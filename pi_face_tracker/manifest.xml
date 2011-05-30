@@ -1,0 +1,23 @@
+<package>
+  <description brief="pi_face_tracker">
+
+  A ROS node for face tracking or tracking an arbitrarily
+  selected patch in a video stream.
+
+  </description>
+  <author>Patrick Goebel</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/pi_face_tracker</url>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+  <depend package="std_msgs"/>
+  <depend package="sensor_msgs"/>
+  <depend package="opencv2"/>
+  <depend package="cv_bridge"/>
+  <depend package="image_transport"/>
+  <depend package="uvc_cam"/>
+
+</package>
+
+
