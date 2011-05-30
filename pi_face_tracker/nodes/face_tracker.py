@@ -3,7 +3,7 @@
 """ face_tracker.py - Version 1.0 2011-04-28
 
     Track a face using the OpenCV Haar detector to initially locate the face, then OpenCV's
-    Good Features to Track and Lucas-Kanade Optical Flow to track face features over 
+    Good-Features-to-Track and Lucas-Kanade Optical Flow to track the face features over 
     subsequent frames.
     
     Can also be used to track arbitrarily selected patches by setting the parameter

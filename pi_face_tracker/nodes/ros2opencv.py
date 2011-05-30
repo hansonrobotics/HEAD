@@ -3,7 +3,7 @@
 """ ros2opencv.py - Version 1.0 2011-04-24
 
     A ROS-to-OpenCV node that uses cv_bridge to map a ROS image topic and optionally a ROS
-    depth image topic the equivalent OpenCV image stream(s).
+    depth image topic to the equivalent OpenCV image stream(s).
     
     Includes variables and helper functions to store detection and tracking information and display
     markers on the image.
