@@ -6,7 +6,7 @@
       flip_image: False
       do_face_tracking: True
       detect_face_only: False
-      use_depth_for_detection: True
+      use_depth_for_detection: False
       use_depth_for_tracking: False
       min_features: 50
       abs_min_features: 6

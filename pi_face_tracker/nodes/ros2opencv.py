@@ -67,9 +67,9 @@ class ROS2OpenCV:
         self.display_box = None
         self.keep_marker_history = False
         self.night_mode = False
-        self.fps = 0
-        self.fps_values = list()
-        self.fps_n_values = 20
+        self.cps = 0 # Cylces per second = number of processing loops per second.
+        self.cps_values = list()
+        self.cps_n_values = 20
 
         """ Create the display window """
         self.cv_window_name = self.node_name
@@ -185,14 +185,14 @@ class ROS2OpenCV:
         end = time.time()
         duration = end - start
         fps = int(1.0 / duration)
-        self.fps_values.append(fps)
-        if len(self.fps_values) > self.fps_n_values:
-            self.fps_values.pop(0)
-        self.fps = int(sum(self.fps_values) / len(self.fps_values))
+        self.cps_values.append(fps)
+        if len(self.cps_values) > self.cps_n_values:
+            self.cps_values.pop(0)
+        self.cps = int(sum(self.cps_values) / len(self.cps_values))
         
         if self.show_text:
             text_font = cv.InitFont(cv.CV_FONT_VECTOR0, 1, 2, 0, 1)
-            cv.PutText(self.display_image, "UPS: " + str(self.fps), (10, int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
+            cv.PutText(self.display_image, "CPS: " + str(self.cps), (10, int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
             cv.PutText(self.display_image, "RES: " + str(self.image_size[0]) + "X" + str(self.image_size[1]), (int(self.image_size[0] * 0.4), int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
 
         # Now display the image.
