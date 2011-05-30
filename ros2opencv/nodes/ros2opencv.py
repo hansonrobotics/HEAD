@@ -192,6 +192,7 @@ class ROS2OpenCV:
         
         if self.show_text:
             text_font = cv.InitFont(cv.CV_FONT_VECTOR0, 1, 2, 0, 1)
+            """ Print cycles per second (CPS) and resolution (RES) at top of the image """
             cv.PutText(self.display_image, "CPS: " + str(self.cps), (10, int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
             cv.PutText(self.display_image, "RES: " + str(self.image_size[0]) + "X" + str(self.image_size[1]), (int(self.image_size[0] * 0.4), int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
 

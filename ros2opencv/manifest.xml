@@ -1,10 +1,12 @@
 <package>
   <description brief="ros2opencv">
 
-     ros2opencv
+     This package defines a base class for other packages in the
+     pi_vision stack for converting ROS image topics to OpenCV
+     format, displaying the image + markers, etc.
 
   </description>
-  <author>patrick</author>
+  <author>Patrick Goebel</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/ros2opencv</url>
