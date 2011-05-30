@@ -17,6 +17,8 @@
   <depend package="opencv2"/>
   <depend package="cv_bridge"/>
   <depend package="image_transport"/>
+  <depend package="openni_camera"/>
+  <depend package="uvc_cam"/>
 
 </package>
 

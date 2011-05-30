@@ -28,7 +28,7 @@
 """
 
 import roslib
-roslib.load_manifest('pi_face_tracker')
+roslib.load_manifest('ros2opencv')
 import rospy
 import cv
 import sys
