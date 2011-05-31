@@ -9,7 +9,10 @@
       use_depth_for_detection: False
       use_depth_for_tracking: False
       min_features: 50
+      auto_min_features: True
       abs_min_features: 6
+      std_err_xy: 3.5
+      max_mse: 10000
       show_text: True
       show_features: True
     </rosparam>

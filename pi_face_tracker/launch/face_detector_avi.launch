@@ -1,0 +1,49 @@
+<launch>
+  <node pkg="pi_face_tracker" name="face_tracker_avi" type="face_tracker.py" output="screen">
+    <rosparam>
+      input_image: /camera/rgb/image_color
+      depth_image: /camera/depth/image
+      flip_image: False
+      do_face_tracking: True
+      detect_face_only: False
+      use_depth_for_detection: False
+      use_depth_for_tracking: False
+      min_features: 50
+      auto_min_features: True
+      abs_min_features: 6
+      std_err_xy: 3.5
+      max_mse: 10000
+      show_text: True
+      show_features: True
+    </rosparam>
+    
+  	<param name="cascade_frontal_alt" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+   	<param name="cascade_frontal_alt2" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt2.xml" />
+  	<param name="cascade_profile" value="$(find pi_face_tracker)/params/haarcascade_profileface.xml" />
+
+  </node>
+  
+  <node pkg="pi_face_tracker" name="face_detector_avi" type="face_tracker.py" output="screen">
+    <rosparam>
+      input_image: /camera/rgb/image_color
+      depth_image: /camera/depth/image
+      flip_image: False
+      do_face_tracking: True
+      detect_face_only: True
+      use_depth_for_detection: False
+      use_depth_for_tracking: False
+      min_features: 50
+      auto_min_features: True
+      abs_min_features: 6
+      std_err_xy: 3.5
+      max_mse: 10000
+      show_text: True
+      show_features: True
+    </rosparam>
+    
+  	<param name="cascade_frontal_alt" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+   	<param name="cascade_frontal_alt2" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt2.xml" />
+  	<param name="cascade_profile" value="$(find pi_face_tracker)/params/haarcascade_profileface.xml" />
+
+  </node>
+</launch>

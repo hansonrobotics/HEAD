@@ -32,7 +32,7 @@ from ros2opencv import ROS2OpenCV
 import rospy
 import cv
 import sys
-from sensor_msgs.msg import RegionOfInterest
+from sensor_msgs.msg import RegionOfInterest, Image
 from math import sqrt, isnan
 
 class PatchTracker(ROS2OpenCV):
@@ -50,8 +50,8 @@ class PatchTracker(ROS2OpenCV):
         """ Should we use depth information for detection? """
         self.use_depth_for_detection = rospy.get_param("~use_depth_for_detection", False)
         
-        self.fov_width = rospy.get_param("~fov_width", 1.0)
-        self.fov_height = rospy.get_param("~fov_height", 1.0)
+        self.fov_width = rospy.get_param("~fov_width", 1.094) # The Kinect's FOV is 62.7 degrees for the RGB image.
+        self.fov_height = rospy.get_param("~fov_height", 1.094)
         
         """ What is the maximum size (in meters) we will accept for a face detection? """
         self.max_face_size = rospy.get_param("~max_face_size", 0.28)
@@ -63,12 +63,21 @@ class PatchTracker(ROS2OpenCV):
             Use 50 for a 640x480 image, or 25 for a 320x240 image """
         self.min_features = rospy.get_param("~min_features", 50)
         
+        """ Alternatively, automatically track the number of features found in the intial detection window """
+        self.auto_min_features = rospy.get_param("~auto_min_features", True)
+        
         """ What is the smallest number of features we will accept before returning to the detector
             to get a fresh patch? """
-        self.abs_min_features = rospy.get_param("~abs_min_features", 6)    
+        self.abs_min_features = rospy.get_param("~abs_min_features", 6) 
+        
+        """ At what standard error do we drop feature points from the tracked cluster? """
+        self.std_err_xy = rospy.get_param("~std_err_xy", 2.5) 
+
+        """ At what total MSE over the cluster do we go back to the detector? """
+        self.max_mse = rospy.get_param("~max_mse", 10000) 
         
         """ How much should we expand the track box when the number of features falls below threshold? """
-        self.expand_scale = 1.5  
+        self.expand_scale = 1.1 
             
         self.detect_box = None
         self.track_box = None
@@ -102,6 +111,12 @@ class PatchTracker(ROS2OpenCV):
         self.win_size = 10
         self.max_count = 200
         self.flags = 0
+        
+        """ Wait until the image topics are ready before starting """
+        rospy.wait_for_message(self.input_image, Image)
+        
+        if self.use_depth_for_detection or self.use_depth_for_tracking:
+            rospy.wait_for_message(self.input_depth, Image)
         
     def process_image(self, cv_image):
         """ If parameter detect_face_only is True, use only the OpenCV Haar detector to track the face """
@@ -173,20 +188,30 @@ class PatchTracker(ROS2OpenCV):
             face_height = pt2[1] - pt1[1]
 
             if self.use_depth_for_detection:
-                """ Get the distance to the middle of the face box """
-                face_distance = cv.Get2D(self.depth_image, int(pt1[1] + face_height / 2), int(pt1[0] + face_width / 2))
-                face_distance = face_distance[0]
-                
-                """ If we are too close to the Kinect, we will get NaN for distance so just accept the detection. """
-                if isnan(face_distance):
+                """ Get the average distance over the face box """
+                ave_face_distance = 0
+                i = 0
+                for x in range(pt1[0], pt2[0]):
+                    for y in range(pt1[1], pt2[1]):
+                        face_distance = cv.Get2D(self.depth_image, y, x)
+                        z = face_distance[0]
+                        if isnan(z):
+                            continue
+                        else:
+                            ave_face_distance += z
+                            i = i + 1
+
+                """ If we are too close to the Kinect, we will get NaN for distances so just accept the detection. """
+                if i == 0:
                     face_size = 0
                 
                 else:
                     """ Compute the size of the face in meters (average of width and height)
                         The Kinect's FOV is about 57 degrees wide which is, coincidentally about 1 radian.
                     """
+                    ave_face_distance = ave_face_distance / float(i)
                     arc = (self.fov_width * float(face_width) / float(self.image_size[0]) + self.fov_height * float(face_height) / float(self.image_size[1])) / 2.0
-                    face_size = face_distance * arc
+                    face_size = ave_face_distance * arc
                 
                 if face_size > self.max_face_size:
                     continue
@@ -263,7 +288,10 @@ class PatchTracker(ROS2OpenCV):
             """ Find points to track using Good Features to Track """
             self.features = cv.GoodFeaturesToTrack(self.grey, eig, temp, self.max_count,
                 self.quality, self.min_distance, mask=roi, blockSize=3, useHarris=0, k=0.04)
-        
+            
+            if self.auto_min_features:
+                """ Since the detect box is larger than the actual face or desired patch, shrink the number a features by 10% """
+                self.min_features = int(len(self.features) * 0.9)
         
         """ Swapping the images """
         self.prev_grey, self.grey = self.grey, self.prev_grey
@@ -272,7 +300,7 @@ class PatchTracker(ROS2OpenCV):
         """ If we have some features... """
         if len(self.features) > 0:
             """ Check the spread of the feature cluster """
-            ((cog_x, cog_y, cog_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.abs_min_features, outlier_threshold = 3.0, mse_threshold=5000)
+            ((cog_x, cog_y, cog_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse)
             
             if score == -1:
                 self.detect_box = None
@@ -401,26 +429,28 @@ class PatchTracker(ROS2OpenCV):
         for point in self.features:
             sum_x = sum_x + point[0]
             sum_y = sum_y + point[1]
-            if self.use_depth_for_tracking:
-                try:
-                    z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
-                except:
-                    rospy.loginfo("X: " + str(point[1]) + " Y: " + str(point[0]))
-                    return ((0, 0, 0), 0, 0, -1)
-
-                z = z[0]
-                """ Depth values can be NaN which will cause an exception and should be dropped """
-                if isnan(z):
-                    features_z.remove(point)
-                    n_z = n_z - 1
-                else:
-                    sum_z = sum_z + z
         
         mean_x = sum_x / n_xy
         mean_y = sum_y / n_xy
         
         if self.use_depth_for_tracking:
+            for point in self.features:
+                try:
+                    z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
+                except:
+                    features_z.remove(point)
+                    n_z = n_z - 1
+                    continue
+                z = z[0]
+                """ Depth values can be NaN which should be dropped """
+                if isnan(z):
+                    features_z.remove(point)
+                    n_z = n_z - 1
+                else:
+                    sum_z = sum_z + z
+                    
             mean_z = sum_z / n_z
+            
         else:
             mean_z = -1
         
@@ -437,15 +467,17 @@ class PatchTracker(ROS2OpenCV):
         
         """ Throw away the outliers based on the x-y variance """
         for point in self.features:
-            if ((point[0] - mean_x) * (point[0] - mean_x) + (point[1] - mean_y) * (point[1] - mean_y)) / mse_xy > outlier_threshold:
-				features_xy.remove(point)
-				try:
-					features_z.remove(point)
-					n_z = n_z - 1
-				except:
-					pass
-				
-				n_xy = n_xy - 1
+            std_err = ((point[0] - mean_x) * (point[0] - mean_x) + (point[1] - mean_y) * (point[1] - mean_y)) / mse_xy 
+            if std_err > outlier_threshold:
+                features_xy.remove(point)
+                #rospy.loginfo("Dropping XY point at std_err: " + str(std_err))
+                try:
+                	features_z.remove(point)
+                	n_z = n_z - 1
+                except:
+                	pass
+                
+                n_xy = n_xy - 1
                 
         """ Now do the same for depth """
         if self.use_depth_for_tracking:
@@ -462,8 +494,12 @@ class PatchTracker(ROS2OpenCV):
                 z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
                 z = z[0]
                 try:
-                    if abs(z - mean_z) / mean_z > 0.5:
+                    pct_err = abs(z - mean_z) / mean_z
+                    std_err = (z - mean_z) * (z - mean_z) / mse_z
+                    #if std_err > 12.0:
+                    if pct_err > 0.2:
                         features_xy.remove(point)
+                        rospy.loginfo("Dropping Z pct_err: " + str(pct_err) + ", Z: " + str(z) + ", mean_z: " + str(mean_z))
                 except:
                     pass
         else:
@@ -491,7 +527,7 @@ def main(args):
     print help_message
     
     """ Fire up the Face Tracker node """
-    PT = PatchTracker("face_tracker")
+    PT = PatchTracker("pi_face_tracker")
 
     try:
       rospy.spin()

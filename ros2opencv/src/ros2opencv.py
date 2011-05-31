@@ -42,6 +42,8 @@ class ROS2OpenCV:
     def __init__(self, node_name):
         rospy.init_node(node_name)
         
+        rospy.on_shutdown(self.cleanup)
+        
         self.node_name = node_name
         self.input_image = rospy.get_param("~input_image", "/camera/rgb/image_color")
         self.input_depth = rospy.get_param("~input_depth", "/camera/depth/image")
@@ -74,7 +76,7 @@ class ROS2OpenCV:
         """ Create the display window """
         self.cv_window_name = self.node_name
         cv.NamedWindow(self.cv_window_name, cv.CV_NORMAL)
-        cv.ResizeWindow(self.cv_window_name, 640, 480)
+        cv.ResizeWindow(self.cv_window_name, 320, 240)
         
         """ Create the cv_bridge object """
         self.bridge = CvBridge()
@@ -85,8 +87,6 @@ class ROS2OpenCV:
         """ Subscribe to the raw camera image topic and set the image processing callback """
         self.image_sub = rospy.Subscriber(self.input_image, Image, self.image_callback)
         self.image_sub = rospy.Subscriber(self.input_depth, Image, self.depth_callback)
-        
-        rospy.on_shutdown(self.cleanup)
         
         rospy.loginfo("Starting " + self.node_name)
         
@@ -191,10 +191,10 @@ class ROS2OpenCV:
         self.cps = int(sum(self.cps_values) / len(self.cps_values))
         
         if self.show_text:
-            text_font = cv.InitFont(cv.CV_FONT_VECTOR0, 1, 2, 0, 1)
+            text_font = cv.InitFont(cv.CV_FONT_VECTOR0, 1, 1, 0, 2, 8)
             """ Print cycles per second (CPS) and resolution (RES) at top of the image """
             cv.PutText(self.display_image, "CPS: " + str(self.cps), (10, int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
-            cv.PutText(self.display_image, "RES: " + str(self.image_size[0]) + "X" + str(self.image_size[1]), (int(self.image_size[0] * 0.4), int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
+            cv.PutText(self.display_image, "RES: " + str(self.image_size[0]) + "X" + str(self.image_size[1]), (int(self.image_size[0] * 0.6), int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
 
         # Now display the image.
         cv.ShowImage(self.node_name, self.display_image)
