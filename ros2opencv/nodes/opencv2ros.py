@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import roslib
-roslib.load_manifest('pi_opencv')
+roslib.load_manifest('ros2opencv')
 import sys
 import rospy
 import cv
@@ -23,8 +23,10 @@ class OpenCV2ROS:
     
         #video = cv.CaptureFromCAM(0)
         video = cv.CaptureFromFile(path)
-        fps = int(cv.GetCaptureProperty(video, cv.CV_CAP_PROP_FPS) * 1.4)
-        #rospy.loginfo(cv.GetCaptureProperty(video, cv.CV_CAP_PROP_FRAME_WIDTH))
+        fps = int(cv.GetCaptureProperty(video, cv.CV_CAP_PROP_FPS))
+        
+        """ Bring the fps up to 25 Hz """
+        fps = int(fps * 25.0 / fps)
     
         cv.NamedWindow("Image window", cv.CV_NORMAL)
         cv.ResizeWindow("Image window", 320, 240)
@@ -50,7 +52,7 @@ class OpenCV2ROS:
                 if cc == 'q':
                     """ user has press the q key, so exit """
                     rospy.signal_shutdown("User hit q key to quit.")
-                elif cc == 'p' or cc == ' ':
+                elif cc == ' ':
                     """ Pause or continue the video """
                     self.paused = not self.paused
                 elif cc == 'r':
@@ -71,6 +73,13 @@ class OpenCV2ROS:
   
 
 def main(args):
+    help_message =  "Hot keys: \n" \
+          "\tq     - quit the program\n" \
+          "\tr     - restart video from beginning\n" \
+          "\tspace - toggle pause/play\n"
+
+    print help_message
+    
     try:
         o2r = OpenCV2ROS(sys.argv[1])
     except KeyboardInterrupt:

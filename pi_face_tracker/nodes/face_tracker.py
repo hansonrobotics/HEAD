@@ -44,8 +44,8 @@ class PatchTracker(ROS2OpenCV):
         """ Do automatic face tracking? """
         self.do_face_tracking = rospy.get_param("~do_face_tracking", True)
 
-        """ For face tracking, use only the OpenCV face detector? """
-        self.detect_face_only = rospy.get_param("~detect_face_only", False)
+        """ For face tracking, use only the OpenCV Haar face detector? """
+        self.use_haar_only = rospy.get_param("~use_haar_only", False)
         
         """ Should we use depth information for detection? """
         self.use_depth_for_detection = rospy.get_param("~use_depth_for_detection", False)
@@ -119,12 +119,12 @@ class PatchTracker(ROS2OpenCV):
             rospy.wait_for_message(self.input_depth, Image)
         
     def process_image(self, cv_image):
-        """ If parameter detect_face_only is True, use only the OpenCV Haar detector to track the face """
-        if (self.detect_face_only or not self.detect_box) and self.do_face_tracking:
+        """ If parameter use_haar_only is True, use only the OpenCV Haar detector to track the face """
+        if (self.use_haar_only or not self.detect_box) and self.do_face_tracking:
             self.detect_box = self.detect_face(cv_image)
         
         """ Otherwise, track the face using Good Features to Track and Lucas-Kanade Optical Flow """
-        if not self.detect_face_only:
+        if not self.use_haar_only:
             if self.detect_box:
                 if not self.track_box:
                     self.features = []

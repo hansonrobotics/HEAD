@@ -5,7 +5,7 @@
       depth_image: /camera/depth/image
       flip_image: False
       do_face_tracking: True
-      detect_face_only: False
+      use_haar_only: False
       use_depth_for_detection: True
       use_depth_for_tracking: False
       auto_min_features: True
