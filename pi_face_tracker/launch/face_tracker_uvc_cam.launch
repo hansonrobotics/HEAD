@@ -1,10 +1,10 @@
 <launch>
   <node pkg="pi_face_tracker" name="face_tracker" type="face_tracker.py" output="screen">
+    <remap from="input_rgb" to="/camera/image_raw" />
+    
     <rosparam>
-      input_image: /camera/rgb/image_color
-      depth_image: /camera/depth/image
       flip_image: False
-      do_face_tracking: True
+      auto_face_tracking: True
       use_haar_only: False
       use_depth_for_detection: False
       use_depth_for_tracking: False

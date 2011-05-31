@@ -7,7 +7,7 @@
     subsequent frames.
     
     Can also be used to track arbitrarily selected patches by setting the parameter
-    do_face_tracking to False and using the mouse to select the desired region.
+    auto_face_tracking to False and using the mouse to select the desired region.
 
     Created for the Pi Robot Project: http://www.pirobot.org
     Copyright (c) 2011 Patrick Goebel.  All rights reserved.
@@ -42,7 +42,7 @@ class PatchTracker(ROS2OpenCV):
         self.node_name = node_name
         
         """ Do automatic face tracking? """
-        self.do_face_tracking = rospy.get_param("~do_face_tracking", True)
+        self.auto_face_tracking = rospy.get_param("~auto_face_tracking", True)
 
         """ For face tracking, use only the OpenCV Haar face detector? """
         self.use_haar_only = rospy.get_param("~use_haar_only", False)
@@ -113,14 +113,14 @@ class PatchTracker(ROS2OpenCV):
         self.flags = 0
         
         """ Wait until the image topics are ready before starting """
-        rospy.wait_for_message(self.input_image, Image)
+        rospy.wait_for_message(self.input_rgb, Image)
         
         if self.use_depth_for_detection or self.use_depth_for_tracking:
             rospy.wait_for_message(self.input_depth, Image)
         
     def process_image(self, cv_image):
         """ If parameter use_haar_only is True, use only the OpenCV Haar detector to track the face """
-        if (self.use_haar_only or not self.detect_box) and self.do_face_tracking:
+        if (self.use_haar_only or not self.detect_box) and self.auto_face_tracking:
             self.detect_box = self.detect_face(cv_image)
         
         """ Otherwise, track the face using Good Features to Track and Lucas-Kanade Optical Flow """
@@ -142,7 +142,7 @@ class PatchTracker(ROS2OpenCV):
         
         return cv_image
     
-    def detect_face(self, cv_image):        
+    def detect_face(self, cv_image):
         if self.grey is None:
             """ Allocate temporary images """      
             self.grey = cv.CreateImage(self.image_size, 8, 1)
