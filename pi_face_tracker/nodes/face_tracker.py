@@ -68,7 +68,7 @@ class PatchTracker(ROS2OpenCV):
         
         """ What is the smallest number of features we will accept before returning to the detector
             to get a fresh patch? """
-        self.abs_min_features = rospy.get_param("~abs_min_features", 6) 
+        self.abs_min_features = rospy.get_param("~abs_min_features", 6)
         
         """ At what standard error do we drop feature points from the tracked cluster? """
         self.std_err_xy = rospy.get_param("~std_err_xy", 2.5) 
@@ -158,17 +158,19 @@ class PatchTracker(ROS2OpenCV):
         """ Scale input image for faster processing """
         cv.Resize(self.grey, self.small_image, cv.CV_INTER_LINEAR)
     
-        """ First check the profile template """
-        if self.cascade_profile:
-            faces = cv.HaarDetectObjects(self.small_image, self.cascade_profile, cv.CreateMemStorage(0),
-                                         self.haar_scale, self.min_neighbors, self.haar_flags, self.min_size)
+        """ First check one of the frontal templates """
+        if self.cascade_frontal_alt:
+            faces = cv.HaarDetectObjects(self.small_image, self.cascade_frontal_alt, cv.CreateMemStorage(0),
+                                          self.haar_scale, self.min_neighbors, self.haar_flags, self.min_size)
+                                         
+        """ If that fails, check the profile template """
+        if not faces:
+            if self.cascade_profile:
+                faces = cv.HaarDetectObjects(self.small_image, self.cascade_profile, cv.CreateMemStorage(0),
+                                             self.haar_scale, self.min_neighbors, self.haar_flags, self.min_size)
+
             if not faces:
-                """ If the alt frontal template fails, check the profile template """
-                if self.cascade_frontal_alt:
-                    faces = cv.HaarDetectObjects(self.small_image, self.cascade_frontal_alt, cv.CreateMemStorage(0),
-                                         self.haar_scale, self.min_neighbors, self.haar_flags, self.min_size)
-            if not faces:
-                """ If the alt2 frontal template fails, check the profile template """
+                """ If that fails, check a different frontal profile """
                 if self.cascade_frontal_alt2:
                     faces = cv.HaarDetectObjects(self.small_image, self.cascade_frontal_alt2, cv.CreateMemStorage(0),
                                          self.haar_scale, self.min_neighbors, self.haar_flags, self.min_size)
@@ -292,6 +294,8 @@ class PatchTracker(ROS2OpenCV):
             if self.auto_min_features:
                 """ Since the detect box is larger than the actual face or desired patch, shrink the number a features by 10% """
                 self.min_features = int(len(self.features) * 0.9)
+                self.abs_min_features = int(0.5 * self.min_features)
+                rospy.loginfo("MIN FEATURES: " + str(self.min_features))
         
         """ Swapping the images """
         self.prev_grey, self.grey = self.grey, self.prev_grey
@@ -299,6 +303,7 @@ class PatchTracker(ROS2OpenCV):
         
         """ If we have some features... """
         if len(self.features) > 0:
+            rospy.loginfo(len(self.features))
             """ Check the spread of the feature cluster """
             ((cog_x, cog_y, cog_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse)
             
@@ -497,7 +502,7 @@ class PatchTracker(ROS2OpenCV):
                     pct_err = abs(z - mean_z) / mean_z
                     std_err = (z - mean_z) * (z - mean_z) / mse_z
                     #if std_err > 12.0:
-                    if pct_err > 0.2:
+                    if pct_err > 0.5:
                         features_xy.remove(point)
                         rospy.loginfo("Dropping Z pct_err: " + str(pct_err) + ", Z: " + str(z) + ", mean_z: " + str(mean_z))
                 except:

@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="pi_opencv" name="ros2opencv" type="ros2opencv.py" output="screen">
+  <node pkg="ros2opencv" name="ros2opencv" type="ros2opencv.py" output="screen">
   	<param name="input_image" value="/camera/rgb/image_color" />
   	<param name="input_depth" value="/camera/depth/image" />
   	<param name="flip_image" value="False" />

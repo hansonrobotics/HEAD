@@ -6,13 +6,13 @@
       flip_image: False
       do_face_tracking: True
       detect_face_only: False
-      use_depth_for_detection: False
+      use_depth_for_detection: True
       use_depth_for_tracking: False
-      min_features: 50
       auto_min_features: True
+      min_features: 50
       abs_min_features: 6
-      std_err_xy: 3.5
-      max_mse: 10000
+      std_err_xy: 2.5
+      max_mse: 100000
       show_text: True
       show_features: True
     </rosparam>
