@@ -1,4 +1,26 @@
 #!/usr/bin/env python
+
+""" avi2ros.py - Version 0.1 2011-04-28
+
+    Read in an AVI video file and republish as a ROS Image topic.
+    
+    Created for the Pi Robot Project: http://www.pirobot.org
+    Copyright (c) 2011 Patrick Goebel.  All rights reserved.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+    
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details at:
+    
+    http://www.gnu.org/licenses/gpl.html
+      
+"""
+
 import roslib
 roslib.load_manifest('ros2opencv')
 import sys
@@ -8,28 +30,22 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
-class OpenCV2ROS:
-    
-    def cleanup(self):
-            print "Shutting down vision node."
-            cv.DestroyAllWindows()  
-
-    def __init__(self, path):
-        rospy.init_node('opencv2ros', anonymous=True)
+class AVI2ROS:
+    def __init__(self):
+        rospy.init_node('avi2ros', anonymous=True)
         
-        image_pub = rospy.Publisher("/camera/rgb/image_color", Image)
+        self.input = rospy.get_param("~input", "")
+        image_pub = rospy.Publisher("output", Image)
         
         rospy.on_shutdown(self.cleanup)
-    
-        #video = cv.CaptureFromCAM(0)
-        video = cv.CaptureFromFile(path)
+        
+        video = cv.CaptureFromFile(self.input)
         fps = int(cv.GetCaptureProperty(video, cv.CV_CAP_PROP_FPS))
         
         """ Bring the fps up to 25 Hz """
         fps = int(fps * 25.0 / fps)
     
-        cv.NamedWindow("Image window", cv.CV_NORMAL)
-        cv.ResizeWindow("Image window", 320, 240)
+        cv.NamedWindow("Image window", True) # autosize the display
 
         bridge = CvBridge()
                 
@@ -40,7 +56,7 @@ class OpenCV2ROS:
         while not rospy.is_shutdown():
             
             if self.restart:
-                video = cv.CaptureFromFile(path)
+                video = cv.CaptureFromFile(self.input)
                 self.restart = None
             
             """ handle events """
@@ -69,8 +85,11 @@ class OpenCV2ROS:
             try:
                 image_pub.publish(bridge.cv_to_imgmsg(frame, "bgr8"))
             except CvBridgeError, e:
-                print e
-  
+                print e         
+    
+    def cleanup(self):
+            print "Shutting down vision node."
+            cv.DestroyAllWindows()
 
 def main(args):
     help_message =  "Hot keys: \n" \
@@ -81,9 +100,9 @@ def main(args):
     print help_message
     
     try:
-        o2r = OpenCV2ROS(sys.argv[1])
+        a2r = AVI2ROS()
     except KeyboardInterrupt:
-        print "Shutting down opencv2ros..."
+        print "Shutting down avi2ros..."
         cv.DestroyAllWindows()
 
 if __name__ == '__main__':

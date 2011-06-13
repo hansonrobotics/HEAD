@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-""" face_tracker.py - Version 1.0 2011-04-28
+""" face_tracker.py - Version 0.2 2011-04-28
 
     Track a face using the OpenCV Haar detector to initially locate the face, then OpenCV's
     Good-Features-to-Track and Lucas-Kanade Optical Flow to track the face features over 
@@ -15,7 +15,7 @@
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+    (at your option) any later version.5
     
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,6 +32,7 @@ from ros2opencv import ROS2OpenCV
 import rospy
 import cv
 import sys
+import os
 from sensor_msgs.msg import RegionOfInterest, Image
 from math import sqrt, isnan
 
@@ -39,44 +40,24 @@ class PatchTracker(ROS2OpenCV):
     def __init__(self, node_name):
         ROS2OpenCV.__init__(self, node_name)
         
-        self.node_name = node_name
+        self.node_name = node_name       
         
-        """ Do automatic face tracking? """
         self.auto_face_tracking = rospy.get_param("~auto_face_tracking", True)
-
-        """ For face tracking, use only the OpenCV Haar face detector? """
         self.use_haar_only = rospy.get_param("~use_haar_only", False)
-        
-        """ Should we use depth information for detection? """
         self.use_depth_for_detection = rospy.get_param("~use_depth_for_detection", False)
-        
-        self.fov_width = rospy.get_param("~fov_width", 1.094) # The Kinect's FOV is 62.7 degrees for the RGB image.
+        self.fov_width = rospy.get_param("~fov_width", 1.094)
         self.fov_height = rospy.get_param("~fov_height", 1.094)
-        
-        """ What is the maximum size (in meters) we will accept for a face detection? """
         self.max_face_size = rospy.get_param("~max_face_size", 0.28)
-
-        """ Should we use depth information for tracking? """
         self.use_depth_for_tracking = rospy.get_param("~use_depth_for_tracking", False)
-        
-        """ What is the minimum number of feature we will accept before expanding the track window?
-            Use 50 for a 640x480 image, or 25 for a 320x240 image """
-        self.min_features = rospy.get_param("~min_features", 50)
-        
-        """ Alternatively, automatically track the number of features found in the intial detection window """
         self.auto_min_features = rospy.get_param("~auto_min_features", True)
-        
-        """ What is the smallest number of features we will accept before returning to the detector
-            to get a fresh patch? """
+        self.min_features = rospy.get_param("~min_features", 50) # Used only if auto_min_features is False
         self.abs_min_features = rospy.get_param("~abs_min_features", 6)
-        
-        """ At what standard error do we drop feature points from the tracked cluster? """
         self.std_err_xy = rospy.get_param("~std_err_xy", 2.5) 
-
-        """ At what total MSE over the cluster do we go back to the detector? """
-        self.max_mse = rospy.get_param("~max_mse", 10000) 
-        
-        """ How much should we expand the track box when the number of features falls below threshold? """
+        self.max_mse = rospy.get_param("~max_mse", 10000)
+        self.good_feature_distance = rospy.get_param("~good_feature_distance", 5)
+        self.add_feature_distance = rospy.get_param("~add_feature_distance", 10)
+        self.flip_image = rospy.get_param("~flip_image", False)
+        self.feature_type = rospy.get_param("~feature_type", 0) # 0 = Good Features to Track, 1 = SURF
         self.expand_scale = 1.1 
             
         self.detect_box = None
@@ -107,18 +88,19 @@ class PatchTracker(ROS2OpenCV):
         """ Set the Good Features to Track and Lucas-Kanade parameters """
         self.night_mode = False       
         self.quality = 0.01
-        self.min_distance = 5
         self.win_size = 10
         self.max_count = 200
         self.flags = 0
+        self.frame_count = 0
         
         """ Wait until the image topics are ready before starting """
-        rospy.wait_for_message(self.input_rgb, Image)
+        rospy.wait_for_message(self.input_rgb_image, Image)
         
         if self.use_depth_for_detection or self.use_depth_for_tracking:
-            rospy.wait_for_message(self.input_depth, Image)
+            rospy.wait_for_message(self.input_depth_image, Image)
         
     def process_image(self, cv_image):
+        #self.frame_count = self.frame_count + 1
         """ If parameter use_haar_only is True, use only the OpenCV Haar detector to track the face """
         if (self.use_haar_only or not self.detect_box) and self.auto_face_tracking:
             self.detect_box = self.detect_face(cv_image)
@@ -126,16 +108,28 @@ class PatchTracker(ROS2OpenCV):
         """ Otherwise, track the face using Good Features to Track and Lucas-Kanade Optical Flow """
         if not self.use_haar_only:
             if self.detect_box:
-                if not self.track_box:
+                if not self.track_box or not self.is_rect_nonzero(self.track_box):
                     self.features = []
                     self.track_box = self.detect_box
                 self.track_box = self.track_lk(cv_image)
                 
+                """ Prune features that are too far from the main cluster """
+                if len(self.features) > 0:
+                    ((cog_x, cog_y, cog_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse)
+                    
+                    if score == -1:
+                        self.detect_box = None
+                        self.track_box = None
+                        return cv_image
+                
+                """ Add features if the number is getting too low """
                 if len(self.features) < self.min_features:
                     self.expand_scale = 1.1 * self.expand_scale
-                    self.add_features(cv_image, min_distance=10)
+                    self.add_features(cv_image)
                 else:
                     self.expand_scale = 1.1
+                
+        
             else:
                 self.features = []
                 self.track_box = None
@@ -180,7 +174,7 @@ class PatchTracker(ROS2OpenCV):
                 text_font = cv.InitFont(cv.CV_FONT_VECTOR0, 3, 2, 0, 3)
                 cv.PutText(self.marker_image, "LOST FACE!", (50, int(self.image_size[1] * 0.9)), text_font, cv.RGB(255, 255, 0))
             return None
-        
+                
         for ((x, y, w, h), n) in faces:
             """ The input to cv.HaarDetectObjects was resized, so scale the 
                 bounding box of each face and convert it to two CvPoints """
@@ -195,8 +189,11 @@ class PatchTracker(ROS2OpenCV):
                 i = 0
                 for x in range(pt1[0], pt2[0]):
                     for y in range(pt1[1], pt2[1]):
-                        face_distance = cv.Get2D(self.depth_image, y, x)
-                        z = face_distance[0]
+                        try:
+                            face_distance = cv.Get2D(self.depth_image, y, x)
+                            z = face_distance[0]
+                        except:
+                            continue
                         if isnan(z):
                             continue
                         else:
@@ -218,12 +215,14 @@ class PatchTracker(ROS2OpenCV):
                 if face_size > self.max_face_size:
                     continue
                 
-            face_box = (pt1[0], pt1[1] , face_width, face_height)
+            face_box = (pt1[0], pt1[1], face_width, face_height)
 
             """ Break out of the loop after the first face """
             return face_box
-        
+
     def track_lk(self, cv_image):
+        feature_box = None
+        
         """ Initialize intermediate images if necessary """
         if not self.pyramid:
             self.grey = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
@@ -237,6 +236,7 @@ class PatchTracker(ROS2OpenCV):
         
         """ Equalize the histogram to reduce lighting effects """
         cv.EqualizeHist(self.grey, self.grey)
+        #cv.Smooth(self.grey, self.grey, param1=13)
             
         if self.track_box and self.features != []:
             """ We have feature points, so track and display them """
@@ -255,11 +255,11 @@ class PatchTracker(ROS2OpenCV):
         elif self.track_box and self.is_rect_nonzero(self.track_box):
             """ Get the initial features to track """
                     
-            """ Create the ROI mask"""
-            roi = cv.CreateImage(cv.GetSize(cv_image), 8, 1) 
+            """ Create a mask image to be used to select the tracked points """
+            mask = cv.CreateImage(cv.GetSize(cv_image), 8, 1) 
             
             """ Begin with all black pixels """
-            cv.Zero(roi)
+            cv.Zero(mask)
 
             """ Get the coordinates and dimensions of the track box """
             try:
@@ -267,29 +267,43 @@ class PatchTracker(ROS2OpenCV):
             except:
                 return None
             
-            """ The detect box tends to extend beyond the actual object so shrink it slightly """
-            x = int(0.97 * x)
-            y = int(0.97 * y)
-            w = int(1 * w)
-            h = int(1 * h)
-            
-            """ Get the center of the track box (type CvRect) so we can create the
-                equivalent CvBox2D (rotated rectangle) required by EllipseBox below. """
-            center_x = int(x + w / 2)
-            center_y = int(y + h / 2)
-            roi_box = ((center_x, center_y), (w, h), 0)
-            
-            """ Create a white ellipse within the track_box to define the ROI.
-                A thickness of -1 causes ellipse to be filled with chosen color, in this case white. """
-            cv.EllipseBox(roi, roi_box, cv.CV_RGB(255,255, 255), thickness=-1)
+            if self.auto_face_tracking:
+                """ For faces, the detect box tends to extend beyond the actual object so shrink it slightly """
+                x = int(0.97 * x)
+                y = int(0.97 * y)
+                w = int(1 * w)
+                h = int(1 * h)
+                
+                """ Get the center of the track box (type CvRect) so we can create the
+                    equivalent CvBox2D (rotated rectangle) required by EllipseBox below. """
+                center_x = int(x + w / 2)
+                center_y = int(y + h / 2)
+                roi_box = ((center_x, center_y), (w, h), 0)
+                
+                """ Create a white ellipse within the track_box to define the ROI.
+                    A thickness of -1 causes ellipse to be filled with chosen color, in this case white. """
+                cv.EllipseBox(mask, roi_box, cv.CV_RGB(255,255, 255), thickness=-1)
+                
+            else:
+                """ For manually selected regions, just use a rectangle """
+                pt1 = (x, y)
+                pt2 = (x + w, y + h)
+                cv.Rectangle(mask, pt1, pt2, cv.CV_RGB(255,255, 255), thickness=-1)
             
             """ Create the temporary scratchpad images """
             eig = cv.CreateImage (cv.GetSize(self.grey), 32, 1)
             temp = cv.CreateImage (cv.GetSize(self.grey), 32, 1)
 
-            """ Find points to track using Good Features to Track """
-            self.features = cv.GoodFeaturesToTrack(self.grey, eig, temp, self.max_count,
-                self.quality, self.min_distance, mask=roi, blockSize=3, useHarris=0, k=0.04)
+            if self.feature_type == 0:
+                """ Find keypoints to track using Good Features to Track """
+                self.features = cv.GoodFeaturesToTrack(self.grey, eig, temp, self.max_count,
+                    self.quality, self.good_feature_distance, mask=mask, blockSize=3, useHarris=0, k=0.04)
+            
+            elif self.feature_type == 1:
+                """ Find keypoints to track using SURF """
+                (features, descriptors) = cv.ExtractSURF(self.grey, mask, cv.CreateMemStorage(0), (0, 100, 3, 1))
+                for feature in features:
+                    self.features.append(feature[0])
             
             if self.auto_min_features:
                 """ Since the detect box is larger than the actual face or desired patch, shrink the number a features by 10% """
@@ -302,14 +316,6 @@ class PatchTracker(ROS2OpenCV):
         
         """ If we have some features... """
         if len(self.features) > 0:
-            """ Check the spread of the feature cluster """
-            ((cog_x, cog_y, cog_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse)
-            
-            if score == -1:
-                self.detect_box = None
-                self.track_box = None
-                return None
-        
             """ The FitEllipse2 function below requires us to convert the feature array
                 into a CvMat matrix """
             try:
@@ -343,10 +349,11 @@ class PatchTracker(ROS2OpenCV):
     
             if feature_box and not self.drag_start and self.is_rect_nonzero(self.track_box):
                 self.ROI = RegionOfInterest()
-                self.ROI.x_offset = int(roi_center[0] - roi_size[0] / 2)
-                self.ROI.y_offset = int(roi_center[1] - roi_size[1] / 2)
-                self.ROI.width = int(roi_size[0])
-                self.ROI.height = int(roi_size[1])
+                self.ROI.x_offset = min(self.image_size[0], max(0, int(roi_center[0] - roi_size[0] / 2)))
+                self.ROI.y_offset = min(self.image_size[1], max(0, int(roi_center[1] - roi_size[1] / 2)))
+                self.ROI.width = min(self.image_size[0], int(roi_size[0]))
+                self.ROI.height = min(self.image_size[1], int(roi_size[1]))
+
                 
             self.pubROI.publish(self.ROI)
             
@@ -355,8 +362,8 @@ class PatchTracker(ROS2OpenCV):
         else:
             return None
         
-    def add_features(self, cv_image, min_distance):
-        """ Look for any new features around the current track box (ellipse) """
+    def add_features(self, cv_image,):
+        """ Look for any new features around the current feature cloud """
         
         """ Create the ROI mask"""
         roi = cv.CreateImage(cv.GetSize(cv_image), 8, 1) 
@@ -386,16 +393,25 @@ class PatchTracker(ROS2OpenCV):
         eig = cv.CreateImage (cv.GetSize(self.grey), 32, 1)
         temp = cv.CreateImage (cv.GetSize(self.grey), 32, 1)
         
-        """ Get the new features using Good Features to Track """
-        features = cv.GoodFeaturesToTrack(self.grey, eig, temp, self.max_count,
-        self.quality, self.min_distance, mask=roi, blockSize=3, useHarris=0, k=0.04)
+        if self.feature_type == 0:
+            """ Get the new features using Good Features to Track """
+            features = cv.GoodFeaturesToTrack(self.grey, eig, temp, self.max_count,
+            self.quality, self.good_feature_distance, mask=roi, blockSize=3, useHarris=0, k=0.04)
+        
+        elif self.feature_type == 1:
+            """ Get the new features using SURF """
+            (features, descriptors) = cv.ExtractSURF(self.grey, roi, cv.CreateMemStorage(0), (0, 100, 3, 1))
+            for feature in features:
+                self.features.append(feature[0])
                 
-        """ Append new features to the current list """
-        i = 0
+        """ Append new features to the current list if they are not too far from the current cluster """
         for new_feature in features:
-            if self.distance_to_cluster(new_feature, self.features) > min_distance:
-                self.features.append(new_feature)
-                i = i + 1
+            try:
+                distance = self.distance_to_cluster(new_feature, self.features)
+                if distance > self.add_feature_distance:
+                    self.features.append(new_feature)
+            except:
+                pass
                 
         """ Remove duplicate features """
         self.features = list(set(self.features))
@@ -403,6 +419,9 @@ class PatchTracker(ROS2OpenCV):
     def distance_to_cluster(self, test_point, cluster):
         min_distance = 10000
         for point in cluster:
+            if point == test_point:
+                continue
+            """ Use L1 distance since it is faster than L2 """
             distance = abs(test_point[0] - point[0])  + abs(test_point[1] - point[1])
             if distance < min_distance:
                 min_distance = distance
@@ -441,14 +460,11 @@ class PatchTracker(ROS2OpenCV):
                 try:
                     z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
                 except:
-                    features_z.remove(point)
-                    n_z = n_z - 1
                     continue
                 z = z[0]
-                """ Depth values can be NaN which should be dropped """
+                """ Depth values can be NaN which should be ignored """
                 if isnan(z):
-                    features_z.remove(point)
-                    n_z = n_z - 1
+                    continue
                 else:
                     sum_z = sum_z + z
                     
@@ -460,6 +476,7 @@ class PatchTracker(ROS2OpenCV):
         """ Compute the x-y MSE (mean squared error) of the cluster in the camera plane """
         for point in self.features:
             sse = sse + (point[0] - mean_x) * (point[0] - mean_x) + (point[1] - mean_y) * (point[1] - mean_y)
+            #sse = sse + abs((point[0] - mean_x)) + abs((point[1] - mean_y))
         
         """ Get the average over the number of feature points """
         mse_xy = sse / n_xy
@@ -469,11 +486,13 @@ class PatchTracker(ROS2OpenCV):
             return ((0, 0, 0), 0, 0, -1)
         
         """ Throw away the outliers based on the x-y variance """
+        max_err = 0
         for point in self.features:
-            std_err = ((point[0] - mean_x) * (point[0] - mean_x) + (point[1] - mean_y) * (point[1] - mean_y)) / mse_xy 
+            std_err = ((point[0] - mean_x) * (point[0] - mean_x) + (point[1] - mean_y) * (point[1] - mean_y)) / mse_xy
+            if std_err > max_err:
+                max_err = std_err
             if std_err > outlier_threshold:
                 features_xy.remove(point)
-                #rospy.loginfo("Dropping XY point at std_err: " + str(std_err))
                 try:
                 	features_z.remove(point)
                 	n_z = n_z - 1
@@ -481,27 +500,32 @@ class PatchTracker(ROS2OpenCV):
                 	pass
                 
                 n_xy = n_xy - 1
-                
+                                
         """ Now do the same for depth """
         if self.use_depth_for_tracking:
             sse = 0
             for point in features_z:
-				z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
-				z = z[0]
-				sse = sse + (z - mean_z) * (z - mean_z)
+                try:
+    				z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
+    				z = z[0]
+    				sse = sse + (z - mean_z) * (z - mean_z)
+                except:
+                    n_z = n_z - 1
             
             mse_z = sse / n_z
             
-            """ Throw away the outliers based on depth """
+            """ Throw away the outliers based on depth using percent error rather than standard error since depth
+                 values can jump dramatically at object boundaries  """
             for point in features_z:
-                z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
-                z = z[0]
+                try:
+                    z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
+                    z = z[0]
+                except:
+                    continue
                 try:
                     pct_err = abs(z - mean_z) / mean_z
-                    #std_err = (z - mean_z) * (z - mean_z) / mse_z
                     if pct_err > 0.5:
                         features_xy.remove(point)
-                        #rospy.loginfo("Dropping Z pct_err: " + str(pct_err) + ", Z: " + str(z) + ", mean_z: " + str(mean_z))
                 except:
                     pass
         else:
@@ -514,8 +538,8 @@ class PatchTracker(ROS2OpenCV):
             score = -1
         else:
             score = 1
-                
-        return ((mean_x, mean_y, mean_z), mse_xy, mse_z, score)        
+                            
+        return ((mean_x, mean_y, mean_z), mse_xy, mse_z, score)     
 
 def main(args):
     """ Display a help message if appropriate """

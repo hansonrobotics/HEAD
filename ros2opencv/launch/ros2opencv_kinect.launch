@@ -1,7 +1,7 @@
 <launch>
   <node pkg="ros2opencv" name="ros2opencv" type="ros2opencv.py" output="screen">
-    <remap from="input_rgb" to="/camera/rgb/image_color" />
-    <remap from="input_depth" to="/camera/depth/image" />
+    <remap from="input_rgb_image to="/camera/rgb/image_color" />
+    <remap from="input_depth_image" to="/camera/depth/image" />
   	<param name="flip_image" value="False" />
   </node>
 </launch>

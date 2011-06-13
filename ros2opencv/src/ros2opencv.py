@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-""" ros2opencv.py - Version 1.0 2011-04-24
+""" ros2opencv.py - Version 0.1 2011-04-24
 
     A ROS-to-OpenCV node that uses cv_bridge to map a ROS image topic and optionally a ROS
     depth image topic to the equivalent OpenCV image stream(s).
@@ -45,9 +45,8 @@ class ROS2OpenCV:
         rospy.on_shutdown(self.cleanup)
         
         self.node_name = node_name
-        self.input_rgb = "input_rgb"
-        self.input_depth = "input_depth"
-        self.flip_image = rospy.get_param("~flip_image", False)
+        self.input_rgb_image = "input_rgb_image"
+        self.input_depth_image = "input_depth_image"
         self.show_text = rospy.get_param("~show_text", True)
         self.show_features = rospy.get_param("~show_features", True)
 
@@ -76,7 +75,7 @@ class ROS2OpenCV:
         """ Create the display window """
         self.cv_window_name = self.node_name
         cv.NamedWindow(self.cv_window_name, cv.CV_NORMAL)
-        cv.ResizeWindow(self.cv_window_name, 320, 240)
+        cv.ResizeWindow(self.cv_window_name, 640, 480)
         
         """ Create the cv_bridge object """
         self.bridge = CvBridge()
@@ -85,8 +84,8 @@ class ROS2OpenCV:
         cv.SetMouseCallback (self.node_name, self.on_mouse_click, None)
         
         """ Subscribe to the raw camera image topic and set the image processing callback """
-        self.image_sub = rospy.Subscriber(self.input_rgb, Image, self.image_callback)
-        self.depth_sub = rospy.Subscriber(self.input_depth, Image, self.depth_callback)
+        self.image_sub = rospy.Subscriber(self.input_rgb_image, Image, self.image_callback)
+        self.depth_sub = rospy.Subscriber(self.input_depth_image, Image, self.depth_callback)
         
         rospy.loginfo("Starting " + self.node_name)
         
@@ -128,14 +127,14 @@ class ROS2OpenCV:
         cv.Copy(depth_image, self.depth_image)
 
     def image_callback(self, data):
-        """ Time this loop to get frames per second """
+        """ Time this loop to get cycles per second """
         start = time.time()
         
         """ Convert the raw image to OpenCV format using the convert_image() helper function """
         cv_image = self.convert_image(data)
         
         """ Some webcams invert the image """
-        if self.flip_image:    
+        if self.flip_image:
             cv.Flip(cv_image)
                     
         """ Create a few images we will use for display """
@@ -173,7 +172,14 @@ class ROS2OpenCV:
         cv.Or(self.processed_image, self.marker_image, self.display_image)
         
         if self.track_box:
-            cv.EllipseBox(self.display_image, self.track_box, cv.CV_RGB(255, 0, 0), 3)
+            if self.auto_face_tracking:
+                cv.EllipseBox(self.display_image, self.track_box, cv.CV_RGB(255, 0, 0), 3)
+            else:
+                (center, size, angle) = self.track_box
+                pt1 = (int(center[0] - size[0] / 2), int(center[1] - size[1] / 2))
+                pt2 = (int(center[0] + size[0] / 2), int(center[1] + size[1] / 2))
+
+                cv.Rectangle(self.display_image, pt1, pt2, cv.RGB(255, 0, 0), 2, 8, 0)
             
         elif self.detect_box:
             (pt1_x, pt1_y, w, h) = self.detect_box
