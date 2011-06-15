@@ -362,7 +362,7 @@ class PatchTracker(ROS2OpenCV):
         else:
             return None
         
-    def add_features(self, cv_image,):
+    def add_features(self, cv_image):
         """ Look for any new features around the current feature cloud """
         
         """ Create the ROI mask"""
