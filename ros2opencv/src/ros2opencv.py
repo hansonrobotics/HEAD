@@ -68,6 +68,7 @@ class ROS2OpenCV:
         self.display_box = None
         self.keep_marker_history = False
         self.night_mode = False
+        self.auto_face_tracking = True
         self.cps = 0 # Cylces per second = number of processing loops per second.
         self.cps_values = list()
         self.cps_n_values = 20
@@ -218,6 +219,12 @@ class ROS2OpenCV:
                 self.show_features = not self.show_features
             elif cc == 't':
                 self.show_text = not self.show_text
+            elif cc == 'a':
+                self.auto_face_tracking = not self.auto_face_tracking
+                if self.auto_face_tracking:
+                    self.features = []
+                    self.track_box = None
+                    self.detect_box = None
             elif cc == 'q':
                 """ user has press the q key, so exit """
                 rospy.signal_shutdown("User hit q key to quit.")      

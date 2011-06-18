@@ -548,7 +548,8 @@ def main(args):
           "\tc - delete current features\n" \
           "\tt - toggle text captions on/off\n" \
           "\tf - toggle display of features on/off\n" \
-          "\tn - toggle the \"night\" mode on/off\n"
+          "\tn - toggle \"night\" mode on/off\n" \
+          "\ta - toggle auto face tracking on/off\n"
 
     print help_message
     
