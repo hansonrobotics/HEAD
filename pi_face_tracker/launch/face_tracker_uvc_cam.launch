@@ -6,6 +6,7 @@
       auto_face_tracking: True
       use_haar_only: False
       use_depth_for_detection: False
+      use_depth_for_tracking: False
       auto_min_features: True
       min_features: 50
       abs_min_features: 6
