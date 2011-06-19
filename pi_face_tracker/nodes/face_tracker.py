@@ -93,6 +93,9 @@ class PatchTracker(ROS2OpenCV):
         self.flags = 0
         self.frame_count = 0
         
+        """ Set the SURF parameters """
+        self.surf_hessian_quality = rospy.get_param("~surf_hessian_quality", 100)
+                
         """ Wait until the image topics are ready before starting """
         rospy.wait_for_message(self.input_rgb_image, Image)
         
@@ -127,9 +130,7 @@ class PatchTracker(ROS2OpenCV):
                     self.expand_scale = 1.1 * self.expand_scale
                     self.add_features(cv_image)
                 else:
-                    self.expand_scale = 1.1
-                
-        
+                    self.expand_scale = 1.1       
             else:
                 self.features = []
                 self.track_box = None
@@ -300,10 +301,11 @@ class PatchTracker(ROS2OpenCV):
                     self.quality, self.good_feature_distance, mask=mask, blockSize=3, useHarris=0, k=0.04)
             
             elif self.feature_type == 1:
-                """ Find keypoints to track using SURF """
-                (features, descriptors) = cv.ExtractSURF(self.grey, mask, cv.CreateMemStorage(0), (0, 100, 3, 1))
-                for feature in features:
-                    self.features.append(feature[0])
+                """ Get the new features using SURF """
+                features = []
+                (surf_features, descriptors) = cv.ExtractSURF(self.grey, roi, self.SURFMemStorage, (0, self.surf_hessian_quality, 3, 1))
+                for feature in surf_features:
+                    features.append(feature[0])
             
             if self.auto_min_features:
                 """ Since the detect box is larger than the actual face or desired patch, shrink the number a features by 10% """
@@ -400,7 +402,7 @@ class PatchTracker(ROS2OpenCV):
         
         elif self.feature_type == 1:
             """ Get the new features using SURF """
-            (features, descriptors) = cv.ExtractSURF(self.grey, roi, cv.CreateMemStorage(0), (0, 100, 3, 1))
+            (features, descriptors) = cv.ExtractSURF(self.grey, roi, cv.CreateMemStorage(0), (0, self.surf_hessian_quality, 3, 1))
             for feature in features:
                 self.features.append(feature[0])
                 

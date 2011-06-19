@@ -23,6 +23,7 @@
       max_face_size: 0.28
       flip_image: False
       feature_type: 0 <!-- 0 = Good Features To Track, 1 = SURF -->
+      surf_hessian_quality: 100
     </rosparam>
     
   	<param name="cascade_frontal_alt" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
