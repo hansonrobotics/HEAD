@@ -302,10 +302,9 @@ class PatchTracker(ROS2OpenCV):
             
             elif self.feature_type == 1:
                 """ Get the new features using SURF """
-                features = []
-                (surf_features, descriptors) = cv.ExtractSURF(self.grey, roi, self.SURFMemStorage, (0, self.surf_hessian_quality, 3, 1))
+                (surf_features, descriptors) = cv.ExtractSURF(self.grey, mask, cv.CreateMemStorage(0), (0, self.surf_hessian_quality, 3, 1))
                 for feature in surf_features:
-                    features.append(feature[0])
+                    self.features.append(feature[0])
             
             if self.auto_min_features:
                 """ Since the detect box is larger than the actual face or desired patch, shrink the number a features by 10% """
@@ -402,9 +401,10 @@ class PatchTracker(ROS2OpenCV):
         
         elif self.feature_type == 1:
             """ Get the new features using SURF """
-            (features, descriptors) = cv.ExtractSURF(self.grey, roi, cv.CreateMemStorage(0), (0, self.surf_hessian_quality, 3, 1))
-            for feature in features:
-                self.features.append(feature[0])
+            features = []
+            (surf_features, descriptors) = cv.ExtractSURF(self.grey, roi, cv.CreateMemStorage(0), (0, self.surf_hessian_quality, 3, 1))
+            for feature in surf_features:
+                features.append(feature[0])
                 
         """ Append new features to the current list if they are not too far from the current cluster """
         for new_feature in features:
