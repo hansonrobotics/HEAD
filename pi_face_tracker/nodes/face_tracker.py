@@ -269,11 +269,11 @@ class PatchTracker(ROS2OpenCV):
                 return None
             
             if self.auto_face_tracking:
-                """ For faces, the detect box tends to extend beyond the actual object so shrink it slightly """
-                x = int(0.97 * x)
-                y = int(0.97 * y)
-                w = int(1 * w)
-                h = int(1 * h)
+#                """ For faces, the detect box tends to extend beyond the actual object so shrink it slightly """
+#                x = int(0.97 * x)
+#                y = int(0.97 * y)
+#                w = int(1 * w)
+#                h = int(1 * h)
                 
                 """ Get the center of the track box (type CvRect) so we can create the
                     equivalent CvBox2D (rotated rectangle) required by EllipseBox below. """

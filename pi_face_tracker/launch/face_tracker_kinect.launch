@@ -11,7 +11,7 @@
       auto_min_features: True
       min_features: 50
       abs_min_features: 6
-      good_feature_distance: 8
+      good_feature_distance: 5
       add_feature_distance: 10
       std_err_xy: 2.5
       std_err_z: 1.0
