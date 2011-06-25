@@ -281,15 +281,13 @@ class PatchTracker(ROS2OpenCV):
                 center_y = int(y + h / 2)
                 roi_box = ((center_x, center_y), (w, h), 0)
                 
-                """ Create a white ellipse within the track_box to define the ROI.
-                    A thickness of -1 causes ellipse to be filled with chosen color, in this case white. """
-                cv.EllipseBox(mask, roi_box, cv.CV_RGB(255,255, 255), thickness=-1)
-                
+                """ Create a filled white ellipse within the track_box to define the ROI. """
+                cv.EllipseBox(mask, roi_box, cv.CV_RGB(255,255, 255), cv.CV_FILLED)      
             else:
                 """ For manually selected regions, just use a rectangle """
                 pt1 = (x, y)
                 pt2 = (x + w, y + h)
-                cv.Rectangle(mask, pt1, pt2, cv.CV_RGB(255,255, 255), thickness=-1)
+                cv.Rectangle(mask, pt1, pt2, cv.CV_RGB(255,255, 255), cv.CV_FILLED)
             
             """ Create the temporary scratchpad images """
             eig = cv.CreateImage (cv.GetSize(self.grey), 32, 1)
@@ -328,7 +326,7 @@ class PatchTracker(ROS2OpenCV):
             i = 0
             for the_point in self.features:
                 if self.show_features:
-                    cv.Circle(self.marker_image, (int(the_point[0]), int(the_point[1])), 3, (0, 255, 0, 0), -1, 8, 0)
+                    cv.Circle(self.marker_image, (int(the_point[0]), int(the_point[1])), 3, (0, 255, 0, 0), cv.CV_FILLED, 8, 0)
                 try:
                     cv.Set2D(self.feature_matrix, 0, i, (int(the_point[0]), int(the_point[1])))
                 except:
@@ -385,10 +383,8 @@ class PatchTracker(ROS2OpenCV):
         
         roi_box = ((x,y), (w,h), a)
         
-        """ Create a white ellipse within the track_box to define the ROI.
-        A thickness of -1 causes ellipse to be filled with chosen color,
-        in this case white. """
-        cv.EllipseBox(roi, roi_box, cv.CV_RGB(255,255, 255), thickness=-1)
+        """ Create a filled white ellipse within the track_box to define the ROI. """
+        cv.EllipseBox(roi, roi_box, cv.CV_RGB(255,255, 255), cv.CV_FILLED)
         
         """ Create the temporary scratchpad images """
         eig = cv.CreateImage (cv.GetSize(self.grey), 32, 1)
