@@ -40,6 +40,7 @@ class AVI2ROS:
         self.fps = rospy.get_param("~fps", 25)
         self.loop = rospy.get_param("~loop", False)
         self.start_paused = rospy.get_param("~start_paused", False)
+        self.show_text = True
         
         rospy.on_shutdown(self.cleanup)
         
@@ -62,6 +63,10 @@ class AVI2ROS:
         
         # Get the first frame to display if we are starting in the paused state.
         frame = cv.QueryFrame(video)
+        image_size = cv.GetSize(frame)
+        
+        text_frame = cv.CloneImage(frame)
+        cv.Zero(text_frame)
     
         while not rospy.is_shutdown():
             """ Handle keyboard events """
@@ -77,7 +82,11 @@ class AVI2ROS:
                     """ Pause or continue the video """
                     self.paused = not self.paused
                 elif cc == 'r':
+                    """ Restart the video from the beginning """
                     self.restart = True
+                elif cc == 't':
+                    """ Toggle display of text help message """
+                    self.show_text = not self.show_text
                 
             if self.restart:
                 video = cv.CaptureFromFile(self.input)
@@ -85,12 +94,23 @@ class AVI2ROS:
     
             if not self.paused:
                 frame = cv.QueryFrame(video)
-            
+                
             if frame == None:
                 if self.loop:
                     self.restart = True
             else:
-                cv.ShowImage("Image window", frame)       
+                if self.show_text:
+                        text_font = cv.InitFont(cv.CV_FONT_HERSHEY_SIMPLEX, 0.2, 1, 0, 1, 8)
+                        cv.PutText(text_frame, "Keyboard commands:", (20, int(image_size[1] * 0.6)), text_font, cv.RGB(255, 255, 0))
+                        cv.PutText(text_frame, " ", (20, int(image_size[1] * 0.65)), text_font, cv.RGB(255, 255, 0))
+                        cv.PutText(text_frame, "space - toggle pause/play", (20, int(image_size[1] * 0.72)), text_font, cv.RGB(255, 255, 0))
+                        cv.PutText(text_frame, "     r - restart video from beginning", (20, int(image_size[1] * 0.79)), text_font, cv.RGB(255, 255, 0))
+                        cv.PutText(text_frame, "     t - hide/show this text", (20, int(image_size[1] * 0.86)), text_font, cv.RGB(255, 255, 0))
+                        cv.PutText(text_frame, "     q - quit the program", (20, int(image_size[1] * 0.93)), text_font, cv.RGB(255, 255, 0))
+                
+                cv.Add(frame, text_frame, text_frame)
+                cv.ShowImage("Image window", text_frame)
+                cv.Zero(text_frame)
                 try:
                     image_pub.publish(bridge.cv_to_imgmsg(frame, "bgr8"))
                 except CvBridgeError, e:
