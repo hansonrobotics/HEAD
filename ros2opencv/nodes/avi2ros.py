@@ -100,17 +100,18 @@ class AVI2ROS:
                     self.restart = True
             else:
                 if self.show_text:
-                        text_font = cv.InitFont(cv.CV_FONT_HERSHEY_SIMPLEX, 0.2, 1, 0, 1, 8)
-                        cv.PutText(text_frame, "Keyboard commands:", (20, int(image_size[1] * 0.6)), text_font, cv.RGB(255, 255, 0))
-                        cv.PutText(text_frame, " ", (20, int(image_size[1] * 0.65)), text_font, cv.RGB(255, 255, 0))
-                        cv.PutText(text_frame, "space - toggle pause/play", (20, int(image_size[1] * 0.72)), text_font, cv.RGB(255, 255, 0))
-                        cv.PutText(text_frame, "     r - restart video from beginning", (20, int(image_size[1] * 0.79)), text_font, cv.RGB(255, 255, 0))
-                        cv.PutText(text_frame, "     t - hide/show this text", (20, int(image_size[1] * 0.86)), text_font, cv.RGB(255, 255, 0))
-                        cv.PutText(text_frame, "     q - quit the program", (20, int(image_size[1] * 0.93)), text_font, cv.RGB(255, 255, 0))
+                    text_font = cv.InitFont(cv.CV_FONT_HERSHEY_SIMPLEX, 0.2, 1, 0, 1, 8)
+                    cv.PutText(text_frame, "Keyboard commands:", (20, int(image_size[1] * 0.6)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, " ", (20, int(image_size[1] * 0.65)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, "space - toggle pause/play", (20, int(image_size[1] * 0.72)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, "     r - restart video from beginning", (20, int(image_size[1] * 0.79)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, "     t - hide/show this text", (20, int(image_size[1] * 0.86)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, "     q - quit the program", (20, int(image_size[1] * 0.93)), text_font, cv.RGB(255, 255, 0))
                 
                 cv.Add(frame, text_frame, text_frame)
                 cv.ShowImage("Image window", text_frame)
                 cv.Zero(text_frame)
+                
                 try:
                     image_pub.publish(bridge.cv_to_imgmsg(frame, "bgr8"))
                 except CvBridgeError, e:
