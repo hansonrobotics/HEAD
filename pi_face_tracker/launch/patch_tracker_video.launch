@@ -1,0 +1,32 @@
+<launch>
+  <node pkg="pi_face_tracker" name="patch_tracker_video" type="face_tracker.py" output="screen">
+    <remap from="input_rgb_image" to="/camera/image_raw" />
+    
+    <rosparam>
+      auto_face_tracking: False
+      use_haar_only: False
+      use_depth_for_detection: False
+      use_depth_for_tracking: False
+      auto_min_features: True
+      min_features: 50
+      abs_min_features: 6
+      good_feature_distance: 5
+      add_feature_distance: 10
+      std_err_xy: 3.0
+      max_mse: 10000
+      show_text: True
+      show_features: True
+      fov_width: 1.094
+      fov_height: 1.094
+      max_face_size: 0.28
+      flip_image: False
+      feature_type: 0 <!-- 0 = Good Features To Track, 1 = SURF -->
+      surf_hessian_quality: 100
+    </rosparam>
+    
+  	<param name="cascade_frontal_alt" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+   	<param name="cascade_frontal_alt2" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt2.xml" />
+  	<param name="cascade_profile" value="$(find pi_face_tracker)/params/haarcascade_profileface.xml" />
+
+  </node>
+</launch>

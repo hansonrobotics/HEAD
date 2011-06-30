@@ -4,6 +4,9 @@
     <node pkg="ros2opencv" name="avi2ros" type="avi2ros.py" output="screen">
 	  <remap from="output" to="/camera/image_raw" />
 	  <param name="input" value="$(arg input)" />
+	  <param name="fps" value="25" />
+	  <param name="loop" value="False" />
+	  <param name="start_paused" value="False" />
     </node>
     
 </launch>

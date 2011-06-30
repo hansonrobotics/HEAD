@@ -186,7 +186,7 @@ class ROS2OpenCV:
             (pt1_x, pt1_y, w, h) = self.detect_box
             cv.Rectangle(self.display_image, (pt1_x, pt1_y), (pt1_x + w, pt1_y + h), cv.RGB(255, 0, 0), 2, 8, 0)
         
-        """ handle events """
+        """ Handle keyboard events """
         self.keystroke = cv.WaitKey(5)
             
         end = time.time()

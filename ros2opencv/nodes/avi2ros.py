@@ -37,31 +37,36 @@ class AVI2ROS:
         self.input = rospy.get_param("~input", "")
         image_pub = rospy.Publisher("output", Image)
         
+        self.fps = rospy.get_param("~fps", 25)
+        self.loop = rospy.get_param("~loop", False)
+        self.start_paused = rospy.get_param("~start_paused", False)
+        
         rospy.on_shutdown(self.cleanup)
         
         video = cv.CaptureFromFile(self.input)
         fps = int(cv.GetCaptureProperty(video, cv.CV_CAP_PROP_FPS))
         
-        """ Bring the fps up to 25 Hz """
-        fps = int(fps * 25.0 / fps)
+        """ Bring the fps up to the specified rate """
+        try:
+            fps = int(fps * self.fps / fps)
+        except:
+            fps = self.fps
     
         cv.NamedWindow("Image window", True) # autosize the display
 
         bridge = CvBridge()
                 
-        self.paused = False
+        self.paused = self.start_paused
         self.keystroke = None
         self.restart = False
+        
+        # Get the first frame to display if we are starting in the paused state.
+        frame = cv.QueryFrame(video)
     
         while not rospy.is_shutdown():
-            
-            if self.restart:
-                video = cv.CaptureFromFile(self.input)
-                self.restart = None
-            
-            """ handle events """
+            """ Handle keyboard events """
             self.keystroke = cv.WaitKey(1000 / fps)
-            
+
             """ Process any keyboard commands """
             if 32 <= self.keystroke and self.keystroke < 128:
                 cc = chr(self.keystroke).lower()
@@ -73,19 +78,23 @@ class AVI2ROS:
                     self.paused = not self.paused
                 elif cc == 'r':
                     self.restart = True
-
-            if self.paused:
-                rospy.sleep(1)
-                continue
+                
+            if self.restart:
+                video = cv.CaptureFromFile(self.input)
+                self.restart = None
     
-            frame = cv.QueryFrame(video)
+            if not self.paused:
+                frame = cv.QueryFrame(video)
             
-            cv.ShowImage("Image window", frame)
-            
-            try:
-                image_pub.publish(bridge.cv_to_imgmsg(frame, "bgr8"))
-            except CvBridgeError, e:
-                print e         
+            if frame == None:
+                if self.loop:
+                    self.restart = True
+            else:
+                cv.ShowImage("Image window", frame)       
+                try:
+                    image_pub.publish(bridge.cv_to_imgmsg(frame, "bgr8"))
+                except CvBridgeError, e:
+                    print e         
     
     def cleanup(self):
             print "Shutting down vision node."
