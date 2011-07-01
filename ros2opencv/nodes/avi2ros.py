@@ -53,7 +53,8 @@ class AVI2ROS:
         except:
             fps = self.fps
     
-        cv.NamedWindow("Image window", True) # autosize the display
+        cv.NamedWindow("AVI Video", True) # autosize the display
+        cv.MoveWindow("AVI Video", 650, 100)
 
         bridge = CvBridge()
                 
@@ -109,7 +110,7 @@ class AVI2ROS:
                     cv.PutText(text_frame, "     q - quit the program", (20, int(image_size[1] * 0.93)), text_font, cv.RGB(255, 255, 0))
                 
                 cv.Add(frame, text_frame, text_frame)
-                cv.ShowImage("Image window", text_frame)
+                cv.ShowImage("AVI Video", text_frame)
                 cv.Zero(text_frame)
                 
                 try:
