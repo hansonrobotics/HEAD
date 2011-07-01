@@ -9,8 +9,6 @@
   <depend stack="common_msgs" /> <!-- geometry_msgs -->
   <depend stack="geometry" /> <!-- tf -->
   <depend stack="image_common" /> <!-- image_transport -->
-  <depend stack="perception_pcl" /> <!-- pcl_ros -->
   <depend stack="ros" /> <!-- roscpp -->
-  <depend stack="vision_opencv" /> <!-- opencv2, cv_bridge -->
   <depend stack="visualization_common" /> <!-- visualization_msgs -->
 </stack>
