@@ -1,3 +1,10 @@
+Release Notes for Version 0.2.1
+
+* Added three new parameters to avi2ros.py:
+	+ "start_paused" (boolean, default False) to launch the video in the paused state which is useful for selecting a patch to track before the video starts
+	+ "loop" (boolean, default False) to loop the video continously
+	+ "fps" (int, default 25) to set the frames per second of the video
+
 Release Notes for Version 0.2
 
 * Fixed bug in add_features() function that prevented adding of new features(!)
