@@ -119,7 +119,7 @@ class PatchTracker(ROS2OpenCV):
                 """ Prune features that are too far from the main cluster """
                 if len(self.features) > 0:
                     ((cog_x, cog_y, cog_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse)
-                    
+                    rospy.loginfo(cog_z)
                     if score == -1:
                         self.detect_box = None
                         self.track_box = None
@@ -433,7 +433,8 @@ class PatchTracker(ROS2OpenCV):
         features_xy = self.features
         features_z = self.features
         n_xy = len(self.features)
-        n_z = n_xy
+        n_z = 0
+        mean_z = mse_z = -1
         
         if self.use_depth_for_tracking:
             if not self.depth_image:
@@ -452,25 +453,7 @@ class PatchTracker(ROS2OpenCV):
         
         mean_x = sum_x / n_xy
         mean_y = sum_y / n_xy
-        
-        if self.use_depth_for_tracking:
-            for point in self.features:
-                try:
-                    z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
-                except:
-                    continue
-                z = z[0]
-                """ Depth values can be NaN which should be ignored """
-                if isnan(z):
-                    continue
-                else:
-                    sum_z = sum_z + z
-                    
-            mean_z = sum_z / n_z
-            
-        else:
-            mean_z = -1
-        
+
         """ Compute the x-y MSE (mean squared error) of the cluster in the camera plane """
         for point in self.features:
             sse = sse + (point[0] - mean_x) * (point[0] - mean_x) + (point[1] - mean_y) * (point[1] - mean_y)
@@ -501,33 +484,48 @@ class PatchTracker(ROS2OpenCV):
                                 
         """ Now do the same for depth """
         if self.use_depth_for_tracking:
-            sse = 0
-            for point in features_z:
-                try:
-    				z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
-    				z = z[0]
-    				sse = sse + (z - mean_z) * (z - mean_z)
-                except:
-                    n_z = n_z - 1
-            
-            mse_z = sse / n_z
-            
-            """ Throw away the outliers based on depth using percent error rather than standard error since depth
-                 values can jump dramatically at object boundaries  """
-            for point in features_z:
+            for point in self.features:
                 try:
                     z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
-                    z = z[0]
                 except:
                     continue
-                try:
-                    pct_err = abs(z - mean_z) / mean_z
-                    if pct_err > 0.5:
-                        features_xy.remove(point)
-                except:
-                    pass
-        else:
-            mse_z = -1
+
+                """ Depth values can be NaN which should be ignored """
+                if isnan(z[0]):
+                    continue
+                else:
+                    sum_z = sum_z + z[0]
+                    n_z += 1
+            
+            if n_z != 0:        
+                mean_z = sum_z / n_z
+                
+                sse = 0
+                n_z = 0
+                for point in self.features:
+                    try:
+                        z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
+                        sse = sse + (z[0] - mean_z) * (z[0] - mean_z)
+                        n_z += 1
+                    except:
+                        continue
+                
+                if n_z != 0:
+                    mse_z = sse / n_z
+                    
+                    """ Throw away the outliers based on depth using percent error rather than standard error since depth
+                         values can jump dramatically at object boundaries  """
+                    for point in features_z:
+                        try:
+                            z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
+                        except:
+                            continue
+                        try:
+                            pct_err = abs(z[0] - mean_z) / mean_z
+                            if pct_err > 0.5:
+                                features_xy.remove(point)
+                        except:
+                            pass
         
         self.features = features_xy
                
