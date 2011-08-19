@@ -119,7 +119,7 @@ class PatchTracker(ROS2OpenCV):
                 """ Prune features that are too far from the main cluster """
                 if len(self.features) > 0:
                     ((cog_x, cog_y, cog_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse)
-                    rospy.loginfo(cog_z)
+
                     if score == -1:
                         self.detect_box = None
                         self.track_box = None
