@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-""" ros2opencv.py - Version 0.1 2011-04-24
+""" ros2opencv.py - Version 0.2 2011-11-09
 
     A ROS-to-OpenCV node that uses cv_bridge to map a ROS image topic and optionally a ROS
     depth image topic to the equivalent OpenCV image stream(s).
@@ -9,6 +9,8 @@
     markers on the image.
     
     Creates an ROI publisher to publish the region of interest on the /roi topic.
+    
+    Publishes a 3D PointStamped message on the /target_point topic.
     
     Created for the Pi Robot Project: http://www.pirobot.org
     Copyright (c) 2011 Patrick Goebel.  All rights reserved.
@@ -35,6 +37,7 @@ import sys
 import os
 from std_msgs.msg import String
 from sensor_msgs.msg import Image, RegionOfInterest, CameraInfo
+from geometry_msgs.msg import PointStamped
 from cv_bridge import CvBridge, CvBridgeError
 import time
 
@@ -53,6 +56,10 @@ class ROS2OpenCV:
         """ Initialize the Region of Interest and its publisher """
         self.ROI = RegionOfInterest()
         self.pubROI = rospy.Publisher("/roi", RegionOfInterest)
+
+        """ Do the same for the point cluster publisher """
+        self.cluster3d = PointStamped()
+        self.pub_cluster3d = rospy.Publisher("/target_point", PointStamped)
         
         """ Initialize a number of global variables """
         self.image = None
@@ -69,7 +76,7 @@ class ROS2OpenCV:
         self.keep_marker_history = False
         self.night_mode = False
         self.auto_face_tracking = True
-        self.cps = 0 # Cylces per second = number of processing loops per second.
+        self.cps = 0 # Cycles per second = number of processing loops per second.
         self.cps_values = list()
         self.cps_n_values = 20
 

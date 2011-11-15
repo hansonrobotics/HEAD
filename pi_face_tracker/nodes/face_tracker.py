@@ -52,13 +52,18 @@ class PatchTracker(ROS2OpenCV):
         self.auto_min_features = rospy.get_param("~auto_min_features", True)
         self.min_features = rospy.get_param("~min_features", 50) # Used only if auto_min_features is False
         self.abs_min_features = rospy.get_param("~abs_min_features", 6)
-        self.std_err_xy = rospy.get_param("~std_err_xy", 2.5) 
+        self.std_err_xy = rospy.get_param("~std_err_xy", 2.5)
         self.max_mse = rospy.get_param("~max_mse", 10000)
         self.good_feature_distance = rospy.get_param("~good_feature_distance", 5)
         self.add_feature_distance = rospy.get_param("~add_feature_distance", 10)
         self.flip_image = rospy.get_param("~flip_image", False)
         self.feature_type = rospy.get_param("~feature_type", 0) # 0 = Good Features to Track, 1 = SURF
-        self.expand_scale = 1.1 
+        self.expand_scale = 1.1
+        
+        self.camera_frame_id = "kinect_depth_optical_frame"
+        
+        self.cog_x = self.cog_y = 0
+        self.cog_z = -1
             
         self.detect_box = None
         self.track_box = None
@@ -107,7 +112,7 @@ class PatchTracker(ROS2OpenCV):
         """ If parameter use_haar_only is True, use only the OpenCV Haar detector to track the face """
         if (self.use_haar_only or not self.detect_box) and self.auto_face_tracking:
             self.detect_box = self.detect_face(cv_image)
-        
+
         """ Otherwise, track the face using Good Features to Track and Lucas-Kanade Optical Flow """
         if not self.use_haar_only:
             if self.detect_box:
@@ -118,8 +123,8 @@ class PatchTracker(ROS2OpenCV):
                 
                 """ Prune features that are too far from the main cluster """
                 if len(self.features) > 0:
-                    ((cog_x, cog_y, cog_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse)
-
+                    ((mean_x, mean_y, mean_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse)
+                    
                     if score == -1:
                         self.detect_box = None
                         self.track_box = None
@@ -134,6 +139,10 @@ class PatchTracker(ROS2OpenCV):
             else:
                 self.features = []
                 self.track_box = None
+        
+        # If using depth info, get the cluster centroid
+        if len(self.features) > 0 and (self.use_depth_for_detection or self.use_depth_for_tracking):
+            (self.cog_x, self.cog_y, self.cog_z) = self.get_cluster_centroid()
         
         return cv_image
     
@@ -352,9 +361,20 @@ class PatchTracker(ROS2OpenCV):
                 self.ROI.y_offset = min(self.image_size[1], max(0, int(roi_center[1] - roi_size[1] / 2)))
                 self.ROI.width = min(self.image_size[0], int(roi_size[0]))
                 self.ROI.height = min(self.image_size[1], int(roi_size[1]))
-
                 
             self.pubROI.publish(self.ROI)
+            
+            """ If using depth info Publish the centroid of the tracked cluster as a PointStamped message """
+            if self.use_depth_for_detection or self.use_depth_for_tracking:
+                if self.cog_z == -1:
+                    self.cog_z = 0
+                if feature_box is not None and not self.drag_start and self.is_rect_nonzero(self.track_box):
+                    self.cluster3d.header.frame_id = self.camera_frame_id
+                    self.cluster3d.header.stamp = rospy.Time()
+                    self.cluster3d.point.x = self.cog_x
+                    self.cluster3d.point.y = self.cog_y
+                    self.cluster3d.point.z = self.cog_z
+                    self.pub_cluster3d.publish(self.cluster3d)
             
         if feature_box is not None and len(self.features) > 0:
             return feature_box
@@ -420,10 +440,51 @@ class PatchTracker(ROS2OpenCV):
             if point == test_point:
                 continue
             """ Use L1 distance since it is faster than L2 """
-            distance = abs(test_point[0] - point[0])  + abs(test_point[1] - point[1])
+            distance = abs(test_point[0] - point[0]) + abs(test_point[1] - point[1])
             if distance < min_distance:
                 min_distance = distance
         return min_distance
+    
+    def get_cluster_centroid(self):
+        """ compute the 3D centroid (COG) of the current cluster """
+        n_xy = n_z = 0
+        sum_x = sum_y = sum_z = 0
+        
+        (cols, rows) = cv.GetSize(self.depth_image)
+        
+        for point in self.features:
+            sum_x = sum_x + point[0]
+            sum_y = sum_y + point[1]
+            n_xy += 1
+            
+            try:
+                z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
+            except cv2.error:
+                rospy.loginfo("Get2D Index Error: " + str(int(point[1])) + " x " + str(int(point[0])))
+                continue
+
+            """ Depth values can be NaN which should be ignored """
+            if isnan(z[0]):
+                continue
+            else:
+                sum_z = sum_z + z[0]
+                n_z += 1
+                
+        #rospy.loginfo(n_z)
+        
+        if n_xy > 0:
+            cog_x = sum_x / n_xy
+            cog_y = sum_y / n_xy
+            
+        if n_z > 0:
+           cog_z = sum_z / n_z
+           # Convert the cog_x and cog_y pixel values to meters using the fact that the Kinect's FOV is about 57 degrees or 1 radian.
+           cog_x = cog_z * self.fov_width * (cog_x - self.image_size[0] / 2.0) / float(self.image_size[0])
+           cog_y = cog_z * self.fov_height * (cog_y - self.image_size[1] / 2.0) / float(self.image_size[1])
+        else:
+            cog_z = -1   
+                        
+        return (cog_x, cog_y, cog_z)    
     
     def prune_features(self, min_features, outlier_threshold, mse_threshold):
         sum_x = 0
