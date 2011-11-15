@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-""" face_tracker.py - Version 0.2 2011-04-28
+""" face_tracker.py - Version 0.21 2011-11-14
 
     Track a face using the OpenCV Haar detector to initially locate the face, then OpenCV's
     Good-Features-to-Track and Lucas-Kanade Optical Flow to track the face features over 
@@ -71,6 +71,7 @@ class PatchTracker(ROS2OpenCV):
         
         self.grey = None
         self.pyramid = None
+        self.small_image = None
         
         """ Set up the face detection parameters """
         self.cascade_frontal_alt = rospy.get_param("~cascade_frontal_alt", "")
@@ -150,6 +151,8 @@ class PatchTracker(ROS2OpenCV):
         if self.grey is None:
             """ Allocate temporary images """      
             self.grey = cv.CreateImage(self.image_size, 8, 1)
+            
+        if self.small_image is None:
             self.small_image = cv.CreateImage((cv.Round(self.image_size[0] / self.image_scale),
                        cv.Round(self.image_size[1] / self.image_scale)), 8, 1)
     
@@ -366,8 +369,6 @@ class PatchTracker(ROS2OpenCV):
             
             """ If using depth info Publish the centroid of the tracked cluster as a PointStamped message """
             if self.use_depth_for_detection or self.use_depth_for_tracking:
-                if self.cog_z == -1:
-                    self.cog_z = 0
                 if feature_box is not None and not self.drag_start and self.is_rect_nonzero(self.track_box):
                     self.cluster3d.header.frame_id = self.camera_frame_id
                     self.cluster3d.header.stamp = rospy.Time()
@@ -459,7 +460,7 @@ class PatchTracker(ROS2OpenCV):
             
             try:
                 z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
-            except cv2.error:
+            except cv.error:
                 rospy.loginfo("Get2D Index Error: " + str(int(point[1])) + " x " + str(int(point[0])))
                 continue
 
@@ -476,13 +477,15 @@ class PatchTracker(ROS2OpenCV):
             cog_x = sum_x / n_xy
             cog_y = sum_y / n_xy
             
+        """ The Kinect returns NaN depth values when closer than about 0.5 meters.  If the target is closer than 0.5 meters
+            then use 0.5 meters as a fudge """
         if n_z > 0:
            cog_z = sum_z / n_z
-           # Convert the cog_x and cog_y pixel values to meters using the fact that the Kinect's FOV is about 57 degrees or 1 radian.
-           cog_x = cog_z * self.fov_width * (cog_x - self.image_size[0] / 2.0) / float(self.image_size[0])
-           cog_y = cog_z * self.fov_height * (cog_y - self.image_size[1] / 2.0) / float(self.image_size[1])
         else:
-            cog_z = -1   
+            cog_z = 0.5
+        # Convert the cog_x and cog_y pixel values to meters using the fact that the Kinect's FOV is about 57 degrees or 1 radian.
+        cog_x = cog_z * self.fov_width * (cog_x - self.image_size[0] / 2.0) / float(self.image_size[0])
+        cog_y = cog_z * self.fov_height * (cog_y - self.image_size[1] / 2.0) / float(self.image_size[1])
                         
         return (cog_x, cog_y, cog_z)    
     
