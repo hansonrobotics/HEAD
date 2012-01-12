@@ -12,12 +12,12 @@
       use_depth_for_detection: True
       use_depth_for_tracking: True
       auto_min_features: True
-      min_features: 50
+      min_features: 20
       abs_min_features: 6
-      good_feature_distance: 5
+      good_feature_distance: 8
       add_feature_distance: 10
       std_err_xy: 2.5
-      std_err_z: 1.0
+      std_err_z: 0.42
       max_mse: 100000
       show_text: True
       show_features: True

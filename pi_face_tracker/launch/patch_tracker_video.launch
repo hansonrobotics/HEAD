@@ -1,9 +1,13 @@
 <launch>
+  <arg name="auto_face_tracking" default="False" />
+  
   <node pkg="pi_face_tracker" name="patch_tracker_video" type="face_tracker.py" output="screen">
     <remap from="input_rgb_image" to="/camera/image_raw" />
+    <remap from="input_depth_image" to="/camera/depth/image" />
+    
+    <param name="auto_face_tracking" value="$(arg auto_face_tracking)" />
     
     <rosparam>
-      auto_face_tracking: False
       use_haar_only: False
       use_depth_for_detection: False
       use_depth_for_tracking: False
