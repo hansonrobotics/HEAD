@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-""" face_tracker.py - Version 0.21 2011-11-14
+""" face_tracker.py - Version 0.22 2012-01-20
 
     Track a face using the OpenCV Haar detector to initially locate the face, then OpenCV's
     Good-Features-to-Track and Lucas-Kanade Optical Flow to track the face features over 
@@ -53,12 +53,14 @@ class PatchTracker(ROS2OpenCV):
         self.min_features = rospy.get_param("~min_features", 50) # Used only if auto_min_features is False
         self.abs_min_features = rospy.get_param("~abs_min_features", 6)
         self.std_err_xy = rospy.get_param("~std_err_xy", 2.5)
+        self.pct_err_z = rospy.get_param("~pct_err_z", 0.42) 
         self.max_mse = rospy.get_param("~max_mse", 10000)
         self.good_feature_distance = rospy.get_param("~good_feature_distance", 5)
         self.add_feature_distance = rospy.get_param("~add_feature_distance", 10)
         self.flip_image = rospy.get_param("~flip_image", False)
         self.feature_type = rospy.get_param("~feature_type", 0) # 0 = Good Features to Track, 1 = SURF
-        self.expand_scale = 1.1
+        self.expand_roi_init = rospy.get_param("~expand_roi", 1.02)
+        self.expand_roi = self.expand_roi_init
         
         self.camera_frame_id = "kinect_depth_optical_frame"
         
@@ -133,10 +135,10 @@ class PatchTracker(ROS2OpenCV):
                 
                 """ Add features if the number is getting too low """
                 if len(self.features) < self.min_features:
-                    self.expand_scale = 1.1 * self.expand_scale
+                    self.expand_roi = self.expand_roi_init * self.expand_roi
                     self.add_features(cv_image)
                 else:
-                    self.expand_scale = 1.1       
+                    self.expand_roi = self.expand_roi_init      
             else:
                 self.features = []
                 self.track_box = None
@@ -399,8 +401,8 @@ class PatchTracker(ROS2OpenCV):
             return
         
         """ Expand the track box to look for new features """
-        w = int(self.expand_scale * w)
-        h = int(self.expand_scale * h)
+        w = int(self.expand_roi * w)
+        h = int(self.expand_roi * h)
         
         roi_box = ((x,y), (w,h), a)
         
@@ -586,7 +588,7 @@ class PatchTracker(ROS2OpenCV):
                             continue
                         try:
                             pct_err = abs(z[0] - mean_z) / mean_z
-                            if pct_err > 0.5:
+                            if pct_err > self.pct_err_z:
                                 features_xy.remove(point)
                         except:
                             pass

@@ -17,13 +17,14 @@
       good_feature_distance: 8
       add_feature_distance: 10
       std_err_xy: 2.5
-      std_err_z: 0.42
+      pct_err_z: 0.42
       max_mse: 100000
       show_text: True
       show_features: True
       fov_width: 1.094
       fov_height: 1.094
       max_face_size: 0.28
+      expand_roi: 1.02
       flip_image: False
       feature_type: 0 <!-- 0 = Good Features To Track, 1 = SURF -->
       surf_hessian_quality: 100
