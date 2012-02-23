@@ -50,6 +50,7 @@ class ROS2OpenCV:
         self.node_name = node_name
         self.input_rgb_image = "input_rgb_image"
         self.input_depth_image = "input_depth_image"
+        self.output_image = "output_image"
         self.show_text = rospy.get_param("~show_text", True)
         self.show_features = rospy.get_param("~show_features", True)
 
@@ -90,6 +91,9 @@ class ROS2OpenCV:
         
         """ Set a call back on mouse clicks on the image window """
         cv.SetMouseCallback (self.node_name, self.on_mouse_click, None)
+        
+        """ A publisher to output the display image back to a ROS topic """
+        self.output_image_pub = rospy.Publisher(self.output_image, Image)
         
         """ Subscribe to the raw camera image topic and set the image processing callback """
         self.image_sub = rospy.Subscriber(self.input_rgb_image, Image, self.image_callback)
@@ -136,7 +140,7 @@ class ROS2OpenCV:
 
     def image_callback(self, data):
         """ Time this loop to get cycles per second """
-        start = time.time()
+        start = rospy.Time.now()
         
         """ Convert the raw image to OpenCV format using the convert_image() helper function """
         cv_image = self.convert_image(data)
@@ -196,8 +200,8 @@ class ROS2OpenCV:
         """ Handle keyboard events """
         self.keystroke = cv.WaitKey(5)
             
-        end = time.time()
-        duration = end - start
+        duration = rospy.Time.now() - start
+        duration = duration.to_sec()
         fps = int(1.0 / duration)
         self.cps_values.append(fps)
         if len(self.cps_values) > self.cps_n_values:
@@ -212,6 +216,12 @@ class ROS2OpenCV:
 
         # Now display the image.
         cv.ShowImage(self.node_name, self.display_image)
+        
+        """ Publish the display image back to ROS """
+        try:
+            self.output_image_pub.publish(self.bridge.cv_to_imgmsg(self.display_image, "bgr8"))
+        except CvBridgeError, e:
+            print e
         
         """ Process any keyboard commands """
         if 32 <= self.keystroke and self.keystroke < 128:
