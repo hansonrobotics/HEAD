@@ -34,7 +34,6 @@ roslib.load_manifest('ros2opencv')
 import rospy
 import cv
 import sys
-import os
 from std_msgs.msg import String
 from sensor_msgs.msg import Image, RegionOfInterest, CameraInfo
 from geometry_msgs.msg import PointStamped
@@ -71,6 +70,7 @@ class ROS2OpenCV:
         self.selection = None
         self.drag_start = None
         self.keystroke = None
+        self.key_command = None
         self.detect_box = None
         self.track_box = None
         self.display_box = None
@@ -80,6 +80,7 @@ class ROS2OpenCV:
         self.cps = 0 # Cycles per second = number of processing loops per second.
         self.cps_values = list()
         self.cps_n_values = 20
+        self.flip_image = False
 
         """ Create the display window """
         self.cv_window_name = self.node_name
@@ -209,11 +210,21 @@ class ROS2OpenCV:
         self.cps = int(sum(self.cps_values) / len(self.cps_values))
         
         if self.show_text:
-            text_font = cv.InitFont(cv.CV_FONT_VECTOR0, 1, 1, 0, 2, 8)
+            hscale = 0.2 * self.image_size[0] / 160. + 0.1
+            vscale = 0.2 * self.image_size[1] / 120. + 0.1
+            text_font = cv.InitFont(cv.CV_FONT_VECTOR0, hscale, vscale, 0, 1, 8)
             """ Print cycles per second (CPS) and resolution (RES) at top of the image """
-            cv.PutText(self.display_image, "CPS: " + str(self.cps), (10, int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
-            cv.PutText(self.display_image, "RES: " + str(self.image_size[0]) + "X" + str(self.image_size[1]), (int(self.image_size[0] * 0.6), int(self.image_size[1] * 0.1)), text_font, cv.RGB(255, 255, 0))
-
+            if self.image_size[0] >= 640:
+                vstart = 25
+                voffset = int(50 + self.image_size[1] / 120.)
+            elif self.image_size[0] == 320:
+                vstart = 15
+                voffset = int(35 + self.image_size[1] / 120.)
+            else:
+                vstart = 10
+                voffset = int(20 + self.image_size[1] / 120.)
+            cv.PutText(self.display_image, "CPS: " + str(self.cps), (10, vstart), text_font, cv.RGB(255, 255, 0))
+            cv.PutText(self.display_image, "RES: " + str(self.image_size[0]) + "X" + str(self.image_size[1]), (10, voffset), text_font, cv.RGB(255, 255, 0))
         # Now display the image.
         cv.ShowImage(self.node_name, self.display_image)
         
@@ -223,7 +234,10 @@ class ROS2OpenCV:
         except CvBridgeError, e:
             print e
         
-        """ Process any keyboard commands """
+        """ Process any keyboard commands or command sent via the key_command service """
+        if self.key_command:
+            self.keystroke = ord(self.key_command)
+            self.key_command = None
         if 32 <= self.keystroke and self.keystroke < 128:
             cc = chr(self.keystroke).lower()
             if cc == 'c':
@@ -315,15 +329,15 @@ def main(args):
     help_message = ""
           
     print help_message
-          
-    # Fire up the node.
-    ROS2OpenCV("ros2opencv")
-    
-    try:
-      rospy.spin()
+
+    try:   
+        # Fire up the node.
+        ROS2OpenCV("ros2opencv")
+        # Spin so our services will work
+        rospy.spin()
     except KeyboardInterrupt:
-      print "Shutting down vision node."
-      cv.DestroyAllWindows()
+        print "Shutting down vision node."
+        cv.DestroyAllWindows()
 
 if __name__ == '__main__':
     main(sys.argv)

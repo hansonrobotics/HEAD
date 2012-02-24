@@ -28,13 +28,13 @@
 
 import roslib
 roslib.load_manifest('pi_face_tracker')
-from ros2opencv import ROS2OpenCV
 import rospy
 import cv
 import sys
-import os
 from sensor_msgs.msg import RegionOfInterest, Image
 from math import sqrt, isnan
+from ros2opencv import ROS2OpenCV
+from pi_face_tracker.srv import *
 
 class PatchTracker(ROS2OpenCV):
     def __init__(self, node_name):
@@ -103,6 +103,10 @@ class PatchTracker(ROS2OpenCV):
         
         """ Set the SURF parameters """
         self.surf_hessian_quality = rospy.get_param("~surf_hessian_quality", 100)
+        
+        """ A service to handle 'keystroke' commands sent from other nodes """
+        self.key_command = None
+        rospy.Service('~key_command', KeyCommand, self.key_command_callback)
                 
         """ Wait until the image topics are ready before starting """
         rospy.wait_for_message(self.input_rgb_image, Image)
@@ -601,7 +605,11 @@ class PatchTracker(ROS2OpenCV):
         else:
             score = 1
                             
-        return ((mean_x, mean_y, mean_z), mse_xy, mse_z, score)     
+        return ((mean_x, mean_y, mean_z), mse_xy, mse_z, score)
+    
+    def key_command_callback(self, req):
+        self.key_command = req.command
+        return KeyCommandResponse()
 
 def main(args):
     """ Display a help message if appropriate """
