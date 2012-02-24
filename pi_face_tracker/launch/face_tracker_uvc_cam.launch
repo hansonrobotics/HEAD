@@ -1,7 +1,7 @@
 <launch>
   <arg name="auto_face_tracking" default="True" />
 
-  <node pkg="pi_face_tracker" name="face_tracker_webcam" type="face_tracker.py" output="screen">
+  <node pkg="pi_face_tracker" name="pi_face_tracker" type="face_tracker.py" output="screen">
     <remap from="input_rgb_image" to="/camera/image_raw" />
     <remap from="output_image" to="/pi_face_tracker/image" />
     
