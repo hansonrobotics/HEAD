@@ -99,6 +99,7 @@ class PatchTracker(ROS2OpenCV):
         self.win_size = 10
         self.max_count = 200
         self.flags = 0
+        
         self.frame_count = 0
         
         """ Set the SURF parameters """
@@ -107,6 +108,9 @@ class PatchTracker(ROS2OpenCV):
         """ A service to handle 'keystroke' commands sent from other nodes """
         self.key_command = None
         rospy.Service('~key_command', KeyCommand, self.key_command_callback)
+        
+        """ A service to allow setting the ROI to track """
+        rospy.Service('~set_roi', SetROI, self.set_roi_callback)
                 
         """ Wait until the image topics are ready before starting """
         rospy.wait_for_message(self.input_rgb_image, Image)
@@ -190,7 +194,9 @@ class PatchTracker(ROS2OpenCV):
             
         if not faces:
             if self.show_text:
-                text_font = cv.InitFont(cv.CV_FONT_VECTOR0, 3, 2, 0, 3)
+                hscale = 0.4 * self.image_size[0] / 160. + 0.1
+                vscale = 0.4 * self.image_size[1] / 120. + 0.1
+                text_font = cv.InitFont(cv.CV_FONT_VECTOR0, hscale, vscale, 0, 1, 8)
                 cv.PutText(self.marker_image, "LOST FACE!", (50, int(self.image_size[1] * 0.9)), text_font, cv.RGB(255, 255, 0))
             return None
                 
@@ -323,7 +329,7 @@ class PatchTracker(ROS2OpenCV):
                     self.features.append(feature[0])
             
             if self.auto_min_features:
-                """ Since the detect box is larger than the actual face or desired patch, shrink the number a features by 10% """
+                """ Since the detect box is larger than the actual face or desired patch, shrink the number of features by 10% """
                 self.min_features = int(len(self.features) * 0.9)
                 self.abs_min_features = int(0.5 * self.min_features)
         
@@ -344,7 +350,7 @@ class PatchTracker(ROS2OpenCV):
             i = 0
             for the_point in self.features:
                 if self.show_features:
-                    cv.Circle(self.marker_image, (int(the_point[0]), int(the_point[1])), 3, (0, 255, 0, 0), cv.CV_FILLED, 8, 0)
+                    cv.Circle(self.marker_image, (int(the_point[0]), int(the_point[1])), 2, (0, 255, 0, 0), cv.CV_FILLED, 8, 0)
                 try:
                     cv.Set2D(self.feature_matrix, 0, i, (int(the_point[0]), int(the_point[1])))
                 except:
@@ -610,6 +616,12 @@ class PatchTracker(ROS2OpenCV):
     def key_command_callback(self, req):
         self.key_command = req.command
         return KeyCommandResponse()
+    
+    def set_roi_callback(self, req):
+        self.keypoints = []
+        self.track_box = None
+        self.detect_box = (req.roi.x_offset, req.roi.y_offset, req.roi.width, req.roi.height)
+        return SetROIResponse()
 
 def main(args):
     """ Display a help message if appropriate """

@@ -97,8 +97,8 @@ class ROS2OpenCV:
         self.output_image_pub = rospy.Publisher(self.output_image, Image)
         
         """ Subscribe to the raw camera image topic and set the image processing callback """
-        self.image_sub = rospy.Subscriber(self.input_rgb_image, Image, self.image_callback)
-        self.depth_sub = rospy.Subscriber(self.input_depth_image, Image, self.depth_callback)
+        self.image_sub = rospy.Subscriber(self.input_rgb_image, Image, self.image_callback, queue_size=1)
+        self.depth_sub = rospy.Subscriber(self.input_depth_image, Image, self.depth_callback, queue_size=1)
         
         rospy.loginfo("Starting " + self.node_name)
         
@@ -186,7 +186,7 @@ class ROS2OpenCV:
         
         if self.track_box:
             if self.auto_face_tracking:
-                cv.EllipseBox(self.display_image, self.track_box, cv.CV_RGB(255, 0, 0), 3)
+                cv.EllipseBox(self.display_image, self.track_box, cv.CV_RGB(255, 0, 0), 2)
             else:
                 (center, size, angle) = self.track_box
                 pt1 = (int(center[0] - size[0] / 2), int(center[1] - size[1] / 2))
