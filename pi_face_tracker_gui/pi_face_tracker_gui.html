@@ -139,6 +139,8 @@ function mouseMove(e) {
 }
 function draw_rect() {
   // ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h); //creates a filled in square
+  ctx.strokeStyle = "yellow";
+  ctx.lineWidth = 2;
   ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h); //creates a square with just the outline
   //Call to pi face service to set roi
    var connection = new ros.Connection("ws://127.0.0.1:9090");
