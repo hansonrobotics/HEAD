@@ -207,7 +207,7 @@ function quit()
         connection.setOnOpen(function (e) {
         connection.callService('/pi_face_tracker/set_roi','{"roi":{"x_offset":0,"y_offset":0,"width":100,"height":50 }}',nop); 
        // connection.callService('/pi_face_tracker/set_roi','["{"roi":{"x_offset":0,"y_offset":0, "width":100, "height":50 }}"]',nop); //attempt 1
-       // ros.publish(’/cmd_vel’,’geometry_msgs/Twist’, ’{"linear:{"x":'+x+',"y":0,"z":0},"angular:{"x":0,"y":0,"z":'+z+'}}')         
+       // ros.publish('/cmd_vel','geometry_msgs/Twist', '{"linear:{"x":'+x+',"y":0,"z":0},"angular:{"x":0,"y":0,"z":'+z+'}}')         
        // connection.publish('/cmd_vel', 'geometry_msgs/Twist', '{"linear":{"x":' + x + ',"y":0,"z":0}, "angular":{"x":0,"y":0,"z":' + z + '}}');
     
         });
