@@ -1,0 +1,221 @@
+<html>
+<head>
+<title>Rosbridge Pi Face Tracker GUI</title>
+</head>
+
+<body onload="init();">
+
+<h2>Rosbridge Pi Face Tracker GUI</h2>
+
+<style type="text/css"><!--
+      #video_canvas { border: 1px solid #000; }
+      #drawing_canvas { border: 1px solid #000; }
+    --></style>
+    
+<canvas id="video_canvas" width="javascript:getWidth()" height="javascript:getHeight()" style="position: absolute; left: 0; top: 50; z-index: 0;"> </canvas>
+<canvas id="drawing_canvas" width="javascript:getWidth()" height="javascript:getHeight()" style="position: absolute; left: 0; top: 50; z-index: 0;"></canvas>
+<div id="button_location">
+    <button type="button" onclick="quit()">Quit</button>
+    <button type="button" onclick="clear_features()">Clear Features/Re-Detect</button>
+    <button type="button" onclick="toggle_markers()">Toggle Text</button>
+    <script language="javascript">
+       if (video_canvas.height < 480) {
+       	 document.write('</br>');
+       }
+    </script>
+    <button type="button" onclick="toggle_features()">Toggle Features</button>
+    <button type="button" onclick="night_mode()">Toggle Night Mode</button>
+    <button type="button" onclick="toggle_autoface_tracking()">Toggle Auto-Face Detect</button>
+</div>
+
+<script type="text/javascript" src="http://brown-ros-pkg.googlecode.com/svn/tags/brown-ros-pkg/rosbridge/ros.js"></script>
+<script type="application/x-javascript">
+var kinect_img = new Image();
+
+  //rectangle drawing code
+    var canvas = document.getElementById('drawing_canvas');
+    var ctx = canvas.getContext('2d');
+    var rect = {};
+    var drag = false;
+
+  // set variables for adjusting canvas and video resolution settings
+    var width = "320" //default width
+    var height = "240"  //default height
+        javascript:console.log("default width = " + width);
+        javascript:console.log("default height = " + height);
+
+    //get kinect video stream width and height values from rostopic via rosbridge
+    dynamically_set_video_resolution();
+    
+
+   
+function init(){
+  kinect_img.src = "http://127.0.0.1:9191/stream?topic=/pi_face_tracker/image";
+
+  //call redraw of video canvas every 100 ms
+  setInterval(draw,100);
+}
+
+function draw() {
+  // draw video on single canvas
+  var ctx = document.getElementById('video_canvas').getContext('2d');
+  //ctx.clearRect(0,0,300,300); // clear canvas...not needed for video feed to work
+  ctx.drawImage(kinect_img,0,0,width,height);
+}
+    function dynamically_set_video_resolution() {
+        javascript:console.log('console initialized');
+        
+        javascript:console.log('creating ROSProxy connection object...');
+        var connection = null;
+        try {
+            connection = new ros.Connection("ws://127.0.0.1:9090");
+        } catch (err) {
+            javascript:console.log('Problem creating proxy connection object!');
+            return;
+        }
+        javascript:console.log('created');
+        javascript:console.log('connecting to 127.0.0.1:9090' + '...');
+        
+        connection.setOnClose(function (e) {
+            javascript:console.log('connection closed');
+        });
+        connection.setOnError(function (e) {
+            javascript:console.log('network error!');
+        });
+        connection.setOnOpen(function (e) {
+            javascript:console.log('connected');
+            javascript:console.log('initializing ROSProxy...');
+            try {
+                connection.callService('/rosjs/topics', '[]', nop);
+            } catch (error) {
+                javascript:console.log('Problem initializing ROSProxy!');
+                return;
+            }
+            javascript:console.log('initialized');       
+            javascript:console.log('running');  
+            javascript:console.log('trying to create topic Handler and read data back from topic');
+            connection.addHandler('/camera/rgb/camera_info',function(msg) {
+        width = msg.width;
+        height = msg.height;
+
+        javascript:console.log("dynamically adjusted width = " + width);
+        javascript:console.log("dynamically adjusted height = " + height);
+
+    document.getElementById("video_canvas").setAttribute("width",width)   
+    document.getElementById("video_canvas").setAttribute("height",height)
+    document.getElementById("drawing_canvas").setAttribute("width",width)
+    document.getElementById("drawing_canvas").setAttribute("height",height)
+    document.getElementById("button_location").setAttribute("style","position: relative; left: 0; top: " + height + ";")
+
+        connection.callService('/rosjs/unsubscribe','["/camera/rgb/camera_info",0]',function(rsp) {
+        javascript:console.log('unsubscribed to /camera/rgb/camera_info');
+    });
+
+    });
+    connection.callService('/rosjs/subscribe','["/camera/rgb/camera_info",0]',function(rsp) {
+        javascript:console.log('subscribed to /camera/rgb/camera_info');
+    });     
+ 
+        });
+    }
+
+function mouseDown(e) {
+  rect.startX = e.pageX - this.offsetLeft;
+  rect.startY = e.pageY - this.offsetTop;
+  drag = true;
+}
+function mouseUp() {
+  drag = false;
+  //clear rectangle on mouse up as opencv now has drawn it for us on the incoming image 
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+function mouseMove(e) {
+  if (drag) {
+    rect.w = (e.pageX - this.offsetLeft) - rect.startX;
+    rect.h = (e.pageY - this.offsetTop) - rect.startY ;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    draw_rect();
+  }
+}
+function draw_rect() {
+  // ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h); //creates a filled in square
+  ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h); //creates a square with just the outline
+  //Call to pi face service to set roi
+   var connection = new ros.Connection("ws://127.0.0.1:9090");
+        connection.setOnOpen(function (e) {
+        connection.callService('/pi_face_tracker/set_roi','{"roi":{"x_offset":' + rect.startX + ',"y_offset":' + rect.startY + ',"width":' + rect.w + ',"height":' + rect.h + ' }}',nop);
+         
+        });
+
+}
+function mouse_init() {
+  canvas.addEventListener('mousedown', mouseDown, false);
+  canvas.addEventListener('mouseup', mouseUp, false);
+  canvas.addEventListener('mousemove', mouseMove, false);
+}
+
+mouse_init();
+
+//Button Control Functions
+function nop() {} //needed to send commands over ros.js
+
+function quit()
+    { 
+        var connection = new ros.Connection("ws://127.0.0.1:9090");
+        connection.setOnOpen(function (e) {
+        connection.callService('/pi_face_tracker/key_command','["q"]',nop);         
+        });
+    }
+    	    function clear_features()
+    { 
+        var connection = new ros.Connection("ws://127.0.0.1:9090");
+        connection.setOnOpen(function (e) {
+        connection.callService('/pi_face_tracker/key_command','["c"]',nop);         
+        });
+    }
+    	    function toggle_markers()
+    { 
+        var connection = new ros.Connection("ws://127.0.0.1:9090");
+        connection.setOnOpen(function (e) {
+        connection.callService('/pi_face_tracker/key_command','["t"]',nop);         
+        });
+    }
+    	    function toggle_features()
+    { 
+        var connection = new ros.Connection("ws://127.0.0.1:9090");
+        connection.setOnOpen(function (e) {
+        connection.callService('/pi_face_tracker/key_command','["f"]',nop);         
+        });
+    }
+    	    function night_mode()
+    { 
+        var connection = new ros.Connection("ws://127.0.0.1:9090");
+        connection.setOnOpen(function (e) {
+        connection.callService('/pi_face_tracker/key_command','["n"]',nop);         
+        });
+    }
+    	    function toggle_autoface_tracking()
+    { 
+        var connection = new ros.Connection("ws://127.0.0.1:9090");
+        connection.setOnOpen(function (e) {
+        connection.callService('/pi_face_tracker/key_command','["a"]',nop);         
+        });
+    }
+    	    function set_roi()
+    { 
+        var connection = new ros.Connection("ws://127.0.0.1:9090");
+        connection.setOnOpen(function (e) {
+        connection.callService('/pi_face_tracker/set_roi','{"roi":{"x_offset":0,"y_offset":0,"width":100,"height":50 }}',nop); 
+       // connection.callService('/pi_face_tracker/set_roi','["{"roi":{"x_offset":0,"y_offset":0, "width":100, "height":50 }}"]',nop); //attempt 1
+       // ros.publish(’/cmd_vel’,’geometry_msgs/Twist’, ’{"linear:{"x":’+x+’,"y":0,"z":0},"angular:{"x":0,"y":0,"z":’+z+’}}’)         
+       // connection.publish('/cmd_vel', 'geometry_msgs/Twist', '{"linear":{"x":' + x + ',"y":0,"z":0}, "angular":{"x":0,"y":0,"z":' + z + '}}');
+    
+        });
+    }
+
+
+</script>
+
+</body>
+</html>
+

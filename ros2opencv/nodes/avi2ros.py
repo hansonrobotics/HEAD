@@ -39,6 +39,8 @@ class AVI2ROS:
         
         self.fps = rospy.get_param("~fps", 25)
         self.loop = rospy.get_param("~loop", False)
+        self.width = rospy.get_param("~width", "")
+        self.height = rospy.get_param("~height", "")
         self.start_paused = rospy.get_param("~start_paused", False)
         self.show_text = True
         
@@ -66,6 +68,12 @@ class AVI2ROS:
         frame = cv.QueryFrame(video)
         image_size = cv.GetSize(frame)
         
+        if self.width and self.height and (self.width != image_size[0] or self.height != image_size[1]):
+            rospy.loginfo("Resizing! " + str(self.width) + " x " + str(self.height))
+            resized_frame = cv.CreateImage((self.width, self.height), frame.depth, frame.channels)
+            cv.Resize(frame, resized_frame)
+            frame = cv.CloneImage(resized_frame)
+                        
         text_frame = cv.CloneImage(frame)
         cv.Zero(text_frame)
     
@@ -95,19 +103,24 @@ class AVI2ROS:
     
             if not self.paused:
                 frame = cv.QueryFrame(video)
+                if frame and self.width and self.height:
+                    if self.width != image_size[0] or self.height != image_size[1]:
+                        cv.Resize(frame, resized_frame)
+                        frame = cv.CloneImage(resized_frame)
                 
             if frame == None:
                 if self.loop:
                     self.restart = True
             else:
                 if self.show_text:
+                    frame_size = cv.GetSize(frame)
                     text_font = cv.InitFont(cv.CV_FONT_HERSHEY_SIMPLEX, 0.2, 1, 0, 1, 8)
-                    cv.PutText(text_frame, "Keyboard commands:", (20, int(image_size[1] * 0.6)), text_font, cv.RGB(255, 255, 0))
-                    cv.PutText(text_frame, " ", (20, int(image_size[1] * 0.65)), text_font, cv.RGB(255, 255, 0))
-                    cv.PutText(text_frame, "space - toggle pause/play", (20, int(image_size[1] * 0.72)), text_font, cv.RGB(255, 255, 0))
-                    cv.PutText(text_frame, "     r - restart video from beginning", (20, int(image_size[1] * 0.79)), text_font, cv.RGB(255, 255, 0))
-                    cv.PutText(text_frame, "     t - hide/show this text", (20, int(image_size[1] * 0.86)), text_font, cv.RGB(255, 255, 0))
-                    cv.PutText(text_frame, "     q - quit the program", (20, int(image_size[1] * 0.93)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, "Keyboard commands:", (20, int(frame_size[1] * 0.6)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, " ", (20, int(frame_size[1] * 0.65)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, "space - toggle pause/play", (20, int(frame_size[1] * 0.72)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, "     r - restart video from beginning", (20, int(frame_size[1] * 0.79)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, "     t - hide/show this text", (20, int(frame_size[1] * 0.86)), text_font, cv.RGB(255, 255, 0))
+                    cv.PutText(text_frame, "     q - quit the program", (20, int(frame_size[1] * 0.93)), text_font, cv.RGB(255, 255, 0))
                 
                 cv.Add(frame, text_frame, text_frame)
                 cv.ShowImage("AVI Video", text_frame)

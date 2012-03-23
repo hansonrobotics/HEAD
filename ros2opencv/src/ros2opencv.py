@@ -316,9 +316,12 @@ class ROS2OpenCV:
             (_,_,w,h) = r
             return (w > 0) and (h > 0)
         except:
-            # Otherwise, assume a CvBox2D type
-            ((_,_),(w,h),a) = r
-            return (w > 0) and (h > 0) 
+            try:
+                # Otherwise, assume a CvBox2D type
+                ((_,_),(w,h),a) = r
+                return (w > 0) and (h > 0)
+            except:
+                return False
         
     def cleanup(self):
         print "Shutting down vision node."

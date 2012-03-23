@@ -98,6 +98,8 @@ class PatchTracker(ROS2OpenCV):
         self.quality = 0.01
         self.win_size = 10
         self.max_count = 200
+        self.block_size = 3
+        self.use_harris = False
         self.flags = 0
         
         self.frame_count = 0
@@ -261,7 +263,6 @@ class PatchTracker(ROS2OpenCV):
         
         """ Equalize the histogram to reduce lighting effects """
         cv.EqualizeHist(self.grey, self.grey)
-        #cv.Smooth(self.grey, self.grey, param1=13)
             
         if self.track_box and self.features != []:
             """ We have feature points, so track and display them """
@@ -320,7 +321,7 @@ class PatchTracker(ROS2OpenCV):
             if self.feature_type == 0:
                 """ Find keypoints to track using Good Features to Track """
                 self.features = cv.GoodFeaturesToTrack(self.grey, eig, temp, self.max_count,
-                    self.quality, self.good_feature_distance, mask=mask, blockSize=3, useHarris=0, k=0.04)
+                    self.quality, self.good_feature_distance, mask=mask, blockSize=self.block_size, useHarris=self.use_harris, k=0.04)
             
             elif self.feature_type == 1:
                 """ Get the new features using SURF """
