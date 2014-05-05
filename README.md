@@ -16,8 +16,10 @@ roslaunch chatbot desktop.launch
 
 On the robot:
 ```
-rosluanch chatbot robot.launch
+roslaunch chatbot robot.launch
 ```
 
 ## Credits
-Speech synthesis copied from [gspeech](https://github.com/achuwilson/gspeech) by Achu Wilson.
+Speech recognition uses the Google Speech Recognition API. Code copied from [gspeech](https://github.com/achuwilson/gspeech) by Achu Wilson.
+
+The chatbot is based on the free [Alice AIML](https://code.google.com/p/aiml-en-us-foundation-alice/) set.
