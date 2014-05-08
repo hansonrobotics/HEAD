@@ -6,10 +6,11 @@ from flask import render_template
 import rospy
 
 app = Flask(__name__)
+app.config['WS_HOST'] = 'robotuna.cs.washington.edu'
 
 @app.route("/")
 def home():
-  return render_template('index.html')
+  return render_template('index.html', ws_host=app.config['WS_HOST'])
 
 class ChatbotWebSpeechRecognizer:
   def __init__(self):
