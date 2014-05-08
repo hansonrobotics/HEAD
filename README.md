@@ -8,12 +8,13 @@ sudo apt-get install python pip
 pip install flask
 ```
 
-You will also need to clone [audio-common](https://github.com/ros-drivers/audio_common) into your catkin workspace, as well as [rosbridge-suite](https://github.com/RobotWebTools/rosbridge_suite). rosbridge-suite can also be installed with ros-groovy-rosbridge-suite, but the Debian repository is broken, which is why you need to clone the repository to your workspace instead.
+You will also need to clone [audio-common](https://github.com/ros-drivers/audio_common) into your catkin workspace, as well as [rosbridge-suite](https://github.com/RobotWebTools/rosbridge_suite). rosbridge-suite can also be installed with ros-groovy-rosbridge-suite, but the Debian repository is currently broken, which is why you need to clone the repository to your workspace instead.
 
 ## Running
 ### On a computer
 Set the ROS Master URI to point to the robot.
-Open scripts/templates/index.html, and change the WebSocket url to your computer. Set the port to 9090.
+Open scripts/weblistener.py, and change the WebSocket host to your computer. It's assumed that the port will be 9090.
+Run:
 ```
 roslaunch chatbot web.launch
 ```
