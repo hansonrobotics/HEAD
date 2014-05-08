@@ -8,8 +8,8 @@ from std_msgs.msg import String
 import urllib
 
 tts_cmd = (
-  'wget -q -U "Mozilla/5.0" -O -
-  "http://translate.google.com/translate_tts?tl=en-uk&q={}" > /tmp/speech.mp3'
+  'wget -q -U "Mozilla/5.0" -O - '
+  '"http://translate.google.com/translate_tts?tl=en-uk&q={}" > /tmp/speech.mp3'
 )
 sox_cmd = 'sox /tmp/speech.mp3 /tmp/speech.wav'
 
