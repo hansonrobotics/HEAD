@@ -51,48 +51,6 @@
   function radToDeg(val) {return val*180/Math.PI;}
   function degToRad(val) {return val*Math.PI/180;}
 
-  var confString = "\n\
-  - name: Jaw\n\
-    motorid: 17\n\
-    min: -1\n\
-    max: 1\n\
-    speed: 200\n\
-    acceleration: 100\n\
-    translate: 0\n\
-\n\
-  - name: Brow\n\
-    motorid: 16\n\
-    min: -1\n\
-    max: 1\n\
-    speed: 200\n\
-    acceleration: 100\n\
-    translate: -0.5\n\
-\n\
-  - name: Neck pitch\n\
-    motorid: 3\n\
-    min: 0\n\
-    max: 0.5\n\
-    speed: 200\n\
-    acceleration: 10\n\
-    translate: 0.5 \n\
-\n\
-  - name: Neck roll\n\
-    motorid: 2\n\
-    min: 0\n\
-    max: 0.5\n\
-    speed: 200\n\
-    acceleration: 10\n\
-    translate: 0\n\
-\n\
-  - name: Neck base\n\
-    motorid: 23\n\
-    min: 0\n\
-    max: 0.5\n\
-    speed: 255\n\
-    acceleration: 10\n\
-    translate: 0 \n\
-  ";
-
   var motorConf; //Holds the decoded config file
 
   //Connect to rosbridge
@@ -172,16 +130,11 @@
   }
 
   $(function() {
-    /* Can't use ajax get on a file in the local file system.
-     * Uncomment the $.ajax command when using a web server. */
-
-    /*$.ajax({
+    $.ajax({
         url: "config.yaml",
         dataType: "text",
         success : onConfigLoad
-    });*/
-
-    onConfigLoad(confString);
+    });
   });
 </script>
   <div class="header"><span id="status" style="color: #FFFF88;">&#9679; Connecting</span></div>
