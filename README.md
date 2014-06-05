@@ -8,4 +8,4 @@ Go to the main directory and run `python -m SimpleHTTPServer`, then open **[http
 
 #Notes
 
-**rosbridge_server** is hardcoded to be located at **127.0.0.1**. This can be changed inside the **index.html***.
+**rosbridge_server** is hardcoded to be located at **127.0.0.1**. This can be changed inside the **index.html**.
