@@ -1,0 +1,39 @@
+- name: Jaw
+  motorid: 17
+  min: -1
+  max: 1
+  speed: 200
+  acceleration: 100
+  translate: 0
+
+- name: Brow
+  motorid: 16
+  min: -1
+  max: 1
+  speed: 200
+  acceleration: 100
+  translate: -0.5
+
+- name: Neck pitch
+  motorid: 3
+  min: 0
+  max: 0.5
+  speed: 200
+  acceleration: 10
+  translate: 0.5 
+
+- name: Neck roll
+  motorid: 2
+  min: 0
+  max: 0.5
+  speed: 200
+  acceleration: 10
+  translate: 0
+
+- name: Neck base
+  motorid: 23
+  min: 0
+  max: 0.5
+  speed: 255
+  acceleration: 10
+  translate: 0 

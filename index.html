@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="mobile-web-app-capable" content="yes">
+<link href="css/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
+</head>
+<body style="">
+<script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+<script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery-ui-1.10.4.min.js"></script>
+<script src="js/js-yaml.min.js"></script>
+<script src="js/jquery.ui.touch-punch.min.js"></script>
+
+<style>
+  body {
+    margin:0;
+    background-color: #DDDDDD;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  p {
+    margin: 4px;
+  }
+  .header {
+    width: 100%;
+    padding: 2px;
+    border: solid 1px #000000;
+    background-color: #AAAAAA;
+    font-size: 11px;
+  }
+  @media screen and (min-width: 600px) {
+    #controlStack {
+      width: 600px;
+    }
+  }
+  .ctrBlock {
+    margin: 5px;
+    padding: 5px;
+    border: solid 1px;
+    background-color: #FFFFFF;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script type="text/javascript">
+
+  function radToDeg(val) {return val*180/Math.PI;}
+  function degToRad(val) {return val*Math.PI/180;}
+
+  var confString = "\n\
+  - name: Jaw\n\
+    motorid: 17\n\
+    min: -1\n\
+    max: 1\n\
+    speed: 200\n\
+    acceleration: 100\n\
+    translate: 0\n\
+\n\
+  - name: Brow\n\
+    motorid: 16\n\
+    min: -1\n\
+    max: 1\n\
+    speed: 200\n\
+    acceleration: 100\n\
+    translate: -0.5\n\
+\n\
+  - name: Neck pitch\n\
+    motorid: 3\n\
+    min: 0\n\
+    max: 0.5\n\
+    speed: 200\n\
+    acceleration: 10\n\
+    translate: 0.5 \n\
+\n\
+  - name: Neck roll\n\
+    motorid: 2\n\
+    min: 0\n\
+    max: 0.5\n\
+    speed: 200\n\
+    acceleration: 10\n\
+    translate: 0\n\
+\n\
+  - name: Neck base\n\
+    motorid: 23\n\
+    min: 0\n\
+    max: 0.5\n\
+    speed: 255\n\
+    acceleration: 10\n\
+    translate: 0 \n\
+  ";
+
+  var motorConf; //Holds the decoded config file
+
+  //Connect to rosbridge
+  var ros = new ROSLIB.Ros({
+    url : 'ws://127.0.0.1:9090'
+  }).on("connection", function(e){
+    $("#status").css("color", "#88FF88");
+    $("#status").html("&#9679; Connected");
+  }).on("error", function(e){
+    $("#status").css("color", "#FFAAAA");
+    $("#status").html("&#9679; No connection");
+  });
+
+  //Publish topic
+  var cmdtopic = new ROSLIB.Topic({
+    ros : ros,
+    name : '/cmd_pololu',
+    messageType : 'ros_pololu_servo/servo_pololu'
+  });
+
+  function sendCmdPololu(confEntry, angle) {
+    var cmd = new ROSLIB.Message({
+      id: confEntry.motorid,
+      angle: degToRad(angle) + confEntry.translate,
+      speed: confEntry.speed,
+      acceleration: confEntry.acceleration
+    });
+    cmdtopic.publish(cmd);
+  }
+
+  function addSliderBlock(confEntry) {
+    var sliderBlock = $("#sliderTemplate").clone();
+    sliderBlock.removeAttr("id"); //Removing sliderTemplate id
+    var degMin = Math.ceil(radToDeg(confEntry.min));
+    var degMax = Math.floor(radToDeg(confEntry.max));
+
+    //Fill header
+    sliderBlock.find(".slName").text(confEntry.name);
+    sliderBlock.find(".slMin").text(degMin);
+    sliderBlock.find(".slMax").text(degMax);
+
+    //Create slider
+    var slVal = sliderBlock.find(".slVal");
+    var slider = sliderBlock.find(".slider");
+    slider.slider({
+      range: "min",
+      value: Math.max(0, degMin),
+      min: -90,
+      max: 90,
+      slide: function(e, ui) {
+
+        //Limit slider value
+        var allow = true;
+        if (ui.value < degMin || ui.value > degMax) {
+          allow = false;
+          ui.value = Math.min(Math.max(ui.value, degMin), degMax);
+          slider.slider("value", ui.value);
+        }
+        
+        //Execute new value
+        slVal.text(ui.value);
+        sendCmdPololu(confEntry, ui.value);
+
+        return allow;
+      }
+    });
+
+    sliderBlock.removeClass("hidden");
+    sliderBlock.appendTo("#controlStack");
+  }
+
+  function onConfigLoad(data) {
+    motorConf = jsyaml.load(data);
+    for (var i = 0; i < motorConf.length; i++) {
+      addSliderBlock(motorConf[i]);
+    };
+  }
+
+  $(function() {
+    /* Can't use ajax get on a file in the local file system.
+     * Uncomment the $.ajax command when using a web server. */
+
+    /*$.ajax({
+        url: "config.yaml",
+        dataType: "text",
+        success : onConfigLoad
+    });*/
+
+    onConfigLoad(confString);
+  });
+</script>
+  <div class="header"><span id="status" style="color: #FFFF88;">&#9679; Connecting</span></div>
+  <div id="controlStack">
+    <div id="sliderTemplate" class="ctrBlock hidden">
+      <p>
+        <b class="slName">Eyebrows</b>: <span class="slVal">10</span>°
+        (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
+      </p>
+      <div class="slider"></div>
+    </div>
+  </div>
+</body>
+</html>
