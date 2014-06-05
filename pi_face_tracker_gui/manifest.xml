@@ -4,6 +4,12 @@
      A web-based GUI for the pi_face_tracker package written by
      Scott Bell and using rosbridge and mjpeg_server.
 
+     <!-- This package depends on the now rather obsolete version 1
+          of rosbridge.  To prevent difficulties with the other packages
+          in this stack, the dependency on rosbridge has been commented
+          out below.
+     -->
+
   </description>
   <author>Scot Bell</author>
   <license>BSD</license>
@@ -11,7 +17,7 @@
   <url>http://ros.org/wiki/pi_face_tracker_gui</url>
   <depend package="rospy"/>
   <depend package="roscpp"/>
-  <depend package="rosbridge"/>
+  <!-- depend package="rosbridge"/ -->
   <depend package="mjpeg_server"/>
   <depend package="pi_face_tracker"/>
 </package>
