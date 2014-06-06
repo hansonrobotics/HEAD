@@ -1,39 +1,48 @@
-- name: Jaw
-  motorid: 17
-  min: -1
-  max: 1
-  speed: 200
-  acceleration: 100
-  translate: 0
-
-- name: Brow
-  motorid: 16
-  min: -1
-  max: 1
-  speed: 200
-  acceleration: 100
-  translate: -0.5
-
-- name: Neck pitch
-  motorid: 3
-  min: 0
-  max: 0.5
-  speed: 200
-  acceleration: 10
-  translate: 0.5 
-
-- name: Neck roll
-  motorid: 2
-  min: 0
-  max: 0.5
-  speed: 200
-  acceleration: 10
-  translate: 0
-
-- name: Neck base
-  motorid: 23
-  min: 0
-  max: 0.5
+- name: smile
+  motorid: 15
+  default: 0
+  min: -1.55
+  max: 1.55
   speed: 255
   acceleration: 10
-  translate: 0 
+
+- name: jaw
+  motorid: 17
+  default: -0.8
+  min: -0.8
+  max: 1.2
+  speed: 200
+  acceleration: 100
+
+- name: brow
+  motorid: 16
+  default: -1
+  min: -1.55
+  max: -0.35
+  speed: 200
+  acceleration: 100
+
+- name: neck_pitch
+  motorid: 3
+  default: 0
+  min: -0.8
+  max: 0.8
+  speed: 200
+  acceleration: 10
+
+- name: neck_roll
+  motorid: 2
+  default: 0.37
+  min: -0.8
+  max: 1.2
+  speed: 200
+  acceleration: 10
+
+- name: neck_base
+  motorid: 23
+  default: 0
+  min: -1
+  max: 1
+  speed: 255
+  acceleration: 10
+

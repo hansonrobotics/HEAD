@@ -52,33 +52,23 @@
   function degToRad(val) {return val*Math.PI/180;}
 
   var motorConf; //Holds the decoded config file
-
-  //Connect to rosbridge
-  var ros = new ROSLIB.Ros({
-    url : 'ws://127.0.0.1:9090'
-  }).on("connection", function(e){
-    $("#status").css("color", "#88FF88");
-    $("#status").html("&#9679; Connected");
-  }).on("error", function(e){
-    $("#status").css("color", "#FFAAAA");
-    $("#status").html("&#9679; No connection");
-  });
-
-  //Publish topic
-  var cmdtopic = new ROSLIB.Topic({
-    ros : ros,
-    name : '/cmd_pololu',
-    messageType : 'ros_pololu_servo/servo_pololu'
-  });
+  var ros;
+  var cmdtopic;
 
   function sendCmdPololu(confEntry, angle) {
     var cmd = new ROSLIB.Message({
       id: confEntry.motorid,
-      angle: degToRad(angle) + confEntry.translate,
+      angle: angle,
       speed: confEntry.speed,
       acceleration: confEntry.acceleration
     });
     cmdtopic.publish(cmd);
+  }
+
+  function sendDefaultPololu() {
+    for (var i = 0; i < motorConf.length; i++) {
+      sendCmdPololu(motorConf[i], motorConf[i].default);
+    };
   }
 
   function addSliderBlock(confEntry) {
@@ -86,35 +76,25 @@
     sliderBlock.removeAttr("id"); //Removing sliderTemplate id
     var degMin = Math.ceil(radToDeg(confEntry.min));
     var degMax = Math.floor(radToDeg(confEntry.max));
+    var degVal = Math.round(radToDeg(confEntry.default));
 
     //Fill header
     sliderBlock.find(".slName").text(confEntry.name);
     sliderBlock.find(".slMin").text(degMin);
     sliderBlock.find(".slMax").text(degMax);
+    sliderBlock.find(".slVal").text(degVal);
 
     //Create slider
     var slVal = sliderBlock.find(".slVal");
     var slider = sliderBlock.find(".slider");
     slider.slider({
       range: "min",
-      value: Math.max(0, degMin),
-      min: -90,
-      max: 90,
+      value: degVal,
+      min: degMin,
+      max: degMax,
       slide: function(e, ui) {
-
-        //Limit slider value
-        var allow = true;
-        if (ui.value < degMin || ui.value > degMax) {
-          allow = false;
-          ui.value = Math.min(Math.max(ui.value, degMin), degMax);
-          slider.slider("value", ui.value);
-        }
-        
-        //Execute new value
         slVal.text(ui.value);
-        sendCmdPololu(confEntry, ui.value);
-
-        return allow;
+        sendCmdPololu(confEntry, degToRad(ui.value));
       }
     });
 
@@ -124,9 +104,30 @@
 
   function onConfigLoad(data) {
     motorConf = jsyaml.load(data);
+
+    //Create sliders
     for (var i = 0; i < motorConf.length; i++) {
       addSliderBlock(motorConf[i]);
     };
+
+    //Connect to rosbridge
+    ros = new ROSLIB.Ros({
+      url : 'ws://192.168.0.12:9090'
+    }).on("connection", function(e){
+      $("#status").css("color", "#88FF88");
+      $("#status").html("&#9679; Connected");
+      sendDefaultPololu();
+    }).on("error", function(e){
+      $("#status").css("color", "#FFAAAA");
+      $("#status").html("&#9679; No connection");
+    });
+
+    //Publish topic
+    cmdtopic = new ROSLIB.Topic({
+      ros : ros,
+      name : '/cmd_pololu',
+      messageType : 'ros_pololu_servo/servo_pololu'
+    });
   }
 
   $(function() {
