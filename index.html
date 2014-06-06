@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="mobile-web-app-capable" content="yes">
 <link href="css/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body style="">
 <script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
@@ -13,6 +13,7 @@
 <script src="js/jquery-ui-1.10.4.min.js"></script>
 <script src="js/js-yaml.min.js"></script>
 <script src="js/jquery.ui.touch-punch.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 
 <style>
   body {
@@ -41,6 +42,9 @@
     border: solid 1px;
     background-color: #FFFFFF;
   }
+  #btnStack .btn {
+    margin: 5px;
+  }
   .hidden {
     display: none;
   }
@@ -54,12 +58,21 @@
   var motorConf; //Holds the decoded config file
   var ros;
   var cmdtopic;
+  
+  /** Updates all UI and sends a ROS message **/
+  function setMotorPos(confEntry, angle, speed, acc) {
+    var degAngle = Math.round(radToDeg(angle));
+    confEntry.element.find(".slider").slider("value", degAngle);
+    confEntry.element.find(".slVal").text(degAngle);
 
-  function sendCmdPololu(confEntry, angle) {
+    sendCmdPololu(confEntry, angle, speed, acc);
+  }
+
+  function sendCmdPololu(confEntry, angle, speed, acc) {
     var cmd = new ROSLIB.Message({
       id: confEntry.motorid,
       angle: angle,
-      speed: confEntry.speed,
+      speed: speed || confEntry.speed,
       acceleration: confEntry.acceleration
     });
     cmdtopic.publish(cmd);
@@ -74,6 +87,7 @@
   function addSliderBlock(confEntry) {
     var sliderBlock = $("#sliderTemplate").clone();
     sliderBlock.removeAttr("id"); //Removing sliderTemplate id
+    confEntry.element = sliderBlock //Saving a reference to html element in config object
     var degMin = Math.ceil(radToDeg(confEntry.min));
     var degMax = Math.floor(radToDeg(confEntry.max));
     var degVal = Math.round(radToDeg(confEntry.default));
@@ -148,5 +162,32 @@
       <div class="slider"></div>
     </div>
   </div>
+  <div id="btnStack">
+    <button type="button" id="btn-smile" class="btn btn-warning">Smile</button>
+    <button type="button" id="btn-frown" class="btn btn-warning">Frown</button>
+    <button type="button" id="btn-sulk" class="btn btn-warning">Sulk</button>
+    <button type="button" id="btn-marvel" class="btn btn-warning">Marvel</button>
+  </div>
+  <script type="text/javascript">
+    $(function() {
+      var speed = 50;
+      //Assuming motorConf[0,1,2] correspond to smile, jaw, brow respectively.
+      $('#btn-smile').click(function(){
+        setMotorPos(motorConf[0], -1.55, speed);
+        setMotorPos(motorConf[1], -0.8, speed);
+        setMotorPos(motorConf[2], -1.55, speed);
+      });
+      $('#btn-sulk').click(function(){
+        setMotorPos(motorConf[0], 1.55, speed);
+        setMotorPos(motorConf[1], 1.2, speed);
+        setMotorPos(motorConf[2], -0.35, speed);
+      });
+      $('#btn-marvel').click(function(){
+        setMotorPos(motorConf[0], -0.87, speed);
+        setMotorPos(motorConf[1], 1.2, speed);
+        setMotorPos(motorConf[2], -1.55, speed);
+      });
+    });
+  </script>
 </body>
 </html>
