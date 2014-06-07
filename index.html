@@ -222,24 +222,29 @@
   </div>
   <script type="text/javascript">
     $("body").on("configload", function(){
-      var speed = 50;
+      var speed = 30;
       var smileConf = getConf("smile");
       var jawConf = getConf("jaw");
       var browConf = getConf("brow");
       $('#btn-smile').click(function(){
-        setMotorPos(smileConf, -1.55, speed);
-        setMotorPos(jawConf, -0.68, speed);
-        setMotorPos(browConf, -0.61, speed);
+        setMotorPos(smileConf, -1.556, speed);
+        setMotorPos(jawConf, -0.54, speed);
+        setMotorPos(browConf, -1.363, speed);
+      });
+      $('#btn-frown').click(function(){
+        setMotorPos(smileConf, 1.526, speed);
+        setMotorPos(jawConf, -0.837, speed);
+        setMotorPos(browConf, -0.925, speed);
       });
       $('#btn-sulk').click(function(){
-        setMotorPos(smileConf, 1.55, speed);
-        setMotorPos(jawConf, 1.2, speed);
+        setMotorPos(smileConf, 1.526, speed);
+        setMotorPos(jawConf, 0.54, speed);
         setMotorPos(browConf, -0.35, speed);
       });
       $('#btn-marvel').click(function(){
-        setMotorPos(smileConf, -0.87, speed);
-        setMotorPos(jawConf, 1.2, speed);
-        setMotorPos(browConf, -1.55, speed);
+        setMotorPos(smileConf, 0.26, speed);
+        setMotorPos(jawConf, -0.21, speed);
+        setMotorPos(browConf, -1.363, speed);
       });
     });
   </script>

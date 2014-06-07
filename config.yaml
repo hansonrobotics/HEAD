@@ -40,7 +40,7 @@
   labelleft: "Lean left"
   labelright: "Lean right"
   motorid: 2
-  default: 0.37
+  default: 0.105
   min: -0.8
   max: 1.2
   speed: 200
