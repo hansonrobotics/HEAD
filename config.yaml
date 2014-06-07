@@ -1,4 +1,6 @@
 - name: smile
+  labelleft: "Smile"
+  labelright: "Frown"
   motorid: 15
   default: 0
   min: -1.55
@@ -7,6 +9,8 @@
   acceleration: 10
 
 - name: jaw
+  labelleft: "Open jaw"
+  labelright: "Close jaw"
   motorid: 17
   default: -0.8
   min: -0.8
@@ -15,6 +19,8 @@
   acceleration: 100
 
 - name: brow
+  labelleft: "Raise brow"
+  labelright: "Lower brow"
   motorid: 16
   default: -1
   min: -1.55
@@ -31,6 +37,8 @@
   acceleration: 10
 
 - name: neck_roll
+  labelleft: "Lean left"
+  labelright: "Lean right"
   motorid: 2
   default: 0.37
   min: -0.8

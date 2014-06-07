@@ -110,7 +110,8 @@
     var degVal = Math.round(radToDeg(confEntry.default));
 
     //Fill header
-    sliderBlock.find(".slName").text(confEntry.name);
+    sliderBlock.find(".slNameL").text(confEntry.labelleft || confEntry.name);
+    sliderBlock.find(".slNameR").text(confEntry.labelright);
     sliderBlock.find(".slMin").text(degMin);
     sliderBlock.find(".slMax").text(degMax);
     sliderBlock.find(".slVal").text(degVal);
@@ -205,10 +206,9 @@
   <div id="controlStack">
     <div id="sliderStack">
       <div id="sliderTemplate" class="uiBlock hidden">
-        <p>
-          <b class="slName">Eyebrows</b>: <span class="slVal">10</span>°
-          (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
-        </p>
+        <p style="float:left"><b class="slNameL"></b></p>
+        <p style="float:right"><b class="slNameR"></b></p>
+        <p><span class="slVal">0</span>°(<span class="slMin">-90</span>° to <span class="slMax">90</span>°)</p>
         <div class="slider"></div>
       </div>
     </div>
