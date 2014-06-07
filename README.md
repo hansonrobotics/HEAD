@@ -10,7 +10,14 @@ Run rosbridge server `roslaunch rosbridge_server rosbridge_websocket.launch`.
 
 ###Usage
 
-Go to the main directory and run `python -m SimpleHTTPServer`, then open **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+After installing dependencies go to the main directory and run `python -m SimpleHTTPServer`, then open **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+
+Or do a full docker installation:
+
+1. Plug in the pololu controller.
+2. Run `docker.io run --privileged -v /dev/ttyACM0:/dev/ttyACM0 -p 8000:8000 -p 9090:9090 -it gaboose/ros-indigo-hanson-webui`.
+3. Wait for the image to download and run.
+4. Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)**.
 
 ###Notes
 
