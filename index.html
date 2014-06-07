@@ -160,7 +160,7 @@
   function connectROS() {
     //Connect to rosbridge
     ros = new ROSLIB.Ros({
-      url : 'ws://192.168.0.12:9090'
+      url : "ws://" + document.domain + ":9090"
     }).on("connection", function(e){
       $("#status").css("color", "#88FF88");
       $("#status").html("&#9679; Connected");
