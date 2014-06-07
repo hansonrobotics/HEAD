@@ -6,7 +6,7 @@
 <link href="css/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
-<body style="">
+<body>
 <script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
 <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
 <script src="js/jquery-1.11.1.min.js"></script>
@@ -14,6 +14,7 @@
 <script src="js/js-yaml.min.js"></script>
 <script src="js/jquery.ui.touch-punch.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="crosshair-slider.js"></script>
 
 <style>
   body {
@@ -28,21 +29,37 @@
     width: 100%;
     padding: 2px;
     border: solid 1px #000000;
-    background-color: #AAAAAA;
+    background-color: #888888;
     font-size: 11px;
   }
-  @media screen and (min-width: 600px) {
-    #controlStack {
-      width: 600px;
-    }
-  }
-  .ctrBlock {
+  .uiBlock {
     margin: 5px;
     padding: 5px;
     border: solid 1px;
     background-color: #FFFFFF;
   }
+  @media screen and (min-width: 590px) {
+    #controlStack {
+      width: 590px;
+    }
+    #sliderStack {
+      width: 380px;
+      float: left;
+    }
+    #btnStack {
+      float: left;
+    }
+  }
+  #crosshairsl {
+    width:200px;
+    height:200px;
+    float:right;
+    margin: 5px
+  }
   #btnStack .btn {
+    margin: 5px;
+  }
+  #btnStack {
     margin: 5px;
   }
   .hidden {
@@ -113,17 +130,34 @@
     });
 
     sliderBlock.removeClass("hidden");
-    sliderBlock.appendTo("#controlStack");
+    sliderBlock.appendTo("#sliderStack");
   }
 
-  function onConfigLoad(data) {
-    motorConf = jsyaml.load(data);
-
+  function createUI() {
     //Create sliders
     for (var i = 0; i < motorConf.length; i++) {
-      addSliderBlock(motorConf[i]);
+      if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
+        addSliderBlock(motorConf[i]);
     };
 
+    //Create crosshair
+    var yawConf = getConf("neck_base");
+    var pitchConf = getConf("neck_pitch");
+    $("#crosshairsl").crosshairsl({
+      xmin: Math.floor(radToDeg(yawConf.min)),
+      xmax: Math.ceil(radToDeg(yawConf.max)),
+      xval: Math.round(radToDeg(yawConf.default)),
+      ymin: Math.floor(radToDeg(pitchConf.min)),
+      ymax: Math.ceil(radToDeg(pitchConf.max)),
+      yval: Math.round(radToDeg(pitchConf.default)),
+      change: function(e, ui) {
+        sendCmdPololu(yawConf, degToRad(ui.xval));
+        sendCmdPololu(yawConf, degToRad(ui.yval));
+      }
+    });
+  }
+
+  function connectROS() {
     //Connect to rosbridge
     ros = new ROSLIB.Ros({
       url : 'ws://192.168.0.12:9090'
@@ -144,48 +178,68 @@
     });
   }
 
+  function getConf(name) {
+    for (var i = 0; i < motorConf.length; i++) {
+      if (motorConf[i].name == name)
+        return motorConf[i];
+    };
+    return;
+  }
+
   $(function() {
+    $("body")
+    .on("configload", createUI)
+    .on("configload", connectROS);
+
     $.ajax({
         url: "config.yaml",
         dataType: "text",
-        success : onConfigLoad
+        success: function(data) {
+          motorConf = jsyaml.load(data);
+          $("body").trigger("configload");
+        }
     });
   });
 </script>
   <div class="header"><span id="status" style="color: #FFFF88;">&#9679; Connecting</span></div>
   <div id="controlStack">
-    <div id="sliderTemplate" class="ctrBlock hidden">
-      <p>
-        <b class="slName">Eyebrows</b>: <span class="slVal">10</span>°
-        (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
-      </p>
-      <div class="slider"></div>
+    <div id="sliderStack">
+      <div id="sliderTemplate" class="uiBlock hidden">
+        <p>
+          <b class="slName">Eyebrows</b>: <span class="slVal">10</span>°
+          (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
+        </p>
+        <div class="slider"></div>
+      </div>
+    </div>
+    <div id="crosshairsl"></div>
+    <div id="btnStack">
+      <button type="button" id="btn-smile" class="btn btn-warning">Smile</button>
+      <button type="button" id="btn-frown" class="btn btn-warning">Frown</button>
+      <button type="button" id="btn-sulk" class="btn btn-warning">Sulk</button>
+      <button type="button" id="btn-marvel" class="btn btn-warning">Marvel</button>
     </div>
   </div>
-  <div id="btnStack">
-    <button type="button" id="btn-smile" class="btn btn-warning">Smile</button>
-    <button type="button" id="btn-frown" class="btn btn-warning">Frown</button>
-    <button type="button" id="btn-sulk" class="btn btn-warning">Sulk</button>
-    <button type="button" id="btn-marvel" class="btn btn-warning">Marvel</button>
-  </div>
   <script type="text/javascript">
-    $(function() {
+    $("body").on("configload", function(){
       var speed = 50;
-      //Assuming motorConf[0,1,2] correspond to smile, jaw, brow respectively.
+      var smileConf = getConf("smile");
+      var jawConf = getConf("jaw");
+      var browConf = getConf("brow");
       $('#btn-smile').click(function(){
-        setMotorPos(motorConf[0], -1.55, speed);
-        setMotorPos(motorConf[1], -0.8, speed);
-        setMotorPos(motorConf[2], -1.55, speed);
+        setMotorPos(smileConf, -1.55, speed);
+        setMotorPos(jawConf, -0.8, speed);
+        setMotorPos(browConf, -1.55, speed);
       });
       $('#btn-sulk').click(function(){
-        setMotorPos(motorConf[0], 1.55, speed);
-        setMotorPos(motorConf[1], 1.2, speed);
-        setMotorPos(motorConf[2], -0.35, speed);
+        setMotorPos(smileConf, 1.55, speed);
+        setMotorPos(jawConf, 1.2, speed);
+        setMotorPos(browConf, -0.35, speed);
       });
       $('#btn-marvel').click(function(){
-        setMotorPos(motorConf[0], -0.87, speed);
-        setMotorPos(motorConf[1], 1.2, speed);
-        setMotorPos(motorConf[2], -1.55, speed);
+        setMotorPos(smileConf, -0.87, speed);
+        setMotorPos(jawConf, 1.2, speed);
+        setMotorPos(browConf, -1.55, speed);
       });
     });
   </script>
