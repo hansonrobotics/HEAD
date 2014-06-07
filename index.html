@@ -153,7 +153,7 @@
       yval: Math.round(radToDeg(pitchConf.default)),
       change: function(e, ui) {
         sendCmdPololu(yawConf, degToRad(ui.xval));
-        sendCmdPololu(yawConf, degToRad(ui.yval));
+        sendCmdPololu(pitchConf, degToRad(ui.yval));
       }
     });
   }
@@ -228,8 +228,8 @@
       var browConf = getConf("brow");
       $('#btn-smile').click(function(){
         setMotorPos(smileConf, -1.55, speed);
-        setMotorPos(jawConf, -0.8, speed);
-        setMotorPos(browConf, -1.55, speed);
+        setMotorPos(jawConf, -0.68, speed);
+        setMotorPos(browConf, -0.61, speed);
       });
       $('#btn-sulk').click(function(){
         setMotorPos(smileConf, 1.55, speed);

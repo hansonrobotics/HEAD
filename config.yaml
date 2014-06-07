@@ -2,19 +2,19 @@
   labelleft: "Smile"
   labelright: "Frown"
   motorid: 15
-  default: 0
-  min: -1.55
-  max: 1.55
+  default: 0.017
+  min: -1.556
+  max: 1.526
   speed: 255
   acceleration: 10
 
 - name: jaw
-  labelleft: "Open jaw"
-  labelright: "Close jaw"
+  labelleft: "Close jaw"
+  labelright: "Open jaw"
   motorid: 17
-  default: -0.8
-  min: -0.8
-  max: 1.2
+  default: -1.271
+  min: -1.271
+  max: 0.017
   speed: 200
   acceleration: 100
 
@@ -22,9 +22,9 @@
   labelleft: "Raise brow"
   labelright: "Lower brow"
   motorid: 16
-  default: -1
-  min: -1.55
-  max: -0.35
+  default: -0.604
+  min: -1.363
+  max: -0.166
   speed: 200
   acceleration: 100
 
