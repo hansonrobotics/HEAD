@@ -22,7 +22,7 @@
   labelleft: "Raise brow"
   labelright: "Lower brow"
   motorid: 16
-  default: -0.604
+  default: -0.977
   min: -1.363
   max: -0.166
   speed: 200
@@ -34,7 +34,7 @@
   min: -0.8
   max: 0.8
   speed: 200
-  acceleration: 10
+  acceleration: 5
 
 - name: neck_roll
   labelleft: "Lean left"
@@ -44,7 +44,7 @@
   min: -0.8
   max: 1.2
   speed: 200
-  acceleration: 10
+  acceleration: 5
 
 - name: neck_base
   motorid: 23
@@ -52,5 +52,5 @@
   min: -1
   max: 1
   speed: 255
-  acceleration: 10
+  acceleration: 5
 

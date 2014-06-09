@@ -88,9 +88,9 @@
   function sendCmdPololu(confEntry, angle, speed, acc) {
     var cmd = new ROSLIB.Message({
       id: confEntry.motorid,
-      angle: angle,
+      angle: Math.min(Math.max(angle, confEntry.min), confEntry.max),
       speed: speed || confEntry.speed,
-      acceleration: confEntry.acceleration
+      acceleration: acc || confEntry.acceleration
     });
     cmdtopic.publish(cmd);
   }
@@ -214,10 +214,17 @@
     </div>
     <div id="crosshairsl"></div>
     <div id="btnStack">
-      <button type="button" id="btn-smile" class="btn btn-warning">Smile</button>
-      <button type="button" id="btn-frown" class="btn btn-warning">Frown</button>
-      <button type="button" id="btn-sulk" class="btn btn-warning">Sulk</button>
-      <button type="button" id="btn-marvel" class="btn btn-warning">Marvel</button>
+      <button type="button" id="btn-neutral" class="btn btn-warning">Neutral</button>
+      <button type="button" id="btn-happy" class="btn btn-warning">Happy</button>
+      <button type="button" id="btn-sad" class="btn btn-warning">Sad</button>
+      <button type="button" id="btn-surprised" class="btn btn-warning">Surprised</button>
+      <button type="button" id="btn-evil" class="btn btn-warning">Evil</button>
+      <button type="button" id="btn-afraid" class="btn btn-warning">Afraid</button>
+      <button type="button" id="btn-horrified" class="btn btn-warning">Horrified</button>
+      <button type="button" id="btn-annoyed" class="btn btn-warning">Annoyed</button>
+      <button type="button" id="btn-innocent" class="btn btn-warning">Innocent</button>
+      <button type="button" id="btn-violent" class="btn btn-warning">Violent</button>
+      <button type="button" id="btn-eureka" class="btn btn-warning">Eureka!</button>
     </div>
   </div>
   <script type="text/javascript">
@@ -226,25 +233,60 @@
       var smileConf = getConf("smile");
       var jawConf = getConf("jaw");
       var browConf = getConf("brow");
-      $('#btn-smile').click(function(){
+      $('#btn-neutral').click(function(){
+        setMotorPos(smileConf, smileConf.default, speed);
+        setMotorPos(jawConf, jawConf.default, speed);
+        setMotorPos(browConf, browConf.default, speed);
+      });
+      $('#btn-happy').click(function(){
         setMotorPos(smileConf, -1.556, speed);
         setMotorPos(jawConf, -0.54, speed);
         setMotorPos(browConf, -1.363, speed);
       });
-      $('#btn-frown').click(function(){
+      $('#btn-sad').click(function(){
         setMotorPos(smileConf, 1.526, speed);
-        setMotorPos(jawConf, -0.837, speed);
+        setMotorPos(jawConf, -10, speed);
         setMotorPos(browConf, -0.925, speed);
       });
-      $('#btn-sulk').click(function(){
-        setMotorPos(smileConf, 1.526, speed);
-        setMotorPos(jawConf, 0.54, speed);
-        setMotorPos(browConf, -0.35, speed);
-      });
-      $('#btn-marvel').click(function(){
+      $('#btn-surprised').click(function(){
         setMotorPos(smileConf, 0.26, speed);
         setMotorPos(jawConf, -0.21, speed);
         setMotorPos(browConf, -1.363, speed);
+      });
+      $('#btn-evil').click(function(){
+        setMotorPos(smileConf, -10, speed);
+        setMotorPos(jawConf, -10, speed);
+        setMotorPos(browConf, 10, speed);
+      });
+      $('#btn-afraid').click(function(){
+        setMotorPos(smileConf, 10, speed);
+        setMotorPos(jawConf, -10, speed);
+        setMotorPos(browConf, -10, speed);
+      });
+      $('#btn-horrified').click(function(){
+        setMotorPos(smileConf, 10, speed);
+        setMotorPos(jawConf, -0.419, speed);
+        setMotorPos(browConf, -10, speed);
+      });
+      $('#btn-annoyed').click(function(){
+        setMotorPos(smileConf, 10, speed);
+        setMotorPos(jawConf, -10, speed);
+        setMotorPos(browConf, 10, speed);
+      });
+      $('#btn-innocent').click(function(){
+        setMotorPos(smileConf, -10, speed);
+        setMotorPos(jawConf, -10, speed);
+        setMotorPos(browConf, -10, speed);
+      });
+      $('#btn-violent').click(function(){
+        setMotorPos(smileConf, 10, speed);
+        setMotorPos(jawConf, 10, speed);
+        setMotorPos(browConf, 10, speed);
+      });
+      $('#btn-eureka').click(function(){
+        setMotorPos(smileConf, -1.169, speed);
+        setMotorPos(jawConf, 10, speed);
+        setMotorPos(browConf, -10, speed);
       });
     });
   </script>
