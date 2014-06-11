@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="css/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+<script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery-ui-1.10.4.min.js"></script>
+<script src="js/js-yaml.min.js"></script>
+<script src="js/jquery.ui.touch-punch.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.knob.js"></script>
+<script src="crosshair-slider.js"></script>
+
+<style>
+  body {
+    margin:0;
+    background-color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  span {
+    color: #ffec03;
+  }
+  .header {
+    width: 100%;
+    padding: 2px;
+    border: solid 1px #000;
+    background-color: #444;
+    font-size: 11px;
+  }
+  #controlStack {
+    width:100%;
+    max-width:590px;
+  }
+  .knobBlock {
+    margin:5px;
+    float:left;
+  }
+  .knobName {
+    font-size:24px;
+    display:table;
+    margin:auto;
+    position:relative;
+  }
+  .crosshairsl {
+    width:200px;
+    height:200px;
+    margin:5px;
+    float:right;
+  }
+  #btnStack .btn {
+    margin: 3px;
+    width: 80px;
+    padding: 4px 0px 4px 0px;
+    color: #111;
+    background-color:#dc0;
+    border-color:#ffec03;
+  }
+
+  @media screen and (max-width: 500px) {
+    .landscape {
+      display:none;
+    }
+    #btnStack {
+      margin:auto;
+      display:table;
+      width:80px;
+      padding-top:5px;
+    }
+  }
+  @media screen and (min-width: 501px) {
+    .portrait {
+      display:none;
+    }
+    #btnStack {
+      display:inline-block;
+    }
+  }
+</style>
+
+<script type="text/javascript">
+
+  function radToDeg(val) {return val*180/Math.PI;}
+  function degToRad(val) {return val*Math.PI/180;}
+
+  var motorConf; //Holds the decoded config file
+  var ros;
+  var cmdtopic;
+  
+  /** Updates all UI and sends a ROS message **/
+  function setMotorPos(confEntry, angle, speed, acc) {
+    var degAngle = Math.round(radToDeg(angle));
+    confEntry.element.find(".slider").slider("value", degAngle);
+    confEntry.element.find(".slVal").text(degAngle);
+
+    sendCmdPololu(confEntry, angle, speed, acc);
+  }
+
+  function sendCmdPololu(confEntry, angle, speed, acc) {
+    var cmd = new ROSLIB.Message({
+      id: confEntry.motorid,
+      angle: Math.min(Math.max(angle, confEntry.min), confEntry.max),
+      speed: speed || confEntry.speed,
+      acceleration: acc || confEntry.acceleration
+    });
+    cmdtopic.publish(cmd);
+  }
+
+  function sendDefaultPololu() {
+    for (var i = 0; i < motorConf.length; i++) {
+      sendCmdPololu(motorConf[i], motorConf[i].default);
+    };
+  }
+
+  function addKnobBlock(confEntry) {
+    var sliderBlock = $("#knobTemplate").clone();
+    sliderBlock.removeAttr("id"); //Removing knobTemplate id
+    confEntry.element = sliderBlock //Saving a reference to html element in config object
+
+    sliderBlock.removeClass("hidden");
+    sliderBlock.appendTo("#sliderStack");
+  }
+
+  function createUI() {
+    //Create sliders
+    for (var i = 0; i < motorConf.length; i++) {
+      if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
+        addKnobBlock(motorConf[i]);
+    };
+
+    //Create crosshair
+    var yawConf = getConf("neck_base");
+    var pitchConf = getConf("neck_pitch");
+    $(".crosshairsl").crosshairsl({
+      bgColor: "#444",
+      fgColor: "#ffec03",
+      xmin: Math.floor(radToDeg(yawConf.min)),
+      xmax: Math.ceil(radToDeg(yawConf.max)),
+      xval: Math.round(radToDeg(yawConf.default)),
+      ymin: Math.floor(radToDeg(pitchConf.min)),
+      ymax: Math.ceil(radToDeg(pitchConf.max)),
+      yval: Math.round(radToDeg(pitchConf.default)),
+      change: function(e, ui) {
+        sendCmdPololu(yawConf, degToRad(ui.xval));
+        sendCmdPololu(pitchConf, degToRad(ui.yval));
+      }
+    });
+
+    //Create dial
+    $(".dial").knob({
+      min: 0,
+      max: 11,
+      angleOffset: -125,
+      angleArc: 275,
+      width: 200,
+      height: 200,
+      thickness: 0.4,
+      fgColor:"#ffec03",
+      bgColor:"#444",
+      draw: function() {
+        this.g.lineWidth = 3;
+        this.cursorExt = 0.2;
+
+        //Override radius to fit the outer circle inside canvas
+        this.radius = this.xy - this.lineWidth * 2 / 3 - this.g.lineWidth ;
+
+        this.g.beginPath();
+        this.g.strokeStyle = this.o.fgColor;
+        this.g.arc( this.xy, this.xy, this.radius + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+        this.g.stroke();
+        return true;
+      },
+      change: function() {
+        console.log("labas");
+      }
+    }).val(5);
+    //Keep the input fields inside dials from being edited directly.
+    $("input.dial").css("pointer-events", "none");
+
+    $('#pusher').css("height", $('#sliderStack').height());
+  }
+
+  function connectROS() {
+    //Connect to rosbridge
+    ros = new ROSLIB.Ros({
+      url : "ws://" + document.domain + ":9090"
+    }).on("connection", function(e){
+      $("#status").css("color", "#88FF88");
+      $("#status").html("&#9679; Connected");
+      sendDefaultPololu();
+    }).on("error", function(e){
+      $("#status").css("color", "#FFAAAA");
+      $("#status").html("&#9679; No connection");
+    });
+
+    //Publish topic
+    cmdtopic = new ROSLIB.Topic({
+      ros : ros,
+      name : '/cmd_pololu',
+      messageType : 'ros_pololu_servo/servo_pololu'
+    });
+  }
+
+  function getConf(name) {
+    for (var i = 0; i < motorConf.length; i++) {
+      if (motorConf[i].name == name)
+        return motorConf[i];
+    };
+    return;
+  }
+
+  $(function() {
+    $("body")
+    .on("configload", createUI)
+    .on("configload", connectROS);
+
+    $.ajax({
+        url: "config.yaml",
+        dataType: "text",
+        success: function(data) {
+          motorConf = jsyaml.load(data);
+          $("body").trigger("configload");
+        }
+    });
+  });
+</script>
+  <div class="header"><span id="status" style="color: #FFFF88;">&#9679; Connecting</span></div>
+  <div id="controlStack">
+    <div class="landscape">
+      <div class="crosshairsl"></div>
+      <div class="knobBlock" style="float:left">
+        <input type="text" class="dial">
+      </div>
+      <span class="knobName" style="top:85px">Smile</span>
+    </div>
+    <div class="portrait" style="float:right">
+      <span class="knobName" style="padding-top:10px">Smile</span>
+      <div class="knobBlock" style="float:right">
+        <input type="text" class="dial">
+      </div>
+      <div class="crosshairsl" style="clear:right;"></div>
+    </div>
+    <div id="btnStack">
+      <button type="button" id="btn-neutral" class="btn btn-warning">Neutral</button>
+      <button type="button" id="btn-happy" class="btn btn-warning">Happy</button>
+      <button type="button" id="btn-sad" class="btn btn-warning">Sad</button>
+      <button type="button" id="btn-surprised" class="btn btn-warning">Surprised</button>
+      <button type="button" id="btn-evil" class="btn btn-warning">Evil</button>
+      <button type="button" id="btn-afraid" class="btn btn-warning">Afraid</button>
+      <button type="button" id="btn-horrified" class="btn btn-warning">Horrified</button>
+      <button type="button" id="btn-annoyed" class="btn btn-warning">Annoyed</button>
+      <button type="button" id="btn-innocent" class="btn btn-warning">Innocent</button>
+      <button type="button" id="btn-violent" class="btn btn-warning">Violent</button>
+      <button type="button" id="btn-eureka" class="btn btn-warning">Eureka!</button>
+    </div>
+  </div>
+</body>
+</html>
