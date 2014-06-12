@@ -1,4 +1,4 @@
-$.widget( "custom.crosshairsl", {
+$.widget("custom.crosshairsl", {
   options: {
     fgColor: "#FFAA00",
     bgColor: "#888",
@@ -81,6 +81,7 @@ $.widget( "custom.crosshairsl", {
     this._updateCrosshair();
 
     this._trigger("change", e, {xval: opts.xval, yval: opts.yval});
+    this.element.trigger("change", {xval: opts.xval, yval: opts.yval});
   },
   _destroy: function() {
     this.horline.remove();
@@ -99,10 +100,10 @@ $.widget( "custom.crosshairsl", {
   _setOption: function( key, value ) {
      //Prevent out of bound values
     if (key == "xval") {
-      setXval(value);
+      this._setXval(value);
       return;
     } else if (key == "yval") {
-      setYval(value);
+      this._setYval(value);
       return;
     }
     this._super(key, value);

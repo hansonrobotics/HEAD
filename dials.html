@@ -16,6 +16,8 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.knob.js"></script>
 <script src="crosshair-slider.js"></script>
+<script src="robo-interface.js"></script>
+<script src="common-ui.js"></script>
 
 <style>
   body {
@@ -88,81 +90,38 @@
   function radToDeg(val) {return val*180/Math.PI;}
   function degToRad(val) {return val*Math.PI/180;}
 
-  var motorConf; //Holds the decoded config file
-  var ros;
-  var cmdtopic;
-  
-  /** Updates all UI and sends a ROS message **/
-  function setMotorPos(confEntry, angle, speed, acc) {
-    var degAngle = Math.round(radToDeg(angle));
-    confEntry.element.find(".slider").slider("value", degAngle);
-    confEntry.element.find(".slVal").text(degAngle);
-
-    sendCmdPololu(confEntry, angle, speed, acc);
-  }
-
-  function sendCmdPololu(confEntry, angle, speed, acc) {
-    var cmd = new ROSLIB.Message({
-      id: confEntry.motorid,
-      angle: Math.min(Math.max(angle, confEntry.min), confEntry.max),
-      speed: speed || confEntry.speed,
-      acceleration: acc || confEntry.acceleration
+  //Create UI that requires a ROS connection.
+  function createUIros() {
+    //Build preset buttons
+    btnStack = $("#btnStack");
+    btnStack.on("exprbtnclick", function(e, name, label) {
+      $("#knobName").text(label);
     });
-    cmdtopic.publish(cmd);
+    CommonUI.buildExpressionButtons(btnStack);
   }
 
-  function sendDefaultPololu() {
-    for (var i = 0; i < motorConf.length; i++) {
-      sendCmdPololu(motorConf[i], motorConf[i].default);
-    };
-  }
-
-  function addKnobBlock(confEntry) {
-    var sliderBlock = $("#knobTemplate").clone();
-    sliderBlock.removeAttr("id"); //Removing knobTemplate id
-    confEntry.element = sliderBlock //Saving a reference to html element in config object
-
-    sliderBlock.removeClass("hidden");
-    sliderBlock.appendTo("#sliderStack");
-  }
-
-  function createUI() {
-    //Create sliders
-    for (var i = 0; i < motorConf.length; i++) {
-      if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
-        addKnobBlock(motorConf[i]);
-    };
-
+  //Create UI that requires a loaded config file.
+  function createUIconf() {
     //Create crosshair
-    var yawConf = getConf("neck_base");
-    var pitchConf = getConf("neck_pitch");
-    $(".crosshairsl").crosshairsl({
-      bgColor: "#444",
-      fgColor: "#ffec03",
-      xmin: Math.floor(radToDeg(yawConf.min)),
-      xmax: Math.ceil(radToDeg(yawConf.max)),
-      xval: Math.round(radToDeg(yawConf.default)),
-      ymin: Math.floor(radToDeg(pitchConf.min)),
-      ymax: Math.ceil(radToDeg(pitchConf.max)),
-      yval: Math.round(radToDeg(pitchConf.default)),
-      change: function(e, ui) {
-        sendCmdPololu(yawConf, degToRad(ui.xval));
-        sendCmdPololu(pitchConf, degToRad(ui.yval));
+    CommonUI.buildCrosshairSlider(
+      $(".crosshairsl"), {
+        bgColor: "#444",
+        fgColor: "#ffec03"
       }
+    ).on("change", function(e, ui){
+      $(".crosshairsl")
+      .crosshairsl("option", "xval", ui.xval)
+      .crosshairsl("option", "yval", ui.yval);
     });
 
     //Create dial
     $(".dial").knob({
-      min: 0,
-      max: 11,
-      angleOffset: -125,
-      angleArc: 275,
-      width: 200,
-      height: 200,
+      min: 0, max: 11,
+      angleOffset: -125, angleArc: 275,
+      width: 200, height: 200,
       thickness: 0.4,
-      fgColor:"#ffec03",
-      bgColor:"#444",
-      draw: function() {
+      fgColor:"#ffec03", bgColor:"#444",
+      draw: function() { //Extended the draw function to add a ring around the dial.
         this.g.lineWidth = 3;
         this.cursorExt = 0.2;
 
@@ -171,63 +130,31 @@
 
         this.g.beginPath();
         this.g.strokeStyle = this.o.fgColor;
-        this.g.arc( this.xy, this.xy, this.radius + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+        this.g.arc(this.xy, this.xy, this.radius + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
         this.g.stroke();
         return true;
       },
-      change: function() {
-        console.log("labas");
+      change: function(value) {
+        $(".dial").val(value).trigger("change");
       }
-    }).val(5);
+    })
     //Keep the input fields inside dials from being edited directly.
     $("input.dial").css("pointer-events", "none");
-
-    $('#pusher').css("height", $('#sliderStack').height());
-  }
-
-  function connectROS() {
-    //Connect to rosbridge
-    ros = new ROSLIB.Ros({
-      url : "ws://" + document.domain + ":9090"
-    }).on("connection", function(e){
-      $("#status").css("color", "#88FF88");
-      $("#status").html("&#9679; Connected");
-      sendDefaultPololu();
-    }).on("error", function(e){
-      $("#status").css("color", "#FFAAAA");
-      $("#status").html("&#9679; No connection");
-    });
-
-    //Publish topic
-    cmdtopic = new ROSLIB.Topic({
-      ros : ros,
-      name : '/cmd_pololu',
-      messageType : 'ros_pololu_servo/servo_pololu'
-    });
-  }
-
-  function getConf(name) {
-    for (var i = 0; i < motorConf.length; i++) {
-      if (motorConf[i].name == name)
-        return motorConf[i];
-    };
-    return;
   }
 
   $(function() {
-    $("body")
-    .on("configload", createUI)
-    .on("configload", connectROS);
-
-    $.ajax({
-        url: "config.yaml",
-        dataType: "text",
-        success: function(data) {
-          motorConf = jsyaml.load(data);
-          $("body").trigger("configload");
-        }
+    RoboInterface.$.on("configload", createUIconf);
+    RoboInterface.connect("ws://" + document.domain + ":9090")
+    .$.on("connection", function(e) {
+      $("#status").css("color", "#88FF88");
+      $("#status").html("&#9679; Connected");
+      createUIros()
+    }).on("error", function(e) {
+      $("#status").css("color", "#FFAAAA");
+      $("#status").html("&#9679; No connection");
     });
   });
+
 </script>
   <div class="header"><span id="status" style="color: #FFFF88;">&#9679; Connecting</span></div>
   <div id="controlStack">
@@ -236,28 +163,16 @@
       <div class="knobBlock" style="float:left">
         <input type="text" class="dial">
       </div>
-      <span class="knobName" style="top:85px">Smile</span>
+      <span class="knobName" style="top:85px">Happy</span>
     </div>
     <div class="portrait" style="float:right">
-      <span class="knobName" style="padding-top:10px">Smile</span>
+      <span class="knobName" style="padding-top:10px">Happy</span>
       <div class="knobBlock" style="float:right">
         <input type="text" class="dial">
       </div>
       <div class="crosshairsl" style="clear:right;"></div>
     </div>
-    <div id="btnStack">
-      <button type="button" id="btn-neutral" class="btn btn-warning">Neutral</button>
-      <button type="button" id="btn-happy" class="btn btn-warning">Happy</button>
-      <button type="button" id="btn-sad" class="btn btn-warning">Sad</button>
-      <button type="button" id="btn-surprised" class="btn btn-warning">Surprised</button>
-      <button type="button" id="btn-evil" class="btn btn-warning">Evil</button>
-      <button type="button" id="btn-afraid" class="btn btn-warning">Afraid</button>
-      <button type="button" id="btn-horrified" class="btn btn-warning">Horrified</button>
-      <button type="button" id="btn-annoyed" class="btn btn-warning">Annoyed</button>
-      <button type="button" id="btn-innocent" class="btn btn-warning">Innocent</button>
-      <button type="button" id="btn-violent" class="btn btn-warning">Violent</button>
-      <button type="button" id="btn-eureka" class="btn btn-warning">Eureka!</button>
-    </div>
+    <div id="btnStack"></div>
   </div>
 </body>
 </html>
