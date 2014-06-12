@@ -22,5 +22,5 @@ class MotorCmd:
 
   def __init__(self, motor_entry, target=None, rest=None):
     self.motor_entry = motor_entry
-    self.target = target or motor_entry['default']
+    self.target = self._saturated(target or motor_entry['default'])
     self.rest = rest or motor_entry['default']
