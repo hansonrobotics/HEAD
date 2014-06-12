@@ -1,8 +1,8 @@
 ##basic_head_api
 
-Listens to `/cmd_face_expr` topic for **FaceExprReq** messages, which include a face expression string and intensity, and sends appropriate **servo_pololu** messages on `/cmd_pololu`.
+Provides `/make_face_expr` service to call with a **MakeFaceExpr.srv**, the request of which includes a face expression string and intensity. The service sends appropriate **servo_pololu** messages on `/cmd_pololu` and responds with corresponding motor positions.
 
-See **einstein.yaml** for available expression strings to include inside **FaceExprReq**.
+See **einstein.yaml** for available expression strings to include inside the **MakeFaceExpr.srv** request. Or get them at runtime with `/valid_face_exprs` and **ValidFaceExprs.srv** service.
 
 ###Notes
 

@@ -1,8 +1,11 @@
+from collections import OrderedDict
 from MotorCmd import MotorCmd
 
-class EinsteinFace:
+class FaceExpr:
+  """Represents a robot face expression in terms of motor positions."""
+
   def msgs(self, intensity=1):
-    # Return a list of ROS messages to publish created from MotorCmd objects.
+    """Returns a list of ROS messages, created from MotorCmd objects, that can be published."""
     return map(
       lambda motor_cmd: motor_cmd.msg_intensity(intensity),
       self.commands
@@ -10,10 +13,10 @@ class EinsteinFace:
 
   @staticmethod
   def build_faces(expr_yaml, motor_yaml):
-    """Builds EinsteinFace instances. Returns a dictionary mapping expression names to them."""
-    result = {}
+    """Builds FaceExpr instances. Returns a dictionary mapping expression names to them."""
+    result = OrderedDict()
     for exprname in expr_yaml:
-      result[exprname] = EinsteinFace(expr_yaml[exprname], motor_yaml)
+      result[exprname] = FaceExpr(expr_yaml[exprname], motor_yaml)
     return result
 
   def __init__(self, expr_entry, motor_yaml):
