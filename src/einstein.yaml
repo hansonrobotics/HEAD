@@ -1,0 +1,49 @@
+happy:
+  smile: -1.556
+  jaw: -0.54
+  brow: -1.363
+
+sad:
+  smile: 1.526
+  jaw: -10
+  brow: -0.925
+
+surprised:
+  smile: 0.26
+  jaw: -0.21
+  brow: -1.363
+
+evil:
+  smile: -10
+  jaw: -10
+  brow: 10
+
+afraid:
+  smile: 10
+  jaw: -10
+  brow: -10
+
+horrified:
+  smile: 10
+  jaw: -0.419
+  brow: -10
+
+annoyed:
+  smile: 10
+  jaw: -10
+  brow: 10
+
+innocent:
+  smile: -10
+  jaw: -10
+  brow: -10
+
+violent:
+  smile: 10
+  jaw: 10
+  brow: 10
+
+eureka:
+  smile: -1.169
+  jaw: 10
+  brow: -10
