@@ -1,6 +1,7 @@
 $.widget( "custom.crosshairsl", {
   options: {
-    color: "#FFAA00",
+    fgColor: "#FFAA00",
+    bgColor: "#888",
     xmin: -50, xmax: 50, xval: 0,
     ymin: -50, ymax: 50, yval: 0,
     change: null
@@ -10,7 +11,7 @@ $.widget( "custom.crosshairsl", {
     if (this.element.height() == 0) this.element.height(100);
 
     this.element
-    .css("background-color", "#888888")
+    .css("background-color", this.options.bgColor)
     .css("border", "solid 1px");
 
     this.horline = $("<div/>")
@@ -50,7 +51,7 @@ $.widget( "custom.crosshairsl", {
   //Called when created, and later when changing options by the user
   _refresh: function() {
     this.element.find(".crosshairsl-line")
-    .css("border-color", this.options.color);
+    .css("border-color", this.options.fgColor);
 
     this._updateCrosshair();
   },
