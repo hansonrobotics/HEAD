@@ -140,11 +140,11 @@
     btnStack = $("#btnStack");
     btnStack.on("exprbtnclick", function(e, nameobj) {
       setFace(nameobj.name, nameobj.label);
-      setKnobPos();
+      setKnobPos(KNOB_OPTS.max*0.7);
     }).on("success", function(e, _btnObjs) { //Note that btnObjs is a global variable
       btnObjs = _btnObjs.btnObjs; //Remove the object wrapper
       setFace(btnObjs[0].name, btnObjs[0].label);
-      setKnobPos(KNOB_OPTS.max/2);
+      setKnobPos(KNOB_OPTS.max*0.7);
     });
     CommonUI.buildExpressionButtons(btnStack);
   }
@@ -210,6 +210,7 @@
   }
 
   $(function() {
+    $(".dial").val(0);
     RoboInterface.$.on("configload", createUIconf);
     RoboInterface.connect("ws://" + document.domain + ":9090")
     .$.on("connection", function(e) {
@@ -236,10 +237,10 @@
       <div class="knobBlock" style="float:left">
         <input type="text" class="dial">
       </div>
-      <span class="knobName" style="top:85px">Happy</span>
+      <span class="knobName" style="top:85px"></span>
     </div>
     <div class="portrait" style="float:right">
-      <span class="knobName" style="padding-top:10px">Happy</span>
+      <span class="knobName" style="padding-top:10px"></span>
       <div class="knobBlock" style="float:right">
         <input type="text" class="dial">
       </div>
