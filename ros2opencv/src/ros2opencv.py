@@ -39,6 +39,7 @@ from sensor_msgs.msg import Image, RegionOfInterest, CameraInfo
 from geometry_msgs.msg import PointStamped
 from cv_bridge import CvBridge, CvBridgeError
 import time
+import numpy
 
 class ROS2OpenCV:
     def __init__(self, node_name):
@@ -230,7 +231,9 @@ class ROS2OpenCV:
         
         """ Publish the display image back to ROS """
         try:
-            self.output_image_pub.publish(self.bridge.cv_to_imgmsg(self.display_image, "bgr8"))
+            """ Convertion for cv2 is needed """
+            cv2_image = numpy.asarray(self.display_image[:,:])
+            self.output_image_pub.publish(self.bridge.cv2_to_imgmsg(cv2_image, "bgr8"))
         except CvBridgeError, e:
             print e
         
@@ -263,7 +266,10 @@ class ROS2OpenCV:
           
     def convert_image(self, ros_image):
         try:
-            cv_image = self.bridge.imgmsg_to_cv(ros_image, "bgr8")
+	    """ Convert to old cv image """
+            cv2_image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
+	    cv_image = cv.CreateImageHeader((cv2_image.shape[1], cv2_image.shape[0]), 8, 3)
+	    cv.SetData(cv_image, cv2_image.tostring(), cv2_image.dtype.itemsize * 3 * cv2_image.shape[1])	
             return cv_image
         except CvBridgeError, e:
           print e
