@@ -19,7 +19,7 @@ Or for latest changes build the Dockerfile inside or install the following packa
 
 ###Usage
 
-Run the **run.sh** file inside, then open **http://127.0.0.1:8000**
+Go to the directory containing **index.html**, run **run.sh**, then open **http://127.0.0.1:8000**
 
 ###Notes
 
