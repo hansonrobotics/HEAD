@@ -61,6 +61,14 @@
     width: 80px;
     padding: 4px 0px 4px 0px;
   }
+  .header .btn-group {
+    margin-left:10px;
+  }
+  .highlight {
+    background-color:#fff;
+    border-color:#fff;
+    color:#000;
+  }
   #btnStack {
     margin: 5px;
   }
@@ -204,7 +212,13 @@
     });
   });
 </script>
-  <div class="header"><span id="status" style="color: #FFFF88;">&#9679; Connecting</span></div>
+  <div class="header">
+    <span id="status" style="color: #FFFF88;">&#9679; Connecting</span>
+    <div class="btn-group btn-group-xs">
+      <button type="button" class="btn">Motors</button>
+      <a href="dials.html" type="button" class="btn btn-warning">Faces</a>
+    </div>
+  </div>
   <div id="controlStack">
     <div id="sliderStack">
       <div id="sliderTemplate" class="uiBlock hidden">

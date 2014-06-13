@@ -33,7 +33,7 @@
     padding: 2px;
     border: solid 1px #000;
     background-color: #444;
-    font-size: 11px;
+    font-size: 12px;
   }
   #controlStack {
     width:100%;
@@ -55,13 +55,18 @@
     margin:5px;
     float:right;
   }
+  .btn {
+    color: #111;
+    background-color:#dc0;
+    border-color:#ffec03;
+  }
+  .header .btn-group {
+    margin-left:10px;
+  }
   #btnStack .btn {
     margin: 3px;
     width: 80px;
     padding: 4px 0px 4px 0px;
-    color: #111;
-    background-color:#dc0;
-    border-color:#ffec03;
   }
   .highlight {
     background-color:#C0ffff!important;
@@ -210,7 +215,13 @@
   });
 
 </script>
-  <div class="header"><span id="status" style="color: #FFFF88;">&#9679; Connecting</span></div>
+  <div class="header">
+    <span id="status" style="color: #FFFF88;">&#9679; Connecting</span>
+    <div class="btn-group btn-group-xs">
+      <a href="/index.html" type="button" class="btn">Motors</a>
+      <button type="button" class="btn highlight">Faces</button>
+    </div>
+  </div>
   <div id="controlStack">
     <div class="landscape">
       <div class="crosshairsl"></div>

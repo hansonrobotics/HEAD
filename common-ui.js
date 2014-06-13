@@ -16,7 +16,7 @@ var CommonUI = new function() {
 
   this.buildExpressionButtons = function(container) {
     function addBtn(btnObj) {
-      btn = $('<button type="button" class="btn btn-warning">'+btnObj['label']+'</button>');
+      btn = $('<button type="button" class="btn">'+btnObj['label']+'</button>');
       btn.click(function(){
         container.trigger("exprbtnclick", btnObj);
       });
