@@ -63,6 +63,10 @@
     background-color:#dc0;
     border-color:#ffec03;
   }
+  .highlight {
+    background-color:#C0ffff!important;
+    border-color:#C0ffff!important;
+  }
 
   @media screen and (max-width: 500px) {
     .landscape {
@@ -90,12 +94,47 @@
   function radToDeg(val) {return val*180/Math.PI;}
   function degToRad(val) {return val*Math.PI/180;}
 
+  var KNOB_OPTS = {
+    max: 11,
+    fgColor: "#ffec03",
+    fgColorExtreme: "#C0ffff"
+  }
+
+  var btnObjs = []; //Holds an array of {name, label, element} objects representing expression buttons.
+  var curface = ''; //Holds the name of the last pressed button.
+
+  function getBtn(name) {
+    for (var i = 0; i < btnObjs.length; i++) {
+      if (btnObjs[i].name == name) {
+        return btnObjs[i].element;
+      }
+    };
+  }
+
+  //Updates UI and inner model.
+  function setFace(name, label) {
+    curface = name;
+    $(".knobName").text(label);
+  }
+
+  //Updates UI and sends a ROS message.
+  function setKnobPos(value) {
+    $(".dial").val(value).trigger("change");
+    var intensity = (value < KNOB_OPTS.max) ? value/(KNOB_OPTS.max + 1) : 1.0
+    RoboInterface.makeFaceExpr(curface, intensity);
+  }
+
   //Create UI that requires a ROS connection.
   function createUIros() {
     //Build preset buttons
     btnStack = $("#btnStack");
-    btnStack.on("exprbtnclick", function(e, name, label) {
-      $("#knobName").text(label);
+    btnStack.on("exprbtnclick", function(e, nameobj) {
+      setFace(nameobj.name, nameobj.label);
+      setKnobPos(5);
+    }).on("success", function(e, _btnObjs) { //Note that btnObjs is a global variable
+      btnObjs = _btnObjs.btnObjs; //Remove the object wrapper
+      setFace(btnObjs[0].name, btnObjs[0].label);
+      setKnobPos(5);
     });
     CommonUI.buildExpressionButtons(btnStack);
   }
@@ -116,12 +155,18 @@
 
     //Create dial
     $(".dial").knob({
-      min: 0, max: 11,
+      min: 0, max: KNOB_OPTS.max,
       angleOffset: -125, angleArc: 275,
       width: 200, height: 200,
       thickness: 0.4,
-      fgColor:"#ffec03", bgColor:"#444",
+      fgColor:KNOB_OPTS.fgColor, bgColor:"#444",
       draw: function() { //Extended the draw function to add a ring around the dial.
+        if (parseInt($(".dial").val()) == KNOB_OPTS.max) {
+          paintSelection(this.o, KNOB_OPTS.fgColorExtreme);
+        } else {
+          paintSelection(this.o, KNOB_OPTS.fgColor);
+        }
+
         this.g.lineWidth = 3;
         this.cursorExt = 0.2;
 
@@ -134,12 +179,21 @@
         this.g.stroke();
         return true;
       },
-      change: function(value) {
-        $(".dial").val(value).trigger("change");
-      }
-    })
+      change: setKnobPos
+    });
     //Keep the input fields inside dials from being edited directly.
     $("input.dial").css("pointer-events", "none");
+  }
+
+  function paintSelection(knobObj, color) {
+    knobObj.fgColor = color;
+    $(".dial").css("color", color)
+    $(".knobName").css("color", color);
+    $("#btnStack .btn").removeClass("highlight");
+    var curBtn = getBtn(curface);
+    if (curBtn) {
+      curBtn.addClass("highlight");
+    }
   }
 
   $(function() {

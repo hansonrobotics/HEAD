@@ -26,6 +26,7 @@ var RoboInterface = {
   },
 
   makeFaceExpr: function(faceStr, intensity, callback) {
+    callback = callback || function(){};
     this.makeFaceExprClient.callService(
       new ROSLIB.ServiceRequest({
         str:faceStr,
@@ -64,8 +65,8 @@ var RoboInterface = {
       });
       RoboInterface.makeFaceExprClient = new ROSLIB.Service({
         ros:ros,
-        name:'/make_face_exprs',
-        serviceType:'basic_head_api/ValidFaceExprs'
+        name:'/make_face_expr',
+        serviceType:'basic_head_api/MakeFaceExpr'
       });
     };
     this.$.on("configload", connectROS);

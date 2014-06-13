@@ -15,21 +15,28 @@ var CommonUI = new function() {
   }
 
   this.buildExpressionButtons = function(container) {
-    function addBtn(name) {
-      label = (name == "eureka") ? "Eureka!" : capitalize(name);
-      btn = $('<button type="button" class="btn btn-warning">'+label+'</button>');
+    function addBtn(btnObj) {
+      btn = $('<button type="button" class="btn btn-warning">'+btnObj['label']+'</button>');
       btn.click(function(){
-        container.trigger("exprbtnclick", name, label);
+        container.trigger("exprbtnclick", btnObj);
       });
       container.append(btn);
+      return btn;
     }
 
+    //Look up valid expression names through ROS.
     var motorConf = RoboInterface.motorConf;
     RoboInterface.getValidFaceExprs(function(response) {
       var names = response.exprnames;
+      var btnObjs = [];
       for (var i = 0; i < names.length; i++) {
-        addBtn(names[i]);
+        btnObjs[i] = {
+          name: names[i],
+          label: (names[i] == "eureka") ? "Eureka!" : capitalize(names[i])
+        };
+        btnObjs[i]['element'] = addBtn(btnObjs[i]);
       };
+      container.trigger("success", {btnObjs:btnObjs}); //Can't send an array without an object wrapper
     });
   }
 
