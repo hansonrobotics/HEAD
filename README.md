@@ -1,6 +1,6 @@
 ##ros_motors_webui
 
-Web interface to control a separate motors of a robot face using **ros_servo_pololu**, **basic_head_api** and **rosbridge_server** packages.
+Web interface to control Mini-Einstein's face and neck using **ros_servo_pololu**, **basic_head_api** and **rosbridge_server** packages.
 
 ###Installation
 
