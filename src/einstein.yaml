@@ -1,0 +1,89 @@
+- name: jaw
+  enabled: true
+  motorid: 17
+  binding:
+    parser: fsshapekey
+    function: linear
+    args:
+      shapekey: JawOpen
+      scale: 2
+      translate: -0.8
+  min: -0.8
+  max: 1.2
+  speed: 200
+  acceleration: 100
+
+- name: brow
+  enabled: true
+  motorid: 16
+  binding:
+    parser: fsshapekey
+    function: linear
+    args:
+      shapekey: BrowsD_L
+      scale: 2.3
+      translate: -2.5
+  min: -1.55
+  max: -0.2
+  speed: 200
+  acceleration: 100
+
+- name: smile
+  enabled: true
+  motorid: 15
+  binding:
+    parser: fsshapekey
+    function: linear
+    args:
+      shapekey: MouthSmile_L
+      scale: -3.1
+      translate: 1.55
+  min: -1.55
+  max: 1.55
+  speed: 255
+  acceleration: 10
+
+- name: neck_pitch
+  enabled: true
+  motorid: 3
+  binding:
+    parser: getproperty
+    function: linear
+    args:
+      property: m_headRotation:x
+      scale: -2
+      translate: 0.5
+  min: 0
+  max: 0.5
+  speed: 200
+  acceleration: 10
+
+- name: neck_roll
+  enabled: true
+  motorid: 2
+  binding:
+    parser: getproperty
+    function: linear
+    args:
+      property: m_headRotation:z
+      scale: -2
+      translate: 0
+  min: 0
+  max: 0.5
+  speed: 200
+  acceleration: 10
+
+- name: neck_base
+  enabled: true
+  motorid: 23
+  binding:
+    parser: getproperty
+    function: linear
+    args:
+      property: m_headRotation:y
+      scale: 1
+      translate: 0
+  min: 0
+  max: 0.5
+  speed: 255
+  acceleration: 10
