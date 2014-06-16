@@ -5,7 +5,7 @@ class ParserBase:
   Abstract class. Methods 'get_value' and '__init__' are to be implemented.
   """
 
-  def get_value(self, msg):
+  def get_coeff(self, msg):
     """
     Implementations of this method should extract the appropriate value or
     values in PAU representation from the provided 'msg' object. The returned
@@ -21,7 +21,7 @@ class ParserBase:
     pass
 
 class GetProperty(ParserBase):
-  def get_value(self, msg):
+  def get_coeff(self, msg):
     return self.keychain.get_value(msg)
 
   def __init__(self, args):

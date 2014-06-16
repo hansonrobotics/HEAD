@@ -12,8 +12,8 @@ class MotorCmder:
   def build_cmd(self, incoming_msg):
     """Builds a motor command given a PAU message."""
 
-    coeff = self.parser(incoming_msg)
-    angle = self.mapper(coeff)
+    coeff = self.parser.get_coeff(incoming_msg)
+    angle = self.mapper.map(coeff)
 
     msg = servo_pololu()
     msg.id = self.motor_entry['motorid']

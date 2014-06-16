@@ -12,7 +12,7 @@ class DictKeyChain:
   """
 
   def get(self, host):
-    for key in key_list:
+    for key in self.key_list:
       host = host[key]
     return host
 
