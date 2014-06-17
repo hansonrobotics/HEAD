@@ -10,7 +10,7 @@ class Pau2MotorsNode:
   def handle_face_pau(self, msg):
     cmds = self.pau2motors.to_motor_cmds(msg)
     for cmd in cmds:
-      self.pub_pololu.publish(cmd)    
+      self.pub_pololu.publish(cmd)
 
   def __init__(self, robot_yaml):
     self.pau2motors = Pau2Motors(robot_yaml)

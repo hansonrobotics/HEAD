@@ -1,6 +1,7 @@
 from ros_pololu_servo.msg import servo_pololu
 import ParserFactory
 import MapperFactory
+import rospy
 
 class MotorCmder:
   """
@@ -14,12 +15,16 @@ class MotorCmder:
 
     coeff = self.parser.get_coeff(incoming_msg)
     angle = self.mapper.map(coeff)
+    rospy.logdebug("Motor: %s, coeff: %s, angle: %s", 
+      self.motor_entry['name'], coeff, angle
+    )
 
     msg = servo_pololu()
     msg.id = self.motor_entry['motorid']
     msg.angle = self._saturated(angle)
     msg.speed = self.motor_entry['speed']
     msg.acceleration = self.motor_entry['acceleration']
+
     return msg
 
   def _saturated(self, angle):

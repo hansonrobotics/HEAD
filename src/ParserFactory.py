@@ -22,7 +22,7 @@ class ParserBase:
 
 class GetProperty(ParserBase):
   def get_coeff(self, msg):
-    return self.keychain.get_value(msg)
+    return self.keychain.get_from(msg)
 
   def __init__(self, args):
     self.keychain = Utils.DictKeyChain(
