@@ -12,9 +12,9 @@
   labelleft: "Close jaw"
   labelright: "Open jaw"
   motorid: 17
-  default: -1.271
-  min: -1.271
-  max: 0.017
+  default: -0.838
+  min: -0.838 
+  max: 0.45
   speed: 200
   acceleration: 100
 

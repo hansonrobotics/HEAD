@@ -95,6 +95,11 @@
     sendCmdPololu(confEntry, angle, speed, acc);
   }
 
+  function calcAngle(coeff, confEntry) {
+    angle = coeff * (confEntry.max - confEntry.min) + confEntry.min;
+    return Math.min(Math.max(angle, confEntry.min), confEntry.max);
+  }
+
   function sendCmdPololu(confEntry, angle, speed, acc) {
     var cmd = new ROSLIB.Message({
       id: confEntry.motorid,
@@ -255,54 +260,54 @@
         setMotorPos(browConf, browConf.default, speed);
       });
       $('#btn-happy').click(function(){
-        setMotorPos(smileConf, -1.556, speed);
-        setMotorPos(jawConf, -0.54, speed);
-        setMotorPos(browConf, -1.363, speed);
+        setMotorPos(smileConf, calcAngle(0, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(0.567, jawConf), speed);
+        setMotorPos(browConf, calcAngle(0, browConf), speed);
       });
       $('#btn-sad').click(function(){
-        setMotorPos(smileConf, 1.526, speed);
-        setMotorPos(jawConf, -10, speed);
-        setMotorPos(browConf, -0.925, speed);
+        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
+        setMotorPos(browConf, calcAngle(0.366, browConf), speed);
       });
       $('#btn-surprised').click(function(){
-        setMotorPos(smileConf, 0.26, speed);
-        setMotorPos(jawConf, -0.21, speed);
-        setMotorPos(browConf, -1.363, speed);
+        setMotorPos(smileConf, calcAngle(0.589, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(0.824, jawConf), speed);
+        setMotorPos(browConf, calcAngle(0, browConf), speed);
       });
       $('#btn-evil').click(function(){
-        setMotorPos(smileConf, -10, speed);
-        setMotorPos(jawConf, -10, speed);
-        setMotorPos(browConf, 10, speed);
+        setMotorPos(smileConf, calcAngle(0, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
+        setMotorPos(browConf, calcAngle(1, browConf), speed);
       });
       $('#btn-afraid').click(function(){
-        setMotorPos(smileConf, 10, speed);
-        setMotorPos(jawConf, -10, speed);
-        setMotorPos(browConf, -10, speed);
+        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
+        setMotorPos(browConf, calcAngle(0, browConf), speed);
       });
       $('#btn-horrified').click(function(){
-        setMotorPos(smileConf, 10, speed);
-        setMotorPos(jawConf, -0.419, speed);
-        setMotorPos(browConf, -10, speed);
+        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(0.661, jawConf), speed);
+        setMotorPos(browConf, calcAngle(0, browConf), speed);
       });
       $('#btn-annoyed').click(function(){
-        setMotorPos(smileConf, 10, speed);
-        setMotorPos(jawConf, -10, speed);
-        setMotorPos(browConf, 10, speed);
+        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
+        setMotorPos(browConf, calcAngle(1, browConf), speed);
       });
       $('#btn-innocent').click(function(){
-        setMotorPos(smileConf, -10, speed);
-        setMotorPos(jawConf, -10, speed);
-        setMotorPos(browConf, -10, speed);
+        setMotorPos(smileConf, calcAngle(0, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
+        setMotorPos(browConf, calcAngle(0, browConf), speed);
       });
       $('#btn-violent').click(function(){
-        setMotorPos(smileConf, 10, speed);
-        setMotorPos(jawConf, 10, speed);
-        setMotorPos(browConf, 10, speed);
+        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(1, jawConf), speed);
+        setMotorPos(browConf, calcAngle(1, browConf), speed);
       });
       $('#btn-eureka').click(function(){
-        setMotorPos(smileConf, -1.169, speed);
-        setMotorPos(jawConf, 10, speed);
-        setMotorPos(browConf, -10, speed);
+        setMotorPos(smileConf, calcAngle(0.126, smileConf), speed);
+        setMotorPos(jawConf, calcAngle(1, jawConf), speed);
+        setMotorPos(browConf, calcAngle(0, browConf), speed);
       });
     });
   </script>
