@@ -1,16 +1,16 @@
 #basic_head_api
 
-##Listens to topics:
-`/make_face_expr` for msg **MakeFaceExpr.msg** that will trigger the requested PAU face expression to be sent to `/cmd_face_pau`.
+###Listens to topics:
++ `/make_face_expr` for msg **MakeFaceExpr.msg** that will trigger the requested PAU face expression to be sent to `/cmd_face_pau`.
 
-`/make_coupled_face_expr` for msg **MakeCoupledFaceExpr.msg** that will trigger motor commands to be sent to `/cmd_pololu` for the requested face expression.
++ `/make_coupled_face_expr` for msg **MakeCoupledFaceExpr.msg** that will trigger motor commands to be sent to `/cmd_pololu` for the requested face expression.
 
 ##Provided services:
-Call `/valid_face_exprs` with **ValidFaceExprs.srv** to request available face expression strings for use in **MakeFaceExpr.msg**.
++ Call `/valid_face_exprs` with **ValidFaceExprs.srv** to request available face expression strings for use in **MakeFaceExpr.msg**.
 
-Call `/valid_coupled_face_exprs` with **ValidCoupledFaceExprs.srv** to do the same for the motor-coupled expressions.
++ Call `/valid_coupled_face_exprs` with **ValidCoupledFaceExprs.srv** to do the same for the motor-coupled expressions.
 
-##Notes
+###Notes
 Currently the only valid value for **robotname** to put in **MakeCoupledFaceExpr.msg** and **ValidCoupledFaceExprs.srv** is `einstein`.
 
 ###Pictures of available PAU expressions
