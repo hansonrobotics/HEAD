@@ -5,7 +5,7 @@
 
 + `/make_coupled_face_expr` for msg **MakeCoupledFaceExpr.msg** that will trigger motor commands to be sent to `/cmd_pololu` for the requested face expression.
 
-##Provided services:
+###Provided services:
 + Call `/valid_face_exprs` with **ValidFaceExprs.srv** to request available face expression strings for use in **MakeFaceExpr.msg**.
 
 + Call `/valid_coupled_face_exprs` with **ValidCoupledFaceExprs.srv** to do the same for the motor-coupled expressions.
