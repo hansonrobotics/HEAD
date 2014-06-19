@@ -7,20 +7,38 @@ class MotorCmder:
     """Builds a message given the target angle."""
     msg = servo_pololu()
     msg.id = self.motor_entry['motorid']
-    msg.angle = self._saturated(angle or self.target)
+    msg.angle = self._saturatedAngle(angle or self.target)
     msg.speed = self.motor_entry['speed']
     msg.acceleration = self.motor_entry['acceleration']
     return msg
 
   def msg_intensity(self, intensity=1):
     """Builds a message given the fractional distance (0 to 1) from rest position to target."""
-    angle = (self.target - self.rest) * intensity + self.rest 
+    angle = self._fracDist2val(
+      intensity,
+      {'min': self.rest, 'max': self.target}
+    )
     return self.msg_angle(angle)
 
-  def _saturated(self, angle):
-    return min(max(angle, self.motor_entry['min']), self.motor_entry['max'])  
+  def _saturatedAngle(self, angle):
+    return min(max(angle, self.motor_entry['min']), self.motor_entry['max'])
 
-  def __init__(self, motor_entry, target=None, rest=None):
+  @staticmethod
+  def _saturatedCoeff(coeff):
+    return min(max(coeff, 0), 1)
+
+  @staticmethod
+  def _fracDist2val(fracDist, interval):
+    return (interval['max'] - interval['min']) * fracDist + interval['min']
+
+  def __init__(self, motor_entry, targetFracDist=None):
+    # See _fracDist2val() for how targetFracDist relates to the target angle.
+
     self.motor_entry = motor_entry
-    self.target = self._saturated(target or motor_entry['default'])
-    self.rest = rest or motor_entry['default']
+
+    self.target = (
+      self._fracDist2val(self._saturatedCoeff(targetFracDist), motor_entry)
+      if targetFracDist != None
+      else self._saturatedAngle(motor_entry['default'])
+    )
+    self.rest = motor_entry['default']
