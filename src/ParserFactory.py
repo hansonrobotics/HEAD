@@ -1,4 +1,5 @@
 import Utils
+import ShapekeyStore
 
 class ParserBase:
   """
@@ -32,29 +33,10 @@ class GetProperty(ParserBase):
 class FsShapeKey(GetProperty):
   """Construct GetProperty parser from a blendshape name (shapekey)."""
 
-  # Will hold a dictionary mapping 48 blendshape names (shapekeys) used by
-  # faceshift to their indices.
-  _shkey2index = None
-
-  @classmethod
-  def _load_shapekeys(cls):
-    """
-    Fills _shkey2index.
-    Called when constructing the first instance of FSMsgParser.
-    """
-    shkey_list = Utils.read_yaml("fs_shapekeys.yaml")
-    d = {}
-    for i in xrange(len(shkey_list)):
-      d[shkey_list[i]] = i
-    cls._shkey2index = d
-
   def __init__(self, args):
-    if not self._shkey2index:
-      self._load_shapekeys()
-
     self.keychain = Utils.DictKeyChain([
-      "m_coeffs", 
-      self._shkey2index[args['shapekey']]
+      "m_coeffs",
+      ShapekeyStore.getIndex(args["shapekey"])
     ])
     
 _parser_classes = {
