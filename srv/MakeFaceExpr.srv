@@ -1,4 +1,0 @@
-string str
-float64 intensity
----
-MotorPos[] motor_positions

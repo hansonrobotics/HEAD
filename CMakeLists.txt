@@ -46,14 +46,15 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  MotorPos.msg
+  MakeFaceExpr.msg
+  MakeCoupledFaceExpr.msg
 )
 
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
   ValidFaceExprs.srv
-  MakeFaceExpr.srv
+  ValidCoupledFaceExprs.srv
 )
 
 ## Generate actions in the 'action' folder

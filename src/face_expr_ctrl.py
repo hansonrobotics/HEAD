@@ -3,11 +3,13 @@ import os
 import yaml
 from collections import OrderedDict
 import rospy
-from FaceExpr import FaceExpr
+import FaceExpr
 from ros_pololu_servo.msg import servo_pololu
-from basic_head_api.srv import ValidFaceExprs
-from basic_head_api.srv import MakeFaceExpr
-from basic_head_api.msg import MotorPos
+from basic_head_api.srv import *
+from basic_head_api.msg import *
+from ros_faceshift.msg import fsMsgTrackingState
+
+CONFIG_DIR = "config"
 
 #Extend yaml functionality
 def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
@@ -21,9 +23,10 @@ yaml.ordered_load = ordered_load
 #---
 
 def read_config(configname):
+  # Find the directory of this python file.
   dirname, filename = os.path.split(os.path.abspath(__file__))
 
-  stream = open(os.path.join(dirname, configname), 'r')
+  stream = open(os.path.join(dirname, CONFIG_DIR, configname), 'r')
   config = yaml.ordered_load(stream)
   stream.close()
   return config
@@ -34,57 +37,97 @@ def to_dict(list, key):
     result[entry[key]] = entry
   return result
 
+
+class PauCtrl:
+
+  def valid_exprs(self):
+    rospy.loginfo("Valid face expressions request.")
+    return {"exprnames": self.faces.keys()}
+
+  def make_face(self, exprname, intensity=1):
+    rospy.loginfo("Face request: %s of %s", intensity, exprname)
+    self.publisher.publish(
+      self.faces[exprname].new_msg(intensity)
+    )
+  
+  def __init__(self, publisher):
+    # Dictionary of expression names mapping to FaceExprPAU instances.
+    self.faces = FaceExpr.FaceExprPAU.from_expr_yaml(
+      read_config("pau_exprs.yaml")
+    )
+
+    # PAU commands will be sent to this publisher.
+    self.publisher = publisher
+
+
+class SpecificRobotCtrl:
+
+  def valid_exprs(self):
+    rospy.loginfo("Valid %s face expressions request.", self.robotname)
+    return {"exprnames": self.faces.keys()}
+
+  def make_face(self, exprname, intensity=1):
+    rospy.loginfo("Face request: %s of %s for %s", intensity, exprname, self.robotname)
+    for cmd in self.faces[exprname].new_msgs(intensity):
+      self.publisher.publish(cmd)
+
+  def __init__(self, robotname, publisher):
+    # Dictionary of expression names mapping to FaceExprMotors instances.
+    self.faces = FaceExpr.FaceExprMotors.from_expr_yaml(
+      read_config(robotname + "_exprs.yaml"),
+      to_dict(read_config(robotname + "_motors.yaml"), "name")
+    )
+
+    # Motor commands will be sent to this publisher.
+    self.publisher = publisher
+
+    self.robotname = robotname
+
+
 class FaceExpressionCtrl:
 
-  faces = None #Will hold a dictionary mapping expression names to FaceExpr instances.
-  motorid_to_name = None #Will hold a dictionary mapping motorid numbers to motor names.
-  pub = None #Will hold a cmd_pololu publisher
+  robot_controllers = {}
 
-  def handle_valid_face_exprs(self, req):
-    rospy.loginfo("Valid face expressions request.")
-    return {'exprnames': self.faces.keys()}
+  def get_robot_ctrl(self, robotname):
+    """
+    Creates a new SpecificRobotCtrl instance, if the given robotname hasn't
+    been accessed yet.
+    """
+    robotctrl = self.robot_controllers.get(robotname)
+    if robotctrl == None:
+      robotctrl = SpecificRobotCtrl(robotname, self.pub_pololu)
+      self.robot_controllers[robotname] = robotctrl
+    return robotctrl
 
-  def handle_face_request(self, req):
-    rospy.loginfo("Face request: {} of {}".format(req.intensity, req.str))
+  def valid_coupled_face_exprs(self, req):
+    return self.get_robot_ctrl(req.robotname).valid_exprs()
 
-    pololu_cmds = self.faces[req.str].msgs(req.intensity)
-
-    for cmd in pololu_cmds:
-      self.pub.publish(cmd)
-
-    # Return angles sent to ros_pololu_servo
-    return {'motor_positions': map(
-      lambda cmd: MotorPos(
-        self.motorid_to_name[cmd.id],
-        cmd.angle
-      ),
-      pololu_cmds
-    )}
-
-  def _fillFromConfig(self):
-    motors_yaml = to_dict(read_config("einstein_motors.yaml"), "name")
-    exprs_yaml = read_config("einstein.yaml")
-    
-    self.faces = FaceExpr.build_faces(
-      exprs_yaml,
-      motors_yaml
+  def coupled_face_request(self, req):
+    self.get_robot_ctrl(req.robotname).make_face(
+      req.expr.exprname,
+      req.expr.intensity
     )
-    
-    motorid_to_name = {}
-    for motorname in motors_yaml:
-      motorid_to_name[motors_yaml[motorname]['motorid']] = motorname
-    self.motorid_to_name = motorid_to_name
 
-
-  def init(self):
-    self._fillFromConfig()
-
+  def __init__(self):
     rospy.init_node('face_expr_ctrl')
-    rospy.Service('valid_face_exprs', ValidFaceExprs, self.handle_valid_face_exprs)
-    rospy.Service("make_face_expr", MakeFaceExpr, self.handle_face_request)
-    self.pub = rospy.Publisher('cmd_pololu', servo_pololu, queue_size=10)
+
+    # Topics and services for PAU expressions
+    self.pau_ctrl = PauCtrl(
+      rospy.Publisher("cmd_face_pau", fsMsgTrackingState, queue_size=10)
+    )
+    rospy.Service("valid_face_exprs", ValidFaceExprs, 
+      lambda req: self.pau_ctrl.valid_exprs()
+    )
+    rospy.Subscriber("make_face_expr", MakeFaceExpr,
+      lambda req: self.pau_ctrl.make_face(req.exprname, req.intensity)
+    )
+
+    # Topics and services for robot-specific motor-coupled expressions.
+    self.pub_pololu = rospy.Publisher("cmd_pololu", servo_pololu, queue_size=10)
+    rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
+    rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
 
 if __name__ == '__main__':
-    FaceExpressionCtrl().init()
+    FaceExpressionCtrl()
     rospy.loginfo("Started")
     rospy.spin()

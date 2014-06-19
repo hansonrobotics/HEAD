@@ -124,7 +124,7 @@ eureka:
   EyeOpen_R: 1
   BrowsU_C: 1
   JawOpen: 0.7
-  MoutSmile_L: 1
+  MouthSmile_L: 1
   MouthSmile_R: 1
   LipsUpperUp: 0.5
   LipsLowerDown: 0.5
