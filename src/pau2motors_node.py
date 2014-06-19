@@ -20,6 +20,6 @@ class Pau2MotorsNode:
     self.pub_pololu = rospy.Publisher('cmd_pololu', servo_pololu, queue_size=10)
 
 if __name__ == '__main__':
-    Pau2MotorsNode(Utils.read_yaml("einstein.yaml"))
+    Pau2MotorsNode(Utils.read_yaml("config/einstein.yaml"))
     rospy.loginfo("Started")
     rospy.spin()

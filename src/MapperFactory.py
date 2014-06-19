@@ -9,24 +9,36 @@ class MapperBase:
   def map(self, val):
     raise NotImplementedError
 
-  def __init__(self, args):
+  def __init__(self, args, motor_entry):
     """
     On construction mapper classes are given the 'args' object (property of
     'binding') parsed from the yaml config file.
+
+    And the whole 'motor_entry' (parent of 'args') mainly to reach 'min' and
+    'max' properties.
     """
     pass
 
 class Linear(MapperBase):
-  def map(self, val):
-    return val * self.args['scale'] + self.args['translate']
 
-  def __init__(self, args):
-    self.args = args
-    pass
+  def map(self, val):
+    return (val + self.pretranslate) * self.scale + self.posttranslate
+
+  def __init__(self, args, motor_entry):
+    if (args.has_key('scale') and args.has_key('translate')):
+      self.pretranslate = 0
+      self.scale = args['scale']
+      self.posttranslate = args['translate']
+
+    elif (args.has_key('min') and args.has_key('max'):
+      # Map the given 'min' and 'max' to the motor's 'min' and 'max'
+      self.pretranslate = -args['min']
+      self.scale = (motor_entry['max']-motor_entry['min'])/(args['max']-args['min'])
+      self.posttranslate = motor_entry['min']
 
 _mapper_classes = {
   "linear": Linear
 }
 
-def build(name, args):
-  return _mapper_classes[name](args)
+def build(name, motor_entry):
+  return _mapper_classes[name](args, motor_entry)
