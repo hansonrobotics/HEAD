@@ -10,9 +10,9 @@ sad:
   brow: 0.366
 
 surprised:
-  smile: 0
-  jaw: 0
-  brow: 1
+  smile: 0.589
+  jaw: 0.824
+  brow: 0
 
 evil:
   smile: 0

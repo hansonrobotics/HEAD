@@ -106,6 +106,7 @@ violent:
   BrowsD_R: 1
   BrowsU_L: 0.5
   BrowsU_R: 0.5
+  JawOpen: 1
   MouthFrown_L: 1
   MouthFrown_R: 1
   LipsStretch_L: 1
