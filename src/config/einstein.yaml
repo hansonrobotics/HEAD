@@ -26,6 +26,9 @@
       shapekey: BrowsD_L;BrowsD_R;BrowsU_C
       imin: 0.5
       terms:
+        #(D_L, D_R, U_C) = (1, 1, 1) is the saddest brow possible,
+        #(D_L, D_R, U_C) = (1, 1, 0) is an angry brow,
+        #(D_L, D_R, U_C) = (0, 0, 1) is a high (happy, surprised) brow.
         - {min: 0.413, max: 1, imax: 0.75}
         - {min: 0.413, max: 1, imax: 0.75}
         - {min: 0, max: 1, imax: 0}
@@ -48,6 +51,7 @@
         - {min: 0, max: 1, imax: 0.25}
         - {min: 0, max: 1, imax: 0.75}
         - {min: 0, max: 1, imax: 0.75}
+        #Hold back on the smile when jaw is widely opened.
         - {min: 0.6, max: 0.8, imax: 0.7}
   min: -1.55
   max: 1.55
