@@ -23,21 +23,29 @@ class ParserBase:
 
 class GetProperty(ParserBase):
   def get_coeff(self, msg):
-    return self.keychain.get_from(msg)
+    coeffs = map(
+      lambda kc: kc.get_from(msg),
+      self.keychains
+    )
+    return coeffs if len(coeffs) > 1 else coeffs[0]
 
   def __init__(self, args):
-    self.keychain = Utils.DictKeyChain(
-      args["property"].split(":")
+    self.keychains = map(
+      lambda chainstr: Utils.DictKeyChain(chainstr.split(":")),
+      args["property"].split(";") 
     )
 
 class FsShapeKey(GetProperty):
   """Construct GetProperty parser from a blendshape name (shapekey)."""
 
   def __init__(self, args):
-    self.keychain = Utils.DictKeyChain([
-      "m_coeffs",
-      ShapekeyStore.getIndex(args["shapekey"])
-    ])
+    self.keychains = map(
+      lambda shapekey: Utils.DictKeyChain([
+        "m_coeffs",
+        ShapekeyStore.getIndex(shapekey)
+      ]),
+      args["shapekey"].split(";")
+    )
     
 _parser_classes = {
   "getproperty": GetProperty,
