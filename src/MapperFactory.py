@@ -77,5 +77,5 @@ _mapper_classes = {
   "weightedsum": WeightedSum
 }
 
-def build(name, motor_entry):
+def build(name, args, motor_entry):
   return _mapper_classes[name](args, motor_entry)

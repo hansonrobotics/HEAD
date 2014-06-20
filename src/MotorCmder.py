@@ -39,6 +39,6 @@ class MotorCmder:
     )
     self.mapper = MapperFactory.build(
       binding_obj["function"],
-      binding_obj["args"]
+      binding_obj["args"], motor_entry
     )
     self.motor_entry = motor_entry
