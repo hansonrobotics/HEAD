@@ -14,12 +14,12 @@ var CommonUI = new function() {
     return;
   }
 
-  this.buildExpressionButtons = function(container) {
+  this.buildExpressionButtons = function(container, classStr) {
     function addBtn(btnObj) {
       btn = $('<button type="button" class="btn">'+btnObj['label']+'</button>');
       btn.click(function(){
         container.trigger("exprbtnclick", btnObj);
-      });
+      }).addClass(classStr);
       container.append(btn);
       return btn;
     }

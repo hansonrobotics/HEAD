@@ -15,6 +15,8 @@
 <script src="js/jquery.ui.touch-punch.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="crosshair-slider.js"></script>
+<script src="robo-interface.js"></script>
+<script src="common-ui.js"></script>
 
 <style>
   body {
@@ -70,7 +72,7 @@
     color:#000;
   }
   #btnStack {
-    margin: 5px;
+    margin: 2px;
   }
   .hidden {
     display: none;
@@ -81,40 +83,6 @@
 
   function radToDeg(val) {return val*180/Math.PI;}
   function degToRad(val) {return val*Math.PI/180;}
-
-  var motorConf; //Holds the decoded config file
-  var ros;
-  var cmdtopic;
-  
-  /** Updates all UI and sends a ROS message **/
-  function setMotorPos(confEntry, angle, speed, acc) {
-    var degAngle = Math.round(radToDeg(angle));
-    confEntry.element.find(".slider").slider("value", degAngle);
-    confEntry.element.find(".slVal").text(degAngle);
-
-    sendCmdPololu(confEntry, angle, speed, acc);
-  }
-
-  function calcAngle(coeff, confEntry) {
-    angle = coeff * (confEntry.max - confEntry.min) + confEntry.min;
-    return Math.min(Math.max(angle, confEntry.min), confEntry.max);
-  }
-
-  function sendCmdPololu(confEntry, angle, speed, acc) {
-    var cmd = new ROSLIB.Message({
-      id: confEntry.motorid,
-      angle: Math.min(Math.max(angle, confEntry.min), confEntry.max),
-      speed: speed || confEntry.speed,
-      acceleration: acc || confEntry.acceleration
-    });
-    cmdtopic.publish(cmd);
-  }
-
-  function sendDefaultPololu() {
-    for (var i = 0; i < motorConf.length; i++) {
-      sendCmdPololu(motorConf[i], motorConf[i].default);
-    };
-  }
 
   function addSliderBlock(confEntry) {
     var sliderBlock = $("#sliderTemplate").clone();
@@ -141,7 +109,7 @@
       max: degMax,
       slide: function(e, ui) {
         slVal.text(ui.value);
-        sendCmdPololu(confEntry, degToRad(ui.value));
+        RoboInterface.sendMotorCmd(confEntry, degToRad(ui.value))
       }
     });
 
@@ -149,71 +117,39 @@
     sliderBlock.appendTo("#sliderStack");
   }
 
-  function createUI() {
+  //Create UI that requires a loaded config file.
+  function createUIconf() {
     //Create sliders
+    motorConf = RoboInterface.motorConf
     for (var i = 0; i < motorConf.length; i++) {
       if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
         addSliderBlock(motorConf[i]);
     };
 
     //Create crosshair
-    var yawConf = getConf("neck_base");
-    var pitchConf = getConf("neck_pitch");
-    $("#crosshairsl").crosshairsl({
-      xmin: Math.floor(radToDeg(yawConf.min)),
-      xmax: Math.ceil(radToDeg(yawConf.max)),
-      xval: Math.round(radToDeg(yawConf.default)),
-      ymin: Math.floor(radToDeg(pitchConf.min)),
-      ymax: Math.ceil(radToDeg(pitchConf.max)),
-      yval: Math.round(radToDeg(pitchConf.default)),
-      change: function(e, ui) {
-        sendCmdPololu(yawConf, degToRad(ui.xval));
-        sendCmdPololu(pitchConf, degToRad(ui.yval));
-      }
-    });
+    CommonUI.buildCrosshairSlider($("#crosshairsl"));
   }
 
-  function connectROS() {
-    //Connect to rosbridge
-    ros = new ROSLIB.Ros({
-      url : "ws://" + document.domain + ":9090"
-    }).on("connection", function(e){
-      $("#status").css("color", "#88FF88");
-      $("#status").html("&#9679; Connected");
-      sendDefaultPololu();
-    }).on("error", function(e){
-      $("#status").css("color", "#FFAAAA");
-      $("#status").html("&#9679; No connection");
-    });
-
-    //Publish topic
-    cmdtopic = new ROSLIB.Topic({
-      ros : ros,
-      name : '/cmd_pololu',
-      messageType : 'ros_pololu_servo/servo_pololu'
-    });
-  }
-
-  function getConf(name) {
-    for (var i = 0; i < motorConf.length; i++) {
-      if (motorConf[i].name == name)
-        return motorConf[i];
-    };
-    return;
+  //Create UI that requires a ROS connection.
+  function createUIros() {
+    //Create buttons
+    btnStack = $("#btnStack");
+    btnStack.on("exprbtnclick", function(e, nameobj) {
+      RoboInterface.makeFaceExpr(nameobj.name, 1.0);
+    })
+    CommonUI.buildExpressionButtons(btnStack, "btn-warning");
   }
 
   $(function() {
-    $("body")
-    .on("configload", createUI)
-    .on("configload", connectROS);
-
-    $.ajax({
-        url: "config.yaml",
-        dataType: "text",
-        success: function(data) {
-          motorConf = jsyaml.load(data);
-          $("body").trigger("configload");
-        }
+    RoboInterface.$.on("configload", createUIconf);
+    RoboInterface.connect("ws://" + document.domain + ":9090")
+    .$.on("connection", function(e) {
+      $("#status").css("color", "#88FF88");
+      $("#status").html("&#9679; Connected");
+      createUIros()
+    }).on("error", function(e) {
+      $("#status").css("color", "#FFAAAA");
+      $("#status").html("&#9679; No connection");
     });
   });
 </script>
@@ -234,82 +170,7 @@
       </div>
     </div>
     <div id="crosshairsl"></div>
-    <div id="btnStack">
-      <button type="button" id="btn-neutral" class="btn btn-warning">Neutral</button>
-      <button type="button" id="btn-happy" class="btn btn-warning">Happy</button>
-      <button type="button" id="btn-sad" class="btn btn-warning">Sad</button>
-      <button type="button" id="btn-surprised" class="btn btn-warning">Surprised</button>
-      <button type="button" id="btn-evil" class="btn btn-warning">Evil</button>
-      <button type="button" id="btn-afraid" class="btn btn-warning">Afraid</button>
-      <button type="button" id="btn-horrified" class="btn btn-warning">Horrified</button>
-      <button type="button" id="btn-annoyed" class="btn btn-warning">Annoyed</button>
-      <button type="button" id="btn-innocent" class="btn btn-warning">Innocent</button>
-      <button type="button" id="btn-violent" class="btn btn-warning">Violent</button>
-      <button type="button" id="btn-eureka" class="btn btn-warning">Eureka!</button>
-    </div>
+    <div id="btnStack"></div>
   </div>
-  <script type="text/javascript">
-    $("body").on("configload", function(){
-      var speed = 30;
-      var smileConf = getConf("smile");
-      var jawConf = getConf("jaw");
-      var browConf = getConf("brow");
-      $('#btn-neutral').click(function(){
-        setMotorPos(smileConf, smileConf.default, speed);
-        setMotorPos(jawConf, jawConf.default, speed);
-        setMotorPos(browConf, browConf.default, speed);
-      });
-      $('#btn-happy').click(function(){
-        setMotorPos(smileConf, calcAngle(0, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(0.567, jawConf), speed);
-        setMotorPos(browConf, calcAngle(0, browConf), speed);
-      });
-      $('#btn-sad').click(function(){
-        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
-        setMotorPos(browConf, calcAngle(0.366, browConf), speed);
-      });
-      $('#btn-surprised').click(function(){
-        setMotorPos(smileConf, calcAngle(0.589, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(0.824, jawConf), speed);
-        setMotorPos(browConf, calcAngle(0, browConf), speed);
-      });
-      $('#btn-evil').click(function(){
-        setMotorPos(smileConf, calcAngle(0, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
-        setMotorPos(browConf, calcAngle(1, browConf), speed);
-      });
-      $('#btn-afraid').click(function(){
-        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
-        setMotorPos(browConf, calcAngle(0, browConf), speed);
-      });
-      $('#btn-horrified').click(function(){
-        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(0.661, jawConf), speed);
-        setMotorPos(browConf, calcAngle(0, browConf), speed);
-      });
-      $('#btn-annoyed').click(function(){
-        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
-        setMotorPos(browConf, calcAngle(1, browConf), speed);
-      });
-      $('#btn-innocent').click(function(){
-        setMotorPos(smileConf, calcAngle(0, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(0, jawConf), speed);
-        setMotorPos(browConf, calcAngle(0, browConf), speed);
-      });
-      $('#btn-violent').click(function(){
-        setMotorPos(smileConf, calcAngle(1, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(1, jawConf), speed);
-        setMotorPos(browConf, calcAngle(1, browConf), speed);
-      });
-      $('#btn-eureka').click(function(){
-        setMotorPos(smileConf, calcAngle(0.126, smileConf), speed);
-        setMotorPos(jawConf, calcAngle(1, jawConf), speed);
-        setMotorPos(browConf, calcAngle(0, browConf), speed);
-      });
-    });
-  </script>
 </body>
 </html>

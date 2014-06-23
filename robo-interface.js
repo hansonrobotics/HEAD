@@ -25,14 +25,12 @@ var RoboInterface = {
     );
   },
 
-  makeFaceExpr: function(faceStr, intensity, callback) {
-    callback = callback || function(){};
-    this.makeFaceExprClient.callService(
-      new ROSLIB.ServiceRequest({
-        str:faceStr,
+  makeFaceExpr: function(faceStr, intensity) {
+    this.makeFaceExprTopic.publish(
+      new ROSLIB.Message({
+        exprname:faceStr,
         intensity:intensity
-      }),
-      callback
+      })
     );
   },
 
@@ -56,17 +54,17 @@ var RoboInterface = {
         name:'/cmd_pololu',
         messageType:'ros_pololu_servo/servo_pololu'
       });
+      RoboInterface.makeFaceExprTopic = new ROSLIB.Topic({
+        ros:ros,
+        name:'/make_face_expr',
+        messageType:'basic_head_api/MakeFaceExpr'
+      })
 
       //Set up services
       RoboInterface.validFaceExprsClient = new ROSLIB.Service({
         ros:ros,
         name:'/valid_face_exprs',
         serviceType:'basic_head_api/ValidFaceExprs'
-      });
-      RoboInterface.makeFaceExprClient = new ROSLIB.Service({
-        ros:ros,
-        name:'/make_face_expr',
-        serviceType:'basic_head_api/MakeFaceExpr'
       });
     };
     this.$.on("configload", connectROS);
