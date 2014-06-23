@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 import Utils
-from ros_faceshift.msg import *
+from pau2motors.msg import *
 from ros_pololu_servo.msg import servo_pololu
 from Pau2Motors import Pau2Motors
 
