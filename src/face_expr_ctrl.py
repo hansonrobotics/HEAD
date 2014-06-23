@@ -7,7 +7,7 @@ import FaceExpr
 from ros_pololu_servo.msg import servo_pololu
 from basic_head_api.srv import *
 from basic_head_api.msg import *
-from ros_faceshift.msg import fsMsgTrackingState
+from pau2motors.msg import fsMsgTrackingState
 
 CONFIG_DIR = "config"
 

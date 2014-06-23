@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from MotorCmder import MotorCmder
-from ros_faceshift.msg import fsMsgTrackingState
+from pau2motors.msg import fsMsgTrackingState
 import ShapekeyStore
 import copy
 import rospy
