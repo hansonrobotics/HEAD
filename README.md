@@ -14,6 +14,7 @@ Download and run a full docker image:
 Or for latest changes build the Dockerfile inside or install the following packages manually:
 
 + **ros_servo_pololu**: https://github.com/hansonrobotics/ros_pololu_servo
++ **pau2motors**: https://github.com/hansonrobotics/pau2motors
 + **basic_head_api**: https://github.com/hansonrobotics/basic_head_api
 + **Rosbridge**: `apt-get install ros-indigo-rosbridge-server`
 

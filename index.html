@@ -110,7 +110,9 @@
       slide: function(e, ui) {
         slVal.text(ui.value);
         RoboInterface.sendMotorCmd(confEntry, degToRad(ui.value))
-      }
+      },
+      start: function(e, ui) {confEntry.isActive = true;},
+      stop: function(e, ui) {confEntry.isActive = false;}
     });
 
     sliderBlock.removeClass("hidden");
@@ -125,6 +127,22 @@
       if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
         addSliderBlock(motorConf[i]);
     };
+    //Update UI according to messages heard on cmd_pololu
+    RoboInterface.$.on("onMotorCmd", function(e, msgObj) {
+      var msg = msgObj.msg;
+      var confEntry = msgObj.confEntry;
+
+      //Ignore crosshair motor commands
+      if (confEntry.element == undefined)
+        return;
+
+      if (confEntry.isActive)
+        return;
+
+      var degAngle = Math.round(radToDeg(msg.angle));
+      confEntry.element.find(".slider").slider("value", degAngle);
+      confEntry.element.find(".slVal").text(degAngle);
+    });
 
     //Create crosshair
     CommonUI.buildCrosshairSlider($("#crosshairsl"));

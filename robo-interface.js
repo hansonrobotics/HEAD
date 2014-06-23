@@ -60,6 +60,14 @@ var RoboInterface = {
         messageType:'basic_head_api/MakeFaceExpr'
       })
 
+      //Subscribe to topic
+      RoboInterface.motorCmdTopic.subscribe(function(msg) {
+        RoboInterface.$.trigger("onMotorCmd", {
+          msg: msg,
+          confEntry: getConfFromID(msg.id)
+        });
+      });
+
       //Set up services
       RoboInterface.validFaceExprsClient = new ROSLIB.Service({
         ros:ros,
@@ -79,5 +87,21 @@ var RoboInterface = {
     });
 
     return this;
-  }
+  },
 };
+
+//Utility function
+var getConfFromID = (function() {
+  var motorID2Conf = {};
+
+  RoboInterface.$.on("configload", function() {
+    var motorConf = RoboInterface.motorConf;
+    for (var i = 0; i < motorConf.length; i++) {
+      motorID2Conf[motorConf[i].motorid] = motorConf[i];
+    };
+  });
+
+  return function (id) {
+    return motorID2Conf[id];
+  };
+})()
