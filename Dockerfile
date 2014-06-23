@@ -25,6 +25,7 @@ RUN git clone https://github.com/hansonrobotics/ros_pololu_servo
 RUN apt-get install -y ros-indigo-rosbridge-server
 
 WORKDIR /catkin_ws/src
+RUN git clone https://github.com/hansonrobotics/pau2motors.git
 RUN git clone https://github.com/hansonrobotics/basic_head_api.git
 RUN git clone https://github.com/hansonrobotics/ros_motors_webui.git
 
