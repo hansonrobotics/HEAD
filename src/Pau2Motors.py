@@ -8,9 +8,9 @@ class Pau2Motors:
       self.motor_commanders
     )
 
-  def __init__(self, robot_yaml):
+  def __init__(self, motors_yaml):
     motor_commanders = []
 
-    for motor_entry in robot_yaml:
+    for motor_entry in motors_yaml:
       motor_commanders.append(MotorCmder(motor_entry))
     self.motor_commanders = motor_commanders

@@ -1,104 +1,109 @@
-- name: jaw
-  enabled: true
-  motorid: 17
-  binding:
-    parser: fsshapekey
-    function: weightedsum
-    args:
-      shapekey: JawOpen;LipsLowerOpen;LipsLowerDown
-      imin: 0
-      terms:
-        - {min: 0, max: 0.8, imax: 1}
-        - {min: 0, max: 1, imax: 0.2}
-        - {min: 0, max: 1, imax: 0.4}
-  min: -0.838
-  max: 0.45
-  speed: 200
-  acceleration: 100
+topics:
+  cmd_face_pau: jaw;brow;smile
+  cmd_neck_pau: neck_pitch;neck_roll;neck_base
 
-- name: brow
-  enabled: true
-  motorid: 16
-  binding:
-    parser: fsshapekey
-    function: weightedsum
-    args:
-      shapekey: BrowsD_L;BrowsD_R;BrowsU_C
-      imin: 0.5
-      terms:
-        #(D_L, D_R, U_C) = (1, 1, 1) is the saddest brow possible,
-        #(D_L, D_R, U_C) = (1, 1, 0) is an angry brow,
-        #(D_L, D_R, U_C) = (0, 0, 1) is a high (happy, surprised) brow.
-        - {min: 0.413, max: 1, imax: 0.75}
-        - {min: 0.413, max: 1, imax: 0.75}
-        - {min: 0, max: 1, imax: 0}
-  min: -1.36
-  max: -0.166
-  speed: 200
-  acceleration: 100
+motors:
+  - name: jaw
+    enabled: true
+    motorid: 17
+    binding:
+      parser: fsshapekey
+      function: weightedsum
+      args:
+        shapekey: JawOpen;LipsLowerOpen;LipsLowerDown
+        imin: 0
+        terms:
+          - {min: 0, max: 0.8, imax: 1}
+          - {min: 0, max: 1, imax: 0.2}
+          - {min: 0, max: 1, imax: 0.4}
+    min: -0.838
+    max: 0.45
+    speed: 200
+    acceleration: 100
 
-- name: smile
-  enabled: true
-  motorid: 15
-  binding:
-    parser: fsshapekey
-    function: weightedsum
-    args:
-      shapekey: MouthSmile_L;MouthSmile_R;MouthFrown_L;MouthFrown_R;JawOpen
-      imin: 0.5
-      terms:
-        - {min: 0, max: 1, imax: 0.25}
-        - {min: 0, max: 1, imax: 0.25}
-        - {min: 0, max: 1, imax: 0.75}
-        - {min: 0, max: 1, imax: 0.75}
-        #Hold back on the smile when jaw is widely opened.
-        - {min: 0.6, max: 0.8, imax: 0.7}
-  min: -1.55
-  max: 1.55
-  speed: 255
-  acceleration: 10
+  - name: brow
+    enabled: true
+    motorid: 16
+    binding:
+      parser: fsshapekey
+      function: weightedsum
+      args:
+        shapekey: BrowsD_L;BrowsD_R;BrowsU_C
+        imin: 0.5
+        terms:
+          #(D_L, D_R, U_C) = (1, 1, 1) is the saddest brow possible,
+          #(D_L, D_R, U_C) = (1, 1, 0) is an angry brow,
+          #(D_L, D_R, U_C) = (0, 0, 1) is a high (happy, surprised) brow.
+          - {min: 0.413, max: 1, imax: 0.75}
+          - {min: 0.413, max: 1, imax: 0.75}
+          - {min: 0, max: 1, imax: 0}
+    min: -1.36
+    max: -0.166
+    speed: 200
+    acceleration: 100
 
-- name: neck_pitch
-  enabled: true
-  motorid: 3
-  binding:
-    parser: getproperty
-    function: linear
-    args:
-      property: m_headRotation:x
-      min: 0.25
-      max: 0
-  min: 0
-  max: 0.5
-  speed: 200
-  acceleration: 10
+  - name: smile
+    enabled: true
+    motorid: 15
+    binding:
+      parser: fsshapekey
+      function: weightedsum
+      args:
+        shapekey: MouthSmile_L;MouthSmile_R;MouthFrown_L;MouthFrown_R;JawOpen
+        imin: 0.5
+        terms:
+          - {min: 0, max: 1, imax: 0.25}
+          - {min: 0, max: 1, imax: 0.25}
+          - {min: 0, max: 1, imax: 0.75}
+          - {min: 0, max: 1, imax: 0.75}
+          #Hold back on the smile when jaw is widely opened.
+          - {min: 0.6, max: 0.8, imax: 0.7}
+    min: -1.55
+    max: 1.55
+    speed: 255
+    acceleration: 10
 
-- name: neck_roll
-  enabled: true
-  motorid: 2
-  binding:
-    parser: getproperty
-    function: linear
-    args:
-      property: m_headRotation:z
-      min: 0
-      max: -0.25
-  min: 0
-  max: 0.5
-  speed: 200
-  acceleration: 10
+  - name: neck_pitch
+    enabled: true
+    motorid: 3
+    binding:
+      parser: getproperty
+      function: linear
+      args:
+        property: m_headRotation:x
+        min: 0.25
+        max: 0
+    min: 0
+    max: 0.5
+    speed: 200
+    acceleration: 10
 
-- name: neck_base
-  enabled: true
-  motorid: 23
-  binding:
-    parser: getproperty
-    function: linear
-    args:
-      property: m_headRotation:y
-      min: 0
-      max: 0.5
-  min: 0
-  max: 0.5
-  speed: 255
-  acceleration: 10
+  - name: neck_roll
+    enabled: true
+    motorid: 2
+    binding:
+      parser: getproperty
+      function: linear
+      args:
+        property: m_headRotation:z
+        min: 0
+        max: -0.25
+    min: 0
+    max: 0.5
+    speed: 200
+    acceleration: 10
+
+  - name: neck_base
+    enabled: true
+    motorid: 23
+    binding:
+      parser: getproperty
+      function: linear
+      args:
+        property: m_headRotation:y
+        min: 0
+        max: 0.5
+    min: 0
+    max: 0.5
+    speed: 255
+    acceleration: 10
