@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 import os
 import yaml
-from collections import OrderedDict
 import rospy
+from collections import OrderedDict
 import FaceExpr
 from ros_pololu_servo.msg import servo_pololu
 from basic_head_api.srv import *
 from basic_head_api.msg import *
-from pau2motors.msg import fsMsgTrackingState
+from pau2motors.msg import *
+import Utils
 
 CONFIG_DIR = "config"
 
@@ -37,7 +38,6 @@ def to_dict(list, key):
     result[entry[key]] = entry
   return result
 
-
 class PauCtrl:
 
   def valid_exprs(self):
@@ -46,18 +46,27 @@ class PauCtrl:
 
   def make_face(self, exprname, intensity=1):
     rospy.loginfo("Face request: %s of %s", intensity, exprname)
-    self.publisher.publish(
+    self.pub_face.publish(
       self.faces[exprname].new_msg(intensity)
     )
+
+  def point_head(self, req):
+    rospy.loginfo("Point head (yaw: %s, pitch %s)", req.yaw, req.pitch)
+    msg = fsMsgTrackingState()
+    msg.m_headRotation = fsQuaternionf(
+      *Utils.euler2quaternion(req.yaw, req.pitch, 0)
+    )
+    self.pub_neck.publish(msg)
   
-  def __init__(self, publisher):
+  def __init__(self, pub_face, pub_neck):
     # Dictionary of expression names mapping to FaceExprPAU instances.
     self.faces = FaceExpr.FaceExprPAU.from_expr_yaml(
       read_config("pau_exprs.yaml")
     )
 
-    # PAU commands will be sent to this publisher.
-    self.publisher = publisher
+    # PAU commands will be sent to these publishers
+    self.pub_face = pub_face
+    self.pub_neck = pub_neck
 
 
 class SpecificRobotCtrl:
@@ -84,7 +93,7 @@ class SpecificRobotCtrl:
     self.robotname = robotname
 
 
-class FaceExpressionCtrl:
+class HeadCtrl:
 
   robot_controllers = {}
 
@@ -109,11 +118,12 @@ class FaceExpressionCtrl:
     )
 
   def __init__(self):
-    rospy.init_node('face_expr_ctrl')
+    rospy.init_node('head_ctrl')
 
     # Topics and services for PAU expressions
     self.pau_ctrl = PauCtrl(
-      rospy.Publisher("cmd_face_pau", fsMsgTrackingState, queue_size=10)
+      rospy.Publisher("cmd_face_pau", fsMsgTrackingState, queue_size=10),
+      rospy.Publisher("cmd_neck_pau", fsMsgTrackingState, queue_size=10)
     )
     rospy.Service("valid_face_exprs", ValidFaceExprs, 
       lambda req: self.pau_ctrl.valid_exprs()
@@ -121,6 +131,7 @@ class FaceExpressionCtrl:
     rospy.Subscriber("make_face_expr", MakeFaceExpr,
       lambda req: self.pau_ctrl.make_face(req.exprname, req.intensity)
     )
+    rospy.Subscriber("point_head", PointHead, self.pau_ctrl.point_head)
 
     # Topics and services for robot-specific motor-coupled expressions.
     self.pub_pololu = rospy.Publisher("cmd_pololu", servo_pololu, queue_size=10)
@@ -128,6 +139,6 @@ class FaceExpressionCtrl:
     rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
 
 if __name__ == '__main__':
-    FaceExpressionCtrl()
+    HeadCtrl()
     rospy.loginfo("Started")
     rospy.spin()

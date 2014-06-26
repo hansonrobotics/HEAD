@@ -48,6 +48,7 @@ add_message_files(
   FILES
   MakeFaceExpr.msg
   MakeCoupledFaceExpr.msg
+  PointHead.msg
 )
 
 ## Generate services in the 'srv' folder
