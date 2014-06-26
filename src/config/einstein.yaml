@@ -7,10 +7,11 @@ motors:
     enabled: true
     motorid: 17
     binding:
-      parser: fsshapekey
-      function: weightedsum
-      args:
+      parser:
+        name: fshapekey
         shapekey: JawOpen;LipsLowerOpen;LipsLowerDown
+      function:
+        name: weightedsum
         imin: 0
         terms:
           - {min: 0, max: 0.8, imax: 1}
@@ -25,10 +26,11 @@ motors:
     enabled: true
     motorid: 16
     binding:
-      parser: fsshapekey
-      function: weightedsum
-      args:
+      parser:
+        name: fsshapekey
         shapekey: BrowsD_L;BrowsD_R;BrowsU_C
+      function:
+        name: weightedsum
         imin: 0.5
         terms:
           #(D_L, D_R, U_C) = (1, 1, 1) is the saddest brow possible,
@@ -46,10 +48,11 @@ motors:
     enabled: true
     motorid: 15
     binding:
-      parser: fsshapekey
-      function: weightedsum
-      args:
+      parser:
+        name: fsshapekey
         shapekey: MouthSmile_L;MouthSmile_R;MouthFrown_L;MouthFrown_R;JawOpen
+      function:
+        name: weightedsum
         imin: 0.5
         terms:
           - {min: 0, max: 1, imax: 0.25}
@@ -67,12 +70,15 @@ motors:
     enabled: true
     motorid: 3
     binding:
-      parser: getproperty
-      function: linear
-      args:
-        property: m_headRotation:x
-        min: 0.25
-        max: 0
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: x
+        - name: linear
+          min: 0.25
+          max: 0
     min: 0
     max: 0.5
     speed: 200
@@ -82,12 +88,15 @@ motors:
     enabled: true
     motorid: 2
     binding:
-      parser: getproperty
-      function: linear
-      args:
-        property: m_headRotation:z
-        min: 0
-        max: -0.25
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: z
+        - name: linear
+          min: 0
+          max: -0.25
     min: 0
     max: 0.5
     speed: 200
@@ -97,12 +106,15 @@ motors:
     enabled: true
     motorid: 23
     binding:
-      parser: getproperty
-      function: linear
-      args:
-        property: m_headRotation:y
-        min: 0
-        max: 0.5
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: y
+        - name: linear
+          min: 0
+          max: 0.5
     min: 0
     max: 0.5
     speed: 255

@@ -34,11 +34,10 @@ class MotorCmder:
     binding_obj = motor_entry["binding"]
 
     self.parser = ParserFactory.build(
-      binding_obj["parser"],
-      binding_obj["args"]
+      binding_obj["parser"]
     )
     self.mapper = MapperFactory.build(
       binding_obj["function"],
-      binding_obj["args"], motor_entry
+      motor_entry
     )
     self.motor_entry = motor_entry

@@ -1,3 +1,5 @@
+import math
+
 class MapperBase:
   """
   This is an abstract class. Methods 'map' and '__init__' are to be
@@ -11,13 +13,23 @@ class MapperBase:
 
   def __init__(self, args, motor_entry):
     """
-    On construction mapper classes are given the 'args' object (property of
-    'binding') parsed from the yaml config file.
+    On construction mapper classes are given the 'args' object (property
+    'function' of 'binding') parsed from the yaml config file.
 
-    And the whole 'motor_entry' (parent of 'args') mainly to reach 'min' and
-    'max' properties.
+    And the whole 'motor_entry' (parent of 'binding') mainly to reach 'min'
+    and 'max' properties.
     """
     pass
+
+class Composite(MapperBase):
+
+  def map(self, val):
+    for mapper_instance in self.mapper_list:
+      val = mapper_instance.map(val)
+    return val
+
+  def __init__(self, mapper_list):
+    self.mapper_list = mapper_list
 
 class Linear(MapperBase):
 
@@ -71,11 +83,34 @@ class WeightedSum(MapperBase):
     )
     self.termargs = args["terms"]
 
+class Quaternion2Euler(MapperBase):
+
+  def __init__(self, args, motor_entry):
+    funcsByAxis = {
+      'x': lambda q: math.atan2(
+        -2*(q['y']*q['z']-q['w']*q['x']),
+        q['w']*q['w']-q['x']*q['x']-q['y']*q['y']+q['z']*q['z']
+      ),
+      'y': lambda q: math.asin(
+        2*(q['x']*q['z'] + q['w']*q['y'])
+      ),
+      'z': lambda q: math.atan2(
+        -2*(q['x']*q['y']-q['w']*q['z']),
+        q['w']*q['w']+q['x']*q['x']-q['y']*q['y']-q['z']*q['z']
+      )
+    }
+    self.map = funcsByAxis[args['axis'].lower()]
 
 _mapper_classes = {
   "linear": Linear,
-  "weightedsum": WeightedSum
+  "weightedsum": WeightedSum,
+  "quaternion2euler": Quaternion2Euler
 }
 
-def build(name, args, motor_entry):
-  return _mapper_classes[name](args, motor_entry)
+def build(yamlobj, motor_entry):
+  if isinstance(yamlobj, dict):
+    return _mapper_classes[yamlobj["name"]](yamlobj, motor_entry)
+  elif isinstance(yamlobj, list):
+    return Composite(
+      [build(func_entry, motor_entry) for func_entry in yamlobj]
+    )
