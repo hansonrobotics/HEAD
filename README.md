@@ -3,7 +3,9 @@
 ###Listens to topics:
 + `/make_face_expr` for msg **MakeFaceExpr.msg** that will trigger the requested PAU face expression to be sent to `/cmd_face_pau`.
 
-+ `/make_coupled_face_expr` for msg **MakeCoupledFaceExpr.msg** that will trigger motor commands to be sent to `/cmd_pololu` for the requested face expression.
++ `/make_coupled_face_expr` for msg **MakeCoupledFaceExpr.msg** that will trigger motor commands to be sent to `/cmd_pololu` for the requested robot and face expression.
+
++ `/point_face` for msg **PointHead.msg** that will build and send a head rotation msg in quaternion format to `/cmd_neck_pau`.
 
 ###Provided services:
 + Call `/valid_face_exprs` with **ValidFaceExprs.srv** to request available face expression strings for use in **MakeFaceExpr.msg**.
