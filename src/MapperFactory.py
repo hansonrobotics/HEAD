@@ -86,17 +86,27 @@ class WeightedSum(MapperBase):
 class Quaternion2Euler(MapperBase):
 
   def __init__(self, args, motor_entry):
+
+    # These functions convert a quaternion to intrinsic Y-Z-X (or extrinsic
+    # X-Z-Y) rotations in that order. So if X axis is the line of sight, Y -
+    # vertical and Z - horizontal axes, Y, Z and X rotations will represent
+    # Yaw, Pitch and Roll respectively. For a different rotation order, swap
+    # q.x, q.y, q.z variables and 'x', 'y', 'z' keys.
+    #
+    # Note: Kudos to anyone who manages to put this swapping mechanism into code,
+    # which also builds functions to compute only one of the rotations like
+    # below. (it's harder than it looks)
     funcsByAxis = {
+      'y': lambda q: math.atan2(
+        -2*(q.z*q.x-q.w*q.y),
+        q.w**2-q.y**2-q.z**2+q.x**2
+      ),
+      'z': lambda q: math.asin(
+        2*(q.y*q.x + q.w*q.z)
+      ),
       'x': lambda q: math.atan2(
-        -2*(q['y']*q['z']-q['w']*q['x']),
-        q['w']*q['w']-q['x']*q['x']-q['y']*q['y']+q['z']*q['z']
-      ),
-      'y': lambda q: math.asin(
-        2*(q['x']*q['z'] + q['w']*q['y'])
-      ),
-      'z': lambda q: math.atan2(
-        -2*(q['x']*q['y']-q['w']*q['z']),
-        q['w']*q['w']+q['x']*q['x']-q['y']*q['y']-q['z']*q['z']
+        -2*(q.y*q.z-q.w*q.x),
+        q.w**2+q.y**2-q.z**2-q.x**2
       )
     }
     self.map = funcsByAxis[args['axis'].lower()]

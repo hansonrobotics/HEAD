@@ -52,5 +52,5 @@ _parser_classes = {
   "fsshapekey": FsShapeKey
 }
 
-def build(name, yamlobj):
+def build(yamlobj):
   return _parser_classes[yamlobj["name"]](yamlobj)

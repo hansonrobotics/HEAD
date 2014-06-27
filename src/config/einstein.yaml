@@ -8,7 +8,7 @@ motors:
     motorid: 17
     binding:
       parser:
-        name: fshapekey
+        name: fsshapekey
         shapekey: JawOpen;LipsLowerOpen;LipsLowerDown
       function:
         name: weightedsum
@@ -75,13 +75,13 @@ motors:
         property: m_headRotation
       function:
         - name: quaternion2euler
-          axis: x
+          axis: z
         - name: linear
-          min: 0.25
-          max: 0
-    min: 0
-    max: 0.5
-    speed: 200
+          min: 0.8
+          max: -0.8
+    min: -0.8
+    max: 0.8
+    speed: 100
     acceleration: 10
 
   - name: neck_roll
@@ -93,13 +93,13 @@ motors:
         property: m_headRotation
       function:
         - name: quaternion2euler
-          axis: z
+          axis: x
         - name: linear
-          min: 0
-          max: -0.25
-    min: 0
-    max: 0.5
-    speed: 200
+          min: 0.6
+          max: -0.6
+    min: -0.85
+    max: 0.35
+    speed: 100
     acceleration: 10
 
   - name: neck_base
@@ -113,9 +113,9 @@ motors:
         - name: quaternion2euler
           axis: y
         - name: linear
-          min: 0
-          max: 0.5
-    min: 0
-    max: 0.5
-    speed: 255
+          min: 1
+          max: -1
+    min: -1.9752
+    max: 0.0248
+    speed: 100
     acceleration: 10
