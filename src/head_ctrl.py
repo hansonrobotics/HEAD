@@ -46,9 +46,14 @@ class PauCtrl:
 
   def make_face(self, exprname, intensity=1):
     rospy.loginfo("Face request: %s of %s", intensity, exprname)
-    self.pub_face.publish(
-      self.faces[exprname].new_msg(intensity)
-    )
+
+    if exprname == 'neutral' or intensity == 0:
+      # Send a neutral expression, which is not saved among other expressions.
+      self.pub_face.publish(FaceExpr.FaceExprPAU().new_msg(0))
+    else:
+      self.pub_face.publish(
+        self.faces[exprname].new_msg(intensity)
+      )
 
   def point_head(self, req):
     rospy.loginfo(

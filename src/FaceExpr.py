@@ -35,12 +35,17 @@ class FaceExprPAU:
     return result
 
   @classmethod
-  def _build_msg(cls, expr_entry):
+  def _build_msg(cls, expr_entry=None):
     """
     Takes an entry from the config file and returns a constructed ROS message.
     """
     msg = fsMsgTrackingState()
     msg.m_coeffs = [0]*cls.M_COEFFS_LEN
+
+    # Allow creation of a neutral face without an expression yaml entry.
+    if expr_entry == None:
+      return msg
+
     for shapekey in expr_entry:
       index = ShapekeyStore.getIndex(shapekey)
       if (index == None):
@@ -49,7 +54,7 @@ class FaceExprPAU:
         msg.m_coeffs[index] = expr_entry[shapekey]
     return msg
 
-  def __init__(self, expr_entry):
+  def __init__(self, expr_entry=None):
     self.msg = self._build_msg(expr_entry)
   
 
