@@ -28,29 +28,19 @@
   speed: 200
   acceleration: 100
 
+- name: neck_base
+  default: 0
+  min: -1
+  max: 1
+
 - name: neck_pitch
-  motorid: 3
   default: 0
   min: -0.8
   max: 0.8
-  speed: 200
-  acceleration: 5
 
 - name: neck_roll
   labelleft: "Lean left"
   labelright: "Lean right"
-  motorid: 2
-  default: 0.105
-  min: -0.8
-  max: 1.2
-  speed: 200
-  acceleration: 5
-
-- name: neck_base
-  motorid: 23
   default: 0
-  min: -1
-  max: 1
-  speed: 255
-  acceleration: 5
-
+  min: -0.6
+  max: 0.6

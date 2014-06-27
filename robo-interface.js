@@ -14,8 +14,11 @@ var RoboInterface = {
 
   sendDefaultMotorCmds: function() {
     for (var i = 0; i < this.motorConf.length; i++) {
-      this.sendMotorCmd(this.motorConf[i], this.motorConf[i].default);
+      var confEntry = motorConf[i];
+      if (confEntry.motorid != undefined)
+        this.sendMotorCmd(confEntry, confEntry.default);
     };
+    this.pointHead();
   },
 
   getValidFaceExprs: function(callback) {
@@ -32,6 +35,19 @@ var RoboInterface = {
         intensity:intensity
       })
     );
+  },
+
+  pointHead: function(new_angles){
+    var angles = {yaw: 0, pitch: 0, roll: 0};
+
+    this.pointHead = function(new_angles) {
+      $.extend(angles, new_angles);
+      RoboInterface.pointHeadTopic.publish(
+        new ROSLIB.Message(angles)
+      );
+    };
+
+    return this.pointHead(new_angles);
   },
 
   //Loads the config file and connects to ROS
@@ -58,7 +74,12 @@ var RoboInterface = {
         ros:ros,
         name:'/make_face_expr',
         messageType:'basic_head_api/MakeFaceExpr'
-      })
+      });
+      RoboInterface.pointHeadTopic = new ROSLIB.Topic({
+        ros:ros,
+        name:'/point_head',
+        messageType:'basic_head_api/PointHead'
+      });
 
       //Subscribe to topic
       RoboInterface.motorCmdTopic.subscribe(function(msg) {

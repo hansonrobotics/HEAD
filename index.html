@@ -107,10 +107,19 @@
       value: degVal,
       min: degMin,
       max: degMax,
-      slide: function(e, ui) {
-        slVal.text(ui.value);
-        RoboInterface.sendMotorCmd(confEntry, degToRad(ui.value))
-      },
+      slide: (function(){
+        if (confEntry.name == "neck_roll") {
+          return function(e, ui) {
+            slVal.text(ui.value);
+            RoboInterface.pointHead({roll: degToRad(ui.value)});
+          }
+        } else {
+          return function(e, ui) {
+            slVal.text(ui.value);
+            RoboInterface.sendMotorCmd(confEntry, degToRad(ui.value));
+          }
+        }
+      })(),
       start: function(e, ui) {confEntry.isActive = true;},
       stop: function(e, ui) {confEntry.isActive = false;}
     });
@@ -132,8 +141,8 @@
       var msg = msgObj.msg;
       var confEntry = msgObj.confEntry;
 
-      //Ignore crosshair motor commands
-      if (confEntry.element == undefined)
+      //Ignore neck motors (if they have no motorid defined).
+      if (confEntry == undefined)
         return;
 
       if (confEntry.isActive)
