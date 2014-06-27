@@ -51,10 +51,13 @@ class PauCtrl:
     )
 
   def point_head(self, req):
-    rospy.loginfo("Point head (yaw: %s, pitch %s)", req.yaw, req.pitch)
+    rospy.loginfo(
+      "Point head (yaw: %s, pitch: %s, roll: %s)",
+      req.yaw, req.pitch, req.roll
+    )
     msg = fsMsgTrackingState()
     msg.m_headRotation = fsQuaternionf(
-      *Utils.euler2quaternion(req.yaw, req.pitch, 0)
+      *Utils.Quat.fromInYZX(req.yaw, req.pitch, req.roll).params
     )
     self.pub_neck.publish(msg)
   
