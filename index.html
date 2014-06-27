@@ -161,6 +161,15 @@
   function createUIros() {
     //Create buttons
     btnStack = $("#btnStack");
+
+    //Neutral button
+    neutral = $('<button type="button" class="btn btn-warning">Neutral</button>');
+    btnStack.append(neutral);
+    neutral.click(function() {
+      RoboInterface.makeFaceExpr("neutral", 0);
+    });
+
+    //Expression buttons
     btnStack.on("exprbtnclick", function(e, nameobj) {
       RoboInterface.makeFaceExpr(nameobj.name, 1.0);
     })
