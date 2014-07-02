@@ -1,31 +1,22 @@
 from ros_pololu_servo.msg import servo_pololu
 import ParserFactory
 import MapperFactory
+import HardwareFactory
 import rospy
 
 class MotorCmder:
   """
-  MotorCmder (or Motor Commander) represents a partially defined motor command.
-  It builds a ROS motor message when given a message that the specified parser
-  expects.
+  MotorCmder (or Motor Commander) is a three-stage adapter put on top of a motor
+  and takes PAU messages to control it.
   """
 
-  def build_cmd(self, incoming_msg):
-    """Builds a motor command given a PAU message."""
-
+  def consume(self, incoming_msg):
     coeff = self.parser.get_coeff(incoming_msg)
     angle = self.mapper.map(coeff)
-    rospy.logdebug("Motor: %s, coeff: %s, angle: %s", 
+    rospy.logdebug("Motor: %s, coeff: %s, angle: %s",
       self.motor_entry['name'], coeff, angle
     )
-
-    msg = servo_pololu()
-    msg.id = self.motor_entry['motorid']
-    msg.angle = self._saturated(angle)
-    msg.speed = self.motor_entry['speed']
-    msg.acceleration = self.motor_entry['acceleration']
-
-    return msg
+    self.hardware.turn(angle)
 
   def _saturated(self, angle):
     return min(max(angle, self.motor_entry['min']), self.motor_entry['max'])  
@@ -39,5 +30,8 @@ class MotorCmder:
     self.mapper = MapperFactory.build(
       binding_obj["function"],
       motor_entry
+    )
+    self.hardware = HardwareFactory.build(
+      binding_obj["hardware"]
     )
     self.motor_entry = motor_entry

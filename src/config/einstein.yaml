@@ -4,8 +4,6 @@ topics:
 
 motors:
   - name: jaw
-    enabled: true
-    motorid: 17
     binding:
       parser:
         name: fsshapekey
@@ -17,14 +15,15 @@ motors:
           - {min: 0, max: 0.8, imax: 1}
           - {min: 0, max: 1, imax: 0.2}
           - {min: 0, max: 1, imax: 0.4}
+      hardware:
+        name: pololu
+        id: 17
+        speed: 200
+        acceleration: 100
     min: -0.838
     max: 0.45
-    speed: 200
-    acceleration: 100
 
   - name: brow
-    enabled: true
-    motorid: 16
     binding:
       parser:
         name: fsshapekey
@@ -39,14 +38,15 @@ motors:
           - {min: 0.413, max: 1, imax: 0.75}
           - {min: 0.413, max: 1, imax: 0.75}
           - {min: 0, max: 1, imax: 0}
+      hardware:
+        name: pololu
+        id: 16
+        speed: 200
+        acceleration: 100
     min: -1.36
     max: -0.166
-    speed: 200
-    acceleration: 100
 
   - name: smile
-    enabled: true
-    motorid: 15
     binding:
       parser:
         name: fsshapekey
@@ -61,14 +61,15 @@ motors:
           - {min: 0, max: 1, imax: 0.75}
           #Hold back on the smile when jaw is widely opened.
           - {min: 0.6, max: 0.8, imax: 0.7}
+      hardware:
+        name: pololu
+        id: 15
+        speed: 200
+        acceleration: 100
     min: -1.55
     max: 1.55
-    speed: 255
-    acceleration: 10
 
   - name: neck_pitch
-    enabled: true
-    motorid: 3
     binding:
       parser:
         name: getproperty
@@ -79,14 +80,15 @@ motors:
         - name: linear
           min: 0.8
           max: -0.8
+      hardware:
+        name: pololu
+        id: 3
+        speed: 100
+        acceleration: 10
     min: -0.8
     max: 0.8
-    speed: 100
-    acceleration: 10
 
   - name: neck_roll
-    enabled: true
-    motorid: 2
     binding:
       parser:
         name: getproperty
@@ -97,14 +99,15 @@ motors:
         - name: linear
           min: 0.6
           max: -0.6
+      hardware:
+        name: pololu
+        id: 2
+        speed: 100
+        acceleration: 10
     min: -0.85
     max: 0.35
-    speed: 100
-    acceleration: 10
 
   - name: neck_base
-    enabled: true
-    motorid: 23
     binding:
       parser:
         name: getproperty
@@ -115,7 +118,10 @@ motors:
         - name: linear
           min: 1
           max: -1
+      hardware:
+        name: pololu
+        id: 23
+        speed: 100
+        acceleration: 10
     min: -1.9752
     max: 0.0248
-    speed: 100
-    acceleration: 10

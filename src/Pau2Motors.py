@@ -2,11 +2,9 @@ from MotorCmder import MotorCmder
 
 class Pau2Motors:
 
-  def to_motor_cmds(self, pau_msg):
-    return map(
-      lambda cmder: cmder.build_cmd(pau_msg),
-      self.motor_commanders
-    )
+  def consume(self, pau_msg):
+    for cmder in self.motor_commanders:
+      cmder.consume(pau_msg)
 
   def __init__(self, motors_yaml):
     motor_commanders = []

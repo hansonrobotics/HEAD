@@ -2,15 +2,13 @@
 import rospy
 import Utils
 from pau2motors.msg import *
-from ros_pololu_servo.msg import servo_pololu
 from Pau2Motors import Pau2Motors
+import HardwareFactory
 
 class Pau2MotorsNode:
 
   def _handle_pau_cmd(self, msg, pau2motors):
-    cmds = pau2motors.to_motor_cmds(msg)
-    for cmd in cmds:
-      self.pub_pololu.publish(cmd)
+    pau2motors.consume(msg)
 
   def _subscribe_single(self, topicname, pau2motors_instance):
     rospy.Subscriber(
@@ -46,8 +44,6 @@ class Pau2MotorsNode:
   def __init__(self, robot_yaml):
 
     rospy.init_node("pau2motors_node")
-    self.pub_pololu = rospy.Publisher('cmd_pololu', servo_pololu, queue_size=10)
-
     self._build_msg_pipe(robot_yaml)
 
 if __name__ == '__main__':

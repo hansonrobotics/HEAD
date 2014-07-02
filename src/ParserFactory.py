@@ -16,8 +16,8 @@ class ParserBase:
 
   def __init__(self, args):
     """
-    On construction parser classes are given the 'args' object (property of
-    'binding') parsed from the yaml config file.
+    On construction parser classes are given the 'args' object (property
+    'parser' of 'binding') parsed from the yaml config file.
     """
     pass
 

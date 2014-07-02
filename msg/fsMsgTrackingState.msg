@@ -6,4 +6,4 @@ float32 m_eyeGazeLeftYaw
 float32 m_eyeGazeRightPitch
 float32 m_eyeGazeRightYaw
 
-float32[] m_coeffs
+float32[48] m_coeffs
