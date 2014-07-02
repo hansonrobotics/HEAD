@@ -16,7 +16,7 @@ class MotorCmder:
     rospy.logdebug("Motor: %s, coeff: %s, angle: %s",
       self.motor_entry['name'], coeff, angle
     )
-    self.hardware.turn(angle)
+    self.hardware.turn(self._saturated(angle))
 
   def _saturated(self, angle):
     return min(max(angle, self.motor_entry['min']), self.motor_entry['max'])  
