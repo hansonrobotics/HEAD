@@ -20,8 +20,8 @@ motors:
         id: 17
         speed: 200
         acceleration: 100
-    min: -0.838
-    max: 0.45
+    min: 0.2
+    max: 0.8
 
   - name: brow
     binding:
