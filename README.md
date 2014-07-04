@@ -25,7 +25,7 @@ rosmake pi_vision
 Run
 =======
 ```
-git clone roslaunch ros2opencv uvc_cam.launch
+roslaunch ros2opencv uvc_cam.launch device:=/dev/video1
 roslaunch pi_face_tracker face_tracker_uvc_cam.launch
 ```
 
