@@ -7,6 +7,7 @@ project(pau2motors)
 find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
+  geometry_msgs
   message_generation
 )
 
@@ -46,9 +47,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  fsMsgTrackingState.msg
-  fsQuaternionf.msg
-  fsVector3f.msg
+  pau.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -69,6 +68,7 @@ add_message_files(
 generate_messages(
   DEPENDENCIES
   std_msgs
+  geometry_msgs
 )
 
 ###################################

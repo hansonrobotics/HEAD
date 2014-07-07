@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 import Utils
-from pau2motors.msg import *
+from pau2motors.msg import pau
 from Pau2Motors import Pau2Motors
 import HardwareFactory
 
@@ -13,7 +13,7 @@ class Pau2MotorsNode:
   def _subscribe_single(self, topicname, pau2motors_instance):
     rospy.Subscriber(
       topicname,
-      fsMsgTrackingState,
+      pau,
       lambda msg: self._handle_pau_cmd(msg, pau2motors_instance)
     )
 
