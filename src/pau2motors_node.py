@@ -47,6 +47,6 @@ class Pau2MotorsNode:
     self._build_msg_pipe(robot_yaml)
 
 if __name__ == '__main__':
-    Pau2MotorsNode(Utils.read_yaml("config/einstein.yaml"))
+    Pau2MotorsNode(Utils.read_yaml("config/dmitry.yaml"))
     rospy.loginfo("Started")
     rospy.spin()

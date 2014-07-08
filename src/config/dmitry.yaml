@@ -11,13 +11,13 @@ motors:
         - name: quaternion2euler
           axis: z
         - name: linear
-          min: -1
-          max: 1
+          scale: 0.5
+          translate: 0
       hardware:
         name: dynamixel
-        topic: (not set)
-    min: -0.5
-    max: 0.5
+        topic: pitch1_controller/command
+    min: -1
+    max: 0.3
 
   - name: neck_pitch_top
     binding:
@@ -28,13 +28,13 @@ motors:
         - name: quaternion2euler
           axis: z
         - name: linear
-          min: -1
-          max: 1
+          scale: 0.5
+          translate: 0
       hardware:
         name: dynamixel
-        topic: (not set)
-    min: -0.5
-    max: 0.5
+        topic: pitch2_controller/command
+    min: -0.4
+    max: 0.4
 
   - name: neck_roll
     binding:
@@ -45,13 +45,13 @@ motors:
         - name: quaternion2euler
           axis: x
         - name: linear
-          min: -1
-          max: 1
+          min: -0.4
+          max: 0.4
       hardware:
         name: dynamixel
-        topic: (not set)
-    min: -1
-    max: 1
+        topic: roll_controller/command
+    min: -0.4
+    max: 0.4
 
   - name: neck_base
     binding:
@@ -62,10 +62,10 @@ motors:
         - name: quaternion2euler
           axis: y
         - name: linear
-          min: -1
-          max: 1
+          scale: -1
+          translate: 0
       hardware:
         name: dynamixel
-        topic: (not set)
-    min: -1
-    max: 1
+        topic: /rotate_controller/command
+    min: -1.7
+    max: 1.7
