@@ -1,7 +1,81 @@
 topics:
   cmd_neck_pau: neck_pitch_top;neck_pitch_bottom;neck_roll;neck_base
+  cmd_eyes_pau: leye_pitch;leye_yaw;reye_pitch;reye_yaw
 
 motors:
+
+# ---Eyes---
+
+  - name: leye_pitch
+    binding:
+      parser:
+        name: getproperty
+        property: m_eyeGazeLeftPitch
+      function:
+        - name: linear
+          min: -1
+          max: 1
+      hardware:
+        name: pololu
+        id: -1
+        speed: 200
+        acceleration: 100
+    min: -1
+    max: 1
+
+  - name: leye_yaw
+    binding:
+      parser:
+        name: getproperty
+        property: m_eyeGazeLeftYaw
+      function:
+        - name: linear
+          min: -1
+          max: 1
+      hardware:
+        name: pololu
+        id: -1
+        speed: 200
+        acceleration: 100
+    min: -1
+    max: 1
+
+  - name: reye_pitch
+    binding:
+      parser:
+        name: getproperty
+        property: m_eyeGazeRightPitch
+      function:
+        - name: linear
+          min: -1
+          max: 1
+      hardware:
+        name: pololu
+        id: -1
+        speed: 200
+        acceleration: 100
+    min: -1
+    max: 1
+
+  - name: reye_yaw
+    binding:
+      parser:
+        name: getproperty
+        property: m_eyeGazeRightYaw
+      function:
+        - name: linear
+          min: -1
+          max: 1
+      hardware:
+        name: pololu
+        id: -1
+        speed: 200
+        acceleration: 100
+    min: -1
+    max: 1
+
+# ---Neck---
+
   - name: neck_pitch_bottom
     binding:
       parser:
