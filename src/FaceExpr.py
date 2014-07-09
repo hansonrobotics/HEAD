@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from MotorCmder import MotorCmder
-from pau2motors.msg import fsMsgTrackingState
+from pau2motors.msg import pau
 import ShapekeyStore
 import copy
 import rospy
@@ -15,7 +15,7 @@ class FaceExprPAU:
 
   def new_msg(self, intensity=1):
     """
-    Builds a fsMsgTrackingState message based on the given expression
+    Builds a pau message based on the given expression
     intensity (0..1).
     """
     result = copy.deepcopy(self.msg)
@@ -39,7 +39,7 @@ class FaceExprPAU:
     """
     Takes an entry from the config file and returns a constructed ROS message.
     """
-    msg = fsMsgTrackingState()
+    msg = pau()
     msg.m_coeffs = [0]*cls.M_COEFFS_LEN
 
     # Allow creation of a neutral face without an expression yaml entry.

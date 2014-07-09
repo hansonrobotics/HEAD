@@ -7,7 +7,8 @@ import FaceExpr
 from ros_pololu_servo.msg import servo_pololu
 from basic_head_api.srv import *
 from basic_head_api.msg import *
-from pau2motors.msg import *
+from pau2motors.msg import pau
+from geometry_msgs.msg import Quaternion
 import Utils
 
 CONFIG_DIR = "config"
@@ -60,8 +61,8 @@ class PauCtrl:
       "Point head (yaw: %s, pitch: %s, roll: %s)",
       req.yaw, req.pitch, req.roll
     )
-    msg = fsMsgTrackingState()
-    msg.m_headRotation = fsQuaternionf(
+    msg = pau()
+    msg.m_headRotation = Quaternion(
       *Utils.Quat.fromInYZX(req.yaw, req.pitch, req.roll).params
     )
     self.pub_neck.publish(msg)
@@ -130,8 +131,8 @@ class HeadCtrl:
 
     # Topics and services for PAU expressions
     self.pau_ctrl = PauCtrl(
-      rospy.Publisher("cmd_face_pau", fsMsgTrackingState, queue_size=10),
-      rospy.Publisher("cmd_neck_pau", fsMsgTrackingState, queue_size=10)
+      rospy.Publisher("cmd_face_pau", pau, queue_size=2),
+      rospy.Publisher("cmd_neck_pau", pau, queue_size=2)
     )
     rospy.Service("valid_face_exprs", ValidFaceExprs, 
       lambda req: self.pau_ctrl.valid_exprs()
