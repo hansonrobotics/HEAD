@@ -140,6 +140,6 @@ motors:
           translate: 0
       hardware:
         name: dynamixel
-        topic: /rotate_controller/command
+        topic: rotate_controller/command
     min: -1.7
     max: 1.7

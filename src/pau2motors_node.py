@@ -3,7 +3,7 @@ import rospy
 import Utils
 from pau2motors.msg import *
 from Pau2Motors import Pau2Motors
-import HardwareFactory
+import os
 
 class Pau2MotorsNode:
 
@@ -41,12 +41,19 @@ class Pau2MotorsNode:
     for topicname, pau2motors_instance in topicname2Pau2Motors.items():
       self._subscribe_single(topicname, pau2motors_instance)
 
-  def __init__(self, robot_yaml):
-
+  def __init__(self):
     rospy.init_node("pau2motors_node")
-    self._build_msg_pipe(robot_yaml)
+
+    configname = rospy.get_param('~config', "einstein.yaml")
+    configpath = os.path.join("config", configname) #Search in 'config' directory
+    rospy.loginfo(
+      "Loading %s\n(use _config:=robotname.yaml to load a different config)" % 
+      configpath
+    )
+
+    self._build_msg_pipe(Utils.read_yaml(configpath))
 
 if __name__ == '__main__':
-    Pau2MotorsNode(Utils.read_yaml("config/dmitry.yaml"))
+    Pau2MotorsNode()
     rospy.loginfo("Started")
     rospy.spin()
