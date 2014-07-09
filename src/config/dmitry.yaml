@@ -6,22 +6,22 @@ motors:
 
 # ---Eyes---
 
-  - name: leye_pitch
+  - name: eyes_pitch
     binding:
       parser:
         name: getproperty
         property: m_eyeGazeLeftPitch
       function:
         - name: linear
-          min: -1
-          max: 1
+          min: 0.5
+          max: -0.5
       hardware:
         name: pololu
-        id: -1
+        id: 2
         speed: 200
         acceleration: 100
-    min: -1
-    max: 1
+    min: -0.28
+    max: 1.117
 
   - name: leye_yaw
     binding:
@@ -30,32 +30,15 @@ motors:
         property: m_eyeGazeLeftYaw
       function:
         - name: linear
-          min: -1
-          max: 1
+          min: -0.8
+          max: 0.8
       hardware:
         name: pololu
-        id: -1
+        id: 1
         speed: 200
         acceleration: 100
-    min: -1
-    max: 1
-
-  - name: reye_pitch
-    binding:
-      parser:
-        name: getproperty
-        property: m_eyeGazeRightPitch
-      function:
-        - name: linear
-          min: -1
-          max: 1
-      hardware:
-        name: pololu
-        id: -1
-        speed: 200
-        acceleration: 100
-    min: -1
-    max: 1
+    min: -0.7
+    max: 0.55
 
   - name: reye_yaw
     binding:
@@ -64,15 +47,15 @@ motors:
         property: m_eyeGazeRightYaw
       function:
         - name: linear
-          min: -1
-          max: 1
+          min: -0.8
+          max: 0.8
       hardware:
         name: pololu
-        id: -1
+        id: 0
         speed: 200
         acceleration: 100
-    min: -1
-    max: 1
+    min: -0.7
+    max: 0.55
 
 # ---Neck---
 
