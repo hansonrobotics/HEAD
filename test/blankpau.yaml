@@ -1,5 +1,3 @@
-m_timestamp: 0.0
-m_trackingSuccessful: true
 m_headRotation:
   x: 0.0
   y: 0.0
@@ -62,7 +60,3 @@ m_coeffs:
   - 0.0
   - 0.0
   - 0.0
-m_markers:
-  - x: 0.0
-    y: 0.0
-    z: 0.0

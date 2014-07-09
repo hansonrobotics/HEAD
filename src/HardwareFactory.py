@@ -1,6 +1,7 @@
 import Utils
 import ShapekeyStore
 from ros_pololu_servo.msg import servo_pololu
+from std_msgs.msg import Float64
 import rospy
 
 class HardwareBase:
@@ -37,9 +38,22 @@ class Pololu(HardwareBase):
     )
 
     self.args = args
+
+class Dynamixel(HardwareBase):
+
+  pub = None
+
+  def turn(self, angle):
+    self.pub.publish(angle)
+
+  def __init__(self, args):
+    self.pub = rospy.Publisher(
+      args["topic"], Float64, queue_size=10
+    )
     
 _hardware_classes = {
-  "pololu": Pololu
+  "pololu": Pololu,
+  "dynamixel": Dynamixel
 }
 
 def build(yamlobj):
