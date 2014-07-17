@@ -17,11 +17,11 @@ motors:
           - {min: 0, max: 1, imax: 0.4}
       hardware:
         name: pololu
-        id: 17
+        id: 5
         speed: 200
         acceleration: 100
-    min: 0.2
-    max: 0.8
+    min: -0.546
+    max: 0.9
 
   - name: brow
     binding:
@@ -40,11 +40,14 @@ motors:
           - {min: 0, max: 1, imax: 0}
       hardware:
         name: pololu
-        id: 16
+        id: 3
         speed: 200
         acceleration: 100
     min: -1.36
     max: -0.166
+    # New limits, when Einstein wasn't able to raise brow, only lower
+    #min: -1.0
+    #max: -0.2
 
   - name: smile
     binding:
@@ -63,7 +66,7 @@ motors:
           - {min: 0.6, max: 0.8, imax: 0.7}
       hardware:
         name: pololu
-        id: 15
+        id: 4
         speed: 200
         acceleration: 100
     min: -1.55
@@ -82,11 +85,11 @@ motors:
           max: -0.8
       hardware:
         name: pololu
-        id: 3
+        id: 2
         speed: 100
         acceleration: 10
-    min: -0.8
-    max: 0.8
+    min: -0.4
+    max: 1.2
 
   - name: neck_roll
     binding:
@@ -101,7 +104,7 @@ motors:
           max: -0.6
       hardware:
         name: pololu
-        id: 2
+        id: 1
         speed: 100
         acceleration: 10
     min: -0.85
@@ -120,7 +123,7 @@ motors:
           max: -1
       hardware:
         name: pololu
-        id: 23
+        id: 0
         speed: 100
         acceleration: 10
     min: -1.9752
