@@ -1,6 +1,6 @@
 topics:
   cmd_neck_pau: neck_pitch_top;neck_pitch_bottom;neck_roll;neck_base
-  cmd_eyes_pau: leye_pitch;leye_yaw;reye_pitch;reye_yaw
+  cmd_eyes_pau: eyes_pitch;leye_yaw;reye_yaw
 
 motors:
 
@@ -13,14 +13,15 @@ motors:
         property: m_eyeGazeLeftPitch
       function:
         - name: linear
-          min: 0.5
-          max: -0.5
+          min: 0.4
+          max: -0.4
       hardware:
         name: pololu
+        topic: /dmitry_eyes/cmd_pololu
         id: 2
         speed: 200
         acceleration: 100
-    min: -0.28
+    min: -0.58
     max: 1.117
 
   - name: leye_yaw
@@ -30,14 +31,15 @@ motors:
         property: m_eyeGazeLeftYaw
       function:
         - name: linear
-          min: -0.8
-          max: 0.8
+          min: 0.8
+          max: -0.8
       hardware:
         name: pololu
+        topic: /dmitry_eyes/cmd_pololu
         id: 1
         speed: 200
         acceleration: 100
-    min: -0.7
+    min: -0.58
     max: 0.55
 
   - name: reye_yaw
@@ -47,15 +49,16 @@ motors:
         property: m_eyeGazeRightYaw
       function:
         - name: linear
-          min: -0.8
-          max: 0.8
+          min: 0.8
+          max: -0.8
       hardware:
         name: pololu
+        topic: /dmitry_eyes/cmd_pololu
         id: 0
         speed: 200
         acceleration: 100
-    min: -0.7
-    max: 0.55
+    min: -0.68
+    max: 0.45
 
 # ---Neck---
 

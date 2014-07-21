@@ -34,7 +34,7 @@ class Pololu(HardwareBase):
   def __init__(self, args):
     if self.__class__.pub == None:
       self.__class__.pub = rospy.Publisher(
-      'cmd_pololu', servo_pololu, queue_size=10
+      args["topic"], servo_pololu, queue_size=10
     )
 
     self.args = args
