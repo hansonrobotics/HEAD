@@ -6,22 +6,35 @@ import rospy
 
 class HardwareBase:
 
+  _topics = {}
+  pub = None
+
+  messageType = None
+
   def turn(self, angle):
     return NotImplementedError
 
+  def getMessageType(self):
+      return  self.messageType
+
   def __init__(self, args):
-    """
-    On construction parser classes are given the 'args' object (property
-    'hardware' of 'binding') parsed from the yaml config file.
-    """
-    pass
+    ''' On construction parser classes are given the 'args' object (property
+    'hardware' of 'binding') parsed from the robot config file in robots_config. '''
+
+    if not self.__class__._topics.has_key(args["topic"]):
+      self.__class__._topics[args["topic"]] = rospy.Publisher(
+        args["topic"], self.messageType, queue_size=10
+      )
+    self.pub = self.__class__._topics[args["topic"]]
+    self.args = args
+
 
 class Pololu(HardwareBase):
-
-  pub = None
+  messageType = servo_pololu
 
   def turn(self, angle):
     self.pub.publish(self.build_msg(angle))
+
 
   def build_msg(self, angle):
     msg = servo_pololu()
@@ -31,26 +44,16 @@ class Pololu(HardwareBase):
     msg.acceleration = self.args["acceleration"]
     return msg
 
-  def __init__(self, args):
-    if self.__class__.pub == None:
-      self.__class__.pub = rospy.Publisher(
-      args["topic"], servo_pololu, queue_size=10
-    )
 
-    self.args = args
 
 class Dynamixel(HardwareBase):
 
-  pub = None
+  messageType = Float64
 
   def turn(self, angle):
     self.pub.publish(angle)
 
-  def __init__(self, args):
-    self.pub = rospy.Publisher(
-      args["topic"], Float64, queue_size=10
-    )
-    
+
 _hardware_classes = {
   "pololu": Pololu,
   "dynamixel": Dynamixel

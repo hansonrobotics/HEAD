@@ -4,6 +4,7 @@ import Utils
 from pau2motors.msg import pau
 from Pau2Motors import Pau2Motors
 import os
+from optparse import OptionParser
 
 class Pau2MotorsNode:
 
@@ -41,19 +42,16 @@ class Pau2MotorsNode:
     for topicname, pau2motors_instance in topicname2Pau2Motors.items():
       self._subscribe_single(topicname, pau2motors_instance)
 
-  def __init__(self):
+  def __init__(self, params):
     rospy.init_node("pau2motors_node")
+    config = rospy.get_param(params[0])
+    self._build_msg_pipe(config)
 
-    configname = rospy.get_param('~config', "einstein.yaml")
-    configpath = os.path.join("config", configname) #Search in 'config' directory
-    rospy.loginfo(
-      "Loading %s\n(use _config:=robotname.yaml to load a different config)" % 
-      configpath
-    )
-
-    self._build_msg_pipe(Utils.read_yaml(configpath))
-
+parser = OptionParser()
 if __name__ == '__main__':
-    Pau2MotorsNode()
+    (options, args) = parser.parse_args(rospy.myargv()[1:])
+    if len(args) < 1:
+         parser.error('Need to specify parameter for config values in param server')
+    Pau2MotorsNode(args)
     rospy.loginfo("Started")
     rospy.spin()
