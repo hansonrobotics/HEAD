@@ -1,0 +1,545 @@
+rotate_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: rotate_joint
+    joint_speed: 1.17
+    motor:
+        id: 0
+        init: 2208
+        min: 1104
+        max: 3377
+pitch1_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: pitch1_joint
+    joint_speed: 0.2
+    motor:
+        id: 1
+        init: 3052
+        min: 2402
+        max: 3247
+roll_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: roll_joint
+    joint_speed: 0.3
+    motor:
+        id: 2
+        init: 2013
+        min: 1753
+        max: 2272
+pitch2_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: pitch2_joint
+    joint_speed: 0.2
+    motor:
+        id: 3
+        init: 2468
+        min: 1883
+        max: 2858
+jaw_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: jaw_joint
+    joint_speed: 0.2
+    motor:
+        id: 4
+        init: 490
+        min: 0
+        max: 1039
+
+
+#Pau2Motors config
+dmitry_pau2motors:
+    topics:
+        cmd_neck_pau: neck_pitch_top;neck_pitch_bottom;neck_roll;neck_base
+        cmd_eyes_pau: eyes_pitch;leye_yaw;reye_yaw
+    motors:
+    # Eyes
+      - name: eyes_pitch
+        binding:
+          parser:
+            name: getproperty
+            property: m_eyeGazeLeftPitch
+          function:
+            - name: linear
+              min: 0.4
+              max: -0.4
+          hardware:
+            name: pololu
+            topic: /dmitry_eyes/cmd_pololu
+            id: 2
+            speed: 200
+            acceleration: 100
+        min: -0.58
+        max: 1.117
+
+      - name: leye_yaw
+        binding:
+          parser:
+            name: getproperty
+            property: m_eyeGazeLeftYaw
+          function:
+            - name: linear
+              min: 0.8
+              max: -0.8
+          hardware:
+            name: pololu
+            topic: /dmitry_eyes/cmd_pololu
+            id: 1
+            speed: 200
+            acceleration: 100
+        min: -0.58
+        max: 0.55
+
+      - name: reye_yaw
+        binding:
+          parser:
+            name: getproperty
+            property: m_eyeGazeRightYaw
+          function:
+            - name: linear
+              min: 0.8
+              max: -0.8
+          hardware:
+            name: pololu
+            topic: /dmitry_eyes/cmd_pololu
+            id: 0
+            speed: 200
+            acceleration: 100
+        min: -0.68
+        max: 0.45
+    #face
+      - name: cheek_squint_l
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 46_CheekSquint_L
+          function:
+            - name: linear
+              min: 0
+              max: 0.4
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 0
+            speed: 200
+            acceleration: 100
+        min: 1.2
+        max: 1.55
+
+      - name: lower_lid_r
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 01_EyeBlink_R;03_EyeSquint_R;09_EyeOpen_R
+          function:
+            - name: weightedsum
+              imin: 0.5
+              terms:
+                - {min: 0, max: 1, imax: 0.6}
+                - {min: 0, max: 1, imax: 0.8}
+                - {min: 0, max: 1, imax: 0.6}
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 2
+            speed: 200
+            acceleration: 100
+        min: -0.645
+        max: 0.26
+
+- name: lower_lid_l
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 00_EyeBlink_L;02_EyeSquint_L;08_EyeOpen_L
+          function:
+            - name: weightedsum
+              imin: 0.5
+              terms:
+                - {min: 0, max: 1, imax: 0.4}
+                - {min: 0, max: 1, imax: 0.2}
+                - {min: 0, max: 1, imax: 0.4}
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 3
+            speed: 200
+            acceleration: 100
+        min: 0.15
+        max: 0.837
+
+      - name: upper_lid_r
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 01_EyeBlink_R;09_EyeOpen_R
+          function:
+            - name: weightedsum
+              imin: 0.7
+              terms:
+                - {min: 0, max: 1, imax: 0.0}
+                - {min: 0, max: 1, imax: 0.9}
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 4
+            speed: 200
+            acceleration: 100
+        min: -1.55
+        max: 0.15
+
+      - name: upper_lid_l
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 00_EyeBlink_L;08_EyeOpen_L
+          function:
+            - name: weightedsum
+              imin: 0.3
+              terms:
+                - {min: 0, max: 1, imax: 1.0}
+                - {min: 0, max: 1, imax: 0.1}
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 5
+            speed: 200
+            acceleration: 100
+        min: -0.54
+        max: 1.117
+
+      - name: frown_r
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 27_MouthFrown_R
+          function:
+            - name: linear
+              min: 1
+              max: 0
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 6
+            speed: 200
+            acceleration: 100
+        min: -1.553
+        max: -0.61
+
+      - name: frown_l
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 26_MouthFrown_L
+          function:
+            - name: linear
+              min: 0
+              max: 1
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 17
+            speed: 200
+            acceleration: 100
+        min: -0.77
+        max: -0.24
+
+      - name: brow_outer_l
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 17_BrowsU_O_L
+          function:
+            - name: linear
+              min: 0
+              max: 1
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 7
+            speed: 200
+            acceleration: 100
+        min: -0.52
+        max: 1.08
+
+      - name: smile_r
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 29_MouthSmile_R
+          function:
+            - name: linear
+              min: 0
+              max: 1
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 8
+            speed: 200
+            acceleration: 100
+        min: -0.92
+        max: 0.92
+
+
+      - name: smile_l
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 28_MouthSmile_L
+          function:
+            - name: linear
+              min: 1
+              max: 0
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 9
+            speed: 200
+            acceleration: 100
+        min: -1.05
+        max: 0.07
+
+      - name: lower_lip_l
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 37_LipsLowerDown_L
+          function:
+            - name: linear
+              min: 0
+              max: 1
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 10
+            speed: 200
+            acceleration: 100
+        min: -0.36
+        max: 1.1
+
+      - name: lower_lip_r
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 37_LipsLowerDown_R
+          function:
+            - name: linear
+              min: 1
+              max: 0
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 14
+            speed: 200
+            acceleration: 100
+        min: -0.83
+        max: 0.977
+
+      - name: upper_lip_c
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 38_LipsUpperOpen
+          function:
+            - name: linear
+              min: 0
+              max: 1
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 11
+            speed: 200
+            acceleration: 100
+        min: -1.344
+        max: -0.489
+
+      - name: sneer_r
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 44_Sneer_R
+          function:
+            - name: linear
+              min: 1
+              max: 0
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 12
+            speed: 200
+            acceleration: 100
+        min: -1.553
+        max: -0.48
+
+      - name: upper_lip_l
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 36_LipsUpperUp_L
+          function:
+            - name: linear
+              min: 1
+              max: 0
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 13
+            speed: 200
+            acceleration: 100
+        min: -1.553
+        max: -1.5
+
+      - name: upper_lip_r
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 36_LipsUpperUp_R
+          function:
+            - name: linear
+              min: 0
+              max: 1
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 19
+            speed: 200
+            acceleration: 100
+        min: 0.33
+        max: 1.553
+
+      - name: lower_lip_c
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 39_LipsLowerOpen
+          function:
+            - name: linear
+              min: 0
+              max: 1
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 15
+            speed: 200
+            acceleration: 100
+        min: 0.47
+        max: 1.553
+
+      - name: brow_outer_r
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 18_BrowsU_O_R
+          function:
+            - name: linear
+              min: 1
+              max: 0
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 21
+            speed: 200
+            acceleration: 100
+        min: 0.733
+        max: -0.14
+
+      - name: brow_inner_r
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 18_BrowsU_I_R
+          function:
+            - name: linear
+              min: 1
+              max: 0
+          hardware:
+            name: pololu
+            topic: /dmitry_face/cmd_pololu
+            id: 23
+            speed: 200
+            acceleration: 100
+        min: -1.32
+        max: 0.23
+    # ---Neck---
+
+      - name: neck_pitch_bottom
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: z
+            - name: linear
+              scale: 0.5
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: pitch1_controller/command
+        min: -1
+        max: 0.3
+
+      - name: neck_pitch_top
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: z
+            - name: linear
+              scale: 0.5
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: pitch2_controller/command
+        min: -0.4
+        max: 0.4
+
+      - name: neck_roll
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: x
+            - name: linear
+              min: -0.4
+              max: 0.4
+          hardware:
+            name: dynamixel
+            topic: roll_controller/command
+        min: -0.4
+        max: 0.4
+
+      - name: neck_base
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: y
+            - name: linear
+              scale: -1
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: rotate_controller/command
+        min: -1.7
+        max: 1.7
+
