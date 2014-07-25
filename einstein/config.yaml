@@ -1,10 +1,10 @@
-einstein_pau2motors:
+pau2motors:
     topics:
       cmd_face_pau: jaw;brow;smile
       cmd_neck_pau: neck_pitch;neck_roll;neck_base
 
     motors:
-      - name: jaw
+      jaw:
         binding:
           parser:
             name: fsshapekey
@@ -25,7 +25,7 @@ einstein_pau2motors:
         min: -0.546
         max: 0.9
 
-      - name: brow
+      brow:
         binding:
           parser:
             name: fsshapekey
@@ -52,7 +52,7 @@ einstein_pau2motors:
         #min: -1.0
         #max: -0.2
 
-      - name: smile
+      smile:
         binding:
           parser:
             name: fsshapekey
@@ -76,7 +76,7 @@ einstein_pau2motors:
         min: -1.55
         max: 1.55
 
-      - name: neck_pitch
+      neck_pitch:
         binding:
           parser:
             name: getproperty
@@ -96,7 +96,7 @@ einstein_pau2motors:
         min: -0.4
         max: 1.2
 
-      - name: neck_roll
+      neck_roll:
         binding:
           parser:
             name: getproperty
@@ -116,7 +116,7 @@ einstein_pau2motors:
         min: -0.85
         max: 0.35
 
-      - name: neck_base
+      neck_base:
         binding:
           parser:
             name: getproperty

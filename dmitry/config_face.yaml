@@ -61,13 +61,13 @@ jaw_controller:
 
 
 #Pau2Motors config
-dmitry_pau2motors:
+pau2motors:
     topics:
         cmd_neck_pau: neck_pitch_top;neck_pitch_bottom;neck_roll;neck_base
         cmd_eyes_pau: eyes_pitch;leye_yaw;reye_yaw
     motors:
     # Eyes
-      - name: eyes_pitch
+      eyes_pitch:
         binding:
           parser:
             name: getproperty
@@ -85,7 +85,7 @@ dmitry_pau2motors:
         min: -0.58
         max: 1.117
 
-      - name: leye_yaw
+      leye_yaw:
         binding:
           parser:
             name: getproperty
@@ -103,7 +103,7 @@ dmitry_pau2motors:
         min: -0.58
         max: 0.55
 
-      - name: reye_yaw
+      reye_yaw:
         binding:
           parser:
             name: getproperty
@@ -121,7 +121,7 @@ dmitry_pau2motors:
         min: -0.68
         max: 0.45
     #face
-      - name: cheek_squint_l
+      cheek_squint_l:
         binding:
           parser:
             name: fsshapekey
@@ -139,7 +139,7 @@ dmitry_pau2motors:
         min: 1.2
         max: 1.55
 
-      - name: lower_lid_r
+      lower_lid_r:
         binding:
           parser:
             name: fsshapekey
@@ -160,7 +160,7 @@ dmitry_pau2motors:
         min: -0.645
         max: 0.26
 
-- name: lower_lid_l
+  - name: lower_lid_l
         binding:
           parser:
             name: fsshapekey
@@ -181,7 +181,7 @@ dmitry_pau2motors:
         min: 0.15
         max: 0.837
 
-      - name: upper_lid_r
+      upper_lid_r:
         binding:
           parser:
             name: fsshapekey
@@ -201,7 +201,7 @@ dmitry_pau2motors:
         min: -1.55
         max: 0.15
 
-      - name: upper_lid_l
+      upper_lid_l:
         binding:
           parser:
             name: fsshapekey
@@ -221,7 +221,7 @@ dmitry_pau2motors:
         min: -0.54
         max: 1.117
 
-      - name: frown_r
+      frown_r:
         binding:
           parser:
             name: fsshapekey
@@ -239,7 +239,7 @@ dmitry_pau2motors:
         min: -1.553
         max: -0.61
 
-      - name: frown_l
+      frown_l:
         binding:
           parser:
             name: fsshapekey
@@ -257,7 +257,7 @@ dmitry_pau2motors:
         min: -0.77
         max: -0.24
 
-      - name: brow_outer_l
+      brow_outer_l:
         binding:
           parser:
             name: fsshapekey
@@ -275,7 +275,7 @@ dmitry_pau2motors:
         min: -0.52
         max: 1.08
 
-      - name: smile_r
+      smile_r:
         binding:
           parser:
             name: fsshapekey
@@ -294,7 +294,7 @@ dmitry_pau2motors:
         max: 0.92
 
 
-      - name: smile_l
+      smile_l:
         binding:
           parser:
             name: fsshapekey
@@ -312,7 +312,7 @@ dmitry_pau2motors:
         min: -1.05
         max: 0.07
 
-      - name: lower_lip_l
+      lower_lip_l:
         binding:
           parser:
             name: fsshapekey
@@ -330,7 +330,7 @@ dmitry_pau2motors:
         min: -0.36
         max: 1.1
 
-      - name: lower_lip_r
+      lower_lip_r:
         binding:
           parser:
             name: fsshapekey
@@ -348,7 +348,7 @@ dmitry_pau2motors:
         min: -0.83
         max: 0.977
 
-      - name: upper_lip_c
+      upper_lip_c:
         binding:
           parser:
             name: fsshapekey
@@ -366,7 +366,7 @@ dmitry_pau2motors:
         min: -1.344
         max: -0.489
 
-      - name: sneer_r
+      sneer_r:
         binding:
           parser:
             name: fsshapekey
@@ -384,7 +384,7 @@ dmitry_pau2motors:
         min: -1.553
         max: -0.48
 
-      - name: upper_lip_l
+      upper_lip_l:
         binding:
           parser:
             name: fsshapekey
@@ -402,7 +402,7 @@ dmitry_pau2motors:
         min: -1.553
         max: -1.5
 
-      - name: upper_lip_r
+      upper_lip_r:
         binding:
           parser:
             name: fsshapekey
@@ -420,7 +420,7 @@ dmitry_pau2motors:
         min: 0.33
         max: 1.553
 
-      - name: lower_lip_c
+      lower_lip_c:
         binding:
           parser:
             name: fsshapekey
@@ -438,7 +438,7 @@ dmitry_pau2motors:
         min: 0.47
         max: 1.553
 
-      - name: brow_outer_r
+      brow_outer_r:
         binding:
           parser:
             name: fsshapekey
@@ -456,7 +456,7 @@ dmitry_pau2motors:
         min: 0.733
         max: -0.14
 
-      - name: brow_inner_r
+      brow_inner_r:
         binding:
           parser:
             name: fsshapekey
@@ -475,7 +475,7 @@ dmitry_pau2motors:
         max: 0.23
     # ---Neck---
 
-      - name: neck_pitch_bottom
+      neck_pitch_bottom:
         binding:
           parser:
             name: getproperty
@@ -492,7 +492,7 @@ dmitry_pau2motors:
         min: -1
         max: 0.3
 
-      - name: neck_pitch_top
+      neck_pitch_top:
         binding:
           parser:
             name: getproperty
@@ -509,7 +509,7 @@ dmitry_pau2motors:
         min: -0.4
         max: 0.4
 
-      - name: neck_roll
+      neck_roll:
         binding:
           parser:
             name: getproperty
@@ -526,7 +526,7 @@ dmitry_pau2motors:
         min: -0.4
         max: 0.4
 
-      - name: neck_base
+      neck_base:
         binding:
           parser:
             name: getproperty

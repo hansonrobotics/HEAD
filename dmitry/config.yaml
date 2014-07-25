@@ -61,7 +61,7 @@ jaw_controller:
 
 
 #Pau2Motors config
-dmitry_pau2motors:
+pau2motors:
     topics:
         cmd_neck_pau: neck_pitch_top;neck_pitch_bottom;neck_roll;neck_base
         cmd_eyes_pau: eyes_pitch;leye_yaw;reye_yaw
