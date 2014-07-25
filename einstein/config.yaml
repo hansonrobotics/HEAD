@@ -18,7 +18,7 @@ pau2motors:
               - {min: 0, max: 1, imax: 0.4}
           hardware:
             name: pololu
-            topic: /einstein/cmd_pololu
+            topic: pololu/cmd_pololu
             id: 5
             speed: 200
             acceleration: 100
@@ -42,7 +42,7 @@ pau2motors:
               - {min: 0, max: 1, imax: 0}
           hardware:
             name: pololu
-            topic: /einstein/cmd_pololu
+            topic: pololu/cmd_pololu
             id: 3
             speed: 200
             acceleration: 100
@@ -69,7 +69,7 @@ pau2motors:
               - {min: 0.6, max: 0.8, imax: 0.7}
           hardware:
             name: pololu
-            topic: /einstein/cmd_pololu
+            topic: pololu/cmd_pololu
             id: 4
             speed: 200
             acceleration: 100
@@ -89,7 +89,7 @@ pau2motors:
               max: -0.8
           hardware:
             name: pololu
-            topic: /einstein2/cmd_pololu
+            topic: pololu/cmd_pololu
             id: 2
             speed: 100
             acceleration: 10
@@ -109,7 +109,7 @@ pau2motors:
               max: -0.6
           hardware:
             name: pololu
-            topic: /einstein/cmd_pololu
+            topic: pololu/cmd_pololu
             id: 1
             speed: 100
             acceleration: 10
@@ -129,7 +129,7 @@ pau2motors:
               max: -1
           hardware:
             name: pololu
-            topic: /einstein/cmd_pololu
+            topic: pololu/cmd_pololu
             id: 0
             speed: 100
             acceleration: 10
