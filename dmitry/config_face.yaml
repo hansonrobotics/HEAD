@@ -78,7 +78,7 @@ pau2motors:
               max: -0.4
           hardware:
             name: pololu
-            topic: /dmitry_eyes/cmd_pololu
+            topic: dmitry_eyes/cmd_pololu
             id: 2
             speed: 200
             acceleration: 100
@@ -96,7 +96,7 @@ pau2motors:
               max: -0.8
           hardware:
             name: pololu
-            topic: /dmitry_eyes/cmd_pololu
+            topic: dmitry_eyes/cmd_pololu
             id: 1
             speed: 200
             acceleration: 100
@@ -114,7 +114,7 @@ pau2motors:
               max: -0.8
           hardware:
             name: pololu
-            topic: /dmitry_eyes/cmd_pololu
+            topic: dmitry_eyes/cmd_pololu
             id: 0
             speed: 200
             acceleration: 100
@@ -132,7 +132,7 @@ pau2motors:
               max: 0.4
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 0
             speed: 200
             acceleration: 100
@@ -153,7 +153,7 @@ pau2motors:
                 - {min: 0, max: 1, imax: 0.6}
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 2
             speed: 200
             acceleration: 100
@@ -174,7 +174,7 @@ pau2motors:
                 - {min: 0, max: 1, imax: 0.4}
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 3
             speed: 200
             acceleration: 100
@@ -194,7 +194,7 @@ pau2motors:
                 - {min: 0, max: 1, imax: 0.9}
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 4
             speed: 200
             acceleration: 100
@@ -214,7 +214,7 @@ pau2motors:
                 - {min: 0, max: 1, imax: 0.1}
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 5
             speed: 200
             acceleration: 100
@@ -232,7 +232,7 @@ pau2motors:
               max: 0
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 6
             speed: 200
             acceleration: 100
@@ -250,7 +250,7 @@ pau2motors:
               max: 1
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 17
             speed: 200
             acceleration: 100
@@ -268,7 +268,7 @@ pau2motors:
               max: 1
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 7
             speed: 200
             acceleration: 100
@@ -286,7 +286,7 @@ pau2motors:
               max: 1
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 8
             speed: 200
             acceleration: 100
@@ -305,7 +305,7 @@ pau2motors:
               max: 0
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 9
             speed: 200
             acceleration: 100
@@ -323,7 +323,7 @@ pau2motors:
               max: 1
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 10
             speed: 200
             acceleration: 100
@@ -341,7 +341,7 @@ pau2motors:
               max: 0
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 14
             speed: 200
             acceleration: 100
@@ -359,7 +359,7 @@ pau2motors:
               max: 1
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 11
             speed: 200
             acceleration: 100
@@ -377,7 +377,7 @@ pau2motors:
               max: 0
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 12
             speed: 200
             acceleration: 100
@@ -395,7 +395,7 @@ pau2motors:
               max: 0
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 13
             speed: 200
             acceleration: 100
@@ -413,7 +413,7 @@ pau2motors:
               max: 1
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 19
             speed: 200
             acceleration: 100
@@ -431,7 +431,7 @@ pau2motors:
               max: 1
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 15
             speed: 200
             acceleration: 100
@@ -449,7 +449,7 @@ pau2motors:
               max: 0
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 21
             speed: 200
             acceleration: 100
@@ -467,7 +467,7 @@ pau2motors:
               max: 0
           hardware:
             name: pololu
-            topic: /dmitry_face/cmd_pololu
+            topic: dmitry_face/cmd_pololu
             id: 23
             speed: 200
             acceleration: 100
