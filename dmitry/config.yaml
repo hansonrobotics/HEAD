@@ -7,9 +7,9 @@ rotate_controller:
     joint_speed: 1.17
     motor:
         id: 0
-        init: 2208
-        min: 1104
-        max: 3377
+        init: 2381
+        min: 1358
+        max: 3401
 pitch1_controller:
     controller:
         package: dynamixel_controllers
@@ -19,9 +19,9 @@ pitch1_controller:
     joint_speed: 0.2
     motor:
         id: 1
-        init: 3052
-        min: 2402
-        max: 3247
+        init: 3460
+        min: 3090
+        max: 3725
 roll_controller:
     controller:
         package: dynamixel_controllers
@@ -31,9 +31,9 @@ roll_controller:
     joint_speed: 0.3
     motor:
         id: 2
-        init: 2013
-        min: 1753
-        max: 2272
+        init: 1200
+        min: 940
+        max: 1400
 pitch2_controller:
     controller:
         package: dynamixel_controllers
@@ -43,9 +43,9 @@ pitch2_controller:
     joint_speed: 0.2
     motor:
         id: 3
-        init: 2468
-        min: 1883
-        max: 2858
+        init: 2675
+        min: 2376
+        max: 3180
 jaw_controller:
     controller:
         package: dynamixel_controllers
@@ -58,7 +58,6 @@ jaw_controller:
         init: 490
         min: 0
         max: 1039
-
 
 #Pau2Motors config
 pau2motors:
@@ -148,7 +147,7 @@ pau2motors:
             - name: quaternion2euler
               axis: z
             - name: linear
-              scale: 0.5
+              scale: -0.5
               translate: 0
           hardware:
             name: dynamixel

@@ -10,7 +10,7 @@
                     port_name: "/dev/ttyUSB0"
                     baud_rate: 117647
                     min_motor_id: 0
-                    max_motor_id: 25
+                    max_motor_id: 5
                     update_rate: 20
         </rosparam>
      </node>
@@ -40,6 +40,8 @@
                 jaw_controller"
           output="screen"/> -->
     <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py"
+          output="screen"/>
+    <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
           output="screen"/>
     </group>
 </launch>
