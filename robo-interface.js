@@ -101,17 +101,17 @@ var RoboInterface = {
       //Publish topic
       RoboInterface.motorCmdTopic = new ROSLIB.Topic({
         ros:ros,
-        name:'/cmd_pololu',
+        name:'pololu/cmd_pololu',
         messageType:'ros_pololu_servo/servo_pololu'
       });
       RoboInterface.makeFaceExprTopic = new ROSLIB.Topic({
         ros:ros,
-        name:'/make_face_expr',
+        name:'make_face_expr',
         messageType:'basic_head_api/MakeFaceExpr'
       });
       RoboInterface.pointHeadTopic = new ROSLIB.Topic({
         ros:ros,
-        name:'/point_head',
+        name:'point_head',
         messageType:'basic_head_api/PointHead'
       });
 
@@ -126,14 +126,14 @@ var RoboInterface = {
       //Set up services
       RoboInterface.validFaceExprsClient = new ROSLIB.Service({
         ros:ros,
-        name:'/valid_face_exprs',
+        name:'valid_face_exprs',
         serviceType:'basic_head_api/ValidFaceExprs'
       });
     };
     this.$.on("configload", connectROS);
 
     $.ajax({
-        url: "config.yaml",
+        url: "config_dmitry_eyes.yaml",
         dataType: "text",
         success: function(data) {
           RoboInterface.motorConf = jsyaml.load(data);
