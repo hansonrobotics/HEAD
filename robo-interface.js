@@ -101,17 +101,17 @@ var RoboInterface = {
       //Publish topic
       RoboInterface.motorCmdTopic = new ROSLIB.Topic({
         ros:ros,
-        name:'pololu/cmd_pololu',
+        name:'/einstein/pololu/cmd_pololu',
         messageType:'ros_pololu_servo/servo_pololu'
       });
       RoboInterface.makeFaceExprTopic = new ROSLIB.Topic({
         ros:ros,
-        name:'make_face_expr',
+        name:'/make_face_expr',
         messageType:'basic_head_api/MakeFaceExpr'
       });
       RoboInterface.pointHeadTopic = new ROSLIB.Topic({
         ros:ros,
-        name:'point_head',
+        name:'/point_head',
         messageType:'basic_head_api/PointHead'
       });
 
