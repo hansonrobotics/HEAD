@@ -126,7 +126,7 @@ var RoboInterface = {
       //Set up services
       RoboInterface.validFaceExprsClient = new ROSLIB.Service({
         ros:ros,
-        name:'valid_face_exprs',
+        name:'einstein/valid_face_exprs',
         serviceType:'basic_head_api/ValidFaceExprs'
       });
     };
