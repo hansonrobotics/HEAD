@@ -143,7 +143,7 @@ class HeadCtrl:
     rospy.Subscriber("point_head", PointHead, self.pau_ctrl.point_head)
 
     # Topics and services for robot-specific motor-coupled expressions.
-    self.pub_pololu = rospy.Publisher("cmd_pololu", servo_pololu, queue_size=10)
+    self.pub_pololu = rospy.Publisher("/cmd_pololu", servo_pololu, queue_size=10)
     rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
     rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
 
