@@ -126,14 +126,14 @@ var RoboInterface = {
       //Set up services
       RoboInterface.validFaceExprsClient = new ROSLIB.Service({
         ros:ros,
-        name:'einstein/valid_face_exprs',
+        name:'/einstein/valid_face_exprs',
         serviceType:'basic_head_api/ValidFaceExprs'
       });
     };
     this.$.on("configload", connectROS);
 
     $.ajax({
-        url: "config_dmitry_eyes.yaml",
+        url: "config.yaml",
         dataType: "text",
         success: function(data) {
           RoboInterface.motorConf = jsyaml.load(data);
