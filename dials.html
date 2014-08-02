@@ -140,11 +140,11 @@
     btnStack = $("#btnStack");
     btnStack.on("exprbtnclick", function(e, nameobj) {
       setFace(nameobj.name, nameobj.label);
-      setKnobPos(KNOB_OPTS.max*0.7);
+      setKnobPos(KNOB_OPTS.max*1);
     }).on("success", function(e, _btnObjs) { //Note that btnObjs is a global variable
       btnObjs = _btnObjs.btnObjs; //Remove the object wrapper
       setFace(btnObjs[0].name, btnObjs[0].label);
-      setKnobPos(KNOB_OPTS.max*0.7);
+      setKnobPos(KNOB_OPTS.max*1);
     });
     CommonUI.buildExpressionButtons(btnStack);
   }
