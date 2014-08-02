@@ -13,9 +13,9 @@ class MotorCmder:
   def consume(self, incoming_msg):
     coeff = self.parser.get_coeff(incoming_msg)
     angle = self.mapper.map(coeff)
-    rospy.logdebug("Motor: %s, coeff: %s, angle: %s",
-      self.motor_entry['name'], coeff, angle
-    )
+#    rospy.logdebug("Motor: %s, coeff: %s, angle: %s",
+#     self.motor_entry['name'], coeff, angle
+#  )
     self.hardware.turn(self._saturated(angle))
 
   def _saturated(self, angle):
