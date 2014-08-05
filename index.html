@@ -7,6 +7,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+
 <script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
 <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
 <script src="js/jquery-1.11.1.min.js"></script>
@@ -14,6 +15,7 @@
 <script src="js/js-yaml.min.js"></script>
 <script src="js/jquery.ui.touch-punch.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.knob.js"></script>
 <script src="crosshair-slider.js"></script>
 <script src="robo-interface.js"></script>
 <script src="common-ui.js"></script>
@@ -21,45 +23,46 @@
 <style>
   body {
     margin:0;
-    background-color: #DDDDDD;
+    background-color: #111;
     font-family: Arial, Helvetica, sans-serif;
   }
-  p {
-    margin: 4px;
+  span {
+    color: #ffec03;
   }
   .header {
     width: 100%;
     padding: 2px;
-    border: solid 1px #000000;
-    background-color: #888888;
+    border: solid 1px #000;
+    background-color: #444;
     font-size: 12px;
+  }
+  #controlStack {
+    width:100%;
+    max-width:590px;
+  }
+  .knobBlock {
+    margin:5px;
+    float:left;
+  }
+  .knobName {
+    font-size:24px;
+    display:table;
+    margin:auto;
+    position:relative;
+  }
+  .crosshairsl {
+    width:200px;
+    height:200px;
+    margin:5px;
+    float:right;
+  }
+  .btn {
+    color: #111;
+    background-color:#dc0;
+    border-color:#ffec03;
   }
   .header .btn-group {
     margin-left:10px;
-  }
-  .uiBlock {
-    margin: 5px;
-    padding: 5px;
-    border: solid 1px;
-    background-color: #FFFFFF;
-  }
-  @media screen and (min-width: 590px) {
-    #controlStack {
-      width: 590px;
-    }
-    #sliderStack {
-      width: 380px;
-      float: left;
-    }
-    #btnStack {
-      float: left;
-    }
-  }
-  #crosshairsl {
-    width:200px;
-    height:200px;
-    float:right;
-    margin: 5px
   }
   #btnStack .btn {
     margin: 3px;
@@ -67,15 +70,28 @@
     padding: 4px 0px 4px 0px;
   }
   .highlight {
-    background-color:#fff;
-    border-color:#fff;
-    color:#000;
+    background-color:#C0ffff!important;
+    border-color:#C0ffff!important;
   }
-  #btnStack {
-    margin: 2px;
+
+  @media screen and (max-width: 500px) {
+    .landscape {
+      display:none;
+    }
+    #btnStack {
+      margin:auto;
+      display:table;
+      width:80px;
+      padding-top:5px;
+    }
   }
-  .hidden {
-    display: none;
+  @media screen and (min-width: 501px) {
+    .portrait {
+      display:none;
+    }
+    #btnStack {
+      display:inline-block;
+    }
   }
 </style>
 
@@ -84,99 +100,118 @@
   function radToDeg(val) {return val*180/Math.PI;}
   function degToRad(val) {return val*Math.PI/180;}
 
-  function addSliderBlock(confEntry) {
-    var sliderBlock = $("#sliderTemplate").clone();
-    sliderBlock.removeAttr("id"); //Removing sliderTemplate id
-    confEntry.element = sliderBlock //Saving a reference to html element in config object
-    var degMin = Math.ceil(radToDeg(confEntry.min));
-    var degMax = Math.floor(radToDeg(confEntry.max));
-    var degVal = Math.round(radToDeg(confEntry.default));
-
-    //Fill header
-    sliderBlock.find(".slNameL").text(confEntry.labelleft || confEntry.name);
-    sliderBlock.find(".slNameR").text(confEntry.labelright);
-    sliderBlock.find(".slMin").text(degMin);
-    sliderBlock.find(".slMax").text(degMax);
-    sliderBlock.find(".slVal").text(degVal);
-
-    //Create slider
-    var slVal = sliderBlock.find(".slVal");
-    var slider = sliderBlock.find(".slider");
-    slider.slider({
-      range: "min",
-      value: degVal,
-      min: degMin,
-      max: degMax,
-      slide: (function(){
-        if (confEntry.name == "neck_roll") {
-          return function(e, ui) {
-            slVal.text(ui.value);
-            RoboInterface.pointHead({roll: degToRad(ui.value)});
-          }
-        } else {
-          return function(e, ui) {
-            slVal.text(ui.value);
-            RoboInterface.sendMotorCmd(confEntry, degToRad(ui.value));
-          }
-        }
-      })(),
-      start: function(e, ui) {confEntry.isActive = true;},
-      stop: function(e, ui) {confEntry.isActive = false;}
-    });
-
-    sliderBlock.removeClass("hidden");
-    sliderBlock.appendTo("#sliderStack");
+  var KNOB_OPTS = {
+    max: 55,
+    maxShow: 11,
+    fgColor: "#ffec03",
+    fgColorExtreme: "#C0ffff"
   }
 
-  //Create UI that requires a loaded config file.
-  function createUIconf() {
-    //Create sliders
-    motorConf = RoboInterface.motorConf
-    for (var i = 0; i < motorConf.length; i++) {
-      if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
-        addSliderBlock(motorConf[i]);
+  var btnObjs = []; //Holds an array of {name, label, element} objects representing expression buttons.
+  var curface = ''; //Holds the name of the last pressed button.
+
+  function getBtn(name) {
+    for (var i = 0; i < btnObjs.length; i++) {
+      if (btnObjs[i].name == name) {
+        return btnObjs[i].element;
+      }
     };
-    //Update UI according to messages heard on cmd_pololu
-    RoboInterface.$.on("onMotorCmd", function(e, msgObj) {
-      var msg = msgObj.msg;
-      var confEntry = msgObj.confEntry;
+  }
 
-      //Ignore neck motors (if they have no motorid defined).
-      if (confEntry == undefined)
-        return;
+  //Updates UI and inner model.
+  function setFace(name, label) {
+    curface = name;
+    $(".knobName").text(label);
+  }
 
-      if (confEntry.isActive)
-        return;
-
-      var degAngle = Math.round(radToDeg(msg.angle));
-      confEntry.element.find(".slider").slider("value", degAngle);
-      confEntry.element.find(".slVal").text(degAngle);
-    });
-
-    //Create crosshair
-    CommonUI.buildCrosshairSlider($("#crosshairsl"));
+  //Updates UI and sends a ROS message.
+  function setKnobPos(value) {
+    if (!value) {
+      value = parseInt($(".dial").val())/KNOB_OPTS.maxShow*KNOB_OPTS.max;
+    }
+    $(".dial").val(value).trigger("change");
+    var intensity = (Math.round(value/KNOB_OPTS.max*KNOB_OPTS.maxShow) < KNOB_OPTS.maxShow)
+      ? value/(KNOB_OPTS.max*1.2) : 1.0
+    RoboInterface.makeFaceExpr(curface, intensity);
   }
 
   //Create UI that requires a ROS connection.
   function createUIros() {
-    //Create buttons
+    //Build preset buttons
     btnStack = $("#btnStack");
+    btnStack.on("exprbtnclick", function(e, nameobj) {
+      setFace(nameobj.name, nameobj.label);
+      setKnobPos(KNOB_OPTS.max*1);
+    }).on("success", function(e, _btnObjs) { //Note that btnObjs is a global variable
+      btnObjs = _btnObjs.btnObjs; //Remove the object wrapper
+      setFace(btnObjs[0].name, btnObjs[0].label);
+      setKnobPos(KNOB_OPTS.max*1);
+    });
+    CommonUI.buildExpressionButtons(btnStack);
+  }
 
-    //Neutral button
-    neutral = $('<button type="button" class="btn btn-warning">Neutral</button>');
-    btnStack.append(neutral);
-    neutral.click(function() {
-      RoboInterface.makeFaceExpr("neutral", 0);
+  //Create UI that requires a loaded config file.
+  function createUIconf() {
+    //Create crosshair
+    CommonUI.buildCrosshairSlider(
+      $(".crosshairsl"), {
+        bgColor: "#444",
+        fgColor: "#ffec03"
+      }
+    ).on("change", function(e, ui){
+      $(".crosshairsl")
+      .crosshairsl("option", "xval", ui.xval)
+      .crosshairsl("option", "yval", ui.yval);
     });
 
-    //Expression buttons
-    btnStack.on("exprbtnclick", function(e, nameobj) {
-      RoboInterface.makeFaceExpr(nameobj.name, 1.0);
-    })
-    CommonUI.buildExpressionButtons(btnStack, "btn-warning");
+    //Create dial
+    $(".dial").knob({
+      min: 0, max: KNOB_OPTS.max,
+      angleOffset: -125, angleArc: 275,
+      width: 200, height: 200,
+      thickness: 0.4,
+      fgColor:KNOB_OPTS.fgColor, bgColor:"#444",
+      draw: function() { //Extended the draw function to add a ring around the dial.
+        if (parseInt($(".dial").val()) >=  Math.round(KNOB_OPTS.maxShow)) {
+          paintSelection(this.o, KNOB_OPTS.fgColorExtreme);
+        } else {
+          paintSelection(this.o, KNOB_OPTS.fgColor);
+        }
+
+        this.g.lineWidth = 3;
+        this.cursorExt = 0.2;
+
+        //Override radius to fit the outer circle inside canvas
+        this.radius = this.xy - this.lineWidth * 2 / 3 - this.g.lineWidth ;
+
+        this.g.beginPath();
+        this.g.strokeStyle = this.o.fgColor;
+        this.g.arc(this.xy, this.xy, this.radius + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+        this.g.stroke();
+        return true;
+      },
+      change: setKnobPos,
+      format: function(value) {
+        return Math.round(value/KNOB_OPTS.max*KNOB_OPTS.maxShow);
+      }
+    });
+    //Keep the input fields inside dials from being edited directly.
+    $("input.dial").css("pointer-events", "none");
+  }
+
+  function paintSelection(knobObj, color) {
+    knobObj.fgColor = color;
+    $(".dial").css("color", color)
+    $(".knobName").css("color", color);
+    $("#btnStack .btn").removeClass("highlight");
+    var curBtn = getBtn(curface);
+    if (curBtn) {
+      curBtn.addClass("highlight");
+    }
   }
 
   $(function() {
+    $(".dial").val(0);
     RoboInterface.$.on("configload", createUIconf);
     RoboInterface.connect("ws://" + document.domain + ":9090")
     .$.on("connection", function(e) {
@@ -188,24 +223,30 @@
       $("#status").html("&#9679; No connection");
     });
   });
+
 </script>
   <div class="header">
     <span id="status" style="color: #FFFF88;">&#9679; Connecting</span>
-    <div class="btn-group btn-group-xs">
-      <button type="button" class="btn">Motors</button>
-      <a href="dials.html" type="button" class="btn btn-warning">Faces</a>
+    <div style="display:none;" class="btn-group btn-group-xs">
+      <a href="/index.html" type="button" class="btn">Motors</a>
+      <button type="button" class="btn highlight">Faces</button>
     </div>
   </div>
   <div id="controlStack">
-    <div id="sliderStack">
-      <div id="sliderTemplate" class="uiBlock hidden">
-        <p style="float:left"><b class="slNameL"></b></p>
-        <p style="float:right"><b class="slNameR"></b></p>
-        <p><span class="slVal">0</span>°(<span class="slMin">-90</span>° to <span class="slMax">90</span>°)</p>
-        <div class="slider"></div>
+    <div class="landscape">
+      <div class="crosshairsl"></div>
+      <div class="knobBlock" style="float:left">
+        <input type="text" class="dial">
       </div>
+      <span class="knobName" style="top:85px"></span>
     </div>
-    <div id="crosshairsl"></div>
+    <div class="portrait" style="float:right">
+      <span class="knobName" style="padding-top:10px"></span>
+      <div class="knobBlock" style="float:right">
+        <input type="text" class="dial">
+      </div>
+      <div class="crosshairsl" style="clear:right;"></div>
+    </div>
     <div id="btnStack"></div>
   </div>
 </body>
