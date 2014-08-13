@@ -93,8 +93,8 @@ pau2motors:
             id: 2
             speed: 100
             acceleration: 10
-        min: -0.4
-        max: 1.2
+        min: -1.0
+        max: 0.6
 
       neck_roll:
         binding:

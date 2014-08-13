@@ -1,5 +1,5 @@
 <launch>
-	<group ns="einstein">
+	<group ns="/einstein">
         <rosparam file="$(find robots_config)/einstein/config.yaml" command="load"/>
         <node name="pololu" pkg="ros_pololu_servo" type="ros_pololu_servo_node" output="screen">
               <param name="port" value="/dev/ttyACM0" />
