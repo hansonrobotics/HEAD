@@ -232,7 +232,7 @@ pau2motors:
             id: 1
             speed: 200
             acceleration: 100
-        min: -0.782
+        min: -0.457
         max: 1.422
 
 
@@ -254,7 +254,7 @@ pau2motors:
             id: 2
             speed: 200
             acceleration: 100
-        min: -0.905
+        min: -0.286
         max: 0.158
 
 
@@ -276,7 +276,7 @@ pau2motors:
             id: 3
             speed: 200
             acceleration: 100
-        min: 0.075
+        min: 0.562
         max: 0.963
 
 
@@ -297,7 +297,7 @@ pau2motors:
             id: 4
             speed: 200
             acceleration: 100
-        min: -0.353
+        min: 0.434
         max: 0.863
 
 
@@ -318,7 +318,7 @@ pau2motors:
             id: 5
             speed: 200
             acceleration: 100
-        min: -0.318
+        min: 0.114
         max: 1.28
 
 
@@ -338,7 +338,7 @@ pau2motors:
             speed: 200
             acceleration: 100
         min: -1.57
-        max: 1.57
+        max: 1.406
 
 
       Brow-Outer_L:
@@ -356,7 +356,7 @@ pau2motors:
             id: 7
             speed: 200
             acceleration: 100
-        min: -1.172
+        min: -0.404
         max: 1.165
 
 
@@ -375,7 +375,7 @@ pau2motors:
             id: 8
             speed: 200
             acceleration: 100
-        min: -0.68
+        min: -1.57
         max: 0.745
 
 
@@ -566,7 +566,7 @@ pau2motors:
             id: 19
             speed: 200
             acceleration: 100
-        min: -0.543
+        min: -0.27
         max: 1.049
 
 
@@ -585,8 +585,8 @@ pau2motors:
             id: 20
             speed: 200
             acceleration: 100
-        min: -1.172
-        max: 1.512
+        min: -0.457
+        max: 1.165
 
 
       Brow_Outer_R:
@@ -625,4 +625,4 @@ pau2motors:
             speed: 200
             acceleration: 100
         min: -1.57
-        max: 0.119
+        max: -0.457
