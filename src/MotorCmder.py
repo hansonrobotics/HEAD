@@ -8,8 +8,10 @@ class MotorCmder:
     msg = servo_pololu()
     msg.id = self.motor_entry['motorid']
     msg.angle = self._saturatedAngle(angle or self.target)
-    msg.speed = self.motor_entry['speed']
-    msg.acceleration = self.motor_entry['acceleration']
+    # Default values are set here, if speed or acceleration are not found in
+    # the motor entry.
+    msg.speed = self.motor_entry.get('speed', 200)
+    msg.acceleration = self.motor_entry.get('acceleration', 10)
     return msg
 
   def msg_intensity(self, intensity=1):
