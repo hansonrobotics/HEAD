@@ -19,7 +19,6 @@ pitch1_controller:
     joint_speed: 0.2
     motor:
         id: 1
-        Pitch 1:
         init: 533
         min: 305
         max: 700
@@ -32,7 +31,6 @@ roll_controller:
     joint_speed: 0.3
     motor:
         id: 2
-        Roll:
         init: 1512
         min: 1330
         max: 1645
