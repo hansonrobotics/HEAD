@@ -137,10 +137,10 @@ class HeadCtrl:
     rospy.Service("valid_face_exprs", ValidFaceExprs, 
       lambda req: self.pau_ctrl.valid_exprs()
     )
-    rospy.Subscriber("/make_face_expr", MakeFaceExpr,
+    rospy.Subscriber("make_face_expr", MakeFaceExpr,
       lambda req: self.pau_ctrl.make_face(req.exprname, req.intensity)
     )
-    rospy.Subscriber("/point_head", PointHead, self.pau_ctrl.point_head)
+    rospy.Subscriber("point_head", PointHead, self.pau_ctrl.point_head)
 
     # Topics and services for robot-specific motor-coupled expressions.
     self.pub_pololu = rospy.Publisher("/cmd_pololu", servo_pololu, queue_size=10)
