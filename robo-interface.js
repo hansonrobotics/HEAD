@@ -52,7 +52,9 @@ var RoboInterface = {
 
   getValidFaceExprs: function(callback) {
     this.validFaceExprsClient.callService(
-      new ROSLIB.ServiceRequest(),
+      new ROSLIB.ServiceRequest({
+        robotname: "dmitry"
+      }),
       callback
     );
   },
@@ -60,8 +62,11 @@ var RoboInterface = {
   makeFaceExpr: function(faceStr, intensity) {
     this.makeFaceExprTopic.publish(
       new ROSLIB.Message({
-        exprname:faceStr,
-        intensity:intensity
+        robotname: "dmitry",
+        expr: {
+          exprname:faceStr,
+          intensity:intensity
+        }
       })
     );
   },
@@ -106,8 +111,8 @@ var RoboInterface = {
       });
       RoboInterface.makeFaceExprTopic = new ROSLIB.Topic({
         ros:ros,
-        name:'/dmitry/make_face_expr',
-        messageType:'basic_head_api/MakeFaceExpr'
+        name:'/dmitry/make_coupled_face_expr',
+        messageType:'basic_head_api/MakeCoupledFaceExpr'
       });
       RoboInterface.pointHeadTopic = new ROSLIB.Topic({
         ros:ros,
@@ -126,8 +131,8 @@ var RoboInterface = {
       //Set up services
       RoboInterface.validFaceExprsClient = new ROSLIB.Service({
         ros:ros,
-        name:'/dmitry/valid_face_exprs',
-        serviceType:'basic_head_api/ValidFaceExprs'
+        name:'/dmitry/valid_coupled_face_exprs',
+        serviceType:'basic_head_api/ValidCoupledFaceExprs'
       });
     };
     this.$.on("configload", connectROS);
