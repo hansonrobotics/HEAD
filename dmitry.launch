@@ -7,7 +7,7 @@
             namespace: dxl_manager
             serial_ports:
                 pan_tilt_port:
-                    port_name: "/dev/ttyUSB0"
+                    port_name: "/dev-host/ttyUSB0"
                     baud_rate: 117647
                     min_motor_id: 0
                     max_motor_id: 5
@@ -44,10 +44,10 @@
     <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
           output="screen"/>
     <node name="dmitry_eyes" pkg="ros_pololu_servo" type="ros_pololu_servo_node" output="screen">
-          <param name="port" value="/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00060101-if00" />
+          <param name="port" value="/dev-host/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00060101-if00" />
     </node>
     <node name="dmitry_face" pkg="ros_pololu_servo" type="ros_pololu_servo_node" output="screen">
-          <param name="port" value="/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00080333-if00" />
+          <param name="port" value="/dev-host/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00080333-if00" />
     </node>
     </group>
 </launch>
