@@ -142,8 +142,8 @@ pau2motors:
           hardware:
             name: dynamixel
             topic: pitch1_controller/command
-        min: -1
-        max: 0.3
+        min: -1.57
+        max: 1.57
 
       neck_pitch_top:
         binding:
@@ -154,13 +154,13 @@ pau2motors:
             - name: quaternion2euler
               axis: z
             - name: linear
-              scale: 0.5
+              scale: -0.5
               translate: 0
           hardware:
             name: dynamixel
             topic: pitch2_controller/command
-        min: -0.4
-        max: 0.4
+        min: -1.57
+        max: 1.57
 
       neck_roll:
         binding:
@@ -171,13 +171,13 @@ pau2motors:
             - name: quaternion2euler
               axis: x
             - name: linear
-              min: -0.4
-              max: 0.4
+              scale: 1.0
+              translate: 0
           hardware:
             name: dynamixel
             topic: roll_controller/command
-        min: -0.4
-        max: 0.4
+        min: -1.57
+        max: 1.57
 
       neck_base:
         binding:
