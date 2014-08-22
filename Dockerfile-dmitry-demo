@@ -1,4 +1,4 @@
-# Run with: sudo docker run --privileged -v /dev:/dev-host -p 8000:8000 -p 9090:9090 -it gaboose/hanson-dmitry-demo
+# Run with: docker run --privileged -v /dev:/dev-host -p 8000:8000 -p 9090:9090 -it gaboose/hanson-dmitry-demo
 
 FROM opencog/ros-indigo-dev
 MAINTAINER Gabrielius Mickevicius "gabrielius.m@gmail.com"
@@ -28,11 +28,11 @@ RUN apt-get install -y ros-indigo-rosbridge-server
 WORKDIR /catkin_ws/src
 RUN git clone https://github.com/hansonrobotics/ros_pololu_servo
 RUN git clone https://github.com/hansonrobotics/pau2motors
+ENV NO_CACHE 2014-08-22-19:30
 RUN git clone https://github.com/hansonrobotics/basic_head_api
 RUN git clone https://github.com/hansonrobotics/ros_motors_webui
 RUN git clone https://github.com/arebgun/dynamixel_motor
 RUN git clone https://github.com/hansonrobotics/docker-scripts
-ENV NO_CACHE 2014-08-21-07:16
 RUN git clone https://github.com/hansonrobotics/robots_config
 
 WORKDIR /catkin_ws/src/ros_pololu_servo
@@ -40,13 +40,13 @@ RUN git checkout b032d5472133f37a0a4592fe5ce28f18737a7f0f
 WORKDIR /catkin_ws/src/pau2motors
 RUN git checkout b729bf6d47984bf6ff477b18445543d90679c9fe
 WORKDIR /catkin_ws/src/basic_head_api
-RUN git checkout 0ed32769c0b431355e071b1e4b3559aeac9c4cb9
+RUN git checkout 7f370012b7e66315bdaaec6bef03359ef7edcf03
 WORKDIR /catkin_ws/src/ros_motors_webui
-RUN git checkout 4993c1cb8ebd5532f544046fc17a832d31bfaeef
+RUN git checkout ad2e16e02a69698fd77280f6cda336d86baca92d
 WORKDIR /catkin_ws/src/docker-scripts
-RUN git checkout a32551636596681ef9d2db6a22c5f75eab0eff88
+RUN git checkout d36ac9cc6fd69b29f26ac74359517a293fbd88ed
 WORKDIR /catkin_ws/src/robots_config
-RUN git checkout e02729d76394937c9d8f082f52e2e9e3ffde9ea9
+RUN git checkout 66462ede36abbc1b67c3157bbe1bd66873c65b13
 
 WORKDIR /catkin_ws
 RUN bash -l -c "/usr/bin/python3 /opt/ros/indigo/bin/catkin_make"
