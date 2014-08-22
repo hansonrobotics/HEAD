@@ -30,13 +30,13 @@
 
 - name: neck_base
   default: 0
-  min: -1
-  max: 1
+  min: -1.57
+  max: 1.57
 
 - name: neck_pitch
   default: 0
-  min: -0.8
-  max: 0.8
+  min: -1.57
+  max: 1.57
 
 - name: neck_roll
   labelleft: "Lean left"
