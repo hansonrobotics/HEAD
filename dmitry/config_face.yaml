@@ -154,7 +154,7 @@ pau2motors:
             - name: quaternion2euler
               axis: z
             - name: linear
-              scale: -0.5
+              scale: 0.5
               translate: 0
           hardware:
             name: dynamixel
@@ -188,7 +188,7 @@ pau2motors:
             - name: quaternion2euler
               axis: y
             - name: linear
-              scale: -1
+              scale: 1
               translate: 0
           hardware:
             name: dynamixel
