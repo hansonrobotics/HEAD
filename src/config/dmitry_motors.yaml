@@ -137,7 +137,7 @@
   default: -0.0034777778
 
 - name: Brow-Inner_R
-  motorid: 23
+  motorid: 28
   max: 0.9471148332
   min: -1.5707963268
   default: -0.4579074163

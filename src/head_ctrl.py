@@ -87,9 +87,11 @@ class SpecificRobotCtrl:
   def make_face(self, exprname, intensity=1):
     rospy.loginfo("Face request: %s of %s for %s", intensity, exprname, self.robotname)
     for cmd in self.faces[exprname].new_msgs(intensity):
-      self.publisher.publish(cmd)
+      pubid = cmd.id // 24
+      cmd.id = cmd.id % 24
+      self.publishers[pubid].publish(cmd)
 
-  def __init__(self, robotname, publisher):
+  def __init__(self, robotname, publishers):
     # Dictionary of expression names mapping to FaceExprMotors instances.
     self.faces = FaceExpr.FaceExprMotors.from_expr_yaml(
       read_config(robotname + "_exprs.yaml"),
@@ -97,7 +99,7 @@ class SpecificRobotCtrl:
     )
 
     # Motor commands will be sent to this publisher.
-    self.publisher = publisher
+    self.publishers = publishers
 
     self.robotname = robotname
 
@@ -143,7 +145,9 @@ class HeadCtrl:
     rospy.Subscriber("point_head", PointHead, self.pau_ctrl.point_head)
 
     # Topics and services for robot-specific motor-coupled expressions.
-    self.pub_pololu = rospy.Publisher("dmitry_face/cmd_pololu", servo_pololu, queue_size=30)
+    self.pub_pololu = [None,None];
+    self.pub_pololu[0] = rospy.Publisher("dmitry_face/cmd_pololu", servo_pololu, queue_size=30)
+    self.pub_pololu[1] = rospy.Publisher("dmitry_eyes/cmd_pololu", servo_pololu, queue_size=30)
     rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
     rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
 
