@@ -2,129 +2,130 @@
 happy:
   Cheek-Squint_L: 1
   Cheek-Squint_R: 1
-  Eyelid-Lower_R: 0.9259259259
-  Eyelid-Lower_L: 0.0304878049
-  Eyelid-Upper_R: 0.7764705882
-  Eyelid-Upper_L: 0.4011904762
-  Frown_R: 0.90875
-  Brow-Outer_L: 0.7684563758
-  Smile_R: 0.9237832874
-  Smile_L: 0.0776152981
-  Lip-Lower_L: 0.6474137931
-  Lip-Upper_C: 0.8303030303
-  Sneer_R: 0.99875
-  Lip-Upper_L: 0.1228070175
-  Lip-Lower_R: 0.2330383481
+  Eyelid-Lower_R: 0.92593
+  Eyelid-Lower_L: 0.03049
+  Eyelid-Upper_R: 0.77647
+  Eyelid-Upper_L: 0.40119
+  Frown_R: 0.9476
+  Brow-Outer_L: 0.76846
+  Smile_R: 0.92012
+  Smile_L: 0.07762
+  Lip-Lower_L: 0.64741
+  Lip-Upper_C: 0.70833
+  Sneer_R: 0.99853
+  Lip-Upper_L: 0.12281
+  Lip-Lower_R: 0.25159
   Lip-Lower_C: 1
-  Brow-Inner_L: 0.7548148148
-  Frown_L: 0.0254237288
+  Brow-Inner_L: 0.75113
+  Frown_L: 0.02542
   EE-oo_R: 0.5
-  Lip-Upper_R: 0.6488888889
-  Sneer_L: 0.8223529412
-  Brow-Outer_R: 0.3514538559
+  Lip-Upper_R: 0.64889
+  Sneer_L: 0.82235
+  Brow-Outer_R: 0.35145
   EE-oo_L: 0.5
-  Brow-Inner_R: 0.1592356688
+  Brow-Inner_R: 0.02762
+
 
 evil:
   Cheek-Squint_L: 1
   Cheek-Squint_R: 1
-  Eyelid-Lower_R: 0.9259259259
-  Eyelid-Lower_L: 0.0304878049
+  Eyelid-Lower_R: 0.92593
+  Eyelid-Lower_L: 0.03049
   Eyelid-Upper_R: 1
   Eyelid-Upper_L: 0
-  Frown_R: 0.90875
+  Frown_R: 0.9476
   Brow-Outer_L: 1
-  Smile_R: 0.9237832874
-  Smile_L: 0.0776152981
-  Lip-Lower_L: 0.6474137931
-  Lip-Upper_C: 0.8303030303
+  Smile_R: 0.92012
+  Smile_L: 0.07762
+  Lip-Lower_L: 0.64741
+  Lip-Upper_C: 0.70833
   Sneer_R: 0
-  Lip-Upper_L: 0.1228070175
-  Lip-Lower_R: 0.2330383481
+  Lip-Upper_L: 0.12281
+  Lip-Lower_R: 0.25159
   Lip-Lower_C: 1
   Brow-Inner_L: 0
-  Frown_L: 0.0254237288
+  Frown_L: 0.02542
   EE-oo_R: 0.5
-  Lip-Upper_R: 0.6488888889
+  Lip-Upper_R: 0.64889
   Sneer_L: 0
   Brow-Outer_R: 0
   EE-oo_L: 0.5
   Brow-Inner_R: 1
 
 sad:
-  Cheek-Squint_L: 0.0175438596
-  Cheek-Squint_R: 0.1097694841
-  Eyelid-Lower_R: 0.2679738562
-  Eyelid-Lower_L: 0.7774390244
-  Eyelid-Upper_R: 0.3294117647
-  Eyelid-Upper_L: 0.7976190476
+  Cheek-Squint_L: 0.01754
+  Cheek-Squint_R: 0.10977
+  Eyelid-Lower_R: 0.26797
+  Eyelid-Lower_L: 0.77744
+  Eyelid-Upper_R: 0.32941
+  Eyelid-Upper_L: 0.79762
   Frown_R: 0
   Brow-Outer_L: 0
-  Smile_R: 0.1147842057
+  Smile_R: 0.07218
   Smile_L: 1
-  Lip-Lower_L: 0.1517241379
+  Lip-Lower_L: 0.15172
   Lip-Upper_C: 0
-  Sneer_R: 0.99875
-  Lip-Upper_L: 0.8650472335
-  Lip-Lower_R: 0.7728613569
+  Sneer_R: 0.99853
+  Lip-Upper_L: 0.86505
+  Lip-Lower_R: 0.83439
   Lip-Lower_C: 0
   Brow-Inner_L: 1
   Frown_L: 1
   EE-oo_R: 0.5
   Lip-Upper_R: 0
-  Sneer_L: 0.8223529412
+  Sneer_L: 0.82235
   Brow-Outer_R: 1
   EE-oo_L: 0.5
   Brow-Inner_R: 0
 
 surprise:
-  Cheek-Squint_L: 0.0175438596
-  Cheek-Squint_R: 0.1097694841
+  Cheek-Squint_L: 0.01754
+  Cheek-Squint_R: 0.10977
   Eyelid-Lower_R: 0
   Eyelid-Lower_L: 1
   Eyelid-Upper_R: 1
   Eyelid-Upper_L: 0
-  Frown_R: 0.90875
+  Frown_R: 0.9476
   Brow-Outer_L: 1
-  Smile_R: 0.1147842057
+  Smile_R: 0.07218
   Smile_L: 1
-  Lip-Lower_L: 0.6474137931
-  Lip-Upper_C: 0.8303030303
-  Sneer_R: 0.99875
-  Lip-Upper_L: 0.1228070175
-  Lip-Lower_R: 0.2330383481
+  Lip-Lower_L: 0.64741
+  Lip-Upper_C: 0.70833
+  Sneer_R: 0.99853
+  Lip-Upper_L: 0.12281
+  Lip-Lower_R: 0.25159
   Lip-Lower_C: 1
   Brow-Inner_L: 1
-  Frown_L: 0.0254237288
+  Frown_L: 0.02542
   EE-oo_R: 0.5
-  Lip-Upper_R: 0.6488888889
-  Sneer_L: 0.8223529412
+  Lip-Upper_R: 0.64889
+  Sneer_L: 0.82235
   Brow-Outer_R: 0
   EE-oo_L: 0.5
   Brow-Inner_R: 0
 
 angry:
-  Cheek-Squint_L: 0.0175438596
-  Cheek-Squint_R: 0.1097694841
-  Eyelid-Lower_R: 0.9259259259
-  Eyelid-Lower_L: 0.0304878049
-  Eyelid-Upper_R: 0.5647058824
-  Eyelid-Upper_L: 0.5595238095
+  Cheek-Squint_L: 0.01754
+  Cheek-Squint_R: 0.10977
+  Eyelid-Lower_R: 0.92593
+  Eyelid-Lower_L: 0.03049
+  Eyelid-Upper_R: 0.56471
+  Eyelid-Upper_L: 0.55952
   Frown_R: 0
   Brow-Outer_L: 1
-  Smile_R: 0.1147842057
+  Smile_R: 0.07218
   Smile_L: 1
-  Lip-Lower_L: 0.6474137931
-  Lip-Upper_C: 0.8303030303
-  Sneer_R: 0.25
-  Lip-Upper_L: 0.1228070175
-  Lip-Lower_R: 0.1150442478
+  Lip-Lower_L: 0.64741
+  Lip-Upper_C: 0.70833
+  Sneer_R: 0.11765
+  Lip-Upper_L: 0.12281
+  Lip-Lower_R: 0.1242
   Lip-Lower_C: 0.7
   Brow-Inner_L: 0
   Frown_L: 1
   EE-oo_R: 0.5
-  Lip-Upper_R: 0.8055555556
-  Sneer_L: 0.2352941176
+  Lip-Upper_R: 0.80556
+  Sneer_L: 0.23529
   Brow-Outer_R: 0
   EE-oo_L: 0.5
   Brow-Inner_R: 1
@@ -138,71 +139,71 @@ afraid:
   Eyelid-Upper_L: 0
   Frown_R: 0
   Brow-Outer_L: 1
-  Smile_R: 0.1147842057
+  Smile_R: 0.07218
   Smile_L: 1
-  Lip-Lower_L: 0.6474137931
-  Lip-Upper_C: 0.8303030303
-  Sneer_R: 0.99875
-  Lip-Upper_L: 0.1228070175
-  Lip-Lower_R: 0.2330383481
+  Lip-Lower_L: 0.64741
+  Lip-Upper_C: 0.70833
+  Sneer_R: 0.99853
+  Lip-Upper_L: 0.12281
+  Lip-Lower_R: 0.25159
   Lip-Lower_C: 1
   Brow-Inner_L: 0
   Frown_L: 1
   EE-oo_R: 0.5
-  Lip-Upper_R: 0.6488888889
-  Sneer_L: 0.8223529412
+  Lip-Upper_R: 0.64889
+  Sneer_L: 0.82235
   Brow-Outer_R: 0
   EE-oo_L: 0.5
-  Brow-Inner_R: 0.9554140127
+  Brow-Inner_R: 0.94843
 
 disgusted:
   Cheek-Squint_L: 1
   Cheek-Squint_R: 1
-  Eyelid-Lower_R: 0.9259259259
-  Eyelid-Lower_L: 0.0304878049
-  Eyelid-Upper_R: 0.3294117647
-  Eyelid-Upper_L: 0.7976190476
+  Eyelid-Lower_R: 0.92593
+  Eyelid-Lower_L: 0.03049
+  Eyelid-Upper_R: 0.32941
+  Eyelid-Upper_L: 0.79762
   Frown_R: 0
   Brow-Outer_L: 0
-  Smile_R: 0.1147842057
+  Smile_R: 0.07218
   Smile_L: 1
   Lip-Lower_L: 0
-  Lip-Upper_C: 0.8303030303
+  Lip-Upper_C: 0.70833
   Sneer_R: 0
-  Lip-Upper_L: 0.1228070175
+  Lip-Upper_L: 0.12281
   Lip-Lower_R: 1
   Lip-Lower_C: 0
   Brow-Inner_L: 0
   Frown_L: 1
   EE-oo_R: 0.5
-  Lip-Upper_R: 0.7777777778
+  Lip-Upper_R: 0.77778
   Sneer_L: 0
   Brow-Outer_R: 1
   EE-oo_L: 0.5
   Brow-Inner_R: 1
 
 amused:
-  Cheek-Squint_L: 0.7929824561
+  Cheek-Squint_L: 0.79298
   Cheek-Squint_R: 1
-  Eyelid-Lower_R: 0.9259259259
-  Eyelid-Lower_L: 0.0304878049
-  Eyelid-Upper_R: 0.7764705882
-  Eyelid-Upper_L: 0.4011904762
-  Frown_R: 0.90875
-  Brow-Outer_L: 0.7684563758
-  Smile_R: 0.9237832874
-  Smile_L: 0.0776152981
-  Lip-Lower_L: 0.6474137931
-  Lip-Upper_C: 0.8303030303
-  Sneer_R: 0.99875
-  Lip-Upper_L: 0.1228070175
-  Lip-Lower_R: 0.2330383481
+  Eyelid-Lower_R: 0.92593
+  Eyelid-Lower_L: 0.03049
+  Eyelid-Upper_R: 0.77647
+  Eyelid-Upper_L: 0.40119
+  Frown_R: 0.9476
+  Brow-Outer_L: 0.76846
+  Smile_R: 0.92012
+  Smile_L: 0.07762
+  Lip-Lower_L: 0.64741
+  Lip-Upper_C: 0.70833
+  Sneer_R: 0.99853
+  Lip-Upper_L: 0.12281
+  Lip-Lower_R: 0.25159
   Lip-Lower_C: 1
-  Brow-Inner_L: 0.7548148148
-  Frown_L: 0.0254237288
+  Brow-Inner_L: 0.75113
+  Frown_L: 0.02542
   EE-oo_R: 0.5
-  Lip-Upper_R: 0.6488888889
-  Sneer_L: 0.8223529412
-  Brow-Outer_R: 0.3514538559
+  Lip-Upper_R: 0.64889
+  Sneer_L: 0.82235
+  Brow-Outer_R: 0.35145
   EE-oo_L: 0.5
-  Brow-Inner_R: 0.5175159236
+  Brow-Inner_R: 0.44199
