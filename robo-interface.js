@@ -25,7 +25,7 @@ var limitCallRate = function(millis, func) {
 
 //Main Class
 var RoboInterface = {
-
+	
   $: $({}), //Event proxy. Events are triggered and bound to this object.
 
   //Keeps the incomming motor messages from flooding.
@@ -34,13 +34,23 @@ var RoboInterface = {
   }),
 
   _sendMotorCmd: function(confEntry, angle, speed, acc) {
-    var cmd = new ROSLIB.Message({
-      id: confEntry.motorid,
-      angle: Math.min(Math.max(angle, confEntry.min), confEntry.max),
-      speed: speed || confEntry.speed,
-      acceleration: acc || confEntry.acceleration
-    });
-    RoboInterface.motorCmdTopic.publish(cmd);
+    if (!confEntry.topic|| confEntry.topic =='none')
+      return false;
+  	var topicParams = RoboInterface.motortopicParams[confEntry.topic];
+  	var topic = RoboInterface.motorCmdTopics[confEntry.topic];
+  	if (topicParams.messageType == 'std_msgs/Float64'){
+  	  var cmd = new ROSLIB.Message({data: Math.min(Math.max(angle, confEntry.min), confEntry.max)});
+  	}else{
+      var cmd = new ROSLIB.Message({
+        id: confEntry.motorid,
+        angle: Math.min(Math.max(angle, confEntry.min), confEntry.max),
+        speed: speed || confEntry.speed,
+        acceleration: acc || confEntry.acceleration
+      });
+
+    }
+    topic.publish(cmd);
+    //RoboInterface.motorCmdTopic.publish(cmd);
   },
 
   sendDefaultMotorCmds: function() {
@@ -103,12 +113,44 @@ var RoboInterface = {
         RoboInterface.$.trigger("error");
       });
 
-      //Publish topic
+      //Publish topic - to be deleted
       RoboInterface.motorCmdTopic = new ROSLIB.Topic({
         ros:ros,
         name:'/dmitry/pololu/cmd_pololu',
         messageType:'ros_pololu_servo/servo_pololu'
       });
+      RoboInterface.motortopicParams = {
+	     face : {
+	        ros:ros,
+    	     name:'/dmitry/dmitry_face/cmd_pololu',
+ 		     messageType:'ros_pololu_servo/servo_pololu'
+ 		  },
+	     eyes : {
+	        ros:ros,
+    	     name:'/dmitry/dmitry_eyes/cmd_pololu',
+ 		     messageType:'ros_pololu_servo/servo_pololu'
+ 		  }, 		  
+	     jaw : {
+	        ros:ros,
+    	     name:'/dmitry/jaw_controller/command',
+ 		     messageType:'std_msgs/Float64'
+ 		  }, 		        	
+      };
+      // Publish and subscribe to topics
+      RoboInterface.motorCmdTopics = {}
+      $.each(RoboInterface.motortopicParams, function(k,p){
+				RoboInterface.motorCmdTopics[k] =  new ROSLIB.Topic(p);
+				RoboInterface.motorCmdTopics[k].subscribe(function(msg) {
+				  console.log('a');
+                //  RoboInterface.$.trigger("onMotorCmd", {
+                 //   msg: msg,
+                //    topic: p,
+                //    confEntry: getConfFromTopicID(msg,k)
+                //  });
+                });
+      });
+
+      
       RoboInterface.makeFaceExprTopic = new ROSLIB.Topic({
         ros:ros,
         name:'/dmitry/make_coupled_face_expr',
@@ -120,13 +162,6 @@ var RoboInterface = {
         messageType:'basic_head_api/PointHead'
       });
 
-      //Subscribe to topic
-      RoboInterface.motorCmdTopic.subscribe(function(msg) {
-        RoboInterface.$.trigger("onMotorCmd", {
-          msg: msg,
-          confEntry: getConfFromID(msg.id)
-        });
-      });
 
       //Set up services
       RoboInterface.validFaceExprsClient = new ROSLIB.Service({
@@ -151,17 +186,19 @@ var RoboInterface = {
 };
 
 //Utility function
-var getConfFromID = (function() {
+var getConfFromTopicID = (function() {
   var motorID2Conf = {};
 
   RoboInterface.$.on("configload", function() {
     var motorConf = RoboInterface.motorConf;
     for (var i = 0; i < motorConf.length; i++) {
-      motorID2Conf[motorConf[i].motorid] = motorConf[i];
+      var id = motorConf[i].motorid || "";
+      motorID2Conf[motorConf[i].topic+id] = motorConf[i];
     };
   });
 
-  return function (id) {
-    return motorID2Conf[id];
+  return function (msg,topic) {
+    var id = msg.id || "";
+    return motorID2Conf[topic+id];
   };
 })()
