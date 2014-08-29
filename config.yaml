@@ -221,7 +221,7 @@
   default: -0.1
   min: -0.68
   max: 0.45
-  motorid: 1
+  motorid: 0
 
 - name: Eye_L
   topic: eyes
@@ -230,7 +230,7 @@
   default: 0
   min: -0.58
   max: 0.55
-  motorid: 2
+  motorid: 1
 
 - name: Eyes_Pitch
   topic: eyes
@@ -239,7 +239,7 @@
   default: 0
   min: -0.58
   max: 1.117
-  motorid: 3
+  motorid: 2
 
 - name: Jaw
   topic: jaw
