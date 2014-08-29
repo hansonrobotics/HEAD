@@ -55,9 +55,9 @@ jaw_controller:
     joint_speed: 0.2
     motor:
         id: 4
-        init: 490
-        min: 0
-        max: 1039
+        init: 425
+        min: 550
+        max: 715
 
 #Pau2Motors config
 pau2motors:
@@ -65,9 +65,6 @@ pau2motors:
         cmd_neck_pau: neck_pitch_top;neck_pitch_bottom;neck_roll;neck_base
         cmd_eyes_pau: eyes_pitch;leye_yaw;reye_yaw
         cmd_face_pau: Cheek-Squint_L;Cheek-Squint_R;Eyelid-Lower_R;Eyelid-Lower_L;Eyelid-Upper_R;Eyelid-Upper_L;Frown_R;Brow-Outer_L;Smile_R;Smile_L;Lip-Lower_L;Lip_Upper_C;Sneer_R;Lip-Upper_L;Lip-Lower_R;Lip-Lower_C;Brow-Inner_L;Frown_L;Lip-Upper_R;Sneer_L;Brow_Outer_R;Brow-Inner_R
-
-
-
 
     motors:
     # Eyes
