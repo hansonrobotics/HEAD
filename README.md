@@ -1,29 +1,37 @@
-##ros_motors_webui
+ros_motors_webui
+=======
 
-Web interface to control Mini-Einstein's face and neck using **ros_servo_pololu**, **basic_head_api** and **rosbridge_server** packages.
+ros_motors_web_ui is the html/javascript application designed to control robots over the ROS. It uses websockets to connect to ROS.
 
-###Installation
+Requirements
+------------
 
-Download and run a full docker image:
+ 1. Rosbridge server. See http://wiki.ros.org/rosbridge_suite
+ 2. Browser supporting websockets: http://caniuse.com/#feat=websockets
 
-1. Plug in the Pololu controller.
-2. Run `docker.io run --privileged -v /dev/ttyACM0:/dev/ttyACM0 -p 8000:8000 -p 9090:9090 -it gaboose/ros-indigo-hanson-webui`.
-3. Wait for the image to download and run.
-4. Open **http://127.0.0.1:8000**.
+Running instructions
+-------------
 
-Or for latest changes build the Dockerfile inside or install the following packages manually:
+Application can run on any webserver, which could connect to the rosbridge websocket. Currently it is assumed that rosbridge server are on same server.
 
-+ **ros_servo_pololu**: https://github.com/hansonrobotics/ros_pololu_servo
-+ **pau2motors**: https://github.com/hansonrobotics/pau2motors
-+ **basic_head_api**: https://github.com/hansonrobotics/basic_head_api
-+ **Rosbridge**: `apt-get install ros-indigo-rosbridge-server`
+ 1. Start rosbridge server: `roslaunch rosbridge_server rosbridge_websocket.launch`
+ 2. In the root directory start python SimpleHTTPServer: `python -m SimpleHTTPServer`
+ 3. By default url on same machine would be `http://127.0.0.1:8000`
 
-###Usage
+Components and ROS topics
+----------
+#### index.html (Emotions)
+ 1. Gets the list of expressions from ROS *valid_coupled_face_exprs*  topic served by [basic_head_api](https://github.com/hansonrobotics/basic_head_api) node
+ 2. Sends the expression and intensity to the */make_coupled_face_expr* to same [basic_head_api](https://github.com/hansonrobotics/basic_head_api) node
+ 3. The joystick control sends the head direction to */point_head* module.
+ 
+ ----------
 
-Go to the directory containing **index.html**, run **run.sh**, then open **http://127.0.0.1:8000**
+#### motors.html (Manual Control)
+Controls individual motors manually. loads config from : `/configs/` dir.
+Currently supported:
 
-###Notes
+ 1. Dynamixels
+ 2. Pololulu using [ros_pololu_servo node](https://github.com/hansonrobotics/ros_pololu_servo)
 
-Avoid running the docker image with no Pololu controller plugged in. A folder named **/dev/ttyACM0** will be created, which interferes with access to the real **/dev/ttyACM0**.
-
-**rosbridge_server** is assumed to be located at the same IP address as the webpage, using **document.domain** js property.
+----------
