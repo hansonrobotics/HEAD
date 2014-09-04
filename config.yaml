@@ -101,9 +101,9 @@
   topic: face
   labelleft: "Lip-Upper_C"
   labelright: ""
-  default: -1.5708
-  min: -1.5708
-  max: -0.45791
+  default: -0.527
+  min: -0.527
+  max: 0.425
   motorid: 11
 
 - name: Sneer_R
@@ -179,13 +179,13 @@
   motorid: 19
 
 - name: Sneer_L
-  topic: face
+  topic: eyes
   labelleft: "Sneer_L"
   labelright: ""
   default: 1.16274
   min: -0.45791
   max: 1.51283
-  motorid: 20
+  motorid: 5
 
 - name: Brow-Outer_R
   topic: face
