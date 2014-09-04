@@ -66,9 +66,9 @@
 
 - name: Lip-Upper_C
   motorid: 11
-  max: -0.4579074163
-  min: -1.5707963268
-  default: -1.5707963268
+  max: 0.4254481564
+  min: -0.5274629732
+  default: -0.5274629732
 
 - name: Sneer_R
   motorid: 12
