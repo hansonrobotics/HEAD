@@ -642,7 +642,6 @@ pau2motors:
         min: -1.57
         max: -0.457
 
-
       Jaw:
         binding:
           parser:
