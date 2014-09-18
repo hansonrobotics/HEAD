@@ -60,6 +60,7 @@ $(function() {
 			});
 			cmdAnimations.publish(msg);
 		});
+		$('#cmd_stop').click();
 
 	}
 
@@ -71,8 +72,9 @@ $(function() {
 		
   });
 
+	var loopOn = 0;
 
-	$('.btn-toggle').click(function() {
+	$('#demo-loop').click(function() {
 		  $(this).find('.btn').toggleClass('active');  
 		  
 		  if ($(this).find('.btn-primary').size()>0) {
@@ -87,11 +89,29 @@ $(function() {
 		  if ($(this).find('.btn-info').size()>0) {
 		  	$(this).find('.btn').toggleClass('btn-info');
 		  }
-		  
 		  $(this).find('.btn').toggleClass('btn-default');
-		     
-	});
+			// process the logic
+			loopOn = $('#loop-on.active').length;
+			if (loopOn){
+				$('.optional').hide();
+			}else{
+				$('.optional').show();
+			}
 
+		
+	});
   // Create a connection to the rosbridge WebSocket server.
-  ros.connect('ws://localhost:9090');
+  ros.connect("ws://" + document.domain + ":9090");
+  //Demo loop
+	jQuery.fn.random = function() {
+		  var randomIndex = Math.floor(Math.random() * this.length);  
+		  return jQuery(this[randomIndex]);
+	};
+	var demo = setInterval(function(){
+		if (loopOn>0){
+			$('.emotion').random().click();
+		}
+	},1000);
+	
+
 }); 

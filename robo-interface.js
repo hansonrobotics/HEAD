@@ -27,6 +27,18 @@ var limitCallRate = function(millis, func) {
 var RoboInterface = {
 	
   $: $({}), //Event proxy. Events are triggered and bound to this object.
+  // Resets blender mode
+  startBlenderMode: function startBlenderMode(){
+		var cmdBlender = new ROSLIB.Topic({
+		  ros : ros,
+		  name : '/cmd_blendermode',
+		  messageType : 'std_msgs/String'
+		});
+		var msg = new ROSLIB.Message({
+		  data: 'Dummy'
+		});
+    cmdBlender.publish(msg);
+  },
 
   //Keeps the incomming motor messages from flooding.
   sendMotorCmd: limitCallRate(30, function() {
@@ -108,6 +120,7 @@ var RoboInterface = {
         url: address
       }).on("connection", function(e){
         RoboInterface.$.trigger("connection");
+	RoboInterface.startBlenderMode();
         RoboInterface.sendDefaultMotorCmds();
       }).on("error", function(e){
         RoboInterface.$.trigger("error");
@@ -141,7 +154,7 @@ var RoboInterface = {
       $.each(RoboInterface.motortopicParams, function(k,p){
 				RoboInterface.motorCmdTopics[k] =  new ROSLIB.Topic(p);
 				RoboInterface.motorCmdTopics[k].subscribe(function(msg) {
-				  console.log('a');
+				  
                 //  RoboInterface.$.trigger("onMotorCmd", {
                  //   msg: msg,
                 //    topic: p,
