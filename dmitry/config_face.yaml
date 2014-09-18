@@ -52,11 +52,11 @@ jaw_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: jaw_joint
-    joint_speed: 0.2
+    joint_speed: 1
     motor:
         id: 4
-        init: 425
-        min: 550
+        init: 550
+        min: 425
         max: 715
 
 #Pau2Motors config
@@ -64,9 +64,11 @@ pau2motors:
     topics:
         cmd_neck_pau: neck_pitch_top;neck_pitch_bottom;neck_roll;neck_base
         cmd_eyes_pau: eyes_pitch;leye_yaw;reye_yaw
-        cmd_face_pau: Cheek-Squint_L;Cheek-Squint_R;Eyelid-Lower_R;Eyelid-Lower_L;Eyelid-Upper_R;Eyelid-Upper_L;Frown_R;Brow-Outer_L;Smile_R;Smile_L;Lip-Lower_L;Lip_Upper_C;Sneer_R;Lip-Upper_L;Lip-Lower_R;Lip-Lower_C;Brow-Inner_L;Frown_L;Lip-Upper_R;Sneer_L;Brow_Outer_R;Brow-Inner_R
+        cmd_face_pau: Cheek-Squint_L;Cheek-Squint_R;Eyelid-Lower_R;Eyelid-Lower_L;Eyelid-Upper_R;Eyelid-Upper_L;Frown_R;Brow-Outer_L;Smile_R;Smile_L;Lip-Lower_L;Lip_Upper_C;Sneer_R;Lip-Upper_L;Lip-Lower_R;Lip-Lower_C;Brow-Inner_L;Frown_L;Lip-Upper_R;Sneer_L;Brow_Outer_R;Brow-Inner_R;Jaw
+
 
     motors:
+
     # Eyes
       eyes_pitch:
         binding:
@@ -134,7 +136,7 @@ pau2motors:
             - name: quaternion2euler
               axis: z
             - name: linear
-              scale: 0.5
+              scale: -0.5
               translate: 0
           hardware:
             name: dynamixel
@@ -193,8 +195,7 @@ pau2motors:
         min: -1.7
         max: 1.7
 
-      #Face
-
+# -----------------------------Face--------------------------------
       Cheek-Squint_L:
         binding:
           parser:
@@ -210,7 +211,7 @@ pau2motors:
             id: 0
             speed: 200
             acceleration: 100
-        min: -1.57
+        min: -1.547
         max: -0.249
 
 
@@ -240,18 +241,18 @@ pau2motors:
             shapekey: 01_EyeBlink_R;03_EyeSquint_R;09_EyeOpen_R
           function:
             - name: weightedsum
-              imin: 0.5
+              imin: 0.485
               terms:
-              - {min: 0, max: 1, imax: 0.6}
-              - {min: 0, max: 1, imax: 0.8}
-              - {min: 0, max: 1, imax: 0.6}
+              - {min: 0, max: 0.8, imax: 1}
+              - {min: 0, max: 1, imax: 0.7}
+              - {min: 0, max: 1, imax: 0.0}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 2
-            speed: 200
-            acceleration: 100
-        min: -0.286
+            speed: 400
+            acceleration: 400
+        min: -0.905
         max: 0.158
 
 
@@ -262,18 +263,18 @@ pau2motors:
             shapekey: 00_EyeBlink_L;02_EyeSquint_L;08_EyeOpen_L
           function:
             - name: weightedsum
-              imin: 0.5
+              imin: 0.4725
               terms:
-              - {min: 0, max: 1, imax: 0.4}
-              - {min: 0, max: 1, imax: 0.2}
-              - {min: 0, max: 1, imax: 0.4}
+              - {min: 0, max: 0.8, imax: 0.0}
+              - {min: 0, max: 0.1, imax: 0.3}
+              - {min: 0, max: 1, imax: 1}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 3
-            speed: 200
-            acceleration: 100
-        min: 0.562
+            speed: 400
+            acceleration: 400
+        min: 0.202
         max: 0.963
 
 
@@ -284,17 +285,17 @@ pau2motors:
             shapekey: 01_EyeBlink_R;09_EyeOpen_R
           function:
             - name: weightedsum
-              imin: 0.7
+              imin: 0.776
               terms:
-              - {min: 0, max: 1, imax: 0.0}
-              - {min: 0, max: 1, imax: 0.9}
+              - {min: 0, max: 0.8, imax: 0.0}
+              - {min: 0, max: 0.8, imax: 1}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 4
-            speed: 200
-            acceleration: 100
-        min: 0.434
+            speed: 400
+            acceleration: 400
+        min: -1.107
         max: 0.863
 
 
@@ -305,17 +306,17 @@ pau2motors:
             shapekey: 00_EyeBlink_L;08_EyeOpen_L
           function:
             - name: weightedsum
-              imin: 0.3
+              imin: 0.401
               terms:
-              - {min: 0, max: 1, imax: 1.0}
-              - {min: 0, max: 1, imax: 0.1}
+              - {min: 0, max: 0.8, imax: 1.0}
+              - {min: 0, max: 1, imax: 0.0}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 5
-            speed: 200
-            acceleration: 100
-        min: 0.114
+            speed: 400
+            acceleration: 400
+        min: -0.666
         max: 1.28
 
 
@@ -326,7 +327,7 @@ pau2motors:
             shapekey: 27_MouthFrown_R
           function:
             - name: linear
-              min: 1
+              min: 0.8
               max: 0
           hardware:
             name: pololu
@@ -335,25 +336,27 @@ pau2motors:
             speed: 200
             acceleration: 100
         min: -1.57
-        max: 1.406
+        max: -0.341
 
 
       Brow-Outer_L:
         binding:
           parser:
             name: fsshapekey
-            shapekey: 17_BrowsU_O_L
+            shapekey: 17_BrowsU_O_L;14_BrowsD_O_L
           function:
-            - name: linear
-              min: 0
-              max: 1
+            - name: weightedsum
+              imin: 0.308
+              terms:
+              - {min: 0, max: 0.7, imax: 0.8}
+              - {min: 0, max: 0.5, imax: 0.0}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 7
             speed: 200
             acceleration: 100
-        min: -0.404
+        min: -0.27
         max: 1.165
 
 
@@ -372,8 +375,8 @@ pau2motors:
             id: 8
             speed: 200
             acceleration: 100
-        min: -1.57
-        max: 0.745
+        min: -1.547
+        max: 0.237
 
 
       Smile_L:
@@ -391,46 +394,52 @@ pau2motors:
             id: 9
             speed: 200
             acceleration: 100
-        min: -1.57
-        max: 0.603
+        min: -1.547
+        max: 0.005
 
 
       Lip-Lower_L:
         binding:
           parser:
             name: fsshapekey
-            shapekey: 37_LipsLowerDown_L
+            shapekey: 37_LipsLowerDown_L;42_ChinLowerRaise
           function:
-            - name: linear
-              min: 0
-              max: 1
+            - name: weightedsum
+              imin: 0.216
+              terms:
+              - {min: 0, max: 0.6, imax: 1.0}
+              - {min: 0, max: 0.8, imax: 0}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 10
             speed: 200
             acceleration: 100
-        min: -0.318
-        max: 1.512
+        min: -0.805
+        max: 0.703
 
 
       Lip_Upper_C:
         binding:
           parser:
             name: fsshapekey
-            shapekey: 38_LipsUpperOpen
+            shapekey: 38_LipsUpperOpen;43_ChinUpperRaise;36_LipsUpperUp_R;36_LipsUpperUp_L
           function:
-            - name: linear
-              min: 0
-              max: 1
+            - name: weightedsum
+              imin: 0.373
+              terms:
+              - {min: 0, max: 1, imax: 1.0}
+              - {min: 0, max: 1, imax: 1}
+              - {min: 0, max: 0.8, imax: 0.6}
+              - {min: 0, max: 0.8, imax: 0.6}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 11
             speed: 200
             acceleration: 100
-        min: -1.57
-        max: 0.005
+        min: -1.095
+        max: 0.284
 
 
       Sneer_R:
@@ -459,7 +468,7 @@ pau2motors:
             shapekey: 36_LipsUpperUp_L
           function:
             - name: linear
-              min: 1
+              min: 0.8
               max: 0
           hardware:
             name: pololu
@@ -467,64 +476,70 @@ pau2motors:
             id: 13
             speed: 200
             acceleration: 100
-        min: -1.037
-        max: 0.386
+        min: -0.784
+        max: 0.251
 
 
       Lip-Lower_R:
         binding:
           parser:
             name: fsshapekey
-            shapekey: 37_LipsLowerDown_R
+            shapekey: 37_LipsLowerDown_R;42_ChinLowerRaise
           function:
-            - name: linear
-              min: 1
-              max: 0
+            - name: weightedsum
+              imin: 0.675
+              terms:
+              - {min: 0, max: 0.6, imax: 0}
+              - {min: 0, max: 0.8, imax: 1}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 14
             speed: 200
             acceleration: 100
-        min: -0.875
-        max: 1.165
+        min: -0.613
+        max: 1.396
 
 
       Lip-Lower_C:
         binding:
           parser:
             name: fsshapekey
-            shapekey: 39_LipsLowerOpen
+            shapekey: 42_ChinLowerRaise;39_LipsLowerOpen
           function:
-            - name: linear
-              min: 0
-              max: 1
+            - name: weightedsum
+              imin: 0.7
+              terms:
+              - {min: 0, max: 0.8, imax: 0}
+              - {min: 0, max: 0.5, imax: 1}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 15
             speed: 200
             acceleration: 100
-        min: 0.817
-        max: 1.512
+        min: -0.457
+        max: 1.396
 
 
       Brow-Inner_L:
         binding:
           parser:
             name: fsshapekey
-            shapekey: 17_BrowsU_I_L
+            shapekey: 17_BrowsU_I_L;14_BrowsD_I_L
           function:
-            - name: linear
-              min: 0
-              max: 1
+            - name: weightedsum
+              imin: 0.515
+              terms:
+              - {min: 0, max: 1, imax: 1}
+              - {min: 0, max: 0.3, imax: 0}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 16
             speed: 200
             acceleration: 100
-        min: -0.226
+        min: -1.57
         max: 1.512
 
 
@@ -536,14 +551,14 @@ pau2motors:
           function:
             - name: linear
               min: 0
-              max: 1
+              max: 0.8
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 17
             speed: 200
             acceleration: 100
-        min: -1.501
+        min: -0.11
         max: 1.165
 
 
@@ -563,8 +578,8 @@ pau2motors:
             id: 19
             speed: 200
             acceleration: 100
-        min: -0.27
-        max: 1.049
+        min: 0.355
+        max: 1.512
 
 
       Sneer_L:
@@ -590,19 +605,22 @@ pau2motors:
         binding:
           parser:
             name: fsshapekey
-            shapekey: 18_BrowsU_O_R
+            shapekey: 15_BrowsD_O_R;18_BrowsU_O_R
           function:
-            - name: linear
-              min: 1
-              max: 0
+            - name: weightedsum
+              imin: 0.6
+              terms:
+              - {min: 0, max: 0.7, imax: 1}
+              - {min: 0, max: 0.5, imax: 0}
           hardware:
             name: pololu
             topic: dmitry_face/cmd_pololu
             id: 21
             speed: 200
             acceleration: 100
-        min: -0.457
-        max: 0.423
+        min: -0.668
+        max: 1.165
+
 
 
 
@@ -613,13 +631,31 @@ pau2motors:
             shapekey: 18_BrowsU_I_R
           function:
             - name: linear
-              min: 1
+              min: 0.3
               max: 0
           hardware:
             name: pololu
-            topic: dmitry_face/cmd_pololu
-            id: 23
+            topic: dmitry_eyes/cmd_pololu
+            id: 4
             speed: 200
             acceleration: 100
         min: -1.57
         max: -0.457
+
+
+      Jaw:
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: 21_JawOpen
+          function:
+            - name: linear
+              min: 0
+              max: 0.4
+          hardware:
+            name: dynamixel
+            topic: jaw_controller/command
+        min: -0.2
+        max: 0.65
+
+
