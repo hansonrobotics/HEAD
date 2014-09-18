@@ -1,0 +1,97 @@
+$(function() {
+	// ROS object to connect to ROS
+
+	var ros = new ROSLIB.Ros();
+  var animations = [];
+	var cmdAnimations;
+	var lastAnim = 'happy-1'
+	// functions
+  // Starts Animations mode in blender
+	function startBlenderMode(){
+		var cmdBlender = new ROSLIB.Topic({
+		  ros : ros,
+		  name : '/cmd_blendermode',
+		  messageType : 'std_msgs/String'
+		});
+		var msg = new ROSLIB.Message({
+		  data: 'Animations'
+		});
+    cmdBlender.publish(msg);
+	}
+
+  // Get animations 
+  function getAnimations(){
+		console.log('anims');
+		var anims = new ROSLIB.Topic({
+		  ros : ros,
+		  name : '/animations_list',
+		  messageType : 'robo_blender/animations_list'
+		});	
+    anims.subscribe(function(msg){
+			animations= msg.actions;
+			anims.unsubscribe();
+		});	
+  }
+
+	function addButtons(){
+		cmdAnimations = new ROSLIB.Topic({
+		  ros : ros,
+		  name : '/cmd_animations',
+		  messageType : 'std_msgs/String'
+		});
+
+		$('.emotion').click(function(){
+			var data = $(this).data('animation');
+			console.log(data);
+			var msg = new ROSLIB.Message({
+				data: 'play:'+data
+			});
+			lastAnim = data;
+			cmdAnimations.publish(msg);
+		});
+		$('.command').click(function(){
+			var data = $(this).data('cmd');
+			console.log(data);
+			if (data == 'play'){
+				data = data+':'+lastAnim
+			}
+			var msg = new ROSLIB.Message({
+				data: data
+			});
+			cmdAnimations.publish(msg);
+		});
+
+	}
+
+  // Find out exactly when we made a connection.
+  ros.on('connection', function() {
+    console.log('Connection made!');
+ 		startBlenderMode();
+		setTimeout(function(){addButtons()},1000);
+		
+  });
+
+
+	$('.btn-toggle').click(function() {
+		  $(this).find('.btn').toggleClass('active');  
+		  
+		  if ($(this).find('.btn-primary').size()>0) {
+		  	$(this).find('.btn').toggleClass('btn-primary');
+		  }
+		  if ($(this).find('.btn-danger').size()>0) {
+		  	$(this).find('.btn').toggleClass('btn-danger');
+		  }
+		  if ($(this).find('.btn-success').size()>0) {
+		  	$(this).find('.btn').toggleClass('btn-success');
+		  }
+		  if ($(this).find('.btn-info').size()>0) {
+		  	$(this).find('.btn').toggleClass('btn-info');
+		  }
+		  
+		  $(this).find('.btn').toggleClass('btn-default');
+		     
+	});
+
+  // Create a connection to the rosbridge WebSocket server.
+  ros.connect('ws://localhost:9090');
+}); 

@@ -3,7 +3,7 @@
   labelleft: "Cheek-Squint_L"
   labelright: ""
   default: -1.54761
-  min: -1.5708
+  min: -1.56298
   max: -0.24924
   motorid: 0
 
@@ -57,8 +57,8 @@
   labelleft: "Frown_R"
   labelright: ""
   default: 1.40618
-  min: -1.5708
-  max: 1.5708
+  min: -1.56298
+  max: 1.56298
   motorid: 6
 
 - name: Brow-Outer_L
@@ -74,18 +74,18 @@
   topic: face
   labelleft: "Smile_R"
   labelright: ""
-  default: -1.39691
-  min: -1.5708
-  max: 0.83814
+  default: -1.56298
+  min: -1.56298
+  max: 0.23765
   motorid: 8
 
 - name: Smile_L
   topic: face
   labelleft: "Smile_L"
   labelright: ""
-  default: 0.70135
-  min: -1.35981
-  max: 0.70135
+  default: 0.0058
+  min: -1.56298
+  max: 0.0058
   motorid: 9
 
 - name: Lip-Lower_L
@@ -101,9 +101,9 @@
   topic: face
   labelleft: "Lip-Upper_C"
   labelright: ""
-  default: -0.527
-  min: -0.527
-  max: 0.425
+  default: -0.52746
+  min: -1.0955
+  max: 0.42545
   motorid: 11
 
 - name: Sneer_R
@@ -111,7 +111,7 @@
   labelleft: "Sneer_R"
   labelright: ""
   default: 0.00348
-  min: -1.5708
+  min: -1.56298
   max: 0.0058
   motorid: 12
 
@@ -130,7 +130,7 @@
   labelright: ""
   default: 0.7454
   min: -0.61325
-  max: 1.5708
+  max: 1.56298
   motorid: 14
 
 - name: Lip-Lower_C
@@ -147,7 +147,7 @@
   labelleft: "Brow-Inner_L"
   labelright: ""
   default: -0.00348
-  min: -1.5708
+  min: -1.56298
   max: 1.51283
   motorid: 16
 
@@ -156,7 +156,7 @@
   labelleft: "Frown_L"
   labelright: ""
   default: -1.50124
-  min: -1.5708
+  min: -1.56298
   max: 1.16506
   motorid: 17
 
@@ -173,19 +173,19 @@
   topic: face
   labelleft: "Lip-Upper_R"
   labelright: ""
-  default: -0.27011
-  min: -1.03754
-  max: 1.04913
+  default: 0.35589
+  min: -0.23765
+  max: 1.56298
   motorid: 19
 
 - name: Sneer_L
-  topic: eyes
+  topic: face
   labelleft: "Sneer_L"
   labelright: ""
   default: 1.16274
   min: -0.45791
   max: 1.51283
-  motorid: 5
+  motorid: 20
 
 - name: Brow-Outer_R
   topic: face
@@ -210,7 +210,7 @@
   labelleft: "Brow-Inner_R"
   labelright: ""
   default: -0.45791
-  min: -1.5708
+  min: -1.56298
   max: 0.94711
   motorid: 4
 
