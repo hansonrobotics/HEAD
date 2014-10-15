@@ -35,7 +35,7 @@ from sensor_msgs.msg import RegionOfInterest, Image
 from math import sqrt, isnan
 from ros2opencv import ROS2OpenCV
 from pi_face_tracker.srv import *
-
+import time
 
 ''' Single face area class '''
 class FaceBox():
@@ -55,7 +55,6 @@ class FaceBox():
         self.status = "init"
         self.pt1 = pt1 # (x1,y1)
         self.pt2 = pt2 # (x2,y2)
-        self.area =  (pt2[0]-pt1[0])*(pt2[1]-pt1[1])
         self.terminated = False
         self.features = []
         self.expand_roi = 1.02
@@ -104,6 +103,21 @@ class FaceBox():
         face_box = (self.pt1[0], self.pt1[1], face_width, face_height)
         return face_box
 
+    def update_box(self,box):
+        self.track_box = box
+        if not box is None:
+            x,y,w,h = box
+            self.pt1 = (x,y)
+            self.pt2 = (x+w, y+h)
+
+    def update_box_elipse(self, elipse):
+        self.track_box = elipse
+        if not elipse is None:
+            (roi_center, roi_size, roi_angle) = elipse
+            self.pt1 = (int(roi_center[0] - roi_size[0]/2), int(roi_center[1] - roi_size[1]/2))
+            self.pt2 = (int(roi_center[0] + roi_size[0]/2), int(roi_center[1] + roi_size[1]/2))
+
+
 class FacesRegistry():
     def __init__(self):
         self.step = 0
@@ -117,11 +131,15 @@ class FacesRegistry():
     ''' Faces array of (pt1,pt2) '''
     def addFaces(self,faces):
         for f in faces:
-            for id in self.faces:
-                if self.faces[id].is_same_face(f[0], f[1]):
-                    break
+            if not self.faces:
                 self.face_id += 1
-                self.faces[self.face_id] = FaceBox(self.face_id,FaceBox(f[0], f[1]))
+                self.faces[self.face_id] = FaceBox(self.face_id,f[0], f[1])
+            else:
+                for id in self.faces.keys():
+                    if self.faces[id].is_same_face(f[0], f[1]):
+                        break
+                    self.face_id += 1
+                    self.faces[self.face_id] = FaceBox(self.face_id,f[0], f[1])
 
     #processes faces statuses:
     # Calls new_face callback if new faces are added,
@@ -200,7 +218,7 @@ class PatchTracker(ROS2OpenCV):
         self.cascade_profile = cv.Load(self.cascade_profile)
 
         self.min_size = (20, 20)
-        self.image_scale = 1
+        self.image_scale = 2
         self.haar_scale = 1.5
         self.min_neighbors = 1
         self.haar_flags = cv.CV_HAAR_DO_CANNY_PRUNING
@@ -238,29 +256,36 @@ class PatchTracker(ROS2OpenCV):
         #TODO Currently detect new faces if no faces found. Need to detcet few times epr second
         if (self.use_haar_only or not self.detect_box.faces) and self.auto_face_tracking:
             self.detect_face(cv_image)
+
         """ Otherwise, track the face using Good Features to Track and Lucas-Kanade Optical Flow """
-        # if not self.use_haar_only:
-        #     for f in self.detect_box.faces.keys():
-        #         if not self.detect_box.faces[f].track_box or not self.is_rect_nonzero(self.detect_box.faces[f].track_box):
-        #             self.detect_box.faces[f].features = []
-        #             self.detect_box.faces[f].track_box  = self.detect_box
-        #             self.detect_box.faces[f].track_box = self.track_lk(cv_image, self.detect_box.faces[f])
-        #
-        #         """ Prune features that are too far from the main cluster """
-        #         if len(self.detect_box.faces[f].features) > 0:
-        #             # Consider to move face class
-        #             ((mean_x, mean_y, mean_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.detect_box.faces[f].abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse,face =self.detect_box.faces[f])
-        #
-        #             if score == -1:
-        #                 del self.detect_box.faces[f]
-        #                 return cv_image
-        #
-        #         """ Add features if the number is getting too low """
-        #         if len(self.detect_box.faces[f].features) < self.detect_box.faces[f].min_features:
-        #             self.detect_box.faces[f] = self.expand_roi_init * self.detect_box.faces[f].expand_roi
-        #             self.add_features(cv_image,self.detect_box.faces[f])
-        #         else:
-        #             self.detect_box.faces[f] = self.expand_roi_init
+        if not self.use_haar_only:
+            for f in self.detect_box.faces.keys():
+                if not self.detect_box.faces[f].track_box or not self.is_rect_nonzero(self.detect_box.faces[f].track_box):
+                    self.detect_box.faces[f].features = []
+                    self.detect_box.faces[f].update_box(self.detect_box.faces[f].face_box())
+                track_box = self.track_lk(cv_image, self.detect_box.faces[f])
+                rospy.loginfo("track %s", self.detect_box.faces[f].get_box())
+                if len(track_box) != 3:
+                    self.detect_box.faces[f].update_box(track_box)
+                else:
+                    self.detect_box.faces[f].update_box_elipse(track_box)
+
+                """ Prune features that are too far from the main cluster """
+                if len(self.detect_box.faces[f].features) > 0:
+                    # Consider to move face class
+                    ((mean_x, mean_y, mean_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.detect_box.faces[f].abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse,face =self.detect_box.faces[f])
+
+                    if score == -1:
+                        del self.detect_box.faces[f]
+                        return cv_image
+
+
+                """ Add features if the number is getting too low """
+                if len(self.detect_box.faces[f].features) < self.detect_box.faces[f].min_features:
+                    self.detect_box.faces[f].expand_roi = self.expand_roi_init * self.detect_box.faces[f].expand_roi
+                    self.add_features(cv_image,self.detect_box.faces[f])
+                else:
+                    self.detect_box.faces[f].expand_roi = self.expand_roi_init
 
         return cv_image
     
@@ -314,7 +339,9 @@ class PatchTracker(ROS2OpenCV):
             pt1 = (int(x * self.image_scale), int(y * self.image_scale))
             pt2 = (int((x + w) * self.image_scale), int((y + h) * self.image_scale))
             fs.append((pt1,pt2))
+        rospy.loginfo("faces: %s", faces)
         self.detect_box.addFaces(fs)
+        rospy.loginfo("faces2: %s", self.detect_box.faces)
         return self.detect_box.faces
 
     def track_lk(self, cv_image, face):
@@ -326,7 +353,7 @@ class PatchTracker(ROS2OpenCV):
             self.prev_grey = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
             self.pyramid = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
             self.prev_pyramid = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
-            self.features = []
+            face.features = []
             
         """ Create a grey version of the image """
         cv.CvtColor(cv_image, self.grey, cv.CV_BGR2GRAY)
@@ -336,7 +363,6 @@ class PatchTracker(ROS2OpenCV):
             
         if face.track_box and face.features != []:
             """ We have feature points, so track and display them """
-
             """ Calculate the optical flow """
             face.features, status, track_error = cv.CalcOpticalFlowPyrLK(
                 self.prev_grey, self.grey, self.prev_pyramid, self.pyramid,
@@ -346,7 +372,7 @@ class PatchTracker(ROS2OpenCV):
                 self.flags)
 
             """ Keep only high status points """
-            face.features = [ p for (st,p) in zip(status, self.features) if st]
+            face.features = [ p for (st,p) in zip(status, face.features) if st]
                                     
         elif face.track_box and self.is_rect_nonzero(face.track_box):
             """ Get the initial features to track """
@@ -413,7 +439,7 @@ class PatchTracker(ROS2OpenCV):
             """ The FitEllipse2 function below requires us to convert the feature array
                 into a CvMat matrix """
             try:
-                self.feature_matrix = cv.CreateMat(1, len(self.features), cv.CV_32SC2)
+                self.feature_matrix = cv.CreateMat(1, len(face.features), cv.CV_32SC2)
             except:
                 pass
                         
@@ -438,7 +464,7 @@ class PatchTracker(ROS2OpenCV):
             try:
                 (roi_center, roi_size, roi_angle) = feature_box
             except:
-                rospy.loginfo("Patch box has shrunk to zero...")
+                rospy.loginfo("Patch box has shrunk to zeros...")
                 feature_box = None
     
             if feature_box and not self.drag_start and self.is_rect_nonzero(face.track_box):
@@ -467,7 +493,7 @@ class PatchTracker(ROS2OpenCV):
 
         """ Get the coordinates and dimensions of the current track box """
         try:
-            ((x,y), (w,h), a) = self.track_box
+            ((x,y), (w,h), a) = face.track_box
         except:
             rospy.loginfo("Track box has shrunk to zero...")
             return
