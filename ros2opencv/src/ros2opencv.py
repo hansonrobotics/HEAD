@@ -102,32 +102,35 @@ class ROS2OpenCV:
         self.depth_sub = rospy.Subscriber(self.input_depth_image, Image, self.depth_callback, queue_size=1)
         
         rospy.loginfo("Starting " + self.node_name)
-        
+
+
     def on_mouse_click(self, event, x, y, flags, param):
+        #disable mouse event for the multiple face tracker
+        return
         """ We will usually use the mouse to select points to track or to draw a rectangle
             around a region of interest. """
         if not self.image:
             return
-        
+
         if self.image.origin:
             y = self.image.height - y
-            
+
         if event == cv.CV_EVENT_LBUTTONDOWN and not self.drag_start:
             self.detect_box = None
             self.selected_point = (x, y)
             self.drag_start = (x, y)
-            
+
         if event == cv.CV_EVENT_LBUTTONUP:
             self.drag_start = None
             self.detect_box = self.selection
-            
+
         if self.drag_start:
             xmin = max(0, min(x, self.drag_start[0]))
             ymin = max(0, min(y, self.drag_start[1]))
             xmax = min(self.image.width, max(x, self.drag_start[0]))
             ymax = min(self.image.height, max(y, self.drag_start[1]))
             self.selection = (xmin, ymin, xmax - xmin, ymax - ymin)
-            
+
     def depth_callback(self, data):
         depth_image = self.convert_depth_image(data)
         
@@ -184,20 +187,20 @@ class ROS2OpenCV:
         
         """ Merge the processed image and the marker image """
         cv.Or(self.processed_image, self.marker_image, self.display_image)
-        
-        if self.track_box:
-            if self.auto_face_tracking:
-                cv.EllipseBox(self.display_image, self.track_box, cv.CV_RGB(255, 0, 0), 2)
-            else:
-                (center, size, angle) = self.track_box
-                pt1 = (int(center[0] - size[0] / 2), int(center[1] - size[1] / 2))
-                pt2 = (int(center[0] + size[0] / 2), int(center[1] + size[1] / 2))
-
-                cv.Rectangle(self.display_image, pt1, pt2, cv.RGB(255, 0, 0), 2, 8, 0)
-            
-        elif self.detect_box:
-            (pt1_x, pt1_y, w, h) = self.detect_box
-            cv.Rectangle(self.display_image, (pt1_x, pt1_y), (pt1_x + w, pt1_y + h), cv.RGB(255, 0, 0), 2, 8, 0)
+        # TODO Draw the images on the rectangle
+        # if self.track_box:
+        #     if self.auto_face_tracking:
+        #         cv.EllipseBox(self.display_image, self.track_box, cv.CV_RGB(255, 0, 0), 2)
+        #     else:
+        #         (center, size, angle) = self.track_box
+        #         pt1 = (int(center[0] - size[0] / 2), int(center[1] - size[1] / 2))
+        #         pt2 = (int(center[0] + size[0] / 2), int(center[1] + size[1] / 2))
+        #
+        #         cv.Rectangle(self.display_image, pt1, pt2, cv.RGB(255, 0, 0), 2, 8, 0)
+        #
+        # elif self.detect_box:
+        #     (pt1_x, pt1_y, w, h) = self.detect_box
+        #     cv.Rectangle(self.display_image, (pt1_x, pt1_y), (pt1_x + w, pt1_y + h), cv.RGB(255, 0, 0), 2, 8, 0)
         
         """ Handle keyboard events """
         self.keystroke = cv.WaitKey(5)
@@ -241,27 +244,28 @@ class ROS2OpenCV:
         if self.key_command:
             self.keystroke = ord(self.key_command)
             self.key_command = None
-        if 32 <= self.keystroke and self.keystroke < 128:
-            cc = chr(self.keystroke).lower()
-            if cc == 'c':
-                self.features = []
-                self.track_box = None
-                self.detect_box = None
-            elif cc == 'n':
-                self.night_mode = not self.night_mode
-            elif cc == 'f':
-                self.show_features = not self.show_features
-            elif cc == 't':
-                self.show_text = not self.show_text
-            elif cc == 'a':
-                self.auto_face_tracking = not self.auto_face_tracking
-                if self.auto_face_tracking:
-                    self.features = []
-                    self.track_box = None
-                    self.detect_box = None
-            elif cc == 'q':
-                """ user has press the q key, so exit """
-                rospy.signal_shutdown("User hit q key to quit.")      
+        """ Disable key commands for multiple face tracking """
+        # if 32 <= self.keystroke and self.keystroke < 128:
+        #     cc = chr(self.keystroke).lower()
+        #     if cc == 'c':
+        #         self.features = []
+        #         self.track_box = None
+        #         self.detect_box = None
+        #     elif cc == 'n':
+        #         self.night_mode = not self.night_mode
+        #     elif cc == 'f':
+        #         self.show_features = not self.show_features
+        #     elif cc == 't':
+        #         self.show_text = not self.show_text
+        #     elif cc == 'a':
+        #         self.auto_face_tracking = not self.auto_face_tracking
+        #         if self.auto_face_tracking:
+        #             self.features = []
+        #             self.track_box = None
+        #             self.detect_box = None
+        #     elif cc == 'q':
+        #         """ user has press the q key, so exit """
+        #         rospy.signal_shutdown("User hit q key to quit.")
 
           
     def convert_image(self, ros_image):
@@ -292,14 +296,15 @@ class ROS2OpenCV:
         cv.EqualizeHist(self.grey, self.grey)
         
         # Since we aren't applying any filters in this base class, set the ROI to the selected region, if any.
-        if not self.drag_start and not self.detect_box is None:         
-            self.ROI = RegionOfInterest()
-            self.ROI.x_offset = self.detect_box[0]
-            self.ROI.y_offset = self.detect_box[1]
-            self.ROI.width = self.detect_box[2]
-            self.ROI.height = self.detect_box[3]
-            
-        self.pubROI.publish(self.ROI)
+        #TODO Implement publishing
+        # if not self.drag_start and not self.detect_box is None:
+        #     self.ROI = RegionOfInterest()
+        #     self.ROI.x_offset = self.detect_box[0]
+        #     self.ROI.y_offset = self.detect_box[1]
+        #     self.ROI.width = self.detect_box[2]
+        #     self.ROI.height = self.detect_box[3]
+        #
+        # self.pubROI.publish(self.ROI)
         
         return self.grey
     
