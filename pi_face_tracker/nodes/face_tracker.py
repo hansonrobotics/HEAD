@@ -45,14 +45,15 @@ class FaceBox():
         # unique id for this session
         self.face_id = id
         #parameters to adjust for better detection
-        self.min_age = 5 # need at least 5 frames to make it new
+        self.min_age = 3 # need at least 5 frames to make it new
 
-        self.min_area = 0.5 #coeff of how much area of the detected box should overlap in order to make same judgement
+        self.min_area = 0.3 #coeff of how much area of the detected box should overlap in order to make same judgement
         self.age = 0
         self.skipped = 0 #frames that couldn't find the face
         self.valid = False
         # available
         self.status = "init"
+        self.trackable_statuses = ['new','ok']
         self.pt1 = pt1 # (x1,y1)
         self.pt2 = pt2 # (x2,y2)
         self.terminated = False
@@ -61,6 +62,7 @@ class FaceBox():
         self.track_box = None
         self.min_features = 50
         self.abs_min_features = 6
+        self.pyramid = None
 
     def area(self):
         return (self.pt2[0]-self.pt1[0])*(self.pt2[1]-self.pt1[1])
@@ -71,7 +73,7 @@ class FaceBox():
         return True
     def _overlap_area(self,pt1,pt2):
         dx = max(0,min(self.pt2[0],pt2[0])-max(self.pt1[0],pt1[0]))
-        dy = max(0,min(self.pt2[1],pt2[1])-max(self.pt1[0],pt1[1]))
+        dy = max(0,min(self.pt2[1],pt2[1])-max(self.pt1[1],pt1[1]))
         return dx*dy
 
     def is_same_face(self,pt1,pt2):
@@ -79,10 +81,12 @@ class FaceBox():
             return False
 
         overlap = self._overlap_area(pt1,pt2)
-        if (overlap/self.area() > self.min_area):
+        if (float(overlap)/float(self.area()) > self.min_area):
+            # reset frames skipped
             self.pt1 = pt1
             self.pt2 = pt2
-            # reset frames skipped
+            self.features = []
+            self.track_box = self.face_box()
             self.skipped = 0
             return True
         return False
@@ -93,6 +97,8 @@ class FaceBox():
         if self.status == 'init':
             if self.age - self.skipped >= self.min_age:
                 self.status = 'new'
+            if self.skipped > self.min_age:
+                self.status = 'deleted'
 
     def get_box(self):
         return [self.pt1,self.pt2]
@@ -117,6 +123,12 @@ class FaceBox():
             self.pt1 = (int(roi_center[0] - roi_size[0]/2), int(roi_center[1] - roi_size[1]/2))
             self.pt2 = (int(roi_center[0] + roi_size[0]/2), int(roi_center[1] + roi_size[1]/2))
 
+    def is_trackable(self):
+        if self.status in self.trackable_statuses:
+            return True
+        return False
+
+
 
 class FacesRegistry():
     def __init__(self):
@@ -127,6 +139,11 @@ class FacesRegistry():
 
     def nextFrame(self):
         self.step += 1
+        for f in self.faces.keys():
+            self.faces[f].next_frame()
+            if self.faces[f].status == 'deleted':
+                del self.faces[f]
+
 
     ''' Faces array of (pt1,pt2) '''
     def addFaces(self,faces):
@@ -135,9 +152,12 @@ class FacesRegistry():
                 self.face_id += 1
                 self.faces[self.face_id] = FaceBox(self.face_id,f[0], f[1])
             else:
+                found = False
                 for id in self.faces.keys():
                     if self.faces[id].is_same_face(f[0], f[1]):
+                        found = True
                         break
+                if not found:
                     self.face_id += 1
                     self.faces[self.face_id] = FaceBox(self.face_id,f[0], f[1])
 
@@ -168,6 +188,13 @@ class FacesRegistry():
             # may need to check if valid
             return self.faces[id]
         return None
+
+    def any_trackable_faces(self):
+        for f in self.faces:
+            if self.faces[f].is_trackable():
+                return True
+        return False
+
 
 class PatchTracker(ROS2OpenCV):
     def __init__(self, node_name):
@@ -251,21 +278,28 @@ class PatchTracker(ROS2OpenCV):
             rospy.wait_for_message(self.input_depth_image, Image)
         
     def process_image(self, cv_image):
-        #self.frame_count = self.frame_count + 1
+        self.frame_count = self.frame_count + 1
         """ If parameter use_haar_only is True, use only the OpenCV Haar detector to track the face """
         #TODO Currently detect new faces if no faces found. Need to detcet few times epr second
-        if (self.use_haar_only or not self.detect_box.faces) and self.auto_face_tracking:
+        if (self.use_haar_only or not self.detect_box.any_trackable_faces()) and self.auto_face_tracking:
+            self.detect_box.nextFrame()
+            self.detect_face(cv_image)
+        elif self.frame_count % 20 == 0:
+            self.detect_box.nextFrame()
             self.detect_face(cv_image)
 
         """ Otherwise, track the face using Good Features to Track and Lucas-Kanade Optical Flow """
         if not self.use_haar_only:
             for f in self.detect_box.faces.keys():
+                if not self.detect_box.faces[f].is_trackable():
+                    continue
+
                 if not self.detect_box.faces[f].track_box or not self.is_rect_nonzero(self.detect_box.faces[f].track_box):
                     self.detect_box.faces[f].features = []
                     self.detect_box.faces[f].update_box(self.detect_box.faces[f].face_box())
                 track_box = self.track_lk(cv_image, self.detect_box.faces[f])
-                rospy.loginfo("track %s", self.detect_box.faces[f].get_box())
-                if len(track_box) != 3:
+                rospy.loginfo("track id: %s box: %s",f, self.detect_box.faces[f].get_box())
+                if track_box and len(track_box) != 3:
                     self.detect_box.faces[f].update_box(track_box)
                 else:
                     self.detect_box.faces[f].update_box_elipse(track_box)
@@ -274,10 +308,9 @@ class PatchTracker(ROS2OpenCV):
                 if len(self.detect_box.faces[f].features) > 0:
                     # Consider to move face class
                     ((mean_x, mean_y, mean_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.detect_box.faces[f].abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse,face =self.detect_box.faces[f])
-
                     if score == -1:
                         del self.detect_box.faces[f]
-                        return cv_image
+                        continue
 
 
                 """ Add features if the number is getting too low """
@@ -325,13 +358,8 @@ class PatchTracker(ROS2OpenCV):
                                          self.haar_scale, self.min_neighbors, self.haar_flags, self.min_size)
             
         if not faces:
-            #TODO move somewhere else as detect faces will be called while faces are tracked
-            # if self.show_text:
-            #     hscale = 0.4 * self.image_size[0] / 160. + 0.1
-            #     vscale = 0.4 * self.image_size[1] / 120. + 0.1
-            #     text_font = cv.InitFont(cv.CV_FONT_VECTOR0, hscale, vscale, 0, 1, 8)
-            #     cv.PutText(self.marker_image, "LOST FACE!", (50, int(self.image_size[1] * 0.9)), text_font, cv.RGB(255, 255, 0))
             return None
+
         fs = []
         for ((x, y, w, h), n) in faces:
             """ The input to cv.HaarDetectObjects was resized, so scale the 
@@ -339,33 +367,31 @@ class PatchTracker(ROS2OpenCV):
             pt1 = (int(x * self.image_scale), int(y * self.image_scale))
             pt2 = (int((x + w) * self.image_scale), int((y + h) * self.image_scale))
             fs.append((pt1,pt2))
-        rospy.loginfo("faces: %s", faces)
         self.detect_box.addFaces(fs)
-        rospy.loginfo("faces2: %s", self.detect_box.faces)
         return self.detect_box.faces
 
     def track_lk(self, cv_image, face):
         feature_box = None
         
         """ Initialize intermediate images if necessary """
-        if not self.pyramid:
-            self.grey = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
-            self.prev_grey = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
-            self.pyramid = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
-            self.prev_pyramid = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
+        if not face.pyramid:
+            face.grey = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
+            face.prev_grey = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
+            face.pyramid = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
+            face.prev_pyramid = cv.CreateImage(cv.GetSize (cv_image), 8, 1)
             face.features = []
             
         """ Create a grey version of the image """
-        cv.CvtColor(cv_image, self.grey, cv.CV_BGR2GRAY)
+        cv.CvtColor(cv_image, face.grey, cv.CV_BGR2GRAY)
         
         """ Equalize the histogram to reduce lighting effects """
-        cv.EqualizeHist(self.grey, self.grey)
+        cv.EqualizeHist(face.grey, face.grey)
             
         if face.track_box and face.features != []:
             """ We have feature points, so track and display them """
             """ Calculate the optical flow """
             face.features, status, track_error = cv.CalcOpticalFlowPyrLK(
-                self.prev_grey, self.grey, self.prev_pyramid, self.pyramid,
+                face.prev_grey, face.grey, face.prev_pyramid, face.pyramid,
                 face.features,
                 (self.win_size, self.win_size), 3,
                 (cv.CV_TERMCRIT_ITER|cv.CV_TERMCRIT_EPS, 20, 0.01),
@@ -416,12 +442,12 @@ class PatchTracker(ROS2OpenCV):
 
             if self.feature_type == 0:
                 """ Find keypoints to track using Good Features to Track """
-                face.features = cv.GoodFeaturesToTrack(self.grey, eig, temp, self.max_count,
+                face.features = cv.GoodFeaturesToTrack(face.grey, eig, temp, self.max_count,
                     self.quality, self.good_feature_distance, mask=mask, blockSize=self.block_size, useHarris=self.use_harris, k=0.04)
             
             elif self.feature_type == 1:
                 """ Get the new features using SURF """
-                (surf_features, descriptors) = cv.ExtractSURF(self.grey, mask, cv.CreateMemStorage(0), (0, self.surf_hessian_quality, 3, 1))
+                (surf_features, descriptors) = cv.ExtractSURF(face.grey, mask, cv.CreateMemStorage(0), (0, self.surf_hessian_quality, 3, 1))
                 for feature in surf_features:
                     face.features.append(feature[0])
             #
@@ -431,8 +457,8 @@ class PatchTracker(ROS2OpenCV):
                 face.abs_min_features = int(0.5 * face.min_features)
         
         """ Swapping the images """
-        self.prev_grey, self.grey = self.grey, self.prev_grey
-        self.prev_pyramid, self.pyramid = self.pyramid, self.prev_pyramid
+        face.prev_grey, face.grey = face.grey, face.prev_grey
+        face.prev_pyramid, face.pyramid = face.pyramid, face.prev_pyramid
         
         """ If we have some features... """
         if len(face.features) > 0:
@@ -619,7 +645,7 @@ class PatchTracker(ROS2OpenCV):
         
         """ Get the average over the number of feature points """
         mse_xy = sse / n_xy
-        
+
         """ The MSE must be > 0 for any sensible feature cluster """
         if mse_xy == 0 or mse_xy > mse_threshold:
             return ((0, 0, 0), 0, 0, -1)
@@ -641,7 +667,7 @@ class PatchTracker(ROS2OpenCV):
                 n_xy = n_xy - 1
 
         face.features = features_xy
-               
+
         """ Consider a cluster bad if we have fewer than abs_min_features left """
         if len(face.features) < face.abs_min_features:
             score = -1
