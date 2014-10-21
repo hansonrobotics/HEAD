@@ -11,11 +11,11 @@ from std_msgs.msg import String
 class Tree():
     def __init__(self):
         self.blackboard = blackboard.Blackboard()
-        self.blackboard["sadness_happiness"] = 0.0
-        self.blackboard["irritation_amusement"] = 0.0
-        self.blackboard["confusion_comprehension"] = 0.0
-        self.blackboard["boredom_engagement"] = 0.0
-        self.blackboard["recoil_surprise"] = 0.0
+        self.blackboard["sadness_happiness"] = 0.5
+        self.blackboard["irritation_amusement"] = 0.5
+        self.blackboard["confusion_comprehension"] = 0.5
+        self.blackboard["boredom_engagement"] = 0.5
+        self.blackboard["recoil_surprise"] = 0.5
         self.blackboard["face_targets"] = []  # IDs of faces in the scene
         self.blackboard["background_face_targets"] = []
         self.blackboard["new_face"] = ""
@@ -27,8 +27,10 @@ class Tree():
         self.blackboard["is_interruption"] = False
         self.blackboard["is_sleeping"] = False
         self.blackboard["is_TrackDev_on"] = False
+        self.blackboard["is_scripted_performance_system_on"] = False
         self.blackboard["random"] = 0.0
-        rospy.Subscriber("tracking_event", String, self.tracking_event_callback)
+        rospy.Subscriber("scripted", String, self.scripted_performance_system_callback)
+        rospy.Subscriber("tracking_event", String, self.tracking_event_callback)  # For now, will change the type to "Event"
         self.tracking_mode_pub = rospy.Publisher("tracking_mode", String, queue_size=1)
         self.tracking_action_pub = rospy.Publisher("tracking_action", String, queue_size=1)  # For now, will change the type to "TrackingAction"
         self.face_id_pub = rospy.Publisher("faces/id", String, queue_size=1)
@@ -42,168 +44,208 @@ class Tree():
             owyl.parallel(
                 ############### Tree: General Behaviors ###############
                 owyl.repeatAlways(
-                    owyl.sequence(
-                        self.sync_variables(),
-                        ########## Main Events ##########
+                    owyl.selector(
                         owyl.sequence(
-                            ##### When Someone Arrived #####
-                            owyl.sequence(
-                                self.is_someone_arrived(),
-                                self.set_emotion(variable="boredom_engagement", value=0.5),
-                                owyl.selector(
-                                    ##### Were No People In The Scene #####
-                                    owyl.sequence(
-                                        self.were_no_people_in_the_scene(),
-                                        self.update_emotion(variable="sadness_happiness", min=1.2, max=1.4),
-                                        self.update_emotion(variable="boredom_engagement", min=1.2, max=1.4),
-                                        self.assign_face_target(variable="current_face_target", value="face_targets"),
-                                        self.interact_with_face_target(id="current_face_target", min_duration=5, max_duration=10.0),
-                                        self.say(utterance="Hello")
-                                    ),
-
-                                    ##### Is Interacting With Someone #####
-                                    owyl.sequence(
-                                        self.is_interacting_with_someone(),
-                                        self.is_random_greater_than(val1="newRandom", val2=0.5),
-                                        self.update_emotion(variable="sadness_happiness", min=1.05, max=1.1),
-                                        self.update_emotion(variable="boredom_engagement", min=1.05, max=1.1),
-                                        self.glance_at_new_face(),
-                                        self.nod()
-                                    ),
-
-                                    ##### Does Nothing #####
-                                    owyl.sequence(
-                                        self.does_nothing()
-                                    )
-                                ),
-                                self.clear_new_face_target()
-                            ),
-
-                            ##### When Someone Left #####
-                            owyl.sequence(
-                                self.is_someone_left(),
-                                owyl.selector(
-                                    ##### Was Interacting With That Person #####
-                                    owyl.sequence(
-                                        self.was_interacting_with_that_person(),
-                                        owyl.selector(
-                                            ##### Confused #####
-                                            owyl.sequence(
-                                                self.is_random_smaller_than(val1="newRandom", val2=0.4),
-                                                self.update_emotion(variable="confusion_comprehension", min=0.4, max=0.6),
-                                                self.show_expression(expression="confused", min_duration=1.0, max_duration=3.0)
-                                            ),
-
-                                            ##### Surprised #####
-                                            owyl.sequence(
-                                                self.is_random_in_between(val="random", greater=0.4, smaller=0.8),
-                                                self.update_emotion(variable="confusion_comprehension", min=0.4, max=0.6),
-                                                self.show_expression(expression="confused", min_duration=1.0, max_duration=3.0)
-                                            ),
-
-                                            ##### Sad #####
-                                            owyl.sequence(
-                                                self.update_emotion(variable="confusion_comprehension", min=0.4, max=0.6),
-                                                self.show_expression(expression="confused", min_duration=1.0, max_duration=3.0)
-                                            ),
-                                        ),
-                                    ),
-
-                                    ##### Is Interacting With Someone Else #####
-                                    owyl.sequence(
-                                        self.is_random_greater_than(val1="newRandom", val2=0.5),
-                                        self.glance_at_lost_face()
-                                    ),
-
-                                    ##### Does Nothing #####
-                                    owyl.sequence(
-                                        self.does_nothing()
-                                    )
-                                ),
-                                self.clear_lost_face_target()
-                            ),
-
-                            ##### People Interaction #####
-                            owyl.sequence(
-                                self.is_face_target(),
-                                owyl.selector(
-                                    ##### Start A New Interaction #####
-                                    owyl.sequence(
-                                        owyl.selector(
-                                            self.is_not_interacting_with_someone(),
-                                            owyl.sequence(
-                                                self.is_more_than_one_face_target(),
-                                                self.is_time_to_change_face_target(limit=10)
-                                            )
-                                        ),
-                                        self.stop_interaction(),
-                                        self.select_a_face_target(),
-                                        self.record_start_time(variable="interact_with_face_target_since"),
-                                        self.interact_with_face_target(id="current_face_target", min_duration=2.0, max_duration=4.0)
-                                    ),
-
-                                    ##### Glance At Other Faces & Continue With The Last Interaction #####
-                                    owyl.sequence(
-                                        self.select_a_glance_target(),
-                                        self.glance_at(id="current_glance_target"),
-                                        self.interact_with_face_target(id="current_face_target", min_duration=2.0, max_duration=4.0)
-                                    )
-                                )
-                            ),
-
-                            ##### Nothing Interesting Is Happening #####
-                            owyl.sequence(
-                                self.update_emotion(variable="boredom_engagement", min=0.7, max=0.9),
-                                owyl.selector(
-                                    ##### Is Not Sleeping #####
-                                    owyl.sequence(
-                                        self.is_not_sleeping(),
-                                        owyl.selector(
-                                            ##### Go To Sleep #####
-                                            owyl.sequence(
-                                                self.is_random_smaller_than(val1="newRandom_plus_boredom", val2=0.6),
-                                                self.record_start_time(variable="sleep_since"),
-                                                self.go_to_sleep(min_duration=5.0, max_duration=10.0)
-                                            ),
-
-                                            ##### If Interruptions -> Wake Up #####
-                                            owyl.sequence(
-                                                self.is_sleeping(),
-                                                self.wake_up(),
-                                                self.update_emotion(variable="boredom_engagement", min="2.2", max="2.6")
-                                            ),
-
-                                            ##### Search For Attention #####
-                                            owyl.sequence(
-                                                self.search_for_attention(min_duration=5.0, max_duration=10.0)
-                                            )
-                                        )
-                                    ),
-
-                                    ##### Is Sleeping #####
+                            self.is_scripted_performance_system_off(),
+                            self.sync_variables(),
+                            ########## Main Events ##########
+                            owyl.selector(
+                                ##### When Someone Arrived #####
+                                owyl.sequence(
+                                    self.is_someone_arrived(),
+                                    self.set_emotion(variable="boredom_engagement", value=0.5),
+                                    self.test(str="----- Someone Arrived!"),
                                     owyl.selector(
-                                        ##### Wake Up #####
+                                        ##### Were No People In The Scene #####
                                         owyl.sequence(
+                                            self.were_no_people_in_the_scene(),
+                                            self.test(str="----- Were No People In The Scene!"),
+                                            self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.2, max=1.4),
+                                            self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.2, max=1.4),
+                                            self.assign_face_target(variable="current_face_target", value="new_face"),
+                                            self.record_start_time(variable="interact_with_face_target_since"),
+                                            self.interact_with_face_target(id="current_face_target", min_duration=5.0, max_duration=10.0)
+                                        ),
+
+                                        ##### Is Interacting With Someone #####
+                                        owyl.sequence(
+                                            self.is_interacting_with_someone(),
+                                            self.test(str="----- Is Interacting With Someone!"),
                                             self.is_random_greater_than(val1="newRandom", val2=0.5),
-                                            self.is_time_to_wake_up(limit=60),
-                                            self.wake_up(),
-                                            self.update_emotion(variable="boredom_engagement", min="2.2", max="2.6")
+                                            self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.05, max=1.1),
+                                            self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.05, max=1.1),
+                                            self.glance_at_new_face()
                                         ),
 
-                                        ##### Continue To Sleep #####
+                                        ##### Does Nothing #####
                                         owyl.sequence(
-                                            self.go_to_sleep(min_duration=5.0, max_duration=10.0)
-                                        ),
-
-                                        ##### If Interruptions -> Wake Up #####
-                                        owyl.sequence(
-                                            self.is_sleeping(),
-                                            self.wake_up(),
-                                            self.update_emotion(variable="boredom_engagement", min="2.2", max="2.6")
+                                            self.test(str="----- Ignoring The New Face!"),
+                                            self.does_nothing()
                                         )
+                                    ),
+                                    self.clear_new_face_target()
+                                ),
+
+                                ##### When Someone Left #####
+                                owyl.sequence(
+                                    self.is_someone_left(),
+                                    self.test(str="----- Someone Left!"),
+                                    owyl.selector(
+                                        ##### Was Interacting With That Person #####
+                                        owyl.sequence(
+                                            self.was_interacting_with_that_person(),
+                                            self.test(str="----- Was Interacting With That Person!"),
+                                            owyl.selector(
+                                                ##### Confused #####
+                                                owyl.sequence(
+                                                    self.is_random_smaller_than(val1="newRandom", val2=0.4),
+                                                    self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
+                                                    self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.05, max=1.1),
+                                                    self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.95, max=1.0),
+                                                    self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
+                                                    self.show_expression(expression="confused", min_duration=1.0, max_duration=3.0)
+                                                ),
+
+                                                ##### Surprise #####
+                                                owyl.sequence(
+                                                    self.is_random_in_between(val="random", greater=0.4, smaller=0.8),
+                                                    self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.4, max=1.6),
+                                                    self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
+                                                    self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.95, max=1.0),
+                                                    self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
+                                                    self.show_expression(expression="surprise", min_duration=1.0, max_duration=3.0)
+                                                ),
+
+                                                ##### Sad #####
+                                                owyl.sequence(
+                                                    self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.4, max=0.6),
+                                                    self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.05, max=1.1),
+                                                    self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.95, max=1.0),
+                                                    self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
+                                                    self.show_expression(expression="sad", min_duration=1.0, max_duration=3.0)
+                                                ),
+                                            ),
+                                        ),
+
+                                        ##### Is Interacting With Someone Else #####
+                                        owyl.sequence(
+                                            self.test(str="----- Is Interacting With Someone Else!"),
+                                            self.is_random_greater_than(val1="newRandom", val2=0.5),
+                                            self.glance_at_lost_face()
+                                        ),
+
+                                        ##### Does Nothing #####
+                                        owyl.sequence(
+                                            self.test(str="----- Ignoring The Lost Face!"),
+                                            self.does_nothing()
+                                        )
+                                    ),
+                                    self.clear_lost_face_target()
+                                ),
+
+                                ##### People Interaction #####
+                                owyl.sequence(
+                                    self.is_face_target(),
+                                    self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.001, max=1.005),
+                                    self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.005, max=1.01),
+                                    owyl.selector(
+                                        ##### Start A New Interaction #####
+                                        owyl.sequence(
+                                            owyl.selector(
+                                                self.is_not_interacting_with_someone(),
+                                                owyl.sequence(
+                                                    self.is_more_than_one_face_target(),
+                                                    self.is_time_to_change_face_target(limit=10)
+                                                )
+                                            ),
+                                            self.test(str="----- Time To Start A New Interaction!"),
+                                            # self.stop_interaction(),
+                                            self.select_a_face_target(),
+                                            self.record_start_time(variable="interact_with_face_target_since"),
+                                            self.interact_with_face_target(id="current_face_target", min_duration=3.0, max_duration=6.0)
+                                        ),
+
+                                        ##### Glance At Other Faces & Continue With The Last Interaction #####
+                                        owyl.sequence(
+                                            self.test(str="----- Continue The Interaction"),
+                                            owyl.selector(
+                                                owyl.sequence(
+                                                    self.is_more_than_one_face_target(),
+                                                    self.is_random_greater_than(val1="newRandom", val2=0.3),
+                                                    self.select_a_glance_target(),
+                                                    self.glance_at(id="current_glance_target")
+                                                ),
+                                                self.does_nothing()
+                                            ),
+                                            self.interact_with_face_target(id="current_face_target", min_duration=3.0, max_duration=6.0)
+                                        )
+                                    )
+                                ),
+
+                                ##### Nothing Interesting Is Happening #####
+                                owyl.sequence(
+                                    self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=0.8, max=0.9),
+                                    self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.995, max=1.0),
+                                    owyl.selector(
+                                        ##### Is Not Sleeping #####
+                                        owyl.sequence(
+                                            self.is_not_sleeping(),
+                                            owyl.selector(
+                                                ##### Go To Sleep #####
+                                                owyl.sequence(
+                                                    self.is_random_smaller_than(val1="newRandom_plus_boredom", val2=0.4),
+                                                    self.record_start_time(variable="sleep_since"),
+                                                    self.test(str="----- Go To Sleep!"),
+                                                    self.go_to_sleep(min_duration=5.0, max_duration=10.0)
+                                                ),
+
+                                                ##### Feeling Sleepy #####
+
+                                                ##### Search For Attention #####
+                                                owyl.sequence(
+                                                    self.test(str="----- Search For Attention!"),
+                                                    self.search_for_attention(min_duration=5.0, max_duration=10.0)
+                                                )
+                                            )
+                                        ),
+
+                                        ##### Is Sleeping #####
+                                        owyl.selector(
+                                            ##### Wake Up #####
+                                            owyl.sequence(
+                                                self.is_random_greater_than(val1="newRandom", val2=0.5),
+                                                self.is_time_to_wake_up(limit=30),
+                                                self.wake_up(),
+                                                self.test(str="----- Wake Up!"),
+                                                self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
+                                            ),
+
+                                            ##### Waking Up #####
+
+                                            ##### Continue To Sleep #####
+                                            owyl.sequence(
+                                                self.test(str="----- Continue To Sleep!"),
+                                                self.go_to_sleep(min_duration=1.0, max_duration=5.0)
+                                            )
+                                        )
+                                    ),
+
+                                    ##### If Interruption && Sleeping -> Wake Up #####
+                                    owyl.sequence(
+                                        self.is_interruption(),
+                                        self.is_sleeping(),
+                                        self.wake_up(),
+                                        self.test(str="----- Interruption: Wake Up!"),
+                                        self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
                                     )
                                 )
                             )
+                        ),
+
+                        ############### Scripted Performance System ###############
+                        owyl.sequence(
+                            self.is_scripted_performance_system_on(),
+                            self.start_scripted_performance_system()
                         )
                     )
                 ),
@@ -212,11 +254,22 @@ class Tree():
         return owyl.visit(eva_behavior_tree, blackboard=self.blackboard)
 
     @owyl.taskmethod
+    def test(self, **kwargs):
+        print kwargs["str"]
+        yield True
+
+    @owyl.taskmethod
     def sync_variables(self, **kwargs):
         if not self.blackboard["is_TrackDev_on"]:
             self.tracking_mode_pub.publish("TrackDev")
             self.blackboard["is_TrackDev_on"] = True
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
+        print "\n========== Emotion Space =========="
+        print "sadness_happiness: " + str(self.blackboard["sadness_happiness"])[:5]
+        print "irritation_amusement: " + str(self.blackboard["irritation_amusement"])[:5]
+        print "confusion_comprehension: " + str(self.blackboard["confusion_comprehension"])[:5]
+        print "boredom_engagement: " + str(self.blackboard["boredom_engagement"])[:5]
+        print "recoil_surprise: " + str(self.blackboard["recoil_surprise"])[:5]
         yield True
 
     @owyl.taskmethod
@@ -230,7 +283,13 @@ class Tree():
 
     @owyl.taskmethod
     def update_emotion(self, **kwargs):
+        if kwargs["lower_limit"] > 0.0:
+            self.blackboard[kwargs["variable"]] = kwargs["lower_limit"]
         self.blackboard[kwargs["variable"]] *= random.uniform(kwargs["min"], kwargs["max"])
+        if self.blackboard[kwargs["variable"]] > 1.0:
+            self.blackboard[kwargs["variable"]] = 1.0
+        elif self.blackboard[kwargs["variable"]] <= 0.0:
+            self.blackboard[kwargs["variable"]] = 0.01
         yield True
 
     @owyl.taskmethod
@@ -302,6 +361,7 @@ class Tree():
     @owyl.taskmethod
     def was_interacting_with_that_person(self, **kwargs):
         if self.blackboard["current_face_target"] == self.blackboard["lost_face"]:
+            self.blackboard["current_face_target"] = ""
             yield True
         else:
             yield False
@@ -322,14 +382,14 @@ class Tree():
 
     @owyl.taskmethod
     def is_time_to_change_face_target(self, **kwargs):
-        if (time.time() - self.blackboard["interact_with_face_target_since"]) >= kwargs["limit"]:
+        if self.blackboard["interact_with_face_target_since"] > 0 and (time.time() - self.blackboard["interact_with_face_target_since"]) >= kwargs["limit"]:
             yield True
         else:
             yield False
 
     @owyl.taskmethod
     def is_time_to_wake_up(self, **kwargs):
-        if (time.time() - self.blackboard["sleep_since"]) >= kwargs["limit"]:
+        if self.blackboard["sleep_since"] > 0 and (time.time() - self.blackboard["sleep_since"]) >= kwargs["limit"]:
             yield True
         else:
             yield False
@@ -349,8 +409,29 @@ class Tree():
             yield False
 
     @owyl.taskmethod
+    def is_interruption(self, **kwargs):
+        if self.blackboard["is_interruption"]:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
+    def is_scripted_performance_system_on(self, **kwargs):
+        if self.blackboard["is_scripted_performance_system_on"]:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
+    def is_scripted_performance_system_off(self, **kwargs):
+        if not self.blackboard["is_scripted_performance_system_on"]:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
     def assign_face_target(self, **kwargs):
-        self.blackboard["current_face_target"] = self.blackboard["face_targets"][0]
+        self.blackboard[kwargs["variable"]] = self.blackboard[kwargs["value"]]
         yield True
 
     @owyl.taskmethod
@@ -361,9 +442,8 @@ class Tree():
     @owyl.taskmethod
     def select_a_glance_target(self, **kwargs):
         target = random.choice(self.blackboard["face_targets"])
-        if len(self.blackboard["face_targets"]) > 1:
-            while target == self.blackboard["current_face_target"]:
-                target = random.choice(self.blackboard["face_targets"])
+        while target == self.blackboard["current_face_target"]:
+            target = random.choice(self.blackboard["face_targets"])
         self.blackboard["current_glance_target"] = target
         yield True
 
@@ -374,30 +454,29 @@ class Tree():
 
     @owyl.taskmethod
     def interact_with_face_target(self, **kwargs):
+        print "----- Is Interacting With: " + self.blackboard[kwargs["id"]]
         face_id = self.blackboard[kwargs["id"]]
         duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
         interval = 0.01
-        self.face_id_pub(face_id)
+        self.face_id_pub.publish(face_id)
         while duration > 0:
             time.sleep(interval)
             duration -= interval
             if self.blackboard["is_interruption"]:
                 break
-        # if duration <= 0:
-        #     self.tracking_mode_pub.publish("Dummy")
-        #     self.blackboard["is_TrackDev_on"] = False
         yield True
 
-    @owyl.taskmethod
-    def stop_interaction(self, **kwargs):
-        self.blackboard["current_face_target"] = ""
-        if self.blackboard["is_TrackDev_on"]:
-            self.tracking_mode_pub.publish("Dummy")
-            self.blackboard["is_TrackDev_on"] = False
-        yield True
+    # @owyl.taskmethod
+    # def stop_interaction(self, **kwargs):
+    #     self.blackboard["current_face_target"] = ""
+    #     if self.blackboard["is_TrackDev_on"]:
+    #         self.tracking_mode_pub.publish("Dummy")
+    #         self.blackboard["is_TrackDev_on"] = False
+    #     yield True
 
     @owyl.taskmethod
     def glance_at(self, **kwargs):
+        print "----- Glancing At " + self.blackboard[kwargs["id"]]
         face_id = self.blackboard[kwargs["id"]]
         # TODO: Construct and publish the TrackingAction Message
         # self.tracking_action_pub.publish()
@@ -405,6 +484,7 @@ class Tree():
 
     @owyl.taskmethod
     def glance_at_new_face(self, **kwargs):
+        print "----- Glancing At The New Face " + self.blackboard["new_face"]
         face_id = self.blackboard["new_face"]
         # TODO: Construct and publish the TrackingAction Message
         # self.tracking_action_pub.publish()
@@ -412,6 +492,7 @@ class Tree():
 
     @owyl.taskmethod
     def glance_at_lost_face(self, **kwargs):
+        print "----- Glancing At The Lost Face " + self.blackboard["lost_face"]
         face_id = self.blackboard["lost_face"]
         # TODO: Construct and publish the TrackingAction Message
         # self.tracking_action_pub.publish()
@@ -447,7 +528,6 @@ class Tree():
             time.sleep(interval)
             duration -= interval
             if self.blackboard["is_interruption"]:
-                yield False
                 break
         yield True
 
@@ -459,34 +539,63 @@ class Tree():
         yield True
 
     @owyl.taskmethod
-    def say(self, **kwargs):
-        utterance = kwargs["utterance"]
-        # TODO: See if needed
-        yield True
-
-    @owyl.taskmethod
-    def nod(self, **kwargs):
-        # TODO: See if needed
-        yield True
-
-    @owyl.taskmethod
     def clear_new_face_target(self, **kwargs):
-        self.blackboard["new_face"] = ""
+        if not self.blackboard["is_interruption"]:
+            print "----- Cleared New Face: " + self.blackboard["new_face"]
+            self.blackboard["new_face"] = ""
         yield True
 
     @owyl.taskmethod
     def clear_lost_face_target(self, **kwargs):
+        print "----- Cleared Lost Face: " + self.blackboard["lost_face"]
         self.blackboard["lost_face"] = ""
+        yield True
+
+    @owyl.taskmethod
+    def start_scripted_performance_system(self, **kwargs):
+        self.tracking_mode_pub.publish("Dummy")
+        self.blackboard["is_TrackDev_on"] = False
+        # TODO
         yield True
 
     def tracking_event_callback(self, data):
         self.blackboard["is_interruption"] = True
-        if data.event == "new_face":
-            self.blackboard["new_face"] = data.parameter
-            self.blackboard["background_face_targets"].append(data.parameter)
-        elif data.event == "exit":
-            self.blackboard["lost_face"] = data.parameter
-            self.blackboard["background_face_targets"].remove(data.parameter)
+
+        ########## For Testing Only ##########
+        if "new" in data.data:
+            print "<< Interruption >> New Face Detected: " + data.data
+            self.blackboard["new_face"] = data.data
+            self.blackboard["background_face_targets"].append(data.data)
+        elif "lost" in data.data:
+            print "<< Interruption >> Lost Face Detected: " + data.data.replace("lost", "new")
+            self.blackboard["lost_face"] = data.data.replace("lost", "new")
+            self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
+            # If the robot lost the new face during the initial interaction, reset new_face variable
+            if self.blackboard["new_face"] == self.blackboard["lost_face"]:
+                self.blackboard["new_face"] = ""
+
+        # TODO
+        # if data.event == "new_face":
+        #     print "<< Interruption >> New Face Detected: " + data.data
+        #     self.blackboard["new_face"] = data.parameter
+        #     self.blackboard["background_face_targets"].append(data.parameter)
+        # elif data.event == "exit":
+        #     print "<< Interruption >> Lost Face Detected: " + data.data
+        #     self.blackboard["lost_face"] = data.parameter
+        #     self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
+        #     # If the robot lost the new face during the initial interaction, reset new_face variable
+        #     if self.blackboard["new_face"] == self.blackboard["lost_face"]:
+        #         self.blackboard["new_face"] = ""
+
+    def scripted_performance_system_callback(self, data):
+        if not self.blackboard["is_scripted_performance_system_on"]:
+            self.blackboard["is_interruption"] = True
+            self.blackboard["is_scripted_performance_system_on"] = True
+            print "Scripted Performance System is ON!"
+        else:
+            self.blackboard["is_interruption"] = False
+            self.blackboard["is_scripted_performance_system_on"] = False
+            print "Scripted Performance System is OFF!"
 
 if __name__ == "__main__":
     rospy.init_node("Eva_Behavior")
