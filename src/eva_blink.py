@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import owyl
 from owyl import blackboard
 import rospy
