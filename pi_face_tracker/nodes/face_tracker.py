@@ -135,14 +135,37 @@ class FacesRegistry():
         self.step = 0
         self.face_id = 0
         self.faces = {}
+        self.publishers = {}
 
+    def _add_entry(self, face_box):
+        self.faces[face_box.face_id] = face_box
+        self.publishers[face_box.face_id] = rospy.Publisher(
+            "faces/%d" % face_box.face_id,
+            RegionOfInterest,
+            queue_size=10
+        )
+
+    def _remove_entry(self, face_id):
+        del self.faces[face_id]
+        self.publishers[face_id].unregister()
+        del self.publishers[face_id]
+
+    def publish_faces(self):
+        for f in self.faces.keys():
+            box = self.faces[f].get_box()
+            roi = RegionOfInterest()
+            roi.x_offset = box[0][0]
+            roi.y_offset = box[0][1]
+            roi.width = box[1][0] - box[0][0]
+            roi.height = box[1][1] - box[0][1]
+            self.publishers[f].publish(roi)
 
     def nextFrame(self):
         self.step += 1
         for f in self.faces.keys():
             self.faces[f].next_frame()
             if self.faces[f].status == 'deleted':
-                del self.faces[f]
+                self._remove_entry(f)
 
 
     ''' Faces array of (pt1,pt2) '''
@@ -150,7 +173,9 @@ class FacesRegistry():
         for f in faces:
             if not self.faces:
                 self.face_id += 1
-                self.faces[self.face_id] = FaceBox(self.face_id,f[0], f[1])
+                self._add_entry(
+                    FaceBox(self.face_id, f[0], f[1])
+                )
             else:
                 found = False
                 for id in self.faces.keys():
@@ -159,7 +184,9 @@ class FacesRegistry():
                         break
                 if not found:
                     self.face_id += 1
-                    self.faces[self.face_id] = FaceBox(self.face_id,f[0], f[1])
+                    self._add_entry(
+                        FaceBox(self.face_id, f[0], f[1])
+                    )
 
     #processes faces statuses:
     # Calls new_face callback if new faces are added,
@@ -175,7 +202,7 @@ class FacesRegistry():
             if f.status == 'terminated':
                 if on_exit is not None:
                     on_exit(f)
-                del self.faces[id]
+                self._remove_entry(id)
 
     #returns Face by id. If no id given returns oldest face in scene
     def getFace(self, id=-1):
@@ -298,11 +325,11 @@ class PatchTracker(ROS2OpenCV):
                     self.detect_box.faces[f].features = []
                     self.detect_box.faces[f].update_box(self.detect_box.faces[f].face_box())
                 track_box = self.track_lk(cv_image, self.detect_box.faces[f])
-                rospy.loginfo("track id: %s box: %s",f, self.detect_box.faces[f].get_box())
                 if track_box and len(track_box) != 3:
                     self.detect_box.faces[f].update_box(track_box)
                 else:
                     self.detect_box.faces[f].update_box_elipse(track_box)
+                rospy.loginfo("track id: %s box: %s",f, self.detect_box.faces[f].get_box())
 
                 """ Prune features that are too far from the main cluster """
                 if len(self.detect_box.faces[f].features) > 0:
@@ -320,6 +347,7 @@ class PatchTracker(ROS2OpenCV):
                 else:
                     self.detect_box.faces[f].expand_roi = self.expand_roi_init
 
+        self.detect_box.publish_faces()
         return cv_image
     
     def detect_face(self, cv_image):
@@ -487,20 +515,20 @@ class PatchTracker(ROS2OpenCV):
                 feature_box = None
             
             """ Publish the ROI for the tracked object """
-            try:
-                (roi_center, roi_size, roi_angle) = feature_box
-            except:
-                rospy.loginfo("Patch box has shrunk to zeros...")
-                feature_box = None
+            # try:
+            #     (roi_center, roi_size, roi_angle) = feature_box
+            # except:
+            #     rospy.loginfo("Patch box has shrunk to zeros...")
+            #     feature_box = None
     
-            if feature_box and not self.drag_start and self.is_rect_nonzero(face.track_box):
-                self.ROI = RegionOfInterest()
-                self.ROI.x_offset = min(self.image_size[0], max(0, int(roi_center[0] - roi_size[0] / 2)))
-                self.ROI.y_offset = min(self.image_size[1], max(0, int(roi_center[1] - roi_size[1] / 2)))
-                self.ROI.width = min(self.image_size[0], int(roi_size[0]))
-                self.ROI.height = min(self.image_size[1], int(roi_size[1]))
+            # if feature_box and not self.drag_start and self.is_rect_nonzero(face.track_box):
+            #     self.ROI = RegionOfInterest()
+            #     self.ROI.x_offset = min(self.image_size[0], max(0, int(roi_center[0] - roi_size[0] / 2)))
+            #     self.ROI.y_offset = min(self.image_size[1], max(0, int(roi_center[1] - roi_size[1] / 2)))
+            #     self.ROI.width = min(self.image_size[0], int(roi_size[0]))
+            #     self.ROI.height = min(self.image_size[1], int(roi_size[1]))
                 
-            self.pubROI.publish(self.ROI)
+            # self.pubROI.publish(self.ROI)
 
             
         if feature_box is not None and len(face.features) > 0:
