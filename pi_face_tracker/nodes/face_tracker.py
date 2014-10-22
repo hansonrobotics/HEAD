@@ -336,7 +336,7 @@ class PatchTracker(ROS2OpenCV):
                     # Consider to move face class
                     ((mean_x, mean_y, mean_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.detect_box.faces[f].abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse,face =self.detect_box.faces[f])
                     if score == -1:
-                        del self.detect_box.faces[f]
+                        self.detect_box._remove_entry(f)
                         continue
 
 
