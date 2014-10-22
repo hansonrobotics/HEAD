@@ -6,6 +6,7 @@ import roslib
 import random
 import time
 from std_msgs.msg import String
+from eva_behavior.msg import event
 
 
 class Tree():
@@ -30,7 +31,7 @@ class Tree():
         self.blackboard["is_scripted_performance_system_on"] = False
         self.blackboard["random"] = 0.0
         rospy.Subscriber("scripted", String, self.scripted_performance_system_callback)
-        rospy.Subscriber("tracking_event", String, self.tracking_event_callback)  # For now, will change the type to "Event"
+        rospy.Subscriber("tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("tracking_mode", String, queue_size=1)
         self.tracking_action_pub = rospy.Publisher("tracking_action", String, queue_size=1)  # For now, will change the type to "TrackingAction"
         self.face_id_pub = rospy.Publisher("faces/id", String, queue_size=1)
@@ -560,32 +561,17 @@ class Tree():
 
     def tracking_event_callback(self, data):
         self.blackboard["is_interruption"] = True
-
-        ########## For Testing Only ##########
-        if "new" in data.data:
-            print "<< Interruption >> New Face Detected: " + data.data
-            self.blackboard["new_face"] = data.data
-            self.blackboard["background_face_targets"].append(data.data)
-        elif "lost" in data.data:
-            print "<< Interruption >> Lost Face Detected: " + data.data.replace("lost", "new")
-            self.blackboard["lost_face"] = data.data.replace("lost", "new")
+        if data.event == "new_face":
+            print "<< Interruption >> New Face Detected: " + data.param
+            self.blackboard["new_face"] = data.param
+            self.blackboard["background_face_targets"].append(self.blackboard["new_face"])
+        elif data.event == "exit":
+            print "<< Interruption >> Lost Face Detected: " + data.param
+            self.blackboard["lost_face"] = data.param
             self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
             # If the robot lost the new face during the initial interaction, reset new_face variable
             if self.blackboard["new_face"] == self.blackboard["lost_face"]:
                 self.blackboard["new_face"] = ""
-
-        # TODO
-        # if data.event == "new_face":
-        #     print "<< Interruption >> New Face Detected: " + data.data
-        #     self.blackboard["new_face"] = data.parameter
-        #     self.blackboard["background_face_targets"].append(data.parameter)
-        # elif data.event == "exit":
-        #     print "<< Interruption >> Lost Face Detected: " + data.data
-        #     self.blackboard["lost_face"] = data.parameter
-        #     self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
-        #     # If the robot lost the new face during the initial interaction, reset new_face variable
-        #     if self.blackboard["new_face"] == self.blackboard["lost_face"]:
-        #         self.blackboard["new_face"] = ""
 
     def scripted_performance_system_callback(self, data):
         if not self.blackboard["is_scripted_performance_system_on"]:
