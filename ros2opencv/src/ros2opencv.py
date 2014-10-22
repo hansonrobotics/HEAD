@@ -55,12 +55,12 @@ class ROS2OpenCV:
         self.show_features = rospy.get_param("~show_features", True)
 
         """ Initialize the Region of Interest and its publisher """
-        self.ROI = RegionOfInterest()
-        self.pubROI = rospy.Publisher("/roi", RegionOfInterest)
+        #self.ROI = RegionOfInterest()
+        #self.pubROI = rospy.Publisher("/roi", RegionOfInterest)
 
         """ Do the same for the point cluster publisher """
-        self.cluster3d = PointStamped()
-        self.pub_cluster3d = rospy.Publisher("/target_point", PointStamped)
+        #self.cluster3d = PointStamped()
+        #self.pub_cluster3d = rospy.Publisher("/target_point", PointStamped)
         
         """ Initialize a number of global variables """
         self.image = None
