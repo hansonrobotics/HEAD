@@ -35,6 +35,7 @@ from sensor_msgs.msg import RegionOfInterest, Image
 from math import sqrt, isnan
 from ros2opencv import ROS2OpenCV
 from pi_face_tracker.srv import *
+from eva_behavior.msg import event
 import time
 
 ''' Single face area class '''
@@ -128,36 +129,67 @@ class FaceBox():
             return True
         return False
 
+    def __repr__(self):
+        return "<Face no.%d @ %s>" % (
+            self.face_id,
+            self.face_box()
+        )
+
 
 
 class FacesRegistry():
+
+    TOPIC_FACE_ROI = "faces/%d"
+    TOPIC_EVENT = "tracking_event"
+    EVENT_NEW_FACE = "new_face"
+    EVENT_LOST_FACE = "exit"
+
     def __init__(self):
         self.step = 0
         self.face_id = 0
         self.faces = {}
         self.publishers = {}
+        self.event_pub = rospy.Publisher(
+            self.TOPIC_EVENT,
+            event,
+            queue_size=10
+        )
 
     def _add_entry(self, face_box):
+        #Update data structures
         self.faces[face_box.face_id] = face_box
         self.publishers[face_box.face_id] = rospy.Publisher(
-            "faces/%d" % face_box.face_id,
+            self.TOPIC_FACE_ROI % face_box.face_id,
             RegionOfInterest,
             queue_size=10
         )
 
+        #Dispatch ROS event
+        self.event_pub.publish(
+            event=self.EVENT_NEW_FACE,
+            param=str(face_box.face_id)
+        )
+
     def _remove_entry(self, face_id):
+        #Update data structures
         del self.faces[face_id]
         self.publishers[face_id].unregister()
         del self.publishers[face_id]
 
+        #Dispatch ROS event
+        self.event_pub.publish(
+            event=self.EVENT_LOST_FACE,
+            param=str(face_id)
+        )
+
     def publish_faces(self):
         for f in self.faces.keys():
-            box = self.faces[f].get_box()
+            face_box = self.faces[f].face_box()
             roi = RegionOfInterest()
-            roi.x_offset = box[0][0]
-            roi.y_offset = box[0][1]
-            roi.width = box[1][0] - box[0][0]
-            roi.height = box[1][1] - box[0][1]
+            (   
+                roi.x_offset, y_offset,
+                roi.width, roi.height
+            ) = face_box
             self.publishers[f].publish(roi)
 
     def nextFrame(self):
@@ -329,14 +361,13 @@ class PatchTracker(ROS2OpenCV):
                     self.detect_box.faces[f].update_box(track_box)
                 else:
                     self.detect_box.faces[f].update_box_elipse(track_box)
-                rospy.loginfo("track id: %s box: %s",f, self.detect_box.faces[f].get_box())
 
                 """ Prune features that are too far from the main cluster """
                 if len(self.detect_box.faces[f].features) > 0:
                     # Consider to move face class
                     ((mean_x, mean_y, mean_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.detect_box.faces[f].abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse,face =self.detect_box.faces[f])
                     if score == -1:
-                        del self.detect_box.faces[f]
+                        self.detect_box._remove_entry(f)
                         continue
 
 
@@ -347,6 +378,7 @@ class PatchTracker(ROS2OpenCV):
                 else:
                     self.detect_box.faces[f].expand_roi = self.expand_roi_init
 
+        rospy.loginfo(self.detect_box.faces)
         self.detect_box.publish_faces()
         return cv_image
     
