@@ -35,7 +35,7 @@ class Tree():
         rospy.Subscriber("scripted", String, self.scripted_performance_system_callback)
         rospy.Subscriber("tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1)
-        self.tracking_action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=1)
+        self.action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=1)
         self.emotion_pub = rospy.Publisher("emotion", emotion, queue_size=1)
         self.tree = self.build_tree()
         while True:
@@ -461,10 +461,11 @@ class Tree():
         face_id = self.blackboard[kwargs["id"]]
         duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
         interval = 0.01
-        tracking_action.target = face_id
-        tracking_action.action = "track"
-        tracking_action.params = ""
-        self.tracking_action_pub.publish(tracking_action)
+        action = tracking_action()
+        action.target = "/faces/" + face_id
+        action.action = "track"
+        action.params = ""
+        self.action_pub.publish(action)
         while duration > 0:
             time.sleep(interval)
             duration -= interval
@@ -476,30 +477,33 @@ class Tree():
     def glance_at(self, **kwargs):
         print "----- Glancing At " + self.blackboard[kwargs["id"]]
         face_id = self.blackboard[kwargs["id"]]
-        tracking_action.target = "/faces/" + face_id
-        tracking_action.action = "glance"
-        tracking_action.params = ""
-        self.tracking_action_pub.publish(tracking_action)
+        action = tracking_action()
+        action.target = "/faces/" + face_id
+        action.action = "glance"
+        action.params = ""
+        self.action_pub.publish(action)
         yield True
 
     @owyl.taskmethod
     def glance_at_new_face(self, **kwargs):
         print "----- Glancing At The New Face " + self.blackboard["new_face"]
         face_id = self.blackboard["new_face"]
-        tracking_action.target = "/faces/" + face_id
-        tracking_action.action = "glance"
-        tracking_action.params = ""
-        self.tracking_action_pub.publish(tracking_action)
+        action = tracking_action()
+        action.target = "/faces/" + face_id
+        action.action = "glance"
+        action.params = ""
+        self.action_pub.publish(action)
         yield True
 
     @owyl.taskmethod
     def glance_at_lost_face(self, **kwargs):
         print "----- Glancing At The Lost Face " + self.blackboard["lost_face"]
         face_id = self.blackboard["lost_face"]
-        tracking_action.target = "/faces/" + face_id
-        tracking_action.action = "glance"
-        tracking_action.params = ""
-        self.tracking_action_pub.publish(tracking_action)
+        action = tracking_action()
+        action.target = "/faces/" + face_id
+        action.action = "glance"
+        action.params = ""
+        self.action_pub.publish(action)
         yield True
 
     @owyl.taskmethod
@@ -573,11 +577,12 @@ class Tree():
             self.blackboard["background_face_targets"].append(self.blackboard["new_face"])
         elif data.event == "exit":
             print "<< Interruption >> Lost Face Detected: " + data.param
-            self.blackboard["lost_face"] = data.param
-            self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
-            # If the robot lost the new face during the initial interaction, reset new_face variable
-            if self.blackboard["new_face"] == self.blackboard["lost_face"]:
-                self.blackboard["new_face"] = ""
+            if data.param in self.blackboard["background_face_targets"]:
+                self.blackboard["lost_face"] = data.param
+                self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
+                # If the robot lost the new face during the initial interaction, reset new_face variable
+                if self.blackboard["new_face"] == self.blackboard["lost_face"]:
+                    self.blackboard["new_face"] = ""
 
     def scripted_performance_system_callback(self, data):
         if not self.blackboard["is_scripted_performance_system_on"]:
