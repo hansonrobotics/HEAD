@@ -19,8 +19,9 @@ class Tree():
         self.blackboard["confusion_comprehension"] = 0.5
         self.blackboard["boredom_engagement"] = 0.5
         self.blackboard["recoil_surprise"] = 0.5
-        self.blackboard["current_emotion"] = ""
+        self.blackboard["current_emotion"] = "happy"
         self.blackboard["current_emotion_intensity"] = 0.5
+        self.blackboard["initialize_emotion"] = False
         self.blackboard["face_targets"] = []  # IDs of faces in the scene
         self.blackboard["background_face_targets"] = []
         self.blackboard["new_face"] = ""
@@ -46,16 +47,6 @@ class Tree():
     def build_tree(self):
         eva_behavior_tree = \
             owyl.parallel(
-                ############### Emotion ###############
-                owyl.repeatAlways(
-                    owyl.limit(
-                        owyl.sequence(
-                            self.keep_emotion_alive()
-                        )
-                    ),
-                    limit_period=0.5
-                ),
-
                 ############### Tree: General Behaviors ###############
                 owyl.repeatAlways(
                     owyl.selector(
@@ -274,6 +265,13 @@ class Tree():
 
     @owyl.taskmethod
     def sync_variables(self, **kwargs):
+        if not self.blackboard["initialize_emotion"]:
+            exp = MakeCoupledFaceExpr()
+            exp.robotname = "Dmitry"
+            exp.expr.exprname = self.blackboard["current_emotion"]
+            exp.expr.intensity = self.blackboard["current_emotion_intensity"]
+            self.emotion_pub.publish(exp)
+            self.blackboard["initialize_emotion"] = True
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
         print "\n========== Emotion Space =========="
         print "sadness_happiness: " + str(self.blackboard["sadness_happiness"])[:5]
@@ -281,25 +279,12 @@ class Tree():
         print "confusion_comprehension: " + str(self.blackboard["confusion_comprehension"])[:5]
         print "boredom_engagement: " + str(self.blackboard["boredom_engagement"])[:5]
         print "recoil_surprise: " + str(self.blackboard["recoil_surprise"])[:5]
+        print "Current Emotion: " + self.blackboard["current_emotion"] + " (" + str(self.blackboard["current_emotion_intensity"])[:5] + ")"
+
         yield True
 
     @owyl.taskmethod
     def does_nothing(self, **kwargs):
-        yield True
-
-    @owyl.taskmethod
-    def keep_emotion_alive(self, **kwargs):
-        exp = MakeCoupledFaceExpr()
-        exp.robotname = "Eva"
-        exp.expr.exprname = self.blackboard["current_emotion"]
-        self.blackboard["current_emotion_intensity"] *= random.uniform(0.9, 1.1)
-        if self.blackboard["current_emotion_intensity"] > 1.0:
-            self.blackboard["current_emotion_intensity"] = 1.0
-        elif self.blackboard["current_emotion_intensity"] < 0.5:
-            self.blackboard["current_emotion_intensity"] = 0.5
-        exp.expr.intensity = self.blackboard["current_emotion_intensity"]
-        print "\nCurrent Emotion: " + self.blackboard["current_emotion"]
-        print "Current Emotion Intensity: " + self.blackboard["current_emotion_intensity"] + "\n"
         yield True
 
     @owyl.taskmethod
@@ -537,7 +522,7 @@ class Tree():
     def show_expression(self, **kwargs):
         exp = MakeCoupledFaceExpr()
         # duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
-        exp.robotname = "Eva"
+        exp.robotname = "Dmitry"
         self.blackboard["current_emotion"] = kwargs["expression"]
         self.blackboard["current_emotion_intensity"] = 0.75
         exp.expr.exprname = self.blackboard["current_emotion"]
