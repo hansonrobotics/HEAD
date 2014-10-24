@@ -8,7 +8,7 @@ import time
 from std_msgs.msg import String
 from eva_behavior.msg import event
 from eva_behavior.msg import tracking_action
-from eva_behavior.msg import emotion
+from basic_head_api.msg import MakeCoupledFaceExpr
 
 
 class Tree():
@@ -19,6 +19,8 @@ class Tree():
         self.blackboard["confusion_comprehension"] = 0.5
         self.blackboard["boredom_engagement"] = 0.5
         self.blackboard["recoil_surprise"] = 0.5
+        self.blackboard["current_emotion"] = ""
+        self.blackboard["current_emotion_intensity"] = 0.5
         self.blackboard["face_targets"] = []  # IDs of faces in the scene
         self.blackboard["background_face_targets"] = []
         self.blackboard["new_face"] = ""
@@ -36,7 +38,7 @@ class Tree():
         rospy.Subscriber("tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1)
         self.action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=1)
-        self.emotion_pub = rospy.Publisher("emotion", emotion, queue_size=1)
+        self.emotion_pub = rospy.Publisher("emotion", MakeCoupledFaceExpr, queue_size=1)
         self.tree = self.build_tree()
         while True:
             self.tree.next()
@@ -44,6 +46,16 @@ class Tree():
     def build_tree(self):
         eva_behavior_tree = \
             owyl.parallel(
+                ############### Emotion ###############
+                owyl.repeatAlways(
+                    owyl.limit(
+                        owyl.sequence(
+                            self.keep_emotion_alive()
+                        )
+                    ),
+                    limit_period=0.5
+                ),
+
                 ############### Tree: General Behaviors ###############
                 owyl.repeatAlways(
                     owyl.selector(
@@ -273,6 +285,21 @@ class Tree():
 
     @owyl.taskmethod
     def does_nothing(self, **kwargs):
+        yield True
+
+    @owyl.taskmethod
+    def keep_emotion_alive(self, **kwargs):
+        exp = MakeCoupledFaceExpr()
+        exp.robotname = "Eva"
+        exp.expr.exprname = self.blackboard["current_emotion"]
+        self.blackboard["current_emotion_intensity"] *= random.uniform(0.9, 1.1)
+        if self.blackboard["current_emotion_intensity"] > 1.0:
+            self.blackboard["current_emotion_intensity"] = 1.0
+        elif self.blackboard["current_emotion_intensity"] < 0.5:
+            self.blackboard["current_emotion_intensity"] = 0.5
+        exp.expr.intensity = self.blackboard["current_emotion_intensity"]
+        print "\nCurrent Emotion: " + self.blackboard["current_emotion"]
+        print "Current Emotion Intensity: " + self.blackboard["current_emotion_intensity"] + "\n"
         yield True
 
     @owyl.taskmethod
@@ -508,10 +535,14 @@ class Tree():
 
     @owyl.taskmethod
     def show_expression(self, **kwargs):
-        expression = kwargs["expression"]
-        duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
-        # TODO: Construct and publish the basic_head_api/MakeFaceExpr Message
-        # self.emotion_pub.publish()
+        exp = MakeCoupledFaceExpr()
+        # duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
+        exp.robotname = "Eva"
+        self.blackboard["current_emotion"] = kwargs["expression"]
+        self.blackboard["current_emotion_intensity"] = 0.75
+        exp.expr.exprname = self.blackboard["current_emotion"]
+        exp.expr.intensity = self.blackboard["current_emotion_intensity"]
+        self.emotion_pub.publish(exp)
         yield True
 
     @owyl.taskmethod

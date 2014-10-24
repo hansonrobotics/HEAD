@@ -1,2 +1,0 @@
-string emotion
-float32 intensity

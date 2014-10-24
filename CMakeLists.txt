@@ -48,7 +48,6 @@ add_message_files(
   FILES
   event.msg
   tracking_action.msg
-  emotion.msg
 )
 
 ## Generate services in the 'srv' folder
