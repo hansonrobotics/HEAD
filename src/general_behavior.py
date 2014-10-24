@@ -19,9 +19,9 @@ class Tree():
         self.blackboard["confusion_comprehension"] = 0.5
         self.blackboard["boredom_engagement"] = 0.5
         self.blackboard["recoil_surprise"] = 0.5
-        self.blackboard["current_emotion"] = "happy"
+        self.blackboard["current_emotion"] = "Happy"  # Happy, Evil, Sad, Surprise, Angry, Afraid, Disgusted
         self.blackboard["current_emotion_intensity"] = 0.5
-        self.blackboard["initialize_emotion"] = False
+        self.blackboard["show_expression_since"] = time.time()
         self.blackboard["face_targets"] = []  # IDs of faces in the scene
         self.blackboard["background_face_targets"] = []
         self.blackboard["new_face"] = ""
@@ -108,7 +108,7 @@ class Tree():
                                                     self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.05, max=1.1),
                                                     self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.95, max=1.0),
                                                     self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-                                                    self.show_expression(expression="confused", min_duration=1.0, max_duration=3.0)
+                                                    self.show_expression(expression="Evil")
                                                 ),
 
                                                 ##### Surprise #####
@@ -118,7 +118,7 @@ class Tree():
                                                     self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
                                                     self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.95, max=1.0),
                                                     self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-                                                    self.show_expression(expression="surprise", min_duration=1.0, max_duration=3.0)
+                                                    self.show_expression(expression="Surprise")
                                                 ),
 
                                                 ##### Sad #####
@@ -127,9 +127,9 @@ class Tree():
                                                     self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.05, max=1.1),
                                                     self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.95, max=1.0),
                                                     self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-                                                    self.show_expression(expression="sad", min_duration=1.0, max_duration=3.0)
-                                                ),
-                                            ),
+                                                    self.show_expression(expression="Sad")
+                                                )
+                                            )
                                         ),
 
                                         ##### Is Interacting With Someone Else #####
@@ -265,13 +265,6 @@ class Tree():
 
     @owyl.taskmethod
     def sync_variables(self, **kwargs):
-        if not self.blackboard["initialize_emotion"]:
-            exp = MakeCoupledFaceExpr()
-            exp.robotname = "Dmitry"
-            exp.expr.exprname = self.blackboard["current_emotion"]
-            exp.expr.intensity = self.blackboard["current_emotion_intensity"]
-            self.emotion_pub.publish(exp)
-            self.blackboard["initialize_emotion"] = True
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
         print "\n========== Emotion Space =========="
         print "sadness_happiness: " + str(self.blackboard["sadness_happiness"])[:5]
@@ -280,7 +273,6 @@ class Tree():
         print "boredom_engagement: " + str(self.blackboard["boredom_engagement"])[:5]
         print "recoil_surprise: " + str(self.blackboard["recoil_surprise"])[:5]
         print "Current Emotion: " + self.blackboard["current_emotion"] + " (" + str(self.blackboard["current_emotion_intensity"])[:5] + ")"
-
         yield True
 
     @owyl.taskmethod
@@ -478,6 +470,8 @@ class Tree():
         action.action = "track"
         action.params = ""
         self.action_pub.publish(action)
+        if time.time() - self.blackboard["show_expression_since"] >= 5.0:
+            self.show(random.choice(["Happy", "Evil", "Surprise"]), random.uniform(0.7, 0.9))
         while duration > 0:
             time.sleep(interval)
             duration -= interval
@@ -520,15 +514,18 @@ class Tree():
 
     @owyl.taskmethod
     def show_expression(self, **kwargs):
+        self.show(kwargs["expression"], 0.75)
+        yield True
+
+    def show(self, expression, intensity):
         exp = MakeCoupledFaceExpr()
-        # duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
         exp.robotname = "Dmitry"
-        self.blackboard["current_emotion"] = kwargs["expression"]
-        self.blackboard["current_emotion_intensity"] = 0.75
+        self.blackboard["current_emotion"] = expression
+        self.blackboard["current_emotion_intensity"] = intensity
         exp.expr.exprname = self.blackboard["current_emotion"]
         exp.expr.intensity = self.blackboard["current_emotion_intensity"]
         self.emotion_pub.publish(exp)
-        yield True
+        self.blackboard["show_expression_since"] = time.time()
 
     @owyl.taskmethod
     def search_for_attention(self, **kwargs):
@@ -537,6 +534,8 @@ class Tree():
         if self.blackboard['blender_mode'] != 'Dummy':
             self.tracking_mode_pub.publish("Dummy")
             self.blackboard['blender_mode']= 'Dummy'
+        if time.time() - self.blackboard["show_expression_since"] >= 5.0:
+            self.show(random.choice(["Happy", "Evil", "Sad"]), random.uniform(0.6, 0.7))
         while duration > 0:
             time.sleep(interval)
             duration -= interval
