@@ -29,12 +29,12 @@ class Tree():
         self.blackboard["sleep_since"] = 0.0
         self.blackboard["is_interruption"] = False
         self.blackboard["is_sleeping"] = False
-        self.blackboard["is_TrackDev_on"] = False
+        self.blackboard["blender_mode"] = ""
         self.blackboard["is_scripted_performance_system_on"] = False
         self.blackboard["random"] = 0.0
         rospy.Subscriber("scripted", String, self.scripted_performance_system_callback)
         rospy.Subscriber("tracking_event", event, self.tracking_event_callback)
-        self.tracking_mode_pub = rospy.Publisher("tracking_mode", String, queue_size=1)
+        self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1)
         self.tracking_action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=1)
         self.emotion_pub = rospy.Publisher("emotion", emotion, queue_size=1)
         self.tree = self.build_tree()
@@ -262,9 +262,6 @@ class Tree():
 
     @owyl.taskmethod
     def sync_variables(self, **kwargs):
-        if not self.blackboard["is_TrackDev_on"]:
-            self.tracking_mode_pub.publish("TrackDev")
-            self.blackboard["is_TrackDev_on"] = True
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
         print "\n========== Emotion Space =========="
         print "sadness_happiness: " + str(self.blackboard["sadness_happiness"])[:5]
@@ -456,6 +453,10 @@ class Tree():
 
     @owyl.taskmethod
     def interact_with_face_target(self, **kwargs):
+        if self.blackboard['blender_mode'] != 'TrackDev':
+            self.tracking_mode_pub.publish("TrackDev")
+            self.blackboard['blender_mode'] = 'TrackDev'
+            time.sleep(0.1)
         print "----- Is Interacting With: " + self.blackboard[kwargs["id"]]
         face_id = self.blackboard[kwargs["id"]]
         duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
@@ -513,7 +514,9 @@ class Tree():
     def search_for_attention(self, **kwargs):
         duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
         interval = 0.01
-        self.tracking_mode_pub.publish("LookAround")
+        if self.blackboard['blender_mode'] != 'Dummy':
+            self.tracking_mode_pub.publish("Dummy")
+            self.blackboard['blender_mode']= 'Dummy'
         while duration > 0:
             time.sleep(interval)
             duration -= interval
@@ -557,6 +560,7 @@ class Tree():
     @owyl.taskmethod
     def start_scripted_performance_system(self, **kwargs):
         self.tracking_mode_pub.publish("Dummy")
+        self.blackboard['blender_mode'] = 'Dummy'
         self.blackboard["is_TrackDev_on"] = False
         # TODO
         yield True

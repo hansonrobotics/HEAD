@@ -4,7 +4,6 @@ import owyl
 from owyl import blackboard
 import rospy
 
-
 class Tree():
     def __init__(self):
         self.blackboard = blackboard.Blackboard()
