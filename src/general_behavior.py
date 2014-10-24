@@ -7,6 +7,8 @@ import random
 import time
 from std_msgs.msg import String
 from eva_behavior.msg import event
+from eva_behavior.msg import tracking_action
+from eva_behavior.msg import emotion
 
 
 class Tree():
@@ -33,9 +35,8 @@ class Tree():
         rospy.Subscriber("scripted", String, self.scripted_performance_system_callback)
         rospy.Subscriber("tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("tracking_mode", String, queue_size=1)
-        self.tracking_action_pub = rospy.Publisher("tracking_action", String, queue_size=1)  # For now, will change the type to "TrackingAction"
-        self.face_id_pub = rospy.Publisher("faces/id", String, queue_size=1)
-        self.emotion_pub = rospy.Publisher("emotion", String, queue_size=1)  # For now, will change the type to "basic_head_api/MakeFaceExpr"
+        self.tracking_action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=1)
+        self.emotion_pub = rospy.Publisher("emotion", emotion, queue_size=1)
         self.tree = self.build_tree()
         while True:
             self.tree.next()
@@ -459,7 +460,10 @@ class Tree():
         face_id = self.blackboard[kwargs["id"]]
         duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
         interval = 0.01
-        self.face_id_pub.publish(face_id)
+        tracking_action.target = face_id
+        tracking_action.action = "track"
+        tracking_action.params = ""
+        self.tracking_action_pub.publish(tracking_action)
         while duration > 0:
             time.sleep(interval)
             duration -= interval
@@ -467,36 +471,34 @@ class Tree():
                 break
         yield True
 
-    # @owyl.taskmethod
-    # def stop_interaction(self, **kwargs):
-    #     self.blackboard["current_face_target"] = ""
-    #     if self.blackboard["is_TrackDev_on"]:
-    #         self.tracking_mode_pub.publish("Dummy")
-    #         self.blackboard["is_TrackDev_on"] = False
-    #     yield True
-
     @owyl.taskmethod
     def glance_at(self, **kwargs):
         print "----- Glancing At " + self.blackboard[kwargs["id"]]
         face_id = self.blackboard[kwargs["id"]]
-        # TODO: Construct and publish the TrackingAction Message
-        # self.tracking_action_pub.publish()
+        tracking_action.target = "/faces/" + face_id
+        tracking_action.action = "glance"
+        tracking_action.params = ""
+        self.tracking_action_pub.publish(tracking_action)
         yield True
 
     @owyl.taskmethod
     def glance_at_new_face(self, **kwargs):
         print "----- Glancing At The New Face " + self.blackboard["new_face"]
         face_id = self.blackboard["new_face"]
-        # TODO: Construct and publish the TrackingAction Message
-        # self.tracking_action_pub.publish()
+        tracking_action.target = "/faces/" + face_id
+        tracking_action.action = "glance"
+        tracking_action.params = ""
+        self.tracking_action_pub.publish(tracking_action)
         yield True
 
     @owyl.taskmethod
     def glance_at_lost_face(self, **kwargs):
         print "----- Glancing At The Lost Face " + self.blackboard["lost_face"]
         face_id = self.blackboard["lost_face"]
-        # TODO: Construct and publish the TrackingAction Message
-        # self.tracking_action_pub.publish()
+        tracking_action.target = "/faces/" + face_id
+        tracking_action.action = "glance"
+        tracking_action.params = ""
+        self.tracking_action_pub.publish(tracking_action)
         yield True
 
     @owyl.taskmethod
