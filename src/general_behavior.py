@@ -108,7 +108,7 @@ class Tree():
                                                     self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.05, max=1.1),
                                                     self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.95, max=1.0),
                                                     self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-                                                    self.show_expression(expression="Evil")
+                                                    self.show_expression(expression="Disgusted", min_intensity=0.6, max_intensity=0.7)
                                                 ),
 
                                                 ##### Surprise #####
@@ -118,7 +118,7 @@ class Tree():
                                                     self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
                                                     self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.95, max=1.0),
                                                     self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-                                                    self.show_expression(expression="Surprise")
+                                                    self.show_expression(expression="Surprise", min_intensity=0.6, max_intensity=0.7)
                                                 ),
 
                                                 ##### Sad #####
@@ -127,7 +127,7 @@ class Tree():
                                                     self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.05, max=1.1),
                                                     self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.95, max=1.0),
                                                     self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-                                                    self.show_expression(expression="Sad")
+                                                    self.show_expression(expression="Sad", min_intensity=0.6, max_intensity=0.7)
                                                 )
                                             )
                                         ),
@@ -471,7 +471,7 @@ class Tree():
         action.params = ""
         self.action_pub.publish(action)
         if time.time() - self.blackboard["show_expression_since"] >= 5.0:
-            self.show(random.choice(["Happy", "Evil", "Surprise"]), random.uniform(0.7, 0.9))
+            self.show_positive_expression()
         while duration > 0:
             time.sleep(interval)
             duration -= interval
@@ -514,8 +514,23 @@ class Tree():
 
     @owyl.taskmethod
     def show_expression(self, **kwargs):
-        self.show(kwargs["expression"], 0.75)
+        self.show(kwargs["expression"], random.uniform(kwargs["min_intensity"], kwargs["max_intensity"]))
+        if kwargs["expression"] == "Surprise":
+            time.sleep(0.5)
+            self.show("Surprise", 0.5)
         yield True
+
+    def show_positive_expression(self):
+        if random.random() >= 0.5:
+            self.show(random.choice(["Sad", "Surprise", "Angry", "Afraid", "Disgusted"]), random.uniform(0.6, 0.9))
+            time.sleep(random.uniform(0.6, 1.5))
+        self.show(random.choice(["Happy", "Evil"]), random.uniform(0.7, 0.9))
+
+    def show_boring_expression(self):
+        if random.random() >= 0.5:
+            self.show(random.choice(["Surprise", "Happy", "Evil", "Angry"]), random.uniform(0.6, 0.9))
+            time.sleep(random.uniform(0.6, 1.5))
+        self.show(random.choice(["Sad", "Afraid", "Disgusted"]), random.uniform(0.6, 0.7))
 
     def show(self, expression, intensity):
         exp = MakeCoupledFaceExpr()
@@ -525,17 +540,18 @@ class Tree():
         exp.expr.exprname = self.blackboard["current_emotion"]
         exp.expr.intensity = self.blackboard["current_emotion_intensity"]
         self.emotion_pub.publish(exp)
+        print "----- Show expression: " + expression + " (" + str(intensity) + ")"
         self.blackboard["show_expression_since"] = time.time()
 
     @owyl.taskmethod
     def search_for_attention(self, **kwargs):
         duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
         interval = 0.01
-        if self.blackboard['blender_mode'] != 'Dummy':
-            self.tracking_mode_pub.publish("Dummy")
-            self.blackboard['blender_mode']= 'Dummy'
+        if self.blackboard['blender_mode'] != 'LookAround':
+            self.tracking_mode_pub.publish("LookAround")
+            self.blackboard['blender_mode'] = 'LookAround'
         if time.time() - self.blackboard["show_expression_since"] >= 5.0:
-            self.show(random.choice(["Happy", "Evil", "Sad"]), random.uniform(0.6, 0.7))
+            self.show_boring_expression()
         while duration > 0:
             time.sleep(interval)
             duration -= interval
