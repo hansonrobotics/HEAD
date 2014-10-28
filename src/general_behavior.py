@@ -109,7 +109,7 @@ class Tree():
                                                     self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.05, max=1.1),
                                                     self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.95, max=1.0),
                                                     self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-                                                    self.show_expression(expression="Disgusted", min_intensity=0.6, max_intensity=0.7)
+                                                    self.show_expression(expression="disgusted", min_intensity=0.6, max_intensity=0.7)
                                                 ),
 
                                                 ##### Surprise #####
@@ -119,7 +119,7 @@ class Tree():
                                                     self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
                                                     self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.95, max=1.0),
                                                     self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-                                                    self.show_expression(expression="Surprise", min_intensity=0.6, max_intensity=0.7)
+                                                    self.show_expression(expression="surprise", min_intensity=0.6, max_intensity=0.7)
                                                 ),
 
                                                 ##### Sad #####
@@ -128,7 +128,7 @@ class Tree():
                                                     self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.05, max=1.1),
                                                     self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.95, max=1.0),
                                                     self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-                                                    self.show_expression(expression="Sad", min_intensity=0.6, max_intensity=0.7)
+                                                    self.show_expression(expression="sad", min_intensity=0.6, max_intensity=0.7)
                                                 )
                                             )
                                         ),
@@ -165,7 +165,6 @@ class Tree():
                                                 )
                                             ),
                                             self.test(str="----- Time To Start A New Interaction!"),
-                                            # self.stop_interaction(),
                                             self.select_a_face_target(),
                                             self.record_start_time(variable="interact_with_face_target_since"),
                                             self.interact_with_face_target(id="current_face_target", min_duration=3.0, max_duration=6.0)
@@ -199,10 +198,10 @@ class Tree():
                                             owyl.selector(
                                                 ##### Go To Sleep #####
                                                 owyl.sequence(
-                                                    self.is_random_smaller_than(val1="newRandom_plus_boredom", val2=0.4),
+                                                    self.is_random_smaller_than(val1="newRandom_plus_boredom", val2=0.3),
                                                     self.record_start_time(variable="sleep_since"),
                                                     self.test(str="----- Go To Sleep!"),
-                                                    self.go_to_sleep(min_duration=5.0, max_duration=10.0)
+                                                    self.go_to_sleep(min_duration=2.0, max_duration=4.0)
                                                 ),
 
                                                 ##### Feeling Sleepy #####
@@ -220,7 +219,7 @@ class Tree():
                                             ##### Wake Up #####
                                             owyl.sequence(
                                                 self.is_random_greater_than(val1="newRandom", val2=0.5),
-                                                self.is_time_to_wake_up(limit=30),
+                                                self.is_time_to_wake_up(limit=10),
                                                 self.wake_up(),
                                                 self.test(str="----- Wake Up!"),
                                                 self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
@@ -231,7 +230,7 @@ class Tree():
                                             ##### Continue To Sleep #####
                                             owyl.sequence(
                                                 self.test(str="----- Continue To Sleep!"),
-                                                self.go_to_sleep(min_duration=1.0, max_duration=5.0)
+                                                self.go_to_sleep(min_duration=1.0, max_duration=2.0)
                                             )
                                         )
                                     ),
@@ -516,22 +515,19 @@ class Tree():
     @owyl.taskmethod
     def show_expression(self, **kwargs):
         self.show(kwargs["expression"], random.uniform(kwargs["min_intensity"], kwargs["max_intensity"]))
-        if kwargs["expression"] == "surprise":
-            time.sleep(0.5)
-            self.show("surprise", 0.5)
         yield True
 
     def show_positive_expression(self):
         if random.random() >= 0.5:
             self.show(random.choice(["sad", "surprise", "angry", "afraid", "disgusted"]), random.uniform(0.6, 0.9))
-            time.sleep(random.uniform(0.6, 1.5))
+            time.sleep(random.uniform(0.1, 0.2))
         self.show(random.choice(["happy", "evil"]), random.uniform(0.7, 0.9))
 
     def show_boring_expression(self):
         if random.random() >= 0.5:
-            self.show(random.choice(["surprise", "happy", "evil", "angry"]), random.uniform(0.6, 0.9))
-            time.sleep(random.uniform(0.6, 1.5))
-        self.show(random.choice(["sad", "afraid", "disgusted"]), random.uniform(0.6, 0.7))
+            self.show(random.choice(["surprise", "evil", "angry", "afraid", "disgusted"]), random.uniform(0.6, 0.9))
+            time.sleep(random.uniform(0.1, 0.2))
+        self.show(random.choice(["sad", "happy"]), random.uniform(0.1, 0.3))
 
     def show(self, expression, intensity):
         exp = MakeCoupledFaceExpr()
@@ -542,16 +538,17 @@ class Tree():
         exp.expr.intensity = self.blackboard["current_emotion_intensity"]
         self.emotion_pub.publish(exp)
         print "----- Show expression: " + expression + " (" + str(intensity) + ")"
+        if self.blackboard["current_emotion"] == "surprise":
+            exp.expr.intensity = 0.2
+            self.emotion_pub.publish(exp)
         self.blackboard["show_expression_since"] = time.time()
 
     @owyl.taskmethod
     def search_for_attention(self, **kwargs):
         duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
         interval = 0.01
-        rospy.loginfo("First Looking around")
         if self.blackboard['blender_mode'] != 'LookAround':
             self.tracking_mode_pub.publish("LookAround")
-            rospy.loginfo("Looking around")
             self.blackboard['blender_mode'] = 'LookAround'
         if time.time() - self.blackboard["show_expression_since"] >= 5.0:
             self.show_boring_expression()
@@ -565,6 +562,7 @@ class Tree():
     @owyl.taskmethod
     def go_to_sleep(self, **kwargs):
         self.blackboard["is_sleeping"] = True
+        self.show("happy", 0.1)
         duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
         interval = 0.01
         #TODO: Topic for sleep
@@ -579,6 +577,7 @@ class Tree():
     def wake_up(self, **kwargs):
         self.blackboard["is_sleeping"] = False
         self.blackboard["sleep_since"] = 0.0
+        self.show("surprise", random.uniform(0.7, 0.9))
         #TODO: Topic for waking up
         yield True
 
