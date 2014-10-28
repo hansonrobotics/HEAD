@@ -19,7 +19,7 @@ class Tree():
         self.blackboard["confusion_comprehension"] = 0.5
         self.blackboard["boredom_engagement"] = 0.5
         self.blackboard["recoil_surprise"] = 0.5
-        self.blackboard["current_emotion"] = "Happy"  # Happy, Evil, Sad, Surprise, Angry, Afraid, Disgusted
+        self.blackboard["current_emotion"] = "happy"  # Happy, Evil, Sad, Surprise, Angry, Afraid, Disgusted
         self.blackboard["current_emotion_intensity"] = 0.5
         self.blackboard["show_expression_since"] = time.time()
         self.blackboard["face_targets"] = []  # IDs of faces in the scene
@@ -39,8 +39,9 @@ class Tree():
         rospy.Subscriber("tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1)
         self.action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=1)
-        self.emotion_pub = rospy.Publisher("emotion", MakeCoupledFaceExpr, queue_size=1)
+        self.emotion_pub = rospy.Publisher("/dmitry/make_coupled_face_expr", MakeCoupledFaceExpr, queue_size=1)
         self.tree = self.build_tree()
+        time.sleep(0.1)
         while True:
             self.tree.next()
 
@@ -515,26 +516,26 @@ class Tree():
     @owyl.taskmethod
     def show_expression(self, **kwargs):
         self.show(kwargs["expression"], random.uniform(kwargs["min_intensity"], kwargs["max_intensity"]))
-        if kwargs["expression"] == "Surprise":
+        if kwargs["expression"] == "surprise":
             time.sleep(0.5)
-            self.show("Surprise", 0.5)
+            self.show("surprise", 0.5)
         yield True
 
     def show_positive_expression(self):
         if random.random() >= 0.5:
-            self.show(random.choice(["Sad", "Surprise", "Angry", "Afraid", "Disgusted"]), random.uniform(0.6, 0.9))
+            self.show(random.choice(["sad", "surprise", "angry", "afraid", "disgusted"]), random.uniform(0.6, 0.9))
             time.sleep(random.uniform(0.6, 1.5))
-        self.show(random.choice(["Happy", "Evil"]), random.uniform(0.7, 0.9))
+        self.show(random.choice(["happy", "evil"]), random.uniform(0.7, 0.9))
 
     def show_boring_expression(self):
         if random.random() >= 0.5:
-            self.show(random.choice(["Surprise", "Happy", "Evil", "Angry"]), random.uniform(0.6, 0.9))
+            self.show(random.choice(["surprise", "happy", "evil", "angry"]), random.uniform(0.6, 0.9))
             time.sleep(random.uniform(0.6, 1.5))
-        self.show(random.choice(["Sad", "Afraid", "Disgusted"]), random.uniform(0.6, 0.7))
+        self.show(random.choice(["sad", "afraid", "disgusted"]), random.uniform(0.6, 0.7))
 
     def show(self, expression, intensity):
         exp = MakeCoupledFaceExpr()
-        exp.robotname = "Dmitry"
+        exp.robotname = "dmitry"
         self.blackboard["current_emotion"] = expression
         self.blackboard["current_emotion_intensity"] = intensity
         exp.expr.exprname = self.blackboard["current_emotion"]
@@ -547,8 +548,10 @@ class Tree():
     def search_for_attention(self, **kwargs):
         duration = random.uniform(kwargs["min_duration"], kwargs["max_duration"])
         interval = 0.01
+        rospy.loginfo("First Looking around")
         if self.blackboard['blender_mode'] != 'LookAround':
             self.tracking_mode_pub.publish("LookAround")
+            rospy.loginfo("Looking around")
             self.blackboard['blender_mode'] = 'LookAround'
         if time.time() - self.blackboard["show_expression_since"] >= 5.0:
             self.show_boring_expression()
