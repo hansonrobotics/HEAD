@@ -70,7 +70,7 @@ class Tree():
                                             self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.2, max=1.4),
                                             self.assign_face_target(variable="current_face_target", value="new_face"),
                                             self.record_start_time(variable="interact_with_face_target_since"),
-                                            self.interact_with_face_target(id="current_face_target", min_duration=5.0, max_duration=10.0)
+                                            self.interact_with_face_target(id="current_face_target", min_duration=5.0, max_duration=10.0, new_face=True)
                                         ),
 
                                         ##### Is Interacting With Someone #####
@@ -167,7 +167,7 @@ class Tree():
                                             self.test(str="----- Time To Start A New Interaction!"),
                                             self.select_a_face_target(),
                                             self.record_start_time(variable="interact_with_face_target_since"),
-                                            self.interact_with_face_target(id="current_face_target", min_duration=3.0, max_duration=6.0)
+                                            self.interact_with_face_target(id="current_face_target", min_duration=3.0, max_duration=6.0,new_face=False)
                                         ),
 
                                         ##### Glance At Other Faces & Continue With The Last Interaction #####
@@ -182,7 +182,7 @@ class Tree():
                                                 ),
                                                 self.does_nothing()
                                             ),
-                                            self.interact_with_face_target(id="current_face_target", min_duration=3.0, max_duration=6.0)
+                                            self.interact_with_face_target(id="current_face_target", min_duration=3.0, max_duration=6.0,new_face=False)
                                         )
                                     )
                                 ),
@@ -470,7 +470,7 @@ class Tree():
         action.action = "track"
         action.params = ""
         self.action_pub.publish(action)
-        if time.time() - self.blackboard["show_expression_since"] >= 5.0:
+        if time.time() - self.blackboard["show_expression_since"] >= 5.0 or kwargs["new_face"]:
             self.show_positive_expression()
         while duration > 0:
             time.sleep(interval)
