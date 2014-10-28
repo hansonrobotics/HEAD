@@ -187,7 +187,7 @@ class FacesRegistry():
             face_box = self.faces[f].face_box()
             roi = RegionOfInterest()
             (   
-                roi.x_offset, y_offset,
+                roi.x_offset, roi.y_offset,
                 roi.width, roi.height
             ) = face_box
             self.publishers[f].publish(roi)
