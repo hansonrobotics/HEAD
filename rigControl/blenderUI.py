@@ -19,10 +19,10 @@ class BLRigControl(bpy.types.Panel):
 		obj = context.object
 
 		row = layout.row()
-
 		prop = row.operator("wm.command_listener", text='Start Command Listener')
 
-		prop = row.operator("wm.emo_loop")
+		row = layout.row()
+		prop = row.operator("wm.animation_playback", text='Test Emotion Cycle')
 
 		row = layout.row()
 		row.label(text="Expression Controls", icon='ARMATURE_DATA')
