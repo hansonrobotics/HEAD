@@ -33,9 +33,9 @@ class Tree():
         self.blackboard["is_interruption"] = False
         self.blackboard["is_sleeping"] = False
         self.blackboard["blender_mode"] = ""
-        self.blackboard["is_scripted_performance_system_on"] = False
+        self.blackboard["is_scripted_performance_system_on"] = True
         self.blackboard["random"] = 0.0
-        rospy.Subscriber("scripted", String, self.scripted_performance_system_callback)
+        rospy.Subscriber("behavior_switch", String, self.behavior_switch_callback)
         rospy.Subscriber("tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1)
         self.action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=1)
@@ -198,7 +198,7 @@ class Tree():
                                             owyl.selector(
                                                 ##### Go To Sleep #####
                                                 owyl.sequence(
-                                                    self.is_random_smaller_than(val1="newRandom_plus_boredom", val2=0.3),
+                                                    self.is_random_smaller_than(val1="newRandom_plus_boredom", val2=0.1),
                                                     self.record_start_time(variable="sleep_since"),
                                                     self.test(str="----- Go To Sleep!"),
                                                     self.go_to_sleep(min_duration=2.0, max_duration=4.0)
@@ -219,7 +219,7 @@ class Tree():
                                             ##### Wake Up #####
                                             owyl.sequence(
                                                 self.is_random_greater_than(val1="newRandom", val2=0.5),
-                                                self.is_time_to_wake_up(limit=10),
+                                                self.is_time_to_wake_up(limit=5),
                                                 self.wake_up(),
                                                 self.test(str="----- Wake Up!"),
                                                 self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
@@ -470,7 +470,8 @@ class Tree():
         action.action = "track"
         action.params = ""
         self.action_pub.publish(action)
-        if time.time() - self.blackboard["show_expression_since"] >= 5.0 or kwargs["new_face"]:
+        if time.time() - self.blackboard["show_expression_since"] >= 2.0 or kwargs["new_face"]:
+            self.show(self.blackboard["current_emotion"], 0.0)  # Reset expression
             self.show_positive_expression()
         while duration > 0:
             time.sleep(interval)
@@ -518,10 +519,10 @@ class Tree():
         yield True
 
     def show_positive_expression(self):
-        if random.random() >= 0.5:
+        if random.random() >= 0.8:
             self.show(random.choice(["sad", "surprise", "angry", "afraid", "disgusted"]), random.uniform(0.6, 0.9))
-            time.sleep(random.uniform(0.1, 0.2))
-        self.show(random.choice(["happy", "evil"]), random.uniform(0.7, 0.9))
+            time.sleep(random.uniform(0.2, 0.3))
+        self.show(random.choice(["happy", "evil"]), random.uniform(0.5, 0.7))
 
     def show_boring_expression(self):
         if random.random() >= 0.5:
@@ -617,15 +618,15 @@ class Tree():
                 if self.blackboard["new_face"] == self.blackboard["lost_face"]:
                     self.blackboard["new_face"] = ""
 
-    def scripted_performance_system_callback(self, data):
-        if not self.blackboard["is_scripted_performance_system_on"]:
-            self.blackboard["is_interruption"] = True
-            self.blackboard["is_scripted_performance_system_on"] = True
-            print "Scripted Performance System is ON!"
-        else:
+    def behavior_switch_callback(self, data):
+        if data.data == "btree_on":
             self.blackboard["is_interruption"] = False
             self.blackboard["is_scripted_performance_system_on"] = False
-            print "Scripted Performance System is OFF!"
+            print "Behavior Tree is ON!"
+        elif data.data == "btree_off":
+            self.blackboard["is_interruption"] = True
+            self.blackboard["is_scripted_performance_system_on"] = True
+            print "Behavior Tree is OFF!"
 
 if __name__ == "__main__":
     rospy.init_node("Eva_Behavior")
