@@ -10,6 +10,7 @@ from basic_head_api.msg import *
 from pau2motors.msg import pau
 from geometry_msgs.msg import Quaternion
 import Utils
+from Blinker import Blinker
 
 CONFIG_DIR = "config"
 
@@ -90,6 +91,7 @@ class SpecificRobotCtrl:
       pubid = cmd.id // 24
       cmd.id = cmd.id % 24
       self.publishers[pubid].publish(cmd)
+      self.blinker.log(cmd)
 
   def __init__(self, robotname, publishers):
     # Dictionary of expression names mapping to FaceExprMotors instances.
@@ -102,6 +104,11 @@ class SpecificRobotCtrl:
     self.publishers = publishers
 
     self.robotname = robotname
+    self.blinker = Blinker(
+      robotname, 
+      read_config(robotname + "_motors.yaml")
+      ("Eyelid-Upper_L", "Eyelid-Upper_R")
+    )
 
 
 class HeadCtrl:
