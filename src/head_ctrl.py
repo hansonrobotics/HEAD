@@ -10,6 +10,7 @@ from basic_head_api.msg import *
 from pau2motors.msg import pau
 from geometry_msgs.msg import Quaternion
 import Utils
+from Blinker import Blinker
 
 CONFIG_DIR = "config"
 
@@ -87,6 +88,7 @@ class SpecificRobotCtrl:
   def make_face(self, exprname, intensity=1):
     rospy.loginfo("Face request: %s of %s for %s", intensity, exprname, self.robotname)
     for cmd in self.faces[exprname].new_msgs(intensity):
+      self.blinker.log(cmd)
       self.publisher.publish(cmd)
 
   def __init__(self, robotname, publisher):
@@ -100,6 +102,11 @@ class SpecificRobotCtrl:
     self.publisher = publisher
 
     self.robotname = robotname
+    self.blinker = Blinker(
+      robotname, 
+      read_config(robotname + "_motors.yaml")
+      ("Eyelid-Upper_L", "Eyelid-Upper_R")
+    )
 
 
 class HeadCtrl:
