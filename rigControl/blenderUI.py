@@ -12,7 +12,7 @@ class BLRigControl(bpy.types.Panel):
 	bl_context = "object"
 
 
-	bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
+	# bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
 
 	def draw(self, context):
 		layout = self.layout
@@ -20,11 +20,9 @@ class BLRigControl(bpy.types.Panel):
 
 		row = layout.row()
 
-		if self.commandListenerActive:
-			# row.operator("wm.command_listener", text='Stop Command Listener')
-			row.label(text='Command Listener is Running')
-		else:
-			row.operator("wm.command_listener", text='Start Command Listener')
+		prop = row.operator("wm.command_listener", text='Start Command Listener')
+
+		prop = row.operator("wm.emo_loop")
 
 		row = layout.row()
 		row.label(text="Expression Controls", icon='ARMATURE_DATA')
