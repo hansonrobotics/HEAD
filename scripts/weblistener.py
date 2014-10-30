@@ -6,7 +6,7 @@ from flask import render_template
 import rospy
 
 app = Flask(__name__)
-app.config['WS_HOST'] = 'robotuna.cs.washington.edu'
+app.config['WS_HOST'] = 'localhost'
 
 @app.route("/")
 def home():

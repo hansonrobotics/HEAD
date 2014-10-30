@@ -8,8 +8,8 @@ from std_msgs.msg import String
 import urllib
 
 tts_cmd = (
-  'wget -q -U "Mozilla/5.0" -O - '
-  '"http://translate.google.com/translate_tts?tl=en-uk&q={}" > /tmp/speech.mp3'
+  'simple_google_tts en '
+  '"{}"'
 )
 sox_cmd = 'sox /tmp/speech.mp3 /tmp/speech.wav'
 
@@ -21,10 +21,10 @@ class ChatbotSpeaker:
     rospy.spin()
 
   def _response_callback(self, data):
-    query = urllib.quote(data.data)
-    os.system(tts_cmd.format(query))
-    os.system(sox_cmd)
-    self._client.playWave('/tmp/speech.wav')
+    os.system(tts_cmd.format(data.data))
+    rospy.logwarn('tts: %s',tts_cmd.format(data.data))
+    #os.system(sox_cmd)
+    #self._client.playWave('/tmp/speech.wav')
 
 def main():
   speaker = ChatbotSpeaker()
