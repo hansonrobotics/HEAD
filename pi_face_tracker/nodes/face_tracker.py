@@ -105,9 +105,9 @@ class FaceBox():
         return [self.pt1,self.pt2]
 
     def face_box(self):
-        face_width = self.pt2[0] - self.pt1[0]
-        face_height = self.pt2[1] - self.pt1[1]
-        face_box = (self.pt1[0], self.pt1[1], face_width, face_height)
+        face_width = self.pt2[0] - max(self.pt1[0],0)
+        face_height = self.pt2[1] - max(self.pt1[1],0)
+        face_box = (max(self.pt1[0],0), max(self.pt1[1],0), face_width, face_height)
         return face_box
 
     def update_box(self,box):
@@ -187,7 +187,7 @@ class FacesRegistry():
             face_box = self.faces[f].face_box()
             roi = RegionOfInterest()
             (   
-                roi.x_offset, y_offset,
+                roi.x_offset, roi.y_offset,
                 roi.width, roi.height
             ) = face_box
             self.publishers[f].publish(roi)
