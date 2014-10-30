@@ -1,0 +1,35 @@
+{
+	// EmotionStates: (0-1 float values). Valid input can be any combination of emotions
+	// Inside Blender, values will slowly decay to 0 if no new values are provided,
+	// this ensure the character doesn't looks stiff or frozen in an awkward pose.
+	"EmotionStates":{
+		"angry":0.0,
+		"happy":0.0,
+		"afraid":0.0,
+		"confident":0.0,
+		"disgusted":0.0,
+		"excited":0.0,
+		"relaxed":0.0,
+		"shy":0.0,
+		"sad":0.0,
+	},
+
+	// EmotionGuestures: send an indivual action to the character.
+	// Duration, magnitude, speed controls the length, strength and swiftness of the animation.
+	// Priority is used to override one animation over another.
+	// Guestures of the same priority will be played back at the same time.
+	// Higher priority guestures will kill lower priority ones (via a quick blend out)
+	"EmotionGuestures":{
+		"smile":{"duration":2.0, "magnitude":0.8, "speed":1.0, "priority": 0},
+		"nod":{"duration":4.0, "magnitude":0.3, "speed":0.8, "priority": 10},
+		"yawn":{"duration":4.0, "magnitude":0.3, "speed":0.8, "priority": 0}
+	},
+
+	// Primary Targets location defines the main focus for the character
+	"HeadTargetPrimary":[0,0,10],
+	"EyeTargetPrimary":[0,0,10],
+
+	// Secondary Targets location defines the minor focus for the character
+	"HeadTargetSecondary":[0,0,10],
+	"EyeTargetSecondary":[0,0,10],
+}
