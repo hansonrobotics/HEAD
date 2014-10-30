@@ -101,7 +101,7 @@ $(function() {
 		
 	});
   // Create a connection to the rosbridge WebSocket server.
-  ros.connect("ws://" + document.domain + ":9090");
+  ros.connect("wss://" + document.domain + ":9090");
   //Demo loop
 	jQuery.fn.random = function() {
 		  var randomIndex = Math.floor(Math.random() * this.length);  

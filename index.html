@@ -213,7 +213,7 @@
   $(function() {
     $(".dial").val(0);
     RoboInterface.$.on("configload", createUIconf);
-    RoboInterface.connect("ws://" + document.domain + ":9090")
+    RoboInterface.connect("wss://" + document.domain + ":9090")
     .$.on("connection", function(e) {
       $("#status").css("color", "#88FF88");
       $("#status").html("&#9679; Connected");
@@ -229,6 +229,7 @@
     <span id="status" style="color: #FFFF88;">&#9679; Connecting</span>
     <div class="btn-group btn-group-xs">
       <a href="/animations/" type="button" class="btn">Animations</a>
+      <a href="/chat/" type="button" class="btn">Interaction</a>
       <a href="/motors.html" type="button" class="btn">Motors</a>
     </div>
   </div>
