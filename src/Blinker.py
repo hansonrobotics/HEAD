@@ -1,3 +1,7 @@
+from threading import Timer
+import random
+from MotorCmder import MotorCmder
+
 class Blinker:
   def log(self, cmd):
     """
@@ -20,16 +24,44 @@ class Blinker:
     """
     return self.logged_cmds.values()
 
-  def __init__(self, robotname, motor_yaml, motornames):
+  def add_motor(self, motorname, frac_dist):
+    self.names2ids[motorname] = self.motor_yaml[motorname]["motorid"]
+
+    self.motor_commanders.append(
+      MotorCmder(
+        self.motor_yaml[motorname],
+        frac_dist
+      )
+    )
+
+
+  def __init__(self, robotname, motor_yaml):
     self.robotname = robotname
-    self.names2ids = {
-      entry.name: entry.motorid for entry in motor_yaml
-      if entry.name in motornames
-    }
-
-    cmders = []
-    for motorname in motornames:
-      cmders.append(MotorCmder(motor_yaml[motorname], 1.0))
-    self.motor_commanders = cmders
-
+    self.motor_yaml = motor_yaml
+    self.names2ids = {}
+    self.motor_commanders = []
     self.logged_cmds = {}
+
+class RandomTimer:
+
+  is_running = False
+  timer = None
+
+  def _hit(self):
+    if self.timer:
+      self.timer.cancel()
+    if self.is_running:
+      self.func()
+      self.timer = Timer(random.gauss(*self.mu_sig), self._hit)
+      self.timer.start()
+
+  def start(self):
+    self.is_running = True
+    self._hit()
+
+  def stop(self):
+    self.is_running = False
+
+  def __init__(self, func, mu_sig):
+    self.func = func
+    self.mu_sig = mu_sig
