@@ -1,35 +1,51 @@
 {
-	// EmotionStates: (0-1 float values). Valid input can be any combination of emotions
-	// Inside Blender, values will slowly decay to 0 if no new values are provided,
-	// this ensure the character doesn't looks stiff or frozen in an awkward pose.
+	// EmotionStates: (-1 to +1 float values). Valid input can be any combination of emotions
+	// Inside Blender, values will slowly decay to neutral if no new values are provided,
+	// this ensure the character doesn't looks stiff or freezes in an awkward pose.
 	"EmotionStates":{
-		"angry":0.0,
-		"happy":0.0,
-		"afraid":0.0,
-		"confident":0.0,
-		"disgusted":0.0,
-		"excited":0.0,
-		"relaxed":0.0,
-		"shy":0.0,
-		"sad":0.0,
+		"sadnessHappiness":0.0,
+		"irritationAmusement":0.0,
+		"confusionComprehension":0.0,
+		"BoredomEngagement":0.0,
+		"recoilSurprise":0.0,
 	},
 
 	// EmotionGuestures: send an indivual action to the character.
 	// Duration, magnitude, speed controls the length, strength and swiftness of the animation.
 	// Priority is used to override one animation over another.
-	// Guestures of the same priority will be played back at the same time.
-	// Higher priority guestures will kill lower priority ones (via a quick blend out)
+	// Guestures of the same weight will be played back at the same time.
+	// Higher weight guestures will kill lower weight ones (via a quick blend out)
 	"EmotionGuestures":{
-		"smile":{"duration":2.0, "magnitude":0.8, "speed":1.0, "priority": 0},
-		"nod":{"duration":4.0, "magnitude":0.3, "speed":0.8, "priority": 10},
-		"yawn":{"duration":4.0, "magnitude":0.3, "speed":0.8, "priority": 0}
+		"smile":{"duration":2.0, "magnitude":0.8, "speed":1.0, "weight": 0},
+		"yawn":{"duration":4.0, "magnitude":0.3, "speed":0.8, "weight": 0},
+		"nodYes":{"duration":4.0, "magnitude":0.3, "speed":0.8, "weight": 0.5},
+		"nodNo":{"duration":4.0, "magnitude":0.3, "speed":0.8, "weight": 0},
+		"scan":{"duration":4.0, "magnitude":0.3, "speed":0.8, "weight": 0},
+
 	},
 
 	// Primary Targets location defines the main focus for the character
-	"HeadTargetPrimary":[0,0,10],
-	"EyeTargetPrimary":[0,0,10],
+	// knowing the location, allows head and eye tracking
+	// the rotation allows for head-tilt matching
+	// scale affects how much the eyes to drift when locked onto a target
+	"PrimaryTarget":{
+		"id":1,
+		"location":[0,0,10],
+		"orientation":[0,0,0],
+		"scale":[2,2,3],
+	},
 
 	// Secondary Targets location defines the minor focus for the character
-	"HeadTargetSecondary":[0,0,10],
-	"EyeTargetSecondary":[0,0,10],
+	"SecondaryTarget":{
+		"id":2,
+		"location":[0,20,10],
+		"orientation":[0,0,0],
+		"scale":[1,1,2],
+	},
+
+	// Autonomous override
+	"AutonomousActions":{
+		"blink":{"magnitude":0.8, "speed":1.0},
+		"breathing":{"magnitude":0.8, "speed":1.0},
+	}
 }
