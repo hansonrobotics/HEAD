@@ -7,7 +7,6 @@ project(chatbot)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   rospy
-  sound_play
   std_msgs
 )
 
