@@ -10,6 +10,11 @@ from basic_head_api.msg import *
 from pau2motors.msg import pau
 from geometry_msgs.msg import Quaternion
 import Utils
+from Blinker import Blinker
+from Blinker import RandomTimer
+from std_msgs.msg import String
+from threading import Timer
+import copy
 
 CONFIG_DIR = "config"
 
@@ -87,9 +92,25 @@ class SpecificRobotCtrl:
   def make_face(self, exprname, intensity=1):
     rospy.loginfo("Face request: %s of %s for %s", intensity, exprname, self.robotname)
     for cmd in self.faces[exprname].new_msgs(intensity):
+      self.blinker.log(copy.deepcopy(cmd))
       pubid = cmd.id // 24
       cmd.id = cmd.id % 24
       self.publishers[pubid].publish(cmd)
+
+  def blink(self):
+    def close_lids():
+      for cmd in self.blinker.new_msgs(1.0):
+        pubid = cmd.id // 24
+        cmd.id = cmd.id % 24
+        self.publishers[pubid].publish(cmd)
+    def open_lids():
+      for cmd in self.blinker.reset_msgs():
+        pubid = cmd.id // 24
+        cmd.id = cmd.id % 24
+        self.publishers[pubid].publish(cmd)
+    close_lids()
+    Timer(0.15, open_lids).start()
+    
 
   def __init__(self, robotname, publishers):
     # Dictionary of expression names mapping to FaceExprMotors instances.
@@ -102,6 +123,13 @@ class SpecificRobotCtrl:
     self.publishers = publishers
 
     self.robotname = robotname
+
+    #Initialize blink support
+    self.blinker = Blinker(robotname, to_dict(read_config(robotname + "_motors.yaml"), "name"))
+    self.timer_blink = RandomTimer(self.blink, (2.0, 0.5))
+    if robotname == "dmitry":
+      self.blinker.add_motor("Eyelid-Upper_L", 1.0)
+      self.blinker.add_motor("Eyelid-Upper_R", 0.0)
 
 
 class HeadCtrl:
@@ -128,6 +156,14 @@ class HeadCtrl:
       req.expr.intensity
     )
 
+  def blink_request(self, req):
+    robotname, switch = req.data.split(":")
+    if switch == "start":
+      self.get_robot_ctrl(robotname).timer_blink.start()
+    elif switch == "stop":
+      self.get_robot_ctrl(robotname).timer_blink.stop()
+
+
   def __init__(self):
     rospy.init_node('head_ctrl')
 
@@ -150,6 +186,7 @@ class HeadCtrl:
     self.pub_pololu[1] = rospy.Publisher("dmitry_eyes/cmd_pololu", servo_pololu, queue_size=30)
     rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
     rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
+    rospy.Subscriber("cmd_blink", String, self.blink_request)
 
 if __name__ == '__main__':
     HeadCtrl()
