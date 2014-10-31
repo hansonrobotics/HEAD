@@ -98,7 +98,7 @@ class Tree():
         self.blackboard["is_interruption"] = False
         self.blackboard["is_sleeping"] = False
         self.blackboard["blender_mode"] = ""
-        self.blackboard["is_scripted_performance_system_on"] = False  # TODO: Should be set to True
+        self.blackboard["is_scripted_performance_system_on"] = True
         self.blackboard["random"] = 0.0
 
         ##### ROS Connections #####
@@ -660,10 +660,9 @@ class Tree():
 
     @owyl.taskmethod
     def start_scripted_performance_system(self, **kwargs):
-        self.tracking_mode_pub.publish("Dummy")
-        self.blackboard["blender_mode"] = "Dummy"
-        self.blackboard["is_TrackDev_on"] = False
-        # TODO
+        if self.blackboard["blender_mode"] != "Dummy":
+            self.tracking_mode_pub.publish("Dummy")
+            self.blackboard["blender_mode"] = "Dummy"
         yield True
 
     def tracking_event_callback(self, data):
