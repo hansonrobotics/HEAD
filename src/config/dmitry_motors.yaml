@@ -22,6 +22,8 @@
   min: -0.90538
   max: 0.15882
   motorid: 2
+  speed: 400
+  acceleration: 400
 - name: Eyelid-Lower_L
   topic: face
   labelleft: "Eyelid-Lower_L"
@@ -30,6 +32,8 @@
   min: 0.20287
   max: 0.96334
   motorid: 3
+  speed: 400
+  acceleration: 400
 - name: Eyelid-Upper_R
   topic: face
   labelleft: "Eyelid-Upper_R"
@@ -38,6 +42,8 @@
   min: -1.10709
   max: 0.86365
   motorid: 4
+  speed: 400
+  acceleration: 400
 - name: Eyelid-Upper_L
   topic: face
   labelleft: "Eyelid-Upper_L"
@@ -46,6 +52,8 @@
   min: -0.66657
   max: 1.28098
   motorid: 5
+  speed: 400
+  acceleration: 400
 - name: Frown_R
   topic: face
   labelleft: "Frown_R"

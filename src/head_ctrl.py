@@ -109,7 +109,7 @@ class SpecificRobotCtrl:
         cmd.id = cmd.id % 24
         self.publishers[pubid].publish(cmd)
     close_lids()
-    Timer(0.15, open_lids).start()
+    Timer(0.1, open_lids).start()
     
 
   def __init__(self, robotname, publishers):
@@ -126,7 +126,7 @@ class SpecificRobotCtrl:
 
     #Initialize blink support
     self.blinker = Blinker(robotname, to_dict(read_config(robotname + "_motors.yaml"), "name"))
-    self.timer_blink = RandomTimer(self.blink, (2.0, 0.5))
+    self.timer_blink = RandomTimer(self.blink, (5.0, 1.0))
     if robotname == "dmitry":
       self.blinker.add_motor("Eyelid-Upper_L", 1.0)
       self.blinker.add_motor("Eyelid-Upper_R", 0.0)
