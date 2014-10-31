@@ -7,7 +7,7 @@ $(function() {
 
   var speech_topic = new ROSLIB.Topic({
     ros: ros,
-    name: '/chatbot_speech',
+    name: '/dmitry/chatbot_speech',
     messageType: 'chatbot/ChatMessage'
   });
 
@@ -48,7 +48,7 @@ $(function() {
   function ready(){
     responses = new ROSLIB.Topic({
 		  ros : ros,
-		  name : '/chatbot_responses',
+		  name : '/dmitry/chatbot_responses',
 		  messageType : 'std_msgs/String'
 	});
     // Publish the response
