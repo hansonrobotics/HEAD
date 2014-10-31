@@ -343,7 +343,7 @@ class PatchTracker(ROS2OpenCV):
         if (self.use_haar_only or not self.detect_box.any_trackable_faces()) and self.auto_face_tracking:
             self.detect_box.nextFrame()
             self.detect_face(cv_image)
-        elif self.frame_count % 20 == 0:
+        elif self.frame_count % 5 == 0:
             self.detect_box.nextFrame()
             self.detect_face(cv_image)
 
