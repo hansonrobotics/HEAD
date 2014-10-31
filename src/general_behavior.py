@@ -105,10 +105,10 @@ class Tree():
         rospy.Subscriber("behavior_switch", String, self.behavior_switch_callback)
         rospy.Subscriber("tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1)
-        self.action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=1)
+        self.action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=10)
         self.emotion_pub = rospy.Publisher("/dmitry/make_coupled_face_expr", MakeCoupledFaceExpr, queue_size=1)
         self.tree = self.build_tree()
-        time.sleep(0.01)
+        time.sleep(0.1)
         while True:
             self.tree.next()
 
@@ -507,24 +507,24 @@ class Tree():
 
     @owyl.taskmethod
     def glance_at(self, **kwargs):
-        print "----- Glancing At Face(id:" + self.blackboard[kwargs["id"]] + ")"
         face_id = self.blackboard[kwargs["id"]]
         action = tracking_action()
         action.target = "/faces/" + face_id
         action.action = "glance"
         action.params = ""
         self.action_pub.publish(action)
+        print "----- Glancing At Face(id:" + face_id + ")"
         yield True
 
     @owyl.taskmethod
     def glance_at_new_face(self, **kwargs):
-        print "----- Glancing At The New Face(id:" + self.blackboard["new_face"] + ")"
         face_id = self.blackboard["new_face"]
         action = tracking_action()
         action.target = "/faces/" + face_id
         action.action = "glance"
         action.params = ""
         self.action_pub.publish(action)
+        print "----- Glancing At The New Face(id:" + face_id + ")"
         yield True
 
     @owyl.taskmethod
