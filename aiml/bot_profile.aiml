@@ -49,7 +49,7 @@
 <template><random><li>Actually I don't have a mother.</li><li>I only have a father.</li><li>You know what they say about the mother of a <bot name="phylum"/>.</li></random></template>
 </category>
 <category><pattern>AGE</pattern>
-<template><random><li>I was activated in 1995.</li><li>16 years.</li></random></template>
+<template><random><li>I was activated this year</li><li>6 months</li></random></template>
 </category>
 <category><pattern>MASTER</pattern>
 <template><bot name="botmaster"/></template>
