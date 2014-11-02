@@ -37,7 +37,26 @@ var RoboInterface = {
 		var msg = new ROSLIB.Message({
 		  data: 'Dummy'
 		});
-    cmdBlender.publish(msg);
+        cmdBlender.publish(msg);
+    	var cmdBllink = new ROSLIB.Topic({
+		  ros : ros,
+		  name : '/dmitry/cmd_blink',
+		  messageType : 'std_msgs/String'
+		});
+		var msg = new ROSLIB.Message({
+		  data: 'dmitry:stop'
+		});
+        cmdBllink.publish(msg);
+    	var cmdTree = new ROSLIB.Topic({
+		  ros : ros,
+		  name : '/dmitry/cmd_blink',
+		  messageType : 'std_msgs/String'
+		});
+		var msg = new ROSLIB.Message({
+		  data: 'btree_off'
+		});
+        cmdTree.publish(msg);
+
   },
 
   //Keeps the incomming motor messages from flooding.

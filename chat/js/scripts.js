@@ -10,7 +10,35 @@ $(function() {
     name: '/dmitry/chatbot_speech',
     messageType: 'chatbot/ChatMessage'
   });
-
+  function startTree(){
+  		var cmdBlender = new ROSLIB.Topic({
+		  ros : ros,
+		  name : '/cmd_blendermode',
+		  messageType : 'std_msgs/String'
+		});
+		var msg = new ROSLIB.Message({
+		  data: 'Dummy'
+		});
+        cmdBlender.publish(msg);
+    	var cmdBllink = new ROSLIB.Topic({
+		  ros : ros,
+		  name : '/dmitry/cmd_blink',
+		  messageType : 'std_msgs/String'
+		});
+		var msg = new ROSLIB.Message({
+		  data: 'dmitry:start'
+		});
+        cmdBllink.publish(msg);
+    	var cmdTree = new ROSLIB.Topic({
+		  ros : ros,
+		  name : '/dmitry/cmd_blink',
+		  messageType : 'std_msgs/String'
+		});
+		var msg = new ROSLIB.Message({
+		  data: 'btree_on'
+		});
+        cmdTree.publish(msg);
+  }
   function recognizeSpeech() {
     if (!('webkitSpeechRecognition' in window)) {
       alert('Browser not supported. Use the newest Chrome browser');
@@ -66,6 +94,7 @@ $(function() {
     console.log('Connection made!');
     $('#recordbutton').click(function(){recognizeSpeech();});
  	console.log('Ready!');
+ 	startTree();
 
   });
   // Create a connection to the rosbridge WebSocket server.
