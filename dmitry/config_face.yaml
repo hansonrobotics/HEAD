@@ -96,7 +96,7 @@ pau2motors:
           function:
             - name: linear
               min: 0.8
-              max: -0.8
+              max: -0.75
           hardware:
             name: pololu
             topic: dmitry_eyes/cmd_pololu

@@ -43,8 +43,6 @@
           output="screen"/>
     <node name="eva_behavior" pkg="eva_behavior" type="general_behavior.py"
           output="screen"/>
-    <node name="tts_speech" pkg="tts_speech" type="itf_talk.py"
-          output="screen"/>
     <include file="$(find chatbot)/launch/robot.launch" />
     <include file="$(find chatbot)/launch/web.launch" />
 
