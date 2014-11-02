@@ -103,9 +103,9 @@ class Tree():
 
         ##### ROS Connections #####
         rospy.Subscriber("behavior_switch", String, self.behavior_switch_callback)
-        rospy.Subscriber("tracking_event", event, self.tracking_event_callback)
+        rospy.Subscriber("/tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
-        self.action_pub = rospy.Publisher("tracking_action", tracking_action, queue_size=5, latch=True)
+        self.action_pub = rospy.Publisher("/tracking_action", tracking_action, queue_size=5, latch=True)
         self.emotion_pub = rospy.Publisher("/dmitry/make_coupled_face_expr", MakeCoupledFaceExpr, queue_size=1)
         self.tree = self.build_tree()
         time.sleep(0.1)
