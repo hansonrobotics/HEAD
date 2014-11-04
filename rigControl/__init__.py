@@ -1,7 +1,7 @@
 from . import blenderUI
 from . import blenderCommandListener
 from . import blenderPlayback
-# from . import network
+from . import animationManager
 
 import imp
 
@@ -16,3 +16,7 @@ blenderUI.refresh()
 # sets up the animation playback
 imp.reload(blenderPlayback)
 blenderPlayback.refresh()
+
+# init animation Manager
+imp.reload(animationManager)
+animationManager.init()

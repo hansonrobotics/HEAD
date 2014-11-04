@@ -23,11 +23,45 @@ def emotionCycle(context, playIndex):
 
 
 
+class EvaDriver(bpy.types.Operator):
+	bl_idname = "eva.driver"
+	bl_label = "Gestures"
+	
+	evaAction = bpy.props.StringProperty()
+	
+	def execute(self, context):
+		# run gesture here
+		deformObj = bpy.data.objects['deform']
+		actionDatablock = bpy.data.actions[self.evaAction]
+
+		# create NLA track
+		newTrack = deformObj.animation_data.nla_tracks.new()
+		newTrack.name = self.evaAction
+
+		# create strip
+		actionName = self.evaAction
+		action = actionDatablock
+		curFrame = 1
+		newStrip = newTrack.strips.new(name=actionName, start=curFrame, action=action)
+		newStrip.blend_type = 'ADD'
+		newStrip.use_animated_time = True
+		
+		# add to animationManager
+		bpy.evaAnimationManager.newGesture(name=self.evaAction, track=newTrack, strip=newStrip)
+		
+		print(len(bpy.evaAnimationManager.gestureList))
+
+		return {'FINISHED'} 
+
+
 
 class BLPlayback(bpy.types.Operator):
 	"""Operator which runs its self from a timer"""
 	bl_label = "Animation Playback"
-	bl_idname = 'eva.animation_playback'
+	bl_idname = 'wm.animation_playback'
+
+	option = bpy.props.StringProperty()
+
 
 	_timer = None
 	playIndex = 0
@@ -39,7 +73,21 @@ class BLPlayback(bpy.types.Operator):
 
 		if event.type == 'TIMER':
 			# print('Running Animation:', self._timer.time_duration)
-			self.playIndex = emotionCycle(context, self.playIndex)
+			# update emotion
+			if 'emo' in self.option:
+				self.playIndex = emotionCycle(context, self.playIndex)
+
+			# update gestures
+			if 'ges' in self.option:
+				gestures = bpy.evaAnimationManager.gestureList
+				for gesture in gestures:
+					gesture.stripRef.strip_time += 1.0
+					bpy.data.scenes['Scene'].frame_set(1)
+
+					if gesture.stripRef.strip_time > gesture.duration:
+						bpy.evaAnimationManager.deleteGesture(gesture)
+
+
 
 		return {'PASS_THROUGH'}
 
@@ -49,7 +97,7 @@ class BLPlayback(bpy.types.Operator):
 		wm = context.window_manager
 		self._timer = wm.event_timer_add(1/framerateHz, context.window)
 		wm.modal_handler_add(self)
-		bpy.ops.eva.looper()
+		# bpy.ops.wm.looper()
 		return {'RUNNING_MODAL'}
 
 
@@ -62,10 +110,12 @@ class BLPlayback(bpy.types.Operator):
 
 def register():
 	bpy.utils.register_class(BLPlayback)
+	bpy.utils.register_class(EvaDriver)
 
 
 def unregister():
 	bpy.utils.unregister_class(BLPlayback)
+	bpy.utils.unregister_class(EvaDriver)
 
 
 def refresh():
