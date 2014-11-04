@@ -13,6 +13,6 @@ blenderCommandListener.refresh()
 imp.reload(blenderUI)
 blenderUI.refresh()
 
-# sets up the network stub
+# sets up the animation playback
 imp.reload(blenderPlayback)
 blenderPlayback.refresh()

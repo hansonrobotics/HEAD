@@ -9,7 +9,7 @@ from . import network
 class BLCommandListener(bpy.types.Operator):
 	"""Operator which runs its self from a timer"""
 	bl_label = "Command Listener"
-	bl_idname = 'wm.command_listener'
+	bl_idname = 'eva.command_listener'
 
 	_timer = None
 	# status = bpy.props.BoolProperty( name = "commandListenerActive", default=False)

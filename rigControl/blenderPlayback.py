@@ -27,7 +27,7 @@ def emotionCycle(context, playIndex):
 class BLPlayback(bpy.types.Operator):
 	"""Operator which runs its self from a timer"""
 	bl_label = "Animation Playback"
-	bl_idname = 'wm.animation_playback'
+	bl_idname = 'eva.animation_playback'
 
 	_timer = None
 	playIndex = 0

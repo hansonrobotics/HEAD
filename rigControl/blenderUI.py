@@ -19,10 +19,10 @@ class BLRigControl(bpy.types.Panel):
 		obj = context.object
 
 		row = layout.row()
-		prop = row.operator("wm.command_listener", text='Start Command Listener')
+		prop = row.operator("eva.command_listener", text='Start Command Listener')
 
 		row = layout.row()
-		prop = row.operator("wm.animation_playback", text='Test Emotion Cycle')
+		prop = row.operator("eva.animation_playback", text='Test Emotion Cycle')
 
 		row = layout.row()
 		row.label(text="Expression Controls", icon='ARMATURE_DATA')
@@ -34,7 +34,16 @@ class BLRigControl(bpy.types.Panel):
 
 		row = layout.row()
 
+		row = layout.row()
+		layout.label(text="Gestures:")
 
+		# for action in bpy.data.actions:
+		# 	if "GST" in action.name:
+		# 		row = layout.row()
+		# 		label = action.name.replace("GST-","")
+		# 		props = row.operator("eva.gestures", text=label)
+		# 		props.evaAction = action.name
+		
 
 
 def register():
