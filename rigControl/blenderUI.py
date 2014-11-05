@@ -19,35 +19,34 @@ class BLRigControl(bpy.types.Panel):
 		obj = context.object
 
 		row = layout.row()
-		prop = row.operator("wm.command_listener", text='Start Command Listener')
-
-		row = layout.row()
-		prop = row.operator("wm.animation_playback", text='Test Emotion Cycle')
-		prop.option = 'emo'
-
-		row = layout.row()
-		prop = row.operator("wm.animation_playback", text='Test Gestures')
-		prop.option = 'ges'
-
-		# row = layout.row()
-		# row.label(text="Expression Controls", icon='ARMATURE_DATA')
-
-		# row = layout.row()
-		# row.label(text="Active object is: " + obj.name)
-		# row = layout.row()
-		# row.prop(obj, "name")
-		# row = layout.row()
+		if bpy.context.scene['commandListenerActive']:
+			prop = row.operator("wm.command_listener", text='Command Listener Running')
+		else:
+			prop = row.operator("wm.command_listener", text='Start Command Listener', icon='CONSOLE')
+		
 
 		row = layout.row()
 		layout.label(text="Gestures:")
+
+		row = layout.row()
+		prop = row.operator("wm.animation_playback", text='Start Gestures Control', icon='ARMATURE_DATA')
+		prop.option = 'ges'
+
 
 		for action in bpy.data.actions:
 			if "GST" in action.name:
 				row = layout.row()
 				label = action.name.replace("GST-","")
-				props = row.operator("eva.driver", text=label)
+				props = row.operator("eva.gestures", text=label)
 				props.evaAction = action.name
 		
+
+		row = layout.row()
+		layout.label(text="Emotions:")
+
+		row = layout.row()
+		prop = row.operator("wm.animation_playback", text='Test Emotion Cycle')
+		prop.option = 'emo'
 
 
 def register():
