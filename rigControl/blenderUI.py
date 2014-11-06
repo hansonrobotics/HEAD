@@ -29,25 +29,61 @@ class BLRigControl(bpy.types.Panel):
 		layout.label(text="Gestures:")
 
 		row = layout.row()
-		prop = row.operator("wm.animation_playback", text='Start Gestures Control', icon='ARMATURE_DATA')
-		prop.option = 'ges'
+		prop = row.operator("wm.animation_playback", icon='ARMATURE_DATA')
+		row = layout.row()
 
 
-		for action in bpy.data.actions:
+
+		for i, action in enumerate(bpy.data.actions):
 			if "GST" in action.name:
-				row = layout.row()
+				if i%2 == 1:
+					row = layout.row()
+
 				label = action.name.replace("GST-","")
-				props = row.operator("eva.gestures", text=label)
-				props.evaAction = action.name
+				op = row.operator("eva.gestures", text=label)
+				op.evaAction = action.name
+
 		
 
 		row = layout.row()
 		layout.label(text="Emotions:")
 
-		row = layout.row()
-		prop = row.operator("wm.animation_playback", text='Test Emotion Cycle')
-		prop.option = 'emo'
 
+		row = layout.row()
+		prop = row.operator("eva.emotions", text='Test Emotion')
+		prop.evaEmotions = ''
+
+
+		row = layout.row()
+		prop = row.operator("eva.emotions", text='Reset Emotion')
+		prop.evaEmotions = 'reset'
+
+		
+		row = layout.row()
+		layout.label(text="Tracking:")
+		row = layout.row()
+		op = row.operator('eva.tracking', text='Up')
+		op.evaTrack = [0, 0, 0.1]
+
+		row = layout.row()
+		op = row.operator('eva.tracking', text='Left')
+		op.evaTrack = [-0.2, 0, 0]
+
+		op = row.operator('eva.tracking', text='Centre')
+		op.evaTrack = [0, 0, 0]
+
+		op = row.operator('eva.tracking', text='Right')
+		op.evaTrack = [0.2, 0, 0]
+
+		row = layout.row()
+		op = row.operator('eva.tracking', text='Down')
+		op.evaTrack = [0, 0, -0.1]
+
+		# row = layout.row()
+		# row.prop(context.scene, 'evaTrackingTarget', text='')
+
+
+		
 
 def register():
 	bpy.utils.register_class(BLRigControl)

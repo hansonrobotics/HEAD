@@ -5,36 +5,36 @@ class AnimationManager():
 	def __init__(self):
 		print('Starting AnimationManager singleton')
 		self.gestureList = []
+		self.primaryTargetLoc = [0,-100,0]
 
 	def newGesture(self, name):
 		print('Creating new gesture ', name)
 		
 		deformObj = bpy.data.objects['deform']
-		actionDatablock = bpy.data.actions[name]
+		try:
+			actionDatablock = bpy.data.actions[name]
+		except KeyError:
+			print('No gesture matching name is found')
+			return
+
 
 		# create NLA track
 		newTrack = deformObj.animation_data.nla_tracks.new()
 		newTrack.name = name
 
-		# create strip
-		actionName = name
-		action = actionDatablock
-		curFrame = 1
-		newStrip = newTrack.strips.new(name=actionName, start=curFrame, action=action)
-		newStrip.blend_type = 'ADD'
-		newStrip.use_animated_time = True
-
-
-		duration = newStrip.frame_end - newStrip.frame_start
 		speed = 1
 		magnitude = 1
 		priority = 1
 		repeat = 1
 
-		# set strip prop
+		# create strip
+		newStrip = newTrack.strips.new(name=name, start=1, action=actionDatablock)
+		duration = newStrip.frame_end - newStrip.frame_start
+		newStrip.blend_type = 'ADD'
+		newStrip.use_animated_time = True
 		newStrip.scale = 1.0/max(speed, 0.01)
 		newStrip.repeat = repeat
-		
+
 		# create object and add to list
 		g = Gesture(name, newTrack, newStrip, duration=duration, speed=speed, magnitude=magnitude, priority=priority, repeat=repeat)
 		self.gestureList.append(g)
@@ -49,6 +49,34 @@ class AnimationManager():
 		# remove from Blender
 		deformObj = bpy.data.objects['deform']
 		deformObj.animation_data.nla_tracks.remove(gesture.trackRef)
+
+
+	def setEmotions(self, emotions):
+		clampMax = 1.0
+		clampMin = 0.0
+		bones = bpy.data.objects['control'].pose.bones
+		for emotion, value in emotions.items():
+			try:
+				control = bones['EMO-'+emotion]
+			except KeyError:
+				print('No bone with name ', emotion)
+				continue
+			else:
+				control['intensity'] = max(min(float(value), clampMax),clampMin)
+
+
+	def resetEmotions(self):
+		bones = bpy.data.objects['control'].pose.bones
+		for bone in bones:
+			if bone.name.startswith('EMO-'):
+				bone['intensity'] = 0.0
+		
+
+	def setPrimaryTarget(self, loc):
+		self.primaryTargetLoc = loc
+
+		
+
 
 
 		
