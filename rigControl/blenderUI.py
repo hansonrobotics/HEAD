@@ -67,13 +67,13 @@ class BLRigControl(bpy.types.Panel):
 
 		row = layout.row()
 		op = row.operator('eva.tracking', text='Left')
-		op.evaTrack = [-0.2, 0, 0]
+		op.evaTrack = [0.2, 0, 0]
 
 		op = row.operator('eva.tracking', text='Centre')
 		op.evaTrack = [0, 0, 0]
 
 		op = row.operator('eva.tracking', text='Right')
-		op.evaTrack = [0.2, 0, 0]
+		op.evaTrack = [-0.2, 0, 0]
 
 		row = layout.row()
 		op = row.operator('eva.tracking', text='Down')

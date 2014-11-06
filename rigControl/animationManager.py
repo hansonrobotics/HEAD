@@ -5,9 +5,12 @@ class AnimationManager():
 	def __init__(self):
 		print('Starting AnimationManager singleton')
 		self.gestureList = []
-		self.primaryTargetLoc = [0,-100,0]
+		self.primaryTargetLoc = [0,0,0]
 
-	def newGesture(self, name):
+		# create keep alive track
+		# self.newGesture('CYC-normal', repeat = 100)
+
+	def newGesture(self, name, repeat = 1):
 		print('Creating new gesture ', name)
 		
 		deformObj = bpy.data.objects['deform']
@@ -25,7 +28,6 @@ class AnimationManager():
 		speed = 1
 		magnitude = 1
 		priority = 1
-		repeat = 1
 
 		# create strip
 		newStrip = newTrack.strips.new(name=name, start=1, action=actionDatablock)

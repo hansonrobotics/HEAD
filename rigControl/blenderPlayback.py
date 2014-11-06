@@ -2,6 +2,7 @@
 # as the animation playback service
 
 framerateHz = 48
+animationStep = 1.2
 
 import bpy
 from .helpers import *
@@ -87,7 +88,7 @@ class BLPlayback(bpy.types.Operator):
 			# update NLA based gestures
 			gestures = bpy.evaAnimationManager.gestureList
 			for gesture in gestures:
-				gesture.stripRef.strip_time += 1.0
+				gesture.stripRef.strip_time += animationStep
 
 				if gesture.stripRef.strip_time > gesture.duration:
 					bpy.evaAnimationManager.deleteGesture(gesture)
@@ -95,21 +96,17 @@ class BLPlayback(bpy.types.Operator):
 			bpy.data.scenes['Scene'].frame_set(1)
 
 			# update tracking
-			headControl = bpy.data.objects['deform'].pose.bones["head"]
+			headControl = bpy.data.objects['deform'].pose.bones["head_target"]
 			eyeControl = bpy.data.objects['deform'].pose.bones["eye_target"]
-			monkeyControl = bpy.data.objects['Suzanne']
 
 			loc = bpy.evaAnimationManager.primaryTargetLoc
 			
-			eyeLoc = mix(list(eyeControl.location), loc, 0.9)
-			headLoc = mix(list(headControl.location), loc, 0.9)
-			monkeyLoc = mix(list(monkeyControl.location), loc, 0.9)
+			eyeLoc = mix(list(eyeControl.location), loc, 0.5)
+			headLoc = mix(list(headControl.location), loc, 0.98)
 
-			# no effects when pose have keyframes
-			# eyeControl.location = eyeLoc
-			# headControl.location = headLoc
+			eyeControl.location = eyeLoc
+			headControl.location = headLoc
 
-			monkeyControl.location = monkeyLoc
 
 			bpy.data.scenes['Scene'].frame_set(1)
 
