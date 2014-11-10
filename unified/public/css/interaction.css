@@ -1,68 +1,54 @@
-#record{
-    padding-top: 15px;
+#record-container {
+    padding: 10px 0;
 }
 
-#recordbutton{
+#app-record-button {
+    display: block;
     width: 100%;
 }
 
-#leftMsg, #rightMsg{
-    display:none;
+#leftMsg, #rightMsg {
+    display: none;
 }
 
-.chat
-{
+#app-chat {
     list-style: none;
     margin: 0;
     padding: 0;
-    overflow:auto;
-    height:auto;
+    overflow: auto;
+    height: auto;
 }
 
-.chat li
-{
+#app-chat li {
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #B3A9A9;
 }
 
-.chat li.left .chat-body
-{
+#app-chat li.left .chat-body {
     margin-left: 60px;
 }
 
-.chat li.right .chat-body
-{
+#app-chat li.right .chat-body {
     margin-right: 60px;
 }
 
-
-.chat li .chat-body p
-{
+#app-chat li .chat-body p {
     margin: 0;
-    color: #777777;
 }
 
-.slidedown .glyphicon, .chat .glyphicon
-{
+.slidedown .glyphicon, #app-chat .glyphicon {
     margin-right: 5px;
 }
 
-
-::-webkit-scrollbar-track
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    background-color: #F5F5F5;
+#message-input-container {
+    margin-top: 10px;
 }
 
-::-webkit-scrollbar
-{
-    width: 12px;
-    background-color: #F5F5F5;
+#app-send-button {
+    height: 31px;
 }
 
-::-webkit-scrollbar-thumb
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #555;
+#app-send-button {
+    margin-left: 0;
 }

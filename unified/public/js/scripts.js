@@ -47,7 +47,7 @@ $(function () {
             var recognition = new webkitSpeechRecognition();
 
             recognition.onstart = function () {
-                document.querySelector('#recordbutton').textContent =
+                document.querySelector('#app-record-button').textContent =
                     "Cancel recording";
             };
 
@@ -56,7 +56,7 @@ $(function () {
             };
 
             recognition.onend = function () {
-                document.querySelector('#recordbutton').textContent =
+                document.querySelector('#app-record-button').textContent =
                     "Start recording";
             };
 
@@ -82,7 +82,6 @@ $(function () {
         });
         // Publish the response
         responses.subscribe(function (msg) {
-            console.log(msg.data);
             addMessage('Robot', msg.data);
         });
     }
@@ -92,7 +91,7 @@ $(function () {
     ros.on('connection', function () {
         ready();
         console.log('Connection made!');
-        $('#recordbutton').click(function () {
+        $('#app-record-button').click(function () {
             recognizeSpeech();
         });
         console.log('Ready!');
@@ -126,24 +125,21 @@ $(function () {
         $(el).find('.msg').text(message);
         $(el).find('.name').text(name);
         $(el).find('.time').text(currentTime());
-        $('ul.chat').append(el);
+        $('#app-chat').append(el);
         $(".content").animate({ scrollTop: $('.content')[0].scrollHeight}, 1000);
 
     }
 
-    $('#btn-chat').click(function () {
-            if ($('#btn-input').val() != "") {
-                addMessage('Me', $('#btn-input').val());
-                var chat_message = new ROSLIB.Message({
-                    utterance: $('#btn-input').val(),
-                    confidence: Math.round(0.9 * 100)
-                });
-                $('#btn-input').val('');
-                speech_topic.publish(chat_message);
-            }
+    $('#app-send-button').click(function () {
+        if ($('#app-message-input').val() != "") {
+            addMessage('Me', $('#app-message-input').val());
+            var chat_message = new ROSLIB.Message({
+                utterance: $('#app-message-input').val(),
+                confidence: Math.round(0.9 * 100)
+            });
+            $('#app-message-input').val('');
+            speech_topic.publish(chat_message);
         }
-    );
-
-
+    });
 });
 
