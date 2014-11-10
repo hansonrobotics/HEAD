@@ -5,3 +5,7 @@
 .glyphicon.white {
     color: #CCC;
 }
+
+.app-page {
+    display: none;
+}

@@ -37,15 +37,31 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Expressions</a></li>
-                <li><a href="#">Motors</a></li>
-                <li><a href="#">Animations</a></li>
-                <li><a href="#">Interaction</a></li>
+                <li><a href="#/expressions" class="app-change-page active" data-page="#app-page-expressions">Expressions</a></li>
+                <li><a href="#/motors" class="app-change-page" data-page="#app-page-motors">Motors</a></li>
+                <li><a href="#/animations" class="app-change-page" data-page="#app-page-animations">Animations</a></li>
+                <li><a href="#/interactions" class="app-change-page" data-page="#app-page-interaction">Interaction</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
+<div id="app-page-expressions" class="app-page">
+    <div class="container">
+        Expressions
+    </div>
+</div>
+<div id="app-page-motors" class="app-page">
+    <div class="container">
+        Motors
+    </div>
+</div>
+<div id="app-page-animations" class="app-page">
+    <div class="container">
+        Animations
+    </div>
+</div>
+<div id="app-page-interaction" class="app-page">
     <div class="container content">
         <ul id="app-chat">
             <li id="leftMsg" class="left clearfix">
@@ -102,6 +118,7 @@
             </div>
         </div>
     </footer>
+</div>
 <body>
 
 <!-- Bootstrap core JavaScript
@@ -115,5 +132,6 @@
 <script type="text/javascript" src="public/js/lib/eventemitter2.js"></script>
 <script type="text/javascript" src="public/js/lib/roslib.js"></script>
 <script type="text/javascript" src="public/js/scripts.js"></script>
+<script type="text/javascript" src="public/js/application.js"></script>
 </body>
 </html>

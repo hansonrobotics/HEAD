@@ -86,7 +86,6 @@ $(function () {
         });
     }
 
-
     // Find out exactly when we made a connection.
     ros.on('connection', function () {
         ready();
@@ -125,8 +124,11 @@ $(function () {
         $(el).find('.msg').text(message);
         $(el).find('.name').text(name);
         $(el).find('.time').text(currentTime());
+        $(el).hide();
         $('#app-chat').append(el);
-        $(".content").animate({ scrollTop: $('.content')[0].scrollHeight}, 1000);
+        $(el).fadeIn();
+
+        $(".content:visible").animate({ scrollTop: $('.content:visible').scrollHeight}, 1000);
 
     }
 
