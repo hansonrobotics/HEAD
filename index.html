@@ -212,8 +212,8 @@
 
   $(function() {
     $(".dial").val(0);
-    RoboInterface.$.on("configload", createUIconf);
-    RoboInterface.connect("wss://" + document.domain + ":9090")
+    RoboInterface.$.on("configload", createUIconf)
+    RoboInterface.connect(websocketAddress())
     .$.on("connection", function(e) {
       $("#status").css("color", "#88FF88");
       $("#status").html("&#9679; Connected");
