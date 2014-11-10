@@ -67,7 +67,6 @@ $(function () {
                     confidence: Math.round(event.results[0][0].confidence * 100)
                 });
                 speech_topic.publish(chat_message);
-                console.log(utterance, ": ", chat_message.confidence);
                 addMessage('Me', utterance);
             };
             recognition.start();
@@ -113,7 +112,7 @@ $(function () {
         }
         return hr + ":" + min + " " + ampm;
     }
-
+    var scrolling = false;
     function addMessage(name, message) {
         var el;
         if (name == 'Robot') {
@@ -126,11 +125,18 @@ $(function () {
         $(el).find('.time').text(currentTime());
         $(el).hide();
         $('#app-chat').append(el);
-        $(el).fadeIn();
+        $(el).fadeIn(400, function() {
+            if (! scrolling)
+                $('html, body').animate({scrollTop: $(document).height()}, 'slow', 'swing', function() {
+                    scrolling = false;
+                });
 
-        $(".content:visible").animate({ scrollTop: $('.content:visible').scrollHeight}, 1000);
-
+            scrolling = true;
+        });
     }
+
+    for (var i = 0; i < 10; i++)
+        addMessage('Henry', "Message");
 
     $('#app-send-button').click(function () {
         if ($('#app-message-input').val() != "") {
