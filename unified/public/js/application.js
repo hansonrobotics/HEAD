@@ -14,7 +14,10 @@ $(document).ready(function() {
                 $(pageEl).fadeIn();
             });
         }
+
+        $('#app-title').html($(this).html());
     });
+
 
     if ($(pageLink).length)
         $(pageLink).click();
