@@ -1,8 +1,7 @@
-# This module controls the user interface in Blender that
+# This module sets up the user interface in Blender that
 # is used to manage the rigControl
 
 import bpy
-import pdb
 
 class BLRigControl(bpy.types.Panel):
 	"""Creates a Panel in the Object properties window"""
@@ -12,27 +11,24 @@ class BLRigControl(bpy.types.Panel):
 	bl_context = "object"
 
 
-	# bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
-
 	def draw(self, context):
 		layout = self.layout
 		obj = context.object
 
+		### Command Listener ###
 		row = layout.row()
 		if bpy.context.scene['commandListenerActive']:
 			prop = row.operator("wm.command_listener", text='Command Listener Running')
 		else:
 			prop = row.operator("wm.command_listener", text='Start Command Listener', icon='CONSOLE')
 		
-
+		### Gestures ###
 		row = layout.row()
 		layout.label(text="Gestures:")
 
 		row = layout.row()
 		prop = row.operator("wm.animation_playback", icon='ARMATURE_DATA')
 		row = layout.row()
-
-
 
 		for i, action in enumerate(bpy.data.actions):
 			if "GST" in action.name:
@@ -44,10 +40,9 @@ class BLRigControl(bpy.types.Panel):
 				op.evaAction = action.name
 
 		
-
+		###  Emotions  ###
 		row = layout.row()
 		layout.label(text="Emotions:")
-
 
 		row = layout.row()
 		prop = row.operator("eva.emotions", text='Test Emotion')
@@ -59,6 +54,7 @@ class BLRigControl(bpy.types.Panel):
 		prop.evaEmotions = 'reset'
 
 		
+		### Tracking ###
 		row = layout.row()
 		layout.label(text="Tracking:")
 		row = layout.row()
@@ -78,10 +74,6 @@ class BLRigControl(bpy.types.Panel):
 		row = layout.row()
 		op = row.operator('eva.tracking', text='Down')
 		op.evaTrack = [0, 0, -0.1]
-
-		# row = layout.row()
-		# row.prop(context.scene, 'evaTrackingTarget', text='')
-
 
 		
 

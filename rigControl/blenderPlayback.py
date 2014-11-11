@@ -2,7 +2,7 @@
 # as the animation playback service
 
 framerateHz = 48
-animationStep = 1.2
+animationStep = 1.0
 
 import bpy
 from .helpers import *
@@ -52,9 +52,7 @@ class EvaTracking(bpy.types.Operator):
 	"""Eva Tracking Control"""
 	bl_idname = "eva.tracking"
 	bl_label = "Eva Tracking"
-	
-	bpy.types.Scene.evaTrackingTarget = bpy.props.FloatVectorProperty(subtype='DIRECTION')
-	bpy.context.scene['evaTrackingTarget'] = [1.0,1.0,1.0]
+
 	evaTrack = bpy.props.FloatVectorProperty()
 	
 	def execute(self, context):
@@ -88,10 +86,14 @@ class BLPlayback(bpy.types.Operator):
 			# update NLA based gestures
 			gestures = bpy.evaAnimationManager.gestureList
 			for gesture in gestures:
-				gesture.stripRef.strip_time += animationStep
+				gesture.stripRef.strip_time += animationStep * gesture.speed
 
 				if gesture.stripRef.strip_time > gesture.duration:
-					bpy.evaAnimationManager.deleteGesture(gesture)
+					if gesture.repeat > 1:
+						gesture.repeat -= 1
+						gesture.stripRef.strip_time = 0
+					else:
+						bpy.evaAnimationManager.deleteGesture(gesture)
 
 			bpy.data.scenes['Scene'].frame_set(1)
 
@@ -99,16 +101,20 @@ class BLPlayback(bpy.types.Operator):
 			headControl = bpy.data.objects['deform'].pose.bones["head_target"]
 			eyeControl = bpy.data.objects['deform'].pose.bones["eye_target"]
 
-			loc = bpy.evaAnimationManager.primaryTargetLoc
+			headLoc = bpy.evaAnimationManager._primaryHeadTargetLoc
+			eyeLoc = bpy.evaAnimationManager._primaryEyeTargetLoc
 			
-			eyeLoc = mix(list(eyeControl.location), loc, 0.5)
-			headLoc = mix(list(headControl.location), loc, 0.98)
+			eyeLoc = mix(list(eyeControl.location), eyeLoc, 0.5)
+			headLoc = mix(list(headControl.location), headLoc, 0.98)
 
 			eyeControl.location = eyeLoc
 			headControl.location = headLoc
 
-
 			bpy.data.scenes['Scene'].frame_set(1)
+
+
+			# keep alive
+			bpy.evaAnimationManager.keepAlive()
 
 		return {'PASS_THROUGH'}
 

@@ -11,3 +11,13 @@ def mix(a,b,factor):
 			raise Exception(ArithmeticError)
 	else:
 		return (a*factor + b*(1.0-factor))
+
+
+def checkValue(var, minV, maxV):
+	if not minV <= var <= maxV:
+		print('Warning:', var, 'is outside of the expected range for', var, ':', minV, '-' , maxV)
+
+
+def smoothstep(x):
+	'''returns a smoothed float given an input between 0 and 1'''
+	return x * x * (3-2*(x))

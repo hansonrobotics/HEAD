@@ -1,5 +1,5 @@
-from . import blenderUI
 from . import blenderCommandListener
+from . import blenderUI
 from . import blenderPlayback
 from . import animationManager
 
