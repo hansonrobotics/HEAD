@@ -1,3 +1,8 @@
+__doc__ = """
+The lists of shapekeys defined here correspond to the coefficient array
+"m_coeffs" in pau.msg. These keys are used in the config files to specify
+which coefficients to extract from the incoming PAU messages.
+"""
 
 _shkey_list = [
   "EyeBlink_L",
