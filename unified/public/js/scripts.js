@@ -135,9 +135,6 @@ $(function () {
         });
     }
 
-    for (var i = 0; i < 10; i++)
-        addMessage('Henry', "Message");
-
     $('#app-send-button').click(function () {
         if ($('#app-message-input').val() != "") {
             addMessage('Me', $('#app-message-input').val());
