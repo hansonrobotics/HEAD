@@ -105,7 +105,11 @@ class BLPlayback(bpy.types.Operator):
 			eyeLoc = bpy.evaAnimationManager._primaryEyeTargetLoc
 			
 			eyeLoc = mix(list(eyeControl.location), eyeLoc, 0.5)
-			headLoc = mix(list(headControl.location), headLoc, 0.98)
+			
+			if True:
+				headLoc = mix(list(headControl.location), headLoc, 0.98)
+
+
 
 			eyeControl.location = eyeLoc
 			headControl.location = headLoc

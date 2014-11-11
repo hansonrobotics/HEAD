@@ -7,6 +7,8 @@ except:
 from .helpers import *
 
 import random
+import time
+
 
 class AnimationManager():
 	
@@ -18,6 +20,7 @@ class AnimationManager():
 		self.primaryEyeTargetLoc = [0,0,0]
 		self.secondaryHeadTargetLoc = [0,0,0]
 		self.secondaryEyeTargetLoc = [0,0,0]
+
 
 
 		self.blinkFrequency = 1.0
@@ -36,46 +39,85 @@ class AnimationManager():
 		self._secondaryHeadTargetLoc = [0,0,0]
 		self._secondaryEyeTargetLoc = [0,0,0]
 
-		self._blend = 0
+		self._primaryHeadTargetLocMoves = []
 
+		self._blend = 0
+		self.lastTriggered = {}
 
 	def keepAlive(self):
 		self.idle += 1.0
 
 
 		# idle cycle
-		for loopBone in bpy.data.objects['control'].pose.bones:
-			if "CYC" in loopBone.name: 
-				if loopBone.location[1] < 1:
-					loopBone.location[1] += 1/(4*loopBone['frames'])
-				else :
-					loopBone.location[1] = 0
+		if False:
+			for loopBone in bpy.data.objects['control'].pose.bones:
+				if "CYC" in loopBone.name: 
+					if loopBone.location[1] < 1:
+						loopBone.location[1] += 1/(4*loopBone['frames'])
+					else :
+						loopBone.location[1] = 0
 
 
-		bpy.data.objects['control'].pose.bones["CYC-normal"]["influence"] = 1.0
+			bpy.data.objects['control'].pose.bones["CYC-normal"]["influence"] = 1.0
 
 
+		# breathing cycle
+		if self.checkElapsed('breathing', 600):
+			self.newGesture('CYC-breathing', repeat=60, speed=1)
+			self.setElapsed('breathing')
 
-		# global frequency
+
+		# global frequency adjustment
 		if random.random() > 0.3:
 			return
 
-		if random.random() < 0.1:
-			# randomly adjust eye target
+
+		if random.random() < 0.5 and self.checkElapsed('primaryEyeTargetLoc', 0.3):
+			# randomly set an eye target
 			loc = [0,0,0]
 			loc[0] = random.gauss(self.primaryEyeTargetLoc[0], 0.05)
 			loc[1] = random.gauss(self.primaryEyeTargetLoc[1], 0.02)
 			loc[2] = random.gauss(self.primaryEyeTargetLoc[2], 0.02)
-			self._primaryEyeTargetLoc = loc
 
-		if random.random() < 0.01:
+			# compute distance from previous eye position
+			distance = computeDistance(loc, self._primaryEyeTargetLoc)
+
+			if distance > 0.1:
+				# trigger blink micro
+				if self.checkElapsed('blinkMicro', 2.0):
+					# print('triggering blink from eye motion - micro')
+					self.newGesture('GST-blink-micro')
+					self.setElapsed('blinkMicro')
+				else:
+					# print('too often, blink supressed')
+					...
+
+
+			self._primaryEyeTargetLoc = loc
+			self.setElapsed('primaryEyeTargetLoc')
+
+		if random.random() < 0.01 and self.checkElapsed('blink', 3.0):
 			# blink
+			# print('blink')
 			self.newGesture('GST-blink')
+			self.setElapsed('blink')
 
 		
-		if random.random() < 0.001:
+		if random.random() < 0.001 and self.checkElapsed('yawn', 30.0):
+			# yawn
 			self.newGesture('GST-yawn-1')
+			self.setElapsed('yawn')
 
+
+
+		if random.random() < 0.1 and self.checkElapsed('primaryHeadTargetLoc', 1):
+			# randomly adjust head target
+			loc = [0,0,0]
+			loc[0] = random.gauss(self.primaryHeadTargetLoc[0], 0.01)
+			loc[1] = random.gauss(self.primaryHeadTargetLoc[1], 0.01)
+			loc[2] = random.gauss(self.primaryHeadTargetLoc[2], 0.02)
+			self._primaryHeadTargetLoc = loc
+			self.setElapsed('primaryHeadTargetLoc')
 
 
 
@@ -96,8 +138,8 @@ class AnimationManager():
 
 
 
-	def newGesture(self, name, repeat = 1, speed=1, magnitude=0.9, priority=1):
-		print('Creating new gesture ', name)
+	def newGesture(self, name, repeat = 1, speed=1, magnitude=0.5, priority=1):
+		# print('Creating new gesture ', name)
 		
 		deformObj = bpy.data.objects['deform']
 		try:
@@ -132,7 +174,7 @@ class AnimationManager():
 
 
 	def deleteGesture(self, gesture):
-		print('Deleting gesture')
+		# print('Deleting gesture')
 
 		# remove from list
 		self.gestureList.remove(gesture)
@@ -143,7 +185,7 @@ class AnimationManager():
 
 
 	def setEmotions(self, emotions):
-		checkValue(value, 0, 1)
+		# checkValue(emotions, 0, 1)
 
 		bones = bpy.data.objects['control'].pose.bones
 		for emotion, value in emotions.items():
@@ -164,12 +206,21 @@ class AnimationManager():
 		
 
 	def setPrimaryTarget(self, loc):
+		# compute distance from previous eye position
+		distance = computeDistance(loc, self._primaryEyeTargetLoc)
+
+		if distance > 0.15:
+			if self.checkElapsed('blink', 1.0):
+				# print('triggering blink from eye motion')
+				self.newGesture('GST-blink-micro')
+				self.setElapsed('blink')
+
 		self.primaryHeadTargetLoc = loc
 		self._primaryHeadTargetLoc = loc
 
 		self.primaryEyeTargetLoc = loc
 		self._primaryEyeTargetLoc = loc
-
+			
 
 	def setSecondaryTarget(self, loc):
 		self.secondaryHeadTargetLoc = loc
@@ -179,6 +230,21 @@ class AnimationManager():
 		
 
 
+	def setElapsed(self, name):
+		''' set the '''
+		self.lastTriggered[name] = time.time()
+
+
+	def checkElapsed(self, name, duration):
+		''' check to see if 'duration' amount seconds has elapsed'''
+		try:
+			oldTime = self.lastTriggered[name]
+		except KeyError:
+			print('checkElapsed Key Error')
+			return True
+
+		elapsedTime = time.time() - oldTime
+		return elapsedTime > duration
 
 		
 class Gesture():
