@@ -16,6 +16,7 @@ $(document).ready(function() {
         }
 
         $('#app-title').html($(this).html());
+        $('.navbar-toggle:visible:not(.collapsed)').click();
     });
 
 

@@ -5,15 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <meta name="author" content="Hanson Rovotics">
 
     <title>Hanson Robotics</title>
 
     <!-- Bootstrap core CSS -->
     <link href="public/css/lib/bootstrap.min.css" rel="stylesheet">
     <link href="public/css/application.css" rel="stylesheet">
-    <link href="public/css/interaction.css" rel="stylesheet">
+    <link href="public/css/pages/interaction.css" rel="stylesheet">
+    <link href="public/css/pages/expressions.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -52,7 +54,23 @@
 
 <div id="app-page-expressions" class="app-page">
     <div class="container">
-        Expressions
+        <div id="controlStack">
+            <div class="landscape">
+                <div class="crosshairsl"></div>
+                <div class="knobBlock" style="float:left">
+                    <input type="text" class="dial">
+                </div>
+                <span class="knobName" style="top:85px"></span>
+            </div>
+            <div class="portrait" style="float:right">
+                <span class="knobName" style="padding-top:10px"></span>
+                <div class="knobBlock" style="float:right">
+                    <input type="text" class="dial">
+                </div>
+                <div class="crosshairsl" style="clear:right;"></div>
+            </div>
+            <div id="btnStack"></div>
+        </div>
     </div>
 </div>
 <div id="app-page-motors" class="app-page">
@@ -128,14 +146,27 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="public/js/lib/ie10-viewport-bug-workaround.js"></script>
 
+<!-- All -->
+<script type="text/javascript" src="public/js/application.js"></script>
 <script type="text/javascript" src="public/js/lib/eventemitter2.js"></script>
 <script type="text/javascript" src="public/js/lib/roslib.js"></script>
-<script type="text/javascript" src="public/js/scripts.js"></script>
-<script type="text/javascript" src="public/js/application.js"></script>
+
+<!-- Interaction -->
+<script type="text/javascript" src="public/js/pages/interaction.js"></script>
+
+<!-- Expressions -->
+<script type="text/javascript" src="public/js/pages/expressions.js"></script>
+<script src="public/js/lib/js-yaml.min.js"></script>
+<script src="public/js/lib/jquery.ui.touch-punch.min.js"></script>
+<script src="public/js/lib/jquery.knob.js"></script>
+<script src="public/js/crosshair-slider.js"></script>
+<script src="public/js/robo-interface.js"></script>
+<script src="public/js/common-ui.js"></script>
+
 </body>
 </html>

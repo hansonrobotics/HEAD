@@ -1,0 +1,63 @@
+var CommonUI = new function () {
+
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    //Look up motor config entry by its name.
+    function getConf(name) {
+        var motorConf = RoboInterface.motorConf;
+        for (var i = 0; i < motorConf.length; i++) {
+            if (motorConf[i].name == name)
+                return motorConf[i];
+        }
+    }
+
+    this.buildExpressionButtons = function (container, classStr) {
+        function addBtn(btnObj) {
+            btn = $('<button type="button" class="btn btn-default">' + btnObj['label'] + '</button>');
+            btn.click(function () {
+                container.trigger("exprbtnclick", btnObj);
+            }).addClass(classStr);
+            container.append(btn);
+            return btn;
+        }
+
+        //Look up valid expression names through ROS.
+        var motorConf = RoboInterface.motorConf;
+        RoboInterface.getValidFaceExprs(function (response) {
+            var names = response.exprnames;
+            var btnObjs = [];
+            for (var i = 0; i < names.length; i++) {
+                btnObjs[i] = {
+                    name: names[i],
+                    label: (names[i] == "eureka") ? "Eureka!" : capitalize(names[i])
+                };
+                btnObjs[i]['element'] = addBtn(btnObjs[i]);
+            }
+            ;
+            container.trigger("success", {btnObjs: btnObjs}); //Can't send an array without an object wrapper
+        });
+    }
+
+    this.buildCrosshairSlider = function (element, options) {
+        var yawConf = getConf("neck_base");
+        var pitchConf = getConf("neck_pitch");
+        element.crosshairsl($.extend({}, {
+            xmin: Math.floor(radToDeg(yawConf.min)),
+            xmax: Math.ceil(radToDeg(yawConf.max)),
+            xval: Math.round(radToDeg(yawConf.default)),
+            //Minus signs and min-max swapped to invert the y axis for pitch to point upwards.
+            ymin: Math.floor(radToDeg(-pitchConf.max)),
+            ymax: Math.ceil(radToDeg(-pitchConf.min)),
+            yval: Math.round(radToDeg(-pitchConf.default)),
+            change: function (e, ui) {
+                RoboInterface.pointHead({
+                    yaw: degToRad(ui.xval),
+                    pitch: degToRad(-ui.yval)
+                });
+            }
+        }, options));
+        return element;
+    }
+};

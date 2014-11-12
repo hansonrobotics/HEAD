@@ -1,0 +1,72 @@
+#controlStack {
+    width: 100%;
+    max-width: 590px;
+}
+
+.knobBlock {
+    margin: 5px;
+    float: left;
+}
+
+.knobName {
+    font-size: 24px;
+    display: table;
+    margin: auto;
+    position: relative;
+}
+
+.crosshairsl {
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+    float: right;
+    border: none !important;
+}
+
+/*.btn {*/
+    /*color: #111;*/
+    /*background-color: #dc0;*/
+    /*border-color: #ffec03;*/
+/*}*/
+
+.header .btn-group {
+    margin-left: 10px;
+}
+
+#btnStack .btn {
+    margin: 3px;
+    width: 75px;
+    padding: 4px 0px 4px 0px;
+}
+
+.highlight {
+    background-color: #df691a !important;
+    border-color: #df691a !important;
+}
+
+.highlight:focus {
+    outline: none;
+}
+
+@media screen and (max-width: 500px) {
+    .landscape {
+        display: none;
+    }
+
+    #btnStack {
+        margin: 0;
+        display: table;
+        width: 80px;
+        padding-top: 5px;
+    }
+}
+
+@media screen and (min-width: 501px) {
+    .portrait {
+        display: none;
+    }
+
+    #btnStack {
+        display: inline-block;
+    }
+}
