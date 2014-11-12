@@ -1,5 +1,9 @@
 #basic_head_api
 
+###Deprecated!
++ Do not use in new code; this node is going away soon.
++ Currently, this node is only being used by the ros_motors_webui.
+
 ###Dependencies
 + Requires hansonrobotics/ros_pololu_servo
 + Currently not compatible with upstream geni-lab/ros_pololu_servo
