@@ -1,4 +1,4 @@
-var CommonUI = new function() {
+var CommonUI = new function () {
 
     function capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -10,14 +10,15 @@ var CommonUI = new function() {
         for (var i = 0; i < motorConf.length; i++) {
             if (motorConf[i].name == name)
                 return motorConf[i];
-        };
+        }
+        ;
         return;
     }
 
-    this.buildExpressionButtons = function(container, classStr) {
+    this.buildExpressionButtons = function (container, classStr) {
         function addBtn(btnObj) {
-            btn = $('<button type="button" class="btn">'+btnObj['label']+'</button>');
-            btn.click(function(){
+            btn = $('<button type="button" class="btn btn-default">' + btnObj['label'] + '</button>');
+            btn.click(function () {
                 container.trigger("exprbtnclick", btnObj);
             }).addClass(classStr);
             container.append(btn);
@@ -26,7 +27,7 @@ var CommonUI = new function() {
 
         //Look up valid expression names through ROS.
         var motorConf = RoboInterface.motorConf;
-        RoboInterface.getValidFaceExprs(function(response) {
+        RoboInterface.getValidFaceExprs(function (response) {
             var names = response.exprnames;
             var btnObjs = [];
             for (var i = 0; i < names.length; i++) {
@@ -35,12 +36,13 @@ var CommonUI = new function() {
                     label: (names[i] == "eureka") ? "Eureka!" : capitalize(names[i])
                 };
                 btnObjs[i]['element'] = addBtn(btnObjs[i]);
-            };
-            container.trigger("success", {btnObjs:btnObjs}); //Can't send an array without an object wrapper
+            }
+            ;
+            container.trigger("success", {btnObjs: btnObjs}); //Can't send an array without an object wrapper
         });
     }
 
-    this.buildCrosshairSlider = function(element, options) {
+    this.buildCrosshairSlider = function (element, options) {
         var yawConf = getConf("neck_base");
         var pitchConf = getConf("neck_pitch");
         element.crosshairsl($.extend({}, {
@@ -51,7 +53,7 @@ var CommonUI = new function() {
             ymin: Math.floor(radToDeg(-pitchConf.max)),
             ymax: Math.ceil(radToDeg(-pitchConf.min)),
             yval: Math.round(radToDeg(-pitchConf.default)),
-            change: function(e, ui) {
+            change: function (e, ui) {
                 RoboInterface.pointHead({
                     yaw: degToRad(ui.xval),
                     pitch: degToRad(-ui.yval)
@@ -63,10 +65,12 @@ var CommonUI = new function() {
 
 };
 
-function websocketAddress(){
-    if (window.location.protocol != "https:"){
+function websocketAddress() {
+    return "ws://192.168.0.32:9090";
+
+    if (window.location.protocol != "https:") {
         return "ws://" + document.domain + ":9090";
-    }else{
+    } else {
         return "wss://" + document.domain + ":9092";
     }
 }
