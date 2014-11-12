@@ -62,3 +62,11 @@ var CommonUI = new function() {
   }
 
 };
+
+function websocketAddress(){
+  if (window.location.protocol != "https:"){
+    return "ws://" + document.domain + ":9090";
+  }else{
+    return "wss://" + document.domain + ":9092";
+  }
+}

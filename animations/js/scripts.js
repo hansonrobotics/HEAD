@@ -82,13 +82,21 @@ $(function() {
 
 	}
 
-  // Find out exactly when we made a connection.
-  ros.on('connection', function() {
-    console.log('Connection made!');
- 		startBlenderMode();
-		setTimeout(function(){addButtons()},1000);
-		
-  });
+	function websocketAddress(){
+      if (window.location.protocol != "https:"){
+        return "ws://" + document.domain + ":9090";
+      }else{
+        return "wss://" + document.domain + ":9092";
+      }
+    }
+
+    // Find out exactly when we made a connection.
+    ros.on('connection', function() {
+      console.log('Connection made!');
+          startBlenderMode();
+          setTimeout(function(){addButtons()},1000);
+
+    });
 
 	var loopOn = 0;
 
@@ -119,7 +127,7 @@ $(function() {
 		
 	});
   // Create a connection to the rosbridge WebSocket server.
-  ros.connect("ws://192.168.0.32:9090");
+  ros.connect(websocketAddress());
   //Demo loop
 	jQuery.fn.random = function() {
 		  var randomIndex = Math.floor(Math.random() * this.length);  

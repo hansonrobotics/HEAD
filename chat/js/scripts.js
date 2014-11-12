@@ -86,6 +86,13 @@ $(function() {
 	});
   }
 
+  function websocketAddress(){
+    if (window.location.protocol != "https:"){
+      return "ws://" + document.domain + ":9090";
+    }else{
+      return "wss://" + document.domain + ":9092";
+    }
+  }
 
 
   // Find out exactly when we made a connection.
@@ -98,7 +105,7 @@ $(function() {
 
   });
   // Create a connection to the rosbridge WebSocket server.
-  ros.connect("wss://" + document.domain + ":9090");
+  ros.connect( websocketAddress());
 
 function currentTime(){
     var d = new Date();
