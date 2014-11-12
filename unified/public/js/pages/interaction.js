@@ -97,7 +97,7 @@ $(function () {
 
     });
     // Create a connection to the rosbridge WebSocket server.
-    ros.connect("ws://192.168.0.32:9090");
+    ros.connect(websocketAddress());
 
     function currentTime() {
         var d = new Date();

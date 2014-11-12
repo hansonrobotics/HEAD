@@ -115,7 +115,7 @@ function paintSelection(knobObj, color) {
 $(function() {
     $(".dial").val(0);
     RoboInterface.$.on("configload", createUIconf);
-    RoboInterface.connect("ws://192.168.0.32:9090")
+    RoboInterface.connect(websocketAddress())
 
         .$.on("connection", function(e) {
             $("#status").css("color", "#88FF88");
