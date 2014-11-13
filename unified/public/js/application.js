@@ -1,3 +1,5 @@
+RosUI = { };
+
 $(document).ready(function() {
     var anchor   = window.location.hash,
         pageLink = $('.app-change-page[href="' + anchor + '"]');
@@ -24,4 +26,7 @@ $(document).ready(function() {
         $(pageLink).click();
     else
         $('.app-change-page.active').click();
+
+    // connect
+    RosUI.connection = RoboInterface.connect(websocketAddress());
 });

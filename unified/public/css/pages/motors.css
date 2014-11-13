@@ -1,0 +1,60 @@
+.uiBlock {
+    margin: 5px;
+    padding: 5px;
+}
+
+.uiBlock p {
+    margin-bottom: 5px;
+}
+
+@media screen and (min-width: 590px) {
+    .control-stack {
+        width: 590px;
+    }
+
+    #sliderStack {
+        width: 380px;
+        float: left;
+    }
+
+    .expression-buttons {
+        float: left;
+    }
+}
+
+
+.expression-buttons .btn {
+    margin: 3px;
+    width: 80px;
+    padding: 4px 0px 4px 0px;
+}
+
+.expression-buttons {
+    margin: 2px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* SLIDER */
+.ui-slider-handle {
+    display: none;
+}
+
+.ui-slider  {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;;
+    border-radius: 0 !important;;
+
+    background-color: #2b3e50;
+    border: none;
+}
+
+.ui-slider-range {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;;
+    border-radius: 0 !important;;
+
+    background-color: #df691a;
+}

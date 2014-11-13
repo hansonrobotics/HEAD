@@ -11,8 +11,6 @@ var CommonUI = new function () {
             if (motorConf[i].name == name)
                 return motorConf[i];
         }
-        ;
-        return;
     }
 
     this.buildExpressionButtons = function (container, classStr) {
@@ -40,7 +38,7 @@ var CommonUI = new function () {
             ;
             container.trigger("success", {btnObjs: btnObjs}); //Can't send an array without an object wrapper
         });
-    }
+    };
 
     this.buildCrosshairSlider = function (element, options) {
         var yawConf = getConf("neck_base");

@@ -11,9 +11,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="public/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="public/css/lib/jquery-ui/jquery-ui.min.css" rel="stylesheet">
     <link href="public/css/application.css" rel="stylesheet">
     <link href="public/css/pages/interaction.css" rel="stylesheet">
     <link href="public/css/pages/expressions.css" rel="stylesheet">
+    <link href="public/css/pages/motors.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
@@ -54,7 +56,7 @@
 
 <div id="app-page-expressions" class="app-page">
     <div class="container">
-        <div id="controlStack">
+        <div class="control-stack">
             <div class="landscape">
                 <div class="crosshairsl"></div>
                 <div class="knobBlock" style="float:left">
@@ -69,17 +71,29 @@
                 </div>
                 <div class="crosshairsl" style="clear:right;"></div>
             </div>
-            <div id="btnStack"></div>
+            <div class="expression-buttons"></div>
         </div>
     </div>
 </div>
 <div id="app-page-motors" class="app-page">
     <div class="container">
-        Motors
+        <div class="control-stack">
+            <div id="sliderStack">
+                <div id="sliderTemplate" class="uiBlock hidden">
+                    <p style="float:left"><b class="slNameL"></b></p>
+                    <p style="float:right"><b class="slNameR"></b></p>
+                    <p><span class="slVal">0</span>°(<span class="slMin">-90</span>° to <span class="slMax">90</span>°)</p>
+                    <div class="slider"></div>
+                </div>
+            </div>
+            <div class="crosshairsl"></div>
+            <div class="expression-buttons"></div>
+        </div>
     </div>
 </div>
 <div id="app-page-animations" class="app-page">
     <div class="container">
+        <p>Test</p>
         Animations
     </div>
 </div>
@@ -153,20 +167,24 @@
 
 <!-- All -->
 <script type="text/javascript" src="public/js/application.js"></script>
+<script type="text/javascript" src="public/js/common-ui.js"></script>
 <script type="text/javascript" src="public/js/lib/eventemitter2.js"></script>
 <script type="text/javascript" src="public/js/lib/roslib.js"></script>
+<script type="text/javascript" src="public/js/lib/js-yaml.min.js"></script>
+<script type="text/javascript" src="public/js/crosshair-slider.js"></script>
+<script type="text/javascript" src="public/js/lib/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="public/js/robo-interface.js"></script>
 
 <!-- Interaction -->
 <script type="text/javascript" src="public/js/pages/interaction.js"></script>
 
 <!-- Expressions -->
 <script type="text/javascript" src="public/js/pages/expressions.js"></script>
-<script src="public/js/lib/js-yaml.min.js"></script>
 <script src="public/js/lib/jquery.ui.touch-punch.min.js"></script>
 <script src="public/js/lib/jquery.knob.js"></script>
-<script src="public/js/crosshair-slider.js"></script>
-<script src="public/js/robo-interface.js"></script>
-<script src="public/js/common-ui.js"></script>
+
+<!-- Expressions -->
+<script type="text/javascript" src="public/js/pages/motors.js"></script>
 
 </body>
 </html>

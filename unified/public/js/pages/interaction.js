@@ -94,10 +94,9 @@ $(function () {
         });
         console.log('Ready!');
         startTree();
-
     });
     // Create a connection to the rosbridge WebSocket server.
-    ros.connect(websocketAddress());
+//    ros.connect(websocketAddress());
 
     function currentTime() {
         var d = new Date();

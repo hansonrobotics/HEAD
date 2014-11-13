@@ -1,4 +1,4 @@
-#controlStack {
+.control-stack {
     width: 100%;
     max-width: 590px;
 }
@@ -33,7 +33,7 @@
     margin-left: 10px;
 }
 
-#btnStack .btn {
+.expression-buttons .btn {
     margin: 3px;
     width: 75px;
     padding: 4px 0px 4px 0px;
@@ -53,7 +53,7 @@
         display: none;
     }
 
-    #btnStack {
+    .expression-buttons {
         margin: 0;
         display: table;
         width: 80px;
@@ -66,7 +66,7 @@
         display: none;
     }
 
-    #btnStack {
+    .expression-buttons {
         display: inline-block;
     }
 }
