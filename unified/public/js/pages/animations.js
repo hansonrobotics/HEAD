@@ -63,8 +63,11 @@ $(function () {
             var msg = new ROSLIB.Message({
                 data: 'play:' + data
             });
+
             lastAnim = data;
             cmdAnimations.publish(msg);
+
+            $('[data-cmd="play"]').click();
         });
         $('.command').click(function () {
             var data = $(this).data('cmd');

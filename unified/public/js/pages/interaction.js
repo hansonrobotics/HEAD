@@ -1,14 +1,6 @@
 $(function () {
     // ROS object to connect to ROS
-    var ros = new ROSLIB.Ros();
     var responses;
-
-
-    var speech_topic = new ROSLIB.Topic({
-        ros: ros,
-        name: '/dmitry/chatbot_speech',
-        messageType: 'chatbot/ChatMessage'
-    });
 
     function startTree() {
 //        var cmdBlender = new ROSLIB.Topic({
@@ -61,12 +53,13 @@ $(function () {
             };
 
             recognition.onresult = function (event) {
+                console.log('res');
                 var utterance = event.results[0][0].transcript;
                 var chat_message = new ROSLIB.Message({
                     utterance: utterance,
                     confidence: Math.round(event.results[0][0].confidence * 100)
                 });
-                speech_topic.publish(chat_message);
+                RosUI.topics.speech_topic.publish(chat_message);
                 addMessage('Me', utterance);
             };
             recognition.start();
@@ -86,13 +79,12 @@ $(function () {
     }
 
     // Find out exactly when we made a connection.
-    ros.on('connection', function () {
+    RosUI.ros.$.on('connection', function () {
         ready();
-        console.log('Connection made!');
+
         $('#app-record-button').click(function () {
             recognizeSpeech();
         });
-        console.log('Ready!');
         startTree();
     });
     // Create a connection to the rosbridge WebSocket server.
@@ -134,6 +126,11 @@ $(function () {
         });
     }
 
+    $('#app-message-input').keyup(function(e){
+        if(e.keyCode == 13)
+            $('#app-send-button').click();
+    });
+
     $('#app-send-button').click(function () {
         if ($('#app-message-input').val() != "") {
             addMessage('Me', $('#app-message-input').val());
@@ -142,7 +139,7 @@ $(function () {
                 confidence: Math.round(0.9 * 100)
             });
             $('#app-message-input').val('');
-            speech_topic.publish(chat_message);
+            RosUI.topics.speech_topic.publish(chat_message);
         }
     });
 });

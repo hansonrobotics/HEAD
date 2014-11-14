@@ -34,6 +34,12 @@
 }
 
 .btn:active, .btn:focus, .btn.active {
+    outline: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.btn-default:active, .btn-default:focus, .btn-default.active {
     background-color: #df691a !important;
     border-color: #df691a !important;
 

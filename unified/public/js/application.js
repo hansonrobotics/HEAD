@@ -48,6 +48,7 @@ RosUI = {
                 RosUI.topics.cmdTree.publish(treeMessage);
 
                 RoboInterface.makeFaceExpr("happy", 0);
+                $('[data-cmd="stop"]').click();
 
                 break;
             case 'app-interactions-link':
@@ -61,6 +62,8 @@ RosUI = {
 
                 treeMessage = new ROSLIB.Message({data: 'btree_on'});
                 RosUI.topics.cmdTree.publish(treeMessage);
+
+                RoboInterface.makeFaceExpr("happy", 0);
                 break;
         }
     }
@@ -84,6 +87,11 @@ $(document).ready(function () {
                 ros: ros,
                 name: '/dmitry/behavior_switch',
                 messageType: 'std_msgs/String'
+            }),
+            speech_topic: new ROSLIB.Topic({
+                ros: ros,
+                name: '/dmitry/chatbot_speech',
+                messageType: 'chatbot/ChatMessage'
             })
         };
 

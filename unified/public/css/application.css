@@ -18,7 +18,7 @@
 .expression-button, .app-animation-button {
     margin: 3px;
     width: 75px;
-    padding: 4px 0px 4px 0px;
+    padding: 4px 0 4px 0;
 }
 
 .app-animation-button {
