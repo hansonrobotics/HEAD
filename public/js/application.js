@@ -58,7 +58,7 @@ RosUI = {
                 RosUI.topics.cmdBlender.publish(blenderMessage);
 
                 blinkMessage = new ROSLIB.Message({data: 'dmitry:start'});
-                RosUI.topics.cmdBllink.publish(blenderMessage);
+                RosUI.topics.cmdBllink.publish(blinkMessage);
 
                 treeMessage = new ROSLIB.Message({data: 'btree_on'});
                 RosUI.topics.cmdTree.publish(treeMessage);
