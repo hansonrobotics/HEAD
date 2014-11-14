@@ -7,33 +7,33 @@ $(function () {
     // functions
     // Starts Animations mode in blender
     function startBlenderMode() {
-        var cmdBlender = new ROSLIB.Topic({
-            ros: ros,
-            name: '/cmd_blendermode',
-            messageType: 'std_msgs/String'
-        });
-        var msg = new ROSLIB.Message({
-            data: 'Animations'
-        });
-        cmdBlender.publish(msg);
-        var cmdBllink = new ROSLIB.Topic({
-            ros: ros,
-            name: '/dmitry/cmd_blink',
-            messageType: 'std_msgs/String'
-        });
-        msg = new ROSLIB.Message({
-            data: 'dmitry:stop'
-        });
-        cmdBllink.publish(msg);
-        var cmdTree = new ROSLIB.Topic({
-            ros: ros,
-            name: '/dmitry/behavior_switch',
-            messageType: 'std_msgs/String'
-        });
-        msg = new ROSLIB.Message({
-            data: 'btree_off'
-        });
-        cmdTree.publish(msg);
+//        var cmdBlender = new ROSLIB.Topic({
+//            ros: ros,
+//            name: '/cmd_blendermode',
+//            messageType: 'std_msgs/String'
+//        });
+//        var msg = new ROSLIB.Message({
+//            data: 'Animations'
+//        });
+//        cmdBlender.publish(msg);
+//        var cmdBllink = new ROSLIB.Topic({
+//            ros: ros,
+//            name: '/dmitry/cmd_blink',
+//            messageType: 'std_msgs/String'
+//        });
+//        msg = new ROSLIB.Message({
+//            data: 'dmitry:stop'
+//        });
+//        cmdBllink.publish(msg);
+//        var cmdTree = new ROSLIB.Topic({
+//            ros: ros,
+//            name: '/dmitry/behavior_switch',
+//            messageType: 'std_msgs/String'
+//        });
+//        msg = new ROSLIB.Message({
+//            data: 'btree_off'
+//        });
+//        cmdTree.publish(msg);
     }
 
     // Get animations
@@ -57,7 +57,7 @@ $(function () {
             messageType: 'std_msgs/String'
         });
 
-        $('.emotion').click(function () {
+        $('.app-animation-button').click(function () {
             var data = $(this).data('animation');
             console.log(data);
             var msg = new ROSLIB.Message({
@@ -68,7 +68,7 @@ $(function () {
         });
         $('.command').click(function () {
             var data = $(this).data('cmd');
-            console.log(data);
+
             if (data == 'play') {
                 data = data + ':' + lastAnim
             }
@@ -79,14 +79,6 @@ $(function () {
         });
         $('#cmd_stop').click();
 
-    }
-
-    function websocketAddress() {
-        if (window.location.protocol != "https:") {
-            return "ws://" + document.domain + ":9090";
-        } else {
-            return "wss://" + document.domain + ":9092";
-        }
     }
 
     // Find out exactly when we made a connection.
@@ -120,9 +112,9 @@ $(function () {
         // process the logic
         loopOn = $('#loop-on.active').length;
         if (loopOn) {
-            $('.optional').hide();
+            $('.app-optional').hide();
         } else {
-            $('.optional').show();
+            $('.app-optional').show();
         }
 
 
@@ -134,7 +126,7 @@ $(function () {
     };
     var demo = setInterval(function () {
         if (loopOn > 0) {
-            $('.emotion').random().click();
+            $('.app-animation-button').random().click();
         }
     }, 1000);
 

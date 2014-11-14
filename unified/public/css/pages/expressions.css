@@ -33,9 +33,13 @@
     margin-left: 10px;
 }
 
-.highlight {
+.btn:active, .btn:focus, .btn.active {
     background-color: #df691a !important;
     border-color: #df691a !important;
+
+    outline: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .highlight:focus {

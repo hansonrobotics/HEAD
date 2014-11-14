@@ -27,6 +27,7 @@ function getBtn(name) {
 function setFace(name, label) {
     curface = name;
     $(".knobName").text(label);
+    console.log('set face to: ' + curface);
 }
 
 //Updates UI and sends a ROS message.
@@ -45,12 +46,10 @@ function createUIros() {
     //Build preset buttons
     btnStack = $(".expression-buttons");
     btnStack.on("exprbtnclick", function (e, nameobj) {
+        console.log('expression button clicked');
+
         setFace(nameobj.name, nameobj.label);
-        setKnobPos(KNOB_OPTS.max * 1);
-    }).on("success", function (e, _btnObjs) { //Note that btnObjs is a global variable
-        btnObjs = _btnObjs.btnObjs; //Remove the object wrapper
-        setFace(btnObjs[0].name, btnObjs[0].label);
-        setKnobPos(KNOB_OPTS.max * 1);
+        setKnobPos(KNOB_OPTS.max);
     });
 
     CommonUI.buildExpressionButtons(btnStack);
@@ -63,10 +62,10 @@ function paintSelection(knobObj, color) {
     knobObj.fgColor = color;
     $(".dial").css("color", color);
     $(".knobName").css("color", color);
-    $(".expression-button").removeClass("highlight");
+    $(".expression-button").removeClass("active");
 
     if (curface)
-        $(".expression-button." + curface).addClass("highlight");
+        $(".expression-button." + curface).addClass("active");
 }
 
 function initExpressions() {
@@ -119,7 +118,6 @@ function initExpressions() {
 
 $(function () {
     $(".dial").val(0);
-    console.log(RosUI);
     RosUI.ros.$.on("connection", function () {
         initExpressions();
         createUIros();

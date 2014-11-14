@@ -7,6 +7,7 @@ RosUI = {
             case 'app-expressions-link':
                 console.log('expressions page load');
 
+                // send messages
                 blenderMessage = new ROSLIB.Message({data: 'Dummy'});
                 RosUI.topics.cmdBlender.publish(blenderMessage);
 
@@ -15,6 +16,10 @@ RosUI = {
 
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
                 RosUI.topics.cmdTree.publish(treeMessage);
+
+                // click selected expression to init it
+                $('.expression-button.active').click();
+
                 break;
             case 'app-motors-link':
                 console.log('motors page load');
@@ -27,6 +32,8 @@ RosUI = {
 
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
                 RosUI.topics.cmdTree.publish(treeMessage);
+
+                RoboInterface.makeFaceExpr("happy", 0);
                 break;
             case 'app-animations-link':
                 console.log('animations page load');
@@ -39,6 +46,8 @@ RosUI = {
 
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
                 RosUI.topics.cmdTree.publish(treeMessage);
+
+                RoboInterface.makeFaceExpr("happy", 0);
 
                 break;
             case 'app-interactions-link':
