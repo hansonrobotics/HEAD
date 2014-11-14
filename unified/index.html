@@ -40,7 +40,14 @@
             <a class="navbar-brand" href="#">
                 <img id="logo" class="pull-left" src="public/img/H.png" alt=""/>
                 <span id="app-title"></span>
+
             </a>
+
+            <span id="notifications" class="pull-left">
+                <span id="app-connecting" class="label label-warning">Connecting... Please wait</span>
+                <span id="app-connection-error" class="label label-danger" style="display: none">Connection error. Click to refresh</span>
+            </span>
+
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -56,78 +63,79 @@
     </div>
 </nav>
 
-<div id="app-page-expressions" class="app-page">
-    <div class="container">
-        <div class="control-stack">
-            <div class="landscape">
-                <div class="crosshairsl"></div>
-                <div class="knobBlock" style="float:left">
-                    <input type="text" class="dial">
+<div id="app-pages" style="display: none">
+    <div id="app-page-expressions" class="app-page">
+        <div class="container">
+            <div class="control-stack">
+                <div class="landscape">
+                    <div class="crosshairsl"></div>
+                    <div class="knobBlock" style="float:left">
+                        <input type="text" class="dial">
+                    </div>
+                    <span class="knobName" style="top:85px"></span>
                 </div>
-                <span class="knobName" style="top:85px"></span>
-            </div>
-            <div class="portrait" style="float:right">
-                <span class="knobName" style="padding-top:10px"></span>
+                <div class="portrait" style="float:right">
+                    <span class="knobName" style="padding-top:10px"></span>
 
-                <div class="knobBlock" style="float:right">
-                    <input type="text" class="dial">
+                    <div class="knobBlock" style="float:right">
+                        <input type="text" class="dial">
+                    </div>
+                    <div class="crosshairsl" style="clear:right;"></div>
                 </div>
-                <div class="crosshairsl" style="clear:right;"></div>
+                <div class="expression-buttons"></div>
             </div>
-            <div class="expression-buttons"></div>
         </div>
     </div>
-</div>
-<div id="app-page-motors" class="app-page">
-    <div class="container">
-        <div class="control-stack">
-            <div id="sliderStack">
-                <div id="sliderTemplate" class="uiBlock hidden">
-                    <p style="float:left"><b class="slNameL"></b></p>
-                    <p style="float:right"><b class="slNameR"></b></p>
+    <div id="app-page-motors" class="app-page">
+        <div class="container">
+            <div class="control-stack">
+                <div id="sliderStack">
+                    <div id="sliderTemplate" class="uiBlock hidden">
+                        <p style="float:left"><b class="slNameL"></b></p>
+                        <p style="float:right"><b class="slNameR"></b></p>
 
-                    <p style="text-indent: 5px"><span class="slVal">0</span>° (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
-                    </p>
+                        <p style="text-indent: 5px"><span class="slVal">0</span>° (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
+                        </p>
 
-                    <div class="slider"></div>
+                        <div class="slider"></div>
+                    </div>
                 </div>
+                <!--<div class="crosshairsl"></div>-->
+                <!--<div class="expression-buttons"></div>-->
             </div>
-            <!--<div class="crosshairsl"></div>-->
-            <!--<div class="expression-buttons"></div>-->
         </div>
     </div>
-</div>
-<div id="app-page-animations" class="app-page">
-    <div class="container">
-        <div class="row">
-            <div id="loop" class="col-xs-5">
-                <h4> Demo loop: </h4>
+    <div id="app-page-animations" class="app-page">
+        <div class="container">
+            <div class="row">
+                <div id="loop" class="col-xs-5">
+                    <h4> Demo loop: </h4>
 
-                <div id="demo-loop" class="btn-group btn-toggle">
-                    <button id="loop-on" class="btn btn-default">On</button>
-                    <button id="loop-off" class="btn btn-default active">Off</button>
+                    <div id="demo-loop" class="btn-group btn-toggle">
+                        <button id="loop-on" class="btn btn-default animation-control">On</button>
+                        <button id="loop-off" class="btn btn-default active animation-control">Off</button>
+                    </div>
+                </div>
+
+                <div id="ctrls" class="col-xs-7 app-optional">
+                    <h4> Controls: </h4>
+
+                    <div class="btn-group" id="controls" data-toggle="buttons"><!--
+                    --><label id="cmd_play" class="btn btn-default command animation-control" data-cmd="play"><!--
+                        --><input type="radio" name="command">Play<!--
+                    --></label><!--
+                    --><label id="cmd_pause" class="btn btn-default command animation-control" data-cmd="pause"><!--
+                        --><input type="radio" name="command">Pause<!--
+                    --></label><!--
+                    --><label id="cmd_stop" class="btn btn-default command active animation-control" data-cmd="stop"><!--
+                        --><input type="radio" name="command">Stop<!--
+                    --></label>
+                    </div>
                 </div>
             </div>
-
-            <div id="ctrls" class="col-xs-7 app-optional">
-                <h4> Controls: </h4>
-
-                <div class="btn-group" id="controls" data-toggle="buttons">
-                    <label id="cmd_play" class="btn btn-default command" data-cmd="play">
-                        <input type="radio" name="command"> Play
-                    </label>
-                    <label id="cmd_pause" class="btn btn-default command" data-cmd="pause">
-                        <input type="radio" name="command"> Pause
-                    </label>
-                    <label id="cmd_stop" class="btn btn-default command active" data-cmd="stop">
-                        <input type="radio" name="command"> Stop
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div id="playlist" class="col-md-12 app-optional">
-                <h4> Animations: </h4><!--
+            <div class="row">
+                <div id="playlist" class="col-md-12 app-optional">
+                    <h4> Animations: </h4><!--
 
                 --><button type="button" class="btn btn-default app-animation-button" data-animation="happy-1">Happy</button><!--
                 --><button type="button" class="btn btn-default app-animation-button" data-animation="amused-1">Amused</button><!--
@@ -146,68 +154,70 @@
                 --><button type="button" class="btn btn-default app-animation-button" data-animation="sleep-out">Wake-up</button><!--
                 --><button type="button" class="btn btn-default app-animation-button" data-animation="surprised-2">Surprised</button><!--
                 --><button type="button" class="btn btn-default app-animation-button" data-animation="yawn-1">Yawn</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div id="app-page-interaction" class="app-page">
-    <div class="container content">
-        <ul id="app-chat">
-            <li id="leftMsg" class="left clearfix">
+    <div id="app-page-interaction" class="app-page">
+        <div class="container content">
+            <ul id="app-chat">
+                <li id="leftMsg" class="left clearfix">
                 <span class="chat-img pull-left">
                     <img src="public/img/u.gif" alt="User Avatar" class="img-circle"/>
                 </span>
 
-                <div class="chat-body clearfix">
-                    <div class="header">
-                        <strong class="primary-font name">Jack Sparrow</strong>
-                        <small class="pull-right text-muted">
-                            <span class="glyphicon glyphicon-time white"></span><span class="time"></span></small>
+                    <div class="chat-body clearfix">
+                        <div class="header">
+                            <strong class="primary-font name">Jack Sparrow</strong>
+                            <small class="pull-right text-muted">
+                                <span class="glyphicon glyphicon-time white"></span><span class="time"></span></small>
+                        </div>
+                        <p class="msg"></p>
                     </div>
-                    <p class="msg"></p>
-                </div>
-            </li>
-            <li id="rightMsg" class="right clearfix">
+                </li>
+                <li id="rightMsg" class="right clearfix">
                 <span class="chat-img pull-right">
                     <img src="public/img/me.gif" alt="User Avatar" class="img-circle"/>
                 </span>
 
-                <div class="chat-body clearfix">
-                    <div class="header">
-                        <small class=" text-muted"><span class="glyphicon glyphicon-time white"></span><span
-                                class="time">15 mins ago</span>
-                        </small>
-                        <strong class="pull-right primary-font name"></strong>
+                    <div class="chat-body clearfix">
+                        <div class="header">
+                            <small class=" text-muted"><span class="glyphicon glyphicon-time white"></span><span
+                                    class="time">15 mins ago</span>
+                            </small>
+                            <strong class="pull-right primary-font name"></strong>
+                        </div>
+                        <p class='msg'></p>
                     </div>
-                    <p class='msg'></p>
-                </div>
-            </li>
-        </ul>
-    </div>
+                </li>
+            </ul>
+        </div>
 
-    <footer class="navbar-default navbar-fixed-bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="message-input-container" class="input-group">
-                        <input id="app-message-input" type="text" class="form-control input-sm"
-                               placeholder="Type your message here..."/>
+        <footer class="navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="message-input-container" class="input-group">
+                            <input id="app-message-input" type="text" class="form-control input-sm"
+                                   placeholder="Type your message here..."/>
 
                         <span class="input-group-btn">
                             <button class="btn btn-primary btn-sm" id="app-send-button">Send</button>
                         </span>
-                    </div>
+                        </div>
 
-                    <div id="record-container" class="col-sm-12">
-                        <button class="btn btn-info btn-sm" id="app-record-button">
-                            Start Recording
-                        </button>
+                        <div id="record-container" class="col-sm-12">
+                            <button class="btn btn-info btn-sm" id="app-record-button">
+                                Start Recording
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 </div>
+
 <body>
 
 <!-- Bootstrap core JavaScript

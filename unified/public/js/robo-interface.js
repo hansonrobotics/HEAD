@@ -139,12 +139,27 @@ var RoboInterface = {
             ros = new ROSLIB.Ros({
                 url: address
             }).on("connection", function (e) {
-                    RoboInterface.$.trigger("connection");
-                    RoboInterface.startBlenderMode();
-                    RoboInterface.sendDefaultMotorCmds();
-                }).on("error", function (e) {
-                    RoboInterface.$.trigger("error");
-                });
+                RoboInterface.$.trigger("connection");
+                RoboInterface.startBlenderMode();
+                RoboInterface.sendDefaultMotorCmds();
+            });
+
+            ros.on('connection', function () {
+                $('#app-connecting').hide();
+                $('#app-pages').fadeIn();
+            });
+
+            ros.on('close', function () {
+                $('#notifications .label').hide();
+                $('#app-connection-error').show();
+                $('#app-title').html('');
+            });
+
+            ros.on('error', function (error) {
+                $('#notifications .label').hide();
+                $('#app-connection-error').show();
+                $('#app-title').html('');
+            });
 
             //Publish topic - to be deleted
             RoboInterface.motorCmdTopic = new ROSLIB.Topic({

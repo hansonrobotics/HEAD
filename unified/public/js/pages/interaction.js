@@ -53,7 +53,6 @@ $(function () {
             };
 
             recognition.onresult = function (event) {
-                console.log('res');
                 var utterance = event.results[0][0].transcript;
                 var chat_message = new ROSLIB.Message({
                     utterance: utterance,

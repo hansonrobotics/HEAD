@@ -28,7 +28,7 @@ RosUI = {
                 RosUI.topics.cmdBlender.publish(blenderMessage);
 
                 blinkMessage = new ROSLIB.Message({data: 'dmitry:stop'});
-                RosUI.topics.cmdBllink.publish(blenderMessage);
+                RosUI.topics.cmdBllink.publish(blinkMessage);
 
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
                 RosUI.topics.cmdTree.publish(treeMessage);
@@ -42,7 +42,7 @@ RosUI = {
                 RosUI.topics.cmdBlender.publish(blenderMessage);
 
                 blinkMessage = new ROSLIB.Message({data: 'dmitry:stop'});
-                RosUI.topics.cmdBllink.publish(blenderMessage);
+                RosUI.topics.cmdBllink.publish(blinkMessage);
 
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
                 RosUI.topics.cmdTree.publish(treeMessage);
@@ -95,11 +95,14 @@ $(document).ready(function () {
             })
         };
 
-        RosUI.initPage();
-    });
+        var anchor = window.location.hash,
+            pageLink = $('.app-change-page[href="' + anchor + '"]');
 
-    var anchor = window.location.hash,
-        pageLink = $('.app-change-page[href="' + anchor + '"]');
+        if ($(pageLink).length)
+            $(pageLink).click();
+        else
+            $('.app-change-page.active').click();
+    });
 
     $('.app-change-page').click(function () {
         var pageEl = $(this).data('page');
@@ -121,8 +124,7 @@ $(document).ready(function () {
         }
     });
 
-    if ($(pageLink).length)
-        $(pageLink).click();
-    else
-        $('.app-change-page.active').click();
+    $('#notifications .label').click(function () {
+        location.reload();
+    });
 });

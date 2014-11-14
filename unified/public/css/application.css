@@ -15,12 +15,30 @@
     display: none;
 }
 
-.expression-button, .app-animation-button {
+.expression-button, .app-animation-button, .animation-control {
     margin: 3px;
     width: 75px;
     padding: 4px 0 4px 0;
 }
 
 .app-animation-button {
-    width: 85px;
+    width: 90px;
+}
+
+.animation-control {
+    margin: 0;
+    width: 58px;
+}
+
+#notifications {
+    margin-top: 10px;
+}
+
+#notifications .label {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.hide {
+    display: none;
 }

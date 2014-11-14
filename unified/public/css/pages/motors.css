@@ -52,3 +52,7 @@
 
     background-color: #df691a;
 }
+
+.ui-slider {
+    height: 20px;
+}

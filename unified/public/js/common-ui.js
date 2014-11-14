@@ -69,11 +69,10 @@ var CommonUI = new function () {
         }, options));
         return element;
     }
-
 };
 
 function websocketAddress() {
-    return "ws://192.168.0.32:9090";
+    return "ws://192.168.0.69d:9090";
 
     if (window.location.protocol != "https:") {
         return "ws://" + document.domain + ":9090";
