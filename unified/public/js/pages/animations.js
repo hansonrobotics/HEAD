@@ -93,32 +93,24 @@ $(function () {
 
     var loopOn = 0;
 
-    $('#demo-loop').click(function () {
-        $(this).find('.btn').toggleClass('active');
+    $('#demo-loop').find('.btn').click(function () {
+        $('#demo-loop').find('.btn').removeClass('active');
+        $(this).addClass('active');
 
-        if ($(this).find('.btn-primary').size() > 0) {
-            $(this).find('.btn').toggleClass('btn-primary');
+        var elements = $(".app-optional");
+        switch ($(this).attr('id')) {
+            case 'loop-on':
+                loopOn = 1;
+                elements.hide();
+                break;
+            case 'loop-off':
+                loopOn = 0;
+                elements.show();
+                $('.command.btn.active').click();
+                break;
         }
-        if ($(this).find('.btn-danger').size() > 0) {
-            $(this).find('.btn').toggleClass('btn-danger');
-        }
-        if ($(this).find('.btn-success').size() > 0) {
-            $(this).find('.btn').toggleClass('btn-success');
-        }
-        if ($(this).find('.btn-info').size() > 0) {
-            $(this).find('.btn').toggleClass('btn-info');
-        }
-        $(this).find('.btn').toggleClass('btn-default');
-        // process the logic
-        loopOn = $('#loop-on.active').length;
-        if (loopOn) {
-            $('.app-optional').hide();
-        } else {
-            $('.app-optional').show();
-        }
-
-
     });
+
     //Demo loop
     jQuery.fn.random = function () {
         var randomIndex = Math.floor(Math.random() * this.length);
@@ -129,6 +121,4 @@ $(function () {
             $('.app-animation-button').random().click();
         }
     }, 1000);
-
-
-}); 
+});
