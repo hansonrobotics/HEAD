@@ -15,11 +15,20 @@ var CommonUI = new function () {
 
     this.buildExpressionButtons = function (container, classStr) {
         function addBtn(btnObj) {
-            btn = $('<button type="button" class="btn btn-default">' + btnObj['label'] + '</button>');
-            btn.click(function () {
-                container.trigger("exprbtnclick", btnObj);
-            }).addClass(classStr);
-            container.append(btn);
+            btn = $('<button type="button" class="btn btn-default expression-button">' + btnObj['label'] + '</button>');
+            btn.addClass(classStr).addClass(btnObj.name);
+
+            $(container).each(function() {
+                var specific_container = this,
+                    specific_button = $(btn).clone();
+
+                specific_button.click(function () {
+                    $(specific_container).trigger("exprbtnclick", btnObj);
+                });
+
+                $(specific_container).append(specific_button);
+            });
+
             return btn;
         }
 
@@ -35,7 +44,7 @@ var CommonUI = new function () {
                 };
                 btnObjs[i]['element'] = addBtn(btnObjs[i]);
             }
-            ;
+
             container.trigger("success", {btnObjs: btnObjs}); //Can't send an array without an object wrapper
         });
     };

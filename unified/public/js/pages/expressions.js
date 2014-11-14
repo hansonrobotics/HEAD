@@ -52,6 +52,7 @@ function createUIros() {
         setFace(btnObjs[0].name, btnObjs[0].label);
         setKnobPos(KNOB_OPTS.max * 1);
     });
+
     CommonUI.buildExpressionButtons(btnStack);
 }
 
@@ -60,13 +61,11 @@ function createUIros() {
 
 function paintSelection(knobObj, color) {
     knobObj.fgColor = color;
-    $(".dial").css("color", color)
-//    $(".knobName").css("color", color);
-    $(".expression-buttons .btn").removeClass("highlight");
-    var curBtn = getBtn(curface);
-    if (curBtn) {
-        curBtn.addClass("highlight");
-    }
+    $(".dial").css("color", color);
+    $(".knobName").css("color", color);
+    $(".expression-button").removeClass("highlight");
+    if (curface)
+        $(".expression-button." + curface).addClass("highlight");
 }
 
 function initExpressions() {
