@@ -38,17 +38,19 @@
 
 
             <a class="navbar-brand" href="#">
-                <img id="logo" class="pull-left" src="public/img/H.png" alt="" />
+                <img id="logo" class="pull-left" src="public/img/H.png" alt=""/>
                 <span id="app-title"></span>
             </a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/expressions" class="app-change-page active" data-page="#app-page-expressions">Expressions</a></li>
-                <li><a href="#/motors" class="app-change-page" data-page="#app-page-motors">Motors</a></li>
-                <li><a href="#/animations" class="app-change-page" data-page="#app-page-animations">Animations</a></li>
-                <li><a href="#/interactions" class="app-change-page" data-page="#app-page-interaction">Interaction</a></li>
+                <li><a id="app-expressions-link" href="#/expressions" class="app-change-page active"
+                       data-page="#app-page-expressions">Expressions</a></li>
+                <li><a id="app-motors-link" href="#/motors" class="app-change-page" data-page="#app-page-motors">Motors</a></li>
+                <li><a id="app-animations-link" href="#/animations" class="app-change-page" data-page="#app-page-animations">Animations</a></li>
+                <li><a id="app-interactions-link" href="#/interactions" class="app-change-page" data-page="#app-page-interaction">Interaction</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -66,12 +68,13 @@
             </div>
             <div class="portrait" style="float:right">
                 <span class="knobName" style="padding-top:10px"></span>
+
                 <div class="knobBlock" style="float:right">
                     <input type="text" class="dial">
                 </div>
                 <div class="crosshairsl" style="clear:right;"></div>
             </div>
-            <div class="expression-buttons"></div>
+                <div class="expression-buttons"></div>
         </div>
     </div>
 </div>
@@ -81,20 +84,69 @@
             <div id="sliderStack">
                 <div id="sliderTemplate" class="uiBlock hidden">
                     <p style="float:left"><b class="slNameL"></b></p>
+
                     <p style="float:right"><b class="slNameR"></b></p>
-                    <p><span class="slVal">0</span>°(<span class="slMin">-90</span>° to <span class="slMax">90</span>°)</p>
+
+                    <p><span class="slVal">0</span>°(<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
+                    </p>
+
                     <div class="slider"></div>
                 </div>
             </div>
-            <div class="crosshairsl"></div>
-            <div class="expression-buttons"></div>
+            <!--<div class="crosshairsl"></div>-->
+            <!--<div class="expression-buttons"></div>-->
         </div>
     </div>
 </div>
 <div id="app-page-animations" class="app-page">
     <div class="container">
-        <p>Test</p>
-        Animations
+        <div id="control-area" class="row show-grid">
+            <div id="loop" class="col-md-4">
+                <h4> Demo loop: </h4>
+
+                <div id="demo-loop" class="btn-group btn-toggle">
+                    <button id="loop-on" class="btn btn-default">ON</button>
+                    <button id="loop-off" class="btn btn-primary active">OFF</button>
+                </div>
+            </div>
+
+            <div id="ctrls" class="col-md-8 optional">
+                <h4> Controls: </h4>
+
+                <div class="btn-group" id="controls" data-toggle="buttons">
+                    <label id="cmd_play" class="btn btn-primary command" data-cmd="play">
+                        <input type="radio" name="command"> Play
+                    </label>
+                    <label id="cmd_pause" class="btn btn-primary command" data-cmd="pause">
+                        <input type="radio" name="command"> Pause
+                    </label>
+                    <label id="cmd_stop" class="btn btn-primary command active" data-cmd="stop">
+                        <input type="radio" name="command"> Stop
+                    </label>
+                </div>
+            </div>
+
+            <div id="playlist" class="row col-md-12 column optional">
+                <h4> Animations: </h4>
+
+                <button type="button" class="btn btn-default emotion" data-animation="happy-1">Happy</button><button type="button" class="btn btn-default emotion" data-animation="amused-1">Amused</button>
+                <button type="button" class="btn btn-default emotion" data-animation="angry-1">Angry</button>
+                <button type="button" class="btn btn-default emotion" data-animation="cheerful-1">Cheerful</button>
+                <button type="button" class="btn btn-default emotion" data-animation="confident-1">Confident</button>
+                <button type="button" class="btn btn-default emotion" data-animation="confused-1">Confused</button>
+                <button type="button" class="btn btn-default emotion" data-animation="curious-1">Curious</button>
+                <button type="button" class="btn btn-default emotion" data-animation="disgusted-1">Disgusd</button>
+                <button type="button" class="btn btn-default emotion" data-animation="enraged-1">Enraged</button>
+                <button type="button" class="btn btn-default emotion" data-animation="grieving-1">Grieving</button>
+                <button type="button" class="btn btn-default emotion" data-animation="mischievous-1">Mischievous</button>
+                <button type="button" class="btn btn-default emotion" data-animation="sad-1">Sad</button>
+                <button type="button" class="btn btn-default emotion" data-animation="shy-1">Shy</button>
+                <button type="button" class="btn btn-default emotion" data-animation="sleep-in">Sleep-in</button>
+                <button type="button" class="btn btn-default emotion" data-animation="sleep-out">Wake-up</button>
+                <button type="button" class="btn btn-default emotion" data-animation="surprised-2">Surprised</button>
+                <button type="button" class="btn btn-default emotion" data-animation="yawn-1">Yawn</button>
+            </div>
+        </div>
     </div>
 </div>
 <div id="app-page-interaction" class="app-page">
@@ -183,8 +235,11 @@
 <script src="public/js/lib/jquery.ui.touch-punch.min.js"></script>
 <script src="public/js/lib/jquery.knob.js"></script>
 
-<!-- Expressions -->
+<!-- Motors -->
 <script type="text/javascript" src="public/js/pages/motors.js"></script>
+
+<!-- Animations -->
+<script type="text/javascript" src="public/js/pages/animations.js"></script>
 
 </body>
 </html>

@@ -11,33 +11,33 @@ $(function () {
     });
 
     function startTree() {
-        var cmdBlender = new ROSLIB.Topic({
-            ros: ros,
-            name: '/cmd_blendermode',
-            messageType: 'std_msgs/String'
-        });
-        var msg = new ROSLIB.Message({
-            data: 'Dummy'
-        });
-        cmdBlender.publish(msg);
-        var cmdBllink = new ROSLIB.Topic({
-            ros: ros,
-            name: '/dmitry/cmd_blink',
-            messageType: 'std_msgs/String'
-        });
-        var msg = new ROSLIB.Message({
-            data: 'dmitry:start'
-        });
-        cmdBllink.publish(msg);
-        var cmdTree = new ROSLIB.Topic({
-            ros: ros,
-            name: '/dmitry/behavior_switch',
-            messageType: 'std_msgs/String'
-        });
-        var msg = new ROSLIB.Message({
-            data: 'btree_on'
-        });
-        cmdTree.publish(msg);
+//        var cmdBlender = new ROSLIB.Topic({
+//            ros: ros,
+//            name: '/cmd_blendermode',
+//            messageType: 'std_msgs/String'
+//        });
+//        var msg = new ROSLIB.Message({
+//            data: 'Dummy'
+//        });
+//        cmdBlender.publish(msg);
+//        var cmdBllink = new ROSLIB.Topic({
+//            ros: ros,
+//            name: '/dmitry/cmd_blink',
+//            messageType: 'std_msgs/String'
+//        });
+//        var msg = new ROSLIB.Message({
+//            data: 'dmitry:start'
+//        });
+//        cmdBllink.publish(msg);
+//        var cmdTree = new ROSLIB.Topic({
+//            ros: ros,
+//            name: '/dmitry/behavior_switch',
+//            messageType: 'std_msgs/String'
+//        });
+//        var msg = new ROSLIB.Message({
+//            data: 'btree_on'
+//        });
+//        cmdTree.publish(msg);
     }
 
     function recognizeSpeech() {

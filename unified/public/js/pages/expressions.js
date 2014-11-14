@@ -64,6 +64,7 @@ function paintSelection(knobObj, color) {
     $(".dial").css("color", color);
     $(".knobName").css("color", color);
     $(".expression-button").removeClass("highlight");
+
     if (curface)
         $(".expression-button." + curface).addClass("highlight");
 }
@@ -118,7 +119,8 @@ function initExpressions() {
 
 $(function () {
     $(".dial").val(0);
-    RosUI.connection.$.on("connection", function () {
+    console.log(RosUI);
+    RosUI.ros.$.on("connection", function () {
         initExpressions();
         createUIros();
     });

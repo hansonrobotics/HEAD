@@ -68,12 +68,12 @@ function updateUI() {
 //Create UI that requires a loaded config file.
 function initMotors() {
     //Create sliders
-    motorConf = RoboInterface.motorConf
+    motorConf = RoboInterface.motorConf;
     for (var i = 0; i < motorConf.length; i++) {
         if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
             addSliderBlock(motorConf[i]);
     }
-    ;
+
     //Update UI according to messages
     RoboInterface.$.on("onMotorCmd", function (e, msgObj) {
         var msg = msgObj.msg;
@@ -85,24 +85,24 @@ function initMotors() {
 
         if (confEntry.isActive)
             return;
+        var degAngle;
+
         if (msgObj.topic.messageType == 'std_msgs/Float64') {
-            var degAngle = Math.round(radToDeg(msg.data));
+            degAngle = Math.round(radToDeg(msg.data));
         } else {
-            var degAngle = Math.round(radToDeg(msg.angle));
+            degAngle = Math.round(radToDeg(msg.angle));
         }
         //confEntry.element.find(".slider").slider("value", degAngle);
         //confEntry.element.find(".slVal").text(degAngle);
         confEntry.newVal = degAngle;
     });
 
-
     //Create crosshair
     CommonUI.buildCrosshairSlider($(".crosshairsl"));
 }
 
-
 $(function () {
-    RosUI.connection.$.on("connection", function () {
+    RosUI.ros.$.on("connection", function () {
         initMotors();
         setInterval(updateUI, 1000);
     });

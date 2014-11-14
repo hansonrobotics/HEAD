@@ -14,3 +14,9 @@
 .app-page {
     display: none;
 }
+
+.expression-buttons .btn {
+    /*margin: 3px;*/
+    /*width: 75px;*/
+    /*padding: 4px 0px 4px 0px;*/
+}
