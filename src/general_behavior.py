@@ -661,7 +661,8 @@ class Tree():
     @owyl.taskmethod
     def start_scripted_performance_system(self, **kwargs):
         if self.blackboard["blender_mode"] != "Dummy":
-            self.tracking_mode_pub.publish("Dummy")
+            # No need to set Dummy mode
+            #self.tracking_mode_pub.publish("Dummy")
             self.blackboard["blender_mode"] = "Dummy"
         yield True
 
