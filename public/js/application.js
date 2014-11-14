@@ -17,6 +17,8 @@ RosUI = {
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
                 RosUI.topics.cmdTree.publish(treeMessage);
 
+                RoboInterface.makeFaceExpr("happy", 0);
+
                 // click selected expression to init it
                 $('.expression-button.active').click();
 
