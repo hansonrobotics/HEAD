@@ -17,10 +17,9 @@ RosUI = {
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
                 RosUI.topics.cmdTree.publish(treeMessage);
 
+                $('.expression-button.active').removeClass('active');
                 RoboInterface.makeFaceExpr("happy", 0);
-
-                // click selected expression to init it
-                $('.expression-button.active').click();
+                RoboInterface.pointHead({yaw: 0, pitch: 0, roll: 0});
 
                 break;
             case 'app-motors-link':
@@ -36,6 +35,8 @@ RosUI = {
                 RosUI.topics.cmdTree.publish(treeMessage);
 
                 RoboInterface.makeFaceExpr("happy", 0);
+                RoboInterface.pointHead({yaw: 0, pitch: 0, roll: 0});
+
                 break;
             case 'app-animations-link':
                 console.log('animations page load');
@@ -50,6 +51,8 @@ RosUI = {
                 RosUI.topics.cmdTree.publish(treeMessage);
 
                 RoboInterface.makeFaceExpr("happy", 0);
+                RoboInterface.pointHead({yaw: 0, pitch: 0, roll: 0});
+
                 $('[data-cmd="stop"]').click();
 
                 break;
@@ -66,6 +69,8 @@ RosUI = {
                 RosUI.topics.cmdTree.publish(treeMessage);
 
                 RoboInterface.makeFaceExpr("happy", 0);
+                RoboInterface.pointHead({yaw: 0, pitch: 0, roll: 0});
+
                 break;
         }
     }
