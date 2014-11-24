@@ -98,8 +98,8 @@ class BLPlayback(bpy.types.Operator):
 			bpy.data.scenes['Scene'].frame_set(1)
 
 			# update tracking
-			headControl = bpy.data.objects['deform'].pose.bones["head_target"]
-			eyeControl = bpy.data.objects['deform'].pose.bones["eye_target"]
+			headControl = bpy.data.objects['control'].pose.bones["head_target"]
+			eyeControl = bpy.data.objects['control'].pose.bones["eye_target"]
 
 			headLoc = bpy.evaAnimationManager._primaryHeadTargetLoc
 			eyeLoc = bpy.evaAnimationManager._primaryEyeTargetLoc

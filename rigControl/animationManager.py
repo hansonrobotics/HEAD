@@ -63,7 +63,7 @@ class AnimationManager():
 
 		# breathing cycle
 		if self.checkElapsed('breathing', 600):
-			self.newGesture('CYC-breathing', repeat=60, speed=1)
+			self.newGesture('CYC-breathing', repeat=60, speed=1, magnitude=0.2)
 			self.setElapsed('breathing')
 
 
