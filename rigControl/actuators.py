@@ -4,7 +4,7 @@ import random
 
 
 def idleCycle(self):
-	for loopBone in bpy.data.objects['control'].pose.bones:
+	for loopBone in self.bones:
 		if "CYC" in loopBone.name: 
 			if loopBone.location[1] < 1:
 				loopBone.location[1] += 1/(4*loopBone['frames'])
@@ -12,7 +12,7 @@ def idleCycle(self):
 				loopBone.location[1] = 0
 
 
-	bpy.data.objects['control'].pose.bones["CYC-normal"]["influence"] = 1.0
+	sel.bones["CYC-normal"]["influence"] = 1.0
 
 
 def breathingCycle(self):
@@ -37,3 +37,12 @@ def eyeSaccades(self):
 				
 	# override eye movement
 	self.primaryEyeTargetLoc.current = newLoc
+
+
+def headDrift(self):
+	''' applies random head drift '''
+	loc = [0,0,0]
+	loc[0] = random.gauss(self.primaryHeadTargetLoc.target[0], 0.01)
+	loc[1] = random.gauss(self.primaryHeadTargetLoc.target[1], 0.01)
+	loc[2] = random.gauss(self.primaryHeadTargetLoc.target[2], 0.02)
+	self.primaryHeadTargetLoc.target = loc

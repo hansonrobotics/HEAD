@@ -17,7 +17,7 @@ class BLRigControl(bpy.types.Panel):
 
 		### Command Listener ###
 		row = layout.row()
-		if bpy.context.scene['commandListenerActive']:
+		if context.scene['commandListenerActive']:
 			prop = row.operator("wm.command_listener", text='Command Listener Running')
 		else:
 			prop = row.operator("wm.command_listener", text='Start Command Listener', icon='CONSOLE')
@@ -45,8 +45,11 @@ class BLRigControl(bpy.types.Panel):
 		layout.label(text="Emotions:")
 
 		row = layout.row()
+		row.prop(context.scene, 'evaEmotions')
+
+		row = layout.row()
 		prop = row.operator("eva.emotions", text='Test Emotion')
-		prop.evaEmotions = ''
+		prop.evaEmotions = context.scene.evaEmotions
 
 
 		row = layout.row()

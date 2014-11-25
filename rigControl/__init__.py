@@ -9,13 +9,14 @@ import imp
 imp.reload(blenderCommandListener)
 blenderCommandListener.refresh()
 
+# sets up the animation playback
+imp.reload(blenderPlayback)
+blenderPlayback.refresh()
+
 # sets up the Blender interface
 imp.reload(blenderUI)
 blenderUI.refresh()
 
-# sets up the animation playback
-imp.reload(blenderPlayback)
-blenderPlayback.refresh()
 
 # init animation Manager
 imp.reload(animationManager)

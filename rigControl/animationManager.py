@@ -1,9 +1,13 @@
 from . import actuators
 from .helpers import *
 
+
 import bpy	
 import random
 import time
+import imp
+
+debug = True
 
 class AnimationManager():
 	
@@ -17,6 +21,7 @@ class AnimationManager():
 		self.secondaryEyeTargetLoc = BlendedNum([0,0,0], steps=5)
 
 		# emotino params
+		self.emotions = {}
 		self.blinkFrequency = 1.0
 		self.blinkSpeed = 1.0
 		self.breathingSpeed = 1.0
@@ -33,7 +38,8 @@ class AnimationManager():
 		self.deformObj = bpy.data.objects['deform']
 		self.bones = bpy.data.objects['control'].pose.bones
 
-
+		if debug:
+			imp.reload(actuators)
 
 	def keepAlive(self):
 		self.idle += 1.0
@@ -48,13 +54,8 @@ class AnimationManager():
 			self.newGesture('GST-blink')
 
 		if False and self.randomFrequency('primaryHeadTargetLoc', 1):
-			# randomly adjust head target
-			loc = [0,0,0]
-			loc[0] = random.gauss(self.primaryHeadTargetLoc.current[0], 0.01)
-			loc[1] = random.gauss(self.primaryHeadTargetLoc.current[1], 0.01)
-			loc[2] = random.gauss(self.primaryHeadTargetLoc.current[2], 0.02)
-			self.primaryHeadTargetLoc.target = loc
-
+			actuators.headDrift(self)
+			
 
 	# show all attributes
 	def __repr__(self):
@@ -110,20 +111,24 @@ class AnimationManager():
 
 
 	def setEmotions(self, emotions):
-		checkValue(emotions, -1, 1)
-
-		for emotion, value in emotions.items():
+		for emotionName, value in emotions.items():
 			try:
-				control = self.bones['EMO-'+emotion]
+				control = self.bones['EMO-'+emotionName]
 			except KeyError:
-				print('Cannot set emotion. No bone with name ', emotion)
+				print('Cannot set emotion. No bone with name ', emotionName)
 				continue
 			else:
-				control['intensity'] = float(value)
+				value = float(value)
+				checkValue(value, -1, 1)
+				#control['intensity'] = value 		# defer this to playback, because we want smoothing
+				if emotionName in self.emotions:
+					self.emotions[emotionName].target = value
+				else:
+					self.emotions[emotionName] = BlendedNum(value, steps = 20)
+
 
 
 	def resetEmotions(self):
-		bones = bpy.data.objects['control'].pose.bones
 		for bone in self.bones:
 			if bone.name.startswith('EMO-'):
 				bone['intensity'] = 0.0
@@ -141,6 +146,22 @@ class AnimationManager():
 		self.primaryEyeTargetLoc.target = loc
 			
 
+	def terminate(self):
+		# remove all leftovers
+		for gesture in self.gestureList:
+			self.deformObj.animation_data.nla_tracks.remove(gesture.trackRef)
+
+		self.gestureList = []
+
+		# reset pose
+		bpy.context.scene.objects.active = self.deformObj
+		try:
+			bpy.ops.pose.transforms_clear()
+		except:
+			bpy.ops.object.posemode_toggle()
+			bpy.ops.pose.transforms_clear()
+
+
 	def randomFrequency(self, name, hz):
 		try:
 			oldTime = self.lastTriggered[name]
@@ -156,7 +177,8 @@ class AnimationManager():
 			return False
 
 
-		
+
+			
 class Gesture():
 	
 	def __init__(self, name, track, strip, duration=100, speed=1, magnitude=1, priority=1, repeat=1):
@@ -173,9 +195,15 @@ class Gesture():
 
 class BlendedNum():
 	def __init__(self, value, steps = 50):
-		self._target = value.copy()
-		self._old = value.copy()
-		self._current = value.copy()
+		if type(value) is float or type(value) is int:
+			self._target = value
+			self._old = value
+			self._current = value
+		else:
+			self._target = value.copy()
+			self._old = value.copy()
+			self._current = value.copy()
+		
 		self._steps = steps
 
 	def __repr__(self):
@@ -196,7 +224,11 @@ class BlendedNum():
 
 	@target.setter
 	def target(self, value):
-		self._target = value.copy()
+		if type(value) is float or type(value) is int:
+			self._target = value
+		else:
+			self._target = value.copy()
+
 	
 	@property
 	def steps(self):
@@ -205,6 +237,7 @@ class BlendedNum():
 	def steps(self, value):
 		self._steps = value
 	
+
 	def blend(self):
 		if type(self._target) is list and len(self._target)==3:
 			delta = [0,0,0]
@@ -231,8 +264,8 @@ class BlendedNum():
 			self._current += deltaValue
 			
 			if (deltaValue > 0 and self._current > self._target) or (deltaValue < 0 and self._current < self._target):
-				self._current = self._target.copy()
-				self._old = self._target.copy()
+				self._current = self._target
+				self._old = self._target
 				return
 
 

@@ -7,6 +7,7 @@ animationStep = 1.0
 import bpy
 from .helpers import *
 
+import pprint
 
 class EvaGestures(bpy.types.Operator):
 	"""Eva Gesture Control"""
@@ -32,13 +33,17 @@ class EvaEmotions(bpy.types.Operator):
 	bl_label = "Eva Emotions"
 	
 	evaEmotions = bpy.props.StringProperty()
+
+	bpy.types.Scene.evaEmotions = bpy.props.StringProperty(name = "evaEmotions")
+	bpy.context.scene['evaEmotions'] = "{'happy':1, 'surprised':0.5}"
+	
 	
 	def execute(self, context):
 		# add to animationManager
 		if self.evaEmotions == 'reset':
-			bpy.evaAnimationManager.resetEmotions()
+			bpy.evaAnimationManager.setEmotions('', reset = True)
 		else:
-			bpy.evaAnimationManager.setEmotions({'happy':1, 'surprised':0.5})
+			bpy.evaAnimationManager.setEmotions(eval(self.evaEmotions))
 		
 		return {'FINISHED'} 
 
@@ -54,7 +59,7 @@ class EvaTracking(bpy.types.Operator):
 	bl_label = "Eva Tracking"
 
 	evaTrack = bpy.props.FloatVectorProperty()
-	
+
 	def execute(self, context):
 		# add to animationManager
 		bpy.evaAnimationManager.setPrimaryTarget(list(self.evaTrack))
@@ -115,7 +120,15 @@ class BLPlayback(bpy.types.Operator):
 			headControl.location = bpy.evaAnimationManager.primaryHeadTargetLoc.current
 			eyeControl.location = bpy.evaAnimationManager.primaryEyeTargetLoc.current
 			
-			
+			# udpate emotions
+			# pprint.pprint(bpy.evaAnimationManager.emotions)
+
+			for emotionName, value in bpy.evaAnimationManager.emotions.items():
+				control = bpy.evaAnimationManager.bones['EMO-'+emotionName]
+				control['intensity'] = value.current
+				value.target *= 0.99
+				value.blend()
+
 
 			# keep alive
 			bpy.evaAnimationManager.keepAlive()
@@ -136,6 +149,7 @@ class BLPlayback(bpy.types.Operator):
 
 	def cancel(self, context):
 		print('Stopping Playback')
+		bpy.evaAnimationManager.terminate()
 		wm = context.window_manager
 		wm.event_timer_remove(self._timer)
 		bpy.context.scene['animationPlaybackActive'] = False
