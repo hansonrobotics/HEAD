@@ -89,7 +89,6 @@ def refresh():
 	try:
 		register()
 	except ValueError:
-		print('Re-registering')
 		unregister()
 		register()
 	

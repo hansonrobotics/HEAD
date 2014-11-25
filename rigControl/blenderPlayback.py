@@ -1,5 +1,5 @@
 # This module sets up a modal operator in Blender to act
-# as the animation playback service
+# as the animation playback service, and hosts other supporting test operators
 
 framerateHz = 48
 animationStep = 1.0
@@ -83,6 +83,15 @@ class BLPlayback(bpy.types.Operator):
 
 		if event.type == 'TIMER':
 
+			# compute mouse pos
+			normalX = (event.mouse_region_x - 500) /1000
+			normalY = (event.mouse_region_y - 500)/1000
+
+			eyeLoc = bpy.evaAnimationManager.primaryEyeTargetLoc.target
+			eyeLoc[0] = -normalX * 0.2
+			eyeLoc[2] = normalY * 0.2
+
+
 			# update NLA based gestures
 			gestures = bpy.evaAnimationManager.gestureList
 			for gesture in gestures:
@@ -95,30 +104,23 @@ class BLPlayback(bpy.types.Operator):
 					else:
 						bpy.evaAnimationManager.deleteGesture(gesture)
 
-			bpy.data.scenes['Scene'].frame_set(1)
 
-			# update tracking
-			headControl = bpy.data.objects['control'].pose.bones["head_target"]
-			eyeControl = bpy.data.objects['control'].pose.bones["eye_target"]
+			# update eye and head blending
+			headControl = bpy.evaAnimationManager.bones["head_target"]
+			eyeControl = bpy.evaAnimationManager.bones["eye_target"]
 
-			headLoc = bpy.evaAnimationManager._primaryHeadTargetLoc
-			eyeLoc = bpy.evaAnimationManager._primaryEyeTargetLoc
+			bpy.evaAnimationManager.primaryHeadTargetLoc.blend()
+			bpy.evaAnimationManager.primaryEyeTargetLoc.blend()
+
+			headControl.location = bpy.evaAnimationManager.primaryHeadTargetLoc.current
+			eyeControl.location = bpy.evaAnimationManager.primaryEyeTargetLoc.current
 			
-			eyeLoc = mix(list(eyeControl.location), eyeLoc, 0.5)
 			
-			if True:
-				headLoc = mix(list(headControl.location), headLoc, 0.98)
-
-
-
-			eyeControl.location = eyeLoc
-			headControl.location = headLoc
-
-			bpy.data.scenes['Scene'].frame_set(1)
-
 
 			# keep alive
 			bpy.evaAnimationManager.keepAlive()
+
+			bpy.data.scenes['Scene'].frame_set(1)
 
 		return {'PASS_THROUGH'}
 
@@ -158,8 +160,6 @@ def refresh():
 	try:
 		register()
 	except Exception as E:
-		print('re-registering')
-		print(E)
 		unregister()
 		register()
 

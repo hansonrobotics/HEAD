@@ -1,14 +1,9 @@
-try:
-	import bpy
-except:
-	bpy = None
-	print ('Running without Blender')
-
+from . import actuators
 from .helpers import *
 
+import bpy	
 import random
 import time
-
 
 class AnimationManager():
 	
@@ -16,16 +11,15 @@ class AnimationManager():
 		print('Starting AnimationManager singleton')
 		self.gestureList = []
 		
-		self.primaryHeadTargetLoc = [0,0,0]
-		self.primaryEyeTargetLoc = [0,0,0]
-		self.secondaryHeadTargetLoc = [0,0,0]
-		self.secondaryEyeTargetLoc = [0,0,0]
+		self.primaryHeadTargetLoc = BlendedNum([0,0,0], steps=50)
+		self.primaryEyeTargetLoc = BlendedNum([0,0,0], steps=5)
+		self.secondaryHeadTargetLoc = BlendedNum([0,0,0], steps=50)
+		self.secondaryEyeTargetLoc = BlendedNum([0,0,0], steps=5)
 
-
-
+		# emotino params
 		self.blinkFrequency = 1.0
 		self.blinkSpeed = 1.0
-		self.breathingFrequency = 1.0
+		self.breathingSpeed = 1.0
 		self.breathingIntensity = 1.0
 		self.swiftness = 1.0
 		self.shyness = 1.0
@@ -33,92 +27,33 @@ class AnimationManager():
 
 		# internal vars
 		self._time = 0
-
-		self._primaryHeadTargetLoc = [0,0,0]
-		self._primaryEyeTargetLoc = [0,0,0]
-		self._secondaryHeadTargetLoc = [0,0,0]
-		self._secondaryEyeTargetLoc = [0,0,0]
-
-		self._primaryHeadTargetLocMoves = []
-
-		self._blend = 0
 		self.lastTriggered = {}
+
+		# global access
+		self.deformObj = bpy.data.objects['deform']
+		self.bones = bpy.data.objects['control'].pose.bones
+
+
 
 	def keepAlive(self):
 		self.idle += 1.0
 
+		# actuators.idleCycle(self)
+		# actuators.breathingCycle(self)
 
-		# idle cycle
-		if False:
-			for loopBone in bpy.data.objects['control'].pose.bones:
-				if "CYC" in loopBone.name: 
-					if loopBone.location[1] < 1:
-						loopBone.location[1] += 1/(4*loopBone['frames'])
-					else :
-						loopBone.location[1] = 0
+		if True and self.randomFrequency('primaryEyeTargetLoc', 2):
+			actuators.eyeSaccades(self)
 
-
-			bpy.data.objects['control'].pose.bones["CYC-normal"]["influence"] = 1.0
-
-
-		# breathing cycle
-		if self.checkElapsed('breathing', 600):
-			self.newGesture('CYC-breathing', repeat=60, speed=1, magnitude=0.2)
-			self.setElapsed('breathing')
-
-
-		# global frequency adjustment
-		if random.random() > 0.3:
-			return
-
-
-		if random.random() < 0.5 and self.checkElapsed('primaryEyeTargetLoc', 0.3):
-			# randomly set an eye target
-			loc = [0,0,0]
-			loc[0] = random.gauss(self.primaryEyeTargetLoc[0], 0.05)
-			loc[1] = random.gauss(self.primaryEyeTargetLoc[1], 0.02)
-			loc[2] = random.gauss(self.primaryEyeTargetLoc[2], 0.02)
-
-			# compute distance from previous eye position
-			distance = computeDistance(loc, self._primaryEyeTargetLoc)
-
-			if distance > 0.1:
-				# trigger blink micro
-				if self.checkElapsed('blinkMicro', 2.0):
-					# print('triggering blink from eye motion - micro')
-					self.newGesture('GST-blink-micro')
-					self.setElapsed('blinkMicro')
-				else:
-					# print('too often, blink supressed')
-					...
-
-
-			self._primaryEyeTargetLoc = loc
-			self.setElapsed('primaryEyeTargetLoc')
-
-		if random.random() < 0.01 and self.checkElapsed('blink', 3.0):
-			# blink
-			# print('blink')
+		if True and self.randomFrequency('blink', 0.1):
 			self.newGesture('GST-blink')
-			self.setElapsed('blink')
 
-		
-		if random.random() < 0.001 and self.checkElapsed('yawn', 30.0):
-			# yawn
-			self.newGesture('GST-yawn-1')
-			self.setElapsed('yawn')
-
-
-
-		if random.random() < 0.1 and self.checkElapsed('primaryHeadTargetLoc', 1):
+		if False and self.randomFrequency('primaryHeadTargetLoc', 1):
 			# randomly adjust head target
 			loc = [0,0,0]
-			loc[0] = random.gauss(self.primaryHeadTargetLoc[0], 0.01)
-			loc[1] = random.gauss(self.primaryHeadTargetLoc[1], 0.01)
-			loc[2] = random.gauss(self.primaryHeadTargetLoc[2], 0.02)
-			self._primaryHeadTargetLoc = loc
-			self.setElapsed('primaryHeadTargetLoc')
-
+			loc[0] = random.gauss(self.primaryHeadTargetLoc.current[0], 0.01)
+			loc[1] = random.gauss(self.primaryHeadTargetLoc.current[1], 0.01)
+			loc[2] = random.gauss(self.primaryHeadTargetLoc.current[2], 0.02)
+			self.primaryHeadTargetLoc.target = loc
 
 
 	# show all attributes
@@ -130,32 +65,21 @@ class AnimationManager():
 		return string
 
 
-	def setEmotionAttr(self, name, value, smoothing = 0):
-		if smoothing == 0:
-			self['name'] = value
-		else:
-			...		
-
-
-
 	def newGesture(self, name, repeat = 1, speed=1, magnitude=0.5, priority=1):
-		# print('Creating new gesture ', name)
-		
-		deformObj = bpy.data.objects['deform']
 		try:
 			actionDatablock = bpy.data.actions[name]
 		except KeyError:
-			print('No gesture matching name is found')
+			raise Exception('No gesture matching name is found')
 			return
 
-		# check value 
-		checkValue(repeat, 1, 100)
+		# check value for sanity
+		checkValue(repeat, 1, 1000)
 		checkValue(speed, 0.1, 10)
 		checkValue(magnitude, 0, 1)
 		checkValue(priority, 0, 1)
 
 		# create NLA track
-		newTrack = deformObj.animation_data.nla_tracks.new()
+		newTrack = self.deformObj.animation_data.nla_tracks.new()
 		newTrack.name = name
 
 		# create strip
@@ -163,6 +87,10 @@ class AnimationManager():
 		duration = (newStrip.frame_end - newStrip.frame_start)
 		newStrip.blend_type = 'ADD'
 		newStrip.use_animated_time = True
+
+		# force blink to play at 1.0 intensity
+		if 'blink' in name.lower():
+			magnitude = 1
 
 		if magnitude < 1:
 			newStrip.use_animated_influence = True
@@ -174,23 +102,19 @@ class AnimationManager():
 
 
 	def deleteGesture(self, gesture):
-		# print('Deleting gesture')
-
 		# remove from list
 		self.gestureList.remove(gesture)
 
 		# remove from Blender
-		deformObj = bpy.data.objects['deform']
-		deformObj.animation_data.nla_tracks.remove(gesture.trackRef)
+		self.deformObj.animation_data.nla_tracks.remove(gesture.trackRef)
 
 
 	def setEmotions(self, emotions):
-		# checkValue(emotions, 0, 1)
+		checkValue(emotions, -1, 1)
 
-		bones = bpy.data.objects['control'].pose.bones
 		for emotion, value in emotions.items():
 			try:
-				control = bones['EMO-'+emotion]
+				control = self.bones['EMO-'+emotion]
 			except KeyError:
 				print('Cannot set emotion. No bone with name ', emotion)
 				continue
@@ -200,51 +124,37 @@ class AnimationManager():
 
 	def resetEmotions(self):
 		bones = bpy.data.objects['control'].pose.bones
-		for bone in bones:
+		for bone in self.bones:
 			if bone.name.startswith('EMO-'):
 				bone['intensity'] = 0.0
 		
 
 	def setPrimaryTarget(self, loc):
 		# compute distance from previous eye position
-		distance = computeDistance(loc, self._primaryEyeTargetLoc)
+		distance = computeDistance(loc, self.primaryEyeTargetLoc.current)
 
 		if distance > 0.15:
-			if self.checkElapsed('blink', 1.0):
-				# print('triggering blink from eye motion')
+			if self.randomFrequency('blink', 20):
 				self.newGesture('GST-blink-micro')
-				self.setElapsed('blink')
 
-		self.primaryHeadTargetLoc = loc
-		self._primaryHeadTargetLoc = loc
-
-		self.primaryEyeTargetLoc = loc
-		self._primaryEyeTargetLoc = loc
+		self.primaryHeadTargetLoc.target = loc
+		self.primaryEyeTargetLoc.target = loc
 			
 
-	def setSecondaryTarget(self, loc):
-		self.secondaryHeadTargetLoc = loc
-		self._secondaryHeadTargetLoc = loc
-		self.secondaryEyeTargetLoc = loc
-		self._secondaryEyeTargetLoc = loc
-		
-
-
-	def setElapsed(self, name):
-		''' set the '''
-		self.lastTriggered[name] = time.time()
-
-
-	def checkElapsed(self, name, duration):
-		''' check to see if 'duration' amount seconds has elapsed'''
+	def randomFrequency(self, name, hz):
 		try:
 			oldTime = self.lastTriggered[name]
 		except KeyError:
-			print('checkElapsed Key Error')
+			self.lastTriggered[name] = time.time()
 			return True
 
 		elapsedTime = time.time() - oldTime
-		return elapsedTime > duration
+		if elapsedTime > random.gauss(1.0/hz, 0.2/hz):  # sigma is hard coded to 1/5 the mu
+			self.lastTriggered[name] = time.time()
+			return True
+		else:
+			return False
+
 
 		
 class Gesture():
@@ -259,6 +169,71 @@ class Gesture():
 
 		self.trackRef = track
 		self.stripRef = strip
+
+
+class BlendedNum():
+	def __init__(self, value, steps = 50):
+		self._target = value.copy()
+		self._old = value.copy()
+		self._current = value.copy()
+		self._steps = steps
+
+	def __repr__(self):
+		allStr = 'BlendedNum:' + str((self._current, self._old, self._target))
+		return allStr
+
+	@property
+	def current(self):
+		return self._current
+	@current.setter
+	def current(self, value):
+		self._current = value
+
+
+	@property
+	def target(self):
+		return self._target
+
+	@target.setter
+	def target(self, value):
+		self._target = value.copy()
+	
+	@property
+	def steps(self):
+		return self._steps
+	@steps.setter
+	def steps(self, value):
+		self._steps = value
+	
+	def blend(self):
+		if type(self._target) is list and len(self._target)==3:
+			delta = [0,0,0]
+			delta[0] = (self._target[0] - self._old[0]) / self._steps
+			delta[1] = (self._target[1] - self._old[1]) / self._steps
+			delta[2] = (self._target[2] - self._old[2]) / self._steps
+
+			self._current[0] += delta[0]
+			self._current[1] += delta[1]
+			self._current[2] += delta[2]
+			
+			if (delta[0] > 0 and self._current[0] > self._target[0]) or (delta[0] < 0 and self._current[0] < self._target[0]):
+				self._current[0] = self._target[0]
+				self._old[0] = self._target[0]
+			if (delta[1] > 0 and self._current[1] > self._target[1]) or (delta[1] < 0 and self._current[1] < self._target[1]):
+				self._current[1] = self._target[1]
+				self._old[1] = self._target[1]
+			if (delta[2] > 0 and self._current[2] > self._target[2]) or (delta[2] < 0 and self._current[2] < self._target[2]):
+				self._current[2] = self._target[2]
+				self._old[2] = self._target[2]
+			
+		else:
+			deltaValue = (self._target - self._old) / self._steps
+			self._current += deltaValue
+			
+			if (deltaValue > 0 and self._current > self._target) or (deltaValue < 0 and self._current < self._target):
+				self._current = self._target.copy()
+				self._old = self._target.copy()
+				return
 
 
 def init():
