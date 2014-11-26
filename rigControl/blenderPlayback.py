@@ -112,8 +112,8 @@ class BLPlayback(bpy.types.Operator):
 			eyeLoc[2] = normalY * 0.5
 
 			headLoc = bpy.evaAnimationManager.primaryHeadTargetLoc.target
-			headLoc[0] = -normalX * 0.1
-			headLoc[2] = normalY * 0.1
+			headLoc[0] = -normalX * 0.2
+			headLoc[2] = normalY * 0.2
 
 			# update NLA based gestures
 			gestures = bpy.evaAnimationManager.gestureList

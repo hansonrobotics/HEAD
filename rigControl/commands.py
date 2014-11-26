@@ -18,8 +18,8 @@ def terminate():
 def availableEmotionStates():
 	emotionStates = []
 	for emo in bpy.data.objects['control'].pose.bones:
-		if "EMO" in emo.name:
-			emotionStates.append(emo.name)
+		if emo.name.startswith('EMO-'):
+			emotionStates.append(emo.name[4:])
 	return emotionStates
 
 
@@ -37,8 +37,8 @@ def setEmotionStates(emotions, animationManager):
 def availableEmotionGestures():
 	emotionGestures = []
 	for gesture in bpy.data.actions:
-		if "GST" in gesture.name:
-			emotionGestures.append(gesture.name)
+		if gesture.name.startswith("GST-"):
+			emotionGestures.append(gesture.name[4:])
 	return emotionGestures
 
 
