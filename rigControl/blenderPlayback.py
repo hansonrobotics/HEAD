@@ -96,6 +96,9 @@ class BLPlayback(bpy.types.Operator):
 			eyeLoc[0] = -normalX * 0.2
 			eyeLoc[2] = normalY * 0.2
 
+			headLoc = bpy.evaAnimationManager.primaryHeadTargetLoc.target
+			headLoc[0] = -normalX * 0.2
+			headLoc[2] = normalY * 0.2
 
 			# update NLA based gestures
 			gestures = bpy.evaAnimationManager.gestureList
@@ -121,12 +124,10 @@ class BLPlayback(bpy.types.Operator):
 			eyeControl.location = bpy.evaAnimationManager.primaryEyeTargetLoc.current
 			
 			# udpate emotions
-			# pprint.pprint(bpy.evaAnimationManager.emotions)
-
 			for emotionName, value in bpy.evaAnimationManager.emotions.items():
 				control = bpy.evaAnimationManager.bones['EMO-'+emotionName]
 				control['intensity'] = value.current
-				value.target *= 0.99
+				value._target *= 0.99
 				value.blend()
 
 

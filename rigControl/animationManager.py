@@ -6,6 +6,8 @@ import bpy
 import random
 import time
 import imp
+import pdb
+import collections
 
 debug = True
 
@@ -15,10 +17,11 @@ class AnimationManager():
 		print('Starting AnimationManager singleton')
 		self.gestureList = []
 		
-		self.primaryHeadTargetLoc = BlendedNum([0,0,0], steps=50)
-		self.primaryEyeTargetLoc = BlendedNum([0,0,0], steps=5)
-		self.secondaryHeadTargetLoc = BlendedNum([0,0,0], steps=50)
-		self.secondaryEyeTargetLoc = BlendedNum([0,0,0], steps=5)
+		self.primaryHeadTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
+		self.secondaryHeadTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
+
+		self.primaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=4)
+		self.secondaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=4)
 
 		# emotino params
 		self.emotions = {}
@@ -53,7 +56,7 @@ class AnimationManager():
 		if True and self.randomFrequency('blink', 0.1):
 			self.newGesture('GST-blink')
 
-		if False and self.randomFrequency('primaryHeadTargetLoc', 1):
+		if True and self.randomFrequency('primaryHeadTargetLoc', 1):
 			actuators.headDrift(self)
 			
 
@@ -110,7 +113,7 @@ class AnimationManager():
 		self.deformObj.animation_data.nla_tracks.remove(gesture.trackRef)
 
 
-	def setEmotions(self, emotions):
+	def setEmotions(self, emotions, reset=False):
 		for emotionName, value in emotions.items():
 			try:
 				control = self.bones['EMO-'+emotionName]
@@ -120,19 +123,11 @@ class AnimationManager():
 			else:
 				value = float(value)
 				checkValue(value, -1, 1)
-				#control['intensity'] = value 		# defer this to playback, because we want smoothing
 				if emotionName in self.emotions:
 					self.emotions[emotionName].target = value
 				else:
-					self.emotions[emotionName] = BlendedNum(value, steps = 20)
+					self.emotions[emotionName] = BlendedNum(value, steps = 10, smoothing = 10)
 
-
-
-	def resetEmotions(self):
-		for bone in self.bones:
-			if bone.name.startswith('EMO-'):
-				bone['intensity'] = 0.0
-		
 
 	def setPrimaryTarget(self, loc):
 		# compute distance from previous eye position
@@ -194,17 +189,22 @@ class Gesture():
 
 
 class BlendedNum():
-	def __init__(self, value, steps = 50):
+	def __init__(self, value, steps = 20, smoothing = 20):
 		if type(value) is float or type(value) is int:
 			self._target = value
 			self._old = value
 			self._current = value
+			self._movingAverage = collections.deque(5*[0], smoothing)
+			self.isVector = False
 		else:
 			self._target = value.copy()
 			self._old = value.copy()
 			self._current = value.copy()
-		
+			self._movingAverage = collections.deque(5*[[0,0,0]], smoothing)
+			self.isVector = True
+			
 		self._steps = steps
+		
 
 	def __repr__(self):
 		allStr = 'BlendedNum:' + str((self._current, self._old, self._target))
@@ -212,7 +212,12 @@ class BlendedNum():
 
 	@property
 	def current(self):
-		return self._current
+		''' return moving average instead of raw lerp value '''
+		if self.isVector:
+			return [float(sum(col))/len(col) for col in zip(*list(self._movingAverage))]
+		else:
+			return sum(self._movingAverage)/len(self._movingAverage)
+
 	@current.setter
 	def current(self, value):
 		self._current = value
@@ -224,11 +229,13 @@ class BlendedNum():
 
 	@target.setter
 	def target(self, value):
-		if type(value) is float or type(value) is int:
-			self._target = value
-		else:
+		if self.isVector:
 			self._target = value.copy()
-
+			self._old = self._current.copy()
+		else:
+			self._target = value
+			self._old = self._current
+			
 	
 	@property
 	def steps(self):
@@ -239,7 +246,14 @@ class BlendedNum():
 	
 
 	def blend(self):
-		if type(self._target) is list and len(self._target)==3:
+		#store old value to moving average:
+		if self.isVector:
+			self._movingAverage.append(self._current.copy())
+		else:
+			self._movingAverage.append(self._current)
+
+
+		if self.isVector and len(self._target)==3:
 			delta = [0,0,0]
 			delta[0] = (self._target[0] - self._old[0]) / self._steps
 			delta[1] = (self._target[1] - self._old[1]) / self._steps

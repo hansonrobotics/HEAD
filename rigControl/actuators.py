@@ -25,8 +25,8 @@ def eyeSaccades(self):
 	''' applies random saccades to eye '''
 	newLoc = [0,0,0]
 	newLoc[0] = random.gauss(self.primaryEyeTargetLoc.current[0], 0.05)
-	newLoc[1] = random.gauss(self.primaryEyeTargetLoc.current[1], 0.02)
-	newLoc[2] = random.gauss(self.primaryEyeTargetLoc.current[2], 0.02)
+	newLoc[1] = random.gauss(self.primaryEyeTargetLoc.current[1], 0.03)
+	newLoc[2] = random.gauss(self.primaryEyeTargetLoc.current[2], 0.03)
 
 	# compute distance from previous eye position
 	distance = computeDistance(newLoc, self.primaryEyeTargetLoc.current)
@@ -44,5 +44,5 @@ def headDrift(self):
 	loc = [0,0,0]
 	loc[0] = random.gauss(self.primaryHeadTargetLoc.target[0], 0.01)
 	loc[1] = random.gauss(self.primaryHeadTargetLoc.target[1], 0.01)
-	loc[2] = random.gauss(self.primaryHeadTargetLoc.target[2], 0.02)
+	loc[2] = random.gauss(self.primaryHeadTargetLoc.target[2], 0.01)
 	self.primaryHeadTargetLoc.target = loc

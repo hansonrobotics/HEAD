@@ -45,18 +45,13 @@ class BLRigControl(bpy.types.Panel):
 		layout.label(text="Emotions:")
 
 		row = layout.row()
-		row.prop(context.scene, 'evaEmotions')
+		row.prop(context.scene, 'evaEmotions', text='')
 
 		row = layout.row()
 		prop = row.operator("eva.emotions", text='Test Emotion')
 		prop.evaEmotions = context.scene.evaEmotions
 
-
-		row = layout.row()
-		prop = row.operator("eva.emotions", text='Reset Emotion')
-		prop.evaEmotions = 'reset'
-
-		
+	
 		### Tracking ###
 		row = layout.row()
 		layout.label(text="Tracking:")
