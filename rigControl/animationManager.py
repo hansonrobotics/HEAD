@@ -15,15 +15,19 @@ class AnimationManager():
 	
 	def __init__(self):
 		print('Starting AnimationManager singleton')
-		self.gestureList = []
 		
+		# gesture params
+		self.gesturesList = []
+		
+		# tracking param
 		self.primaryHeadTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
 		self.secondaryHeadTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
 
-		self.primaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=4)
-		self.secondaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=4)
+		self.primaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
+		self.secondaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
 
-		# emotino params
+
+		# emotion params
 		self.emotions = {}
 		self.blinkFrequency = 1.0
 		self.blinkSpeed = 1.0
@@ -44,11 +48,16 @@ class AnimationManager():
 		if debug:
 			imp.reload(actuators)
 
+
 	def keepAlive(self):
+		''' called every frame, used to dispatch animation actuators'''
 		self.idle += 1.0
 
-		# actuators.idleCycle(self)
-		# actuators.breathingCycle(self)
+		if True:
+			actuators.idleCycle(self)
+			
+		if False:
+			actuators.breathingCycle(self)
 
 		if True and self.randomFrequency('primaryEyeTargetLoc', 2):
 			actuators.eyeSaccades(self)
@@ -70,6 +79,7 @@ class AnimationManager():
 
 
 	def newGesture(self, name, repeat = 1, speed=1, magnitude=0.5, priority=1):
+		''' create a new gesture '''
 		try:
 			actionDatablock = bpy.data.actions[name]
 		except KeyError:
@@ -102,18 +112,20 @@ class AnimationManager():
 
 		# create object and add to list
 		g = Gesture(name, newTrack, newStrip, duration=duration, speed=speed, magnitude=magnitude, priority=priority, repeat=repeat)
-		self.gestureList.append(g)
+		self.gesturesList.append(g)
 
 
-	def deleteGesture(self, gesture):
+	def _deleteGesture(self, gesture):
+		''' internal use only, stops and deletes a gesture'''
 		# remove from list
-		self.gestureList.remove(gesture)
+		self.gesturesList.remove(gesture)
 
 		# remove from Blender
 		self.deformObj.animation_data.nla_tracks.remove(gesture.trackRef)
 
 
 	def setEmotions(self, emotions, reset=False):
+		''' set the emotion param of the character'''
 		for emotionName, value in emotions.items():
 			try:
 				control = self.bones['EMO-'+emotionName]
@@ -130,6 +142,7 @@ class AnimationManager():
 
 
 	def setPrimaryTarget(self, loc):
+		''' set the target used by eye and face tracking '''
 		# compute distance from previous eye position
 		distance = computeDistance(loc, self.primaryEyeTargetLoc.current)
 
@@ -142,11 +155,12 @@ class AnimationManager():
 			
 
 	def terminate(self):
-		# remove all leftovers
-		for gesture in self.gestureList:
+		''' house keeping at the end of the run'''
+		# remove all leftover gestures
+		for gesture in self.gesturesList:
 			self.deformObj.animation_data.nla_tracks.remove(gesture.trackRef)
 
-		self.gestureList = []
+		self.gesturesList = []
 
 		# reset pose
 		bpy.context.scene.objects.active = self.deformObj
@@ -158,6 +172,7 @@ class AnimationManager():
 
 
 	def randomFrequency(self, name, hz):
+		''' returns a random true/false based on a hertz value as input'''
 		try:
 			oldTime = self.lastTriggered[name]
 		except KeyError:
@@ -175,7 +190,7 @@ class AnimationManager():
 
 			
 class Gesture():
-	
+	''' represents a blender actions'''
 	def __init__(self, name, track, strip, duration, speed, magnitude, priority, repeat):
 		self.name = name
 		self.duration = duration
@@ -189,6 +204,7 @@ class Gesture():
 
 
 class BlendedNum():
+	''' represents a number or vec3 float that is smoothly blended'''
 	def __init__(self, value, steps = 20, smoothing = 20):
 		if type(value) is float or type(value) is int:
 			self._target = value
@@ -252,8 +268,8 @@ class BlendedNum():
 		else:
 			self._movingAverage.append(self._current)
 
-
 		if self.isVector and len(self._target)==3:
+			# trilinear interpolation
 			delta = [0,0,0]
 			delta[0] = (self._target[0] - self._old[0]) / self._steps
 			delta[1] = (self._target[1] - self._old[1]) / self._steps
@@ -274,6 +290,7 @@ class BlendedNum():
 				self._old[2] = self._target[2]
 			
 		else:
+			# linear interpolation
 			deltaValue = (self._target - self._old) / self._steps
 			self._current += deltaValue
 			
@@ -284,7 +301,4 @@ class BlendedNum():
 
 
 def init():
-	if bpy:
-		bpy.evaAnimationManager = AnimationManager()
-	else:
-		return AnimationManager()
+	bpy.evaAnimationManager = AnimationManager()

@@ -4,21 +4,13 @@ import random
 
 
 def idleCycle(self):
-	for loopBone in self.bones:
-		if "CYC" in loopBone.name: 
-			if loopBone.location[1] < 1:
-				loopBone.location[1] += 1/(4*loopBone['frames'])
-			else :
-				loopBone.location[1] = 0
-
-
-	sel.bones["CYC-normal"]["influence"] = 1.0
+	if 'CYC-normal' not in [gesture.name for gesture in self.gesturesList]:
+		self.newGesture('CYC-normal', repeat = 10, speed=1, magnitude=1.0, priority=1)
 
 
 def breathingCycle(self):
-	if self.checkElapsed('breathing', 600):
-		self.newGesture('CYC-breathing', repeat=60, speed=1, magnitude=0.2)
-		self.setElapsed('breathing')
+	if 'CYC-breathing' not in [gesture.name for gesture in self.gesturesList]:
+		self.newGesture('CYC-breathing', repeat=10, speed=1, magnitude=1.0)
 
 
 def eyeSaccades(self):

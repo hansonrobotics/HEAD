@@ -116,7 +116,7 @@ class BLPlayback(bpy.types.Operator):
 			headLoc[2] = normalY * 0.2
 
 			# update NLA based gestures
-			gestures = bpy.evaAnimationManager.gestureList
+			gestures = bpy.evaAnimationManager.gesturesList
 			for gesture in gestures:
 				gesture.stripRef.strip_time += animationStep * gesture.speed
 
@@ -125,7 +125,7 @@ class BLPlayback(bpy.types.Operator):
 						gesture.repeat -= 1
 						gesture.stripRef.strip_time = 0
 					else:
-						bpy.evaAnimationManager.deleteGesture(gesture)
+						bpy.evaAnimationManager._deleteGesture(gesture)
 
 
 			# update eye and head blending

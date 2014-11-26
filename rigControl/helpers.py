@@ -17,7 +17,7 @@ def mix(a,b,factor):
 
 def checkValue(var, minV, maxV):
 	if not minV <= var <= maxV:
-		print('Warning:', var, 'is outside of the expected range for', var, ':', minV, '-' , maxV)
+		print('Warning:', var, 'is outside of the expected range ', ':', minV, '-' , maxV)
 
 
 def smoothstep(x):
