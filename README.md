@@ -21,7 +21,7 @@ Pre-requisites: you must have a working version of Blender 2.72 or higher.
 # Command Listener #
 
 * Comands may be sent through ROS to control Eva.
-* The API is currently in draft stage: API_v1.pdf
+* The API is currently in draft stage: [API_v1.pdf](docs/API_v1.pdf)
 
 
 # Design #
