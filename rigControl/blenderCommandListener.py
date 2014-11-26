@@ -5,7 +5,13 @@ commandRateHz = 10
 debug = True
 
 import bpy
+
 from . import network
+from . import commands
+
+import imp
+imp.reload(commands)
+
 
 class BLCommandListener(bpy.types.Operator):
 	"""Listens for external commands"""
@@ -21,9 +27,9 @@ class BLCommandListener(bpy.types.Operator):
 			return self.cancel(context)
 
 		if debug and event.type == 'TIMER':
-			print('Running Command Listener', round(self._timer.time_duration,3))
+			# print('Running Command Listener', round(self._timer.time_duration,3))
 			command = network.poll(context)
-			...
+
 
 		# set status
 		bpy.context.scene['commandListenerActive'] = True

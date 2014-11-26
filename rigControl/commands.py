@@ -1,3 +1,5 @@
+import bpy
+
 def getAPIVersion():
 	return 1
 
@@ -14,25 +16,47 @@ def terminate():
 	...
 
 def availableEmotionStates():
-	pass
+	emotionStates = []
+	for emo in bpy.data.objects['control'].pose.bones:
+		if "EMO" in emo.name:
+			emotionStates.append(emo.name)
+	return emotionStates
 
-def getEmotionStates():
-	pass
+
+def getEmotionStates(animationManager):
+	emotionStates = {}
+	for name, emotion in animationManager.emotions.items():
+		emotionStates[name] = round(emotion.current, 3)
+	return emotionStates
+
 
 def setEmotionStates():
 	pass
 
-def availableEmotionGestures():
-	pass
 
-def getEmotionGestures():
-	pass
+def availableEmotionGestures():
+	emotionGestures = []
+	for gesture in bpy.data.actions:
+		if "GST" in gesture.name:
+			emotionGestures.append(gesture.name)
+	return emotionGestures
+
+
+def getEmotionGestures(animationManager):
+	emotionGestures = []
+	for gesture in animationManager.gestureList:
+		data = [gesture.name, gesture.duration*gesture.repeat - gesture.stripRef.strip_time]
+		emotionGestures.append(data)
+	return emotionGestures
+
 
 def setEmotionGestures():
 	pass
 
+
 def setPrimaryTarget():
 	pass
+	
 
 def setSecondaryTarget():
 	pass
