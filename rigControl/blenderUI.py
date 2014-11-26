@@ -53,27 +53,53 @@ class BLRigControl(bpy.types.Panel):
 
 	
 		### Tracking ###
+		# row = layout.row()
+		# layout.label(text="Tracking:")
+		# row = layout.row()
+		# op = row.operator('eva.tracking', text='Up')
+		# op.evaTrack = [0, 0, 0.1]
+
+		# row = layout.row()
+		# op = row.operator('eva.tracking', text='Left')
+		# op.evaTrack = [0.2, 0, 0]
+
+		# op = row.operator('eva.tracking', text='Centre')
+		# op.evaTrack = [0, 0, 0]
+
+		# op = row.operator('eva.tracking', text='Right')
+		# op.evaTrack = [-0.2, 0, 0]
+
+		# row = layout.row()
+		# op = row.operator('eva.tracking', text='Down')
+		# op.evaTrack = [0, 0, -0.1]
 		row = layout.row()
-		layout.label(text="Tracking:")
-		row = layout.row()
-		op = row.operator('eva.tracking', text='Up')
-		op.evaTrack = [0, 0, 0.1]
+		op = row.operator('eva.debug', text='Happy')
+		op.action = 'commands.setEmotionStates({"happy":0.8},bpy.evaAnimationManager)'
 
 		row = layout.row()
-		op = row.operator('eva.tracking', text='Left')
-		op.evaTrack = [0.2, 0, 0]
+		op = row.operator('eva.debug', text='recoil')
+		op.action = 'commands.setEmotionStates({"recoil":0.8},bpy.evaAnimationManager)'
 
-		op = row.operator('eva.tracking', text='Centre')
-		op.evaTrack = [0, 0, 0]
 
-		op = row.operator('eva.tracking', text='Right')
-		op.evaTrack = [-0.2, 0, 0]
 
 		row = layout.row()
-		op = row.operator('eva.tracking', text='Down')
-		op.evaTrack = [0, 0, -0.1]
+		layout.label(text="Debug:")
+		row = layout.row()
+		op = row.operator('eva.debug', text='availableEmotionStates()')
+		op.action = 'commands.availableEmotionStates()'
 
-		
+		row = layout.row()
+		op = row.operator('eva.debug', text='availableEmotionGestures()')
+		op.action = 'commands.availableEmotionGestures()'
+
+		row = layout.row()
+		op = row.operator('eva.debug', text='getEmotionStates()')
+		op.action = 'commands.getEmotionStates(bpy.evaAnimationManager)'
+
+		row = layout.row()
+		op = row.operator('eva.debug', text='getEmotionGestures()')
+		op.action = 'commands.getEmotionGestures(bpy.evaAnimationManager)'
+
 
 def register():
 	bpy.utils.register_class(BLRigControl)

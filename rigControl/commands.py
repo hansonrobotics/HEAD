@@ -30,8 +30,8 @@ def getEmotionStates(animationManager):
 	return emotionStates
 
 
-def setEmotionStates():
-	pass
+def setEmotionStates(emotions, animationManager):
+		animationManager.setEmotions(emotions)
 
 
 def availableEmotionGestures():
@@ -56,7 +56,7 @@ def setEmotionGestures():
 
 def setPrimaryTarget():
 	pass
-	
+
 
 def setSecondaryTarget():
 	pass

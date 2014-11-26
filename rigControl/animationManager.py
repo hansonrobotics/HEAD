@@ -69,7 +69,7 @@ class AnimationManager():
 		return string
 
 
-	def newGesture(self, name, repeat = 3, speed=1, magnitude=0.5, priority=1):
+	def newGesture(self, name, repeat = 1, speed=1, magnitude=0.5, priority=1):
 		try:
 			actionDatablock = bpy.data.actions[name]
 		except KeyError:

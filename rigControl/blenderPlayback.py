@@ -9,6 +9,21 @@ from .helpers import *
 
 import pprint
 
+class EvaDebug(bpy.types.Operator):
+	"""Eva Debug Control"""
+	bl_idname = "eva.debug"
+	bl_label = "Eva Debug"
+	
+	action = bpy.props.StringProperty()
+	
+	def execute(self, context):
+		from . import commands
+		print(eval(self.action))
+		return {'FINISHED'}
+
+	
+
+
 class EvaGestures(bpy.types.Operator):
 	"""Eva Gesture Control"""
 	bl_idname = "eva.gestures"
@@ -35,7 +50,7 @@ class EvaEmotions(bpy.types.Operator):
 	evaEmotions = bpy.props.StringProperty()
 
 	bpy.types.Scene.evaEmotions = bpy.props.StringProperty(name = "evaEmotions")
-	bpy.context.scene['evaEmotions'] = "{'happy':1, 'surprised':0.5}"
+	bpy.context.scene['evaEmotions'] = "{'happy':0.5, 'amused':0.5}"
 	
 	
 	def execute(self, context):
@@ -93,12 +108,12 @@ class BLPlayback(bpy.types.Operator):
 			normalY = (event.mouse_region_y - 500)/1000
 
 			eyeLoc = bpy.evaAnimationManager.primaryEyeTargetLoc.target
-			eyeLoc[0] = -normalX * 0.2
-			eyeLoc[2] = normalY * 0.2
+			eyeLoc[0] = -normalX * 0.6
+			eyeLoc[2] = normalY * 0.5
 
 			headLoc = bpy.evaAnimationManager.primaryHeadTargetLoc.target
-			headLoc[0] = -normalX * 0.2
-			headLoc[2] = normalY * 0.2
+			headLoc[0] = -normalX * 0.1
+			headLoc[2] = normalY * 0.1
 
 			# update NLA based gestures
 			gestures = bpy.evaAnimationManager.gestureList
@@ -162,6 +177,7 @@ def register():
 	bpy.utils.register_class(EvaGestures)
 	bpy.utils.register_class(EvaEmotions)
 	bpy.utils.register_class(EvaTracking)
+	bpy.utils.register_class(EvaDebug)
 
 
 def unregister():
@@ -169,6 +185,7 @@ def unregister():
 	bpy.utils.unregister_class(EvaGestures)
 	bpy.utils.unregister_class(EvaEmotions)
 	bpy.utils.unregister_class(EvaTracking)
+	bpy.utils.unregister_class(EvaDebug)
 
 
 def refresh():
