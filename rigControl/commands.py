@@ -44,7 +44,7 @@ def availableEmotionGestures():
 
 def getEmotionGestures(animationManager):
 	emotionGestures = []
-	for gesture in animationManager.gestureList:
+	for gesture in animationManager.gesturesList:
 		data = [gesture.name, gesture.duration*gesture.repeat - gesture.stripRef.strip_time]
 		emotionGestures.append(data)
 	return emotionGestures

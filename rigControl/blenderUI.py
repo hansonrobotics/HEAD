@@ -15,21 +15,22 @@ class BLRigControl(bpy.types.Panel):
 		layout = self.layout
 		obj = context.object
 
-		### Command Listener ###
+		### system ###
 		row = layout.row()
 		if context.scene['commandListenerActive']:
 			prop = row.operator("wm.command_listener", text='Command Listener Running')
 		else:
 			prop = row.operator("wm.command_listener", text='Start Command Listener', icon='CONSOLE')
 		
+		row = layout.row()
+		prop = row.operator("wm.animation_playback", icon='ARMATURE_DATA')
+
 		### Gestures ###
 		row = layout.row()
 		layout.label(text="Gestures:")
 
 		row = layout.row()
-		prop = row.operator("wm.animation_playback", icon='ARMATURE_DATA')
-		row = layout.row()
-
+		
 		for i, action in enumerate(bpy.data.actions):
 			if "GST" in action.name:
 				if i%2 == 1:
@@ -45,13 +46,27 @@ class BLRigControl(bpy.types.Panel):
 		layout.label(text="Emotions:")
 
 		row = layout.row()
+		for emo in bpy.evaAnimationManager.bones:
+			if emo.name.startswith("EMO-"):
+				label = emo.name.replace("EMO-", "")
+				layout.prop(emo,'["intensity"]', text=label, slider=True)
+	
+		row = layout.row()
 		row.prop(context.scene, 'evaEmotions', text='')
 
 		row = layout.row()
 		prop = row.operator("eva.emotions", text='Test Emotion')
 		prop.evaEmotions = context.scene.evaEmotions
 
-	
+
+		# row = layout.row()
+		# op = row.operator('eva.debug', text='Happy')
+		# op.action = 'commands.setEmotionStates({"happy":0.8},bpy.evaAnimationManager)'
+
+		# row = layout.row()
+		# op = row.operator('eva.debug', text='recoil')
+		# op.action = 'commands.setEmotionStates({"recoil":0.8},bpy.evaAnimationManager)'
+
 		### Tracking ###
 		# row = layout.row()
 		# layout.label(text="Tracking:")
@@ -72,15 +87,7 @@ class BLRigControl(bpy.types.Panel):
 		# row = layout.row()
 		# op = row.operator('eva.tracking', text='Down')
 		# op.evaTrack = [0, 0, -0.1]
-		row = layout.row()
-		op = row.operator('eva.debug', text='Happy')
-		op.action = 'commands.setEmotionStates({"happy":0.8},bpy.evaAnimationManager)'
-
-		row = layout.row()
-		op = row.operator('eva.debug', text='recoil')
-		op.action = 'commands.setEmotionStates({"recoil":0.8},bpy.evaAnimationManager)'
-
-
+		
 
 		row = layout.row()
 		layout.label(text="Debug:")

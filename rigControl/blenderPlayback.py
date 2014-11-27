@@ -21,6 +21,10 @@ class EvaDebug(bpy.types.Operator):
 		print(eval(self.action))
 		return {'FINISHED'}
 
+	@classmethod
+	def poll(cls, context):
+		return bpy.context.scene['animationPlaybackActive']
+
 	
 
 
