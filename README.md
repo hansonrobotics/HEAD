@@ -4,7 +4,7 @@ Initial behaviour tree for Eva. Current verion designed to work with Dmitroid ro
 
 ### System requirements
 
-Download and install Owyl python package: http://code.google.com/p/owyl/downloads/list
+Fork the Owyl behvaiors package: https://github.com/eykd/owyl/
 
 ### Communication
 
