@@ -2,9 +2,13 @@
 
 Initial behaviour tree for Eva. Current verion designed to work with Dmitroid robot and current nodes already developed.
 
-### System requirements
+### Prerequisites
 
-Fork the Owyl behvaiors package: https://github.com/eykd/owyl/
+The Owyl Behavior Trees package is required: https://github.com/eykd/owyl/
+To install:
+1) `git clone git@github.com:eykd/owyl.git`
+2) `sudo python setup.py install`
+
 
 ### Communication
 
