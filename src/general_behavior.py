@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 import owyl
 from owyl import blackboard
 import rospy
@@ -15,7 +15,7 @@ from basic_head_api.msg import MakeCoupledFaceExpr
 
 class Tree():
     def __init__(self):
-        self.blackboard = blackboard.Blackboard()
+        self.blackboard = blackboard.Blackboard("rig expressions")
 
         ##### From Config File #####
         def get_values(from_config, num_of_values, is_probability):

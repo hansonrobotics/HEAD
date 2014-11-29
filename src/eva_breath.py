@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 
 import owyl
 from owyl import blackboard
@@ -6,7 +6,7 @@ import rospy
 
 class Tree():
     def __init__(self):
-        self.blackboard = blackboard.Blackboard()
+        self.blackboard = blackboard.Blackboard("breath tree")
         self.tree = self.build_tree()
         while True:
             self.tree.next()
