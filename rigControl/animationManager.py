@@ -1,7 +1,6 @@
 from . import actuators
 from .helpers import *
 
-
 import bpy	
 import random
 import time
@@ -10,6 +9,7 @@ import pdb
 import collections
 
 debug = True
+
 
 class AnimationManager():
 	
@@ -29,10 +29,13 @@ class AnimationManager():
 
 		# emotion params
 		self.emotions = {}
-		self.blinkFrequency = 1.0
-		self.blinkSpeed = 1.0
-		self.breathingSpeed = 1.0
-		self.breathingIntensity = 1.0
+		self.eyeDartRate = 0.0
+		self.eyeWander = 0.0
+		self.blinkRate = 0.0
+		self.blinkDuration = 0.0
+		self.breathRate = 0.0
+		self.breathIntensity = 0.0
+
 		self.swiftness = 1.0
 		self.shyness = 1.0
 		self.idle = 0.0
@@ -56,14 +59,14 @@ class AnimationManager():
 		if True:
 			actuators.idleCycle(self)
 			
-		if False:
-			actuators.breathingCycle(self)
+		if True:
+			actuators.breathingCycle(self, self.breathRate, self.breathIntensity)
 
-		if True and self.randomFrequency('primaryEyeTargetLoc', 2):
-			actuators.eyeSaccades(self)
+		if True and self.randomFrequency('dart', self.eyeDartRate):
+			actuators.eyeSaccades(self, self.eyeWander)
 
-		if True and self.randomFrequency('blink', 0.1):
-			self.newGesture('GST-blink')
+		if True and self.randomFrequency('blink', self.blinkRate):
+			actuators.blink(self, self.blinkDuration)
 
 		if True and self.randomFrequency('primaryHeadTargetLoc', 1):
 			actuators.headDrift(self)
@@ -180,6 +183,7 @@ class AnimationManager():
 			return True
 
 		elapsedTime = time.time() - oldTime
+		hz = max(hz, 0.0001)  # prevents div by 0
 		if elapsedTime > random.gauss(1.0/hz, 0.2/hz):  # sigma is hard coded to 1/5 the mu
 			self.lastTriggered[name] = time.time()
 			return True

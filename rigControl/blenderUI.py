@@ -88,6 +88,23 @@ class BLRigControl(bpy.types.Panel):
 		# op = row.operator('eva.tracking', text='Down')
 		# op.evaTrack = [0, 0, -0.1]
 		
+		row = layout.row()
+		eva = bpy.evaAnimationManager
+		bones = eva.deformObj.pose.bones
+		layout.row().prop(bones['eye_dart_rate'], 'location', index=0, text='eyeDartRate')
+		layout.label(str(eva.eyeDartRate))
+		layout.row().prop(bones['eye_wander'], 'location', index=0, text='eyeWander')
+		layout.label(str(eva.eyeWander))
+		layout.row().prop(bones['blink_rate'], 'location', index=0, text='blinkRate')
+		layout.label(str(eva.blinkRate))
+		layout.row().prop(bones['blink_duration'], 'location', index=0, text='blinkDuration')
+		layout.label(str(eva.blinkDuration))		
+		layout.row().prop(bones['breath_rate'], 'location', index=0, text='breathRate')
+		layout.label(str(eva.breathRate))		
+		layout.row().prop(bones['breath_intensity'], 'location', index=0, text='breathIntensity')
+		layout.label(str(eva.breathIntensity))		
+
+
 
 		row = layout.row()
 		layout.label(text="Debug:")
@@ -107,6 +124,9 @@ class BLRigControl(bpy.types.Panel):
 		op = row.operator('eva.debug', text='getEmotionGestures()')
 		op.action = 'commands.getEmotionGestures(bpy.evaAnimationManager)'
 
+		row = layout.row()
+		op = row.operator('eva.debug', text='getEmotionParams()')
+		op.action = 'commands.getEmotionParams(bpy.evaAnimationManager)'
 
 def register():
 	bpy.utils.register_class(BLRigControl)

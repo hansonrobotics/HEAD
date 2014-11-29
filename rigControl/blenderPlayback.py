@@ -6,6 +6,8 @@ animationStep = 1.0
 
 import bpy
 from .helpers import *
+from .animationSettings import *
+
 
 import pprint
 
@@ -107,20 +109,22 @@ class BLPlayback(bpy.types.Operator):
 
 		if event.type == 'TIMER':
 
+			eva = bpy.evaAnimationManager
+
 			# compute mouse pos
 			normalX = (event.mouse_region_x - 500) /1000
 			normalY = (event.mouse_region_y - 500)/1000
 
-			eyeLoc = bpy.evaAnimationManager.primaryEyeTargetLoc.target
+			eyeLoc = eva.primaryEyeTargetLoc.target
 			eyeLoc[0] = -normalX * 0.6
 			eyeLoc[2] = normalY * 0.5
 
-			headLoc = bpy.evaAnimationManager.primaryHeadTargetLoc.target
+			headLoc = eva.primaryHeadTargetLoc.target
 			headLoc[0] = -normalX * 0.2
 			headLoc[2] = normalY * 0.2
 
 			# update NLA based gestures
-			gestures = bpy.evaAnimationManager.gesturesList
+			gestures = eva.gesturesList
 			for gesture in gestures:
 				gesture.stripRef.strip_time += animationStep * gesture.speed
 
@@ -129,29 +133,44 @@ class BLPlayback(bpy.types.Operator):
 						gesture.repeat -= 1
 						gesture.stripRef.strip_time = 0
 					else:
-						bpy.evaAnimationManager._deleteGesture(gesture)
+						eva._deleteGesture(gesture)
 
 
 			# update eye and head blending
-			headControl = bpy.evaAnimationManager.bones["head_target"]
-			eyeControl = bpy.evaAnimationManager.bones["eye_target"]
+			headControl = eva.bones["head_target"]
+			eyeControl = eva.bones["eye_target"]
 
-			bpy.evaAnimationManager.primaryHeadTargetLoc.blend()
-			bpy.evaAnimationManager.primaryEyeTargetLoc.blend()
+			eva.primaryHeadTargetLoc.blend()
+			eva.primaryEyeTargetLoc.blend()
 
-			headControl.location = bpy.evaAnimationManager.primaryHeadTargetLoc.current
-			eyeControl.location = bpy.evaAnimationManager.primaryEyeTargetLoc.current
+			headControl.location = eva.primaryHeadTargetLoc.current
+			eyeControl.location = eva.primaryEyeTargetLoc.current
 			
 			# udpate emotions
-			for emotionName, value in bpy.evaAnimationManager.emotions.items():
-				control = bpy.evaAnimationManager.bones['EMO-'+emotionName]
+			for emotionName, value in eva.emotions.items():
+				control = eva.bones['EMO-'+emotionName]
 				control['intensity'] = value.current
 				value._target *= 0.99
 				value.blend()
 
+			# Read emotion parameters into eva
+			eyeDartRate = eva.deformObj.pose.bones['eye_dart_rate'].location[0]
+			eyeWander = eva.deformObj.pose.bones['eye_wander'].location[0]
+			blinkRate = eva.deformObj.pose.bones['blink_rate'].location[0]
+			blinkDuration = eva.deformObj.pose.bones['blink_duration'].location[0]
+			breathRate = eva.deformObj.pose.bones['breath_rate'].location[0]
+			breathIntensity = eva.deformObj.pose.bones['breath_intensity'].location[0]
+
+			eva.eyeDartRate = mapValue(eyeDartRate, -1, 1, MIN_EYE_DART_RATE, MAX_EYE_DART_RATE)
+			eva.eyeWander = mapValue(eyeWander, 0, 1, MIN_EYE_WANDER, MAX_EYE_WANDER)
+			eva.blinkRate = mapValue(blinkRate, -1, 3, MIN_BLINK_RATE, MAX_BLINK_RATE)
+			eva.blinkDuration = blinkDuration
+			eva.breathRate = mapValue(breathRate, -1, 1, MIN_BREATH_RATE, MAX_BREATH_RATE)
+			eva.breathIntensity = mapValue(breathIntensity, -1, 1, MIN_BREATH_INTENSITY, MAX_BREATH_INTENSITY)
+
 
 			# keep alive
-			bpy.evaAnimationManager.keepAlive()
+			eva.keepAlive()
 
 			bpy.data.scenes['Scene'].frame_set(1)
 

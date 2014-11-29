@@ -23,15 +23,15 @@ def availableEmotionStates():
 	return emotionStates
 
 
-def getEmotionStates(animationManager):
+def getEmotionStates(eva):
 	emotionStates = {}
-	for name, emotion in animationManager.emotions.items():
+	for name, emotion in eva.emotions.items():
 		emotionStates[name] = round(emotion.current, 3)
 	return emotionStates
 
 
-def setEmotionStates(emotions, animationManager):
-		animationManager.setEmotions(emotions)
+def setEmotionStates(emotions, eva):
+		eva.setEmotions(emotions)
 
 
 def availableEmotionGestures():
@@ -42,9 +42,9 @@ def availableEmotionGestures():
 	return emotionGestures
 
 
-def getEmotionGestures(animationManager):
+def getEmotionGestures(eva):
 	emotionGestures = []
-	for gesture in animationManager.gesturesList:
+	for gesture in eva.gesturesList:
 		data = [gesture.name, gesture.duration*gesture.repeat - gesture.stripRef.strip_time]
 		emotionGestures.append(data)
 	return emotionGestures
@@ -60,3 +60,9 @@ def setPrimaryTarget():
 
 def setSecondaryTarget():
 	pass
+
+# ------------
+
+
+def getEmotionParams(eva):
+	return (eva.eyeDartRate, eva.eyeWander, eva.blinkRate, eva.blinkDuration, eva.breathRate, eva.breathIntensity)

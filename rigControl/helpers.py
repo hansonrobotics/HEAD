@@ -34,3 +34,17 @@ def computeDistance(a, b):
 		return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2]-b[2])**2 + (a[3]-b[3])**2)
 	else:
 		raise Exception(ArithmeticError)
+
+
+def mapValue(value, leftMin, leftMax, rightMin, rightMax):
+	# map value from one range to another range
+
+	# Figure out how 'wide' each range is
+	leftSpan = leftMax - leftMin
+	rightSpan = rightMax - rightMin
+
+	# Convert the left range into a 0-1 range (float)
+	valueScaled = float(value - leftMin) / float(leftSpan)
+
+	# Convert the 0-1 range into a value in the right range.
+	return rightMin + (valueScaled * rightSpan)
