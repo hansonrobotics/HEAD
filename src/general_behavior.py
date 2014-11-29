@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 import owyl
 from owyl import blackboard
 import rospy

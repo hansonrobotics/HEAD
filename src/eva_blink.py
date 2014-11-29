@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 import owyl
 import rospy
 import roslib
@@ -7,7 +7,7 @@ from owyl import blackboard
 
 class Tree():
     def __init__(self):
-        self.blackboard = blackboard.Blackboard()
+        self.blackboard = blackboard.Blackboard("blink tree")
         self.tree = self.build_tree()
         while True:
             self.tree.next()
