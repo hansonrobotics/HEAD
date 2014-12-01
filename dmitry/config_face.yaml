@@ -19,9 +19,9 @@ pitch1_controller:
     joint_speed: 0.2
     motor:
         id: 1
-        init: 533
-        min: 305
-        max: 700
+        init: 2039
+        min: 1850
+        max: 2180
 roll_controller:
     controller:
         package: dynamixel_controllers
@@ -285,7 +285,7 @@ pau2motors:
             shapekey: 01_EyeBlink_R;09_EyeOpen_R
           function:
             - name: weightedsum
-              imin: 0.776
+              imin: 0.675
               terms:
               - {min: 0, max: 0.8, imax: 0.0}
               - {min: 0, max: 0.8, imax: 1}
@@ -295,8 +295,8 @@ pau2motors:
             id: 4
             speed: 400
             acceleration: 400
-        min: -1.107
-        max: 0.863
+        min: -0.05
+        max: 1.13
 
 
       Eyelid-Upper_L:
@@ -306,7 +306,7 @@ pau2motors:
             shapekey: 00_EyeBlink_L;08_EyeOpen_L
           function:
             - name: weightedsum
-              imin: 0.401
+              imin: 0.27
               terms:
               - {min: 0, max: 0.8, imax: 1.0}
               - {min: 0, max: 1, imax: 0.0}
@@ -316,8 +316,8 @@ pau2motors:
             id: 5
             speed: 400
             acceleration: 400
-        min: -0.666
-        max: 1.28
+        min: 0
+        max: 1.08
 
 
       Frown_R:
@@ -375,8 +375,8 @@ pau2motors:
             id: 8
             speed: 200
             acceleration: 100
-        min: -1.547
-        max: 0.237
+        min: -1.246
+        max: -0.09
 
 
       Smile_L:
