@@ -69,8 +69,9 @@ class BLRigControl(bpy.types.Panel):
 		### Tracking ###
 		row = layout.row()
 		layout.label(text="Tracking:")
-
-		layout.prop(context.scene, 'evaFollowMouse', text='Follow Mouse', toggle=True)
+		row = layout.row()
+		row.active = runningAnimation
+		row.prop(context.scene, 'evaFollowMouse', text='Follow Mouse')
 
 		col = layout.column(align = True)
 		col.operator('eva.tracking', text='Up').evaTrack = [0, 0, 0.1]
@@ -84,18 +85,14 @@ class BLRigControl(bpy.types.Panel):
 		row = layout.row()
 		eva = bpy.evaAnimationManager
 		bones = eva.deformObj.pose.bones
-		layout.prop(bones['eye_dart_rate'], '["value"]', text='eyeDartRate')
-		layout.label(str(eva.eyeDartRate))
-		layout.prop(bones['eye_wander'], '["value"]', text='eyeWander')
-		layout.label(str(eva.eyeWander))
-		layout.prop(bones['blink_rate'], '["value"]', text='blinkRate')
-		layout.label(str(eva.blinkRate))
-		layout.prop(bones['blink_duration'], '["value"]', text='blinkDuration')
-		layout.label(str(eva.blinkDuration))		
-		layout.prop(bones['breath_rate'], '["value"]', text='breathRate')
-		layout.label(str(eva.breathRate))		
-		layout.prop(bones['breath_intensity'], '["value"]', text='breathIntensity')
-		layout.label(str(eva.breathIntensity))
+		col = layout.column(align = True)
+		col.active = runningAnimation
+		col.prop(bones['eye_dart_rate'], '["value"]', text='eyeDartRate', slider = True)
+		col.prop(bones['eye_wander'], '["value"]', text='eyeWander', slider = True)
+		col.prop(bones['blink_rate'], '["value"]', text='blinkRate', slider = True)
+		col.prop(bones['blink_duration'], '["value"]', text='blinkDuration', slider = True)
+		col.prop(bones['breath_rate'], '["value"]', text='breathRate', slider = True)
+		col.prop(bones['breath_intensity'], '["value"]', text='breathIntensity', slider = True)
 
 		row = layout.row()
 		layout.label(text="Debug:")

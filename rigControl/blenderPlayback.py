@@ -20,7 +20,7 @@ class EvaDebug(bpy.types.Operator):
 
 	# register some helper bpy props
 	bpy.types.Scene.evaFollowMouse = bpy.props.BoolProperty(name = "evaFollowMouse")
-	bpy.context.scene['evaFollowMouse'] = True
+	bpy.context.scene['evaFollowMouse'] = False
 	
 	
 	def execute(self, context):
@@ -167,13 +167,13 @@ class BLPlayback(bpy.types.Operator):
 			breathRate = eva.deformObj.pose.bones['breath_rate']['value']
 			breathIntensity = eva.deformObj.pose.bones['breath_intensity']['value']
 
-			eva.eyeDartRate = mapValue(eyeDartRate, -1, 1, MIN_EYE_DART_RATE, MAX_EYE_DART_RATE)
-			eva.eyeWander = mapValue(eyeWander, 0, 1, MIN_EYE_WANDER, MAX_EYE_WANDER)
-			eva.blinkRate = mapValue(blinkRate, -1, 3, MIN_BLINK_RATE, MAX_BLINK_RATE)
+			# no more remapping of values
+			eva.eyeDartRate = eyeDartRate
+			eva.eyeWander = eyeWander
+			eva.blinkRate = blinkRate
 			eva.blinkDuration = blinkDuration
-			eva.breathRate = mapValue(breathRate, -1, 1, MIN_BREATH_RATE, MAX_BREATH_RATE)
-			eva.breathIntensity = mapValue(breathIntensity, -1, 1, MIN_BREATH_INTENSITY, MAX_BREATH_INTENSITY)
-
+			eva.breathRate = breathRate
+			eva.breathIntensity = breathIntensity
 
 			# keep alive
 			eva.keepAlive()
