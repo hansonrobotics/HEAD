@@ -23,7 +23,7 @@ class HardwareBase:
 
     if not self.__class__._topics.has_key(args["topic"]):
       self.__class__._topics[args["topic"]] = rospy.Publisher(
-        args["topic"], self.messageType, queue_size=10
+        args["topic"], self.messageType, queue_size=30
       )
     self.pub = self.__class__._topics[args["topic"]]
     self.args = args
