@@ -1,0 +1,4 @@
+#This constant value in the request should be equal to the value in the response
+uint8 VALUE=1
+---
+uint8 value
