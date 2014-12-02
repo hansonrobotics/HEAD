@@ -28,7 +28,10 @@ class BLCommandListener(bpy.types.Operator):
 
 		if debug and event.type == 'TIMER':
 			# print('Running Command Listener', round(self._timer.time_duration,3))
-			command = network.poll(context)
+			while True:
+				command = network.poll(context)
+				if command: command.execute()
+				else: break
 
 
 		# set status
@@ -72,7 +75,7 @@ class BLCommandListener(bpy.types.Operator):
 	def poll(cls, context):
 		return not bpy.context.scene['commandListenerActive']
 		# return True
-		
+
 
 def register():
 	bpy.utils.register_class(BLCommandListener)
@@ -90,4 +93,3 @@ def refresh():
 		print(E)
 		unregister()
 		register()
-
