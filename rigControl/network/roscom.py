@@ -1,10 +1,10 @@
 import bpy
-from . import commands
+from .. import commands
 
 import imp
 imp.reload(commands)
 
-import asyncio, queue
+import threading, queue
 
 from .helpers import soft_import, underscorize
 rospy = soft_import('rospy')
@@ -16,7 +16,7 @@ def build():
 		print('ROS not found')
 		return None
 	elif not (srv and msg):
-		print('blender_api_msgs not found')
+		print('Package blender_api_msg not found')
 		return None
 	else:
 		return RosNode()
@@ -28,25 +28,26 @@ class RosNode:
 		self.command_queue = queue.Queue()
 		rospy.init_node('blender_api')
 
-		# Find common methods between the ServiceHandlers class and the
-		# 'commands' module. Then register as ROS services.
-		command_names = set(dir(commands)).intersection(dir(ServiceHandlers))
-		self.services = register_services(command_names)
+		# Find common public methods between the 'commands' module and the
+		# ServiceHandlers class. Then register as ROS services.
+		command_names = {name for name in dir(commands) if name[0] != '_'}
+		command_names = command_names.intersection(dir(ServiceHandlers))
+		self.services = self.register_services(command_names)
 
-	@staticmethod
-	def register_services(command_names):
+	def register_services(self, command_names):
+		services = []
 		for name in command_names:
 			# Generate service parameters
 			# E.g. if name == "getApiVersion" then:
-			# topic == "get_api_version"
-			topic = underscorize(name)
+			# topic == "~get_api_version"
+			topic = '~' + underscorize(name)
 			# srvType == srv.GetApiVersion
 			srvType = getattr(srv, name[0].upper() + name[1:])
 			# handler == ServiceHandler.getApiVersion
 			handler = getattr(ServiceHandlers, name)
-			service = rospy.Service(topic, srvType, self.queued(handler)
+			service = rospy.Service(topic, srvType, self.queued(handler))
 			services.append(service)
-			self.services = services
+		return services
 
 	def queued(self, func):
 		''' wrap threadsafety around a service handler '''
@@ -73,60 +74,64 @@ class RosNode:
 		return True
 
 class ServiceHandlers:
-
 	'''
 	The names of these methods should match the ones in 'commands' module.
 	These methods shouldn't be called directly but through
 	ThreadSafeCommand.execute() in the Blender coroutine.
+
+	The returned values are implicitly converted to response objects like
+	srv.GetApiVersionResponse, srv.GetEmotionStatesResponse, etc.
+	See http://wiki.ros.org/rospy/Overview/Services#Providing_services for valid
+	return values.
 	'''
 
 	@staticmethod
-	def getApiVersion(req):
-		return commands.get_api_version()
+	def getAPIVersion(req):
+		return commands.getAPIVersion()
 
 	@staticmethod
 	def availableEmotionStates(req):
-		return commands.availableEmotionStates()
+		return [commands.availableEmotionStates()]
 
 	@staticmethod
 	def getEmotionStates(req):
-		return [
+		return [[
 			msg.EmotionState(name, value) for name, value in
 			commands.getEmotionStates(bpy.evaAnimationManager).items()
-		]
+		]]
 
 	@staticmethod
 	def setEmotionStates(req):
 		emotions = {emotion.name: emotion.value for emotion in req.data}
-		return commands.setEmotionStates(emotions, bpy.evaAnimationManager)
+		return commands.setEmotionStates(emotions, bpy.evaAnimationManager) or 0
 
 	@staticmethod
 	def availableEmotionGestures(req):
-		return commands.availableEmotionGestures()
+		return [commands.availableEmotionGestures()]
 
 	@staticmethod
 	def getEmotionGestures(req):
-		return [
-			msg.EmotionGesture(name, value) for name, value in
-			commands.getEmotionGestures(bpy.evaAnimationManager).items()
-		]
+		return [[
+			msg.EmotionGesture(name, rospy.Duration(time)) for name, time in
+			commands.getEmotionGestures(bpy.evaAnimationManager)
+		]]
 
 class ThreadSafeCommand:
 
 	def __init__(self, func, arg):
 		self.func, self.arg = func, arg
-		self.condition = asyncio.Condition()
+		self.condition = threading.Condition()
 		self.is_executed = False
 
 	def execute(self):
 		''' should be called from the Blender coroutine '''
-		with (yield from self.condition):
+		with self.condition:
 			self.response = self.func(self.arg)
 			self.is_executed = True
 			self.condition.notify_all()
 
 	def release(self):
 		''' should be called from a ROS service handler coroutine '''
-		with (yield from self.condition):
-			self.condition.wait_for(lambda x: self.is_executed)
+		with self.condition:
+			self.condition.wait_for(lambda: self.is_executed)
 			return self.response

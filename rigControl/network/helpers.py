@@ -8,5 +8,5 @@ def soft_import(name):
 		return None
 
 def underscorize(string):
-	''' E.g. underscorize('getApiVersion') == get_api_version '''
+	''' E.g. underscorize('getEmotionStates') == get_emotion_states '''
 	return re.sub(r'([A-Z]+)', r'_\1', string).lower()
