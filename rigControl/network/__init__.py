@@ -1,16 +1,21 @@
-# network stub for dealing with interface with other apps
+# deals with interface with other apps
+
+from . import roscom
+rosnode = None
 
 
 def init(context):
-	success = True
+	global rosnode
+	rosnode = roscom.build()
+	success = bool(rosnode)
 	return success
 
 
 def poll(context):
-	command = None
+	command = rosnode.poll()
 	return command
 
 
 def drop(context):
-	success = True
+	success = rosnode.drop()
 	return success
