@@ -17,6 +17,11 @@ class EvaDebug(bpy.types.Operator):
 	bl_label = "Eva Debug"
 	
 	action = bpy.props.StringProperty()
+
+	# register some helper bpy props
+	bpy.types.Scene.evaFollowMouse = bpy.props.BoolProperty(name = "evaFollowMouse")
+	bpy.context.scene['evaFollowMouse'] = True
+	
 	
 	def execute(self, context):
 		from . import commands
@@ -88,7 +93,7 @@ class EvaTracking(bpy.types.Operator):
 
 	@classmethod
 	def poll(cls, context):
-		return bpy.context.scene['animationPlaybackActive']
+		return bpy.context.scene['animationPlaybackActive'] and not bpy.context.scene['evaFollowMouse']
 
 
 
@@ -111,17 +116,18 @@ class BLPlayback(bpy.types.Operator):
 
 			eva = bpy.evaAnimationManager
 
-			# compute mouse pos
-			normalX = (event.mouse_region_x - 500) /1000
-			normalY = (event.mouse_region_y - 500)/1000
+			if bpy.context.scene['evaFollowMouse']:
+				# compute mouse pos
+				normalX = (event.mouse_region_x - 500) /1000
+				normalY = (event.mouse_region_y - 500)/1000
+			
+				eyeLoc = eva.primaryEyeTargetLoc.target
+				eyeLoc[0] = -normalX * 0.6
+				eyeLoc[2] = normalY * 0.5
 
-			eyeLoc = eva.primaryEyeTargetLoc.target
-			eyeLoc[0] = -normalX * 0.6
-			eyeLoc[2] = normalY * 0.5
-
-			headLoc = eva.primaryHeadTargetLoc.target
-			headLoc[0] = -normalX * 0.2
-			headLoc[2] = normalY * 0.2
+				headLoc = eva.primaryHeadTargetLoc.target
+				headLoc[0] = -normalX * 0.2
+				headLoc[2] = normalY * 0.2
 
 			# update NLA based gestures
 			gestures = eva.gesturesList
@@ -154,12 +160,12 @@ class BLPlayback(bpy.types.Operator):
 				value.blend()
 
 			# Read emotion parameters into eva
-			eyeDartRate = eva.deformObj.pose.bones['eye_dart_rate'].location[0]
-			eyeWander = eva.deformObj.pose.bones['eye_wander'].location[0]
-			blinkRate = eva.deformObj.pose.bones['blink_rate'].location[0]
-			blinkDuration = eva.deformObj.pose.bones['blink_duration'].location[0]
-			breathRate = eva.deformObj.pose.bones['breath_rate'].location[0]
-			breathIntensity = eva.deformObj.pose.bones['breath_intensity'].location[0]
+			eyeDartRate = eva.deformObj.pose.bones['eye_dart_rate']['value']
+			eyeWander = eva.deformObj.pose.bones['eye_wander']['value']
+			blinkRate = eva.deformObj.pose.bones['blink_rate']['value']
+			blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
+			breathRate = eva.deformObj.pose.bones['breath_rate']['value']
+			breathIntensity = eva.deformObj.pose.bones['breath_intensity']['value']
 
 			eva.eyeDartRate = mapValue(eyeDartRate, -1, 1, MIN_EYE_DART_RATE, MAX_EYE_DART_RATE)
 			eva.eyeWander = mapValue(eyeWander, 0, 1, MIN_EYE_WANDER, MAX_EYE_WANDER)
@@ -193,6 +199,11 @@ class BLPlayback(bpy.types.Operator):
 		wm.event_timer_remove(self._timer)
 		bpy.context.scene['animationPlaybackActive'] = False
 		return {'CANCELLED'}
+
+	@classmethod
+	def poll(cls, context):
+		return not bpy.context.scene['animationPlaybackActive']
+
 
 
 def register():

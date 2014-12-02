@@ -15,49 +15,48 @@ class BLRigControl(bpy.types.Panel):
 		layout = self.layout
 		obj = context.object
 
+		runningAnimation = context.scene['animationPlaybackActive']
+		runningCommand = context.scene['commandListenerActive']
+
 		### system ###
-		row = layout.row()
-		if context.scene['commandListenerActive']:
-			prop = row.operator("wm.command_listener", text='Command Listener Running')
+		if runningCommand:
+			text = 'Command Listener Running'
 		else:
-			prop = row.operator("wm.command_listener", text='Start Command Listener', icon='CONSOLE')
+			text='Start Command Listener'
 		
-		row = layout.row()
-		prop = row.operator("wm.animation_playback", icon='ARMATURE_DATA')
+		col = layout.column(align=True)
+		col.operator("wm.command_listener", text=text, icon='CONSOLE')
+		col.operator("wm.animation_playback", icon='ARMATURE_DATA')
+
 
 		### Gestures ###
 		row = layout.row()
 		layout.label(text="Gestures:")
-
-		row = layout.row()
-		
+		col = layout.column(align=True)
 		for i, action in enumerate(bpy.data.actions):
 			if "GST" in action.name:
-				if i%2 == 1:
-					row = layout.row()
+				if i%2 == 0:
+					row = col.row(align=True)
 
-				label = action.name.replace("GST-","")
-				op = row.operator("eva.gestures", text=label)
-				op.evaAction = action.name
+				row.operator("eva.gestures", text=action.name[4:]).evaAction = action.name
 
 		
 		###  Emotions  ###
 		row = layout.row()
 		layout.label(text="Emotions:")
-
-		row = layout.row()
-		for emo in bpy.evaAnimationManager.bones:
+		col = layout.column(align = True)
+		col.active = runningAnimation
+		for i, emo in enumerate(bpy.evaAnimationManager.bones):
 			if emo.name.startswith("EMO-"):
-				label = emo.name.replace("EMO-", "")
-				layout.prop(emo,'["intensity"]', text=label, slider=True)
-	
-		row = layout.row()
-		row.prop(context.scene, 'evaEmotions', text='')
+				if i%2 == 0:
+					row = col.row(align=True)
+				
+				row.prop(emo,'["intensity"]', text=emo.name[4:], slider=True)
 
-		row = layout.row()
-		prop = row.operator("eva.emotions", text='Test Emotion')
-		prop.evaEmotions = context.scene.evaEmotions
-
+		col = layout.column(align = True)
+		col.active = runningAnimation
+		col.operator("eva.emotions", text='Set Emotions').evaEmotions = context.scene.evaEmotions
+		col.prop(context.scene, 'evaEmotions', text='')
 
 		# row = layout.row()
 		# op = row.operator('eva.debug', text='Happy')
@@ -68,65 +67,45 @@ class BLRigControl(bpy.types.Panel):
 		# op.action = 'commands.setEmotionStates({"recoil":0.8},bpy.evaAnimationManager)'
 
 		### Tracking ###
-		# row = layout.row()
-		# layout.label(text="Tracking:")
-		# row = layout.row()
-		# op = row.operator('eva.tracking', text='Up')
-		# op.evaTrack = [0, 0, 0.1]
+		row = layout.row()
+		layout.label(text="Tracking:")
 
-		# row = layout.row()
-		# op = row.operator('eva.tracking', text='Left')
-		# op.evaTrack = [0.2, 0, 0]
+		layout.prop(context.scene, 'evaFollowMouse', text='Follow Mouse', toggle=True)
 
-		# op = row.operator('eva.tracking', text='Centre')
-		# op.evaTrack = [0, 0, 0]
+		col = layout.column(align = True)
+		col.operator('eva.tracking', text='Up').evaTrack = [0, 0, 0.1]
+		row = col.row(align=True)
+		row.operator('eva.tracking', text='Left').evaTrack = [0.2, 0, 0]
+		row.operator('eva.tracking', text='Centre').evaTrack = [0, 0, 0]
+		row.operator('eva.tracking', text='Right').evaTrack = [-0.2, 0, 0]
+		col.operator('eva.tracking', text='Down').evaTrack = [0, 0, -0.1]
 
-		# op = row.operator('eva.tracking', text='Right')
-		# op.evaTrack = [-0.2, 0, 0]
-
-		# row = layout.row()
-		# op = row.operator('eva.tracking', text='Down')
-		# op.evaTrack = [0, 0, -0.1]
 		
 		row = layout.row()
 		eva = bpy.evaAnimationManager
 		bones = eva.deformObj.pose.bones
-		layout.row().prop(bones['eye_dart_rate'], 'location', index=0, text='eyeDartRate')
+		layout.prop(bones['eye_dart_rate'], '["value"]', text='eyeDartRate')
 		layout.label(str(eva.eyeDartRate))
-		layout.row().prop(bones['eye_wander'], 'location', index=0, text='eyeWander')
+		layout.prop(bones['eye_wander'], '["value"]', text='eyeWander')
 		layout.label(str(eva.eyeWander))
-		layout.row().prop(bones['blink_rate'], 'location', index=0, text='blinkRate')
+		layout.prop(bones['blink_rate'], '["value"]', text='blinkRate')
 		layout.label(str(eva.blinkRate))
-		layout.row().prop(bones['blink_duration'], 'location', index=0, text='blinkDuration')
+		layout.prop(bones['blink_duration'], '["value"]', text='blinkDuration')
 		layout.label(str(eva.blinkDuration))		
-		layout.row().prop(bones['breath_rate'], 'location', index=0, text='breathRate')
+		layout.prop(bones['breath_rate'], '["value"]', text='breathRate')
 		layout.label(str(eva.breathRate))		
-		layout.row().prop(bones['breath_intensity'], 'location', index=0, text='breathIntensity')
-		layout.label(str(eva.breathIntensity))		
-
-
+		layout.prop(bones['breath_intensity'], '["value"]', text='breathIntensity')
+		layout.label(str(eva.breathIntensity))
 
 		row = layout.row()
 		layout.label(text="Debug:")
-		row = layout.row()
-		op = row.operator('eva.debug', text='availableEmotionStates()')
-		op.action = 'commands.availableEmotionStates()'
+		col = layout.column(align=True)
+		col.operator('eva.debug', text='availableEmotionStates()').action = 'commands.availableEmotionStates()'
+		col.operator('eva.debug', text='availableEmotionGestures()').action = 'commands.availableEmotionGestures()'
+		col.operator('eva.debug', text='getEmotionStates()').action = 'commands.getEmotionStates(bpy.evaAnimationManager)'
+		col.operator('eva.debug', text='getEmotionGestures()').action = 'commands.getEmotionGestures(bpy.evaAnimationManager)'
+		col.operator('eva.debug', text='getEmotionParams()').action = 'commands.getEmotionParams(bpy.evaAnimationManager)'
 
-		row = layout.row()
-		op = row.operator('eva.debug', text='availableEmotionGestures()')
-		op.action = 'commands.availableEmotionGestures()'
-
-		row = layout.row()
-		op = row.operator('eva.debug', text='getEmotionStates()')
-		op.action = 'commands.getEmotionStates(bpy.evaAnimationManager)'
-
-		row = layout.row()
-		op = row.operator('eva.debug', text='getEmotionGestures()')
-		op.action = 'commands.getEmotionGestures(bpy.evaAnimationManager)'
-
-		row = layout.row()
-		op = row.operator('eva.debug', text='getEmotionParams()')
-		op.action = 'commands.getEmotionParams(bpy.evaAnimationManager)'
 
 def register():
 	bpy.utils.register_class(BLRigControl)
