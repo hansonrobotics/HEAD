@@ -20,6 +20,11 @@ def breathingCycle(self, rate, intensity):
 				gesture.speed = rate
 
 
+def emotionJitter(self):
+	for emotion in self.emotionsList:
+		target = emotion.intensity.target
+		emotion.intensity.target = random.gauss(target, target/10)
+
 
 def eyeSaccades(self, eyeWanderAbs):
 	''' applies random saccades to eye '''
@@ -42,9 +47,9 @@ def eyeSaccades(self, eyeWanderAbs):
 def headDrift(self):
 	''' applies random head drift '''
 	loc = [0,0,0]
-	loc[0] = random.gauss(self.primaryHeadTargetLoc.target[0], 0.01)
-	loc[1] = random.gauss(self.primaryHeadTargetLoc.target[1], 0.01)
-	loc[2] = random.gauss(self.primaryHeadTargetLoc.target[2], 0.01)
+	loc[0] = random.gauss(self.primaryHeadTargetLoc.target[0], 0.005)
+	loc[1] = random.gauss(self.primaryHeadTargetLoc.target[1], 0.005)
+	loc[2] = random.gauss(self.primaryHeadTargetLoc.target[2], 0.005)
 	self.primaryHeadTargetLoc.target = loc
 
 

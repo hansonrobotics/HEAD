@@ -7,7 +7,6 @@ import bpy
 from .helpers import *
 from .animationSettings import *
 
-
 import pprint, time
 
 class EvaDebug(bpy.types.Operator):
@@ -160,11 +159,19 @@ class BLPlayback(bpy.types.Operator):
 			eyeControl.location = eva.primaryEyeTargetLoc.current
 			
 			# udpate emotions
-			for emotionName, value in eva.emotions.items():
-				control = eva.bones['EMO-'+emotionName]
-				control['intensity'] = value.current
-				value._target *= 0.99
-				value.blend()
+			for emotion in eva.emotionsList:
+				control = eva.bones['EMO-'+emotion.name]
+				control['intensity'] = emotion.intensity.current
+				emotion.duration -= timeScale
+				emotion.intensity.blend()
+				
+				if emotion.duration < 0:
+					emotion.intensity._target *= 0.99
+
+					if emotion.intensity.current < 0.1:
+						eva.emotionsList.remove(emotion)
+						control['intensity'] = 0.0
+
 
 			# Read emotion parameters into eva
 			eva.eyeDartRate = eva.deformObj.pose.bones['eye_dart_rate']['value']

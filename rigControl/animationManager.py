@@ -18,6 +18,7 @@ class AnimationManager():
 		
 		# gesture params
 		self.gesturesList = []
+		self.emotionsList = []
 		
 		# tracking param
 		self.primaryHeadTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
@@ -26,9 +27,7 @@ class AnimationManager():
 		self.primaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
 		self.secondaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
 
-
 		# emotion params
-		self.emotions = {}
 		self.eyeDartRate = 0.0
 		self.eyeWander = 0.0
 		self.blinkRate = 0.0
@@ -70,7 +69,11 @@ class AnimationManager():
 
 		if True and self.randomFrequency('primaryHeadTargetLoc', 1):
 			actuators.headDrift(self)
-			
+
+		if True and self.randomFrequency('emotionJitter', 20):
+			actuators.emotionJitter(self)
+		
+
 
 	# show all attributes
 	def __repr__(self):
@@ -127,9 +130,9 @@ class AnimationManager():
 		self.deformObj.animation_data.nla_tracks.remove(gesture.trackRef)
 
 
-	def setEmotions(self, emotions, reset=False):
+	def setEmotions(self, emotionDict):
 		''' set the emotion param of the character'''
-		for emotionName, value in emotions.items():
+		for emotionName, value in emotionDict.items():
 			try:
 				control = self.bones['EMO-'+emotionName]
 			except KeyError:
@@ -138,10 +141,18 @@ class AnimationManager():
 			else:
 				value = float(value)
 				checkValue(value, -1, 1)
-				if emotionName in self.emotions:
-					self.emotions[emotionName].target = value
-				else:
-					self.emotions[emotionName] = BlendedNum(value, steps = 10, smoothing = 10)
+				
+				found = False
+				for emotion in self.emotionsList:
+					if emotionName == emotion.name:
+						# update intensity
+						emotion.intensity.target = value
+						emotion.duration = 0
+						found = True
+				
+				if not found:
+					emotion = Emotion(emotionName, intensity = BlendedNum(value, steps = 10, smoothing = 10), duration = 100)
+					self.emotionsList.append(emotion)
 
 
 	def setPrimaryTarget(self, loc):
@@ -191,6 +202,16 @@ class AnimationManager():
 			return False
 
 
+
+
+			
+class Emotion():
+	''' represents an emotion'''
+	def __init__(self, name, intensity, duration):
+		self.name = name
+		self.intensity = intensity
+		self.duration = duration
+		self.priority = 0
 
 			
 class Gesture():
