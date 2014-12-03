@@ -6,7 +6,9 @@ known as the rigControl module. These controls can be activated from
 the blender interface, or by sending specially crafted messages to a
 listener daemon.
 
-# Demo #
+
+![Eva Splash](docs/splash.png)
+
 
 This youtube video shows what is currently possible:
 [Eva demo](https://www.youtube.com/watch?v=s8Kwcor3CvY)
@@ -24,7 +26,7 @@ Pre-requisites: you must have a working version of Blender 2.72 or higher.
 # Command Listener #
 
 * Comands may be sent through ROS to control Eva.
-* The API is currently in draft stage: [API_v1.pdf](docs/API_v1.pdf)
+* The API is currently in draft stage: [API_v1](docs/API_v1.md)
 
 
 # Design #
