@@ -3,6 +3,19 @@
 
 import bpy
 
+class BLRigConsole(bpy.types.Panel):
+	"""Creates a Panel in the Object properties window"""
+	bl_label = "RigConsole"
+	bl_space_type = 'VIEW_3D'
+	bl_region_type = 'UI'
+	bl_context = "object"
+
+	def draw(self, context):
+		layout = self.layout
+		layout.prop(context.scene, 'evaFPS', slider = True)
+
+
+
 class BLRigControl(bpy.types.Panel):
 	"""Creates a Panel in the Object properties window"""
 	bl_label = "RigControl"
@@ -106,10 +119,12 @@ class BLRigControl(bpy.types.Panel):
 
 def register():
 	bpy.utils.register_class(BLRigControl)
+	bpy.utils.register_class(BLRigConsole)
 
 
 def unregister():
 	bpy.utils.unregister_class(BLRigControl)
+	bpy.utils.unregister_class(BLRigConsole)
 
 
 def refresh():

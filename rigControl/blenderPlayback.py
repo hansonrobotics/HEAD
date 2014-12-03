@@ -2,14 +2,13 @@
 # as the animation playback service, and hosts other supporting test operators
 
 framerateHz = 48
-animationStep = 1.0
 
 import bpy
 from .helpers import *
 from .animationSettings import *
 
 
-import pprint
+import pprint, time
 
 class EvaDebug(bpy.types.Operator):
 	"""Eva Debug Control"""
@@ -18,11 +17,14 @@ class EvaDebug(bpy.types.Operator):
 	
 	action = bpy.props.StringProperty()
 
-	# register some helper bpy props
+	# register some helper bpy props for dev purposes
 	bpy.types.Scene.evaFollowMouse = bpy.props.BoolProperty(name = "evaFollowMouse")
 	bpy.context.scene['evaFollowMouse'] = False
 	
+	bpy.types.Scene.evaFPS = bpy.props.IntProperty(name = "evaFPS", soft_min = 10, soft_max = 60)
+	bpy.context.scene['evaFPS'] = 0
 	
+
 	def execute(self, context):
 		from . import commands
 		print(eval(self.action))
@@ -107,6 +109,7 @@ class BLPlayback(bpy.types.Operator):
 
 	_timer = None
 
+	timeList = []
 
 	def modal(self, context, event):
 		if event.type in {'ESC'}:
@@ -115,6 +118,10 @@ class BLPlayback(bpy.types.Operator):
 		if event.type == 'TIMER':
 
 			eva = bpy.evaAnimationManager
+
+			# compute fps
+			context.scene['evaFPS'] = fps = self.computeFPS(context)
+			timeScale = framerateHz/fps
 
 			if bpy.context.scene['evaFollowMouse']:
 				# compute mouse pos
@@ -132,7 +139,7 @@ class BLPlayback(bpy.types.Operator):
 			# update NLA based gestures
 			gestures = eva.gesturesList
 			for gesture in gestures:
-				gesture.stripRef.strip_time += animationStep * gesture.speed
+				gesture.stripRef.strip_time += gesture.speed * timeScale
 
 				if gesture.stripRef.strip_time > gesture.duration:
 					if gesture.repeat > 1:
@@ -160,24 +167,17 @@ class BLPlayback(bpy.types.Operator):
 				value.blend()
 
 			# Read emotion parameters into eva
-			eyeDartRate = eva.deformObj.pose.bones['eye_dart_rate']['value']
-			eyeWander = eva.deformObj.pose.bones['eye_wander']['value']
-			blinkRate = eva.deformObj.pose.bones['blink_rate']['value']
-			blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
-			breathRate = eva.deformObj.pose.bones['breath_rate']['value']
-			breathIntensity = eva.deformObj.pose.bones['breath_intensity']['value']
-
-			# no more remapping of values
-			eva.eyeDartRate = eyeDartRate
-			eva.eyeWander = eyeWander
-			eva.blinkRate = blinkRate
-			eva.blinkDuration = blinkDuration
-			eva.breathRate = breathRate
-			eva.breathIntensity = breathIntensity
+			eva.eyeDartRate = eva.deformObj.pose.bones['eye_dart_rate']['value']
+			eva.eyeWander = eva.deformObj.pose.bones['eye_wander']['value']
+			eva.blinkRate = eva.deformObj.pose.bones['blink_rate']['value']
+			eva.blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
+			eva.breathRate = eva.deformObj.pose.bones['breath_rate']['value']
+			eva.breathIntensity = eva.deformObj.pose.bones['breath_intensity']['value']
 
 			# keep alive
 			eva.keepAlive()
 
+			# force update
 			bpy.data.scenes['Scene'].frame_set(1)
 
 		return {'PASS_THROUGH'}
@@ -199,6 +199,24 @@ class BLPlayback(bpy.types.Operator):
 		wm.event_timer_remove(self._timer)
 		bpy.context.scene['animationPlaybackActive'] = False
 		return {'CANCELLED'}
+
+
+	def computeFPS(self, context):
+		# record
+		self.timeList.append(time.time())
+
+		# trim
+		if len(self.timeList)> 100:
+			self.timeList[100:]
+
+		# compute
+		counter = 0
+		for timestamp in self.timeList:
+			if timestamp > (time.time() - 1):
+				counter += 1
+
+		return counter
+
 
 	@classmethod
 	def poll(cls, context):
