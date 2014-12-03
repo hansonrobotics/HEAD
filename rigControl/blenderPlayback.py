@@ -23,38 +23,13 @@ class EvaDebug(bpy.types.Operator):
 	bpy.types.Scene.evaFPS = bpy.props.IntProperty(name = "evaFPS", soft_min = 10, soft_max = 60)
 	bpy.context.scene['evaFPS'] = 0
 	
+	bpy.types.Scene.evaEmotion = bpy.props.StringProperty(name = "evaEmotion")
+	bpy.context.scene['evaEmotion'] = "{'happy': {'magnitude': 0.9, 'duration': 10}}"
 
 	def execute(self, context):
 		from . import commands
 		print(eval(self.action))
 		return {'FINISHED'}
-
-
-
-
-class EvaEmotions(bpy.types.Operator):
-	"""Eva Emotion Control"""
-	bl_idname = "eva.emotions"
-	bl_label = "Eva Emotions"
-	
-	evaEmotions = bpy.props.StringProperty()
-
-	bpy.types.Scene.evaEmotions = bpy.props.StringProperty(name = "evaEmotions")
-	bpy.context.scene['evaEmotions'] = "{'happy':0.5, 'amused':0.5}"
-	
-	
-	def execute(self, context):
-		# add to animationManager
-		if self.evaEmotions == 'reset':
-			bpy.evaAnimationManager.setEmotions('', reset = True)
-		else:
-			bpy.evaAnimationManager.setEmotions(eval(self.evaEmotions))
-		
-		return {'FINISHED'} 
-
-	@classmethod
-	def poll(cls, context):
-		return bpy.context.scene['animationPlaybackActive']
 
 
 
@@ -211,14 +186,12 @@ class BLPlayback(bpy.types.Operator):
 
 def register():
 	bpy.utils.register_class(BLPlayback)
-	bpy.utils.register_class(EvaEmotions)
 	bpy.utils.register_class(EvaTracking)
 	bpy.utils.register_class(EvaDebug)
 
 
 def unregister():
 	bpy.utils.unregister_class(BLPlayback)
-	bpy.utils.unregister_class(EvaEmotions)
 	bpy.utils.unregister_class(EvaTracking)
 	bpy.utils.unregister_class(EvaDebug)
 

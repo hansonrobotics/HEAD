@@ -33,8 +33,8 @@ def getEmotionStates():
 	return emotionStates
 
 
-def setEmotionStates(emotions):
-	bpy.evaAnimationManager.setEmotions(emotions)
+def setEmotionState(emotion):
+	bpy.evaAnimationManager.setEmotion(eval(emotion))
 
 
 def availableEmotionGestures():

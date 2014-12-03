@@ -23,7 +23,7 @@ def breathingCycle(self, rate, intensity):
 def emotionJitter(self):
 	for emotion in self.emotionsList:
 		target = emotion.magnitude.target
-		emotion.magnitude.target = random.gauss(target, target/10)
+		emotion.magnitude.target = random.gauss(target, target/20)
 
 
 def eyeSaccades(self, eyeWanderAbs):

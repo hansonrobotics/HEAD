@@ -56,7 +56,6 @@ class BLRigControl(bpy.types.Panel):
 				row.operator('eva.debug', text=action.name[4:]).action = 'commands.setEmotionGestures("'+ action.name +'")'
 
 
-
 		
 		###  Emotions  ###
 		row = layout.row()
@@ -67,13 +66,15 @@ class BLRigControl(bpy.types.Panel):
 			if emo.name.startswith("EMO-"):
 				if i%2 == 0:
 					row = col.row(align=True)
-				
 				row.prop(emo,'["intensity"]', text=emo.name[4:], slider=True)
 
 		col = layout.column(align = True)
 		col.active = runningAnimation
-		col.operator("eva.emotions", text='Set Emotions').evaEmotions = context.scene.evaEmotions
-		col.prop(context.scene, 'evaEmotions', text='')
+		# col.operator("eva.emotions", text='Set Emotions').evaEmotions = context.scene.evaEmotions
+		# col.prop(context.scene, 'evaEmotions', text='')
+		col.operator('eva.debug', text = 'Set Emotion').action =  'commands.setEmotionState("'+ context.scene.evaEmotion + '")'
+		col.prop(context.scene, 'evaEmotion', text='')
+
 
 		# row = layout.row()
 		# op = row.operator('eva.debug', text='Happy')
