@@ -29,28 +29,6 @@ class EvaDebug(bpy.types.Operator):
 		print(eval(self.action))
 		return {'FINISHED'}
 
-	@classmethod
-	def poll(cls, context):
-		return bpy.context.scene['animationPlaybackActive']
-
-	
-
-
-class EvaGestures(bpy.types.Operator):
-	"""Eva Gesture Control"""
-	bl_idname = "eva.gestures"
-	bl_label = "Eva Gestures"
-	
-	evaAction = bpy.props.StringProperty()
-	
-	def execute(self, context):
-		# add to animationManager
-		bpy.evaAnimationManager.newGesture(name=self.evaAction)
-		return {'FINISHED'}
-
-	@classmethod
-	def poll(cls, context):
-		return bpy.context.scene['animationPlaybackActive']
 
 
 
@@ -161,14 +139,14 @@ class BLPlayback(bpy.types.Operator):
 			# udpate emotions
 			for emotion in eva.emotionsList:
 				control = eva.bones['EMO-'+emotion.name]
-				control['intensity'] = emotion.intensity.current
+				control['intensity'] = emotion.magnitude.current
 				emotion.duration -= timeScale
-				emotion.intensity.blend()
+				emotion.magnitude.blend()
 				
 				if emotion.duration < 0:
-					emotion.intensity._target *= 0.99
+					emotion.magnitude._target *= 0.99
 
-					if emotion.intensity.current < 0.1:
+					if emotion.magnitude.current < 0.1:
 						eva.emotionsList.remove(emotion)
 						control['intensity'] = 0.0
 
@@ -233,7 +211,6 @@ class BLPlayback(bpy.types.Operator):
 
 def register():
 	bpy.utils.register_class(BLPlayback)
-	bpy.utils.register_class(EvaGestures)
 	bpy.utils.register_class(EvaEmotions)
 	bpy.utils.register_class(EvaTracking)
 	bpy.utils.register_class(EvaDebug)
@@ -241,7 +218,6 @@ def register():
 
 def unregister():
 	bpy.utils.unregister_class(BLPlayback)
-	bpy.utils.unregister_class(EvaGestures)
 	bpy.utils.unregister_class(EvaEmotions)
 	bpy.utils.unregister_class(EvaTracking)
 	bpy.utils.unregister_class(EvaDebug)

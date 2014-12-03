@@ -9,7 +9,7 @@ import imp
 imp.reload(blenderCommandListener)
 blenderCommandListener.refresh()
 
-# sets up the animation playback
+# sets up the Blender operators
 imp.reload(blenderPlayback)
 blenderPlayback.refresh()
 
@@ -17,7 +17,6 @@ blenderPlayback.refresh()
 imp.reload(blenderUI)
 blenderUI.refresh()
 
-
-# init animation Manager
+# init animation Manager singleton
 imp.reload(animationManager)
 animationManager.init()

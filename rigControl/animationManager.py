@@ -145,13 +145,13 @@ class AnimationManager():
 				found = False
 				for emotion in self.emotionsList:
 					if emotionName == emotion.name:
-						# update intensity
-						emotion.intensity.target = value
+						# update magnitude
+						emotion.magnitude.target = value
 						emotion.duration = 0
 						found = True
 				
 				if not found:
-					emotion = Emotion(emotionName, intensity = BlendedNum(value, steps = 10, smoothing = 10), duration = 100)
+					emotion = Emotion(emotionName, magnitude = BlendedNum(value, steps = 10, smoothing = 10), duration = 100)
 					self.emotionsList.append(emotion)
 
 
@@ -207,9 +207,9 @@ class AnimationManager():
 			
 class Emotion():
 	''' represents an emotion'''
-	def __init__(self, name, intensity, duration):
+	def __init__(self, name, magnitude, duration):
 		self.name = name
-		self.intensity = intensity
+		self.magnitude = magnitude
 		self.duration = duration
 		self.priority = 0
 
@@ -326,4 +326,5 @@ class BlendedNum():
 
 
 def init():
+	'''Create AnimationManager singleton and make available for global access'''
 	bpy.evaAnimationManager = AnimationManager()

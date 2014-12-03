@@ -39,7 +39,8 @@ class BLRigControl(bpy.types.Panel):
 		
 		col = layout.column(align=True)
 		col.operator("wm.command_listener", text=text, icon='CONSOLE')
-		col.operator("wm.animation_playback", icon='ARMATURE_DATA')
+		col.operator('eva.debug', text='Start Animation', icon='ARMATURE_DATA').action = 'commands.init()'
+		
 
 
 		### Gestures ###
@@ -51,7 +52,10 @@ class BLRigControl(bpy.types.Panel):
 				if i%2 == 0:
 					row = col.row(align=True)
 
-				row.operator("eva.gestures", text=action.name[4:]).evaAction = action.name
+				# row.operator("eva.gestures", text=action.name[4:]).evaAction = action.name
+				row.operator('eva.debug', text=action.name[4:]).action = 'commands.setEmotionGestures("'+ action.name +'")'
+
+
 
 		
 		###  Emotions  ###
@@ -110,12 +114,14 @@ class BLRigControl(bpy.types.Panel):
 		row = layout.row()
 		layout.label(text="Debug:")
 		col = layout.column(align=True)
+		col.operator('eva.debug', text='getAPIVersion()').action = 'commands.getAPIVersion()'
+		col.operator('eva.debug', text='isAlive()').action = 'commands.isAlive()'
 		col.operator('eva.debug', text='availableEmotionStates()').action = 'commands.availableEmotionStates()'
 		col.operator('eva.debug', text='availableEmotionGestures()').action = 'commands.availableEmotionGestures()'
-		col.operator('eva.debug', text='getEmotionStates()').action = 'commands.getEmotionStates(bpy.evaAnimationManager)'
-		col.operator('eva.debug', text='getEmotionGestures()').action = 'commands.getEmotionGestures(bpy.evaAnimationManager)'
-		col.operator('eva.debug', text='getEmotionParams()').action = 'commands.getEmotionParams(bpy.evaAnimationManager)'
-
+		col.operator('eva.debug', text='getEmotionStates()').action = 'commands.getEmotionStates()'
+		col.operator('eva.debug', text='getEmotionGestures()').action = 'commands.getEmotionGestures()'
+		col.operator('eva.debug', text='getEmotionParams()').action = 'commands.getEmotionParams()'
+		
 
 def register():
 	bpy.utils.register_class(BLRigControl)

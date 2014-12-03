@@ -11,7 +11,7 @@ def idleCycle(self):
 def breathingCycle(self, rate, intensity):
 	if 'CYC-breathing' not in [gesture.name for gesture in self.gesturesList]:
 		# create new strip
-		self.newGesture('CYC-breathing', repeat=1, speed=rate, magnitude=intensity)
+		self.newGesture('CYC-breathing', repeat=10, speed=rate, magnitude=intensity)
 	else:
 		# update strip property
 		for gesture in self.gesturesList:
@@ -22,8 +22,8 @@ def breathingCycle(self, rate, intensity):
 
 def emotionJitter(self):
 	for emotion in self.emotionsList:
-		target = emotion.intensity.target
-		emotion.intensity.target = random.gauss(target, target/10)
+		target = emotion.magnitude.target
+		emotion.magnitude.target = random.gauss(target, target/10)
 
 
 def eyeSaccades(self, eyeWanderAbs):
