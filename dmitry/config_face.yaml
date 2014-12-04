@@ -4,12 +4,13 @@ rotate_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: rotate_joint
-    joint_speed: 1.17
+    joint_speed: 0.8
     motor:
         id: 0
         init: 2290
         min: 1240
         max: 3340
+        acceleration: 10
 pitch1_controller:
     controller:
         package: dynamixel_controllers
@@ -19,7 +20,7 @@ pitch1_controller:
     joint_speed: 0.2
     motor:
         id: 1
-        init: 2039
+        init: 2089
         min: 1850
         max: 2180
 roll_controller:
@@ -43,7 +44,7 @@ pitch2_controller:
     joint_speed: 0.2
     motor:
         id: 3
-        init: 2065
+        init: 2015
         min: 1800
         max: 2240
 jaw_controller:
@@ -65,7 +66,8 @@ pau2motors:
         cmd_neck_pau: neck_pitch_top;neck_pitch_bottom;neck_roll;neck_base
         cmd_eyes_pau: eyes_pitch;leye_yaw;reye_yaw
         cmd_face_pau: Cheek-Squint_L;Cheek-Squint_R;Eyelid-Lower_R;Eyelid-Lower_L;Eyelid-Upper_R;Eyelid-Upper_L;Frown_R;Brow-Outer_L;Smile_R;Smile_L;Lip-Lower_L;Lip_Upper_C;Sneer_R;Lip-Upper_L;Lip-Lower_R;Lip-Lower_C;Brow-Inner_L;Frown_L;Lip-Upper_R;Sneer_L;Brow_Outer_R;Brow-Inner_R;Jaw
-
+        faceshift_track: Eyelid-Lower_R;Eyelid-Lower_L;Eyelid-Upper_R;Eyelid-Upper_L;Brow-Outer_L;Smile_R;Smile_L;Brow-Inner_L;Brow_Outer_R;Brow-Inner_R;Jaw;eyes_pitch;leye_yaw;reye_yaw;neck_pitch_top;neck_pitch_bottom;neck_roll;neck_base
+        #faceshift_track: Eyelid-Lower_R;Eyelid-Lower_L;Eyelid-Upper_R;Eyelid-Upper_L
 
     motors:
 
@@ -241,7 +243,7 @@ pau2motors:
             shapekey: 01_EyeBlink_R;03_EyeSquint_R;09_EyeOpen_R
           function:
             - name: weightedsum
-              imin: 0.485
+              imin: 0.4
               terms:
               - {min: 0, max: 0.8, imax: 1}
               - {min: 0, max: 1, imax: 0.7}
@@ -252,8 +254,8 @@ pau2motors:
             id: 2
             speed: 400
             acceleration: 400
-        min: -0.905
-        max: 0.158
+        min: -0.813
+        max: 0.084
 
 
       Eyelid-Lower_L:
@@ -263,7 +265,7 @@ pau2motors:
             shapekey: 00_EyeBlink_L;02_EyeSquint_L;08_EyeOpen_L
           function:
             - name: weightedsum
-              imin: 0.4725
+              imin: 0.59
               terms:
               - {min: 0, max: 0.8, imax: 0.0}
               - {min: 0, max: 0.1, imax: 0.3}
@@ -274,8 +276,8 @@ pau2motors:
             id: 3
             speed: 400
             acceleration: 400
-        min: 0.202
-        max: 0.963
+        min: 0.052
+        max: 0.826
 
 
       Eyelid-Upper_R:
@@ -285,7 +287,7 @@ pau2motors:
             shapekey: 01_EyeBlink_R;09_EyeOpen_R
           function:
             - name: weightedsum
-              imin: 0.675
+              imin: 0.673
               terms:
               - {min: 0, max: 0.8, imax: 0.0}
               - {min: 0, max: 0.8, imax: 1}
@@ -295,8 +297,8 @@ pau2motors:
             id: 4
             speed: 400
             acceleration: 400
-        min: -0.05
-        max: 1.13
+        min: -0.551
+        max: 0.877
 
 
       Eyelid-Upper_L:
@@ -306,7 +308,7 @@ pau2motors:
             shapekey: 00_EyeBlink_L;08_EyeOpen_L
           function:
             - name: weightedsum
-              imin: 0.27
+              imin: 0.288
               terms:
               - {min: 0, max: 0.8, imax: 1.0}
               - {min: 0, max: 1, imax: 0.0}
@@ -316,8 +318,9 @@ pau2motors:
             id: 5
             speed: 400
             acceleration: 400
-        min: 0
-        max: 1.08
+        min: -0.199
+        max: 1.229
+
 
 
       Frown_R:
