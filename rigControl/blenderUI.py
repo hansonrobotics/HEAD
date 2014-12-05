@@ -53,7 +53,7 @@ class BLRigControl(bpy.types.Panel):
 					row = col.row(align=True)
 
 				# row.operator("eva.gestures", text=action.name[4:]).evaAction = action.name
-				row.operator('eva.debug', text=action.name[4:]).action = 'commands.setEmotionGestures("'+ action.name +'")'
+				row.operator('eva.debug', text=action.name[4:]).action = 'commands.setEmotionGesture("'+ action.name +'")'
 
 
 		
