@@ -1,3 +1,5 @@
+# Implements the commands defined by the public API
+
 import bpy
 
 def getAPIVersion():
@@ -56,7 +58,7 @@ def getEmotionGestures():
 	return emotionGestures
 
 
-def setEmotionGestures(name):
+def setEmotionGesture(name):
 	bpy.evaAnimationManager.newGesture(name=name)
 	
 

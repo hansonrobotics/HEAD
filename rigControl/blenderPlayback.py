@@ -5,7 +5,6 @@ framerateHz = 48
 
 import bpy
 from .helpers import *
-from .animationSettings import *
 
 import pprint, time
 

@@ -1,3 +1,5 @@
+# Implements helper functions used by the rest of the module
+
 import math
 
 def mix(a,b,factor):

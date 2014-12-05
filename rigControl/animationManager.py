@@ -1,3 +1,5 @@
+# AnimationManager is the primary datastore for the Eva character
+
 from . import actuators
 from .blendedNum import BlendedNum
 from .helpers import *

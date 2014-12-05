@@ -1,4 +1,5 @@
-# a numeric object that allow blending and smoothing of values
+# Implements a numeric object that allow blending and smoothing of values
+# access using .current, set using .target, must be manually interpolated using .blend() every frame
 
 import collections
 

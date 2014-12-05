@@ -1,3 +1,5 @@
+# Functions that controls the Eva character
+
 from .helpers import *
 
 import random
