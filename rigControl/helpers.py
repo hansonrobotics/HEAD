@@ -1,6 +1,6 @@
 # Implements helper functions used by the rest of the module
 
-import math
+import math, random
 
 def mix(a,b,factor):
 	'''mix two number together using a factor'''
@@ -50,3 +50,12 @@ def mapValue(value, leftMin, leftMax, rightMin, rightMax):
 
 	# Convert the 0-1 range into a value in the right range.
 	return rightMin + (valueScaled * rightSpan)
+
+
+def randomSelect(probs):
+	r = random.random()
+	index = 0
+	while(r >= 0 and index < len(probs)):
+		r -= probs[index]
+		index += 1
+	return index - 1

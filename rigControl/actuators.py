@@ -56,11 +56,19 @@ def headDrift(self):
 
 
 def blink(self, duration):
-	if duration < -0.5:
-		self.newGesture('GST-blink-micro')
-	elif duration < 0.5:
-		self.newGesture('GST-blink')
-	elif duration < 1.5:
-		self.newGesture('GST-blink-relaxed')
-	elif duration < 2.5:
-		self.newGesture('GST-blink-sleepy')
+	# compute probability
+	micro = -(abs(duration+1)-1)
+	normal = -(abs(duration+0)-1)
+	relaxed = -(abs(duration-1)-1)
+	sleepy = -(abs(duration-2)-1)
+
+	micro = max(micro, 0)
+	normal = max(normal, 0)
+	relaxed = max(relaxed, 0)
+	sleepy = max(sleepy, 0)
+
+	index = randomSelect([micro, normal, relaxed, sleepy])
+	action = ['GST-blink-micro', 'GST-blink', 'GST-blink-relaxed', 'GST-blink-sleepy']
+	self.newGesture(action[index])
+	
+	# print(action[index])
