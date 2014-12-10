@@ -11,7 +11,6 @@ RosUI = {
             RosUI.interaction.init();
 
             init_interaction();
-            init_motors();
         });
     },
     topics: {}

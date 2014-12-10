@@ -22,8 +22,7 @@ RosUI.ros = {
                 // call the success callback
                 success();
 
-                RoboInterface.$.trigger("connection");
-                RoboInterface.sendDefaultMotorCmds();
+                RosUI.api.set_default_motor_values();
             }).on('connection', function () {
                 $('#app-connecting').hide();
                 $('#app-pages').fadeIn();
@@ -46,31 +45,6 @@ RosUI.ros = {
             ros: RosUI.ros.ros,
             name: '/dmitry/pololu/cmd_pololu',
             messageType: 'ros_pololu_servo/servo_pololu'
-        });
-
-        RoboInterface.motortopicParams = {
-            face: {
-                ros: RosUI.ros.ros,
-                name: '/dmitry/dmitry_face/cmd_pololu',
-                messageType: 'ros_pololu_servo/servo_pololu'
-            },
-            eyes: {
-                ros: RosUI.ros.ros,
-                name: '/dmitry/dmitry_eyes/cmd_pololu',
-                messageType: 'ros_pololu_servo/servo_pololu'
-            },
-            jaw: {
-                ros: RosUI.ros.ros,
-                name: '/dmitry/jaw_controller/command',
-                messageType: 'std_msgs/Float64'
-            }
-        };
-        // Publish and subscribe to topics
-        RoboInterface.motorCmdTopics = {};
-        $.each(RoboInterface.motortopicParams, function (k, p) {
-            RoboInterface.motorCmdTopics[k] = new ROSLIB.Topic(p);
-            RoboInterface.motorCmdTopics[k].subscribe(function (msg) {
-            });
         });
 
         RosUI.ros.topics = {
@@ -103,6 +77,21 @@ RosUI.ros = {
                 ros: RosUI.ros.ros,
                 name: '/dmitry/point_head',
                 messageType: 'basic_head_api/PointHead'
+            }),
+            face: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/dmitry/dmitry_face/cmd_pololu',
+                messageType: 'ros_pololu_servo/servo_pololu'
+            }),
+            eyes: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/dmitry/dmitry_eyes/cmd_pololu',
+                messageType: 'ros_pololu_servo/servo_pololu'
+            }),
+            jaw: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/dmitry/jaw_controller/command',
+                messageType: 'std_msgs/Float64'
             })
         }
     },
@@ -129,5 +118,26 @@ RosUI.ros = {
             if (motorConf[i].name == name)
                 return motorConf[i];
         }
+    },
+    limit_call_rate: function (millis, func) {
+        var timeout = null;
+        var last_args = null;
+
+        function fire() {
+            timeout = null;
+            if (last_args != null) {
+                args = last_args;
+                last_args = null;
+                timeout = setTimeout(fire, millis);
+                func.apply(null, args); //Apply the last saved arguments
+            }
+        }
+
+        return function () {
+            last_args = arguments;
+            if (timeout == null) {
+                fire();
+            }
+        };
     }
 };
