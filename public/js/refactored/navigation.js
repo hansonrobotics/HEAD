@@ -22,7 +22,7 @@ RosUI.navigation = {
             $('#app-title').html($(this).html());
 
             // load page
-            if (typeof ros != 'undefined')
+            if (typeof RosUI.ros.ros != 'undefined')
                 RosUI.navigation.reload();
         });
 

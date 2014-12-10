@@ -87,26 +87,26 @@ RosUI.motors = {
         }
 
         //Update UI according to messages
-        RoboInterface.$.on("onMotorCmd", function (e, msgObj) {
-            var msg = msgObj.msg;
-            var confEntry = msgObj.confEntry;
-
-            //Ignore neck motors (if they have no motorid defined).
-            if (confEntry == undefined)
-                return;
-
-            if (confEntry.isActive)
-                return;
-            var degAngle;
-
-            if (msgObj.topic.messageType == 'std_msgs/Float64') {
-                degAngle = Math.round(radToDeg(msg.data));
-            } else {
-                degAngle = Math.round(radToDeg(msg.angle));
-            }
-            //confEntry.element.find(".slider").slider("value", degAngle);
-            //confEntry.element.find(".slVal").text(degAngle);
-            confEntry.newVal = degAngle;
-        });
+        //RoboInterface.$.on("onMotorCmd", function (e, msgObj) {
+        //    var msg = msgObj.msg;
+        //    var confEntry = msgObj.confEntry;
+        //
+        //    //Ignore neck motors (if they have no motorid defined).
+        //    if (confEntry == undefined)
+        //        return;
+        //
+        //    if (confEntry.isActive)
+        //        return;
+        //    var degAngle;
+        //
+        //    if (msgObj.topic.messageType == 'std_msgs/Float64') {
+        //        degAngle = Math.round(radToDeg(msg.data));
+        //    } else {
+        //        degAngle = Math.round(radToDeg(msg.angle));
+        //    }
+        //    //confEntry.element.find(".slider").slider("value", degAngle);
+        //    //confEntry.element.find(".slVal").text(degAngle);
+        //    confEntry.newVal = degAngle;
+        //});
     }
 };

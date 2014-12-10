@@ -16,7 +16,7 @@ RosUI.interaction = {
         treeMessage = new ROSLIB.Message({data: 'btree_on'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 
-        RoboInterface.set_expression("happy", 0);
-        RoboInterface.pointHead({yaw: 0, pitch: 0, roll: 0});
+        RosUI.api.set_expression("happy", 0);
+        RosUI.api.point_head({yaw: 0, pitch: 0, roll: 0});
     }
 };

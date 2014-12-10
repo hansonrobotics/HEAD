@@ -13,7 +13,10 @@ RosUI.api = {
         );
     },
     point_head: function (angles) {
-        $.extend({yaw: 0, pitch: 0, roll: 0}, angles);
+        if (typeof angles == 'undefined')
+            angles = {};
+
+        angles = $.extend({yaw: 0, pitch: 0, roll: 0}, angles);
 
         console.log('pointing head:');
         console.log(angles);
@@ -26,6 +29,13 @@ RosUI.api = {
         RosUI.ros.services.expression_list.callService(new ROSLIB.ServiceRequest({
                 robotname: "dmitry"
             }), success
+        );
+    },
+    play_animation: function (animation) {
+        RosUI.ros.topics.animations.publish(
+            new ROSLIB.Message({
+                data: 'play:' + animation
+            })
         );
     },
     send_motor_command: RosUI.ros.limit_call_rate(30, function () {

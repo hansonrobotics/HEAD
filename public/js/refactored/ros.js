@@ -40,13 +40,6 @@ RosUI.ros = {
         RosUI.ros.init_services();
     },
     init_topics: function () {
-        //Publish topic - to be deleted
-        RoboInterface.motorCmdTopic = new ROSLIB.Topic({
-            ros: RosUI.ros.ros,
-            name: '/dmitry/pololu/cmd_pololu',
-            messageType: 'ros_pololu_servo/servo_pololu'
-        });
-
         RosUI.ros.topics = {
             cmdBlender: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
@@ -92,6 +85,11 @@ RosUI.ros = {
                 ros: RosUI.ros.ros,
                 name: '/dmitry/jaw_controller/command',
                 messageType: 'std_msgs/Float64'
+            }),
+            animations: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/cmd_animations',
+                messageType: 'std_msgs/String'
             })
         }
     },

@@ -27,8 +27,8 @@ RosUI.expressions = {
 
         $('.expression-button.active').removeClass('active');
 
-        RosUI.ros.set_expression("happy", 0);
-        RosUI.ros.point_head();
+        RosUI.api.set_expression("happy", 0);
+        RosUI.api.point_head();
     },
 
     init_expressions: function () {
