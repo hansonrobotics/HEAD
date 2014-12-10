@@ -1,0 +1,61 @@
+neck1_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: neck1_joint
+    joint_speed: 0.2
+    motor:
+        id: 0
+        init: 0
+        min: 0
+        max: 0
+neck2_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: neck2_joint
+    joint_speed: 0.2
+    motor:
+        id: 0
+        init: 0
+        min: 0
+        max: 0
+neck3_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: neck3_joint
+    joint_speed: 0.2
+    motor:
+        id: 0
+        init: 0
+        min: 0
+        max: 0
+neck4_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: neck4_joint
+    joint_speed: 0.2
+    motor:
+        id: 0
+        init: 0
+        min: 0
+        max: 0
+neck5_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: neck5_joint
+    joint_speed: 0.2
+    motor:
+        id: 0
+        init: 0
+        min: 0
+        max: 0
+

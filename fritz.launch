@@ -1,0 +1,43 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <group ns="/fritz">
+    <rosparam file="$(find robots_config)/fritz/config.yaml" command="load"/>
+    <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" output="screen">
+        <rosparam>
+            namespace: dxl_manager
+            serial_ports:
+                pan_tilt_port:
+                    port_name: "/dev-host/ttyUSB0"
+                    baud_rate: 117647
+                    min_motor_id: 0
+                    max_motor_id: 5
+                    update_rate: 20
+        </rosparam>
+     </node>
+     <node name="neck1_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                neck1_controller"
+          output="screen"/>
+    <node name="neck2_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                neck2_controller"
+          output="screen"/>
+    <node name="neck3_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                neck3_controller"
+          output="screen"/>
+    <node name="neck4_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                neck4_controller"
+          output="screen"/>
+    <node name="neck5_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                neck5_controller"
+          output="screen"/> -->
+    </group>
+</launch>
