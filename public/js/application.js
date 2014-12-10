@@ -10,8 +10,6 @@ RosUI = {
             RosUI.motors.init();
             RosUI.animations.init();
             RosUI.interaction.init();
-
-            init_interaction();
         });
     },
     topics: {}

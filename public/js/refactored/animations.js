@@ -4,7 +4,7 @@ RosUI.animations = {
 
         $('.app-animation-button').click(function () {
             var data = $(this).data('animation');
-            RosUI.api.play_animation(data);
+            RosUI.api.playAnimation(data);
 
             last_animation = data;
             $('[data-cmd="play"]').click();
@@ -14,7 +14,7 @@ RosUI.animations = {
             var data = $(this).data('cmd');
 
             if (data == 'play') {
-                RosUI.api.play_animation(last_animation);
+                RosUI.api.playAnimation(last_animation);
             }
         });
 
@@ -52,7 +52,7 @@ RosUI.animations = {
             }
         }, 1000);
     },
-    load_page: function () {
+    loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
         blenderMessage = new ROSLIB.Message({data: 'Animations'});
@@ -64,8 +64,8 @@ RosUI.animations = {
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 
-        RosUI.api.set_expression("happy", 0);
-        RosUI.api.point_head({yaw: 0, pitch: 0, roll: 0});
+        RosUI.api.setExpression("happy", 0);
+        RosUI.api.pointHead({yaw: 0, pitch: 0, roll: 0});
 
         $('[data-cmd="stop"]').click();
     }

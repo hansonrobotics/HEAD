@@ -46,16 +46,16 @@ RosUI.navigation = {
     reload: function () {
         switch ($('.app-change-page.active').attr('id')) {
             case 'app-expressions-link':
-                RosUI.expressions.load_page();
+                RosUI.expressions.loadPage();
                 break;
             case 'app-motors-link':
-                RosUI.motors.load_page();
+                RosUI.motors.loadPage();
                 break;
             case 'app-animations-link':
-                RosUI.animations.load_page();
+                RosUI.animations.loadPage();
                 break;
             case 'app-interactions-link':
-                RosUI.interaction.load_page();
+                RosUI.interaction.loadPage();
                 break;
         }
     }

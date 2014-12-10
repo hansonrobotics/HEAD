@@ -1,5 +1,5 @@
 RosUI.api = {
-    set_expression: function (name, intensity) {
+    setExpression: function (name, intensity) {
         console.log('setting expression to: ' + name + ", intensity: " + intensity);
 
         RosUI.ros.topics.expression.publish(
@@ -12,7 +12,7 @@ RosUI.api = {
             })
         );
     },
-    point_head: function (angles) {
+    pointHead: function (angles) {
         if (typeof angles == 'undefined')
             angles = {};
 
@@ -25,23 +25,31 @@ RosUI.api = {
             new ROSLIB.Message(angles)
         );
     },
-    expression_list: function (success) {
-        RosUI.ros.services.expression_list.callService(new ROSLIB.ServiceRequest({
+    expressionList: function (success) {
+        RosUI.ros.services.expressionList.callService(new ROSLIB.ServiceRequest({
                 robotname: "dmitry"
             }), success
         );
     },
-    play_animation: function (animation) {
+    playAnimation: function (animation) {
         RosUI.ros.topics.animations.publish(
             new ROSLIB.Message({
                 data: 'play:' + animation
             })
         );
     },
-    send_motor_command: RosUI.ros.limit_call_rate(30, function () {
-        RosUI.api._send_motor_command.apply(RosUI.api, arguments);
+    sendChatMessage: function(text) {
+        var message = new ROSLIB.Message({
+            utterance: text,
+            confidence: Math.round(0.9 * 100)
+        });
+
+        RosUI.ros.topics.speech_topic.publish(message);
+    },
+    sendMotorCommand: RosUI.utilities.limitCallRate(30, function () {
+        RosUI.api._sendMotorCommand.apply(RosUI.api, arguments);
     }),
-    _send_motor_command: function (confEntry, angle, speed, acc) {
+    _sendMotorCommand: function (confEntry, angle, speed, acc) {
         if (!confEntry.topic || confEntry.topic == 'none')
             return false;
         var topicParams = RosUI.ros.topics[confEntry.topic];
@@ -58,9 +66,9 @@ RosUI.api = {
         }
         RosUI.ros.topics[confEntry.topic].publish(cmd);
     },
-    set_default_motor_values: function () {
+    setDefaultMotorValues: function () {
         for (var i = 0; i < RosUI.ros.config.motors.length; i++) {
-            this._send_motor_command(RosUI.ros.config.motors[i], RosUI.ros.config.motors[i].default);
+            this._sendMotorCommand(RosUI.ros.config.motors[i], RosUI.ros.config.motors[i].default);
         }
     }
 };

@@ -22,7 +22,7 @@ RosUI.ros = {
                 // call the success callback
                 success();
 
-                RosUI.api.set_default_motor_values();
+                RosUI.api.setDefaultMotorValues();
             }).on('connection', function () {
                 $('#app-connecting').hide();
                 $('#app-pages').fadeIn();
@@ -61,6 +61,11 @@ RosUI.ros = {
                 name: '/dmitry/chatbot_speech',
                 messageType: 'chatbot/ChatMessage'
             }),
+            chat_responses: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/dmitry/chatbot_responses',
+                messageType: 'std_msgs/String'
+            }),
             expression: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/dmitry/make_coupled_face_expr',
@@ -93,9 +98,9 @@ RosUI.ros = {
             })
         }
     },
-    init_services: function() {
+    init_services: function () {
         RosUI.ros.services = {
-            expression_list: new ROSLIB.Service({
+            expressionList: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
                 name: '/valid_coupled_face_exprs',
                 serviceType: 'basic_head_api/ValidCoupledFaceExprs'
@@ -109,33 +114,12 @@ RosUI.ros = {
             return "wss://" + document.domain + ":9092";
         }
     },
-    get_motor_config: function (name) {
+    getMotorConfig: function (name) {
         var motorConf = RosUI.ros.config.motors;
 
         for (var i = 0; i < motorConf.length; i++) {
             if (motorConf[i].name == name)
                 return motorConf[i];
         }
-    },
-    limit_call_rate: function (millis, func) {
-        var timeout = null;
-        var last_args = null;
-
-        function fire() {
-            timeout = null;
-            if (last_args != null) {
-                args = last_args;
-                last_args = null;
-                timeout = setTimeout(fire, millis);
-                func.apply(null, args); //Apply the last saved arguments
-            }
-        }
-
-        return function () {
-            last_args = arguments;
-            if (timeout == null) {
-                fire();
-            }
-        };
     }
 };

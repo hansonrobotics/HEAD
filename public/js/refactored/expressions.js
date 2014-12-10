@@ -9,11 +9,11 @@ RosUI.expressions = {
     },
     init: function () {
         $(".dial").val(0);
-        this.init_expressions();
-        this.create_buttons();
+        this.initExpressions();
+        this.createButtons();
     },
 
-    load_page: function () {
+    loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
         blenderMessage = new ROSLIB.Message({data: 'Dummy'});
@@ -27,13 +27,13 @@ RosUI.expressions = {
 
         $('.expression-button.active').removeClass('active');
 
-        RosUI.api.set_expression("happy", 0);
-        RosUI.api.point_head();
+        RosUI.api.setExpression("happy", 0);
+        RosUI.api.pointHead();
     },
 
-    init_expressions: function () {
+    initExpressions: function () {
         //Create crosshair
-        RosUI.expressions.build_crosshair_slider(
+        RosUI.expressions.buildCrosshair(
             $(".crosshairsl"), {
                 bgColor: "#485563",
                 fgColor: "#fff"
@@ -64,7 +64,7 @@ RosUI.expressions = {
                 this.g.stroke();
                 return true;
             },
-            change: RosUI.expressions.update_expression,
+            change: RosUI.expressions.updateExpression,
             format: function (value) {
                 return Math.round(value / RosUI.expressions.config.knob.max * RosUI.expressions.config.knob.maxShow);
             }
@@ -72,8 +72,8 @@ RosUI.expressions = {
         //Keep the input fields inside dials from being edited directly.
         $("input.dial").css("pointer-events", "none");
     },
-    create_buttons: function () {
-        RosUI.api.expression_list(function (response) {
+    createButtons: function () {
+        RosUI.api.expressionList(function (response) {
             var capitalize = function (str) {
                 return str.charAt(0).toUpperCase() + str.slice(1);
             };
@@ -87,14 +87,14 @@ RosUI.expressions = {
                         RosUI.expressions.current_face = $(this).data('expression');
                         $(".knobName").text($(this).html());
 
-                        RosUI.expressions.update_expression(RosUI.expressions.config.knob.max);
+                        RosUI.expressions.updateExpression(RosUI.expressions.config.knob.max);
                     });
 
                 $(".expression-buttons").append(button);
             });
         });
     },
-    update_expression: function (value) {
+    updateExpression: function (value) {
         if (!value)
             value = parseInt($(".dial").val()) / RosUI.expressions.config.knob.maxShow * RosUI.expressions.config.knob.max;
 
@@ -104,24 +104,24 @@ RosUI.expressions = {
         RosUI.expressions.config.knob.maxShow) < RosUI.expressions.config.knob.maxShow)
             ? value / (RosUI.expressions.config.knob.max * 1.2) : 1.0;
 
-        RosUI.api.set_expression(RosUI.expressions.current_face, intensity);
+        RosUI.api.setExpression(RosUI.expressions.current_face, intensity);
     },
-    build_crosshair_slider: function (element, options) {
-        var yaw = RosUI.ros.get_motor_config("neck_base");
-        var pitch = RosUI.ros.get_motor_config("neck_pitch");
+    buildCrosshair: function (element, options) {
+        var yaw = RosUI.ros.getMotorConfig("neck_base");
+        var pitch = RosUI.ros.getMotorConfig("neck_pitch");
 
         $(element).crosshairsl($.extend({}, {
-            xmin: Math.floor(radToDeg(yaw.min)),
-            xmax: Math.ceil(radToDeg(yaw.max)),
-            xval: Math.round(radToDeg(yaw.default)),
+            xmin: Math.floor(RosUI.utilities.radToDeg(yaw.min)),
+            xmax: Math.ceil(RosUI.utilities.radToDeg(yaw.max)),
+            xval: Math.round(RosUI.utilities.radToDeg(yaw.default)),
             //Minus signs and min-max swapped to invert the y axis for pitch to point upwards.
-            ymin: Math.floor(radToDeg(-pitch.max)),
-            ymax: Math.ceil(radToDeg(-pitch.min)),
-            yval: Math.round(radToDeg(-pitch.default)),
+            ymin: Math.floor(RosUI.utilities.radToDeg(-pitch.max)),
+            ymax: Math.ceil(RosUI.utilities.radToDeg(-pitch.min)),
+            yval: Math.round(RosUI.utilities.radToDeg(-pitch.default)),
             change: function (e, ui) {
-                RosUI.api.point_head({
-                    yaw: degToRad(ui.xval),
-                    pitch: degToRad(-ui.yval)
+                RosUI.api.pointHead({
+                    yaw: RosUI.utilities.degToRad(ui.xval),
+                    pitch: RosUI.utilities.degToRad(-ui.yval)
                 });
             } }, options));
 

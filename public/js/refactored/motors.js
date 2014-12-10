@@ -1,10 +1,10 @@
 RosUI.motors = {
     init: function () {
         RosUI.motors.initMotors();
-        setInterval(RosUI.motors.update_sliders, 1000);
+        setInterval(RosUI.motors.updateSliders, 1000);
     },
 
-    load_page: function () {
+    loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
         blenderMessage = new ROSLIB.Message({data: 'Dummy'});
@@ -16,17 +16,17 @@ RosUI.motors = {
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 
-        RosUI.api.set_expression("happy", 0);
-        RosUI.api.point_head({yaw: 0, pitch: 0, roll: 0});
+        RosUI.api.setExpression("happy", 0);
+        RosUI.api.pointHead({yaw: 0, pitch: 0, roll: 0});
 
     },
-    add_slider: function (config) {
+    addSlider: function (config) {
         var sliderBlock = $("#sliderTemplate").clone();
         sliderBlock.removeAttr("id"); //Removing sliderTemplate id
         config.element = sliderBlock //Saving a reference to html element in config object
-        var degMin = Math.ceil(radToDeg(config.min));
-        var degMax = Math.floor(radToDeg(config.max));
-        var degVal = Math.round(radToDeg(config.default));
+        var degMin = Math.ceil(RosUI.utilities.radToDeg(config.min));
+        var degMax = Math.floor(RosUI.utilities.radToDeg(config.max));
+        var degVal = Math.round(RosUI.utilities.radToDeg(config.default));
 
         //Fill header
         sliderBlock.find(".slNameL").text(config.labelleft || config.name);
@@ -47,12 +47,12 @@ RosUI.motors = {
                 if (config.name == "neck_roll") {
                     return function (e, ui) {
                         slVal.text(ui.value);
-                        RosUI.api.point_head({roll: degToRad(ui.value)});
+                        RosUI.api.pointHead({roll: RosUI.utilities.degToRad(ui.value)});
                     }
                 } else {
                     return function (e, ui) {
                         slVal.text(ui.value);
-                        RosUI.api.send_motor_command(config, degToRad(ui.value));
+                        RosUI.api.sendMotorCommand(config, RosUI.utilities.degToRad(ui.value));
                     }
                 }
             })(),
@@ -67,7 +67,7 @@ RosUI.motors = {
         sliderBlock.removeClass("hidden");
         sliderBlock.appendTo("#sliderStack");
     },
-    update_sliders: function () {
+    updateSliders: function () {
         var motorConf = RosUI.ros.config.motors;
         for (var i = 0; i < motorConf.length; i++) {
             if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
@@ -83,7 +83,7 @@ RosUI.motors = {
         var motorConf = RosUI.ros.config.motors;
         for (var i = 0; i < motorConf.length; i++) {
             if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
-                RosUI.motors.add_slider(motorConf[i]);
+                RosUI.motors.addSlider(motorConf[i]);
         }
 
         //Update UI according to messages
