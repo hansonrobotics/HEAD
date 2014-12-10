@@ -1,4 +1,4 @@
-$(function () {
+init_animations = function () {
     // ROS object to connect to ROS
 
     var animations = [];
@@ -6,41 +6,12 @@ $(function () {
     var lastAnim = 'happy-1'
     // functions
     // Starts Animations mode in blender
-    function startBlenderMode() {
-//        var cmdBlender = new ROSLIB.Topic({
-//            ros: ros,
-//            name: '/cmd_blendermode',
-//            messageType: 'std_msgs/String'
-//        });
-//        var msg = new ROSLIB.Message({
-//            data: 'Animations'
-//        });
-//        cmdBlender.publish(msg);
-//        var cmdBllink = new ROSLIB.Topic({
-//            ros: ros,
-//            name: '/dmitry/cmd_blink',
-//            messageType: 'std_msgs/String'
-//        });
-//        msg = new ROSLIB.Message({
-//            data: 'dmitry:stop'
-//        });
-//        cmdBllink.publish(msg);
-//        var cmdTree = new ROSLIB.Topic({
-//            ros: ros,
-//            name: '/dmitry/behavior_switch',
-//            messageType: 'std_msgs/String'
-//        });
-//        msg = new ROSLIB.Message({
-//            data: 'btree_off'
-//        });
-//        cmdTree.publish(msg);
-    }
 
     // Get animations
     function getAnimations() {
         console.log('anims');
         var anims = new ROSLIB.Topic({
-            ros: ros,
+            ros: RosUI.api.ros,
             name: '/animations_list',
             messageType: 'robo_blender/animations_list'
         });
@@ -52,7 +23,7 @@ $(function () {
 
     function addButtons() {
         cmdAnimations = new ROSLIB.Topic({
-            ros: ros,
+            ros: RosUI.api.ros,
             name: '/cmd_animations',
             messageType: 'std_msgs/String'
         });
@@ -85,9 +56,8 @@ $(function () {
     }
 
     // Find out exactly when we made a connection.
-    RosUI.ros.$.on('connection', function () {
+    RosUI.api.ros.on('connection', function () {
         console.log('Connection made!');
-        startBlenderMode();
         setTimeout(function () {
             addButtons()
         }, 1000);
@@ -124,4 +94,4 @@ $(function () {
             $('.app-animation-button').random().click();
         }
     }, 1000);
-});
+};

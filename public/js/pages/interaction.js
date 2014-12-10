@@ -1,4 +1,4 @@
-$(function () {
+init_interaction =function () {
     // ROS object to connect to ROS
     var responses;
 
@@ -58,7 +58,7 @@ $(function () {
                     utterance: utterance,
                     confidence: Math.round(event.results[0][0].confidence * 100)
                 });
-                RosUI.topics.speech_topic.publish(chat_message);
+                RosUI.api.topics.speech_topic.publish(chat_message);
                 addMessage('Me', utterance);
             };
             recognition.start();
@@ -78,7 +78,7 @@ $(function () {
     }
 
     // Find out exactly when we made a connection.
-    RosUI.ros.$.on('connection', function () {
+    RosUI.api.ros.on('connection', function () {
         ready();
 
         $('#app-record-button').click(function () {
@@ -138,8 +138,8 @@ $(function () {
                 confidence: Math.round(0.9 * 100)
             });
             $('#app-message-input').val('');
-            RosUI.topics.speech_topic.publish(chat_message);
+            RosUI.api.topics.speech_topic.publish(chat_message);
         }
     });
-});
+}
 

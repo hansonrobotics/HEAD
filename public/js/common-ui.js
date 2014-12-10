@@ -1,3 +1,10 @@
+function radToDeg(val) {
+    return val * 180 / Math.PI;
+}
+function degToRad(val) {
+    return val * Math.PI / 180;
+}
+
 var CommonUI = new function () {
 
     function capitalize(str) {
@@ -6,7 +13,7 @@ var CommonUI = new function () {
 
     //Look up motor config entry by its name.
     function getConf(name) {
-        var motorConf = RoboInterface.motorConf;
+        var motorConf = RosUI.api.config.motors;
         for (var i = 0; i < motorConf.length; i++) {
             if (motorConf[i].name == name)
                 return motorConf[i];
@@ -61,7 +68,7 @@ var CommonUI = new function () {
             ymax: Math.ceil(radToDeg(-pitchConf.min)),
             yval: Math.round(radToDeg(-pitchConf.default)),
             change: function (e, ui) {
-                RoboInterface.pointHead({
+                RosUI.api.point_head({
                     yaw: degToRad(ui.xval),
                     pitch: degToRad(-ui.yval)
                 });
@@ -73,7 +80,7 @@ var CommonUI = new function () {
 
 function websocketAddress() {
     if (window.location.protocol != "https:") {
-        return "ws://" + document.domain + ":9090";
+        return "ws://172.17.0.2:9090";
     } else {
         return "wss://" + document.domain + ":9092";
     }

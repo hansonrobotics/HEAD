@@ -1,10 +1,3 @@
-function radToDeg(val) {
-    return val * 180 / Math.PI;
-}
-function degToRad(val) {
-    return val * Math.PI / 180;
-}
-
 function addSliderBlock(confEntry) {
     var sliderBlock = $("#sliderTemplate").clone();
     sliderBlock.removeAttr("id"); //Removing sliderTemplate id
@@ -54,7 +47,7 @@ function addSliderBlock(confEntry) {
 }
 
 function updateUI() {
-    motorConf = RoboInterface.motorConf;
+    motorConf = RosUI.api.config.motors;
     for (var i = 0; i < motorConf.length; i++) {
         if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
             if (motorConf[i].newVal != undefined) {
@@ -68,7 +61,7 @@ function updateUI() {
 //Create UI that requires a loaded config file.
 function initMotors() {
     //Create sliders
-    motorConf = RoboInterface.motorConf;
+    motorConf = RosUI.api.config.motors;
     for (var i = 0; i < motorConf.length; i++) {
         if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
             addSliderBlock(motorConf[i]);
@@ -101,9 +94,7 @@ function initMotors() {
     CommonUI.buildCrosshairSlider($(".crosshairsl"));
 }
 
-$(function () {
-    RosUI.ros.$.on("connection", function () {
-        initMotors();
-        setInterval(updateUI, 1000);
-    });
-});
+init_motors = function () {
+    initMotors();
+    setInterval(updateUI, 1000);
+};

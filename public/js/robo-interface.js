@@ -21,43 +21,12 @@ var limitCallRate = function (millis, func) {
             fire();
         }
     };
-}
+};
 
 //Main Class
 var RoboInterface = {
 
     $: $({}), //Event proxy. Events are triggered and bound to this object.
-    // Resets blender mode
-    startBlenderMode: function startBlenderMode() {
-//        var cmdBlender = new ROSLIB.Topic({
-//            ros: ros,
-//            name: '/cmd_blendermode',
-//            messageType: 'std_msgs/String'
-//        });
-//        var msg = new ROSLIB.Message({
-//            data: 'Dummy'
-//        });
-//        cmdBlender.publish(msg);
-//        var cmdBllink = new ROSLIB.Topic({
-//            ros: ros,
-//            name: '/dmitry/cmd_blink',
-//            messageType: 'std_msgs/String'
-//        });
-//        var msg = new ROSLIB.Message({
-//            data: 'dmitry:stop'
-//        });
-//        cmdBllink.publish(msg);
-//        var cmdTree = new ROSLIB.Topic({
-//            ros: ros,
-//            name: '/dmitry/behavior_switch',
-//            messageType: 'std_msgs/String'
-//        });
-//        var msg = new ROSLIB.Message({
-//            data: 'btree_off'
-//        });
-//        cmdTree.publish(msg);
-
-    },
 
     //Keeps the incomming motor messages from flooding.
     sendMotorCmd: limitCallRate(30, function () {
@@ -85,11 +54,10 @@ var RoboInterface = {
     },
 
     sendDefaultMotorCmds: function () {
-        for (var i = 0; i < this.motorConf.length; i++) {
-            this._sendMotorCmd(this.motorConf[i], this.motorConf[i].default);
+        for (var i = 0; i < RosUI.api.config.motors.length; i++) {
+            this._sendMotorCmd(RosUI.api.config.motors[i], RosUI.api.config.motors[i].default);
         }
-        ;
-        this.pointHead();
+        //this.pointHead();
     },
 
     getValidFaceExprs: function (callback) {
@@ -99,154 +67,23 @@ var RoboInterface = {
             }),
             callback
         );
-    },
-
-    makeFaceExpr: function (faceStr, intensity) {
-        this.makeFaceExprTopic.publish(
-            new ROSLIB.Message({
-                robotname: "dmitry",
-                expr: {
-                    exprname: faceStr,
-                    intensity: intensity
-                }
-            })
-        );
-    },
-
-    //Keeps the incomming motor messages from flooding.
-    pointHead: limitCallRate(30, function () {
-        RoboInterface._pointHead.apply(RoboInterface, arguments);
-    }),
-
-    _pointHead: function (new_angles) {
-        var angles = {yaw: 0, pitch: 0, roll: 0};
-
-        this._pointHead = function (new_angles) {
-            $.extend(angles, new_angles);
-            RoboInterface.pointHeadTopic.publish(
-                new ROSLIB.Message(angles)
-            );
-        };
-
-        return this._pointHead(new_angles);
-    },
-
-    //Loads the config file and connects to ROS
-    connect: function (address) {
-
-        function connectROS() {
-            //Connect to rosbridge
-            ros = new ROSLIB.Ros({
-                url: address
-            }).on("connection", function (e) {
-                RoboInterface.$.trigger("connection");
-                RoboInterface.startBlenderMode();
-                RoboInterface.sendDefaultMotorCmds();
-            });
-
-            ros.on('connection', function () {
-                $('#app-connecting').hide();
-                $('#app-pages').fadeIn();
-            });
-
-            ros.on('close', function () {
-                $('#notifications .label').hide();
-                $('#app-connection-error').show();
-                $('#app-title').html('');
-            });
-
-            ros.on('error', function (error) {
-                $('#notifications .label').hide();
-                $('#app-connection-error').show();
-                $('#app-title').html('');
-            });
-
-            //Publish topic - to be deleted
-            RoboInterface.motorCmdTopic = new ROSLIB.Topic({
-                ros: ros,
-                name: '/dmitry/pololu/cmd_pololu',
-                messageType: 'ros_pololu_servo/servo_pololu'
-            });
-            RoboInterface.motortopicParams = {
-                face: {
-                    ros: ros,
-                    name: '/dmitry/dmitry_face/cmd_pololu',
-                    messageType: 'ros_pololu_servo/servo_pololu'
-                },
-                eyes: {
-                    ros: ros,
-                    name: '/dmitry/dmitry_eyes/cmd_pololu',
-                    messageType: 'ros_pololu_servo/servo_pololu'
-                },
-                jaw: {
-                    ros: ros,
-                    name: '/dmitry/jaw_controller/command',
-                    messageType: 'std_msgs/Float64'
-                },
-            };
-            // Publish and subscribe to topics
-            RoboInterface.motorCmdTopics = {}
-            $.each(RoboInterface.motortopicParams, function (k, p) {
-                RoboInterface.motorCmdTopics[k] = new ROSLIB.Topic(p);
-                RoboInterface.motorCmdTopics[k].subscribe(function (msg) {
-
-                    //  RoboInterface.$.trigger("onMotorCmd", {
-                    //   msg: msg,
-                    //    topic: p,
-                    //    confEntry: getConfFromTopicID(msg,k)
-                    //  });
-                });
-            });
-
-
-            RoboInterface.makeFaceExprTopic = new ROSLIB.Topic({
-                ros: ros,
-                name: '/dmitry/make_coupled_face_expr',
-                messageType: 'basic_head_api/MakeCoupledFaceExpr'
-            });
-            RoboInterface.pointHeadTopic = new ROSLIB.Topic({
-                ros: ros,
-                name: '/dmitry/point_head',
-                messageType: 'basic_head_api/PointHead'
-            });
-
-
-            //Set up services
-            RoboInterface.validFaceExprsClient = new ROSLIB.Service({
-                ros: ros,
-                name: '/dmitry/valid_coupled_face_exprs',
-                serviceType: 'basic_head_api/ValidCoupledFaceExprs'
-            });
-        };
-        this.$.on("configload", connectROS);
-
-        $.ajax({
-            url: "config.yaml",
-            dataType: "text",
-            success: function (data) {
-                RoboInterface.motorConf = jsyaml.load(data);
-                RoboInterface.$.trigger("configload");
-            }
-        });
-
-        return this;
     }
+
+    ////Keeps the incomming motor messages from flooding.
+    //pointHead: limitCallRate(30, function () {
+    //    RoboInterface._pointHead.apply(RoboInterface, arguments);
+    //}),
+    //
+    //_pointHead: function (new_angles) {
+    //    var angles = {yaw: 0, pitch: 0, roll: 0};
+    //
+    //    this._pointHead = function (new_angles) {
+    //        $.extend(angles, new_angles);
+    //        RoboInterface.pointHeadTopic.publish(
+    //            new ROSLIB.Message(angles)
+    //        );
+    //    };
+    //
+    //    return this._pointHead(new_angles);
+    //}
 };
-
-//Utility function
-var getConfFromTopicID = (function () {
-    var motorID2Conf = {};
-
-    RoboInterface.$.on("configload", function () {
-        var motorConf = RoboInterface.motorConf;
-        for (var i = 0; i < motorConf.length; i++) {
-            var id = motorConf[i].motorid || "";
-            motorID2Conf[motorConf[i].topic + id] = motorConf[i];
-        }
-    });
-
-    return function (msg, topic) {
-        var id = msg.id || "";
-        return motorID2Conf[topic + id];
-    };
-})();
