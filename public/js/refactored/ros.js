@@ -17,7 +17,7 @@ RosUI.ros = {
     connect: function (success) {
         //Connect to rosbridge
         RosUI.ros.ros = new ROSLIB.Ros({
-            url: RosUI.ros.ros_url()
+            url: RosUI.ros.rosUrl()
         }).on("connection", function (e) {
                 // call the success callback
                 success();
@@ -36,10 +36,10 @@ RosUI.ros = {
                 $('#app-title').html('');
             });
 
-        RosUI.ros.init_topics();
-        RosUI.ros.init_services();
+        RosUI.ros.initTopics();
+        RosUI.ros.initServices();
     },
-    init_topics: function () {
+    initTopics: function () {
         RosUI.ros.topics = {
             cmdBlender: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
@@ -98,7 +98,7 @@ RosUI.ros = {
             })
         }
     },
-    init_services: function () {
+    initServices: function () {
         RosUI.ros.services = {
             expressionList: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
@@ -107,7 +107,7 @@ RosUI.ros = {
             })
         };
     },
-    ros_url: function () {
+    rosUrl: function () {
         if (window.location.protocol != "https:") {
             return "ws://172.17.0.2:9090";
         } else {
