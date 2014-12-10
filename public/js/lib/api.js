@@ -12,7 +12,10 @@ RosUI.api = {
             })
         );
     },
-    pointHead: function (angles) {
+    pointHead: RosUI.utilities.limitCallRate(30, function () {
+        RosUI.api._pointHead.apply(RosUI.api, arguments);
+    }),
+    _pointHead: function (angles) {
         if (typeof angles == 'undefined')
             angles = {};
 
