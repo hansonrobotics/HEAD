@@ -3,19 +3,17 @@ RosUI.animations = {
         var last_animation = 'happy-1';
 
         $('.app-animation-button').click(function () {
-            var data = $(this).data('animation');
-            RosUI.api.playAnimation(data);
+            last_animation = $(this).data('animation');
 
-            last_animation = data;
+            // this will call RosUI.api.playAnimation
             $('[data-cmd="play"]').click();
         });
 
         $('.command').click(function () {
             var data = $(this).data('cmd');
 
-            if (data == 'play') {
+            if (data == 'play')
                 RosUI.api.playAnimation(last_animation);
-            }
         });
 
         $('#cmd_stop').click();
