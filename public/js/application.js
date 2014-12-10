@@ -1,8 +1,8 @@
 RosUI = {
     init: function() {
         // init rosbridge
-        RosUI.api.init(function() {
-            // init navigartion
+        RosUI.ros.init(function() {
+            // init navigation
             RosUI.navigation.init();
 
             RosUI.expressions.init();

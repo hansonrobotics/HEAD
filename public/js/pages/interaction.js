@@ -58,7 +58,7 @@ init_interaction =function () {
                     utterance: utterance,
                     confidence: Math.round(event.results[0][0].confidence * 100)
                 });
-                RosUI.api.topics.speech_topic.publish(chat_message);
+                RosUI.ros.topics.speech_topic.publish(chat_message);
                 addMessage('Me', utterance);
             };
             recognition.start();
@@ -78,7 +78,7 @@ init_interaction =function () {
     }
 
     // Find out exactly when we made a connection.
-    RosUI.api.ros.on('connection', function () {
+    RosUI.ros.ros.on('connection', function () {
         ready();
 
         $('#app-record-button').click(function () {
@@ -138,7 +138,7 @@ init_interaction =function () {
                 confidence: Math.round(0.9 * 100)
             });
             $('#app-message-input').val('');
-            RosUI.api.topics.speech_topic.publish(chat_message);
+            RosUI.ros.topics.speech_topic.publish(chat_message);
         }
     });
 }

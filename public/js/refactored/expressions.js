@@ -17,18 +17,18 @@ RosUI.expressions = {
         var blenderMessage, blinkMessage, treeMessage;
 
         blenderMessage = new ROSLIB.Message({data: 'Dummy'});
-        RosUI.api.topics.cmdBlender.publish(blenderMessage);
+        RosUI.ros.topics.cmdBlender.publish(blenderMessage);
 
         blinkMessage = new ROSLIB.Message({data: 'dmitry:stop'});
-        RosUI.api.topics.cmdBllink.publish(blinkMessage);
+        RosUI.ros.topics.cmdBllink.publish(blinkMessage);
 
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
-        RosUI.api.topics.cmdTree.publish(treeMessage);
+        RosUI.ros.topics.cmdTree.publish(treeMessage);
 
         $('.expression-button.active').removeClass('active');
 
-        RosUI.api.set_expression("happy", 0);
-        RosUI.api.point_head();
+        RosUI.ros.set_expression("happy", 0);
+        RosUI.ros.point_head();
     },
 
     init_expressions: function () {
@@ -107,8 +107,8 @@ RosUI.expressions = {
         RosUI.api.set_expression(RosUI.expressions.current_face, intensity);
     },
     build_crosshair_slider: function (element, options) {
-        var yaw = RosUI.api.get_motor_config("neck_base");
-        var pitch = RosUI.api.get_motor_config("neck_pitch");
+        var yaw = RosUI.ros.get_motor_config("neck_base");
+        var pitch = RosUI.ros.get_motor_config("neck_pitch");
 
         $(element).crosshairsl($.extend({}, {
             xmin: Math.floor(radToDeg(yaw.min)),

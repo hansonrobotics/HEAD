@@ -54,8 +54,8 @@ var RoboInterface = {
     },
 
     sendDefaultMotorCmds: function () {
-        for (var i = 0; i < RosUI.api.config.motors.length; i++) {
-            this._sendMotorCmd(RosUI.api.config.motors[i], RosUI.api.config.motors[i].default);
+        for (var i = 0; i < RosUI.ros.config.motors.length; i++) {
+            this._sendMotorCmd(RosUI.ros.config.motors[i], RosUI.ros.config.motors[i].default);
         }
         //this.pointHead();
     }

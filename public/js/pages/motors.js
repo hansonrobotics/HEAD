@@ -47,7 +47,7 @@ function addSliderBlock(confEntry) {
 }
 
 function updateUI() {
-    motorConf = RosUI.api.config.motors;
+    motorConf = RosUI.ros.config.motors;
     for (var i = 0; i < motorConf.length; i++) {
         if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
             if (motorConf[i].newVal != undefined) {
@@ -61,7 +61,7 @@ function updateUI() {
 //Create UI that requires a loaded config file.
 function initMotors() {
     //Create sliders
-    motorConf = RosUI.api.config.motors;
+    motorConf = RosUI.ros.config.motors;
     for (var i = 0; i < motorConf.length; i++) {
         if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
             addSliderBlock(motorConf[i]);
@@ -89,9 +89,6 @@ function initMotors() {
         //confEntry.element.find(".slVal").text(degAngle);
         confEntry.newVal = degAngle;
     });
-
-    //Create crosshair
-    CommonUI.buildCrosshairSlider($(".crosshairsl"));
 }
 
 init_motors = function () {

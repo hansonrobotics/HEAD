@@ -11,7 +11,7 @@ init_animations = function () {
     function getAnimations() {
         console.log('anims');
         var anims = new ROSLIB.Topic({
-            ros: RosUI.api.ros,
+            ros: RosUI.ros.ros,
             name: '/animations_list',
             messageType: 'robo_blender/animations_list'
         });
@@ -23,7 +23,7 @@ init_animations = function () {
 
     function addButtons() {
         cmdAnimations = new ROSLIB.Topic({
-            ros: RosUI.api.ros,
+            ros: RosUI.ros.ros,
             name: '/cmd_animations',
             messageType: 'std_msgs/String'
         });
@@ -56,7 +56,7 @@ init_animations = function () {
     }
 
     // Find out exactly when we made a connection.
-    RosUI.api.ros.on('connection', function () {
+    RosUI.ros.ros.on('connection', function () {
         console.log('Connection made!');
         setTimeout(function () {
             addButtons()
