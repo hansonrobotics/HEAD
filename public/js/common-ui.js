@@ -50,23 +50,6 @@ var CommonUI = new function () {
     };
 
     this.buildCrosshairSlider = function (element, options) {
-        var yawConf = getConf("neck_base");
-        var pitchConf = getConf("neck_pitch");
-        element.crosshairsl($.extend({}, {
-            xmin: Math.floor(radToDeg(yawConf.min)),
-            xmax: Math.ceil(radToDeg(yawConf.max)),
-            xval: Math.round(radToDeg(yawConf.default)),
-            //Minus signs and min-max swapped to invert the y axis for pitch to point upwards.
-            ymin: Math.floor(radToDeg(-pitchConf.max)),
-            ymax: Math.ceil(radToDeg(-pitchConf.min)),
-            yval: Math.round(radToDeg(-pitchConf.default)),
-            change: function (e, ui) {
-                RoboInterface.pointHead({
-                    yaw: degToRad(ui.xval),
-                    pitch: degToRad(-ui.yval)
-                });
-            }
-        }, options));
         return element;
     }
 };

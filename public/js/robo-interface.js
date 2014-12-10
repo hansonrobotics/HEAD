@@ -168,19 +168,29 @@ var RoboInterface = {
                 messageType: 'ros_pololu_servo/servo_pololu'
             });
             RoboInterface.motortopicParams = {
-                face: {
+                neck1: {
                     ros: ros,
-                    name: '/dmitry/dmitry_face/cmd_pololu',
-                    messageType: 'ros_pololu_servo/servo_pololu'
+                    name: '/fritz/neck1_controller/command',
+                    messageType: 'std_msgs/Float64'
+                },                
+                neck2: {
+                    ros: ros,
+                    name: '/fritz/neck2_controller/command',
+                    messageType: 'std_msgs/Float64'
                 },
-                eyes: {
+                neck3: {
                     ros: ros,
-                    name: '/dmitry/dmitry_eyes/cmd_pololu',
-                    messageType: 'ros_pololu_servo/servo_pololu'
+                    name: '/fritz/neck3_controller/command',
+                    messageType: 'std_msgs/Float64'
                 },
-                jaw: {
+                neck4: {
                     ros: ros,
-                    name: '/dmitry/jaw_controller/command',
+                    name: '/fritz/neck4_controller/command',
+                    messageType: 'std_msgs/Float64'
+                },
+                neck5: {
+                    ros: ros,
+                    name: '/fritz/neck5_controller/command',
                     messageType: 'std_msgs/Float64'
                 },
             };

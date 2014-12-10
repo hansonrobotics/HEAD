@@ -56,12 +56,11 @@ function addSliderBlock(confEntry) {
 function updateUI() {
     motorConf = RoboInterface.motorConf;
     for (var i = 0; i < motorConf.length; i++) {
-        if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
-            if (motorConf[i].newVal != undefined) {
-                motorConf[i].element.find(".slider").slider("value", motorConf[i].newVal);
-                motorConf[i].element.find(".slVal").text(motorConf[i].newVal);
-                delete motorConf[i].newVal;
-            }
+        if (motorConf[i].newVal != undefined) {
+            motorConf[i].element.find(".slider").slider("value", motorConf[i].newVal);
+            motorConf[i].element.find(".slVal").text(motorConf[i].newVal);
+            delete motorConf[i].newVal;
+        }
     }
 }
 
@@ -70,8 +69,7 @@ function initMotors() {
     //Create sliders
     motorConf = RoboInterface.motorConf;
     for (var i = 0; i < motorConf.length; i++) {
-        if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
-            addSliderBlock(motorConf[i]);
+        addSliderBlock(motorConf[i]);
     }
 
     //Update UI according to messages
