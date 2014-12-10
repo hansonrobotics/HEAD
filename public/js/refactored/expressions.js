@@ -9,11 +9,11 @@ RosUI.expressions = {
     },
     init: function () {
         $(".dial").val(0);
-        this.initExpressions();
-        this.createUIros();
+        this.init_expressions();
+        this.create_buttons();
     },
 
-    loadPage: function () {
+    load_page: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
         blenderMessage = new ROSLIB.Message({data: 'Dummy'});
@@ -31,9 +31,9 @@ RosUI.expressions = {
         RosUI.api.point_head();
     },
 
-    initExpressions: function () {
+    init_expressions: function () {
         //Create crosshair
-        CommonUI.buildCrosshairSlider(
+        RosUI.expressions.build_crosshair_slider(
             $(".crosshairsl"), {
                 bgColor: "#485563",
                 fgColor: "#fff"
@@ -52,12 +52,6 @@ RosUI.expressions = {
             thickness: 0.4,
             fgColor: RosUI.expressions.config.knob.fgColor, bgColor: "#444",
             draw: function () { //Extended the draw function to add a ring around the dial.
-                if (parseInt($(".dial").val()) >= Math.round(RosUI.expressions.config.knob.maxShow)) {
-                    RosUI.expressions.paintSelection(this.o, RosUI.expressions.config.knob.fgColorExtreme);
-                } else {
-                    RosUI.expressions.paintSelection(this.o, RosUI.expressions.config.knob.fgColor);
-                }
-
                 this.g.lineWidth = 3;
                 this.cursorExt = 0.2;
 
@@ -70,7 +64,7 @@ RosUI.expressions = {
                 this.g.stroke();
                 return true;
             },
-            change: RosUI.expressions.setKnobPos,
+            change: RosUI.expressions.update_expression,
             format: function (value) {
                 return Math.round(value / RosUI.expressions.config.knob.max * RosUI.expressions.config.knob.maxShow);
             }
@@ -78,43 +72,59 @@ RosUI.expressions = {
         //Keep the input fields inside dials from being edited directly.
         $("input.dial").css("pointer-events", "none");
     },
-    createUIros: function () {
-        //Build preset buttons
-        var btnStack = $(".expression-buttons");
-        btnStack.on("exprbtnclick", function (e, nameobj) {
-            console.log('expression button clicked');
+    create_buttons: function () {
+        RosUI.api.expression_list(function (response) {
+            var capitalize = function (str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            };
 
-            RosUI.expressions.setFace(nameobj.name, nameobj.label);
-            RosUI.expressions.setKnobPos(RosUI.expressions.config.knob.max);
+            $.each(response.exprnames, function () {
+                var button = $('<button type="button" class="btn btn-default expression-button">' + capitalize(this) + '</button>')
+                    .data('expression', this)
+                    .click(function () {
+                        $('.expression-button').removeClass('active');
+                        $(this).addClass('active');
+                        RosUI.expressions.current_face = $(this).data('expression');
+                        $(".knobName").text($(this).html());
+
+                        RosUI.expressions.update_expression(RosUI.expressions.config.knob.max);
+                    });
+
+                $(".expression-buttons").append(button);
+            });
         });
-
-        CommonUI.buildExpressionButtons(btnStack);
     },
-    setFace: function (name, label) {
-        RosUI.expressions.current_face = name;
-        $(".knobName").text(label);
-        console.log('set face to: ' + RosUI.expressions.current_face);
-    },
-    setKnobPos: function (value) {
+    update_expression: function (value) {
         if (!value)
             value = parseInt($(".dial").val()) / RosUI.expressions.config.knob.maxShow * RosUI.expressions.config.knob.max;
 
         $(".dial").val(value).trigger("change");
 
         var intensity = (Math.round(value / RosUI.expressions.config.knob.max *
-            RosUI.expressions.config.knob.maxShow) < RosUI.expressions.config.knob.maxShow)
-            ? value / (RosUI.expressions.config.knob.max * 1.2) : 1.0
+        RosUI.expressions.config.knob.maxShow) < RosUI.expressions.config.knob.maxShow)
+            ? value / (RosUI.expressions.config.knob.max * 1.2) : 1.0;
 
         RosUI.api.set_expression(RosUI.expressions.current_face, intensity);
     },
+    build_crosshair_slider: function (element, options) {
+        var yaw = RosUI.api.get_motor_config("neck_base");
+        var pitch = RosUI.api.get_motor_config("neck_pitch");
 
-    paintSelection: function (knobObj, color) {
-        knobObj.fgColor = color;
-        $(".dial").css("color", color);
-        $(".knobName").css("color", color);
-        $(".expression-button").removeClass("active");
+        $(element).crosshairsl($.extend({}, {
+            xmin: Math.floor(radToDeg(yaw.min)),
+            xmax: Math.ceil(radToDeg(yaw.max)),
+            xval: Math.round(radToDeg(yaw.default)),
+            //Minus signs and min-max swapped to invert the y axis for pitch to point upwards.
+            ymin: Math.floor(radToDeg(-pitch.max)),
+            ymax: Math.ceil(radToDeg(-pitch.min)),
+            yval: Math.round(radToDeg(-pitch.default)),
+            change: function (e, ui) {
+                RosUI.api.point_head({
+                    yaw: degToRad(ui.xval),
+                    pitch: degToRad(-ui.yval)
+                });
+            } }, options));
 
-        if (RosUI.expressions.current_face)
-            $(".expression-button." + RosUI.expressions.current_face).addClass("active");
+        return element;
     }
 };

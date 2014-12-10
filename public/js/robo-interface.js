@@ -58,15 +58,6 @@ var RoboInterface = {
             this._sendMotorCmd(RosUI.api.config.motors[i], RosUI.api.config.motors[i].default);
         }
         //this.pointHead();
-    },
-
-    getValidFaceExprs: function (callback) {
-        this.validFaceExprsClient.callService(
-            new ROSLIB.ServiceRequest({
-                robotname: "dmitry"
-            }),
-            callback
-        );
     }
 
     ////Keeps the incomming motor messages from flooding.

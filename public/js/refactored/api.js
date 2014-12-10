@@ -38,6 +38,7 @@ RosUI.api = {
             });
 
         RosUI.api.init_topics();
+        RosUI.api.init_services();
     },
     set_expression: function (faceStr, intensity) {
         RosUI.api.topics.expression.publish(
@@ -58,6 +59,12 @@ RosUI.api = {
 
         RosUI.api.topics.pointHeadTopic.publish(
             new ROSLIB.Message(angles)
+        );
+    },
+    expression_list: function (success) {
+        RosUI.api.services.expression_list.callService(new ROSLIB.ServiceRequest({
+                robotname: "dmitry"
+            }), success
         );
     },
     init_topics: function () {
@@ -93,13 +100,6 @@ RosUI.api = {
             });
         });
 
-        //Set up services
-        RoboInterface.validFaceExprsClient = new ROSLIB.Service({
-            ros: RosUI.api.ros,
-            name: '/valid_coupled_face_exprs',
-            serviceType: 'basic_head_api/ValidCoupledFaceExprs'
-        });
-
         RosUI.api.topics = {
             cmdBlender: new ROSLIB.Topic({
                 ros: RosUI.api.ros,
@@ -133,11 +133,28 @@ RosUI.api = {
             })
         }
     },
+    init_services: function() {
+        RosUI.api.services = {
+            expression_list: new ROSLIB.Service({
+                ros: RosUI.api.ros,
+                name: '/valid_coupled_face_exprs',
+                serviceType: 'basic_head_api/ValidCoupledFaceExprs'
+            })
+        };
+    },
     ros_url: function () {
         if (window.location.protocol != "https:") {
             return "ws://172.17.0.2:9090";
         } else {
             return "wss://" + document.domain + ":9092";
+        }
+    },
+    get_motor_config: function (name) {
+        var motorConf = RosUI.api.config.motors;
+
+        for (var i = 0; i < motorConf.length; i++) {
+            if (motorConf[i].name == name)
+                return motorConf[i];
         }
     }
 };
