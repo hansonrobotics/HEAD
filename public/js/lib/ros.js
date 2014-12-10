@@ -109,7 +109,7 @@ RosUI.ros = {
     },
     rosUrl: function () {
         if (window.location.protocol != "https:") {
-            return "ws://172.17.0.2:9090";
+            return "ws://" + document.domain + ":9090";
         } else {
             return "wss://" + document.domain + ":9092";
         }
