@@ -1,2 +1,4 @@
 string name
-duration time_remaining
+float32 magnitude
+duration duration
+float32 speed

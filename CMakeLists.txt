@@ -44,20 +44,20 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
+  GetAPIVersion.msg
+  AvailableEmotionStates.msg
+  EmotionStates.msg
+  AvailableEmotionGestures.msg
+  EmotionGestures.msg
   EmotionState.msg
   EmotionGesture.msg
 )
 
 ## Generate services in the 'srv' folder
-add_service_files(
-  FILES
-  GetAPIVersion.srv
-  AvailableEmotionStates.srv
-  GetEmotionStates.srv
-  SetEmotionStates.srv
-  AvailableEmotionGestures.srv
-  GetEmotionGestures.srv
-)
+# add_service_files(
+#   FILES
+#   GetAPIVersion.srv
+# )
 
 ## Generate actions in the 'action' folder
 # add_action_files(
