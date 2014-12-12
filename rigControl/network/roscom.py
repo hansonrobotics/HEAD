@@ -89,16 +89,17 @@ class CommandDecorator:
 class publish_once(CommandDecorator):
 	def register(self):
 		self.pub = rospy.Publisher(self.topic, self.dataType, queue_size=1, latch=True)
-		self._publish()
-	def _publish(self):
 		self.pub.publish(self.cmd_func())
 	def drop(self):
 		self.pub.unregister()
 
-class publish_live(publish_once):
-	def __init__(self, *args, **kargs):
-		super().__init__(*args, **kargs)
-		self.publish = self._publish
+class publish_live(CommandDecorator):
+	def register(self):
+		self.pub = rospy.Publisher(self.topic, self.dataType, queue_size=1)
+	def publish(self):
+		self.pub.publish(self.cmd_func())
+	def drop(self):
+		self.pub.unregister()
 
 class subscribe(CommandDecorator):
 	def register(self):
