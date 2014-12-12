@@ -10,11 +10,12 @@ def init(context):
 	success = bool(rosnode)
 	return success
 
-
 def poll(context):
 	command = rosnode.poll()
 	return command
 
+def push(context):
+	rosnode.push()
 
 def drop(context):
 	success = rosnode.drop()
