@@ -127,7 +127,7 @@ class SpecificRobotCtrl:
     #Initialize blink support
     self.blinker = Blinker(robotname, to_dict(read_config(robotname + "_motors.yaml"), "name"))
     self.timer_blink = RandomTimer(self.blink, (5.0, 1.0))
-    if robotname == "dmitry":
+    if robotname == "arthur":
       self.blinker.add_motor("Eyelid-Upper_L", 1.0)
       self.blinker.add_motor("Eyelid-Upper_R", 0.0)
 
@@ -182,8 +182,8 @@ class HeadCtrl:
 
     # Topics and services for robot-specific motor-coupled expressions.
     self.pub_pololu = [None,None];
-    self.pub_pololu[0] = rospy.Publisher("dmitry_face/cmd_pololu", servo_pololu, queue_size=30)
-    self.pub_pololu[1] = rospy.Publisher("dmitry_eyes/cmd_pololu", servo_pololu, queue_size=30)
+    self.pub_pololu[0] = rospy.Publisher("arthur_face/cmd_pololu", servo_pololu, queue_size=30)
+    self.pub_pololu[1] = rospy.Publisher("arthur_eyes/cmd_pololu", servo_pololu, queue_size=30)
     rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
     rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
     rospy.Subscriber("cmd_blink", String, self.blink_request)
