@@ -106,7 +106,7 @@ class Tree():
         rospy.Subscriber("/tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
         self.action_pub = rospy.Publisher("/tracking_action", tracking_action, queue_size=5, latch=True)
-        self.emotion_pub = rospy.Publisher("/dmitry/make_coupled_face_expr", MakeCoupledFaceExpr, queue_size=1)
+        self.emotion_pub = rospy.Publisher("/arthur/make_coupled_face_expr", MakeCoupledFaceExpr, queue_size=1)
         self.tree = self.build_tree()
         time.sleep(0.1)
         while True:
@@ -559,7 +559,7 @@ class Tree():
 
     def show(self, expression, intensity):
         exp = MakeCoupledFaceExpr()
-        exp.robotname = "dmitry"
+        exp.robotname = "arthur"
         self.blackboard["current_emotion"] = expression
         self.blackboard["current_emotion_intensity"] = intensity
         exp.expr.exprname = self.blackboard["current_emotion"]
