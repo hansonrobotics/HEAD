@@ -71,7 +71,6 @@ def setSecondaryTarget():
 	pass
 
 
-
 def getEmotionParams():
 	eva = bpy.evaAnimationManager
 	return {'eyeDartRate': round(eva.eyeDartRate, 3),
@@ -80,3 +79,24 @@ def getEmotionParams():
 			'blinkDuration': round(eva.blinkDuration, 3),
 			'breathRate': round(eva.breathRate, 3),
 			'breathIntensity': round(eva.breathIntensity, 3)}
+
+
+# ========== info dump for ROS, to be invoked automatically with Blender in the future
+def getHeadData():
+	bones = bpy.evaAnimationManager.deformObj.pose.bones
+	return bones['head'].matrix
+
+
+def getEyesData():
+	bones = bpy.evaAnimationManager.deformObj.pose.bones
+	both = [bones['eye.L'].matrix, bones['eye.R'].matrix]
+	return both
+
+
+def getFaceData():
+	shapekeys = {}
+	for shapekeyGroup in bpy.data.shape_keys:
+		if shapekeyGroup.name == 'Key.007':          # hardcoded to find the correct group
+			for kb in shapekeyGroup.key_blocks:
+				shapekeys[kb.name] = kb.value
+	return shapekeys

@@ -136,6 +136,9 @@ class BLPlayback(bpy.types.Operator):
 			# keep alive
 			eva.keepAlive()
 
+			# send ROS data
+			...
+
 			# force update
 			bpy.data.scenes['Scene'].frame_set(1)
 
