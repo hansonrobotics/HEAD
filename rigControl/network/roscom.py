@@ -1,13 +1,13 @@
-import bpy
 from .. import commands
 
 import imp
 imp.reload(commands)
 
-import threading, queue
+import queue
 
-from .helpers import soft_import, underscorize
+from .helpers import soft_import
 rospy = soft_import('rospy')
+std_msgs = soft_import('std_msgs.msg')
 srv = soft_import('blender_api_msgs.srv')
 msg = soft_import('blender_api_msgs.msg')
 
@@ -22,116 +22,141 @@ def build():
 		return RosNode()
 
 class RosNode:
-	''' all of class state is stored in self.command_queue and self.services '''
+	''' all of class state is stored in self.incoming_queue and self.topics '''
 
 	def __init__(self):
-		self.command_queue = queue.Queue()
+		self.incoming_queue = queue.Queue()
 		rospy.init_node('blender_api')
 
-		# Find common public methods between the 'commands' module and the
-		# ServiceHandlers class. Then register as ROS services.
-		command_names = {name for name in dir(commands) if name[0] != '_'}
-		command_names = command_names.intersection(dir(ServiceHandlers))
-		self.services = self.register_services(command_names)
-
-	def register_services(self, command_names):
-		services = []
-		for name in command_names:
-			# Generate service parameters
-			# E.g. if name == "getApiVersion" then:
-			# topic == "~get_api_version"
-			topic = '~' + underscorize(name)
-			# srvType == srv.GetApiVersion
-			srvType = getattr(srv, name[0].upper() + name[1:])
-			# handler == ServiceHandler.getApiVersion
-			handler = getattr(ServiceHandlers, name)
-			service = rospy.Service(topic, srvType, self.queued(handler))
-			services.append(service)
-		return services
-
-	def queued(self, func):
-		''' wrap threadsafety around a service handler '''
-		def handler(arg):
-			''' delegate handler execution to the blender coroutine and wait for results '''
-			command = ThreadSafeCommand(func, arg)
-			self.command_queue.put(command)
-			return command.release()
-		return handler
+		# Collect all public methods in CommandWrappers class.
+		# Note that, because of the applied decorators, the methods are actually
+		# CommandDecorator objects.
+		self.topics = [
+			getattr(CommandWrappers, name) for name in dir(CommandWrappers)
+			if name[0] != '_'
+		]
+		# Advertise the publishers and subscribers.
+		for topic in self.topics:
+			# Direct '@subscribe' decorated topics to our queue.
+			if isinstance(topic, subscribe):
+				topic.callback = self._enqueue
+			topic.register()
 
 	def poll(self):
-		''' blocked service call getter '''
+		''' incoming cmd getter '''
 		try:
-			return self.command_queue.get_nowait()
+			return self.incoming_queue.get_nowait()
 		except queue.Empty:
 			return None
+
+	def push(self):
+		''' create and publish messages to '@publish_live' decorated topics '''
+		live_topics = [topic for topic in self.topics if isinstance(topic, publish_live)]
+		for topic in live_topics:
+			topic.publish()
 
 	def drop(self):
 		''' disable communication '''
 		# We don't shutdown the actual ROS node, because restarting a ROS node after
 		# shutdown is not supported in rospy.
-		for service in self.services:
-			service.shutdown()
+		for topic in self.topics:
+			topic.drop()
 		return True
 
-class ServiceHandlers:
-	'''
-	The names of these methods should match the ones in 'commands' module.
-	These methods shouldn't be called directly but through
-	ThreadSafeCommand.execute() in the Blender coroutine.
+	def _enqueue(self, incoming_cmd):
+		self.incoming_queue.put(incoming_cmd)
 
-	The returned values are implicitly converted to response objects like
-	srv.GetApiVersionResponse, srv.GetEmotionStatesResponse, etc.
-	See http://wiki.ros.org/rospy/Overview/Services#Providing_services for valid
-	return values.
-	'''
-
-	@staticmethod
-	def getAPIVersion(req):
-		return commands.getAPIVersion()
-
-	@staticmethod
-	def availableEmotionStates(req):
-		return [commands.availableEmotionStates()]
-
-	@staticmethod
-	def getEmotionStates(req):
-		return [[
-			msg.EmotionState(name, value) for name, value in
-			commands.getEmotionStates(bpy.evaAnimationManager).items()
-		]]
-
-	@staticmethod
-	def setEmotionStates(req):
-		emotions = {emotion.name: emotion.value for emotion in req.data}
-		return commands.setEmotionStates(emotions, bpy.evaAnimationManager) or 0
-
-	@staticmethod
-	def availableEmotionGestures(req):
-		return [commands.availableEmotionGestures()]
-
-	@staticmethod
-	def getEmotionGestures(req):
-		return [[
-			msg.EmotionGesture(name, rospy.Duration(time)) for name, time in
-			commands.getEmotionGestures(bpy.evaAnimationManager)
-		]]
-
-class ThreadSafeCommand:
-
+class IncomingCmd:
+	''' a function (command) prepared for delayed execution '''
 	def __init__(self, func, arg):
 		self.func, self.arg = func, arg
-		self.condition = threading.Condition()
-		self.is_executed = False
-
 	def execute(self):
-		''' should be called from the Blender coroutine '''
-		with self.condition:
-			self.response = self.func(self.arg)
-			self.is_executed = True
-			self.condition.notify_all()
+		self.func(self.arg)
 
-	def release(self):
-		''' should be called from a ROS service handler coroutine '''
-		with self.condition:
-			self.condition.wait_for(lambda: self.is_executed)
-			return self.response
+
+# Decorators for CommandWrappers methods
+
+class CommandDecorator:
+	def __init__(self, topic, dataType):
+		self.topic = topic
+		self.dataType = dataType
+	def __call__(self, cmd_func):
+		self.cmd_func = cmd_func
+		return self
+	def register(self): raise NotImplementedError
+	def drop(self): raise NotImplementedError
+
+class publish_once(CommandDecorator):
+	def register(self):
+		self.pub = rospy.Publisher(self.topic, self.dataType, queue_size=1, latch=True)
+		self.pub.publish(self.cmd_func())
+	def drop(self):
+		self.pub.unregister()
+
+class publish_live(CommandDecorator):
+	def register(self):
+		self.pub = rospy.Publisher(self.topic, self.dataType, queue_size=1)
+	def publish(self):
+		self.pub.publish(self.cmd_func())
+	def drop(self):
+		self.pub.unregister()
+
+class subscribe(CommandDecorator):
+	def register(self):
+		self.sub = rospy.Subscriber(self.topic, self.dataType, self._handle)
+	def drop(self):
+		self.sub.unregister()
+	def _handle(self, msg):
+		self.callback(IncomingCmd(self.cmd_func, msg))
+
+
+class CommandWrappers:
+	'''
+	These methods shouldn't be called directly.
+	They define topics the rosnode will publish and subscribe to.
+
+	These methods must be decorated with a CommandDecorator subclass.
+	The decorators take two arguments: a topicname and a message type they are
+	meant to send or receive.
+	'''
+
+	@publish_once("~get_api_version", msg.GetAPIVersion)
+	def getAPIVersion():
+		return msg.GetAPIVersion(commands.getAPIVersion())
+
+	@publish_once("~available_emotion_states", msg.AvailableEmotionStates)
+	def availableEmotionStates():
+		return msg.AvailableEmotionStates(commands.availableEmotionStates())
+
+	@publish_live("~get_emotion_states", msg.EmotionStates)
+	def getEmotionStates():
+		return msg.EmotionStates([
+			msg.EmotionState(name, vals['magnitude'], rospy.Duration(vals['duration']))
+			for name, vals in commands.getEmotionStates().items()
+		])
+
+	@subscribe("~set_emotion_state", msg.EmotionStates)
+	def setEmotionState(msg):
+		emotions = str({
+			emotion.name: {
+				'magnitude': emotion.magnitude,
+				'duration': emotion.duration.to_sec()
+			} for emotion in msg.data
+		})
+		commands.setEmotionState(emotions)
+
+	@publish_once("~available_emotion_gestures", msg.AvailableEmotionGestures)
+	def availableEmotionGestures():
+		return msg.AvailableEmotionGestures(commands.availableEmotionGestures())
+
+	@publish_live("~get_emotion_gestures", msg.EmotionGestures)
+	def getEmotionGestures():
+		return msg.EmotionGestures([
+			msg.EmotionGesture(
+				name, vals['magnitude'], rospy.Duration(vals['duration']), vals['speed']
+			) for name, vals in commands.getEmotionGestures().items()
+		])
+
+	@subscribe("~set_emotion_gesture", std_msgs.String)
+	def setEmotionGesture(msg):
+		commands.setEmotionGesture(msg.data)

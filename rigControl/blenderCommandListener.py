@@ -32,6 +32,7 @@ class BLCommandListener(bpy.types.Operator):
 				command = network.poll(context)
 				if command: command.execute()
 				else: break
+			network.push(context)
 
 
 		# set status
