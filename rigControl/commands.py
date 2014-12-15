@@ -89,7 +89,7 @@ def getHeadData():
 
 def getEyesData():
 	bones = bpy.evaAnimationManager.deformObj.pose.bones
-	both = [bones['eye.L'].matrix, bones['eye.R'].matrix]
+	both = [bones['eye.L'].matrix.to_euler(), bones['eye.R'].matrix.to_euler()]
 	return both
 
 
