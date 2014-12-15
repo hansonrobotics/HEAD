@@ -27,7 +27,7 @@ RosUI.interaction = {
         blenderMessage = new ROSLIB.Message({data: 'TrackDev'});
         RosUI.ros.topics.cmdBlender.publish(blenderMessage);
 
-        blinkMessage = new ROSLIB.Message({data: 'dmitry:start'});
+        blinkMessage = new ROSLIB.Message({data: 'arthur:start'});
         RosUI.ros.topics.cmdBllink.publish(blinkMessage);
 
         treeMessage = new ROSLIB.Message({data: 'btree_on'});

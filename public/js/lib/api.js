@@ -30,7 +30,7 @@ RosUI.api = {
     },
     expressionList: function (success) {
         RosUI.ros.services.expressionList.callService(new ROSLIB.ServiceRequest({
-                robotname: "dmitry"
+                robotname: "arthur"
             }), success
         );
     },

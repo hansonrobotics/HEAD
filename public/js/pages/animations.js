@@ -56,7 +56,7 @@ RosUI.animations = {
         blenderMessage = new ROSLIB.Message({data: 'Animations'});
         RosUI.ros.topics.cmdBlender.publish(blenderMessage);
 
-        blinkMessage = new ROSLIB.Message({data: 'dmitry:stop'});
+        blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
         RosUI.ros.topics.cmdBllink.publish(blinkMessage);
 
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
