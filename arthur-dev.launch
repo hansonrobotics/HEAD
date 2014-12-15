@@ -1,0 +1,15 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <group ns="/arthur">
+    <rosparam file="$(find robots_config)/arthur/config_face.yaml" command="load"/>
+    <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py"
+          output="screen"/>
+    <node name="eva_behavior" pkg="eva_behavior" type="general_behavior.py"
+          output="screen"/>
+    <include file="$(find chatbot)/launch/robot.launch" />
+    <include file="$(find chatbot)/launch/web.launch" />
+
+    <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
+          output="screen"/>
+    </group>
+</launch>
