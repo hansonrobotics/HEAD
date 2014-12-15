@@ -28,8 +28,8 @@ either run by one of the launch files in **robots_config** or with a
 sequence of commands like this:
 
 ```
-export ROS_NAMESPACE=/dmitry
-rosparam load /path_to/robots_config/dmitry/config_face.yaml
+export ROS_NAMESPACE=/arthur
+rosparam load /path_to/robots_config/arthur/config_face.yaml
 rosrun pau2motors pau2motors_node.py
 ```
 
@@ -40,7 +40,7 @@ parameters in the current namespace:
 ```
 Couldn't find 'pau2motors' param in namespace '/'.
 Change namespace with `export ROS_NAMESPACE=<ns>`
-Current valid <ns>: /dmitry.
+Current valid <ns>: /arthur.
 Check robots_config repo to get more config options.
 ```
 
