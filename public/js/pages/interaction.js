@@ -14,16 +14,16 @@ $(function () {
 //        cmdBlender.publish(msg);
 //        var cmdBllink = new ROSLIB.Topic({
 //            ros: ros,
-//            name: '/dmitry/cmd_blink',
+//            name: '/arthur/cmd_blink',
 //            messageType: 'std_msgs/String'
 //        });
 //        var msg = new ROSLIB.Message({
-//            data: 'dmitry:start'
+//            data: 'arthur:start'
 //        });
 //        cmdBllink.publish(msg);
 //        var cmdTree = new ROSLIB.Topic({
 //            ros: ros,
-//            name: '/dmitry/behavior_switch',
+//            name: '/arthur/behavior_switch',
 //            messageType: 'std_msgs/String'
 //        });
 //        var msg = new ROSLIB.Message({
@@ -68,7 +68,7 @@ $(function () {
     function ready() {
         responses = new ROSLIB.Topic({
             ros: ros,
-            name: '/dmitry/chatbot_responses',
+            name: '/arthur/chatbot_responses',
             messageType: 'std_msgs/String'
         });
         // Publish the response

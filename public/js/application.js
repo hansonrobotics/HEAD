@@ -11,7 +11,7 @@ RosUI = {
                 blenderMessage = new ROSLIB.Message({data: 'Dummy'});
                 RosUI.topics.cmdBlender.publish(blenderMessage);
 
-                blinkMessage = new ROSLIB.Message({data: 'dmitry:stop'});
+                blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
                 RosUI.topics.cmdBllink.publish(blenderMessage);
 
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
@@ -28,7 +28,7 @@ RosUI = {
                 blenderMessage = new ROSLIB.Message({data: 'Dummy'});
                 RosUI.topics.cmdBlender.publish(blenderMessage);
 
-                blinkMessage = new ROSLIB.Message({data: 'dmitry:stop'});
+                blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
                 RosUI.topics.cmdBllink.publish(blinkMessage);
 
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
@@ -44,7 +44,7 @@ RosUI = {
                 blenderMessage = new ROSLIB.Message({data: 'Animations'});
                 RosUI.topics.cmdBlender.publish(blenderMessage);
 
-                blinkMessage = new ROSLIB.Message({data: 'dmitry:stop'});
+                blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
                 RosUI.topics.cmdBllink.publish(blinkMessage);
 
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
@@ -62,7 +62,7 @@ RosUI = {
                 blenderMessage = new ROSLIB.Message({data: 'TrackDev'});
                 RosUI.topics.cmdBlender.publish(blenderMessage);
 
-                blinkMessage = new ROSLIB.Message({data: 'dmitry:start'});
+                blinkMessage = new ROSLIB.Message({data: 'arthur:start'});
                 RosUI.topics.cmdBllink.publish(blinkMessage);
 
                 treeMessage = new ROSLIB.Message({data: 'btree_on'});
@@ -87,17 +87,17 @@ $(document).ready(function () {
             }),
             cmdBllink: new ROSLIB.Topic({
                 ros: ros,
-                name: '/dmitry/cmd_blink',
+                name: '/arthur/cmd_blink',
                 messageType: 'std_msgs/String'
             }),
             cmdTree: new ROSLIB.Topic({
                 ros: ros,
-                name: '/dmitry/behavior_switch',
+                name: '/arthur/behavior_switch',
                 messageType: 'std_msgs/String'
             }),
             speech_topic: new ROSLIB.Topic({
                 ros: ros,
-                name: '/dmitry/chatbot_speech',
+                name: '/arthur/chatbot_speech',
                 messageType: 'chatbot/ChatMessage'
             })
         };

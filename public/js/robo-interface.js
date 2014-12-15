@@ -40,16 +40,16 @@ var RoboInterface = {
 //        cmdBlender.publish(msg);
 //        var cmdBllink = new ROSLIB.Topic({
 //            ros: ros,
-//            name: '/dmitry/cmd_blink',
+//            name: '/arthur/cmd_blink',
 //            messageType: 'std_msgs/String'
 //        });
 //        var msg = new ROSLIB.Message({
-//            data: 'dmitry:stop'
+//            data: 'arthur:stop'
 //        });
 //        cmdBllink.publish(msg);
 //        var cmdTree = new ROSLIB.Topic({
 //            ros: ros,
-//            name: '/dmitry/behavior_switch',
+//            name: '/arthur/behavior_switch',
 //            messageType: 'std_msgs/String'
 //        });
 //        var msg = new ROSLIB.Message({
@@ -95,7 +95,7 @@ var RoboInterface = {
     getValidFaceExprs: function (callback) {
         this.validFaceExprsClient.callService(
             new ROSLIB.ServiceRequest({
-                robotname: "dmitry"
+                robotname: "arthur"
             }),
             callback
         );
@@ -104,7 +104,7 @@ var RoboInterface = {
     makeFaceExpr: function (faceStr, intensity) {
         this.makeFaceExprTopic.publish(
             new ROSLIB.Message({
-                robotname: "dmitry",
+                robotname: "arthur",
                 expr: {
                     exprname: faceStr,
                     intensity: intensity
@@ -164,23 +164,23 @@ var RoboInterface = {
             //Publish topic - to be deleted
             RoboInterface.motorCmdTopic = new ROSLIB.Topic({
                 ros: ros,
-                name: '/dmitry/pololu/cmd_pololu',
+                name: '/arthur/pololu/cmd_pololu',
                 messageType: 'ros_pololu_servo/servo_pololu'
             });
             RoboInterface.motortopicParams = {
                 face: {
                     ros: ros,
-                    name: '/dmitry/dmitry_face/cmd_pololu',
+                    name: '/arthur/arthur_face/cmd_pololu',
                     messageType: 'ros_pololu_servo/servo_pololu'
                 },
                 eyes: {
                     ros: ros,
-                    name: '/dmitry/dmitry_eyes/cmd_pololu',
+                    name: '/arthur/arthur_eyes/cmd_pololu',
                     messageType: 'ros_pololu_servo/servo_pololu'
                 },
                 jaw: {
                     ros: ros,
-                    name: '/dmitry/jaw_controller/command',
+                    name: '/arthur/jaw_controller/command',
                     messageType: 'std_msgs/Float64'
                 },
             };
@@ -201,12 +201,12 @@ var RoboInterface = {
 
             RoboInterface.makeFaceExprTopic = new ROSLIB.Topic({
                 ros: ros,
-                name: '/dmitry/make_coupled_face_expr',
+                name: '/arthur/make_coupled_face_expr',
                 messageType: 'basic_head_api/MakeCoupledFaceExpr'
             });
             RoboInterface.pointHeadTopic = new ROSLIB.Topic({
                 ros: ros,
-                name: '/dmitry/point_head',
+                name: '/arthur/point_head',
                 messageType: 'basic_head_api/PointHead'
             });
 
@@ -214,7 +214,7 @@ var RoboInterface = {
             //Set up services
             RoboInterface.validFaceExprsClient = new ROSLIB.Service({
                 ros: ros,
-                name: '/dmitry/valid_coupled_face_exprs',
+                name: '/arthur/valid_coupled_face_exprs',
                 serviceType: 'basic_head_api/ValidCoupledFaceExprs'
             });
         };
