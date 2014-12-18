@@ -141,21 +141,23 @@ class FaceBox():
         )
 
     def update_bounding_box(self, pt1,pt2):
-        self.bounding_size = pt2[0] - pt1[0]
+        self.bounding_size = pt2[1] - pt1[1]
 
     def get_3d_point(self):
         # TODO will need to be updated:
         # Current camera callibration matrix should be passed.
         # Current camera pose needed (offset, and angle)
-        # For now we assume its 90 degrees FOV with the face height of 20 cm, camera pointing stright.
+        # For now we assume its  degrees FOV with the face height of 20 cm
         #Standard 640x480 image used
+        #Approx horizontal FOV of camera used:
+        fov_x = 0.625 # in radians
         p = Point()
         # same FOV for both, so calculate the relative distance of one pixel
-        dp = 0.2 / float(self.bounding_size)
+        dp = 0.22 / float(self.bounding_size) # It should be same in both axis
         rospy.logwarn(self.bounding_size)
-        p.x = dp *  (240 / tan((pi-pi/2.0)/2.0))
-        p.y = dp * ((self.pt2[0]+self.pt1[0])/2-320) # Y is to the left
-        p.z = dp * ((self.pt2[1]+self.pt1[1])/2-240) # Y is to the left
+        p.x = dp *  (240 / tan(fov_x/2.0))
+        p.y = dp * ((self.pt2[0]+self.pt1[0])/2-320) # Y is to the right in camera image
+        p.z = dp * (240-(self.pt2[1]+self.pt1[1])/2) # Z is to top
         return p
 
 
@@ -339,7 +341,7 @@ class PatchTracker(ROS2OpenCV):
 
         self.min_size = (20, 20)
         self.image_scale = 2
-        self.haar_scale = 1.5
+        self.haar_scale = 1.2
         self.min_neighbors = 1
         self.haar_flags = cv.CV_HAAR_DO_CANNY_PRUNING
         
