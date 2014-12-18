@@ -13,13 +13,16 @@ msg = soft_import('blender_api_msgs.msg')
 
 def build():
 	if not rospy:
-		print('ROS not found')
+		raise ImportError('ROS not found')
 		return None
 	elif not (srv and msg):
-		print('Package blender_api_msg not found')
+		raise ImportError('Package blender_api_msg not found')
 		return None
 	else:
 		return RosNode()
+
+# Now actually call build!
+build()
 
 class RosNode:
 	''' all of class state is stored in self.incoming_queue and self.topics '''
