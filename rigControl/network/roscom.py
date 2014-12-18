@@ -8,21 +8,17 @@ import queue
 from .helpers import soft_import
 rospy = soft_import('rospy')
 std_msgs = soft_import('std_msgs.msg')
-srv = soft_import('blender_api_msgs.srv')
 msg = soft_import('blender_api_msgs.msg')
 
+# This is called when the CommandListener is started.
 def build():
 	if not rospy:
 		raise ImportError('ROS not found')
 		return None
-	elif not (srv and msg):
+	elif not msg:
 		raise ImportError('Package blender_api_msg not found')
 		return None
-	else:
-		return RosNode()
-
-# Now actually call build!
-build()
+	return RosNode()
 
 class RosNode:
 	''' all of class state is stored in self.incoming_queue and self.topics '''
