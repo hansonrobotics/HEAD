@@ -32,9 +32,12 @@ import rospy
 import cv
 import sys
 from sensor_msgs.msg import RegionOfInterest, Image
-from math import sqrt, isnan
+from math import *
 from ros2opencv import ROS2OpenCV
 from pi_face_tracker.srv import *
+from pi_face_tracker.msg import Faces
+from pi_face_tracker.msg import Face
+from geometry_msgs.msg import Point
 from eva_behavior.msg import event
 import time
 
@@ -64,6 +67,8 @@ class FaceBox():
         self.min_features = 50
         self.abs_min_features = 6
         self.pyramid = None
+        # size of the face to meassure realative distance. Face width is enough
+        self.bounding_size = pt2[0] - pt1[0]
 
     def area(self):
         return (self.pt2[0]-self.pt1[0])*(self.pt2[1]-self.pt1[1])
@@ -135,12 +140,32 @@ class FaceBox():
             self.face_box()
         )
 
+    def update_bounding_box(self, pt1,pt2):
+        self.bounding_size = pt2[0] - pt1[0]
+
+    def get_3d_point(self):
+        # TODO will need to be updated:
+        # Current camera callibration matrix should be passed.
+        # Current camera pose needed (offset, and angle)
+        # For now we assume its 90 degrees FOV with the face height of 20 cm, camera pointing stright.
+        #Standard 640x480 image used
+        p = Point()
+        # same FOV for both, so calculate the relative distance of one pixel
+        dp = 0.2 / float(self.bounding_size)
+        rospy.logwarn(self.bounding_size)
+        p.x = dp *  (240 / tan((pi-pi/2.0)/2.0))
+        p.y = dp * ((self.pt2[0]+self.pt1[0])/2-320) # Y is to the left
+        p.z = dp * ((self.pt2[1]+self.pt1[1])/2-240) # Y is to the left
+        return p
+
+
 
 
 class FacesRegistry():
 
     TOPIC_FACE_ROI = "faces/%d"
     TOPIC_EVENT = "tracking_event"
+    TOPIC_FACES = "faces3d"
     EVENT_NEW_FACE = "new_face"
     EVENT_LOST_FACE = "exit"
 
@@ -152,6 +177,11 @@ class FacesRegistry():
         self.event_pub = rospy.Publisher(
             self.TOPIC_EVENT,
             event,
+            queue_size=10
+        )
+        self.faces_pub = rospy.Publisher(
+            self.TOPIC_FACES,
+            Faces,
             queue_size=10
         )
 
@@ -183,14 +213,15 @@ class FacesRegistry():
         )
 
     def publish_faces(self):
+        faces =[]
         for f in self.faces.keys():
-            face_box = self.faces[f].face_box()
-            roi = RegionOfInterest()
-            (   
-                roi.x_offset, roi.y_offset,
-                roi.width, roi.height
-            ) = face_box
-            self.publishers[f].publish(roi)
+            face = Face()
+            face.id = f
+            face.point = self.faces[f].get_3d_point()
+            faces.append(face)
+        msg = Faces()
+        msg.faces = Faces()
+        self.faces_pub.publish(faces)
 
     def nextFrame(self):
         self.step += 1
@@ -209,18 +240,21 @@ class FacesRegistry():
                     FaceBox(self.face_id, f[0], f[1])
                 )
             else:
-                found = False
+                found = -1
                 for id in self.faces.keys():
                     if self.faces[id].is_same_face(f[0], f[1]):
-                        found = True
+                        found = id
                         break
-                if not found:
+                if found == -1:
                     self.face_id += 1
                     self._add_entry(
                         FaceBox(self.face_id, f[0], f[1])
                     )
+                else:
+                    self.faces[found].update_bounding_box(f[0], f[1])
+                    # Need to update the boxsize of
 
-    #processes faces statuses:
+    # Processes faces statuses:
     # Calls new_face callback if new faces are added,
     # Calls onExit when face
     def checkStatus(self, new_face = None, on_exit = None):
@@ -339,7 +373,7 @@ class PatchTracker(ROS2OpenCV):
     def process_image(self, cv_image):
         self.frame_count = self.frame_count + 1
         """ If parameter use_haar_only is True, use only the OpenCV Haar detector to track the face """
-        #TODO Currently detect new faces if no faces found. Need to detcet few times epr second
+        """ Try detecte faces every  frames. It will detect any new faces in scene or will update the current ones """
         if (self.use_haar_only or not self.detect_box.any_trackable_faces()) and self.auto_face_tracking:
             self.detect_box.nextFrame()
             self.detect_face(cv_image)
