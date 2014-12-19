@@ -1,0 +1,51 @@
+<package>
+  <name>pi_face_tracker</name>
+  <version>0.1.0</version>
+  <description>A ROS node for face tracking or tracking an arbitrarily
+  selected patch in a video stream.</description>
+  <maintainer email="vytas@hansonrobotics.com">Vytas</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/pi_face_tracker</url>
+  <!-- <url type="bugtracker"></url> -->
+
+  <author>Patrick Goebel</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>rospy</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>ros2opencv</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>image_transport</build_depend>
+  <build_depend>openni_camera</build_depend>
+  <build_depend>uvc_cam</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>rospy</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>ros2opencv</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>cv_bridge</run_depend>
+  <run_depend>image_transport</run_depend>
+  <run_depend>openni_camera</run_depend>
+  <run_depend>uvc_cam</run_depend>
+
+  <!-- Dependencies needed only for running tests. -->
+  <!-- <test_depend>rospy</test_depend> -->
+  <!-- <test_depend>roscpp</test_depend> -->
+  <!-- <test_depend>ros2opencv</test_depend> -->
+  <!-- <test_depend>std_msgs</test_depend> -->
+  <!-- <test_depend>sensor_msgs</test_depend> -->
+  <!-- <test_depend>cv_bridge</test_depend> -->
+  <!-- <test_depend>image_transport</test_depend> -->
+  <!-- <test_depend>openni_camera</test_depend> -->
+  <!-- <test_depend>uvc_cam</test_depend> -->
+
+</package>
