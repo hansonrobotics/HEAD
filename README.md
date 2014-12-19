@@ -25,6 +25,8 @@ Pre-requisites: The code is designed for Blender 2.72 or higher. If you are on B
  * The character should now be live, as indicated by eye movement and blinking.
  * One can control Eva by using the graphic interface provided.
 
+A HOWTO guide for performing various tasks can be found in the
+[Eva cookbook](docs/cookbook.md).
 
 # Command Listener #
 * Comands may be sent through ROS to control Eva.

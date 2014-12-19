@@ -10,15 +10,15 @@ rospy = soft_import('rospy')
 std_msgs = soft_import('std_msgs.msg')
 msg = soft_import('blender_api_msgs.msg')
 
+# This is called when the CommandListener is started.
 def build():
 	if not rospy:
-		print('ROS not found')
+		raise ImportError('ROS not found')
 		return None
 	elif not msg:
-		print('Package blender_api_msg not found')
+		raise ImportError('Package blender_api_msg not found')
 		return None
-	else:
-		return RosNode()
+	return RosNode()
 
 class RosNode:
 	''' all of class state is stored in self.incoming_queue and self.topics '''
@@ -158,4 +158,7 @@ class CommandWrappers:
 
 	@subscribe("~set_emotion_gesture", std_msgs.String)
 	def setEmotionGesture(msg):
-		commands.setEmotionGesture(msg.data)
+		try:
+			commands.setEmotionGesture(msg.data)
+		except KeyError:
+			print('Error: unknown gesture:', msg);
