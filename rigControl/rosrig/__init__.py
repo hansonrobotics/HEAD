@@ -1,22 +1,9 @@
 # deals with interface with other apps
 
 from . import roscom
-rosnode = None
+node = None
 
-
-def init(context):
-	global rosnode
-	rosnode = roscom.build()
-	success = bool(rosnode)
-	return success
-
-def poll(context):
-	command = rosnode.poll()
-	return command
-
-def push(context):
-	rosnode.push()
-
-def drop(context):
-	success = rosnode.drop()
-	return success
+def init():
+	global node
+	node = roscom.build()
+	return node

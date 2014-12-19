@@ -106,7 +106,7 @@ class BLCommandListener(bpy.types.Operator):
 		return not bpy.context.scene['commandListenerActive']
 		# return True
 
-	def register_command_sourse(self, source):
+	def register_command_source(self, source):
 		cmd_sources.append(source)
 
 	def __init__(self):

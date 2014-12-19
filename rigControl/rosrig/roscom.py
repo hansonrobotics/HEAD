@@ -1,4 +1,5 @@
 from .. import commands
+from ..blenderCommandListener import CommandSource
 
 import imp
 imp.reload(commands)
@@ -64,6 +65,7 @@ class RosNode(CommandSource):
 
 	def _enqueue(self, incoming_cmd):
 		self.incoming_queue.put(incoming_cmd)
+
 
 class IncomingCmd:
 	''' a function (command) prepared for delayed execution '''

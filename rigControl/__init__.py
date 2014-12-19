@@ -1,7 +1,5 @@
 #
 
-import importlib
-
 from . import blenderCommandListener
 from . import blenderUI
 from . import blenderPlayback
@@ -24,3 +22,21 @@ blenderUI.refresh()
 # init animation Manager singleton
 imp.reload(animationManager)
 animationManager.init()
+
+# Temporary hack for loadingthe ROS node code
+import importlib
+#try:
+importlib.import_module('rospy')
+print("step A")
+# from .rosrig import build
+from .rosrig import *
+print("step B")
+node = rosrig.init()
+print("step C")
+blenderCommandListener.register_command_source(node)
+print("step D")
+
+#except:
+#	print('No ROS found')
+
+
