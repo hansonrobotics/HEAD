@@ -15,9 +15,10 @@ This youtube video shows what is currently possible:
 
 # Running #
 
-Pre-requisites: you must have a working version of Blender 2.72 or higher.
+Pre-requisites: The code is designed for Blender 2.72 or higher. If you are on Blender 2.69 (That comes with Ubuntu) and has issues with eva.blend. Try eva269.blend.
 
  * Start Blender, load Eva.blend.
+ * If Eva's face looks distorted, make sure you follow the next step.
  * From the top status bar, click on 'Reload Trusted' if a security prompt exists.
  * This will bring up a RigControl panel on the right.
  * Click on "Start Animation" to initialize the character.
