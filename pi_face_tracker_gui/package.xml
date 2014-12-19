@@ -1,0 +1,36 @@
+<package>
+  <name>pi_face_tracker_gui</name>
+  <version>0.1.0</version>
+  <description>A web-based GUI for the pi_face_tracker package written by
+     Scott Bell and using rosbridge and mjpeg_server.</description>
+  <maintainer email="vytas@hansonrobotics.com">Vytas</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/pi_face_tracker_gui</url>
+  <!-- <url type="bugtracker"></url> -->
+
+  <author>Scot Bell</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>rospy</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>mjpeg_server</build_depend>
+  <build_depend>pi_face_tracker</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>rospy</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>mjpeg_server</run_depend>
+  <run_depend>pi_face_tracker</run_depend>
+
+  <!-- Dependencies needed only for running tests. -->
+  <!-- <test_depend>rospy</test_depend> -->
+  <!-- <test_depend>roscpp</test_depend> -->
+  <!-- <test_depend>mjpeg_server</test_depend> -->
+  <!-- <test_depend>pi_face_tracker</test_depend> -->
+
+</package>
