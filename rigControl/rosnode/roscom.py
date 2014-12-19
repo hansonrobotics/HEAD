@@ -20,7 +20,7 @@ def build():
 		return None
 	return RosNode()
 
-class RosNode:
+class RosNode(CommandSource):
 	''' all of class state is stored in self.incoming_queue and self.topics '''
 
 	def __init__(self):

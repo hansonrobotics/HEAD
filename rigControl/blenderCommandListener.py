@@ -21,6 +21,12 @@ class CommandSource:
 	def push(self):
 		return
 
+	def init(self):
+		return
+
+	def drop(self):
+		return
+
 
 
 class BLCommandListener(bpy.types.Operator):
@@ -39,11 +45,20 @@ class BLCommandListener(bpy.types.Operator):
 
 		if debug and event.type == 'TIMER':
 			# print('Running Command Listener', round(self._timer.time_duration,3))
+
+			# Poll each possible command source, see if it has anything
+			# for us to do.
 			while True:
-				command = network.poll(context)
-				if command: command.execute()
-				else: break
-			network.push(context)
+				have_more = False
+				for src in cmd_sources:
+					command = src.poll()
+					if command:
+						command.execute()
+						have_more = True
+				if not have_more:
+					break
+			for src in cmd_sources:
+				src.push()
 
 
 		# set status
@@ -54,9 +69,11 @@ class BLCommandListener(bpy.types.Operator):
 	def execute(self, context):
 		print('Starting Command Listener')
 
-		success = network.init(context)
-		...
-
+		success = False
+		for src in cmd_sources:
+			src.push()
+			success = success and src.init()
+			...
 
 		if success:
 			wm = context.window_manager
@@ -77,7 +94,8 @@ class BLCommandListener(bpy.types.Operator):
 		else:
 			print('no timer')
 
-		network.drop(context)
+		for src in cmd_sources:
+			src.drop()
 		...
 		bpy.context.scene['commandListenerActive'] = False
 		return {'CANCELLED'}
@@ -87,6 +105,12 @@ class BLCommandListener(bpy.types.Operator):
 	def poll(cls, context):
 		return not bpy.context.scene['commandListenerActive']
 		# return True
+
+	def register_command_course(self, source):
+		cmd_sources.append(source)
+
+	def __init__(self):
+		cmd_sources = [];
 
 
 def register():
