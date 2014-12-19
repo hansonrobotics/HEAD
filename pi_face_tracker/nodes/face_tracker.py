@@ -156,7 +156,7 @@ class FaceBox():
         dp = 0.22 / float(self.bounding_size) # It should be same in both axis
         rospy.logwarn(self.bounding_size)
         p.x = dp *  (240 / tan(fov_x/2.0))
-        p.y = dp * ((self.pt2[0]+self.pt1[0])/2-320) # Y is to the right in camera image
+        p.y = dp * (320-(self.pt2[0]+self.pt1[0])/2) # Y is to the left in camera image
         p.z = dp * (240-(self.pt2[1]+self.pt1[1])/2) # Z is to top
         return p
 
