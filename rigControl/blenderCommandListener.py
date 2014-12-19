@@ -6,11 +6,21 @@ debug = True
 
 import bpy
 
-from . import network
 from . import commands
 
 import imp
 imp.reload(commands)
+
+
+# Virtual base class for sources of commands
+# The methods don't do anything.
+class CommandSource:
+	def poll(self):
+		return None
+
+	def push(self):
+		return
+
 
 
 class BLCommandListener(bpy.types.Operator):
@@ -21,6 +31,7 @@ class BLCommandListener(bpy.types.Operator):
 	_timer = None
 	bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
 	bpy.context.scene['commandListenerActive'] = False
+
 
 	def modal(self, context, event):
 		if debug and event.type in {'ESC'}:
