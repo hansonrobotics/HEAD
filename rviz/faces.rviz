@@ -1,0 +1,525 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 78
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+        - /TF1/Frames1/Face11
+        - /TF1/Frames1/Face11/Position1
+        - /TF1/Tree1
+      Splitter Ratio: 0.678344
+    Tree Height: 775
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.588679
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+      - /Current View1/Focal Point1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: ""
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 0.5
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: camera
+      Value: true
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 1
+      Frames:
+        All Enabled: true
+        Face1:
+          Value: true
+        Face10:
+          Value: true
+        Face11:
+          Value: true
+        Face12:
+          Value: true
+        Face13:
+          Value: true
+        Face135:
+          Value: true
+        Face14:
+          Value: true
+        Face15:
+          Value: true
+        Face16:
+          Value: true
+        Face168:
+          Value: true
+        Face173:
+          Value: true
+        Face18:
+          Value: true
+        Face182:
+          Value: true
+        Face183:
+          Value: true
+        Face184:
+          Value: true
+        Face185:
+          Value: true
+        Face186:
+          Value: true
+        Face187:
+          Value: true
+        Face188:
+          Value: true
+        Face189:
+          Value: true
+        Face19:
+          Value: true
+        Face190:
+          Value: true
+        Face191:
+          Value: true
+        Face192:
+          Value: true
+        Face193:
+          Value: true
+        Face194:
+          Value: true
+        Face195:
+          Value: true
+        Face196:
+          Value: true
+        Face197:
+          Value: true
+        Face198:
+          Value: true
+        Face199:
+          Value: true
+        Face2:
+          Value: true
+        Face20:
+          Value: true
+        Face200:
+          Value: true
+        Face201:
+          Value: true
+        Face203:
+          Value: true
+        Face204:
+          Value: true
+        Face205:
+          Value: true
+        Face206:
+          Value: true
+        Face207:
+          Value: true
+        Face209:
+          Value: true
+        Face210:
+          Value: true
+        Face211:
+          Value: true
+        Face212:
+          Value: true
+        Face213:
+          Value: true
+        Face214:
+          Value: true
+        Face215:
+          Value: true
+        Face216:
+          Value: true
+        Face217:
+          Value: true
+        Face218:
+          Value: true
+        Face219:
+          Value: true
+        Face22:
+          Value: true
+        Face220:
+          Value: true
+        Face221:
+          Value: true
+        Face222:
+          Value: true
+        Face223:
+          Value: true
+        Face224:
+          Value: true
+        Face225:
+          Value: true
+        Face226:
+          Value: true
+        Face227:
+          Value: true
+        Face228:
+          Value: true
+        Face229:
+          Value: true
+        Face23:
+          Value: true
+        Face230:
+          Value: true
+        Face231:
+          Value: true
+        Face232:
+          Value: true
+        Face233:
+          Value: true
+        Face234:
+          Value: true
+        Face235:
+          Value: true
+        Face236:
+          Value: true
+        Face237:
+          Value: true
+        Face238:
+          Value: true
+        Face239:
+          Value: true
+        Face24:
+          Value: true
+        Face240:
+          Value: true
+        Face241:
+          Value: true
+        Face242:
+          Value: true
+        Face25:
+          Value: true
+        Face26:
+          Value: true
+        Face27:
+          Value: true
+        Face28:
+          Value: true
+        Face29:
+          Value: true
+        Face3:
+          Value: true
+        Face30:
+          Value: true
+        Face31:
+          Value: true
+        Face32:
+          Value: true
+        Face33:
+          Value: true
+        Face35:
+          Value: true
+        Face39:
+          Value: true
+        Face4:
+          Value: true
+        Face40:
+          Value: true
+        Face43:
+          Value: true
+        Face46:
+          Value: true
+        Face47:
+          Value: true
+        Face5:
+          Value: true
+        Face6:
+          Value: true
+        Face7:
+          Value: true
+        Face8:
+          Value: true
+        Face9:
+          Value: true
+        camera:
+          Value: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        camera:
+          Face1:
+            {}
+          Face10:
+            {}
+          Face11:
+            {}
+          Face12:
+            {}
+          Face13:
+            {}
+          Face135:
+            {}
+          Face14:
+            {}
+          Face15:
+            {}
+          Face16:
+            {}
+          Face168:
+            {}
+          Face173:
+            {}
+          Face18:
+            {}
+          Face182:
+            {}
+          Face183:
+            {}
+          Face184:
+            {}
+          Face185:
+            {}
+          Face186:
+            {}
+          Face187:
+            {}
+          Face188:
+            {}
+          Face189:
+            {}
+          Face19:
+            {}
+          Face190:
+            {}
+          Face191:
+            {}
+          Face192:
+            {}
+          Face193:
+            {}
+          Face194:
+            {}
+          Face195:
+            {}
+          Face196:
+            {}
+          Face197:
+            {}
+          Face198:
+            {}
+          Face199:
+            {}
+          Face2:
+            {}
+          Face20:
+            {}
+          Face200:
+            {}
+          Face201:
+            {}
+          Face203:
+            {}
+          Face204:
+            {}
+          Face205:
+            {}
+          Face206:
+            {}
+          Face207:
+            {}
+          Face209:
+            {}
+          Face210:
+            {}
+          Face211:
+            {}
+          Face212:
+            {}
+          Face213:
+            {}
+          Face214:
+            {}
+          Face215:
+            {}
+          Face216:
+            {}
+          Face217:
+            {}
+          Face218:
+            {}
+          Face219:
+            {}
+          Face22:
+            {}
+          Face220:
+            {}
+          Face221:
+            {}
+          Face222:
+            {}
+          Face223:
+            {}
+          Face224:
+            {}
+          Face225:
+            {}
+          Face226:
+            {}
+          Face227:
+            {}
+          Face228:
+            {}
+          Face229:
+            {}
+          Face23:
+            {}
+          Face230:
+            {}
+          Face231:
+            {}
+          Face232:
+            {}
+          Face233:
+            {}
+          Face234:
+            {}
+          Face235:
+            {}
+          Face236:
+            {}
+          Face237:
+            {}
+          Face238:
+            {}
+          Face239:
+            {}
+          Face24:
+            {}
+          Face240:
+            {}
+          Face241:
+            {}
+          Face242:
+            {}
+          Face25:
+            {}
+          Face26:
+            {}
+          Face27:
+            {}
+          Face28:
+            {}
+          Face29:
+            {}
+          Face3:
+            {}
+          Face30:
+            {}
+          Face31:
+            {}
+          Face32:
+            {}
+          Face33:
+            {}
+          Face35:
+            {}
+          Face39:
+            {}
+          Face4:
+            {}
+          Face40:
+            {}
+          Face43:
+            {}
+          Face46:
+            {}
+          Face47:
+            {}
+          Face5:
+            {}
+          Face6:
+            {}
+          Face7:
+            {}
+          Face8:
+            {}
+          Face9:
+            {}
+      Update Interval: 0
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: camera
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Topic: /initialpose
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 3.99631
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: -0.0428214
+        Y: -0.0470757
+        Z: -0.0195225
+      Name: Current View
+      Near Clip Distance: 0.01
+      Pitch: 0.769797
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+      Yaw: 2.70539
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1056
+  Hide Left Dock: false
+  Hide Right Dock: true
+  QMainWindow State: 000000ff00000000fd00000004000000000000013c00000396fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000396000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002c4fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000028000002c4000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000073f0000003efc0100000002fb0000000800540069006d006501000000000000073f000002f600fffffffb0000000800540069006d00650100000000000004500000000000000000000005fd0000039600000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: true
+  Width: 1855
+  X: 65
+  Y: 24

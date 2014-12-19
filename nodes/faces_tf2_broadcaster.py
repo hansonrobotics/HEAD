@@ -7,18 +7,23 @@ from geometry_msgs.msg import TransformStamped
 from geometry_msgs.msg import Transform
 from geometry_msgs.msg import Vector3
 from std_msgs.msg import Header
+import time
 
+broadcasters = {}
 
 def handle_faces(msg):
     f= Faces()
-    br = tf2_ros.TransformBroadcaster()
-    for face in msg.faces:
+
+    for i, face in enumerate(msg.faces):
+        if not i in broadcasters.keys():
+            broadcasters[i] =  tf2_ros.TransformBroadcaster()
         transform = TransformStamped(header=Header(stamp=rospy.Time.now(), frame_id="camera"),
                              transform=Transform(translation=Vector3(face.point.x,face.point.y,face.point.z),
                                                  rotation=Quaternion(0,0,0,1)),
                              child_frame_id="Face" + str(face.id)
                             )
-        br.sendTransform(transform)
+        broadcasters[i].sendTransform(transform)
+        time.sleep(0.01) # Need to investigate why we cant publish multiple messages at same time
 
 if __name__ == '__main__':
     rospy.init_node('faces_tf2_broadcaster')
