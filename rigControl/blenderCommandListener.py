@@ -28,12 +28,12 @@ class CommandSource:
 		return
 
 
-
 class BLCommandListener(bpy.types.Operator):
 	"""Listens for external commands"""
 	bl_label = "Command Listener"
 	bl_idname = 'wm.command_listener'
 
+	cmd_sources = []
 	_timer = None
 	bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
 	bpy.context.scene['commandListenerActive'] = False
@@ -106,11 +106,11 @@ class BLCommandListener(bpy.types.Operator):
 		return not bpy.context.scene['commandListenerActive']
 		# return True
 
-	def register_command_course(self, source):
+	def register_command_sourse(self, source):
 		cmd_sources.append(source)
 
 	def __init__(self):
-		cmd_sources = [];
+		cmd_sources = []
 
 
 def register():
