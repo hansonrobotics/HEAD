@@ -21,8 +21,10 @@ def build():
 		return None
 	return RosNode()
 
+# RosNode implements the virtual class CommandSource that blender
+# expects us to use as the API to the rig.
 class RosNode(CommandSource):
-	''' all of class state is stored in self.incoming_queue and self.topics '''
+	'''All of class state is stored in self.incoming_queue and self.topics '''
 
 	def __init__(self):
 		self.incoming_queue = queue.Queue()
@@ -46,22 +48,23 @@ class RosNode(CommandSource):
 		return True
 
 	def poll(self):
-		''' incoming cmd getter '''
+		'''Incoming cmd getter '''
 		try:
 			return self.incoming_queue.get_nowait()
 		except queue.Empty:
 			return None
 
 	def push(self):
-		''' create and publish messages to '@publish_live' decorated topics '''
+		'''Create and publish messages to '@publish_live' decorated topics '''
 		live_topics = [topic for topic in self.topics if isinstance(topic, publish_live)]
 		for topic in live_topics:
 			topic.publish()
 
+	# After this is called, blender will not ever poll us again.
 	def drop(self):
-		''' disable communication '''
-		# We don't shutdown the actual ROS node, because restarting a ROS node after
-		# shutdown is not supported in rospy.
+		'''Disable communication'''
+		# We don't shutdown the actual ROS node, because restarting a 
+		# ROS node after shutdown is not supported in rospy.
 		for topic in self.topics:
 			topic.drop()
 		return True
@@ -165,5 +168,5 @@ class CommandWrappers:
 	def setEmotionGesture(msg):
 		try:
 			commands.setEmotionGesture(msg.data)
-		except KeyError:
+		except TypeError:
 			print('Error: unknown gesture:', msg);

@@ -87,10 +87,14 @@ class AnimationManager():
 
 	def newGesture(self, name, repeat = 1, speed=1, magnitude=0.5, priority=1):
 		'''Perform a new gesture '''
+		fail = False
 		try:
 			actionDatablock = bpy.data.actions[name]
 		except KeyError:
-			raise Exception('No gesture matching name is found')
+			fail = True
+
+		if fail:
+			raise TypeError('Gesture \"' + name + '\" is not known')
 			return
 
 		# Check value for sanity
