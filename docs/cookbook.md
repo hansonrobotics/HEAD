@@ -56,10 +56,12 @@ which is interpreted as [seconds, nanoseconds].  Thus, below, the list
 ```
 rostopic pub --once /blender_api/set_emotion_state blender_api_msgs/EmotionState '{name: sad, magnitude: 1.0, duration: [6, 500000000]}'
 ```
-
 Multiple emotions can be specified in rapid succession; these will be
-blended together. The current emotional state is continually published,
-and can be monitored:
+blended together.
+
+##Monitoring Emotional State
+The current emotional state is continually published, and can be
+monitored:
 ```
 rospic echo /blender_api/get_emotion_states
 ```
