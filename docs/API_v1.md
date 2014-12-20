@@ -1,126 +1,202 @@
-Blender_ROS_API Draft
-===
+Blender_API v1.0 (draft)
+================
+The Blender_API is implemented in the `rigControl/commands.py` file.
 
+##Initializtion and Termination
+General status reporting.
 
-System Commands
 ---
 
 `getAPIVersion()`
 
-Returns a positive integer that represents the version of the currently running CommandListener	Used to make sure the server and the client are running on the same version of the API. Initial iteration will be version 1. Takes no argument.
+Returns a positive integer that represents the version of the currently
+running CommandListener. Used to make sure the server and the client
+are running on the same version of the API. Current version is 1.
+Takes no argument.
 
 ---
 `init()`
 
-Returns 0 if success, else returns the error code	Initializes the 3D environment, must be called before any other command except for getAPIVersion() Takes no argument currently.
+Initializes the 3D environment. Must be called before any other command
+except for getAPIVersion().  Takes no argument.  Returns 0 if success,
+else returns an error code.
 
 ---
- `getEnvironment()`
+`getEnvironment()`
 
-Returns the parameters of the currently initialized environment. Things returned could include nominal playback framerate, commandListener pull rate, statistics on performance, system hardware, etc.
+Returns the parameters of the currently initialized environment. Things
+returned could include nominal playback framerate, commandListener pull
+rate, statistics on performance, system hardware, etc.
 
-Can be also used to as a way to compute round trip time between sending a command and getting a reply. Useful for time critical communication such as speech, where a minuscule time delay can look unnatural."
-isAlive()	Returns 0 if 3D environment is alive and ready to accept command, else returns the error code	"Should be called after init() to make sure everything is kosher and that the 3D environment is ready to accept further commands.
+Can be also used to as a way to compute round trip time between sending
+a command and getting a reply. Useful for time critical communication
+such as speech, where a minuscule time delay can look unnatural.
+
+---
+`isAlive()`
+
+Returns 0 if 3D environment is alive and ready to accept command, else
+returns the error code.	Should be called after `init()` to make sure
+that blender is properly operating, and that the 3D environment is ready
+to accept further commands.
 
 ---
 
 `terminate()`
 
-Returns 0 if success, else returns the error code	"Terminates the 3D environment and severs the connection, will have to reestablish it with init() after terminate() is called.
-
-Takes no argument currently.
+Terminates the 3D environment and severs the connection.  To use the
+API again, the connection needs to be re-establshed with `init()`.
+Returns 0 if success, else returns an error code.  Takes no argument.
 
 ---
 
-Emotion & Gesture
----
+##Emotion & Gesture
 
+Emotional facial expressions are long-duration movements and expressions
+shown on the head and face, such as happiness, sadness.  Directly
+controllable gestures are short-duration movements, such as nods, shakes
+and blinks. Autonomic gestures, such as breathing motion, cannot be
+stopped.
+
+The functions here report a menu of available emotional states and
+gestures, starts ans stops them, and reports the current emotional and
+gestural state.
+
+---
 
 `availableEmotionStates()`
 
-Returns a list of the available emotionState in string format. Because the list of available animations in the 3D environment is subjected to change, this call ensures the AI modules is aware of what emotionStates are supported (i.e. sad, happy, confused, etc)
+Returns a list of the available emotion states, in string format.
+The list of available animations depends on the specific blender
+rig; that is, it depends on what has been impleemnted.  Typical
+emotional states include `sad`, `happy`, `confused`, etc.
 
 Takes no argument.
 
 ---
 `getEmotionStates()`
 
-Returns the current state of the character’s emotionStates in an object format (or list of list, depending on the protocol being used)	"Because the emotionStates of the character is dynamic and interpolated, this might be slightly different than what’s expected even immediately after called setEmotionStates()
+Returns the current state of the character’s emotional state, as a list
+of objects.  The list enumerates all of the emotions being curently
+expressed, how long each has been expressed, and the magntidue
+(strength) of the expression.  The progression of emotional states
+depends on the rig.  Typically, the rig can express multiple
+different emotion types at once (e.g. surprise and happiness),
+with varying degrees of strength, the the strngth decaying over time
+to a neutral state.
 
-Takes no argument
+Takes no argument.
 
 ---
 
-`setEmotionStates(     emotionState1 = float,     emotionState2 = float )`
+`setEmotionState(emotion)`
 
-Returns 0 if success, else returns the error code	"Inside Blender, EmotionState values will quickly blend into the existing emotionStates, and slowly decay to neutral if no new values are set, this ensure the character doesn't looks stiff or freezes in an awkward pose.
+Adds the indicated emotion to the set of emotions being currently
+expressed.  The emotion is a triple, consisting of the emotion name,
+the strength of the expression, and the duration for which it should
+be expressed. The name should be one of the values returned by
+`availableemotionStates()`.
 
-emotionStatesN are any of the emotionStates returned by availableemotionStates()
+The new emotion is blended into the current emotion state, and is
+decayed to neutral over the given period of time.
+
+To alter a currently playing emotion, simply specify a new state
+for it.
+
+Returns 0 if success, else returns the error code.
 
 ---		
 
-`availableEmotionGestures()`
+`availableGestures()`
 
-Returns a list of the available emotionGestures in string format	Ensures the AI modules is aware of what emotionGestures are supported (i.e. yawn, nod, blink)
-
----
-
-`getEmotionGestures()`
-
-Returns the current state of the character’s emotionGestures that’s playing (including time remaining for each gesture) as a list-of-strings format	emotionGestures are manually triggered animations such as yawn, nod. 
+Returns a list of the available gestures in string format.
+These typically include gestures such as yawn, nod, and blink.
 
 ---
 
-`setEmotionsGestures(     “gesture” = string     “repeat” = float,      “speed" = float,
-    “magnitude" = float,     “priority" = float)"`
-    
-Returns 0 if success, else returns the error code	"triggers an immediate playback of a gesture. Parameters include:
+`getGestures()`
 
-gesture: the string representing the name of the gesture
-repeat: the number of times the gesture is to be repeated (1 being default)
-speed: the playback speed of the gesture (1 being nominal, 2 is 2x as fast, etc)
-magnitude: the intensity of the gesture (1 being nominal, 0.5 being half as intense, etc)
+Returns the current state of the character’s gesture state.  This
+includes the name of the gesture, the magnitude of its expression,
+and the time remaining for each gesture.  The list includes both
+the specifiable gestures (nodding, blinking) as well as autonomic
+ones (breathing).
 
 ---
-`stopEmotionGestures(  gestureID = id,  smoothing = float
-)
-`
-Returns 0 when the command is successfully registered (not when gesture is stopped). Returns error code otherwise.	Stops an existing gesture. Used to interrupt one gesture (for another).
+
+`setEmotionsGesture(“gesture” = string, “repeat”= float, “speedp” = float,
+    “magnitude” = float,   “priority” = float)`
+
+Triggers an immediate playback of a gesture. Parameters include:
+
+* gesture: the string name of the gesture.
+* repeat: the number of times the gesture is to be repeated (1 being default)
+* speed: the playback speed of the gesture (1 being nominal, 2 is twice as
+   fast, etc)
+* magnitude: the intensity of the gesture (1 being nominal, 0.5 being
+  half as intense, etc.)
+
+Returns 0 if success, else returns the error code.
+
+XXX TODO: current implementation takes only one argument.
+
+---
+`stopGesture(gestureID = id, smoothing = float)`
+
+Stops an existing gesture. Used to interrupt one gesture (for another).
+Returns 0 when the command is successfully registered
+(not when gesture is stopped). Returns error code otherwise.
+
+XXX TODO Not implemented.
+
+---
+`getGestureParams()`
 
 ---	
 		
-Target Tracking and Speech
----
-
-
-`setPrimaryTarget(
-    “id” = int,     “location” = vec3,     “rotation” = vec3,     “scale” = vec3,
-    “tracking” = 0.7 )`
-    
-Returns 0 if success, else returns the error code	"id is the identifier for each unique target. Useful for when eva is interacting with multiple people.
-
-location controls where the character will look and turn
-rotation is the rotation of the target, can affe head tilt when the character is in a playful mood scale is the size of the target. affects how much the eyes drift around when locked onto a target
-tracking controls the percentage of times when the character is looking at this target"
+##Target Tracking and Speech
+Commands for tracking movements of the eyes, and lip-sync motions.
 
 ---
-`setSecondaryTarget(
-    “id” = int,     “location” = vec3,     “rotation” = vec3,     “scale” = vec3,     “tracking” = 0.3 )`
-    
-Returns 0 if success, else returns the error code	"id is the identifier for each unique target. Useful for when eva is interacting with multiple people.
 
-location controls where the character will look and turn
-rotation is the rotation of the target, can affe head tilt when the character is in a playful mood scale is the size of the target. affects how much the eyes drift around when locked onto a target
-tracking controls the percentage of times when the character is looking at this target"
+
+`setPrimaryTarget(“id” = int, “location” = vec3, “rotation” = vec3, “scale” = vec3, “tracking” = 0.7)`
+
+Specify an target to face and look at.
+
+* `id` is the identifier for each unique target. Useful for when the rig
+  is interacting with multiple people.
+
+* `location` controls where the character will look and turn.
+
+* `rotation` is the rotation of the target, can affect head tilt when
+  the character is in a playful mood. (Huh ???)
+
+* `scale` is the size of the target. Affects how much the eyes drift
+  around when examining a target.
+
+* `tracking` controls the percentage of the time that the character is
+  looking at this target.
+
+Returns 0 if success, else returns the error code.
 
 ---
-`engageTarget( target = primary|secondary
-time = float )`
+`setSecondaryTarget(“id” = int, “location” = vec3, “rotation” = vec3, “scale” = vec3, “tracking” = 0.3)`
 
-Returns 0 if success, else returns the error code	Force character to look at a specific target for time.
+Takes the same parameters as the primary target.  The character will
+alternate paying attention between the primary and the secondary target.
+
+Returns 0 if success, else returns the error code.
+
+
+---
+`engageTarget(target = primary|secondary, time = float)`
+
+Force the character to look at a specific target for a period of time.
+Returns 0 if success, else returns the error code.
 
 ---
 
 `saySpeech()` TBD	TBD
 		
-		
+

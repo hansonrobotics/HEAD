@@ -2,20 +2,26 @@
 
 import bpy
 
+# System control and information commands ===========
 def getAPIVersion():
 	return 1
 
 def init():
 	bpy.ops.wm.animation_playback()
+	return 0
 
 def getEnvironment():
 	...
+	return None
 
 def isAlive():
 	return bpy.context.scene['animationPlaybackActive']
 
 def terminate():
 	...
+	return 0
+
+# Emotion and Gesture commands ==========================
 
 def availableEmotionStates():
 	emotionStates = []
@@ -37,9 +43,11 @@ def getEmotionStates():
 
 def setEmotionState(emotion):
 	bpy.evaAnimationManager.setEmotion(eval(emotion))
+	return 0
 
 
-def availableEmotionGestures():
+# Gestures --------------------------------------
+def availableGestures():
 	emotionGestures = []
 	for gesture in bpy.data.actions:
 		if gesture.name.startswith("GST-"):
@@ -47,7 +55,7 @@ def availableEmotionGestures():
 	return emotionGestures
 
 
-def getEmotionGestures():
+def getGestures():
 	eva = bpy.evaAnimationManager
 	emotionGestures = {}
 	for gesture in eva.gesturesList:
@@ -58,19 +66,22 @@ def getEmotionGestures():
 	return emotionGestures
 
 
-def setEmotionGesture(name):
+def setGesture(name):
 	bpy.evaAnimationManager.newGesture(name='GST-'+name)
-
+   return 0
 
 def setPrimaryTarget():
-	pass
+	return 0
 
 
 def setSecondaryTarget():
-	pass
+	return 0
+
+def engageTarget()
+	return 0
 
 
-def getEmotionParams():
+def getGestureParams():
 	eva = bpy.evaAnimationManager
 	return {'eyeDartRate': round(eva.eyeDartRate, 3),
 			'eyeWander': round(eva.eyeWander, 3),

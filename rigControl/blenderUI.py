@@ -36,11 +36,10 @@ class BLRigControl(bpy.types.Panel):
 			text = 'Command Listener Running'
 		else:
 			text='Start Command Listener'
-		
+
 		col = layout.column(align=True)
 		col.operator("wm.command_listener", text=text, icon='CONSOLE')
 		col.operator('eva.debug', text='Start Animation', icon='ARMATURE_DATA').action = 'commands.init()'
-		
 
 
 		### Gestures ###
@@ -53,10 +52,9 @@ class BLRigControl(bpy.types.Panel):
 					row = col.row(align=True)
 
 				# row.operator("eva.gestures", text=action.name[4:]).evaAction = action.name
-				row.operator('eva.debug', text=action.name[4:]).action = 'commands.setEmotionGesture("'+ action.name +'")'
+				row.operator('eva.debug', text=action.name[4:]).action = 'commands.setGesture("'+ action.name +'")'
 
 
-		
 		###  Emotions  ###
 		row = layout.row()
 		layout.label(text="Emotions:")
@@ -99,7 +97,7 @@ class BLRigControl(bpy.types.Panel):
 		row.operator('eva.tracking', text='Right').evaTrack = [-0.2, 0, 0]
 		col.operator('eva.tracking', text='Down').evaTrack = [0, 0, -0.1]
 
-		
+
 		row = layout.row()
 		eva = bpy.evaAnimationManager
 		bones = eva.deformObj.pose.bones
@@ -118,14 +116,14 @@ class BLRigControl(bpy.types.Panel):
 		col.operator('eva.debug', text='getAPIVersion()').action = 'commands.getAPIVersion()'
 		col.operator('eva.debug', text='isAlive()').action = 'commands.isAlive()'
 		col.operator('eva.debug', text='availableEmotionStates()').action = 'commands.availableEmotionStates()'
-		col.operator('eva.debug', text='availableEmotionGestures()').action = 'commands.availableEmotionGestures()'
+		col.operator('eva.debug', text='availableGestures()').action = 'commands.availableGestures()'
 		col.operator('eva.debug', text='getEmotionStates()').action = 'commands.getEmotionStates()'
-		col.operator('eva.debug', text='getEmotionGestures()').action = 'commands.getEmotionGestures()'
-		col.operator('eva.debug', text='getEmotionParams()').action = 'commands.getEmotionParams()'
+		col.operator('eva.debug', text='getGestures()').action = 'commands.getGestures()'
+		col.operator('eva.debug', text='getGestureParams()').action = 'commands.getGestureParams()'
 		col.operator('eva.debug', text='getHeadData()').action = 'commands.getHeadData()'
 		col.operator('eva.debug', text='getEyesData()').action = 'commands.getEyesData()'
 		col.operator('eva.debug', text='getFaceData()').action = 'commands.getFaceData()'
-		
+
 
 def register():
 	bpy.utils.register_class(BLRigControl)
@@ -143,4 +141,4 @@ def refresh():
 	except ValueError:
 		unregister()
 		register()
-	
+
