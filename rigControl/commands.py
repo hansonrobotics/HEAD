@@ -70,11 +70,12 @@ def setGesture(name):
 	bpy.evaAnimationManager.newGesture(name='GST-'+name)
 	return 0
 
-def setPrimaryTarget():
+def setPrimaryTarget(loc):
+	bpy.evaAnimationManager.setPrimaryTarget(loc)
 	return 0
 
-
-def setSecondaryTarget():
+def setSecondaryTarget(loc):
+	bpy.evaAnimationManager.setSecondaryTarget(loc)
 	return 0
 
 def engageTarget():

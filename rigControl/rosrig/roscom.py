@@ -1,5 +1,9 @@
+# Implements ROS node to convert from ROS messages to the
+# blender API defined in commands.py.  The actual commands
+# are transmitted to blender using the CommandListener.
+#
 from .. import commands
-from ..blenderCommandListener import CommandSource
+from ..CommandSource import CommandSource
 
 import imp
 imp.reload(commands)
@@ -131,9 +135,11 @@ class CommandWrappers:
 	def getAPIVersion():
 		return msg.GetAPIVersion(commands.getAPIVersion())
 
+
 	@publish_once("~available_emotion_states", msg.AvailableEmotionStates)
 	def availableEmotionStates():
 		return msg.AvailableEmotionStates(commands.availableEmotionStates())
+
 
 	@publish_live("~get_emotion_states", msg.EmotionStates)
 	def getEmotionStates():
@@ -153,9 +159,11 @@ class CommandWrappers:
 		})
 		commands.setEmotionState(emotion)
 
+
 	@publish_once("~available_gestures", msg.AvailableGestures)
 	def availableGestures():
 		return msg.AvailableGestures(commands.availableGestures())
+
 
 	@publish_live("~get_gestures", msg.Gestures)
 	def getGestures():
@@ -165,6 +173,7 @@ class CommandWrappers:
 			) for name, vals in commands.getGestures().items()
 		])
 
+
 	@subscribe("~set_gesture", std_msgs.String)
 	def setGesture(msg):
 
@@ -172,3 +181,18 @@ class CommandWrappers:
 			commands.setGesture(msg.data)
 		except TypeError:
 			print('Error: unknown gesture:', msg.data);
+
+
+	@subscribe("~set_primary_target", msg.Target)
+	def setPrimaryTarget(msg):
+		# Eva uses y==forward x==right
+		# Standard robotics (e.g. player/gazebo) uses x==forward, y==left.
+		flist = [-msg.y, msg.x, msg.z]
+		commands.setPrimaryTarget(flist)
+
+	@subscribe("~set_secondary_target", msg.Target)
+	def setSecondaryTarget(msg):
+		# Eva uses y==forward x==right
+		# Standard robotics (e.g. player/gazebo) uses x==forward, y==left.
+		flist = [-msg.y, msg.x, msg.z]
+		commands.setSecondaryTarget(flist)

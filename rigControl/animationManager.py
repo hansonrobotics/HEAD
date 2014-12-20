@@ -171,6 +171,19 @@ class AnimationManager():
 		self.primaryEyeTargetLoc.target = loc
 
 
+	def setSecondaryTarget(self, loc):
+		'''Set the target used by eye and face tracking '''
+		# compute distance from previous eye position
+		distance = computeDistance(loc, self.secondaryEyeTargetLoc.current)
+
+		if distance > 0.15:
+			if self.randomFrequency('blink', 20):
+				self.newGesture('GST-blink-micro')
+
+		self.secondaryHeadTargetLoc.target = loc
+		self.secondaryEyeTargetLoc.target = loc
+
+
 	def terminate(self):
 		'''House-keeping at the end of the run'''
 		# remove all leftover gestures
