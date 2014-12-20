@@ -46,11 +46,11 @@ add_message_files(
   FILES
   GetAPIVersion.msg
   AvailableEmotionStates.msg
-  EmotionStates.msg
-  AvailableEmotionGestures.msg
-  EmotionGestures.msg
+  AvailableGestures.msg
   EmotionState.msg
-  EmotionGesture.msg
+  EmotionStates.msg
+  Gesture.msg
+  Gestures.msg
 )
 
 ## Generate services in the 'srv' folder
