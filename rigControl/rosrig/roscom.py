@@ -142,6 +142,7 @@ class CommandWrappers:
 			for name, vals in commands.getEmotionStates().items()
 		])
 
+	# Message is a single emotion state
 	@subscribe("~set_emotion_state", msg.EmotionState)
 	def setEmotionState(msg):
 		emotion = str({

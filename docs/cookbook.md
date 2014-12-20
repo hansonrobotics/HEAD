@@ -49,5 +49,5 @@ and um ...
 
 duration can only be an int, or the list [secs, nanosecs]
 ```
-rostopic pub --once /blender_api/set_emotion_state blender_api_msgs/EmotionState '{name: sad, magnitude: 0.5, duration: [2, 500000000]}'
+rostopic pub --once /blender_api/set_emotion_state blender_api_msgs/EmotionState '{name: sad, magnitude: 1.0, duration: [6, 500000000]}'
 ```
