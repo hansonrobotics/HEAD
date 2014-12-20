@@ -51,6 +51,7 @@ add_message_files(
   EmotionStates.msg
   Gesture.msg
   Gestures.msg
+  SetGesture.msg
   Target.msg
 )
 
