@@ -47,7 +47,7 @@ add_message_files(
   GetAPIVersion.msg
   AvailableEmotionStates.msg
   EmotionStates.msg
-  AvailableEmotionGestures.msg
+  AvailableGestures.msg
   EmotionGestures.msg
   EmotionState.msg
   EmotionGesture.msg
