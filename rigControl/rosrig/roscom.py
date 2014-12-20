@@ -142,7 +142,7 @@ class CommandWrappers:
 			for name, vals in commands.getEmotionStates().items()
 		])
 
-	@subscribe("~set_emotion_state", msg.EmotionStates)
+	@subscribe("~set_emotion_state", msg.EmotionState)
 	def setEmotionState(msg):
 		emotions = str({
 			emotion.name: {

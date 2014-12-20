@@ -45,3 +45,7 @@ Uhh
 ```
 rostopic pub --once /blender_api/set_emotion_gesture std_msgs/String nod-1
 ```
+and um ... 
+```
+rostopic pub --once /blender_api/set_emotion_state blender_api_msgs/EmotionState '{name: sad, magnitude: 0.5, duration: 2.5}'
+```
