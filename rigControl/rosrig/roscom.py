@@ -157,18 +157,18 @@ class CommandWrappers:
 	def availableGestures():
 		return msg.AvailableGestures(commands.availableGestures())
 
-	@publish_live("~get_emotion_gestures", msg.EmotionGestures)
-	def getEmotionGestures():
-		return msg.EmotionGestures([
-			msg.EmotionGesture(
+	@publish_live("~get_gestures", msg.Gestures)
+	def getGestures():
+		return msg.Gestures([
+			msg.Gesture(
 				name, vals['magnitude'], rospy.Duration(vals['duration']), vals['speed']
-			) for name, vals in commands.getEmotionGestures().items()
+			) for name, vals in commands.getGestures().items()
 		])
 
-	@subscribe("~set_emotion_gesture", std_msgs.String)
-	def setEmotionGesture(msg):
+	@subscribe("~set_gesture", std_msgs.String)
+	def setGesture(msg):
 
 		try:
-			commands.setEmotionGesture(msg.data)
+			commands.setGesture(msg.data)
 		except TypeError:
 			print('Error: unknown gesture:', msg.data);

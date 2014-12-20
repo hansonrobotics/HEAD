@@ -89,7 +89,7 @@ Takes no argument.
 
 ---
 
-`setEmotionStates(emotion)`
+`setEmotionState(emotion)`
 
 Adds the indicated emotion to the set of emotions being currently
 expressed.  The emotion is a triple, consisting of the emotion name,
@@ -105,9 +105,6 @@ for it.
 
 Returns 0 if success, else returns the error code.
 
----
-`getGestureParams()`
-
 ---		
 
 `availableGestures()`
@@ -117,7 +114,7 @@ These typically include gestures such as yawn, nod, and blink.
 
 ---
 
-`getEmotionGestures()`
+`getGestures()`
 
 Returns the current state of the character’s gesture state.  This
 includes the name of the gesture, the magnitude of its expression,
@@ -144,13 +141,16 @@ Returns 0 if success, else returns the error code.
 XXX TODO: current implementation takes only one argument.
 
 ---
-`stopEmotionGestures(gestureID = id, smoothing = float)`
+`stopGesture(gestureID = id, smoothing = float)`
 
 Stops an existing gesture. Used to interrupt one gesture (for another).
 Returns 0 when the command is successfully registered
 (not when gesture is stopped). Returns error code otherwise.
 
 XXX TODO Not implemented.
+
+---
+`getGestureParams()`
 
 ---	
 		

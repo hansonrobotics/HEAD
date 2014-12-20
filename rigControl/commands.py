@@ -55,7 +55,7 @@ def availableGestures():
 	return emotionGestures
 
 
-def getEmotionGestures():
+def getGestures():
 	eva = bpy.evaAnimationManager
 	emotionGestures = {}
 	for gesture in eva.gesturesList:
@@ -66,7 +66,7 @@ def getEmotionGestures():
 	return emotionGestures
 
 
-def setEmotionGesture(name):
+def setGesture(name):
 	bpy.evaAnimationManager.newGesture(name='GST-'+name)
    return 0
 

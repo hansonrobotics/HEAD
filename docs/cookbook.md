@@ -44,7 +44,7 @@ data: ['irritated', 'happy', 'recoil', 'surprised', 'sad', 'confused', 'afraid',
 Individual gestures can be launched one at a time. For example, a
 single, short nod:
 ```
-rostopic pub --once /blender_api/set_emotion_gesture std_msgs/String nod-1
+rostopic pub --once /blender_api/set_gesture std_msgs/String nod-1
 ```
 
 Emotional states require a magnitude and duration to be specified, and
@@ -108,7 +108,7 @@ The gesture state can also be monitored.  Under normal circumstances,
 the rig is animated so as to breath, and thus will publish a continuous
 stream of messages. Thus,
 ```
-rospic echo /blender_api/get_emotion_gestures
+rostopic echo /blender_api/get_gestures
 ```
 will show
 ```
@@ -159,5 +159,5 @@ data:
 will appear after a nod request:
 
 ```
-rostopic pub --once /blender_api/set_emotion_gesture std_msgs/String nod-3
+rostopic pub --once /blender_api/set_gesture std_msgs/String nod-3
 ```
