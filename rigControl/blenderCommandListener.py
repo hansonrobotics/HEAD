@@ -6,18 +6,39 @@ debug = True
 
 import bpy
 
-from . import network
 from . import commands
 
 import imp
 imp.reload(commands)
 
 
+# Virtual base class for sources of animation commands.
+# Any class inheriting from thos one can be used to send commands to
+# blender. Use register_cmd_source(), below, to declare a new command
+# source to the blender api.
+class CommandSource:
+
+	# When called, should return the next command that blender will run.
+	def poll(self):
+		return None
+
+	def push(self):
+		return
+
+	def init(self):
+		return False
+
+	# After this is called, blender will never again poll for more
+	# commands. This is a great time to empty out any pending queues.
+	def drop(self):
+		return
+
 class BLCommandListener(bpy.types.Operator):
 	"""Listens for external commands"""
 	bl_label = "Command Listener"
 	bl_idname = 'wm.command_listener'
 
+	cmd_sources = []
 	_timer = None
 	bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
 	bpy.context.scene['commandListenerActive'] = False
@@ -28,11 +49,20 @@ class BLCommandListener(bpy.types.Operator):
 
 		if debug and event.type == 'TIMER':
 			# print('Running Command Listener', round(self._timer.time_duration,3))
+
+			# Poll each possible command source, see if it has anything
+			# for us to do.
 			while True:
-				command = network.poll(context)
-				if command: command.execute()
-				else: break
-			network.push(context)
+				have_more = False
+				for src in self.cmd_sources:
+					command = src.poll()
+					if command:
+						command.execute()
+						have_more = True
+				if not have_more:
+					break
+			for src in self.cmd_sources:
+				src.push()
 
 
 		# set status
@@ -43,9 +73,11 @@ class BLCommandListener(bpy.types.Operator):
 	def execute(self, context):
 		print('Starting Command Listener')
 
-		success = network.init(context)
+		success = True
+		for src in self.cmd_sources:
+			src.push()
+			success = success and src.init()
 		...
-
 
 		if success:
 			wm = context.window_manager
@@ -66,7 +98,8 @@ class BLCommandListener(bpy.types.Operator):
 		else:
 			print('no timer')
 
-		network.drop(context)
+		for src in cmd_sources:
+			src.drop()
 		...
 		bpy.context.scene['commandListenerActive'] = False
 		return {'CANCELLED'}
@@ -76,6 +109,10 @@ class BLCommandListener(bpy.types.Operator):
 	def poll(cls, context):
 		return not bpy.context.scene['commandListenerActive']
 		# return True
+
+	@classmethod
+	def register_command_source(cls, source):
+		cls.cmd_sources.append(source)
 
 
 def register():
@@ -94,3 +131,9 @@ def refresh():
 		print(E)
 		unregister()
 		register()
+
+# Register a new animation command source.  The arugment should be an
+# object derived from the class CommandSource (defined above)
+def register_cmd_source(src):
+	BLCommandListener.register_command_source(src)
+
