@@ -42,6 +42,9 @@ class RosNode(CommandSource):
 				topic.callback = self._enqueue
 			topic.register()
 
+	def init(self):
+		return True
+
 	def poll(self):
 		''' incoming cmd getter '''
 		try:

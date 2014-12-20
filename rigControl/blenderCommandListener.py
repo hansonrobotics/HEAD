@@ -22,22 +22,22 @@ class CommandSource:
 		return
 
 	def init(self):
-		return
+		return False
 
 	def drop(self):
 		return
 
+# XXX FIXME, Global should be in BLCommandListener
+cmd_sources = []
 
 class BLCommandListener(bpy.types.Operator):
 	"""Listens for external commands"""
 	bl_label = "Command Listener"
 	bl_idname = 'wm.command_listener'
 
-	cmd_sources = []
 	_timer = None
 	bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
 	bpy.context.scene['commandListenerActive'] = False
-
 
 	def modal(self, context, event):
 		if debug and event.type in {'ESC'}:
@@ -69,11 +69,11 @@ class BLCommandListener(bpy.types.Operator):
 	def execute(self, context):
 		print('Starting Command Listener')
 
-		success = False
+		success = True
 		for src in cmd_sources:
 			src.push()
 			success = success and src.init()
-			...
+		...
 
 		if success:
 			wm = context.window_manager
@@ -109,9 +109,6 @@ class BLCommandListener(bpy.types.Operator):
 	def register_command_source(self, source):
 		cmd_sources.append(source)
 
-	def __init__(self):
-		cmd_sources = []
-
 
 def register():
 	bpy.utils.register_class(BLCommandListener)
@@ -129,3 +126,8 @@ def refresh():
 		print(E)
 		unregister()
 		register()
+
+def register_cmd_source(src):
+	global cmd_sources
+	cmd_sources.append(src)
+

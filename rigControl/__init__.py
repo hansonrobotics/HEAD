@@ -33,7 +33,7 @@ from .rosrig import *
 print("step B")
 node = rosrig.init()
 print("step C")
-blenderCommandListener.register_command_source(node)
+blenderCommandListener.register_cmd_source(node)
 print("step D")
 
 #except:
