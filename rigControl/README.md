@@ -17,7 +17,7 @@
 * animationManager.py
   uses bpy, accesses bones....
 
-* blenderPlayback.py
+* blenderPlayback.py ... per-frame service
   uses bpy
 
 * blendedNum.py: Implements a numeric object that allow blending and
