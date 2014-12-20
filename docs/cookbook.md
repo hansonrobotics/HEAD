@@ -34,8 +34,7 @@ These should display the following outputs:
 $ rostopic echo -n 1 /blender_api/available_gestures
 data: ['blink', 'blink-micro', 'blink-relaxed', 'blink-sleepy', 'nod-1', 'nod-2', 'nod-3', 'shake-2', 'shake-3', 'yawn-1']
 ---
-linas@fanny: ~/src/novamente/hanson/src/hr/blender_api $ rostopic echo -n 1
-/blender_api/available_emotion_states
+$ rostopic echo -n 1 /blender_api/available_emotion_states
 data: ['irritated', 'happy', 'recoil', 'surprised', 'sad', 'confused', 'afraid', 'bored', 'engaged', 'amused', 'comprehending']
 ---
 ```
@@ -63,7 +62,7 @@ blended together.
 The current emotional state is continually published, and can be
 monitored:
 ```
-rospic echo /blender_api/get_emotion_states
+rostopic echo /blender_api/get_emotion_states
 ```
 A neutral emotional state is reported as an empty list:
 ```

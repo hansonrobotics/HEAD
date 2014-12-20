@@ -68,7 +68,7 @@ def getGestures():
 
 def setGesture(name):
 	bpy.evaAnimationManager.newGesture(name='GST-'+name)
-   return 0
+	return 0
 
 def setPrimaryTarget():
 	return 0
@@ -77,7 +77,7 @@ def setPrimaryTarget():
 def setSecondaryTarget():
 	return 0
 
-def engageTarget()
+def engageTarget():
 	return 0
 
 
