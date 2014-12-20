@@ -1,15 +1,15 @@
 #
 
-from . import blenderCommandListener
+from . import animationManager
 from . import blenderUI
 from . import blenderPlayback
-from . import animationManager
+from . import CommandListener
 
 import imp
 
 # sets up the Command listener
-imp.reload(blenderCommandListener)
-blenderCommandListener.refresh()
+imp.reload(CommandListener)
+CommandListener.refresh()
 
 # sets up the Blender operators
 imp.reload(blenderPlayback)
@@ -30,6 +30,6 @@ try:
 	importlib.import_module('rospy')
 	from .rosrig import init
 	node = rosrig.init()
-	blenderCommandListener.register_cmd_source(node)
+	CommandListener.register_cmd_source(node)
 except:
 	print('No ROS found')

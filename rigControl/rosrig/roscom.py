@@ -3,7 +3,7 @@
 # are transmitted to blender using the CommandListener.
 #
 from .. import commands
-from ..CommandListener import CommandSource
+from ..CommandSource import CommandSource
 
 import imp
 imp.reload(commands)

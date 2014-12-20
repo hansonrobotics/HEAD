@@ -6,7 +6,10 @@
   files define the API, asside from CommandListener, which handles
   messages I/O
 
-* blenderCommandListener.py: defines the API for command events
+* CommandSource.py: defines the API for command events
+
+* CommandListener.py: command handler, accepts events from one or
+  more command sources, and queues them with blender.
 
 * actuators.py handles autonomous functions: breathing, blinking
   eye saccades.  Does NOT use bpy.
