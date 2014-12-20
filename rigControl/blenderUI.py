@@ -119,7 +119,7 @@ class BLRigControl(bpy.types.Panel):
 		col.operator('eva.debug', text='availableGestures()').action = 'commands.availableGestures()'
 		col.operator('eva.debug', text='getEmotionStates()').action = 'commands.getEmotionStates()'
 		col.operator('eva.debug', text='getEmotionGestures()').action = 'commands.getEmotionGestures()'
-		col.operator('eva.debug', text='getEmotionParams()').action = 'commands.getEmotionParams()'
+		col.operator('eva.debug', text='getGestureParams()').action = 'commands.getGestureParams()'
 		col.operator('eva.debug', text='getHeadData()').action = 'commands.getHeadData()'
 		col.operator('eva.debug', text='getEyesData()').action = 'commands.getEyesData()'
 		col.operator('eva.debug', text='getFaceData()').action = 'commands.getFaceData()'

@@ -106,7 +106,7 @@ for it.
 Returns 0 if success, else returns the error code.
 
 ---
-`getEmotionParams()`
+`getGestureParams()`
 
 ---		
 

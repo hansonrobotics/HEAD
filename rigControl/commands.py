@@ -81,7 +81,7 @@ def engageTarget()
 	return 0
 
 
-def getEmotionParams():
+def getGestureParams():
 	eva = bpy.evaAnimationManager
 	return {'eyeDartRate': round(eva.eyeDartRate, 3),
 			'eyeWander': round(eva.eyeWander, 3),
