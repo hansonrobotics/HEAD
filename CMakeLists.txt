@@ -51,6 +51,7 @@ add_message_files(
   EmotionStates.msg
   Gesture.msg
   Gestures.msg
+  Target.msg
 )
 
 ## Generate services in the 'srv' folder
