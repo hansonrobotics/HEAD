@@ -1,5 +1,9 @@
+# Implements ROS node to convert from ROS messages to the
+# blender API defined in commands.py.  The actual commands
+# are transmitted to blender using the CommandListener.
+#
 from .. import commands
-from ..blenderCommandListener import CommandSource
+from ..CommandListener import CommandSource
 
 import imp
 imp.reload(commands)

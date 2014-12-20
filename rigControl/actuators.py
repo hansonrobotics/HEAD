@@ -1,4 +1,5 @@
-# Functions that controls the Eva character
+# Functions that control autonomous behaviors in the Eva character
+# Breathing, blinking, eye saccades.
 
 from .helpers import *
 

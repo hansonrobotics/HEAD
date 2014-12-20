@@ -161,9 +161,7 @@ class AnimationManager():
 	def setPrimaryTarget(self, loc):
 		'''Set the target used by eye and face tracking '''
 		# compute distance from previous eye position
-		print ('duude current loc is', self.primaryEyeTargetLoc.current)
 		distance = computeDistance(loc, self.primaryEyeTargetLoc.current)
-		print ('duude distance is', distance)
 
 		if distance > 0.15:
 			if self.randomFrequency('blink', 20):
@@ -171,6 +169,19 @@ class AnimationManager():
 
 		self.primaryHeadTargetLoc.target = loc
 		self.primaryEyeTargetLoc.target = loc
+
+
+	def setSecondaryTarget(self, loc):
+		'''Set the target used by eye and face tracking '''
+		# compute distance from previous eye position
+		distance = computeDistance(loc, self.secondaryEyeTargetLoc.current)
+
+		if distance > 0.15:
+			if self.randomFrequency('blink', 20):
+				self.newGesture('GST-blink-micro')
+
+		self.secondaryHeadTargetLoc.target = loc
+		self.secondaryEyeTargetLoc.target = loc
 
 
 	def terminate(self):
