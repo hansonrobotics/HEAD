@@ -12,8 +12,10 @@ import imp
 imp.reload(commands)
 
 
-# Virtual base class for sources of commands
-# The methods don't do anything.
+# Virtual base class for sources of animation commands.
+# Any class inheriting from thos one can be used to send commands to
+# blender. Use register_cmd_source(), below, to declare a new command
+# source to the blender api.
 class CommandSource:
 	def poll(self):
 		return None
@@ -27,14 +29,12 @@ class CommandSource:
 	def drop(self):
 		return
 
-# XXX FIXME, Global should be in BLCommandListener
-cmd_sources = []
-
 class BLCommandListener(bpy.types.Operator):
 	"""Listens for external commands"""
 	bl_label = "Command Listener"
 	bl_idname = 'wm.command_listener'
 
+	cmd_sources = []
 	_timer = None
 	bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
 	bpy.context.scene['commandListenerActive'] = False
@@ -50,14 +50,14 @@ class BLCommandListener(bpy.types.Operator):
 			# for us to do.
 			while True:
 				have_more = False
-				for src in cmd_sources:
+				for src in self.cmd_sources:
 					command = src.poll()
 					if command:
 						command.execute()
 						have_more = True
 				if not have_more:
 					break
-			for src in cmd_sources:
+			for src in self.cmd_sources:
 				src.push()
 
 
@@ -70,7 +70,7 @@ class BLCommandListener(bpy.types.Operator):
 		print('Starting Command Listener')
 
 		success = True
-		for src in cmd_sources:
+		for src in self.cmd_sources:
 			src.push()
 			success = success and src.init()
 		...
@@ -106,8 +106,9 @@ class BLCommandListener(bpy.types.Operator):
 		return not bpy.context.scene['commandListenerActive']
 		# return True
 
-	def register_command_source(self, source):
-		cmd_sources.append(source)
+	@classmethod
+	def register_command_source(cls, source):
+		cls.cmd_sources.append(source)
 
 
 def register():
@@ -127,7 +128,8 @@ def refresh():
 		unregister()
 		register()
 
+# Register a new animation command source.  The arugment should be an
+# object derived from the class CommandSource (defined above)
 def register_cmd_source(src):
-	global cmd_sources
-	cmd_sources.append(src)
+	BLCommandListener.register_command_source(src)
 
