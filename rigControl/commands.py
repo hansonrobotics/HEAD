@@ -47,7 +47,7 @@ def setEmotionState(emotion):
 
 
 # Gestures --------------------------------------
-def availableEmotionGestures():
+def availableGestures():
 	emotionGestures = []
 	for gesture in bpy.data.actions:
 		if gesture.name.startswith("GST-"):

@@ -153,9 +153,9 @@ class CommandWrappers:
 		})
 		commands.setEmotionState(emotion)
 
-	@publish_once("~available_emotion_gestures", msg.AvailableEmotionGestures)
-	def availableEmotionGestures():
-		return msg.AvailableEmotionGestures(commands.availableEmotionGestures())
+	@publish_once("~available_gestures", msg.AvailableGestures)
+	def availableGestures():
+		return msg.AvailableGestures(commands.availableGestures())
 
 	@publish_live("~get_emotion_gestures", msg.EmotionGestures)
 	def getEmotionGestures():

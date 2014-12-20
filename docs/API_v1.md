@@ -110,7 +110,7 @@ Returns 0 if success, else returns the error code.
 
 ---		
 
-`availableEmotionGestures()`
+`availableGestures()`
 
 Returns a list of the available gestures in string format.
 These typically include gestures such as yawn, nod, and blink.
