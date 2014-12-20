@@ -2,6 +2,7 @@
 
 import bpy
 
+# System control and information commands ===========
 def getAPIVersion():
 	return 1
 
@@ -19,6 +20,8 @@ def isAlive():
 def terminate():
 	...
 	return 0
+
+# Emotion and Gesture commands ==========================
 
 def availableEmotionStates():
 	emotionStates = []
@@ -40,8 +43,10 @@ def getEmotionStates():
 
 def setEmotionState(emotion):
 	bpy.evaAnimationManager.setEmotion(eval(emotion))
+	return 0
 
 
+# Gestures --------------------------------------
 def availableEmotionGestures():
 	emotionGestures = []
 	for gesture in bpy.data.actions:
@@ -63,14 +68,17 @@ def getEmotionGestures():
 
 def setEmotionGesture(name):
 	bpy.evaAnimationManager.newGesture(name='GST-'+name)
-
+   return 0
 
 def setPrimaryTarget():
-	pass
+	return 0
 
 
 def setSecondaryTarget():
-	pass
+	return 0
+
+def engageTarget()
+	return 0
 
 
 def getEmotionParams():

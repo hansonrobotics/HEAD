@@ -53,8 +53,10 @@ Returns 0 if success, else returns an error code.  Takes no argument.
 ##Emotion & Gesture
 
 Emotional facial expressions are long-duration movements and expressions
-shown on the head and face, such as happiness, sadness.  Gestures are
-short-duration movements, such as nods, shakes and blinks.
+shown on the head and face, such as happiness, sadness.  Directly
+controllable gestures are short-duration movements, such as nods, shakes
+and blinks. Autonomic gestures, such as breathing motion, cannot be
+stopped.
 
 The functions here report a menu of available emotional states and
 gestures, starts ans stops them, and reports the current emotional and
@@ -103,70 +105,98 @@ for it.
 
 Returns 0 if success, else returns the error code.
 
+---
+`getEmotionParams()`
+
 ---		
 
 `availableEmotionGestures()`
 
-Returns a list of the available emotionGestures in string format	Ensures the AI modules is aware of what emotionGestures are supported (i.e. yawn, nod, blink)
+Returns a list of the available gestures in string format.
+These typically include gestures such as yawn, nod, and blink.
 
 ---
 
 `getEmotionGestures()`
 
-Returns the current state of the character’s emotionGestures that’s playing (including time remaining for each gesture) as a list-of-strings format	emotionGestures are manually triggered animations such as yawn, nod. 
+Returns the current state of the character’s gesture state.  This
+includes the name of the gesture, the magnitude of its expression,
+and the time remaining for each gesture.  The list includes both
+the specifiable gestures (nodding, blinking) as well as autonomic
+ones (breathing).
 
 ---
 
-`setEmotionsGestures(     “gesture” = string     “repeat” = float,      “speed" = float,
-    “magnitude" = float,     “priority" = float)"`
-    
-Returns 0 if success, else returns the error code	"triggers an immediate playback of a gesture. Parameters include:
+`setEmotionsGesture(“gesture” = string, “repeat”= float, “speedp” = float,
+    “magnitude” = float,   “priority” = float)`
 
-gesture: the string representing the name of the gesture
-repeat: the number of times the gesture is to be repeated (1 being default)
-speed: the playback speed of the gesture (1 being nominal, 2 is 2x as fast, etc)
-magnitude: the intensity of the gesture (1 being nominal, 0.5 being half as intense, etc)
+Triggers an immediate playback of a gesture. Parameters include:
+
+* gesture: the string name of the gesture.
+* repeat: the number of times the gesture is to be repeated (1 being default)
+* speed: the playback speed of the gesture (1 being nominal, 2 is twice as
+   fast, etc)
+* magnitude: the intensity of the gesture (1 being nominal, 0.5 being
+  half as intense, etc.)
+
+Returns 0 if success, else returns the error code.
+
+XXX TODO: current implementation takes only one argument.
 
 ---
-`stopEmotionGestures(  gestureID = id,  smoothing = float
-)
-`
-Returns 0 when the command is successfully registered (not when gesture is stopped). Returns error code otherwise.	Stops an existing gesture. Used to interrupt one gesture (for another).
+`stopEmotionGestures(gestureID = id, smoothing = float)`
+
+Stops an existing gesture. Used to interrupt one gesture (for another).
+Returns 0 when the command is successfully registered
+(not when gesture is stopped). Returns error code otherwise.
+
+XXX TODO Not implemented.
 
 ---	
 		
-Target Tracking and Speech
----
-
-
-`setPrimaryTarget(
-    “id” = int,     “location” = vec3,     “rotation” = vec3,     “scale” = vec3,
-    “tracking” = 0.7 )`
-    
-Returns 0 if success, else returns the error code	"id is the identifier for each unique target. Useful for when eva is interacting with multiple people.
-
-location controls where the character will look and turn
-rotation is the rotation of the target, can affe head tilt when the character is in a playful mood scale is the size of the target. affects how much the eyes drift around when locked onto a target
-tracking controls the percentage of times when the character is looking at this target"
+##Target Tracking and Speech
+Commands for tracking movements of the eyes, and lip-sync motions.
 
 ---
-`setSecondaryTarget(
-    “id” = int,     “location” = vec3,     “rotation” = vec3,     “scale” = vec3,     “tracking” = 0.3 )`
-    
-Returns 0 if success, else returns the error code	"id is the identifier for each unique target. Useful for when eva is interacting with multiple people.
 
-location controls where the character will look and turn
-rotation is the rotation of the target, can affe head tilt when the character is in a playful mood scale is the size of the target. affects how much the eyes drift around when locked onto a target
-tracking controls the percentage of times when the character is looking at this target"
+
+`setPrimaryTarget(“id” = int, “location” = vec3, “rotation” = vec3, “scale” = vec3, “tracking” = 0.7)`
+
+Specify an target to face and look at.
+
+* `id` is the identifier for each unique target. Useful for when the rig
+  is interacting with multiple people.
+
+* `location` controls where the character will look and turn.
+
+* `rotation` is the rotation of the target, can affect head tilt when
+  the character is in a playful mood. (Huh ???)
+
+* `scale` is the size of the target. Affects how much the eyes drift
+  around when examining a target.
+
+* `tracking` controls the percentage of the time that the character is
+  looking at this target.
+
+Returns 0 if success, else returns the error code.
 
 ---
-`engageTarget( target = primary|secondary
-time = float )`
+`setSecondaryTarget(“id” = int, “location” = vec3, “rotation” = vec3, “scale” = vec3, “tracking” = 0.3)`
 
-Returns 0 if success, else returns the error code	Force character to look at a specific target for time.
+Takes the same parameters as the primary target.  The character will
+alternate paying attention between the primary and the secondary target.
+
+Returns 0 if success, else returns the error code.
+
+
+---
+`engageTarget(target = primary|secondary, time = float)`
+
+Force the character to look at a specific target for a period of time.
+Returns 0 if success, else returns the error code.
 
 ---
 
 `saySpeech()` TBD	TBD
 		
-		
+
