@@ -86,7 +86,7 @@ class AnimationManager():
 
 
 	def newGesture(self, name, repeat = 1, speed=1, magnitude=0.5, priority=1):
-		'''Perform a new gesture '''
+		'''Perform a new gesture.'''
 		fail = False
 		try:
 			actionDatablock = bpy.data.actions[name]

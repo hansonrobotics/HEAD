@@ -166,7 +166,8 @@ class CommandWrappers:
 
 	@subscribe("~set_emotion_gesture", std_msgs.String)
 	def setEmotionGesture(msg):
+
 		try:
 			commands.setEmotionGesture(msg.data)
 		except TypeError:
-			print('Error: unknown gesture:', msg);
+			print('Error: unknown gesture:', msg.data);
