@@ -23,20 +23,13 @@ blenderUI.refresh()
 imp.reload(animationManager)
 animationManager.init()
 
-# Temporary hack for loadingthe ROS node code
+# Temporary hack for loading the ROS node
+# If ROS is found, we try to load the ROS node, else not.
 import importlib
-#try:
-importlib.import_module('rospy')
-print("step A")
-# from .rosrig import build
-from .rosrig import *
-print("step B")
-node = rosrig.init()
-print("step C")
-blenderCommandListener.register_cmd_source(node)
-print("step D")
-
-#except:
-#	print('No ROS found')
-
-
+try:
+	importlib.import_module('rospy')
+	from .rosrig import init
+	node = rosrig.init()
+	blenderCommandListener.register_cmd_source(node)
+except:
+	print('No ROS found')
