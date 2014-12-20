@@ -124,8 +124,8 @@ ones (breathing).
 
 ---
 
-`setEmotionsGesture(“gesture” = string, “repeat”= float, “speedp” = float,
-    “magnitude” = float,   “priority” = float)`
+`setGesture(“gesture” = string, “repeat”= float, “speed” = float,
+    “magnitude” = float)`
 
 Triggers an immediate playback of a gesture. Parameters include:
 
@@ -135,10 +135,9 @@ Triggers an immediate playback of a gesture. Parameters include:
    fast, etc)
 * magnitude: the intensity of the gesture (1 being nominal, 0.5 being
   half as intense, etc.)
+* Priority: proposed, not implemented.
 
 Returns 0 if success, else returns the error code.
-
-XXX TODO: current implementation takes only one argument.
 
 ---
 `stopGesture(gestureID = id, smoothing = float)`

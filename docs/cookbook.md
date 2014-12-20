@@ -43,8 +43,11 @@ data: ['irritated', 'happy', 'recoil', 'surprised', 'sad', 'confused', 'afraid',
 Individual gestures can be launched one at a time. For example, a
 single, short nod:
 ```
-rostopic pub --once /blender_api/set_gesture std_msgs/String nod-1
+rostopic pub --once /blender_api/set_gesture blender_api_msgs/SetGesture '{name: nod-1, repeat: 1, speed: 0.7, magnitude: 0.4}'
 ```
+The arguments should be self-explanatory: the gesture is carried out
+fairly quickly (`speed`), is not too forceful (`magnitude`) and is
+performed only once (`repeat`).
 
 Emotional states require a magnitude and duration to be specified, and
 so the message format is more complex. The duration can be a single
@@ -158,7 +161,7 @@ data:
 will appear after a nod request:
 
 ```
-rostopic pub --once /blender_api/set_gesture std_msgs/String nod-3
+rostopic pub --once /blender_api/set_gesture blender_api_msgs/SetGesture '{name: nod-2, repeat: 1, speed: 0.5, magnitude: 0.2}'
 ```
 
 ##Eye Tracking

@@ -62,12 +62,14 @@ def getGestures():
 		duration = round(gesture.duration*gesture.repeat - gesture.stripRef.strip_time, 3)
 		magnitude = round(gesture.magnitude, 3)
 		speed = round(gesture.speed, 3)
-		emotionGestures[gesture.name] = {'duration': duration, 'magnitude': magnitude, 'speed': speed}
+		emotionGestures[gesture.name] = {'duration': duration, \
+			'magnitude': magnitude, 'speed': speed}
 	return emotionGestures
 
 
-def setGesture(name):
-	bpy.evaAnimationManager.newGesture(name='GST-'+name)
+def setGesture(name, repeat, speed, magnitude):
+	bpy.evaAnimationManager.newGesture(name='GST-'+name, \
+		repeat=repeat, speed=speed, magnitude=magnitude)
 	return 0
 
 def setPrimaryTarget(loc):

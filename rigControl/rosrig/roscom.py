@@ -174,13 +174,12 @@ class CommandWrappers:
 		])
 
 
-	@subscribe("~set_gesture", std_msgs.String)
+	@subscribe("~set_gesture", msg.SetGesture)
 	def setGesture(msg):
-
 		try:
-			commands.setGesture(msg.data)
+			commands.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
 		except TypeError:
-			print('Error: unknown gesture:', msg.data);
+			print('Error: unknown gesture:', msg.name);
 
 
 	@subscribe("~set_primary_target", msg.Target)
