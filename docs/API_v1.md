@@ -1,61 +1,107 @@
-Blender_ROS_API Draft
-===
+Blender_API v1.0 (draft)
+================
+The Blender_API is implemented in the `rigControl/commands.py` file.
 
+##Initializtion and Termination
+General status reporting.
 
-System Commands
 ---
 
 `getAPIVersion()`
 
-Returns a positive integer that represents the version of the currently running CommandListener	Used to make sure the server and the client are running on the same version of the API. Initial iteration will be version 1. Takes no argument.
+Returns a positive integer that represents the version of the currently
+running CommandListener. Used to make sure the server and the client
+are running on the same version of the API. Current version is 1.
+Takes no argument.
 
 ---
 `init()`
 
-Returns 0 if success, else returns the error code	Initializes the 3D environment, must be called before any other command except for getAPIVersion() Takes no argument currently.
+Initializes the 3D environment. Must be called before any other command
+except for getAPIVersion().  Takes no argument.  Returns 0 if success,
+else returns an error code.
 
 ---
- `getEnvironment()`
+`getEnvironment()`
 
-Returns the parameters of the currently initialized environment. Things returned could include nominal playback framerate, commandListener pull rate, statistics on performance, system hardware, etc.
+Returns the parameters of the currently initialized environment. Things
+returned could include nominal playback framerate, commandListener pull
+rate, statistics on performance, system hardware, etc.
 
-Can be also used to as a way to compute round trip time between sending a command and getting a reply. Useful for time critical communication such as speech, where a minuscule time delay can look unnatural."
-isAlive()	Returns 0 if 3D environment is alive and ready to accept command, else returns the error code	"Should be called after init() to make sure everything is kosher and that the 3D environment is ready to accept further commands.
+Can be also used to as a way to compute round trip time between sending
+a command and getting a reply. Useful for time critical communication
+such as speech, where a minuscule time delay can look unnatural.
+
+---
+`isAlive()`
+
+Returns 0 if 3D environment is alive and ready to accept command, else
+returns the error code.	Should be called after `init()` to make sure
+that blender is properly operating, and that the 3D environment is ready
+to accept further commands.
 
 ---
 
 `terminate()`
 
-Returns 0 if success, else returns the error code	"Terminates the 3D environment and severs the connection, will have to reestablish it with init() after terminate() is called.
-
-Takes no argument currently.
+Terminates the 3D environment and severs the connection.  To use the
+API again, the connection needs to be re-establshed with `init()`.
+Returns 0 if success, else returns an error code.  Takes no argument.
 
 ---
 
-Emotion & Gesture
----
+##Emotion & Gesture
 
+Emotional facial expressions are long-duration movements and expressions
+shown on the head and face, such as happiness, sadness.  Gestures are
+short-duration movements, such as nods, shakes and blinks.
+
+The functions here report a menu of available emotional states and
+gestures, starts ans stops them, and reports the current emotional and
+gestural state.
+
+---
 
 `availableEmotionStates()`
 
-Returns a list of the available emotionState in string format. Because the list of available animations in the 3D environment is subjected to change, this call ensures the AI modules is aware of what emotionStates are supported (i.e. sad, happy, confused, etc)
+Returns a list of the available emotion states, in string format.
+The list of available animations depends on the specific blender
+rig; that is, it depends on what has been impleemnted.  Typical
+emotional states include `sad`, `happy`, `confused`, etc.
 
 Takes no argument.
 
 ---
 `getEmotionStates()`
 
-Returns the current state of the character’s emotionStates in an object format (or list of list, depending on the protocol being used)	"Because the emotionStates of the character is dynamic and interpolated, this might be slightly different than what’s expected even immediately after called setEmotionStates()
+Returns the current state of the character’s emotional state, as a list
+of objects.  The list enumerates all of the emotions being curently
+expressed, how long each has been expressed, and the magntidue
+(strength) of the expression.  The progression of emotional states
+depends on the rig.  Typically, the rig can express multiple
+different emotion types at once (e.g. surprise and happiness),
+with varying degrees of strength, the the strngth decaying over time
+to a neutral state.
 
-Takes no argument
+Takes no argument.
 
 ---
 
-`setEmotionStates(     emotionState1 = float,     emotionState2 = float )`
+`setEmotionStates(emotion)`
 
-Returns 0 if success, else returns the error code	"Inside Blender, EmotionState values will quickly blend into the existing emotionStates, and slowly decay to neutral if no new values are set, this ensure the character doesn't looks stiff or freezes in an awkward pose.
+Adds the indicated emotion to the set of emotions being currently
+expressed.  The emotion is a triple, consisting of the emotion name,
+the strength of the expression, and the duration for which it should
+be expressed. The name should be one of the values returned by
+`availableemotionStates()`.
 
-emotionStatesN are any of the emotionStates returned by availableemotionStates()
+The new emotion is blended into the current emotion state, and is
+decayed to neutral over the given period of time.
+
+To alter a currently playing emotion, simply specify a new state
+for it.
+
+Returns 0 if success, else returns the error code.
 
 ---		
 

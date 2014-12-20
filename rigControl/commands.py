@@ -7,15 +7,18 @@ def getAPIVersion():
 
 def init():
 	bpy.ops.wm.animation_playback()
+	return 0
 
 def getEnvironment():
 	...
+	return None
 
 def isAlive():
 	return bpy.context.scene['animationPlaybackActive']
 
 def terminate():
 	...
+	return 0
 
 def availableEmotionStates():
 	emotionStates = []
