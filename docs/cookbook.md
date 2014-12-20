@@ -160,3 +160,11 @@ will appear after a nod request:
 ```
 rostopic pub --once /blender_api/set_gesture std_msgs/String nod-3
 ```
+
+##Eye Tracking
+The coordinate system used is head-relative, in 'engineering' coordinates:
+'x' is forward, 'y' to the left, and 'z' up.
+Coordinate system
+```
+rostopic pub --once /blender_api/set_primary_target blender_api_msgs/Target '{x: 2, y: 0 , z: 0}'
+```
