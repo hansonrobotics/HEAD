@@ -41,7 +41,121 @@ data: ['irritated', 'happy', 'recoil', 'surprised', 'sad', 'confused', 'afraid',
 ```
 
 ## Running Animations
-Uhh
+Individual gestures can be launched one at a time. For example, a
+single, short nod:
 ```
 rostopic pub --once /blender_api/set_emotion_gesture std_msgs/String nod-1
+```
+
+Emotional states require a magnitude and duration to be specified, and
+so the message format is more complex. The duration can be a single
+integer, which is interpreted as seconds, or a list of two integers
+which is interpreted as [seconds, nanoseconds].  Thus, below, the list
+[6, 500000000] represents six-and-a-half seconds.
+
+```
+rostopic pub --once /blender_api/set_emotion_state blender_api_msgs/EmotionState '{name: sad, magnitude: 1.0, duration: [6, 500000000]}'
+```
+
+Multiple emotions can be specified in rapid succession; these will be
+blended together. The current emotional state is continually published,
+and can be monitored:
+```
+rospic echo /blender_api/get_emotion_states
+```
+A neutral emotional state is reported as an empty list:
+```
+data: []
+---
+data: []
+---
+```
+while an emotion that is active might appear as:
+```
+---
+data:
+  -
+    name: happy
+    magnitude: 0.328999996185
+    duration:
+      secs: -402
+      nsecs: 903000001
+---
+```
+Multiple blended emotions will be reported as such:
+```
+---
+data:
+  -
+    name: afraid
+    magnitude: 0.757000029087
+    duration:
+      secs: -43
+      nsecs: 133000001
+  -
+    name: happy
+    magnitude: 0.202999994159
+    duration:
+      secs: -794
+      nsecs: 491000000
+---
+```
+
+
+The gesture state can also be monitored.  Under normal circumstances,
+the rig is animated so as to breath, and thus will publish a continuous
+stream of messages. Thus,
+```
+rospic echo /blender_api/get_emotion_gestures
+```
+will show
+```
+---
+data:
+  -
+    name: CYC-normal
+    magnitude: 1.0
+    duration:
+      secs: 1108
+      nsecs: 944999999
+    speed: 1.0
+  -
+    name: CYC-breathing
+    magnitude: 0.5
+    duration:
+      secs: 1275
+      nsecs: 878999999
+    speed: 1.0
+---
+```
+Specific gestures will have the GST prefix, and so
+```
+data:
+  -
+    name: GST-nod-3
+    magnitude: 0.5
+    duration:
+      secs: 41
+      nsecs: 399999999
+    speed: 1.0
+  -
+    name: CYC-normal
+    magnitude: 1.0
+    duration:
+      secs: 507
+      nsecs: 5999999
+    speed: 1.0
+  -
+    name: CYC-breathing
+    magnitude: 0.5
+    duration:
+      secs: 717
+      nsecs: 332999999
+    speed: 1.0
+---
+```
+will appear after a nod request:
+
+```
+rostopic pub --once /blender_api/set_emotion_gesture std_msgs/String nod-3
 ```

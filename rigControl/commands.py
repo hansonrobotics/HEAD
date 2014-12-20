@@ -59,8 +59,7 @@ def getEmotionGestures():
 
 
 def setEmotionGesture(name):
-	bpy.evaAnimationManager.newGesture(name=name)
-	
+	bpy.evaAnimationManager.newGesture(name='GST-'+name)
 
 
 def setPrimaryTarget():
