@@ -46,6 +46,8 @@ Uhh
 rostopic pub --once /blender_api/set_emotion_gesture std_msgs/String nod-1
 ```
 and um ... 
+
+duration can only be an int, or the list [secs, nanosecs]
 ```
-rostopic pub --once /blender_api/set_emotion_state blender_api_msgs/EmotionState '{name: sad, magnitude: 0.5, duration: 2.5}'
+rostopic pub --once /blender_api/set_emotion_state blender_api_msgs/EmotionState '{name: sad, magnitude: 0.5, duration: [2, 500000000]}'
 ```

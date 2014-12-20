@@ -144,13 +144,13 @@ class CommandWrappers:
 
 	@subscribe("~set_emotion_state", msg.EmotionState)
 	def setEmotionState(msg):
-		emotions = str({
-			emotion.name: {
-				'magnitude': emotion.magnitude,
-				'duration': emotion.duration.to_sec()
-			} for emotion in msg.data
+		emotion = str({
+			msg.name: {
+				'magnitude': msg.magnitude,
+				'duration': msg.duration.to_sec()
+			} 
 		})
-		commands.setEmotionState(emotions)
+		commands.setEmotionState(emotion)
 
 	@publish_once("~available_emotion_gestures", msg.AvailableEmotionGestures)
 	def availableEmotionGestures():
