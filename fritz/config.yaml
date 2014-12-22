@@ -1,61 +1,60 @@
-neck1_controller:
+base_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: neck0_joint
+    joint_speed: 2.0
+    motor:
+        id: 0
+        init: 2048
+        min: 1
+        max: 4095
+base_right_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck1_joint
-    joint_speed: 0.2
+    joint_speed: 2.0
     motor:
-        id: 0
-        init: 0
-        min: 0
-        max: 0
-neck2_controller:
+        id: 1
+        init: 1722
+        min: 1331
+        max: 2113
+base_left_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck2_joint
-    joint_speed: 0.2
+    joint_speed: 2.0
     motor:
-        id: 0
-        init: 0
-        min: 0
-        max: 0
-neck3_controller:
+        id: 2
+        init: 2504
+        min: 2113
+        max: 2895
+neck_right_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck3_joint
-    joint_speed: 0.2
+    joint_speed: 2.0
     motor:
-        id: 0
-        init: 0
-        min: 0
-        max: 0
-neck4_controller:
+        id: 3
+        init: 3026
+        min: 2635
+        max: 3416
+neck_left_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck4_joint
-    joint_speed: 0.2
+    joint_speed: 2.0
     motor:
-        id: 0
-        init: 0
-        min: 0
-        max: 0
-neck5_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: neck5_joint
-    joint_speed: 0.2
-    motor:
-        id: 0
-        init: 0
-        min: 0
-        max: 0
-
+        id: 4
+        init: 2178
+        min: 1787
+        max: 2568

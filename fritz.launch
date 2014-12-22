@@ -8,36 +8,20 @@
             serial_ports:
                 pan_tilt_port:
                     port_name: "/dev-host/ttyUSB0"
-                    baud_rate: 117647
+                    baud_rate: 1000000
                     min_motor_id: 0
-                    max_motor_id: 5
+                    max_motor_id: 4
                     update_rate: 20
         </rosparam>
      </node>
-     <node name="neck1_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+     <node name="neck_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
           args="--manager=dxl_manager
                 --port pan_tilt_port
-                neck1_controller"
+                base_controller
+                base_right_controller
+                base_left_controller
+                neck_right_controller
+                neck_left_controller"
           output="screen"/>
-    <node name="neck2_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
-          args="--manager=dxl_manager
-                --port pan_tilt_port
-                neck2_controller"
-          output="screen"/>
-    <node name="neck3_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
-          args="--manager=dxl_manager
-                --port pan_tilt_port
-                neck3_controller"
-          output="screen"/>
-    <node name="neck4_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
-          args="--manager=dxl_manager
-                --port pan_tilt_port
-                neck4_controller"
-          output="screen"/>
-    <node name="neck5_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
-          args="--manager=dxl_manager
-                --port pan_tilt_port
-                neck5_controller"
-          output="screen"/> -->
     </group>
 </launch>
