@@ -31,5 +31,5 @@ try:
 	from .rosrig import init
 	node = rosrig.init()
 	CommandListener.register_cmd_source(node)
-except:
+except ImportError:
 	print('No ROS found')

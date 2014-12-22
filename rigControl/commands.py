@@ -2,6 +2,7 @@
 import bpy
 from  mathutils import Matrix
 from math import pi
+from collections import OrderedDict
 # System control and information commands ===========
 def getAPIVersion():
 	return 1
@@ -121,7 +122,7 @@ def getEyesData():
 
 
 def getFaceData():
-	shapekeys = {}
+	shapekeys = OrderedDict()
 	for shapekeyGroup in bpy.data.shape_keys:
 		if shapekeyGroup.name == 'Key.007':          # hardcoded to find the correct group
 			for kb in shapekeyGroup.key_blocks:
