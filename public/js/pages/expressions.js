@@ -111,13 +111,12 @@ RosUI.expressions = {
         var pitch = RosUI.ros.getMotorConfig("neck_pitch");
 
         $(element).crosshairsl($.extend({}, {
-            xmin: Math.floor(RosUI.utilities.radToDeg(yaw.min)),
-            xmax: Math.ceil(RosUI.utilities.radToDeg(yaw.max)),
-            xval: Math.round(RosUI.utilities.radToDeg(yaw.default)),
-            //Minus signs and min-max swapped to invert the y axis for pitch to point upwards.
-            ymin: Math.floor(RosUI.utilities.radToDeg(-pitch.max)),
-            ymax: Math.ceil(RosUI.utilities.radToDeg(-pitch.min)),
-            yval: Math.round(RosUI.utilities.radToDeg(-pitch.default)),
+            xmin: Math.floor(RosUI.utilities.radToDeg(-1.57)),
+            xmax: Math.ceil(RosUI.utilities.radToDeg(1.57)),
+            xval: Math.round(RosUI.utilities.radToDeg(0)),
+            ymin: Math.floor(RosUI.utilities.radToDeg(-0.6)),
+            ymax: Math.ceil(RosUI.utilities.radToDeg(0.6)),
+            yval: Math.round(RosUI.utilities.radToDeg(0)),
             change: function (e, ui) {
                 RosUI.api.pointHead({
                     yaw: RosUI.utilities.degToRad(ui.xval),

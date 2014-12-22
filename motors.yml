@@ -1,5 +1,5 @@
 - name: Neck 0
-  topic: base
+  topic: neck0
   labelleft: "Yaw"
   labelright: ""
   default: 0
@@ -7,7 +7,7 @@
   max: 3.14
 
 - name: Neck 1
-  topic: base_right
+  topic: neck1
   labelleft: "Right Base Hinge"
   labelright: ""
   default: 0
@@ -15,7 +15,7 @@
   max: 0.6
 
 - name: Neck 2
-  topic: base_left
+  topic: neck2
   labelleft: "Left Base Hinge"
   labelright: ""
   default: 0
@@ -23,7 +23,7 @@
   max: 0.6
 
 - name: Neck 3
-  topic: neck_right
+  topic: neck3
   labelleft: "Right Neck Hinge"
   labelright: ""
   default: 0
@@ -31,7 +31,7 @@
   max: 0.6
 
 - name: Neck 4
-  topic: neck_left
+  topic: neck4
   labelleft: "Left Neck Hinge"
   labelright: ""
   default: 0

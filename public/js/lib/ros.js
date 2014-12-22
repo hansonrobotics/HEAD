@@ -1,6 +1,6 @@
 RosUI.ros = {
     config: {
-        robotname: "arthur"
+        robotname: "fritz"
     },
     topics: {},
     init: function (success) {
@@ -73,7 +73,7 @@ RosUI.ros = {
             }),
             pointHeadTopic: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/point_head',
+                name: '/fritz/point_head',
                 messageType: 'basic_head_api/PointHead'
             }),
             face: new ROSLIB.Topic({
@@ -95,7 +95,34 @@ RosUI.ros = {
                 ros: RosUI.ros.ros,
                 name: '/cmd_animations',
                 messageType: 'std_msgs/String'
+            }),
+
+            neck0: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/fritz/base_controller/command',
+                messageType: 'std_msgs/Float64'
+            }),
+            neck1: new ROSLIB.Topic({
+              ros: RosUI.ros.ros,
+              name: '/fritz/base_right_controller/command',
+              messageType: 'std_msgs/Float64'
+            }),
+            neck2: new ROSLIB.Topic({
+              ros: RosUI.ros.ros,
+              name: '/fritz/base_left_controller/command',
+              messageType: 'std_msgs/Float64'
+            }),
+            neck3: new ROSLIB.Topic({
+              ros: RosUI.ros.ros,
+              name: '/fritz/neck_right_controller/command',
+              messageType: 'std_msgs/Float64'
+            }),
+            neck4: new ROSLIB.Topic({
+              ros: RosUI.ros.ros,
+              name: '/fritz/neck_left_controller/command',
+              messageType: 'std_msgs/Float64'
             })
+
         }
     },
     initServices: function () {
