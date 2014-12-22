@@ -2,17 +2,20 @@
 Cookbook
 ========
 A collection of recipies and HOWTO instructions for using this ROS node.
+Includes a casual demonstration of each published and subscribed topic.
 
 Before running, be sure to do the following steps:
 ```
 $ source /opt/ros/indigo/setup.bash
 $ cd your_catkin_ws
 $ git clone https://github.com/hansonrobotics/blender_api_msgs.git
+$ git clone https://github.com/hansonrobotics/pau2motors.git
 $ catkin build
 $ source devel/setup.bash
 ```
-The `blender_api_msgs` are used to define the messages that this node
-uses.
+The `blender_api_msgs` module defines the messages that this node uses.
+The `pau2motors` module defines the PAU messge used to publish the neck
+and eye positions.
 
 ##API Version
 In order to maintain compatibility, the node publishes a ROS version number:

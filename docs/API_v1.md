@@ -1,6 +1,9 @@
 Blender_API v1.0 (draft)
 ================
-The Blender_API is implemented in the `rigControl/commands.py` file.
+The Blender_API defines the Python interface to controlling the blender
+rig. The corresponding ROS node interface can be found in cookbook.md
+
+The API is implemented in the `rigControl/commands.py` file.
 
 ##Initializtion and Termination
 General status reporting.
@@ -36,7 +39,7 @@ such as speech, where a minuscule time delay can look unnatural.
 `isAlive()`
 
 Returns 0 if 3D environment is alive and ready to accept command, else
-returns the error code.	Should be called after `init()` to make sure
+returns the error code.  Should be called after `init()` to make sure
 that blender is properly operating, and that the 3D environment is ready
 to accept further commands.
 
@@ -105,7 +108,7 @@ for it.
 
 Returns 0 if success, else returns the error code.
 
----		
+---
 
 `availableGestures()`
 
@@ -151,8 +154,8 @@ XXX TODO Not implemented.
 ---
 `getGestureParams()`
 
----	
-		
+---
+
 ##Target Tracking and Speech
 Commands for tracking movements of the eyes, and lip-sync motions.
 
@@ -196,6 +199,4 @@ Returns 0 if success, else returns the error code.
 
 ---
 
-`saySpeech()` TBD	TBD
-		
-
+`saySpeech()` TBD TBD
