@@ -67,8 +67,8 @@ def getGestures():
 	return emotionGestures
 
 
-def setGesture(name, repeat, speed, magnitude):
-	bpy.evaAnimationManager.newGesture(name='GST-'+name, \
+def setGesture(name, repeat=1, speed=1, magnitude=0.5):
+	bpy.evaAnimationManager.newGesture(name, \
 		repeat=repeat, speed=speed, magnitude=magnitude)
 	return 0
 
