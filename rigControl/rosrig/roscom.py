@@ -3,8 +3,8 @@
 # are transmitted to blender using the CommandListener.
 #
 from .. import commands
+from math import radians,pi
 from ..CommandSource import CommandSource
-
 import imp
 imp.reload(commands)
 
@@ -14,7 +14,7 @@ from .helpers import soft_import
 rospy = soft_import('rospy')
 std_msgs = soft_import('std_msgs.msg')
 msg = soft_import('blender_api_msgs.msg')
-
+paumsg = soft_import('pau2motors.msg')
 # This is called when the CommandListener is started.
 def build():
 	if not rospy:
@@ -23,6 +23,10 @@ def build():
 	elif not msg:
 		raise ImportError('Package blender_api_msg not found')
 		return None
+	elif not paumsg:
+		raise ImportError('Package pau2motors not found')
+		return None
+
 	return RosNode()
 
 # RosNode implements the virtual class CommandSource that blender
@@ -195,3 +199,27 @@ class CommandWrappers:
 		# Standard robotics (e.g. player/gazebo) uses x==forward, y==left.
 		flist = [-msg.y, msg.x, msg.z]
 		commands.setSecondaryTarget(flist)
+
+	# Publishes Pau messages
+	@publish_live("~get_pau", paumsg.pau)
+	def getPau():
+		msg = paumsg.pau()
+
+		head = commands.getHeadData()
+		msg.m_headRotation.x = head['x']
+		msg.m_headRotation.y = head['y']
+		msg.m_headRotation.z = head['z']
+		msg.m_headRotation.w = head['w']
+
+		eyes = commands.getEyesData()
+		msg.m_eyeGazeLeftPitch = eyes['l']['p']
+		msg.m_eyeGazeLeftYaw = eyes['l']['y']
+		msg.m_eyeGazeRightPitch = eyes['r']['p']
+		msg.m_eyeGazeRightYaw = eyes['r']['y']
+		shapekeys = commands.getFaceData()
+
+		msg.m_coeffs = shapekeys.values()
+		return msg
+
+
+

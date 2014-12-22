@@ -1,7 +1,7 @@
 # Implements the commands defined by the public API
-
 import bpy
-
+from  mathutils import Matrix
+from math import pi
 # System control and information commands ===========
 def getAPIVersion():
 	return 1
@@ -94,16 +94,30 @@ def getGestureParams():
 			'breathIntensity': round(eva.breathIntensity, 3)}
 
 
-# ========== info dump for ROS, to be invoked automatically with Blender in the future
+# ========== info dump for ROS, Should return non-blender data structures
+
+# Gets Head rotation quaternion in XYZ formot in blender independamt data structure.
+# Pitch: X (positive down, negative up)?
+# Yaw: Z (negative right to positive left)
+
 def getHeadData():
 	bones = bpy.evaAnimationManager.deformObj.pose.bones
-	return bones['head'].matrix
+	q = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
+	return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
 
+# Gets Eye rotation angles:
+# Pitch: down(negative) to up(positive)
+# Yaw: left (negative) to right(positive)
 
 def getEyesData():
 	bones = bpy.evaAnimationManager.deformObj.pose.bones
-	both = [bones['eye.L'].matrix.to_euler(), bones['eye.R'].matrix.to_euler()]
-	return both
+	leye = bones['eye.L'].matrix.to_euler()
+	reye = bones['eye.R'].matrix.to_euler()
+	leye_p = leye.x
+	leye_y = pi - leye.z if leye.z >= 0 else -(pi+leye.z)
+	reye_p = reye.x
+	reye_y = pi - reye.z if reye.z >= 0 else -(pi+reye.z)
+	return {'l':{'p':leye_p,'y':leye_y},'r':{'p':reye_p,'y':reye_y}}
 
 
 def getFaceData():
