@@ -1,5 +1,8 @@
 # This module sets up the user interface in Blender that
-# is used to manage the rigControl
+# is used to manage the rigControl.  That is, when various
+# entries are clicked on the blender emotion/gesture selection
+# panel, they are wired into here (BLRigControl), which then
+# just turns around and calls methods from commands.py.
 
 import bpy
 
@@ -52,7 +55,7 @@ class BLRigControl(bpy.types.Panel):
 					row = col.row(align=True)
 
 				# row.operator("eva.gestures", text=action.name[4:]).evaAction = action.name
-				row.operator('eva.debug', text=action.name[4:]).action = 'commands.setGesture("'+ action.name +'")'
+				row.operator('eva.debug', text=action.name[4:]).action = 'commands.setGesture("'+ action.name[4:] +'")'
 
 
 		###  Emotions  ###

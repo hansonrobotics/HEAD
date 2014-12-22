@@ -68,7 +68,7 @@ def getGestures():
 
 
 def setGesture(name, repeat=1, speed=1, magnitude=0.5):
-	bpy.evaAnimationManager.newGesture(name, \
+	bpy.evaAnimationManager.newGesture(name='GST-'+name, \
 		repeat=repeat, speed=speed, magnitude=magnitude)
 	return 0
 
