@@ -4,7 +4,7 @@ base_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck0_joint
-    joint_speed: 2.0
+    joint_speed: 8.0
     motor:
         id: 0
         init: 2048
@@ -16,7 +16,7 @@ base_right_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck1_joint
-    joint_speed: 2.0
+    joint_speed: 4.0
     motor:
         id: 1
         init: 1722
@@ -28,7 +28,7 @@ base_left_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck2_joint
-    joint_speed: 2.0
+    joint_speed: 4.0
     motor:
         id: 2
         init: 2504
@@ -40,7 +40,7 @@ neck_right_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck3_joint
-    joint_speed: 2.0
+    joint_speed: 4.0
     motor:
         id: 3
         init: 3026
@@ -52,9 +52,231 @@ neck_left_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck4_joint
-    joint_speed: 2.0
+    joint_speed: 4.0
     motor:
         id: 4
         init: 2178
         min: 1787
         max: 2568
+
+#Pau2Motors config
+pau2motors:
+    topics:
+        cmd_neck_pau: neck0;neck1;neck2;neck3;neck4
+        cmd_eyes_pau: eyes_pitch;leye_yaw;reye_yaw;top-lid-r;bottom-lid-r;top-lid-l;bottom-lid-l
+    motors:
+
+      # --Eyes--
+
+      eyes_pitch:
+        binding:
+          parser:
+            name: getproperty
+            property: m_eyeGazeLeftPitch
+          function:
+            - name: linear
+              min: 0.133
+              max: -0.133
+          hardware:
+            name: pololu
+            topic: pololu_servo/cmd_pololu
+            id: 9
+            speed: 200
+            acceleration: 100
+        min: -0.7
+        max: 0.7
+
+      reye_yaw:
+        binding:
+          parser:
+            name: getproperty
+            property: m_eyeGazeRightYaw
+          function:
+            - name: linear
+              min: 0.133
+              max: -0.133
+          hardware:
+            name: pololu
+            topic: pololu_servo/cmd_pololu
+            id: 10
+            speed: 200
+            acceleration: 100
+        min: -0.45
+        max: 0.2
+
+      leye_yaw:
+        binding:
+          parser:
+            name: getproperty
+            property: m_eyeGazeLeftYaw
+          function:
+            - name: linear
+              min: 0.133
+              max: -0.133
+          hardware:
+            name: pololu
+            topic: pololu_servo/cmd_pololu
+            id: 11
+            speed: 200
+            acceleration: 100
+        min: -0.1
+        max: 0.5
+
+      top-lid-r:
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: eye-blink.UP.R
+          function:
+            - name: linear
+              min: 1.4
+              max: -0.4
+          hardware:
+            name: pololu
+            topic: pololu_servo/cmd_pololu
+            id: 12
+            speed: 200
+            acceleration: 100
+        min: -0.6
+        max: 0.9
+
+      bottom-lid-r:
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: eye-blink.LO.R
+          function:
+            - name: linear
+              min: -0.4
+              max: 1.4
+          hardware:
+            name: pololu
+            topic: pololu_servo/cmd_pololu
+            id: 13
+            speed: 200
+            acceleration: 100
+        min: -0.8
+        max: 0.7
+
+      top-lid-l:
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: eye-blink.UP.L
+          function:
+            - name: linear
+              min: -0.4
+              max: 1.4
+          hardware:
+            name: pololu
+            topic: pololu_servo/cmd_pololu
+            id: 14
+            speed: 200
+            acceleration: 100
+        min: -0.8
+        max: 0.7
+
+      bottom-lid-l:
+        binding:
+          parser:
+            name: fsshapekey
+            shapekey: eye-blink.LO.L
+          function:
+            - name: linear
+              min: 1.4
+              max: -0.4
+          hardware:
+            name: pololu
+            topic: pololu_servo/cmd_pololu
+            id: 15
+            speed: 200
+            acceleration: 100
+        min: -0.6
+        max: 1.0
+
+    # ---Neck---
+
+      neck0:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: y
+            - name: linear
+              scale: 4
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: base_controller/command
+        min: -3.13
+        max: 3.14
+
+      neck1:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: z
+            - name: linear
+              scale: 2
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: base_right_controller/command
+        min: -0.6
+        max: 0.6
+
+      neck2:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: z
+            - name: linear
+              scale: -2
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: base_left_controller/command
+        min: -0.6
+        max: 0.6
+
+      neck3:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: z
+            - name: linear
+              scale: 2
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: neck_right_controller/command
+        min: -0.6
+        max: 0.6
+
+      neck4:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: z
+            - name: linear
+              scale: -2
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: neck_left_controller/command
+        min: -0.6
+        max: 0.6
