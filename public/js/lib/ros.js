@@ -1,0 +1,125 @@
+RosUI.ros = {
+    config: {
+        robotname: "arthur"
+    },
+    topics: {},
+    init: function (success) {
+        $.ajax({
+            url: "motors.yml",
+            dataType: "text",
+
+            success: function (data) {
+                RosUI.ros.config.motors = jsyaml.load(data);
+                RosUI.ros.connect(success);
+            }
+        });
+    },
+    connect: function (success) {
+        //Connect to rosbridge
+        RosUI.ros.ros = new ROSLIB.Ros({
+            url: RosUI.ros.rosUrl()
+        }).on("connection", function (e) {
+                // call the success callback
+                success();
+
+                RosUI.api.setDefaultMotorValues();
+            }).on('connection', function () {
+                $('#app-connecting').hide();
+                $('#app-pages').fadeIn();
+            }).on('close', function () {
+                $('#notifications .label').hide();
+                $('#app-connection-error').show();
+                $('#app-title').html('');
+            }).on('error', function (error) {
+                $('#notifications .label').hide();
+                $('#app-connection-error').show();
+                $('#app-title').html('');
+            });
+
+        RosUI.ros.initTopics();
+        RosUI.ros.initServices();
+    },
+    initTopics: function () {
+        RosUI.ros.topics = {
+            cmdBlender: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/cmd_blendermode',
+                messageType: 'std_msgs/String'
+            }),
+            cmdBllink: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/arthur/cmd_blink',
+                messageType: 'std_msgs/String'
+            }),
+            cmdTree: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/arthur/behavior_switch',
+                messageType: 'std_msgs/String'
+            }),
+            speech_topic: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/arthur/chatbot_speech',
+                messageType: 'chatbot/ChatMessage'
+            }),
+            chat_responses: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/arthur/chatbot_responses',
+                messageType: 'std_msgs/String'
+            }),
+            expression: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/arthur/make_coupled_face_expr',
+                messageType: 'basic_head_api/MakeCoupledFaceExpr'
+            }),
+            pointHeadTopic: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/arthur/point_head',
+                messageType: 'basic_head_api/PointHead'
+            }),
+            face: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/arthur/arthur_face/cmd_pololu',
+                messageType: 'ros_pololu_servo/servo_pololu'
+            }),
+            eyes: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/arthur/arthur_eyes/cmd_pololu',
+                messageType: 'ros_pololu_servo/servo_pololu'
+            }),
+            jaw: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/arthur/jaw_controller/command',
+                messageType: 'std_msgs/Float64'
+            }),
+            animations: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/cmd_animations',
+                messageType: 'std_msgs/String'
+            })
+        }
+    },
+    initServices: function () {
+        RosUI.ros.services = {
+            expressionList: new ROSLIB.Service({
+                ros: RosUI.ros.ros,
+                name: '/valid_coupled_face_exprs',
+                serviceType: 'basic_head_api/ValidCoupledFaceExprs'
+            })
+        };
+    },
+    rosUrl: function () {
+        if (window.location.protocol != "https:") {
+            return "ws://" + document.domain + ":9090";
+        } else {
+            return "wss://" + document.domain + ":9092";
+        }
+    },
+    getMotorConfig: function (name) {
+        var motorConf = RosUI.ros.config.motors;
+
+        for (var i = 0; i < motorConf.length; i++) {
+            if (motorConf[i].name == name)
+                return motorConf[i];
+        }
+    }
+};

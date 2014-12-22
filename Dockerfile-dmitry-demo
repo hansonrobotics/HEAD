@@ -1,4 +1,4 @@
-# Run with: docker run --privileged -v /dev:/dev-host -p 8000:8000 -p 9090:9090 -it gaboose/hanson-dmitry-demo
+# Run with: docker run --privileged -v /dev:/dev-host -p 8000:8000 -p 9090:9090 -it gaboose/hanson-arthur-demo
 
 FROM opencog/ros-indigo-dev
 MAINTAINER Gabrielius Mickevicius "gabrielius.m@gmail.com"
@@ -56,4 +56,4 @@ EXPOSE 9090
 #Webserver
 EXPOSE 8000
 
-ENTRYPOINT bash -l -c "cd /catkin_ws/src/docker-scripts; ./dmitry.sh; bash"
+ENTRYPOINT bash -l -c "cd /catkin_ws/src/docker-scripts; ./arthur.sh; bash"
