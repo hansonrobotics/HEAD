@@ -1,5 +1,7 @@
 # Functions that control autonomous behaviors in the Eva character
-# Breathing, blinking, eye saccades.
+# Breathing, blinking, eye saccades, head drift.
+#
+# All of the functions here take AnimationManager as the argument.
 
 from .helpers import *
 

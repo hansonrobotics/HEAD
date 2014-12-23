@@ -16,11 +16,12 @@
   in the blender panel, the code here causes the corresponding
   commands.py API call to be called.
 
-* actuators.py handles autonomous functions: breathing, blinking
-  eye saccades.  Does NOT use bpy.
+* animationManager.py: provides KeepAlive method, and meths to start
+  an emotion or a gesture.  Uses bpy, accesses bones....
 
-* animationManager.py
-  uses bpy, accesses bones....
+* actuators.py: algorithmic scripted behaviors for a handful of
+  autonomous functions: breathing, blinking, eye saccades, head drift.
+  Does NOT use bpy directly, uses AnimationManager.
 
 * blenderPlayback.py ... per-frame service
   uses bpy
