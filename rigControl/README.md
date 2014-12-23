@@ -1,11 +1,11 @@
 # Implementation Internals
 The main user interface is implemented in the `commands.py` file, and
-is documented in the [../docs/API_v1.md] file.  See also the ROS HOWTO
-tutorial in [../docs/cookbook.md].  What follows below is documentation
-for the internal implementation.  It is not meant to be accessed
-directly by users.
+is documented in the [../docs/API_v1.md](../docs/API_v1.md) file.  See
+also the ROS HOWTO tutorial in [../docs/cookbook.md](../docs/cookbook.md).
+What follows below is documentation for the internal implementation.
+It is not meant to be accessed directly by users.
 
-# File contents
+## File contents
 
 * commands.py: Defines the formal, external public API.  No other
   files define the API, asside from CommandListener, which handles
@@ -36,7 +36,7 @@ directly by users.
 * blendedNum.py: Implements a numeric object that allow blending and
   smoothing of values
 
-#Actions
+##Actions
 Rig modifications are implemented as actions. These are not meant to be
 invoked manually; use teh commands.py interface for that. The actions
 constitute the lowest-level interace between blender and the python
@@ -54,14 +54,14 @@ There are several kinds of actions:
 * Other Gestures - some other actions defined but not yet used with
   API yet. Like LipSync actions.
 
-#Rig Architecture
+##Rig Architecture
 
 The Eva rig contains two separate armatures; "deform" and "control". The
 "deform" armature is to be used by the animator when creating poses and
 actions. The "control" armature contains the automated controls which
 are not manually animated.
 
-##Deform armature
+###Deform armature
 
 Most of the controls on the deform armature drive shape keys on the Eva
 mesh. These controls are supposed to directly relate to the motors in
@@ -88,7 +88,7 @@ The deformation bones are DEF_neck, DEF_head, DEF_jaw, eye.L and eye.R.
 These bones provide rotational values to the robot and are not to be
 manipulated by the animator.
 
-##Control armature
+###Control armature
 
 This contains the head_target, eye_target and the emotion controllers.
 The emotion controllers drive action constraints on the controllers in
