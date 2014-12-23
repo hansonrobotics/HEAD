@@ -28,3 +28,21 @@
 
 * blendedNum.py: Implements a numeric object that allow blending and
   smoothing of values
+
+#Actions
+Rig modifications are implemented as actions. These are not meant to be
+invoked manually; use teh commands.py interface for that. The actions 
+constitute the lowest-level interace between blender and the python
+code in this directory.
+
+There are several kinds of actions:
+
+* Cycle actions (prefix: CYC) - breathing, normal and sleeping
+  actions. Used to for keep-alive movement.
+* Emotion actions (prefix: EMO) - Emotion actions consisting of about
+  100 frames each, which represent verious emotional expressions. Emotion
+  actions are controlled by drivers associated with bones.
+* Gesture actions (prefix: GST) - Gestures that can be called from API
+  and applied over the CYC and EMO actions.
+* Other Gestures - some other actions defined but not yet used with
+  API yet. Like LipSync actions.
