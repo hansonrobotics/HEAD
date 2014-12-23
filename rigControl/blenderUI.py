@@ -93,14 +93,14 @@ class BLRigControl(bpy.types.Panel):
 		row.prop(context.scene, 'evaFollowMouse', text='Follow Mouse')
 
 		col = layout.column(align = True)
-		col.operator('eva.tracking', text='Up').evaTrack = [0, 0, 0.1]
+		col.operator('eva.debug', text='Up').action = 'commands.setPrimaryTarget([0, 100, 100])'
 		row = col.row(align=True)
-		row.operator('eva.tracking', text='Left').evaTrack = [0.2, 0, 0]
-		row.operator('eva.tracking', text='Centre').evaTrack = [0, 0, 0]
-		row.operator('eva.tracking', text='Right').evaTrack = [-0.2, 0, 0]
-		col.operator('eva.tracking', text='Down').evaTrack = [0, 0, -0.1]
+		row.operator('eva.debug', text='Left').action = 'commands.setPrimaryTarget([100, 100, 0])'
+		row.operator('eva.debug', text='Centre').action = 'commands.setPrimaryTarget([0, 100, 0])'
+		row.operator('eva.debug', text='Right').action = 'commands.setPrimaryTarget([-100, 100, 0])'
+		col.operator('eva.debug', text='Down').action = 'commands.setPrimaryTarget([0, 100, -100])'
 
-
+		
 		row = layout.row()
 		eva = bpy.evaAnimationManager
 		bones = eva.deformObj.pose.bones

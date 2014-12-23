@@ -74,11 +74,13 @@ def setGesture(name, repeat=1, speed=1, magnitude=0.5):
 	return 0
 
 def setPrimaryTarget(loc):
-	bpy.evaAnimationManager.setPrimaryTarget(loc)
+	eva = bpy.evaAnimationManager
+	eva.setTarget(eva.primaryHeadTargetLoc, eva.primaryEyeTargetLoc, loc)
 	return 0
 
 def setSecondaryTarget(loc):
-	bpy.evaAnimationManager.setSecondaryTarget(loc)
+	eva = bpy.evaAnimationManager
+	eva.setTarget(eva.secondaryHeadTargetLoc, eva.secondaryEyeTargetLoc, loc)
 	return 0
 
 def engageTarget():

@@ -32,24 +32,6 @@ class EvaDebug(bpy.types.Operator):
 
 
 
-class EvaTracking(bpy.types.Operator):
-	"""Eva Tracking Control"""
-	bl_idname = "eva.tracking"
-	bl_label = "Eva Tracking"
-
-	evaTrack = bpy.props.FloatVectorProperty()
-
-	def execute(self, context):
-		# add to animationManager
-		bpy.evaAnimationManager.setPrimaryTarget(list(self.evaTrack))
-		return {'FINISHED'} 
-
-	@classmethod
-	def poll(cls, context):
-		return bpy.context.scene['animationPlaybackActive'] and not bpy.context.scene['evaFollowMouse']
-
-
-
 class BLPlayback(bpy.types.Operator):
 	"""Playback Control"""
 	bl_label = "Start Animation"
@@ -188,13 +170,11 @@ class BLPlayback(bpy.types.Operator):
 
 def register():
 	bpy.utils.register_class(BLPlayback)
-	bpy.utils.register_class(EvaTracking)
 	bpy.utils.register_class(EvaDebug)
 
 
 def unregister():
 	bpy.utils.unregister_class(BLPlayback)
-	bpy.utils.unregister_class(EvaTracking)
 	bpy.utils.unregister_class(EvaDebug)
 
 
