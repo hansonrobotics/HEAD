@@ -158,30 +158,23 @@ class AnimationManager():
 					self.emotionsList.append(emotion)
 
 
-	def setPrimaryTarget(self, loc):
+	def setTarget(self, head, eye, loc):
 		'''Set the target used by eye and face tracking '''
+		# convert to CM
+		locBU = CM2BU(loc)
+
+		# adjust for world offset. Magic number incoming...
+		locBU[1] -= 0.8
+
 		# compute distance from previous eye position
-		distance = computeDistance(loc, self.primaryEyeTargetLoc.current)
+		distance = computeDistance(locBU, eye.current)
 
 		if distance > 0.15:
 			if self.randomFrequency('blink', 20):
 				self.newGesture('GST-blink-micro')
 
-		self.primaryHeadTargetLoc.target = loc
-		self.primaryEyeTargetLoc.target = loc
-
-
-	def setSecondaryTarget(self, loc):
-		'''Set the target used by eye and face tracking '''
-		# compute distance from previous eye position
-		distance = computeDistance(loc, self.secondaryEyeTargetLoc.current)
-
-		if distance > 0.15:
-			if self.randomFrequency('blink', 20):
-				self.newGesture('GST-blink-micro')
-
-		self.secondaryHeadTargetLoc.target = loc
-		self.secondaryEyeTargetLoc.target = loc
+		head.target = locBU
+		eye.target = locBU
 
 
 	def terminate(self):

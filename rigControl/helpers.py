@@ -61,6 +61,17 @@ def randomSelect(probs):
 	return index - 1
 
 
+def CM2BU(cm):
+	# converts input (assuming centimeters) to Blender Unit:
+	SCALE = 50        # arbitrary set based on realworld size of Eva
+	if type(cm) is list or type(cm) is tuple:
+		bu = [i/SCALE for i in cm]
+	else:
+		bu = cm/SCALE
+	print(cm, bu)
+	return bu
+
+
 
 from mathutils import Matrix
 
