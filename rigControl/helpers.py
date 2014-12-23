@@ -68,7 +68,6 @@ def CM2BU(cm):
 		bu = [i/SCALE for i in cm]
 	else:
 		bu = cm/SCALE
-	print(cm, bu)
 	return bu
 
 
