@@ -160,15 +160,37 @@ class AnimationManager():
 
 	def setTarget(self, head, eye, loc):
 		'''Set the target used by eye and face tracking '''
-		# convert to CM
+
+		# Prevent crazy values, e.g. looking at inside of skull.
+		# The look-at target must be at least 10 centimeters away.
+		# This is an error condition that should never happen, but
+		# just in case it does, we don't want the rig to go berzerk.
+		# (Right now, the head-drift becomes very large if this
+		# distance is under 15 centimeters.)
+		dist = computeDistance(loc, [0,0,0])
+		mindist = 10.0
+		if dist < mindist :
+			if dist < 1.0:
+				# If totally crazy, look straight ahead.
+				# Should probably animate some puzzled wtf expression,
+				# just in case this happens (and it never should ...)
+				loc = [0.0, 30.0, 0.0]
+			else:
+				# Else try to look at approximately correct location
+				dist = mindist / dist
+				loc = [loc[0]*dist, loc[1]*dist, loc[2]*dist] 
+
+		# Convert from centimeters to 'blender-units'
 		locBU = CM2BU(loc)
 
-		# adjust for world offset. Magic number incoming...
+		# Adjust for world offset. Magic number incoming...
 		locBU[1] -= 0.8
 
-		# compute distance from previous eye position
+		# Compute distance from previous eye position
 		distance = computeDistance(locBU, eye.current)
 
+		# Behavior: if the point being looked at changed
+		# significantly, then microlblink.
 		if distance > 0.15:
 			if self.randomFrequency('blink', 20):
 				self.newGesture('GST-blink-micro')

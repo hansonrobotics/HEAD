@@ -169,8 +169,9 @@ rostopic pub --once /blender_api/set_gesture blender_api_msgs/SetGesture '{name:
 
 ##Eye Tracking
 The coordinate system used is head-relative, in 'engineering' coordinates:
-'x' is forward, 'y' to the left, and 'z' up.
-Coordinate system
+'x' is forward, 'y' to the left, and 'z' up.  Distances are measured in meters.
+Origin of the coordinate system is somewhere (where?) in the middle of the
+head.
 ```
 rostopic pub --once /blender_api/set_primary_target blender_api_msgs/Target '{x: 2, y: 0 , z: 0}'
 ```

@@ -77,7 +77,7 @@ class BLCommandListener(bpy.types.Operator):
 		else:
 			print('no timer')
 
-		for src in cmd_sources:
+		for src in self.cmd_sources:
 			src.drop()
 		...
 		bpy.context.scene['commandListenerActive'] = False

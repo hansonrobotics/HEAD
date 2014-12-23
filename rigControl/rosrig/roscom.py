@@ -15,6 +15,7 @@ rospy = soft_import('rospy')
 std_msgs = soft_import('std_msgs.msg')
 msg = soft_import('blender_api_msgs.msg')
 paumsg = soft_import('pau2motors.msg')
+
 # This is called when the CommandListener is started.
 def build():
 	if not rospy:
@@ -186,19 +187,12 @@ class CommandWrappers:
 			print('Error: unknown gesture:', msg.name);
 
 
+	# Location that Eva will look at.
 	@subscribe("~set_primary_target", msg.Target)
 	def setPrimaryTarget(msg):
-		# Eva uses y==forward x==right
-		# Standard robotics (e.g. player/gazebo) uses x==forward, y==left.
-		flist = [-msg.y, msg.x, msg.z]
+		flist = [msg.x, msg.y, msg.z]
 		commands.setPrimaryTarget(flist)
 
-	@subscribe("~set_secondary_target", msg.Target)
-	def setSecondaryTarget(msg):
-		# Eva uses y==forward x==right
-		# Standard robotics (e.g. player/gazebo) uses x==forward, y==left.
-		flist = [-msg.y, msg.x, msg.z]
-		commands.setSecondaryTarget(flist)
 
 	# Publishes Pau messages
 	@publish_live("~get_pau", paumsg.pau)

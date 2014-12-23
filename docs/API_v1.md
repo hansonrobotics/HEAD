@@ -164,7 +164,12 @@ Commands for tracking movements of the eyes, and lip-sync motions.
 
 `setPrimaryTarget(“id” = int, “location” = vec3, “rotation” = vec3, “scale” = vec3, “tracking” = 0.7)`
 
-Specify an target to face and look at.
+Specify a visual target to face and look at.
+
+The coordinate system used is head-relative, in 'engineering'
+coordinates: 'x' is forward, 'y' to the left, and 'z' up.
+Distances are measured in meters.  Origin of the coordinate
+system is somewhere (where?) in the middle of the head.
 
 * `id` is the identifier for each unique target. Useful for when the rig
   is interacting with multiple people.
