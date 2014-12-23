@@ -108,7 +108,8 @@ def getGestureParams():
 
 # ========== info dump for ROS, Should return non-blender data structures
 
-# Gets Head rotation quaternion in XYZ formot in blender independamt data structure.
+# Gets Head rotation quaternion in XYZ format in blender independamt
+# data structure.
 # Pitch: X (positive down, negative up)?
 # Yaw: Z (negative right to positive left)
 
@@ -135,7 +136,8 @@ def getEyesData():
 def getFaceData():
 	shapekeys = OrderedDict()
 	for shapekeyGroup in bpy.data.shape_keys:
-		if shapekeyGroup.name == 'Key.007':          # hardcoded to find the correct group
+		# Hardcoded to find the correct group
+		if shapekeyGroup.name == 'Key.007':
 			for kb in shapekeyGroup.key_blocks:
 				shapekeys[kb.name] = kb.value
 	return shapekeys
