@@ -190,11 +190,7 @@ class CommandWrappers:
 	# Location that Eva will look at.
 	@subscribe("~set_primary_target", msg.Target)
 	def setPrimaryTarget(msg):
-		# Eva uses y==forward x==right. Distances in centimeters from
-		# somewhere in the middle of the head.
-		# Standard robotics (e.g. player/gazebo) uses x==forward, y==left.
-		# and distances in meters.  So convert.
-		flist = [-100.0*msg.y, 100.0*msg.x, 100.0*msg.z]
+		flist = [msg.x, msg.y, msg.z]
 		commands.setPrimaryTarget(flist)
 
 
