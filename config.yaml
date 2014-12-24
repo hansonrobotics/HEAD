@@ -106,15 +106,6 @@
   max: 0.42545
   motorid: 11
 
-- name: Sneer_R
-  topic: face
-  labelleft: "Sneer_R"
-  labelright: ""
-  default: 0.00348
-  min: -1.56298
-  max: 0.0058
-  motorid: 12
-
 - name: Lip-Upper_L
   topic: face
   labelleft: "Lip-Upper_L"
@@ -160,15 +151,6 @@
   max: 1.16506
   motorid: 17
 
-- name: EE-oo_R
-  topic: face
-  labelleft: "EE-oo_R"
-  labelright: ""
-  default: -0.00348
-  min: -1.17201
-  max: 1.16506
-  motorid: 18
-
 - name: Lip-Upper_R
   topic: face
   labelleft: "Lip-Upper_R"
@@ -178,15 +160,6 @@
   max: 1.56298
   motorid: 19
 
-- name: Sneer_L
-  topic: face
-  labelleft: "Sneer_L"
-  labelright: ""
-  default: 1.16274
-  min: -0.45791
-  max: 1.51283
-  motorid: 20
-
 - name: Brow-Outer_R
   topic: face
   labelleft: "Brow-Outer_R"
@@ -194,16 +167,7 @@
   default: 0.42313
   min: -0.66889
   max: 1.16506
-  motorid: 21
-
-- name: EE-oo_L
-  topic: face
-  labelleft: "EE-oo_L"
-  labelright: ""
-  default: -0.00348
-  min: -1.17201
-  max: 1.16506
-  motorid: 22
+  motorid: 20
 
 - name: Brow-Inner_R
   topic: eyes
