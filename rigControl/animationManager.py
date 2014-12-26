@@ -161,7 +161,14 @@ class AnimationManager():
 	def setTarget(self, head, eye, loc):
 		'''Set the target used by eye and face tracking '''
 
-		# Prevent crazy values, e.g. looking at inside of skull.
+		# Prevent crazy values, e.g. looking at inside of skull, or
+		# lookings straight backwards.
+		#
+		# Negative y values will cause her neck to do a 'Linda Blair'
+		# in the Exorcist.
+		if loc[1] < 0.0:
+			loc[1] = 0.0
+
 		# The look-at target must be at least 10 centimeters away.
 		# This is an error condition that should never happen, but
 		# just in case it does, we don't want the rig to go berzerk.
