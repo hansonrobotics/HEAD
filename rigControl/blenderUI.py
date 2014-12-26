@@ -92,13 +92,15 @@ class BLRigControl(bpy.types.Panel):
 		row.active = runningAnimation
 		row.prop(context.scene, 'evaFollowMouse', text='Follow Mouse')
 
+		# Warning: X and Y Axis are flipped to accomodate Command Lisenter
 		col = layout.column(align = True)
-		col.operator('eva.debug', text='Up').action = 'commands.setPrimaryTarget([0, 1, 1])'
+		col.operator('eva.debug', text='Up').action = 'commands.setPrimaryTarget([1, 0, 1])'
 		row = col.row(align=True)
-		row.operator('eva.debug', text='Left').action = 'commands.setPrimaryTarget([1, 1, 0])'
-		row.operator('eva.debug', text='Centre').action = 'commands.setPrimaryTarget([0, 1, 0])'
-		row.operator('eva.debug', text='Right').action = 'commands.setPrimaryTarget([-1, 1, 0])'
-		col.operator('eva.debug', text='Down').action = 'commands.setPrimaryTarget([0, 1, -1])'
+		row.operator('eva.debug', text='Left').action = 'commands.setPrimaryTarget([1, -1, 0])'
+		row.operator('eva.debug', text='Centre').action = 'commands.setPrimaryTarget([1, 0,0])'
+		row.operator('eva.debug', text='Right').action = 'commands.setPrimaryTarget([1, 1, 0])'
+		col.operator('eva.debug', text='Down').action = 'commands.setPrimaryTarget([1, 0, -1])'
+		col.operator('eva.debug', text='Nil').action = 'commands.setPrimaryTarget([0, 0, 0])'
 
 		
 		row = layout.row()

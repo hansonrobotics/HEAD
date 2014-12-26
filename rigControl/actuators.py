@@ -52,9 +52,9 @@ def eyeSaccades(self, eyeWanderAbs):
 def headDrift(self):
 	''' applies random head drift '''
 	loc = [0,0,0]
-	loc[0] = random.gauss(self.primaryHeadTargetLoc.target[0], 0.005)
-	loc[1] = random.gauss(self.primaryHeadTargetLoc.target[1], 0.005)
-	loc[2] = random.gauss(self.primaryHeadTargetLoc.target[2], 0.005)
+	loc[0] = random.gauss(self.primaryHeadTargetLoc.target[0], self.primaryHeadTargetLoc.target[0]/100)
+	loc[1] = random.gauss(self.primaryHeadTargetLoc.target[1], self.primaryHeadTargetLoc.target[1]/100)
+	loc[2] = random.gauss(self.primaryHeadTargetLoc.target[2], self.primaryHeadTargetLoc.target[2]/100)
 	self.primaryHeadTargetLoc.target = loc
 
 

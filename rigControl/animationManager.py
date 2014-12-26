@@ -191,7 +191,7 @@ class AnimationManager():
 		locBU = CM2BU(loc)
 
 		# Adjust for world offset. Magic number incoming...
-		locBU[1] -= 0.8
+		locBU[1] -= (1.2)
 
 		# Compute distance from previous eye position
 		distance = computeDistance(locBU, eye.current)
