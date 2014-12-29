@@ -8,8 +8,8 @@ class Blinker:
     Log blink-less motor commands of the eye lids so they can be replayed when
     the blink is over.
     """
-    if cmd.id in self.names2ids.values():
-      self.logged_cmds[cmd.id] = cmd
+    if cmd.joint_name in self.names2ids.values():
+      self.logged_cmds[cmd.joint_name] = cmd
 
   def new_msgs(self, intensity=1):
     """
@@ -25,7 +25,7 @@ class Blinker:
     return self.logged_cmds.values()
 
   def add_motor(self, motorname, frac_dist):
-    self.names2ids[motorname] = self.motor_yaml[motorname]["motorid"]
+    self.names2ids[motorname] = motorname
 
     self.motor_commanders.append(
       MotorCmder(

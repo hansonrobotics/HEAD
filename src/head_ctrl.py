@@ -4,11 +4,12 @@ import yaml
 import rospy
 from collections import OrderedDict
 import FaceExpr
-from ros_pololu_servo.msg import servo_pololu
+from ros_pololu_servo.msg import MotorCommand
 from basic_head_api.srv import *
 from basic_head_api.msg import *
 from pau2motors.msg import pau
 from geometry_msgs.msg import Quaternion
+from pi_face_tracker.msg import Faces
 import Utils
 from Blinker import Blinker
 from Blinker import RandomTimer
@@ -93,21 +94,16 @@ class SpecificRobotCtrl:
     rospy.loginfo("Face request: %s of %s for %s", intensity, exprname, self.robotname)
     for cmd in self.faces[exprname].new_msgs(intensity):
       self.blinker.log(copy.deepcopy(cmd))
-      pubid = cmd.id // 24
-      cmd.id = cmd.id % 24
+      pubid = 0
       self.publishers[pubid].publish(cmd)
 
   def blink(self):
     def close_lids():
       for cmd in self.blinker.new_msgs(1.0):
-        pubid = cmd.id // 24
-        cmd.id = cmd.id % 24
-        self.publishers[pubid].publish(cmd)
+        self.publishers[0].publish(cmd)
     def open_lids():
       for cmd in self.blinker.reset_msgs():
-        pubid = cmd.id // 24
-        cmd.id = cmd.id % 24
-        self.publishers[pubid].publish(cmd)
+        self.publishers[0].publish(cmd)
     close_lids()
     Timer(0.1, open_lids).start()
     
@@ -182,8 +178,8 @@ class HeadCtrl:
 
     # Topics and services for robot-specific motor-coupled expressions.
     self.pub_pololu = [None,None];
-    self.pub_pololu[0] = rospy.Publisher("arthur_face/cmd_pololu", servo_pololu, queue_size=30)
-    self.pub_pololu[1] = rospy.Publisher("arthur_eyes/cmd_pololu", servo_pololu, queue_size=30)
+    self.pub_pololu[0] = rospy.Publisher("arthur_face/cmd_pololu", MotorCommand, queue_size=30)
+    self.pub_pololu[1] = rospy.Publisher("arthur_eyes/cmd_pololu", MotorCommand, queue_size=30)
     rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
     rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
     rospy.Subscriber("cmd_blink", String, self.blink_request)

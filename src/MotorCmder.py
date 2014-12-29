@@ -1,17 +1,17 @@
-from ros_pololu_servo.msg import servo_pololu
+from ros_pololu_servo.msg import MotorCommand
 
 class MotorCmder:
   """Represents a partially defined motor command. Builds a ROS msg when given an angle."""
 
   def msg_angle(self, angle=None):
     """Builds a message given the target angle."""
-    msg = servo_pololu()
-    msg.id = self.motor_entry['motorid']
-    msg.angle = self._saturatedAngle(angle or self.target)
+    msg = MotorCommand()
+    msg.joint_name = self.motor_entry['name']
+    msg.position = self._saturatedAngle(angle or self.target)
     # Default values are set here, if speed or acceleration are not found in
     # the motor entry.
-    msg.speed = self.motor_entry.get('speed', 200)
-    msg.acceleration = self.motor_entry.get('acceleration', 10)
+    msg.speed = self.motor_entry.get('speed', 200)/255.0
+    msg.acceleration = self.motor_entry.get('acceleration', 10)/255.0
     return msg
 
   def msg_intensity(self, intensity=1):
