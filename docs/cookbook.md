@@ -4,6 +4,8 @@ Cookbook
 A collection of recipies and HOWTO instructions for using this ROS node.
 Includes a casual demonstration of each published and subscribed topic.
 
+Building
+========
 Before running, be sure to do the following steps:
 ```
 $ source /opt/ros/indigo/setup.bash
@@ -17,6 +19,43 @@ The `blender_api_msgs` module defines the messages that this node uses.
 The `pau2motors` module defines the PAU messge used to publish the neck
 and eye positions.
 
+Running
+=======
+Before starting the blender model, ROS, should be started:
+```
+roscore
+```
+
+There are two ways to start the blender model: with display, and without.
+With-display is useful, in order to see that the ROS messages are
+causing the correct responses. Without-display is better suited for a
+server application, where only the output PAU messages are required,
+for driving the motors.
+
+## With display
+Start by issueing
+```
+blender -y Eva269.blend
+```
+The command listener and the animation must be started manually, by
+clickingthe "Start Command Listerner" buton, followed by the "Start
+Animation" button.  Alternately, these can be autostarted:
+
+```
+blender -y Eva269.blend -P autostart.py
+```
+
+
+##Without display
+Without a display, there are no buttons to press.  Thus, the animations
+MUST be autostarted:
+```
+blender -y -b Eva269.blend -P autostart.py
+```
+
+
+ROS messages and responses
+==========================
 ##API Version
 In order to maintain compatibility, the node publishes a ROS version number:
 ```
