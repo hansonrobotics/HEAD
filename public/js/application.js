@@ -12,7 +12,7 @@ RosUI = {
                 RosUI.topics.cmdBlender.publish(blenderMessage);
 
                 blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
-                RosUI.topics.cmdBllink.publish(blenderMessage);
+                RosUI.topics.cmdBllink.publish(blinkMessage);
 
                 treeMessage = new ROSLIB.Message({data: 'btree_off'});
                 RosUI.topics.cmdTree.publish(treeMessage);

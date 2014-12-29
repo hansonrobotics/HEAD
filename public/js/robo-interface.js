@@ -73,12 +73,11 @@ var RoboInterface = {
             var cmd = new ROSLIB.Message({data: Math.min(Math.max(angle, confEntry.min), confEntry.max)});
         } else {
             var cmd = new ROSLIB.Message({
-                id: confEntry.motorid,
-                angle: Math.min(Math.max(angle, confEntry.min), confEntry.max),
-                speed: speed || confEntry.speed,
-                acceleration: acc || confEntry.acceleration
+                joint_name: confEntry.name,
+                position: Math.min(Math.max(angle, confEntry.min), confEntry.max),
+                speed: (speed/255 || confEntry.speed/255 || 100)/255,
+                acceleration: (acc || confEntry.acceleration || 50)/255
             });
-
         }
         topic.publish(cmd);
         //RoboInterface.motorCmdTopic.publish(cmd);
@@ -165,18 +164,18 @@ var RoboInterface = {
             RoboInterface.motorCmdTopic = new ROSLIB.Topic({
                 ros: ros,
                 name: '/arthur/pololu/cmd_pololu',
-                messageType: 'ros_pololu_servo/servo_pololu'
+                messageType: 'ros_pololu_servo/MotorCommand'
             });
             RoboInterface.motortopicParams = {
                 face: {
                     ros: ros,
                     name: '/arthur/arthur_face/cmd_pololu',
-                    messageType: 'ros_pololu_servo/servo_pololu'
+                    messageType: 'ros_pololu_servo/MotorCommand'
                 },
                 eyes: {
                     ros: ros,
                     name: '/arthur/arthur_eyes/cmd_pololu',
-                    messageType: 'ros_pololu_servo/servo_pololu'
+                    messageType: 'ros_pololu_servo/MotorCommand'
                 },
                 jaw: {
                     ros: ros,
