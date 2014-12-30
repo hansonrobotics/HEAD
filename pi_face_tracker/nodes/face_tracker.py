@@ -119,8 +119,6 @@ class FaceBox():
                 self.status = 'new'
             if self.skipped > self.min_age:
                 self.status = 'deleted'
-xxxxxxxxx
-        self.filter_3d_loc()
 
     def get_box(self):
         return [self.pt1,self.pt2]
@@ -137,6 +135,9 @@ xxxxxxxxx
             x,y,w,h = box
             self.pt1 = (x,y)
             self.pt2 = (x+w, y+h)
+            self.update_bounding_box()
+            self.filter_3d_loc()
+
 
     def update_box_elipse(self, elipse):
         self.track_box = elipse
@@ -144,6 +145,8 @@ xxxxxxxxx
             (roi_center, roi_size, roi_angle) = elipse
             self.pt1 = (int(roi_center[0] - roi_size[0]/2), int(roi_center[1] - roi_size[1]/2))
             self.pt2 = (int(roi_center[0] + roi_size[0]/2), int(roi_center[1] + roi_size[1]/2))
+            self.update_bounding_box()
+            self.filter_3d_loc()
 
     def is_trackable(self):
         if self.status in self.trackable_statuses:
@@ -156,8 +159,8 @@ xxxxxxxxx
             self.face_box()
         )
 
-    def update_bounding_box(self, pt1, pt2):
-        self.bounding_size = pt2[1] - pt1[1]
+    def update_bounding_box(self):
+        self.bounding_size = self.pt2[1] - self.pt1[1]
 
     def get_3d_point(self):
         # TODO will need to be updated:
@@ -292,11 +295,10 @@ class FacesRegistry():
 
                 # Oh, hey, we have seen this face!
                 else:
-                    self.faces[found].update_bounding_box(f[0], f[1])
-                    self.faces[found].filter_3d_point()
-xxxxxxxxx
-                    # Maybe need to call update_box() and
-                    # update_box_ellipse() ???
+                    fface = self.faces[found]
+                    fface.pt1 = f[0]
+                    fface.pt2 = f[1]
+                    fface.update_box(fface.face_box())
 
     # Processes faces statuses:
     # Calls new_face callback if new faces are added,
