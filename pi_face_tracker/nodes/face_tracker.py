@@ -80,10 +80,12 @@ class FaceBox():
         # The goal is to limit the jumpiness of the reported postion.
         # This does introduce some lag, but it shouldn't be more than
         # about 1-2 frames. A much much stronger filer is used for the
-        # z-location, as that one is much noisier.
+        # x-location (distance from camera), as that one is much noisier.
         # XXX To get fancy, this could be replaced by a Kalman filter.
-        self.xy_smooth_factor = 0.6
-        self.z_smooth_factor = 0.93
+        # XXX All this is really just a hack, simply because the 2D
+        # tracking just does not work very well ...
+        self.yz_smooth_factor = 0.65
+        self.x_smooth_factor = 0.98
         self.loc_3d = Point()
 
     def area(self):
@@ -189,15 +191,18 @@ class FaceBox():
     def filter_3d_point(self) :
         p = self.get_3d_point()
         if 1 < self.age:
-           pha = self.xy_smooth_factor
+           pha = self.yz_smooth_factor
+           bet = 1.0 - pha
+           p.y = pha * self.loc_3d.y + bet * p.y
+           p.z = pha * self.loc_3d.z + bet * p.z
+
+           # x (distance from camera) gets a much stronger filter,
+           # since its much noisier.
+           # rawx = p.x
+           pha = self.x_smooth_factor
            bet = 1.0 - pha
            p.x = pha * self.loc_3d.x + bet * p.x
-           p.y = pha * self.loc_3d.y + bet * p.y
-
-           # z gets a much stronger filter, since its noisier.
-           pha = self.z_smooth_factor
-           bet = 1.0 - pha
-           p.z = pha * self.loc_3d.z + bet * p.z
+           # rospy.logwarn("raw x=" + str(rawx) + " filtered x=" + str(p.x))
 
         self.loc_3d = p
 
