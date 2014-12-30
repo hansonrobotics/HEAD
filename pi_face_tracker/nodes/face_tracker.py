@@ -176,10 +176,12 @@ class FaceBox():
         p = Point()
         # same FOV for both, so calculate the relative distance of one pixel
         dp = 0.22 / float(self.bounding_size) # It should be same in both axis
-        rospy.logwarn(self.bounding_size)
+        # rospy.logwarn("bbox size=" + str(self.bounding_size))
+
+        # Y is to the left in camera image, Z is to top
         p.x = dp *  (240 / tan(fov_x/2.0))
-        p.y = dp * (320-(self.pt2[0]+self.pt1[0])/2) # Y is to the left in camera image
-        p.z = dp * (240-(self.pt2[1]+self.pt1[1])/2) # Z is to top
+        p.y = dp * (320-(self.pt2[0]+self.pt1[0])/2)
+        p.z = dp * (240-(self.pt2[1]+self.pt1[1])/2)
         return p
 
     # Smooth out the 3D location of the face, by using an
