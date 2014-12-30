@@ -44,7 +44,9 @@ from geometry_msgs.msg import Point
 from eva_behavior.msg import event
 import time
 
-''' Single face area class '''
+''' Class that trackes a single face. Both 2D and 3D tracking is
+perforrmed.  The 2D tracking is done in camera pixel coords, the
+3D position information is guesstimated from that.'''
 class FaceBox():
 
     #top left, and right bottom corner points given
@@ -56,7 +58,7 @@ class FaceBox():
 
         self.min_area = 0.3 #coeff of how much area of the detected box should overlap in order to make same judgement
         self.age = 0
-        self.skipped = 0 #frames that couldn't find the face
+        self.skipped = 0 # numer of frames that couldn't find the face
         self.valid = False
         # available
         self.status = "init"
@@ -72,6 +74,13 @@ class FaceBox():
         self.pyramid = None
         # size of the face to meassure realative distance. Face width is enough
         self.bounding_size = pt2[0] - pt1[0]
+
+        # Simple exponential decay filter to smoothed 3D location.
+        # The goal is to limit the jumpiness of the reported postion.
+        # This does intrdocue some lag, but it shouldn't be too bad.
+        # XXX To get fancy, this could be replaced by a Kalman filter.
+        self.smooth_factor = 0.6
+        self.3d_loc = Point()
 
     def area(self):
         return (self.pt2[0]-self.pt1[0])*(self.pt2[1]-self.pt1[1])
@@ -108,6 +117,8 @@ class FaceBox():
                 self.status = 'new'
             if self.skipped > self.min_age:
                 self.status = 'deleted'
+
+         self.filter_3d_point();
 
     def get_box(self):
         return [self.pt1,self.pt2]
@@ -163,6 +174,19 @@ class FaceBox():
         p.z = dp * (240-(self.pt2[1]+self.pt1[1])/2) # Z is to top
         return p
 
+	def filter_3d_point(self)
+        '''Smooth out the 3D location of the face, by using an
+        exponential filter.'''
+        p = self.get_3d_point();
+        if 1 < self.age:
+           p = smooth_factor * p + (1.0-smooth_factor) * self.3d_loc
+
+        self.3d_loc = p
+
+	def get_filtered_3d_point(self)
+        '''Get a smoothed, exponentially filtered version of the 3d
+        point.'''
+        return self.3d_loc
 
 
 
@@ -261,7 +285,7 @@ class FacesRegistry():
 
     # Processes faces statuses:
     # Calls new_face callback if new faces are added,
-    # Calls onExit when face
+    # Calls onExit when face is lost.
     def checkStatus(self, new_face = None, on_exit = None):
         for id in self.faces.keys():
             #check new
@@ -275,7 +299,7 @@ class FacesRegistry():
                     on_exit(f)
                 self._remove_entry(id)
 
-    #returns Face by id. If no id given returns oldest face in scene
+    # Returns Face by id. If no id given returns oldest face in scene
     def getFace(self, id=-1):
         if id < 0:
             for i in self.faces.keys():
