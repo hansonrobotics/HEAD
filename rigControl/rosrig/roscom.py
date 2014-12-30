@@ -187,12 +187,17 @@ class CommandWrappers:
 			print('Error: unknown gesture:', msg.name);
 
 
-	# Location that Eva will look at.
-	@subscribe("~set_primary_target", msg.Target)
-	def setPrimaryTarget(msg):
+	# Location that Eva will look at and face.
+	@subscribe("~set_face_target", msg.Target)
+	def setFaceTarget(msg):
 		flist = [msg.x, msg.y, msg.z]
-		commands.setPrimaryTarget(flist)
+		commands.setFaceTarget(flist)
 
+	# Location that Eva will look at (only).
+	@subscribe("~set_gaze_target", msg.Target)
+	def setGazeTarget(msg):
+		flist = [msg.x, msg.y, msg.z]
+		commands.setGazeTarget(flist)
 
 	# Publishes Pau messages
 	@publish_live("~get_pau", paumsg.pau)
