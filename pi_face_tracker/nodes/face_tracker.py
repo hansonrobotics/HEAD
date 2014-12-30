@@ -76,11 +76,16 @@ class FaceBox():
         # size of the face to meassure realative distance. Face width is enough
         self.bounding_size = pt2[0] - pt1[0]
 
-        # Simple exponential decay filter to smoothed 3D location.
+        # Simple exponential decay filter to smooth the 3D location.
         # The goal is to limit the jumpiness of the reported postion.
-        # This does intrdocue some lag, but it shouldn't be too bad.
+        # This does introduce some lag, but it shouldn't be more than
+        # about 1-2 frames. A much much stronger filer is used for the
+        # x-location (distance from camera), as that one is much noisier.
         # XXX To get fancy, this could be replaced by a Kalman filter.
-        self.smooth_factor = 0.6
+        # XXX All this is really just a hack, simply because the 2D
+        # tracking just does not work very well ...
+        self.yz_smooth_factor = 0.65
+        self.x_smooth_factor = 0.98
         self.loc_3d = Point()
 
     def area(self):
@@ -173,10 +178,12 @@ class FaceBox():
         p = Point()
         # same FOV for both, so calculate the relative distance of one pixel
         dp = 0.22 / float(self.bounding_size) # It should be same in both axis
-        rospy.logwarn(self.bounding_size)
+        # rospy.logwarn("bbox size=" + str(self.bounding_size))
+
+        # Y is to the left in camera image, Z is to top
         p.x = dp *  (240 / tan(fov_x/2.0))
-        p.y = dp * (320-(self.pt2[0]+self.pt1[0])/2) # Y is to the left in camera image
-        p.z = dp * (240-(self.pt2[1]+self.pt1[1])/2) # Z is to top
+        p.y = dp * (320-(self.pt2[0]+self.pt1[0])/2)
+        p.z = dp * (240-(self.pt2[1]+self.pt1[1])/2)
         return p
 
     # Smooth out the 3D location of the face, by using an
@@ -184,11 +191,18 @@ class FaceBox():
     def filter_3d_point(self) :
         p = self.get_3d_point()
         if 1 < self.age:
-           pha = self.smooth_factor
+           pha = self.yz_smooth_factor
            bet = 1.0 - pha
-           p.x = pha * p.x + bet * self.loc_3d.x
-           p.y = pha * p.y + bet * self.loc_3d.y
-           p.z = pha * p.z + bet * self.loc_3d.z
+           p.y = pha * self.loc_3d.y + bet * p.y
+           p.z = pha * self.loc_3d.z + bet * p.z
+
+           # x (distance from camera) gets a much stronger filter,
+           # since its much noisier.
+           # rawx = p.x
+           pha = self.x_smooth_factor
+           bet = 1.0 - pha
+           p.x = pha * self.loc_3d.x + bet * p.x
+           # rospy.logwarn("raw x=" + str(rawx) + " filtered x=" + str(p.x))
 
         self.loc_3d = p
 
