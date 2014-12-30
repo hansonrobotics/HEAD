@@ -56,6 +56,15 @@ roslaunch ros2opencv uvc_cam.launch device:=/dev/video1
 roslaunch pi_face_tracker face_tracker_uvc_cam.launch
 ```
 
+ROS Nodes
+=========
+
+## /faces3d
+Publishes list of human faces being tracked. Each is given an ID number,
+and a 3D coordinate.  The coordinate frame used is the usual ROS
+'engineering' frame: `x` is straight ahead, `y` is the the left, and `z`
+is up.  Units are in meters.
+
 
 TODO
 ====
