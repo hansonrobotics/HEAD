@@ -1,4 +1,5 @@
-# AnimationManager is the primary datastore for the Eva character
+# AnimationManager is the primary datastore for the various paramters
+# that define the Eva character.
 
 from . import actuators
 from .blendedNum import BlendedNum
@@ -18,16 +19,15 @@ class AnimationManager():
 	def __init__(self):
 		print('Starting AnimationManager singleton')
 
-		# gesture params
+		# Gesture params
 		self.gesturesList = []
 		self.emotionsList = []
 
-		# tracking param
+		# Head and Eye tracking parameters
 		self.headTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
-
 		self.eyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
 
-		# emotion params
+		# Autonomous (unconscious) behavior parameters
 		self.eyeDartRate = 0.0
 		self.eyeWander = 0.0
 		self.blinkRate = 0.0
@@ -35,11 +35,12 @@ class AnimationManager():
 		self.breathRate = 0.0
 		self.breathIntensity = 0.0
 
+		# Emotional parameters
 		self.swiftness = 1.0
 		self.shyness = 1.0
 		self.idle = 0.0
 
-		# internal vars
+		# Internal vars
 		self._time = 0
 		self.lastTriggered = {}
 
@@ -135,7 +136,7 @@ class AnimationManager():
 
 
 	def setEmotion(self, emotionDict):
-		'''Set the emotion param of the character'''
+		'''Set the emotional state of the character.'''
 		for emotionName, data in emotionDict.items():
 			try:
 				control = self.bones['EMO-'+emotionName]
@@ -156,8 +157,12 @@ class AnimationManager():
 					self.emotionsList.append(emotion)
 
 
-	def setTarget(self, head, eye, loc):
-		'''Set the target used by eye and face tracking '''
+	def coordConvert(self, loc, currbu):
+		'''Convert coordinates from the external coord system (meters) to
+		blender units.  This also clamps values to prevent completely
+		crazy look-at directions from happening.  Returns the look-at
+		point, in blender units.
+		'''
 
 		# Prevent crazy values, e.g. looking at inside of skull, or
 		# lookings straight backwards.
@@ -192,13 +197,20 @@ class AnimationManager():
 		locBU[1] -= (1.2)
 
 		# Compute distance from previous eye position
-		distance = computeDistance(locBU, eye.current)
+		distance = computeDistance(locBU, currbu)
 
 		# Behavior: if the point being looked at changed
 		# significantly, then microlblink.
 		if distance > 0.15:
 			if self.randomFrequency('blink', 20):
 				self.newGesture('GST-blink-micro')
+
+		return locBU
+
+	def setTarget(self, head, eye, loc):
+		'''Set the target used by eye and face tracking '''
+
+		locBU = self.coordConvert(loc, eye.current)
 
 		head.target = locBU
 		eye.target = locBU
