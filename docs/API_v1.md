@@ -161,8 +161,7 @@ Commands for tracking movements of the eyes, and lip-sync motions.
 
 ---
 
-
-`setFaceTarget(“location” = vec3, “scale” = vec3, “break_freq” = float, “rotation” = vec3)`
+`setFaceTarget(“location” = vec3, “scale” = vec3, “dart_rate” = float, “rotation” = vec3)`
 
 Specify a visual target to look at and face.
 
@@ -176,7 +175,7 @@ system is somewhere (where?) in the middle of the head.
 * `scale` is the size of the target. Affects how much the eyes drift
   around when examining a target.
 
-* `break_freq` is the frequency (how often) the eyes will break contact
+* `dart_rate` is the rate (how often) the eyes will break contact
   with the gaze target.
 
 * `rotation` is the rotation of the target, can affect head tilt when
@@ -185,7 +184,7 @@ system is somewhere (where?) in the middle of the head.
 Returns 0 if success, else returns the error code.
 
 ---
-`setGazeTarget(“location” = vec3, “scale” = vec3, “break_freq” = float)`
+`setGazeTarget(“location” = vec3, “scale” = vec3, “dart_rate” = float)`
 
 Specify a visual target to look at, using the eyes only, without turning
 the head.
@@ -195,7 +194,7 @@ the head.
 * `scale` is the size of the target. Affects how much the eyes drift
   around when examining a target.
 
-* `break_freq` is the frequency (how often) the eyes will break contact
+* `dart_rate` is the rate (how often) the eyes will break contact
   with the gaze target.
 
 

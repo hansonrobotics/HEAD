@@ -78,21 +78,15 @@ def setGesture(name, repeat=1, speed=1, magnitude=0.5):
 #  Distances are measured in meters.  Origin of the coordinate
 # system is somewhere (where?) in the middle of the head.
 
-def setPrimaryTarget(loc):
+def setFaceTarget(loc):
 	# Eva uses y==forward x==right. Distances in centimeters from
 	# somewhere in the middle of the head.
 	cmloc = [-100.0* loc[1], 100.0* loc[0], 100.0* loc[2]]
 	eva = bpy.evaAnimationManager
-	eva.setTarget(eva.primaryHeadTargetLoc, eva.primaryEyeTargetLoc, cmloc)
+	eva.setTarget(eva.headTargetLoc, eva.eyeTargetLoc, cmloc)
 	return 0
 
-def setSecondaryTarget(loc):
-	cmloc = [-100.0* loc[1], 100.0* loc[0], 100.0* loc[2]]
-	eva = bpy.evaAnimationManager
-	eva.setTarget(eva.secondaryHeadTargetLoc, eva.secondaryEyeTargetLoc, cmloc)
-	return 0
-
-def engageTarget():
+def setGazeTarget(loc):
 	return 0
 
 

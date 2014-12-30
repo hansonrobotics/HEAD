@@ -61,11 +61,11 @@ class BLPlayback(bpy.types.Operator):
 				normalX = (event.mouse_region_x - 500) /1000
 				normalY = (event.mouse_region_y - 500)/1000
 			
-				eyeLoc = eva.primaryEyeTargetLoc.target
+				eyeLoc = eva.eyeTargetLoc.target
 				eyeLoc[0] = -normalX * 0.6
 				eyeLoc[2] = normalY * 0.5
 
-				headLoc = eva.primaryHeadTargetLoc.target
+				headLoc = eva.headTargetLoc.target
 				headLoc[0] = -normalX * 0.2
 				headLoc[2] = normalY * 0.2
 
@@ -86,11 +86,11 @@ class BLPlayback(bpy.types.Operator):
 			headControl = eva.bones["head_target"]
 			eyeControl = eva.bones["eye_target"]
 
-			eva.primaryHeadTargetLoc.blend()
-			eva.primaryEyeTargetLoc.blend()
+			eva.headTargetLoc.blend()
+			eva.eyeTargetLoc.blend()
 
-			headControl.location = eva.primaryHeadTargetLoc.current
-			eyeControl.location = eva.primaryEyeTargetLoc.current
+			headControl.location = eva.headTargetLoc.current
+			eyeControl.location = eva.eyeTargetLoc.current
 			
 			# udpate emotions
 			for emotion in eva.emotionsList:

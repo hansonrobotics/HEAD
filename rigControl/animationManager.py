@@ -23,11 +23,9 @@ class AnimationManager():
 		self.emotionsList = []
 
 		# tracking param
-		self.primaryHeadTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
-		self.secondaryHeadTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
+		self.headTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
 
-		self.primaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
-		self.secondaryEyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
+		self.eyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
 
 		# emotion params
 		self.eyeDartRate = 0.0
@@ -69,7 +67,7 @@ class AnimationManager():
 		if True and self.randomFrequency('blink', self.blinkRate):
 			actuators.blink(self, self.blinkDuration)
 
-		if True and self.randomFrequency('primaryHeadTargetLoc', 1):
+		if True and self.randomFrequency('headTargetLoc', 1):
 			actuators.headDrift(self)
 
 		if True and self.randomFrequency('emotionJitter', 20):
