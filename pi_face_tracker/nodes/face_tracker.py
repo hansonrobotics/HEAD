@@ -81,7 +81,7 @@ class FaceBox():
         # This does intrdocue some lag, but it shouldn't be too bad.
         # XXX To get fancy, this could be replaced by a Kalman filter.
         self.smooth_factor = 0.6
-        self.3d_loc = Point()
+        self.loc_3d = Point()
 
     def area(self):
         return (self.pt2[0]-self.pt1[0])*(self.pt2[1]-self.pt1[1])
@@ -136,7 +136,7 @@ class FaceBox():
             self.pt1 = (x,y)
             self.pt2 = (x+w, y+h)
             self.update_bounding_box()
-            self.filter_3d_loc()
+            self.filter_loc_3d()
 
 
     def update_box_elipse(self, elipse):
@@ -146,7 +146,7 @@ class FaceBox():
             self.pt1 = (int(roi_center[0] - roi_size[0]/2), int(roi_center[1] - roi_size[1]/2))
             self.pt2 = (int(roi_center[0] + roi_size[0]/2), int(roi_center[1] + roi_size[1]/2))
             self.update_bounding_box()
-            self.filter_3d_loc()
+            self.filter_loc_3d()
 
     def is_trackable(self):
         if self.status in self.trackable_statuses:
@@ -184,14 +184,14 @@ class FaceBox():
         exponential filter.'''
         p = self.get_3d_point();
         if 1 < self.age:
-           p = smooth_factor * p + (1.0-smooth_factor) * self.3d_loc
+           p = smooth_factor * p + (1.0-smooth_factor) * self.loc_3d
 
-        self.3d_loc = p
+        self.loc_3d = p
 
 	def get_filtered_3d_point(self)
         '''Get a smoothed, exponentially filtered version of the 3d
         point.'''
-        return self.3d_loc
+        return self.loc_3d
 
 
 
