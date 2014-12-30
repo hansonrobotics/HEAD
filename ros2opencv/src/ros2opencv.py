@@ -2,13 +2,15 @@
 
 """ ros2opencv.py - Version 0.2 2011-11-09
 
-    A ROS-to-OpenCV node that uses cv_bridge to map a ROS image topic and optionally a ROS
-    depth image topic to the equivalent OpenCV image stream(s).
+    A ROS-to-OpenCV node that uses cv_bridge to map a ROS image topic
+    and optionally a ROS depth image topic to the equivalent OpenCV
+    image stream(s).
     
-    Includes variables and helper functions to store detection and tracking information and display
-    markers on the image.
+    Includes variables and helper functions to store detection and
+    tracking information and display markers on the image.
     
-    Creates an ROI publisher to publish the region of interest on the /roi topic.
+    Creates an ROI publisher to publish the region of interest on the
+    /roi topic.
     
     Publishes a 3D PointStamped message on the /target_point topic.
     
