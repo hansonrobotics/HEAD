@@ -184,7 +184,11 @@ class FaceBox():
     def filter_3d_point(self) :
         p = self.get_3d_point()
         if 1 < self.age:
-           p = self.smooth_factor * p + (1.0-self.smooth_factor) * self.loc_3d
+           pha = self.smooth_factor
+           bet = 1.0 - pha
+           p.x = pha * p.x + bet * self.loc_3d.x
+           p.y = pha * p.y + bet * self.loc_3d.y
+           p.z = pha * p.z + bet * self.loc_3d.z
 
         self.loc_3d = p
 
