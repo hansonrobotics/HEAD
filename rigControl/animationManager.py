@@ -207,13 +207,20 @@ class AnimationManager():
 
 		return locBU
 
-	def setTarget(self, head, eye, loc):
-		'''Set the target used by eye and face tracking '''
+	def setFaceTarget(self, loc):
+		'''Set the target used by eye and face tracking.'''
 
-		locBU = self.coordConvert(loc, eye.current)
+		locBU = self.coordConvert(loc, self.eyeTargetLoc.current)
 
-		head.target = locBU
-		eye.target = locBU
+		self.headTargetLoc.target = locBU
+		self.eyeTargetLoc.target = locBU
+
+
+	def setGazeTarget(self, loc):
+		'''Set the target used for eye tracking only.'''
+
+		locBU = self.coordConvert(loc, self.eyeTargetLoc.current)
+		self.eyeTargetLoc.target = locBU
 
 
 	def terminate(self):

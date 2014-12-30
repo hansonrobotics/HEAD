@@ -82,13 +82,13 @@ def setFaceTarget(loc):
 	# Eva uses y==forward x==right. Distances in centimeters from
 	# somewhere in the middle of the head.
 	cmloc = [-100.0* loc[1], 100.0* loc[0], 100.0* loc[2]]
-	eva = bpy.evaAnimationManager
-	eva.setTarget(eva.headTargetLoc, eva.eyeTargetLoc, cmloc)
+	bpy.evaAnimationManager.setFaceTarget(cmloc)
 	return 0
 
 def setGazeTarget(loc):
+	cmloc = [-100.0* loc[1], 100.0* loc[0], 100.0* loc[2]]
+	bpy.evaAnimationManager.setGazeTarget(cmloc)
 	return 0
-
 
 def getGestureParams():
 	eva = bpy.evaAnimationManager
