@@ -76,11 +76,14 @@ class FaceBox():
         # size of the face to meassure realative distance. Face width is enough
         self.bounding_size = pt2[0] - pt1[0]
 
-        # Simple exponential decay filter to smoothed 3D location.
+        # Simple exponential decay filter to smooth the 3D location.
         # The goal is to limit the jumpiness of the reported postion.
-        # This does intrdocue some lag, but it shouldn't be too bad.
+        # This does introduce some lag, but it shouldn't be more than
+        # about 1-2 frames. A much much stronger filer is used for the
+        # z-location, as that one is much noisier.
         # XXX To get fancy, this could be replaced by a Kalman filter.
-        self.smooth_factor = 0.6
+        self.xy_smooth_factor = 0.6
+        self.z_smooth_factor = 0.93
         self.loc_3d = Point()
 
     def area(self):
@@ -184,11 +187,15 @@ class FaceBox():
     def filter_3d_point(self) :
         p = self.get_3d_point()
         if 1 < self.age:
-           pha = self.smooth_factor
+           pha = self.xy_smooth_factor
            bet = 1.0 - pha
-           p.x = pha * p.x + bet * self.loc_3d.x
-           p.y = pha * p.y + bet * self.loc_3d.y
-           p.z = pha * p.z + bet * self.loc_3d.z
+           p.x = pha * self.loc_3d.x + bet * p.x
+           p.y = pha * self.loc_3d.y + bet * p.y
+
+           # z gets a much stronger filter, since its noisier.
+           pha = self.z_smooth_factor
+           bet = 1.0 - pha
+           p.z = pha * self.loc_3d.z + bet * p.z
 
         self.loc_3d = p
 
