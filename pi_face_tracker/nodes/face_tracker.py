@@ -136,7 +136,7 @@ class FaceBox():
             self.pt1 = (x,y)
             self.pt2 = (x+w, y+h)
             self.update_bounding_box()
-            self.filter_loc_3d()
+            self.filter_3d_point()
 
 
     def update_box_elipse(self, elipse):
@@ -146,7 +146,7 @@ class FaceBox():
             self.pt1 = (int(roi_center[0] - roi_size[0]/2), int(roi_center[1] - roi_size[1]/2))
             self.pt2 = (int(roi_center[0] + roi_size[0]/2), int(roi_center[1] + roi_size[1]/2))
             self.update_bounding_box()
-            self.filter_loc_3d()
+            self.filter_3d_point()
 
     def is_trackable(self):
         if self.status in self.trackable_statuses:
@@ -179,18 +179,17 @@ class FaceBox():
         p.z = dp * (240-(self.pt2[1]+self.pt1[1])/2) # Z is to top
         return p
 
-	def filter_3d_point(self)
-        '''Smooth out the 3D location of the face, by using an
-        exponential filter.'''
-        p = self.get_3d_point();
+    # Smooth out the 3D location of the face, by using an
+    # exponential filter.
+    def filter_3d_point(self) :
+        p = self.get_3d_point()
         if 1 < self.age:
            p = smooth_factor * p + (1.0-smooth_factor) * self.loc_3d
 
         self.loc_3d = p
 
-	def get_filtered_3d_point(self)
-        '''Get a smoothed, exponentially filtered version of the 3d
-        point.'''
+    # Get a smoothed, exponentially filtered version of the 3d point.
+    def get_filtered_3d_point(self):
         return self.loc_3d
 
 
