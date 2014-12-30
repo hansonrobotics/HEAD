@@ -94,21 +94,21 @@ class BLRigControl(bpy.types.Panel):
 
 		# Warning: X and Y Axis are rotated to accomodate Command Lisenter
 		col = layout.column(align = True)
-		col.operator('eva.debug', text='Face Up').action = 'commands.setFaceTarget([1, 0, 1])'
+		col.operator('eva.debug', text='Face Up').action = 'commands.setFaceTarget([1, 0, 0.5])'
 		row = col.row(align=True)
-		row.operator('eva.debug', text='Left').action = 'commands.setFaceTarget([1, -1, 0])'
+		row.operator('eva.debug', text='Left').action = 'commands.setFaceTarget([1, -0.5, 0])'
 		row.operator('eva.debug', text='Centre').action = 'commands.setFaceTarget([1, 0,0])'
-		row.operator('eva.debug', text='Right').action = 'commands.setFaceTarget([1, 1, 0])'
-		col.operator('eva.debug', text='Face Down').action = 'commands.setFaceTarget([1, 0, -1])'
+		row.operator('eva.debug', text='Right').action = 'commands.setFaceTarget([1, 0.5, 0])'
+		col.operator('eva.debug', text='Face Down').action = 'commands.setFaceTarget([1, 0, -0.5])'
 		col.operator('eva.debug', text='Face Nil').action = 'commands.setFaceTarget([0, 0, 0])'
 
 		col = layout.column(align = True)
-		col.operator('eva.debug', text='Gaze Up').action = 'commands.setGazeTarget([1, 0, 1])'
+		col.operator('eva.debug', text='Gaze Up').action = 'commands.setGazeTarget([1, 0, 0.5])'
 		row = col.row(align=True)
-		row.operator('eva.debug', text='Left').action = 'commands.setGazeTarget([1, -1, 0])'
+		row.operator('eva.debug', text='Left').action = 'commands.setGazeTarget([1, -0.5, 0])'
 		row.operator('eva.debug', text='Centre').action = 'commands.setGazeTarget([1, 0,0])'
-		row.operator('eva.debug', text='Right').action = 'commands.setGazeTarget([1, 1, 0])'
-		col.operator('eva.debug', text='Gaze Down').action = 'commands.setGazeTarget([1, 0, -1])'
+		row.operator('eva.debug', text='Right').action = 'commands.setGazeTarget([1, 0.5, 0])'
+		col.operator('eva.debug', text='Gaze Down').action = 'commands.setGazeTarget([1, 0, -0.5])'
 		col.operator('eva.debug', text='Gaze Nil').action = 'commands.setGazeTarget([0, 0, 0])'
 
 		row = layout.row()
