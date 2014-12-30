@@ -6,6 +6,6 @@
         <param name="width" value="640" />
         <param name="height" value="480" />
         <param name="frame_rate" value="20" />
-        <param name="exposure" value="0" />
+        <param name="exposure" value="3" />
     </node>
 </launch>

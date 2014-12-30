@@ -1,7 +1,11 @@
 pi_vision
 =========
 
-Pi Vision ported to ROS Indigo.
+Pi Vision ported to ROS Indigo.  This is more or less the "original"
+Pi Vision package, from http://wiki.ros.org/pi_vision, which was
+abandonded after groovy.  This includes
+http://wiki.ros.org/pi_face_tracker and
+http://wiki.ros.org/pi_face_tracker_gui
 
 Installation
 ============
@@ -34,4 +38,3 @@ TODO
 ============
 1. Make it work with Kinect
 2. Migrate to Python cv2 from cv
-
