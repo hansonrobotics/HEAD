@@ -12,6 +12,10 @@ http://wiki.ros.org/pi_vision, which had been abandonded after groovy.
 This package includes both includes http://wiki.ros.org/pi_face_tracker
 and http://wiki.ros.org/pi_face_tracker_gui
 
+The plain, unenhanced  port of pi_vision to indigo can be found in the
+branch `pi-vision-orig-indigo`.
+
+
 Installation
 ============
 Requirements:
@@ -36,13 +40,17 @@ git clone https://github.com/ericperko/uvc_cam.git
 rosmake uvc_cam
 
 git clone https://github.com/hansonrobotics/pi_vision
-rosmake pi_vision
+cd catkin; catkin build
 ```
-or use catkin.
 
 Run
 ===
+
+Note that uvc_cam won't automatically show up in the `ROS_PACKAGE_PATH`
+environment variable; it must be added by hand.  Otherwise, the launch
+will fail.
 ```
+export ROS_PACKAGE_PATH=/path/to/uvc_cam:$ROS_PACKAGE_PATH
 roslaunch ros2opencv uvc_cam.launch device:=/dev/video1
 roslaunch pi_face_tracker face_tracker_uvc_cam.launch
 ```
