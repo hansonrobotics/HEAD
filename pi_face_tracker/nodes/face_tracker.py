@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 
-""" face_tracker.py - Version 0.22 2012-01-20
+""" face_tracker.py - Version 0.30 2014-12-30
 
-    Track a face using the OpenCV Haar detector to initially locate the face, then OpenCV's
-    Good-Features-to-Track and Lucas-Kanade Optical Flow to track the face features over 
-    subsequent frames.
+    Track a face using the OpenCV Haar detector to initially locate
+    the face, then OpenCV's Good-Features-to-Track and Lucas-Kanade
+    Optical Flow to track the face features over subsequent frames.
     
-    Can also be used to track arbitrarily selected patches by setting the parameter
-    auto_face_tracking to False and using the mouse to select the desired region.
+    Can also be used to track arbitrarily selected patches by setting
+    the parameter auto_face_tracking to False and using the mouse to
+    select the desired region.
+
+    This version is modified to spit out 3D coordinates.
 
     Created for the Pi Robot Project: http://www.pirobot.org
     Copyright (c) 2011 Patrick Goebel.  All rights reserved.
