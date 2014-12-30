@@ -49,7 +49,8 @@ perforrmed.  The 2D tracking is done in camera pixel coords, the
 3D position information is guesstimated from that.'''
 class FaceBox():
 
-    #top left, and right bottom corner points given
+    # pt1 and pt2 are the top left and bottom right corner points,
+    # bounding the location of the face.
     def __init__(self, id, pt1, pt2):
         # unique id for this session
         self.face_id = id
@@ -89,6 +90,7 @@ class FaceBox():
         if (self.age < self.min_age):
             return False
         return True
+
     def _overlap_area(self,pt1,pt2):
         dx = max(0,min(self.pt2[0],pt2[0])-max(self.pt1[0],pt1[0]))
         dy = max(0,min(self.pt2[1],pt2[1])-max(self.pt1[1],pt1[1]))
@@ -117,8 +119,8 @@ class FaceBox():
                 self.status = 'new'
             if self.skipped > self.min_age:
                 self.status = 'deleted'
-
-         self.filter_3d_point();
+xxxxxxxxx
+        self.filter_3d_loc()
 
     def get_box(self):
         return [self.pt1,self.pt2]
@@ -154,7 +156,7 @@ class FaceBox():
             self.face_box()
         )
 
-    def update_bounding_box(self, pt1,pt2):
+    def update_bounding_box(self, pt1, pt2):
         self.bounding_size = pt2[1] - pt1[1]
 
     def get_3d_point(self):
@@ -190,6 +192,7 @@ class FaceBox():
 
 
 
+# A registery of all the faces currently visible.
 class FacesRegistry():
 
     TOPIC_FACE_ROI = "faces/%d"
@@ -246,7 +249,7 @@ class FacesRegistry():
         for f in self.faces.keys():
             face = Face()
             face.id = f
-            face.point = self.faces[f].get_3d_point()
+            face.point = self.faces[f].get_filtered_3d_point()
             faces.append(face)
         msg = Faces()
         msg.faces = Faces()
@@ -260,9 +263,12 @@ class FacesRegistry():
                 self._remove_entry(f)
 
 
-    ''' Faces array of (pt1,pt2) '''
-    def addFaces(self,faces):
-        for f in faces:
+    ''' This adds a set of faces to the registery. It is given an
+    array of (pt1,pt2) bounding boxes for each face.'''
+    def addFaces(self, face_bbs):
+        for f in face_bbs:
+
+            # We are not currently tracking any fces. Add one.
             if not self.faces:
                 self.face_id += 1
                 self._add_entry(
@@ -270,18 +276,27 @@ class FacesRegistry():
                 )
             else:
                 found = -1
+                # Have we seen this face before?  Is it already in our
+                # list?
                 for id in self.faces.keys():
                     if self.faces[id].is_same_face(f[0], f[1]):
                         found = id
                         break
+
+                # Nope, we've never seen this face before.
                 if found == -1:
                     self.face_id += 1
                     self._add_entry(
                         FaceBox(self.face_id, f[0], f[1])
                     )
+
+                # Oh, hey, we have seen this face!
                 else:
                     self.faces[found].update_bounding_box(f[0], f[1])
-                    # Need to update the boxsize of
+                    self.faces[found].filter_3d_point()
+xxxxxxxxx
+                    # Maybe need to call update_box() and
+                    # update_box_ellipse() ???
 
     # Processes faces statuses:
     # Calls new_face callback if new faces are added,
@@ -401,8 +416,10 @@ class PatchTracker(ROS2OpenCV):
         
     def process_image(self, cv_image):
         self.frame_count = self.frame_count + 1
-        """ If parameter use_haar_only is True, use only the OpenCV Haar detector to track the face """
-        """ Try detecte faces every  frames. It will detect any new faces in scene or will update the current ones """
+        """ If parameter use_haar_only is True, use only the OpenCV
+        Haar detector to track the face.  Try to detect faces in every
+        frame. It will detect any new faces in the scene and it will
+        update the current ones. """
         if (self.use_haar_only or not self.detect_box.any_trackable_faces()) and self.auto_face_tracking:
             self.detect_box.nextFrame()
             self.detect_face(cv_image)
@@ -410,7 +427,8 @@ class PatchTracker(ROS2OpenCV):
             self.detect_box.nextFrame()
             self.detect_face(cv_image)
 
-        """ Otherwise, track the face using Good Features to Track and Lucas-Kanade Optical Flow """
+        """ Otherwise, track the face using Good Features to Track and
+        Lucas-Kanade Optical Flow """
         if not self.use_haar_only:
             for f in self.detect_box.faces.keys():
                 if not self.detect_box.faces[f].is_trackable():
