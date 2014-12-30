@@ -34,28 +34,28 @@ def emotionJitter(self):
 def eyeSaccades(self, eyeWanderAbs):
 	''' applies random saccades to eye '''
 	newLoc = [0,0,0]
-	newLoc[0] = random.gauss(self.primaryEyeTargetLoc.current[0], eyeWanderAbs)
-	newLoc[1] = self.primaryEyeTargetLoc.current[1]
-	newLoc[2] = random.gauss(self.primaryEyeTargetLoc.current[2], eyeWanderAbs * 0.5)
+	newLoc[0] = random.gauss(self.eyeTargetLoc.current[0], eyeWanderAbs)
+	newLoc[1] = self.eyeTargetLoc.current[1]
+	newLoc[2] = random.gauss(self.eyeTargetLoc.current[2], eyeWanderAbs * 0.5)
 
 	# compute distance from previous eye position
-	distance = computeDistance(newLoc, self.primaryEyeTargetLoc.current)
+	distance = computeDistance(newLoc, self.eyeTargetLoc.current)
 
 	if distance > 0.1:
 		if self.randomFrequency('blinkMicro', 1.0):
 			self.newGesture('GST-blink-micro')
 				
 	# override eye movement
-	self.primaryEyeTargetLoc.current = newLoc
+	self.eyeTargetLoc.current = newLoc
 
 
 def headDrift(self):
 	''' applies random head drift '''
 	loc = [0,0,0]
-	loc[0] = random.gauss(self.primaryHeadTargetLoc.target[0], self.primaryHeadTargetLoc.target[0]/100)
-	loc[1] = random.gauss(self.primaryHeadTargetLoc.target[1], self.primaryHeadTargetLoc.target[1]/100)
-	loc[2] = random.gauss(self.primaryHeadTargetLoc.target[2], self.primaryHeadTargetLoc.target[2]/100)
-	self.primaryHeadTargetLoc.target = loc
+	loc[0] = random.gauss(self.headTargetLoc.target[0], self.headTargetLoc.target[0]/100)
+	loc[1] = random.gauss(self.headTargetLoc.target[1], self.headTargetLoc.target[1]/100)
+	loc[2] = random.gauss(self.headTargetLoc.target[2], self.headTargetLoc.target[2]/100)
+	self.headTargetLoc.target = loc
 
 
 def blink(self, duration):

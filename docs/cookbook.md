@@ -206,13 +206,22 @@ will appear after a nod request:
 rostopic pub --once /blender_api/set_gesture blender_api_msgs/SetGesture '{name: nod-2, repeat: 1, speed: 0.5, magnitude: 0.2}'
 ```
 
-##Eye Tracking
+##Eye and Head Tracking
+The eye gaze and the head tracking are quasi-independent. Setting the
+gaze target allows the eyes to look at that point, without turning the
+head. Setting the face target causes the eyes to look, with the face
+turning to face that direction at a slower rate.
+
 The coordinate system used is head-relative, in 'engineering' coordinates:
 'x' is forward, 'y' to the left, and 'z' up.  Distances are measured in meters.
 Origin of the coordinate system is somewhere (where?) in the middle of the
 head.
 ```
-rostopic pub --once /blender_api/set_primary_target blender_api_msgs/Target '{x: 2, y: 0 , z: 0}'
+rostopic pub --once /blender_api/set_face_target blender_api_msgs/Target '{x: 2, y: 0.6 , z: 0}'
+```
+
+```
+rostopic pub --once /blender_api/set_gaze_target blender_api_msgs/Target '{x: 2, y: -0.6 , z: 0}'
 ```
 
 ## PAU Messages

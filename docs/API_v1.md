@@ -161,45 +161,43 @@ Commands for tracking movements of the eyes, and lip-sync motions.
 
 ---
 
+`setFaceTarget(“location” = vec3, “scale” = vec3, “dart_rate” = float, “rotation” = vec3)`
 
-`setPrimaryTarget(“id” = int, “location” = vec3, “rotation” = vec3, “scale” = vec3, “tracking” = 0.7)`
+Specify a visual target to look at and face.
 
-Specify a visual target to face and look at.
-
-The coordinate system used is head-relative, in 'engineering'
+The coordinate system used is torso-relative, in 'engineering'
 coordinates: 'x' is forward, 'y' to the left, and 'z' up.
 Distances are measured in meters.  Origin of the coordinate
 system is somewhere (where?) in the middle of the head.
 
-* `id` is the identifier for each unique target. Useful for when the rig
-  is interacting with multiple people.
-
 * `location` controls where the character will look and turn.
-
-* `rotation` is the rotation of the target, can affect head tilt when
-  the character is in a playful mood. (Huh ???)
 
 * `scale` is the size of the target. Affects how much the eyes drift
   around when examining a target.
 
-* `tracking` controls the percentage of the time that the character is
-  looking at this target.
+* `dart_rate` is the rate (how often) the eyes will break contact
+  with the gaze target.
+
+* `rotation` is the rotation of the target, can affect head tilt when
+  the character is in a playful mood. (Not implemented at this time).
 
 Returns 0 if success, else returns the error code.
 
 ---
-`setSecondaryTarget(“id” = int, “location” = vec3, “rotation” = vec3, “scale” = vec3, “tracking” = 0.3)`
+`setGazeTarget(“location” = vec3, “scale” = vec3, “dart_rate” = float)`
 
-Takes the same parameters as the primary target.  The character will
-alternate paying attention between the primary and the secondary target.
+Specify a visual target to look at, using the eyes only, without turning
+the head.
 
-Returns 0 if success, else returns the error code.
+* `location` controls where the character will look and turn.
+
+* `scale` is the size of the target. Affects how much the eyes drift
+  around when examining a target.
+
+* `dart_rate` is the rate (how often) the eyes will break contact
+  with the gaze target.
 
 
----
-`engageTarget(target = primary|secondary, time = float)`
-
-Force the character to look at a specific target for a period of time.
 Returns 0 if success, else returns the error code.
 
 ---
