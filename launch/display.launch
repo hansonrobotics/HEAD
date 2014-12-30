@@ -1,10 +1,19 @@
 <launch>
 	<arg name="model" />
+    <group ns="/arthur">
 	<arg name="gui" default="True" />
 	<param name="robot_description" textfile="$(find perception)/urdf/arthur.urdf" />
 	<param name="use_gui" value="$(arg gui)"/>
-	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+        <rosparam param="source_list">["joint_states_combined"]</rosparam>
+	</node>
+
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
     <node name="faces_broadcaster" pkg="perception" type="faces_tf2_broadcaster.py" />
+
+        <node name="state_publisher" pkg="perception" type="joint_state_publisher.py">
+            <rosparam param="pololu_joints">[Eyes_Pitch,Eye_L,Eye_R]</rosparam>
+        </node>
+    </group>
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find perception)/rviz/urdf.rviz" required="true" />
 </launch>
