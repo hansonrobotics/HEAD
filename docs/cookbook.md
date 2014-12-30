@@ -217,11 +217,11 @@ The coordinate system used is head-relative, in 'engineering' coordinates:
 Origin of the coordinate system is somewhere (where?) in the middle of the
 head.
 ```
-rostopic pub --once /blender_api/set_face_target blender_api_msgs/Target '{x: 2, y: 0.1 , z: 0}'
+rostopic pub --once /blender_api/set_face_target blender_api_msgs/Target '{x: 2, y: 0.6 , z: 0}'
 ```
 
 ```
-rostopic pub --once /blender_api/set_gaze_target blender_api_msgs/Target '{x: 2, y: -0.1 , z: 0}'
+rostopic pub --once /blender_api/set_gaze_target blender_api_msgs/Target '{x: 2, y: -0.6 , z: 0}'
 ```
 
 ## PAU Messages
