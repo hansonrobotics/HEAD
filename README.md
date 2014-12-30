@@ -41,6 +41,7 @@ rosmake uvc_cam
 
 git clone https://github.com/hansonrobotics/pi_vision
 cd catkin; catkin build
+source devel/setup.bash
 ```
 
 Run
