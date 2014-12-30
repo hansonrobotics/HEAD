@@ -11,5 +11,12 @@
 
     <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
           output="screen"/>
+    <node name="arthur_eyes" pkg="ros_pololu_servo" type="ros_pololu_servo_node" output="screen">
+          <param name="port" value="/dev/ttyACM0" />
+          <param name="pololu_motors_yaml" value="$(find robots_config)/arthur/pololu_eyes.yaml" />
+          <param name="topic_prefix" value="arthur_eyes/" />
+          <param name="topic_name" value="cmd_pololu" />
+
+    </node>
     </group>
 </launch>
