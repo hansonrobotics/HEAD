@@ -150,10 +150,10 @@ class FaceBox():
         # TODO will need to be updated:
         # Current camera callibration matrix should be passed.
         # Current camera pose needed (offset, and angle)
-        # For now we assume its  degrees FOV with the face height of 20 cm
-        #Standard 640x480 image used
-        #Approx horizontal FOV of camera used:
-        fov_x = 0.625 # in radians
+        # For now we assume its 36 degrees FOV with the face height of 20 cm
+        # Standard 640x480 image used
+        # Approx horizontal FOV of camera used:
+        fov_x = 0.625 # 0.625 radians is 36 degrees
         p = Point()
         # same FOV for both, so calculate the relative distance of one pixel
         dp = 0.22 / float(self.bounding_size) # It should be same in both axis
