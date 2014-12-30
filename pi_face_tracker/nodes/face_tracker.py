@@ -184,7 +184,7 @@ class FaceBox():
     def filter_3d_point(self) :
         p = self.get_3d_point()
         if 1 < self.age:
-           p = smooth_factor * p + (1.0-smooth_factor) * self.loc_3d
+           p = self.smooth_factor * p + (1.0-self.smooth_factor) * self.loc_3d
 
         self.loc_3d = p
 
@@ -416,11 +416,11 @@ class PatchTracker(ROS2OpenCV):
             rospy.wait_for_message(self.input_depth_image, Image)
 
     def process_image(self, cv_image):
-        self.frame_count = self.frame_count + 1
         """ If parameter use_haar_only is True, use only the OpenCV
         Haar detector to track the face.  Try to detect faces in every
         frame. It will detect any new faces in the scene and it will
         update the current ones. """
+        self.frame_count = self.frame_count + 1
         if (self.use_haar_only or not self.detect_box.any_trackable_faces()) and self.auto_face_tracking:
             self.detect_box.nextFrame()
             self.detect_face(cv_image)
