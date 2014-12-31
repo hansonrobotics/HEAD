@@ -449,34 +449,35 @@ class PatchTracker(ROS2OpenCV):
         """ Otherwise, track the face using Good Features to Track and
         Lucas-Kanade Optical Flow """
         if not self.use_haar_only:
-            for f in self.detect_box.faces.keys():
-                if not self.detect_box.faces[f].is_trackable():
+            for fkey in self.detect_box.faces.keys():
+                face = self.detect_box.faces[fkey]
+                if not face.is_trackable():
                     continue
 
-                if not self.detect_box.faces[f].track_box or not self.is_rect_nonzero(self.detect_box.faces[f].track_box):
-                    self.detect_box.faces[f].features = []
-                    self.detect_box.faces[f].update_box(self.detect_box.faces[f].face_box())
-                track_box = self.track_lk(cv_image, self.detect_box.faces[f])
+                if not face.track_box or not self.is_rect_nonzero(face.track_box):
+                    face.features = []
+                    face.update_box(face.face_box())
+                track_box = self.track_lk(cv_image, face)
                 if track_box and len(track_box) != 3:
-                    self.detect_box.faces[f].update_box(track_box)
+                    face.update_box(track_box)
                 else:
-                    self.detect_box.faces[f].update_box_elipse(track_box)
+                    face.update_box_elipse(track_box)
 
                 """ Prune features that are too far from the main cluster """
-                if len(self.detect_box.faces[f].features) > 0:
+                if len(face.features) > 0:
                     # Consider to move face class
-                    ((mean_x, mean_y, mean_z), mse_xy, mse_z, score) = self.prune_features(min_features = self.detect_box.faces[f].abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse,face =self.detect_box.faces[f])
+                    ((mean_x, mean_y, mean_z), mse_xy, mse_z, score) = self.prune_features(min_features = face.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse,face = face)
                     if score == -1:
                         self.detect_box._remove_entry(f)
                         continue
 
 
                 """ Add features if the number is getting too low """
-                if len(self.detect_box.faces[f].features) < self.detect_box.faces[f].min_features:
-                    self.detect_box.faces[f].expand_roi = self.expand_roi_init * self.detect_box.faces[f].expand_roi
-                    self.add_features(cv_image,self.detect_box.faces[f])
+                if len(face.features) < face.min_features:
+                    face.expand_roi = self.expand_roi_init * face.expand_roi
+                    self.add_features(cv_image, face)
                 else:
-                    self.detect_box.faces[f].expand_roi = self.expand_roi_init
+                    face.expand_roi = self.expand_roi_init
 
         rospy.loginfo(self.detect_box.faces)
         self.detect_box.publish_faces()
