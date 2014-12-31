@@ -59,19 +59,30 @@ class FaceBox():
         # Need to have constant HAAR detection for certain time before publishing
         self.min_haar_time = rospy.get_param('~face_min_haar_time',1.0)
         self.face_haar_frames_needed = rospy.get_param('~face_haar_frames_needed',8)
+        # Face attention. Ranges from 1.0 to 0.0, based on how recently
+        # the face was seen by the HAAR detector.  Decreases by 1%
+        # everytime the face is not detected by Haar.  When the
+        # attention drops below min_attention, the face is considered
+        # lost.
+        self.attention = 1.0
+        self.attention_decay_rate = 0.99
         # minimum attention needed.
         self.min_attention = rospy.get_param('~face_min_attention',0.7)
+
         # Allow to restore same face within this time
         self.time_to_keep = rospy.get_param('~face_time_to_keep',2.0)
-         # Coeff of how much area of the detected box should overlap in order to make same judgement
+        # Coeff of how much area of the detected box should overlap
+        # in order to make same judgement
         self.min_area = rospy.get_param('~face_min_area',0.3)
 
         # Camera settings:
+        # FOV == Field of View; 0.625 radians == 36 degrees.
         self.camera_fov_x = rospy.get_param('~camera_fov_x',0.625)
         # TODO replace after decided on volume
         self.camera_width = rospy.get_param('uvc_cam_node/width',640)
         self.camera_height = rospy.get_param('uvc_cam_node/height',480)
-        # init time needed for full time since added, start time needed in case face will reappear
+        # init time needed for full time since added, start time
+        # needed in case face will reappear.
         self.init_time = self.start_time = rospy.Time.now()
         self.haar_frames = 0
         self.haar_frames_detected = 1
@@ -79,10 +90,6 @@ class FaceBox():
         self.disappear_time = None
         # Faces status: new, ok, deleted
         self.status = 'new'
-        # Face attention. 0-1 based on how recent the face was found by HAAR detector.
-        # decreased 1%, everytime face is not detected by Haar
-        self.attention = 1.0
-
 
         self.pt1 = pt1 # (x1,y1)
         self.pt2 = pt2 # (x2,y2)
@@ -101,9 +108,15 @@ class FaceBox():
         # This does introduce some lag, but it shouldn't be more than
         # about 1-2 frames. A much much stronger filer is used for the
         # x-location (distance from camera), as that one is much noisier.
-        # XXX To get fancy, this could be replaced by a Kalman filter.
-        # XXX All this is really just a hack, simply because the 2D
-        # tracking just does not work very well ...
+        #
+        # TODO To get fancy, this could be replaced by a Kalman filter.
+        # Or maybe just an alpha-beta filter would be best.
+        #
+        # It might be tempting to perform smoothing on the 2D position,
+        # but since the tracked object really is slow-moving in 3D, we
+        # do the smoothing on the 3D coordinates. In particular, if
+        # Kalman was used, it would not be correct to apply it to the 2D
+        # coords.
         self.yz_smooth_factor = 0.64
         self.x_smooth_factor = 0.95
         self.loc_3d = Point()
@@ -162,7 +175,8 @@ class FaceBox():
 
             if self.status == 'deleted':
                 self.haar_frames_detected = max(1, self.haar_frames_detected-1)
-            self.attention *= 0.99
+
+            self.attention *= self.attention_decay_rate
 
         if self.status == 'deleted' and \
                 rospy.Time.now() - self.disappear_time > rospy.Duration.from_sec(self.time_to_keep):
@@ -254,9 +268,14 @@ class FaceBox():
         return p
 
     # Smooth out the 3D location of the face, by using an
-    # exponential filter.
+    # simple exponential filter.
     def filter_3d_point(self) :
         p = self.get_3d_point()
+
+        # First time ever, initialize to a reasonable value.
+        if self.status = 'new':
+            self.loc_3d = p
+
         pha = self.yz_smooth_factor
         bet = 1.0 - pha
         p.y = pha * self.loc_3d.y + bet * p.y
