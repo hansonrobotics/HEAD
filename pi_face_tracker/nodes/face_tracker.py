@@ -293,7 +293,7 @@ class FacesRegistry():
     def addFaces(self, face_bbs):
         for f in face_bbs:
 
-            # We are not currently tracking any fces. Add one.
+            # We are not currently tracking any faces. Add the first one.
             if not self.faces:
                 self.face_id += 1
                 self._add_entry(
@@ -322,7 +322,7 @@ class FacesRegistry():
                     fface.pt2 = f[1]
                     fface.update_box(fface.face_box())
 
-    # Processes faces statuses:
+    # Process status of all faces:
     # Calls new_face callback if new faces are added,
     # Calls onExit when face is lost.
     def checkStatus(self, new_face = None, on_exit = None):
@@ -338,7 +338,8 @@ class FacesRegistry():
                     on_exit(f)
                 self._remove_entry(id)
 
-    # Returns Face by id. If no id given returns oldest face in scene
+    # Returns Face by id. If no id given, it returns the oldest face
+    # in the scene.
     def getFace(self, id=-1):
         if id < 0:
             for i in self.faces.keys():
@@ -346,10 +347,11 @@ class FacesRegistry():
                     return self.faces[i]
             return False
         if id in self.faces:
-            # may need to check if valid
+            # Maybe should check if valid ?
             return self.faces[id]
         return None
 
+    # Return true if any of the faces are trackable, else return false.
     def any_trackable_faces(self):
         for f in self.faces:
             if self.faces[f].is_trackable():

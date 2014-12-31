@@ -68,7 +68,8 @@ is up.  Units are in meters.
 
 TODO
 ====
-1. Make it work with Kinect
-2. Migrate to Python cv2 from cv
+1. Make it work with Kinect.
+2. Migrate to Python cv2 wrappers from cv.  The cv wrappers use a
+   c++-like interface, the cv2 wrappers use numpy and are more efficient.
 3. Make camera settings configurable; its now hard-coded to 640x480,
    and the field-of-view angle is also hard-coded.
