@@ -84,8 +84,8 @@ class FaceBox():
         # XXX To get fancy, this could be replaced by a Kalman filter.
         # XXX All this is really just a hack, simply because the 2D
         # tracking just does not work very well ...
-        self.yz_smooth_factor = 0.65
-        self.x_smooth_factor = 0.98
+        self.yz_smooth_factor = 0.64
+        self.x_smooth_factor = 0.95
         self.loc_3d = Point()
 
     def area(self):
