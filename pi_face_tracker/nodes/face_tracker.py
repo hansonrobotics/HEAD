@@ -54,16 +54,36 @@ class FaceBox():
     def __init__(self, id, pt1, pt2):
         # unique id for this session
         self.face_id = id
-        #parameters to adjust for better detection
-        self.min_age = 3 # need at least 5 frames to make it new
 
-        self.min_area = 0.3 #coeff of how much area of the detected box should overlap in order to make same judgement
-        self.age = 0
-        self.skipped = 0 # numer of frames that couldn't find the face
-        self.valid = False
-        # available
-        self.status = "init"
-        self.trackable_statuses = ['new','ok']
+        # Face detection threshholds
+        # Need to have constant HAAR detection for certain time before publishing
+        self.min_haar_time = rospy.get_param('~face_min_haar_time',1.0)
+        self.face_haar_frames_needed = rospy.get_param('~face_haar_frames_needed',8)
+        # minimum attention needed.
+        self.min_attention = rospy.get_param('~face_min_attention',0.7)
+        # Allow to restore same face within this time
+        self.time_to_keep = rospy.get_param('~face_time_to_keep',2.0)
+         # Coeff of how much area of the detected box should overlap in order to make same judgement
+        self.min_area = rospy.get_param('~face_min_area',0.3)
+
+        # Camera settings:
+        self.camera_fov_x = rospy.get_param('~camera_fov_x',0.625)
+        # TODO replace after decided on volume
+        self.camera_width = rospy.get_param('uvc_cam_node/width',640)
+        self.camera_height = rospy.get_param('uvc_cam_node/height',480)
+        # init time needed for full time since added, start time needed in case face will reappear
+        self.init_time = self.start_time = rospy.Time.now()
+        self.haar_frames = 0
+        self.haar_frames_detected = 1
+
+        self.disappear_time = None
+        # Faces status: new, ok, deleted
+        self.status = 'new'
+        # Face attention. 0-1 based on how recent the face was found by HAAR detector.
+        # decreased 1%, everytime face is not detected by Haar
+        self.attention = 1.0
+
+
         self.pt1 = pt1 # (x1,y1)
         self.pt2 = pt2 # (x2,y2)
         self.terminated = False
@@ -88,13 +108,16 @@ class FaceBox():
         self.x_smooth_factor = 0.95
         self.loc_3d = Point()
 
+    def _points_area(self, pt1,pt2):
+        return (pt2[0]-pt1[0])*(pt2[1]-pt1[1])
+
     def area(self):
-        return (self.pt2[0]-self.pt1[0])*(self.pt2[1]-self.pt1[1])
+        return self._points_area(self.pt1,self.pt2)
 
     def valid(self):
-        if (self.age < self.min_age):
-            return False
-        return True
+        if self.status == 'ok':
+            return True
+        return False
 
     def _overlap_area(self,pt1,pt2):
         dx = max(0,min(self.pt2[0],pt2[0])-max(self.pt1[0],pt1[0]))
@@ -102,28 +125,62 @@ class FaceBox():
         return dx*dy
 
     def is_same_face(self,pt1,pt2):
-        if self.terminated:
-            return False
-
         overlap = self._overlap_area(pt1,pt2)
-        if (float(overlap)/float(self.area()) > self.min_area):
+        #Overlap is bigger than min area
+        if (float(overlap)/min(float(self.area()),self._points_area(pt1,pt2)) > self.min_area):
             # reset frames skipped
             self.pt1 = pt1
             self.pt2 = pt2
             self.features = []
             self.track_box = self.face_box()
-            self.skipped = 0
+            if self.status == 'new':
+                self.haar_frames_detected += 1
             return True
         return False
 
-    def next_frame(self):
-        self.age += 1
-        self.skipped += 1
-        if self.status == 'init':
-            if self.age - self.skipped >= self.min_age:
-                self.status = 'new'
-            if self.skipped > self.min_age:
-                self.status = 'deleted'
+    #called after detecting new faces. Returns 0 - remove face completely, 1 - ok, 2 - new face event
+    def next_frame(self, haar=False):
+        result = 1
+        if haar:
+            if self.status == 'new':
+                self.haar_frames += 1
+                # new faces deleted automatically
+                if self.haar_frames_detected < self.haar_frames:
+                    return 0
+                # Turns to face for tracking
+                if self.haar_frames >= self.face_haar_frames_needed:
+                    self.status = 'ok'
+                    if self.start_time == self.init_time:
+                        result = 2
+                elif rospy.Time.now() - self.start_time >= rospy.Duration.from_sec(self.min_haar_time):
+                    self.status = 'ok'
+                    if self.start_time == self.init_time:
+                        result = 2
+
+            if self.attention < self.min_attention:
+                self.lost_face()
+
+            if self.status == 'deleted':
+                self.haar_frames_detected = max(1, self.haar_frames_detected-1)
+            self.attention *= 0.99
+
+        if self.status == 'deleted' and \
+                rospy.Time.now() - self.disappear_time > rospy.Duration.from_sec(self.time_to_keep):
+            return False
+        return result
+
+
+    def lost_face(self):
+        self.disappear_time = rospy.Time.now()
+        self.status = 'deleted'
+
+    # Face reappered within given time
+    def returned_face(self):
+        self.disappear_time = None
+        self.status = 'new'
+        self.start_time = rospy.Time.now()
+        # Allow fast reappearance of face.
+        self.haar_frames = self.haar_frames_detected - 1
 
     def get_box(self):
         return [self.pt1,self.pt2]
@@ -140,6 +197,7 @@ class FaceBox():
             x,y,w,h = box
             self.pt1 = (x,y)
             self.pt2 = (x+w, y+h)
+            self.attention = 1.0
             self.update_bounding_box()
             self.filter_3d_point()
 
@@ -151,22 +209,26 @@ class FaceBox():
             self.pt1 = (int(roi_center[0] - roi_size[0]/2), int(roi_center[1] - roi_size[1]/2))
             self.pt2 = (int(roi_center[0] + roi_size[0]/2), int(roi_center[1] + roi_size[1]/2))
 
-            # Do NOT update the bbox or the 3D location here: the bbox
+            # Do NOT update the bbox: the bbox
             # is obtained from the visual flow tracking, and is less
             # accurate than the Haar detector, which calls the method
             # update_box() above.
             # self.update_bounding_box()
-            # self.filter_3d_point()
+            # 3D point can be updated, the distance will be calculated
+            # from last bounding box size
+            self.filter_3d_point()
 
     def is_trackable(self):
-        if self.status in self.trackable_statuses:
+        if self.status == 'ok':
             return True
         return False
 
     def __repr__(self):
-        return "<Face no.%d @ %s>" % (
+        return "<Face no.%d @ %s - %s - %s>" % (
             self.face_id,
-            self.face_box()
+            self.face_box(),
+            self.attention,
+            self.status
         )
 
     def update_bounding_box(self):
@@ -179,35 +241,34 @@ class FaceBox():
         # For now we assume its 36 degrees FOV with the face height of 20 cm
         # Standard 640x480 image used
         # Approx horizontal FOV of camera used:
-        fov_x = 0.625 # 0.625 radians is 36 degrees
         p = Point()
         # same FOV for both, so calculate the relative distance of one pixel
         dp = 0.22 / float(self.bounding_size) # It should be same in both axis
         # rospy.logwarn("bbox size=" + str(self.bounding_size))
-
+        w = self.camera_width/2
+        h = self.camera_height/2
         # Y is to the left in camera image, Z is to top
-        p.x = dp *  (240 / tan(fov_x/2.0))
-        p.y = dp * (320-(self.pt2[0]+self.pt1[0])/2)
-        p.z = dp * (240-(self.pt2[1]+self.pt1[1])/2)
+        p.x = dp *  (h / tan(self.camera_fov_x/2.0))
+        p.y = dp * (w-(self.pt2[0]+self.pt1[0])/2)
+        p.z = dp * (h-(self.pt2[1]+self.pt1[1])/2)
         return p
 
     # Smooth out the 3D location of the face, by using an
     # exponential filter.
     def filter_3d_point(self) :
         p = self.get_3d_point()
-        if 1 < self.age:
-           pha = self.yz_smooth_factor
-           bet = 1.0 - pha
-           p.y = pha * self.loc_3d.y + bet * p.y
-           p.z = pha * self.loc_3d.z + bet * p.z
+        pha = self.yz_smooth_factor
+        bet = 1.0 - pha
+        p.y = pha * self.loc_3d.y + bet * p.y
+        p.z = pha * self.loc_3d.z + bet * p.z
 
-           # x (distance from camera) gets a much stronger filter,
-           # since its much noisier.
-           # rawx = p.x
-           pha = self.x_smooth_factor
-           bet = 1.0 - pha
-           p.x = pha * self.loc_3d.x + bet * p.x
-           # rospy.logwarn("raw x=" + str(rawx) + " filtered x=" + str(p.x))
+        # x (distance from camera) gets a much stronger filter,
+        # since its much noisier.
+        # rawx = p.x
+        pha = self.x_smooth_factor
+        bet = 1.0 - pha
+        p.x = pha * self.loc_3d.x + bet * p.x
+        # rospy.logwarn("raw x=" + str(rawx) + " filtered x=" + str(p.x))
 
         self.loc_3d = p
 
@@ -227,7 +288,6 @@ class FacesRegistry():
     EVENT_LOST_FACE = "exit"
 
     def __init__(self):
-        self.step = 0
         self.face_id = 0
         self.faces = {}
         self.publishers = {}
@@ -245,23 +305,11 @@ class FacesRegistry():
     def _add_entry(self, face_box):
         #Update data structures
         self.faces[face_box.face_id] = face_box
-        self.publishers[face_box.face_id] = rospy.Publisher(
-            self.TOPIC_FACE_ROI % face_box.face_id,
-            RegionOfInterest,
-            queue_size=10
-        )
 
-        #Dispatch ROS event
-        self.event_pub.publish(
-            event=self.EVENT_NEW_FACE,
-            param=str(face_box.face_id)
-        )
 
     def _remove_entry(self, face_id):
         #Update data structures
         del self.faces[face_id]
-        self.publishers[face_id].unregister()
-        del self.publishers[face_id]
 
         #Dispatch ROS event
         self.event_pub.publish(
@@ -280,13 +328,17 @@ class FacesRegistry():
         msg.faces = Faces()
         self.faces_pub.publish(faces)
 
-    def nextFrame(self):
-        self.step += 1
+    def nextFrame(self, haar):
         for f in self.faces.keys():
-            self.faces[f].next_frame()
-            if self.faces[f].status == 'deleted':
+            keep = self.faces[f].next_frame(haar)
+            if keep == 0:
                 self._remove_entry(f)
-
+            elif keep==2:
+                # Dispatch ROS event.
+                self.event_pub.publish(
+                    event=self.EVENT_NEW_FACE,
+                    param=str(f)
+                )
 
     ''' This adds a set of faces to the registery. It is given an
     array of (pt1,pt2) bounding boxes for each face.'''
@@ -320,23 +372,9 @@ class FacesRegistry():
                     fface = self.faces[found]
                     fface.pt1 = f[0]
                     fface.pt2 = f[1]
+                    if fface.status == 'deleted':
+                        fface.returned_face()
                     fface.update_box(fface.face_box())
-
-    # Process status of all faces:
-    # Calls new_face callback if new faces are added,
-    # Calls onExit when face is lost.
-    def checkStatus(self, new_face = None, on_exit = None):
-        for id in self.faces.keys():
-            #check new
-            f = self.faces[id]
-            if f.status == 'new':
-                f.status = 'ok'
-                if new_face is not None:
-                    new_face(f)
-            if f.status == 'terminated':
-                if on_exit is not None:
-                    on_exit(f)
-                self._remove_entry(id)
 
     # Returns Face by id. If no id given, it returns the oldest face
     # in the scene.
@@ -441,17 +479,16 @@ class PatchTracker(ROS2OpenCV):
             rospy.wait_for_message(self.input_depth_image, Image)
 
     def process_image(self, cv_image):
-        """ If parameter use_haar_only is True, use only the OpenCV
-        Haar detector to track the face.  Try to detect faces in every
-        frame. It will detect any new faces in the scene and it will
-        update the current ones. """
+
         self.frame_count = self.frame_count + 1
+        haar = False
+        # Use HAAR if no faces are tracked yet or every 5
         if (self.use_haar_only or not self.detect_box.any_trackable_faces()) and self.auto_face_tracking:
-            self.detect_box.nextFrame()
             self.detect_face(cv_image)
+            haar = True
         elif self.frame_count % 5 == 0:
-            self.detect_box.nextFrame()
             self.detect_face(cv_image)
+            haar = True
 
         """ Otherwise, track the face using Good Features to Track and
         Lucas-Kanade Optical Flow """
@@ -475,7 +512,7 @@ class PatchTracker(ROS2OpenCV):
                     # Consider to move face class
                     ((mean_x, mean_y, mean_z), mse_xy, mse_z, score) = self.prune_features(min_features = face.abs_min_features, outlier_threshold = self.std_err_xy, mse_threshold=self.max_mse,face = face)
                     if score == -1:
-                        self.detect_box._remove_entry(fkey)
+                        face.lost_face()
                         continue
 
 
@@ -485,7 +522,7 @@ class PatchTracker(ROS2OpenCV):
                     self.add_features(cv_image, face)
                 else:
                     face.expand_roi = self.expand_roi_init
-
+        self.detect_box.nextFrame(haar)
         rospy.loginfo(self.detect_box.faces)
         self.detect_box.publish_faces()
         return cv_image
