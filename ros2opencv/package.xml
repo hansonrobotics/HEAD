@@ -1,12 +1,12 @@
 <package>
   <name>ros2opencv</name>
-  <version>0.1.0</version>
+  <version>0.3.0</version>
   <description>This package defines a base class for other packages in the
      pi_vision stack for converting ROS image topics to OpenCV
      format, displaying the image + markers, etc.</description>
   <maintainer email="vytas@hansonrobotics.com">Vytas</maintainer>
 
-  <license>BSD</license>
+  <license>GPLv2</license>
 
   <url type="website">http://ros.org/wiki/ros2opencv</url>
   <!-- <url type="bugtracker"></url> -->
