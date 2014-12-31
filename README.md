@@ -70,4 +70,5 @@ TODO
 ====
 1. Make it work with Kinect
 2. Migrate to Python cv2 from cv
-
+3. Make camera settings configurable; its now hard-coded to 640x480,
+   and the field-of-view angle is also hard-coded.
