@@ -150,8 +150,13 @@ class FaceBox():
             (roi_center, roi_size, roi_angle) = elipse
             self.pt1 = (int(roi_center[0] - roi_size[0]/2), int(roi_center[1] - roi_size[1]/2))
             self.pt2 = (int(roi_center[0] + roi_size[0]/2), int(roi_center[1] + roi_size[1]/2))
-            self.update_bounding_box()
-            self.filter_3d_point()
+
+            # Do NOT update the bbox or the 3D location here: the bbox
+            # is obtained from the visual flow tracking, and is less
+            # accurate than the Haar detector, which calls the method
+            # update_box() above.
+            # self.update_bounding_box()
+            # self.filter_3d_point()
 
     def is_trackable(self):
         if self.status in self.trackable_statuses:
