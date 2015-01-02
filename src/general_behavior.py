@@ -487,7 +487,10 @@ class Tree():
         if time.time() - self.blackboard["show_expression_since"] >= 2.0 or kwargs["new_face"]:
             ##### Show A Random Instant Expression #####
             if random.random() <= self.blackboard["show_expressions_other_than_positive_probabilities"]:
-                self.show(random.choice([other for other in self.blackboard["emotions"] if other not in self.blackboard["positive_emotions"]]), random.uniform(self.blackboard["expressions_other_than_positive_intensity_min"], self.blackboard["expressions_other_than_positive_intensity_max"]))
+
+                emo_name = random.choice([other for other in self.blackboard["emotions"] if other not in self.blackboard["positive_emotions"]])
+                emo_intense = random.uniform(self.blackboard["expressions_other_than_positive_intensity_min"], self.blackboard["expressions_other_than_positive_intensity_max"])
+                self.show_emotion(emo_name, emo_intense, 15)
                 time.sleep(random.uniform(self.blackboard["expressions_other_than_positive_duration_min"], self.blackboard["expressions_other_than_positive_duration_max"]))
             ##### Show A Positive Expression #####
             sum = 0
@@ -499,7 +502,7 @@ class Tree():
                     intensity_min = self.blackboard["positive_emotions_intensities_min"][i]
                     intensity_max = self.blackboard["positive_emotions_intensities_max"][i]
                     break
-            self.show(expression_to_show, random.uniform(intensity_min, intensity_max))
+            self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
         while duration > 0:
             time.sleep(interval)
             duration -= interval
@@ -542,7 +545,7 @@ class Tree():
 
     @owyl.taskmethod
     def show_expression(self, **kwargs):
-        self.show(kwargs["expression"], random.uniform(kwargs["min_intensity"], kwargs["max_intensity"]))
+        self.show_emotion(kwargs["expression"], random.uniform(kwargs["min_intensity"], kwargs["max_intensity"]), 15)
         yield True
 
     @owyl.taskmethod
@@ -556,11 +559,12 @@ class Tree():
                 intensity_min = self.blackboard["frustrated_emotions_intensities_min"][i]
                 intensity_max = self.blackboard["frustrated_emotions_intensities_max"][i]
                 break
-        self.show(expression_to_show, random.uniform(intensity_min, intensity_max))
+        self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
         yield True
 
-    # Get the robot to express a particular emotional state.
-    def show(self, expression, intensity):
+    # Accept an expression name, intentisty and duration, and publish it
+    # as a ros message.
+    def show_emotion(self, expression, intensity, duration):
 
         # Update the blackboard
         self.blackboard["current_emotion"] = expression
@@ -570,14 +574,12 @@ class Tree():
         exp = EmotionState()
         exp.name = self.blackboard["current_emotion"]
         exp.magnitude = self.blackboard["current_emotion_intensity"]
-        exp.duration.secs = 15  # XXX FIXME
-        exp.duration.nsecs = 0  # XXX FIXME
+        intsecs = int(duration)
+        exp.duration.secs = intsecs
+        exp.duration.nsecs = 1000000000 * (duration - intsecs)
         self.emotion_pub.publish(exp)
 
         print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ")"
-        #if self.blackboard["current_emotion"] == "surprise":
-        #    exp.magnitude = 0.2
-        #    self.emotion_pub.publish(exp)
         self.blackboard["show_expression_since"] = time.time()
 
     @owyl.taskmethod
@@ -591,7 +593,12 @@ class Tree():
         if time.time() - self.blackboard["show_expression_since"] >= 5.0:
             ##### Show A Random Instant Expression #####
             if random.random() <= self.blackboard["show_expressions_other_than_boring_probabilities"]:
-                self.show(random.choice([other for other in self.blackboard["emotions"] if other not in self.blackboard["boring_emotions"]]), random.uniform(self.blackboard["expressions_other_than_boring_intensity_min"], self.blackboard["expressions_other_than_boring_intensity_max"]))
+                emo_name = random.choice([other for other in self.blackboard["emotions"] if other not in self.blackboard["boring_emotions"]])
+
+                emo_intense = random.uniform(self.blackboard["expressions_other_than_boring_intensity_min"], self.blackboard["expressions_other_than_boring_intensity_max"])
+
+                # XXX fixme -- set the druration....
+                self.show_emotion(emo_name, emo_intense, 15)
                 time.sleep(random.uniform(self.blackboard["expressions_other_than_boring_duration_min"], self.blackboard["expressions_other_than_boring_duration_max"]))
             ##### Show A Positive Expression #####
             sum = 0
@@ -603,7 +610,7 @@ class Tree():
                     intensity_min = self.blackboard["boring_emotions_intensities_min"][i]
                     intensity_max = self.blackboard["boring_emotions_intensities_max"][i]
                     break
-            self.show(expression_to_show, random.uniform(intensity_min, intensity_max))
+            self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
         while duration > 0:
             time.sleep(interval)
             duration -= interval
@@ -624,7 +631,7 @@ class Tree():
                 intensity_min = self.blackboard["sleep_emotions_intensities_min"][i]
                 intensity_max = self.blackboard["sleep_emotions_intensities_max"][i]
                 break
-        self.show(expression_to_show, random.uniform(intensity_min, intensity_max))
+        self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
         duration = random.uniform(self.blackboard["sleep_duration_min"], self.blackboard["sleep_duration_max"])
         interval = 0.01
         #TODO: Topic for sleep
@@ -650,7 +657,7 @@ class Tree():
                 intensity_min = self.blackboard["wake_up_emotions_intensities_min"][i]
                 intensity_max = self.blackboard["wake_up_emotions_intensities_max"][i]
                 break
-        self.show(expression_to_show, random.uniform(intensity_min, intensity_max))
+        self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
         #TODO: Topic for waking up
         yield True
 
