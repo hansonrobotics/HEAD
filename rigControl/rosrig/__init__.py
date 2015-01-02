@@ -1,4 +1,4 @@
-# deals with interface with other apps
+# Initializes the ROS node
 
 from . import roscom
 node = None

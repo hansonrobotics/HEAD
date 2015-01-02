@@ -123,7 +123,11 @@ class subscribe(CommandDecorator):
 	def drop(self):
 		self.sub.unregister()
 	def _handle(self, msg):
-		self.callback(IncomingCmd(self.cmd_func, msg))
+		# XXX ??? Now that ROS is not initialized twice, the
+		# self.callback thing is not working.  I cannot tell what
+		# it was supposed to do ???
+		# self.callback(IncomingCmd(self.cmd_func, msg))
+		self.cmd_func(msg)
 
 
 class CommandWrappers:
