@@ -223,6 +223,10 @@ class AnimationManager():
 		self.eyeTargetLoc.target = locBU
 
 
+	def setViseme(self):
+		pass
+
+		
 	def terminate(self):
 		'''House-keeping at the end of the run'''
 		# remove all leftover gestures
