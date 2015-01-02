@@ -286,4 +286,7 @@ class Gesture():
 
 def init():
 	'''Create AnimationManager singleton and make available for global access'''
-	bpy.evaAnimationManager = AnimationManager()
+	if hasattr(bpy, 'evaAnimationManager'):
+		print('Skipping Singleton instanciation')
+	else:
+		bpy.evaAnimationManager = AnimationManager()
