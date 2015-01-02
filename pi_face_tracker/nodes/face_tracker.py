@@ -78,7 +78,7 @@ class FaceBox():
         # Camera settings:
         # FOV == Field of View; 0.625 radians == 36 degrees.
         self.camera_fov_x = rospy.get_param('~camera_fov_x',0.625)
-        # TODO replace after decided on volume
+        # TODO replace after decided on camera node
         self.camera_width = rospy.get_param('uvc_cam_node/width',640)
         self.camera_height = rospy.get_param('uvc_cam_node/height',480)
         # init time needed for full time since added, start time
@@ -127,11 +127,6 @@ class FaceBox():
     def area(self):
         return self._points_area(self.pt1,self.pt2)
 
-    def valid(self):
-        if self.status == 'ok':
-            return True
-        return False
-
     def _overlap_area(self,pt1,pt2):
         dx = max(0,min(self.pt2[0],pt2[0])-max(self.pt1[0],pt1[0]))
         dy = max(0,min(self.pt2[1],pt2[1])-max(self.pt1[1],pt1[1]))
@@ -151,7 +146,12 @@ class FaceBox():
             return True
         return False
 
-    #called after detecting new faces. Returns 0 - remove face completely, 1 - ok, 2 - new face event
+    # Changes the face status from new to init if the haar_minimum_frames or max_haar _time reached
+    # If tracking fails or face is deleted for longer than allowed returns 0 which triggers removal
+    # Called by FacesRegistry::next_frame after frame is processed by face tracker.
+    # Argument haar specifies if frame was processed with haar face detection
+    # Returns 0 if face needs to be deleted, 1 - no action,
+    # 2 - Face turned from 'new' to 'ok' and need to dispatch the new face event.
     def next_frame(self, haar=False):
         result = 1
         if haar:
@@ -175,7 +175,7 @@ class FaceBox():
 
             if self.status == 'deleted':
                 self.haar_frames_detected = max(1, self.haar_frames_detected-1)
-
+            # Decrease attention every haar frame.
             self.attention *= self.attention_decay_rate
 
         if self.status == 'deleted' and \
@@ -273,7 +273,7 @@ class FaceBox():
         p = self.get_3d_point()
 
         # First time ever, initialize to a reasonable value.
-        if self.status = 'new':
+        if self.loc_3d.x == 0:
             self.loc_3d = p
 
         pha = self.yz_smooth_factor
@@ -400,7 +400,7 @@ class FacesRegistry():
     def getFace(self, id=-1):
         if id < 0:
             for i in self.faces.keys():
-                if self.faces[i].valid():
+                if self.faces[i].is_trackable():
                     return self.faces[i]
             return False
         if id in self.faces:
