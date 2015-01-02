@@ -10,7 +10,8 @@ import os
 from std_msgs.msg import String
 from eva_behavior.msg import event
 from eva_behavior.msg import tracking_action
-from basic_head_api.msg import MakeCoupledFaceExpr
+from blender_api_msgs.msg import EmotionState
+from blender_api_msgs.msg import SetGesture
 
 
 class Tree():
@@ -106,7 +107,8 @@ class Tree():
         rospy.Subscriber("/tracking_event", event, self.tracking_event_callback)
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
         self.action_pub = rospy.Publisher("/tracking_action", tracking_action, queue_size=5, latch=True)
-        self.emotion_pub = rospy.Publisher("/arthur/make_coupled_face_expr", MakeCoupledFaceExpr, queue_size=1)
+        self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state", EmotionState, queue_size=1)
+        self.gesture_pub = rospy.Publisher("/blender_api/set_gesture", SetGesture, queue_size=1)
         self.tree = self.build_tree()
         time.sleep(0.1)
         while True:
@@ -557,18 +559,25 @@ class Tree():
         self.show(expression_to_show, random.uniform(intensity_min, intensity_max))
         yield True
 
+    # Get the robot to express a particular emotional state.
     def show(self, expression, intensity):
-        exp = MakeCoupledFaceExpr()
-        exp.robotname = "arthur"
+
+        # Update the blackboard
         self.blackboard["current_emotion"] = expression
         self.blackboard["current_emotion_intensity"] = intensity
-        exp.expr.exprname = self.blackboard["current_emotion"]
-        exp.expr.intensity = self.blackboard["current_emotion_intensity"]
+
+        # Create the message
+        exp = EmotionState()
+        exp.name = self.blackboard["current_emotion"]
+        exp.magnitude = self.blackboard["current_emotion_intensity"]
+        exp.duration.secs = 15  # XXX FIXME
+        exp.duration.nsecs = 0  # XXX FIXME
         self.emotion_pub.publish(exp)
+
         print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ")"
-        if self.blackboard["current_emotion"] == "surprise":
-            exp.expr.intensity = 0.2
-            self.emotion_pub.publish(exp)
+        #if self.blackboard["current_emotion"] == "surprise":
+        #    exp.magnitude = 0.2
+        #    self.emotion_pub.publish(exp)
         self.blackboard["show_expression_since"] = time.time()
 
     @owyl.taskmethod

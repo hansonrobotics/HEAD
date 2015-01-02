@@ -14,6 +14,8 @@ required.  To install:
 ## Co-requisites
 
 This is meant to be used in conjuction with several ROS nodes:
+* [blender_api_msgs](http://github.com/hansonrobotics/blender_api_msgs)
+  defines the robot head controlling messages.
 * [robo_blender](http://github.com/hansonrobotics/robo_blender) which
   implements a movable robot head.
 * [perception](http://github.com/hansonrobotics/perception) which
@@ -71,7 +73,9 @@ params (time to track).
 ## Cookbook
 Below follows a list of examples and demos.
 
-### uhhh
+### Start 
+Turn on behaviors:
+`rostopic  pub --once /behavior_switch std_msgs/String btree_on`
 
 
 
