@@ -105,6 +105,8 @@ class Tree():
         ##### ROS Connections #####
         rospy.Subscriber("behavior_switch", String, self.behavior_switch_callback)
         rospy.Subscriber("/tracking_event", event, self.tracking_event_callback)
+
+        # cmd_blendermode needs to go away eventually...
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
         self.action_pub = rospy.Publisher("/tracking_action", tracking_action, queue_size=5, latch=True)
         self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state", EmotionState, queue_size=1)
@@ -277,6 +279,7 @@ class Tree():
 
                     ############### Scripted Performance System ###############
                     owyl.sequence(
+                        self.idle_spin(),
                         self.is_scripted_performance_system_on(),
                         self.start_scripted_performance_system()
                     )
@@ -586,7 +589,6 @@ class Tree():
     def search_for_attention(self, **kwargs):
         print "----- Search For Attention!"
         duration = random.uniform(self.blackboard["search_for_attention_duration_min"], self.blackboard["search_for_attention_duration_max"])
-        interval = 0.01
         if self.blackboard["blender_mode"] != "LookAround":
             self.tracking_mode_pub.publish("LookAround")
             self.blackboard["blender_mode"] = "LookAround"
@@ -611,6 +613,7 @@ class Tree():
                     intensity_max = self.blackboard["boring_emotions_intensities_max"][i]
                     break
             self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
+        interval = 0.01
         while duration > 0:
             time.sleep(interval)
             duration -= interval
@@ -682,6 +685,18 @@ class Tree():
             self.blackboard["blender_mode"] = "Dummy"
         yield True
 
+
+    # This avoids burning CPU time when teh behavior system is off.
+    # Mostly it sleeps, and peridoically checks for interrpt messages.
+    @owyl.taskmethod
+    def idle_spin(self, **kwargs):
+        if self.blackboard["is_scripted_performance_system_on"]:
+            yield True
+
+        # Sleep for 1 second.
+        time.sleep(1)
+        yield True
+
     def tracking_event_callback(self, data):
         self.blackboard["is_interruption"] = True
         if data.event == "new_face":
@@ -697,6 +712,7 @@ class Tree():
                 if self.blackboard["new_face"] == self.blackboard["lost_face"]:
                     self.blackboard["new_face"] = ""
 
+    # Turn behaviors on and off.
     def behavior_switch_callback(self, data):
         if data.data == "btree_on":
             self.blackboard["is_interruption"] = False
