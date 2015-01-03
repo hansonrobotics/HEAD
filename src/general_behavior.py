@@ -1,4 +1,22 @@
-#! /usr/bin/env python
+#
+# general_behavior.py -  The primary Owyl behavior tree
+# Copyright (C) 2014  Hanson Robotics
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+
 import owyl
 from owyl import blackboard
 import rospy
@@ -8,7 +26,7 @@ import time
 import ConfigParser
 import os
 from std_msgs.msg import String
-from eva_behavior.msg import event
+from pi_vision.msg import FaceEvent
 from eva_behavior.msg import tracking_action
 
 from blender_api_msgs.msg import AvailableEmotionStates, AvailableGestures
@@ -18,6 +36,12 @@ from blender_api_msgs.msg import SetGesture
 
 class Tree():
     def __init__(self):
+
+        # ROS Config
+        TOPIC_FACE_EVENT = "face_event"
+        EVENT_NEW_FACE = "new_face"
+        EVENT_LOST_FACE = "lost_face"
+
         self.blackboard = blackboard.Blackboard("rig expressions")
 
         ##### From Config File #####
@@ -106,7 +130,7 @@ class Tree():
 
         ##### ROS Connections #####
         rospy.Subscriber("behavior_switch", String, self.behavior_switch_callback)
-        rospy.Subscriber("/tracking_event", event, self.tracking_event_callback)
+        rospy.Subscriber(self.TOPIC_FACE_EVENT, FaceEvent, self.tracking_event_callback)
 
         rospy.Subscriber("/blender_api/available_emotion_states",
             AvailableEmotionStates, self.get_emotion_states_cb)
@@ -693,6 +717,7 @@ class Tree():
         self.blackboard["lost_face"] = ""
         yield True
 
+    # XXX old-style API -- should be removed.
     @owyl.taskmethod
     def start_scripted_performance_system(self, **kwargs):
         if self.blackboard["blender_mode"] != "Dummy":
@@ -715,16 +740,17 @@ class Tree():
 
     def tracking_event_callback(self, data):
         self.blackboard["is_interruption"] = True
-        if data.event == "new_face":
-            print "<< Interruption >> New Face Detected: " + data.param
-            self.blackboard["new_face"] = data.param
+        if data.face_event == self.EVENT_NEW_FACE:
+            print "<< Interruption >> New Face Detected: " + data.face_id
+            self.blackboard["new_face"] = data.face_id
             self.blackboard["background_face_targets"].append(self.blackboard["new_face"])
-        elif data.event == "exit":
-            print "<< Interruption >> Lost Face Detected: " + data.param
-            if data.param in self.blackboard["background_face_targets"]:
-                self.blackboard["lost_face"] = data.param
+        elif data.face_event == self.EVENT_LOST_FACE:
+            print "<< Interruption >> Lost Face Detected: " + data.face_id
+            if data.face_id in self.blackboard["background_face_targets"]:
+                self.blackboard["lost_face"] = data.face_id
                 self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
-                # If the robot lost the new face during the initial interaction, reset new_face variable
+                # If the robot lost the new face during the initial
+                # interaction, reset new_face variable
                 if self.blackboard["new_face"] == self.blackboard["lost_face"]:
                     self.blackboard["new_face"] = ""
 
@@ -777,6 +803,3 @@ class Tree():
             self.blackboard["is_scripted_performance_system_on"] = True
             print "Behavior Tree is OFF!"
 
-if __name__ == "__main__":
-    rospy.init_node("Eva_Behavior")
-    tree = Tree()

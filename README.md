@@ -73,10 +73,10 @@ params (time to track).
 ## Cookbook
 Below follows a list of examples and demos.
 
-### Baic random emotion cycling
+### Basic random emotion cycling
 Start up one of the blender heads, then:
 ```
-rosrun eva_behavior general_behavior.py
+rosrun eva_behavior main.py
 ```
 Turn on behaviors:
 ```
@@ -84,5 +84,14 @@ rostopic  pub --once /behavior_switch std_msgs/String btree_on
 ```
 The head should now be cycling through a set of facial expressions.
 
+### Face Tracking
+As above, but also start uvc_cam and pi_vision. Note that uvc_cam
+won't automatically show up in the `ROS_PACKAGE_PATH` environment
+variable; it must be added by hand.
+```
+export ROS_PACKAGE_PATH=/path/to/uvc_cam:$ROS_PACKAGE_PATH
+roslaunch ros2opencv uvc_cam.launch device:=/dev/video1
+roslaunch pi_face_tracker face_tracker_uvc_cam.launch
+```
 
 
