@@ -13,8 +13,8 @@ information, rather than having it drive the facial responses directly.
 
 ##Prerequisites
 pi_vision is needed. See
-(pi_vision)[https://github.com/hansonrobotics/pi_vision] for install &
-run details.  Start pi_vision running.
+[pi_vision](https://github.com/hansonrobotics/pi_vision) for install &
+run details.
 
 ## Running, Testing
  * Make sure pi_vision is running.
