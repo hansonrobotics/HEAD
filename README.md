@@ -59,12 +59,16 @@ roslaunch pi_face_tracker face_tracker_uvc_cam.launch
 ROS Nodes
 =========
 
-## /faces3d
-Publishes list of human faces being tracked. Each is given an ID number,
+## /faces_locations
+Publishes a list of human faces being tracked. Each is given an ID number,
 and a 3D coordinate.  The coordinate frame used is the usual ROS
 'engineering' frame: `x` is straight ahead, `y` is the the left, and `z`
 is up.  Units are in meters.
 
+## /faces_event
+Publishes face tracking events. Currently, the only events published are
+`new_face` and `lost_face`. The first indicates a newly-acquired face to
+track, the second, that a face is no longer visible.
 
 TODO
 ====

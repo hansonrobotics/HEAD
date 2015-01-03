@@ -40,8 +40,8 @@ from ros2opencv import ROS2OpenCV
 from pi_face_tracker.srv import *
 from pi_face_tracker.msg import Faces
 from pi_face_tracker.msg import Face
+from pi_face_tracker.msg import Event
 from geometry_msgs.msg import Point
-from eva_behavior.msg import event
 import time
 
 ''' Class that trackes a single face. Both 2D and 3D tracking is
@@ -300,11 +300,10 @@ class FaceBox():
 # A registery of all the faces currently visible.
 class FacesRegistry():
 
-    TOPIC_FACE_ROI = "faces/%d"
-    TOPIC_EVENT = "tracking_event"
-    TOPIC_FACES = "faces3d"
+    TOPIC_EVENT = "face_event"
+    TOPIC_FACES = "face_locations"
     EVENT_NEW_FACE = "new_face"
-    EVENT_LOST_FACE = "exit"
+    EVENT_LOST_FACE = "lost_face"
 
     def __init__(self):
         self.face_id = 0
@@ -312,7 +311,7 @@ class FacesRegistry():
         self.publishers = {}
         self.event_pub = rospy.Publisher(
             self.TOPIC_EVENT,
-            event,
+            Event,
             queue_size=10
         )
         self.faces_pub = rospy.Publisher(
@@ -332,8 +331,8 @@ class FacesRegistry():
 
         #Dispatch ROS event
         self.event_pub.publish(
-            event=self.EVENT_LOST_FACE,
-            param=str(face_id)
+            face_event = self.EVENT_LOST_FACE,
+            face_id = face_id
         )
 
     def publish_faces(self):
@@ -355,8 +354,8 @@ class FacesRegistry():
             elif keep==2:
                 # Dispatch ROS event.
                 self.event_pub.publish(
-                    event=self.EVENT_NEW_FACE,
-                    param=str(f)
+                    face_event = self.EVENT_NEW_FACE,
+                    face_id = f
                 )
 
     ''' This adds a set of faces to the registery. It is given an
