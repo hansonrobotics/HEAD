@@ -22,6 +22,7 @@ class AnimationManager():
 		# Gesture params
 		self.gesturesList = []
 		self.emotionsList = []
+		self.visemesList = []
 
 		# Head and Eye tracking parameters
 		self.headTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
@@ -47,6 +48,12 @@ class AnimationManager():
 		# global access
 		self.deformObj = bpy.data.objects['deform']
 		self.bones = bpy.data.objects['control'].pose.bones
+
+		self.availableVisemes = []
+		for action in bpy.data.actions:
+			if action.name.startswith('VIS-'):
+				self.availableVisemes.append(action)
+
 
 		if debug:
 			imp.reload(actuators)
@@ -223,8 +230,11 @@ class AnimationManager():
 		self.eyeTargetLoc.target = locBU
 
 
-	def setViseme(self):
-		pass
+	def setViseme(self, cmd, duration, rampDuration):
+		for viseme in self.availableVisemes:
+			if cmd in viseme.name:
+				self.newGesture(viseme.name, repeat=duration)
+				return viseme.name
 
 		
 	def terminate(self):
@@ -282,6 +292,15 @@ class Gesture():
 
 		self.trackRef = track
 		self.stripRef = strip
+
+
+class Viseme():
+	'''Represents a Viseme'''
+	def __init__(self, vis, duration):
+		self.vis = vis
+		self.duration = duration
+		self.time = 0
+		self.magnitude = 1.0
 
 
 def init():

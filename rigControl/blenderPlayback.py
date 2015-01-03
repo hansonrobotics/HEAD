@@ -81,6 +81,16 @@ class BLPlayback(bpy.types.Operator):
 					else:
 						eva._deleteGesture(gesture)
 
+			# update visemes
+			visemes = eva.visemesList
+			for viseme in visemes:
+				viseme.stripRef.strip_time += gesture.speed * timeScale
+
+				# compute intensity using ramp
+				...
+
+
+				
 
 			# update eye and head blending
 			headControl = eva.bones["head_target"]

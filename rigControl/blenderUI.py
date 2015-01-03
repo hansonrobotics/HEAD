@@ -112,6 +112,7 @@ class BLRigControl(bpy.types.Panel):
 		col.operator('eva.debug', text='Gaze Nil').action = 'commands.setGazeTarget([0, 0, 0])'
 
 		row = layout.row()
+		row.label(text="Physiological:")
 		eva = bpy.evaAnimationManager
 		bones = eva.deformObj.pose.bones
 		col = layout.column(align = True)
@@ -122,6 +123,15 @@ class BLRigControl(bpy.types.Panel):
 		col.prop(bones['blink_duration'], '["value"]', text='blinkDuration', slider = True)
 		col.prop(bones['breath_rate'], '["value"]', text='breathRate', slider = True)
 		col.prop(bones['breath_intensity'], '["value"]', text='breathIntensity', slider = True)
+
+		col = layout.column()
+		col.label(text="Speech:")
+		row = layout.row(align=True)
+		row.operator('eva.debug', text='A').action = 'commands.setVisemes(cmd="A")'
+		row.operator('eva.debug', text='C').action = 'commands.setVisemes(cmd="C")'
+		row.operator('eva.debug', text='E').action = 'commands.setVisemes(cmd="E")'
+		row.operator('eva.debug', text='F').action = 'commands.setVisemes(cmd="F")'
+
 
 		row = layout.row()
 		layout.label(text="Debug:")
