@@ -616,7 +616,12 @@ class Tree():
             ##### Show A Positive Expression #####
             sum = 0
             random_number = random.random()
-            for i in range(0, len(self.blackboard["boring_emotions_probabilities"])):
+            # XXX FIXME: the list of boring_emotions might be shorter or
+            # longer than boring_emotions_probabilities, because it was
+            # revised based on the available emotional states. In particular,
+            # the probabilities probably don't total to 1.0. This needs fixing.
+            # See get_emotion_states() below.
+            for i in range(0, len(self.blackboard["boring_emotions"])):
                 sum += self.blackboard["boring_emotions_probabilities"][i]
                 if random_number <= sum:
                     expression_to_show = self.blackboard["boring_emotions"][i]
@@ -738,6 +743,9 @@ class Tree():
 
     # Get the list of available emotions. Update our master list, and
     # cull the various subclasses.
+    # XXX FIXME: this is not really right: the subclasses have associated
+    # probabilities. The revised subclasses could be either fewer or
+    # *greater* in number; these should be handled.
     def get_emotion_states_cb(self, msg) :
         print("Available Emotion States:" + str(msg.data))
         # Update the complete list of emtions.
