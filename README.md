@@ -73,9 +73,16 @@ params (time to track).
 ## Cookbook
 Below follows a list of examples and demos.
 
-### Start 
+### Baic random emotion cycling
+Start up one of the blender heads, then:
+```
+rosrun eva_behavior general_behavior.py
+```
 Turn on behaviors:
-`rostopic  pub --once /behavior_switch std_msgs/String btree_on`
+```
+rostopic  pub --once /behavior_switch std_msgs/String btree_on
+```
+The head should now be cycling through a set of facial expressions.
 
 
 

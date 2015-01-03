@@ -10,6 +10,8 @@ import os
 from std_msgs.msg import String
 from eva_behavior.msg import event
 from eva_behavior.msg import tracking_action
+
+from blender_api_msgs.msg import AvailableEmotionStates, AvailableGestures
 from blender_api_msgs.msg import EmotionState
 from blender_api_msgs.msg import SetGesture
 
@@ -105,6 +107,12 @@ class Tree():
         ##### ROS Connections #####
         rospy.Subscriber("behavior_switch", String, self.behavior_switch_callback)
         rospy.Subscriber("/tracking_event", event, self.tracking_event_callback)
+
+        rospy.Subscriber("/blender_api/available_emotion_states",
+            AvailableEmotionStates, self.get_emotion_states_cb)
+
+        rospy.Subscriber("/blender_api/available_gestures",
+            AvailableGestures, self.get_gestures_cb)
 
         # cmd_blendermode needs to go away eventually...
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
@@ -278,6 +286,7 @@ class Tree():
                     ),
 
                     ############### Scripted Performance System ###############
+                    # This only executes when scripting is turned off.
                     owyl.sequence(
                         self.idle_spin(),
                         self.is_scripted_performance_system_on(),
@@ -287,11 +296,13 @@ class Tree():
             )
         return owyl.visit(eva_behavior_tree, blackboard=self.blackboard)
 
+    # Print a single status message
     @owyl.taskmethod
     def print_status(self, **kwargs):
         print kwargs["str"]
         yield True
 
+    # Print emotional state
     @owyl.taskmethod
     def sync_variables(self, **kwargs):
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
@@ -605,7 +616,12 @@ class Tree():
             ##### Show A Positive Expression #####
             sum = 0
             random_number = random.random()
-            for i in range(0, len(self.blackboard["boring_emotions_probabilities"])):
+            # XXX FIXME: the list of boring_emotions might be shorter or
+            # longer than boring_emotions_probabilities, because it was
+            # revised based on the available emotional states. In particular,
+            # the probabilities probably don't total to 1.0. This needs fixing.
+            # See get_emotion_states() below.
+            for i in range(0, len(self.blackboard["boring_emotions"])):
                 sum += self.blackboard["boring_emotions_probabilities"][i]
                 if random_number <= sum:
                     expression_to_show = self.blackboard["boring_emotions"][i]
@@ -711,6 +727,44 @@ class Tree():
                 # If the robot lost the new face during the initial interaction, reset new_face variable
                 if self.blackboard["new_face"] == self.blackboard["lost_face"]:
                     self.blackboard["new_face"] = ""
+
+    # Return the subset of 'core' strings that are in 'avail' strings.
+    # Note that 'avail' strings might contain longer names,
+    # e.g. "happy-3", whereas core just contains "happy". We want to
+    # return "happy-3" in that case, as well as happy-2 and happy-1
+    # if they are there.
+    def set_intersect(self, core, avail) :
+        rev = []
+        for e in core:
+            for a in avail:
+                if e in a:
+                    rev.append(a)
+        return rev
+
+    # Get the list of available emotions. Update our master list, and
+    # cull the various subclasses.
+    # XXX FIXME: this is not really right: the subclasses have associated
+    # probabilities. The revised subclasses could be either fewer or
+    # *greater* in number; these should be handled.
+    def get_emotion_states_cb(self, msg) :
+        print("Available Emotion States:" + str(msg.data))
+        # Update the complete list of emtions.
+        self.blackboard["emotions"] = msg.data
+        # Reconcile the other classes
+        self.blackboard["frustrated_emotions"] = \
+            self.set_intersect(self.blackboard["frustrated_emotions"], msg.data)
+        self.blackboard["positive_emotions"] = \
+            self.set_intersect(self.blackboard["positive_emotions"], msg.data)
+        self.blackboard["boring_emotions"] = \
+            self.set_intersect(self.blackboard["boring_emotions"], msg.data)
+        self.blackboard["sleep_emotions"] = \
+            self.set_intersect(self.blackboard["sleep_emotions"], msg.data)
+        self.blackboard["wake_up_emotions"] = \
+            self.set_intersect(self.blackboard["wake_up_emotions"], msg.data)
+
+
+    def get_gestures_cb(self, msg) :
+        print("Available Gestures:" + str(msg.data))
 
     # Turn behaviors on and off.
     def behavior_switch_callback(self, data):
