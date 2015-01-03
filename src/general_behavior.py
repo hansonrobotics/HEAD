@@ -693,6 +693,7 @@ class Tree():
         self.blackboard["lost_face"] = ""
         yield True
 
+    # XXX old-style API -- should be removed.
     @owyl.taskmethod
     def start_scripted_performance_system(self, **kwargs):
         if self.blackboard["blender_mode"] != "Dummy":
@@ -777,6 +778,3 @@ class Tree():
             self.blackboard["is_scripted_performance_system_on"] = True
             print "Behavior Tree is OFF!"
 
-if __name__ == "__main__":
-    rospy.init_node("Eva_Behavior")
-    tree = Tree()
