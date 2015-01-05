@@ -1,6 +1,7 @@
 # eva_behavior
 
-Initial behaviour tree for Eva. Current verion designed to work with Dmitroid robot and current nodes already developed.
+Initial behaviour tree for Eva. Current verion designed to work with
+Dmitroid robot and current nodes already developed.
 
 ## Pre-requisites
 
@@ -27,7 +28,11 @@ This is meant to be used in conjuction with several ROS nodes:
 To run, start the robo_blender, perception, pi_vision and uvc_cam nodes.
 Then
 
-`rosrun eva_behavior general_behavior.py`
+`rosrun eva_behavior main.py`
+
+Don't forget to:
+* catkin build
+* source devel/setup.bash
 
 
 ## ROS Messaging API
