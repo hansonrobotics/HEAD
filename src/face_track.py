@@ -122,7 +122,11 @@ class FaceTrack:
 
 		self.gaze_at = faceid
 
-	# Turn entire head to look at the given target face; track that face.
+	# Turn entire head to look at the given target face. The head-turn is
+	# performed only once per call; after that, the eyes will then
+	# automatically track that face, but the head will not.  Call again,
+	# to make the head move again.
+	#
 	def look_at_face(self, faceid):
 		print ("look at: " + str(faceid))
 
@@ -202,7 +206,7 @@ class FaceTrack:
 			str(self.face_locations.keys())
 
 
-
+	# ----------------------------------------------------------
 	# Main look-at action driver.  Should be called at least a few times
 	# per second.  This publishes all of the eye-related actions that the
 	# blender api robot head should be performing.
@@ -213,30 +217,29 @@ class FaceTrack:
 	# 3) If we should be looking at one of these faces, then look
 	#    at it, now.
 	def do_look_at_actions(self) :
-		# If the location of a face has not been reported in a while,
-		# remove it from the active list, and put it on the recently-seen
-		# list. We should have gotten a lost face message for this,
-		# but these do not always seem reliable.
 		now = time.time()
-		if (now - self.last_vacuum > self.VACUUM_INTERVAL):
-			self.last_vacuum = now
-			for fid in self.face_locations.keys():
-				face = self.face_locations[fid]
-				if (now - face.t > self.VACUUM_INTERVAL):
-					self.recent_locations[fid] = self.face_locations[fid]
-					del self.face_locations[fid]
-
-			for fid in self.recent_locations.keys():
-				face = self.recent_locations[fid]
-				if (now - face.t > self.RECENT_INTERVAL):
-					del self.recent_locations[fid]
-
 
 		# Publish a new lookat target to the blender API
 		if (now - self.last_lookat > self.LOOKAT_INTERVAL):
 			self.last_lookat = now
 
-			if 0 != self.look_at:
+			# Update the eye position, if need be. Skip, if there
+			# is also a pending look-at to perform.
+			if 0 < self.gaze_at and self.look_at <= 0:
+				print("Gaze at id " + str(self.gaze_at))
+				try:
+					face = self.face_locations[self.gaze_at]
+				except KeyError:
+					print("Error: no gaze-at target")
+					self.gaze_at_face(0)
+					return
+				trg = Target()
+				trg.x = face.x
+				trg.y = face.y
+				trg.z = face.z
+				self.gaze_pub.publish(trg)
+
+			if 0 < self.look_at:
 				print("Look at id " + str(self.look_at))
 				try:
 					face = self.face_locations[self.look_at]
@@ -250,19 +253,33 @@ class FaceTrack:
 				trg.z = face.z
 				self.look_pub.publish(trg)
 
-			if 0 != self.gaze_at:
-				print("Gaze at id " + str(self.gaze_at))
-				try:
-					face = self.face_locations[self.gaze_at]
-				except KeyError:
-					print("Error: no gaze-at target")
-					self.gaze_at_face(0)
-					return
-				trg = Target()
-				trg.x = face.x
-				trg.y = face.y
-				trg.z = face.z
-				self.gaze_pub.publish(trg)
+				# Now that we've turned to face the target, don't do it
+				# again; instead, just track with the eyes.
+				self.gaze_at = self.look_at
+				self.look_at = -1
+
+		# General housecleaning.
+		# If the location of a face has not been reported in a while,
+		# remove it from the active list, and put it on the recently-seen
+		# list. We should have gotten a lost face message for this,
+		# but these do not always seem reliable.
+		if (now - self.last_vacuum > self.VACUUM_INTERVAL):
+			self.last_vacuum = now
+			for fid in self.face_locations.keys():
+				face = self.face_locations[fid]
+				if (now - face.t > self.VACUUM_INTERVAL):
+					self.recent_locations[fid] = self.face_locations[fid]
+					del self.face_locations[fid]
+
+			# Vacuum out the recent locations as well.
+			for fid in self.recent_locations.keys():
+				face = self.recent_locations[fid]
+				if (now - face.t > self.RECENT_INTERVAL):
+					del self.recent_locations[fid]
+
+
+	# ----------------------------------------------------------
+	# pi_vision ROS callbacks
 
 	# pi_vision ROS callback, called when a new face is detected,
 	# or a face is lost.  Note: I don't think this is really needed,
