@@ -202,41 +202,17 @@ class FaceTrack:
 			str(self.face_locations.keys())
 
 
-	# pi_vision ROS callback, called when a new face is detected,
-	# or a face is lost.  Note: I don't think this is really needed,
-	# the face_loc_cb accomplishes the same thing. So maybe should
-	# remove this someday.
-	def face_event_cb(self, data):
-		if data.face_event == self.EVENT_NEW_FACE:
-			self.add_face(data.face_id)
 
-		elif data.face_event == self.EVENT_LOST_FACE:
-			self.remove_face(data.face_id)
-
-	# pi_vision ROS callback, called to update the location of the
-	# visible faces.  This performs multiple actions:
+	# Main look-at action driver.  Should be called at least a few times
+	# per second.  This publishes all of the eye-related actions that the
+	# blender api robot head should be performing.
+	#
+	# This performs multiple actions:
 	# 1) updates the list of currently visible faces
 	# 2) updates the list of recently seen (but now lost) faces
 	# 3) If we should be looking at one of these faces, then look
 	#    at it, now.
-	def face_loc_cb(self, data):
-		for face in data.faces:
-			fid = face.id
-			loc = face.point
-			inface = Face(fid, loc)
-
-			# Sanity check.  Sometimes pi_vision sends us faces with
-			# location (0,0,0). Discard these.
-			if loc.x < 0.05:
-				continue
-
-			self.add_face(fid)
-			self.face_locations[fid] = inface
-
-			# If we see it now, its not 'recently seen' any longer.
-			if fid in self.recent_locations:
-				del self.recent_locations[fid]
-
+	def do_look_at_actions(self) :
 		# If the location of a face has not been reported in a while,
 		# remove it from the active list, and put it on the recently-seen
 		# list. We should have gotten a lost face message for this,
@@ -287,3 +263,39 @@ class FaceTrack:
 				trg.y = face.y
 				trg.z = face.z
 				self.gaze_pub.publish(trg)
+
+	# pi_vision ROS callback, called when a new face is detected,
+	# or a face is lost.  Note: I don't think this is really needed,
+	# the face_loc_cb accomplishes the same thing. So maybe should
+	# remove this someday.
+	def face_event_cb(self, data):
+		if data.face_event == self.EVENT_NEW_FACE:
+			self.add_face(data.face_id)
+
+		elif data.face_event == self.EVENT_LOST_FACE:
+			self.remove_face(data.face_id)
+
+	# pi_vision ROS callback, called when pi_vision has new face
+	# location data for us. Because tis happens frequently (10x/second)
+	# we also use this as the main update loop, and drive all look-at
+	# actions from here.
+	def face_loc_cb(self, data):
+		for face in data.faces:
+			fid = face.id
+			loc = face.point
+			inface = Face(fid, loc)
+
+			# Sanity check.  Sometimes pi_vision sends us faces with
+			# location (0,0,0). Discard these.
+			if loc.x < 0.05:
+				continue
+
+			self.add_face(fid)
+			self.face_locations[fid] = inface
+
+			# If we see it now, its not 'recently seen' any longer.
+			if fid in self.recent_locations:
+				del self.recent_locations[fid]
+
+		# Now perform all the various looking-at actions
+		do_look_at_actions()
