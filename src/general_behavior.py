@@ -26,7 +26,6 @@ import time
 import ConfigParser
 import os
 from std_msgs.msg import String
-from eva_behavior.msg import tracking_action
 
 from blender_api_msgs.msg import AvailableEmotionStates, AvailableGestures
 from blender_api_msgs.msg import EmotionState
@@ -140,7 +139,6 @@ class Tree():
 
         # cmd_blendermode needs to go away eventually...
         self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
-        self.action_pub = rospy.Publisher("/tracking_action", tracking_action, queue_size=5, latch=True)
         self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state", EmotionState, queue_size=1)
         self.gesture_pub = rospy.Publisher("/blender_api/set_gesture", SetGesture, queue_size=1)
         self.tree = self.build_tree()
@@ -373,7 +371,7 @@ class Tree():
     @owyl.taskmethod
     def is_someone_arrived(self, **kwargs):
         self.blackboard["is_interruption"] = False
-        if self.blackboard["new_face"]:
+        if self.blackboard["new_face"] > 0:
             print "----- Someone Arrived!"
             yield True
         else:
@@ -382,7 +380,7 @@ class Tree():
     @owyl.taskmethod
     def is_someone_left(self, **kwargs):
         self.blackboard["is_interruption"] = False
-        if len(self.blackboard["lost_face"]) > 0:
+        if self.blackboard["lost_face"] > 0:
             print "----- Someone Left!"
             yield True
         else:
@@ -414,7 +412,7 @@ class Tree():
     @owyl.taskmethod
     def was_interacting_with_that_person(self, **kwargs):
         if self.blackboard["current_face_target"] == self.blackboard["lost_face"]:
-            self.blackboard["current_face_target"] = ""
+            self.blackboard["current_face_target"] = 0
             print "----- Was Interacting With That Person!"
             yield True
         else:
@@ -516,12 +514,9 @@ class Tree():
         face_id = self.blackboard[kwargs["id"]]
         duration = random.uniform(self.blackboard["min_duration_for_interaction"], self.blackboard["max_duration_for_interaction"])
         interval = 0.01
-        action = tracking_action()
-        action.target = "/faces/" + face_id
-        action.action = "track"
-        action.params = ""
-        self.action_pub.publish(action)
-        print "----- Is Interacting With Face(id:" + face_id + ") for " + str(duration)[:5] + " seconds"
+        self.facetrack.look_at_face(face_id)
+
+        print "----- Interacting w/Face(id:" + str(face_id) + ") for " + str(duration)[:5] + " seconds"
         if time.time() - self.blackboard["show_expression_since"] >= 2.0 or kwargs["new_face"]:
             ##### Show A Random Instant Expression #####
             if random.random() <= self.blackboard["show_expressions_other_than_positive_probabilities"]:
@@ -551,34 +546,24 @@ class Tree():
     @owyl.taskmethod
     def glance_at(self, **kwargs):
         face_id = self.blackboard[kwargs["id"]]
-        action = tracking_action()
-        action.target = "/faces/" + face_id
-        action.action = "glance"
-        action.params = ""
-        self.action_pub.publish(action)
-        print "----- Glancing At Face(id:" + face_id + ")"
+        print "----- Glancing at face:" + str(face_id)
+        glance_seconds = 1
+        self.facetrack.glance_at_face(face_id, glance_seconds)
         yield True
 
     @owyl.taskmethod
     def glance_at_new_face(self, **kwargs):
         face_id = self.blackboard["new_face"]
-        action = tracking_action()
-        action.target = "/faces/" + face_id
-        action.action = "glance"
-        action.params = ""
-        self.action_pub.publish(action)
-        print "----- Glancing At The New Face(id:" + face_id + ")"
+        print "----- Glancing at new face:" + str(face_id)
+        glance_seconds = 1
+        self.facetrack.glance_at_face(face_id, glance_seconds)
         yield True
 
     @owyl.taskmethod
     def glance_at_lost_face(self, **kwargs):
-        print "----- Glancing At The Lost Face(id:" + self.blackboard["lost_face"] + ")"
+        print "----- Glancing at lost face:" + str(self.blackboard["lost_face"])
         face_id = self.blackboard["lost_face"]
-        action = tracking_action()
-        action.target = "/faces/" + face_id
-        action.action = "glance"
-        action.params = ""
-        self.action_pub.publish(action)
+        self.facetrack.glance_at_face(face_id, 1)
         yield True
 
     @owyl.taskmethod
@@ -707,14 +692,14 @@ class Tree():
     @owyl.taskmethod
     def clear_new_face_target(self, **kwargs):
         if not self.blackboard["is_interruption"]:
-            print "----- Cleared New Face: " + self.blackboard["new_face"]
-            self.blackboard["new_face"] = ""
+            print "----- Cleared New Face: " + str(self.blackboard["new_face"])
+            self.blackboard["new_face"] = 0
         yield True
 
     @owyl.taskmethod
     def clear_lost_face_target(self, **kwargs):
-        print "----- Cleared Lost Face: " + self.blackboard["lost_face"]
-        self.blackboard["lost_face"] = ""
+        print "----- Cleared Lost Face: " + str(self.blackboard["lost_face"])
+        self.blackboard["lost_face"] = 0
         yield True
 
     # XXX old-style API -- should be removed.
