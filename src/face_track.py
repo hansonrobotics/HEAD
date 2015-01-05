@@ -72,9 +72,6 @@ class FaceTrack:
 		self.blackboard["new_face"] = faceid
 		self.blackboard["background_face_targets"].append(faceid)
 
-		print "New face added to visibile faces: " + \
-			str(self.blackboard["background_face_targets"])
-
 	# Remove a face from the Owyl blackboard.
 	def remove_face_from_bb(self, fid):
 
@@ -90,15 +87,16 @@ class FaceTrack:
 		if self.blackboard["new_face"] == fid :
 			self.blackboard["new_face"] = ""
 
-		print "Lost face; visibile faces now: " + \
-			str(self.blackboard["background_face_targets"])
-
 	# Start tracking a face
 	def add_face(self, faceid):
 		if faceid in self.visible_faces:
 			return
 
 		self.visible_faces.append(faceid)
+
+		print "New face added to visibile faces: " + \
+			str(self.face_locations.keys()))
+
 
 	# Stop tracking a face
 	def remove_face(self, faceid):
@@ -107,6 +105,10 @@ class FaceTrack:
 
 		if faceid in self.face_locations:
 			del self.face_locations[faceid]
+
+		# print "Lost face; visibile faces now: " + str(self.visible_faces))
+		print "Lost face; visibile faces now: " + \
+			str(self.face_locations.keys()))
 
 
 	def face_event_cb(self, data):
