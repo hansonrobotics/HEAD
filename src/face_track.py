@@ -67,6 +67,9 @@ class FaceTrack:
 		# Current look-at-target
 		self.look_at = 0
 		self.gaze_at = 0
+		self.glance_at = 0
+		self.last_glance = 0
+		self.glance_howlong = -1
 
 		# How often we update the look-at target.
 		self.LOOKAT_INTERVAL = 1
@@ -147,9 +150,8 @@ class FaceTrack:
 
 	def glance_at_face(self, faceid, howlong):
 		print("glance at: " + str(faceid) + " for " + str(howlong) + " seconds")
-		print("XXX TODO NOT IMPLEMENTED")
-		# XXX we will be asked to glance at faces that have disappeared... 
-		# So we will need to keep track of those.
+		self.glance_at = faceid
+		self.glance_howlong = howlong
 
 	# ---------------------------------------------------------------
 	# Private functions, not for use outside of this class.

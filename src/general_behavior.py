@@ -547,14 +547,16 @@ class Tree():
     def glance_at(self, **kwargs):
         face_id = self.blackboard[kwargs["id"]]
         print "----- Glancing at face:" + str(face_id)
-        self.facetrack.glance_at_face(face_id, 1)
+        glance_seconds = 1
+        self.facetrack.glance_at_face(face_id, glance_seconds)
         yield True
 
     @owyl.taskmethod
     def glance_at_new_face(self, **kwargs):
         face_id = self.blackboard["new_face"]
         print "----- Glancing at new face:" + str(face_id)
-        self.facetrack.glance_at_face(face_id, 1)
+        glance_seconds = 1
+        self.facetrack.glance_at_face(face_id, glance_seconds)
         yield True
 
     @owyl.taskmethod
