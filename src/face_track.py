@@ -127,6 +127,12 @@ class FaceTrack:
 
 		self.look_at = faceid
 
+	def glance_at_face(self, faceid, howlong):
+		print("glance at: " + str(faceid) + " for " + str(jhowlong) + " seconds")
+		print("XXX TODO NOT IMPLEMENTED")
+		# XXX we will be asked to glance at faces that have disappeared... 
+		# So we will need to keep track of those.
+
 	# Private functions, not for use outside of this class.
 	# Add a face to the Owyl blackboard.
 	def add_face_to_bb(self, faceid):
