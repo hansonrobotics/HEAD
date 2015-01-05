@@ -93,24 +93,34 @@ class FaceTrack:
 		print "Lost face; visibile faces now: " + \
 			str(self.blackboard["background_face_targets"])
 
+	# Start tracking a face
+	def add_face(self, faceid):
+		if faceid in self.visible_faces:
+			return
+
+		self.visible_faces.append(faceid)
+
+	# Stop tracking a face
+	def remove_face(self, faceid):
+		if faceid in self.visible_faces:
+			self.visible_faces.remove(faceid)
+
+		if faceid in self.face_locations:
+			del self.face_locations[faceid]
+
+
 	def face_event_cb(self, data):
 		if data.face_event == self.EVENT_NEW_FACE:
 
 			# Keep track of the visible faces.
-			self.visible_faces.append(data.face_id)
+			self.add_face(data.face_id)
 			self.add_face_to_bb(data.face_id)
 
 		elif data.face_event == self.EVENT_LOST_FACE:
-			fid = data.face_id
 
 			# Keep track of the visible faces.
-			self.remove_face_from_bb(fid)
-
-			if fid in self.visible_faces:
-				self.visible_faces.remove(fid)
-
-			if fid in self.face_locations:
-				del self.face_locations[fid]
+			self.remove_face(data.face_id)
+			self.remove_face_from_bb(data.face_id)
 
 	def face_loc_cb(self, data):
 		for face in data.faces:
