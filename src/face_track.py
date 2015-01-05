@@ -45,8 +45,19 @@ class FaceTrack:
 
 		print("Starting Face Tracker")
 		self.blackboard = owyl_bboard
+
+		# List of currently visible faces
 		self.visible_faces = []
+		# List of locations of currently visible faces
 		self.face_locations = {}
+
+		# Current look-at-target
+		self.look_at = 0
+		self.gaze_at = 0
+
+		# How often we update the look-at target.
+		self.LOOKAT_INTERVAL = 1
+		self.last_lookat = 0
 
 		# Last time that the list of active faces was vacuumed out.
 		self.last_vacuum = 0
@@ -70,7 +81,7 @@ class FaceTrack:
 		rospy.Subscriber(self.TOPIC_FACE_LOCATIONS, Faces, self.face_loc_cb)
 
 		# Where to look
-		self.face_pub = rospy.Publisher(self.TOPIC_FACE_TARGET, \
+		self.look_pub = rospy.Publisher(self.TOPIC_FACE_TARGET, \
 			Target, queue_size=10)
 
 		self.gaze_pub = rospy.Publisher(self.TOPIC_GAZE_TARGET, \
@@ -80,12 +91,29 @@ class FaceTrack:
 
 	# Turn only the eyes towards the given target face; track that face.
 	def gaze_at_face(self, faceid):
-		print ("gaze at: " + str(faceid)
-		# self.face_pub.publish()
+		print ("gaze at: " + str(faceid))
+
+		# Look at neutral position
+		# if 0 == faceid :
+		#	self.gaze_pub ... 
+
+		self.last_lookat = 0
+		if faceid not in self.visible_faces :
+			self.gaze_at = 0
+			return
+
+		self.gaze_at = faceid
 
 	# Turn entire head to look at the given target face; track that face.
 	def look_at_face(self, faceid):
-		print ("look at: " + str(faceid)
+		print ("look at: " + str(faceid))
+
+		self.last_lookat = 0
+		if faceid not in self.visible_faces :
+			self.look_at = 0
+			return
+
+		self.look_at = faceid
 
 	# Private functions, not for use outside of this class.
 	# Add a face to the Owyl blackboard.
@@ -176,3 +204,26 @@ class FaceTrack:
 				if (now - face.t > self.VACUUM_INTERVAL):
 					del self.face_locations[fid]
 
+		# Publish a new lookat target to the blender API
+		if (now - self.last_lookat > self.LOOKAT_INTERVAL):
+			if 0 != self.look_at:
+				face = self.face_locations[self.look_at]
+				if not face:
+					self.look_at_face(0)
+					return
+				trg = Target()
+				trg.x = face.x
+				trg.y = face.y
+				trg.z = face.z
+				self.look_pub(trg)
+
+			if 0 != self.gaze_at:
+				face = self.face_locations[self.gaze_at]
+				if not face:
+					self.gaze_at_face(0)
+					return
+				trg = Target()
+				trg.x = face.x
+				trg.y = face.y
+				trg.z = face.z
+				self.gaze_pub(trg)
