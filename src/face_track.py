@@ -18,7 +18,7 @@
 
 from owyl import blackboard
 import rospy
-from pi_face_tracker.msg import FaceEvent
+from pi_face_tracker.msg import FaceEvent, Faces
 
 # A registery of all the faces currently visible.
 # Copies face data to owyl blackboard.
@@ -35,27 +35,36 @@ class FaceTrack:
 		self.EVENT_NEW_FACE = "new_face"
 		self.EVENT_LOST_FACE = "lost_face"
 
+		self.TOPIC_FACE_LOCATIONS = "face_locations"
+
 		# Face appearance/disappearance from pi_vision
 		rospy.Subscriber(self.TOPIC_FACE_EVENT, FaceEvent, self.face_event_cb)
 
 		# Face location information from pi_vision
+		rospy.Subscriber(self.TOPIC_FACE_LOCATIONS, Faces, self.face_loc_cb)
 
 	def face_event_cb(self, data):
 		self.blackboard["is_interruption"] = True
 		if data.face_event == self.EVENT_NEW_FACE:
-			self.blackboard["new_face"] = str(data.face_id)
-			self.blackboard["background_face_targets"].append(self.blackboard["new_face"])
+			str_id = str(data.face_id)
+			self.blackboard["new_face"] = str_id
+			self.blackboard["background_face_targets"].append(str_id)
 			print "New face added to visibile faces: " + \
 				str(self.blackboard["background_face_targets"])
 
 		elif data.face_event == self.EVENT_LOST_FACE:
-			if data.face_id in self.blackboard["background_face_targets"]:
-				self.blackboard["lost_face"] = str(data.face_id)
-				self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
+			str_id = str(data.face_id)
+			if str_id in self.blackboard["background_face_targets"]:
+				self.blackboard["lost_face"] = str_id
+				self.blackboard["background_face_targets"].remove(str_id)
 				# If the robot lost the new face during the initial
 				# interaction, reset new_face variable
-				if self.blackboard["new_face"] == self.blackboard["lost_face"]:
+				if self.blackboard["new_face"] == str_id :
 					self.blackboard["new_face"] = ""
 
 				print "Lost face; visibile faces now: " + \
 					str(self.blackboard["background_face_targets"])
+
+	def face_loc_cb(self, data):
+		# print("duude ola:" + str(data))
+		print("")
