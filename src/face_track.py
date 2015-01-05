@@ -1,7 +1,7 @@
 #
 # face_track.py -  Registery and tracking of faces
-# Copyright (C) 2014  Hanson Robotics
-# Copyright (C) 2014  Linas Vepstas
+# Copyright (C) 2014,2015  Hanson Robotics
+# Copyright (C) 2015 Linas Vepstas
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,6 +22,7 @@ import time
 from owyl import blackboard
 import rospy
 from pi_face_tracker.msg import FaceEvent, Faces
+from blender_api_msgs.msg import Target
 
 # A Face. Currently consists only of an ID number, a 3D location,
 # and the time it was last seen.  Should be extended to include
@@ -51,12 +52,16 @@ class FaceTrack:
 		self.last_vacuum = 0
 		self.VACUUM_INTERVAL = 1
 
-		# pi_vision topics and events
+		# Subscribed pi_vision topics and events
 		self.TOPIC_FACE_EVENT = "face_event"
 		self.EVENT_NEW_FACE = "new_face"
 		self.EVENT_LOST_FACE = "lost_face"
 
 		self.TOPIC_FACE_LOCATIONS = "face_locations"
+
+		# Published blender_api topics
+		self.TOPIC_FACE_TARGET = "/blender_api/set_face_target"
+		self.TOPIC_GAZE_TARGET = "/blender_api/set_gaze_target"
 
 		# Face appearance/disappearance from pi_vision
 		rospy.Subscriber(self.TOPIC_FACE_EVENT, FaceEvent, self.face_event_cb)
@@ -64,7 +69,25 @@ class FaceTrack:
 		# Face location information from pi_vision
 		rospy.Subscriber(self.TOPIC_FACE_LOCATIONS, Faces, self.face_loc_cb)
 
+		# Where to look
+		self.face_pub = rospy.Publisher(self.TOPIC_FACE_TARGET, \
+			Target, queue_size=10)
 
+		self.gaze_pub = rospy.Publisher(self.TOPIC_GAZE_TARGET, \
+			Target, queue_size=10)
+
+	# Public API. Use these to get things done.
+
+	# Turn only the eyes towards the given target face; track that face.
+	def gaze_at_face(self, faceid):
+		print ("gaze at: " + str(faceid)
+		# self.face_pub.publish()
+
+	# Turn entire head to look at the given target face; track that face.
+	def look_at_face(self, faceid):
+		print ("look at: " + str(faceid)
+
+	# Private functions, not for use outside of this class.
 	# Add a face to the Owyl blackboard.
 	def add_face_to_bb(self, faceid):
 
