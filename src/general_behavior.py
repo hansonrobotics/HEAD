@@ -605,14 +605,17 @@ class Tree():
 	def show_frustrated_expression(self, **kwargs):
 		random_number = random.random()
 		sum = 0
-		for i in range(0, len(self.blackboard["frustrated_emotions_probabilities"])):
-			sum += self.blackboard["frustrated_emotions_probabilities"][i]
+		emos = self.blackboard["frustrated_emotions"]
+		for emo in emos:
+			sum += emo.probability
 			if random_number <= sum:
-				expression_to_show = self.blackboard["frustrated_emotions"][i]
-				intensity_min = self.blackboard["frustrated_emotions_intensities_min"][i]
-				intensity_max = self.blackboard["frustrated_emotions_intensities_max"][i]
+				expression_to_show = emo.name
+				intensity_min = emo.min_intensity
+				intensity_max = emo.max_intensity
+				duration_seconds = 15 # XXX make this configuraable!?
 				break
-		self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
+		self.show_emotion(expression_to_show, \
+			random.uniform(intensity_min, intensity_max), duration_seconds)
 		yield True
 
 	# Accept an expression name, intentisty and duration, and publish it
