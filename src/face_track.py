@@ -68,7 +68,7 @@ class FaceTrack:
 		self.look_at = 0
 		self.gaze_at = 0
 		self.glance_at = 0
-		self.last_glance = 0
+		self.first_glance = -1
 		self.glance_howlong = -1
 
 		# How often we update the look-at target.
@@ -152,6 +152,7 @@ class FaceTrack:
 		print("glance at: " + str(faceid) + " for " + str(howlong) + " seconds")
 		self.glance_at = faceid
 		self.glance_howlong = howlong
+		self.first_glance = -1
 
 	# ---------------------------------------------------------------
 	# Private functions, not for use outside of this class.
@@ -221,8 +222,39 @@ class FaceTrack:
 	def do_look_at_actions(self) :
 		now = time.time()
 
+		# Should we be glancing elsewhere? If so, then do it, and
+		# do it actively, i.e. track that face intently.
+		if 0 < self.glance_at:
+			if self.first_glance < 0:
+				self.first_glance = now
+			if (now - self.first_glance < self.glance_howlong):
+				face = None
+
+				# If not a currently visible face, then maybe it was visible
+				# recently.
+				if self.glance_at in self.face_locations.keys() :
+					face = self.face_locations[self.glance_at]
+				elif self.glance_at in self.recent_locations.keys() :
+					face = self.recent_locations[self.glance_at]
+
+				if face:
+					trg = Target()
+					trg.x = face.x
+					trg.y = face.y
+					trg.z = face.z
+					self.gaze_pub.publish(trg)
+				else :
+					print("Error: no face to glance at!")
+					self.glance_at = 0
+					self.first_flance = -1
+
+			else :
+				# We are done with the glance. Resume normal operations.
+				self.glance_at = 0
+				self.first_glance = -1
+
 		# Publish a new lookat target to the blender API
-		if (now - self.last_lookat > self.LOOKAT_INTERVAL):
+		elif (now - self.last_lookat > self.LOOKAT_INTERVAL):
 			self.last_lookat = now
 
 			# Update the eye position, if need be. Skip, if there
