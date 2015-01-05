@@ -26,6 +26,7 @@ class FaceTrack:
 
 	def __init__(self, owyl_bboard):
 
+		print("Starting Face Tracker")
 		self.blackboard = owyl_bboard
 		self.visible_faces = []
 
@@ -34,19 +35,21 @@ class FaceTrack:
 		self.EVENT_NEW_FACE = "new_face"
 		self.EVENT_LOST_FACE = "lost_face"
 
-		# Face location information from pi_vision
+		# Face appearance/disappearance from pi_vision
 		rospy.Subscriber(self.TOPIC_FACE_EVENT, FaceEvent, self.face_event_cb)
+
+		# Face location information from pi_vision
 
 	def face_event_cb(self, data):
 		self.blackboard["is_interruption"] = True
 		if data.face_event == self.EVENT_NEW_FACE:
-			print "<< Interruption >> New Face Detected: " + data.face_id
-			self.blackboard["new_face"] = data.face_id
+			print "<< Interruption >> New Face Detected: " + str(data.face_id)
+			self.blackboard["new_face"] = str(data.face_id)
 			self.blackboard["background_face_targets"].append(self.blackboard["new_face"])
 		elif data.face_event == self.EVENT_LOST_FACE:
-			print "<< Interruption >> Lost Face Detected: " + data.face_id
+			print "<< Interruption >> Lost Face Detected: " + str(data.face_id)
 			if data.face_id in self.blackboard["background_face_targets"]:
-				self.blackboard["lost_face"] = data.face_id
+				self.blackboard["lost_face"] = str(data.face_id)
 				self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
 				# If the robot lost the new face during the initial
 				# interaction, reset new_face variable
