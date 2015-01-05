@@ -206,8 +206,6 @@ class FaceTrack:
 			self.add_face(fid)
 			self.face_locations[fid] = inface
 
-			self.gaze_at = fid
-
 		# If the location of a face has not been reported in a while,
 		# remove it from the list. We should have gotten a lost face
 		# message for this, but these do not always seem reliable.
@@ -223,8 +221,8 @@ class FaceTrack:
 		if (now - self.last_lookat > self.LOOKAT_INTERVAL):
 			self.last_lookat = now
 
-			print("Look at id " + str(self.gaze_at))
 			if 0 != self.look_at:
+				print("Look at id " + str(self.look_at))
 				try:
 					face = self.face_locations[self.look_at]
 				except KeyError:
@@ -237,8 +235,8 @@ class FaceTrack:
 				trg.z = face.z
 				self.look_pub.publish(trg)
 
-			print("Gaze at id " + str(self.gaze_at))
 			if 0 != self.gaze_at:
+				print("Gaze at id " + str(self.gaze_at))
 				try:
 					face = self.face_locations[self.gaze_at]
 				except KeyError:
