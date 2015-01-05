@@ -171,7 +171,8 @@ class FaceBox():
                     if self.start_time == self.init_time:
                         result = 2
 
-            if self.attention < self.min_attention:
+            # Check for attention threshold only for active faces
+            if self.status == 'ok' and  self.attention < self.min_attention:
                 self.lost_face()
 
             if self.status == 'deleted':
