@@ -40,7 +40,7 @@ from ros2opencv import ROS2OpenCV
 from pi_face_tracker.srv import *
 from pi_face_tracker.msg import Faces
 from pi_face_tracker.msg import Face
-from pi_face_tracker.msg import Event
+from pi_face_tracker.msg import FaceEvent
 from geometry_msgs.msg import Point
 import time
 
@@ -311,7 +311,7 @@ class FacesRegistry():
         self.publishers = {}
         self.event_pub = rospy.Publisher(
             self.TOPIC_EVENT,
-            Event,
+            FaceEvent,
             queue_size=10
         )
         self.faces_pub = rospy.Publisher(
