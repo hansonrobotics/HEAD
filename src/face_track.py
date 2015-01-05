@@ -349,4 +349,4 @@ class FaceTrack:
 				del self.recent_locations[fid]
 
 		# Now perform all the various looking-at actions
-		do_look_at_actions()
+		self.do_look_at_actions()
