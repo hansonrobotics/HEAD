@@ -110,10 +110,14 @@ class Tree():
 
         ##### Other System Variables #####
         self.blackboard["show_expression_since"] = time.time()
-        self.blackboard["face_targets"] = []  # IDs of faces in the scene, updated once per cycle
-        self.blackboard["background_face_targets"] = []  # IDs of faces in the scene, updated immediately
-        self.blackboard["new_face"] = ""
-        self.blackboard["lost_face"] = ""
+
+        # ID's of faces newly seen, or lost. Integer ID.
+        self.blackboard["new_face"] = 0
+        self.blackboard["lost_face"] = 0
+        # IDs of faces in the scene, updated once per cycle
+        self.blackboard["face_targets"] = []
+        # IDs of faces in the scene, updated immediately
+        self.blackboard["background_face_targets"] = []
         self.blackboard["current_glance_target"] = ""
         self.blackboard["current_face_target"] = ""
         self.blackboard["interact_with_face_target_since"] = 0.0

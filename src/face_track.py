@@ -29,6 +29,7 @@ class FaceTrack:
 		print("Starting Face Tracker")
 		self.blackboard = owyl_bboard
 		self.visible_faces = []
+		self.face_locations = {}
 
 		# pi_vision topics and events
 		self.TOPIC_FACE_EVENT = "face_event"
@@ -46,25 +47,42 @@ class FaceTrack:
 	def face_event_cb(self, data):
 		self.blackboard["is_interruption"] = True
 		if data.face_event == self.EVENT_NEW_FACE:
-			str_id = str(data.face_id)
-			self.blackboard["new_face"] = str_id
-			self.blackboard["background_face_targets"].append(str_id)
+
+			# Keep track of the visible faces.
+			self.visible_faces.append(data.face_id)
+
+			# Also update the blackboard.
+			self.blackboard["new_face"] = data.face_id
+			self.blackboard["background_face_targets"].append(data.face_id)
 			print "New face added to visibile faces: " + \
 				str(self.blackboard["background_face_targets"])
 
 		elif data.face_event == self.EVENT_LOST_FACE:
-			str_id = str(data.face_id)
-			if str_id in self.blackboard["background_face_targets"]:
-				self.blackboard["lost_face"] = str_id
-				self.blackboard["background_face_targets"].remove(str_id)
+			# Keep track of the visible faces.
+			if data.face_id in self.visible_faces:
+				self.visible_faces.remove(data.face_id)
+
+			# Also update the blackboard.
+			if data.face_id in self.blackboard["background_face_targets"]:
+				self.blackboard["lost_face"] = data.face_id
+				self.blackboard["background_face_targets"].remove(data.face_id)
 				# If the robot lost the new face during the initial
 				# interaction, reset new_face variable
-				if self.blackboard["new_face"] == str_id :
+				if self.blackboard["new_face"] == data.face_id :
 					self.blackboard["new_face"] = ""
 
 				print "Lost face; visibile faces now: " + \
 					str(self.blackboard["background_face_targets"])
 
 	def face_loc_cb(self, data):
-		# print("duude ola:" + str(data))
-		print("")
+		for face in data.faces:
+			fid = face.id
+			loc = face.point
+
+			# Sanity check.  Sometimes pi_vision sends us faces with
+			# location (0,0,0). Discard these.
+			if loc.x < 0.05:
+				continue
+
+			print("duude ola:" + str(fid) + " and " + str(pnt))
+
