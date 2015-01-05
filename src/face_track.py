@@ -44,39 +44,58 @@ class FaceTrack:
 		# Face location information from pi_vision
 		rospy.Subscriber(self.TOPIC_FACE_LOCATIONS, Faces, self.face_loc_cb)
 
-	def face_event_cb(self, data):
+
+	# Add a face to the Owyl blackboard.
+	def add_face_to_bb(self, faceid):
+
+		# We already know about it.
+		if faceid in self.blackboard["background_face_targets"]:
+			return
+
+		# Update the blackboard.
 		self.blackboard["is_interruption"] = True
+		self.blackboard["new_face"] = faceid
+		self.blackboard["background_face_targets"].append(faceid)
+
+		print "New face added to visibile faces: " + \
+			str(self.blackboard["background_face_targets"])
+
+	# Remove a face from the Owyl blackboard.
+	def remove_face_from_bb(self, fid):
+
+		if fid not in self.blackboard["background_face_targets"]:
+			return
+
+		# Update the blackboard.
+		self.blackboard["is_interruption"] = True
+		self.blackboard["lost_face"] = fid
+		self.blackboard["background_face_targets"].remove(fid)
+		# If the robot lost the new face during the initial
+		# interaction, reset new_face variable
+		if self.blackboard["new_face"] == fid :
+			self.blackboard["new_face"] = ""
+
+		print "Lost face; visibile faces now: " + \
+			str(self.blackboard["background_face_targets"])
+
+	def face_event_cb(self, data):
 		if data.face_event == self.EVENT_NEW_FACE:
 
 			# Keep track of the visible faces.
 			self.visible_faces.append(data.face_id)
-
-			# Also update the blackboard.
-			self.blackboard["new_face"] = data.face_id
-			self.blackboard["background_face_targets"].append(data.face_id)
-			print "New face added to visibile faces: " + \
-				str(self.blackboard["background_face_targets"])
+			self.add_face_to_bb(data.face_id)
 
 		elif data.face_event == self.EVENT_LOST_FACE:
-			# Keep track of the visible faces.
 			fid = data.face_id
+
+			# Keep track of the visible faces.
+			self.remove_face_from_bb(fid)
+
 			if fid in self.visible_faces:
 				self.visible_faces.remove(fid)
 
 			if fid in self.face_locations:
 				del self.face_locations[fid]
-
-			# Also update the blackboard.
-			if fid in self.blackboard["background_face_targets"]:
-				self.blackboard["lost_face"] = fid
-				self.blackboard["background_face_targets"].remove(fid)
-				# If the robot lost the new face during the initial
-				# interaction, reset new_face variable
-				if self.blackboard["new_face"] == fid :
-					self.blackboard["new_face"] = ""
-
-				print "Lost face; visibile faces now: " + \
-					str(self.blackboard["background_face_targets"])
 
 	def face_loc_cb(self, data):
 		for face in data.faces:
@@ -90,6 +109,8 @@ class FaceTrack:
 
 			if fid not in self.visible_faces:
 				self.visible_faces.append(fid)
+				self.add_face_to_bb(fid)
+
 			self.face_locations[fid] = loc
 
 			# TODO If location has not been reported in a while,
