@@ -48,7 +48,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 # catkin_package parameters: http://ros.org/doc/groovy/api/catkin/html/dev_guide/generated_cmake_api.html#catkin-package
 # TODO: fill in what other packages will need to use this package
 catkin_package(
-    DEPENDS roscpp rospy std_msgs sensor_msgs cv_bridge image_transport openni_camera uvc_cam opencv2
+    DEPENDS roscpp rospy std_msgs sensor_msgs cv_bridge image_transport openni_camera usb_cam opencv2
     CATKIN_DEPENDS # TODO
     INCLUDE_DIRS # TODO include
     LIBRARIES # TODO

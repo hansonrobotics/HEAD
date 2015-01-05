@@ -21,23 +21,21 @@ Installation
 Requirements:
 * ros-indigo-openni-camera
 * mjpeg_server
-* uvc_cam
+* usb_cam
 
-The first two can be obtained via `apt`:
 
 ```
 apt-get install ros-indigo-mjpeg-server
 
 apt-get install ros-indigo-openni-camera
-# If error occureed sub-process /usr/bin/dpkg returned an error code (1)
-#dpkg --remove --force-remove-reinstreq libopenni-sensor-pointclouds0
-#apt-get install -f -y
+
+apt-get install ros-indigo-usb-cam
+
 ```
 
-The rest must be built from git:
+The node must be built from git:
+
 ```
-git clone https://github.com/ericperko/uvc_cam.git
-rosmake uvc_cam
 
 git clone https://github.com/hansonrobotics/pi_vision
 cd catkin; catkin build
@@ -47,13 +45,11 @@ source devel/setup.bash
 Run
 ===
 
-Note that uvc_cam won't automatically show up in the `ROS_PACKAGE_PATH`
-environment variable; it must be added by hand.  Otherwise, the launch
-will fail.
+To change camera settings modify the usb_cam.launch file.
+
 ```
-export ROS_PACKAGE_PATH=/path/to/uvc_cam:$ROS_PACKAGE_PATH
-roslaunch ros2opencv uvc_cam.launch device:=/dev/video1
-roslaunch pi_face_tracker face_tracker_uvc_cam.launch
+roslaunch ros2opencv usb_cam.launch 
+roslaunch pi_face_tracker face_tracker_usb_cam.launch
 ```
 
 ROS Nodes
@@ -75,5 +71,3 @@ TODO
 1. Make it work with Kinect.
 2. Migrate to Python cv2 wrappers from cv.  The cv wrappers use a
    c++-like interface, the cv2 wrappers use numpy and are more efficient.
-3. Make camera settings configurable; its now hard-coded to 640x480,
-   and the field-of-view angle is also hard-coded.

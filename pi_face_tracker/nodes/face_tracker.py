@@ -78,9 +78,10 @@ class FaceBox():
         # Camera settings:
         # FOV == Field of View; 0.625 radians == 36 degrees.
         self.camera_fov_x = rospy.get_param('~camera_fov_x',0.625)
-        # TODO replace after decided on camera node
-        self.camera_width = rospy.get_param('uvc_cam_node/width',640)
-        self.camera_height = rospy.get_param('uvc_cam_node/height',480)
+        # Camera name as format
+        self.camera_name = rospy.get_param("~camera_name", 'camera')
+        self.camera_width = rospy.get_param(self.camera_name + '/width',640)
+        self.camera_height = rospy.get_param(self.camera_name + '/height',480)
         # init time needed for full time since added, start time
         # needed in case face will reappear.
         self.init_time = self.start_time = rospy.Time.now()
