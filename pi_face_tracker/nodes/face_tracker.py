@@ -311,16 +311,20 @@ class FacesRegistry():
         self.face_id = 0
         self.faces = {}
         self.publishers = {}
+        # Camera name
+        self.camera_name = rospy.get_param("~camera_name", 'camera')
+        # publish data to camera namespace. Can use multiple cameras in single namespace.
         self.event_pub = rospy.Publisher(
-            self.TOPIC_EVENT,
+            self.camera_name + "/" + self.TOPIC_EVENT,
             FaceEvent,
             queue_size=10
         )
         self.faces_pub = rospy.Publisher(
-            self.TOPIC_FACES,
+            self.camera_name + "/" +  self.TOPIC_FACES,
             Faces,
             queue_size=10
         )
+
 
     def _add_entry(self, face_box):
         #Update data structures
