@@ -35,6 +35,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #uncomment if you have defined messages
 add_message_files(
   FILES
+  FaceEvent.msg
   Face.msg
   Faces.msg
 )
