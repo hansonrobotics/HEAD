@@ -37,8 +37,16 @@ class Face:
 		self.t = time.time()
 
 
-# A registery of all the faces currently visible.
-# Copies face data to owyl blackboard.
+# A registery (in-memory database) of all human faces that are currently
+# visible, or have been recently seen.  Implements various basic look-at
+# actions, including:
+# *) turning to face a given face
+# *) tracking a face with the eyes
+# *) glancing a currrently-visible face, or a face that was recently
+#    seen.
+#
+# Provides the new-face, lost-face data to general-behavior, by putting
+# the face data into the owyl blackboard.
 class FaceTrack:
 
 	def __init__(self, owyl_bboard):
@@ -50,6 +58,11 @@ class FaceTrack:
 		self.visible_faces = []
 		# List of locations of currently visible faces
 		self.face_locations = {}
+
+		# List of no longer visible faces, but seen recently.
+		self.recent_locations = {}
+		# How long to keep around a recently seen, but now lost face.
+		self.RECENT_INTERVAL = 5
 
 		# Current look-at-target
 		self.look_at = 0
@@ -87,6 +100,7 @@ class FaceTrack:
 		self.gaze_pub = rospy.Publisher(self.TOPIC_GAZE_TARGET, \
 			Target, queue_size=10)
 
+	# ---------------------------------------------------------------
 	# Public API. Use these to get things done.
 
 	# Turn only the eyes towards the given target face; track that face.
@@ -128,11 +142,12 @@ class FaceTrack:
 		self.look_at = faceid
 
 	def glance_at_face(self, faceid, howlong):
-		print("glance at: " + str(faceid) + " for " + str(jhowlong) + " seconds")
+		print("glance at: " + str(faceid) + " for " + str(howlong) + " seconds")
 		print("XXX TODO NOT IMPLEMENTED")
 		# XXX we will be asked to glance at faces that have disappeared... 
 		# So we will need to keep track of those.
 
+	# ---------------------------------------------------------------
 	# Private functions, not for use outside of this class.
 	# Add a face to the Owyl blackboard.
 	def add_face_to_bb(self, faceid):
@@ -188,7 +203,9 @@ class FaceTrack:
 
 
 	# pi_vision ROS callback, called when a new face is detected,
-	# or a face is lost.
+	# or a face is lost.  Note: I don't think this is really needed,
+	# the face_loc_cb accomplishes the same thing. So maybe should
+	# remove this someday.
 	def face_event_cb(self, data):
 		if data.face_event == self.EVENT_NEW_FACE:
 			self.add_face(data.face_id)
@@ -197,7 +214,11 @@ class FaceTrack:
 			self.remove_face(data.face_id)
 
 	# pi_vision ROS callback, called to update the location of the
-	# visible faces.
+	# visible faces.  This performs multiple actions:
+	# 1) updates the list of currently visible faces
+	# 2) updates the list of recently seen (but now lost) faces
+	# 3) If we should be looking at one of these faces, then look
+	#    at it, now.
 	def face_loc_cb(self, data):
 		for face in data.faces:
 			fid = face.id
@@ -212,16 +233,28 @@ class FaceTrack:
 			self.add_face(fid)
 			self.face_locations[fid] = inface
 
+			# If we see it now, its not 'recently seen' any longer.
+			if fid in self.recent_locations:
+				del self.recent_locations[fid]
+
 		# If the location of a face has not been reported in a while,
-		# remove it from the list. We should have gotten a lost face
-		# message for this, but these do not always seem reliable.
+		# remove it from the active list, and put it on the recently-seen
+		# list. We should have gotten a lost face message for this,
+		# but these do not always seem reliable.
 		now = time.time()
 		if (now - self.last_vacuum > self.VACUUM_INTERVAL):
 			self.last_vacuum = now
 			for fid in self.face_locations.keys():
 				face = self.face_locations[fid]
 				if (now - face.t > self.VACUUM_INTERVAL):
+					self.recent_locations[fid] = self.face_locations[fid]
 					del self.face_locations[fid]
+
+			for fid in self.recent_locations.keys():
+				face = self.recent_locations[fid]
+				if (now - face.t > self.RECENT_INTERVAL):
+					del self.recent_locations[fid]
+
 
 		# Publish a new lookat target to the blender API
 		if (now - self.last_lookat > self.LOOKAT_INTERVAL):
