@@ -16,9 +16,24 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
+import time
+
 from owyl import blackboard
 import rospy
 from pi_face_tracker.msg import FaceEvent, Faces
+
+# A Face. Currently consists only of an ID number, a 3D location,
+# and the time it was last seen.  Should be extended to include
+# the size of the face, possibly the location of the eyes, and,
+# if possible, the name of the human attached to it ...
+class Face:
+	def __init__(self, fid, point):
+		self.faceid = fid
+		self.x = point.x
+		self.y = point.y
+		self.z = point.z
+		self.t = time.time()
+
 
 # A registery of all the faces currently visible.
 # Copies face data to owyl blackboard.
@@ -101,6 +116,7 @@ class FaceTrack:
 		for face in data.faces:
 			fid = face.id
 			loc = face.point
+			inface = Face(fid, loc)
 
 			# Sanity check.  Sometimes pi_vision sends us faces with
 			# location (0,0,0). Discard these.
@@ -111,7 +127,7 @@ class FaceTrack:
 				self.visible_faces.append(fid)
 				self.add_face_to_bb(fid)
 
-			self.face_locations[fid] = loc
+			self.face_locations[fid] = inface
 
 			# TODO If location has not been reported in a while,
 			# remove it from the list. We should have gotten a
