@@ -43,11 +43,12 @@ class FaceTrack:
 	def face_event_cb(self, data):
 		self.blackboard["is_interruption"] = True
 		if data.face_event == self.EVENT_NEW_FACE:
-			print "<< Interruption >> New Face Detected: " + str(data.face_id)
 			self.blackboard["new_face"] = str(data.face_id)
 			self.blackboard["background_face_targets"].append(self.blackboard["new_face"])
+			print "New face added to visibile faces: " + \
+				str(self.blackboard["background_face_targets"])
+
 		elif data.face_event == self.EVENT_LOST_FACE:
-			print "<< Interruption >> Lost Face Detected: " + str(data.face_id)
 			if data.face_id in self.blackboard["background_face_targets"]:
 				self.blackboard["lost_face"] = str(data.face_id)
 				self.blackboard["background_face_targets"].remove(self.blackboard["lost_face"])
@@ -55,3 +56,6 @@ class FaceTrack:
 				# interaction, reset new_face variable
 				if self.blackboard["new_face"] == self.blackboard["lost_face"]:
 					self.blackboard["new_face"] = ""
+
+				print "Lost face; visibile faces now: " + \
+					str(self.blackboard["background_face_targets"])
