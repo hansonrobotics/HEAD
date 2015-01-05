@@ -26,7 +26,6 @@ import time
 import ConfigParser
 import os
 from std_msgs.msg import String
-from eva_behavior.msg import tracking_action # XXX not needed any more 
 
 from blender_api_msgs.msg import AvailableEmotionStates, AvailableGestures
 from blender_api_msgs.msg import EmotionState
