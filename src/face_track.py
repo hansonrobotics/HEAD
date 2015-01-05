@@ -93,9 +93,13 @@ class FaceTrack:
 	def gaze_at_face(self, faceid):
 		print ("gaze at: " + str(faceid))
 
-		# Look at neutral position
-		# if 0 == faceid :
-		#	self.gaze_pub ... 
+		# Look at neutral position, 1 meter in front
+		if 0 == faceid :
+			trg = Target()
+			trg.x = 1.0
+			trg.y = 0.0
+			trg.z = 0.0
+			self.gaze_pub.publish(trg)
 
 		self.last_lookat = 0
 		if faceid not in self.visible_faces :
@@ -107,6 +111,14 @@ class FaceTrack:
 	# Turn entire head to look at the given target face; track that face.
 	def look_at_face(self, faceid):
 		print ("look at: " + str(faceid))
+
+		# Look at neutral position, 1 meter in front
+		if 0 == faceid :
+			trg = Target()
+			trg.x = 1.0
+			trg.y = 0.0
+			trg.z = 0.0
+			self.look_pub.publish(trg)
 
 		self.last_lookat = 0
 		if faceid not in self.visible_faces :
@@ -194,11 +206,14 @@ class FaceTrack:
 			self.add_face(fid)
 			self.face_locations[fid] = inface
 
+			self.gaze_at = fid
+
 		# If the location of a face has not been reported in a while,
 		# remove it from the list. We should have gotten a lost face
 		# message for this, but these do not always seem reliable.
 		now = time.time()
 		if (now - self.last_vacuum > self.VACUUM_INTERVAL):
+			self.last_vacuum = now
 			for fid in self.face_locations.keys():
 				face = self.face_locations[fid]
 				if (now - face.t > self.VACUUM_INTERVAL):
@@ -206,24 +221,32 @@ class FaceTrack:
 
 		# Publish a new lookat target to the blender API
 		if (now - self.last_lookat > self.LOOKAT_INTERVAL):
+			self.last_lookat = now
+
+			print("Look at id " + str(self.gaze_at))
 			if 0 != self.look_at:
-				face = self.face_locations[self.look_at]
-				if not face:
+				try:
+					face = self.face_locations[self.look_at]
+				except KeyError:
+					print("Error: no look-at target")
 					self.look_at_face(0)
 					return
 				trg = Target()
 				trg.x = face.x
 				trg.y = face.y
 				trg.z = face.z
-				self.look_pub(trg)
+				self.look_pub.publish(trg)
 
+			print("Gaze at id " + str(self.gaze_at))
 			if 0 != self.gaze_at:
-				face = self.face_locations[self.gaze_at]
-				if not face:
+				try:
+					face = self.face_locations[self.gaze_at]
+				except KeyError:
+					print("Error: no gaze-at target")
 					self.gaze_at_face(0)
 					return
 				trg = Target()
 				trg.x = face.x
 				trg.y = face.y
 				trg.z = face.z
-				self.gaze_pub(trg)
+				self.gaze_pub.publish(trg)
