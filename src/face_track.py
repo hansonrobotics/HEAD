@@ -1,6 +1,7 @@
 #
 # face_track.py -  Registery and tracking of faces
 # Copyright (C) 2014  Hanson Robotics
+# Copyright (C) 2014  Linas Vepstas
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -45,6 +46,10 @@ class FaceTrack:
 		self.blackboard = owyl_bboard
 		self.visible_faces = []
 		self.face_locations = {}
+
+		# Last time that the list of active faces was vacuumed out.
+		self.last_vacuum = 0
+		self.VACUUM_INTERVAL = 1
 
 		# pi_vision topics and events
 		self.TOPIC_FACE_EVENT = "face_event"
@@ -95,11 +100,13 @@ class FaceTrack:
 		self.visible_faces.append(faceid)
 
 		print "New face added to visibile faces: " + \
-			str(self.face_locations.keys()))
+			str(self.face_locations.keys())
 
+		self.add_face_to_bb(faceid)
 
 	# Stop tracking a face
 	def remove_face(self, faceid):
+		self.remove_face_from_bb(faceid)
 		if faceid in self.visible_faces:
 			self.visible_faces.remove(faceid)
 
@@ -108,22 +115,20 @@ class FaceTrack:
 
 		# print "Lost face; visibile faces now: " + str(self.visible_faces))
 		print "Lost face; visibile faces now: " + \
-			str(self.face_locations.keys()))
+			str(self.face_locations.keys())
 
 
+	# pi_vision ROS callback, called when a new face is detected,
+	# or a face is lost.
 	def face_event_cb(self, data):
 		if data.face_event == self.EVENT_NEW_FACE:
-
-			# Keep track of the visible faces.
 			self.add_face(data.face_id)
-			self.add_face_to_bb(data.face_id)
 
 		elif data.face_event == self.EVENT_LOST_FACE:
-
-			# Keep track of the visible faces.
 			self.remove_face(data.face_id)
-			self.remove_face_from_bb(data.face_id)
 
+	# pi_vision ROS callback, called to update the location of the
+	# visible faces.
 	def face_loc_cb(self, data):
 		for face in data.faces:
 			fid = face.id
@@ -135,15 +140,16 @@ class FaceTrack:
 			if loc.x < 0.05:
 				continue
 
-			if fid not in self.visible_faces:
-				self.visible_faces.append(fid)
-				self.add_face_to_bb(fid)
-
+			self.add_face(fid)
 			self.face_locations[fid] = inface
 
-			# TODO If location has not been reported in a while,
-			# remove it from the list. We should have gotten a
-			# lost face message for this, but these do not always
-			# seem reliable.
-			# print("duude ola:" + str(self.face_locations))
+		# If the location of a face has not been reported in a while,
+		# remove it from the list. We should have gotten a lost face
+		# message for this, but these do not always seem reliable.
+		now = time.time()
+		if (now - self.last_vacuum > self.VACUUM_INTERVAL):
+			for fid in self.face_locations.keys():
+				face = self.face_locations[fid]
+				if (now - face.t > self.VACUUM_INTERVAL):
+					del self.face_locations[fid]
 
