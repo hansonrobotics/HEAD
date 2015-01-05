@@ -59,16 +59,20 @@ class FaceTrack:
 
 		elif data.face_event == self.EVENT_LOST_FACE:
 			# Keep track of the visible faces.
-			if data.face_id in self.visible_faces:
-				self.visible_faces.remove(data.face_id)
+			fid = data.face_id
+			if fid in self.visible_faces:
+				self.visible_faces.remove(fid)
+
+			if fid in self.face_locations:
+				del self.face_locations[fid]
 
 			# Also update the blackboard.
-			if data.face_id in self.blackboard["background_face_targets"]:
-				self.blackboard["lost_face"] = data.face_id
-				self.blackboard["background_face_targets"].remove(data.face_id)
+			if fid in self.blackboard["background_face_targets"]:
+				self.blackboard["lost_face"] = fid
+				self.blackboard["background_face_targets"].remove(fid)
 				# If the robot lost the new face during the initial
 				# interaction, reset new_face variable
-				if self.blackboard["new_face"] == data.face_id :
+				if self.blackboard["new_face"] == fid :
 					self.blackboard["new_face"] = ""
 
 				print "Lost face; visibile faces now: " + \
@@ -84,5 +88,13 @@ class FaceTrack:
 			if loc.x < 0.05:
 				continue
 
-			print("duude ola:" + str(fid) + " and " + str(pnt))
+			if fid not in self.visible_faces:
+				self.visible_faces.append(fid)
+			self.face_locations[fid] = loc
+
+			# TODO If location has not been reported in a while,
+			# remove it from the list. We should have gotten a
+			# lost face message for this, but these do not always
+			# seem reliable.
+			# print("duude ola:" + str(self.face_locations))
 
