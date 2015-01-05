@@ -33,22 +33,21 @@ from blender_api_msgs.msg import SetGesture
 
 from face_track import FaceTrack
 
+# Basic holder for emotion-expression properties and probabilities
 class Emotion:
-
 	def __init__(self, name) :
-
-        self.blackboard["frustrated_emotions"] = [x.strip() for x in config.get("emotion", "frustrated_emotions").split(",")]
-        self.blackboard["frustrated_emotions_probabilities"] = get_values(config.get("emotion", "frustrated_emotions_probabilities"), len(self.blackboard["frustrated_emotions"]), True)
-        self.blackboard["frustrated_emotions_intensities_min"] = get_values(config.get("emotion", "frustrated_emotions_intensities_min"), len(self.blackboard["frustrated_emotions"]), False)
-        self.blackboard["frustrated_emotions_intensities_max"] = get_values(config.get("emotion", "frustrated_emotions_intensities_max"), len(self.blackboard["frustrated_emotions"]), False)
-
+		self.name = name
+		self.probability = 0.0
+		self.min_intensity = 0.0
+		self.max_intensity = 1.0
 
 class Tree():
 	def __init__(self):
 
 		self.blackboard = blackboard.Blackboard("rig expressions")
 
-		##### From Config File #####
+		# ---------
+		# Config File utilities
 		def get_values(from_config, num_of_values, is_probability):
 			rtn_values = [float(z.strip()) for z in from_config.split(",")]
 			if len(rtn_values) != num_of_values:
@@ -56,6 +55,29 @@ class Tree():
 			if is_probability and sum(rtn_values) != 1.0:
 				raise Exception("Probabilities don't sum up to 1.0!")
 			return rtn_values
+
+		def unpack_config_emotions(self, emo_class) :
+			names = [x.strip() for x in config.get("emotion", emo_class).split(",")]
+			numb = len(names)
+
+			probs = get_values(config.get("emotion", \
+				emo_class + "_probabilities"), numb, True)
+			mins = get_values(config.get("emotion", \
+				emo_class + "_intensities_min"), numb, False)
+
+			maxs = get_values(config.get("emotion", \
+				emo_class + "_intensities_max"), numb, False)
+
+			emos = []
+			for (n,p,mi,mx) in zip (names, probs, mins, maxs):
+				emo = Emotion(n)
+				emo.probability = p
+				emo.min_intensity = mi
+				emo.max_intensity = mx
+				emos.appent(emo)
+
+			self.blackboard[emo_class] = emos
+
 		config = ConfigParser.ConfigParser()
 		config.readfp(open(os.path.join(os.path.dirname(__file__), "../behavior.cfg")))
 		self.blackboard["sadness_happiness"] = config.getfloat("emotion", "sadness_happiness")
@@ -66,10 +88,9 @@ class Tree():
 		self.blackboard["emotions"] = [x.strip() for x in config.get("emotion", "basic_emotions").split(",")]
 		self.blackboard["current_emotion"] = config.get("emotion", "default_emotion")
 		self.blackboard["current_emotion_intensity"] = config.getfloat("emotion", "default_emotion_intensity")
-		self.blackboard["frustrated_emotions"] = [x.strip() for x in config.get("emotion", "frustrated_emotions").split(",")]
-		self.blackboard["frustrated_emotions_probabilities"] = get_values(config.get("emotion", "frustrated_emotions_probabilities"), len(self.blackboard["frustrated_emotions"]), True)
-		self.blackboard["frustrated_emotions_intensities_min"] = get_values(config.get("emotion", "frustrated_emotions_intensities_min"), len(self.blackboard["frustrated_emotions"]), False)
-		self.blackboard["frustrated_emotions_intensities_max"] = get_values(config.get("emotion", "frustrated_emotions_intensities_max"), len(self.blackboard["frustrated_emotions"]), False)
+
+		unpack_config_emotions("frustrated_emotions")
+
 		self.blackboard["positive_emotions"] = [x.strip() for x in config.get("emotion", "positive_emotions").split(",")]
 		self.blackboard["positive_emotions_probabilities"] = get_values(config.get("emotion", "positive_emotions_probabilities"), len(self.blackboard["positive_emotions"]), True)
 		self.blackboard["positive_emotions_intensities_min"] = get_values(config.get("emotion", "positive_emotions_intensities_min"), len(self.blackboard["positive_emotions"]), False)
