@@ -65,9 +65,9 @@ class Tree():
 		probs = get_values(config.get("emotion", \
 			emo_class + "_probabilities"), numb)
 		mins = get_values(config.get("emotion", \
-			emo_class + "_intensities_min"), numb)
+			emo_class + "_intensity_min"), numb)
 		maxs = get_values(config.get("emotion", \
-			emo_class + "_intensities_max"), numb)
+			emo_class + "_intensity_max"), numb)
 
 		dins = get_values(config.get("emotion", \
 			emo_class + "_duration_min"), numb)
