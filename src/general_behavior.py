@@ -105,10 +105,8 @@ class Tree():
 		unpack_config_emotions("bored_emotions")
 		unpack_config_emotions("non_bored_emotion")
 
-		self.blackboard["sleep_emotions"] = [x.strip() for x in config.get("emotion", "sleep_emotions").split(",")]
-		self.blackboard["sleep_emotions_probabilities"] = get_values(config.get("emotion", "sleep_emotions_probabilities"), len(self.blackboard["sleep_emotions"]), True)
-		self.blackboard["sleep_emotions_intensities_min"] = get_values(config.get("emotion", "sleep_emotions_intensities_min"), len(self.blackboard["sleep_emotions"]), False)
-		self.blackboard["sleep_emotions_intensities_max"] = get_values(config.get("emotion", "sleep_emotions_intensities_max"), len(self.blackboard["sleep_emotions"]), False)
+		unpack_config_emotions("sleep_emotions")
+
 		self.blackboard["show_expressions_other_than_sleep_probabilities"] = config.getfloat("emotion", "show_expressions_other_than_sleep_probabilities")
 		self.blackboard["expressions_other_than_sleep_intensity_min"] = config.getfloat("emotion", "expressions_other_than_sleep_intensity_min")
 		self.blackboard["expressions_other_than_sleep_intensity_max"] = config.getfloat("emotion", "expressions_other_than_sleep_intensity_max")
@@ -678,18 +676,10 @@ class Tree():
 	def go_to_sleep(self, **kwargs):
 		self.blackboard["is_sleeping"] = True
 		##### Show A Sleep Expression #####
-		sum = 0
-		random_number = random.random()
-		for i in range(0, len(self.blackboard["sleep_emotions_probabilities"])):
-			sum += self.blackboard["sleep_emotions_probabilities"][i]
-			if random_number <= sum:
-				expression_to_show = self.blackboard["sleep_emotions"][i]
-				intensity_min = self.blackboard["sleep_emotions_intensities_min"][i]
-				intensity_max = self.blackboard["sleep_emotions_intensities_max"][i]
-				break
-		self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
-		duration = random.uniform(self.blackboard["sleep_duration_min"], self.blackboard["sleep_duration_max"])
+		self.pick_random_emotion_name("sleep_emotions")
+
 		interval = 0.01
+		duration = 15
 		#TODO: Topic for sleep
 		while duration > 0:
 			time.sleep(interval)
