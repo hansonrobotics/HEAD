@@ -19,20 +19,26 @@ This is meant to be used in conjuction with several ROS nodes:
   defines the robot head controlling messages.
 * [robo_blender](http://github.com/hansonrobotics/robo_blender) which
   implements a movable robot head.
-* [perception](http://github.com/hansonrobotics/perception) which
-  organizes  visual data from cameras and other sensors.
 * [pi_vision]((http://github.com/hansonrobotics/pi_vision) which
   provides visual data to the perception node.
-
-## Running
-To run, start the robo_blender, perception, pi_vision and uvc_cam nodes.
-Then
-
-`rosrun eva_behavior main.py`
 
 Don't forget to:
 * catkin build
 * source devel/setup.bash
+
+## Running
+To run, start the robo_blender, perception, pi_vision and uvc_cam nodes.
+Then
+```
+rosrun eva_behavior main.py
+```
+Then, turn on behaviors:
+```
+rostopic  pub --once /behavior_switch std_msgs/String btree_on
+```
+This will cause the system to play through the set of scripted
+behaviors, which includes exprsssing a variety of emotions,
+looking at the various faces as they become visible, and so on.
 
 
 ## ROS Messaging API
@@ -98,5 +104,3 @@ export ROS_PACKAGE_PATH=/path/to/uvc_cam:$ROS_PACKAGE_PATH
 roslaunch ros2opencv uvc_cam.launch device:=/dev/video1
 roslaunch pi_face_tracker face_tracker_uvc_cam.launch
 ```
-
-
