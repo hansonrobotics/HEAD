@@ -165,8 +165,10 @@ class Tree():
 		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture", SetGesture, queue_size=1)
 		self.tree = self.build_tree()
 		time.sleep(0.1)
+
 		while True:
 			self.tree.next()
+
 
 	# Pick a random expression out of the class of expressions,
 	# and display it. Return the display emotion, or None if none
@@ -209,6 +211,46 @@ class Tree():
 			time.sleep(durat) # XXX Sleep is a bad idea, blocks events ...
 		return emo_name
 
+	# ------------------------------------------------------------------
+	# The various behavior trees
+
+	# Actions that are taken when a face becomes visible.
+	def new_arrival(self) :
+		tree = owyl.sequence(
+			self.is_someone_arrived(),
+			self.set_emotion(variable="boredom_engagement", value=0.5),
+			owyl.selector(
+				##### There were no people in the scene #####
+				owyl.sequence(
+					self.were_no_people_in_the_scene(),
+					self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.2, max=1.4),
+					self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.2, max=1.4),
+					self.assign_face_target(variable="current_face_target", value="new_face"),
+					self.record_start_time(variable="interact_with_face_target_since"),
+					self.interact_with_face_target(id="current_face_target", new_face=True)
+				),
+
+				##### Currently interacting with someone #####
+				owyl.sequence(
+					self.is_interacting_with_someone(),
+					self.is_random_smaller_than(val1="newRandom", val2="glance_probability_for_new_faces"),
+					self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.05, max=1.1),
+					self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.05, max=1.1),
+					self.glance_at_new_face()
+				),
+
+				##### Does Nothing #####
+				owyl.sequence(
+					self.print_status(str="----- Ignoring The New Face!"),
+					self.does_nothing()
+				)
+			),
+			self.clear_new_face_target()
+		)
+		return tree
+
+	# ------------------------------------------------------------------
+	# Build the main tree
 	def build_tree(self):
 		eva_behavior_tree = \
 			owyl.repeatAlways(
@@ -219,37 +261,7 @@ class Tree():
 						########## Main Events ##########
 						owyl.selector(
 							##### When Someone Arrived #####
-							owyl.sequence(
-								self.is_someone_arrived(),
-								self.set_emotion(variable="boredom_engagement", value=0.5),
-								owyl.selector(
-									##### Were No People In The Scene #####
-									owyl.sequence(
-										self.were_no_people_in_the_scene(),
-										self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.2, max=1.4),
-										self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.2, max=1.4),
-										self.assign_face_target(variable="current_face_target", value="new_face"),
-										self.record_start_time(variable="interact_with_face_target_since"),
-										self.interact_with_face_target(id="current_face_target", new_face=True)
-									),
-
-									##### Is Interacting With Someone #####
-									owyl.sequence(
-										self.is_interacting_with_someone(),
-										self.is_random_smaller_than(val1="newRandom", val2="glance_probability_for_new_faces"),
-										self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.05, max=1.1),
-										self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.05, max=1.1),
-										self.glance_at_new_face()
-									),
-
-									##### Does Nothing #####
-									owyl.sequence(
-										self.print_status(str="----- Ignoring The New Face!"),
-										self.does_nothing()
-									)
-								),
-								self.clear_new_face_target()
-							),
+							self.new_arrival(),
 
 							##### When Someone Left #####
 							owyl.sequence(
