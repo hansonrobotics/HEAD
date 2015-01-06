@@ -250,6 +250,7 @@ class Tree():
 		)
 		return tree
 
+	# ---------------------------
 	# Actions that are taken when a face leaves
 	def someone_left(self) :
 		tree = owyl.sequence(
@@ -282,6 +283,45 @@ class Tree():
 		)
 		return tree
 
+	# Interact with people
+	def interct_with_people(self) :
+		tree = owyl.sequence(
+			self.is_face_target(),
+			self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.001, max=1.005),
+			self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.005, max=1.01),
+			owyl.selector(
+				##### Start A New Interaction #####
+				owyl.sequence(
+					owyl.selector(
+						self.is_not_interacting_with_someone(),
+						owyl.sequence(
+							self.is_more_than_one_face_target(),
+							self.is_time_to_change_face_target()
+						)
+					),
+					self.select_a_face_target(),
+					self.record_start_time(variable="interact_with_face_target_since"),
+					self.interact_with_face_target(id="current_face_target", new_face=False)
+				),
+
+				##### Glance At Other Faces & Continue With The Last Interaction #####
+				owyl.sequence(
+					self.print_status(str="----- Continue The Interaction"),
+					owyl.selector(
+						owyl.sequence(
+							self.is_more_than_one_face_target(),
+							self.is_random_smaller_than(val1="newRandom", val2="glance_probability"),
+							self.select_a_glance_target(),
+							self.glance_at(id="current_glance_target")
+						),
+						self.does_nothing()
+					),
+					self.interact_with_face_target(id="current_face_target", new_face=False)
+				)
+			)
+		)
+		return tree
+
 	# ------------------------------------------------------------------
 	# Build the main tree
 	def build_tree(self):
@@ -295,43 +335,8 @@ class Tree():
 						owyl.selector(
 							self.someone_arrived(),
 							self.someone_left(),
+							self.interact_with_people(),
 
-							##### People Interaction #####
-							owyl.sequence(
-								self.is_face_target(),
-								self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.001, max=1.005),
-								self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.005, max=1.01),
-								owyl.selector(
-									##### Start A New Interaction #####
-									owyl.sequence(
-										owyl.selector(
-											self.is_not_interacting_with_someone(),
-											owyl.sequence(
-												self.is_more_than_one_face_target(),
-												self.is_time_to_change_face_target()
-											)
-										),
-										self.select_a_face_target(),
-										self.record_start_time(variable="interact_with_face_target_since"),
-										self.interact_with_face_target(id="current_face_target", new_face=False)
-									),
-
-									##### Glance At Other Faces & Continue With The Last Interaction #####
-									owyl.sequence(
-										self.print_status(str="----- Continue The Interaction"),
-										owyl.selector(
-											owyl.sequence(
-												self.is_more_than_one_face_target(),
-												self.is_random_smaller_than(val1="newRandom", val2="glance_probability"),
-												self.select_a_glance_target(),
-												self.glance_at(id="current_glance_target")
-											),
-											self.does_nothing()
-										),
-										self.interact_with_face_target(id="current_face_target", new_face=False)
-									)
-								)
-							),
 
 							##### Nothing Interesting Is Happening #####
 							owyl.sequence(
