@@ -16,21 +16,26 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
+# system imports
+import copy
+import os
+import random
+import time
 
+# tool imports
 import owyl
 from owyl import blackboard
 import rospy
 import roslib
-import random
-import time
 import ConfigParser
-import os
-from std_msgs.msg import String
 
+# message imports
+from std_msgs.msg import String
 from blender_api_msgs.msg import AvailableEmotionStates, AvailableGestures
 from blender_api_msgs.msg import EmotionState
 from blender_api_msgs.msg import SetGesture
 
+# local stuff.
 from face_track import FaceTrack
 
 # Basic holder for emotion-expression properties and probabilities
@@ -167,12 +172,12 @@ class Tree():
 	# were picked.
 	def pick_random_expression(self, emo_class_name):
 		random_number = random.random()
-		sum = 0
+		tot = 0
 		emo = None
 		emos = self.blackboard[emo_class_name]
 		for emo in emos:
-			sum += emo.probability
-			if random_number <= sum:
+			tot += emo.probability
+			if random_number <= tot:
 				break
 
 		if emo:
@@ -731,36 +736,39 @@ class Tree():
 	# e.g. "happy-3", whereas core just contains "happy". We want to
 	# return "happy-3" in that case, as well as happy-2 and happy-1
 	# if they are there.
-	def set_intersect(self, core, avail) :
+	def set_intersect(self, emo_class, avail) :
+		emos = self.blackboard[emo_class]
 		rev = []
-		for e in core:
+		for emo in emos:
 			for a in avail:
-				if e in a:
-					rev.append(a)
-		return rev
+				if emo.name in a:
+					# Copy the emotion, but give it the new name!
+					nemo = copy.deepcopy(emo)
+					nemo.name = a
+					rev.append(nemo)
 
-	# Get the list of available emotions. Update our master list, and
-	# cull the various subclasses.
-	# XXX FIXME: this is not really right: the subclasses have associated
-	# probabilities. The revised subclasses could be either fewer or
-	# *greater* in number; these should be handled.
+		# Now, renormalize the probabilities
+		tot = 0.0
+		for emo  in rev:
+			tot += emo.probability
+		for emo  in rev:
+			emo.probability /= tot
+
+		self.blackboard[emo_class] = rev
+
+	# Get the list of available emotions. Update our master list,
+	# and cull the various subclasses appropriately.
 	def get_emotion_states_cb(self, msg) :
 		print("Available Emotion States:" + str(msg.data))
 		# Update the complete list of emtions.
 		self.blackboard["emotions"] = msg.data
 
-xxxxxxxxxxxxxx
 		# Reconcile the other classes
-		self.blackboard["frustrated_emotions"] = \
-			self.set_intersect(self.blackboard["frustrated_emotions"], msg.data)
-		self.blackboard["positive_emotions"] = \
-			self.set_intersect(self.blackboard["positive_emotions"], msg.data)
-		self.blackboard["bored_emotions"] = \
-			self.set_intersect(self.blackboard["bored_emotions"], msg.data)
-		self.blackboard["sleep_emotions"] = \
-			self.set_intersect(self.blackboard["sleep_emotions"], msg.data)
-		self.blackboard["wake_up_emotions"] = \
-			self.set_intersect(self.blackboard["wake_up_emotions"], msg.data)
+		self.set_intersect("frustrated_emotions", msg.data)
+		self.set_intersect("positive_emotions", msg.data)
+		self.set_intersect("bored_emotions", msg.data)
+		self.set_intersect("sleep_emotions", msg.data)
+		self.set_intersect("wake_up_emotions", msg.data)
 
 
 	def get_gestures_cb(self, msg) :
