@@ -56,10 +56,13 @@ looking at the various faces as they become visible, and so on.
 * `cmd_blendermode (std_msgs/String)`. Blender mode used for tracking:
   Dummy (do nothing), TrackDev(tracking objects), LookAround (looking
   for attention).
-* `tracking_action (eva_behavior/tracking_message)`. Sends the command
-  to blender for specific object tracking (track, glance).
-* `make_coupled_face_expr (basic_head_api/MakeCoupledFaceExpr)`. Sends
-  the expression and intensity for the current robot to basic_head_api node.
+
+* `/blender_api/set_face_target (blender_api_msg/Target)`. Sends
+  location that the robot head should face and look at.
+
+* `/blender_api/set_gaze_target (blender_api_msg/Target)`. Sends
+  location that the robot eyes should look at (without moving the
+  head).
 
 
 ## Cookbook
