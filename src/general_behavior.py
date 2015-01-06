@@ -100,11 +100,8 @@ class Tree():
 		unpack_config_emotions("frustrated_emotions")
 		unpack_config_emotions("positive_emotions")
 		unpack_config_emotions("non_positive_emotion")
+		unpack_config_emotions("bored_emotions")
 
-		self.blackboard["boring_emotions"] = [x.strip() for x in config.get("emotion", "boring_emotions").split(",")]
-		self.blackboard["boring_emotions_probabilities"] = get_values(config.get("emotion", "boring_emotions_probabilities"), len(self.blackboard["boring_emotions"]), True)
-		self.blackboard["boring_emotions_intensities_min"] = get_values(config.get("emotion", "boring_emotions_intensities_min"), len(self.blackboard["boring_emotions"]), False)
-		self.blackboard["boring_emotions_intensities_max"] = get_values(config.get("emotion", "boring_emotions_intensities_max"), len(self.blackboard["boring_emotions"]), False)
 		self.blackboard["show_expressions_other_than_boring_probabilities"] = config.getfloat("emotion", "show_expressions_other_than_boring_probabilities")
 		self.blackboard["expressions_other_than_boring_intensity_min"] = config.getfloat("emotion", "expressions_other_than_boring_intensity_min")
 		self.blackboard["expressions_other_than_boring_intensity_max"] = config.getfloat("emotion", "expressions_other_than_boring_intensity_max")
@@ -671,21 +668,8 @@ class Tree():
 				self.show_emotion(emo_name, emo_intense, duration_seconds)
 				time.sleep(random.uniform(self.blackboard["expressions_other_than_boring_duration_min"], self.blackboard["expressions_other_than_boring_duration_max"]))
 			##### Show A Positive Expression #####
-			sum = 0
-			random_number = random.random()
-			# XXX FIXME: the list of boring_emotions might be shorter or
-			# longer than boring_emotions_probabilities, because it was
-			# revised based on the available emotional states. In particular,
-			# the probabilities probably don't total to 1.0. This needs fixing.
-			# See get_emotion_states() below.
-			for i in range(0, len(self.blackboard["boring_emotions"])):
-				sum += self.blackboard["boring_emotions_probabilities"][i]
-				if random_number <= sum:
-					expression_to_show = self.blackboard["boring_emotions"][i]
-					intensity_min = self.blackboard["boring_emotions_intensities_min"][i]
-					intensity_max = self.blackboard["boring_emotions_intensities_max"][i]
-					break
-			self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
+			self.pick_random_expression("bored_emotions")
+
 		interval = 0.01
 		while duration > 0:
 			time.sleep(interval)
@@ -799,8 +783,8 @@ class Tree():
 			self.set_intersect(self.blackboard["frustrated_emotions"], msg.data)
 		self.blackboard["positive_emotions"] = \
 			self.set_intersect(self.blackboard["positive_emotions"], msg.data)
-		self.blackboard["boring_emotions"] = \
-			self.set_intersect(self.blackboard["boring_emotions"], msg.data)
+		self.blackboard["bored_emotions"] = \
+			self.set_intersect(self.blackboard["bored_emotions"], msg.data)
 		self.blackboard["sleep_emotions"] = \
 			self.set_intersect(self.blackboard["sleep_emotions"], msg.data)
 		self.blackboard["wake_up_emotions"] = \
