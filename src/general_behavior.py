@@ -50,12 +50,10 @@ class Tree():
 
 		# ---------
 		# Config File utilities
-		def get_values(from_config, num_of_values, is_probability):
+		def get_values(from_config, num_values):
 			rtn_values = [float(z.strip()) for z in from_config.split(",")]
-			if len(rtn_values) != num_of_values:
-				raise Exception("Value counts don't match!")
-			if is_probability and sum(rtn_values) != 1.0:
-				raise Exception("Probabilities don't sum up to 1.0!")
+			if len(rtn_values) != num_values:
+				raise Exception("List lengths don't match!")
 			return rtn_values
 
 		def unpack_config_emotions(self, emo_class) :
@@ -63,16 +61,16 @@ class Tree():
 			numb = len(names)
 
 			probs = get_values(config.get("emotion", \
-				emo_class + "_probabilities"), numb, True)
+				emo_class + "_probabilities"), numb)
 			mins = get_values(config.get("emotion", \
-				emo_class + "_intensities_min"), numb, False)
+				emo_class + "_intensities_min"), numb)
 			maxs = get_values(config.get("emotion", \
-				emo_class + "_intensities_max"), numb, False)
+				emo_class + "_intensities_max"), numb)
 
 			dins = get_values(config.get("emotion", \
-				emo_class + "_duration_min"), numb, False)
+				emo_class + "_duration_min"), numb)
 			daxs = get_values(config.get("emotion", \
-				emo_class + "_duration_max"), numb, False)
+				emo_class + "_duration_max"), numb)
 
 			emos = []
 			for (n,p,mi,mx,di,dx) in zip (names, probs, mins, maxs, dins, daxs):
@@ -750,6 +748,8 @@ class Tree():
 		print("Available Emotion States:" + str(msg.data))
 		# Update the complete list of emtions.
 		self.blackboard["emotions"] = msg.data
+
+xxxxxxxxxxxxxx
 		# Reconcile the other classes
 		self.blackboard["frustrated_emotions"] = \
 			self.set_intersect(self.blackboard["frustrated_emotions"], msg.data)
