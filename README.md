@@ -43,25 +43,6 @@ looking at the various faces as they become visible, and so on.
 
 ## ROS Messaging API
 
-#####Messages defined:
-
-* `event`:
-```
-string event
-string param
-```
-Specifies event(new_face,exit) with the face_id as parameter.
-
-* `tracking_message`
-```
-string target
-string action
-string params
-```
-Specifies what to track (topic name that publishes
-`sensor_msgs/RegionOFInterest` message), action (track, glance),
-params (time to track).
-
 ##### Topics subscribed :
 
 * `behavior_switch (std_msgs/String)`. Values: ("btree_on", "btree_off").
