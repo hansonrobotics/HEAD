@@ -49,45 +49,46 @@ class Emotion:
 		self.max_duration = 15.0
 
 class Tree():
-	def __init__(self):
+	# ---------
+	# Config File utilities
+	def unpack_config_emotions(self, config, emo_class) :
 
-		self.blackboard = blackboard.Blackboard("rig expressions")
-
-		# ---------
-		# Config File utilities
 		def get_values(from_config, num_values):
 			rtn_values = [float(z.strip()) for z in from_config.split(",")]
 			if len(rtn_values) != num_values:
 				raise Exception("List lengths don't match!")
 			return rtn_values
 
-		def unpack_config_emotions(self, emo_class) :
-			names = [x.strip() for x in config.get("emotion", emo_class).split(",")]
-			numb = len(names)
+		names = [x.strip() for x in config.get("emotion", emo_class).split(",")]
+		numb = len(names)
 
-			probs = get_values(config.get("emotion", \
-				emo_class + "_probabilities"), numb)
-			mins = get_values(config.get("emotion", \
-				emo_class + "_intensities_min"), numb)
-			maxs = get_values(config.get("emotion", \
-				emo_class + "_intensities_max"), numb)
+		probs = get_values(config.get("emotion", \
+			emo_class + "_probabilities"), numb)
+		mins = get_values(config.get("emotion", \
+			emo_class + "_intensities_min"), numb)
+		maxs = get_values(config.get("emotion", \
+			emo_class + "_intensities_max"), numb)
 
-			dins = get_values(config.get("emotion", \
-				emo_class + "_duration_min"), numb)
-			daxs = get_values(config.get("emotion", \
-				emo_class + "_duration_max"), numb)
+		dins = get_values(config.get("emotion", \
+			emo_class + "_duration_min"), numb)
+		daxs = get_values(config.get("emotion", \
+			emo_class + "_duration_max"), numb)
 
-			emos = []
-			for (n,p,mi,mx,di,dx) in zip (names, probs, mins, maxs, dins, daxs):
-				emo = Emotion(n)
-				emo.probability = p
-				emo.min_intensity = mi
-				emo.max_intensity = mx
-				emo.min_duration = di
-				emo.max_duration = dx
-				emos.append(emo)
+		emos = []
+		for (n,p,mi,mx,di,dx) in zip (names, probs, mins, maxs, dins, daxs):
+			emo = Emotion(n)
+			emo.probability = p
+			emo.min_intensity = mi
+			emo.max_intensity = mx
+			emo.min_duration = di
+			emo.max_duration = dx
+			emos.append(emo)
 
-			self.blackboard[emo_class] = emos
+		self.blackboard[emo_class] = emos
+
+	def __init__(self):
+
+		self.blackboard = blackboard.Blackboard("rig expressions")
 
 		config = ConfigParser.ConfigParser()
 		config.readfp(open(os.path.join(os.path.dirname(__file__), "../behavior.cfg")))
@@ -100,18 +101,18 @@ class Tree():
 		self.blackboard["current_emotion"] = config.get("emotion", "default_emotion")
 		self.blackboard["current_emotion_intensity"] = config.getfloat("emotion", "default_emotion_intensity")
 
-		unpack_config_emotions("frustrated_emotions")
+		self.unpack_config_emotions(config, "frustrated_emotions")
 
-		unpack_config_emotions("positive_emotions")
-		unpack_config_emotions("non_positive_emotion")
+		self.unpack_config_emotions(config, "positive_emotions")
+		self.unpack_config_emotions(config, "non_positive_emotion")
 
-		unpack_config_emotions("bored_emotions")
-		unpack_config_emotions("non_bored_emotion")
+		self.unpack_config_emotions(config, "bored_emotions")
+		self.unpack_config_emotions(config, "non_bored_emotion")
 
-		unpack_config_emotions("sleep_emotions")
-		unpack_config_emotions("non_sleep_emotion")
+		self.unpack_config_emotions(config, "sleep_emotions")
+		self.unpack_config_emotions(config, "non_sleep_emotion")
 
-		unpack_config_emotions("wake_up_emotions")
+		self.unpack_config_emotions(config, "wake_up_emotions")
 
 		self.blackboard["min_duration_for_interaction"] = config.getfloat("interaction", "duration_min")
 		self.blackboard["max_duration_for_interaction"] = config.getfloat("interaction", "duration_max")
