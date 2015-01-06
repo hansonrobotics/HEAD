@@ -199,7 +199,7 @@ class Tree():
 
 	# Pick a  so-called "instant" or "flash" expression
 	def pick_instant(self, emo_class, exclude_class) :
-		emo = pick_random_expression(exclude_class)
+		emo = self.pick_random_expression(exclude_class)
 		if emo :
 			exclude = self.blackboard[emo_class]
 			emo_name = self.pick_random_emotion_name(exclude)
