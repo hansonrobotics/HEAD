@@ -585,7 +585,7 @@ class Tree():
 			self.pick_instant("positive_emotions", "non_positive_emotion")
 
 			##### Show A Positive Expression #####
-			pick_random_expression("positive_emotions")
+			self.pick_random_expression("positive_emotions")
 
 		while duration > 0:
 			time.sleep(interval)
