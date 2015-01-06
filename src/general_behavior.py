@@ -108,10 +108,8 @@ class Tree():
 		unpack_config_emotions("sleep_emotions")
 		unpack_config_emotions("non_sleep_emotion")
 
-		self.blackboard["wake_up_emotions"] = [x.strip() for x in config.get("emotion", "wake_up_emotions").split(",")]
-		self.blackboard["wake_up_emotions_probabilities"] = get_values(config.get("emotion", "wake_up_emotions_probabilities"), len(self.blackboard["wake_up_emotions"]), True)
-		self.blackboard["wake_up_emotions_intensities_min"] = get_values(config.get("emotion", "wake_up_emotions_intensities_min"), len(self.blackboard["wake_up_emotions"]), False)
-		self.blackboard["wake_up_emotions_intensities_max"] = get_values(config.get("emotion", "wake_up_emotions_intensities_max"), len(self.blackboard["wake_up_emotions"]), False)
+		unpack_config_emotions("wake_up_emotions")
+
 		self.blackboard["min_duration_for_interaction"] = config.getfloat("interaction", "duration_min")
 		self.blackboard["max_duration_for_interaction"] = config.getfloat("interaction", "duration_max")
 		self.blackboard["time_to_change_face_target_min"] = config.getfloat("interaction", "time_to_change_face_target_min")
@@ -690,16 +688,8 @@ class Tree():
 		self.blackboard["is_sleeping"] = False
 		self.blackboard["sleep_since"] = 0.0
 		##### Show A Wake Up Expression #####
-		sum = 0
-		random_number = random.random()
-		for i in range(0, len(self.blackboard["wake_up_emotions_probabilities"])):
-			sum += self.blackboard["wake_up_emotions_probabilities"][i]
-			if random_number <= sum:
-				expression_to_show = self.blackboard["wake_up_emotions"][i]
-				intensity_min = self.blackboard["wake_up_emotions_intensities_min"][i]
-				intensity_max = self.blackboard["wake_up_emotions_intensities_max"][i]
-				break
-		self.show_emotion(expression_to_show, random.uniform(intensity_min, intensity_max), 15)
+		self.pick_random_expression("wake_up_emotions")
+
 		#TODO: Topic for waking up
 		yield True
 
