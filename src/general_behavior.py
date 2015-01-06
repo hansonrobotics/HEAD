@@ -194,7 +194,8 @@ class Tree():
 	# Pick the name of a random emotion, excluding those from
 	# the exclude list
 	def pick_random_emotion_name(self, exclude) :
-		ixnay = [ex.name for ex in exclude]
+		exemos = self.blackboard[exclude]
+		ixnay = [ex.name for ex in exemos]
 		emos = self.blackboard["emotions"]
 		emo_name = random.choice([other for other in emos if other not in ixnay])
 		return emo_name
