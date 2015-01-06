@@ -194,8 +194,7 @@ class Tree():
 	# Pick the name of a random emotion, excluding those from
 	# the exclude list
 	def pick_random_emotion_name(self, exclude) :
-		exemos = self.blackboard[exclude]
-		ixnay = [ex.name for ex in exemos]
+		ixnay = [ex.name for ex in exclude]
 		emos = self.blackboard["emotions"]
 		emo_name = random.choice([other for other in emos if other not in ixnay])
 		return emo_name
@@ -700,7 +699,7 @@ class Tree():
 	def go_to_sleep(self, **kwargs):
 		self.blackboard["is_sleeping"] = True
 		##### Show A Sleep Expression #####
-		self.pick_random_emotion_name("sleep_emotions")
+		self.pick_random_emotion_name(self.blackboard["sleep_emotions"])
 
 		interval = 0.01
 		duration = 15
