@@ -283,8 +283,9 @@ class Tree():
 		)
 		return tree
 
+	# -----------------------------
 	# Interact with people
-	def interct_with_people(self) :
+	def interact_with_people(self) :
 		tree = owyl.sequence(
 			self.is_face_target(),
 			self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.001, max=1.005),
@@ -322,6 +323,61 @@ class Tree():
 		)
 		return tree
 
+
+	# -------------------
+	##### Nothing Interesting Is Happening #####
+	def nothing_is_happening(self) :
+
+		tree = owyl.sequence(
+			self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=0.8, max=0.9),
+			self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.995, max=1.0),
+			owyl.selector(
+				##### Is Not Sleeping #####
+				owyl.sequence(
+					self.is_not_sleeping(),
+					owyl.selector(
+						##### Go To Sleep #####
+						owyl.sequence(
+							self.is_random_smaller_than(val1="newRandom_plus_boredom", val2="sleep_probability"),
+							self.record_start_time(variable="sleep_since"),
+							self.print_status(str="----- Go To Sleep!"),
+							self.go_to_sleep()
+						),
+
+						##### Search For Attention #####
+						self.search_for_attention()
+					)
+				),
+
+				##### Is Sleeping #####
+				owyl.selector(
+					##### Wake Up #####
+					owyl.sequence(
+						self.is_random_smaller_than(val1="newRandom", val2="wake_up_probability"),
+						self.is_time_to_wake_up(),
+						self.wake_up(),
+						self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
+					),
+
+					##### Continue To Sleep #####
+					owyl.sequence(
+						self.print_status(str="----- Continue To Sleep!"),
+						self.go_to_sleep()
+					)
+				)
+			),
+
+			##### If Interruption && Sleeping -> Wake Up #####
+			owyl.sequence(
+				self.is_interruption(),
+				self.is_sleeping(),
+				self.wake_up(),
+				self.print_status(str="----- Interruption: Wake Up!"),
+				self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
+			)
+		)
+		return tree
+
 	# ------------------------------------------------------------------
 	# Build the main tree
 	def build_tree(self):
@@ -336,62 +392,12 @@ class Tree():
 							self.someone_arrived(),
 							self.someone_left(),
 							self.interact_with_people(),
-
-
-							##### Nothing Interesting Is Happening #####
-							owyl.sequence(
-								self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=0.8, max=0.9),
-								self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.995, max=1.0),
-								owyl.selector(
-									##### Is Not Sleeping #####
-									owyl.sequence(
-										self.is_not_sleeping(),
-										owyl.selector(
-											##### Go To Sleep #####
-											owyl.sequence(
-												self.is_random_smaller_than(val1="newRandom_plus_boredom", val2="sleep_probability"),
-												self.record_start_time(variable="sleep_since"),
-												self.print_status(str="----- Go To Sleep!"),
-												self.go_to_sleep()
-											),
-
-											##### Search For Attention #####
-											self.search_for_attention()
-										)
-									),
-
-									##### Is Sleeping #####
-									owyl.selector(
-										##### Wake Up #####
-										owyl.sequence(
-											self.is_random_smaller_than(val1="newRandom", val2="wake_up_probability"),
-											self.is_time_to_wake_up(),
-											self.wake_up(),
-											self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
-										),
-
-										##### Continue To Sleep #####
-										owyl.sequence(
-											self.print_status(str="----- Continue To Sleep!"),
-											self.go_to_sleep()
-										)
-									)
-								),
-
-								##### If Interruption && Sleeping -> Wake Up #####
-								owyl.sequence(
-									self.is_interruption(),
-									self.is_sleeping(),
-									self.wake_up(),
-									self.print_status(str="----- Interruption: Wake Up!"),
-									self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
-								)
-							)
+							self.nothing_is_happening()
 						)
 					),
 
-					############### Scripted Performance System ###############
-					# This only executes when scripting is turned off.
+					# Turn on scripted performances
+					# This point is reached only when scripting is turned off.
 					owyl.sequence(
 						self.idle_spin(),
 						self.is_scripted_performance_system_on(),
