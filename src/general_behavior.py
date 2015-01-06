@@ -215,7 +215,7 @@ class Tree():
 	# The various behavior trees
 
 	# Actions that are taken when a face becomes visible.
-	def new_arrival(self) :
+	def someone_arrived(self) :
 		tree = owyl.sequence(
 			self.is_someone_arrived(),
 			self.set_emotion(variable="boredom_engagement", value=0.5),
@@ -249,6 +249,38 @@ class Tree():
 		)
 		return tree
 
+	# Actions that are taken when a face leaves
+	def someone_left(self) :
+		tree = owyl.sequence(
+			self.is_someone_left(),
+			owyl.selector(
+				##### Was Interacting With That Person #####
+				owyl.sequence(
+					self.was_interacting_with_that_person(),
+					self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
+					self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.8, max=2.2),
+					self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.4, max=0.6),
+					self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
+					self.show_frustrated_expression()
+				),
+
+				##### Is Interacting With Someone Else #####
+				owyl.sequence(
+					self.is_interacting_with_someone(),
+					self.is_random_smaller_than(val1="newRandom", val2="glance_probability_for_lost_faces"),
+					self.glance_at_lost_face()
+				),
+
+				##### Does Nothing #####
+				owyl.sequence(
+					self.print_status(str="----- Ignoring The Lost Face!"),
+					self.does_nothing()
+				)
+			),
+			self.clear_lost_face_target()
+		)
+		return tree
+
 	# ------------------------------------------------------------------
 	# Build the main tree
 	def build_tree(self):
@@ -260,38 +292,8 @@ class Tree():
 						self.sync_variables(),
 						########## Main Events ##########
 						owyl.selector(
-							##### When Someone Arrived #####
-							self.new_arrival(),
-
-							##### When Someone Left #####
-							owyl.sequence(
-								self.is_someone_left(),
-								owyl.selector(
-									##### Was Interacting With That Person #####
-									owyl.sequence(
-										self.was_interacting_with_that_person(),
-										self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
-										self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.8, max=2.2),
-										self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.4, max=0.6),
-										self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
-										self.show_frustrated_expression()
-									),
-
-									##### Is Interacting With Someone Else #####
-									owyl.sequence(
-										self.is_interacting_with_someone(),
-										self.is_random_smaller_than(val1="newRandom", val2="glance_probability_for_lost_faces"),
-										self.glance_at_lost_face()
-									),
-
-									##### Does Nothing #####
-									owyl.sequence(
-										self.print_status(str="----- Ignoring The Lost Face!"),
-										self.does_nothing()
-									)
-								),
-								self.clear_lost_face_target()
-							),
+							self.someone_arrived(),
+							self.someone_left(),
 
 							##### People Interaction #####
 							owyl.sequence(
