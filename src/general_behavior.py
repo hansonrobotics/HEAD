@@ -198,6 +198,14 @@ class Tree():
 		return emo
 
 
+	# Pick the name of a random emotion, excluding those from
+	# the exclude list
+	def pick_random_emotion_name(self, exclude)
+		ixnay = [ex.name for ex in exclude]
+		emos = self.blackboard["emotions"]
+		emo_name = random.choice([other for other in emos if other not in ixnay])
+		return emo_name
+
 	def build_tree(self):
 		eva_behavior_tree = \
 			owyl.repeatAlways(
@@ -574,11 +582,12 @@ class Tree():
 			emo = pick_random_expression("non_positive_emotion")
 			if emo :
 
-				emo_name = random.choice([other for other in self.blackboard["emotions"] if other not in self.blackboard["positive_emotions"]])
-				emo_intense = random.uniform(self.blackboard["expressions_other_than_positive_intensity_min"], self.blackboard["expressions_other_than_positive_intensity_max"])
-				self.show_emotion(emo_name, emo_intense, 15)
+				exclude = self.blackboard["positive_emotions"]
+				emo_name = self.pick_random_emotion_name(exclude)
+				tense = random.uniform(emo.min_intensity, emo.max_intensity)
 				durat = random.uniform(emo.min_duration, emo.max_duration)
-				time.sleep(durat)
+				self.show_emotion(emo_name, tense, durat)
+				time.sleep(durat) # XXX Sleep is a bad idea, blocks events ...
 
 			##### Show A Positive Expression #####
 			pick_random_expression("positive_emotions")
