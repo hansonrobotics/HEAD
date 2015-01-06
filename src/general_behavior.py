@@ -106,12 +106,8 @@ class Tree():
 		unpack_config_emotions("non_bored_emotion")
 
 		unpack_config_emotions("sleep_emotions")
+		unpack_config_emotions("non_sleep_emotion")
 
-		self.blackboard["show_expressions_other_than_sleep_probabilities"] = config.getfloat("emotion", "show_expressions_other_than_sleep_probabilities")
-		self.blackboard["expressions_other_than_sleep_intensity_min"] = config.getfloat("emotion", "expressions_other_than_sleep_intensity_min")
-		self.blackboard["expressions_other_than_sleep_intensity_max"] = config.getfloat("emotion", "expressions_other_than_sleep_intensity_max")
-		self.blackboard["expressions_other_than_sleep_duration_min"] = config.getfloat("emotion", "expressions_other_than_sleep_duration_min")
-		self.blackboard["expressions_other_than_sleep_duration_max"] = config.getfloat("emotion", "expressions_other_than_sleep_duration_max")
 		self.blackboard["wake_up_emotions"] = [x.strip() for x in config.get("emotion", "wake_up_emotions").split(",")]
 		self.blackboard["wake_up_emotions_probabilities"] = get_values(config.get("emotion", "wake_up_emotions_probabilities"), len(self.blackboard["wake_up_emotions"]), True)
 		self.blackboard["wake_up_emotions_intensities_min"] = get_values(config.get("emotion", "wake_up_emotions_intensities_min"), len(self.blackboard["wake_up_emotions"]), False)
