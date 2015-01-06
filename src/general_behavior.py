@@ -98,15 +98,13 @@ class Tree():
 		self.blackboard["current_emotion_intensity"] = config.getfloat("emotion", "default_emotion_intensity")
 
 		unpack_config_emotions("frustrated_emotions")
+
 		unpack_config_emotions("positive_emotions")
 		unpack_config_emotions("non_positive_emotion")
-		unpack_config_emotions("bored_emotions")
 
-		self.blackboard["show_expressions_other_than_boring_probabilities"] = config.getfloat("emotion", "show_expressions_other_than_boring_probabilities")
-		self.blackboard["expressions_other_than_boring_intensity_min"] = config.getfloat("emotion", "expressions_other_than_boring_intensity_min")
-		self.blackboard["expressions_other_than_boring_intensity_max"] = config.getfloat("emotion", "expressions_other_than_boring_intensity_max")
-		self.blackboard["expressions_other_than_boring_duration_min"] = config.getfloat("emotion", "expressions_other_than_boring_duration_min")
-		self.blackboard["expressions_other_than_boring_duration_max"] = config.getfloat("emotion", "expressions_other_than_boring_duration_max")
+		unpack_config_emotions("bored_emotions")
+		unpack_config_emotions("non_bored_emotion")
+
 		self.blackboard["sleep_emotions"] = [x.strip() for x in config.get("emotion", "sleep_emotions").split(",")]
 		self.blackboard["sleep_emotions_probabilities"] = get_values(config.get("emotion", "sleep_emotions_probabilities"), len(self.blackboard["sleep_emotions"]), True)
 		self.blackboard["sleep_emotions_intensities_min"] = get_values(config.get("emotion", "sleep_emotions_intensities_min"), len(self.blackboard["sleep_emotions"]), False)
@@ -197,10 +195,22 @@ class Tree():
 
 	# Pick the name of a random emotion, excluding those from
 	# the exclude list
-	def pick_random_emotion_name(self, exclude)
+	def pick_random_emotion_name(self, exclude) :
 		ixnay = [ex.name for ex in exclude]
 		emos = self.blackboard["emotions"]
 		emo_name = random.choice([other for other in emos if other not in ixnay])
+		return emo_name
+
+	# Pick a  so-called "instant" or "flash" expression
+	def pick_instant(self, emo_class, exclude_class) :
+		emo = pick_random_expression(exclude_class)
+		if emo :
+			exclude = self.blackboard[emo_class]
+			emo_name = self.pick_random_emotion_name(exclude)
+			tense = random.uniform(emo.min_intensity, emo.max_intensity)
+			durat = random.uniform(emo.min_duration, emo.max_duration)
+			self.show_emotion(emo_name, tense, durat)
+			time.sleep(durat) # XXX Sleep is a bad idea, blocks events ...
 		return emo_name
 
 	def build_tree(self):
@@ -576,15 +586,7 @@ class Tree():
 		print "----- Interacting w/Face(id:" + str(face_id) + ") for " + str(duration)[:5] + " seconds"
 		if time.time() - self.blackboard["show_expression_since"] >= 2.0 or kwargs["new_face"]:
 			##### Show A Random Instant Expression #####
-			emo = pick_random_expression("non_positive_emotion")
-			if emo :
-
-				exclude = self.blackboard["positive_emotions"]
-				emo_name = self.pick_random_emotion_name(exclude)
-				tense = random.uniform(emo.min_intensity, emo.max_intensity)
-				durat = random.uniform(emo.min_duration, emo.max_duration)
-				self.show_emotion(emo_name, tense, durat)
-				time.sleep(durat) # XXX Sleep is a bad idea, blocks events ...
+			self.pick_instant("positive_emotions", "non_positive_emotion")
 
 			##### Show A Positive Expression #####
 			pick_random_expression("positive_emotions")
@@ -656,18 +658,12 @@ class Tree():
 		if self.blackboard["blender_mode"] != "LookAround":
 			self.tracking_mode_pub.publish("LookAround")
 			self.blackboard["blender_mode"] = "LookAround"
+
 		if time.time() - self.blackboard["show_expression_since"] >= 5.0:
 			##### Show A Random Instant Expression #####
-			if random.random() <= self.blackboard["show_expressions_other_than_boring_probabilities"]:
-				emo_name = random.choice([other for other in self.blackboard["emotions"] if other not in self.blackboard["boring_emotions"]])
+			self.pick_instant("bored_emotions", "non_bored_emotion")
 
-				emo_intense = random.uniform(self.blackboard["expressions_other_than_boring_intensity_min"], self.blackboard["expressions_other_than_boring_intensity_max"])
-
-				# XXX fixme -- set the duration....
-				duration_seconds = 15
-				self.show_emotion(emo_name, emo_intense, duration_seconds)
-				time.sleep(random.uniform(self.blackboard["expressions_other_than_boring_duration_min"], self.blackboard["expressions_other_than_boring_duration_max"]))
-			##### Show A Positive Expression #####
+			##### Show A Bored Expression #####
 			self.pick_random_expression("bored_emotions")
 
 		interval = 0.01
