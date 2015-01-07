@@ -17,7 +17,7 @@ Broadcast `/tf` data from face tracking.
 ###### Subscribed topics
  * `camera/face_locations (pi_vision/Faces)`: Faces published by pi_vision in 3D coordinates by main camera
  * `eye_camera/face_locations (pi_vision/Faces)`:  Faces published by pi_vision in 3D coordinates by eye camera
- * 
+ 
 ###### Params topics
  * `max_distance`: Max distance for faces from eye-camera and body camera to be considered same.
 
