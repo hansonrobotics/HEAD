@@ -1,6 +1,5 @@
 <launch>
 	<arg name="model" />
-    <group ns="/arthur">
 	<arg name="gui" default="True" />
 	<param name="robot_description" textfile="$(find perception)/urdf/arthur.urdf" />
 	<param name="use_gui" value="$(arg gui)"/>
@@ -14,6 +13,5 @@
         <node name="state_publisher" pkg="perception" type="joint_state_publisher.py">
             <rosparam param="pololu_joints">[Eyes_Pitch,Eye_L,Eye_R]</rosparam>
         </node>
-    </group>
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find perception)/rviz/urdf.rviz" required="true" />
 </launch>
