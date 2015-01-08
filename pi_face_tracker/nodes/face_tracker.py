@@ -78,9 +78,10 @@ class FaceBox():
         # Camera settings:
         # FOV == Field of View; 0.625 radians == 36 degrees.
         self.camera_fov_x = rospy.get_param('~camera_fov_x',0.625)
-        # TODO replace after decided on camera node
-        self.camera_width = rospy.get_param('uvc_cam_node/width',640)
-        self.camera_height = rospy.get_param('uvc_cam_node/height',480)
+        # Camera name as format
+        self.camera_name = rospy.get_param("~camera_name", 'camera')
+        self.camera_width = rospy.get_param(self.camera_name + '/width',640)
+        self.camera_height = rospy.get_param(self.camera_name + '/height',480)
         # init time needed for full time since added, start time
         # needed in case face will reappear.
         self.init_time = self.start_time = rospy.Time.now()
@@ -170,13 +171,16 @@ class FaceBox():
                     if self.start_time == self.init_time:
                         result = 2
 
-            if self.attention < self.min_attention:
+            # Decrease attention every haar frame.
+            self.attention *= self.attention_decay_rate
+
+            # Check for attention threshold only for active faces
+            if self.status == 'ok' and  self.attention < self.min_attention:
                 self.lost_face()
 
             if self.status == 'deleted':
                 self.haar_frames_detected = max(1, self.haar_frames_detected-1)
-            # Decrease attention every haar frame.
-            self.attention *= self.attention_decay_rate
+
 
         if self.status == 'deleted' and \
                 rospy.Time.now() - self.disappear_time > rospy.Duration.from_sec(self.time_to_keep):
@@ -309,16 +313,20 @@ class FacesRegistry():
         self.face_id = 0
         self.faces = {}
         self.publishers = {}
+        # Camera name
+        self.camera_name = rospy.get_param("~camera_name", 'camera')
+        # publish data to camera namespace. Can use multiple cameras in single namespace.
         self.event_pub = rospy.Publisher(
-            self.TOPIC_EVENT,
+            self.camera_name + "/" + self.TOPIC_EVENT,
             FaceEvent,
             queue_size=10
         )
         self.faces_pub = rospy.Publisher(
-            self.TOPIC_FACES,
+            self.camera_name + "/" +  self.TOPIC_FACES,
             Faces,
             queue_size=10
         )
+
 
     def _add_entry(self, face_box):
         #Update data structures
@@ -456,12 +464,14 @@ class PatchTracker(ROS2OpenCV):
 
         """ Set up the face detection parameters """
         self.cascade_frontal_alt = rospy.get_param("~cascade_frontal_alt", "")
-        self.cascade_frontal_alt2 = rospy.get_param("~cascade_frontal_alt2", "")
-        self.cascade_profile = rospy.get_param("~cascade_profile", "")
-
+        # optional for Face detection
+        self.cascade_frontal_alt2 = rospy.get_param("~cascade_frontal_alt2", False)
+        self.cascade_profile = rospy.get_param("~cascade_profile", False)
         self.cascade_frontal_alt = cv.Load(self.cascade_frontal_alt)
-        self.cascade_frontal_alt2 = cv.Load(self.cascade_frontal_alt2)
-        self.cascade_profile = cv.Load(self.cascade_profile)
+        if self.cascade_frontal_alt2:
+            self.cascade_frontal_alt2 = cv.Load(self.cascade_frontal_alt2)
+        if self.cascade_profile:
+            self.cascade_profile = cv.Load(self.cascade_profile)
 
         self.min_size = (20, 20)
         self.image_scale = 2
