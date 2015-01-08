@@ -70,7 +70,7 @@ class BLPlayback(bpy.types.Operator):
 				headLoc[2] = normalY * 0.2
 
 			# update NLA based gestures
-			gestures = eva.gesturesList
+			gestures = eva.gesturesList[:]  	# prevent in-situ removal while iterating bug
 			for gesture in gestures:
 				gesture.stripRef.strip_time += gesture.speed * timeScale
 
@@ -81,14 +81,37 @@ class BLPlayback(bpy.types.Operator):
 					else:
 						eva._deleteGesture(gesture)
 
+
 			# update visemes
-			visemes = eva.visemesList
+			visemes = eva.visemesList[:]
 			for viseme in visemes:
-				viseme.stripRef.strip_time += gesture.speed * timeScale
+				# wait to start
+				if viseme.time < 0:
+					continue
 
-				# compute intensity using ramp
-				...
+				# remove if finished
+				if viseme.time > viseme.duration:
+					eva._deleteViseme(viseme)
+					continue
+				
+				# ramp in from 0
+				rampPoint = viseme.duration * viseme.rampRatio
+				if viseme.time <= rampPoint:
+					# compute ramp in factor
+					viseme.magnitude = viseme.time / rampPoint
 
+				# ramp out to 0
+				rampOutPoint = viseme.duration - rampPoint
+				if viseme.time >= rampOutPoint:
+					# compute ramp in factor
+					viseme.magnitude = 1.0 - (viseme.time - rampOutPoint) / rampPoint
+
+
+				# update action
+				viseme.stripRef.influence = viseme.magnitude
+
+				# update time
+				viseme.time += (1/framerateHz)*timeScale
 
 				
 

@@ -127,10 +127,12 @@ class BLRigControl(bpy.types.Panel):
 		col = layout.column()
 		col.label(text="Speech:")
 		row = layout.row(align=True)
-		row.operator('eva.debug', text='A').action = 'commands.setVisemes(cmd="A")'
-		row.operator('eva.debug', text='C').action = 'commands.setVisemes(cmd="C")'
-		row.operator('eva.debug', text='E').action = 'commands.setVisemes(cmd="E")'
-		row.operator('eva.debug', text='F').action = 'commands.setVisemes(cmd="F")'
+		row.operator('eva.debug', text='A').action = 'commands.setVisemes(vis="A")'
+		row.operator('eva.debug', text='C').action = 'commands.setVisemes(vis="C")'
+		row.operator('eva.debug', text='E').action = 'commands.setVisemes(vis="E")'
+		row.operator('eva.debug', text='F').action = 'commands.setVisemes(vis="F")'
+		row.operator('eva.debug', text='W').action = 'commands.setVisemes(vis="W")'
+		row.operator('eva.debug', text='Q').action = 'commands.setVisemes(vis="Q")'
 
 
 		row = layout.row()

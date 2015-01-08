@@ -99,9 +99,9 @@ def getGestureParams():
 			'breathRate': round(eva.breathRate, 3),
 			'breathIntensity': round(eva.breathIntensity, 3)}
 
-def setVisemes(cmd):
+def setVisemes(vis):
 	eva = bpy.evaAnimationManager
-	return eva.setViseme(cmd, duration=100, rampDuration=30)
+	return eva.setViseme(vis, duration=0.2, rampRatio=0.3)
 
 # ========== info dump for ROS, Should return non-blender data structures
 

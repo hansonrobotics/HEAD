@@ -164,6 +164,38 @@ class AnimationManager():
 					self.emotionsList.append(emotion)
 
 
+	def newViseme(self, action, duration, rampRatio):
+			'''Perform a new viseme'''
+			# Check value for sanity
+			checkValue(duration, 0, 10)
+			checkValue(rampRatio, 0, 1)
+
+			# Create NLA track
+			newTrack = self.deformObj.animation_data.nla_tracks.new()
+			newTrack.name = action.name
+
+			# Create strip
+			newStrip = newTrack.strips.new(name=action.name, start=1, action=action)
+			newStrip.blend_type = 'ADD'
+			newStrip.use_animated_time = True
+		
+			newStrip.use_animated_influence = True
+			newStrip.influence = 0
+
+			# Create object and add to list
+			v = Viseme(action.name, newTrack, newStrip, duration, rampRatio)
+			self.visemesList.append(v)
+
+	
+	def _deleteViseme(self, viseme):
+			''' internal use only, stops and deletes a viseme'''
+			# remove from list
+			self.visemesList.remove(viseme)
+
+			# remove from Blender
+			self.deformObj.animation_data.nla_tracks.remove(viseme.trackRef)
+
+
 	def coordConvert(self, loc, currbu):
 		'''Convert coordinates from the external coord system (meters) to
 		blender units.  This also clamps values to prevent completely
@@ -214,6 +246,7 @@ class AnimationManager():
 
 		return locBU
 
+
 	def setFaceTarget(self, loc):
 		'''Set the target used by eye and face tracking.'''
 
@@ -230,11 +263,13 @@ class AnimationManager():
 		self.eyeTargetLoc.target = locBU
 
 
-	def setViseme(self, cmd, duration, rampDuration):
+	def setViseme(self, vis, duration, rampRatio):
 		for viseme in self.availableVisemes:
-			if cmd in viseme.name:
-				self.newGesture(viseme.name, repeat=duration)
+			if vis in viseme.name:
+				self.newViseme(viseme, duration, rampRatio)
 				return viseme.name
+		
+		print('No Action mactching viseme: ', vis)
 
 		
 	def terminate(self):
@@ -296,11 +331,16 @@ class Gesture():
 
 class Viseme():
 	'''Represents a Viseme'''
-	def __init__(self, vis, duration):
+	def __init__(self, vis, track, strip, duration, rampRatio, startTime = 0):
 		self.vis = vis
-		self.duration = duration
-		self.time = 0
-		self.magnitude = 1.0
+		self.trackRef = track
+		self.stripRef = strip
+		self.duration = duration  		# duration of animation in seconds
+		self.time = 0 - startTime 		# -time is scheduled for the future (seconds)
+										# 0 is happening right away
+										# +time is animation in progress (seconds)
+		self.magnitude = 1.0 			# normalized amplitude
+		self.rampRatio = rampRatio 		# percentage of time spent in ramp mode
 
 
 def init():
