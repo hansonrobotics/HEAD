@@ -417,6 +417,7 @@ class Tree():
 	def sync_variables(self, **kwargs):
 		self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
 		print "\n========== Emotion Space =========="
+		print "Looking at face: " + str(self.blackboard["current_face_target"])
 		print "sadness_happiness: " + str(self.blackboard["sadness_happiness"])[:5]
 		print "irritation_amusement: " + str(self.blackboard["irritation_amusement"])[:5]
 		print "confusion_comprehension: " + str(self.blackboard["confusion_comprehension"])[:5]

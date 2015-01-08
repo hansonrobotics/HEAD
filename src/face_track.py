@@ -80,11 +80,11 @@ class FaceTrack:
 		self.VACUUM_INTERVAL = 1
 
 		# Subscribed pi_vision topics and events
-		self.TOPIC_FACE_EVENT = "face_event"
+		self.TOPIC_FACE_EVENT = "/camera/face_event"
 		self.EVENT_NEW_FACE = "new_face"
 		self.EVENT_LOST_FACE = "lost_face"
 
-		self.TOPIC_FACE_LOCATIONS = "face_locations"
+		self.TOPIC_FACE_LOCATIONS = "/camera/face_locations"
 
 		# Published blender_api topics
 		self.TOPIC_FACE_TARGET = "/blender_api/set_face_target"
@@ -327,7 +327,7 @@ class FaceTrack:
 			self.remove_face(data.face_id)
 
 	# pi_vision ROS callback, called when pi_vision has new face
-	# location data for us. Because tis happens frequently (10x/second)
+	# location data for us. Because this happens frequently (10x/second)
 	# we also use this as the main update loop, and drive all look-at
 	# actions from here.
 	def face_loc_cb(self, data):
