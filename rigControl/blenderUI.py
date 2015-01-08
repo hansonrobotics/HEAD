@@ -45,6 +45,21 @@ class BLRigControl(bpy.types.Panel):
 		col.operator('eva.debug', text='Start Animation', icon='ARMATURE_DATA').action = 'commands.init()'
 
 
+		# speech
+		col = layout.column(align=True)
+		col.label(text="Speech:")
+		row = col.row(align=True)
+		row.operator('eva.debug', text='A-I').action = 'commands.setVisemes(vis="A")'
+		row.operator('eva.debug', text='E').action = 'commands.setVisemes(vis="E")'
+		row.operator('eva.debug', text='F-V').action = 'commands.setVisemes(vis="F")'
+		row.operator('eva.debug', text='Q-W').action = 'commands.setVisemes(vis="Q")'
+		row.operator('eva.debug', text='L').action = 'commands.setVisemes(vis="L")'
+		row = col.row(align=True)
+		row.operator('eva.debug', text='C-D-G-K-N-TH').action = 'commands.setVisemes(vis="C")'
+		row.operator('eva.debug', text='M').action = 'commands.setVisemes(vis="M")'
+		row.operator('eva.debug', text='O').action = 'commands.setVisemes(vis="O")'
+		row.operator('eva.debug', text='U').action = 'commands.setVisemes(vis="U")'
+
 		### Gestures ###
 		row = layout.row()
 		layout.label(text="Gestures:")
@@ -123,17 +138,6 @@ class BLRigControl(bpy.types.Panel):
 		col.prop(bones['blink_duration'], '["value"]', text='blinkDuration', slider = True)
 		col.prop(bones['breath_rate'], '["value"]', text='breathRate', slider = True)
 		col.prop(bones['breath_intensity'], '["value"]', text='breathIntensity', slider = True)
-
-		col = layout.column()
-		col.label(text="Speech:")
-		row = layout.row(align=True)
-		row.operator('eva.debug', text='A').action = 'commands.setVisemes(vis="A")'
-		row.operator('eva.debug', text='C').action = 'commands.setVisemes(vis="C")'
-		row.operator('eva.debug', text='E').action = 'commands.setVisemes(vis="E")'
-		row.operator('eva.debug', text='F').action = 'commands.setVisemes(vis="F")'
-		row.operator('eva.debug', text='W').action = 'commands.setVisemes(vis="W")'
-		row.operator('eva.debug', text='Q').action = 'commands.setVisemes(vis="Q")'
-
 
 		row = layout.row()
 		layout.label(text="Debug:")

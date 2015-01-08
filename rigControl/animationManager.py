@@ -164,27 +164,39 @@ class AnimationManager():
 					self.emotionsList.append(emotion)
 
 
-	def newViseme(self, action, duration, rampRatio):
-			'''Perform a new viseme'''
-			# Check value for sanity
-			checkValue(duration, 0, 10)
-			checkValue(rampRatio, 0, 1)
+	def newViseme(self, vis, duration=0.5, rampInRatio=0.1, rampOutRatio=0.8, startTime=0):
+		'''Perform a new viseme'''
+		action = None
+		for viseme in self.availableVisemes:
+			if vis in viseme.name:
+				action = viseme
+				break
+			
+		if not action:
+			print('No Action mactching viseme: ', vis)
+			return False
 
-			# Create NLA track
-			newTrack = self.deformObj.animation_data.nla_tracks.new()
-			newTrack.name = action.name
+		# Check value for sanity
+		checkValue(duration, 0, 10)
+		checkValue(rampInRatio, 0, 0.9)
+		checkValue(rampOutRatio, 0, 0.9)
+		checkValue(rampInRatio+rampOutRatio, 0, 1.0)
 
-			# Create strip
-			newStrip = newTrack.strips.new(name=action.name, start=1, action=action)
-			newStrip.blend_type = 'ADD'
-			newStrip.use_animated_time = True
-		
-			newStrip.use_animated_influence = True
-			newStrip.influence = 0
+		# Create NLA track
+		newTrack = self.deformObj.animation_data.nla_tracks.new()
+		newTrack.name = action.name
 
-			# Create object and add to list
-			v = Viseme(action.name, newTrack, newStrip, duration, rampRatio)
-			self.visemesList.append(v)
+		# Create strip
+		newStrip = newTrack.strips.new(name=action.name, start=1, action=action)
+		newStrip.blend_type = 'ADD'
+		newStrip.use_animated_influence = True
+		newStrip.influence = 0
+
+		# Create object and add to list
+		v = Viseme(action.name, newTrack, newStrip, duration, rampInRatio, rampOutRatio, startTime)
+		self.visemesList.append(v)
+
+		return True
 
 	
 	def _deleteViseme(self, viseme):
@@ -262,15 +274,7 @@ class AnimationManager():
 		locBU = self.coordConvert(loc, self.eyeTargetLoc.current)
 		self.eyeTargetLoc.target = locBU
 
-
-	def setViseme(self, vis, duration, rampRatio):
-		for viseme in self.availableVisemes:
-			if vis in viseme.name:
-				self.newViseme(viseme, duration, rampRatio)
-				return viseme.name
 		
-		print('No Action mactching viseme: ', vis)
-
 		
 	def terminate(self):
 		'''House-keeping at the end of the run'''
@@ -331,7 +335,7 @@ class Gesture():
 
 class Viseme():
 	'''Represents a Viseme'''
-	def __init__(self, vis, track, strip, duration, rampRatio, startTime = 0):
+	def __init__(self, vis, track, strip, duration, rampInRatio, rampOutRatio, startTime):
 		self.vis = vis
 		self.trackRef = track
 		self.stripRef = strip
@@ -339,13 +343,14 @@ class Viseme():
 		self.time = 0 - startTime 		# -time is scheduled for the future (seconds)
 										# 0 is happening right away
 										# +time is animation in progress (seconds)
-		self.magnitude = 1.0 			# normalized amplitude
-		self.rampRatio = rampRatio 		# percentage of time spent in ramp mode
+		self.magnitude = BlendedNum(0, steps=2, smoothing=4) 	# normalized amplitude
+		self.rampInRatio = rampInRatio 		# percentage of time spent blending in
+		self.rampOutRatio = rampOutRatio 	# percentage of time spent blending out
 
 
 def init():
 	'''Create AnimationManager singleton and make available for global access'''
-	if hasattr(bpy, 'evaAnimationManager'):
+	if hasattr(bpy, 'evaAnimationManager') and False:
 		print('Skipping Singleton instanciation')
 	else:
 		bpy.evaAnimationManager = AnimationManager()
