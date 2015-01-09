@@ -103,7 +103,8 @@ class FaceBox():
         self.pyramid = None
         # size of the face to meassure realative distance. Face width is enough
         self.bounding_size = pt2[0] - pt1[0]
-
+        # New face event fired, so Lost Face event has to be fired as well
+        self.lost_face_event = False
         # Simple exponential decay filter to smooth the 3D location.
         # The goal is to limit the jumpiness of the reported postion.
         # This does introduce some lag, but it shouldn't be more than
@@ -334,25 +335,28 @@ class FacesRegistry():
 
 
     def _remove_entry(self, face_id):
+        if self.faces[face_id].lost_face_event:
+            #Dispatch ROS event
+            self.event_pub.publish(
+                face_event = self.EVENT_LOST_FACE,
+                face_id = face_id
+            )
+
         #Update data structures
         del self.faces[face_id]
 
-        #Dispatch ROS event
-        self.event_pub.publish(
-            face_event = self.EVENT_LOST_FACE,
-            face_id = face_id
-        )
-
+    # Publish only faces that are valid.
     def publish_faces(self):
         faces =[]
         for f in self.faces.keys():
-            face = Face()
-            face.id = f
-            face.point = self.faces[f].get_filtered_3d_point()
-            faces.append(face)
+            if self.faces[f].is_trackable():
+                face = Face()
+                face.id = f
+                face.point = self.faces[f].get_filtered_3d_point()
+                faces.append(face)
         msg = Faces()
-        msg.faces = Faces()
-        self.faces_pub.publish(faces)
+        msg.faces = faces
+        self.faces_pub.publish(msg)
 
     def nextFrame(self, haar):
         for f in self.faces.keys():
@@ -361,6 +365,7 @@ class FacesRegistry():
                 self._remove_entry(f)
             elif keep==2:
                 # Dispatch ROS event.
+                self.faces[f].lost_face_event = True
                 self.event_pub.publish(
                     face_event = self.EVENT_NEW_FACE,
                     face_id = f
@@ -892,10 +897,10 @@ class PatchTracker(ROS2OpenCV):
             if std_err > outlier_threshold:
                 features_xy.remove(point)
                 try:
-                	features_z.remove(point)
-                	n_z = n_z - 1
+                    features_z.remove(point)
+                    n_z = n_z - 1
                 except:
-                	pass
+                    pass
 
                 n_xy = n_xy - 1
 
