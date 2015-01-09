@@ -23,6 +23,7 @@ from owyl import blackboard
 import rospy
 from pi_face_tracker.msg import FaceEvent, Faces
 from blender_api_msgs.msg import Target
+import tf
 
 # A Face. Currently consists only of an ID number, a 3D location,
 # and the time it was last seen.  Should be extended to include
@@ -35,7 +36,6 @@ class Face:
 		self.y = point.y
 		self.z = point.z
 		self.t = time.time()
-
 
 # A registery (in-memory database) of all human faces that are currently
 # visible, or have been recently seen.  Implements various basic look-at
@@ -102,6 +102,11 @@ class FaceTrack:
 
 		self.gaze_pub = rospy.Publisher(self.TOPIC_GAZE_TARGET, \
 			Target, queue_size=10)
+
+		# Frame in which coordinates will be returned from transformation
+		self.LOCATION_FRAME = "body"
+		# Transform Listener.Allows history of RECENT_INTERVAL
+		self.tf_listener = tf.TransformListener(False, rospy.Duration(self.RECENT_INTERVAL))
 
 	# ---------------------------------------------------------------
 	# Public API. Use these to get things done.
@@ -191,7 +196,7 @@ class FaceTrack:
 		self.visible_faces.append(faceid)
 
 		print "New face added to visibile faces: " + \
-			str(self.face_locations.keys())
+			str(self.visible_faces)
 
 		self.add_face_to_bb(faceid)
 
@@ -201,12 +206,8 @@ class FaceTrack:
 		if faceid in self.visible_faces:
 			self.visible_faces.remove(faceid)
 
-		if faceid in self.face_locations:
-			del self.face_locations[faceid]
+		print("Lost face; visibile faces now: " + str(self.visible_faces))
 
-		# print "Lost face; visibile faces now: " + str(self.visible_faces))
-		print "Lost face; visibile faces now: " + \
-			str(self.face_locations.keys())
 
 
 	# ----------------------------------------------------------
@@ -230,24 +231,14 @@ class FaceTrack:
 			if (now - self.first_glance < self.glance_howlong):
 				face = None
 
-				# If not a currently visible face, then maybe it was visible
-				# recently.
-				if self.glance_at in self.face_locations.keys() :
-					face = self.face_locations[self.glance_at]
-				elif self.glance_at in self.recent_locations.keys() :
-					face = self.recent_locations[self.glance_at]
-
-				if face:
-					trg = Target()
-					trg.x = face.x
-					trg.y = face.y
-					trg.z = face.z
+				# Find latest postion known
+				try:
+					trg = self.face_target(self.glance_at)
 					self.gaze_pub.publish(trg)
-				else :
+				except:
 					print("Error: no face to glance at!")
 					self.glance_at = 0
 					self.first_flance = -1
-
 			else :
 				# We are done with the glance. Resume normal operations.
 				self.glance_at = 0
@@ -259,58 +250,35 @@ class FaceTrack:
 
 			# Update the eye position, if need be. Skip, if there
 			# is also a pending look-at to perform.
+
 			if 0 < self.gaze_at and self.look_at <= 0:
 				print("Gaze at id " + str(self.gaze_at))
 				try:
-					face = self.face_locations[self.gaze_at]
-				except KeyError:
+					if not self.gaze_at in self.visible_faces:
+						raise Exception("Face not visible")
+					trg = self.face_target(self.gaze_at)
+					self.gaze_pub.publish(trg)
+				except:
 					print("Error: no gaze-at target")
 					self.gaze_at_face(0)
 					return
-				trg = Target()
-				trg.x = face.x
-				trg.y = face.y
-				trg.z = face.z
-				self.gaze_pub.publish(trg)
 
 			if 0 < self.look_at:
 				print("Look at id " + str(self.look_at))
 				try:
-					face = self.face_locations[self.look_at]
-				except KeyError:
+					if not self.look_at in self.visible_faces:
+						raise Exception("Face not visible")
+					trg = self.face_target(self.look_at)
+					self.look_pub.publish(trg)
+				except:
 					print("Error: no look-at target")
 					self.look_at_face(0)
 					return
-				trg = Target()
-				trg.x = face.x
-				trg.y = face.y
-				trg.z = face.z
-				self.look_pub.publish(trg)
 
 				# Now that we've turned to face the target, don't do it
 				# again; instead, just track with the eyes.
 				self.gaze_at = self.look_at
 				self.look_at = -1
-
-		# General housecleaning.
-		# If the location of a face has not been reported in a while,
-		# remove it from the active list, and put it on the recently-seen
-		# list. We should have gotten a lost face message for this,
-		# but these do not always seem reliable.
-		if (now - self.last_vacuum > self.VACUUM_INTERVAL):
-			self.last_vacuum = now
-			for fid in self.face_locations.keys():
-				face = self.face_locations[fid]
-				if (now - face.t > self.VACUUM_INTERVAL):
-					self.recent_locations[fid] = self.face_locations[fid]
-					del self.face_locations[fid]
-
-			# Vacuum out the recent locations as well.
-			for fid in self.recent_locations.keys():
-				face = self.recent_locations[fid]
-				if (now - face.t > self.RECENT_INTERVAL):
-					del self.recent_locations[fid]
-
 
 	# ----------------------------------------------------------
 	# pi_vision ROS callbacks
@@ -334,19 +302,21 @@ class FaceTrack:
 		for face in data.faces:
 			fid = face.id
 			loc = face.point
-			inface = Face(fid, loc)
-
 			# Sanity check.  Sometimes pi_vision sends us faces with
 			# location (0,0,0). Discard these.
 			if loc.x < 0.05:
 				continue
-
 			self.add_face(fid)
-			self.face_locations[fid] = inface
-
-			# If we see it now, its not 'recently seen' any longer.
-			if fid in self.recent_locations:
-				del self.recent_locations[fid]
 
 		# Now perform all the various looking-at actions
 		self.do_look_at_actions()
+
+	# Queries tf_listener to sget latest available position
+	# Throws TF exceptions if transform canot be returned
+	def face_target(self,faceid):
+		(trans, rot) = self.tf_listener.lookupTransform(self.LOCATION_FRAME,'Face'+str(faceid), rospy.Time(0))
+		t = Target()
+		t.x = trans[0]
+		t.y = trans[1]
+		t.z = trans[2]
+		return t
