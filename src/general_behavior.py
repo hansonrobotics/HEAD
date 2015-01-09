@@ -48,6 +48,18 @@ class Emotion:
 		self.min_duration = 5.0
 		self.max_duration = 15.0
 
+# Basic holder for gesture properties and probabilities
+class Gesture:
+	def __init__(self, name):
+		self.name = name
+		self.probability = 0.0
+		self.min_intensity = 0.0
+		self.max_intensity = 1.0
+		self.min_repeat = 0.0
+		self.max_repeat = 1.0
+		self.min_speed = 0.0
+		self.max_speed = 1.0
+
 class Tree():
 	# ---------
 	# Config File utilities
@@ -86,6 +98,48 @@ class Tree():
 
 		self.blackboard[emo_class] = emos
 
+	def unpack_config_gestures(self, config, ges_class) :
+
+		def get_values(from_config, num_values):
+			rtn_values = [float(z.strip()) for z in from_config.split(",")]
+			if len(rtn_values) != num_values:
+				raise Exception("List lengths don't match!")
+			return rtn_values
+
+		names = [x.strip() for x in config.get("gesture", ges_class).split(",")]
+		numb = len(names)
+
+		probs = get_values(config.get("gesture", \
+			ges_class + "_probabilities"), numb)
+		mins = get_values(config.get("gesture", \
+			ges_class + "_intensity_min"), numb)
+		maxs = get_values(config.get("gesture", \
+			ges_class + "_intensity_max"), numb)
+
+		rins = get_values(config.get("gesture", \
+			ges_class + "_repeat_min"), numb)
+		raxs = get_values(config.get("gesture", \
+			ges_class + "_repeat_max"), numb)
+
+		sins = get_values(config.get("gesture", \
+			ges_class + "_speed_min"), numb)
+		saxs = get_values(config.get("gesture", \
+			ges_class + "_speed_max"), numb)
+
+		gestures = []
+		for (n,p,mi,mx,ri,rx,si,sa) in zip (names, probs, mins, maxs, rins, raxs, sins, saxs):
+			ges = Gesture(n)
+			ges.probability = p
+			ges.min_intensity = mi
+			ges.max_intensity = mx
+			ges.min_repeat = ri
+			ges.max_repeat = rx
+			ges.min_speed = si
+			ges.max_speed = sa
+			gestures.append(ges)
+
+		self.blackboard[ges_class] = gestures
+
 	def __init__(self):
 
 		self.blackboard = blackboard.Blackboard("rig expressions")
@@ -97,9 +151,9 @@ class Tree():
 		self.blackboard["confusion_comprehension"] = config.getfloat("emotion", "confusion_comprehension")
 		self.blackboard["boredom_engagement"] = config.getfloat("emotion", "boredom_engagement")
 		self.blackboard["recoil_surprise"] = config.getfloat("emotion", "recoil_surprise")
-		self.blackboard["emotions"] = [x.strip() for x in config.get("emotion", "basic_emotions").split(",")]
 		self.blackboard["current_emotion"] = config.get("emotion", "default_emotion")
 		self.blackboard["current_emotion_intensity"] = config.getfloat("emotion", "default_emotion_intensity")
+		self.blackboard["current_emotion_duration"] = config.getfloat("emotion", "default_emotion_duration")
 
 		self.unpack_config_emotions(config, "frustrated_emotions")
 
@@ -113,6 +167,12 @@ class Tree():
 		self.unpack_config_emotions(config, "non_sleep_emotion")
 
 		self.unpack_config_emotions(config, "wake_up_emotions")
+
+		self.unpack_config_emotions(config, "new_arrival_emotions")
+
+		self.unpack_config_gestures(config, "positive_gestures")
+
+		self.unpack_config_gestures(config, "bored_gestures")
 
 		self.blackboard["min_duration_for_interaction"] = config.getfloat("interaction", "duration_min")
 		self.blackboard["max_duration_for_interaction"] = config.getfloat("interaction", "duration_max")
@@ -190,6 +250,24 @@ class Tree():
 
 		return emo
 
+	def pick_random_gesture(self, ges_class_name):
+		random_number = random.random()
+		tot = 0
+		ges = None
+		gestures = self.blackboard[ges_class_name]
+		for ges in gestures:
+			tot += ges.probability
+			if random_number <= tot:
+				break
+
+		if ges:
+			intensity = random.uniform(ges.min_intensity, ges.max_intensity)
+			repeat = random.uniform(ges.min_repeat, ges.max_repeat)
+			speed = random.uniform(ges.min_speed, ges.max_speed)
+			self.show_gesture(ges.name, intensity, repeat, speed)
+
+		return ges
+
 
 	# Pick the name of a random emotion, excluding those from
 	# the exclude list
@@ -218,15 +296,16 @@ class Tree():
 	def someone_arrived(self) :
 		tree = owyl.sequence(
 			self.is_someone_arrived(),
-			self.set_emotion(variable="boredom_engagement", value=0.5),
+			# self.set_emotion(variable="boredom_engagement", value=0.5),
 			owyl.selector(
 				##### There were no people in the scene #####
 				owyl.sequence(
 					self.were_no_people_in_the_scene(),
-					self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.2, max=1.4),
-					self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.2, max=1.4),
+					# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.2, max=1.4),
+					# self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.2, max=1.4),
 					self.assign_face_target(variable="current_face_target", value="new_face"),
 					self.record_start_time(variable="interact_with_face_target_since"),
+					self.show_expression(emo_class="new_arrival_emotions"),
 					self.interact_with_face_target(id="current_face_target", new_face=True)
 				),
 
@@ -234,8 +313,8 @@ class Tree():
 				owyl.sequence(
 					self.is_interacting_with_someone(),
 					self.is_random_smaller_than(val1="newRandom", val2="glance_probability_for_new_faces"),
-					self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.05, max=1.1),
-					self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.05, max=1.1),
+					# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.05, max=1.1),
+					# self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.05, max=1.1),
 					self.glance_at_new_face()
 				),
 
@@ -258,10 +337,10 @@ class Tree():
 				##### Was Interacting With That Person #####
 				owyl.sequence(
 					self.was_interacting_with_that_person(),
-					self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
-					self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.8, max=2.2),
-					self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.4, max=0.6),
-					self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
+					# self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
+					# self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.8, max=2.2),
+					# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.4, max=0.6),
+					# self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
 					self.show_frustrated_expression()
 				),
 
@@ -287,8 +366,8 @@ class Tree():
 	def interact_with_people(self) :
 		tree = owyl.sequence(
 			self.is_face_target(),
-			self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.001, max=1.005),
-			self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.005, max=1.01),
+			# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.001, max=1.005),
+			# self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.005, max=1.01),
 			owyl.selector(
 				##### Start A New Interaction #####
 				owyl.sequence(
@@ -328,8 +407,8 @@ class Tree():
 	def nothing_is_happening(self) :
 
 		tree = owyl.sequence(
-			self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=0.8, max=0.9),
-			self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.995, max=1.0),
+			# self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=0.8, max=0.9),
+			# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.995, max=1.0),
 			owyl.selector(
 				##### Is Not Sleeping #####
 				owyl.sequence(
@@ -389,9 +468,9 @@ class Tree():
 						########## Main Events ##########
 						owyl.selector(
 							self.someone_arrived(),
-							self.someone_left(),
+							# self.someone_left(),
 							self.interact_with_people(),
-							self.nothing_is_happening()
+							# self.nothing_is_happening()
 						)
 					),
 
@@ -416,14 +495,14 @@ class Tree():
 	@owyl.taskmethod
 	def sync_variables(self, **kwargs):
 		self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
-		print "\n========== Emotion Space =========="
-		print "Looking at face: " + str(self.blackboard["current_face_target"])
-		print "sadness_happiness: " + str(self.blackboard["sadness_happiness"])[:5]
-		print "irritation_amusement: " + str(self.blackboard["irritation_amusement"])[:5]
-		print "confusion_comprehension: " + str(self.blackboard["confusion_comprehension"])[:5]
-		print "boredom_engagement: " + str(self.blackboard["boredom_engagement"])[:5]
-		print "recoil_surprise: " + str(self.blackboard["recoil_surprise"])[:5]
-		print "Current Emotion: " + self.blackboard["current_emotion"] + " (" + str(self.blackboard["current_emotion_intensity"])[:5] + ")"
+		# print "\n========== Emotion Space =========="
+		# print "Looking at face: " + str(self.blackboard["current_face_target"])
+		# print "sadness_happiness: " + str(self.blackboard["sadness_happiness"])[:5]
+		# print "irritation_amusement: " + str(self.blackboard["irritation_amusement"])[:5]
+		# print "confusion_comprehension: " + str(self.blackboard["confusion_comprehension"])[:5]
+		# print "boredom_engagement: " + str(self.blackboard["boredom_engagement"])[:5]
+		# print "recoil_surprise: " + str(self.blackboard["recoil_surprise"])[:5]
+		# print "Current Emotion: " + self.blackboard["current_emotion"] + " (" + str(self.blackboard["current_emotion_intensity"])[:5] + ")"
 		yield True
 
 	@owyl.taskmethod
@@ -523,7 +602,9 @@ class Tree():
 
 	@owyl.taskmethod
 	def is_time_to_change_face_target(self, **kwargs):
-		if self.blackboard["interact_with_face_target_since"] > 0 and (time.time() - self.blackboard["interact_with_face_target_since"]) >= random.uniform(self.blackboard["time_to_change_face_target_min"], self.blackboard["time_to_change_face_target_max"]):
+		if self.blackboard["interact_with_face_target_since"] > 0 and \
+				(time.time() - self.blackboard["interact_with_face_target_since"]) >= \
+						random.uniform(self.blackboard["time_to_change_face_target_min"], self.blackboard["time_to_change_face_target_max"]):
 			print "----- Time To Start A New Interaction!"
 			yield True
 		else:
@@ -606,12 +687,17 @@ class Tree():
 		self.facetrack.look_at_face(face_id)
 
 		print "----- Interacting w/Face(id:" + str(face_id) + ") for " + str(duration)[:5] + " seconds"
-		if time.time() - self.blackboard["show_expression_since"] >= 2.0 or kwargs["new_face"]:
+		if time.time() - self.blackboard["show_expression_since"] >= self.blackboard["current_emotion_duration"]/3 or kwargs["new_face"]:
 			##### Show A Random Instant Expression #####
-			self.pick_instant("positive_emotions", "non_positive_emotion")
+			# self.pick_instant("positive_emotions", "non_positive_emotion")
 
 			##### Show A Positive Expression #####
-			self.pick_random_expression("positive_emotions")
+			if random.random >= 0.4:
+				self.pick_random_expression("positive_emotions")
+
+			##### Show A Positive Gesture #####
+			if random.random >= 0.4:
+				self.pick_random_gesture("positive_gestures")
 
 		while duration > 0:
 			time.sleep(interval)
@@ -645,7 +731,7 @@ class Tree():
 
 	@owyl.taskmethod
 	def show_expression(self, **kwargs):
-		self.show_emotion(kwargs["expression"], random.uniform(kwargs["min_intensity"], kwargs["max_intensity"]), 15)
+		self.pick_random_expression(kwargs["emo_class"])
 		yield True
 
 	@owyl.taskmethod
@@ -653,13 +739,14 @@ class Tree():
 		self.pick_random_expression("frustrated_emotions")
 		yield True
 
-	# Accept an expression name, intentisty and duration, and publish it
+	# Accept an expression name, intensity and duration, and publish it
 	# as a ros message.
 	def show_emotion(self, expression, intensity, duration):
 
 		# Update the blackboard
 		self.blackboard["current_emotion"] = expression
 		self.blackboard["current_emotion_intensity"] = intensity
+		self.blackboard["current_emotion_duration"] = duration
 
 		# Create the message
 		exp = EmotionState()
@@ -670,8 +757,20 @@ class Tree():
 		exp.duration.nsecs = 1000000000 * (duration - intsecs)
 		self.emotion_pub.publish(exp)
 
-		print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ")"
+		print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ") for " + str(duration)[:4] + " seconds"
 		self.blackboard["show_expression_since"] = time.time()
+
+	# Accept an gesture name, intensity, repeat (perform how many times) and speed
+	# and then publish it as a ros message.
+	def show_gesture(self, gesture, intensity, repeat, speed):
+		ges = SetGesture()
+		ges.name = gesture
+		ges.magnitude = intensity
+		ges.repeat = repeat
+		ges.speed = speed
+		self.gesture_pub.publish(ges)
+
+		print "----- Show gesture: " + gesture + " (" + str(intensity)[:5] + ")"
 
 	@owyl.taskmethod
 	def search_for_attention(self, **kwargs):
@@ -796,6 +895,7 @@ class Tree():
 		self.set_intersect("bored_emotions", msg.data)
 		self.set_intersect("sleep_emotions", msg.data)
 		self.set_intersect("wake_up_emotions", msg.data)
+		self.set_intersect("new_arrival_emotions", msg.data)
 
 
 	def get_gestures_cb(self, msg) :
@@ -811,4 +911,3 @@ class Tree():
 			self.blackboard["is_interruption"] = True
 			self.blackboard["is_scripted_performance_system_on"] = True
 			print "Behavior Tree is OFF!"
-
