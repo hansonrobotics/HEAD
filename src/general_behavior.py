@@ -166,7 +166,7 @@ class Tree():
 		self.tree = self.build_tree()
 		time.sleep(0.1)
 
-		while True:
+		while not rospy.is_shutdown():
 			self.tree.next()
 
 
