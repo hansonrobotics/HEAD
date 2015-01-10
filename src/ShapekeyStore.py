@@ -55,7 +55,7 @@ _shkey_list = [
   "CheekSquint_R"
 ]
 
-_shkey_list2 = [ 
+_shkey_list2 = [
   "00_EyeBlink_L",
   "01_EyeBlink_R",
   "02_EyeSquint_L",
@@ -99,6 +99,25 @@ _shkey_list2 = [
   "47_CheekSquint_R"
 ]
 
+_shkey_list_eva = [
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "eye-blink.UP.L",
+  "eye-blink.LO.L",
+  "eye-blink.UP.R",
+  "eye-blink.LO.R"
+]
+
 def _build_index(lst):
   """Build a dictionary mapping the given list values to their indices"""
   result = {}
@@ -109,7 +128,7 @@ def _build_index(lst):
 #Call _build_index() for every shkey_list
 _shkey2index = [
   _build_index(shkey_list)
-  for shkey_list in [_shkey_list, _shkey_list2]
+  for shkey_list in [_shkey_list, _shkey_list2, _shkey_list_eva]
 ]
 
 _current_dict = _shkey2index[0]
