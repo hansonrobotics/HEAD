@@ -1,4 +1,4 @@
-from ros_pololu_servo.msg import servo_pololu
+from ros_pololu_servo.msg import MotorCommand
 import ParserFactory
 import MapperFactory
 import HardwareFactory

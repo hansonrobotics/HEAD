@@ -1,6 +1,6 @@
 import Utils
 import ShapekeyStore
-from ros_pololu_servo.msg import servo_pololu
+from ros_pololu_servo.msg import MotorCommand
 from std_msgs.msg import Float64
 import rospy
 
@@ -30,18 +30,18 @@ class HardwareBase:
 
 
 class Pololu(HardwareBase):
-  messageType = servo_pololu
+  messageType = MotorCommand
 
   def turn(self, angle):
     self.pub.publish(self.build_msg(angle))
 
 
   def build_msg(self, angle):
-    msg = servo_pololu()
-    msg.id = self.args["id"]
-    msg.angle = angle
-    msg.speed = self.args["speed"]
-    msg.acceleration = self.args["acceleration"]
+    msg = MotorCommand()
+    msg.joint_name = self.args["joint_name"]
+    msg.position = angle
+    msg.speed = self.args["speed"]/255.0
+    msg.acceleration = self.args["acceleration"]/255.0
     return msg
 
 
