@@ -11,22 +11,6 @@ from . import CommandListener
 
 import imp
 
-# sets up the Command listener
-imp.reload(CommandListener)
-CommandListener.refresh()
-
-# sets up the Blender operators
-imp.reload(blenderPlayback)
-blenderPlayback.refresh()
-
-# sets up the Blender interface
-imp.reload(blenderUI)
-blenderUI.refresh()
-
-# init animation Manager singleton
-imp.reload(animationManager)
-animationManager.init()
-
 
 # Goofy hack -- It seems that we are called twice, by ../loader.py.
 # The first time by `import rigControl` at line 11, and then again by
@@ -42,6 +26,23 @@ except NameError:
 
 if not is_init :
 	is_init = True
+
+	# sets up the Command listener
+	imp.reload(CommandListener)
+	CommandListener.refresh()
+
+	# sets up the Blender operators
+	imp.reload(blenderPlayback)
+	blenderPlayback.refresh()
+
+	# sets up the Blender interface
+	imp.reload(blenderUI)
+	blenderUI.refresh()
+
+	# init animation Manager singleton
+	imp.reload(animationManager)
+	animationManager.init()
+
 
 	# Temporary hack for loading the ROS node
 	# If ROS is found, we try to load the ROS node, else not.
