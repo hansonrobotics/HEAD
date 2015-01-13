@@ -174,6 +174,10 @@ class Tree():
 
 		self.unpack_config_gestures(config, "bored_gestures")
 
+		self.unpack_config_gestures(config, "sleep_gestures")
+
+		self.unpack_config_gestures(config, "wake_up_gestures")
+
 		self.blackboard["min_duration_for_interaction"] = config.getfloat("interaction", "duration_min")
 		self.blackboard["max_duration_for_interaction"] = config.getfloat("interaction", "duration_max")
 		self.blackboard["time_to_change_face_target_min"] = config.getfloat("interaction", "time_to_change_face_target_min")
@@ -203,6 +207,7 @@ class Tree():
 		self.blackboard["current_face_target"] = ""
 		self.blackboard["interact_with_face_target_since"] = 0.0
 		self.blackboard["sleep_since"] = 0.0
+		self.blackboard["bored_since"] = 0.0
 		self.blackboard["is_interruption"] = False
 		self.blackboard["is_sleeping"] = False
 		self.blackboard["blender_mode"] = ""
@@ -238,9 +243,10 @@ class Tree():
 		tot = 0
 		emo = None
 		emos = self.blackboard[emo_class_name]
-		for emo in emos:
-			tot += emo.probability
+		for emotion in emos:
+			tot += emotion.probability
 			if random_number <= tot:
+				emo = emotion
 				break
 
 		if emo:
@@ -255,9 +261,10 @@ class Tree():
 		tot = 0
 		ges = None
 		gestures = self.blackboard[ges_class_name]
-		for ges in gestures:
-			tot += ges.probability
+		for gesture in gestures:
+			tot += gesture.probability
 			if random_number <= tot:
+				ges = gesture
 				break
 
 		if ges:
@@ -286,23 +293,25 @@ class Tree():
 			tense = random.uniform(emo.min_intensity, emo.max_intensity)
 			durat = random.uniform(emo.min_duration, emo.max_duration)
 			self.show_emotion(emo_name, tense, durat)
-			time.sleep(durat) # XXX Sleep is a bad idea, blocks events ...
+			# time.sleep(durat) # XXX Sleep is a bad idea, blocks events ...
 		return emo_name
 
 	# ------------------------------------------------------------------
 	# The various behavior trees
 
 	# Actions that are taken when a face becomes visible.
+	# If there were no people in the scene, she always interacts with that person
+	# If she is already interacting with someone else in the scene,
+	# she will either glance at the new face or ignore it, depends on the dice roll
+	# If she has been interacting with another person for a while,
+	# the probability of glancing at a new face is higher
 	def someone_arrived(self) :
 		tree = owyl.sequence(
 			self.is_someone_arrived(),
-			# self.set_emotion(variable="boredom_engagement", value=0.5),
 			owyl.selector(
 				##### There were no people in the scene #####
 				owyl.sequence(
 					self.were_no_people_in_the_scene(),
-					# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.2, max=1.4),
-					# self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.2, max=1.4),
 					self.assign_face_target(variable="current_face_target", value="new_face"),
 					self.record_start_time(variable="interact_with_face_target_since"),
 					self.show_expression(emo_class="new_arrival_emotions"),
@@ -312,16 +321,14 @@ class Tree():
 				##### Currently interacting with someone #####
 				owyl.sequence(
 					self.is_interacting_with_someone(),
-					self.is_random_smaller_than(val1="newRandom", val2="glance_probability_for_new_faces"),
-					# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.05, max=1.1),
-					# self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.05, max=1.1),
+					self.dice_roll(event="glance_new_face"),
 					self.glance_at_new_face()
 				),
 
 				##### Does Nothing #####
 				owyl.sequence(
 					self.print_status(str="----- Ignoring The New Face!"),
-					self.does_nothing()
+					owyl.succeed()
 				)
 			),
 			self.clear_new_face_target()
@@ -330,6 +337,9 @@ class Tree():
 
 	# ---------------------------
 	# Actions that are taken when a face leaves
+	# If she was interacting with that person, she will be frustrated
+	# If she was interacting with someone else,
+	# she will either glance at the lost face or ignore it, depends on the dice roll
 	def someone_left(self) :
 		tree = owyl.sequence(
 			self.is_someone_left(),
@@ -337,24 +347,20 @@ class Tree():
 				##### Was Interacting With That Person #####
 				owyl.sequence(
 					self.was_interacting_with_that_person(),
-					# self.update_emotion(variable="confusion_comprehension", lower_limit=0.0, min=0.4, max=0.6),
-					# self.update_emotion(variable="recoil_surprise", lower_limit=0.0, min=1.8, max=2.2),
-					# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.4, max=0.6),
-					# self.update_emotion(variable="irritation_amusement", lower_limit=0.0, min=0.95, max=1.0),
 					self.show_frustrated_expression()
 				),
 
 				##### Is Interacting With Someone Else #####
 				owyl.sequence(
 					self.is_interacting_with_someone(),
-					self.is_random_smaller_than(val1="newRandom", val2="glance_probability_for_lost_faces"),
+					self.dice_roll(event="glance_lost_face"),
 					self.glance_at_lost_face()
 				),
 
 				##### Does Nothing #####
 				owyl.sequence(
 					self.print_status(str="----- Ignoring The Lost Face!"),
-					self.does_nothing()
+					owyl.succeed()
 				)
 			),
 			self.clear_lost_face_target()
@@ -363,11 +369,13 @@ class Tree():
 
 	# -----------------------------
 	# Interact with people
+	# If she is not currently interacting with anyone, or it's time to switch target
+	# she will start interacting with someone else
+	# Otherwise she will continue with the current interaction
+	# she may also glance at other people if there are more than one people in the scene
 	def interact_with_people(self) :
 		tree = owyl.sequence(
 			self.is_face_target(),
-			# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=1.001, max=1.005),
-			# self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=1.005, max=1.01),
 			owyl.selector(
 				##### Start A New Interaction #####
 				owyl.sequence(
@@ -389,11 +397,11 @@ class Tree():
 					owyl.selector(
 						owyl.sequence(
 							self.is_more_than_one_face_target(),
-							self.is_random_smaller_than(val1="newRandom", val2="glance_probability"),
+							self.dice_roll(event="group_interaction"),
 							self.select_a_glance_target(),
 							self.glance_at(id="current_glance_target")
 						),
-						self.does_nothing()
+						owyl.succeed()
 					),
 					self.interact_with_face_target(id="current_face_target", new_face=False)
 				)
@@ -403,12 +411,13 @@ class Tree():
 
 
 	# -------------------
-	##### Nothing Interesting Is Happening #####
+	# Nothing interesting is happening
+	# she will look around and search for attention
+	# she may go to sleep, and it's more likely to happen if she has been bored for a while
+	# she wakes up whenever there's an interruption, e.g. someone arrives
+	# or after timeout
 	def nothing_is_happening(self) :
-
 		tree = owyl.sequence(
-			# self.update_emotion(variable="boredom_engagement", lower_limit=0.0, min=0.8, max=0.9),
-			# self.update_emotion(variable="sadness_happiness", lower_limit=0.0, min=0.995, max=1.0),
 			owyl.selector(
 				##### Is Not Sleeping #####
 				owyl.sequence(
@@ -416,7 +425,7 @@ class Tree():
 					owyl.selector(
 						##### Go To Sleep #####
 						owyl.sequence(
-							self.is_random_smaller_than(val1="newRandom_plus_boredom", val2="sleep_probability"),
+							self.dice_roll(event="go_to_sleep"),
 							self.record_start_time(variable="sleep_since"),
 							self.print_status(str="----- Go To Sleep!"),
 							self.go_to_sleep()
@@ -431,10 +440,9 @@ class Tree():
 				owyl.selector(
 					##### Wake Up #####
 					owyl.sequence(
-						self.is_random_smaller_than(val1="newRandom", val2="wake_up_probability"),
+						self.dice_roll(event="wake_up"),
 						self.is_time_to_wake_up(),
 						self.wake_up(),
-						self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
 					),
 
 					##### Continue To Sleep #####
@@ -451,7 +459,6 @@ class Tree():
 				self.is_sleeping(),
 				self.wake_up(),
 				self.print_status(str="----- Interruption: Wake Up!"),
-				self.update_emotion(variable="boredom_engagement", lower_limit=0.3, min=1.5, max=2.0)
 			)
 		)
 		return tree
@@ -468,9 +475,9 @@ class Tree():
 						########## Main Events ##########
 						owyl.selector(
 							self.someone_arrived(),
-							# self.someone_left(),
+							self.someone_left(),
 							self.interact_with_people(),
-							# self.nothing_is_happening()
+							self.nothing_is_happening()
 						)
 					),
 
@@ -505,36 +512,58 @@ class Tree():
 		# print "Current Emotion: " + self.blackboard["current_emotion"] + " (" + str(self.blackboard["current_emotion_intensity"])[:5] + ")"
 		yield True
 
-	@owyl.taskmethod
-	def does_nothing(self, **kwargs):
-		yield True
+	# @owyl.taskmethod
+	# def set_emotion(self, **kwargs):
+	# 	self.blackboard[kwargs["variable"]] = kwargs["value"]
+	# 	yield True
+
+	# @owyl.taskmethod
+	# def update_emotion(self, **kwargs):
+	# 	if kwargs["lower_limit"] > 0.0:
+	# 		self.blackboard[kwargs["variable"]] = kwargs["lower_limit"]
+	# 	self.blackboard[kwargs["variable"]] *= random.uniform(kwargs["min"], kwargs["max"])
+	# 	if self.blackboard[kwargs["variable"]] > 1.0:
+	# 		self.blackboard[kwargs["variable"]] = 1.0
+	# 	elif self.blackboard[kwargs["variable"]] <= 0.0:
+	# 		self.blackboard[kwargs["variable"]] = 0.01
+	# 	yield True
 
 	@owyl.taskmethod
-	def set_emotion(self, **kwargs):
-		self.blackboard[kwargs["variable"]] = kwargs["value"]
-		yield True
-
-	@owyl.taskmethod
-	def update_emotion(self, **kwargs):
-		if kwargs["lower_limit"] > 0.0:
-			self.blackboard[kwargs["variable"]] = kwargs["lower_limit"]
-		self.blackboard[kwargs["variable"]] *= random.uniform(kwargs["min"], kwargs["max"])
-		if self.blackboard[kwargs["variable"]] > 1.0:
-			self.blackboard[kwargs["variable"]] = 1.0
-		elif self.blackboard[kwargs["variable"]] <= 0.0:
-			self.blackboard[kwargs["variable"]] = 0.01
-		yield True
-
-	@owyl.taskmethod
-	def is_random_smaller_than(self, **kwargs):
-		if kwargs["val1"] == "newRandom":
-			self.blackboard["random"] = random.random()
-		elif kwargs["val1"] == "newRandom_plus_boredom":
-			self.blackboard["random"] = random.random() + self.blackboard["boredom_engagement"]
-		if self.blackboard["random"] < self.blackboard[kwargs["val2"]]:
-			yield True
+	def dice_roll(self, **kwargs):
+		if kwargs["event"] == "glance_new_face":
+			if self.blackboard["glance_probability_for_new_faces"] > 0 and self.blackboard["interact_with_face_target_since"] > 0:
+				skew = (time.time() - self.blackboard["interact_with_face_target_since"]) / self.blackboard["time_to_change_face_target_max"]
+				if random.random() < self.blackboard["glance_probability_for_new_faces"] + skew:
+					yield True
+				else:
+					yield False
+			else:
+				yield False
+		elif kwargs["event"] == "group_interaction":
+			if random.random() < self.blackboard["glance_probability"]:
+				yield True
+			else:
+				yield False
+		elif kwargs["event"] == "go_to_sleep":
+			if self.blackboard["sleep_probability"] > 0 and self.blackboard["bored_since"] > 0:
+				skew = (time.time() - self.blackboard["bored_since"]) / \
+					   (self.blackboard["search_for_attention_duration_max"] / self.blackboard["sleep_probability"])
+				if random.random() < self.blackboard["sleep_probability"] + skew:
+					yield True
+				else:
+					yield False
+			else:
+				yield False
+		elif kwargs["event"] == "wake_up":
+			if random.random() < self.blackboard["wake_up_probability"]:
+				yield True
+			else:
+				yield False
 		else:
-			yield False
+			if random.random() > 0.5:
+				yield True
+			else:
+				yield False
 
 	@owyl.taskmethod
 	def is_someone_arrived(self, **kwargs):
@@ -682,28 +711,22 @@ class Tree():
 			self.blackboard["blender_mode"] = "TrackDev"
 			time.sleep(0.1)
 		face_id = self.blackboard[kwargs["id"]]
-		duration = random.uniform(self.blackboard["min_duration_for_interaction"], self.blackboard["max_duration_for_interaction"])
-		interval = 0.01
 		self.facetrack.look_at_face(face_id)
 
-		print "----- Interacting w/Face(id:" + str(face_id) + ") for " + str(duration)[:5] + " seconds"
-		if time.time() - self.blackboard["show_expression_since"] >= self.blackboard["current_emotion_duration"]/3 or kwargs["new_face"]:
-			##### Show A Random Instant Expression #####
-			# self.pick_instant("positive_emotions", "non_positive_emotion")
-
-			##### Show A Positive Expression #####
-			if random.random >= 0.4:
+		if self.should_show_expression("positive_emotions") or kwargs["new_face"]:
+			# Show a positive expression, either with or without an instant expression in advance
+			if random.random() < self.blackboard["non_positive_emotion_probabilities"]:
+				self.pick_instant("positive_emotions", "non_positive_emotion")
+			else:
 				self.pick_random_expression("positive_emotions")
 
-			##### Show A Positive Gesture #####
-			if random.random >= 0.4:
-				self.pick_random_gesture("positive_gestures")
+		##### Show A Positive Gesture #####
+		self.pick_random_gesture("positive_gestures")
 
-		while duration > 0:
-			time.sleep(interval)
-			duration -= interval
-			if self.blackboard["is_interruption"]:
-				break
+		interval = 0.01
+		duration = random.uniform(self.blackboard["min_duration_for_interaction"], self.blackboard["max_duration_for_interaction"])
+		print "----- Interacting w/Face(id:" + str(face_id) + ") for " + str(duration)[:5] + " seconds"
+		self.break_if_interruptions(interval, duration)
 		yield True
 
 	@owyl.taskmethod
@@ -775,40 +798,49 @@ class Tree():
 	@owyl.taskmethod
 	def search_for_attention(self, **kwargs):
 		print "----- Search For Attention!"
-		duration = random.uniform(self.blackboard["search_for_attention_duration_min"], self.blackboard["search_for_attention_duration_max"])
+		if self.blackboard["bored_since"] == 0:
+			self.blackboard["bored_since"] = time.time()
 		if self.blackboard["blender_mode"] != "LookAround":
 			self.tracking_mode_pub.publish("LookAround")
 			self.blackboard["blender_mode"] = "LookAround"
 
-		if time.time() - self.blackboard["show_expression_since"] >= 5.0:
-			##### Show A Random Instant Expression #####
-			self.pick_instant("bored_emotions", "non_bored_emotion")
+		if self.should_show_expression("bored_emotions"):
+			# Show a bored expression, either with or without an instant expression in advance
+			if random.random() < self.blackboard["non_bored_emotion_probabilities"]:
+				self.pick_instant("bored_emotions", "non_bored_emotion")
+			else:
+				self.pick_random_expression("bored_emotions")
 
-			##### Show A Bored Expression #####
-			self.pick_random_expression("bored_emotions")
+		##### Show A Bored Gesture #####
+		self.pick_random_gesture("bored_gestures")
 
 		interval = 0.01
-		while duration > 0:
-			time.sleep(interval)
-			duration -= interval
-			if self.blackboard["is_interruption"]:
-				break
+		duration = random.uniform(self.blackboard["search_for_attention_duration_min"], self.blackboard["search_for_attention_duration_max"])
+		self.break_if_interruptions(interval, duration)
 		yield True
+
+	# To determine whether it is a good time to show another expression
+	# Can be used to avoid making expressions too frequently
+	def should_show_expression(self, emo_class):
+		if (time.time() - self.blackboard["show_expression_since"]) >= (self.blackboard["current_emotion_duration"] / 4):
+			return True
+		else:
+			return False
 
 	@owyl.taskmethod
 	def go_to_sleep(self, **kwargs):
 		self.blackboard["is_sleeping"] = True
+		self.blackboard["bored_since"] = 0.0
+
 		##### Show A Sleep Expression #####
 		self.pick_random_emotion_name(self.blackboard["sleep_emotions"])
 
+		##### Show A Sleep Gesture #####
+		self.pick_random_gesture("sleep_gestures")
+
 		interval = 0.01
-		duration = 15
-		#TODO: Topic for sleep
-		while duration > 0:
-			time.sleep(interval)
-			duration -= interval
-			if self.blackboard["is_interruption"]:
-				break
+		duration = random.uniform(self.blackboard["sleep_duration_min"], self.blackboard["sleep_duration_max"])
+		self.break_if_interruptions(interval, duration)
 		yield True
 
 	@owyl.taskmethod
@@ -816,10 +848,14 @@ class Tree():
 		print "----- Wake Up!"
 		self.blackboard["is_sleeping"] = False
 		self.blackboard["sleep_since"] = 0.0
+		self.blackboard["bored_since"] = 0.0
+
 		##### Show A Wake Up Expression #####
 		self.pick_random_expression("wake_up_emotions")
 
-		#TODO: Topic for waking up
+		##### Show A Wake Up Gesture #####
+		self.pick_random_gesture("wake_up_gestures")
+
 		yield True
 
 	@owyl.taskmethod
@@ -856,6 +892,12 @@ class Tree():
 		time.sleep(1)
 		yield True
 
+	def break_if_interruptions(self, interval, duration):
+		while duration > 0:
+			time.sleep(interval)
+			duration -= interval
+			if self.blackboard["is_interruption"]:
+				break
 
 	# Return the subset of 'core' strings that are in 'avail' strings.
 	# Note that 'avail' strings might contain longer names,
