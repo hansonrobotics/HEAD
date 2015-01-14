@@ -60,10 +60,10 @@ RosUI.api = {
             var cmd = new ROSLIB.Message({data: Math.min(Math.max(angle, confEntry.min), confEntry.max)});
         } else {
             var cmd = new ROSLIB.Message({
-                id: confEntry.motorid,
-                angle: Math.min(Math.max(angle, confEntry.min), confEntry.max),
-                speed: speed || confEntry.speed,
-                acceleration: acc || confEntry.acceleration
+                joint_name: confEntry.name,
+                position: Math.min(Math.max(angle, confEntry.min), confEntry.max),
+                speed: (speed || confEntry.speed || 100)/255,
+                acceleration: (acc || confEntry.acceleration || 50)/255
             });
 
         }

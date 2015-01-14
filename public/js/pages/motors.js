@@ -30,7 +30,7 @@ RosUI.motors = {
 
         //Fill header
         sliderBlock.find(".slNameL").text(config.labelleft || config.name);
-        sliderBlock.find(".slNameR").text(config.labelright);
+        sliderBlock.find(".slNameR").text(config.labelright || "");
         sliderBlock.find(".slMin").text(degMin);
         sliderBlock.find(".slMax").text(degMax);
         sliderBlock.find(".slVal").text(degVal);

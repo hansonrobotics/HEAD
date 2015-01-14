@@ -48,27 +48,27 @@ RosUI.ros = {
             }),
             cmdBllink: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/cmd_blink',
+                name: '/fritz/cmd_blink',
                 messageType: 'std_msgs/String'
             }),
             cmdTree: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/behavior_switch',
+                name: '/fritz/behavior_switch',
                 messageType: 'std_msgs/String'
             }),
             speech_topic: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/chatbot_speech',
+                name: '/fritz/chatbot_speech',
                 messageType: 'chatbot/ChatMessage'
             }),
             chat_responses: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/chatbot_responses',
+                name: '/fritz/chatbot_responses',
                 messageType: 'std_msgs/String'
             }),
             expression: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/make_coupled_face_expr',
+                name: '/fritz/make_coupled_face_expr',
                 messageType: 'basic_head_api/MakeCoupledFaceExpr'
             }),
             pointHeadTopic: new ROSLIB.Topic({
@@ -76,21 +76,17 @@ RosUI.ros = {
                 name: '/fritz/point_head',
                 messageType: 'basic_head_api/PointHead'
             }),
-            face: new ROSLIB.Topic({
+            left: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/arthur_face/cmd_pololu',
-                messageType: 'ros_pololu_servo/servo_pololu'
+                name: '/fritz/left/command',
+                messageType: 'ros_pololu_servo/MotorCommand'
             }),
-            eyes: new ROSLIB.Topic({
+            right: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/arthur_eyes/cmd_pololu',
-                messageType: 'ros_pololu_servo/servo_pololu'
+                name: '/fritz/right/command',
+                messageType: 'ros_pololu_servo/MotorCommand'
             }),
-            jaw: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/arthur/jaw_controller/command',
-                messageType: 'std_msgs/Float64'
-            }),
+
             animations: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/cmd_animations',
