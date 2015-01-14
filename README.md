@@ -36,6 +36,10 @@ Then, turn on behaviors:
 ```
 rostopic  pub --once /behavior_switch std_msgs/String btree_on
 ```
+OR in this way (for stage mode):
+```
+rostopic  pub --once /behavior_switch std_msgs/String btree_on_stage
+```
 This will cause the system to play through the set of scripted
 behaviors, which includes exprsssing a variety of emotions,
 looking at the various faces as they become visible, and so on.
@@ -45,9 +49,9 @@ looking at the various faces as they become visible, and so on.
 
 ##### Topics subscribed :
 
-* `behavior_switch (std_msgs/String)`. Values: ("btree_on", "btree_off").
+* `behavior_switch (std_msgs/String)`. Values: ("btree_on", "btree_on_stage", "btree_off").
   By default the behaviour tree is off and it needs to receive
-  btree_on to start.
+  btree_on or btree_on_stage (for stage mode) to start.
 * `tracking_event (eva_behavior/event)`. Event received from the
   perception nodes, currently only pi_vision.
 
@@ -76,6 +80,10 @@ rosrun eva_behavior main.py
 Turn on behaviors:
 ```
 rostopic  pub --once /behavior_switch std_msgs/String btree_on
+```
+OR in this way (for stage mode):
+```
+rostopic  pub --once /behavior_switch std_msgs/String btree_on_stage
 ```
 The head should now be cycling through a set of facial expressions.
 
