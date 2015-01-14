@@ -92,7 +92,6 @@ RosUI.ros = {
                 name: '/cmd_animations',
                 messageType: 'std_msgs/String'
             }),
-
             neck0: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/fritz/base_controller/command',
@@ -114,12 +113,19 @@ RosUI.ros = {
               messageType: 'std_msgs/Float64'
             }),
             neck4: new ROSLIB.Topic({
-              ros: RosUI.ros.ros,
-              name: '/fritz/neck_left_controller/command',
-              messageType: 'std_msgs/Float64'
+                ros: RosUI.ros.ros,
+                name: '/fritz/neck_left_controller/command',
+                messageType: 'std_msgs/Float64'
+            }),
+            available_gestures: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/blender_api/available_gestures'
+            }),
+            available_emotion_states: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/blender_api/available_emotion_states'
             })
-
-        }
+        };
     },
     initServices: function () {
         RosUI.ros.services = {

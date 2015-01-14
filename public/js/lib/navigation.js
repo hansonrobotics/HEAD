@@ -57,6 +57,9 @@ RosUI.navigation = {
             case 'app-interactions-link':
                 RosUI.interaction.loadPage();
                 break;
+            case 'app-gestures-link':
+                RosUI.gestures.loadPage();
+                break;
         }
     }
 };
