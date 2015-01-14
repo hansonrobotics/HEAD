@@ -1,38 +1,42 @@
-$(function () {
-    // ROS object to connect to ROS
-    var responses;
+RosUI.interaction = {
+    init: function () {
+        RosUI.ros.topics.chat_responses.subscribe(function (msg) {
+            RosUI.interaction.addMessage('Robot', msg.data);
+        });
 
-    function startTree() {
-//        var cmdBlender = new ROSLIB.Topic({
-//            ros: ros,
-//            name: '/cmd_blendermode',
-//            messageType: 'std_msgs/String'
-//        });
-//        var msg = new ROSLIB.Message({
-//            data: 'Dummy'
-//        });
-//        cmdBlender.publish(msg);
-//        var cmdBllink = new ROSLIB.Topic({
-//            ros: ros,
-//            name: '/arthur/cmd_blink',
-//            messageType: 'std_msgs/String'
-//        });
-//        var msg = new ROSLIB.Message({
-//            data: 'arthur:start'
-//        });
-//        cmdBllink.publish(msg);
-//        var cmdTree = new ROSLIB.Topic({
-//            ros: ros,
-//            name: '/arthur/behavior_switch',
-//            messageType: 'std_msgs/String'
-//        });
-//        var msg = new ROSLIB.Message({
-//            data: 'btree_on'
-//        });
-//        cmdTree.publish(msg);
-    }
+        $('#app-record-button').click(function () {
+            RosUI.interaction.recognizeSpeech();
+        });
 
-    function recognizeSpeech() {
+        $('#app-message-input').keyup(function (e) {
+            if (e.keyCode == 13)
+                $('#app-send-button').click();
+        });
+
+        $('#app-send-button').click(function () {
+            if ($('#app-message-input').val() != "") {
+                RosUI.interaction.addMessage('Me', $('#app-message-input').val());
+                RosUI.api.sendChatMessage($('#app-message-input').val());
+                $('#app-message-input').val('');
+            }
+        });
+    },
+    loadPage: function () {
+        var blenderMessage, blinkMessage, treeMessage;
+
+        blenderMessage = new ROSLIB.Message({data: 'TrackDev'});
+        RosUI.ros.topics.cmdBlender.publish(blenderMessage);
+
+        blinkMessage = new ROSLIB.Message({data: 'arthur:start'});
+        RosUI.ros.topics.cmdBllink.publish(blinkMessage);
+
+        treeMessage = new ROSLIB.Message({data: 'btree_on'});
+        RosUI.ros.topics.cmdTree.publish(treeMessage);
+
+        RosUI.api.setExpression("happy", 0);
+        RosUI.api.pointHead({yaw: 0, pitch: 0, roll: 0});
+    },
+    recognizeSpeech: function () {
         if (!('webkitSpeechRecognition' in window)) {
             alert('Browser not supported. Use the newest Chrome browser');
         } else {
@@ -58,88 +62,51 @@ $(function () {
                     utterance: utterance,
                     confidence: Math.round(event.results[0][0].confidence * 100)
                 });
-                RosUI.topics.speech_topic.publish(chat_message);
-                addMessage('Me', utterance);
+                RosUI.ros.topics.speech_topic.publish(chat_message);
+                RosUI.interaction.addMessage('Me', utterance);
             };
             recognition.start();
         }
-    }
+    },
+    addMessage: function (name, message) {
+        var element;
 
-    function ready() {
-        responses = new ROSLIB.Topic({
-            ros: ros,
-            name: '/arthur/chatbot_responses',
-            messageType: 'std_msgs/String'
-        });
-        // Publish the response
-        responses.subscribe(function (msg) {
-            addMessage('Robot', msg.data);
-        });
-    }
-
-    // Find out exactly when we made a connection.
-    RosUI.ros.$.on('connection', function () {
-        ready();
-
-        $('#app-record-button').click(function () {
-            recognizeSpeech();
-        });
-        startTree();
-    });
-    // Create a connection to the rosbridge WebSocket server.
-//    ros.connect(websocketAddress());
-
-    function currentTime() {
-        var d = new Date();
-        var hr = d.getHours();
-        var min = d.getMinutes();
-        if (min < 10) {
-            min = "0" + min;
-        }
-        var ampm = hr < 12 ? "am" : "pm";
-        if (hr > 12) {
-            hr = hr - 12;
-        }
-        return hr + ":" + min + " " + ampm;
-    }
-    var scrolling = false;
-    function addMessage(name, message) {
-        var el;
         if (name == 'Robot') {
-            el = $('#leftMsg').clone().removeAttr('id');
+            element = $('#leftMsg').clone().removeAttr('id');
         } else {
-            el = $('#rightMsg').clone().removeAttr('id');
+            element = $('#rightMsg').clone().removeAttr('id');
         }
-        $(el).find('.msg').text(message);
-        $(el).find('.name').text(name);
-        $(el).find('.time').text(currentTime());
-        $(el).hide();
-        $('#app-chat').append(el);
-        $(el).fadeIn(400, function() {
-            if (! scrolling)
-                $('html, body').animate({scrollTop: $(document).height()}, 'slow', 'swing', function() {
-                    scrolling = false;
+
+        if (typeof this.scrolling == 'undefined')
+            this.scrolling = false;
+
+        $(element).find('.msg').text(message);
+        $(element).find('.name').text(name);
+        $(element).find('.time').text(RosUI.interaction.currentTime());
+        $(element).hide();
+        $('#app-chat').append(element);
+        $(element).fadeIn(400, function () {
+            if (!RosUI.interaction.scrolling)
+                $('html, body').animate({scrollTop: $(document).height()}, 'slow', 'swing', function () {
+                    RosUI.interaction.scrolling = false;
                 });
 
-            scrolling = true;
+            RosUI.interaction.scrolling = true;
         });
+    },
+    currentTime: function () {
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+
+        if (min < 10)
+            min = "0" + min;
+
+        var amPm = hour < 12 ? "am" : "pm";
+
+        if (hour > 12)
+            hour = hour - 12;
+
+        return hour + ":" + min + " " + amPm;
     }
-
-    $('#app-message-input').keyup(function(e){
-        if(e.keyCode == 13)
-            $('#app-send-button').click();
-    });
-
-    $('#app-send-button').click(function () {
-        if ($('#app-message-input').val() != "") {
-            addMessage('Me', $('#app-message-input').val());
-            var chat_message = new ROSLIB.Message({
-                utterance: $('#app-message-input').val(),
-                confidence: Math.round(0.9 * 100)
-            });
-            $('#app-message-input').val('');
-            RosUI.topics.speech_topic.publish(chat_message);
-        }
-    });
-});
-
+};

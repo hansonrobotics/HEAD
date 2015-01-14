@@ -1,3 +1,7 @@
+body {
+    margin-top: 40px;
+}
+
 #logo {
     padding-right: 10px;
     height: 20px;
@@ -41,4 +45,8 @@
 
 .hide {
     display: none;
+}
+
+#app-page-interaction {
+    padding-top: 20px;
 }

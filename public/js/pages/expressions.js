@@ -1,125 +1,129 @@
-function radToDeg(val) {
-    return val * 180 / Math.PI;
-}
-function degToRad(val) {
-    return val * Math.PI / 180;
-}
-
-var KNOB_OPTS = {
-    max: 55,
-    maxShow: 11,
-    fgColor: "#df691a",
-    fgColorExtreme: "#df691a"
-};
-
-var btnObjs = []; //Holds an array of {name, label, element} objects representing expression buttons.
-var curface = ''; //Holds the name of the last pressed button.
-
-function getBtn(name) {
-    for (var i = 0; i < btnObjs.length; i++) {
-        if (btnObjs[i].name == name) {
-            return btnObjs[i].element;
+RosUI.expressions = {
+    config: {
+        knob: {
+            max: 55,
+            maxShow: 11,
+            fgColor: "#df691a",
+            fgColorExtreme: "#df691a"
         }
-    }
-}
+    },
+    init: function () {
+        $(".dial").val(0);
+        this.initExpressions();
+        this.createButtons();
+    },
 
-//Updates UI and inner model.
-function setFace(name, label) {
-    curface = name;
-    $(".knobName").text(label);
-    console.log('set face to: ' + curface);
-}
+    loadPage: function () {
+        var blenderMessage, blinkMessage, treeMessage;
 
-//Updates UI and sends a ROS message.
-function setKnobPos(value) {
-    if (!value) {
-        value = parseInt($(".dial").val()) / KNOB_OPTS.maxShow * KNOB_OPTS.max;
-    }
-    $(".dial").val(value).trigger("change");
-    var intensity = (Math.round(value / KNOB_OPTS.max * KNOB_OPTS.maxShow) < KNOB_OPTS.maxShow)
-        ? value / (KNOB_OPTS.max * 1.2) : 1.0
-    RoboInterface.makeFaceExpr(curface, intensity);
-}
+        blenderMessage = new ROSLIB.Message({data: 'Dummy'});
+        RosUI.ros.topics.cmdBlender.publish(blenderMessage);
 
-//Create UI that requires a ROS connection.
-function createUIros() {
-    //Build preset buttons
-    btnStack = $(".expression-buttons");
-    btnStack.on("exprbtnclick", function (e, nameobj) {
-        console.log('expression button clicked');
+        blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
+        RosUI.ros.topics.cmdBllink.publish(blinkMessage);
 
-        setFace(nameobj.name, nameobj.label);
-        setKnobPos(KNOB_OPTS.max);
-    });
+        treeMessage = new ROSLIB.Message({data: 'btree_off'});
+        RosUI.ros.topics.cmdTree.publish(treeMessage);
 
-    CommonUI.buildExpressionButtons(btnStack);
-}
+        $('.expression-button.active').removeClass('active');
 
-//Create UI that requires a loaded config file.
+        RosUI.api.setExpression("happy", 0);
+        RosUI.api.pointHead();
+    },
 
-
-function paintSelection(knobObj, color) {
-    knobObj.fgColor = color;
-    $(".dial").css("color", color);
-    $(".knobName").css("color", color);
-    $(".expression-button").removeClass("active");
-
-    if (curface)
-        $(".expression-button." + curface).addClass("active");
-}
-
-function initExpressions() {
-    //Create crosshair
-    CommonUI.buildCrosshairSlider(
-        $(".crosshairsl"), {
-            bgColor: "#485563",
-            fgColor: "#fff"
-        }
-    ).on("change", function (e, ui) {
-            $(".crosshairsl")
-                .crosshairsl("option", "xval", ui.xval)
-                .crosshairsl("option", "yval", ui.yval);
-        });
-
-    //Create dial
-    $(".dial").knob({
-        min: 0, max: KNOB_OPTS.max,
-        angleOffset: -125, angleArc: 275,
-        width: 200, height: 200,
-        thickness: 0.4,
-        fgColor: KNOB_OPTS.fgColor, bgColor: "#444",
-        draw: function () { //Extended the draw function to add a ring around the dial.
-            if (parseInt($(".dial").val()) >= Math.round(KNOB_OPTS.maxShow)) {
-                paintSelection(this.o, KNOB_OPTS.fgColorExtreme);
-            } else {
-                paintSelection(this.o, KNOB_OPTS.fgColor);
+    initExpressions: function () {
+        //Create crosshair
+        RosUI.expressions.buildCrosshair(
+            $(".crosshairsl"), {
+                bgColor: "#485563",
+                fgColor: "#fff"
             }
+        ).on("change", function (e, ui) {
+                $(".crosshairsl")
+                    .crosshairsl("option", "xval", ui.xval)
+                    .crosshairsl("option", "yval", ui.yval);
+            });
 
-            this.g.lineWidth = 3;
-            this.cursorExt = 0.2;
+        //Create dial
+        $(".dial").knob({
+            min: 0, max: RosUI.expressions.config.knob.max,
+            angleOffset: -125, angleArc: 275,
+            width: 200, height: 200,
+            thickness: 0.4,
+            fgColor: RosUI.expressions.config.knob.fgColor, bgColor: "#444",
+            draw: function () { //Extended the draw function to add a ring around the dial.
+                this.g.lineWidth = 3;
+                this.cursorExt = 0.2;
 
-            //Override radius to fit the outer circle inside canvas
-            this.radius = this.xy - this.lineWidth * 2 / 3 - this.g.lineWidth;
+                //Override radius to fit the outer circle inside canvas
+                this.radius = this.xy - this.lineWidth * 2 / 3 - this.g.lineWidth;
 
-            this.g.beginPath();
-            this.g.strokeStyle = this.o.fgColor;
-            this.g.arc(this.xy, this.xy, this.radius + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
-            this.g.stroke();
-            return true;
-        },
-        change: setKnobPos,
-        format: function (value) {
-            return Math.round(value / KNOB_OPTS.max * KNOB_OPTS.maxShow);
-        }
-    });
-    //Keep the input fields inside dials from being edited directly.
-    $("input.dial").css("pointer-events", "none");
-}
+                this.g.beginPath();
+                this.g.strokeStyle = this.o.fgColor;
+                this.g.arc(this.xy, this.xy, this.radius + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+                this.g.stroke();
+                return true;
+            },
+            change: RosUI.expressions.updateExpression,
+            format: function (value) {
+                return Math.round(value / RosUI.expressions.config.knob.max * RosUI.expressions.config.knob.maxShow);
+            }
+        });
+        //Keep the input fields inside dials from being edited directly.
+        $("input.dial").css("pointer-events", "none");
+    },
+    createButtons: function () {
+        RosUI.api.expressionList(function (response) {
+            var capitalize = function (str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            };
 
-$(function () {
-    $(".dial").val(0);
-    RosUI.ros.$.on("connection", function () {
-        initExpressions();
-        createUIros();
-    });
-});
+            $.each(response.exprnames, function () {
+                var button = $('<button type="button" class="btn btn-default expression-button">' + capitalize(this) + '</button>')
+                    .data('expression', this)
+                    .click(function () {
+                        $('.expression-button').removeClass('active');
+                        $(this).addClass('active');
+                        RosUI.expressions.current_face = $(this).data('expression');
+                        $(".knobName").text($(this).html());
+
+                        RosUI.expressions.updateExpression(RosUI.expressions.config.knob.max);
+                    });
+
+                $(".expression-buttons").append(button);
+            });
+        });
+    },
+    updateExpression: function (value) {
+        if (!value)
+            value = parseInt($(".dial").val()) / RosUI.expressions.config.knob.maxShow * RosUI.expressions.config.knob.max;
+
+        $(".dial").val(value).trigger("change");
+
+        var intensity = (Math.round(value / RosUI.expressions.config.knob.max *
+        RosUI.expressions.config.knob.maxShow) < RosUI.expressions.config.knob.maxShow)
+            ? value / (RosUI.expressions.config.knob.max * 1.2) : 1.0;
+
+        RosUI.api.setExpression(RosUI.expressions.current_face, intensity);
+    },
+    buildCrosshair: function (element, options) {
+        var yaw = RosUI.ros.getMotorConfig("neck_base");
+        var pitch = RosUI.ros.getMotorConfig("neck_pitch");
+
+        $(element).crosshairsl($.extend({}, {
+            xmin: Math.floor(RosUI.utilities.radToDeg(-1.57)),
+            xmax: Math.ceil(RosUI.utilities.radToDeg(1.57)),
+            xval: Math.round(RosUI.utilities.radToDeg(0)),
+            ymin: Math.floor(RosUI.utilities.radToDeg(-0.6)),
+            ymax: Math.ceil(RosUI.utilities.radToDeg(0.6)),
+            yval: Math.round(RosUI.utilities.radToDeg(0)),
+            change: function (e, ui) {
+                RosUI.api.pointHead({
+                    yaw: RosUI.utilities.degToRad(ui.xval),
+                    pitch: RosUI.utilities.degToRad(-ui.yval)
+                });
+            } }, options));
+
+        return element;
+    }
+};
