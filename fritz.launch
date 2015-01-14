@@ -23,5 +23,24 @@
                 neck_right_controller
                 neck_left_controller"
           output="screen"/>
+    <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py"
+          output="screen">
+          <remap from="cmd_neck_pau" to="/blender_api/get_pau" />
+    </node>
+
+    <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
+          output="screen"/>
+    <node pkg="ros_pololu_servo" type="ros_pololu_servo_node" name="left_pololu_node" output="screen">
+        <param name="pololu_motors_yaml" value="$(find robots_config)/fritz/left_pololu.yaml" />
+        <param name="port_name" value="/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00080384-if00" />
+        <param name="topic_prefix" value="left/" />
+    </node>
+
+    <node pkg="ros_pololu_servo" type="ros_pololu_servo_node" name="right_pololu_node" output="screen">
+        <param name="pololu_motors_yaml" value="$(find robots_config)/fritz/right_pololu.yaml" />
+        <param name="port_name" value="/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00080380-if00" />
+        <param name="topic_prefix" value="right/" />
+    </node>
+
     </group>
 </launch>

@@ -4,7 +4,7 @@ base_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck0_joint
-    joint_speed: 8.0
+    joint_speed: 1.0
     motor:
         id: 0
         init: 2048
@@ -16,7 +16,7 @@ base_right_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck1_joint
-    joint_speed: 4.0
+    joint_speed: 1.0
     motor:
         id: 1
         init: 1722
@@ -28,7 +28,7 @@ base_left_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck2_joint
-    joint_speed: 4.0
+    joint_speed: 1.0
     motor:
         id: 2
         init: 2504
@@ -40,7 +40,7 @@ neck_right_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck3_joint
-    joint_speed: 4.0
+    joint_speed: 1.0
     motor:
         id: 3
         init: 3026
@@ -52,7 +52,7 @@ neck_left_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: neck4_joint
-    joint_speed: 4.0
+    joint_speed: 1.0
     motor:
         id: 4
         init: 2178
@@ -203,9 +203,9 @@ pau2motors:
             property: m_headRotation
           function:
             - name: quaternion2euler
-              axis: y
+              axis: z
             - name: linear
-              scale: 4
+              scale: 2.92
               translate: 0
           hardware:
             name: dynamixel
@@ -220,7 +220,7 @@ pau2motors:
             property: m_headRotation
           function:
             - name: quaternion2euler
-              axis: z
+              axis: x
             - name: linear
               scale: 2
               translate: 0
@@ -237,7 +237,7 @@ pau2motors:
             property: m_headRotation
           function:
             - name: quaternion2euler
-              axis: z
+              axis: x
             - name: linear
               scale: -2
               translate: 0
@@ -254,7 +254,7 @@ pau2motors:
             property: m_headRotation
           function:
             - name: quaternion2euler
-              axis: z
+              axis: x
             - name: linear
               scale: 2
               translate: 0
@@ -271,7 +271,7 @@ pau2motors:
             property: m_headRotation
           function:
             - name: quaternion2euler
-              axis: z
+              axis: x
             - name: linear
               scale: -2
               translate: 0
