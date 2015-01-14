@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<div id="mydiv">
+
+</div>
+
+<body>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">
+  function query() {
+    $.ajax({
+      url: "system/status",
+      dataType: "text",
+
+      success: function(data) {
+        data = $.parseJSON(data);
+
+        lines = $.map(data, function(obj, i) {
+          line = (obj.success ? '\u2713' : '\u2717')
+          line += ' <b>' + obj.label + '</b> (cmd: ' + obj.cmd + ')'
+          return line;
+        });
+
+        $("#mydiv").html(lines.join("<br/>"));
+      }
+    });
+  }
+  query();
+  setInterval(query, 5000);
+</script>
+</body>
+</html>
