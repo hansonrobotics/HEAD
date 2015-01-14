@@ -1,6 +1,6 @@
 <launch>
     <node pkg="usb_cam" type="usb_cam_node" name="camera">
-      <param name="video_device" value="/dev/video0"/>
+      <param name="video_device" value="/dev/video2"/>
       <param name="pixel_format" value="yuyv"/>
       <!-- Image size and type -->
       <param name="width" value="640"/>
@@ -40,7 +40,7 @@
           fov_height: 1.094
           max_face_size: 0.28
           expand_roi: 1.02
-          flip_image: False
+          flip_image: True
           feature_type: 0 <!-- 0 = Good Features To Track, 1 = SURF -->
           surf_hessian_quality: 100
         </rosparam>
@@ -77,7 +77,7 @@
           fov_height: 1.094
           max_face_size: 0.28
           expand_roi: 1.02
-          flip_image: False
+          flip_image: True
           feature_type: 0 <!-- 0 = Good Features To Track, 1 = SURF -->
           surf_hessian_quality: 100
         </rosparam>

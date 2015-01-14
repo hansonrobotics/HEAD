@@ -1,7 +1,7 @@
 <launch>
 	<arg name="model" />
 	<arg name="gui" default="True" />
-	<param name="robot_description" textfile="$(find perception)/urdf/arthur.urdf" />
+	<param name="robot_description" textfile="$(find perception)/urdf/fritz.urdf" />
 	<param name="use_gui" value="$(arg gui)"/>
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
         <rosparam param="source_list">["joint_states_combined"]</rosparam>
