@@ -86,6 +86,8 @@ class Tree():
 		daxs = get_values(config.get("emotion", \
 			emo_class + "_duration_max"), numb)
 
+		self.blackboard["emotion_classes"].append(emo_class)
+
 		emos = []
 		for (n,p,mi,mx,di,dx) in zip (names, probs, mins, maxs, dins, daxs):
 			emo = Emotion(n)
@@ -126,6 +128,8 @@ class Tree():
 		saxs = get_values(config.get("gesture", \
 			ges_class + "_speed_max"), numb)
 
+		self.blackboard["gesture_classes"].append(ges_class)
+
 		gestures = []
 		for (n,p,mi,mx,ri,rx,si,sa) in zip (names, probs, mins, maxs, rins, raxs, sins, saxs):
 			ges = Gesture(n)
@@ -154,6 +158,10 @@ class Tree():
 		self.blackboard["current_emotion"] = config.get("emotion", "default_emotion")
 		self.blackboard["current_emotion_intensity"] = config.getfloat("emotion", "default_emotion_intensity")
 		self.blackboard["current_emotion_duration"] = config.getfloat("emotion", "default_emotion_duration")
+		self.blackboard["emotion_classes"] = []
+		self.blackboard["gesture_classes"] = []
+		self.blackboard["emotion_scale_up_factor"] = config.getfloat("emotion", "emotion_scale_up_factor_for_stage")
+		self.blackboard["gesture_scale_up_factor"] = config.getfloat("gesture", "gesture_scale_up_factor_for_stage")
 
 		self.unpack_config_emotions(config, "frustrated_emotions")
 
@@ -212,6 +220,7 @@ class Tree():
 		self.blackboard["is_sleeping"] = False
 		self.blackboard["blender_mode"] = ""
 		self.blackboard["is_scripted_performance_system_on"] = True
+		self.blackboard["stage_mode"] = False
 		self.blackboard["random"] = 0.0
 
 		##### ROS Connections #####
@@ -948,7 +957,35 @@ class Tree():
 		if data.data == "btree_on":
 			self.blackboard["is_interruption"] = False
 			self.blackboard["is_scripted_performance_system_on"] = False
+
+			if self.blackboard["stage_mode"]:
+				for emo_class in self.blackboard["emotion_classes"]:
+					for emo in self.blackboard[emo_class]:
+						emo.min_intensity /= self.blackboard["emotion_scale_up_factor"]
+						emo.max_intensity /= self.blackboard["emotion_scale_up_factor"]
+				for ges_class in self.blackboard["gesture_classes"]:
+					for ges in self.blackboard[ges_class]:
+						ges.min_intensity /= self.blackboard["gesture_scale_up_factor"]
+						ges.max_intensity /= self.blackboard["gesture_scale_up_factor"]
+				self.blackboard["stage_mode"] = False
 			print "Behavior Tree is ON!"
+
+		elif data.data == "btree_on_stage":
+			self.blackboard["is_interruption"] = False
+			self.blackboard["is_scripted_performance_system_on"] = False
+
+			if not self.blackboard["stage_mode"]:
+				for emo_class in self.blackboard["emotion_classes"]:
+					for emo in self.blackboard[emo_class]:
+						emo.min_intensity *= self.blackboard["emotion_scale_up_factor"]
+						emo.max_intensity *= self.blackboard["emotion_scale_up_factor"]
+				for ges_class in self.blackboard["gesture_classes"]:
+					for ges in self.blackboard[ges_class]:
+						ges.min_intensity *= self.blackboard["gesture_scale_up_factor"]
+						ges.max_intensity *= self.blackboard["gesture_scale_up_factor"]
+				self.blackboard["stage_mode"] = True
+			print "Behavior Tree (stage mode) is ON!"
+
 		elif data.data == "btree_off":
 			self.blackboard["is_interruption"] = True
 			self.blackboard["is_scripted_performance_system_on"] = True
