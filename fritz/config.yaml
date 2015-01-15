@@ -62,12 +62,13 @@ neck_left_controller:
 #Pau2Motors config
 pau2motors:
     topics:
-        cmd_pau: neck0;neck1;neck2;neck3;neck4;Eyes_Pitch,Eye_L,Eye_R,EyeLid_U_L,EyeLid_L_L,Eyelid_U_R,EyeLid_L_R,Jaw_open,Jaw_Forward_L,Jaw_Forward_R,Lower_Lip_C,Lower_Lip_Roll_C,Lower_lip_L,Lower_Lip_Roll_L,Lower_Lip_R,Lower_Lip_Roll_R
+        neck_pau: neck0;neck1;neck2;neck3;neck4
+        head_pau: Eyes_Pitch;Eye_L;Eye_R;EyeLid_U_L;EyeLid_L_L;Eyelid_U_R;EyeLid_L_R
     motors:
       Eyes_Pitch:
         binding:
           parser:
-            name: property
+            name: getproperty
             property: m_eyeGazeLeftPitch
           function:
             - name: linear
@@ -84,7 +85,7 @@ pau2motors:
       Eye_L:
         binding:
           parser:
-            name: property
+            name: getproperty
             property: m_eyeGazeLeftYaw
           function:
             - name: linear
@@ -101,7 +102,7 @@ pau2motors:
       Eye_R:
         binding:
           parser:
-            name: property
+            name: getproperty
             property: m_eyeGazeRightYaw
           function:
             - name: linear
