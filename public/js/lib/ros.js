@@ -150,6 +150,7 @@ RosUI.ros = {
                 serviceType: 'topic_tools/MuxSelect'
             }),
             expressionList: new ROSLIB.Service({
+                ros: RosUI.ros.ros,
                 name: '/valid_coupled_face_exprs',
                 serviceType: 'basic_head_api/ValidCoupledFaceExprs'
             })

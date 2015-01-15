@@ -74,6 +74,7 @@ RosUI.api = {
             this._sendMotorCommand(RosUI.ros.config.motors[i], RosUI.ros.config.motors[i].default);
         }
     },
+
     /**
      * Passes a list of available gestures to success function
      *
@@ -84,6 +85,7 @@ RosUI.api = {
             success(message.data);
         });
     },
+
     /**
      * Set a gesture
      *
@@ -111,6 +113,7 @@ RosUI.api = {
             })
         );
     },
+
     /**
      * Passes a list of available emotions to success function
      *
@@ -121,6 +124,7 @@ RosUI.api = {
             success(message.data);
         });
     },
+
     /**
      * Set an emotion, call multiple times to blend emotions together
      *
@@ -134,7 +138,6 @@ RosUI.api = {
 
         if (typeof duration == 'undefined')
             duration = {secs: 1, nsecs: 0};
-
         RosUI.ros.topics.set_emotion_state.publish(
             new ROSLIB.Message({
                 name: name,
@@ -145,12 +148,12 @@ RosUI.api = {
     },
     blenderMode: {
         enable: function() {
-            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest("/blender_api/get_pau"));
-            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest("/blender_api/get_pau"));
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
         },
         disable: function() {
-            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest("/fritz/no_pau"));
-            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest("/fritz/cmd_neck_pau"));
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/no_pau"}));
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/cmd_neck_pau"}));
         }
     }
 };
