@@ -188,7 +188,7 @@ class AnimationManager():
 			else:
 				# Else try to look at approximately correct location
 				dist = mindist / dist
-				loc = [loc[0]*dist, loc[1]*dist, loc[2]*dist] 
+				loc = [loc[0]*dist, loc[1]*dist, loc[2]*dist]
 
 		# Convert from centimeters to 'blender-units'
 		locBU = CM2BU(loc)
@@ -226,7 +226,7 @@ class AnimationManager():
 	def setViseme(self):
 		pass
 
-		
+
 	def terminate(self):
 		'''House-keeping at the end of the run'''
 		# remove all leftover gestures
@@ -285,8 +285,8 @@ class Gesture():
 
 
 def init():
-	'''Create AnimationManager singleton and make available for global access'''
+	'''Create AnimationManager singleton and make it available for global access'''
 	if hasattr(bpy, 'evaAnimationManager'):
-		print('Skipping Singleton instanciation')
+		print('Skipping Singleton instantiation')
 	else:
 		bpy.evaAnimationManager = AnimationManager()
