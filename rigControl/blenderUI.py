@@ -45,6 +45,21 @@ class BLRigControl(bpy.types.Panel):
 		col.operator('eva.debug', text='Start Animation', icon='ARMATURE_DATA').action = 'commands.init()'
 
 
+		# speech
+		col = layout.column(align=True)
+		col.label(text="Speech:")
+		row = col.row(align=True)
+		row.operator('eva.debug', text='A-I').action = 'commands.setVisemes(vis="A")'
+		row.operator('eva.debug', text='E').action = 'commands.setVisemes(vis="E")'
+		row.operator('eva.debug', text='F-V').action = 'commands.setVisemes(vis="F")'
+		row.operator('eva.debug', text='Q-W').action = 'commands.setVisemes(vis="Q")'
+		row.operator('eva.debug', text='L').action = 'commands.setVisemes(vis="L")'
+		row = col.row(align=True)
+		row.operator('eva.debug', text='C-D-G-K-N-TH').action = 'commands.setVisemes(vis="C")'
+		row.operator('eva.debug', text='M').action = 'commands.setVisemes(vis="M")'
+		row.operator('eva.debug', text='O').action = 'commands.setVisemes(vis="O")'
+		row.operator('eva.debug', text='U').action = 'commands.setVisemes(vis="U")'
+
 		### Gestures ###
 		row = layout.row()
 		layout.label(text="Gestures:")
@@ -112,6 +127,7 @@ class BLRigControl(bpy.types.Panel):
 		col.operator('eva.debug', text='Gaze Nil').action = 'commands.setGazeTarget([0, 0, 0])'
 
 		row = layout.row()
+		row.label(text="Physiological:")
 		eva = bpy.evaAnimationManager
 		bones = eva.deformObj.pose.bones
 		col = layout.column(align = True)

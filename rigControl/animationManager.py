@@ -22,6 +22,7 @@ class AnimationManager():
 		# Gesture params
 		self.gesturesList = []
 		self.emotionsList = []
+		self.visemesList = []
 
 		# Head and Eye tracking parameters
 		self.headTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
@@ -69,7 +70,11 @@ class AnimationManager():
 		#
 		bpy.data.cameras["Camera.001"].angle = 0.175
 		bpy.data.objects["Camera.001"].location = [-0.028, -7, 0.96]
-		# .ortho_scale = 1.6
+
+		self.availableVisemes = []
+		for action in bpy.data.actions:
+			if action.name.startswith('VIS-'):
+				self.availableVisemes.append(action)
 
 		if debug:
 			imp.reload(actuators)
@@ -180,6 +185,50 @@ class AnimationManager():
 					self.emotionsList.append(emotion)
 
 
+	def newViseme(self, vis, duration=0.5, rampInRatio=0.1, rampOutRatio=0.8, startTime=0):
+		'''Perform a new viseme'''
+		action = None
+		for viseme in self.availableVisemes:
+			if vis in viseme.name:
+				action = viseme
+				break
+			
+		if not action:
+			print('No Action mactching viseme: ', vis)
+			return False
+
+		# Check value for sanity
+		checkValue(duration, 0, 10)
+		checkValue(rampInRatio, 0, 0.9)
+		checkValue(rampOutRatio, 0, 0.9)
+		checkValue(rampInRatio+rampOutRatio, 0, 1.0)
+
+		# Create NLA track
+		newTrack = self.deformObj.animation_data.nla_tracks.new()
+		newTrack.name = action.name
+
+		# Create strip
+		newStrip = newTrack.strips.new(name=action.name, start=1, action=action)
+		newStrip.blend_type = 'ADD'
+		newStrip.use_animated_influence = True
+		newStrip.influence = 0
+
+		# Create object and add to list
+		v = Viseme(action.name, newTrack, newStrip, duration, rampInRatio, rampOutRatio, startTime)
+		self.visemesList.append(v)
+
+		return True
+
+	
+	def _deleteViseme(self, viseme):
+			''' internal use only, stops and deletes a viseme'''
+			# remove from list
+			self.visemesList.remove(viseme)
+
+			# remove from Blender
+			self.deformObj.animation_data.nla_tracks.remove(viseme.trackRef)
+
+
 	def coordConvert(self, loc, currbu):
 		'''Convert coordinates from the external coord system (meters) to
 		blender units.  This also clamps values to prevent completely
@@ -230,6 +279,7 @@ class AnimationManager():
 
 		return locBU
 
+
 	def setFaceTarget(self, loc):
 		'''Set the target used by eye and face tracking.'''
 
@@ -244,7 +294,6 @@ class AnimationManager():
 
 		locBU = self.coordConvert(loc, self.eyeTargetLoc.current)
 		self.eyeTargetLoc.target = locBU
-
 
 	def setViseme(self):
 		pass
@@ -305,6 +354,21 @@ class Gesture():
 
 		self.trackRef = track
 		self.stripRef = strip
+
+
+class Viseme():
+	'''Represents a Viseme'''
+	def __init__(self, vis, track, strip, duration, rampInRatio, rampOutRatio, startTime):
+		self.vis = vis
+		self.trackRef = track
+		self.stripRef = strip
+		self.duration = duration  		# duration of animation in seconds
+		self.time = 0 - startTime 		# -time is scheduled for the future (seconds)
+										# 0 is happening right away
+										# +time is animation in progress (seconds)
+		self.magnitude = BlendedNum(0, steps=2, smoothing=4) 	# normalized amplitude
+		self.rampInRatio = rampInRatio 		# percentage of time spent blending in
+		self.rampOutRatio = rampOutRatio 	# percentage of time spent blending out
 
 
 def init():
