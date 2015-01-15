@@ -230,11 +230,20 @@ class AnimationManager():
 
 
 	def coordConvert(self, loc, currbu):
-		'''Convert coordinates from the external coord system (meters) to
-		blender units.  This also clamps values to prevent completely
-		crazy look-at directions from happening.  Returns the look-at
-		point, in blender units.
+		'''Convert coordinates from centi-meters to blender units. The
+		coordinate frame used here is y is straight-ahead, x is th the
+		right, and z is up.  This also clamps values to prevent
+		completely crazy look-at directions from happening.  Returns
+		the look-at point, in blender units.
 		'''
+
+		# Magic numbers. Something is wrong with the coordinate system,
+		# so that if you tell her to look at a specific angle direction,
+		# she turns her head to about 4 times that angle.  So here, we
+		# divide by 4 to correct for that.  See github issue #25 for
+		# additional details.
+		loc[0] *= 0.25
+		loc[2] *= 0.25
 
 		# Prevent crazy values, e.g. looking at inside of skull, or
 		# lookings straight backwards.
@@ -266,10 +275,13 @@ class AnimationManager():
 		locBU = CM2BU(loc)
 
 		# Adjust for world offset. Magic number incoming...
-		# XXX This cannot possibly be right.  Telling her to gaze down and
-		# the side works great, but telling her to face that way make her
-		# Linda Blair ...
-		# locBU[1] -= (1.2)
+		# 15 Jan 2015 - Linas figured out experimentally that this number
+		# has to be between -0.9 and -1.0. These are the only values
+		# where, if she is told to look at a point infiintely far away,
+		# and also look at a point close-up, but in the same direction,
+		# she does not turn her head. Any other values cause her to turn
+		# her head, either too far outwards, or too far inwards.
+		locBU[1] -= (0.95)
 
 		# Compute distance from previous eye position
 		distance = computeDistance(locBU, currbu)

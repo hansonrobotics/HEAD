@@ -75,7 +75,7 @@ def setGesture(name, repeat=1, speed=1, magnitude=0.5):
 
 # The coordinate system used is head-relative, in 'engineering'
 # coordinates: 'x' is forward, 'y' to the left, and 'z' up.
-#  Distances are measured in meters.  Origin of the coordinate
+# Distances are measured in meters.  Origin of the coordinate
 # system is somewhere (where?) in the middle of the head.
 
 def setFaceTarget(loc):
