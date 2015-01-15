@@ -63,7 +63,12 @@ def randomSelect(probs):
 
 def CM2BU(cm):
 	# converts input (assuming centimeters) to Blender Unit:
-	SCALE = 50        # arbitrary set based on realworld size of Eva
+	# SCALE = 50        # arbitrary set based on realworld size of Eva
+	# Based on bug report #25 on github, the only way I can get her to
+	# look at the right place is to change the scale factor here to
+	# a value of 500.  I can't tell what this really is, its a voodoo
+	# number.
+	SCALE = 500        # arbitrary set based on realworld size of Eva
 	if type(cm) is list or type(cm) is tuple:
 		bu = [i/SCALE for i in cm]
 	else:
