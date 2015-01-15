@@ -124,6 +124,16 @@ RosUI.ros = {
             available_emotion_states: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/blender_api/available_emotion_states'
+            }),
+            set_gesture: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/blender_api/set_gesture',
+                messageType: 'blender_api_msgs/SetGesture'
+            }),
+            set_emotion_state: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/blender_api/set_emotion_state',
+                messageType: 'blender_api_msgs/EmotionState'
             })
         };
     },

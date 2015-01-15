@@ -7,24 +7,32 @@ RosUI.gestures = {
     loadPage: function () {
 
     },
-    createGestureButtons: function() {
-        RosUI.ros.topics.available_gestures.subscribe(function (message) {
-            $.each(message.data, function () {
+    createGestureButtons: function () {
+        RosUI.api.getAvailableGestures(function(gestures) {
+            $.each(gestures, function () {
+                var gesture = this;
+
+                var button = $('<button type="button" class="btn btn-default app-gesture-button" data-gesture="' +
+                gesture + '">' + gesture + '</button>');
+
+                $(button).click(function () {
+                    RosUI.api.setGesture(gesture);
+                });
+
                 $('#app-gesture-buttons')
-                    .append('<button type="button" class="btn btn-default app-gesture-button" data-animation="' +
-                    this + '">' + this + '</button>');
+                    .append(button);
             });
         });
     },
-    createEmotionSliders: function() {
-        RosUI.ros.topics.available_emotion_states.subscribe(function (message) {
-            $.each(message.data, function () {
+    createEmotionSliders: function () {
+        RosUI.api.getAvailableEmotionStates(function(emotions) {
+            $.each(emotions, function () {
                 RosUI.gestures.addEmotionSlider(this);
             });
         });
     },
-    addEmotionSlider: function(name, value) {
-        if (typeof value =="undefined")
+    addEmotionSlider: function (name, value) {
+        if (typeof value == "undefined")
             value = 0;
 
         var sliderBlock = $("#sliderTemplate").clone().attr('data-emotion', name);
@@ -44,7 +52,7 @@ RosUI.gestures = {
                 return function (e, ui) {
                     $('.app-value', sliderBlock).html("(" + ui.value + "%)");
 
-                    // handle slider change
+                    RosUI.api.setEmotion(name, ui.value / 100);
                 }
             })()
         });
@@ -52,7 +60,7 @@ RosUI.gestures = {
         sliderBlock.removeClass("hidden");
         sliderBlock.appendTo("#app-emotion-sliders");
     },
-    updateSlider: function(name, value) {
+    updateSlider: function (name, value) {
         var container = $('.uiBlock[data-emotion="' + name + '"]');
 
         $(".slider", container).slider({
