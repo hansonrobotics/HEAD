@@ -266,7 +266,10 @@ class AnimationManager():
 		locBU = CM2BU(loc)
 
 		# Adjust for world offset. Magic number incoming...
-		locBU[1] -= (1.2)
+		# XXX This cannot possibly be right.  Telling her to gaze down and
+		# the side works great, but telling her to face that way make her
+		# Linda Blair ...
+		# locBU[1] -= (1.2)
 
 		# Compute distance from previous eye position
 		distance = computeDistance(locBU, currbu)
