@@ -24,8 +24,10 @@ RosUI.interaction = {
     loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
-        blenderMessage = new ROSLIB.Message({data: 'TrackDev'});
-        RosUI.ros.topics.cmdBlender.publish(blenderMessage);
+        //blenderMessage = new ROSLIB.Message({data: 'TrackDev'});
+        //RosUI.ros.topics.cmdBlender.publish(blenderMessage);
+
+        RosUI.api.blenderMode.enable();
 
         blinkMessage = new ROSLIB.Message({data: 'arthur:start'});
         RosUI.ros.topics.cmdBllink.publish(blinkMessage);

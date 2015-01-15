@@ -5,7 +5,7 @@ RosUI.gestures = {
         RosUI.gestures.createEmotionSliders();
     },
     loadPage: function () {
-
+        RosUI.api.blenderMode.enable();
     },
     createGestureButtons: function () {
         RosUI.api.getAvailableGestures(function(gestures) {

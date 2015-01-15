@@ -142,5 +142,15 @@ RosUI.api = {
                 duration: duration
             })
         );
+    },
+    blenderMode: {
+        enable: function() {
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest("/blender_api/get_pau"));
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest("/blender_api/get_pau"));
+        },
+        disable: function() {
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest("/fritz/no_pau"));
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest("/fritz/cmd_neck_pau"));
+        }
     }
 };

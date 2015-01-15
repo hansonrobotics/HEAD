@@ -139,8 +139,17 @@ RosUI.ros = {
     },
     initServices: function () {
         RosUI.ros.services = {
-            expressionList: new ROSLIB.Service({
+            headPauMux: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
+                name: '/fritz/head_pau_mux/select',
+                serviceType: 'topic_tools/MuxSelect'
+            }),
+            neckPauMux: new ROSLIB.Service({
+                ros: RosUI.ros.ros,
+                name: '/fritz/neck_pau_mux/select',
+                serviceType: 'topic_tools/MuxSelect'
+            }),
+            expressionList: new ROSLIB.Service({
                 name: '/valid_coupled_face_exprs',
                 serviceType: 'basic_head_api/ValidCoupledFaceExprs'
             })
