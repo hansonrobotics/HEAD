@@ -104,7 +104,7 @@ class FaceTrack:
 			Target, queue_size=10)
 
 		# Frame in which coordinates will be returned from transformation
-		self.LOCATION_FRAME = "body"
+		self.LOCATION_FRAME = "blender"
 		# Transform Listener.Allows history of RECENT_INTERVAL
 		self.tf_listener = tf.TransformListener(False, rospy.Duration(self.RECENT_INTERVAL))
 
