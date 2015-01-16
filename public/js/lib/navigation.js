@@ -44,6 +44,8 @@ RosUI.navigation = {
         }
     },
     reload: function () {
+        RosUI.gestures.demo.disable();
+
         switch ($('.app-change-page.active').attr('id')) {
             case 'app-expressions-link':
                 RosUI.expressions.loadPage();

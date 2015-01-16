@@ -37,6 +37,8 @@ RosUI.interaction = {
 
         RosUI.api.setExpression("happy", 0);
         RosUI.api.pointHead({yaw: 0, pitch: 0, roll: 0});
+
+        RosUI.gestures.demo.enable()
     },
     recognizeSpeech: function () {
         if (!('webkitSpeechRecognition' in window)) {
