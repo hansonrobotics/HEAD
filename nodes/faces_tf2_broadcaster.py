@@ -45,14 +45,18 @@ class FacesPublisher:
         rospy.Subscriber('eye_camera/face_locations',
                      pi_face_tracker.msg.Faces,
                      self.handle_eye_faces)
-        #Last faces got from body camera
+        # Last faces gotten from body camera
         self.last_faces = {}
-        # stores delta information for the faces
+        # Stores delta information for the faces
         self.delta = {}
         self.broadcaster =  tf.TransformBroadcaster()
         self.listener = tf.TransformListener()
-        # waiting for camera and eye transforms
-        self.listener.waitForTransform('camera','world', rospy.Time(0), rospy.Duration(2.0))
+        # Wait for camera and eye transforms
+        try:
+            self.listener.waitForTransform('camera', 'world', \
+                rospy.Time(0), rospy.Duration(3.0))
+        except Exception:
+            print("Error: No camera!")
         self.last_faces_time = rospy.Time.now()
         #self.buffer.lookup_transform()
 

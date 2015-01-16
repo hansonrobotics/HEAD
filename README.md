@@ -17,19 +17,16 @@ pi_vision is needed. See
 run details.
 
 ## Running, Testing
- * Make sure pi_vision is running.
+ * Make sure pi_vision is running, and that the face tracker is
+   publishing faces:
 ```
-rosrun image_view image_view image:=/pi_face_tracker/image
+rostopic echo /face_locations
 ```
  * Start the perception node:
 ```
 rosrun perception faces_tf2_broadcaster.py
 ```
- * Make sure the face tracker is publishing faces
-```
-rostopic echo /faces3d
-```
- * Verify that the 3D location of teh face is reasonable; launch rviz to
+ * Verify that the 3D location of the face is reasonable; launch rviz to
    see where it is.
 ```
 rosrun rviz rviz -d `rospack find perception`/rviz/faces.rviz
