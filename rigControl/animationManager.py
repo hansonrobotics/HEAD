@@ -63,10 +63,10 @@ class AnimationManager():
 		# viewport.  So that is what the below does.
 		#
 		# The part that I don't get is that this means that 7 "blender
-		# units" is 80cm (or 1 BU is 11 cm).  Which is ridiculously
-		# inconsistent with the code in helpers.by, where 1 BU seems to
-		# be about 500cm (5 meters!!). So WTF. Something about the camera
-		# units and the BU's is crazy/broken.
+		# units" is 80cm (or 1 BU is 11 cm).  Beorn says that 1BU should
+		# be about 20cm. So it doesn't quite match up, but seems in the
+		# right ballpark, at least.  Perhaps I'm misunderstanding how the
+		# viewport works?
 		#
 		bpy.data.cameras["Camera.001"].angle = 0.175
 		bpy.data.objects["Camera.001"].location = [-0.028, -7, 0.96]
