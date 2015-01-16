@@ -136,4 +136,9 @@ def getFaceData():
 		if shapekeyGroup.name == 'Key.007':
 			for kb in shapekeyGroup.key_blocks:
 				shapekeys[kb.name] = kb.value
+
+	# Fake the jaw shapekey from its z coordinate
+	jawz = bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]
+	shapekeys['jaw'] = min(max(jawz/0.3, 0), 1)
+
 	return shapekeys
