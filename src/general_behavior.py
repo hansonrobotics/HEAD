@@ -356,7 +356,8 @@ class Tree():
 				##### Was Interacting With That Person #####
 				owyl.sequence(
 					self.was_interacting_with_that_person(),
-					self.show_frustrated_expression()
+					self.show_frustrated_expression(),
+					self.return_to_neutral_position()
 				),
 
 				##### Is Interacting With Someone Else #####
@@ -578,6 +579,7 @@ class Tree():
 	def is_someone_arrived(self, **kwargs):
 		self.blackboard["is_interruption"] = False
 		if self.blackboard["new_face"] > 0:
+			self.blackboard["bored_since"] = 0
 			print "----- Someone Arrived!"
 			yield True
 		else:
@@ -769,6 +771,11 @@ class Tree():
 	@owyl.taskmethod
 	def show_frustrated_expression(self, **kwargs):
 		self.pick_random_expression("frustrated_emotions")
+		yield True
+
+	@owyl.taskmethod
+	def return_to_neutral_position(self, **kwargs):
+		self.facetrack.look_at_face(0)
 		yield True
 
 	# Accept an expression name, intensity and duration, and publish it
