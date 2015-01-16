@@ -43,7 +43,7 @@ class AnimationManager():
 
 		# Internal vars
 		self._time = 0
-		self.lastTriggered = {}
+		self.nextTrigger = {}
 
 		# global access
 		self.deformObj = bpy.data.objects['deform']
@@ -192,7 +192,7 @@ class AnimationManager():
 			if vis in viseme.name:
 				action = viseme
 				break
-			
+
 		if not action:
 			print('No Action mactching viseme: ', vis)
 			return False
@@ -219,7 +219,7 @@ class AnimationManager():
 
 		return True
 
-	
+
 	def _deleteViseme(self, viseme):
 			''' internal use only, stops and deletes a viseme'''
 			# remove from list
@@ -333,19 +333,18 @@ class AnimationManager():
 
 	def randomFrequency(self, name, hz):
 		'''Returns a random true/false based on a hertz value as input'''
+		now = time.time()
 		try:
-			oldTime = self.lastTriggered[name]
+			success = now > self.nextTrigger[name]
 		except KeyError:
-			self.lastTriggered[name] = time.time()
-			return True
+			success = True
 
-		elapsedTime = time.time() - oldTime
-		hz = max(hz, 0.0001)  # prevents div by 0
-		if elapsedTime > random.gauss(1.0/hz, 0.2/hz):  # sigma is hard coded to 1/5 the mu
-			self.lastTriggered[name] = time.time()
-			return True
-		else:
-			return False
+		if success:
+			# prevents div by 0
+			hz = max(hz, 0.0001)
+			# sigma is hard coded to 1/5 the mu
+			self.nextTrigger[name] = now + random.gauss(1.0/hz, 0.2/hz)
+		return success
 
 
 class Emotion():
