@@ -258,8 +258,8 @@ class FaceTrack:
 						raise Exception("Face not visible")
 					trg = self.face_target(self.gaze_at)
 					self.gaze_pub.publish(trg)
-				except:
-					print("Error: no gaze-at target")
+				except Exception as ex:
+					print("Error: no gaze-at target: ", ex)
 					self.gaze_at_face(0)
 					return
 
@@ -270,8 +270,8 @@ class FaceTrack:
 						raise Exception("Face not visible")
 					trg = self.face_target(self.look_at)
 					self.look_pub.publish(trg)
-				except:
-					print("Error: no look-at target")
+				except Exception as ex:
+					print("Error: no look-at target: ", ex)
 					self.look_at_face(0)
 					return
 
@@ -311,10 +311,11 @@ class FaceTrack:
 		# Now perform all the various looking-at actions
 		self.do_look_at_actions()
 
-	# Queries tf_listener to sget latest available position
+	# Queries tf_listener to get latest available position
 	# Throws TF exceptions if transform canot be returned
 	def face_target(self,faceid):
-		(trans, rot) = self.tf_listener.lookupTransform(self.LOCATION_FRAME,'Face'+str(faceid), rospy.Time(0))
+		(trans, rot) = self.tf_listener.lookupTransform( \
+			self.LOCATION_FRAME, 'Face' + str(faceid), rospy.Time(0))
 		t = Target()
 		t.x = trans[0]
 		t.y = trans[1]
