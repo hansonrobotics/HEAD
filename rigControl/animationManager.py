@@ -71,6 +71,18 @@ class AnimationManager():
 		bpy.data.cameras["Camera.001"].angle = 0.175
 		bpy.data.objects["Camera.001"].location = [-0.028, -7, 0.96]
 
+
+		# Scale for Blender coordinates 1 BU in m.
+		self.scale = 0.2
+		# Distance between eyes and 0 point in the head in BU
+		self.eyes_distance = 0.34
+		# Target minimum distance in m
+		self.min_distance  = 0.1
+		# Face target offset in BU
+		self.face_target_offset = -0.84
+		# Eye_target offset in BU
+		self.eye_target_offset = -1.67
+
 		self.availableVisemes = []
 		for action in bpy.data.actions:
 			if action.name.startswith('VIS-'):
@@ -229,59 +241,21 @@ class AnimationManager():
 			self.deformObj.animation_data.nla_tracks.remove(viseme.trackRef)
 
 
-	def coordConvert(self, loc, currbu):
-		'''Convert coordinates from centi-meters to blender units. The
+	def coordConvert(self, loc, currbu, offset= 0):
+		'''Convert coordinates from meters to blender units. The
 		coordinate frame used here is y is straight-ahead, x is th the
-		right, and z is up.  This also clamps values to prevent
-		completely crazy look-at directions from happening.  Returns
-		the look-at point, in blender units.
+		right, and z is up.
 		'''
 
-		# Magic numbers. Something is wrong with the coordinate system,
-		# so that if you tell her to look at a specific angle direction,
-		# she turns her head to about 4 times that angle.  So here, we
-		# divide by 4 to correct for that.  See github issue #25 for
-		# additional details.
-		loc[0] *= 0.25
-		loc[2] *= 0.25
 
-		# Prevent crazy values, e.g. looking at inside of skull, or
-		# lookings straight backwards.
-		#
-		# Negative y values will cause her neck to do a 'Linda Blair'
-		# in the Exorcist.
-		if loc[1] < 0.0:
-			loc[1] = 0.0
+		# Set minimum distance
+		loc[1] = max(loc[1], self.eyes_distance*self.scale+self.min_distance)
 
-		# The look-at target must be at least 10 centimeters away.
-		# This is an error condition that should never happen, but
-		# just in case it does, we don't want the rig to go berzerk.
-		# (Right now, the head-drift becomes very large if this
-		# distance is under 15 centimeters.)
-		dist = computeDistance(loc, [0,0,0])
-		mindist = 10.0
-		if dist < mindist :
-			if dist < 1.0:
-				# If totally crazy, look straight ahead.
-				# Should probably animate some puzzled wtf expression,
-				# just in case this happens (and it never should ...)
-				loc = [0.0, 30.0, 0.0]
-			else:
-				# Else try to look at approximately correct location
-				dist = mindist / dist
-				loc = [loc[0]*dist, loc[1]*dist, loc[2]*dist]
+		# Convert from meters to 'blender-units'
+		locBU = m2bu(loc, self.scale)
 
-		# Convert from centimeters to 'blender-units'
-		locBU = CM2BU(loc)
-
-		# Adjust for world offset. Magic number incoming...
-		# 15 Jan 2015 - Linas figured out experimentally that this number
-		# has to be between -0.9 and -1.0. These are the only values
-		# where, if she is told to look at a point infiintely far away,
-		# and also look at a point close-up, but in the same direction,
-		# she does not turn her head. Any other values cause her to turn
-		# her head, either too far outwards, or too far inwards.
-		locBU[1] -= (0.95)
+		# Add offset if any
+		locBU[1] += offset
 
 		# Compute distance from previous eye position
 		distance = computeDistance(locBU, currbu)
@@ -298,16 +272,18 @@ class AnimationManager():
 	def setFaceTarget(self, loc):
 		'''Set the target used by eye and face tracking.'''
 
-		locBU = self.coordConvert(loc, self.eyeTargetLoc.current)
+		locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.face_target_offset)
 
 		self.headTargetLoc.target = locBU
+		# Change offset for the eyes
+		locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
 		self.eyeTargetLoc.target = locBU
 
 
 	def setGazeTarget(self, loc):
 		'''Set the target used for eye tracking only.'''
 
-		locBU = self.coordConvert(loc, self.eyeTargetLoc.current)
+		locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.eye_target_offset)
 		self.eyeTargetLoc.target = locBU
 
 	def setViseme(self):

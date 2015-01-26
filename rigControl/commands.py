@@ -79,15 +79,15 @@ def setGesture(name, repeat=1, speed=1, magnitude=0.5):
 # system is somewhere (where?) in the middle of the head.
 
 def setFaceTarget(loc):
-	# Eva uses y==forward x==right. Distances in centimeters from
+	# Eva uses y==forward x==right. Distances in meters from
 	# somewhere in the middle of the head.
-	cmloc = [-100.0* loc[1], 100.0* loc[0], 100.0* loc[2]]
-	bpy.evaAnimationManager.setFaceTarget(cmloc)
+	mloc = [-loc[1], loc[0], loc[2]]
+	bpy.evaAnimationManager.setFaceTarget(mloc)
 	return 0
 
 def setGazeTarget(loc):
-	cmloc = [-100.0* loc[1], 100.0* loc[0], 100.0* loc[2]]
-	bpy.evaAnimationManager.setGazeTarget(cmloc)
+	mloc = [-loc[1],  loc[0], loc[2]]
+	bpy.evaAnimationManager.setGazeTarget(mloc)
 	return 0
 
 def getGestureParams():
