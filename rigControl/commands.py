@@ -120,12 +120,17 @@ def getHeadData():
 
 def getEyesData():
 	bones = bpy.evaAnimationManager.deformObj.pose.bones
+	head = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_euler()
 	leye = bones['eye.L'].matrix.to_euler()
 	reye = bones['eye.R'].matrix.to_euler()
-	leye_p = leye.x
+	# Relative to head. Head angles are inversed.
+	leye_p = leye.x + head.x
 	leye_y = pi - leye.z if leye.z >= 0 else -(pi+leye.z)
-	reye_p = reye.x
+	reye_p = reye.x + head.x
 	reye_y = pi - reye.z if reye.z >= 0 else -(pi+reye.z)
+	# Add head target
+	leye_y += head.z
+	reye_y += head.z
 	return {'l':{'p':leye_p,'y':leye_y},'r':{'p':reye_p,'y':reye_y}}
 
 
