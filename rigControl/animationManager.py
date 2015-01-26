@@ -43,17 +43,38 @@ class AnimationManager():
 
 		# Internal vars
 		self._time = 0
-		self.lastTriggered = {}
+		self.nextTrigger = {}
 
 		# global access
 		self.deformObj = bpy.data.objects['deform']
 		self.bones = bpy.data.objects['control'].pose.bones
 
+		# Camera hacks. See issue #25 in github.
+		# Basic assumptions:
+		# 1) blender viewport is about 80cm from me.
+		# 2) Eva is just a little heind the viewport.
+		# 3) Eva's head is 14cm wide.
+		# This means that, with a camera field-of-view of 10 degrees
+		# she should just fill the viewport.  That's becasue the half
+		# angle is given by  arcsin(7/80) = 0.0876 radians = 5 degrees
+		# or equivalently, a whole angle of 10 degrees (0.175 radians).
+		# Then with this camera FOV, I have to position the camera at
+		# -7 "blender units" to get her face to actually fill the
+		# viewport.  So that is what the below does.
+		#
+		# The part that I don't get is that this means that 7 "blender
+		# units" is 80cm (or 1 BU is 11 cm).  Beorn says that 1BU should
+		# be about 20cm. So it doesn't quite match up, but seems in the
+		# right ballpark, at least.  Perhaps I'm misunderstanding how the
+		# viewport works?
+		#
+		bpy.data.cameras["Camera.001"].angle = 0.175
+		bpy.data.objects["Camera.001"].location = [-0.028, -7, 0.96]
+
 		self.availableVisemes = []
 		for action in bpy.data.actions:
 			if action.name.startswith('VIS-'):
 				self.availableVisemes.append(action)
-
 
 		if debug:
 			imp.reload(actuators)
@@ -171,7 +192,7 @@ class AnimationManager():
 			if vis in viseme.name:
 				action = viseme
 				break
-			
+
 		if not action:
 			print('No Action mactching viseme: ', vis)
 			return False
@@ -198,7 +219,7 @@ class AnimationManager():
 
 		return True
 
-	
+
 	def _deleteViseme(self, viseme):
 			''' internal use only, stops and deletes a viseme'''
 			# remove from list
@@ -209,11 +230,20 @@ class AnimationManager():
 
 
 	def coordConvert(self, loc, currbu):
-		'''Convert coordinates from the external coord system (meters) to
-		blender units.  This also clamps values to prevent completely
-		crazy look-at directions from happening.  Returns the look-at
-		point, in blender units.
+		'''Convert coordinates from centi-meters to blender units. The
+		coordinate frame used here is y is straight-ahead, x is th the
+		right, and z is up.  This also clamps values to prevent
+		completely crazy look-at directions from happening.  Returns
+		the look-at point, in blender units.
 		'''
+
+		# Magic numbers. Something is wrong with the coordinate system,
+		# so that if you tell her to look at a specific angle direction,
+		# she turns her head to about 4 times that angle.  So here, we
+		# divide by 4 to correct for that.  See github issue #25 for
+		# additional details.
+		loc[0] *= 0.25
+		loc[2] *= 0.25
 
 		# Prevent crazy values, e.g. looking at inside of skull, or
 		# lookings straight backwards.
@@ -239,13 +269,19 @@ class AnimationManager():
 			else:
 				# Else try to look at approximately correct location
 				dist = mindist / dist
-				loc = [loc[0]*dist, loc[1]*dist, loc[2]*dist] 
+				loc = [loc[0]*dist, loc[1]*dist, loc[2]*dist]
 
 		# Convert from centimeters to 'blender-units'
 		locBU = CM2BU(loc)
 
 		# Adjust for world offset. Magic number incoming...
-		locBU[1] -= (1.2)
+		# 15 Jan 2015 - Linas figured out experimentally that this number
+		# has to be between -0.9 and -1.0. These are the only values
+		# where, if she is told to look at a point infiintely far away,
+		# and also look at a point close-up, but in the same direction,
+		# she does not turn her head. Any other values cause her to turn
+		# her head, either too far outwards, or too far inwards.
+		locBU[1] -= (0.95)
 
 		# Compute distance from previous eye position
 		distance = computeDistance(locBU, currbu)
@@ -274,8 +310,10 @@ class AnimationManager():
 		locBU = self.coordConvert(loc, self.eyeTargetLoc.current)
 		self.eyeTargetLoc.target = locBU
 
-		
-		
+	def setViseme(self):
+		pass
+
+
 	def terminate(self):
 		'''House-keeping at the end of the run'''
 		# remove all leftover gestures
@@ -295,19 +333,18 @@ class AnimationManager():
 
 	def randomFrequency(self, name, hz):
 		'''Returns a random true/false based on a hertz value as input'''
+		now = time.time()
 		try:
-			oldTime = self.lastTriggered[name]
+			success = now > self.nextTrigger[name]
 		except KeyError:
-			self.lastTriggered[name] = time.time()
-			return True
+			success = True
 
-		elapsedTime = time.time() - oldTime
-		hz = max(hz, 0.0001)  # prevents div by 0
-		if elapsedTime > random.gauss(1.0/hz, 0.2/hz):  # sigma is hard coded to 1/5 the mu
-			self.lastTriggered[name] = time.time()
-			return True
-		else:
-			return False
+		if success:
+			# prevents div by 0
+			hz = max(hz, 0.0001)
+			# sigma is hard coded to 1/5 the mu
+			self.nextTrigger[name] = now + random.gauss(1.0/hz, 0.2/hz)
+		return success
 
 
 class Emotion():
@@ -349,8 +386,8 @@ class Viseme():
 
 
 def init():
-	'''Create AnimationManager singleton and make available for global access'''
-	if hasattr(bpy, 'evaAnimationManager') and False:
-		print('Skipping Singleton instanciation')
+	'''Create AnimationManager singleton and make it available for global access'''
+	if hasattr(bpy, 'evaAnimationManager'):
+		print('Skipping Singleton instantiation')
 	else:
 		bpy.evaAnimationManager = AnimationManager()
