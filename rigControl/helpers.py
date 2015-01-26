@@ -61,14 +61,13 @@ def randomSelect(probs):
 	return index - 1
 
 
-def CM2BU(cm):
+def m2bu(m, scale=0.25):
 	# converts input (assuming centimeters) to Blender Unit:
 	# Beorn says in github #25 that one BU should be about 20cm.
-	SCALE = 20        # arbitrary set based on realworld size of Eva
-	if type(cm) is list or type(cm) is tuple:
-		bu = [i/SCALE for i in cm]
+	if type(m) is list or type(m) is tuple:
+		bu = [i/scale for i in m]
 	else:
-		bu = cm/SCALE
+		bu = m/scale
 	return bu
 
 
