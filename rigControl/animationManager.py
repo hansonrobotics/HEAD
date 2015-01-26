@@ -52,7 +52,7 @@ class AnimationManager():
 		# Camera hacks. See issue #25 in github.
 		# Basic assumptions:
 		# 1) blender viewport is about 80cm from me.
-		# 2) Eva is just a little heind the viewport.
+		# 2) Eva is just a little behind the viewport.
 		# 3) Eva's head is 14cm wide.
 		# This means that, with a camera field-of-view of 10 degrees
 		# she should just fill the viewport.  That's becasue the half
@@ -69,7 +69,10 @@ class AnimationManager():
 		# viewport works?
 		#
 		bpy.data.cameras["Camera.001"].angle = 0.175
-		bpy.data.objects["Camera.001"].location = [-0.028, -7, 0.96]
+		bpy.data.objects["Camera.001"].location = [-0.028, -7, 0.68]
+
+		# 90 degrees, exactly.
+		bpy.data.objects["Camera.001"].rotation_euler = [1.570796, 0.0, 0.0]
 
 
 		# Scale for Blender coordinates 1 BU in m.
