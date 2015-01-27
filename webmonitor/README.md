@@ -4,5 +4,7 @@ on a web page.
 
 May be integrated as just another webui page later?
 
+![Screenshot](docs/screenshot-bare-text.png)
+
 ## Run
 Run `./flaskserver.py`, then open [localhost:5000](http://localhost:5000).
