@@ -38,8 +38,8 @@ such as speech, where a minuscule time delay can look unnatural.
 ---
 `isAlive()`
 
-Returns 0 if 3D environment is alive and ready to accept command, else
-returns the error code.  Should be called after `init()` to make sure
+Returns 1 if 3D environment is alive and ready to accept command, else
+returns 0.  Should be called after `init()` to make sure
 that blender is properly operating, and that the 3D environment is ready
 to accept further commands.
 
@@ -202,4 +202,3 @@ Returns 0 if success, else returns the error code.
 
 ---
 
-`saySpeech()` TBD TBD

@@ -16,7 +16,7 @@ def getEnvironment():
 	return None
 
 def isAlive():
-	return bpy.context.scene['animationPlaybackActive']
+	return int(bpy.context.scene['animationPlaybackActive'])
 
 def terminate():
 	...
@@ -43,6 +43,7 @@ def getEmotionStates():
 
 
 def setEmotionState(emotion):
+	# TODO: expand arguments and update doc
 	bpy.evaAnimationManager.setEmotion(eval(emotion))
 	return 0
 
@@ -72,6 +73,12 @@ def setGesture(name, repeat=1, speed=1, magnitude=0.5):
 	bpy.evaAnimationManager.newGesture(name='GST-'+name, \
 		repeat=repeat, speed=speed, magnitude=magnitude)
 	return 0
+
+
+def stopGesture(gestureID, smoothing):
+	## TODO
+	return 0
+
 
 # The coordinate system used is head-relative, in 'engineering'
 # coordinates: 'x' is forward, 'y' to the left, and 'z' up.

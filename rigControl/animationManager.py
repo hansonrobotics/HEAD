@@ -202,6 +202,13 @@ class AnimationManager():
 
 	def newViseme(self, vis, duration=0.5, rampInRatio=0.1, rampOutRatio=0.8, startTime=0):
 		'''Perform a new viseme'''
+		# vis should be a string found in self.availableVisemes
+		# duration is time to stay in this viseme in seconds, (including ramp time).
+		# ramp*Ratio are the percentage of time the animation transitions in.
+		# 	i.e. In=0, Out=0 would be no blending
+		# 	In = 0.5, Out=0.5 would be maximum blending in and out
+		# startTime is the starting time for the viseme in seconds relative to now.
+
 		action = None
 		for viseme in self.availableVisemes:
 			if vis in viseme.name:
