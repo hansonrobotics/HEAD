@@ -1,14 +1,9 @@
 # Implements ROS node to convert from ROS messages to the
-# blender API defined in commands.py.  The actual commands
+# blender API defined in rigAPI.py.  The actual commands
 # are transmitted to blender using the CommandListener.
 #
 from math import radians,pi
-from rigControl import commands
-from rigControl.CommandSource import CommandSource
-
-
-import imp
-imp.reload(commands)
+from rigAPI.CommandSource import CommandSource
 
 import queue
 
@@ -19,7 +14,9 @@ msg = soft_import('blender_api_msgs.msg')
 paumsg = soft_import('pau2motors.msg')
 
 # XXX this should not be hard-coded
+from rigControl import commands
 api = commands.EvaAPI()
+
 
 
 # This is called when the CommandListener is started.
