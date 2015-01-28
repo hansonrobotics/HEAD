@@ -6,15 +6,32 @@ from collections import OrderedDict
 
 from .rigAPI import RigAPI
 
-# System control and information commands ===========
+# ====================================================
+
+def init():
+	bpy.ops.wm.animation_playback()
+	return 0
+
+def getEnvironment():
+	...
+	return None
+
+def terminate():
+	...
+	return 0
+
 
 class EvaAPI(RigAPI):
 
 	def __init__(self):
 		pass
 
+	# System control and information commands ===========
 	def getAPIVersion(self):
 		return 1
+
+	def isAlive(self):
+		return int(bpy.context.scene['animationPlaybackActive'])
 
 	# Emotion and Gesture commands ==========================
 
@@ -104,66 +121,48 @@ class EvaAPI(RigAPI):
 		return bpy.evaAnimationManager.newViseme(vis)
 
 
-# ====================================================
+	# ========== info dump for ROS, Should return non-blender data structures
 
-def init():
-	bpy.ops.wm.animation_playback()
-	return 0
+	# Gets Head rotation quaternion in XYZ format in blender independamt
+	# data structure.
+	# Pitch: X (positive down, negative up)?
+	# Yaw: Z (negative right to positive left)
 
-def getEnvironment():
-	...
-	return None
+	def getHeadData():
+		bones = bpy.evaAnimationManager.deformObj.pose.bones
+		q = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
+		return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
 
-def isAlive():
-	return int(bpy.context.scene['animationPlaybackActive'])
+	# Gets Eye rotation angles:
+	# Pitch: down(negative) to up(positive)
+	# Yaw: left (negative) to right(positive)
 
-def terminate():
-	...
-	return 0
-
-
-# ========== info dump for ROS, Should return non-blender data structures
-
-# Gets Head rotation quaternion in XYZ format in blender independamt
-# data structure.
-# Pitch: X (positive down, negative up)?
-# Yaw: Z (negative right to positive left)
-
-def getHeadData():
-	bones = bpy.evaAnimationManager.deformObj.pose.bones
-	q = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
-	return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
-
-# Gets Eye rotation angles:
-# Pitch: down(negative) to up(positive)
-# Yaw: left (negative) to right(positive)
-
-def getEyesData():
-	bones = bpy.evaAnimationManager.deformObj.pose.bones
-	head = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_euler()
-	leye = bones['eye.L'].matrix.to_euler()
-	reye = bones['eye.R'].matrix.to_euler()
-	# Relative to head. Head angles are inversed.
-	leye_p = leye.x + head.x
-	leye_y = pi - leye.z if leye.z >= 0 else -(pi+leye.z)
-	reye_p = reye.x + head.x
-	reye_y = pi - reye.z if reye.z >= 0 else -(pi+reye.z)
-	# Add head target
-	leye_y += head.z
-	reye_y += head.z
-	return {'l':{'p':leye_p,'y':leye_y},'r':{'p':reye_p,'y':reye_y}}
+	def getEyesData():
+		bones = bpy.evaAnimationManager.deformObj.pose.bones
+		head = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_euler()
+		leye = bones['eye.L'].matrix.to_euler()
+		reye = bones['eye.R'].matrix.to_euler()
+		# Relative to head. Head angles are inversed.
+		leye_p = leye.x + head.x
+		leye_y = pi - leye.z if leye.z >= 0 else -(pi+leye.z)
+		reye_p = reye.x + head.x
+		reye_y = pi - reye.z if reye.z >= 0 else -(pi+reye.z)
+		# Add head target
+		leye_y += head.z
+		reye_y += head.z
+		return {'l':{'p':leye_p,'y':leye_y},'r':{'p':reye_p,'y':reye_y}}
 
 
-def getFaceData():
-	shapekeys = OrderedDict()
-	for shapekeyGroup in bpy.data.shape_keys:
-		# Hardcoded to find the correct group
-		if shapekeyGroup.name == 'Key.007':
-			for kb in shapekeyGroup.key_blocks:
-				shapekeys[kb.name] = kb.value
+	def getFaceData():
+		shapekeys = OrderedDict()
+		for shapekeyGroup in bpy.data.shape_keys:
+			# Hardcoded to find the correct group
+			if shapekeyGroup.name == 'Key.007':
+				for kb in shapekeyGroup.key_blocks:
+					shapekeys[kb.name] = kb.value
 
-	# Fake the jaw shapekey from its z coordinate
-	jawz = bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]
-	shapekeys['jaw'] = min(max(jawz/0.3, 0), 1)
+		# Fake the jaw shapekey from its z coordinate
+		jawz = bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]
+		shapekeys['jaw'] = min(max(jawz/0.3, 0), 1)
 
-	return shapekeys
+		return shapekeys
