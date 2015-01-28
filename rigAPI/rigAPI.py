@@ -52,6 +52,7 @@ class RigAPI:
 	# Pitch: X (positive down, negative up)?
 	# Yaw: Z (negative right to positive left)
 	def getHeadData(self):
+		return None
 
 	# Get Eye rotation angles:
 	# Pitch: down(negative) to up(positive)
