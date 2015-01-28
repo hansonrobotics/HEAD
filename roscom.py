@@ -201,13 +201,13 @@ class CommandWrappers:
 	@subscribe("~set_face_target", msg.Target)
 	def setFaceTarget(msg):
 		flist = [msg.x, msg.y, msg.z]
-		commands.setFaceTarget(flist)
+		api.setFaceTarget(flist)
 
 	# Location that Eva will look at (only).
 	@subscribe("~set_gaze_target", msg.Target)
 	def setGazeTarget(msg):
 		flist = [msg.x, msg.y, msg.z]
-		commands.setGazeTarget(flist)
+		api.setGazeTarget(flist)
 
 	# Publishes Pau messages
 	@publish_live("~get_pau", paumsg.pau)
