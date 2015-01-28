@@ -59,17 +59,12 @@ class AnimationManager():
 		# angle is given by  arcsin(7/80) = 0.0876 radians = 5 degrees
 		# or equivalently, a whole angle of 10 degrees (0.175 radians).
 		# Then with this camera FOV, I have to position the camera at
-		# -7 "blender units" to get her face to actually fill the
-		# viewport.  So that is what the below does.
-		#
-		# The part that I don't get is that this means that 7 "blender
-		# units" is 80cm (or 1 BU is 11 cm).  Beorn says that 1BU should
-		# be about 20cm. So it doesn't quite match up, but seems in the
-		# right ballpark, at least.  Perhaps I'm misunderstanding how the
-		# viewport works?
-		#
+		# -3.2 "blender units" (80cm) to get her face to actually fill the
+		# viewport, width-wise.
+
+
 		bpy.data.cameras["Camera.001"].angle = 0.175
-		bpy.data.objects["Camera.001"].location = [-0.028, -7, 0.68]
+		bpy.data.objects["Camera.001"].location = [0, -3.2, 0.75]
 
 		# 90 degrees, exactly.
 		bpy.data.objects["Camera.001"].rotation_euler = [1.570796, 0.0, 0.0]
