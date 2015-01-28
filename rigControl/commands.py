@@ -16,6 +16,63 @@ class EvaAPI(RigAPI):
 	def getAPIVersion(self):
 		return 1
 
+	# Emotion and Gesture commands ==========================
+
+	def availableEmotionStates(self):
+		emotionStates = []
+		for emo in bpy.data.objects['control'].pose.bones:
+			if emo.name.startswith('EMO-'):
+				emotionStates.append(emo.name[4:])
+		return emotionStates
+
+
+	def getEmotionStates(self):
+		eva = bpy.evaAnimationManager
+		emotionStates = {}
+		for emotion in eva.emotionsList:
+			magnitude = round(emotion.magnitude.current, 3)
+			duration = round(emotion.duration, 3)
+			emotionStates[emotion.name] = {'magnitude': magnitude, 'duration': duration}
+		return emotionStates
+
+
+	def setEmotionState(self, emotion):
+		# TODO: expand arguments and update doc
+		bpy.evaAnimationManager.setEmotion(eval(emotion))
+		return 0
+
+
+	# Gestures --------------------------------------
+	def availableGestures(self):
+		emotionGestures = []
+		for gesture in bpy.data.actions:
+			if gesture.name.startswith("GST-"):
+				emotionGestures.append(gesture.name[4:])
+		return emotionGestures
+
+
+	def getGestures(self):
+		eva = bpy.evaAnimationManager
+		emotionGestures = {}
+		for gesture in eva.gesturesList:
+			duration = round(gesture.duration*gesture.repeat - gesture.stripRef.strip_time, 3)
+			magnitude = round(gesture.magnitude, 3)
+			speed = round(gesture.speed, 3)
+			emotionGestures[gesture.name] = {'duration': duration, \
+				'magnitude': magnitude, 'speed': speed}
+		return emotionGestures
+
+
+	def setGesture(self, name, repeat=1, speed=1, magnitude=0.5):
+		bpy.evaAnimationManager.newGesture(name='GST-'+name, \
+			repeat=repeat, speed=speed, magnitude=magnitude)
+		return 0
+
+
+	def stopGesture(self, gestureID, smoothing):
+		## TODO
+		return 0
+
 def init():
 	bpy.ops.wm.animation_playback()
 	return 0
@@ -29,63 +86,6 @@ def isAlive():
 
 def terminate():
 	...
-	return 0
-
-# Emotion and Gesture commands ==========================
-
-def availableEmotionStates():
-	emotionStates = []
-	for emo in bpy.data.objects['control'].pose.bones:
-		if emo.name.startswith('EMO-'):
-			emotionStates.append(emo.name[4:])
-	return emotionStates
-
-
-def getEmotionStates():
-	eva = bpy.evaAnimationManager
-	emotionStates = {}
-	for emotion in eva.emotionsList:
-		magnitude = round(emotion.magnitude.current, 3)
-		duration = round(emotion.duration, 3)
-		emotionStates[emotion.name] = {'magnitude': magnitude, 'duration': duration}
-	return emotionStates
-
-
-def setEmotionState(emotion):
-	# TODO: expand arguments and update doc
-	bpy.evaAnimationManager.setEmotion(eval(emotion))
-	return 0
-
-
-# Gestures --------------------------------------
-def availableGestures():
-	emotionGestures = []
-	for gesture in bpy.data.actions:
-		if gesture.name.startswith("GST-"):
-			emotionGestures.append(gesture.name[4:])
-	return emotionGestures
-
-
-def getGestures():
-	eva = bpy.evaAnimationManager
-	emotionGestures = {}
-	for gesture in eva.gesturesList:
-		duration = round(gesture.duration*gesture.repeat - gesture.stripRef.strip_time, 3)
-		magnitude = round(gesture.magnitude, 3)
-		speed = round(gesture.speed, 3)
-		emotionGestures[gesture.name] = {'duration': duration, \
-			'magnitude': magnitude, 'speed': speed}
-	return emotionGestures
-
-
-def setGesture(name, repeat=1, speed=1, magnitude=0.5):
-	bpy.evaAnimationManager.newGesture(name='GST-'+name, \
-		repeat=repeat, speed=speed, magnitude=magnitude)
-	return 0
-
-
-def stopGesture(gestureID, smoothing):
-	## TODO
 	return 0
 
 

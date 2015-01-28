@@ -153,14 +153,14 @@ class CommandWrappers:
 
 	@publish_once("~available_emotion_states", msg.AvailableEmotionStates)
 	def availableEmotionStates():
-		return msg.AvailableEmotionStates(commands.availableEmotionStates())
+		return msg.AvailableEmotionStates(api.availableEmotionStates())
 
 
 	@publish_live("~get_emotion_states", msg.EmotionStates)
 	def getEmotionStates():
 		return msg.EmotionStates([
 			msg.EmotionState(name, vals['magnitude'], rospy.Duration(vals['duration']))
-			for name, vals in commands.getEmotionStates().items()
+			for name, vals in api.getEmotionStates().items()
 		])
 
 	# Message is a single emotion state
@@ -172,12 +172,12 @@ class CommandWrappers:
 				'duration': msg.duration.to_sec()
 			} 
 		})
-		commands.setEmotionState(emotion)
+		api.setEmotionState(emotion)
 
 
 	@publish_once("~available_gestures", msg.AvailableGestures)
 	def availableGestures():
-		return msg.AvailableGestures(commands.availableGestures())
+		return msg.AvailableGestures(api.availableGestures())
 
 
 	@publish_live("~get_gestures", msg.Gestures)
@@ -185,14 +185,14 @@ class CommandWrappers:
 		return msg.Gestures([
 			msg.Gesture(
 				name, vals['magnitude'], rospy.Duration(vals['duration']), vals['speed']
-			) for name, vals in commands.getGestures().items()
+			) for name, vals in api.getGestures().items()
 		])
 
 
 	@subscribe("~set_gesture", msg.SetGesture)
 	def setGesture(msg):
 		try:
-			commands.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
+			api.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
 		except TypeError:
 			print('Error: unknown gesture:', msg.name);
 
