@@ -214,18 +214,18 @@ class CommandWrappers:
 	def getPau():
 		msg = paumsg.pau()
 
-		head = commands.getHeadData()
+		head = api.getHeadData()
 		msg.m_headRotation.x = head['x']
 		msg.m_headRotation.y = head['y']
 		msg.m_headRotation.z = head['z']
 		msg.m_headRotation.w = head['w']
 
-		eyes = commands.getEyesData()
+		eyes = api.getEyesData()
 		msg.m_eyeGazeLeftPitch = eyes['l']['p']
 		msg.m_eyeGazeLeftYaw = eyes['l']['y']
 		msg.m_eyeGazeRightPitch = eyes['r']['p']
 		msg.m_eyeGazeRightYaw = eyes['r']['y']
-		shapekeys = commands.getFaceData()
+		shapekeys = api.getFaceData()
 
 		msg.m_coeffs = shapekeys.values()
 		return msg
