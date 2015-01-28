@@ -7,7 +7,7 @@ debug = True
 import bpy
 
 from . import commands
-from . import CommandSource
+from rigAPI import CommandSource
 
 import imp
 imp.reload(commands)
