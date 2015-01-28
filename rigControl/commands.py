@@ -3,9 +3,18 @@ import bpy
 from  mathutils import Matrix
 from math import pi
 from collections import OrderedDict
+
+from .rigAPI import RigAPI
+
 # System control and information commands ===========
-def getAPIVersion():
-	return 1
+
+class EvaAPI(RigAPI):
+
+	def __init__(self):
+		pass
+
+	def getAPIVersion(self):
+		return 1
 
 def init():
 	bpy.ops.wm.animation_playback()
