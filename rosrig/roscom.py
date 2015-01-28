@@ -6,6 +6,7 @@ from math import radians,pi
 from rigControl import commands
 from rigControl.CommandSource import CommandSource
 
+
 import imp
 imp.reload(commands)
 
@@ -16,6 +17,10 @@ rospy = soft_import('rospy')
 std_msgs = soft_import('std_msgs.msg')
 msg = soft_import('blender_api_msgs.msg')
 paumsg = soft_import('pau2motors.msg')
+
+# XXX this should not be hard-coded
+api = commands.EvaAPI()
+
 
 # This is called when the CommandListener is started.
 def build():
@@ -143,19 +148,19 @@ class CommandWrappers:
 
 	@publish_once("~get_api_version", msg.GetAPIVersion)
 	def getAPIVersion():
-		return msg.GetAPIVersion(commands.getAPIVersion())
+		return msg.GetAPIVersion(api.getAPIVersion())
 
 
 	@publish_once("~available_emotion_states", msg.AvailableEmotionStates)
 	def availableEmotionStates():
-		return msg.AvailableEmotionStates(commands.availableEmotionStates())
+		return msg.AvailableEmotionStates(api.availableEmotionStates())
 
 
 	@publish_live("~get_emotion_states", msg.EmotionStates)
 	def getEmotionStates():
 		return msg.EmotionStates([
 			msg.EmotionState(name, vals['magnitude'], rospy.Duration(vals['duration']))
-			for name, vals in commands.getEmotionStates().items()
+			for name, vals in api.getEmotionStates().items()
 		])
 
 	# Message is a single emotion state
@@ -167,12 +172,12 @@ class CommandWrappers:
 				'duration': msg.duration.to_sec()
 			} 
 		})
-		commands.setEmotionState(emotion)
+		api.setEmotionState(emotion)
 
 
 	@publish_once("~available_gestures", msg.AvailableGestures)
 	def availableGestures():
-		return msg.AvailableGestures(commands.availableGestures())
+		return msg.AvailableGestures(api.availableGestures())
 
 
 	@publish_live("~get_gestures", msg.Gestures)
@@ -180,14 +185,14 @@ class CommandWrappers:
 		return msg.Gestures([
 			msg.Gesture(
 				name, vals['magnitude'], rospy.Duration(vals['duration']), vals['speed']
-			) for name, vals in commands.getGestures().items()
+			) for name, vals in api.getGestures().items()
 		])
 
 
 	@subscribe("~set_gesture", msg.SetGesture)
 	def setGesture(msg):
 		try:
-			commands.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
+			api.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
 		except TypeError:
 			print('Error: unknown gesture:', msg.name);
 
@@ -196,31 +201,31 @@ class CommandWrappers:
 	@subscribe("~set_face_target", msg.Target)
 	def setFaceTarget(msg):
 		flist = [msg.x, msg.y, msg.z]
-		commands.setFaceTarget(flist)
+		api.setFaceTarget(flist)
 
 	# Location that Eva will look at (only).
 	@subscribe("~set_gaze_target", msg.Target)
 	def setGazeTarget(msg):
 		flist = [msg.x, msg.y, msg.z]
-		commands.setGazeTarget(flist)
+		api.setGazeTarget(flist)
 
 	# Publishes Pau messages
 	@publish_live("~get_pau", paumsg.pau)
 	def getPau():
 		msg = paumsg.pau()
 
-		head = commands.getHeadData()
+		head = api.getHeadData()
 		msg.m_headRotation.x = head['x']
 		msg.m_headRotation.y = head['y']
 		msg.m_headRotation.z = head['z']
 		msg.m_headRotation.w = head['w']
 
-		eyes = commands.getEyesData()
+		eyes = api.getEyesData()
 		msg.m_eyeGazeLeftPitch = eyes['l']['p']
 		msg.m_eyeGazeLeftYaw = eyes['l']['y']
 		msg.m_eyeGazeRightPitch = eyes['r']['p']
 		msg.m_eyeGazeRightYaw = eyes['r']['y']
-		shapekeys = commands.getFaceData()
+		shapekeys = api.getFaceData()
 
 		msg.m_coeffs = shapekeys.values()
 		return msg
