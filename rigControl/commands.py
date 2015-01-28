@@ -73,6 +73,39 @@ class EvaAPI(RigAPI):
 		## TODO
 		return 0
 
+	# Eye look-at targets ==========================
+	# The coordinate system used is head-relative, in 'engineering'
+	# coordinates: 'x' is forward, 'y' to the left, and 'z' up.
+	# Distances are measured in meters.  Origin of the coordinate
+	# system is somewhere (where?) in the middle of the head.
+
+	def setFaceTarget(self, loc):
+		# Eva uses y==forward x==right. Distances in meters from
+		# somewhere in the middle of the head.
+		mloc = [-loc[1], loc[0], loc[2]]
+		bpy.evaAnimationManager.setFaceTarget(mloc)
+		return 0
+
+	def setGazeTarget(self, loc):
+		mloc = [-loc[1],  loc[0], loc[2]]
+		bpy.evaAnimationManager.setGazeTarget(mloc)
+		return 0
+
+	def getGestureParams(self):
+		eva = bpy.evaAnimationManager
+		return {'eyeDartRate': round(eva.eyeDartRate, 3),
+				'eyeWander': round(eva.eyeWander, 3),
+				'blinkRate': round(eva.blinkRate, 3),
+				'blinkDuration': round(eva.blinkDuration, 3),
+				'breathRate': round(eva.breathRate, 3),
+				'breathIntensity': round(eva.breathIntensity, 3)}
+
+	def setVisemes(self, vis):
+		return bpy.evaAnimationManager.newViseme(vis)
+
+
+# ====================================================
+
 def init():
 	bpy.ops.wm.animation_playback()
 	return 0
@@ -88,35 +121,6 @@ def terminate():
 	...
 	return 0
 
-
-# The coordinate system used is head-relative, in 'engineering'
-# coordinates: 'x' is forward, 'y' to the left, and 'z' up.
-# Distances are measured in meters.  Origin of the coordinate
-# system is somewhere (where?) in the middle of the head.
-
-def setFaceTarget(loc):
-	# Eva uses y==forward x==right. Distances in meters from
-	# somewhere in the middle of the head.
-	mloc = [-loc[1], loc[0], loc[2]]
-	bpy.evaAnimationManager.setFaceTarget(mloc)
-	return 0
-
-def setGazeTarget(loc):
-	mloc = [-loc[1],  loc[0], loc[2]]
-	bpy.evaAnimationManager.setGazeTarget(mloc)
-	return 0
-
-def getGestureParams():
-	eva = bpy.evaAnimationManager
-	return {'eyeDartRate': round(eva.eyeDartRate, 3),
-			'eyeWander': round(eva.eyeWander, 3),
-			'blinkRate': round(eva.blinkRate, 3),
-			'blinkDuration': round(eva.blinkDuration, 3),
-			'breathRate': round(eva.breathRate, 3),
-			'breathIntensity': round(eva.breathIntensity, 3)}
-
-def setVisemes(vis):
-	return bpy.evaAnimationManager.newViseme(vis)
 
 # ========== info dump for ROS, Should return non-blender data structures
 
