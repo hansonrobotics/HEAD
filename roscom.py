@@ -6,6 +6,7 @@ from math import radians,pi
 from rigControl import commands
 from rigControl.CommandSource import CommandSource
 
+
 import imp
 imp.reload(commands)
 
@@ -16,6 +17,10 @@ rospy = soft_import('rospy')
 std_msgs = soft_import('std_msgs.msg')
 msg = soft_import('blender_api_msgs.msg')
 paumsg = soft_import('pau2motors.msg')
+
+# XXX this should not be hard-coded
+api = commands.EvaAPI()
+
 
 # This is called when the CommandListener is started.
 def build():
@@ -143,7 +148,7 @@ class CommandWrappers:
 
 	@publish_once("~get_api_version", msg.GetAPIVersion)
 	def getAPIVersion():
-		return msg.GetAPIVersion(commands.getAPIVersion())
+		return msg.GetAPIVersion(api.getAPIVersion())
 
 
 	@publish_once("~available_emotion_states", msg.AvailableEmotionStates)
