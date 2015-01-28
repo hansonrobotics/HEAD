@@ -1,11 +1,13 @@
 # Eva Blender Animation API #
 
 This repository contains an animated model of the Eva head, as a
-Blender file.  The head is driven by a collection of Python scripts
-known as the rigControl module. These controls can be activated from
-the blender interface, or by sending specially crafted messages to a
-listener daemon.
+Blender file, as well as a Robot Operating System (ROS) node to control
+the model.  The ROS node is automatically started when the blender
+file is loaded.
 
+The rigControl python module contains scripts to drive the model, as
+well as defining a public programming API.  The rosrig python module
+contains ROS node implementation.
 
 ![Eva Splash](docs/splash.png)
 
@@ -15,41 +17,37 @@ This youtube video shows what is currently possible:
 
 # Running #
 
-Pre-requisites: The code is designed for Blender 2.72 or higher. If you are on Blender 2.69 (That comes with Ubuntu) and has issues with eva.blend. Try eva269.blend.
+Pre-requisites: The code is designed for Blender 2.72 or higher. If
+you are on Blender 2.69 (that comes with Ubuntu) and have issues with
+eva.blend, try eva269.blend instead.  Note: eva269.blend is missing
+some of the newer fixes, including a camera location fix.
 
- * Start Blender, load Eva.blend.
- * If Eva's face looks distorted, make sure you follow the next step.
- * From the top status bar, click on 'Reload Trusted' if a security prompt exists.
- * This will bring up a RigControl panel on the right.
- * Click on "Start Animation" to initialize the character.
- * The character should now be live, as indicated by eye movement and blinking.
- * One can control Eva by using the graphic interface provided.
-
-A HOWTO guide for performing various tasks can be found in the
-[Eva cookbook](docs/cookbook.md).
-
-# Command Listener #
-* Comands may be sent through ROS to control Eva.
-* 'Command Listener' must be started in the RigControl Panel before commands are to be accepted.
-* The API is currently in draft stage: [API_v1](docs/API_v1.md)
+Start blender as follows:
+```
+blender -y Eva.blend -P autostart.py
+```
+Eva can be controlled via buttons in the blender GUI (note the panel
+on the right).  A HOWTO guide for manipulating via ROS can be found in
+the [Eva cookbook](docs/cookbook.md) in the `docs` directory.
 
 
 # Design #
+The programming API is currently in draft stage, here: 
+[API_v1](docs/API_v1.md). What has actually been implemented does not
+match the proposed API; neither is "authoritative", both probably need
+revision.
 
 ![UML Diagram](docs/evaEmoDesign.png)
 
-The CommandListener listens for and parses command from ROS.
+* The CommandListener listens for and parses command from ROS.
+* The AnimationManager keeps track of of Eva's internal state.
+* The Actuators are responsible individual actions of Eva such as
+  breathing, blinking and eye movement.
 
-The AnimationManager keeps track of of Eva's internal state.
-
-The Actuators are responsible individual actions of Eva such as breathing, blinking, eye movement.
-
-All the animation sequences and 3D data are stored in the Blender file.
-
+All animation sequences and 3D data are stored in the Blender file.
 
 # Copyright #
 
-Copyright (c) 2014 Hanson Robotics
+Copyright (c) 2014,2015 Hanson Robotics
 
-Copyright (c) 2014 Mike Pan
-
+Copyright (c) 2014,2015 Mike Pan

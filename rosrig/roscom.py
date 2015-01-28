@@ -2,9 +2,10 @@
 # blender API defined in commands.py.  The actual commands
 # are transmitted to blender using the CommandListener.
 #
-from .. import commands
 from math import radians,pi
-from ..CommandSource import CommandSource
+from rigControl import commands
+from rigControl.CommandSource import CommandSource
+
 import imp
 imp.reload(commands)
 

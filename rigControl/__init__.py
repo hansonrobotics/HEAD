@@ -50,7 +50,7 @@ if not is_init :
 	import importlib
 	try:
 		importlib.import_module('rospy')
-		from .rosrig import init
+		import rosrig
 
 		node = rosrig.init()
 		CommandListener.register_cmd_source(node)
