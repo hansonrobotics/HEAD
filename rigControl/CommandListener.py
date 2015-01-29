@@ -17,7 +17,7 @@ class BLCommandListener(bpy.types.Operator):
 	bl_label = "Command Listener"
 	bl_idname = 'wm.command_listener'
 
-	cmd_sources = []
+	cmd_sources = None
 	_timer = None
 	bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
 	bpy.context.scene['commandListenerActive'] = False
@@ -51,6 +51,14 @@ class BLCommandListener(bpy.types.Operator):
 
 	def execute(self, context):
 		print('Starting Command Listener')
+
+		# Load cmd sources on first press of the button
+		if self.cmd_sources == None:
+			type(self).cmd_sources, names = load_cmd_sources()
+			if len(self.cmd_sources) > 0:
+				print("Command Source '%s' loaded" % ', '.join(names))
+			else:
+				print('No Command Sources found')
 
 		success = True
 		for src in self.cmd_sources:
@@ -89,10 +97,6 @@ class BLCommandListener(bpy.types.Operator):
 		return not bpy.context.scene['commandListenerActive']
 		# return True
 
-	@classmethod
-	def register_command_source(cls, source):
-		cls.cmd_sources.append(source)
-
 
 def register():
 	bpy.utils.register_class(BLCommandListener)
@@ -111,8 +115,24 @@ def refresh():
 		unregister()
 		register()
 
-# Register a new animation command source.  The arugment should be an
-# object derived from the class CommandSource (defined above)
-def register_cmd_source(src):
-	BLCommandListener.register_command_source(src)
+# Find and load command sources like ROS
+def load_cmd_sources():
+	import pkg_resources
 
+	# Command Sources must advertise their build functions
+	# under this entry point group
+	group = 'blender_api.command_source.build'
+
+	entry_points = list(pkg_resources.iter_entry_points(group))
+	cmdsrcs = []
+	names = []
+	for point in entry_points:
+		try:
+			build = point.load()
+			node = build(commands.EvaAPI())
+			cmdsrcs.append(node)
+			names.append(point.name)
+		except ImportError:
+			print("Command Source '%s' won't build" % point.name)
+
+	return cmdsrcs, names
