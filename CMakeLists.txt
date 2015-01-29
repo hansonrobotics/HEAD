@@ -47,12 +47,15 @@ add_message_files(
   GetAPIVersion.msg
   AvailableEmotionStates.msg
   AvailableGestures.msg
+  AvailableVisemes.msg
   EmotionState.msg
   EmotionStates.msg
   Gesture.msg
   Gestures.msg
   SetGesture.msg
   Target.msg
+  Viseme.msg
+  Visemes.msg
 )
 
 ## Generate services in the 'srv' folder
