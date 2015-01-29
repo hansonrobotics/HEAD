@@ -10,12 +10,14 @@ Before running, be sure to do the following steps:
 ```
 $ source /opt/ros/indigo/setup.bash
 $ cd your_catkin_ws
-$ git clone https://github.com/hansonrobotics/blender_api_msgs.git
 $ git clone https://github.com/hansonrobotics/pau2motors.git
+$ git clone https://github.com/hansonrobotics/blender_api_msgs.git
+$ pip3 install ./blender_api_msgs
 $ catkin_make
 $ source devel/setup.bash
 ```
-The `blender_api_msgs` module defines the messages that this node uses.
+The `blender_api_msgs` module defines the messages and a ROS interface that
+this project uses.
 The `pau2motors` module defines the PAU messge used to publish the neck
 and eye positions.
 
