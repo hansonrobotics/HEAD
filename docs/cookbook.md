@@ -12,7 +12,7 @@ $ source /opt/ros/indigo/setup.bash
 $ cd your_catkin_ws
 $ git clone https://github.com/hansonrobotics/blender_api_msgs.git
 $ git clone https://github.com/hansonrobotics/pau2motors.git
-$ catkin build
+$ catkin_make
 $ source devel/setup.bash
 ```
 The `blender_api_msgs` module defines the messages that this node uses.
@@ -33,12 +33,12 @@ server application, where only the output PAU messages are required,
 for driving the motors.
 
 ## With display
-Start by issueing
+Start by issuing
 ```
 blender -y Eva269.blend
 ```
 The command listener and the animation must be started manually, by
-clickingthe "Start Command Listerner" buton, followed by the "Start
+clicking the "Start Command Listerner" button, followed by the "Start
 Animation" button.  Alternately, these can be autostarted:
 
 ```
@@ -47,11 +47,12 @@ blender -y Eva269.blend -P autostart.py
 
 
 ##Without display
-Without a display, there are no buttons to press.  Thus, the animations
+Without a display, there are no buttons to press. Thus, the animations
 MUST be autostarted:
 ```
 blender -y -b Eva269.blend -P autostart.py
 ```
+Note: doesn't work yet. See #19
 
 
 ROS messages and responses
