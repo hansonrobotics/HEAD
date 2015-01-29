@@ -193,6 +193,10 @@ class CommandWrappers:
 			print('Error: unknown gesture:', msg.name);
 
 
+	@publish_once("~available_visemes", msg.AvailableVisemes)
+	def availableVisemes():
+		return msg.AvailableVisemes(api.availableVisemes())
+
 	# Location that Eva will look at and face.
 	@subscribe("~set_face_target", msg.Target)
 	def setFaceTarget(msg):

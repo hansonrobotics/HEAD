@@ -70,6 +70,7 @@ Obtain the list of supported animations.
 rostopic list
 rostopic echo -n 1 /blender_api/available_gestures
 rostopic echo -n 1 /blender_api/available_emotion_states
+rostopic echo -n 1 /blender_api/available_visemes
 ```
 These should display the following outputs:
 ```
@@ -78,6 +79,9 @@ data: ['blink', 'blink-micro', 'blink-relaxed', 'blink-sleepy', 'nod-1', 'nod-2'
 ---
 $ rostopic echo -n 1 /blender_api/available_emotion_states
 data: ['irritated', 'happy', 'recoil', 'surprised', 'sad', 'confused', 'afraid', 'bored', 'engaged', 'amused', 'comprehending']
+---
+$ rostopic echo -n 1 /blender_api/available_visemes
+data: ['A-I', 'C-D-G-K-N-S-TH', 'E', 'F-V', 'L', 'M', 'O', 'U', 'W-Q']
 ---
 ```
 
