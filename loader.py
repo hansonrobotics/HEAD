@@ -11,17 +11,21 @@ def register():
 	import rigControl
 	imp.reload(rigControl)
 
-	# Start ROS node too..
-	# If ROS is found, we try to load the ROS node, else not.
+	# Start command sources like ROS
 	from rigControl import commands, CommandListener
-	import importlib
-	try:
-		importlib.import_module('rospy')
-		import rosrig
-
-		node = rosrig.init(commands.EvaAPI())
-		CommandListener.register_cmd_source(node)
-	except ImportError:
-		print('No ROS found')
+	import pkg_resources
+	group = 'blender_api.command_source.build'
+	entry_points = list(pkg_resources.iter_entry_points(group))
+	if len(entry_points) > 0:
+		for point in entry_points:
+			try:
+				build = point.load()
+				node = build(commands.EvaAPI())
+				CommandListener.register_cmd_source(node)
+				print("Command Source '%s' registered" % point.name)
+			except ImportError:
+				print("Command Source '%s' won't build" % point.name)
+	else:
+		print('No Command Sources found')
 
 register()
