@@ -109,8 +109,10 @@ class EvaAPI(RigAPI):
 		return visemes
 
 
-	def setVisemes(self, vis):
-		return bpy.evaAnimationManager.newViseme(vis)
+	def queueViseme(self, vis, start, duration, rampin, rampout, magnitude):
+		print("ola ", "VIS-"+vis, duration, rampin, rampout, start)
+		return bpy.evaAnimationManager.newViseme("VIS-"+vis, duration, \
+			rampin, rampout, start)
 
 	# Eye look-at targets ==========================
 	# The coordinate system used is head-relative, in 'engineering'

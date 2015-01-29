@@ -74,7 +74,7 @@ class RosNode(CommandSource):
 	# After this is called, blender will not ever poll us again.
 	def drop(self):
 		'''Disable communication'''
-		# We don't shutdown the actual ROS node, because restarting a 
+		# We don't shutdown the actual ROS node, because restarting a
 		# ROS node after shutdown is not supported in rospy.
 		for topic in self.topics:
 			topic.drop()
@@ -166,7 +166,7 @@ class CommandWrappers:
 			msg.name: {
 				'magnitude': msg.magnitude,
 				'duration': msg.duration.to_sec()
-			} 
+			}
 		})
 		api.setEmotionState(emotion)
 
@@ -196,6 +196,15 @@ class CommandWrappers:
 	@publish_once("~available_visemes", msg.AvailableVisemes)
 	def availableVisemes():
 		return msg.AvailableVisemes(api.availableVisemes())
+
+	@subscribe("~queue_viseme", msg.Viseme)
+	def queueViseme(msg):
+		try:
+			api.queueViseme(msg.name, msg.start.to_sec(),
+				msg.duration.to_sec(),
+				msg.rampin, msg.rampout, msg.magnitude)
+		except TypeError:
+			print('Error: unknown viseme:', msg.name);
 
 	# Location that Eva will look at and face.
 	@subscribe("~set_face_target", msg.Target)
