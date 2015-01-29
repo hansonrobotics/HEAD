@@ -4,7 +4,8 @@ from setuptools import setup, find_packages
 setup(
     name = "roscom-blender-api",
     version = "0.1",
-    packages = find_packages(),
+    package_dir = {'': 'src',},
+    packages = find_packages('src'),
     entry_points={
         'blender_api.command_source.build': 'ros = roscom:build'
     }
