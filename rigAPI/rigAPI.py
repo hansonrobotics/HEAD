@@ -20,10 +20,10 @@ class RigAPI:
 	def setEmotionState(self, emotion):
 		return None
 
+	# Gestures --------------------------------------
 	def availableGestures(self):
 		return None
 
-	# Gestures --------------------------------------
 	def getGestures(self):
 		return None
 
@@ -31,6 +31,16 @@ class RigAPI:
 		return None
 
 	def stopGesture(self, gestureID, smoothing):
+		return None
+
+	def getGestureParams(self):
+		return None
+
+	# Visemes --------------------------------------
+	def availableVisemes(self):
+		return None
+
+	def queueVisemes(self, vis, start, duration, rampin, rampout, magnitude):
 		return None
 
 	# Eye look-at targets ==========================
@@ -42,9 +52,6 @@ class RigAPI:
 		return None
 
 	def setGazeTarget(self, location):
-		return None
-
-	def setVisemes(self, vis):
 		return None
 
 	# ========== info dump for ROS

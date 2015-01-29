@@ -210,8 +210,7 @@ class AnimationManager():
 				break
 
 		if not action:
-			print('No Action mactching viseme: ', vis)
-			return False
+			raise TypeError('Visemee \"' + vis + '\" is not known')
 
 		# Check value for sanity
 		checkValue(duration, 0, 10)

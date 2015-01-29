@@ -90,6 +90,29 @@ class EvaAPI(RigAPI):
 		## TODO
 		return 0
 
+	def getGestureParams(self):
+		eva = bpy.evaAnimationManager
+		return {'eyeDartRate': round(eva.eyeDartRate, 3),
+				'eyeWander': round(eva.eyeWander, 3),
+				'blinkRate': round(eva.blinkRate, 3),
+				'blinkDuration': round(eva.blinkDuration, 3),
+				'breathRate': round(eva.breathRate, 3),
+				'breathIntensity': round(eva.breathIntensity, 3)}
+
+
+	# Visemes --------------------------------------
+	def availableVisemes(self):
+		visemes = []
+		for viseme in bpy.data.actions:
+			if viseme.name.startswith("VIS-"):
+				visemes.append(viseme.name[4:])
+		return visemes
+
+
+	def queueViseme(self, vis, start, duration, rampin, rampout, magnitude):
+		return bpy.evaAnimationManager.newViseme("VIS-"+vis, duration, \
+			rampin, rampout, start)
+
 	# Eye look-at targets ==========================
 	# The coordinate system used is head-relative, in 'engineering'
 	# coordinates: 'x' is forward, 'y' to the left, and 'z' up.
@@ -107,19 +130,6 @@ class EvaAPI(RigAPI):
 		mloc = [-loc[1],  loc[0], loc[2]]
 		bpy.evaAnimationManager.setGazeTarget(mloc)
 		return 0
-
-	def getGestureParams(self):
-		eva = bpy.evaAnimationManager
-		return {'eyeDartRate': round(eva.eyeDartRate, 3),
-				'eyeWander': round(eva.eyeWander, 3),
-				'blinkRate': round(eva.blinkRate, 3),
-				'blinkDuration': round(eva.blinkDuration, 3),
-				'breathRate': round(eva.breathRate, 3),
-				'breathIntensity': round(eva.breathIntensity, 3)}
-
-	def setVisemes(self, vis):
-		return bpy.evaAnimationManager.newViseme(vis)
-
 
 	# ========== info dump for ROS, Should return non-blender data structures
 
