@@ -26,7 +26,6 @@ class BLRigControl(bpy.types.Panel):
 	bl_region_type = 'UI'
 	bl_context = "object"
 
-
 	def draw(self, context):
 		layout = self.layout
 		obj = context.object
@@ -49,16 +48,16 @@ class BLRigControl(bpy.types.Panel):
 		col = layout.column(align=True)
 		col.label(text="Speech:")
 		row = col.row(align=True)
-		row.operator('eva.debug', text='A-I').action = 'commands.setVisemes(vis="A")'
-		row.operator('eva.debug', text='E').action = 'commands.setVisemes(vis="E")'
-		row.operator('eva.debug', text='F-V').action = 'commands.setVisemes(vis="F")'
-		row.operator('eva.debug', text='Q-W').action = 'commands.setVisemes(vis="Q")'
-		row.operator('eva.debug', text='L').action = 'commands.setVisemes(vis="L")'
+		row.operator('eva.debug', text='A-I').action = 'commands.EvaAPI().queueViseme(vis="A")'
+		row.operator('eva.debug', text='E').action = 'commands.EvaAPI().queueViseme(vis="E")'
+		row.operator('eva.debug', text='F-V').action = 'commands.EvaAPI().queueViseme(vis="F")'
+		row.operator('eva.debug', text='Q-W').action = 'commands.EvaAPI().queueViseme(vis="W-Q")'
+		row.operator('eva.debug', text='L').action = 'commands.EvaAPI().queueViseme(vis="L")'
 		row = col.row(align=True)
-		row.operator('eva.debug', text='C-D-G-K-N-TH').action = 'commands.setVisemes(vis="C")'
-		row.operator('eva.debug', text='M').action = 'commands.setVisemes(vis="M")'
-		row.operator('eva.debug', text='O').action = 'commands.setVisemes(vis="O")'
-		row.operator('eva.debug', text='U').action = 'commands.setVisemes(vis="U")'
+		row.operator('eva.debug', text='C-D-G-K-N-TH').action = 'commands.EvaAPI().queueViseme(vis="C")'
+		row.operator('eva.debug', text='M').action = 'commands.EvaAPI().queueViseme(vis="M")'
+		row.operator('eva.debug', text='O').action = 'commands.EvaAPI().queueViseme(vis="O")'
+		row.operator('eva.debug', text='U').action = 'commands.EvaAPI().queueViseme(vis="U")'
 
 		### Gestures ###
 		row = layout.row()
@@ -70,7 +69,7 @@ class BLRigControl(bpy.types.Panel):
 					row = col.row(align=True)
 
 				# row.operator("eva.gestures", text=action.name[4:]).evaAction = action.name
-				row.operator('eva.debug', text=action.name[4:]).action = 'commands.setGesture("'+ action.name[4:] +'")'
+				row.operator('eva.debug', text=action.name[4:]).action = 'commands.EvaAPI().setGesture("'+ action.name[4:] +'")'
 
 
 		###  Emotions  ###
@@ -88,17 +87,17 @@ class BLRigControl(bpy.types.Panel):
 		col.active = runningAnimation
 		# col.operator("eva.emotions", text='Set Emotions').evaEmotions = context.scene.evaEmotions
 		# col.prop(context.scene, 'evaEmotions', text='')
-		col.operator('eva.debug', text = 'Set Emotion').action =  'commands.setEmotionState("'+ context.scene.evaEmotion + '")'
+		col.operator('eva.debug', text = 'Set Emotion').action =  'commands.EvaAPI().setEmotionState("'+ context.scene.evaEmotion + '")'
 		col.prop(context.scene, 'evaEmotion', text='')
 
 
 		# row = layout.row()
 		# op = row.operator('eva.debug', text='Happy')
-		# op.action = 'commands.setEmotionStates({"happy":0.8},bpy.evaAnimationManager)'
+		# op.action = 'commands.EvaAPI().setEmotionStates({"happy":0.8},bpy.evaAnimationManager)'
 
 		# row = layout.row()
 		# op = row.operator('eva.debug', text='recoil')
-		# op.action = 'commands.setEmotionStates({"recoil":0.8},bpy.evaAnimationManager)'
+		# op.action = 'commands.EvaAPI().setEmotionStates({"recoil":0.8},bpy.evaAnimationManager)'
 
 		### Tracking ###
 		row = layout.row()
@@ -109,22 +108,22 @@ class BLRigControl(bpy.types.Panel):
 
 		# Warning: X and Y Axis are rotated to accomodate Command Lisenter
 		col = layout.column(align = True)
-		col.operator('eva.debug', text='Face Up').action = 'commands.setFaceTarget([1, 0, 0.5])'
+		col.operator('eva.debug', text='Face Up').action = 'commands.EvaAPI().setFaceTarget([1, 0, 0.5])'
 		row = col.row(align=True)
-		row.operator('eva.debug', text='Left').action = 'commands.setFaceTarget([1, -0.5, 0])'
-		row.operator('eva.debug', text='Centre').action = 'commands.setFaceTarget([1, 0,0])'
-		row.operator('eva.debug', text='Right').action = 'commands.setFaceTarget([1, 0.5, 0])'
-		col.operator('eva.debug', text='Face Down').action = 'commands.setFaceTarget([1, 0, -0.5])'
-		col.operator('eva.debug', text='Face Nil').action = 'commands.setFaceTarget([0, 0, 0])'
+		row.operator('eva.debug', text='Left').action = 'commands.EvaAPI().setFaceTarget([1, -0.5, 0])'
+		row.operator('eva.debug', text='Centre').action = 'commands.EvaAPI().setFaceTarget([1, 0,0])'
+		row.operator('eva.debug', text='Right').action = 'commands.EvaAPI().setFaceTarget([1, 0.5, 0])'
+		col.operator('eva.debug', text='Face Down').action = 'commands.EvaAPI().setFaceTarget([1, 0, -0.5])'
+		col.operator('eva.debug', text='Face Nil').action = 'commands.EvaAPI().setFaceTarget([0, 0, 0])'
 
 		col = layout.column(align = True)
-		col.operator('eva.debug', text='Gaze Up').action = 'commands.setGazeTarget([1, 0, 0.5])'
+		col.operator('eva.debug', text='Gaze Up').action = 'commands.EvaAPI().setGazeTarget([1, 0, 0.5])'
 		row = col.row(align=True)
-		row.operator('eva.debug', text='Left').action = 'commands.setGazeTarget([1, -0.5, 0])'
-		row.operator('eva.debug', text='Centre').action = 'commands.setGazeTarget([1, 0,0])'
-		row.operator('eva.debug', text='Right').action = 'commands.setGazeTarget([1, 0.5, 0])'
-		col.operator('eva.debug', text='Gaze Down').action = 'commands.setGazeTarget([1, 0, -0.5])'
-		col.operator('eva.debug', text='Gaze Nil').action = 'commands.setGazeTarget([0, 0, 0])'
+		row.operator('eva.debug', text='Left').action = 'commands.EvaAPI().setGazeTarget([1, -0.5, 0])'
+		row.operator('eva.debug', text='Centre').action = 'commands.EvaAPI().setGazeTarget([1, 0,0])'
+		row.operator('eva.debug', text='Right').action = 'commands.EvaAPI().setGazeTarget([1, 0.5, 0])'
+		col.operator('eva.debug', text='Gaze Down').action = 'commands.EvaAPI().setGazeTarget([1, 0, -0.5])'
+		col.operator('eva.debug', text='Gaze Nil').action = 'commands.EvaAPI().setGazeTarget([0, 0, 0])'
 
 		row = layout.row()
 		row.label(text="Physiological:")
@@ -142,16 +141,16 @@ class BLRigControl(bpy.types.Panel):
 		row = layout.row()
 		layout.label(text="Debug:")
 		col = layout.column(align=True)
-		col.operator('eva.debug', text='getAPIVersion()').action = 'commands.getAPIVersion()'
-		col.operator('eva.debug', text='isAlive()').action = 'commands.isAlive()'
-		col.operator('eva.debug', text='availableEmotionStates()').action = 'commands.availableEmotionStates()'
-		col.operator('eva.debug', text='availableGestures()').action = 'commands.availableGestures()'
-		col.operator('eva.debug', text='getEmotionStates()').action = 'commands.getEmotionStates()'
-		col.operator('eva.debug', text='getGestures()').action = 'commands.getGestures()'
-		col.operator('eva.debug', text='getGestureParams()').action = 'commands.getGestureParams()'
-		col.operator('eva.debug', text='getHeadData()').action = 'commands.getHeadData()'
-		col.operator('eva.debug', text='getEyesData()').action = 'commands.getEyesData()'
-		col.operator('eva.debug', text='getFaceData()').action = 'commands.getFaceData()'
+		col.operator('eva.debug', text='getAPIVersion()').action = 'commands.EvaAPI().getAPIVersion()'
+		col.operator('eva.debug', text='isAlive()').action = 'commands.EvaAPI().isAlive()'
+		col.operator('eva.debug', text='availableEmotionStates()').action = 'commands.EvaAPI().availableEmotionStates()'
+		col.operator('eva.debug', text='availableGestures()').action = 'commands.EvaAPI().availableGestures()'
+		col.operator('eva.debug', text='getEmotionStates()').action = 'commands.EvaAPI().getEmotionStates()'
+		col.operator('eva.debug', text='getGestures()').action = 'commands.EvaAPI().getGestures()'
+		col.operator('eva.debug', text='getGestureParams()').action = 'commands.EvaAPI().getGestureParams()'
+		col.operator('eva.debug', text='getHeadData()').action = 'commands.EvaAPI().getHeadData()'
+		col.operator('eva.debug', text='getEyesData()').action = 'commands.EvaAPI().getEyesData()'
+		col.operator('eva.debug', text='getFaceData()').action = 'commands.EvaAPI().getFaceData()'
 
 
 def register():

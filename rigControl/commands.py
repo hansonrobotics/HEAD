@@ -109,7 +109,8 @@ class EvaAPI(RigAPI):
 		return visemes
 
 
-	def queueViseme(self, vis, start, duration, rampin, rampout, magnitude):
+	def queueViseme(self, vis, start=0, duration=0.5, \
+			rampin=0.1, rampout=0.8, magnitude=1):
 		return bpy.evaAnimationManager.newViseme("VIS-"+vis, duration, \
 			rampin, rampout, start)
 
