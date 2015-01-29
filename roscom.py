@@ -13,14 +13,11 @@ std_msgs = soft_import('std_msgs.msg')
 msg = soft_import('blender_api_msgs.msg')
 paumsg = soft_import('pau2motors.msg')
 
-# XXX this should not be hard-coded
-from rigControl import commands
-api = commands.EvaAPI()
+api = None
 
-
-
-# This is called when the CommandListener is started.
-def build():
+# This is called by __init__.py
+# rigapi should be a (non-abstract-base-class) instance of RigAPI
+def build(rigapi):
 	if not rospy:
 		raise ImportError('ROS not found')
 		return None
@@ -31,6 +28,8 @@ def build():
 		raise ImportError('Package pau2motors not found')
 		return None
 
+	global api
+	api = rigapi
 	return RosNode()
 
 # RosNode implements the virtual class CommandSource that blender
