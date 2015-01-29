@@ -19,7 +19,7 @@ try:
 	importlib.import_module('rospy')
 	import rosrig
 
-	node = rosrig.init()
+	node = rosrig.init(commands.EvaAPI())
 	CommandListener.register_cmd_source(node)
 except ImportError:
 	print('No ROS found')
