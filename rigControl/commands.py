@@ -4,7 +4,7 @@ from  mathutils import Matrix
 from math import pi
 from collections import OrderedDict
 
-from .rigAPI import RigAPI
+from rigAPI.rigAPI import RigAPI
 
 # ====================================================
 
@@ -128,7 +128,7 @@ class EvaAPI(RigAPI):
 	# Pitch: X (positive down, negative up)?
 	# Yaw: Z (negative right to positive left)
 
-	def getHeadData():
+	def getHeadData(self):
 		bones = bpy.evaAnimationManager.deformObj.pose.bones
 		q = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
 		return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
@@ -137,7 +137,7 @@ class EvaAPI(RigAPI):
 	# Pitch: down(negative) to up(positive)
 	# Yaw: left (negative) to right(positive)
 
-	def getEyesData():
+	def getEyesData(self):
 		bones = bpy.evaAnimationManager.deformObj.pose.bones
 		head = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_euler()
 		leye = bones['eye.L'].matrix.to_euler()
@@ -153,7 +153,7 @@ class EvaAPI(RigAPI):
 		return {'l':{'p':leye_p,'y':leye_y},'r':{'p':reye_p,'y':reye_y}}
 
 
-	def getFaceData():
+	def getFaceData(self):
 		shapekeys = OrderedDict()
 		for shapekeyGroup in bpy.data.shape_keys:
 			# Hardcoded to find the correct group
