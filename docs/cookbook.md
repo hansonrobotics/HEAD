@@ -107,9 +107,11 @@ rostopic pub --once /blender_api/set_emotion_state blender_api_msgs/EmotionState
 Multiple emotions can be specified in rapid succession; these will be
 blended together.
 
+Visemes are queued, so that they run one after another, at the
+specified start times.
 ```
 rostopic pub --once /blender_api/queue_viseme blender_api_msgs/Viseme
-'{name: A-I, rampin: 0.1, rampout: 0.8, start: [2, 0], magnitude: 1.0, duration: [0, 500000000]}'
+'{name: A-I, rampin: 0.1, rampout: 0.8, start: [0, 0], magnitude: 1.0, duration: [0, 500000000]}'
 ```
 
 ##Monitoring Emotional State
