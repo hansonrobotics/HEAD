@@ -178,6 +178,20 @@ class CommandWrappers:
             print('Error: unknown gesture:', msg.name);
 
 
+    @publish_once("~available_visemes", msg.AvailableVisemes)
+    def availableVisemes():
+        return msg.AvailableVisemes(api.availableVisemes())
+
+    @subscribe("~queue_viseme", msg.Viseme)
+    def queueViseme(msg):
+        try:
+            api.queueViseme(msg.name, msg.start.to_sec(),
+                msg.duration.to_sec(),
+                msg.rampin, msg.rampout, msg.magnitude)
+        except TypeError:
+            print('Error: unknown viseme:', msg.name);
+
+
     # Location that Eva will look at and face.
     @subscribe("~set_face_target", msg.Target)
     def setFaceTarget(msg):
