@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 from flask import Flask, send_from_directory
-import reporter, json
+import json, reporter
+
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__)

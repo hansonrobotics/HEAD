@@ -15,8 +15,7 @@ Running instructions
 Application can run on any webserver, which could connect to the rosbridge websocket. Currently it is assumed that rosbridge server are on same server.
 
  1. Start rosbridge server: `roslaunch rosbridge_server rosbridge_websocket.launch`
- 2. In the root directory start python SimpleHTTPServer: `python -m SimpleHTTPServer`
- 3. By default url on same machine would be `http://127.0.0.1:8000`
+ 2. Run `./flaskserver.py`, then open [localhost:5000](http://localhost:5000).
 
 Components and ROS topics
 ----------
