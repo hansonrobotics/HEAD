@@ -1,6 +1,7 @@
 RosUI.motors = {
     init: function () {
         RosUI.motors.initMotors();
+        RosUI.motors.initEdit();
         setInterval(RosUI.motors.updateSliders, 1000);
     },
 
@@ -84,5 +85,19 @@ RosUI.motors = {
             if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
                 RosUI.motors.addSlider(motorConf[i]);
         }
+    },
+    initEdit: function() {
+        var editButton = $('#app-edit-motors-button'),
+            saveButton = $('#app-save-motors-button');
+
+        editButton.click(function() {
+            $(this).hide();
+            $(saveButton).show();
+        });
+
+        saveButton.click(function() {
+            $(this).hide();
+            $(editButton).show();
+        }).click();
     }
 };

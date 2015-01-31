@@ -88,20 +88,27 @@
     </div>
     <div id="app-page-motors" class="app-page">
         <div class="container">
-            <div class="control-stack">
-                <div id="sliderStack">
-                    <div id="sliderTemplate" class="uiBlock hidden">
-                        <p style="float:left"><b class="slNameL"></b></p>
-                        <p style="float:right"><b class="slNameR"></b></p>
+            <div class="row">
+                <div class="control-stack">
+                    <div id="sliderStack">
+                        <div id="sliderTemplate" class="uiBlock hidden">
+                            <p style="float:left"><b class="slNameL"></b></p>
+                            <p style="float:right"><b class="slNameR"></b></p>
 
-                        <p style="text-indent: 5px"><span class="slVal">0</span>° (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
-                        </p>
+                            <p style="text-indent: 5px"><span class="slVal">0</span>° (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
+                            </p>
 
-                        <div class="slider"></div>
+                            <div class="slider"></div>
+                        </div>
+
                     </div>
                 </div>
-                <!--<div class="crosshairsl"></div>-->
-                <!--<div class="expression-buttons"></div>-->
+            </div>
+            <div class="row">
+                <div id="app-edit-motors">
+                    <button id="app-edit-motors-button" class="btn btn-default">Edit Motors</button>
+                    <button id="app-save-motors-button" class="btn btn-default">Save Motors</button>
+                </div>
             </div>
         </div>
     </div>
