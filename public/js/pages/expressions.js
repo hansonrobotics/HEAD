@@ -16,8 +16,10 @@ RosUI.expressions = {
     loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
-        blenderMessage = new ROSLIB.Message({data: 'Dummy'});
-        RosUI.ros.topics.cmdBlender.publish(blenderMessage);
+        //blenderMessage = new ROSLIB.Message({data: 'Dummy'});
+        //RosUI.ros.topics.cmdBlender.publish(blenderMessage);
+
+        RosUI.api.blenderMode.disable();
 
         blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
         RosUI.ros.topics.cmdBllink.publish(blinkMessage);

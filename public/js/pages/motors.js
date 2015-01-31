@@ -4,7 +4,6 @@ RosUI.motors = {
         RosUI.motors.initEdit();
         setInterval(RosUI.motors.updateSliders, 1000);
     },
-
     loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
@@ -24,7 +23,7 @@ RosUI.motors = {
     addSlider: function (config) {
         var sliderBlock = $("#sliderTemplate").clone();
         sliderBlock.removeAttr("id"); //Removing sliderTemplate id
-        config.element = sliderBlock //Saving a reference to html element in config object
+        config.element = sliderBlock; //Saving a reference to html element in config object
         var degMin = Math.ceil(RosUI.utilities.radToDeg(config.min));
         var degMax = Math.floor(RosUI.utilities.radToDeg(config.max));
         var degVal = Math.round(RosUI.utilities.radToDeg(config.default));

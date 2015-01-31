@@ -44,6 +44,8 @@ RosUI.navigation = {
         }
     },
     reload: function () {
+        RosUI.gestures.demo.disable();
+
         switch ($('.app-change-page.active').attr('id')) {
             case 'app-expressions-link':
                 RosUI.expressions.loadPage();
@@ -56,6 +58,9 @@ RosUI.navigation = {
                 break;
             case 'app-interactions-link':
                 RosUI.interaction.loadPage();
+                break;
+            case 'app-gestures-link':
+                RosUI.gestures.loadPage();
                 break;
         }
     }

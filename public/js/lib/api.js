@@ -73,5 +73,87 @@ RosUI.api = {
         for (var i = 0; i < RosUI.ros.config.motors.length; i++) {
             this._sendMotorCommand(RosUI.ros.config.motors[i], RosUI.ros.config.motors[i].default);
         }
+    },
+
+    /**
+     * Passes a list of available gestures to success function
+     *
+     * @param success
+     */
+    getAvailableGestures: function(success) {
+        RosUI.ros.topics.available_gestures.subscribe(function (message) {
+            success(message.data);
+        });
+    },
+
+    /**
+     * Set a gesture
+     *
+     * @param name
+     * @param repeat
+     * @param speed
+     * @param magnitude
+     */
+    setGesture: function (name, repeat, speed, magnitude) {
+        if (typeof repeat == 'undefined')
+            repeat = 1;
+
+        if (typeof speed == 'undefined')
+            speed = 0.5;
+
+        if (typeof magnitude == 'undefined')
+            magnitude = 0.5;
+
+        RosUI.ros.topics.set_gesture.publish(
+            new ROSLIB.Message({
+                name: name,
+                repeat: repeat,
+                speed: speed,
+                magnitude: magnitude
+            })
+        );
+    },
+
+    /**
+     * Passes a list of available emotions to success function
+     *
+     * @param success
+     */
+    getAvailableEmotionStates: function (success) {
+        RosUI.ros.topics.available_emotion_states.subscribe(function (message) {
+            success(message.data);
+        });
+    },
+
+    /**
+     * Set an emotion, call multiple times to blend emotions together
+     *
+     * @param name
+     * @param magnitude 0..1
+     * @param duration array [seconds, nanoseconds]
+     */
+    setEmotion: function(name, magnitude, duration) {
+        if (typeof magnitude == 'undefined')
+            magnitude = 0.5;
+
+        if (typeof duration == 'undefined')
+            duration = {secs: 1, nsecs: 0};
+        RosUI.ros.topics.set_emotion_state.publish(
+            new ROSLIB.Message({
+                name: name,
+                magnitude: magnitude,
+                duration: duration
+            })
+        );
+    },
+    blenderMode: {
+        enable: function() {
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
+        },
+        disable: function() {
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/no_pau"}));
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/cmd_neck_pau"}));
+        }
     }
 };

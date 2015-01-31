@@ -92,7 +92,6 @@ RosUI.ros = {
                 name: '/cmd_animations',
                 messageType: 'std_msgs/String'
             }),
-
             neck0: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/fritz/base_controller/command',
@@ -114,15 +113,42 @@ RosUI.ros = {
               messageType: 'std_msgs/Float64'
             }),
             neck4: new ROSLIB.Topic({
-              ros: RosUI.ros.ros,
-              name: '/fritz/neck_left_controller/command',
-              messageType: 'std_msgs/Float64'
+                ros: RosUI.ros.ros,
+                name: '/fritz/neck_left_controller/command',
+                messageType: 'std_msgs/Float64'
+            }),
+            available_gestures: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/blender_api/available_gestures'
+            }),
+            available_emotion_states: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/blender_api/available_emotion_states'
+            }),
+            set_gesture: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/blender_api/set_gesture',
+                messageType: 'blender_api_msgs/SetGesture'
+            }),
+            set_emotion_state: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/blender_api/set_emotion_state',
+                messageType: 'blender_api_msgs/EmotionState'
             })
-
-        }
+        };
     },
     initServices: function () {
         RosUI.ros.services = {
+            headPauMux: new ROSLIB.Service({
+                ros: RosUI.ros.ros,
+                name: '/fritz/head_pau_mux/select',
+                serviceType: 'topic_tools/MuxSelect'
+            }),
+            neckPauMux: new ROSLIB.Service({
+                ros: RosUI.ros.ros,
+                name: '/fritz/neck_pau_mux/select',
+                serviceType: 'topic_tools/MuxSelect'
+            }),
             expressionList: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
                 name: '/valid_coupled_face_exprs',
