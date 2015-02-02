@@ -40,7 +40,7 @@ RosUI.gestures = {
         if (typeof value == "undefined")
             value = 0;
 
-        var sliderBlock = $("#app-slider-template").clone().attr('data-emotion', name);
+        var sliderBlock = $("#app-emotion-slider-template").clone().attr('data-emotion', name);
         sliderBlock.removeAttr("id"); //Removing app-slider-template id
 
         sliderBlock.find(".app-slider-label-left").text(name);
@@ -66,7 +66,7 @@ RosUI.gestures = {
         sliderBlock.appendTo("#app-emotion-sliders");
     },
     updateSlider: function (name, value) {
-        var container = $('.app-slider[data-emotion="' + name + '"]');
+        var container = $('.app-emotion-slider-container[data-emotion="' + name + '"]');
 
         $(".app-slider", container).slider("value", value).trigger('slide');
         $(".app-slider-value-container", container).text('(' + value + '%)');
@@ -93,7 +93,7 @@ RosUI.gestures = {
             }, 2000);
         },
         setRandomGesture: function() {
-            var emotionSliders = $('.app-slider[data-emotion]'),
+            var emotionSliders = $('.app-emotion-slider-container[data-emotion]'),
                 randomSlider = $(emotionSliders).get(Math.floor(Math.random() * $(emotionSliders).length));
 
             $.each(emotionSliders, function() {
