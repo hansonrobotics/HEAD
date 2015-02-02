@@ -53,9 +53,11 @@ RosUI.api = {
         RosUI.api._sendMotorCommand.apply(RosUI.api, arguments);
     }),
     _sendMotorCommand: function (confEntry, angle, speed, acc) {
-        if (!confEntry.topic || confEntry.topic == 'none')
-            return false;
         var topicParams = RosUI.ros.topics[confEntry.topic];
+
+        if (!confEntry.topic || confEntry.topic == 'none' || typeof topicParams == 'undefined')
+            return false;
+
         if (topicParams.messageType == 'std_msgs/Float64') {
             var cmd = new ROSLIB.Message({data: Math.min(Math.max(angle, confEntry.min), confEntry.max)});
         } else {
@@ -87,7 +89,6 @@ RosUI.api = {
      */
     getAvailableGestures: function (success) {
         RosUI.ros.topics.available_gestures.subscribe(function (message) {
-            console.log(message);
             success(message.data);
         });
     },

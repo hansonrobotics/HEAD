@@ -2,7 +2,7 @@ RosUI.motors = {
     init: function () {
         RosUI.motors.initMotors();
         RosUI.motors.initEdit();
-        setInterval(RosUI.motors.updateSliders, 1000);
+        //setInterval(RosUI.motors.updateSliders, 1000);
     },
     loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
@@ -24,13 +24,16 @@ RosUI.motors = {
         var sliderBlock = $("#app-slider-template").clone();
         sliderBlock.removeAttr("id"); //Removing app-slider-template id
         config.element = sliderBlock; //Saving a reference to html element in config object
+
         var degMin = Math.ceil(RosUI.utilities.radToDeg(config.min));
         var degMax = Math.floor(RosUI.utilities.radToDeg(config.max));
         var degVal = Math.round(RosUI.utilities.radToDeg(config.default));
 
         //Fill header
-        sliderBlock.find(".app-slider-label-left").text(config.labelleft || config.name);
-        sliderBlock.find(".slNameR").text(config.labelright || "");
+        var motor_name = config.labelleft || config.name;
+        sliderBlock.find(".app-slider-label-left").text(motor_name);
+        sliderBlock.find(".app-motor-name").val(motor_name);
+        sliderBlock.find(".app-slider-label-right").text(config.labelright || "");
         sliderBlock.find(".app-slider-min-value").text(degMin);
         sliderBlock.find(".app-slider-max-value").text(degMax);
         sliderBlock.find(".app-slider-value").text(degVal);
@@ -38,6 +41,7 @@ RosUI.motors = {
         //Create slider
         var slVal = sliderBlock.find(".app-slider-value");
         var slider = sliderBlock.find(".app-slider");
+
         slider.slider({
             range: "min",
             value: degVal,
@@ -66,6 +70,20 @@ RosUI.motors = {
 
         sliderBlock.removeClass("hidden");
         sliderBlock.appendTo("#app-motor-sliders");
+
+        sliderBlock.find('.app-motors-set-min').click(function () {
+            config.min = $('.app-slider', sliderBlock).slider("value");
+            $('.app-slider-min-value', sliderBlock).html(config.min);
+        });
+
+        sliderBlock.find('.app-motors-set-max').click(function () {
+            config.max = $('.app-slider', sliderBlock).slider("value");
+            $('.app-slider-max-value', sliderBlock).html(config.max);
+        });
+
+        sliderBlock.find('.app-motors-set-default').click(function () {
+            config.default = $('.app-slider', sliderBlock).slider("value");
+        });
     },
     updateSliders: function () {
         var motorConf = RosUI.ros.config.motors;
@@ -80,6 +98,8 @@ RosUI.motors = {
     },
     initMotors: function () {
         var motorConf = RosUI.ros.config.motors;
+        console.log(motorConf);
+        console.log(motorConf);
         for (var i = 0; i < motorConf.length; i++) {
             if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
                 RosUI.motors.addSlider(motorConf[i]);
@@ -87,11 +107,15 @@ RosUI.motors = {
     },
     initEdit: function() {
         var editButton = $('#app-edit-motors-button'),
-            saveButton = $('#app-save-motors-button');
+            saveButton = $('#app-save-motors-button'),
+            motorConfig = [];
 
         editButton.click(function() {
             $(this).hide();
             $(saveButton).show();
+
+            $("#app-page-motors .app-motors-show-on-edit").show();
+            $("#app-page-motors .app-motors-hide-on-edit").hide();
 
             $('#app-motor-sliders').sortable({axis: "y"});
         });
@@ -100,18 +124,94 @@ RosUI.motors = {
             $(this).hide();
             $(editButton).show();
 
+            RosUI.motors.saveMotorConfig(motorConfig);
+
+            $("#app-page-motors .app-motors-hide-on-edit").show();
+            $("#app-page-motors .app-motors-show-on-edit").hide();
+
             if ($('#app-motor-sliders').hasClass('ui-sortable'))
                 $('#app-motor-sliders').sortable("destroy");
-        }).click();
+        });
 
         RosUI.api.getMotorTopicNames(function(response) {
             response.topics = ['fake1', 'fake2'];
 
             if (typeof response.topics != 'undefined') {
                 $.each(response.topics, function() {
+                    var config = {
+                        name: "",
+                        topic: this,
+                        motor_id: "",
+                        min: -3.141593,
+                        max: 3.141593,
+                        default: 0
+                    };
 
+                    var duplicate = false;
+                    $.each(RosUI.ros.config.motors, function () {
+                        if (this.topic == config.topic)
+                            duplicate = true;
+                    });
+
+                    if (! duplicate) {
+                        RosUI.motors.addSlider(config, true);
+                        motorConfig.push(config);
+
+                        var slider = config.element;
+                        $(slider).addClass("app-motors-show-on-edit");
+                    }
                 });
             }
         });
+    },
+    saveMotorConfig: function(newMotorsConfig) {
+        var config = [];
+        $('#app-motor-sliders .app-slider:not(#app-slider-template)').each(function() {
+            var container = $(this).closest('.app-slider-container'),
+                slider = this,
+                found = false;
+
+            if ($('.app-motor-name', container).val().trim() == "")
+                return;
+
+            $.each(RosUI.ros.config.motors, function() {
+                if (this.element.get(0) == container.get(0)) {
+                    config.push(jQuery.extend({}, this));
+                    found = true;
+                }
+            });
+
+            $.each(newMotorsConfig, function() {
+                if (this.element.get(0) == container.get(0)) {
+                    config.push(jQuery.extend({}, this));
+                    found = true;
+                }
+            });
+
+            if (found) {
+                var i = config.length - 1;
+                config[i].labelleft = $('.app-motor-name', container).val();
+                delete config[i].element;
+                delete config[i].isActive;
+            }
+        });
+
+        $.ajax("/motors/update_config", {
+            data: JSON.stringify(config),
+            type: 'POST',
+            dataType: "json",
+            success: function(response) {
+                if (response) {
+                    RosUI.ros.loadMotorConfig(function() {
+                        RosUI.motors.destroySliders();
+                        RosUI.motors.initMotors();
+                        RosUI.motors.initEdit();
+                    })
+                }
+            }
+        });
+    },
+    destroySliders: function() {
+        $('#app-motor-sliders li:not(#app-slider-template)').hide().remove();
     }
 };

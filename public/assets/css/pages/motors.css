@@ -1,11 +1,15 @@
-.app-slider {
+.app-slider-container {
     margin: 5px 0;
     padding: 5px 0;
     list-style: none;
 }
 
-.app-slider p {
+.app-slider-container p {
     margin-bottom: 5px;
+}
+
+.app-slider {
+    margin: 5px 0;
 }
 
 @media screen and (min-width: 590px) {
@@ -69,4 +73,13 @@
 
 .app-slider-value-container {
     text-indent: 5px;
+}
+
+.app-motors-show-on-edit {
+    display: none;
+}
+
+.app-motor-name {
+    padding: 2px 8px;
+    height: 21px;
 }

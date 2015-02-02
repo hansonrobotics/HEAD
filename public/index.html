@@ -41,7 +41,6 @@
             <a class="navbar-brand" href="#">
                 <img id="logo" class="pull-left" src="assets/img/H.png" alt=""/>
                 <span id="app-title"></span>
-
             </a>
 
             <span id="notifications" class="pull-left">
@@ -93,20 +92,44 @@
             <div class="row">
                 <div class="control-stack">
                     <ul id="app-motor-sliders">
-                        <li id="app-slider-template" class="app-slider hidden">
-                            <p class="pull-left"><b class="app-slider-label-left"></b></p>
-                            <p class="pull-right"><b class="app-slider-label-right"></b></p>
+                        <li id="app-slider-template" class="app-slider-container hidden">
+                            <div class="app-motors-hide-on-edit">
+                                <div class="pull-left">
+                                    <b class="app-slider-label-left"></b>
+                                </div>
 
-                            <p class="app-slider-value-container"><span class="app-slider-value">0</span>° (<span class="app-slider-min-value">-90</span>° to <span class="app-slider-max-value">90</span>°)</p>
+                                <div class="pull-right">
+                                    <b class="app-slider-label-right"></b>
+                                </div>
+                            </div>
+
+                            <div class="app-motors-show-on-edit">
+                                <div class="pull-left">
+                                    <input class="app-motor-name form-control" type="text"/>
+                                </div>
+                            </div>
+
+                            <div class="app-slider-value-container"><span class="app-slider-value">0</span>° (<span class="app-slider-min-value">-90</span>° to <span class="app-slider-max-value">90</span>°)</div>
+
+                            <div class="clearfix"></div>
+
                             <div class="app-slider"></div>
+
+                            <div class="app-motors-show-on-edit">
+                                <button class="app-motors-set-min btn btn-default">Set Min</button>
+                                <button class="app-motors-set-max btn btn-default">Set Max</button>
+                                <button class="app-motors-set-default btn btn-default">Set Default</button>
+                            </div>
+
+                            <hr class="app-motors-show-on-edit"/>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div id="app-edit-motors">
-                    <button id="app-edit-motors-button" class="btn btn-default">Edit Motors</button>
-                    <button id="app-save-motors-button" class="btn btn-default">Save Motors</button>
+                    <button id="app-edit-motors-button" class="app-motors-hide-on-edit btn btn-default">Edit</button>
+                    <button id="app-save-motors-button" class="app-motors-show-on-edit btn btn-default">Save</button>
                 </div>
             </div>
         </div>

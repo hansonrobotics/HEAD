@@ -4,13 +4,19 @@ RosUI.ros = {
     },
     topics: {},
     init: function (success) {
+        RosUI.ros.loadMotorConfig(function() {
+            RosUI.ros.connect(success);
+        });
+    },
+    loadMotorConfig: function(success) {
         $.ajax({
             url: "motors.yml",
             dataType: "text",
+            cache: false,
 
             success: function (data) {
                 RosUI.ros.config.motors = jsyaml.load(data);
-                RosUI.ros.connect(success);
+                success();
             }
         });
     },
@@ -86,7 +92,6 @@ RosUI.ros = {
                 name: '/fritz/right/command',
                 messageType: 'ros_pololu_servo/MotorCommand'
             }),
-
             animations: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/cmd_animations',

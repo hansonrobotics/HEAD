@@ -1,7 +1,10 @@
 #!/usr/bin/python3
+import os
 
-from flask import Flask, send_from_directory
-import json, reporter
+from flask import Flask, send_from_directory, request
+import json
+import reporter
+import yaml
 
 json_encode = json.JSONEncoder().encode
 
@@ -23,6 +26,25 @@ def send_public(filename):
 @app.route('/motors/get_topic_names')
 def get_motor_topic_names():
     return json_encode(rep.get_motor_topic_names())
+
+@app.route('/motors/update_config', methods=['POST'])
+def update_motor_config():
+    data = json.loads(request.get_data().decode('utf8'))
+    filename = 'public/motors.yml'
+
+    # delete existing config
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
+
+    # write new config
+    f = open(filename, 'w')
+    f.write(yaml.dump(data))
+    f.close()
+
+    # return True
+    return json_encode(True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, use_reloader=False)
