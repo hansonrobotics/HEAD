@@ -41,7 +41,7 @@ RosUI.api = {
             })
         );
     },
-    sendChatMessage: function(text) {
+    sendChatMessage: function (text) {
         var message = new ROSLIB.Message({
             utterance: text,
             confidence: Math.round(0.9 * 100)
@@ -62,8 +62,8 @@ RosUI.api = {
             var cmd = new ROSLIB.Message({
                 joint_name: confEntry.name,
                 position: Math.min(Math.max(angle, confEntry.min), confEntry.max),
-                speed: (speed || confEntry.speed || 100)/255,
-                acceleration: (acc || confEntry.acceleration || 50)/255
+                speed: (speed || confEntry.speed || 100) / 255,
+                acceleration: (acc || confEntry.acceleration || 50) / 255
             });
 
         }
@@ -74,14 +74,20 @@ RosUI.api = {
             this._sendMotorCommand(RosUI.ros.config.motors[i], RosUI.ros.config.motors[i].default);
         }
     },
-
+    getMotorTopicNames: function (success) {
+        $.ajax("/motors/get_topic_names", {
+            success: success,
+            dataType: "json"
+        });
+    },
     /**
      * Passes a list of available gestures to success function
      *
      * @param success
      */
-    getAvailableGestures: function(success) {
+    getAvailableGestures: function (success) {
         RosUI.ros.topics.available_gestures.subscribe(function (message) {
+            console.log(message);
             success(message.data);
         });
     },
@@ -132,7 +138,7 @@ RosUI.api = {
      * @param magnitude 0..1
      * @param duration array [seconds, nanoseconds]
      */
-    setEmotion: function(name, magnitude, duration) {
+    setEmotion: function (name, magnitude, duration) {
         if (typeof magnitude == 'undefined')
             magnitude = 0.5;
 
@@ -147,11 +153,11 @@ RosUI.api = {
         );
     },
     blenderMode: {
-        enable: function() {
+        enable: function () {
             RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
             RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
         },
-        disable: function() {
+        disable: function () {
             RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/no_pau"}));
             RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/cmd_neck_pau"}));
         }
