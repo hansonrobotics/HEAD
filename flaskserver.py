@@ -20,5 +20,9 @@ def send_index():
 def send_public(filename):
     return send_from_directory('public', filename)
 
+@app.route('/motors/get_topic_names')
+def get_motor_topic_names():
+    return json_encode(rep.get_motor_topic_names())
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, use_reloader=False)

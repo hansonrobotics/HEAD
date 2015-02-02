@@ -1,5 +1,6 @@
 import yaml
-from subprocess import call, check_output, DEVNULL
+import json
+from subprocess import Popen, PIPE, call, check_output, DEVNULL
 
 class Reporter:
     """
@@ -40,6 +41,22 @@ class Reporter:
         # Return a copy of self.config['checks'] with a new parameter 'success'
         return [dict(list(check.items()) + [('success', success)])
                 for check, success in zip(self.config['checks'], statuslist)]
+
+    def get_motor_topic_names(self):
+        # ros_pololu_servo/command
+        cmd = ["rosservice", "call", "rosapi/topics_for_type",  "\"type: 'ros_pololu_servo/command'\""]
+
+        p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        output, err = p.communicate()
+        status = p.returncode
+
+        output = output.strip().decode('utf-8').replace("topics", '"topics"')
+        output = "{" + output + "}"
+
+        if status == 0:
+            return json.loads(output)
+        else:
+            return {"topics": [], "error": err}
 
     @staticmethod
     def check(cmd, env=None):
