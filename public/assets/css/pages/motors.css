@@ -1,9 +1,10 @@
-.uiBlock {
+.app-slider {
     margin: 5px 0;
     padding: 5px 0;
+    list-style: none;
 }
 
-.uiBlock p {
+.app-slider p {
     margin-bottom: 5px;
 }
 
@@ -12,7 +13,7 @@
         width: 590px;
     }
 
-    #sliderStack {
+    #app-motor-sliders {
         width: 380px;
         float: left;
     }
@@ -54,4 +55,18 @@
 
 .ui-slider {
     height: 20px;
+}
+
+#app-motor-sliders {
+    padding: 0;
+    max-resolution: 0;
+    list-style: none;
+}
+
+#app-edit-motors {
+    margin-bottom: 20px;
+}
+
+.app-slider-value-container {
+    text-indent: 5px;
 }

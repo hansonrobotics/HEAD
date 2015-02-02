@@ -92,15 +92,15 @@
         <div class="container">
             <div class="row">
                 <div class="control-stack">
-                    <div id="sliderStack">
-                        <div id="sliderTemplate" class="uiBlock hidden">
-                            <p style="float:left"><b class="slNameL"></b></p>
-                            <p style="float:right"><b class="slNameR"></b></p>
+                    <ul id="app-motor-sliders">
+                        <li id="app-slider-template" class="app-slider hidden">
+                            <p class="pull-left"><b class="app-slider-label-left"></b></p>
+                            <p class="pull-right"><b class="app-slider-label-right"></b></p>
 
-                            <p class="app-value" style="text-indent: 5px"><span class="slVal">0</span>° (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)</p>
-                            <div class="slider"></div>
-                        </div>
-                    </div>
+                            <p class="app-slider-value-container"><span class="app-slider-value">0</span>° (<span class="app-slider-min-value">-90</span>° to <span class="app-slider-max-value">90</span>°)</p>
+                            <div class="app-slider"></div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row">
@@ -181,7 +181,7 @@
                 <div class="col-md-12">
                     <h4>Emotions: </h4>
 
-                    <div id="app-emotion-sliders"></div>
+                    <ul id="app-emotion-sliders"></ul>
                 </div>
             </div>
         </div>

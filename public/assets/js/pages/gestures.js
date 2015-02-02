@@ -40,14 +40,14 @@ RosUI.gestures = {
         if (typeof value == "undefined")
             value = 0;
 
-        var sliderBlock = $("#sliderTemplate").clone().attr('data-emotion', name);
-        sliderBlock.removeAttr("id"); //Removing sliderTemplate id
+        var sliderBlock = $("#app-slider-template").clone().attr('data-emotion', name);
+        sliderBlock.removeAttr("id"); //Removing app-slider-template id
 
-        sliderBlock.find(".slNameL").text(name);
-        $(".app-value", sliderBlock).html("(" + value + "%)");
+        sliderBlock.find(".app-slider-label-left").text(name);
+        $(".app-slider-value-container", sliderBlock).html("(" + value + "%)");
 
         //Create slider
-        var slider = sliderBlock.find(".slider");
+        var slider = sliderBlock.find(".app-slider");
         slider.slider({
             range: "min",
             value: 0,
@@ -55,7 +55,7 @@ RosUI.gestures = {
             max: 100,
             change: (function () {
                 return function (e, ui) {
-                    $('.app-value', sliderBlock).html("(" + ui.value + "%)");
+                    $('.app-slider-value-container', sliderBlock).html("(" + ui.value + "%)");
 
                     RosUI.api.setEmotion(name, ui.value / 100);
                 }
@@ -66,10 +66,10 @@ RosUI.gestures = {
         sliderBlock.appendTo("#app-emotion-sliders");
     },
     updateSlider: function (name, value) {
-        var container = $('.uiBlock[data-emotion="' + name + '"]');
+        var container = $('.app-slider[data-emotion="' + name + '"]');
 
-        $(".slider", container).slider("value", value).trigger('slide');
-        $(".app-value", container).text('(' + value + '%)');
+        $(".app-slider", container).slider("value", value).trigger('slide');
+        $(".app-slider-value-container", container).text('(' + value + '%)');
     },
     demo: {
         init: function() {
@@ -93,7 +93,7 @@ RosUI.gestures = {
             }, 2000);
         },
         setRandomGesture: function() {
-            var emotionSliders = $('.uiBlock[data-emotion]'),
+            var emotionSliders = $('.app-slider[data-emotion]'),
                 randomSlider = $(emotionSliders).get(Math.floor(Math.random() * $(emotionSliders).length));
 
             $.each(emotionSliders, function() {
