@@ -91,3 +91,19 @@
 .app-slider-container .app-motor-info {
     margin-bottom: 5px;
 }
+
+.app-motor-drag-handle {
+    cursor: move;
+    display: none;
+}
+
+#app-motor-sliders .ui-state-highlight {
+    height: 132px;
+    padding: 5px;
+    background: #4e5d6c;
+    border: solid 1px #df691a;
+}
+
+#app-edit-motors-button {
+    display: none;
+}

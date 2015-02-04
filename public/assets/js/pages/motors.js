@@ -125,17 +125,24 @@ RosUI.motors = {
             $(".app-editable-motor.app-motors-show-on-edit, .app-editable-motor .app-motors-show-on-edit", $('#app-page-motors')).show();
             $(".app-editable-motor.app-motors-hide-on-edit, .app-editable-motor .app-motors-hide-on-edit", $('#app-page-motors')).hide();
 
-            $('#app-motor-sliders').sortable({axis: "y"});
+            $('.app-motor-drag-handle').show();
+
+            $('#app-motor-sliders').sortable({
+                axis: "y",
+                handle: ".app-motor-drag-handle",
+                placeholder: "ui-state-highlight"
+            });
         });
 
         saveButton.click(function() {
             $(this).hide();
-            $(editButton).show();
 
             RosUI.motors.saveMotorConfig(motorConfig);
 
             $(".app-editable-motor.app-motors-hide-on-edit, .app-editable-motor .app-motors-hide-on-edit", $('#app-page-motors')).show();
             $(".app-editable-motor.app-motors-show-on-edit, .app-editable-motor .app-motors-show-on-edit", $('#app-page-motors')).hide();
+
+            $('.app-motor-drag-handle').hide();
 
             if ($('#app-motor-sliders').hasClass('ui-sortable'))
                 $('#app-motor-sliders').sortable("destroy");
@@ -168,6 +175,8 @@ RosUI.motors = {
 
                     motorConfig.push(config);
                 }
+
+                $(editButton).fadeIn();
             });
         });
     },
