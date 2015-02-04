@@ -75,7 +75,7 @@ RosUI.motors = {
             sliderBlock.addClass('app-editable-motor');
 
             $('.app-motor-topic-name', sliderBlock).html(config.topic);
-            $('.app-motor-id', sliderBlock).html(config.motor_id);
+            $('.app-motor-id', sliderBlock).html(config.name);
 
             sliderBlock.find('.app-motors-set-min').click(function () {
                 var deg = $('.app-slider', sliderBlock).slider("value");
@@ -173,28 +173,27 @@ RosUI.motors = {
     },
     saveMotorConfig: function(newMotorsConfig) {
         var config = [];
-        $('#app-motor-sliders .app-slider-container.app-editable-motor').each(function() {
+        $('#app-motor-sliders .app-slider-container:not(#app-slider-template)').each(function() {
             var container = this,
-                slider = $('.app-slider', this),
-                found = false;
+                slider = $('.app-slider', this);
 
             if ($('.app-motor-name', container).val().trim() == "")
                 return;
 
-            $.each(newMotorsConfig, function() {
+            $.each(newMotorsConfig.concat(RosUI.ros.config.motors), function() {
                 if (this.element.get(0) == container) {
-                    config.push(jQuery.extend({}, this));
-                    found = true;
+                    var i = config.length;
+
+                    config.push($.extend({}, this));
+                    config[i].labelleft = $('.app-motor-name', container).val();
+
+                    delete config[i].element;
+                    delete config[i].isActive;
+
+                    // break each
+                    return false;
                 }
             });
-
-            if (found) {
-                var i = config.length - 1;
-                config[i].labelleft = $('.app-motor-name', container).val();
-                delete config[i].element;
-                delete config[i].isActive;
-                delete config[i].editable;
-            }
         });
 
         $.ajax("/motors/update_config", {
