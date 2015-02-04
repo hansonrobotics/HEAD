@@ -83,3 +83,11 @@
     padding: 2px 8px;
     height: 21px;
 }
+
+.app-slider-container hr {
+    margin: 0 0 5px;
+}
+
+.app-slider-container .app-motor-info {
+    margin-bottom: 5px;
+}

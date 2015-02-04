@@ -20,7 +20,9 @@ RosUI.motors = {
         RosUI.api.pointHead({yaw: 0, pitch: 0, roll: 0});
 
     },
-    addSlider: function (config) {
+    addSlider: function (config, editable) {
+        if (typeof editable == 'undefined') editable = false;
+
         var sliderBlock = $("#app-slider-template").clone();
         sliderBlock.removeAttr("id"); //Removing app-slider-template id
         config.element = sliderBlock; //Saving a reference to html element in config object
@@ -71,19 +73,26 @@ RosUI.motors = {
         sliderBlock.removeClass("hidden");
         sliderBlock.appendTo("#app-motor-sliders");
 
-        sliderBlock.find('.app-motors-set-min').click(function () {
-            config.min = $('.app-slider', sliderBlock).slider("value");
-            $('.app-slider-min-value', sliderBlock).html(config.min);
-        });
+        if (editable) {
+            sliderBlock.addClass('app-editable-motor');
 
-        sliderBlock.find('.app-motors-set-max').click(function () {
-            config.max = $('.app-slider', sliderBlock).slider("value");
-            $('.app-slider-max-value', sliderBlock).html(config.max);
-        });
+            $('.app-motor-topic-name', sliderBlock).html(config.topic);
+            $('.app-motor-id', sliderBlock).html(config.motor_id);
 
-        sliderBlock.find('.app-motors-set-default').click(function () {
-            config.default = $('.app-slider', sliderBlock).slider("value");
-        });
+            sliderBlock.find('.app-motors-set-min').click(function () {
+                config.min = $('.app-slider', sliderBlock).slider("value");
+                $('.app-slider-min-value', sliderBlock).html(config.min);
+            });
+
+            sliderBlock.find('.app-motors-set-max').click(function () {
+                config.max = $('.app-slider', sliderBlock).slider("value");
+                $('.app-slider-max-value', sliderBlock).html(config.max);
+            });
+
+            sliderBlock.find('.app-motors-set-default').click(function () {
+                config.default = $('.app-slider', sliderBlock).slider("value");
+            });
+        }
     },
     updateSliders: function () {
         var motorConf = RosUI.ros.config.motors;
@@ -114,8 +123,8 @@ RosUI.motors = {
             $(this).hide();
             $(saveButton).show();
 
-            $("#app-page-motors .app-motors-show-on-edit").show();
-            $("#app-page-motors .app-motors-hide-on-edit").hide();
+            $(".app-editable-motor.app-motors-show-on-edit, .app-editable-motor .app-motors-show-on-edit", $('#app-page-motors')).show();
+            $(".app-editable-motor.app-motors-hide-on-edit, .app-editable-motor .app-motors-hide-on-edit", $('#app-page-motors')).hide();
 
             $('#app-motor-sliders').sortable({axis: "y"});
         });
@@ -126,39 +135,41 @@ RosUI.motors = {
 
             RosUI.motors.saveMotorConfig(motorConfig);
 
-            $("#app-page-motors .app-motors-hide-on-edit").show();
-            $("#app-page-motors .app-motors-show-on-edit").hide();
+            $(".app-editable-motor.app-motors-hide-on-edit, .app-editable-motor .app-motors-hide-on-edit", $('#app-page-motors')).show();
+            $(".app-editable-motor.app-motors-show-on-edit, .app-editable-motor .app-motors-show-on-edit", $('#app-page-motors')).hide();
 
             if ($('#app-motor-sliders').hasClass('ui-sortable'))
                 $('#app-motor-sliders').sortable("destroy");
         });
 
         RosUI.api.getMotorTopicNames(function(response) {
-            response.topics = ['fake1', 'fake2'];
+            response.topics = ['fake1'];
 
             if (typeof response.topics != 'undefined') {
                 $.each(response.topics, function() {
-                    var config = {
-                        name: "",
-                        topic: this,
-                        motor_id: "",
-                        min: -3.141593,
-                        max: 3.141593,
-                        default: 0
-                    };
+                    for (var i = 0; i < 24; i++) {
+                        var config = {
+                            name: "",
+                            topic: this,
+                            motor_id: i,
+                            min: -1.5707965,
+                            max: 1.5707965,
+                            default: 0
+                        };
 
-                    var duplicate = false;
-                    $.each(RosUI.ros.config.motors, function () {
-                        if (this.topic == config.topic)
-                            duplicate = true;
-                    });
+                        var duplicate = false;
+                        $.each(RosUI.ros.config.motors, function () {
+                            if (this.topic == config.topic && this.motor_id == config.motor_id)
+                                duplicate = true;
+                        });
 
-                    if (! duplicate) {
-                        RosUI.motors.addSlider(config, true);
-                        motorConfig.push(config);
+                        if (! duplicate) {
+                            RosUI.motors.addSlider(config, true);
+                            motorConfig.push(config);
 
-                        var slider = config.element;
-                        $(slider).addClass("app-motors-show-on-edit");
+                            var slider = config.element;
+                            $(slider).addClass("app-motors-show-on-edit");
+                        }
                     }
                 });
             }
