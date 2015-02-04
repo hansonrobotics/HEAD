@@ -30,7 +30,7 @@ def get_motor_topic_names():
 @app.route('/motors/update_config', methods=['POST'])
 def update_motor_config():
     data = json.loads(request.get_data().decode('utf8'))
-    filename = 'public/motors.yml'
+    filename = 'public/config/pololu_motors.yml'
 
     # delete existing config
     try:

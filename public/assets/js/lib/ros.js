@@ -9,15 +9,40 @@ RosUI.ros = {
         });
     },
     loadMotorConfig: function(success) {
-        $.ajax({
-            url: "motors.yml",
+        var motorConfig = $.ajax({
+            url: "config/motors.yml",
             dataType: "text",
-            cache: false,
+            cache: false
+        });
 
-            success: function (data) {
-                RosUI.ros.config.motors = jsyaml.load(data);
-                success();
+        var pololuMotorConfig = $.ajax({
+            url: "config/pololu_motors.yml",
+            dataType: "text",
+            cache: false
+        });
+
+        $.when(motorConfig, pololuMotorConfig).done(function(motorsResponse, pololuMotorsResponse) {
+            console.log(motorsResponse);
+            console.log(pololuMotorsResponse);
+
+            var motorsConfig = jsyaml.load(motorsResponse[0]);
+            var pololuMotorsConfig = jsyaml.load(pololuMotorsResponse[0]);
+
+            RosUI.ros.config.motors = [];
+
+            if (motorsConfig != null)
+                RosUI.ros.config.motors = RosUI.ros.config.motors.concat(motorsConfig);
+
+            // allow editing for pololu motors
+            if (pololuMotorsConfig != null) {
+                $.each(pololuMotorsConfig, function () {
+                    this.editable = true;
+                });
+
+                RosUI.ros.config.motors = RosUI.ros.config.motors.concat(pololuMotorsConfig);
             }
+
+            success();
         });
     },
     connect: function (success) {

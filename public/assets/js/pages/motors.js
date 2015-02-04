@@ -20,9 +20,7 @@ RosUI.motors = {
         RosUI.api.pointHead({yaw: 0, pitch: 0, roll: 0});
 
     },
-    addSlider: function (config, editable) {
-        if (typeof editable == 'undefined') editable = false;
-
+    addSlider: function (config) {
         var sliderBlock = $("#app-slider-template").clone();
         sliderBlock.removeAttr("id"); //Removing app-slider-template id
         config.element = sliderBlock; //Saving a reference to html element in config object
@@ -73,24 +71,26 @@ RosUI.motors = {
         sliderBlock.removeClass("hidden");
         sliderBlock.appendTo("#app-motor-sliders");
 
-        if (editable) {
+        if (typeof config.editable != 'undefined' && config.editable == true) {
             sliderBlock.addClass('app-editable-motor');
 
             $('.app-motor-topic-name', sliderBlock).html(config.topic);
             $('.app-motor-id', sliderBlock).html(config.motor_id);
 
             sliderBlock.find('.app-motors-set-min').click(function () {
-                config.min = $('.app-slider', sliderBlock).slider("value");
-                $('.app-slider-min-value', sliderBlock).html(config.min);
+                var deg = $('.app-slider', sliderBlock).slider("value");
+                config.min = RosUI.utilities.degToRad(deg);
+                $('.app-slider-min-value', sliderBlock).html(deg);
             });
 
             sliderBlock.find('.app-motors-set-max').click(function () {
-                config.max = $('.app-slider', sliderBlock).slider("value");
-                $('.app-slider-max-value', sliderBlock).html(config.max);
+                var deg = $('.app-slider', sliderBlock).slider("value");
+                config.max = RosUI.utilities.degToRad(deg);
+                $('.app-slider-max-value', sliderBlock).html(deg);
             });
 
             sliderBlock.find('.app-motors-set-default').click(function () {
-                config.default = $('.app-slider', sliderBlock).slider("value");
+                config.default = RosUI.utilities.degToRad($('.app-slider', sliderBlock).slider("value"));
             });
         }
     },
@@ -107,8 +107,7 @@ RosUI.motors = {
     },
     initMotors: function () {
         var motorConf = RosUI.ros.config.motors;
-        console.log(motorConf);
-        console.log(motorConf);
+
         for (var i = 0; i < motorConf.length; i++) {
             if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
                 RosUI.motors.addSlider(motorConf[i]);
@@ -154,22 +153,24 @@ RosUI.motors = {
                             motor_id: i,
                             min: -1.5707965,
                             max: 1.5707965,
-                            default: 0
+                            default: 0,
+                            editable: true
                         };
 
                         var duplicate = false;
                         $.each(RosUI.ros.config.motors, function () {
-                            if (this.topic == config.topic && this.motor_id == config.motor_id)
+                            if (this.topic == config.topic && this.motor_id == config.motor_id) {
                                 duplicate = true;
+                                config = this;
+                            }
                         });
 
                         if (! duplicate) {
-                            RosUI.motors.addSlider(config, true);
-                            motorConfig.push(config);
-
-                            var slider = config.element;
-                            $(slider).addClass("app-motors-show-on-edit");
+                            RosUI.motors.addSlider(config);
+                            $(config.element).addClass("app-motors-show-on-edit");
                         }
+
+                        motorConfig.push(config);
                     }
                 });
             }
@@ -177,23 +178,16 @@ RosUI.motors = {
     },
     saveMotorConfig: function(newMotorsConfig) {
         var config = [];
-        $('#app-motor-sliders .app-slider:not(#app-slider-template)').each(function() {
-            var container = $(this).closest('.app-slider-container'),
-                slider = this,
+        $('#app-motor-sliders .app-slider-container.app-editable-motor').each(function() {
+            var container = this,
+                slider = $('.app-slider', this),
                 found = false;
 
             if ($('.app-motor-name', container).val().trim() == "")
                 return;
 
-            $.each(RosUI.ros.config.motors, function() {
-                if (this.element.get(0) == container.get(0)) {
-                    config.push(jQuery.extend({}, this));
-                    found = true;
-                }
-            });
-
             $.each(newMotorsConfig, function() {
-                if (this.element.get(0) == container.get(0)) {
+                if (this.element.get(0) == container) {
                     config.push(jQuery.extend({}, this));
                     found = true;
                 }
@@ -204,6 +198,7 @@ RosUI.motors = {
                 config[i].labelleft = $('.app-motor-name', container).val();
                 delete config[i].element;
                 delete config[i].isActive;
+                delete config[i].editable;
             }
         });
 
