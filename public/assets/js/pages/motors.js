@@ -30,7 +30,7 @@ RosUI.motors = {
         var degVal = Math.round(RosUI.utilities.radToDeg(config.default));
 
         //Fill header
-        var motor_name = config.labelleft || config.name;
+        var motor_name = config.labelleft;
         sliderBlock.find(".app-slider-label-left").text(motor_name);
         sliderBlock.find(".app-motor-name").val(motor_name);
         sliderBlock.find(".app-slider-label-right").text(config.labelright || "");
@@ -141,39 +141,34 @@ RosUI.motors = {
                 $('#app-motor-sliders').sortable("destroy");
         });
 
-        RosUI.api.getMotorTopicNames(function(response) {
-            response.topics = ['fake1'];
+        RosUI.api.getPololuMotorTopics(function(topics) {
+            $.each(topics, function() {
+                for (var i = 0; i < 24; i++) {
+                    var config = {
+                        name: i,
+                        topic: this,
+                        min: - Math.PI / 2,
+                        max: Math.PI / 2,
+                        default: 0,
+                        editable: true
+                    };
 
-            if (typeof response.topics != 'undefined') {
-                $.each(response.topics, function() {
-                    for (var i = 0; i < 24; i++) {
-                        var config = {
-                            name: "",
-                            topic: this,
-                            motor_id: i,
-                            min: -1.5707965,
-                            max: 1.5707965,
-                            default: 0,
-                            editable: true
-                        };
-
-                        var duplicate = false;
-                        $.each(RosUI.ros.config.motors, function () {
-                            if (this.topic == config.topic && this.motor_id == config.motor_id) {
-                                duplicate = true;
-                                config = this;
-                            }
-                        });
-
-                        if (! duplicate) {
-                            RosUI.motors.addSlider(config);
-                            $(config.element).addClass("app-motors-show-on-edit");
+                    var duplicate = false;
+                    $.each(RosUI.ros.config.motors, function () {
+                        if (this.topic == config.topic && this.name == config.name) {
+                            duplicate = true;
+                            config = this;
                         }
+                    });
 
-                        motorConfig.push(config);
+                    if (! duplicate) {
+                        RosUI.motors.addSlider(config);
+                        $(config.element).addClass("app-motors-show-on-edit");
                     }
-                });
-            }
+
+                    motorConfig.push(config);
+                }
+            });
         });
     },
     saveMotorConfig: function(newMotorsConfig) {

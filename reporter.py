@@ -44,7 +44,7 @@ class Reporter:
 
     def get_motor_topic_names(self):
         # ros_pololu_servo/command
-        cmd = ["rosservice", "call", "rosapi/topics_for_type",  "\"type: 'ros_pololu_servo/command'\""]
+        cmd = ["rosservice", "call", "rosapi/topics_for_type",  "\"type: 'ros_pololu_servo/MotorCommand'\""]
 
         p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         output, err = p.communicate()

@@ -67,7 +67,6 @@ RosUI.api = {
                 speed: (speed || confEntry.speed || 100) / 255,
                 acceleration: (acc || confEntry.acceleration || 50) / 255
             });
-
         }
         RosUI.ros.topics[confEntry.topic].publish(cmd);
     },
@@ -76,9 +75,26 @@ RosUI.api = {
             this._sendMotorCommand(RosUI.ros.config.motors[i], RosUI.ros.config.motors[i].default);
         }
     },
-    getMotorTopicNames: function (success) {
+    getPololuMotorTopics: function (success) {
         $.ajax("/motors/get_topic_names", {
-            success: success,
+            success: function(response) {
+                var topics = [];
+
+                if (typeof response.topics != 'undefined')
+                    topics = response.topics;
+
+                // register topics if not registered
+                $.each(topics, function() {
+                    if (typeof RosUI.ros.topics[this] == 'undefined')
+                        RosUI.ros.topics[this] = new ROSLIB.Topic({
+                            ros: RosUI.ros.ros,
+                            name: this,
+                            messageType: 'ros_pololu_servo/MotorCommand'
+                        });
+                });
+
+                success(topics);
+            },
             dataType: "json"
         });
     },
