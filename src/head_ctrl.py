@@ -14,6 +14,7 @@ import Utils
 from Blinker import Blinker
 from Blinker import RandomTimer
 from std_msgs.msg import String
+from std_msgs.msg import Float64
 from threading import Timer
 import copy
 
@@ -95,8 +96,12 @@ class SpecificRobotCtrl:
     for cmd in self.faces[exprname].new_msgs(intensity):
       self.blinker.log(copy.deepcopy(cmd))
       (cmd.joint_name, pubid) = cmd.joint_name.split('@')
-      rospy.loginfo("Pub id: %s", pubid) 
-      self.publishers[pubid].publish(cmd)
+      rospy.loginfo("Pub id: %s", pubid)
+      # Dynamixel commands only sends position
+      if self.publishers[pubid].type == 'std_msgs/Float64':
+        self.publishers[pubid].publish({'data': cmd.position})
+      else:
+        self.publishers[pubid].publish(cmd)
 
   def blink(self):
     def close_lids():
@@ -143,7 +148,7 @@ class HeadCtrl:
     """
     robotctrl = self.robot_controllers.get(robotname)
     if robotctrl == None:
-      robotctrl = SpecificRobotCtrl(robotname, self.pub_pololu)
+      robotctrl = SpecificRobotCtrl(robotname, self.publishers)
       self.robot_controllers[robotname] = robotctrl
     return robotctrl
 
@@ -181,9 +186,17 @@ class HeadCtrl:
     rospy.Subscriber("point_head", PointHead, self.pau_ctrl.point_head)
 
     # Topics and services for robot-specific motor-coupled expressions.
-    self.pub_pololu = {};
-    self.pub_pololu['left'] = rospy.Publisher("left/command", MotorCommand, queue_size=30)
-    self.pub_pololu['right'] = rospy.Publisher("right/command", MotorCommand, queue_size=30)
+    self.publishers = {};
+    self.publishers['left'] = rospy.Publisher("left/command", MotorCommand, queue_size=30)
+    self.publishers['right'] = rospy.Publisher("right/command", MotorCommand, queue_size=30)
+    self.publishers['neck0'] = rospy.Publisher("base_controller/command", Float64, queue_size=30)
+    self.publishers['neck1'] = rospy.Publisher("base_right_controller/command", Float64, queue_size=30)
+    self.publishers['neck2'] = rospy.Publisher("base_left_controller/command", Float64, queue_size=30)
+    self.publishers['neck3'] = rospy.Publisher("neck_right_controller/command", Float64, queue_size=30)
+    self.publishers['neck4'] = rospy.Publisher("neck_left_controller/command", Float64, queue_size=30)
+
+
+
     rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
     rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
     rospy.Subscriber("cmd_blink", String, self.blink_request)
