@@ -176,8 +176,9 @@ RosUI.motors = {
                     motorConfig.push(config);
                 }
 
-                $(editButton).fadeIn();
             });
+
+            $(editButton).fadeIn();
         });
     },
     saveMotorConfig: function(newMotorsConfig) {

@@ -76,27 +76,28 @@ RosUI.api = {
         }
     },
     getPololuMotorTopics: function (success) {
-        $.ajax("/motors/get_topic_names", {
-            success: function(response) {
-                var topics = [];
-
-                if (typeof response.topics != 'undefined')
-                    topics = response.topics;
-
-                // register topics if not registered
-                $.each(topics, function() {
-                    if (typeof RosUI.ros.topics[this] == 'undefined')
-                        RosUI.ros.topics[this] = new ROSLIB.Topic({
-                            ros: RosUI.ros.ros,
-                            name: this,
-                            messageType: 'ros_pololu_servo/MotorCommand'
-                        });
-                });
-
-                success(topics);
-            },
-            dataType: "json"
-        });
+        success(['/fritz/left/command', '/fritz/right/command']);
+        //$.ajax("/motors/get_topic_names", {
+        //    success: function(response) {
+        //        var topics = [];
+        //
+        //        if (typeof response.topics != 'undefined')
+        //            topics = response.topics;
+        //
+        //        // register topics if not registered
+        //        $.each(topics, function() {
+        //            if (typeof RosUI.ros.topics[this] == 'undefined')
+        //                RosUI.ros.topics[this] = new ROSLIB.Topic({
+        //                    ros: RosUI.ros.ros,
+        //                    name: this,
+        //                    messageType: 'ros_pololu_servo/MotorCommand'
+        //                });
+        //        });
+        //
+        //        success(topics);
+        //    },
+        //    dataType: "json"
+        //});
     },
     /**
      * Passes a list of available gestures to success function
