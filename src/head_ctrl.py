@@ -99,7 +99,7 @@ class SpecificRobotCtrl:
       rospy.loginfo("Pub id: %s", pubid)
       # Dynamixel commands only sends position
       if self.publishers[pubid].type == 'std_msgs/Float64':
-        self.publishers[pubid].publish({'data': cmd.position})
+        self.publishers[pubid].publish(cmd.position)
       else:
         self.publishers[pubid].publish(cmd)
 
