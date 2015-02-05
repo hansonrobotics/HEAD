@@ -85,12 +85,12 @@ RosUI.ros = {
                 name: '/fritz/point_head',
                 messageType: 'basic_head_api/PointHead'
             }),
-            left: new ROSLIB.Topic({
+            "/fritz/left/command": new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/fritz/left/command',
                 messageType: 'ros_pololu_servo/MotorCommand'
             }),
-            right: new ROSLIB.Topic({
+            "/fritz/right/command": new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/fritz/right/command',
                 messageType: 'ros_pololu_servo/MotorCommand'
