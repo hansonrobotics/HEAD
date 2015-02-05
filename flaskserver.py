@@ -23,10 +23,6 @@ def send_index():
 def send_public(filename):
     return send_from_directory('public', filename)
 
-@app.route('/motors/get_topic_names')
-def get_motor_topic_names():
-    return json_encode(rep.get_motor_topic_names())
-
 @app.route('/motors/update_config', methods=['POST'])
 def update_motor_config():
     data = json.loads(request.get_data().decode('utf8'))

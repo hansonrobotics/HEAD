@@ -1,13 +1,10 @@
 import yaml
-import json
-from subprocess import Popen, PIPE, call, check_output, DEVNULL
+from subprocess import call, check_output, DEVNULL
+
 
 class Reporter:
-    """
-    Executes a number of shell commands, interprets their return codes as
-    sucess or failure and returns results.
-    """
-
+    # Executes a number of shell commands, interprets their return codes as
+    # success or failure and returns results.
     def __init__(self, yamlfilename):
         self.filename = yamlfilename
         self.load_config()
@@ -42,22 +39,6 @@ class Reporter:
         return [dict(list(check.items()) + [('success', success)])
                 for check, success in zip(self.config['checks'], statuslist)]
 
-    def get_motor_topic_names(self):
-        # ros_pololu_servo/command
-        cmd = ["rosservice", "call", "rosapi/topics_for_type",  "\"type: 'ros_pololu_servo/MotorCommand'\""]
-
-        p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        output, err = p.communicate()
-        status = p.returncode
-
-        output = output.strip().decode('utf-8').replace("topics", '"topics"')
-        output = "{" + output + "}"
-
-        if status == 0:
-            return json.loads(output)
-        else:
-            return {"topics": [], "error": err}
-
     @staticmethod
     def check(cmd, env=None):
         """ Checks a single command for success """
@@ -67,6 +48,7 @@ class Reporter:
     def _build_env(self):
         return {name: check_output(cmd, shell=True)
                 for name, cmd in self.config['setup']['env'].items()}
+
 
 def deepupdate(original, new):
     """Updates missing or None values in all 'directly' nested dicts."""

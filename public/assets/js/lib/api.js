@@ -53,21 +53,23 @@ RosUI.api = {
         RosUI.api._sendMotorCommand.apply(RosUI.api, arguments);
     }),
     _sendMotorCommand: function (confEntry, angle, speed, acc) {
-        var topicParams = RosUI.ros.topics[confEntry.topic];
+        var topicParams = RosUI.ros.topics[confEntry.topic],
+            cmd;
 
         if (!confEntry.topic || confEntry.topic == 'none' || typeof topicParams == 'undefined')
             return false;
 
         if (topicParams.messageType == 'std_msgs/Float64') {
-            var cmd = new ROSLIB.Message({data: Math.min(Math.max(angle, confEntry.min), confEntry.max)});
+            cmd = new ROSLIB.Message({data: Math.min(Math.max(angle, confEntry.min), confEntry.max)});
         } else {
-            var cmd = new ROSLIB.Message({
+            cmd = new ROSLIB.Message({
                 joint_name: confEntry.name.toString(),
                 position: Math.min(Math.max(angle, confEntry.min), confEntry.max),
                 speed: (speed || confEntry.speed || 100) / 255,
                 acceleration: (acc || confEntry.acceleration || 50) / 255
             });
         }
+
         RosUI.ros.topics[confEntry.topic].publish(cmd);
     },
     setDefaultMotorValues: function () {
@@ -76,28 +78,11 @@ RosUI.api = {
         }
     },
     getPololuMotorTopics: function (success) {
-        success(['/fritz/left/command', '/fritz/right/command']);
-        //$.ajax("/motors/get_topic_names", {
-        //    success: function(response) {
-        //        var topics = [];
-        //
-        //        if (typeof response.topics != 'undefined')
-        //            topics = response.topics;
-        //
-        //        // register topics if not registered
-        //        $.each(topics, function() {
-        //            if (typeof RosUI.ros.topics[this] == 'undefined')
-        //                RosUI.ros.topics[this] = new ROSLIB.Topic({
-        //                    ros: RosUI.ros.ros,
-        //                    name: this,
-        //                    messageType: 'ros_pololu_servo/MotorCommand'
-        //                });
-        //        });
-        //
-        //        success(topics);
-        //    },
-        //    dataType: "json"
-        //});
+        RosUI.ros.services.topicsForType.callService({type: 'ros_pololu_servo/MotorCommand'}, function(response) {
+            success(response.topics);
+        }, function (error) {
+            console.log(error);
+        });
     },
     /**
      * Passes a list of available gestures to success function

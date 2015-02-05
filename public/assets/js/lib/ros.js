@@ -161,6 +161,11 @@ RosUI.ros = {
                 ros: RosUI.ros.ros,
                 name: '/valid_coupled_face_exprs',
                 serviceType: 'basic_head_api/ValidCoupledFaceExprs'
+            }),
+            topicsForType: new ROSLIB.Service({
+                ros: RosUI.ros.ros,
+                name: '/rosapi/topics_for_type',
+                serviceType : 'rosapi/TopicsForType'
             })
         };
     },
