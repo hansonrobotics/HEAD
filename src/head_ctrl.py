@@ -69,7 +69,7 @@ class PauCtrl:
     )
     msg = pau()
     msg.m_headRotation = Quaternion(
-      *Utils.Quat.fromInYZX(req.yaw, req.pitch, req.roll).params
+      *Utils.Quat.fromInYZX(req.roll, req.yaw, -req.pitch).params
     )
     self.pub_neck.publish(msg)
   
@@ -94,16 +94,20 @@ class SpecificRobotCtrl:
     rospy.loginfo("Face request: %s of %s for %s", intensity, exprname, self.robotname)
     for cmd in self.faces[exprname].new_msgs(intensity):
       self.blinker.log(copy.deepcopy(cmd))
-      pubid = 0
+      (cmd.joint_name, pubid) = cmd.joint_name.split('@')
+      rospy.loginfo("Pub id: %s", pubid) 
       self.publishers[pubid].publish(cmd)
 
   def blink(self):
     def close_lids():
       for cmd in self.blinker.new_msgs(1.0):
-        self.publishers[0].publish(cmd)
+        (cmd.joint_name, pubid) = cmd.joint_name.split('@')
+        self.publishers[pubid].publish(cmd)
     def open_lids():
       for cmd in self.blinker.reset_msgs():
         self.publishers[0].publish(cmd)
+        (cmd.joint_name, pubid) = cmd.joint_name.split('@')
+        self.publishers[pubid].publish(cmd)
     close_lids()
     Timer(0.1, open_lids).start()
     
@@ -177,9 +181,9 @@ class HeadCtrl:
     rospy.Subscriber("point_head", PointHead, self.pau_ctrl.point_head)
 
     # Topics and services for robot-specific motor-coupled expressions.
-    self.pub_pololu = [None,None];
-    self.pub_pololu[0] = rospy.Publisher("arthur_face/cmd_pololu", MotorCommand, queue_size=30)
-    self.pub_pololu[1] = rospy.Publisher("arthur_eyes/cmd_pololu", MotorCommand, queue_size=30)
+    self.pub_pololu = {};
+    self.pub_pololu['left'] = rospy.Publisher("left/command", MotorCommand, queue_size=30)
+    self.pub_pololu['right'] = rospy.Publisher("right/command", MotorCommand, queue_size=30)
     rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
     rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
     rospy.Subscriber("cmd_blink", String, self.blink_request)

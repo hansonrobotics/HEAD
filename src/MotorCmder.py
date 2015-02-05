@@ -6,7 +6,8 @@ class MotorCmder:
   def msg_angle(self, angle=None):
     """Builds a message given the target angle."""
     msg = MotorCommand()
-    msg.joint_name = self.motor_entry['name']
+    msg.joint_name = self.motor_entry['name']+"@"+self.motor_entry['topic']
+
     msg.position = self._saturatedAngle(angle or self.target)
     # Default values are set here, if speed or acceleration are not found in
     # the motor entry.
