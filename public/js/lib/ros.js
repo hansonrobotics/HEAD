@@ -167,7 +167,7 @@ RosUI.ros = {
         if (window.location.protocol != "https:") {
             return "ws://" + document.domain + ":9090";
         } else {
-            return "wss://" + document.domain + ":9092";
+            return "wss://" + document.domain + ":9094";
         }
     },
     getMotorConfig: function (name) {
