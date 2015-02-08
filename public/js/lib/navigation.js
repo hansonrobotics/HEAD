@@ -63,5 +63,6 @@ RosUI.navigation = {
                 RosUI.gestures.loadPage();
                 break;
         }
+        $('.navbar-collapse.in').collapse('hide');
     }
 };
