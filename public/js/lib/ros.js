@@ -53,7 +53,7 @@ RosUI.ros = {
             }),
             cmdTree: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/behavior_switch',
+                name: '/behavior_switch',
                 messageType: 'std_msgs/String'
             }),
             speech_topic: new ROSLIB.Topic({
@@ -79,14 +79,21 @@ RosUI.ros = {
             left: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/fritz/left/command',
-                messageType: 'ros_pololu_servo/MotorCommand'
+                messageType: 'ros_pololu_servo/MotorCommand',
+                throttle_rate: 5
             }),
             right: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/fritz/right/command',
-                messageType: 'ros_pololu_servo/MotorCommand'
+                messageType: 'ros_pololu_servo/MotorCommand',
+                throttle_rate: 5
             }),
-
+            middle: new ROSLIB.Topic({
+                ros: RosUI.ros.ros,
+                name: '/fritz/middle/command',
+                messageType: 'ros_pololu_servo/MotorCommand',
+                throttle_rate: 5
+            }),
             animations: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/cmd_animations',
@@ -151,7 +158,7 @@ RosUI.ros = {
             }),
             expressionList: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
-                name: '/valid_coupled_face_exprs',
+                name: '/fritz/valid_coupled_face_exprs',
                 serviceType: 'basic_head_api/ValidCoupledFaceExprs'
             })
         };

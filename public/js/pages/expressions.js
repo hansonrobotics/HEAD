@@ -29,7 +29,7 @@ RosUI.expressions = {
 
         $('.expression-button.active').removeClass('active');
 
-        RosUI.api.setExpression("happy", 0);
+        RosUI.motors.initMotors();
         RosUI.api.pointHead();
     },
 
@@ -75,6 +75,7 @@ RosUI.expressions = {
         $("input.dial").css("pointer-events", "none");
     },
     createButtons: function () {
+        console.log("Creating Buttons")
         RosUI.api.expressionList(function (response) {
             var capitalize = function (str) {
                 return str.charAt(0).toUpperCase() + str.slice(1);
@@ -113,8 +114,8 @@ RosUI.expressions = {
         var pitch = RosUI.ros.getMotorConfig("neck_pitch");
 
         $(element).crosshairsl($.extend({}, {
-            xmin: Math.floor(RosUI.utilities.radToDeg(-1.57)),
-            xmax: Math.ceil(RosUI.utilities.radToDeg(1.57)),
+            xmin: Math.floor(RosUI.utilities.radToDeg(-1)),
+            xmax: Math.ceil(RosUI.utilities.radToDeg(1)),
             xval: Math.round(RosUI.utilities.radToDeg(0)),
             ymin: Math.floor(RosUI.utilities.radToDeg(-0.6)),
             ymax: Math.ceil(RosUI.utilities.radToDeg(0.6)),

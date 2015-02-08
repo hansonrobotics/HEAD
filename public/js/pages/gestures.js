@@ -8,6 +8,10 @@ RosUI.gestures = {
     },
     loadPage: function () {
         RosUI.api.blenderMode.enable();
+        var blenderMessage, blinkMessage, treeMessage;
+        
+        treeMessage = new ROSLIB.Message({data: 'btree_off'});
+        RosUI.ros.topics.cmdTree.publish(treeMessage);
     },
     createGestureButtons: function () {
         RosUI.api.getAvailableGestures(function(gestures) {
@@ -18,10 +22,13 @@ RosUI.gestures = {
                 gesture + '">' + gesture + '</button>');
 
                 $(button).click(function () {
-                    $('#app-gesture-buttons button').removeClass('active');
                     $(this).addClass('active');
-
+                    var btn = this;
                     RosUI.api.setGesture(gesture);
+                    setTimeout(function(){
+                        $(btn).removeClass('active');
+                        $(btn).blur();
+                    },2000)
                 });
 
                 $('#app-gesture-buttons')
@@ -56,8 +63,8 @@ RosUI.gestures = {
             change: (function () {
                 return function (e, ui) {
                     $('.app-value', sliderBlock).html("(" + ui.value + "%)");
-
                     RosUI.api.setEmotion(name, ui.value / 100);
+                    setTimeout(function(){RosUI.gestures.updateSlider(name,0)},3000)          
                 }
             })()
         });
@@ -70,6 +77,11 @@ RosUI.gestures = {
 
         $(".slider", container).slider("value", value).trigger('slide');
         $(".app-value", container).text('(' + value + '%)');
+        console.log(value);
+        if (value > 0){
+
+            setTimeout(function(){RosUI.gestures.updateSlider(name,0)},1000)
+        }
     },
     demo: {
         init: function() {

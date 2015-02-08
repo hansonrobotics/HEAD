@@ -30,7 +30,7 @@ RosUI.api = {
     },
     expressionList: function (success) {
         RosUI.ros.services.expressionList.callService(new ROSLIB.ServiceRequest({
-                robotname: "arthur"
+                robotname: "fritz"
             }), success
         );
     },
@@ -148,12 +148,12 @@ RosUI.api = {
     },
     blenderMode: {
         enable: function() {
-            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
-            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function(){return 0;});
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function(){return 0;});
         },
         disable: function() {
-            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/no_pau"}));
-            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/cmd_neck_pau"}));
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/no_pau"}), function(){return 0;});
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/cmd_neck_pau"}), function(){return 0;});
         }
     }
 };

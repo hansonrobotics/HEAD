@@ -6,8 +6,7 @@ RosUI.motors = {
     loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
-        blenderMessage = new ROSLIB.Message({data: 'Dummy'});
-        RosUI.ros.topics.cmdBlender.publish(blenderMessage);
+        RosUI.api.blenderMode.disable();
 
         blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
         RosUI.ros.topics.cmdBllink.publish(blinkMessage);
@@ -15,7 +14,7 @@ RosUI.motors = {
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 
-        RosUI.api.setExpression("happy", 0);
+        RosUI.motors.initMotors();
         RosUI.api.pointHead({yaw: 0, pitch: 0, roll: 0});
 
     },
