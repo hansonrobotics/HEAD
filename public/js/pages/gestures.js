@@ -9,7 +9,7 @@ RosUI.gestures = {
     loadPage: function () {
         RosUI.api.blenderMode.enable();
         var blenderMessage, blinkMessage, treeMessage;
-        
+        RosUI.api.setExpression("Neutral", 0);
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
     },

@@ -14,8 +14,9 @@ RosUI.motors = {
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 
-        RosUI.motors.initMotors();
         RosUI.api.pointHead({yaw: 0, pitch: 0, roll: 0});
+        RosUI.api.setExpression("Neutral", 0);
+        
 
     },
     addSlider: function (config) {

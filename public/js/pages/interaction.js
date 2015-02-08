@@ -31,7 +31,7 @@ RosUI.interaction = {
 
         treeMessage = new ROSLIB.Message({data: 'btree_on'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
-
+        RosUI.api.setExpression("Neutral", 0);
 
         //RosUI.gestures.demo.enable()
     },
