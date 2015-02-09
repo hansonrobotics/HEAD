@@ -6,6 +6,7 @@ RosUI = {
             RosUI.navigation.init();
 
             // init pages
+            RosUI.status.init();
             RosUI.expressions.init();
             RosUI.motors.init();
             RosUI.animations.init();

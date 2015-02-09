@@ -13,6 +13,7 @@
     <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/lib/jquery-ui/jquery-ui.min.css" rel="stylesheet">
     <link href="assets/css/application.css" rel="stylesheet">
+    <link href="assets/css/pages/status.css" rel="stylesheet">
     <link href="assets/css/pages/interaction.css" rel="stylesheet">
     <link href="assets/css/pages/expressions.css" rel="stylesheet">
     <link href="assets/css/pages/motors.css" rel="stylesheet">
@@ -68,7 +69,13 @@
 
 <div id="app-pages" style="display: none">
     <div id="app-page-status" class="app-page">
-        status
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul id="app-status-indicators"></ul>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="app-page-expressions" class="app-page">
         <div class="container">
