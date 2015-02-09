@@ -47,6 +47,9 @@ RosUI.navigation = {
         RosUI.gestures.demo.disable();
 
         switch ($('.app-change-page.active').attr('id')) {
+            case 'app-status-link':
+                RosUI.status.loadPage();
+                break;
             case 'app-expressions-link':
                 RosUI.expressions.loadPage();
                 break;

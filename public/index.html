@@ -52,6 +52,8 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+                <li><a id="app-status-link" href="#/status" class="app-change-page active"
+                       data-page="#app-page-status">Status</a></li>
                 <li><a id="app-expressions-link" href="#/expressions" class="app-change-page active"
                        data-page="#app-page-expressions">Expressions</a></li>
                 <li><a id="app-motors-link" href="#/motors" class="app-change-page" data-page="#app-page-motors">Motors</a></li>
@@ -65,6 +67,9 @@
 </nav>
 
 <div id="app-pages" style="display: none">
+    <div id="app-page-status" class="app-page">
+        status
+    </div>
     <div id="app-page-expressions" class="app-page">
         <div class="container">
             <div class="control-stack">
@@ -321,6 +326,7 @@
 <script type="text/javascript" src="assets/js/lib/api.js"></script>
 
 <!-- Pages -->
+<script type="text/javascript" src="assets/js/pages/status.js"></script>
 <script type="text/javascript" src="assets/js/pages/expressions.js"></script>
 <script type="text/javascript" src="assets/js/pages/animations.js"></script>
 <script type="text/javascript" src="assets/js/pages/gestures.js"></script>
