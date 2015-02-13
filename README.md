@@ -41,7 +41,7 @@ parameters in the current namespace:
 Couldn't find 'pau2motors' param in namespace '/'.
 Change namespace with `export ROS_NAMESPACE=<ns>`
 Current valid <ns>: /arthur.
-Check robots_config repo to get more config options.
+Check the **robots_config** repo to get more config options.
 ```
 
 ##Dependencies
@@ -49,15 +49,15 @@ Check robots_config repo to get more config options.
 Depends on
 **[ros_servo_pololu](https://github.com/hansonrobotics/ros_pololu_servo)**
 and **[dynamixel_motor](https://github.com/arebgun/dynamixel_motor)**
-packages. These are the package this node sends commands to.
+packages. These are the packages that this node sends commands to.
 
 ##Notes
 
-Currently the configuration for different robots are stored in the
+Currently, the configuration for different robots are stored in the
 **[robots_config](https://github.com/hansonrobotics/robots_config)**
 package, in yaml config files, in dictionaries called `pau2motors`
-(e.g.  [Einstein]
-(https://github.com/hansonrobotics/robots_config/blob/master/einstein/config.yaml)).
+(e.g.  [Fritz]
+(https://github.com/hansonrobotics/robots_config/blob/master/fritz/config.yaml)).
 The `hardware`, `parser` and `function` properties in the config files
 refer to classes in this repo's modules **HardwareFactory.py**,
 **ParserFactory.py** and **MapperFactory.py**, which may be extended
