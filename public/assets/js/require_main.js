@@ -13,7 +13,11 @@ requirejs.config({
         //"spin.jquery": "vendor/spin.jquery",
         text: "vendor/text",
         tpl: "vendor/underscore-tpl",
-        underscore: "vendor/underscore"
+        underscore: "vendor/underscore",
+        jsyaml: "vendor/js-yaml.min",
+        roslib: "vendor/roslib",
+        eventemitter: "vendor/eventemitter2",
+        bootstrap: 'vendor/bootstrap.min'
     },
     shim: {
         underscore: {
@@ -32,12 +36,15 @@ requirejs.config({
         "jquery-ui": ["jquery"],
         //localstorage: ["backbone"],
         //"spin.jquery": ["spin", "jquery"],
-        tpl: ["text"]
+        tpl: ["text"],
+        eventemitter: {
+            exports: 'EventEmitter2'
+        },
+        roslib: {
+            deps: ["eventemitter"],
+            exports: "ROSLIB"
+        }
     }
 });
 
-require(["application/init"], function(){
-
-});
-
-
+require(["application/init"]);

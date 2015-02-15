@@ -200,9 +200,9 @@
 
               tree._listeners.warned = true;
               console.error('(node) warning: possible EventEmitter memory ' +
-                            'leak detected. %d listeners added. ' +
-                            'Use emitter.setMaxListeners() to increase limit.',
-                            tree._listeners.length);
+                  'leak detected. %d listeners added. ' +
+                  'Use emitter.setMaxListeners() to increase limit.',
+                  tree._listeners.length);
               console.trace();
             }
           }
@@ -283,8 +283,8 @@
     if (type === 'error') {
 
       if (!this._all &&
-        !this._events.error &&
-        !(this.wildcard && this.listenerTree.error)) {
+          !this._events.error &&
+          !(this.wildcard && this.listenerTree.error)) {
 
         if (arguments[1] instanceof Error) {
           throw arguments[1]; // Unhandled 'error' event
@@ -392,9 +392,9 @@
 
           this._events[type].warned = true;
           console.error('(node) warning: possible EventEmitter memory ' +
-                        'leak detected. %d listeners added. ' +
-                        'Use emitter.setMaxListeners() to increase limit.',
-                        this._events[type].length);
+              'leak detected. %d listeners added. ' +
+              'Use emitter.setMaxListeners() to increase limit.',
+              this._events[type].length);
           console.trace();
         }
       }
@@ -446,8 +446,8 @@
 
         for (var i = 0, length = handlers.length; i < length; i++) {
           if (handlers[i] === listener ||
-            (handlers[i].listener && handlers[i].listener === listener) ||
-            (handlers[i]._origin && handlers[i]._origin === listener)) {
+              (handlers[i].listener && handlers[i].listener === listener) ||
+              (handlers[i]._origin && handlers[i]._origin === listener)) {
             position = i;
             break;
           }
@@ -475,8 +475,8 @@
         return this;
       }
       else if (handlers === listener ||
-        (handlers.listener && handlers.listener === listener) ||
-        (handlers._origin && handlers._origin === listener)) {
+          (handlers.listener && handlers.listener === listener) ||
+          (handlers._origin && handlers._origin === listener)) {
         if(this.wildcard) {
           delete leaf._listeners;
         }
@@ -558,7 +558,7 @@
   };
 
   if (typeof define === 'function' && define.amd) {
-     // AMD. Register as an anonymous module.
+    // AMD. Register as an anonymous module.
     define(function() {
       return EventEmitter;
     });
