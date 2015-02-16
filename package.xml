@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package>
   <name>eva_behavior</name>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
   <description>Scripted behaviors for the Eva rig</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <maintainer email="manhinleung@gmail.com">Leung Man Hin</maintainer>
-  <maintainer email="linasvepstas@gmail.com">Linas Vepstas</maintainer>
+  <maintainer email="linasvepstas@gmail.com">Linas Vepštas</maintainer>
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
