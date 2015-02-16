@@ -57,7 +57,7 @@ class WeightedSum(MapperBase):
 
   @staticmethod
   def _saturated(val, interval):
-    return min(max(val, interval["min"]), interval["max"])
+    return min(max(val, min(interval["min"],interval["max"])), max(interval["min"],interval["max"]))
 
   def map(self, vals):
     return sum(
