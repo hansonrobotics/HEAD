@@ -258,6 +258,12 @@ class FaceTrack:
 						raise Exception("Face not visible")
 					trg = self.face_target(self.gaze_at)
 					self.gaze_pub.publish(trg)
+				except tf.LookupException as lex:
+					print("Warning: TF has forgotten about face id:" +
+						str(self.look_at))
+					self.remove_face(self.look_at)
+					self.look_at_face(0)
+					return
 				except Exception as ex:
 					print("Error: no gaze-at target: ", ex)
 					self.gaze_at_face(0)
@@ -270,6 +276,12 @@ class FaceTrack:
 						raise Exception("Face not visible")
 					trg = self.face_target(self.look_at)
 					self.look_pub.publish(trg)
+				except tf.LookupException as lex:
+					print("Warning: TF has forgotten about face id:" +
+						str(self.look_at))
+					self.remove_face(self.look_at)
+					self.look_at_face(0)
+					return
 				except Exception as ex:
 					print("Error: no look-at target: ", ex)
 					self.look_at_face(0)
@@ -313,7 +325,7 @@ class FaceTrack:
 
 	# Queries tf_listener to get latest available position
 	# Throws TF exceptions if transform canot be returned
-	def face_target(self,faceid):
+	def face_target(self, faceid):
 		(trans, rot) = self.tf_listener.lookupTransform( \
 			self.LOCATION_FRAME, 'Face' + str(faceid), rospy.Time(0))
 		t = Target()
