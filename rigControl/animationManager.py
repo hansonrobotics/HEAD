@@ -70,15 +70,15 @@ class AnimationManager():
 
 
 		# Scale for Blender coordinates 1 BU in m.
-		self.scale = 0.2
-		# Distance between eyes and 0 point in the head in BU
-		self.eyes_distance = 0.34
+		self.scale = 0.25
+		# Distance between eyes target and 0 point in the head in BU
+		self.eyes_distance = 0.32
 		# Target minimum distance in m
 		self.min_distance  = 0.1
-		# Face target offset in BU
-		self.face_target_offset = -0.84
-		# Eye_target offset in BU
-		self.eye_target_offset = -1.67
+		# Face target offset in BU from 0 point
+		self.face_target_offset = -1.04
+		# Eye_target distance in BU from 0 point
+		self.eye_target_offset = -6
 
 		self.availableVisemes = []
 		for action in bpy.data.actions:
