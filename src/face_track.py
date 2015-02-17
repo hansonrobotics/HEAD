@@ -270,14 +270,14 @@ class FaceTrack:
 					return
 
 			if 0 < self.look_at:
-				print("Look at id " + str(self.look_at))
+				print("Look at id: " + str(self.look_at))
 				try:
 					if not self.look_at in self.visible_faces:
 						raise Exception("Face not visible")
 					trg = self.face_target(self.look_at)
 					self.look_pub.publish(trg)
 				except tf.LookupException as lex:
-					print("Warning: TF has forgotten about face id:" +
+					print("Warning: TF has forgotten about face id: " +
 						str(self.look_at))
 					self.remove_face(self.look_at)
 					self.look_at_face(0)
