@@ -56,7 +56,9 @@ class FacesPublisher:
             self.listener.waitForTransform('camera', 'world', \
                 rospy.Time(0), rospy.Duration(3.0))
         except Exception:
-            print("Error: No camera!")
+            rospy.logerr("No camera transforms!")
+            exit(1)
+
         self.last_faces_time = rospy.Time.now()
         #self.buffer.lookup_transform()
 
@@ -109,9 +111,10 @@ class FacesPublisher:
                     rospy.logwarn("No transform")
                     continue
 
-    # Checks if we can merge two points from different cameras to single face.
-    # ps : PointStamped relative to the face we are checking
 
+    # Checks if we can merge two points from different cameras to
+    # single face.
+    # ps : PointStamped relative to the face we are checking
     def _sameFace(self, ps):
         # To be refined based on real data
         if math.sqrt(ps.point.x**2 + ps.point.y**2 + ps.point.z**2) <= self.max_distance:

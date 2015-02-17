@@ -1,3 +1,8 @@
+<!--
+-- tracker.launch
+--
+-- Launch file for: one body camera, one eye camera.
+-->
 <launch>
     <node pkg="usb_cam" type="usb_cam_node" name="camera">
       <param name="video_device" value="/dev/video2"/>

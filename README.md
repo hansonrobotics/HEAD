@@ -20,7 +20,7 @@ run details.
  * Make sure pi_vision is running, and that the face tracker is
    publishing faces:
 ```
-rostopic echo /face_locations
+rostopic echo /camera/face_locations
 ```
  * Start the perception node:
 ```
@@ -37,19 +37,23 @@ rosrun rviz rviz -d `rospack find perception`/rviz/faces.rviz
 Broadcast `/tf` data from face tracking.
 
 ###### Subscribed topics
- * `camera/face_locations (pi_vision/Faces)`: Faces published by pi_vision in 3D coordinates by main camera
- * `eye_camera/face_locations (pi_vision/Faces)`:  Faces published by pi_vision in 3D coordinates by eye camera
- 
+ * `camera/face_locations (pi_vision/Faces)`: Faces published by
+   pi_vision, as seen by main camera.
+ * `eye_camera/face_locations (pi_vision/Faces)`:  Faces published by
+   pi_vision, as seen by eye camera.
+
 ###### Params topics
- * `max_distance`: Max distance for faces from eye-camera and body camera to be considered same.
+ * `max_distance`: Max distance for faces from eye-camera and body
+   camera to be considered same.
 
 ###### Transformations published:
  * `face_base<face_id>`: Face location based on body camera
- * `Face<face_id>`: Transformation relative to the `face_base` from eye camera.
+ * `Face<face_id>`: Transformation relative to the `face_base` from eye
+   camera.
 
 ###### Testing
  * Make sure you have two cameras connected:
    - Body Camera on `/dev/video0`
    - Eye Camera on `/dev/video1`
- * Run face tracking: `roslaunch perception tracking.launch`
- * Run the node: `roslaunch perception display.launch` 
+ * Run face tracking: `roslaunch perception tracker.launch`
+ * Run the node: `roslaunch perception display.launch`
