@@ -140,7 +140,7 @@ Visualization Manager:
           Value: true
         yaw:
           Value: true
-      Marker Scale: 1
+      Marker Scale: 0.35
       Name: TF
       Show Arrows: true
       Show Axes: false

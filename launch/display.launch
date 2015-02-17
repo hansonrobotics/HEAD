@@ -1,7 +1,7 @@
 <!--
--- display.launch
---
--- Run the frtiz geometry, together with rviz
+ - display.launch
+ -
+ - Run the fritz geometry, together with rviz
 -->
 <launch>
 	<arg name="model" />
