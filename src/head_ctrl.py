@@ -11,11 +11,8 @@ from pau2motors.msg import pau
 from geometry_msgs.msg import Quaternion
 from pi_face_tracker.msg import Faces
 import Utils
-from Blinker import Blinker
-from Blinker import RandomTimer
 from std_msgs.msg import String
 from std_msgs.msg import Float64
-from threading import Timer
 import copy
 
 CONFIG_DIR = "config"
@@ -70,7 +67,7 @@ class PauCtrl:
     )
     msg = pau()
     msg.m_headRotation = Quaternion(
-      *Utils.Quat.fromInYZX(req.roll, req.yaw, -req.pitch).params
+      *Utils.Quat.fromInYZX(req.roll, -req.yaw, -req.pitch).params
     )
     self.pub_neck.publish(msg)
   
@@ -94,7 +91,6 @@ class SpecificRobotCtrl:
   def make_face(self, exprname, intensity=1):
     rospy.loginfo("Face request: %s of %s for %s", intensity, exprname, self.robotname)
     for cmd in self.faces[exprname].new_msgs(intensity):
-      self.blinker.log(copy.deepcopy(cmd))
       (cmd.joint_name, pubid) = cmd.joint_name.split('@')
       rospy.loginfo("Pub id: %s", pubid)
       # Dynamixel commands only sends position
@@ -102,20 +98,7 @@ class SpecificRobotCtrl:
         self.publishers[pubid].publish(cmd.position)
       else:
         self.publishers[pubid].publish(cmd)
-
-  def blink(self):
-    def close_lids():
-      for cmd in self.blinker.new_msgs(1.0):
-        (cmd.joint_name, pubid) = cmd.joint_name.split('@')
-        self.publishers[pubid].publish(cmd)
-    def open_lids():
-      for cmd in self.blinker.reset_msgs():
-        self.publishers[0].publish(cmd)
-        (cmd.joint_name, pubid) = cmd.joint_name.split('@')
-        self.publishers[pubid].publish(cmd)
-    close_lids()
-    Timer(0.1, open_lids).start()
-    
+   
 
   def __init__(self, robotname, publishers):
     # Dictionary of expression names mapping to FaceExprMotors instances.
@@ -128,13 +111,6 @@ class SpecificRobotCtrl:
     self.publishers = publishers
 
     self.robotname = robotname
-
-    #Initialize blink support
-    self.blinker = Blinker(robotname, to_dict(read_config(robotname + "_motors.yaml"), "name"))
-    self.timer_blink = RandomTimer(self.blink, (5.0, 1.0))
-    if robotname == "arthur":
-      self.blinker.add_motor("Eyelid-Upper_L", 1.0)
-      self.blinker.add_motor("Eyelid-Upper_R", 0.0)
 
 
 class HeadCtrl:
@@ -161,45 +137,21 @@ class HeadCtrl:
       req.expr.intensity
     )
 
-  def blink_request(self, req):
-    robotname, switch = req.data.split(":")
-    if switch == "start":
-      self.get_robot_ctrl(robotname).timer_blink.start()
-    elif switch == "stop":
-      self.get_robot_ctrl(robotname).timer_blink.stop()
-
-
   def __init__(self):
     rospy.init_node('head_ctrl')
 
-    # Topics and services for PAU expressions
-    self.pau_ctrl = PauCtrl(
-      rospy.Publisher("cmd_face_pau", pau, queue_size=2),
-      rospy.Publisher("cmd_neck_pau", pau, queue_size=2)
-    )
-    rospy.Service("valid_face_exprs", ValidFaceExprs, 
-      lambda req: self.pau_ctrl.valid_exprs()
-    )
-    rospy.Subscriber("make_face_expr", MakeFaceExpr,
-      lambda req: self.pau_ctrl.make_face(req.exprname, req.intensity)
-    )
     rospy.Subscriber("point_head", PointHead, self.pau_ctrl.point_head)
 
     # Topics and services for robot-specific motor-coupled expressions.
     self.publishers = {};
-    self.publishers['left'] = rospy.Publisher("left/command", MotorCommand, queue_size=30)
-    self.publishers['right'] = rospy.Publisher("right/command", MotorCommand, queue_size=30)
-    self.publishers['neck0'] = rospy.Publisher("base_controller/command", Float64, queue_size=30)
-    self.publishers['neck1'] = rospy.Publisher("base_right_controller/command", Float64, queue_size=30)
-    self.publishers['neck2'] = rospy.Publisher("base_left_controller/command", Float64, queue_size=30)
-    self.publishers['neck3'] = rospy.Publisher("neck_right_controller/command", Float64, queue_size=30)
-    self.publishers['neck4'] = rospy.Publisher("neck_left_controller/command", Float64, queue_size=30)
+    self.publishers['face'] = rospy.Publisher("face/command", MotorCommand, queue_size=30)
+    self.publishers['eyes'] = rospy.Publisher("eyes/command", MotorCommand, queue_size=30)
+    self.publishers['jaw'] = rospy.Publisher("jaw_controller/command", Float64, queue_size=30)
 
 
 
     rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
     rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
-    rospy.Subscriber("cmd_blink", String, self.blink_request)
 
 if __name__ == '__main__':
     HeadCtrl()
