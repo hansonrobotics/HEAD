@@ -211,8 +211,8 @@ class Tree():
 		self.blackboard["face_targets"] = []
 		# IDs of faces in the scene, updated immediately
 		self.blackboard["background_face_targets"] = []
-		self.blackboard["current_glance_target"] = ""
-		self.blackboard["current_face_target"] = ""
+		self.blackboard["current_glance_target"] = 0
+		self.blackboard["current_face_target"] = 0
 		self.blackboard["interact_with_face_target_since"] = 0.0
 		self.blackboard["sleep_since"] = 0.0
 		self.blackboard["bored_since"] = 0.0
@@ -318,7 +318,7 @@ class Tree():
 		tree = owyl.sequence(
 			self.is_someone_arrived(),
 			owyl.selector(
-				##### There were no people in the scene #####
+				##### There previously were no people in the scene #####
 				owyl.sequence(
 					self.were_no_people_in_the_scene(),
 					self.assign_face_target(variable="current_face_target", value="new_face"),
@@ -336,7 +336,7 @@ class Tree():
 
 				##### Does Nothing #####
 				owyl.sequence(
-					self.print_status(str="----- Ignoring The New Face!"),
+					self.print_status(str="----- Ignoring the new face!"),
 					owyl.succeed()
 				)
 			),
@@ -369,7 +369,7 @@ class Tree():
 
 				##### Does Nothing #####
 				owyl.sequence(
-					self.print_status(str="----- Ignoring The Lost Face!"),
+					self.print_status(str="----- Ignoring the lost face!"),
 					owyl.succeed()
 				)
 			),
@@ -580,7 +580,7 @@ class Tree():
 		self.blackboard["is_interruption"] = False
 		if self.blackboard["new_face"] > 0:
 			self.blackboard["bored_since"] = 0
-			print "----- Someone Arrived!"
+			print("----- Someone arrived! id: " + str(self.blackboard["new_face"]))
 			yield True
 		else:
 			yield False
@@ -589,7 +589,7 @@ class Tree():
 	def is_someone_left(self, **kwargs):
 		self.blackboard["is_interruption"] = False
 		if self.blackboard["lost_face"] > 0:
-			print "----- Someone Left!"
+			print("----- Someone left! id: " + str(self.blackboard["lost_face"]))
 			yield True
 		else:
 			yield False
@@ -612,7 +612,7 @@ class Tree():
 	@owyl.taskmethod
 	def were_no_people_in_the_scene(self, **kwargs):
 		if len(self.blackboard["face_targets"]) == 1:
-			print "----- Were No People In The Scene!"
+			print("----- Previously, no one in the scene!")
 			yield True
 		else:
 			yield False
@@ -621,7 +621,8 @@ class Tree():
 	def was_interacting_with_that_person(self, **kwargs):
 		if self.blackboard["current_face_target"] == self.blackboard["lost_face"]:
 			self.blackboard["current_face_target"] = 0
-			print "----- Was Interacting With That Person!"
+			print("----- Lost face " + str(self.blackboard["lost_face"] +
+				", but was interacting with them!")
 			yield True
 		else:
 			yield False
@@ -736,7 +737,7 @@ class Tree():
 
 		interval = 0.01
 		duration = random.uniform(self.blackboard["min_duration_for_interaction"], self.blackboard["max_duration_for_interaction"])
-		print "----- Interacting w/Face(id:" + str(face_id) + ") for " + str(duration)[:5] + " seconds"
+		print "----- Interacting w/face id:" + str(face_id) + " for " + str(duration)[:5] + " seconds"
 		self.break_if_interruptions(interval, duration)
 		yield True
 
@@ -813,7 +814,7 @@ class Tree():
 
 	@owyl.taskmethod
 	def search_for_attention(self, **kwargs):
-		print "----- Search For Attention!"
+		print("----- Search for attention!")
 		if self.blackboard["bored_since"] == 0:
 			self.blackboard["bored_since"] = time.time()
 		if self.blackboard["blender_mode"] != "LookAround":
@@ -877,13 +878,13 @@ class Tree():
 	@owyl.taskmethod
 	def clear_new_face_target(self, **kwargs):
 		if not self.blackboard["is_interruption"]:
-			print "----- Cleared New Face: " + str(self.blackboard["new_face"])
+			print "----- Cleared new face: " + str(self.blackboard["new_face"])
 			self.blackboard["new_face"] = 0
 		yield True
 
 	@owyl.taskmethod
 	def clear_lost_face_target(self, **kwargs):
-		print "----- Cleared Lost Face: " + str(self.blackboard["lost_face"])
+		print "----- Cleared lost face: " + str(self.blackboard["lost_face"])
 		self.blackboard["lost_face"] = 0
 		yield True
 
