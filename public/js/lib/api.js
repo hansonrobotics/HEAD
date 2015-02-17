@@ -4,11 +4,8 @@ RosUI.api = {
 
         RosUI.ros.topics.expression.publish(
             new ROSLIB.Message({
-                robotname: RosUI.ros.config.robotname,
-                expr: {
-                    exprname: name,
-                    intensity: intensity
-                }
+                exprname: name,
+                intensity: intensity
             })
         );
     },
@@ -29,10 +26,7 @@ RosUI.api = {
         );
     },
     expressionList: function (success) {
-        RosUI.ros.services.expressionList.callService(new ROSLIB.ServiceRequest({
-                robotname: "fritz"
-            }), success
-        );
+        RosUI.ros.services.expressionList.callService(new ROSLIB.ServiceRequest(), success);
     },
     playAnimation: function (animation) {
         RosUI.ros.topics.animations.publish(
@@ -152,8 +146,13 @@ RosUI.api = {
             RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function(){return 0;});
         },
         disable: function() {
-            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/no_pau"}), function(){return 0;});
-            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/cmd_neck_pau"}), function(){return 0;});
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/arthur/no_pau"}), function(){return 0;});
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/arthur/cmd_neck_pau"}), function(){return 0;});
         }
+    },
+
+    getMotorsConfig: function(callback){
+        var motors_param = new ROSLIB.Param({ros: RosUI.ros.ros, name:'/'+RosUI.ros.config.robotname+'/motors'});
+        getMotorsConfig = motors_param.get(callback);
     }
 };

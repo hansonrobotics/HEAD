@@ -1,6 +1,6 @@
 RosUI.motors = {
     init: function () {
-        RosUI.motors.initMotors();
+        RosUI.api.getMotorsConfig(RosUI.motors.initMotors);
         setInterval(RosUI.motors.updateSliders, 1000);
     },
     loadPage: function () {
@@ -77,8 +77,7 @@ RosUI.motors = {
                 }
         }
     },
-    initMotors: function () {
-        var motorConf = RosUI.ros.config.motors;
+    initMotors: function (motorConf) {
         for (var i = 0; i < motorConf.length; i++) {
             if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
                 RosUI.motors.addSlider(motorConf[i]);

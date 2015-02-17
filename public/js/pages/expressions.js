@@ -28,8 +28,7 @@ RosUI.expressions = {
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 
         $('.expression-button.active').removeClass('active');
-
-        RosUI.motors.initMotors();
+        RosUI.api.setExpression("Neutral", 0);
         RosUI.api.pointHead();
     },
 

@@ -1,6 +1,6 @@
 RosUI.ros = {
     config: {
-        robotname: "fritz"
+        robotname: "arthur"
     },
     topics: {},
     init: function (success) {
@@ -48,7 +48,7 @@ RosUI.ros = {
             }),
             cmdBllink: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/cmd_blink',
+                name: '/arthur/cmd_blink',
                 messageType: 'std_msgs/String'
             }),
             cmdTree: new ROSLIB.Topic({
@@ -58,39 +58,33 @@ RosUI.ros = {
             }),
             speech_topic: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/chatbot_speech',
+                name: '/arthur/chatbot_speech',
                 messageType: 'chatbot/ChatMessage'
             }),
             chat_responses: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/chatbot_responses',
+                name: '/arthur/chatbot_responses',
                 messageType: 'std_msgs/String'
             }),
             expression: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/make_coupled_face_expr',
-                messageType: 'basic_head_api/MakeCoupledFaceExpr'
+                name: '/arthur/make_face_expr',
+                messageType: 'basic_head_api/MakeFaceExpr'
             }),
             pointHeadTopic: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/point_head',
+                name: '/arthur/point_head',
                 messageType: 'basic_head_api/PointHead'
             }),
-            left: new ROSLIB.Topic({
+            eyes: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/left/command',
+                name: '/arthur/eyes/command',
                 messageType: 'ros_pololu_servo/MotorCommand',
                 throttle_rate: 5
             }),
-            right: new ROSLIB.Topic({
+            face: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/right/command',
-                messageType: 'ros_pololu_servo/MotorCommand',
-                throttle_rate: 5
-            }),
-            middle: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/fritz/middle/command',
+                name: '/arthur/face/command',
                 messageType: 'ros_pololu_servo/MotorCommand',
                 throttle_rate: 5
             }),
@@ -101,28 +95,23 @@ RosUI.ros = {
             }),
             neck0: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/base_controller/command',
+                name: '/arthur/rotate_controller/command',
                 messageType: 'std_msgs/Float64'
             }),
             neck1: new ROSLIB.Topic({
               ros: RosUI.ros.ros,
-              name: '/fritz/base_right_controller/command',
+              name: '/arthur/hinge_right_controller/command',
               messageType: 'std_msgs/Float64'
             }),
             neck2: new ROSLIB.Topic({
               ros: RosUI.ros.ros,
-              name: '/fritz/base_left_controller/command',
+              name: '/arthur/hinge_left_controller/command',
               messageType: 'std_msgs/Float64'
             }),
-            neck3: new ROSLIB.Topic({
+            jaw: new ROSLIB.Topic({
               ros: RosUI.ros.ros,
-              name: '/fritz/neck_right_controller/command',
+              name: '/arthur/jaw_controller/command',
               messageType: 'std_msgs/Float64'
-            }),
-            neck4: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/fritz/neck_left_controller/command',
-                messageType: 'std_msgs/Float64'
             }),
             available_gestures: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
@@ -148,18 +137,18 @@ RosUI.ros = {
         RosUI.ros.services = {
             headPauMux: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
-                name: '/fritz/head_pau_mux/select',
+                name: '/arthur/head_pau_mux/select',
                 serviceType: 'topic_tools/MuxSelect'
             }),
             neckPauMux: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
-                name: '/fritz/neck_pau_mux/select',
+                name: '/arthur/neck_pau_mux/select',
                 serviceType: 'topic_tools/MuxSelect'
             }),
             expressionList: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
-                name: '/fritz/valid_coupled_face_exprs',
-                serviceType: 'basic_head_api/ValidCoupledFaceExprs'
+                name: '/arthur/valid_face_exprs',
+                serviceType: 'basic_head_api/ValidFaceExprs'
             })
         };
     },
