@@ -4,15 +4,7 @@ RosUI.ros = {
     },
     topics: {},
     init: function (success) {
-        $.ajax({
-            url: "motors.yml",
-            dataType: "text",
-
-            success: function (data) {
-                RosUI.ros.config.motors = jsyaml.load(data);
-                RosUI.ros.connect(success);
-            }
-        });
+         RosUI.ros.connect(success);
     },
     connect: function (success) {
         //Connect to rosbridge
@@ -22,7 +14,6 @@ RosUI.ros = {
                 // call the success callback
                 success();
 
-                RosUI.api.setDefaultMotorValues();
             }).on('connection', function () {
                 $('#app-connecting').hide();
                 $('#app-pages').fadeIn();

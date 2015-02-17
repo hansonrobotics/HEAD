@@ -109,9 +109,6 @@ RosUI.expressions = {
         RosUI.api.setExpression(RosUI.expressions.current_face, intensity);
     },
     buildCrosshair: function (element, options) {
-        var yaw = RosUI.ros.getMotorConfig("neck_base");
-        var pitch = RosUI.ros.getMotorConfig("neck_pitch");
-
         $(element).crosshairsl($.extend({}, {
             xmin: Math.floor(RosUI.utilities.radToDeg(-1)),
             xmax: Math.ceil(RosUI.utilities.radToDeg(1)),

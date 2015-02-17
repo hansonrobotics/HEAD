@@ -79,8 +79,10 @@ RosUI.motors = {
     },
     initMotors: function (motorConf) {
         for (var i = 0; i < motorConf.length; i++) {
-            if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
-                RosUI.motors.addSlider(motorConf[i]);
+            RosUI.motors.addSlider(motorConf[i]);
         }
+        RosUI.ros.config.motors = motorConf;
+        // Neutral position
+        RosUI.api.setDefaultMotorValues();
     }
 };
