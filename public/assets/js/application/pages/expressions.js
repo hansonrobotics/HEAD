@@ -1,5 +1,5 @@
-define(['./../lib/api', './../lib/ros', './../lib/utilities', './../lib/crosshair-slider',
-    'vendor/jquery.knob'], function (api, ros, utilities) {
+define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities', './../lib/crosshair-slider',
+    'vendor/jquery.knob'], function ($, api, ros, utilities) {
     var expressions = {
         config: {
             knob: {

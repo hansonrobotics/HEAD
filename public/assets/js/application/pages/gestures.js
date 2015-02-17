@@ -1,4 +1,4 @@
-define(['./../lib/api'], function (api) {
+define(['jquery', './../lib/api'], function ($, api) {
     var gestures = {
         config: {},
         init: function () {

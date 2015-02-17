@@ -1,4 +1,4 @@
-define(['roslib', './utilities'], function (ROSLIB, utilities) {
+define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
     var api = {
         config: {
             robotname: "fritz"

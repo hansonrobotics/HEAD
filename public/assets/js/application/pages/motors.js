@@ -1,4 +1,4 @@
-define(['./../lib/api', './../lib/ros', './../lib/utilities'], function (api, ros, utilities) {
+define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities'], function ($, api, ros, utilities) {
     var motors = {
         init: function () {
             motors.initMotors();

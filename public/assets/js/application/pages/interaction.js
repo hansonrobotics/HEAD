@@ -1,4 +1,4 @@
-define(['./../lib/api'], function (api) {
+define(['jquery', './../lib/api', './gestures'], function ($, api, gestures) {
     var interaction = {
         init: function () {
             api.topics.chat_responses.subscribe(function (msg) {

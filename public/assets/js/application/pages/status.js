@@ -1,4 +1,4 @@
-define([], function () {
+define(['jquery', './../lib/api', 'roslib'], function ($, api, ROSLIB) {
     var status = {
         config: {
         },
@@ -30,16 +30,16 @@ define([], function () {
         loadPage: function () {
             var blinkMessage, treeMessage;
 
-            RosUI.api.blenderMode.disable();
+            api.blenderMode.disable();
 
             blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
-            RosUI.ros.topics.cmdBllink.publish(blinkMessage);
+            api.topics.cmdBllink.publish(blinkMessage);
 
             treeMessage = new ROSLIB.Message({data: 'btree_off'});
-            RosUI.ros.topics.cmdTree.publish(treeMessage);
+            api.topics.cmdTree.publish(treeMessage);
 
-            RosUI.api.setExpression("happy", 0);
-            RosUI.api.pointHead();
+            api.setExpression("happy", 0);
+            api.pointHead();
         }
     };
 

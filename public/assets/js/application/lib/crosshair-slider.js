@@ -1,4 +1,4 @@
-define(['jquery-ui'], function () {
+define(['jquery', 'jquery-ui'], function ($) {
     $.widget("custom.crosshairsl", {
         options: {
             fgColor: "#FFAA00",

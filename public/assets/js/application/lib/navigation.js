@@ -1,4 +1,6 @@
-define(['./api', 'application/pages/status'], function (api, status) {
+define(['jquery', './api', 'application/pages/status', './../pages/expressions',
+    './../pages/animations', './../pages/gestures', './../pages/interaction', './../pages/motors'],
+    function ($, api, status, expressions, animations, gestures, interaction, motors) {
     var navigation = {
         init: function() {
             // bind page change to navigation links
@@ -45,27 +47,26 @@ define(['./api', 'application/pages/status'], function (api, status) {
             }
         },
         reload: function () {
-            console.log('here');
-            RosUI.gestures.demo.disable();
+            gestures.demo.disable();
 
             switch ($('.app-change-page.active').attr('id')) {
                 case 'app-status-link':
                     status.loadPage();
                     break;
                 case 'app-expressions-link':
-                    RosUI.expressions.loadPage();
+                    expressions.loadPage();
                     break;
                 case 'app-motors-link':
-                    RosUI.motors.loadPage();
+                    motors.loadPage();
                     break;
                 case 'app-animations-link':
-                    RosUI.animations.loadPage();
+                    animations.loadPage();
                     break;
                 case 'app-interactions-link':
-                    RosUI.interaction.loadPage();
+                    interaction.loadPage();
                     break;
                 case 'app-gestures-link':
-                    RosUI.gestures.loadPage();
+                    gestures.loadPage();
                     break;
             }
         }
