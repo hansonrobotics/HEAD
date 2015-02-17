@@ -1,3 +1,12 @@
+<!--
+ - tracker.launch
+ -
+ - Launch file for pi_vision face tracking, with inputs from two
+ - cameras: a (stationary) body camera, and an eye camera (which
+ - moves with the eyes, and thus has a constantly changing
+ - field-of-view)
+ -
+-->
 <launch>
     <node pkg="usb_cam" type="usb_cam_node" name="camera">
       <param name="video_device" value="/dev/video2"/>
