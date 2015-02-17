@@ -47,7 +47,6 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   MakeFaceExpr.msg
-  MakeCoupledFaceExpr.msg
   PointHead.msg
 )
 
@@ -55,7 +54,6 @@ add_message_files(
 add_service_files(
   FILES
   ValidFaceExprs.srv
-  ValidCoupledFaceExprs.srv
 )
 
 ## Generate actions in the 'action' folder

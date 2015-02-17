@@ -1,62 +1,7 @@
 from collections import OrderedDict
 from MotorCmder import MotorCmder
-from pau2motors.msg import pau
-import ShapekeyStore
 import copy
 import rospy
-
-class FaceExprPAU:
-  """
-  Represents a robot face expression in terms of PAU coefficients.
-  Call msg() to get the corresponding ROS message.
-  """
-
-  M_COEFFS_LEN = 48
-
-  def new_msg(self, intensity=1):
-    """
-    Builds a pau message based on the given expression
-    intensity (0..1).
-    """
-    result = copy.deepcopy(self.msg)
-    for i in xrange(self.M_COEFFS_LEN):
-      result.m_coeffs[i] *= intensity
-    return result
-
-  @classmethod
-  def from_expr_yaml(cls, expr_yaml):
-    """
-    Builds FaceExprPAU instances from config file. Returns a dictionary
-    mapping expression names to them.
-    """
-    result = OrderedDict()
-    for exprname in expr_yaml:
-      result[exprname] = cls(expr_yaml[exprname])
-    return result
-
-  @classmethod
-  def _build_msg(cls, expr_entry=None):
-    """
-    Takes an entry from the config file and returns a constructed ROS message.
-    """
-    msg = pau()
-    msg.m_coeffs = [0]*cls.M_COEFFS_LEN
-
-    # Allow creation of a neutral face without an expression yaml entry.
-    if expr_entry == None:
-      return msg
-
-    for shapekey in expr_entry:
-      index = ShapekeyStore.getIndex(shapekey)
-      if (index == None):
-        rospy.logwarn("Invalid shapekey in expression data: %s", shapekey)
-      else:
-        msg.m_coeffs[index] = expr_entry[shapekey]
-    return msg
-
-  def __init__(self, expr_entry=None):
-    self.msg = self._build_msg(expr_entry)
-  
 
 class FaceExprMotors:
   """

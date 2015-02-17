@@ -15,27 +15,6 @@ from std_msgs.msg import String
 from std_msgs.msg import Float64
 import copy
 
-CONFIG_DIR = "config"
-
-#Extend yaml functionality
-def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
-    class OrderedLoader(Loader):
-        pass
-    OrderedLoader.add_constructor(
-        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
-        lambda loader, node: object_pairs_hook(loader.construct_pairs(node)))
-    return yaml.load(stream, OrderedLoader)
-yaml.ordered_load = ordered_load
-#---
-
-def read_config(configname):
-  # Find the directory of this python file.
-  dirname, filename = os.path.split(os.path.abspath(__file__))
-
-  stream = open(os.path.join(dirname, CONFIG_DIR, configname), 'r')
-  config = yaml.ordered_load(stream)
-  stream.close()
-  return config
 
 def to_dict(list, key):
   result = {}
@@ -44,21 +23,6 @@ def to_dict(list, key):
   return result
 
 class PauCtrl:
-
-  def valid_exprs(self):
-    rospy.loginfo("Valid face expressions request.")
-    return {"exprnames": self.faces.keys()}
-
-  def make_face(self, exprname, intensity=1):
-    rospy.loginfo("Face request: %s of %s", intensity, exprname)
-
-    if exprname == 'neutral' or intensity == 0:
-      # Send a neutral expression, which is not saved among other expressions.
-      self.pub_face.publish(FaceExpr.FaceExprPAU().new_msg(0))
-    else:
-      self.pub_face.publish(
-        self.faces[exprname].new_msg(intensity)
-      )
 
   def point_head(self, req):
     rospy.loginfo(
@@ -71,25 +35,19 @@ class PauCtrl:
     )
     self.pub_neck.publish(msg)
   
-  def __init__(self, pub_face, pub_neck):
-    # Dictionary of expression names mapping to FaceExprPAU instances.
-    self.faces = FaceExpr.FaceExprPAU.from_expr_yaml(
-      read_config("pau_exprs.yaml")
-    )
-
+  def __init__(self):
     # PAU commands will be sent to these publishers
-    self.pub_face = pub_face
-    self.pub_neck = pub_neck
+    self.pub_neck = rospy.Publisher("cmd_neck_pau", pau, queue_size=30)
 
 
 class SpecificRobotCtrl:
 
   def valid_exprs(self):
-    rospy.loginfo("Valid %s face expressions request.", self.robotname)
+    rospy.loginfo("Valid face expressions request.")
     return {"exprnames": self.faces.keys()}
 
   def make_face(self, exprname, intensity=1):
-    rospy.loginfo("Face request: %s of %s for %s", intensity, exprname, self.robotname)
+    rospy.loginfo("Face request: %s of %s", intensity, exprname)
     for cmd in self.faces[exprname].new_msgs(intensity):
       (cmd.joint_name, pubid) = cmd.joint_name.split('@')
       rospy.loginfo("Pub id: %s", pubid)
@@ -98,60 +56,45 @@ class SpecificRobotCtrl:
         self.publishers[pubid].publish(cmd.position)
       else:
         self.publishers[pubid].publish(cmd)
-   
 
-  def __init__(self, robotname, publishers):
-    # Dictionary of expression names mapping to FaceExprMotors instances.
-    self.faces = FaceExpr.FaceExprMotors.from_expr_yaml(
-      read_config(robotname + "_exprs.yaml"),
-      to_dict(read_config(robotname + "_motors.yaml"), "name")
-    )
-
+  def __init__(self):
+    motors = rospy.get_param('motors')
+    expressions = rospy.get_param('expressions')
+    #Expressions to motors mapping
+    self.faces = FaceExpr.FaceExprMotors.from_expr_yaml(expressions, to_dict(motors, "name"))
     # Motor commands will be sent to this publisher.
-    self.publishers = publishers
-
-    self.robotname = robotname
+    self.publishers = {}
+    # Subscribe motor topics based on their type
+    for m in motors:
+      if not m['topic'] in self.publishers.keys():
+        # Pololu motor if motor_id is specified
+        if 'motor_id' in m: 
+          self.publishers[m['topic']] = rospy.Publisher(m['topic']+"/command",MotorCommand, queue_size=30)
+        else:
+          self.publishers[m['topic']] = rospy.Publisher(m['topic']+"/command",Float64, queue_size=30)
 
 
 class HeadCtrl:
 
-  robot_controllers = {}
+  def valid_face_exprs(self,req):
+    return self.robot_ctrl.valid_exprs()
 
-  def get_robot_ctrl(self, robotname):
-    """
-    Creates a new SpecificRobotCtrl instance, if the given robotname hasn't
-    been accessed yet.
-    """
-    robotctrl = self.robot_controllers.get(robotname)
-    if robotctrl == None:
-      robotctrl = SpecificRobotCtrl(robotname, self.publishers)
-      self.robot_controllers[robotname] = robotctrl
-    return robotctrl
-
-  def valid_coupled_face_exprs(self, req):
-    return self.get_robot_ctrl(req.robotname).valid_exprs()
-
-  def coupled_face_request(self, req):
-    self.get_robot_ctrl(req.robotname).make_face(
-      req.expr.exprname,
-      req.expr.intensity
+  def face_request(self, req):
+    self.robot_ctrl.make_face(
+      req.exprname,
+      req.intensity
     )
 
   def __init__(self):
     rospy.init_node('head_ctrl')
-
+    # Deprecated. WebUI should send direct commands
+    self.pau_ctrl = PauCtrl()
     rospy.Subscriber("point_head", PointHead, self.pau_ctrl.point_head)
 
-    # Topics and services for robot-specific motor-coupled expressions.
-    self.publishers = {};
-    self.publishers['face'] = rospy.Publisher("face/command", MotorCommand, queue_size=30)
-    self.publishers['eyes'] = rospy.Publisher("eyes/command", MotorCommand, queue_size=30)
-    self.publishers['jaw'] = rospy.Publisher("jaw_controller/command", Float64, queue_size=30)
-
-
-
-    rospy.Service("valid_coupled_face_exprs", ValidCoupledFaceExprs, self.valid_coupled_face_exprs)
-    rospy.Subscriber("make_coupled_face_expr", MakeCoupledFaceExpr, self.coupled_face_request)
+    # Robot Control  
+    self.robot_ctrl= SpecificRobotCtrl()
+    rospy.Service("valid_face_exprs", ValidFaceExprs, self.valid_face_exprs)
+    rospy.Subscriber("make_face_expr", MakeFaceExpr, self.face_request)
 
 if __name__ == '__main__':
     HeadCtrl()
