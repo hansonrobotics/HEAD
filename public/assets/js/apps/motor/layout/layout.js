@@ -4,7 +4,7 @@ define(["app", "tpl!./templates/layout.tpl"], function (UI, layoutTpl) {
             template: layoutTpl,
 
             regions: {
-                motorRegion: "#motor-region"
+                motorRegion: "#app-motor-region"
             }
         });
     });
