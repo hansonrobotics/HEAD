@@ -20,7 +20,7 @@ class Chatbot():
 
   def initialize(self, aiml_dir):
     self._kernel.learn(os.sep.join([aiml_dir, '*.aiml']))
-    properties_file = open(os.sep.join([aiml_dir, 'bot.properties']))
+    properties_file = open(rospy.get_param('~properties',os.sep.join([aiml_dir, 'bot.properties'])))
     for line in properties_file:
       parts = line.split('=')
       key = parts[0]
