@@ -1,77 +1,168 @@
 Eye_L:
   pololu_id: 0
   motor_id: 0
-  init: 1497
+  init: 1585
   min: 1384
   max: 1743
   reverse: false
   calibration:
-    min_pulse: 820
-    min_angle: -90
-    max_pulse: 2175
-    max_angle: 90
+    min_pulse: 1384
+    min_angle: -28
+    max_pulse: 1743
+    max_angle: 22
 
 EyeLid_U_L:
   pololu_id: 0
   motor_id: 1
-  init: 1497
-  min: 1290
-  max: 1310
+  init: 1401
+  min: 1166
+  max: 1636
   reverse: false
   calibration:
-    min_pulse: 820
-    min_angle: -90
-    max_pulse: 2175
-    max_angle: 90
+    min_pulse: 1166
+    min_angle: -45
+    max_pulse: 1636
+    max_angle: 45
 
 EyeLid_L_L:
   pololu_id: 0
   motor_id: 2
-  init: 1497
-  min: 1600
-  max: 1700
+  init: 1498
+  min: 1331
+  max: 1665
   reverse: false
   calibration:
-    min_pulse: 820
-    min_angle: -90
-    max_pulse: 2175
-    max_angle: 90
+    min_pulse: 1331
+    min_angle: -45
+    max_pulse: 1665
+    max_angle: 45
 
 Jaw_Forward_L:
   pololu_id: 0
   motor_id: 3
-  init: 1497
-  min: 1500
-  max: 1600
+  init: 1476
+  min: 1103
+  max: 1848
   reverse: false
   calibration:
-    min_pulse: 820
-    min_angle: -90
-    max_pulse: 2175
-    max_angle: 90
+    min_pulse: 1103
+    min_angle: -45
+    max_pulse: 1848
+    max_angle: 45
 
 Lower_lip_L:
   pololu_id: 0
   motor_id: 4
-  init: 1497
-  min: 1750
-  max: 1950
+  init: 1830
+  min: 1500
+  max: 2160
   reverse: false
   calibration:
-    min_pulse: 820
-    min_angle: -90
-    max_pulse: 2175
-    max_angle: 90
+    min_pulse: 1500
+    min_angle: -45
+    max_pulse: 2160
+    max_angle: 45
 
 Lower_Lip_Roll_L:
   pololu_id: 0
   motor_id: 5
-  init: 1497
+  init: 1840
   min: 1500
-  max: 1600
+  max: 2180
+  reverse: false
+  calibration:
+    min_pulse: 1500
+    min_angle: -45
+    max_pulse: 2180
+    max_angle: 45
+
+Lip_Upper_L:
+  pololu_id: 0
+  motor_id: 6
+  init: 1575
+  min: 1182
+  max: 1968
+  reverse: false
+  calibration:
+    min_pulse: 1182
+    min_angle: -45
+    max_pulse: 1968
+    max_angle: 45
+
+Sneer_R:
+  pololu_id: 0
+  motor_id: 7
+  init: 1932
+  min: 1688
+  max: 2175
+  reverse: false
+  calibration:
+    min_pulse: 1688
+    min_angle: -45
+    max_pulse: 2175
+    max_angle: 45
+
+Smile2_L:
+  pololu_id: 0
+  motor_id: 8
+  init: 1888
+  min: 1600
+  max: 2175
+  reverse: false
+  calibration:
+    min_pulse: 1600
+    min_angle: -45
+    max_pulse: 2175
+    max_angle: 45
+
+Lip_Upper_C:
+  pololu_id: 0
+  motor_id: 17
+  init: 1329
+  min: 820
+  max: 1838
   reverse: false
   calibration:
     min_pulse: 820
-    min_angle: -90
+    min_angle: -45
+    max_pulse: 1838
+    max_angle: 45
+
+Outer_Brow_L:
+  pololu_id: 0
+  motor_id: 14
+  init: 1235
+  min: 820
+  max: 1650
+  reverse: false
+  calibration:
+    min_pulse: 820
+    min_angle: -45
+    max_pulse: 1650
+    max_angle: 45
+
+Frown_R:
+  pololu_id: 0
+  motor_id: 22
+  init: 1693
+  min: 1210
+  max: 2175
+  reverse: false
+  calibration:
+    min_pulse: 1210
+    min_angle: -45
     max_pulse: 2175
-    max_angle: 90
+    max_angle: 45
+
+Inner_Bwow_L:
+  pololu_id: 0
+  motor_id: 23
+  init: 1622
+  min: 1093
+  max: 2150
+  reverse: false
+  calibration:
+    min_pulse: 1093
+    min_angle: -45
+    max_pulse: 2150
+    max_angle: 45
