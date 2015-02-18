@@ -1,8 +1,8 @@
-define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities'], function ($, api, ros, utilities) {
+define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities'], function ($, api, ros, utilities, motorsLayout) {
     var motors = {
         init: function () {
-            motors.initMotors();
-            motors.initEdit();
+            //motors.initMotors();
+            //motors.initEdit();
             //setInterval(motors.updateSliders, 1000);
         },
         loadPage: function () {

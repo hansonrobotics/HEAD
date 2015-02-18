@@ -1,4 +1,4 @@
-define(['jquery', './api', 'application/pages/status', './../pages/expressions',
+define(['jquery', './api', 'main/pages/status', './../pages/expressions',
     './../pages/animations', './../pages/gestures', './../pages/interaction', './../pages/motors'],
     function ($, api, status, expressions, animations, gestures, interaction, motors) {
     var navigation = {
@@ -39,7 +39,7 @@ define(['jquery', './api', 'application/pages/status', './../pages/expressions',
                 pageLink = $('.app-change-page[href="' + anchor + '"]');
 
             if ($(pageLink).length) {
-                // load page if has is valid
+                // load page if found
                 $(pageLink).click();
             } else {
                 // load current active page by default

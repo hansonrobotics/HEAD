@@ -16,7 +16,7 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     if (motorsConfig != null)
                         api.config.motors = api.config.motors.concat(jsyaml.load(motorsConfig));
 
-                    success();
+                    success(api.config.motors);
                 }
             });
         },
