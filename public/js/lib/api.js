@@ -152,7 +152,12 @@ RosUI.api = {
     },
 
     getMotorsConfig: function(callback){
-        var motors_param = new ROSLIB.Param({ros: RosUI.ros.ros, name:'/'+RosUI.ros.config.robotname+'/motors'});
-        getMotorsConfig = motors_param.get(callback);
+        var param = new ROSLIB.Param({ros: RosUI.ros.ros, name:'/'+RosUI.robot+'/motors'});
+        param.get(callback);
+    },
+    getRobotName: function(callback){
+        var param = new ROSLIB.Param({ros: RosUI.ros.ros, name:'/robot_name'});
+        param.get(callback);
     }
+
 };

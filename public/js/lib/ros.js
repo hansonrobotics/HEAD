@@ -1,19 +1,27 @@
 RosUI.ros = {
-    config: {
-        robotname: "arthur"
-    },
+    config: {},
     topics: {},
     init: function (success) {
-         RosUI.ros.connect(success);
+        RosUI.ros.connect(success);
     },
     connect: function (success) {
         //Connect to rosbridge
         RosUI.ros.ros = new ROSLIB.Ros({
             url: RosUI.ros.rosUrl()
         }).on("connection", function (e) {
-                // call the success callback
-                success();
-
+                // Get Robot name
+                RosUI.api.getRobotName(function(val){
+                    if (val){
+                        // Finishe initializing UI
+                        console.log('robot: '+val);
+                        RosUI.robot = val
+                        RosUI.ros.initTopics();
+                        RosUI.ros.initServices();
+                        success();                            
+                    }else{
+                        RosUI.ros.ros.close();
+                    }
+                });  
             }).on('connection', function () {
                 $('#app-connecting').hide();
                 $('#app-pages').fadeIn();
@@ -27,8 +35,6 @@ RosUI.ros = {
                 $('#app-title').html('');
             });
 
-        RosUI.ros.initTopics();
-        RosUI.ros.initServices();
     },
     initTopics: function () {
         RosUI.ros.topics = {
@@ -39,7 +45,7 @@ RosUI.ros = {
             }),
             cmdBllink: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/cmd_blink',
+                name: '/'+RosUI.robot + '/cmd_blink',
                 messageType: 'std_msgs/String'
             }),
             cmdTree: new ROSLIB.Topic({
@@ -49,33 +55,33 @@ RosUI.ros = {
             }),
             speech_topic: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/chatbot_speech',
+                name: '/'+RosUI.robot + '/chatbot_speech',
                 messageType: 'chatbot/ChatMessage'
             }),
             chat_responses: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/chatbot_responses',
+                name: '/'+RosUI.robot + '/chatbot_responses',
                 messageType: 'std_msgs/String'
             }),
             expression: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/make_face_expr',
+                name: '/'+RosUI.robot + '/make_face_expr',
                 messageType: 'basic_head_api/MakeFaceExpr'
             }),
             pointHeadTopic: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/point_head',
+                name: '/'+RosUI.robot + '/point_head',
                 messageType: 'basic_head_api/PointHead'
             }),
             eyes: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/eyes/command',
+                name: '/'+RosUI.robot + '/eyes/command',
                 messageType: 'ros_pololu_servo/MotorCommand',
                 throttle_rate: 5
             }),
             face: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/face/command',
+                name: '/'+RosUI.robot + '/face/command',
                 messageType: 'ros_pololu_servo/MotorCommand',
                 throttle_rate: 5
             }),
@@ -86,22 +92,22 @@ RosUI.ros = {
             }),
             neck0: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/arthur/rotate_controller/command',
+                name: '/'+RosUI.robot + '/rotate_controller/command',
                 messageType: 'std_msgs/Float64'
             }),
             neck1: new ROSLIB.Topic({
               ros: RosUI.ros.ros,
-              name: '/arthur/hinge_right_controller/command',
+              name: '/'+RosUI.robot + '/hinge_right_controller/command',
               messageType: 'std_msgs/Float64'
             }),
             neck2: new ROSLIB.Topic({
               ros: RosUI.ros.ros,
-              name: '/arthur/hinge_left_controller/command',
+              name: '/'+RosUI.robot + '/hinge_left_controller/command',
               messageType: 'std_msgs/Float64'
             }),
             jaw: new ROSLIB.Topic({
               ros: RosUI.ros.ros,
-              name: '/arthur/jaw_controller/command',
+              name: '/'+RosUI.robot + '/jaw_controller/command',
               messageType: 'std_msgs/Float64'
             }),
             available_gestures: new ROSLIB.Topic({
@@ -125,20 +131,21 @@ RosUI.ros = {
         };
     },
     initServices: function () {
+        console.log('init services');
         RosUI.ros.services = {
             headPauMux: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
-                name: '/arthur/head_pau_mux/select',
+                name: '/'+RosUI.robot + '/head_pau_mux/select',
                 serviceType: 'topic_tools/MuxSelect'
             }),
             neckPauMux: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
-                name: '/arthur/neck_pau_mux/select',
+                name: '/'+RosUI.robot + '/neck_pau_mux/select',
                 serviceType: 'topic_tools/MuxSelect'
             }),
             expressionList: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
-                name: '/arthur/valid_face_exprs',
+                name: '/'+RosUI.robot + '/valid_face_exprs',
                 serviceType: 'basic_head_api/ValidFaceExprs'
             })
         };
