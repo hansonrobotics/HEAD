@@ -1,0 +1,35 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" output="screen">
+        <rosparam>
+            namespace: dxl_manager
+            serial_ports:
+                pan_tilt_port:
+                    port_name: "/dev/ttyUSB0"
+                    baud_rate: 1000000
+                    min_motor_id: 0
+                    max_motor_id: 4
+                    update_rate: 20
+        </rosparam>
+     </node>
+     <node name="neck_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                rotate_controller
+                hinge_right_controller
+                hinge_left_controller
+                jaw_controller"
+          output="screen"/>
+
+    <node pkg="ros_pololu_servo" type="ros_pololu_servo_node" name="eyes_pololu_node" output="screen">
+        <param name="pololu_motors_yaml" value="$(find robots_config)/arthur/pololu_eyes.yaml" />
+        <param name="port_name" value="/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00080389-if00" />
+        <param name="topic_prefix" value="eyes/" />
+    </node>
+
+    <node pkg="ros_pololu_servo" type="ros_pololu_servo_node" name="face_pololu_node" output="screen">
+        <param name="pololu_motors_yaml" value="$(find robots_config)/arthur/pololu_face.yaml" />
+        <param name="port_name" value="/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00080396-if00" />
+        <param name="topic_prefix" value="face/" />
+    </node>
+</launch>

@@ -1,0 +1,34 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <param name="/robot_name" type="str" value="$(arg name)" />
+	<group ns="/$(arg name)">
+    <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
+    <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
+    <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
+    <include file="$(find robots_config)/$(arg name)-hardware.launch" />
+
+    <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py"
+          output="screen">
+    </node>
+
+    <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
+          output="screen"/>
+
+    <node pkg="topic_tools" type="mux" name="neck_pau" args="neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux"/>
+    <node pkg="topic_tools" type="mux" name="head_pau" args="head_pau no_pau /blender_api/get_pau mux:=head_pau_mux"/>
+
+    <node name="chatbot_ai" pkg="chatbot" type="ai.py" args="/catkin_ws/src/chatbot/aiml/">
+    	<param name="properties" value="$(find robots_config)/$(arg name)/bot.properties" />
+    </node>
+
+    <node name="tts" pkg="tts" type="tts_talker.py">
+        <param name="topic_name" value="chatbot_responses" />
+        <param name="voice" value="$(find robots_config)/$(arg name)/bot.properties" />
+        <param name="license" value="" />
+    </node>
+
+    <node name="faceshift" pkg="ros_faceshift" type="ros_faceshift_node.py">
+        <param name="topic_name" value="chatbot_responses" />
+    </node>
+    </group>
+</launch>
