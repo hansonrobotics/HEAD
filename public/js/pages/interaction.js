@@ -24,9 +24,6 @@ RosUI.interaction = {
     loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
-        //blenderMessage = new ROSLIB.Message({data: 'TrackDev'});
-        //RosUI.ros.topics.cmdBlender.publish(blenderMessage);
-
         RosUI.api.blenderMode.enable();
 
         treeMessage = new ROSLIB.Message({data: 'btree_on'});

@@ -21,9 +21,6 @@ RosUI.expressions = {
 
         RosUI.api.blenderMode.disable();
 
-        blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
-        RosUI.ros.topics.cmdBllink.publish(blinkMessage);
-
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 

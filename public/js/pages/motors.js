@@ -8,9 +8,6 @@ RosUI.motors = {
 
         RosUI.api.blenderMode.disable();
 
-        blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
-        RosUI.ros.topics.cmdBllink.publish(blinkMessage);
-
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 
@@ -79,6 +76,26 @@ RosUI.motors = {
     },
     initMotors: function (motorConf) {
         for (var i = 0; i < motorConf.length; i++) {
+            //Create topics for specific motors
+            // Motor_id is only set for the 
+            if (!(motorConf[i]['topic'] in RosUI.ros.topics)){
+                if ('motor_id' in motorConf[i]){
+                    // Pololu
+                    RosUI.ros.topics[motorConf[i]['topic']] = new ROSLIB.Topic({
+                        ros: RosUI.ros.ros,
+                        name: '/'+RosUI.robot + '/'+motorConf[i]['topic']+'/command',
+                        messageType: 'ros_pololu_servo/MotorCommand',
+                        throttle_rate: 5
+                    });
+                }else{
+                    // Dynamixel
+                    RosUI.ros.topics[motorConf[i]['topic']] =new ROSLIB.Topic({
+                        ros: RosUI.ros.ros,
+                        name: '/'+RosUI.robot + '/'+motorConf[i]['topic']+'_controller/command',
+                        messageType: 'std_msgs/Float64'
+                    });
+                }
+            }
             RosUI.motors.addSlider(motorConf[i]);
         }
         RosUI.ros.config.motors = motorConf;

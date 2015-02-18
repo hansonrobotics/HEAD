@@ -1,3 +1,4 @@
+// Dprecated
 RosUI.animations = {
     init: function () {
         var last_animation = 'happy-1';

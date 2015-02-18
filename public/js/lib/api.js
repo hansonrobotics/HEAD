@@ -146,8 +146,8 @@ RosUI.api = {
             RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function(){return 0;});
         },
         disable: function() {
-            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/arthur/no_pau"}), function(){return 0;});
-            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/arthur/cmd_neck_pau"}), function(){return 0;});
+            RosUI.ros.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/"+RosUI.robot+"/no_pau"}), function(){return 0;});
+            RosUI.ros.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/"+RosUI.robot+"/cmd_neck_pau"}), function(){return 0;});
         }
     },
 

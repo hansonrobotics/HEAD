@@ -38,16 +38,6 @@ RosUI.ros = {
     },
     initTopics: function () {
         RosUI.ros.topics = {
-            cmdBlender: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/cmd_blendermode',
-                messageType: 'std_msgs/String'
-            }),
-            cmdBllink: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/'+RosUI.robot + '/cmd_blink',
-                messageType: 'std_msgs/String'
-            }),
             cmdTree: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
                 name: '/behavior_switch',
@@ -72,43 +62,6 @@ RosUI.ros = {
                 ros: RosUI.ros.ros,
                 name: '/'+RosUI.robot + '/point_head',
                 messageType: 'basic_head_api/PointHead'
-            }),
-            eyes: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/'+RosUI.robot + '/eyes/command',
-                messageType: 'ros_pololu_servo/MotorCommand',
-                throttle_rate: 5
-            }),
-            face: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/'+RosUI.robot + '/face/command',
-                messageType: 'ros_pololu_servo/MotorCommand',
-                throttle_rate: 5
-            }),
-            animations: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/cmd_animations',
-                messageType: 'std_msgs/String'
-            }),
-            neck0: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/'+RosUI.robot + '/rotate_controller/command',
-                messageType: 'std_msgs/Float64'
-            }),
-            neck1: new ROSLIB.Topic({
-              ros: RosUI.ros.ros,
-              name: '/'+RosUI.robot + '/hinge_right_controller/command',
-              messageType: 'std_msgs/Float64'
-            }),
-            neck2: new ROSLIB.Topic({
-              ros: RosUI.ros.ros,
-              name: '/'+RosUI.robot + '/hinge_left_controller/command',
-              messageType: 'std_msgs/Float64'
-            }),
-            jaw: new ROSLIB.Topic({
-              ros: RosUI.ros.ros,
-              name: '/'+RosUI.robot + '/jaw_controller/command',
-              messageType: 'std_msgs/Float64'
             }),
             available_gestures: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
