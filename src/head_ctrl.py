@@ -71,7 +71,7 @@ class SpecificRobotCtrl:
         if 'motor_id' in m: 
           self.publishers[m['topic']] = rospy.Publisher(m['topic']+"/command",MotorCommand, queue_size=30)
         else:
-          self.publishers[m['topic']] = rospy.Publisher(m['topic']+"/command",Float64, queue_size=30)
+          self.publishers[m['topic']] = rospy.Publisher(m['topic']+"_controller/command",Float64, queue_size=30)
 
 
 class HeadCtrl:
