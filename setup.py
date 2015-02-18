@@ -1,6 +1,6 @@
 import os, sys
+from glob import glob
 from setuptools import setup
-from setuptools.command.test import test as TestCommand
 
 README = open(os.path.join(os.path.dirname(__file__), 'README.md')).read()
 
@@ -10,12 +10,14 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name='pololu-motors',
     version='1.0.0',
-    packages=['motors',],
+    packages=['motors', 'docs/pmcapi',],
+    data_files=[(os.path.join(
+        sys.prefix, 'share', 'doc', 'pololu_motors'), glob("docs/pmcapi/*"))],
     include_package_data=True,
     license='MIT License',
     description=('Pololu motor drivers APTs.'),
     long_description=README,
-    url='https://github.com/cnobile2012/pololu_motors',
+    url='https://github.com/cnobile2012/pololu-motors',
     author='Carl J. Nobile',
     author_email='carl.nobile@gmail.com',
     classifiers=[
