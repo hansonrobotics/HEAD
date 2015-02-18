@@ -18,7 +18,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-__docformat__ = "restructuredtext en"
+__docformat__ = "reStructuredText en"
 
 
 from .qik import Qik
@@ -77,7 +77,7 @@ class Qik2s9v1(Qik):
         2: (7800, '7-Bit, PWM Frequency 7.8 kHz'),
         3: (3900, '8-Bit, PWM Frequency 3.9 kHz'),
         }
-    _CONFIG_PWM_TO_VALUE = dict([(v[0], k) for k, v in _CONFIG_PWM.items()])
+    _CONFIG_PWM_TO_VALUE = dict(((v[0], k) for k, v in _CONFIG_PWM.items()))
 
     def __init__(self, device, baud=38400, readTimeout=None, writeTimeout=None,
                  log=None):
@@ -218,7 +218,7 @@ class Qik2s9v1(Qik):
           depending on the value of `message`.
 
         :Exceptions:
-          SerialException
+          * `SerialException`
             IO error indicating there was a problem reading from the serial
             connection.
         """
@@ -245,7 +245,7 @@ class Qik2s9v1(Qik):
           A text message or an int. See the `message` parameter above.
 
         :Exceptions:
-          SerialException
+          * `SerialException`
             IO error indicating there was a problem reading from the serial
             connection.
         """
@@ -275,7 +275,7 @@ class Qik2s9v1(Qik):
           A text message or an int. See the `message` parameter above.
 
         :Exceptions:
-          SerialException
+          * `SerialException`
             IO error indicating there was a problem reading from the serial
             connection.
         """
@@ -327,7 +327,7 @@ class Qik2s9v1(Qik):
           Text message indicating the status of the shutdown error.
 
         :Exceptions:
-          SerialException
+          * `SerialException`
             IO error indicating there was a problem reading from the serial
             connection.
         """
@@ -344,9 +344,9 @@ class Qik2s9v1(Qik):
             default value.
 
         :Exceptions:
-          SerialTimeoutException
+          * `SerialTimeoutException`
             If the low level serial package times out.
-          SerialException
+          * `SerialException`
             IO error when the port is not open.
         """
         cmd = self._COMMAND.get('m0-coast')
@@ -363,9 +363,9 @@ class Qik2s9v1(Qik):
             default value.
 
         :Exceptions:
-          SerialTimeoutException
+          * `SerialTimeoutException`
             If the low level serial package times out.
-          SerialException
+          * `SerialException`
             IO error when the port is not open.
         """
         cmd = self._COMMAND.get('m1-coast')
@@ -387,9 +387,9 @@ class Qik2s9v1(Qik):
             default value.
 
         :Exceptions:
-          SerialTimeoutException
+          * `SerialTimeoutException`
             If the low level serial package times out.
-          SerialException
+          * `SerialException`
             IO error when the port is not open.
         """
         self._setM0Speed(speed, device)
@@ -410,9 +410,9 @@ class Qik2s9v1(Qik):
             default value.
 
         :Exceptions:
-          SerialTimeoutException
+          * `SerialTimeoutException`
             If the low level serial package times out.
-          SerialException
+          * `SerialException`
             IO error when the port is not open.
         """
         self._setM1Speed(speed, device)

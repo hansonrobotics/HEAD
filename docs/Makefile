@@ -16,10 +16,7 @@ TARBALL_NAME	= PololuMotorDocs
 all	: api-docs
 #----------------------------------------------------------------------
 api-docs:
-	@(cd ..; epydoc -v --name "Pololu Motor Control API" \
-          -o docs/${API_DIR} --show-private --show-imports --graph all \
-          --url "${URL}" --debug */*.py \
-         )
+	@(cd ..; epydoc -v --config docs/epydoc.conf)
 
 #----------------------------------------------------------------------
 tar	:

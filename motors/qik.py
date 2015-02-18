@@ -17,7 +17,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-__docformat__ = "restructuredtext en"
+__docformat__ = "reStructuredText en"
 
 
 import serial
@@ -186,9 +186,9 @@ class Qik(object):
             Sequence of bytes to write.
 
         :Exceptions:
-          SerialTimeoutException
+          * `SerialTimeoutException`
             If the low level serial package times out.
-          SerialException
+          * `SerialException`
             IO error when the port is not open.
         """
         sequence = []
@@ -407,7 +407,7 @@ class Qik(object):
           A text message or an int. See the `message` parameter above.
 
         :Exceptions:
-          SerialException
+          * `SerialException`
             IO error indicating there was a problem reading from the serial
             connection.
         """
