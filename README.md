@@ -114,7 +114,7 @@ with `tox`.
 First you will need to install the tox subsystem then you will be able to run 
 the tests.
 
-  * This command will install tox` in a Python 3.x directory on your system, 
+  * This command will install `tox` in a Python 3.x directory on your system, 
     but this will not matter since it is run independently from your 
     `pololu-motor` install.
     * `$ sudo pip install tox`
