@@ -21,9 +21,8 @@ following steps will install it for you. The docs are at:
     * `$ sudo pip install virtualenvwrapper`
   * Add the next two lines, using your favorite text editor, to the end of the
     `.bashrc` file in your home directory. 
-    * ```
-      # Setup the Python virtual environment.
-        source /usr/local/bin/virtualenvwrapper.sh```
+    * ```# Setup the Python virtual environment.
+         source /usr/local/bin/virtualenvwrapper.sh```
   * Lastly resource the `.bashrc` file in your home directory.
     * `$ source ~/.bashrc`
 
@@ -48,12 +47,12 @@ environment will be named `pololu`.
 Installing via `pip` is probably the simplest, but may not work on all 
 platforms. If using a virtual environment be sure you are in the virtual 
 environment before running the below command. Documentation for pip can be
-found at [pip](https://pip.pypa.io/en/latest/)
+found at: [pip](https://pip.pypa.io/en/latest/).
 
   * `pip install pololu-motors`
 
 That's it, there is no more to do. The package will also install HTML API docs 
-in <prefix>/share/doc/pololu_motors/index.html. Where <prefix> can be 
+in `<prefix>/share/doc/pololu_motors/index.html`. Where `<prefix>` can be 
 `/usr`, `/usr/local`, or `~/.virtualenvs/pololu`.
 
 ### Installing `pololu-motors` with setup.py
