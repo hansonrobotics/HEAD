@@ -1,7 +1,7 @@
 
 Cookbook
 ========
-A collection of recipies and HOWTO instructions for using this ROS node.
+A collection of recipes and HOWTO instructions for using this ROS node.
 Includes a casual demonstration of each published and subscribed topic.
 
 Building
@@ -37,14 +37,14 @@ for driving the motors.
 ## With display
 Start by issuing
 ```
-blender -y Eva269.blend
+blender -y Eva.blend
 ```
 The command listener and the animation must be started manually, by
 clicking the "Start Command Listerner" button, followed by the "Start
 Animation" button.  Alternately, these can be autostarted:
 
 ```
-blender -y Eva269.blend -P autostart.py
+blender -y Eva.blend -P autostart.py
 ```
 
 
@@ -52,9 +52,9 @@ blender -y Eva269.blend -P autostart.py
 Without a display, there are no buttons to press. Thus, the animations
 MUST be autostarted:
 ```
-blender -y -b Eva269.blend -P autostart.py
+blender -y -b Eva.blend -P autostart.py
 ```
-Note: doesn't work yet. See #19
+Note: doesn't work yet. See issue #19
 
 
 ROS messages and responses
