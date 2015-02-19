@@ -15,6 +15,7 @@
       <param name="width" value="640"/>
       <param name="height" value="480"/>
     </node>
+
     <node pkg="usb_cam" type="usb_cam_node" name="eye_camera">
       <param name="video_device" value="/dev/video1"/>
       <param name="pixel_format" value="yuyv"/>
@@ -22,8 +23,11 @@
       <param name="width" value="640"/>
       <param name="height" value="480"/>
     </node>
+
     <arg name="auto_face_tracking" default="True" />
-    <node pkg="pi_face_tracker" name="body_face_tracker" type="face_tracker.py" output="screen">
+    <node pkg="pi_face_tracker" name="body_face_tracker"
+          type="face_tracker.py" output="screen">
+
         <!--remap the topics if using multiple cameras -->
         <remap from="input_rgb_image" to="camera/image_raw" />
         <remap from="output_image" to="camera/pi_face_tracker/image" />
@@ -54,10 +58,14 @@
           surf_hessian_quality: 100
         </rosparam>
 
-        <param name="cascade_frontal_alt" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
-        <param name="cascade_frontal_alt2" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt2.xml" />
+        <param name="cascade_frontal_alt"
+               value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+        <param name="cascade_frontal_alt2"
+               value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt2.xml" />
   </node>
-  <node pkg="pi_face_tracker" name="eye_face_tracker" type="face_tracker.py" output="screen">
+  <node pkg="pi_face_tracker" name="eye_face_tracker"
+        type="face_tracker.py" output="screen">
+
         <!--remap the topics if using multiple cameras -->
         <remap from="input_rgb_image" to="eye_camera/image_raw" />
         <remap from="output_image" to="eye_camera/pi_face_tracker/image" />
@@ -91,7 +99,8 @@
           surf_hessian_quality: 100
         </rosparam>
 
-        <param name="cascade_frontal_alt" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+        <param name="cascade_frontal_alt"
+               value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
 
   </node>
 </launch>
