@@ -35,13 +35,27 @@ Just run the launch files.  You may want to adjust single-cam.launch
 to match your actual webcam.
 ```
 roslaunch perception tracker-single-cam.launch
-roslaunch perception display.launch
+roslaunch perception geometry.launch
 ```
 ### Two-camera (body+eye) startup
 ```
 roslaunch perception tracker.launch
-roslaunch perception display.launch
+roslaunch perception geometry.launch
 ```
+
+### Disable rviz visualization
+The rviz visualizer can be disabled by saying:
+```
+roslaunch perception geometry.launch gui=false
+```
+
+### Alternative URDF files:
+Alternative URDF files can be specified by saying
+```
+roslaunch perception geometry.launch model:=other.urdf
+```
+to use the `other.urdf` file.
+
 ### Manual startup
  * Make sure the usb camera is running, typically like this:
 ```
@@ -51,7 +65,7 @@ roslaunch ros2opencv usb_cam.launch
 ```
 roslaunch pi_face_tracker face_tracker_usb_cam.launch
 ```
- * make sure that the face tracker is publishing faces:
+ * Make sure that the face tracker is publishing faces:
 ```
 rostopic echo /camera/face_locations
 ```
