@@ -58,6 +58,17 @@ behaviors, which includes exprsssing a variety of emotions,
 looking at the various people (faces) as they become visible to the
 robot camera, and so on.
 
+The relative scaling of the gestures, when running close-up vs. stage
+mode, is controlled in the `behavior.cfg` file, by the following
+factors:
+```
+emotion_scale_stage
+emotion_scale_closeup
+gesture_scale_stage
+gesture_scale_closeup
+```
+
+Other behavior is configued in this same file.
 
 ## ROS Messaging API
 
