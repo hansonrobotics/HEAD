@@ -403,7 +403,7 @@ class Tree():
 
 				##### Glance At Other Faces & Continue With The Last Interaction #####
 				owyl.sequence(
-					self.print_status(str="----- Continue The Interaction"),
+					self.print_status(str="----- Continue Interaction"),
 					owyl.selector(
 						owyl.sequence(
 							self.is_more_than_one_face_target(),
@@ -437,7 +437,7 @@ class Tree():
 						owyl.sequence(
 							self.dice_roll(event="go_to_sleep"),
 							self.record_start_time(variable="sleep_since"),
-							self.print_status(str="----- Go To Sleep!"),
+							self.print_status(str="----- Go to sleep!"),
 							self.go_to_sleep()
 						),
 
@@ -621,7 +621,7 @@ class Tree():
 	def was_interacting_with_that_person(self, **kwargs):
 		if self.blackboard["current_face_target"] == self.blackboard["lost_face"]:
 			self.blackboard["current_face_target"] = 0
-			print("----- Lost face " + str(self.blackboard["lost_face"] +
+			print("----- Lost face " + str(self.blackboard["lost_face"]) +
 				", but was interacting with them!")
 			yield True
 		else:

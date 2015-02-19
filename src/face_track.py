@@ -61,8 +61,9 @@ class FaceTrack:
 
 		# List of no longer visible faces, but seen recently.
 		self.recent_locations = {}
-		# How long to keep around a recently seen, but now lost face.
-		self.RECENT_INTERVAL = 5
+		# How long (in seconds) to keep around a recently seen, but now
+		# lost face. tf does the tracking for us.
+		self.RECENT_INTERVAL = 20
 
 		# Current look-at-target
 		self.look_at = 0
@@ -195,8 +196,8 @@ class FaceTrack:
 
 		self.visible_faces.append(faceid)
 
-		print "New face added to visibile faces: " + \
-			str(self.visible_faces)
+		print("New face added to visibile faces: " +
+			str(self.visible_faces))
 
 		self.add_face_to_bb(faceid)
 
