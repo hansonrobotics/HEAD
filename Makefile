@@ -27,7 +27,7 @@ api-docs: clean
 dist	: clean api-docs
 	python setup.py sdist
 
-upload	: clobber
+upload	: clobber api-docs
 	python setup.py sdist upload
 
 #----------------------------------------------------------------------
