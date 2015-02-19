@@ -405,7 +405,7 @@ class Tree():
 
 				##### Glance At Other Faces & Continue With The Last Interaction #####
 				owyl.sequence(
-					self.print_status(str="----- Continue Interaction"),
+					self.print_status(str="----- Continue interaction"),
 					owyl.selector(
 						owyl.sequence(
 							self.is_more_than_one_face_target(),
@@ -459,7 +459,7 @@ class Tree():
 
 					##### Continue To Sleep #####
 					owyl.sequence(
-						self.print_status(str="----- Continue To Sleep!"),
+						self.print_status(str="----- Continue to sleep."),
 						self.go_to_sleep()
 					)
 				)
@@ -470,7 +470,7 @@ class Tree():
 				self.is_interruption(),
 				self.is_sleeping(),
 				self.wake_up(),
-				self.print_status(str="----- Interruption: Wake Up!"),
+				self.print_status(str="----- Interruption: Wake up!"),
 			)
 		)
 		return tree
@@ -648,7 +648,7 @@ class Tree():
 		if self.blackboard["interact_with_face_target_since"] > 0 and \
 				(time.time() - self.blackboard["interact_with_face_target_since"]) >= \
 						random.uniform(self.blackboard["time_to_change_face_target_min"], self.blackboard["time_to_change_face_target_max"]):
-			print "----- Time To Start A New Interaction!"
+			print "----- Time to start a new interaction!"
 			yield True
 		else:
 			yield False
@@ -816,7 +816,7 @@ class Tree():
 
 	@owyl.taskmethod
 	def search_for_attention(self, **kwargs):
-		print("----- Search for attention!")
+		print("----- Search for attention")
 		if self.blackboard["bored_since"] == 0:
 			self.blackboard["bored_since"] = time.time()
 		if self.blackboard["blender_mode"] != "LookAround":
@@ -864,7 +864,7 @@ class Tree():
 
 	@owyl.taskmethod
 	def wake_up(self, **kwargs):
-		print "----- Wake Up!"
+		print "----- Wake up!"
 		self.blackboard["is_sleeping"] = False
 		self.blackboard["sleep_since"] = 0.0
 		self.blackboard["bored_since"] = 0.0
