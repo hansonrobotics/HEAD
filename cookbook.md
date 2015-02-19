@@ -230,13 +230,18 @@ The coordinate system used is head-relative, in 'engineering' coordinates:
 'x' is forward, 'y' to the left, and 'z' up.  Distances are measured in meters.
 Origin of the coordinate system is somewhere (where?) in the middle of the
 head.
+
+The dimensions below should cause eva to look at your left shoulder.
+This assumes that you are facing eva at eye-level, are about an arm's
+length away from the screen (80cm) and that your shoulder is about 20cm
+down and 2cm to the left of the brdige of your nose.
 ```
-rostopic pub --once /blender_api/set_face_target blender_api_msgs/Target '{x: 2, y: 0.6 , z: 0}'
+rostopic pub --once /blender_api/set_gaze_target blender_api_msgs/Target '{x: 0.8, y: -0.2 , z: -0.2}'
+```
+```
+rostopic pub --once /blender_api/set_face_target blender_api_msgs/Target '{x: 0.8, y: -0.2 , z: -0.2}'
 ```
 
-```
-rostopic pub --once /blender_api/set_gaze_target blender_api_msgs/Target '{x: 2, y: -0.6 , z: 0}'
-```
 
 ## PAU Messages
 The PAU messages describe the neck and eye positions.  The PAU message
