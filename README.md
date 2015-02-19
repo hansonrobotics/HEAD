@@ -19,18 +19,15 @@ This youtube video shows what is currently possible:
 
 # Running #
 
-Pre-requisites: The code is designed for Blender 2.72 or higher. If
-you are on Blender 2.69 (that comes with Ubuntu) and have issues with
-eva.blend, try eva269.blend instead.  Note: eva269.blend is missing
-some of the newer fixes, including a camera location fix.
-
+Pre-requisites: The code is designed for Blender 2.72 or higher.
 Start blender as follows:
 ```
 blender -y Eva.blend -P autostart.py
 ```
 Eva can be controlled via buttons in the blender GUI (note the panel
 on the right).  A HOWTO guide for manipulating via ROS can be found in
-the [Eva cookbook](docs/cookbook.md) in the `docs` directory.
+the [Eva cookbook](https://githib.com/hansonrobotics/blender_api_msgs/cookbook.md)
+in the `blender_api_msgs` project.
 
 
 # Design #
