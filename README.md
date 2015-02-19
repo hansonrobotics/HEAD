@@ -96,7 +96,7 @@ baseline of how the code should perform. To run the tests you will need a
 [Qik 2s9v1](https://www.pololu.com/product/1110), 
 [USB to serial adapter](https://www.pololu.com/product/1308),  
 [USB Cable A to Micro-B](https://www.pololu.com/product/1938), 
-breadboard and some jumper leads to connectit all together.
+breadboard and some jumper leads to connect it all together.
 
 After all these items are installed properly you can run the tests. You can 
 also connect a motor to M0. M1 is not tested at this time since most of the 
