@@ -10,12 +10,27 @@ ROS interface controlling the head+body `blender_api` rig.
 
 # Installation
 ```
-$ cd your_catkin_workspace
+$ cd your_catkin_workspace/src
 $ git clone https://github.com/hansonrobotics/blender_api_msgs.git
-$ pip3 install ./blender_api_msgs
+$ pip3 install -t ../devel/lib/python2.7/dist-packages/ ./blender_api_msgs
 $ cd ../
-$ catkin_make
+$ catkin build
 ```
+The the above uses several hacks which may be painful to discover and
+diagnose. These are:
+
+* Neither `catkin_make` nor `catkin build` currently support
+  `entry_points` in `setup.py`. To be more precise, it is actually
+  `catkin_pkg.python_setup` that does not support `entry_points`, and
+  thus ordinary python setup is used, instead of the catkinized version.
+
+* Next, `pip3 install` defaults to an install path in the root file
+  system.  To work around this, an explicit install path must be
+  specified with the `-t` flag.
+
+* You might think that the correct catkin install path would be
+  in python3.4 not python2.7 but you would be wrong: when sourcing
+  `devel/setup.sh`, only the 2.7 path is added to PYTHONPATH.
 
 # Usage
 Start blender from the `/blender_api` project.  If this package was
