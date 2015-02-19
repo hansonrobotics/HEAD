@@ -118,8 +118,7 @@ the tests.
     but this will not matter since it is run independently from your 
     `pololu-motor` install.
     * `$ sudo pip install tox`
-  * Now run `tox`. It will run all the tests also.
+  * Now run `tox`. It will run all the tests.
     * `$ tox`
-
 
 If you have any issue please contact me at: carl.nobile at gmail.com
