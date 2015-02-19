@@ -18,8 +18,13 @@ $ catkin_make
 ```
 
 # Usage
-Run `blender_api` with the **autostart script** or press the **Start Command
-Listener** button.
+Start blender from the `/blender_api` project.  If this package was
+installed with pip or setuptools, `blender_api` should discover it
+automatically.
 
-If this package is installed with pip or setuptools, `blender_api` should
-discover it automatically.
+Bleder can be started with the **autostart script**:
+```
+blender -y Eva.blend -P autostart.py
+```
+or it can be started manually, by pressing the **Start Command
+Listener** button.
