@@ -62,12 +62,13 @@ Installing this way is best if you get the code from a compressed file like a
 `.zip` or `.tar.gz`. This also would work from a clone of the git repository 
 at: [pololu-motors](https://github.com/cnobile2012/pololu-motors).
 
-  * Search on [PyPi](https://pypi.python.org/) for `pololu-motors`.
+  * Search on [PyPi](https://pypi.python.org/) for `pololu-motors` then 
+    download the file.
 
 or
 
   * Clone the GitHub repository with 
-    `$ git clone https://github.com/cnobile2012/pololu-motors.git`
+    * `$ git clone https://github.com/cnobile2012/pololu-motors.git`
 
 After you have the package and expanded it in your work area, you may want to 
 install it. Installing the package is not necessary if you just want to test 
