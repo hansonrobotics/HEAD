@@ -15,7 +15,8 @@ all	: tar
 #----------------------------------------------------------------------
 tar	: clean api-docs
 	@(cd ..; tar -czvf $(PACKAGE_DIR).tar.gz --exclude=".git" \
-          --exclude=".gitignore" --exclude=".tox"  $(BASE_DIR))
+          --exclude=".gitignore" --exclude=".tox" --exclude=".#*" \
+          $(BASE_DIR))
 
 tests	:
 	@(export PYTHONPATH=$(PREFIX); python motors/tests/test_qik2s9v1.py;)
