@@ -991,7 +991,7 @@ class Tree():
 				ges_scale /= self.blackboard["gesture_scale_stage"]
 
 			else:
-				print("---- Behavior tree enabled.")
+				print("----- Behavior tree enabled, closeup mode.")
 
 			self.rescale_intensity(emo_scale, ges_scale)
 			self.blackboard["stage_mode"] = False
@@ -1006,11 +1006,11 @@ class Tree():
 			# If previously in close-up mode, exaggerate the emotions
 			# for the stage settting.
 			if self.blackboard["performance_system_on"] and not self.blackboard["stage_mode"]:
-				print("----- Switch to close-up mode")
+				print("----- Switch to stage mode")
 				emo_scale /= self.blackboard["emotion_scale_closeup"]
 				ges_scale /= self.blackboard["gesture_scale_closeup"]
 			else:
-				print("---- Behavior tree enabled (stage mode).")
+				print("----- Behavior tree enabled, stage mode.")
 
 			self.rescale_intensity(emo_scale, ges_scale)
 			self.blackboard["stage_mode"] = True
