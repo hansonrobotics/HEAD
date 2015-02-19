@@ -4,7 +4,7 @@
  - Launch file for pi_vision face tracking, with inputs from two
  - cameras: a (stationary) body camera, and an eye camera (which
  - moves with the eyes, and thus has a constantly changing
- - field-of-view)
+ - field-of-view).
  -
 -->
 <launch>

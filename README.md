@@ -51,7 +51,7 @@ roslaunch ros2opencv usb_cam.launch
 ```
 roslaunch pi_face_tracker face_tracker_usb_cam.launch
 ```
- * make sure that the face tracker is publishing faces:
+ * Make sure that the face tracker is publishing faces:
 ```
 rostopic echo /camera/face_locations
 ```

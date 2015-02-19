@@ -1,9 +1,9 @@
 <!--
- - single-cam.launch
+ - tracker-single-cam.launch
  -
  - Launch file for pi_vision face tracking, with input from a single
- - stationary USB camera.  The USB camera is assumed to be 640x480 
- - at /dev/video0
+ - stationary UVC (USB) camera.  The UVC camera is assumed to be 640x480
+ - and located at /dev/video0
  -
 -->
 <launch>
