@@ -290,6 +290,8 @@ class Tree():
 	def pick_random_emotion_name(self, exclude) :
 		ixnay = [ex.name for ex in exclude]
 		emos = self.blackboard["emotions"]
+		if None == emos:
+			return None
 		emo_name = random.choice([other for other in emos if other not in ixnay])
 		return emo_name
 
