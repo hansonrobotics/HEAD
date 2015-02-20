@@ -7,17 +7,21 @@ README = open(os.path.join(os.path.dirname(__file__), 'README.md')).read()
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
+version = '0.1.0'
+
 setup(
     name='pololu-motors',
-    version='1.0.0',
+    version=version,
     packages=['motors', 'docs/pmcapi',],
     data_files=[(os.path.join(
         sys.prefix, 'share', 'doc', 'pololu_motors'), glob("docs/pmcapi/*"))],
     include_package_data=True,
     license='MIT License',
-    description=('Pololu motor drivers APTs.'),
+    description=('Pololu motor driver APIs.'),
     long_description=README,
     url='https://github.com/cnobile2012/pololu-motors',
+    download_url=('https://github.com/cnobile2012/'
+                  'pololu-motors/tarball/{}').format(version),
     author='Carl J. Nobile',
     author_email='carl.nobile@gmail.com',
     classifiers=[
