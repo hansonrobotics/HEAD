@@ -52,6 +52,11 @@ found at: [pip](https://pip.pypa.io/en/latest/).
 
   * `$ pip install pololu-motors`
 
+or directly from the git repository
+
+  * Check the version number at the end of the URL, it may have changed.
+    * `$ pip install git+https://github.com/cnobile2012/pololu-motors/t-v0.1.1`
+
 That's it, there is no more to do. The package will also install HTML API docs 
 in `<prefix>/share/doc/pololu_motors/index.html`. Where `<prefix>` can be 
 `/usr`, `/usr/local`, or `~/.virtualenvs/pololu`.
