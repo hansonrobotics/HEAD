@@ -28,14 +28,14 @@ dist	: clean api-docs
 	python setup.py sdist
 
 upload	: clobber api-docs
-	python setup.py sdist upload
+	python setup.py sdist upload -r pypi
 
 #----------------------------------------------------------------------
 
 clean	:
 	$(shell cleanDirs.sh clean)
 	@rm -rf *.egg-info
-	@rm -rf pololu-motors-1.0
+	@rm -rf pololu-motors-$(VERSION)
 	@rm -rf dist build
 
 clobber	: clean

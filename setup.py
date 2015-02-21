@@ -34,4 +34,7 @@ setup(
         'Topic :: Home Automation',
         'Topic :: System :: Hardware :: Hardware Drivers',
         ],
+    install_requires=[
+        'pyserial',
+        ],
     )
