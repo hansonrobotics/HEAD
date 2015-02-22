@@ -2,9 +2,8 @@
 # include.mk
 #
 
-# Restycode version and date info (DO NOT MODIFY)
+# Pololu Motors version info.
 MAJORVERSION	= 0
-MINORVERSION	= 1
-PATCHLEVEL	= 2
+MINORVERSION	= 2
+PATCHLEVEL	= 0
 VERSION		= ${MAJORVERSION}.${MINORVERSION}.${PATCHLEVEL}
-#TODAY		= $(shell date +"%Y-%m-%d_%H%M")

@@ -1,5 +1,5 @@
 #
-# motors/pololu/qik2s9v1.py
+# pololu/motors/qik2s9v1.py
 #
 # Usual device on Linux: /dev/ttyUSB0
 #
@@ -22,9 +22,6 @@ __docformat__ = "reStructuredText en"
 
 
 from .qik import Qik
-
-__version__ = '1.0.0'
-__version_info__ = tuple([int(num) for num in __version__.split('.')])
 
 
 class Qik2s9v1(Qik):

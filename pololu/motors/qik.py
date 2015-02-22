@@ -1,5 +1,5 @@
 #
-# motors/pololu/qik.py
+# pololu/motors/qik.py
 #
 # Usual device on Linux: /dev/ttyUSB0
 #

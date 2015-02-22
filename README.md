@@ -126,4 +126,13 @@ the tests.
   * Now run `tox`. It will run all the tests.
     * `$ tox`
 
+## Build Instructions
+
+  * The package is built with the `make dist` target in the `Makefile`.
+  * The version number of the package is <major>.<minor>.<patch>` and is only
+    changed in the `include.mk` file. You will not find the version defined 
+    anywhere else.
+
+
+--------------------------------------------------------------------
 If you have any issue please contact me at: carl.nobile at gmail.com

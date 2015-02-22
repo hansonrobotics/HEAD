@@ -1,5 +1,5 @@
 #
-# motor/pololu/crc7.py
+# pololu/motors/crc7.py
 #
 # Basic algorithm thanks to Jean-Loup Le Roux
 # https://code.google.com/p/robotter/source/browse/code/crc7.py?repo=charon

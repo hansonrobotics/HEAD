@@ -1,19 +1,30 @@
-import os, sys
+import os, sys, re
 from glob import glob
 from setuptools import setup
+
+def version():
+    regex = r'^(?m){}[\s]*=[\s]*(?P<ver>\d*)$'
+
+    with open(os.path.join(os.path.dirname(__file__), 'include.mk')) as f:
+        ver = f.read()
+
+    major = re.search(regex.format('MAJORVERSION'), ver).group('ver')
+    minor = re.search(regex.format('MINORVERSION'), ver).group('ver')
+    patch = re.search(regex.format('PATCHLEVEL'), ver).group('ver')
+    return "{}.{}.{}".format(major, minor, patch)
+
+VERSION = version()
 
 def readme():
     with open(os.path.join(os.path.dirname(__file__), 'README.md')) as f:
         return f.read()
 
-# allow setup.py to be run from any path
+# Allow setup.py to be run from any path.
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
-
-version = '0.1.2'
 
 setup(
     name='pololu-motors',
-    version=version,
+    version=VERSION,
     packages=['pololu',],
     data_files=[(os.path.join(
         sys.prefix, 'share', 'doc', 'pololu_motors'), glob("docs/pmcapi/*"))],
@@ -23,7 +34,7 @@ setup(
     long_description=readme(),
     url='https://github.com/cnobile2012/pololu-motors',
     download_url=('https://github.com/cnobile2012/'
-                  'pololu-motors/tarball/t-v{}').format(version),
+                  'pololu-motors/tarball/t-v{}').format(VERSION),
     author='Carl J. Nobile',
     author_email='carl.nobile@gmail.com',
     keywords='pololu motor API',
