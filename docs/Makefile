@@ -11,7 +11,7 @@ FQDN		= $(shell hostname --fqdn)
 DOC_DIR		= $(shell pwd)
 API_DIR		= pmcapi
 URL		= http://${FQDN}${DOC_DIR}/${API_DIR}/index.html
-TARBALL_NAME	= PololuMotorDocs
+TARBALL_NAME	= pololu_motor_docs
 
 all	: api-docs
 #----------------------------------------------------------------------

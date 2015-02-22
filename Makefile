@@ -19,7 +19,8 @@ tar	: clean api-docs
           $(BASE_DIR))
 
 tests	:
-	@(export PYTHONPATH=$(PREFIX); python motors/tests/test_qik2s9v1.py;)
+	@(export PYTHONPATH=$(PREFIX); \
+          python pololu/motors/tests/test_qik2s9v1.py;)
 
 api-docs: clean
 	@(cd $(DOCS_DIR); make)
