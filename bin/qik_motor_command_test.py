@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# bin/motor_command_test.py
+# bin/qik_motor_command_test.py
 #
 
 import sys, os, logging
@@ -9,7 +9,7 @@ BASE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, BASE_PATH)
 #print sys.path
 
-from motors.pololu import Qik2s9v1
+from pololu.motors import Qik2s9v1
 
 
 def setupLogger(fullpath=None, level=logging.INFO):
