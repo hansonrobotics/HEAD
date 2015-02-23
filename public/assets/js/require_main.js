@@ -1,5 +1,7 @@
 requirejs.config({
     baseUrl: 'assets/js',
+    // disables caching for development
+    urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
         backbone: 'vendor/backbone',
         //'backbone.picky': 'vendor/backbone.picky',
@@ -47,6 +49,4 @@ requirejs.config({
     }
 });
 
-require(['app', 'apps/motor/motor_app', 'main/init'], function (UI) {
-    UI.start();
-});
+require(['main/init']);

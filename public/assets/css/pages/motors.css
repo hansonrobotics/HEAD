@@ -12,21 +12,6 @@
     margin: 5px 0;
 }
 
-@media screen and (min-width: 590px) {
-    .control-stack {
-        width: 590px;
-    }
-
-    #app-motor-sliders {
-        width: 380px;
-        float: left;
-    }
-
-    .expression-buttons {
-        float: left;
-    }
-}
-
 .expression-buttons {
     margin: 2px;
 }
@@ -61,12 +46,6 @@
     height: 20px;
 }
 
-#app-motor-sliders {
-    padding: 0;
-    max-resolution: 0;
-    list-style: none;
-}
-
 #app-edit-motors {
     margin-bottom: 20px;
 }
@@ -75,11 +54,7 @@
     text-indent: 5px;
 }
 
-.app-motors-show-on-edit {
-    display: none;
-}
-
-.app-motor-name {
+.app-motor-label {
     padding: 2px 8px;
     height: 21px;
 }
@@ -97,13 +72,18 @@
     display: none;
 }
 
-#app-motor-sliders .ui-state-highlight {
+.app-motors .ui-state-highlight {
     height: 132px;
     padding: 5px;
     background: #4e5d6c;
     border: solid 1px #df691a;
 }
 
-#app-edit-motors-button {
+.app-motors-show-on-edit, .app-save-motors-button {
     display: none;
+}
+
+ul.app-motors {
+    list-style: none;
+    padding: 0;
 }

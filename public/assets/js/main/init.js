@@ -5,8 +5,7 @@ require(["eventemitter"], function (EventEmitter2) {
 define(['jquery', './lib/ros', './lib/navigation', './pages/status', './pages/expressions',
         './pages/animations', './pages/gestures', './pages/interaction', './pages/motors', 'jquery-ui', 'bootstrap'],
     function ($, ros, navigation, status, expressions, animations, gestures, interaction, motors) {
-        $(document).ready(function () {
-            ros.init(function () {
+        ros.init(function () {
                 // init navigation
                 navigation.init();
 
@@ -18,5 +17,9 @@ define(['jquery', './lib/ros', './lib/navigation', './pages/status', './pages/ex
                 gestures.init();
                 interaction.init();
             });
-        });
+
+        // start backbone here so that ros is initialised
+        require(['app', 'apps/motor/motor_app'], function (UI) {
+            UI.start();
+        })
     });

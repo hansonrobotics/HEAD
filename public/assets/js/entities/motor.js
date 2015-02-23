@@ -11,6 +11,18 @@ define(['app', 'main/lib/api', 'main/lib/utilities'], function (UI, api, utiliti
             getDefaultDeg: function () {
                 return Math.round(utilities.radToDeg(this.get('default')));
             },
+            setMinDeg: function (deg) {
+                this.set('min', utilities.degToRad(deg));
+            },
+            setMaxDeg: function (deg) {
+                this.set('max', utilities.degToRad(deg));
+            },
+            setDefaultDeg: function (deg) {
+                this.set('default', utilities.degToRad(deg));
+            },
+            getValueDeg: function () {
+                return Math.round(utilities.radToDeg(this.get('value')));
+            },
             setValueDeg: function (deg) {
                 this.set('value', utilities.degToRad(deg));
 
@@ -20,12 +32,19 @@ define(['app', 'main/lib/api', 'main/lib/utilities'], function (UI, api, utiliti
                     api.sendMotorCommand(this.toJSON(), utilities.degToRad(this.get('value')));
                 }
             }
-        })
-        ;
-        Entities.MotorCollection = Backbone.Collection.extend({
-            model: Entities.Motor
         });
-    })
-    ;
-})
-;
+        Entities.MotorCollection = Backbone.Collection.extend({
+            model: Entities.Motor,
+            comparator: 'order_no',
+            sync: function () {
+                $.ajax("/motors/update_config", {
+                    data: JSON.stringify(this.toJSON()),
+                    type: 'POST',
+                    dataType: "json",
+                    success: function (response) {
+                    }
+                });
+            }
+        });
+    });
+});

@@ -31,10 +31,10 @@ define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities'], functio
             var degVal = Math.round(utilities.radToDeg(config.default));
 
             //Fill header
-            var motor_name = config.labelleft;
+            var motor_name = config.label_left;
             sliderBlock.find(".app-slider-label-left").text(motor_name);
             sliderBlock.find(".app-motor-name").val(motor_name);
-            sliderBlock.find(".app-slider-label-right").text(config.labelright || "");
+            sliderBlock.find(".app-slider-label-right").text(config.label_right || "");
             sliderBlock.find(".app-slider-min-value").text(degMin);
             sliderBlock.find(".app-slider-max-value").text(degMax);
             sliderBlock.find(".app-slider-value").text(degVal);
@@ -196,7 +196,7 @@ define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities'], functio
                         var i = config.length;
 
                         config.push($.extend({}, this));
-                        config[i].labelleft = $('.app-motor-name', container).val();
+                        config[i].label_left = $('.app-motor-name', container).val();
 
                         delete config[i].element;
                         delete config[i].isActive;
