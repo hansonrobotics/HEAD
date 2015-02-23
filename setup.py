@@ -6,7 +6,7 @@ setup(
     version = "0.1",
     package_dir = {'': 'src',},
     packages = find_packages('src'),
-    entry_points={
+    entry_points = {
         'blender_api.command_source.build': 'ros = roscom:build'
     }
 )
