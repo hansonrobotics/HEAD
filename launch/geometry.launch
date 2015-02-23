@@ -18,12 +18,12 @@
  -
 -->
 <launch>
-	<arg name="model" default="fritz.urdf" />
+	<arg name="model" default="$(find perception)/urdf/fritz.urdf" />
 	<arg name="gui" default="True" />
-
+	<arg name="pololu_joints" default="Eyes_Pitch;Eye_L;Eye_R" />
 	<!-- fritz.urdf, per above -->
 	<param name="robot_description"
-	       textfile="$(find perception)/urdf/$(arg model)" />
+	       textfile="$(arg model)" />
 	<param name="use_gui" value="$(arg gui)"/>
 
 	<node name="joint_state_publisher"
@@ -43,13 +43,14 @@
 	<node name="state_publisher"
 	      pkg="perception"
 	      type="joint_state_publisher.py">
-		<rosparam param="pololu_joints">[Eyes_Pitch,Eye_L,Eye_R]</rosparam>
+	    <param name="pololu_joints" value="$(arg pololu_joints)"/>
+
 	</node>
 
 	<!-- Run rviz only if gui set to true... -->
 	<group if="$(arg gui)">
 		<node name="rviz" pkg="rviz"
 		      type="rviz"
-		      args="-d $(find perception)/rviz/urdf.rviz" required="true" />
+		      args="-d $(find perception)/rviz/urdf.rviz" />
 	</group>
 </launch>

@@ -27,8 +27,7 @@ from sensor_msgs.msg import JointState
 from threading import Thread, RLock
 from ros_pololu_servo.msg import MotorStateList
 from dynamixel_msgs.msg import JointState as DynamixelJointState
-from itertools import repeat
-
+from itertools import repeat 
 
 class JointStatePublisher(Thread):
     NODE_NAME = 'joint_state_publisher_node'
@@ -38,7 +37,8 @@ class JointStatePublisher(Thread):
         rospy.init_node(self.NODE_NAME)
         self.rate = rospy.Rate(rospy.get_param('~sensor_rate', 15.0))
         self.base_frame_id = rospy.get_param('~base_frame_id', "world")
-        self.pololu_joint_names = rospy.get_param('~pololu_joints', None)
+        self.pololu_joint_names = rospy.get_param('~pololu_joints', "")
+        self.pololu_joint_names = self.pololu_joint_names.split(";")
         self.dyn_joint_names = rospy.get_param('~dyn_joints', None)
         # Initialize publisher
         self.joint_state_pub = rospy.Publisher("joint_states_combined", JointState, queue_size=10)
