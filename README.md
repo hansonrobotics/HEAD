@@ -2,16 +2,16 @@
 
 Robots configuration package.
 
-All robot specific configs should be in this package.
+All robot-specific configs should be in this package.
 
-### Running
+### Example: Running Arthur
 
-Start Robot:
-```sh
+Start robot:
+```
 roslaunch robots_config robot.launch name:=arthur rviz:=True
 ```
 
-It launches the foillowing nodes:
+It launches the following nodes:
   * Motor specific nodes (pololu & dynamixel if needed)
   * [pau2motors](https://github.com/hansonrobotics/pau2motors)
   * [basic_head_api](https://github.com/hansonrobotics/basic_head_api)
