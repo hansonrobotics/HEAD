@@ -25,10 +25,9 @@ Requirements:
 
 
 ```
+apt-get install ros-indigo-cv-bridge ros-indigo-image-transport
 apt-get install ros-indigo-mjpeg-server
-
 apt-get install ros-indigo-openni-camera
-
 apt-get install ros-indigo-usb-cam
 
 ```
