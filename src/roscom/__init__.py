@@ -212,7 +212,7 @@ class CommandWrappers:
         head = api.getHeadData()
         msg.m_headRotation.x = head['x']
         msg.m_headRotation.y = head['y']
-        msg.m_headRotation.z = head['z']
+        msg.m_headRotation.z = -head['z']
         msg.m_headRotation.w = head['w']
 
         eyes = api.getEyesData()
