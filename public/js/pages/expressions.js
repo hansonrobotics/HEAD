@@ -16,18 +16,16 @@ RosUI.expressions = {
     loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
-        blenderMessage = new ROSLIB.Message({data: 'Dummy'});
-        RosUI.ros.topics.cmdBlender.publish(blenderMessage);
+        //blenderMessage = new ROSLIB.Message({data: 'Dummy'});
+        //RosUI.ros.topics.cmdBlender.publish(blenderMessage);
 
-        blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
-        RosUI.ros.topics.cmdBllink.publish(blinkMessage);
+        RosUI.api.blenderMode.disable();
 
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 
         $('.expression-button.active').removeClass('active');
-
-        RosUI.api.setExpression("happy", 0);
+        RosUI.api.setExpression("Neutral", 0);
         RosUI.api.pointHead();
     },
 
@@ -73,6 +71,7 @@ RosUI.expressions = {
         $("input.dial").css("pointer-events", "none");
     },
     createButtons: function () {
+        console.log("Creating Buttons")
         RosUI.api.expressionList(function (response) {
             var capitalize = function (str) {
                 return str.charAt(0).toUpperCase() + str.slice(1);
@@ -107,12 +106,9 @@ RosUI.expressions = {
         RosUI.api.setExpression(RosUI.expressions.current_face, intensity);
     },
     buildCrosshair: function (element, options) {
-        var yaw = RosUI.ros.getMotorConfig("neck_base");
-        var pitch = RosUI.ros.getMotorConfig("neck_pitch");
-
         $(element).crosshairsl($.extend({}, {
-            xmin: Math.floor(RosUI.utilities.radToDeg(-1.57)),
-            xmax: Math.ceil(RosUI.utilities.radToDeg(1.57)),
+            xmin: Math.floor(RosUI.utilities.radToDeg(-1)),
+            xmax: Math.ceil(RosUI.utilities.radToDeg(1)),
             xval: Math.round(RosUI.utilities.radToDeg(0)),
             ymin: Math.floor(RosUI.utilities.radToDeg(-0.6)),
             ymax: Math.ceil(RosUI.utilities.radToDeg(0.6)),

@@ -9,6 +9,7 @@ RosUI = {
             RosUI.expressions.init();
             RosUI.motors.init();
             RosUI.animations.init();
+            RosUI.gestures.init();
             RosUI.interaction.init();
         });
     },

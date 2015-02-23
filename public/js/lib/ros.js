@@ -1,28 +1,27 @@
 RosUI.ros = {
-    config: {
-        robotname: "fritz"
-    },
+    config: {},
     topics: {},
     init: function (success) {
-        $.ajax({
-            url: "motors.yml",
-            dataType: "text",
-
-            success: function (data) {
-                RosUI.ros.config.motors = jsyaml.load(data);
-                RosUI.ros.connect(success);
-            }
-        });
+        RosUI.ros.connect(success);
     },
     connect: function (success) {
         //Connect to rosbridge
         RosUI.ros.ros = new ROSLIB.Ros({
             url: RosUI.ros.rosUrl()
         }).on("connection", function (e) {
-                // call the success callback
-                success();
-
-                RosUI.api.setDefaultMotorValues();
+                // Get Robot name
+                RosUI.api.getRobotName(function(val){
+                    if (val){
+                        // Finishe initializing UI
+                        console.log('robot: '+val);
+                        RosUI.robot = val
+                        RosUI.ros.initTopics();
+                        RosUI.ros.initServices();
+                        success();                            
+                    }else{
+                        RosUI.ros.ros.close();
+                    }
+                });  
             }).on('connection', function () {
                 $('#app-connecting').hide();
                 $('#app-pages').fadeIn();
@@ -36,97 +35,71 @@ RosUI.ros = {
                 $('#app-title').html('');
             });
 
-        RosUI.ros.initTopics();
-        RosUI.ros.initServices();
     },
     initTopics: function () {
         RosUI.ros.topics = {
-            cmdBlender: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/cmd_blendermode',
-                messageType: 'std_msgs/String'
-            }),
-            cmdBllink: new ROSLIB.Topic({
-                ros: RosUI.ros.ros,
-                name: '/fritz/cmd_blink',
-                messageType: 'std_msgs/String'
-            }),
             cmdTree: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/behavior_switch',
+                name: '/behavior_switch',
                 messageType: 'std_msgs/String'
             }),
             speech_topic: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/chatbot_speech',
+                name: '/'+RosUI.robot + '/chatbot_speech',
                 messageType: 'chatbot/ChatMessage'
             }),
             chat_responses: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/chatbot_responses',
+                name: '/'+RosUI.robot + '/chatbot_responses',
                 messageType: 'std_msgs/String'
             }),
             expression: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/make_coupled_face_expr',
-                messageType: 'basic_head_api/MakeCoupledFaceExpr'
+                name: '/'+RosUI.robot + '/make_face_expr',
+                messageType: 'basic_head_api/MakeFaceExpr'
             }),
             pointHeadTopic: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/point_head',
+                name: '/'+RosUI.robot + '/point_head',
                 messageType: 'basic_head_api/PointHead'
             }),
-            left: new ROSLIB.Topic({
+            available_gestures: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/left/command',
-                messageType: 'ros_pololu_servo/MotorCommand'
+                name: '/blender_api/available_gestures'
             }),
-            right: new ROSLIB.Topic({
+            available_emotion_states: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/right/command',
-                messageType: 'ros_pololu_servo/MotorCommand'
+                name: '/blender_api/available_emotion_states'
             }),
-
-            animations: new ROSLIB.Topic({
+            set_gesture: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/cmd_animations',
-                messageType: 'std_msgs/String'
+                name: '/blender_api/set_gesture',
+                messageType: 'blender_api_msgs/SetGesture'
             }),
-
-            neck0: new ROSLIB.Topic({
+            set_emotion_state: new ROSLIB.Topic({
                 ros: RosUI.ros.ros,
-                name: '/fritz/base_controller/command',
-                messageType: 'std_msgs/Float64'
-            }),
-            neck1: new ROSLIB.Topic({
-              ros: RosUI.ros.ros,
-              name: '/fritz/base_right_controller/command',
-              messageType: 'std_msgs/Float64'
-            }),
-            neck2: new ROSLIB.Topic({
-              ros: RosUI.ros.ros,
-              name: '/fritz/base_left_controller/command',
-              messageType: 'std_msgs/Float64'
-            }),
-            neck3: new ROSLIB.Topic({
-              ros: RosUI.ros.ros,
-              name: '/fritz/neck_right_controller/command',
-              messageType: 'std_msgs/Float64'
-            }),
-            neck4: new ROSLIB.Topic({
-              ros: RosUI.ros.ros,
-              name: '/fritz/neck_left_controller/command',
-              messageType: 'std_msgs/Float64'
+                name: '/blender_api/set_emotion_state',
+                messageType: 'blender_api_msgs/EmotionState'
             })
-
-        }
+        };
     },
     initServices: function () {
+        console.log('init services');
         RosUI.ros.services = {
+            headPauMux: new ROSLIB.Service({
+                ros: RosUI.ros.ros,
+                name: '/'+RosUI.robot + '/head_pau_mux/select',
+                serviceType: 'topic_tools/MuxSelect'
+            }),
+            neckPauMux: new ROSLIB.Service({
+                ros: RosUI.ros.ros,
+                name: '/'+RosUI.robot + '/neck_pau_mux/select',
+                serviceType: 'topic_tools/MuxSelect'
+            }),
             expressionList: new ROSLIB.Service({
                 ros: RosUI.ros.ros,
-                name: '/valid_coupled_face_exprs',
-                serviceType: 'basic_head_api/ValidCoupledFaceExprs'
+                name: '/'+RosUI.robot + '/valid_face_exprs',
+                serviceType: 'basic_head_api/ValidFaceExprs'
             })
         };
     },
@@ -134,7 +107,7 @@ RosUI.ros = {
         if (window.location.protocol != "https:") {
             return "ws://" + document.domain + ":9090";
         } else {
-            return "wss://" + document.domain + ":9092";
+            return "wss://" + document.domain + ":9094";
         }
     },
     getMotorConfig: function (name) {

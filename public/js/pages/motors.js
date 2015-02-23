@@ -1,29 +1,25 @@
 RosUI.motors = {
     init: function () {
-        RosUI.motors.initMotors();
+        RosUI.api.getMotorsConfig(RosUI.motors.initMotors);
         setInterval(RosUI.motors.updateSliders, 1000);
     },
-
     loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
-        blenderMessage = new ROSLIB.Message({data: 'Dummy'});
-        RosUI.ros.topics.cmdBlender.publish(blenderMessage);
-
-        blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
-        RosUI.ros.topics.cmdBllink.publish(blinkMessage);
+        RosUI.api.blenderMode.disable();
 
         treeMessage = new ROSLIB.Message({data: 'btree_off'});
         RosUI.ros.topics.cmdTree.publish(treeMessage);
 
-        RosUI.api.setExpression("happy", 0);
         RosUI.api.pointHead({yaw: 0, pitch: 0, roll: 0});
+        RosUI.api.setExpression("Neutral", 0);
+        
 
     },
     addSlider: function (config) {
         var sliderBlock = $("#sliderTemplate").clone();
         sliderBlock.removeAttr("id"); //Removing sliderTemplate id
-        config.element = sliderBlock //Saving a reference to html element in config object
+        config.element = sliderBlock; //Saving a reference to html element in config object
         var degMin = Math.ceil(RosUI.utilities.radToDeg(config.min));
         var degMax = Math.floor(RosUI.utilities.radToDeg(config.max));
         var degVal = Math.round(RosUI.utilities.radToDeg(config.default));
@@ -78,11 +74,32 @@ RosUI.motors = {
                 }
         }
     },
-    initMotors: function () {
-        var motorConf = RosUI.ros.config.motors;
+    initMotors: function (motorConf) {
         for (var i = 0; i < motorConf.length; i++) {
-            if (motorConf[i].name != "neck_pitch" && motorConf[i].name != "neck_base")
-                RosUI.motors.addSlider(motorConf[i]);
+            //Create topics for specific motors
+            // Motor_id is only set for the 
+            if (!(motorConf[i]['topic'] in RosUI.ros.topics)){
+                if ('motor_id' in motorConf[i]){
+                    // Pololu
+                    RosUI.ros.topics[motorConf[i]['topic']] = new ROSLIB.Topic({
+                        ros: RosUI.ros.ros,
+                        name: '/'+RosUI.robot + '/'+motorConf[i]['topic']+'/command',
+                        messageType: 'ros_pololu_servo/MotorCommand',
+                        throttle_rate: 5
+                    });
+                }else{
+                    // Dynamixel
+                    RosUI.ros.topics[motorConf[i]['topic']] =new ROSLIB.Topic({
+                        ros: RosUI.ros.ros,
+                        name: '/'+RosUI.robot + '/'+motorConf[i]['topic']+'_controller/command',
+                        messageType: 'std_msgs/Float64'
+                    });
+                }
+            }
+            RosUI.motors.addSlider(motorConf[i]);
         }
+        RosUI.ros.config.motors = motorConf;
+        // Neutral position
+        RosUI.api.setDefaultMotorValues();
     }
 };

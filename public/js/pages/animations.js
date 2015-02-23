@@ -1,3 +1,4 @@
+// Dprecated
 RosUI.animations = {
     init: function () {
         var last_animation = 'happy-1';
@@ -53,8 +54,10 @@ RosUI.animations = {
     loadPage: function () {
         var blenderMessage, blinkMessage, treeMessage;
 
-        blenderMessage = new ROSLIB.Message({data: 'Animations'});
-        RosUI.ros.topics.cmdBlender.publish(blenderMessage);
+        //blenderMessage = new ROSLIB.Message({data: 'Animations'});
+        //RosUI.ros.topics.cmdBlender.publish(blenderMessage);
+
+        RosUI.api.blenderMode.disable();
 
         blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
         RosUI.ros.topics.cmdBllink.publish(blinkMessage);

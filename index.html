@@ -16,6 +16,7 @@
     <link href="public/css/pages/interaction.css" rel="stylesheet">
     <link href="public/css/pages/expressions.css" rel="stylesheet">
     <link href="public/css/pages/motors.css" rel="stylesheet">
+    <link href="public/css/pages/gestures.css" rel="stylesheet">
 
     <script src="public/js/vendor/jquery.min.js"></script>
 
@@ -55,7 +56,8 @@
                 <li><a id="app-expressions-link" href="#/expressions" class="app-change-page active"
                        data-page="#app-page-expressions">Expressions</a></li>
                 <li><a id="app-motors-link" href="#/motors" class="app-change-page" data-page="#app-page-motors">Motors</a></li>
-                <li><a id="app-animations-link" href="#/animations" class="app-change-page" data-page="#app-page-animations">Animations</a></li>
+                <!--<li><a id="app-animations-link" href="#/animations" class="app-change-page" data-page="#app-page-animations">Animations</a></li>-->
+                <li><a id="app-gestures-link" href="#/gestures" class="app-change-page" data-page="#app-page-gestures">Gestures</a></li>
                 <li><a id="app-interactions-link" href="#/interactions" class="app-change-page" data-page="#app-page-interaction">Interaction</a>
                 </li>
             </ul>
@@ -94,9 +96,7 @@
                         <p style="float:left"><b class="slNameL"></b></p>
                         <p style="float:right"><b class="slNameR"></b></p>
 
-                        <p style="text-indent: 5px"><span class="slVal">0</span>° (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)
-                        </p>
-
+                        <p class="app-value" style="text-indent: 5px"><span class="slVal">0</span>° (<span class="slMin">-90</span>° to <span class="slMax">90</span>°)</p>
                         <div class="slider"></div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
     <div id="app-page-animations" class="app-page">
         <div class="container">
             <div class="row">
-                <div id="loop" class="col-xs-5">
+                <div class="col-xs-5">
                     <h4> Demo loop: </h4>
 
                     <div id="demo-loop" class="btn-group btn-toggle">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
 
-                <div id="ctrls" class="col-xs-7 app-optional">
+                <div class="col-xs-7 app-optional">
                     <h4> Controls: </h4>
 
                     <div class="btn-group" id="controls" data-toggle="buttons"><!--
@@ -154,6 +154,28 @@
                 --><button type="button" class="btn btn-default app-animation-button" data-animation="sleep-out">Wake-up</button><!--
                 --><button type="button" class="btn btn-default app-animation-button" data-animation="surprised-2">Surprised</button><!--
                 --><button type="button" class="btn btn-default app-animation-button" data-animation="yawn-1">Yawn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="app-page-gestures" class="app-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Demo: </h4>
+                    <button id="app-gesture-demo-start" type="button" class="btn btn-default">Start</button>
+                    <button id="app-gesture-demo-stop" type="button" class="btn btn-default">Stop</button>
+                </div>
+                <div class="col-md-10">
+                    <h4>Gestures: </h4>
+                    <div id="app-gesture-buttons"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Emotions: </h4>
+
+                    <div id="app-emotion-sliders"></div>
                 </div>
             </div>
         </div>
@@ -248,6 +270,7 @@
 <!-- Pages -->
 <script type="text/javascript" src="public/js/pages/expressions.js"></script>
 <script type="text/javascript" src="public/js/pages/animations.js"></script>
+<script type="text/javascript" src="public/js/pages/gestures.js"></script>
 <script type="text/javascript" src="public/js/pages/motors.js"></script>
 <script type="text/javascript" src="public/js/pages/interaction.js"></script>
 
