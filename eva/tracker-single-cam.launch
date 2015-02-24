@@ -31,15 +31,11 @@
 
         <rosparam>
           use_haar_only: False
-          use_depth_for_detection: False
-          use_depth_for_tracking: False
           auto_min_features: True
           min_features: 50
           abs_min_features: 6
           good_feature_distance: 5
           add_feature_distance: 10
-          std_err_xy: 3.0
-          max_mse: 10000
           show_text: True
           show_features: True
           camera_fov_x: 0.7175
@@ -47,7 +43,6 @@
           expand_roi: 1.02
           flip_image: False
           feature_type: 0 <!-- 0 = Good Features To Track, 1 = SURF -->
-          surf_hessian_quality: 100
         </rosparam>
 
         <param name="cascade_frontal_alt"
