@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """ face_tracker.py - Version 0.30 2014-12-30
 
@@ -76,8 +77,9 @@ class FaceBox():
         self.min_area = rospy.get_param('~face_min_area',0.3)
 
         # Camera settings:
-        # FOV == Field of View; 0.625 radians == 36 degrees.
-        self.camera_fov_x = rospy.get_param('~camera_fov_x',0.625)
+        # FOV == Field of View (full angle); 0.625 radians == 36 degrees.
+        # My webcam is 2 x 0.3588 == 0.7175 radians == 2 x 20.5 == 41 degrees.
+        self.camera_fov_x = rospy.get_param('~camera_fov_x', 0.625)
         # Camera name as format
         self.camera_name = rospy.get_param("~camera_name", 'camera')
         self.camera_width = rospy.get_param(self.camera_name + '/width',640)
@@ -255,11 +257,11 @@ class FaceBox():
 
     def get_3d_point(self):
         # TODO will need to be updated:
-        # Current camera callibration matrix should be passed.
+        # Current camera calibration matrix should be passed.
         # Current camera pose needed (offset, and angle)
         # For now we assume its 36 degrees FOV with the face height of 20 cm
-        # Standard 640x480 image used
-        # Approx horizontal FOV of camera used:
+        # Standard 640x480 image used (taken from config)
+        # Approx horizontal FOV of camera used (taken from config)
         p = Point()
         # same FOV for both, so calculate the relative distance of one pixel
         dp = 0.22 / float(self.bounding_size) # It should be same in both axis
@@ -437,6 +439,7 @@ class PatchTracker(ROS2OpenCV):
         self.auto_face_tracking = rospy.get_param("~auto_face_tracking", True)
         self.use_haar_only = rospy.get_param("~use_haar_only", False)
         self.use_depth_for_detection = rospy.get_param("~use_depth_for_detection", False)
+        # Classic Kinnect FOV is 57.8° = 1.008 radians
         self.fov_width = rospy.get_param("~fov_width", 1.094)
         self.fov_height = rospy.get_param("~fov_height", 1.094)
         self.max_face_size = rospy.get_param("~max_face_size", 0.28)
@@ -690,7 +693,8 @@ class PatchTracker(ROS2OpenCV):
                     face.features.append(feature[0])
             #
             if self.auto_min_features:
-                """ Since the detect box is larger than the actual face or desired patch, shrink the number of features by 10% """
+                """ Since the detect box is larger than the actual face
+                    or desired patch, shrink the number of features by 10% """
                 face.min_features = int(len(face.features) * 0.9)
                 face.abs_min_features = int(0.5 * face.min_features)
 
@@ -787,7 +791,8 @@ class PatchTracker(ROS2OpenCV):
             for feature in surf_features:
                 features.append(feature[0])
 
-        """ Append new features to the current list if they are not too far from the current cluster """
+        """ Append new features to the current list if they are not too
+            far from the current cluster """
         for new_feature in features:
             try:
                 distance = self.distance_to_cluster(new_feature, face.features)
@@ -841,16 +846,17 @@ class PatchTracker(ROS2OpenCV):
             cog_x = sum_x / n_xy
             cog_y = sum_y / n_xy
 
-        """ The Kinect returns NaN depth values when closer than about 0.5 meters.  If the target is closer than 0.5 meters
+        """ The Kinect returns NaN depth values when closer than about
+            0.5 meters.  If the target is closer than 0.5 meters
             then use 0.5 meters as a fudge """
         if n_z > 0:
            cog_z = sum_z / n_z
         else:
             cog_z = 0.5
-        # Convert the cog_x and cog_y pixel values to meters using the fact that the Kinect's FOV is about 57 degrees or 1 radian.
+        # Convert the cog_x and cog_y pixel values to meters using the fact
+        # that the Kinect's FOV is about 57 degrees or 1 radian (1.008)
         cog_x = cog_z * self.fov_width * (cog_x - self.image_size[0] / 2.0) / float(self.image_size[0])
         cog_y = cog_z * self.fov_height * (cog_y - self.image_size[1] / 2.0) / float(self.image_size[1])
-
         return (cog_x, cog_y, cog_z)
 
     def prune_features(self, min_features, outlier_threshold, mse_threshold, face):
@@ -876,7 +882,8 @@ class PatchTracker(ROS2OpenCV):
         mean_x = sum_x / n_xy
         mean_y = sum_y / n_xy
 
-        """ Compute the x-y MSE (mean squared error) of the cluster in the camera plane """
+        """ Compute the x-y MSE (mean squared error) of the cluster in
+            the camera plane """
         for point in face.features:
             sse = sse + (point[0] - mean_x) * (point[0] - mean_x) + (point[1] - mean_y) * (point[1] - mean_y)
             #sse = sse + abs((point[0] - mean_x)) + abs((point[1] - mean_y))
