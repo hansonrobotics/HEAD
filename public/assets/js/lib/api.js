@@ -59,7 +59,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 cmd = new ROSLIB.Message({data: Math.min(Math.max(angle, confEntry.min), confEntry.max)});
             } else {
                 cmd = new ROSLIB.Message({
-                    joint_name: confEntry.name.toString(),
+                    joint_name: confEntry.motor_id ? confEntry.motor_id : confEntry.name.toString(),
                     position: Math.min(Math.max(angle, confEntry.min), confEntry.max),
                     speed: (speed || confEntry.speed || 100) / 255,
                     acceleration: (acc || confEntry.acceleration || 50) / 255
@@ -172,7 +172,31 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         getMotorsConfig: function (callback) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
-            param.get(callback);
+            param.get(function (motors) {
+                for (var i = 0; i < motors.length; i++) {
+                    // Create topics for specific motors
+                    if (!(motors[i]['topic'] in api.topics)) {
+                        if ('motor_id' in motors[i]) {
+                            // Pololu
+                            api.topics[motors[i]['topic']] = new ROSLIB.Topic({
+                                ros: api.ros,
+                                name: '/' + api.config.robot + '/' + motors[i]['topic'] + '/command',
+                                messageType: 'ros_pololu_servo/MotorCommand',
+                                throttle_rate: 5
+                            });
+                        } else {
+                            // Dynamixel
+                            api.topics[motors[i]['topic']] = new ROSLIB.Topic({
+                                ros: api.ros,
+                                name: '/' + api.config.robot + '/' + motors[i]['topic'] + '_controller/command',
+                                messageType: 'std_msgs/Float64'
+                            });
+                        }
+                    }
+                }
+
+                callback(motors);
+            });
         },
         getRobotName: function (callback) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/robot_name'});
