@@ -1,4 +1,4 @@
-define(['jquery', './../lib/api'], function ($, api) {
+define(['jquery', 'lib/api'], function ($, api) {
     var gestures = {
         config: {},
         init: function () {
@@ -9,6 +9,8 @@ define(['jquery', './../lib/api'], function ($, api) {
         },
         loadPage: function () {
             api.blenderMode.enable();
+            api.setExpression("Neutral", 0);
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
         },
         createGestureButtons: function () {
             api.getAvailableGestures(function (gestures) {
@@ -19,10 +21,13 @@ define(['jquery', './../lib/api'], function ($, api) {
                     gesture + '">' + gesture + '</button>');
 
                     $(button).click(function () {
-                        $('#app-gesture-buttons button').removeClass('active');
                         $(this).addClass('active');
-
+                        var btn = this;
                         api.setGesture(gesture);
+                        setTimeout(function () {
+                            $(btn).removeClass('active');
+                            $(btn).blur();
+                        }, 2000)
                     });
 
                     $('#app-gesture-buttons')
@@ -59,6 +64,9 @@ define(['jquery', './../lib/api'], function ($, api) {
                         $('.app-slider-value-container', sliderBlock).html("(" + ui.value + "%)");
 
                         api.setEmotion(name, ui.value / 100);
+                        setTimeout(function () {
+                            gestures.updateSlider(name, 0)
+                        }, 3000);
                     }
                 })()
             });
@@ -71,6 +79,12 @@ define(['jquery', './../lib/api'], function ($, api) {
 
             $(".app-slider", container).slider("value", value).trigger('slide');
             $(".app-slider-value-container", container).text('(' + value + '%)');
+            console.log(value);
+            if (value > 0) {
+                setTimeout(function () {
+                    RosUI.gestures.updateSlider(name, 0)
+                }, 1000)
+            }
         },
         demo: {
             init: function () {

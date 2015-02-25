@@ -1,18 +1,13 @@
 define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
     var api = {
-        config: {
-            robotname: "fritz"
-        },
+        config: {},
         setExpression: function (name, intensity) {
             console.log('setting expression to: ' + name + ", intensity: " + intensity);
 
             api.topics.expression.publish(
                 new ROSLIB.Message({
-                    robotname: api.config.robotname,
-                    expr: {
-                        exprname: name,
-                        intensity: intensity
-                    }
+                    exprname: name,
+                    intensity: intensity
                 })
             );
         },
@@ -33,10 +28,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             );
         },
         expressionList: function (success) {
-            api.services.expressionList.callService(new ROSLIB.ServiceRequest({
-                    robotname: "arthur"
-                }), success
-            );
+            api.services.expressionList.callService(new ROSLIB.ServiceRequest(), success);
         },
         playAnimation: function (animation) {
             api.topics.animations.publish(
@@ -151,6 +143,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
 
             if (typeof duration == 'undefined')
                 duration = {secs: 1, nsecs: 0};
+
             api.topics.set_emotion_state.publish(
                 new ROSLIB.Message({
                     name: name,
@@ -161,13 +154,29 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         blenderMode: {
             enable: function () {
-                api.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
-                api.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}));
+                api.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function () {
+                    return 0;
+                });
+                api.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function () {
+                    return 0;
+                });
             },
             disable: function () {
-                api.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/no_pau"}));
-                api.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/fritz/cmd_neck_pau"}));
+                api.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/" + api.config.robot + "/no_pau"}), function () {
+                    return 0;
+                });
+                api.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/" + api.config.robot + "/cmd_neck_pau"}), function () {
+                    return 0;
+                });
             }
+        },
+        getMotorsConfig: function (callback) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
+            param.get(callback);
+        },
+        getRobotName: function (callback) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/robot_name'});
+            param.get(callback);
         }
     };
 

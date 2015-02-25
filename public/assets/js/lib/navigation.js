@@ -1,5 +1,5 @@
-define(['jquery', './api', 'main/pages/status', './../pages/expressions',
-    './../pages/animations', './../pages/gestures', './../pages/interaction', './../pages/motors'],
+define(['jquery', './api', 'pages/status', 'pages/expressions',
+    'pages/animations', 'pages/gestures', 'pages/interaction', 'pages/motors'],
     function ($, api, status, expressions, animations, gestures, interaction, motors) {
     var navigation = {
         init: function() {
@@ -69,6 +69,8 @@ define(['jquery', './api', 'main/pages/status', './../pages/expressions',
                     gestures.loadPage();
                     break;
             }
+
+            $('.navbar-collapse.in').collapse('hide');
         }
     };
 

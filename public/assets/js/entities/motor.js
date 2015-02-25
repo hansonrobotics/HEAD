@@ -1,4 +1,4 @@
-define(['app', 'main/lib/api', 'main/lib/utilities'], function (UI, api, utilities) {
+define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utilities) {
     UI.module('Entities', function (Entities, UI, Backbone, Marionette, $, _) {
         Entities.Motor = Backbone.Model.extend({
             // converts given attribute value to radians
@@ -40,9 +40,7 @@ define(['app', 'main/lib/api', 'main/lib/utilities'], function (UI, api, utiliti
                 $.ajax("/motors/update_config", {
                     data: JSON.stringify(this.toJSON()),
                     type: 'POST',
-                    dataType: "json",
-                    success: function (response) {
-                    }
+                    dataType: "json"
                 });
             }
         });

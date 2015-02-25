@@ -12,17 +12,17 @@
 
     <div class="app-motors-hide-on-edit">
         <div class="pull-left">
-            <b class="app-slider-label-left"><%= label_left %></b>
+            <b class="app-slider-label-left"><%= labelleft %></b>
         </div>
 
         <div class="pull-right">
-            <b class="app-slider-label-right"><%= label_right %></b>
+            <b class="app-slider-label-right"><%= labelright %></b>
         </div>
     </div>
 
     <div class="app-motors-show-on-edit">
         <div class="pull-left">
-            <input value="<%= label_left %>" class="app-motor-label form-control" type="text"/>
+            <input value="<%= labelleft %>" class="app-motor-label form-control" type="text"/>
         </div>
     </div>
 

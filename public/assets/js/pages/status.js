@@ -1,17 +1,15 @@
-define(['jquery', './../lib/api', 'roslib'], function ($, api, ROSLIB) {
+define(['jquery', 'lib/api', 'roslib'], function ($, api, ROSLIB) {
     var status = {
-        config: {
-        },
         init: function () {
             function query() {
                 $.ajax({
                     url: "system/status",
                     dataType: "json",
 
-                    success: function(data) {
+                    success: function (data) {
                         var indicators = "";
 
-                        $.each(data, function() {
+                        $.each(data, function () {
                             indicators += '<li><span class="glyphicon ' +
                             (this.success ? "glyphicon-ok" : "glyphicon-remove") +
                             '" aria-hidden="true"></span>' +
@@ -28,18 +26,9 @@ define(['jquery', './../lib/api', 'roslib'], function ($, api, ROSLIB) {
             setInterval(query, 5000);
         },
         loadPage: function () {
-            var blinkMessage, treeMessage;
-
             api.blenderMode.disable();
-
-            blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
-            api.topics.cmdBllink.publish(blinkMessage);
-
-            treeMessage = new ROSLIB.Message({data: 'btree_off'});
-            api.topics.cmdTree.publish(treeMessage);
-
-            api.setExpression("happy", 0);
-            api.pointHead();
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+            api.setExpression("Neutral", 0);
         }
     };
 

@@ -1,4 +1,4 @@
-define(["app", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], function (UI, motorView, motorsTemplate) {
+define(["../../../ros_ui", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], function (UI, motorView, motorsTemplate) {
     UI.module("Motors.View", function (View, RosUI, Backbone, Marionette, $, _) {
         View.Motors = Marionette.CompositeView.extend({
             template: motorsTemplate,

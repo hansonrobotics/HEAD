@@ -1,4 +1,4 @@
-define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities', './../lib/crosshair-slider',
+define(['jquery', 'lib/api', 'lib/ros', 'lib/utilities', 'lib/crosshair-slider',
     'vendor/jquery.knob'], function ($, api, ros, utilities) {
     var expressions = {
         config: {
@@ -16,22 +16,16 @@ define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities', './../li
         },
 
         loadPage: function () {
-            var blenderMessage, blinkMessage, treeMessage;
-
-            //blenderMessage = new ROSLIB.Message({data: 'Dummy'});
-            //api.topics.cmdBlender.publish(blenderMessage);
+            var treeMessage;
 
             api.blenderMode.disable();
-
-            blinkMessage = new ROSLIB.Message({data: 'arthur:stop'});
-            api.topics.cmdBllink.publish(blinkMessage);
 
             treeMessage = new ROSLIB.Message({data: 'btree_off'});
             api.topics.cmdTree.publish(treeMessage);
 
             $('.expression-button.active').removeClass('active');
 
-            api.setExpression("happy", 0);
+            api.setExpression("Neutral", 0);
             api.pointHead();
         },
 
@@ -77,6 +71,7 @@ define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities', './../li
             $("input.dial").css("pointer-events", "none");
         },
         createButtons: function () {
+            console.log('Creating buttons');
             api.expressionList(function (response) {
                 var capitalize = function (str) {
                     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -111,12 +106,9 @@ define(['jquery', './../lib/api', './../lib/ros', './../lib/utilities', './../li
             api.setExpression(expressions.current_face, intensity);
         },
         buildCrosshair: function (element, options) {
-            var yaw = ros.getMotorConfig("neck_base");
-            var pitch = ros.getMotorConfig("neck_pitch");
-
             $(element).crosshairsl($.extend({}, {
-                xmin: Math.floor(utilities.radToDeg(-1.57)),
-                xmax: Math.ceil(utilities.radToDeg(1.57)),
+                xmin: Math.floor(utilities.radToDeg(-1)),
+                xmax: Math.ceil(utilities.radToDeg(1)),
                 xval: Math.round(utilities.radToDeg(0)),
                 ymin: Math.floor(utilities.radToDeg(-0.6)),
                 ymax: Math.ceil(utilities.radToDeg(0.6)),

@@ -1,4 +1,4 @@
-define(['jquery', './../lib/api', './gestures'], function ($, api, gestures) {
+define(['jquery', 'lib/api', './gestures'], function ($, api, gestures) {
     var interaction = {
         init: function () {
             api.topics.chat_responses.subscribe(function (msg) {
@@ -23,23 +23,11 @@ define(['jquery', './../lib/api', './gestures'], function ($, api, gestures) {
             });
         },
         loadPage: function () {
-            var blenderMessage, blinkMessage, treeMessage;
-
-            //blenderMessage = new ROSLIB.Message({data: 'TrackDev'});
-            //api.topics.cmdBlender.publish(blenderMessage);
-
             api.blenderMode.enable();
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on'}));
+            api.setExpression("Neutral", 0);
 
-            blinkMessage = new ROSLIB.Message({data: 'arthur:start'});
-            api.topics.cmdBllink.publish(blinkMessage);
-
-            treeMessage = new ROSLIB.Message({data: 'btree_on'});
-            api.topics.cmdTree.publish(treeMessage);
-
-            api.setExpression("happy", 0);
-            api.pointHead({yaw: 0, pitch: 0, roll: 0});
-
-            gestures.demo.enable()
+            // gestures.demo.enable();
         },
         recognizeSpeech: function () {
             if (!('webkitSpeechRecognition' in window)) {

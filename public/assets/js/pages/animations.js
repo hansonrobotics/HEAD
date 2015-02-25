@@ -1,4 +1,5 @@
-define(['jquery', './../lib/api'], function ($, api) {
+// Deprecated
+define(['jquery', 'lib/api'], function ($, api) {
     var animations = {
         init: function () {
             var last_animation = 'happy-1';

@@ -1,4 +1,4 @@
-define(['app', './motors', 'main/lib/api', 'main/lib/ros', 'entities/motor'],
+define(['../../../ros_ui', './motors', '../../../lib/api', '../../../lib/ros', 'entities/motor'],
     function (UI, MotorsView, api, ros) {
         UI.module('MotorApp.List', function (List, ContactManager, Backbone, Marionette, $, _) {
             List.Controller = {
@@ -9,7 +9,7 @@ define(['app', './motors', 'main/lib/api', 'main/lib/ros', 'entities/motor'],
                         });
 
                     // load motors from config
-                    ros.loadMotorConfig(function (motors) {
+                    api.getMotorsConfig(function (motors) {
                         motorsCollection.add(motors);
                         // load motors from pololu board
                         api.getPololuMotorTopics(function (topics) {
@@ -23,8 +23,8 @@ define(['app', './motors', 'main/lib/api', 'main/lib/ros', 'entities/motor'],
                                             max: Math.PI / 2,
                                             default: 0,
                                             editable: true,
-                                            label_left: '',
-                                            label_right: ''
+                                            labelleft: '',
+                                            labelright: ''
                                         });
 
                                     _.each(motorsCollection.models, function (motor) {

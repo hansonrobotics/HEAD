@@ -4,15 +4,10 @@ requirejs.config({
     urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
         backbone: 'vendor/backbone',
-        //'backbone.picky': 'vendor/backbone.picky',
-        //'backbone.syphon': 'vendor/backbone.syphon',
         jquery: 'vendor/jquery.min',
         'jquery-ui': 'vendor/jquery-ui.min',
         json2: 'vendor/json2',
-        //localstorage: 'vendor/backbone.localstorage',
         marionette: 'vendor/backbone.marionette',
-        //spin: 'vendor/spin',
-        //'spin.jquery': 'vendor/spin.jquery',
         text: 'vendor/text',
         tpl: 'vendor/underscore-tpl',
         underscore: 'vendor/underscore',
@@ -36,12 +31,7 @@ requirejs.config({
             exports: 'Marionette'
         },
         'jquery-ui': ['jquery'],
-        //localstorage: ['backbone'],
-        //'spin.jquery': ['spin', 'jquery'],
         tpl: ['text'],
-        eventemitter: {
-            exports: 'EventEmitter2'
-        },
         roslib: {
             deps: ['eventemitter'],
             exports: 'ROSLIB'
@@ -49,4 +39,4 @@ requirejs.config({
     }
 });
 
-require(['main/init']);
+require(['init']);

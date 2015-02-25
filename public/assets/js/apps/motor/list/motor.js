@@ -1,4 +1,4 @@
-define(["app", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
+define(["../../../ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
     UI.module("Motors.View", function (View, RosUI, Backbone, Marionette, $, _) {
         View.Motor = Marionette.ItemView.extend({
             template: motorTpl,
@@ -43,7 +43,7 @@ define(["app", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
             },
             setMotorConfigured: function () {
                 // motor is considered configured if it has label defined
-                this.motor_configured = !!this.model.get('label_left');
+                this.motor_configured = !!this.model.get('labelleft');
             },
             getMotorConfigured: function () {
                 return this.motor_configured;
@@ -84,7 +84,7 @@ define(["app", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
             },
             setLabelLeft: function () {
                 var label = this.ui.labelLeftInput.val();
-                this.model.set('label_left', label);
+                this.model.set('labelleft', label);
                 this.ui.labelLeft.html(label);
             },
             enableEdit: function () {
