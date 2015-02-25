@@ -16,7 +16,7 @@ class BlendedNum():
 			self._target = value.copy()
 			self._old = value.copy()
 			self._current = value.copy()
-			self._movingAverage = collections.deque(5*[[0,0,0]], smoothing)
+			self._movingAverage = collections.deque(5*[value.copy()], smoothing)
 			self.isVector = True
 			
 		self._steps = steps
