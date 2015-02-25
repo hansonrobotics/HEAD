@@ -10,6 +10,7 @@ define(['../../../ros_ui', './motors', '../../../lib/api', '../../../lib/ros', '
 
                     // load motors from config
                     api.getMotorsConfig(function (motors) {
+                        console.log(motors);
                         motorsCollection.add(motors);
                         // load motors from pololu board
                         api.getPololuMotorTopics(function (topics) {
