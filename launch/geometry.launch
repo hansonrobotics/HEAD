@@ -18,7 +18,7 @@
  -
 -->
 <launch>
-	<arg name="model" default="$(find perception)/urdf/fritz.urdf" />
+	<arg name="model" default="$(find robots_config)/han/description.urdf" />
 	<arg name="gui" default="True" />
 	<arg name="pololu_joints" default="Eyes_Pitch;Eye_L;Eye_R" />
 	<!-- fritz.urdf, per above -->

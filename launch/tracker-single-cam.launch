@@ -3,8 +3,9 @@
  -
  - Launch file for pi_vision face tracking, with input from a single
  - stationary UVC (USB) camera.  The UVC camera is assumed to be 640x480
- - and located at /dev/video0
- -
+ - and located at /dev/video0.  It is configured to be fairly narrow
+ - field-of-view (as is typical for desktop/laptop USB cameras).
+ - (full-angle FOV is set to 0.7175 or about 41 degrees).
 -->
 <launch>
     <node pkg="usb_cam" type="usb_cam_node" name="camera">
@@ -41,8 +42,7 @@
           max_mse: 10000
           show_text: True
           show_features: True
-          fov_width: 1.094
-          fov_height: 1.094
+          camera_fov_x: 0.7175
           max_face_size: 0.28
           expand_roi: 1.02
           flip_image: False
