@@ -23,10 +23,10 @@ def send_index():
 def send_public(filename):
     return send_from_directory('public', filename)
 
-@app.route('/motors/update_config', methods=['POST'])
-def update_motor_config():
+@app.route('/<robot_name>/motors/update', methods=['POST'])
+def update_motor_config(robot_name):
     data = json.loads(request.get_data().decode('utf8'))
-    filename = 'public/config/motors.yml'
+    filename = '/catkin_ws/src/robots_config/' + robot_name + '/motors.yaml'
 
     # delete existing config
     try:

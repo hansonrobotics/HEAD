@@ -49,6 +49,9 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api._sendMotorCommand.apply(api, arguments);
         }),
         _sendMotorCommand: function (confEntry, angle, speed, acc) {
+            console.log('Sending motor command:');
+            console.log([confEntry, angle, speed, acc]);
+
             var topicParams = api.topics[confEntry.topic],
                 cmd;
 

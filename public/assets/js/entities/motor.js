@@ -37,7 +37,7 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
             model: Entities.Motor,
             comparator: 'order_no',
             sync: function () {
-                $.ajax("/motors/update_config", {
+                $.ajax("/" + api.config.robot + "/motors/update", {
                     data: JSON.stringify(this.toJSON()),
                     type: 'POST',
                     dataType: "json"
