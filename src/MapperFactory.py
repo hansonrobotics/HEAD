@@ -1,11 +1,33 @@
+#
+# Robot PAU to motor mapping
+# Copyright (C) 2014, 2015 Hanson Robotics
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301  USA
+
 import math
 
 class MapperBase:
   """
-  This is an abstract class. Methods 'map' and '__init__' are to be
-  implemented when writing a new Mapper class. Subclasses of MapperBase will
-  be used as mapping functions that take values received in messages and
-  return angles in radians.
+  Abstract base class for motor mappings.  Subclasses of MapperBase will
+  be used to remap input values in received messages and convert them to
+  motor units. Typically (but not always) the motor units are angles,
+  measured in radians.
+
+  The methods 'map' and '__init__' must be implemented when writing a
+  new subclass.
   """
 
   def map(self, val):
@@ -13,16 +35,45 @@ class MapperBase:
 
   def __init__(self, args, motor_entry):
     """
-    On construction mapper classes are given the 'args' object (property
-    'function' of 'binding') parsed from the yaml config file.
+    On construction, mapper classes are passed an 'args' object and a
+    'motor_entry' object, taken from a yaml file.  The args object will
+    correspond to a 'function' property in the 'binding' stanza. The
+    'motor_entry' will be the parent of 'binding', and is used mainly
+    to reach 'min' and 'max' properties.  Thus, for example:
 
-    And the whole 'motor_entry' (parent of 'binding') mainly to reach 'min'
-    and 'max' properties.
+        foomotor:
+           binding:
+             function:
+                - name: barmapper
+                  bararg: 3.14
+                  barmore:  2.718
+           min: -1.0
+           max: 1.0
+
+    Thus, 'args' could be 'bararg', 'barmore', while 'motor_entry' would be
+    the entire 'foomotor' stanza.
     """
     pass
 
-class Composite(MapperBase):
+# --------------------------------------------------------------
 
+class Composite(MapperBase):
+  """
+  Composition mapper. This is initialized with an ordered list of
+  mappers.  The output value is obtained by applying each of the
+  mappers in sequence, one after the other.  The yaml file must
+  specify a list of mappings in the function property.  For example:
+
+          function:
+            - name: quaternion2euler
+              axis: z
+            - name: linear
+              scale: -2.92
+              translate: 0
+
+  would cause the quaternion2euler mapper function to be applied first,
+  followed by the linear mapper.
+  """
   def map(self, val):
     for mapper_instance in self.mapper_list:
       val = mapper_instance.map(val)
@@ -31,7 +82,31 @@ class Composite(MapperBase):
   def __init__(self, mapper_list):
     self.mapper_list = mapper_list
 
+# --------------------------------------------------------------
+
 class Linear(MapperBase):
+  """
+  Linear mapper.  This handles yaml entries that appear in one of the
+  two forms.  One form uses inhomogenous coordinates, such as:
+
+     function:
+       - name: linear
+         scale: -2.92
+         translate: 0.3
+
+  The other form specifies a min and max range, such as:
+
+      function:
+        - name: linear
+          min: 0.252
+          max: -0.342
+
+  The first form just rescales the value to the indicated slope and
+  offset. The second form rescales such that the indicated input min
+  and max match the motor min and max.  For instance, in the second
+  case, the input could be specified as min and max radians (for an
+  angle), which is converted to motor min and max displacement.
+  """
 
   def map(self, val):
     return (val + self.pretranslate) * self.scale + self.posttranslate
@@ -48,11 +123,22 @@ class Linear(MapperBase):
       self.scale = (motor_entry['max']-motor_entry['min'])/(args['max']-args['min'])
       self.posttranslate = motor_entry['min']
 
+# --------------------------------------------------------------
+
 class WeightedSum(MapperBase):
   """
   This will map min-max range for every term to intermediate min-max range
-  (imin-imax) and sums them up. Then the intermediate 0..1 range will be
+  (imin-imax) and then sum them up. Then the intermediate 0..1 range will be
   mapped to the motor min-max range.
+
+  Example:
+
+          function:
+            - name: weightedsum
+              imin: 0.402
+              terms:
+              - {min: 0, max: 1, imax: 0}
+              - {min: 0, max: 0.6, imax: 1}
   """
 
   @staticmethod
@@ -62,9 +148,9 @@ class WeightedSum(MapperBase):
   def map(self, vals):
     return sum(
       map(
-        lambda (val, translate, scale, term): 
+        lambda (val, translate, scale, term):
           (self._saturated(val, term) + translate) * scale,
-        zip(vals, self.pretranslations, self.scalefactors, self.termargs) 
+        zip(vals, self.pretranslations, self.scalefactors, self.termargs)
       )
     ) + self.posttranslate
 
@@ -82,6 +168,8 @@ class WeightedSum(MapperBase):
       args["terms"]
     )
     self.termargs = args["terms"]
+
+# --------------------------------------------------------------
 
 class Quaternion2Euler(MapperBase):
 
@@ -111,6 +199,8 @@ class Quaternion2Euler(MapperBase):
     }
     self.map = funcsByAxis[args['axis'].lower()]
 
+# --------------------------------------------------------------
+
 _mapper_classes = {
   "linear": Linear,
   "weightedsum": WeightedSum,
@@ -120,6 +210,7 @@ _mapper_classes = {
 def build(yamlobj, motor_entry):
   if isinstance(yamlobj, dict):
     return _mapper_classes[yamlobj["name"]](yamlobj, motor_entry)
+
   elif isinstance(yamlobj, list):
     return Composite(
       [build(func_entry, motor_entry) for func_entry in yamlobj]
