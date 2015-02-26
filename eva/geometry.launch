@@ -7,7 +7,7 @@
  - of the eyes, which is needed so that we can know where the eye
  - cameras are actually looking.
  -
- - Default: use the fritz geometry, and launch rviz so that we can
+ - Default: use the han geometry, and launch rviz so that we can
  - visualize what is going on.
  -
  - To disable rviz, start with
@@ -21,9 +21,11 @@
 	<arg name="model" default="$(find robots_config)/han/description.urdf" />
 	<arg name="gui" default="True" />
 	<arg name="pololu_joints" default="Eyes_Pitch;Eye_L;Eye_R" />
-	<!-- fritz.urdf, per above -->
+	<!-- han.urdf, per above -->
 	<param name="robot_description"
 	       textfile="$(arg model)" />
+
+	<!-- This param for joint_state_publisher -->
 	<param name="use_gui" value="$(arg gui)"/>
 
 	<node name="joint_state_publisher"
