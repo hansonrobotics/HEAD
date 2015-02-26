@@ -13,11 +13,9 @@ at [doc.faceshift.com](http://doc.faceshift.com). See also [ShapekeyStore.py]
 (./src/ShapekeyStore.py)
 
 The purpose of this node is to abstract away robot's hardware from the
-nodes that operate in virtual space (possibly [**basic_head_api**]
-(https://github.com/hansonrobotics/basic_head_api),
-[**robo_blender/modular-dev**]
-(https://github.com/hansonrobotics/robo_blender/tree/modular-dev) and [
-**blender_api**](https://github.com/hansonrobotics/blender_api)).
+nodes that operate in virtual space (possibly [**blender_api_msgs**]
+(https://github.com/hansonrobotics/blender_api_msgs)
+and [**blender_api**](https://github.com/hansonrobotics/blender_api)).
 
 ##Running
 
@@ -28,9 +26,10 @@ either run by one of the launch files in **robots_config** or with a
 sequence of commands like this:
 
 ```
-export ROS_NAMESPACE=/arthur
-rosparam load /path_to/robots_config/arthur/config_face.yaml
+export ROS_NAMESPACE=/han
+rosparam load /path_to/robots_config/han/config.yaml
 rosrun pau2motors pau2motors_node.py
+rosrun topic_tools mux /han/neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux
 ```
 
 **pau2motors** node is sensitive to the ROS_NAMESPACE environment
@@ -56,8 +55,8 @@ packages. These are the packages that this node sends commands to.
 Currently, the configuration for different robots are stored in the
 **[robots_config](https://github.com/hansonrobotics/robots_config)**
 package, in yaml config files, in dictionaries called `pau2motors`
-(e.g.  [Fritz]
-(https://github.com/hansonrobotics/robots_config/blob/master/fritz/config.yaml)).
+(e.g.  [Han]
+(https://github.com/hansonrobotics/robots_config/blob/master/han/config.yaml)).
 The `hardware`, `parser` and `function` properties in the config files
 refer to classes in this repo's modules **HardwareFactory.py**,
 **ParserFactory.py** and **MapperFactory.py**, which may be extended
