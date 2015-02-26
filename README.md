@@ -23,14 +23,19 @@ ROS params from
 **[robots_config](https://github.com/hansonrobotics/robots_config)**
 must be loaded prior to running this node. To achieve this, the node is
 either run by one of the launch files in **robots_config** or with a
-sequence of commands like this:
+sequence of commands such as this:
 
 ```
 export ROS_NAMESPACE=/han
 rosparam load /path_to/robots_config/han/config.yaml
 rosrun pau2motors pau2motors_node.py
 rosrun topic_tools mux /han/neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux
+rosservice call neck_pau_mux/select /blender_api/get_pau
 ```
+The mux that is started ans switched on in the last two lines serves
+to attach the output of the Eva blender model to the topics that the
+pau2motors listens to. The head_pau should also be attached.
+
 
 **pau2motors** node is sensitive to the ROS_NAMESPACE environment
 variable and will print an error if it doesn't find suitable ROS
