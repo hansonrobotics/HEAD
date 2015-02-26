@@ -16,14 +16,19 @@
 # 6) rosrun basic_head_api head_ctrl.py
 # 7) rostopic pub --once /point_head basic_head_api/PointHead '{yaw: 0.1, pitch:0.2, roll:0.3}' 
 #
+# Verify operation:
+# rostopic echo /foo/left_motor
+# rostopic echo /foo/right_motor
+# rostopic echo /foo/axis_motor
 
 pau2motors:
+    # --- topics to be publsihed: one per motor
     topics:
-        neck_pau: neck0;neck1;neck2;neck3;neck4
+        neck_pau: neck_axis;neck_left;neck_right
 
     motors:
       # ---Neck---
-      neck0:
+      neck_axis:
         binding:
           parser:
             name: getproperty
@@ -36,11 +41,11 @@ pau2motors:
               translate: 0
           hardware:
             name: dynamixel
-            topic: base_controller/command
+            topic: axis
         min: -1.57
         max: 1.57
 
-      neck1:
+      neck_left:
         binding:
           parser:
             name: getproperty
@@ -53,11 +58,11 @@ pau2motors:
               translate: 0
           hardware:
             name: dynamixel
-            topic: base_right_controller/command
+            topic: left_motor
         min: -1.57
         max: 1.57
 
-      neck2:
+      neck_right:
         binding:
           parser:
             name: getproperty
@@ -70,40 +75,7 @@ pau2motors:
               translate: 0
           hardware:
             name: dynamixel
-            topic: base_left_controller/command
+            topic: right_motor
         min: -1.57
         max: 1.57
 
-      neck3:
-        binding:
-          parser:
-            name: getproperty
-            property: m_headRotation
-          function:
-            - name: quaternion2euler
-              axis: x
-            - name: linear
-              scale: 1.3
-              translate: 0
-          hardware:
-            name: dynamixel
-            topic: neck_right_controller/command
-        min: -1.57
-        max: 1.57
-
-      neck4:
-        binding:
-          parser:
-            name: getproperty
-            property: m_headRotation
-          function:
-            - name: quaternion2euler
-              axis: x
-            - name: linear
-              scale: -1.3
-              translate: 0
-          hardware:
-            name: dynamixel
-            topic: neck_left_controller/command
-        min: -1.57
-        max: 1.57
