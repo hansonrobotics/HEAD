@@ -55,6 +55,8 @@ class MapperBase:
     """
     pass
 
+# --------------------------------------------------------------
+
 class Composite(MapperBase):
   """
   Composition mapper. This is initialized with an ordered list of
@@ -80,6 +82,7 @@ class Composite(MapperBase):
   def __init__(self, mapper_list):
     self.mapper_list = mapper_list
 
+# --------------------------------------------------------------
 
 class Linear(MapperBase):
   """
@@ -120,11 +123,22 @@ class Linear(MapperBase):
       self.scale = (motor_entry['max']-motor_entry['min'])/(args['max']-args['min'])
       self.posttranslate = motor_entry['min']
 
+# --------------------------------------------------------------
+
 class WeightedSum(MapperBase):
   """
   This will map min-max range for every term to intermediate min-max range
-  (imin-imax) and sums them up. Then the intermediate 0..1 range will be
+  (imin-imax) and then sum them up. Then the intermediate 0..1 range will be
   mapped to the motor min-max range.
+
+  Example:
+
+          function:
+            - name: weightedsum
+              imin: 0.402
+              terms:
+              - {min: 0, max: 1, imax: 0}
+              - {min: 0, max: 0.6, imax: 1}
   """
 
   @staticmethod
@@ -155,6 +169,8 @@ class WeightedSum(MapperBase):
     )
     self.termargs = args["terms"]
 
+# --------------------------------------------------------------
+
 class Quaternion2Euler(MapperBase):
 
   def __init__(self, args, motor_entry):
@@ -183,6 +199,8 @@ class Quaternion2Euler(MapperBase):
     }
     self.map = funcsByAxis[args['axis'].lower()]
 
+# --------------------------------------------------------------
+
 _mapper_classes = {
   "linear": Linear,
   "weightedsum": WeightedSum,
@@ -192,6 +210,7 @@ _mapper_classes = {
 def build(yamlobj, motor_entry):
   if isinstance(yamlobj, dict):
     return _mapper_classes[yamlobj["name"]](yamlobj, motor_entry)
+
   elif isinstance(yamlobj, list):
     return Composite(
       [build(func_entry, motor_entry) for func_entry in yamlobj]
