@@ -3,6 +3,7 @@
 
 from . import actuators
 from .blendedNum import BlendedNum
+from .blendedAngle import BlendedAngle
 from .helpers import *
 
 import bpy
@@ -24,9 +25,22 @@ class AnimationManager():
 		self.emotionsList = []
 		self.visemesList = []
 
+		# Scale for Blender coordinates 1 BU in m.
+		self.scale = 0.25
+		# Distance between eyes target and 0 point in the head in BU
+		self.eyes_distance = 0.32
+		# Target minimum distance in m
+		self.min_distance  = 0.1
+		# Face target offset in BU
+		self.face_target_offset = -1.04
+		# Eye_target distance in BU from 0 point
+		self.eye_target_offset = -6
+
+
 		# Head and Eye tracking parameters
-		self.headTargetLoc = BlendedNum([0,0,0], steps=10, smoothing=10)
+		self.headTargetLoc = BlendedAngle([0,0,0], steps=10, smoothing=10, ang_speed=1, offset=[0, self.face_target_offset, 0])
 		self.eyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
+
 
 		# Autonomous (unconscious) behavior parameters
 		self.eyeDartRate = 0.0
@@ -69,16 +83,6 @@ class AnimationManager():
 		bpy.data.objects["Camera.001"].rotation_euler = [1.570796, 0.0, 0.0]
 
 
-		# Scale for Blender coordinates 1 BU in m.
-		self.scale = 0.25
-		# Distance between eyes target and 0 point in the head in BU
-		self.eyes_distance = 0.32
-		# Target minimum distance in m
-		self.min_distance  = 0.1
-		# Face target offset in BU from 0 point
-		self.face_target_offset = -1.04
-		# Eye_target distance in BU from 0 point
-		self.eye_target_offset = -6
 
 		self.availableVisemes = []
 		for action in bpy.data.actions:
