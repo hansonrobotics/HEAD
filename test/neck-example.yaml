@@ -1,0 +1,109 @@
+#
+# Demo neck yaml file.
+# Used for testing and development of complex neck mechanisms.
+#
+# To run:
+# 0) export ROS_NAMESPACE=foo
+# 1) restart roscore
+# 2) rosparam load pau2motors/test/neck-example.yaml
+# 3) rosrun pau2motors pau2motors_node.py
+# 4) rosrun topic_tools mux /foo/neck_pau  cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux
+# 5) rosservice call neck_pau_mux/select /blender_api/get_pau
+# 6) blender -y Eva.blend -P autostart.py
+#
+# or alternately:
+# 5) rosservice call neck_pau_mux/select /cmd_neck_pau
+# 6) rosrun basic_head_api head_ctrl.py
+# 7) rostopic pub --once /point_head basic_head_api/PointHead '{yaw: 0.1, pitch:0.2, roll:0.3}' 
+#
+
+pau2motors:
+    topics:
+        neck_pau: neck0;neck1;neck2;neck3;neck4
+
+    motors:
+      # ---Neck---
+      neck0:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: z
+            - name: linear
+              scale: -2.92
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: base_controller/command
+        min: -1.57
+        max: 1.57
+
+      neck1:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: x
+            - name: linear
+              scale: 1.3
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: base_right_controller/command
+        min: -1.57
+        max: 1.57
+
+      neck2:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: x
+            - name: linear
+              scale: -1.3
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: base_left_controller/command
+        min: -1.57
+        max: 1.57
+
+      neck3:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: x
+            - name: linear
+              scale: 1.3
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: neck_right_controller/command
+        min: -1.57
+        max: 1.57
+
+      neck4:
+        binding:
+          parser:
+            name: getproperty
+            property: m_headRotation
+          function:
+            - name: quaternion2euler
+              axis: x
+            - name: linear
+              scale: -1.3
+              translate: 0
+          hardware:
+            name: dynamixel
+            topic: neck_left_controller/command
+        min: -1.57
+        max: 1.57
