@@ -60,6 +60,7 @@ class SpecificRobotCtrl:
   def __init__(self):
     motors = rospy.get_param('motors')
     expressions = rospy.get_param('expressions')
+    expressions = OrderedDict((v.keys()[0],v.values()[0]) for k,v in enumerate(expressions))
     #Expressions to motors mapping
     self.faces = FaceExpr.FaceExprMotors.from_expr_yaml(expressions, to_dict(motors, "name"))
     # Motor commands will be sent to this publisher.
