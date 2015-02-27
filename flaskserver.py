@@ -42,5 +42,32 @@ def update_motor_config(robot_name):
     # return True
     return json_encode(True)
 
+@app.route('/expressions/<robot_name>', methods=['GET'])
+def get_expressions(robot_name):
+    f = open("/catkin_ws/src/robots_config/" + robot_name + "/expressions.yaml")
+    expressions = yaml.load(f.read())
+    f.close()
+
+    return json_encode(expressions)
+
+@app.route('/expressions/update/<robot_name>', methods=['POST'])
+def update_expressions(robot_name):
+    data = json.loads(request.get_data().decode('utf8'))
+    filename = "/catkin_ws/src/robots_config/" + robot_name + "/expressions.yaml"
+
+    # delete existing config
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
+
+    # write new config
+    f = open(filename, 'w')
+    f.write(yaml.dump(data))
+    f.close()
+
+    # return True
+    return json_encode(True)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, use_reloader=False)

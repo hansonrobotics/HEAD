@@ -18,6 +18,7 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 showOnEdit: '.app-motors-show-on-edit',
                 dragHandle: '.app-motor-drag-handle',
                 labelLeft: '.app-slider-label-left',
+                labelright: '.app-slider-label-right',
                 labelLeftInput: 'input.app-motor-label',
                 sliderMinVal: '.app-slider-min-value',
                 sliderMaxVal: '.app-slider-max-value'
@@ -40,6 +41,12 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
             },
             modelChanged: function () {
                 this.setMotorConfigured();
+                this.ui.value.text(this.model.getValueDeg());
+                this.ui.slider.slider('value', this.model.getValueDeg());
+                this.ui.labelLeft = this.model.get('labelleft');
+                this.ui.labelright = this.model.get('labelright');
+                this.ui.min = this.model.get('min');
+                this.ui.max = this.model.get('max');
             },
             setMotorConfigured: function () {
                 // motor is considered configured if it has label defined
@@ -57,7 +64,6 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                     max: this.model.getMaxDeg(),
                     slide: function (e, ui) {
                         self.model.setValueDeg(ui.value);
-                        self.ui.value.text(ui.value);
                     },
                     start: function (e, ui) {
                         self.model.set('isActive', true);

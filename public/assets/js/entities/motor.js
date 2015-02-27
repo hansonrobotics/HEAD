@@ -1,6 +1,9 @@
 define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utilities) {
     UI.module('Entities', function (Entities, UI, Backbone, Marionette, $, _) {
         Entities.Motor = Backbone.Model.extend({
+            initialize: function () {
+                this.set('value', this.get('default'));
+            },
             // converts given attribute value to radians
             getMinDeg: function () {
                 return Math.ceil(utilities.radToDeg(this.get('min')));
@@ -24,7 +27,10 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                 return Math.round(utilities.radToDeg(this.get('value')));
             },
             setValueDeg: function (deg) {
-                this.set('value', utilities.degToRad(deg));
+                this.setValue(utilities.degToRad(deg));
+            },
+            setValue: function (value) {
+                this.set('value', value);
 
                 if (this.get('name') == "neck_roll") {
                     api.pointHead({roll: utilities.degToRad(this.get('value'))});
@@ -42,6 +48,15 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                     type: 'POST',
                     dataType: "json"
                 });
+            },
+            getMotorPositions: function () {
+                var positions = {};
+
+                this.each(function (motor) {
+                    positions[motor.get('name')] = motor.get('value');
+                });
+
+                return positions;
             }
         });
     });

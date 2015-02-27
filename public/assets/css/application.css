@@ -20,9 +20,9 @@ body {
 }
 
 .expression-button, .app-animation-button, .animation-control {
-    margin: 3px;
-    width: 75px;
-    padding: 4px 0 4px 0;
+    margin: 0 5px 5px 0;
+    padding: 5px;
+    min-width: 100px;
 }
 
 .app-animation-button {
@@ -45,4 +45,8 @@ body {
 
 #app-page-interaction {
     padding-top: 20px;
+}
+
+.app-expressions.expression-buttons div {
+    float: left;
 }
