@@ -44,13 +44,17 @@ class SpecificRobotCtrl:
 
   def valid_exprs(self):
     rospy.loginfo("Valid face expressions request.")
-    return {"exprnames": self.faces.keys()}
+    return {"exprnames": x for x in self.faces.keys() if x[:4] != "vis_"}
 
   def make_face(self, exprname, intensity=1):
     rospy.loginfo("Face request: %s of %s", intensity, exprname)
     for cmd in self.faces[exprname].new_msgs(intensity):
       (cmd.joint_name, pubid) = cmd.joint_name.split('@')
       rospy.loginfo("Pub id: %s", pubid)
+      # Maximum speed for visimes
+      if exprname[:4] == 'vis_':
+          cmd.speed = 0.0
+          cmd.acceleration = 0.0
       # Dynamixel commands only sends position
       if self.publishers[pubid].type == 'std_msgs/Float64':
         self.publishers[pubid].publish(cmd.position)
