@@ -469,6 +469,7 @@ class PatchTracker(ROS2OpenCV):
         self.grey = None
         self.pyramid = None
         self.small_image = None
+        self.frame_count = 0
 
         """ Set up the face detection parameters """
         self.cascade_frontal_alt = rospy.get_param("~cascade_frontal_alt", "")
@@ -498,8 +499,6 @@ class PatchTracker(ROS2OpenCV):
         self.block_size = 3
         self.use_harris = False
         self.flags = 0
-
-        self.frame_count = 0
 
         """ Set the SURF parameters """
         self.surf_hessian_quality = rospy.get_param("~surf_hessian_quality", 100)
