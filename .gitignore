@@ -4,6 +4,7 @@
 *#*#
 .DS_Store
 **/*.txt
+!LICENSE.txt
 !requirements.txt
 *.pdf
 logs/*.log*
