@@ -38,8 +38,15 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
             model: Entities.Motor,
             comparator: 'order_no',
             sync: function () {
+                var data = [];
+
+                this.each(function (motor) {
+                    if (motor.get('labelleft'))
+                        data.push(motor.toJSON());
+                });
+
                 $.ajax("/" + api.config.robot + "/motors/update", {
-                    data: JSON.stringify(this.toJSON()),
+                    data: JSON.stringify(data),
                     type: 'POST',
                     dataType: "json"
                 });

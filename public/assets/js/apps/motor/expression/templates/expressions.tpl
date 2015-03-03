@@ -1,13 +1,11 @@
 <div class="row">
     <div class="col-md-12">
-        <form class="form-inline">
-            <div class="form-group">
-                <label class="sr-only" for="app-expression-name">Amount (in dollars)</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="app-expression-name" placeholder="Expression name">
-                </div>
+        <div class="form-group">
+            <label class="sr-only" for="app-expression-name">Amount (in dollars)</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="app-expression-name" placeholder="Expression name">
             </div>
-        </form>
+        </div>
 
         <div class="app-expressions expression-buttons"></div>
 
