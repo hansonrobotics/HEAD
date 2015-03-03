@@ -62,7 +62,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 cmd = new ROSLIB.Message({data: Math.min(Math.max(angle, confEntry.min), confEntry.max)});
             } else {
                 cmd = new ROSLIB.Message({
-                    joint_name: confEntry.motor_id ? confEntry.motor_id : confEntry.name.toString(),
+                    joint_name: confEntry.motor_id ? confEntry.motor_id.toString() : confEntry.name.toString(),
                     position: Math.min(Math.max(angle, confEntry.min), confEntry.max),
                     speed: (speed || confEntry.speed || 100) / 255,
                     acceleration: (acc || confEntry.acceleration || 50) / 255
