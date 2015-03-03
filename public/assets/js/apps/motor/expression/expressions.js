@@ -7,8 +7,8 @@ define(["ros_ui", "./expression", 'tpl!./templates/expressions.tpl'],
                 childView: expressionView,
                 ui: {
                     nameField: '#app-expression-name',
-                    addButton: '#app-create-expression',
-                    saveButton: '#app-save-expressions'
+                    addButton: '.app-create-expression',
+                    saveButton: '.app-save-expressions'
                 },
                 events: {
                     'keyup @ui.nameField': 'changeExpressionsName',
@@ -23,8 +23,9 @@ define(["ros_ui", "./expression", 'tpl!./templates/expressions.tpl'],
                     };
                 },
                 addExpressions: function () {
+                    var val = this.ui.nameField.val();
                     var expression = new RosUI.Entities.Expression({
-                        name: this.ui.nameField.val(),
+                        name: val ? val : 'enter name',
                         motor_positions: this.motors.getMotorPositions()
                     });
 
@@ -34,6 +35,8 @@ define(["ros_ui", "./expression", 'tpl!./templates/expressions.tpl'],
                     this.collection.sync();
                 },
                 expressionButtonClicked: function (view) {
+                    RosUI.vent.trigger('motors:selection:set', true);
+
                     if (this.last_clicked != view) {
                         this.last_clicked = view;
                         this.ui.nameField.val(view.model.get('name'));

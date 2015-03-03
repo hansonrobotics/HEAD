@@ -7,13 +7,13 @@
                     <input type="text" class="form-control" id="app-expression-name" placeholder="Expression name">
                 </div>
             </div>
-            <button id="app-create-expression" type="button" class="btn btn-primary">Add custom expression</button>
         </form>
 
         <div class="app-expressions expression-buttons"></div>
 
         <div class="input-group">
-            <button id="app-save-expressions" type="button" class="btn btn-primary">Save</button>
+            <button type="button" title="Add new expression" class="app-create-expression btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+            <button type="button" class="app-save-expressions btn btn-primary">Save</button>
         </div>
     </div>
 </div>

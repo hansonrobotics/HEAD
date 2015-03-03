@@ -13,6 +13,12 @@ define(["ros_ui", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], functio
                 'click @ui.editButton': 'enableEdit',
                 'click @ui.saveButton': 'updateMotors'
             },
+            initialize: function () {
+                var self = this;
+                RosUI.vent.on('motors:selection:set', function (status) {
+                    self.showSelectButtons(status);
+                })
+            },
             enableEdit: function () {
                 var self = this;
 
@@ -49,6 +55,11 @@ define(["ros_ui", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], functio
                 });
 
                 this.collection.sync();
+            },
+            showSelectButtons: function (status) {
+                this.children.each(function (motorView) {
+                    motorView.showSelectButton(status);
+                });
             }
         });
     });

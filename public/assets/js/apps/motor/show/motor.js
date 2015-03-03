@@ -81,6 +81,9 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 if (!this.getMotorConfigured()) this.$el.hide();
                 // deselect by default
                 this.modelChanged();
+
+                // hide select buttons by default
+                this.showSelectButton(false);
             },
             setMin: function () {
                 var valueDeg = this.model.getValueDeg();
@@ -148,6 +151,13 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
             },
             toggleSelect: function () {
                 this.model.selected() ? this.model.selected(false) : this.model.selected(true);
+            },
+            showSelectButton: function (show) {
+                if (show) {
+                    this.ui.selectButton.show();
+                } else {
+                    this.ui.selectButton.hide();
+                }
             }
         });
     });
