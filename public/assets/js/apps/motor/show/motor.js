@@ -21,13 +21,17 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 labelright: '.app-slider-label-right',
                 labelLeftInput: 'input.app-motor-label',
                 sliderMinVal: '.app-slider-min-value',
-                sliderMaxVal: '.app-slider-max-value'
+                sliderMaxVal: '.app-slider-max-value',
+                container: '.app-slider-container',
+                selectButton: '.app-select-motor-button',
+                selectButtonIcon: '.app-select-motor-button span'
             },
             events: {
                 'click @ui.setMinButton': 'setMin',
                 'click @ui.setMaxButton': 'setMax',
                 'click @ui.setDefaultButton': 'setDefault',
-                'keyup @ui.labelLeftInput': 'setLabelLeft'
+                'keyup @ui.labelLeftInput': 'setLabelLeft',
+                'click @ui.selectButton': 'toggleSelect'
             },
             initialize: function () {
                 this.setMotorConfigured();
@@ -47,6 +51,9 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 this.ui.labelright = this.model.get('labelright');
                 this.ui.min = this.model.get('min');
                 this.ui.max = this.model.get('max');
+
+                // select updated motor
+                this.select(true);
             },
             setMotorConfigured: function () {
                 // motor is considered configured if it has label defined
@@ -72,8 +79,9 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                         self.model.set('isActive', false);
                     }
                 });
-
-                if (! this.getMotorConfigured()) this.$el.hide();
+                if (!this.getMotorConfigured()) this.$el.hide();
+                // deselect by default
+                this.select(false);
             },
             setMin: function () {
                 var valueDeg = this.model.getValueDeg();
@@ -111,7 +119,42 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                     this.ui.hideOnEdit.show();
                 }
 
-                if (! this.getMotorConfigured()) this.$el.hide();
+                if (!this.getMotorConfigured()) this.$el.hide();
+            },
+            /**
+             * Sets select state if boolean argument is present,
+             * returns current state if no argument provided
+             *
+             * @param selected
+             * @returns {boolean}
+             */
+            select: function (selected) {
+                if (typeof selected == 'undefined') {
+                    return typeof this.selected == 'undefined' ? false : this.selected;
+                } else {
+                    this.selected = selected;
+
+                    if (this.selected) {
+                        this.ui.selectButton.addClass('btn-success');
+                        this.ui.selectButton.removeClass('btn-danger');
+
+                        this.ui.selectButtonIcon.addClass('glyphicon-ok');
+                        this.ui.selectButtonIcon.removeClass('glyphicon-remove');
+                    } else {
+                        this.ui.selectButton.removeClass('btn-success');
+                        this.ui.selectButton.addClass('btn-danger');
+
+                        this.ui.selectButtonIcon.removeClass('glyphicon-ok');
+                        this.ui.selectButtonIcon.addClass('glyphicon-remove');
+                    }
+                }
+            },
+            toggleSelect: function () {
+                if (typeof this.selected == 'undefined' || !this.selected) {
+                    this.select(true);
+                } else {
+                    this.select(false);
+                }
             }
         });
     });

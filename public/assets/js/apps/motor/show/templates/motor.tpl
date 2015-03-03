@@ -17,6 +17,7 @@
 
         <div class="pull-right">
             <b class="app-slider-label-right"><%= labelright %></b>
+            <button type="button" class="app-select-motor-button btn"><span class="glyphicon" aria-hidden="true"></span></button>
         </div>
     </div>
 

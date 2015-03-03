@@ -83,3 +83,13 @@ ul.app-motors {
     list-style: none;
     padding: 0;
 }
+
+.app-motors li.app-active {
+    border: 3px solid #df691a;
+    margin-bottom: 5px;
+    padding: 3px;
+}
+
+.app-select-motor-button {
+    padding: 2px 4px;
+}
