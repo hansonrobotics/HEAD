@@ -34,15 +34,20 @@ define(["ros_ui", "tpl!./templates/expression.tpl"], function (UI, template) {
                 this.expressionsView.expressionButtonClicked(this);
                 this.active(true);
 
-                var self = this;
-                var motorPositions = this.model.get('motor_positions');
-                _.each(motorPositions, function (position, name) {
-                    self.collection.each(function (motor) {
-                        if (motor.get('name') == name) {
-                            motor.setValue(position);
-                        }
-                    });
-                })
+                var self = this,
+                    motorPositions = this.model.get('motor_positions'),
+                    motorNames = _.keys(motorPositions);
+
+                self.collection.each(function (motor) {
+                    var name = motor.get('name');
+
+                    if (_.indexOf(motorNames, name) != -1) {
+                        motor.setValue(motorPositions[name]);
+                        motor.selected(true);
+                    } else {
+                        motor.selected(false);
+                    }
+                });
             },
             active: function (val) {
                 if (typeof val == 'undefined')

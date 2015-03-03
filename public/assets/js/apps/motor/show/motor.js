@@ -6,7 +6,7 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
             modelEvents: {
                 "change": "modelChanged"
             },
-            // indicates that motor is fully configured
+            // indicates that motor is fully configuredselected
             motor_configured: true,
             ui: {
                 slider: '.app-slider',
@@ -52,8 +52,7 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 this.ui.min = this.model.get('min');
                 this.ui.max = this.model.get('max');
 
-                // select updated motor
-                this.select(true);
+                this.selected(this.model.selected());
             },
             setMotorConfigured: function () {
                 // motor is considered configured if it has label defined
@@ -81,7 +80,7 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 });
                 if (!this.getMotorConfigured()) this.$el.hide();
                 // deselect by default
-                this.select(false);
+                this.modelChanged();
             },
             setMin: function () {
                 var valueDeg = this.model.getValueDeg();
@@ -122,19 +121,17 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 if (!this.getMotorConfigured()) this.$el.hide();
             },
             /**
-             * Sets select state if boolean argument is present,
-             * returns current state if no argument provided
+             * Sets select model select state if boolean argument is present,
+             * returns current state (defaults to false) otherwise
              *
              * @param selected
              * @returns {boolean}
              */
-            select: function (selected) {
+            selected: function (selected) {
                 if (typeof selected == 'undefined') {
-                    return typeof this.selected == 'undefined' ? false : this.selected;
+                    return this.model.selected();
                 } else {
-                    this.selected = selected;
-
-                    if (this.selected) {
+                    if (selected) {
                         this.ui.selectButton.addClass('btn-success');
                         this.ui.selectButton.removeClass('btn-danger');
 
@@ -150,11 +147,7 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 }
             },
             toggleSelect: function () {
-                if (typeof this.selected == 'undefined' || !this.selected) {
-                    this.select(true);
-                } else {
-                    this.select(false);
-                }
+                this.model.selected() ? this.model.selected(false) : this.model.selected(true);
             }
         });
     });

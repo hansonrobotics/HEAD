@@ -34,10 +34,10 @@ define(["ros_ui", "./expression", 'tpl!./templates/expressions.tpl'],
                     this.collection.sync();
                 },
                 expressionButtonClicked: function (view) {
-                    RosUI.vent.trigger('motors:expression:select');
-
-                    this.last_clicked = view;
-                    this.ui.nameField.val(view.model.get('name'));
+                    if (this.last_clicked != view) {
+                        this.last_clicked = view;
+                        this.ui.nameField.val(view.model.get('name'));
+                    }
                 },
                 changeExpressionsName: function () {
                     if (typeof this.last_clicked != 'undefined')

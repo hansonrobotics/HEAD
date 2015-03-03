@@ -37,6 +37,16 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                 } else {
                     api.sendMotorCommand(this.toJSON(), utilities.degToRad(this.get('value')));
                 }
+            },
+            selected: function (selected) {
+                if (typeof selected == 'undefined') {
+                    // return status if arg undefined
+                    return (typeof this.motor_selected == 'undefined') ? false : this.motor_selected;
+                } else {
+                    // set status otherwise
+                    this.motor_selected = selected;
+                    this.trigger('change');
+                }
             }
         });
         Entities.MotorCollection = Backbone.Collection.extend({
@@ -53,7 +63,8 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                 var positions = {};
 
                 this.each(function (motor) {
-                    positions[motor.get('name')] = motor.get('value');
+                    if (motor.selected())
+                        positions[motor.get('name')] = motor.get('value');
                 });
 
                 return positions;
