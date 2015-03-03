@@ -39,18 +39,18 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
             // passes data to the template
             serializeData: function () {
                 return _.extend(this.model.toJSON(), {
-                    min: this.model.getMinDeg(),
-                    max: this.model.getMaxDeg()
+                    min: this.model.getDegrees('min'),
+                    max: this.model.getDegrees('max')
                 });
             },
             modelChanged: function () {
                 this.setMotorConfigured();
-                this.ui.value.text(this.model.getValueDeg());
-                this.ui.slider.slider('value', this.model.getValueDeg());
+                this.ui.value.text(this.model.getDegrees('value'));
+                this.ui.slider.slider('value', this.model.getDegrees('value'));
                 this.ui.labelLeft = this.model.get('labelleft');
                 this.ui.labelright = this.model.get('labelright');
-                this.ui.min = this.model.get('min');
-                this.ui.max = this.model.get('max');
+                this.ui.min = this.model.getDegrees('min');
+                this.ui.max = this.model.getDegrees('max');
 
                 this.selected(this.model.selected());
             },
@@ -65,11 +65,11 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 var self = this;
                 $(this.ui.slider).slider({
                     range: "min",
-                    value: this.model.getDefaultDeg(),
-                    min: this.model.getMinDeg(),
-                    max: this.model.getMaxDeg(),
+                    value: this.model.getDegrees('default'),
+                    min: this.model.getDegrees('min'),
+                    max: this.model.getDegrees('max'),
                     slide: function (e, ui) {
-                        self.model.setValueDeg(ui.value);
+                        self.model.setDegrees('value', ui.value);
                     },
                     start: function (e, ui) {
                         self.model.set('isActive', true);
@@ -86,17 +86,17 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 this.showSelectButton(false);
             },
             setMin: function () {
-                var valueDeg = this.model.getValueDeg();
-                this.ui.sliderMinVal.html(valueDeg);
-                this.model.setMinDeg(valueDeg);
+                var value = this.model.getDegrees('value');
+                this.ui.sliderMinVal.html(value);
+                this.model.setDegrees('min', value);
             },
             setMax: function () {
-                var valueDeg = this.model.getValueDeg();
-                this.ui.sliderMaxVal.html(valueDeg);
-                this.model.setMaxDeg(valueDeg);
+                var value = this.model.getDegrees('value');
+                this.ui.sliderMaxVal.html(value);
+                this.model.setDegrees('max', value);
             },
             setDefault: function () {
-                this.model.setDefaultDeg(this.model.getValueDeg());
+                this.model.set('default', this.model.get('value'));
             },
             setLabelLeft: function () {
                 var label = this.ui.labelLeftInput.val();

@@ -42,7 +42,7 @@ define(["ros_ui", "tpl!./templates/expression.tpl"], function (UI, template) {
                     var name = motor.get('name');
 
                     if (_.indexOf(motorNames, name) != -1) {
-                        motor.setValue(motorPositions[name]);
+                        motor.set('value', motorPositions[name]);
                         motor.selected(true);
                     } else {
                         motor.selected(false);
