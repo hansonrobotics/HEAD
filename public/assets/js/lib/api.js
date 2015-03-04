@@ -173,33 +173,50 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 });
             }
         },
-        getMotorsConfig: function (callback) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
-            param.get(function (motors) {
-                for (var i = 0; i < motors.length; i++) {
-                    // Create topics for specific motors
-                    if (!(motors[i]['topic'] in api.topics)) {
-                        if ('motor_id' in motors[i]) {
-                            // Pololu
-                            api.topics[motors[i]['topic']] = new ROSLIB.Topic({
-                                ros: api.ros,
-                                name: '/' + api.config.robot + '/' + motors[i]['topic'] + '/command',
-                                messageType: 'ros_pololu_servo/MotorCommand',
-                                throttle_rate: 5
-                            });
-                        } else {
-                            // Dynamixel
-                            api.topics[motors[i]['topic']] = new ROSLIB.Topic({
-                                ros: api.ros,
-                                name: '/' + api.config.robot + '/' + motors[i]['topic'] + '_controller/command',
-                                messageType: 'std_msgs/Float64'
-                            });
-                        }
-                    }
-                }
+        getMotorsFromParam: function (callback) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'}),
+                self = this;
 
+            param.get(function (motors) {
+                self.createMotorTopics(motors);
                 callback(motors);
             });
+        },
+        getMotorsFromFile: function (callback) {
+            var self = this;
+
+            $.ajax('/' + api.config.robot + '/motors/get', {
+                dataType: 'json',
+                success: function (motors) {
+                    motors = JSON.parse(motors)
+                    self.createMotorTopics(motors);
+                    callback(motors);
+                }
+            });
+        },
+
+        createMotorTopics: function (motors) {
+            for (var i = 0; i < motors.length; i++) {
+                // Create topics for specific motors
+                if (!(motors[i]['topic'] in api.topics)) {
+                    if ('motor_id' in motors[i]) {
+                        // Pololu
+                        api.topics[motors[i]['topic']] = new ROSLIB.Topic({
+                            ros: api.ros,
+                            name: '/' + api.config.robot + '/' + motors[i]['topic'] + '/command',
+                            messageType: 'ros_pololu_servo/MotorCommand',
+                            throttle_rate: 5
+                        });
+                    } else {
+                        // Dynamixel
+                        api.topics[motors[i]['topic']] = new ROSLIB.Topic({
+                            ros: api.ros,
+                            name: '/' + api.config.robot + '/' + motors[i]['topic'] + '_controller/command',
+                            messageType: 'std_msgs/Float64'
+                        });
+                    }
+                }
+            }
         },
         getRobotName: function (callback) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/robot_name'});

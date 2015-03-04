@@ -21,13 +21,11 @@ define(["ros_ui", "lib/api", "./common/layout", "./show/motors", './expression/e
                 layoutView.getRegion('motors').show(motorsView);
                 layoutView.getRegion('expressions').show(expressionsView);
 
-                this.loadMotors(motors);
-                this.loadPololuMotors(motors);
-            },
-            loadMotors: function (collection) {
-                api.getMotorsConfig(function (motors) {
-                    collection.add(motors);
+                api.getMotorsFromFile(function (data) {
+                    motors.add(data);
                 });
+
+                this.loadPololuMotors(motors);
             },
             loadPololuMotors: function (collection) {
                 api.getPololuMotorTopics(function (topics) {
@@ -36,6 +34,7 @@ define(["ros_ui", "lib/api", "./common/layout", "./show/motors", './expression/e
                             var unique = true,
                                 newMotor = new RosUi.Entities.Motor({
                                     name: i,
+                                    motor_id: i,
                                     topic: topic,
                                     min: -Math.PI / 2,
                                     max: Math.PI / 2,
@@ -46,7 +45,7 @@ define(["ros_ui", "lib/api", "./common/layout", "./show/motors", './expression/e
                                 });
 
                             _.each(collection.models, function (motor) {
-                                if (motor.get('name') == newMotor.get('name') &&
+                                if (motor.get('motor_id') == newMotor.get('motor_id') &&
                                     motor.get(topic) == newMotor.get('topic')) {
                                     unique = false;
                                 }
