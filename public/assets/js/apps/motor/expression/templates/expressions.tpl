@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="form-group">
+        <div class="app-expression-name form-group">
             <label class="sr-only" for="app-expression-name">Amount (in dollars)</label>
             <div class="input-group">
                 <input type="text" class="form-control" id="app-expression-name" placeholder="Expression name">
