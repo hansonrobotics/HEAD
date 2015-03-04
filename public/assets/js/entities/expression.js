@@ -8,6 +8,8 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                 var collection = this;
 
                 $.ajax('/expressions/' + api.config.robot, {
+                    cache: false,
+                    dataType: 'json',
                     success: function (data) {
                         var expressions = JSON.parse(data).expressions;
 

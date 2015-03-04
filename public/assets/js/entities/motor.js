@@ -6,21 +6,24 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                 this.set('value', this.get('default'));
 
                 // send motor command when updating value
-                this.on('change', this.checkUpdatedValue)
+                this.on('change', this.checkUpdatedValue())
             },
             checkUpdatedValue: function () {
-                if (this.previous('value') != this.get('value')) {
-                    api._sendMotorCommand(this.toJSON(), this.get('value'));
-                }
+                var self = this;
+
+                return function () {
+                    if (this.previous('value') != this.get('value')) {
+                        api._sendMotorCommand(self.toJSON(), self.get('value'));
+                    }
+                };
             },
             selected: function (selected) {
                 if (typeof selected == 'undefined') {
                     // return status if arg undefined
-                    return (typeof this.motor_selected == 'undefined') ? false : this.motor_selected;
+                    return this.get('selected');
                 } else {
                     // set status otherwise
-                    this.motor_selected = selected;
-                    this.trigger('change');
+                    this.set('selected', !!selected);
                 }
             },
             getDegrees: function (attribute) {
@@ -30,17 +33,17 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                 return this.set(attribute, utilities.degToRad(value));
             },
             // Sets value 0-1 mapped to min and max.
-            setRelativeVal: function(attribute, value){
+            setRelativeVal: function (attribute, value) {
                 var min = this.get('min');
                 var max = this.get('max');
-                var v = (min+(max-min)*value);
+                var v = (min + (max - min) * value);
                 this.set(attribute, v);
             },
             getRelativeVal: function (attribute) {
                 var min = this.get('min');
                 var max = this.get('max');
                 var v = this.get(attribute);
-                return Math.min(1, Math.max(0,(v-min)/(max-min)));
+                return Math.min(1, Math.max(0, (v - min) / (max - min)));
             }
         });
         Entities.MotorCollection = Backbone.Collection.extend({
@@ -50,8 +53,12 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                 var data = [];
 
                 this.each(function (motor) {
-                    if (motor.get('labelleft'))
-                        data.push(motor.toJSON());
+                    if (motor.get('labelleft')) {
+                        motor = motor.toJSON();
+                        delete motor['selected'];
+
+                        data.push(motor);
+                    }
                 });
 
                 $.ajax("/" + api.config.robot + "/motors/update", {
@@ -60,24 +67,14 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                     dataType: "json"
                 });
             },
-            getMotorPositions: function () {
-                var positions = {};
-
-                this.each(function (motor) {
-                    if (motor.selected())
-                        positions[motor.get('name')] = motor.get('value');
-                });
-
-                return positions;
-            },
-            getRelativePositions: function() {
+            getRelativePositions: function () {
                 var positions = {};
 
                 this.each(function (motor) {
                     if (motor.selected())
                         positions[motor.get('name')] = motor.getRelativeVal('value');
                 });
-                return positions;                
+                return positions;
             }
         });
     });
