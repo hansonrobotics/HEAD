@@ -10,11 +10,7 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
             },
             checkUpdatedValue: function () {
                 if (this.previous('value') != this.get('value')) {
-                    if (this.get('name') == "neck_roll") {
-                        api.pointHead({roll: utilities.degToRad(this.get('value'))});
-                    } else {
-                        api.sendMotorCommand(this.toJSON(), this.get('value'));
-                    }
+                    api.sendMotorCommand(this.toJSON(), this.get('value'));
                 }
             },
             selected: function (selected) {
