@@ -27,6 +27,11 @@ def send_index():
 def send_public(filename):
     return send_from_directory('public', filename)
 
+@app.route('/<robot_name>/motors/get')
+def get_motors(robot_name):
+    motors = read_yaml("/catkin_ws/src/robots_config/" + robot_name + "/motors.yaml")
+    return json_encode(motors)
+
 
 @app.route('/<robot_name>/motors/update', methods=['POST'])
 def update_motor_config(robot_name):
@@ -43,7 +48,7 @@ def update_motor_config(robot_name):
                 'motor_id': motor['motor_id'],
                 'init': radians_to_pulse(motor['default']),
                 'min': radians_to_pulse(motor['min']),
-                'max': radians_to_pulse(motor['min']),
+                'max': radians_to_pulse(motor['max']),
                 'reverse': False,
                 'calibration': {
                     'min_pulse': radians_to_pulse(motor['min']),
@@ -64,40 +69,9 @@ def update_motor_config(robot_name):
     return json_encode(True)
 
 
-def write_yaml(file_name, data):
-    # delete existing config
-    try:
-        os.remove(file_name)
-    except OSError:
-        pass
-
-    f = open(file_name, 'w')
-    f.write(yaml.dump(data))
-    f.close()
-
-
-def radians_to_pulse(rad):
-    # equals -PI / 2
-    pulse_min = 820
-
-    # equals PI / 2
-    pulse_max = 2175
-
-    one_rad_pulse = pulse_max - pulse_min
-    zero_pulse = pulse_min + one_rad_pulse / 2
-    return round(zero_pulse + one_rad_pulse * rad)
-
-
-def radians_to_degrees(rad):
-    return round(rad * 180 / math.pi)
-
-
-@app.route('/expressions/<robot_name>', methods=['GET'])
+@app.route('/expressions/<robot_name>')
 def get_expressions(robot_name):
-    f = open("/catkin_ws/src/robots_config/" + robot_name + "/expressions.yaml")
-    expressions = yaml.load(f.read())
-    f.close()
-
+    expressions = read_yaml("/catkin_ws/src/robots_config/" + robot_name + "/expressions.yaml")
     return json_encode(expressions)
 
 
@@ -119,6 +93,42 @@ def update_expressions(robot_name):
 
     # return True
     return json_encode(True)
+
+
+def write_yaml(file_name, data):
+    # delete existing config
+    try:
+        os.remove(file_name)
+    except OSError:
+        pass
+
+    f = open(file_name, 'w')
+    f.write(yaml.dump(data))
+    f.close()
+
+
+def read_yaml(file_name):
+    f = open(file_name)
+    data = yaml.load(f.read())
+    f.close()
+
+    return json_encode(data)
+
+
+def radians_to_pulse(rad):
+    # equals -PI / 2
+    pulse_min = 820
+
+    # equals PI / 2
+    pulse_max = 2175
+
+    one_rad_pulse = pulse_max - pulse_min
+    zero_pulse = pulse_min + one_rad_pulse / 2
+    return round(zero_pulse + one_rad_pulse * rad)
+
+
+def radians_to_degrees(rad):
+    return round(rad * 180 / math.pi)
 
 
 if __name__ == '__main__':
