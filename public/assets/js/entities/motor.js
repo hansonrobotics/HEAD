@@ -40,7 +40,7 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                 var min = this.get('min');
                 var max = this.get('max');
                 var v = this.get(attribute);
-                return (v-min)/(max-min);
+                return Math.min(1, Math.max(0,(v-min)/(max-min)));
             }
         });
         Entities.MotorCollection = Backbone.Collection.extend({
