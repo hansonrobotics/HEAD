@@ -28,7 +28,7 @@ define(["ros_ui", "tpl!./templates/expression.tpl"], function (UI, template) {
             },
             collectionChanged: function () {
                 if (this.active())
-                    this.model.set('motor_positions', this.collection.getMotorPositions());
+                    this.model.set('motor_positions', this.collection.getRelativePositions());
             },
             select: function () {
                 this.expressionsView.expressionButtonClicked(this);
@@ -42,7 +42,7 @@ define(["ros_ui", "tpl!./templates/expression.tpl"], function (UI, template) {
                     var name = motor.get('name');
 
                     if (_.indexOf(motorNames, name) != -1) {
-                        motor.set('value', motorPositions[name]);
+                        motor.setRelativeVal('value', motorPositions[name]);
                         motor.selected(true);
                     } else {
                         motor.selected(false);

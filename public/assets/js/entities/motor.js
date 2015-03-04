@@ -28,6 +28,19 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
             },
             setDegrees: function (attribute, value) {
                 return this.set(attribute, utilities.degToRad(value));
+            },
+            // Sets value 0-1 mapped to min and max.
+            setRelativeVal: function(attribute, value){
+                var min = this.get('min');
+                var max = this.get('max');
+                var v = (min+(max-min)*value);
+                this.set(attribute, v);
+            },
+            getRelativeVal: function (attribute) {
+                var min = this.get('min');
+                var max = this.get('max');
+                var v = this.get(attribute);
+                return (v-min)/(max-min);
             }
         });
         Entities.MotorCollection = Backbone.Collection.extend({
@@ -56,6 +69,15 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                 });
 
                 return positions;
+            },
+            getRelativePositions: function() {
+                var positions = {};
+
+                this.each(function (motor) {
+                    if (motor.selected())
+                        positions[motor.get('name')] = motor.getRelativeVal('value');
+                });
+                return positions;                
             }
         });
     });

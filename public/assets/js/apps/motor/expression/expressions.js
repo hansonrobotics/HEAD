@@ -23,12 +23,10 @@ define(["ros_ui", "./expression", 'tpl!./templates/expressions.tpl'],
                     };
                 },
                 addExpressions: function () {
-                    var val = this.ui.nameField.val();
                     var expression = new RosUI.Entities.Expression({
-                        name: val ? val : 'enter name',
-                        motor_positions: this.motors.getMotorPositions()
+                        name: 'NewExpression',
+                        motor_positions: this.motors.getRelativePositions()
                     });
-
                     this.collection.add(expression);
                 },
                 updateExpressions: function () {
