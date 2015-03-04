@@ -10,7 +10,7 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
             },
             checkUpdatedValue: function () {
                 if (this.previous('value') != this.get('value')) {
-                    api.sendMotorCommand(this.toJSON(), this.get('value'));
+                    api._sendMotorCommand(this.toJSON(), this.get('value'));
                 }
             },
             selected: function (selected) {
