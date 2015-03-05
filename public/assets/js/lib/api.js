@@ -189,7 +189,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 dataType: 'json',
                 success: function (motors) {
                     motors = JSON.parse(motors)
-                    self.createMotorTopics(motors);
+                    self.createMotorTopics(motors.motors);
                     callback(motors);
                 }
             });
