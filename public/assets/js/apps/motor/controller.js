@@ -20,12 +20,11 @@ define(["ros_ui", "lib/api", "./common/layout", "./show/motors", './expression/e
                 $('#app-page-motors').html(layoutView.render().el);
                 layoutView.getRegion('motors').show(motorsView);
                 layoutView.getRegion('expressions').show(expressionsView);
-
+                self = this;
                 api.getMotorsFromFile(function (data) {
-                    motors.add(data);
+                    motors.add(data.motors);
+                    self.loadPololuMotors(motors);
                 });
-
-                this.loadPololuMotors(motors);
             },
             loadPololuMotors: function (collection) {
                 api.getPololuMotorTopics(function (topics) {
