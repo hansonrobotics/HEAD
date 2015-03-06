@@ -8,6 +8,7 @@
         <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
         <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>
         <include file="$(find robots_config)/$(arg name)/hardware.launch" />
 
         <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py"
