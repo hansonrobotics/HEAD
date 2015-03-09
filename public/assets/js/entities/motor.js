@@ -56,6 +56,7 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                     if (motor.get('labelleft')) {
                         motor = motor.toJSON();
                         delete motor['selected'];
+                        delete motor['value'];
 
                         data.push(motor);
                     }

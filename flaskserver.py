@@ -64,6 +64,7 @@ def update_motors(robot_name):
 
             if 'calibration' in motor:
                 calibration[motor['topic']][motor['name']] = motor['calibration']
+                del motor['calibration']
             else:
                 calibration[motor['topic']][motor['name']] = {
                     'pololu_id': 0,

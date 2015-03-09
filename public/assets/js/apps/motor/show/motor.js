@@ -149,10 +149,11 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 }
             },
             setDefault: function () {
+                var value = this.ui.slider.slider('value');
+
                 if (this.calibrationEditEnabled()) {
                     // cloning so that model change event is triggered
-                    var calibration = _.clone(this.model.get('calibration')),
-                        value = this.ui.slider.slider('value');
+                    var calibration = _.clone(this.model.get('calibration'));
 
                     if (calibration) {
                         calibration['init'] = value;
