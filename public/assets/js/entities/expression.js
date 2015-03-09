@@ -11,7 +11,7 @@ define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utili
                     cache: false,
                     dataType: 'json',
                     success: function (data) {
-                        var expressions = JSON.parse(data).expressions;
+                        var expressions = data.expressions;
 
                         _.each(expressions, function (expression, i) {
                             _.each(expression, function(motorPositions, name) {

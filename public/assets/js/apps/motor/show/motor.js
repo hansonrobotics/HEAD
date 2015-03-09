@@ -7,7 +7,6 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 "change": "modelChanged"
             },
             // indicates that motor is fully configuredselected
-            motor_configured: true,
             ui: {
                 slider: '.app-slider',
                 value: '.app-slider-value',
@@ -24,42 +23,63 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 sliderMaxVal: '.app-slider-max-value',
                 container: '.app-slider-container',
                 selectButton: '.app-select-motor-button',
-                selectButtonIcon: '.app-select-motor-button span'
+                selectButtonIcon: '.app-select-motor-button span',
+                anglesButton: '.app-angles-button',
+                calibrationButton: '.app-calibration-button'
             },
             events: {
                 'click @ui.setMinButton': 'setMin',
                 'click @ui.setMaxButton': 'setMax',
                 'click @ui.setDefaultButton': 'setDefault',
                 'keyup @ui.labelLeftInput': 'setLabelLeft',
-                'click @ui.selectButton': 'toggleSelect'
-            },
-            initialize: function () {
-                this.setMotorConfigured();
-            },
-            // passes data to the template
-            serializeData: function () {
-                return _.extend(this.model.toJSON(), {
-                    min: this.model.getDegrees('min'),
-                    max: this.model.getDegrees('max')
-                });
+                'click @ui.selectButton': 'toggleSelect',
+                'click @ui.anglesButton': 'anglesSelected',
+                'click @ui.calibrationButton': 'calibrationSelected'
+
             },
             modelChanged: function () {
-                this.setMotorConfigured();
-                this.ui.value.text(this.model.getDegrees('value'));
-                this.ui.slider.slider('value', this.model.getDegrees('value'));
-                this.ui.labelLeft = this.model.get('labelleft');
-                this.ui.labelright = this.model.get('labelright');
-                this.ui.min = this.model.getDegrees('min');
-                this.ui.max = this.model.getDegrees('max');
+                if (this.calibrationEditEnabled()) {
+                    var calibration = this.model.get('calibration');
+
+                    this.setSliderMin(820);
+                    this.ui.sliderMinVal.text(calibration['min']);
+                    this.setSliderMax(2175);
+                    this.ui.sliderMaxVal.text(calibration['max']);
+
+                    this.setSliderValue(calibration['init']);
+                } else {
+                    var min = this.model.getDegrees('min');
+                    var max = this.model.getDegrees('max');
+
+                    this.ui.sliderMinVal.text(min + '°');
+                    this.ui.sliderMaxVal.text(max + '°');
+
+
+                    if (this.editEnabled()) {
+                        this.setSliderMin(-90);
+                        this.setSliderMax(90);
+                    } else {
+                        this.setSliderMin(min);
+                        this.setSliderMax(max);
+                    }
+
+                    this.setSliderValue(this.model.getDegrees('value'), true);
+                }
+
+                this.ui.labelLeft.text(this.model.get('labelleft'));
+                this.ui.labelright.text(this.model.get('labelright'));
 
                 this.selected(this.model.selected());
             },
-            setMotorConfigured: function () {
-                // motor is considered configured if it has label defined
-                this.motor_configured = !!this.model.get('labelleft');
+            setSliderValue: function (value, degrees) {
+                this.ui.value.text(value + (degrees ? '°' : ''));
+                this.ui.slider.slider('value', value);
             },
-            getMotorConfigured: function () {
-                return this.motor_configured;
+            setSliderMin: function (value) {
+                this.ui.slider.slider('option', 'min', value);
+            },
+            setSliderMax: function (value) {
+                this.ui.slider.slider('option', 'max', value);
             },
             onRender: function () {
                 var self = this;
@@ -69,16 +89,19 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                     min: this.model.getDegrees('min'),
                     max: this.model.getDegrees('max'),
                     slide: function (e, ui) {
-                        self.model.setDegrees('value', ui.value);
-                    },
-                    start: function (e, ui) {
-                        self.model.set('isActive', true);
-                    },
-                    stop: function (e, ui) {
-                        self.model.set('isActive', false);
+                        if (self.ui.calibrationButton.hasClass('active'))
+                            self.setSliderValue(ui.value);
+                        else
+                            self.model.setDegrees('value', ui.value);
                     }
                 });
-                if (!this.getMotorConfigured()) this.$el.hide();
+
+                // hide if doesn't have label
+                if (!this.model.get('labelleft')) this.$el.hide();
+
+                // show angles by default
+                this.anglesSelected();
+
                 // deselect by default
                 this.modelChanged();
 
@@ -86,17 +109,58 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 this.showSelectButton(false);
             },
             setMin: function () {
-                var value = this.model.getDegrees('value');
-                this.ui.sliderMinVal.html(value);
-                this.model.setDegrees('min', value);
+                // cloning so that model change event is triggered
+                var calibration = _.clone(this.model.get('calibration')),
+                    value = this.ui.slider.slider('value');
+
+                if (this.calibrationEditEnabled()) {
+                    if (calibration) {
+                        calibration['min'] = calibration['calibration']['min_pulse'] = value;
+                        this.model.set('calibration', calibration);
+                    }
+                } else {
+                    this.ui.sliderMinVal.text(value);
+                    this.model.setDegrees('min', value);
+
+                    if (calibration) {
+                        calibration['calibration']['min_angle'] = value;
+                        this.model.set('calibration', calibration);
+                    }
+                }
             },
             setMax: function () {
-                var value = this.model.getDegrees('value');
-                this.ui.sliderMaxVal.html(value);
-                this.model.setDegrees('max', value);
+                // cloning so that model change event is triggered
+                var calibration = _.clone(this.model.get('calibration')),
+                    value = this.ui.slider.slider('value');
+
+                if (this.calibrationEditEnabled()) {
+                    if (calibration) {
+                        calibration['max'] = calibration['calibration']['max_pulse'] = value;
+                        this.model.set('calibration', calibration);
+                    }
+                } else {
+                    this.ui.sliderMaxVal.text(value);
+                    this.model.setDegrees('max', value);
+
+                    if (calibration) {
+                        calibration['calibration']['max_angle'] = value;
+                        this.model.set('calibration', calibration);
+                    }
+                }
             },
             setDefault: function () {
-                this.model.set('default', this.model.get('value'));
+                if (this.calibrationEditEnabled()) {
+                    // cloning so that model change event is triggered
+                    var calibration = _.clone(this.model.get('calibration')),
+                        value = this.ui.slider.slider('value');
+
+                    if (calibration) {
+                        calibration['init'] = value;
+                        this.model.set('calibration', calibration);
+                    }
+                } else {
+                    this.model.set('default', value);
+                }
             },
             setLabelLeft: function () {
                 var label = this.ui.labelLeftInput.val();
@@ -106,7 +170,9 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
             enableEdit: function () {
                 this.ui.dragHandle.show();
 
-                if (this.model.get('editable') == true) {
+                if (this.model.get('motor_id') != null) {
+                    this.edit_enabled = true;
+
                     this.ui.showOnEdit.show();
                     this.ui.hideOnEdit.hide();
                 }
@@ -114,14 +180,22 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 this.$el.show();
             },
             disableEdit: function () {
+                this.edit_enabled = false;
                 this.ui.dragHandle.hide();
+                this.anglesSelected();
 
-                if (this.model.get('editable') == true) {
+                if (this.model.get('motor_id') != null) {
                     this.ui.showOnEdit.hide();
                     this.ui.hideOnEdit.show();
                 }
 
-                if (!this.getMotorConfigured()) this.$el.hide();
+                if (!this.model.get('labelleft')) this.$el.hide();
+            },
+            editEnabled: function () {
+                return typeof this.edit_enabled != 'undefined' && this.edit_enabled;
+            },
+            calibrationEditEnabled: function () {
+                return this.ui.calibrationButton.hasClass('active');
             },
             /**
              * Sets select model select state if boolean argument is present,
@@ -158,6 +232,18 @@ define(["ros_ui", "tpl!./templates/motor.tpl"], function (UI, motorTpl) {
                 } else {
                     this.ui.selectButton.hide();
                 }
+            },
+            calibrationSelected: function () {
+                this.ui.calibrationButton.addClass('active');
+                this.ui.anglesButton.removeClass('active');
+
+                this.modelChanged();
+            },
+            anglesSelected: function () {
+                this.ui.anglesButton.addClass('active');
+                this.ui.calibrationButton.removeClass('active');
+
+                this.modelChanged();
             }
         });
     });

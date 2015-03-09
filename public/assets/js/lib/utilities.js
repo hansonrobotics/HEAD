@@ -13,7 +13,7 @@ define(function () {
             function fire() {
                 timeout = null;
                 if (last_args != null) {
-                    args = last_args;
+                    var args = last_args;
                     last_args = null;
                     timeout = setTimeout(fire, millis);
                     func.apply(null, args); //Apply the last saved arguments

@@ -1,23 +1,33 @@
 <div class="app-slider-container">
     <hr class="app-motors-show-on-edit"/>
 
-    <div class="app-motor-info app-motors-show-on-edit">
-        <strong>Topic:</strong>
-        <span class="app-motor-topic-name"><%= topic %></span>
-        <strong>, Motor ID:</strong>
-        <span class="app-motor-id"><%= name %></span>
+    <div class="app-motor-info">
+        <span class="app-motors-show-on-edit">
+            <strong>Topic:</strong>
+            <span class="app-motor-topic-name"><%= topic %></span>
+            <strong>, Motor ID:</strong>
+            <span class="app-motor-id"><%= (typeof motor_id == 'undefined') ? "" : motor_id %></span>
+        </span>
+
+        <span class="app-motor-drag-handle pull-right ui-icon ui-icon-arrowthick-2-n-s"></span>
     </div>
 
-    <span class="app-motor-drag-handle pull-right ui-icon ui-icon-arrowthick-2-n-s"></span>
-
-    <div class="app-motors-hide-on-edit">
-        <div class="pull-left">
-            <b class="app-slider-label-left"><%= labelleft %></b>
+    <div>
+        <div class="app-motors-hide-on-edit pull-left">
+            <b class="app-slider-label-left"></b>
         </div>
 
         <div class="pull-right">
-            <b class="app-slider-label-right"><%= labelright %></b>
-            <button type="button" class="app-select-motor-button btn"><span class="glyphicon" aria-hidden="true"></span></button>
+            <b class="app-motors-hide-on-edit app-slider-label-right"></b>
+            <% if (typeof motor_id != 'undefined') { %>
+            <div class="pull-left app-motors-show-on-edit btn-group" role="group" aria-label="...">
+                <button type="button" class="app-angles-button motor-action btn btn-default">Angles</button>
+                <button type="button" class="app-calibration-button motor-action btn btn-default">Calibration</button>
+            </div>
+            <% } %>
+            <button type="button" class="pull-right app-select-motor-button motor-action btn"><span class="glyphicon"
+                                                                                         aria-hidden="true"></span>
+            </button>
         </div>
     </div>
 
@@ -27,7 +37,9 @@
         </div>
     </div>
 
-    <div class="app-slider-value-container"><span class="app-slider-value"></span>° (<span class="app-slider-min-value"><%= min %></span>° to <span class="app-slider-max-value"><%= max %></span>°)</div>
+    <div class="app-slider-value-container"><span class="app-slider-value"></span> (<span
+            class="app-slider-min-value"></span> to <span class="app-slider-max-value"></span>)
+    </div>
 
     <div class="clearfix"></div>
 

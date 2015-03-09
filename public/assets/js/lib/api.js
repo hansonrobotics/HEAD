@@ -188,7 +188,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             $.ajax('/' + api.config.robot + '/motors/get', {
                 dataType: 'json',
                 success: function (motors) {
-                    motors = JSON.parse(motors)
                     self.createMotorTopics(motors);
                     callback(motors);
                 }
