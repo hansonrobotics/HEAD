@@ -1,7 +1,7 @@
 define(['jquery', 'lib/api', 'lib/ros', 'lib/utilities'], function ($, api, ros, utilities, motorsLayout) {
     var motors = {
         init: function () {
-            require(['ros_ui', 'apps/motor/motor_app'], function (RosUi) {
+            require(['ros_ui', 'modules/motor/motor_app'], function (RosUi) {
                 RosUi.start();
             });
         },
