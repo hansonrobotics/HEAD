@@ -57,10 +57,13 @@
                        data-page="#app-page-status">Status</a></li>
                 <li><a id="app-expressions-link" href="#/expressions" class="app-change-page"
                        data-page="#app-page-expressions">Expressions</a></li>
-                <li><a id="app-motors-link" href="#/motors" class="app-change-page" data-page="#app-page-motors">Motors</a></li>
-                <!--<li><a id="app-animations-link" href="#/animations" class="app-change-page" data-page="#app-page-animations">Animations</a></li>-->
-                <li><a id="app-gestures-link" href="#/gestures" class="app-change-page" data-page="#app-page-gestures">Gestures</a></li>
-                <li><a id="app-interactions-link" href="#/interactions" class="app-change-page" data-page="#app-page-interaction">Interaction</a>
+                <li><a id="app-motors-link" href="#/motors" class="app-change-page"
+                       data-page="#app-page-motors">Motors</a></li>
+                <li><a id="app-animations-link" href="#/animations" class="app-change-page" data-page="#app-page-animations">Animations</a></li>
+                <li><a id="app-gestures-link" href="#/gestures" class="app-change-page" data-page="#app-page-gestures">Gestures</a>
+                </li>
+                <li><a id="app-interactions-link" href="#/interactions" class="app-change-page"
+                       data-page="#app-page-interaction">Interaction</a>
                 </li>
             </ul>
         </div>
@@ -100,59 +103,7 @@
         </div>
     </div>
     <div id="app-page-motors" class="app-page"></div>
-    <div id="app-page-animations" class="app-page">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-5">
-                    <h4> Demo loop: </h4>
-
-                    <div id="demo-loop" class="btn-group btn-toggle">
-                        <button id="loop-on" class="btn btn-default animation-control">On</button>
-                        <button id="loop-off" class="btn btn-default active animation-control">Off</button>
-                    </div>
-                </div>
-
-                <div class="col-xs-7 app-optional">
-                    <h4> Controls: </h4>
-
-                    <div class="btn-group" id="controls" data-toggle="buttons"><!--
-                    --><label id="cmd_play" class="btn btn-default command animation-control" data-cmd="play"><!--
-                        --><input type="radio" name="command">Play<!--
-                    --></label><!--
-                    --><label id="cmd_pause" class="btn btn-default command animation-control" data-cmd="pause"><!--
-                        --><input type="radio" name="command">Pause<!--
-                    --></label><!--
-                    --><label id="cmd_stop" class="btn btn-default command active animation-control" data-cmd="stop"><!--
-                        --><input type="radio" name="command">Stop<!--
-                    --></label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div id="playlist" class="col-md-12 app-optional">
-                    <h4> Animations: </h4><!--
-
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="happy-1">Happy</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="amused-1">Amused</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="angry-1">Angry</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="cheerful-1">Cheerful</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="confident-1">Confident</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="confused-1">Confused</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="curious-1">Curious</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="disgusted-1">Disgusted</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="enraged-1">Enraged</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="grieving-1">Grieving</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="mischievous-1">Mischievous</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="sad-1">Sad</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="shy-1">Shy</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="sleep-in">Sleep-in</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="sleep-out">Wake-up</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="surprised-2">Surprised</button><!--
-                --><button type="button" class="btn btn-default app-animation-button" data-animation="yawn-1">Yawn</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="app-page-animations" class="app-page"></div>
     <div id="app-page-gestures" class="app-page">
         <div class="container">
             <div class="row">
@@ -163,6 +114,7 @@
                 </div>
                 <div class="col-md-10">
                     <h4>Gestures: </h4>
+
                     <div id="app-gesture-buttons"></div>
                 </div>
             </div>
@@ -180,7 +132,10 @@
                                 <b class="app-slider-label-right"></b>
                             </div>
 
-                            <div class="app-slider-value-container"><span class="app-slider-value">0</span>° (<span class="app-slider-min-value">-90</span>° to <span class="app-slider-max-value">90</span>°)</div>
+                            <div class="app-slider-value-container"><span class="app-slider-value">0</span>° (<span
+                                    class="app-slider-min-value">-90</span>° to <span
+                                    class="app-slider-max-value">90</span>°)
+                            </div>
 
                             <div class="app-slider"></div>
                         </li>
