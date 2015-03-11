@@ -93,3 +93,7 @@ ul.app-motors {
 .motor-action {
     padding: 2px 6px;
 }
+
+.app-motor-drag-handle {
+    margin-right: 5px;
+}

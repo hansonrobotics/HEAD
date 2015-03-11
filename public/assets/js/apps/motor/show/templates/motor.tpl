@@ -1,19 +1,17 @@
 <div class="app-slider-container">
     <hr class="app-motors-show-on-edit"/>
 
-    <div class="app-motor-info">
-        <span class="app-motors-show-on-edit">
-            <strong>Topic:</strong>
-            <span class="app-motor-topic-name"><%= topic %></span>
-            <strong>, Motor ID:</strong>
-            <span class="app-motor-id"><%= (typeof motor_id == 'undefined') ? "" : motor_id %></span>
-        </span>
-
-        <span class="app-motor-drag-handle pull-right ui-icon ui-icon-arrowthick-2-n-s"></span>
+    <div class="app-motor-info app-motors-show-on-edit">
+        <span class="app-motor-drag-handle pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>
+        <strong>Topic:</strong>
+        <span class="app-motor-topic-name"><%= topic %></span>
+        <strong>, Motor ID:</strong>
+        <span class="app-motor-id"><%= (typeof motor_id == 'undefined') ? "" : motor_id %></span>
     </div>
 
     <div>
         <div class="app-motors-hide-on-edit pull-left">
+            <span class="app-motor-drag-handle pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>
             <b class="app-slider-label-left"></b>
         </div>
 
@@ -26,7 +24,7 @@
             </div>
             <% } %>
             <button type="button" class="pull-right app-select-motor-button motor-action btn"><span class="glyphicon"
-                                                                                         aria-hidden="true"></span>
+                                                                                                    aria-hidden="true"></span>
             </button>
         </div>
     </div>
