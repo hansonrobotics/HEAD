@@ -19,14 +19,10 @@ define(['application', 'tpl!./templates/animations.tpl', './frame', 'lib/api', '
                 },
                 buttonClicked: function (e) {
                     this.ui.buttons.removeClass('active');
+                    var name = $(e.target).addClass('active').data('name');
 
-                    var button = $(e.target);
-                    button.addClass('active');
-
-                    api.playAnimation(button.data('name'), 25);
-
-                    // trigger event
-                    Views.trigger('animation_selected', button);
+                    Views.trigger('animation_selected', name);
+                    api.playAnimation(name, 25);
                 }
             });
         });
