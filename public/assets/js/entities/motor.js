@@ -1,5 +1,5 @@
-define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utilities) {
-    UI.module('Entities', function (Entities, UI, Backbone, Marionette, $, _) {
+define(['application', '../lib/api', '../lib/utilities'], function (App, api, utilities) {
+    App.module('Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Motor = Backbone.Model.extend({
             initialize: function () {
                 // set value to default

@@ -117,6 +117,17 @@ def update_expressions(robot_name):
     # return True
     return json_encode(True)
 
+@app.route('/<robot_name>/animations/get')
+def get_animations(robot_name):
+    return json_encode(read_yaml("/catkin_ws/src/robots_config/" + robot_name + "/" + "animations.yaml"))
+
+@app.route('/<robot_name>/animations/update', methods=['POST'])
+def update_animations(robot_name):
+    data = json.loads(request.get_data().decode('utf8'))
+    file_name = "/catkin_ws/src/robots_config/" + robot_name + "/expressions.yaml"
+
+    write_yaml(file_name, data)
+
 
 def write_yaml(file_name, data):
     # delete existing config

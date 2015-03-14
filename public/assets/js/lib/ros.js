@@ -92,6 +92,10 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/blender_api/set_emotion_state',
                     messageType: 'blender_api_msgs/EmotionState'
+                }),
+                play_animation: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/play_animation'
                 })
             };
         },

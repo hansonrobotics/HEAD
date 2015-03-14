@@ -1,5 +1,5 @@
-define(['ros_ui', 'tpl!./templates/layout.tpl'], function (RosUi, template) {
-    RosUi.module("Motors.Common", function (Common, RosUI, Backbone, Marionette, $, _) {
+define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
+    App.module("Motors.Common", function (Common, App, Backbone, Marionette, $, _) {
         Common.Layout = Marionette.LayoutView.extend({
             template: template,
 
@@ -10,5 +10,5 @@ define(['ros_ui', 'tpl!./templates/layout.tpl'], function (RosUi, template) {
         });
     });
 
-    return RosUi.Motors.Common.Layout;
+    return App.Motors.Common.Layout;
 });

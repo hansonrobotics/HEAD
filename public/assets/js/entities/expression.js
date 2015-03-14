@@ -1,5 +1,5 @@
-define(['../ros_ui', '../lib/api', '../lib/utilities'], function (UI, api, utilities) {
-    UI.module('Entities', function (Entities, UI, Backbone, Marionette, $, _) {
+define(['application', 'lib/api'], function (App, api) {
+    App.module('Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Expression = Backbone.Model.extend({});
         Entities.ExpressionCollection = Backbone.Collection.extend({
             model: Entities.Expression,

@@ -30,10 +30,20 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         expressionList: function (success) {
             api.services.expressionList.callService(new ROSLIB.ServiceRequest(), success);
         },
-        playAnimation: function (animation) {
-            api.topics.animations.publish(
+        getAnimationsFromFile: function (callback) {
+            $.ajax('/' + api.config.robot + '/animations/get', {
+                dataType: 'json',
+                success: function (response) {
+
+                    callback(response.animations);
+                }
+            });
+        },
+        playAnimation: function (animation, fps) {
+            api.topics.play_animation.publish(
                 new ROSLIB.Message({
-                    data: 'play:' + animation
+                    animation: animation,
+                    fps: fps
                 })
             );
         },
@@ -187,9 +197,9 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
 
             $.ajax('/' + api.config.robot + '/motors/get', {
                 dataType: 'json',
-                success: function (motors) {
-                    self.createMotorTopics(motors);
-                    callback(motors);
+                success: function (response) {
+                    self.createMotorTopics(response.motors);
+                    callback(response.motors);
                 }
             });
         },

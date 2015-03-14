@@ -1,5 +1,5 @@
-define(["ros_ui", "tpl!./templates/expression.tpl"], function (UI, template) {
-    UI.module("Motors.View", function (View, RosUI, Backbone, Marionette, $, _) {
+define(["application", "tpl!./templates/expression.tpl"], function (App, template) {
+    App.module("Motors.View", function (View, RosApp, Backbone, Marionette, $, _) {
         View.Expression = Marionette.ItemView.extend({
             template: template,
             modelEvents: {
@@ -62,5 +62,5 @@ define(["ros_ui", "tpl!./templates/expression.tpl"], function (UI, template) {
         });
     });
 
-    return UI.Motors.View.Expression;
+    return App.Motors.View.Expression;
 });

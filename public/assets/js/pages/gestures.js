@@ -82,7 +82,7 @@ define(['jquery', 'lib/api'], function ($, api) {
             console.log(value);
             if (value > 0) {
                 setTimeout(function () {
-                    RosUI.gestures.updateSlider(name, 0)
+                    App.gestures.updateSlider(name, 0)
                 }, 1000)
             }
         },

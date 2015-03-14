@@ -1,5 +1,5 @@
-define(["ros_ui", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], function (RosUi, motorView, motorsTemplate) {
-    RosUi.module("Motors.View", function (View, RosUI, Backbone, Marionette, $, _) {
+define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], function (App, motorView, motorsTemplate) {
+    App.module("Motors.View", function (View, App, Backbone, Marionette, $, _) {
         View.Motors = Marionette.CompositeView.extend({
             template: motorsTemplate,
             childViewContainer: '.app-motors',
@@ -15,7 +15,7 @@ define(["ros_ui", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], functio
             },
             initialize: function () {
                 var self = this;
-                RosUI.vent.on('motors:selection:set', function (status) {
+                App.vent.on('motors:selection:set', function (status) {
                     self.showSelectButtons(status);
                 })
             },
@@ -64,5 +64,5 @@ define(["ros_ui", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], functio
         });
     });
 
-    return RosUi.Motors.View.Motors;
+    return App.Motors.View.Motors;
 });

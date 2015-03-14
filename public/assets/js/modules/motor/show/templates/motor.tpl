@@ -18,7 +18,7 @@
         <div class="pull-right">
             <b class="app-motors-hide-on-edit app-slider-label-right"></b>
             <% if (typeof motor_id != 'undefined') { %>
-            <div class="pull-left app-motors-show-on-edit btn-group" role="group" aria-label="...">
+            <div class="pull-left app-motors-show-on-edit btn-group" role="group">
                 <button type="button" class="app-angles-button motor-action btn btn-default">Angles</button>
                 <button type="button" class="app-calibration-button motor-action btn btn-default">Calibration</button>
             </div>

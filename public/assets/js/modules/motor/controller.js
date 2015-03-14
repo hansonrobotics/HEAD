@@ -1,10 +1,10 @@
-define(["ros_ui", "lib/api", "./common/layout", "./show/motors", './expression/expressions',
+define(["application", "lib/api", "./common/layout", "./show/motors", './expression/expressions',
         'entities/motor', 'entities/expression'],
-    function (RosUi, api, LayoutView, MotorsView, ExpressionsView) {
+    function (App, api, LayoutView, MotorsView, ExpressionsView) {
         return {
             show: function () {
-                var motors = new RosUi.Entities.MotorCollection(),
-                    expressions = new RosUi.Entities.ExpressionCollection(),
+                var motors = new App.Entities.MotorCollection(),
+                    expressions = new App.Entities.ExpressionCollection(),
                     layoutView = new LayoutView(),
                     motorsView = new MotorsView({
                         collection: motors
@@ -32,7 +32,7 @@ define(["ros_ui", "lib/api", "./common/layout", "./show/motors", './expression/e
                     _.each(topics, function (topic) {
                         for (var i = 0; i < 24; i++) {
                             var unique = true,
-                                newMotor = new RosUi.Entities.Motor({
+                                newMotor = new App.Entities.Motor({
                                     name: i,
                                     motor_id: i,
                                     topic: topic,

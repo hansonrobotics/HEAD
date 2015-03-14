@@ -1,6 +1,6 @@
-define(["ros_ui", "./expression", 'tpl!./templates/expressions.tpl'],
-    function (RosUi, expressionView, template) {
-        RosUi.module("Motors.View", function (View, RosUI, Backbone, Marionette, $, _) {
+define(["application", "./expression", 'tpl!./templates/expressions.tpl'],
+    function (App, expressionView, template) {
+        App.module("Motors.View", function (View, App, Backbone, Marionette, $, _) {
             View.Expressions = Marionette.CompositeView.extend({
                 template: template,
                 childViewContainer: '.app-expressions',
@@ -23,7 +23,7 @@ define(["ros_ui", "./expression", 'tpl!./templates/expressions.tpl'],
                     };
                 },
                 addExpressions: function () {
-                    var expression = new RosUI.Entities.Expression({
+                    var expression = new App.Entities.Expression({
                         name: 'NewExpression',
                         motor_positions: this.motors.getRelativePositions()
                     });
@@ -33,7 +33,7 @@ define(["ros_ui", "./expression", 'tpl!./templates/expressions.tpl'],
                     this.collection.sync();
                 },
                 expressionButtonClicked: function (view) {
-                    RosUI.vent.trigger('motors:selection:set', true);
+                    App.vent.trigger('motors:selection:set', true);
 
                     if (this.last_clicked != view) {
                         this.last_clicked = view;
@@ -47,5 +47,5 @@ define(["ros_ui", "./expression", 'tpl!./templates/expressions.tpl'],
             });
         });
 
-        return RosUi.Motors.View.Expressions;
+        return App.Motors.View.Expressions;
     });
