@@ -1,8 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="app-class-animations col-md-6">
-            <h3>Animations</h3>
-
+            <br/>
             <div class="app-animations"></div>
 
             <h3>Editing</h3>
@@ -14,10 +13,14 @@
 
             <div class="app-editing">
                 <h3>Frames</h3>
-                <div class="app-frames"></div>
+                <hr/>
+                <div class="app-frames">
+                    <div class="alert alert-info">Please select an animation</div>
+                </div>
+                <button class="app-save-frames btn btn-primary" type="button">Save</button>
             </div>
         </div>
 
-        <div class="app-motors col-md-6"></div>
+        <div class="app-motors app-editing col-md-6"></div>
     </div>
 </div>

@@ -124,9 +124,10 @@ def get_animations(robot_name):
 @app.route('/<robot_name>/animations/update', methods=['POST'])
 def update_animations(robot_name):
     data = json.loads(request.get_data().decode('utf8'))
-    file_name = "/catkin_ws/src/robots_config/" + robot_name + "/expressions.yaml"
+    file_name = "/catkin_ws/src/robots_config/" + robot_name + "/animations.yaml"
 
     write_yaml(file_name, data)
+    return json_encode(True)
 
 
 def write_yaml(file_name, data):

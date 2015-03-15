@@ -5,6 +5,9 @@ define(['application', '../lib/api', '../lib/utilities'], function (App, api, ut
                 // set value to default
                 this.set('value', this.get('default'));
 
+                // not selected by default
+                this.set('selected', false);
+
                 // send motor command when updating value
                 this.on('change', this.checkUpdatedValue())
             },

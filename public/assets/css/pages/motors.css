@@ -68,13 +68,6 @@
     display: none;
 }
 
-.app-motors .ui-state-highlight {
-    height: 132px;
-    padding: 5px;
-    background: #4e5d6c;
-    border: solid 1px #df691a;
-}
-
 .app-motors-show-on-edit, .app-save-motors-button {
     display: none;
 }

@@ -34,8 +34,18 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             $.ajax('/' + api.config.robot + '/animations/get', {
                 dataType: 'json',
                 success: function (response) {
-
                     callback(response.animations);
+                }
+            });
+        },
+        updateAnimationsFile: function (animations, callback) {
+            $.ajax('/' + api.config.robot + '/animations/update', {
+                dataType: 'json',
+                data: JSON.stringify({animations: animations}),
+                method: 'POST',
+                success: function (response) {
+                    if (typeof callback == 'function')
+                        callback(response);
                 }
             });
         },

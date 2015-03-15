@@ -50,3 +50,16 @@ body {
 .app-expressions.expression-buttons div {
     float: left;
 }
+
+.ui-state-highlight {
+    height: 132px;
+    padding: 5px;
+    background: #4e5d6c;
+    border: solid 1px #df691a;
+}
+
+.ui-sortable-helper {
+    background-color: #2b3e50;
+    border: solid 1px #df691a;
+    padding: 10px 5px 5px;
+}

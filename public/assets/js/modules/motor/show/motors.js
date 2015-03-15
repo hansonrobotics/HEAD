@@ -19,6 +19,10 @@ define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], fu
                     self.showSelectButtons(status);
                 })
             },
+            onRender: function () {
+                if (typeof this.options.disable_edit != 'undefined' && this.options.disable_edit)
+                    this.ui.editButton.hide();
+            },
             enableEdit: function () {
                 var self = this;
 

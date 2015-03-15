@@ -6,11 +6,13 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
                 enableEditButton: '.app-enable-edit',
                 disableEditButton: '.app-disable-edit',
                 motors: '.app-motors',
-                frames: '.app-frames'
+                editing: '.app-editing',
+                saveButton: '.app-save-frames'
             },
             events: {
                 'click @ui.enableEditButton': 'enableEditing',
-                'click @ui.disableEditButton': 'disableEditing'
+                'click @ui.disableEditButton': 'disableEditing',
+                'click @ui.saveButton': 'updateAnimations'
             },
             regions: {
                 animationButtons: '.app-animations',
@@ -18,21 +20,23 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
                 frames: '.app-frames'
             },
             onRender: function () {
-                this.ui.frames.hide();
-                this.ui.motors.hide();
+                this.ui.editing.hide();
                 this.disableEditing();
             },
             enableEditing: function () {
                 this.ui.enableEditButton.addClass('active');
                 this.ui.disableEditButton.removeClass('active');
 
-                this.ui.motors.fadeIn();
+                this.ui.editing.fadeIn();
             },
             disableEditing: function () {
                 this.ui.disableEditButton.addClass('active');
                 this.ui.enableEditButton.removeClass('active');
 
-                this.ui.motors.fadeOut();
+                this.ui.editing.fadeOut();
+            },
+            updateAnimations: function () {
+                this.options.animationsCollection.sync();
             }
         });
     });

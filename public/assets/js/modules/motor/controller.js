@@ -7,7 +7,8 @@ define(["application", "lib/api", "./common/layout", "./show/motors", './express
                     expressions = new App.Entities.ExpressionCollection(),
                     layoutView = new LayoutView(),
                     motorsView = new MotorsView({
-                        collection: motors
+                        collection: motors,
+                        disable_edit: true
                     }),
                     expressionsView = new ExpressionsView({
                         collection: expressions,
