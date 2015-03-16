@@ -7,12 +7,14 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
                 disableEditButton: '.app-disable-edit',
                 motors: '.app-motors',
                 editing: '.app-editing',
-                saveButton: '.app-save-frames'
+                saveButton: '.app-save-frames',
+                addFrame: '.app-add-frame'
             },
             events: {
                 'click @ui.enableEditButton': 'enableEditing',
                 'click @ui.disableEditButton': 'disableEditing',
-                'click @ui.saveButton': 'updateAnimations'
+                'click @ui.saveButton': 'updateAnimations',
+                'click @ui.addFrame': 'addFrame'
             },
             regions: {
                 animationButtons: '.app-animations',
@@ -38,6 +40,9 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
             },
             updateAnimations: function () {
                 this.options.animationsCollection.sync();
+            },
+            addFrame: function () {
+                Views.trigger('add_frame');
             }
         });
     });

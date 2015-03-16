@@ -18,7 +18,10 @@
                 <div class="app-frames">
                     <div class="alert alert-info">Please select an animation</div>
                 </div>
-                <button class="app-save-frames btn btn-primary" type="button">Save</button>
+                <div class="button-group">
+                    <button class="app-add-frame btn btn-default" title="Add Frame" type="button"><span class="glyphicon glyphicon-plus" area-hidden="true"></span></button>
+                    <button class="app-save-frames btn btn-primary" type="button">Save</button>
+                </div>
             </div>
         </div>
 

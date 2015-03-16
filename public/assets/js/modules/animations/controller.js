@@ -31,19 +31,23 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
                     self.animationSelected(name);
                 });
 
+                App.module('Animations.Views').on('add_frame', function () {
+                    self.addFrame();
+                });
+
                 this.motorsCollection.on('change', function () {
                     self.updateFrame();
                 });
             },
             animationSelected: function (name) {
-                if (typeof this.last_animation == 'undefined' || this.last_animation != name) {
-                    this.last_animation = name;
-                    this.selected_frame = null;
+                // find animation model
+                var animation = this.animationsCollection.find(function (model) {
+                    return model.get('name') == name;
+                });
 
-                    // find animation model
-                    var animation = this.animationsCollection.find(function (model) {
-                        return model.get('name') == name;
-                    });
+                if (typeof this.last_animation == 'undefined' || this.last_animation != animation) {
+                    this.last_animation = animation;
+                    this.selected_frame = null;
 
                     var framesView = new FramesView({collection: animation.get('frames_collection')});
                     this.layoutView.getRegion('frames').show(framesView);
@@ -76,6 +80,18 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
             updateFrame: function () {
                 if (typeof this.selected_frame != 'undefined' && this.selected_frame)
                     this.selected_frame.set('motors', this.motorsCollection.getRelativePositions());
+            },
+            addFrame: function () {
+                if (typeof this.last_animation != 'undefined') {
+                    var frames = this.last_animation.get('frames_collection');
+                    frames.add(new Backbone.Model({
+                        acceleration: null,
+                        frames: null,
+                        motors: {},
+                        name: '',
+                        speed: null
+                    }));
+                }
             }
         }
     });
