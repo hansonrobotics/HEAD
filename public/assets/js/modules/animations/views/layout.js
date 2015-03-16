@@ -8,13 +8,17 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
                 motors: '.app-motors',
                 editing: '.app-editing',
                 saveButton: '.app-save-frames',
-                addFrame: '.app-add-frame'
+                addFrame: '.app-add-frame',
+                deleteAnimation: '.app-delete-animation',
+                addAnimation: '.app-add-animation'
             },
             events: {
                 'click @ui.enableEditButton': 'enableEditing',
                 'click @ui.disableEditButton': 'disableEditing',
                 'click @ui.saveButton': 'updateAnimations',
-                'click @ui.addFrame': 'addFrame'
+                'click @ui.addFrame': 'addFrame',
+                'click @ui.deleteAnimation': 'deleteAnimation',
+                'click @ui.addAnimation': 'addAnimation'
             },
             regions: {
                 animationButtons: '.app-animations',
@@ -43,6 +47,12 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
             },
             addFrame: function () {
                 Views.trigger('add_frame');
+            },
+            deleteAnimation: function () {
+                Views.trigger('delete_animation');
+            },
+            addAnimation: function () {
+                Views.trigger('add_animation');
             }
         });
     });

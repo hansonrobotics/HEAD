@@ -11,6 +11,11 @@
                 <button class="app-disable-edit btn btn-default">Disable</button>
             </div>
 
+            <div class="app-editing pull-right">
+                <button class="app-add-animation btn btn-default"><span class="glyphicon glyphicon-plus" area-hidden="true"></span> Add</button>
+                <button class="app-delete-animation btn btn-danger">Delete</button>
+            </div>
+
             <div class="app-editing">
                 <div class="app-animation-edit"></div>
                 <h3>Frames</h3>

@@ -25,14 +25,14 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
 
                 App.module('Animations.Views').on('frame_selected', function (frame) {
                     self.frameSelected(frame);
-                });
-
-                App.module('Animations.Views').on('animation_selected', function (name) {
+                }).on('animation_selected', function (name) {
                     self.animationSelected(name);
-                });
-
-                App.module('Animations.Views').on('add_frame', function () {
+                }).on('add_frame', function () {
                     self.addFrame();
+                }).on('delete_animation', function () {
+                    self.deleteAnimation();
+                }).on('add_animation', function () {
+                    self.addAnimation();
                 });
 
                 this.motorsCollection.on('change', function () {
@@ -92,6 +92,21 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
                         speed: null
                     }));
                 }
+            },
+            deleteAnimation: function () {
+                if (typeof this.last_animation != 'undefined'
+                    && confirm("Are you sure you want to delete currently selected animation?")) {
+
+                    this.layoutView.getRegion('frames').reset();
+                    this.layoutView.getRegion('animationEdit').reset();
+                    this.last_animation.destroy();
+                }
+            },
+            addAnimation: function () {
+                this.animationsCollection.add(new App.Entities.Animation({
+                    name: 'New_Animation',
+                    frames_collection: new App.Entities.FramesCollection()
+                }));
             }
         }
     });
