@@ -18,7 +18,7 @@ define(['application', 'tpl!./templates/animation.tpl', 'lib/api'],
                     this.ui.button.addClass('active');
 
                     var name = this.ui.button.data('name');
-                    Views.trigger('animation_selected', name);
+                    Views.trigger('animation_selected', this.model);
                     api.playAnimation(name, 25);
                 },
                 update: function () {

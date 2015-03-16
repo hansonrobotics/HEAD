@@ -41,12 +41,7 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
                     self.updateFrame();
                 });
             },
-            animationSelected: function (name) {
-                // find animation model
-                var animation = this.animationsCollection.find(function (model) {
-                    return model.get('name') == name;
-                });
-
+            animationSelected: function (animation) {
                 if (typeof this.last_animation == 'undefined' || this.last_animation != animation) {
                     this.last_animation = animation;
                     this.selected_frame = null;
