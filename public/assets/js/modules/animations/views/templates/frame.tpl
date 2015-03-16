@@ -3,7 +3,7 @@
         <input type="text" class="app-name form-control" placeholder="Name"/>
     </div>
     <div class="col-xs-7">
-        <button class="app-select-frame btn btn-default">Edit Motors</button>
+        <button class="app-select-frame btn btn-default">Select Motors</button>
         <button class="app-copy-frame btn btn-warning">Copy</button>
         <button class="app-delete-frame btn btn-danger">Delete</button>
         <div class="pull-right">
