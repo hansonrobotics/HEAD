@@ -33,6 +33,8 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
                     self.deleteAnimation();
                 }).on('add_animation', function () {
                     self.addAnimation();
+                }).on('copy_frame', function (frame) {
+                    self.copyFrame(frame);
                 });
 
                 this.motorsCollection.on('change', function () {
@@ -85,11 +87,11 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
                 if (typeof this.last_animation != 'undefined') {
                     var frames = this.last_animation.get('frames_collection');
                     frames.add(new Backbone.Model({
-                        acceleration: null,
-                        frames: null,
+                        acceleration: 0,
+                        frames: 1,
                         motors: {},
                         name: '',
-                        speed: null
+                        speed: 0
                     }));
                 }
             },
@@ -107,6 +109,16 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
                     name: 'New_Animation',
                     frames_collection: new App.Entities.FramesCollection()
                 }));
+            },
+            copyFrame: function (frame) {
+                if (typeof this.last_animation != 'undefined') {
+                    var frames = this.last_animation.get('frames_collection');
+                    var clone = frame.clone();
+                    clone.unset('order_no');
+                    clone.set('name', clone.get('name') + '_Copy')
+
+                    frames.add(clone);
+                }
             }
         }
     });

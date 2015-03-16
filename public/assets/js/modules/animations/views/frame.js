@@ -9,11 +9,13 @@ define(["../../../application", "tpl!./templates/frame.tpl"], function (App, tem
                 speed: '.app-speed',
                 acceleration: '.app-acceleration',
                 selectButton: '.app-select-frame',
-                deleteButton: '.app-delete-frame'
+                deleteButton: '.app-delete-frame',
+                copyButton: '.app-copy-frame'
             },
             events: {
                 'click @ui.selectButton': 'selectFrame',
                 'click @ui.deleteButton': 'deleteFrame',
+                'click @ui.copyButton': 'copyFrame',
                 'change @ui.name': 'updateFrame',
                 'change @ui.frames': 'updateFrame',
                 'change @ui.speed': 'updateFrame',
@@ -45,6 +47,9 @@ define(["../../../application", "tpl!./templates/frame.tpl"], function (App, tem
             deleteFrame: function () {
                 if (confirm('Are you sure you want to delete this frame?'))
                     this.model.destroy();
+            },
+            copyFrame: function () {
+                View.trigger('copy_frame', this.model);
             }
         });
     });
