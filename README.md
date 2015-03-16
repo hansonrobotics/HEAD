@@ -33,6 +33,7 @@ Specifies chatbot answers suchas name age and etc.
 Following parmas has to be set:
   * dynamixel controllers settings
   * voice (currently jak, giles and heather supported)
+  * lipsync (True/False) - lypsinc enabled or not
   * pau2motors settings to map motors with pau coefficients
 
 ##### description.urdf
@@ -43,6 +44,8 @@ URDF description of robot. Following frames required:
 
 ##### expressions.yaml
 Expressions for [basic_head_api](https://github.com/hansonrobotics/basic_head_api)
+Expressions starting with "vis_" are considered to be visimes.
+
 
 ##### hardware.launch
 Launch file with robot specific motor controllers.
