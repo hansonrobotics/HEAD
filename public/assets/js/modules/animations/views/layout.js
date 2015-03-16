@@ -17,7 +17,8 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
             regions: {
                 animationButtons: '.app-animations',
                 motors: '.app-motors',
-                frames: '.app-frames'
+                frames: '.app-frames',
+                animationEdit: '.app-animation-edit'
             },
             onRender: function () {
                 this.ui.editing.hide();

@@ -4,7 +4,8 @@ define(['application', 'tpl!./templates/animations.tpl', './frame', 'lib/api', '
             Views.Animations = Marionette.ItemView.extend({
                 template: template,
                 collectionEvents: {
-                    add: 'render'
+                    add: 'render',
+                    change: 'render'
                 },
                 ui: {
                     buttons: 'button'
@@ -12,14 +13,19 @@ define(['application', 'tpl!./templates/animations.tpl', './frame', 'lib/api', '
                 events: {
                     'click @ui.buttons': 'buttonClicked'
                 },
+                initialize: function () {
+                    this.selected_name = null;
+                },
                 serializeData: function () {
                     return {
-                        animations: this.options.collection.toJSON()
+                        animations: this.options.collection.toJSON(),
+                        selected_name: this.selected_name
                     };
                 },
                 buttonClicked: function (e) {
                     this.ui.buttons.removeClass('active');
                     var name = $(e.target).addClass('active').data('name');
+                    this.selected_name = name;
 
                     Views.trigger('animation_selected', name);
                     api.playAnimation(name, 25);

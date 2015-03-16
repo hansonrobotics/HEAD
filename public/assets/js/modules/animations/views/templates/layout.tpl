@@ -12,6 +12,7 @@
             </div>
 
             <div class="app-editing">
+                <div class="app-animation-edit"></div>
                 <h3>Frames</h3>
                 <hr/>
                 <div class="app-frames">

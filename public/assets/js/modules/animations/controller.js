@@ -1,6 +1,6 @@
 define(['jquery', 'application', './views/animations', './views/layout', '../motor/show/motors',
-        './views/frames', 'lib/api', 'entities/animation'],
-    function ($, App, AnimationsView, LayoutView, MotorsView, FramesView, api) {
+        './views/frames', './views/animation_edit', 'lib/api', 'entities/animation'],
+    function ($, App, AnimationsView, LayoutView, MotorsView, FramesView, AnimationEditView, api) {
         return {
             init: function () {
                 var self = this;
@@ -45,11 +45,11 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
                         return model.get('name') == name;
                     });
 
-                    var framesView = new FramesView({
-                        collection: animation.get('frames_collection')
-                    });
-
+                    var framesView = new FramesView({collection: animation.get('frames_collection')});
                     this.layoutView.getRegion('frames').show(framesView);
+
+                    var animationEditView = new AnimationEditView({model: animation});
+                    this.layoutView.getRegion('animationEdit').show(animationEditView);
                 }
             },
             frameSelected: function (frame) {
