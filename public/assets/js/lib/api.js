@@ -30,6 +30,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         expressionList: function (success) {
             api.services.expressionList.callService(new ROSLIB.ServiceRequest(), success);
         },
+        setExpressionsParam: function (expressions) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/expressions'});
+            param.set(expressions);
+        },
         getAnimations: function (callback) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/animations'});
 

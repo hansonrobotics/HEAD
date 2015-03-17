@@ -44,7 +44,10 @@ define(['application', 'lib/api'], function (App, api) {
                     method: 'POST',
                     data: JSON.stringify({expressions: expressions}),
                     type: 'POST',
-                    dataType: "json"
+                    dataType: "json",
+                    success: function () {
+                        api.setExpressionsParam(expressions);
+                    }
                 });
             }
         });
