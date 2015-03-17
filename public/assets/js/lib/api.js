@@ -213,6 +213,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 callback(self.admin_enabled);
             }
         },
+        setMotorsParam: function (motors) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
+            param.set(motors);
+        },
         getMotorsFromParam: function (callback) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'}),
                 self = this;

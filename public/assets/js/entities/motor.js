@@ -68,7 +68,10 @@ define(['application', '../lib/api', '../lib/utilities'], function (App, api, ut
                 $.ajax("/" + api.config.robot + "/motors/update", {
                     data: JSON.stringify(data),
                     type: 'POST',
-                    dataType: "json"
+                    dataType: "json",
+                    success: function () {
+                        api.setMotorsParam(data);
+                    }
                 });
             },
             getRelativePositions: function () {

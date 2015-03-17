@@ -16,14 +16,19 @@ define(["application", "lib/api", "./common/layout", "./show/motors", './express
                         controller: this
                     });
 
-                expressions.fetch();
-
                 $('#app-page-motors').html(layoutView.render().el);
+
                 layoutView.getRegion('motors').show(motorsView);
-                layoutView.getRegion('expressions').show(expressionsView);
+
+                App.getAdminEnabled(function(enabled) {
+                    if (enabled) {
+                        expressions.fetch();
+                        layoutView.getRegion('expressions').show(expressionsView);
+                    }
+                });
 
                 var self = this;
-                api.getMotorsFromFile(function (data) {
+                api.getMotorsFromParam(function (data) {
                     motors.add(data);
                     self.loadPololuMotors(motors);
                 });
