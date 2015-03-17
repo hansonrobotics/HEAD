@@ -48,6 +48,7 @@ add_message_files(
   FILES
   MakeFaceExpr.msg
   PointHead.msg
+  PlayAnimation.msg
 )
 
 ## Generate services in the 'srv' folder

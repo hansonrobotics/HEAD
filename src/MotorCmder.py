@@ -23,6 +23,11 @@ class MotorCmder:
     )
     return self.msg_angle(angle)
 
+  def msg_fracDist(self, fracDist):
+      """ Builds a message given the fractional distance (0 to 1) from between motor min and max """
+      angle = self._fracDist2val(fracDist, self.motor_entry)
+      return self.msg_angle(angle)
+
   def _saturatedAngle(self, angle):
     return min(max(angle, self.motor_entry['min']), self.motor_entry['max'])
 
