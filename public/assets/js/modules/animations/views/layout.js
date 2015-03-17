@@ -10,7 +10,8 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
                 saveButton: '.app-save-frames',
                 addFrame: '.app-add-frame',
                 deleteAnimation: '.app-delete-animation',
-                addAnimation: '.app-add-animation'
+                addAnimation: '.app-add-animation',
+                adminUI: '.app-admin'
             },
             events: {
                 'click @ui.enableEditButton': 'enableEditing',
@@ -28,7 +29,13 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
             },
             onRender: function () {
                 this.ui.editing.hide();
+                this.ui.adminUI.hide();
                 this.disableEditing();
+
+                var self = this;
+                App.getAdminEnabled(function (enabled) {
+                    if (enabled) self.ui.adminUI.show();
+                });
             },
             enableEditing: function () {
                 this.ui.enableEditButton.addClass('active');

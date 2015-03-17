@@ -8,7 +8,7 @@ define(['application', 'lib/api'], function (App, api) {
             model: Entities.Expression,
             fetch: function () {
                 var self = this;
-                api.getAnimationsFromFile(function (animations) {
+                api.getAnimations(function (animations) {
                     _.each(animations, function (animation) {
                         _.each(animation, function (frames, name) {
                             self.add(new Backbone.Model({
@@ -38,7 +38,7 @@ define(['application', 'lib/api'], function (App, api) {
                     animations.push(animation);
                 });
 
-                api.updateAnimationsFile(animations);
+                api.updateAnimations(animations);
             }
         });
     });

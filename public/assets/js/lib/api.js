@@ -30,22 +30,29 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         expressionList: function (success) {
             api.services.expressionList.callService(new ROSLIB.ServiceRequest(), success);
         },
-        getAnimationsFromFile: function (callback) {
-            $.ajax('/' + api.config.robot + '/animations/get', {
-                dataType: 'json',
-                success: function (response) {
-                    callback(response.animations);
-                }
+        getAnimations: function (callback) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/animations'});
+
+            param.get(function (animations) {
+                callback(animations);
             });
         },
-        updateAnimationsFile: function (animations, callback) {
+        setAnimations: function (animations) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/animations'});
+            param.set(animations);
+        },
+        updateAnimations: function (animations, callback) {
+            var self = this;
             $.ajax('/' + api.config.robot + '/animations/update', {
                 dataType: 'json',
                 data: JSON.stringify({animations: animations}),
                 method: 'POST',
                 success: function (response) {
-                    if (typeof callback == 'function')
+                    self.setAnimations(animations);
+
+                    if (typeof callback == 'function') {
                         callback(response);
+                    }
                 }
             });
         },
@@ -191,6 +198,19 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 api.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/" + api.config.robot + "/cmd_neck_pau"}), function () {
                     return 0;
                 });
+            }
+        },
+        getAdminEnabled: function (callback) {
+            var self = this;
+            if (typeof self.admin_enabled == 'undefined') {
+                var param = new ROSLIB.Param({ros: api.ros, name: '/ros_motors_webui/admin'});
+
+                param.get(function (adminEnabled) {
+                    self.admin_enabled = !!adminEnabled;
+                    callback(self.admin_enabled);
+                });
+            } else {
+                callback(self.admin_enabled);
             }
         },
         getMotorsFromParam: function (callback) {

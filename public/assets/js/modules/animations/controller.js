@@ -9,36 +9,42 @@ define(['jquery', 'application', './views/animations', './views/layout', '../mot
                 this.motorsCollection = new App.Entities.MotorCollection();
 
                 this.layoutView = new LayoutView({animationsCollection: this.animationsCollection});
-                this.motorsView = new MotorsView({collection: this.motorsCollection, disable_edit: true});
                 this.animationsView = new AnimationsView({collection: this.animationsCollection});
 
                 // show views
                 $('#app-page-animations').html(this.layoutView.render().el);
                 this.layoutView.getRegion('animationButtons').show(this.animationsView);
-                this.layoutView.getRegion('motors').show(this.motorsView);
 
                 // load data
                 this.animationsCollection.fetch();
-                api.getMotorsFromFile(function (data) {
-                    self.motorsCollection.add(data);
-                });
 
-                App.module('Animations.Views').on('frame_selected', function (frame) {
-                    self.frameSelected(frame);
-                }).on('animation_selected', function (name) {
-                    self.animationSelected(name);
-                }).on('add_frame', function () {
-                    self.addFrame();
-                }).on('delete_animation', function () {
-                    self.deleteAnimation();
-                }).on('add_animation', function () {
-                    self.addAnimation();
-                }).on('copy_frame', function (frame) {
-                    self.copyFrame(frame);
-                });
+                App.getAdminEnabled(function (enabled) {
+                    if (enabled) {
+                        self.motorsView = new MotorsView({collection: self.motorsCollection, disable_edit: true});
+                        self.layoutView.getRegion('motors').show(self.motorsView);
 
-                this.motorsCollection.on('change', function () {
-                    self.updateFrame();
+                        api.getMotorsFromFile(function (data) {
+                            self.motorsCollection.add(data);
+                        });
+
+                        App.module('Animations.Views').on('frame_selected', function (frame) {
+                            self.frameSelected(frame);
+                        }).on('animation_selected', function (name) {
+                            self.animationSelected(name);
+                        }).on('add_frame', function () {
+                            self.addFrame();
+                        }).on('delete_animation', function () {
+                            self.deleteAnimation();
+                        }).on('add_animation', function () {
+                            self.addAnimation();
+                        }).on('copy_frame', function (frame) {
+                            self.copyFrame(frame);
+                        });
+
+                        self.motorsCollection.on('change', function () {
+                            self.updateFrame();
+                        });
+                    }
                 });
             },
             animationSelected: function (animation) {

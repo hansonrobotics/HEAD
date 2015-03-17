@@ -4,28 +4,30 @@
             <br/>
             <div class="app-animations"></div>
 
-            <h3>Editing</h3>
+            <div class="app-admin">
+                <h3>Editing</h3>
 
-            <div class="btn-group" role="group">
-                <button class="app-enable-edit btn btn-default">Enable</button>
-                <button class="app-disable-edit btn btn-default">Disable</button>
-            </div>
-
-            <div class="app-editing pull-right">
-                <button class="app-add-animation btn btn-default"><span class="glyphicon glyphicon-plus" area-hidden="true"></span> Add</button>
-                <button class="app-delete-animation btn btn-danger">Delete</button>
-            </div>
-
-            <div class="app-editing">
-                <div class="app-animation-edit"></div>
-                <h3>Frames</h3>
-                <hr/>
-                <div class="app-frames">
-                    <div class="alert alert-info">Please select an animation</div>
+                <div class="btn-group" role="group">
+                    <button class="app-enable-edit btn btn-default">Enable</button>
+                    <button class="app-disable-edit btn btn-default">Disable</button>
                 </div>
-                <div class="button-group">
-                    <button class="app-add-frame btn btn-default" title="Add Frame" type="button"><span class="glyphicon glyphicon-plus" area-hidden="true"></span></button>
-                    <button class="app-save-frames btn btn-primary" type="button">Save</button>
+
+                <div class="app-editing pull-right">
+                    <button class="app-add-animation btn btn-default"><span class="glyphicon glyphicon-plus" area-hidden="true"></span> Add</button>
+                    <button class="app-delete-animation btn btn-danger">Delete</button>
+                </div>
+
+                <div class="app-editing">
+                    <div class="app-animation-edit"></div>
+                    <h3>Frames</h3>
+                    <hr/>
+                    <div class="app-frames">
+                        <div class="alert alert-info">Please select an animation</div>
+                    </div>
+                    <div class="button-group">
+                        <button class="app-add-frame btn btn-default" title="Add Frame" type="button"><span class="glyphicon glyphicon-plus" area-hidden="true"></span></button>
+                        <button class="app-save-frames btn btn-primary" type="button">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
