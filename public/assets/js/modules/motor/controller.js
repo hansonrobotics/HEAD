@@ -2,32 +2,40 @@ define(["application", "lib/api", "./common/layout", "./show/motors", './express
         'entities/motor', 'entities/expression'],
     function (App, api, LayoutView, MotorsView, ExpressionsView) {
         return {
-            show: function () {
-                var motors = new App.Entities.MotorCollection(),
-                    expressions = new App.Entities.ExpressionCollection(),
-                    layoutView = new LayoutView(),
-                    motorsView = new MotorsView({
-                        collection: motors,
+            index: function () {
+                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+                api.pointHead();
+
+                this.motorsCollection = new App.Entities.MotorCollection(),
+                    this.layoutView = new LayoutView(),
+                    this.motorsView = new MotorsView({
+                        collection: this.motorsCollection,
                         disable_edit: true
-                    }),
-                    expressionsView = new ExpressionsView({
-                        collection: expressions,
-                        motors: motors,
-                        controller: this
                     });
 
-                $('#app-page-motors').html(layoutView.render().el);
+                App.LayoutInstance.setTitle('Motors');
+                App.LayoutInstance.getRegion('content').show(this.layoutView);
 
-                layoutView.getRegion('motors').show(motorsView);
-
-                expressions.fetch();
-                layoutView.getRegion('expressions').show(expressionsView);
+                this.layoutView.getRegion('motors').show(this.motorsView);
 
                 var self = this;
                 api.getMotorsFromParam(function (data) {
-                    motors.add(data);
-                    self.loadPololuMotors(motors);
+                    self.motorsCollection.add(data);
+                    self.loadPololuMotors(self.motorsCollection);
                 });
+            },
+            admin_index: function () {
+                this.index();
+
+                var expressions = new App.Entities.ExpressionCollection(),
+                    expressionsView = new ExpressionsView({
+                        collection: expressions,
+                        motors: this.motorsCollection,
+                        controller: this
+                    });
+
+                expressions.fetch();
+                this.layoutView.getRegion('expressions').show(expressionsView);
             },
             loadPololuMotors: function (collection) {
                 api.getPololuMotorTopics(function (topics) {

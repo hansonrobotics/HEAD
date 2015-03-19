@@ -17,7 +17,8 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout'],
             require([
                     'modules/animations/animations_app',
                     'modules/status/status_app',
-                    'modules/expressions/expressions_app'],
+                    'modules/expressions/expressions_app',
+                    'modules/motor/motor_app'],
                 function () {
                     Application.start();
                 });
