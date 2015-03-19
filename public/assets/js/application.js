@@ -14,7 +14,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout'],
         $('body').prepend(Application.LayoutInstance.render().el);
 
         ros.connect(function () {
-            require(['modules/animations/animations_app'], function () {
+            require(['modules/animations/animations_app', 'modules/status/status_app'], function () {
                 Application.start();
             });
         });
