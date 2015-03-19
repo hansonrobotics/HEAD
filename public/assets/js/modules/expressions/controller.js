@@ -6,6 +6,7 @@ define(['application', './views/expressions', 'lib/api', 'lib/utilities', 'lib/c
                 this.expressionsView = new ExpressionsView();
                 App.LayoutInstance.setTitle('Expressions');
                 App.LayoutInstance.getRegion('content').show(this.expressionsView);
+                App.LayoutInstance.showNav();
 
                 console.log('here');
                 $(".dial").val(0);

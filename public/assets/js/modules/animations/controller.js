@@ -12,6 +12,7 @@ define(['application', './views/animations', './views/layout', '../motor/show/mo
                 // show views
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
                 App.LayoutInstance.setTitle('Animations');
+                App.LayoutInstance.showNav();
 
                 // show animations
                 this.layoutView.getRegion('animationButtons').show(this.animationsView);
@@ -27,6 +28,8 @@ define(['application', './views/animations', './views/layout', '../motor/show/mo
 
                 // init index
                 this.index();
+
+                App.LayoutInstance.showAdminNav();
 
                 // show admin area
                 this.layoutView.ui.adminUI.show();

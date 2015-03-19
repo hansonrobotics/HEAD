@@ -6,6 +6,7 @@ define(['application', './views/gestures', 'lib/api'],
 
                 App.LayoutInstance.setTitle('Gestures');
                 App.LayoutInstance.getRegion('content').show(this.gesturesView);
+                App.LayoutInstance.showNav();
 
                 gestures.createGestureButtons();
                 gestures.createEmotionSliders();

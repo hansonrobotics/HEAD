@@ -10,6 +10,7 @@ define(['application', './views/interaction', 'lib/api'],
 
                 App.LayoutInstance.setTitle('Interaction');
                 App.LayoutInstance.getRegion('content').show(this.interactionView);
+                App.LayoutInstance.showNav();
 
                 api.topics.chat_responses.subscribe(function (msg) {
                     interaction.addMessage('Robot', msg.data);

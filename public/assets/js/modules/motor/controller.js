@@ -15,6 +15,7 @@ define(["application", "lib/api", "./common/layout", "./show/motors", './express
 
                 App.LayoutInstance.setTitle('Motors');
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
+                App.LayoutInstance.showNav();
 
                 this.layoutView.getRegion('motors').show(this.motorsView);
 
@@ -26,6 +27,7 @@ define(["application", "lib/api", "./common/layout", "./show/motors", './express
             },
             admin_index: function () {
                 this.index();
+                App.LayoutInstance.showAdminNav();
 
                 var expressions = new App.Entities.ExpressionCollection(),
                     expressionsView = new ExpressionsView({

@@ -31,6 +31,10 @@ define(['application', './views/status', 'lib/api'],
                         self.layoutView.ui.indicators.html(indicators);
                     }
                 });
+            },
+            admin_index: function () {
+                this.index();
+                App.LayoutInstance.showAdminNav();
             }
         }
     });
