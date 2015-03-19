@@ -13,29 +13,24 @@ define(['application', './views/status', 'lib/api'],
                 App.LayoutInstance.setTitle('Status');
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
 
-                var query = function () {
-                    $.ajax({
-                        url: "system/status",
-                        dataType: "json",
+                $.ajax({
+                    url: "system/status",
+                    dataType: "json",
 
-                        success: function (data) {
-                            var indicators = "";
+                    success: function (data) {
+                        var indicators = "";
 
-                            $.each(data, function () {
-                                indicators += '<li><span class="glyphicon ' +
-                                (this.success ? "glyphicon-ok" : "glyphicon-remove") +
-                                '" aria-hidden="true"></span>' +
-                                '<strong>' + this.label + '</strong> (' + this.cmd + ')' +
-                                '</li>';
-                            });
+                        $.each(data, function () {
+                            indicators += '<li><span class="glyphicon ' +
+                            (this.success ? "glyphicon-ok" : "glyphicon-remove") +
+                            '" aria-hidden="true"></span>' +
+                            '<strong>' + this.label + '</strong> (' + this.cmd + ')' +
+                            '</li>';
+                        });
 
-                            self.layoutView.ui.indicators.html(indicators);
-                        }
-                    });
-                };
-
-                query();
-                setInterval(query, 5000);
+                        self.layoutView.ui.indicators.html(indicators);
+                    }
+                });
             }
         }
     });
