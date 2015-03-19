@@ -3,19 +3,13 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
         Views.Animations = Marionette.LayoutView.extend({
             template: template,
             ui: {
-                enableEditButton: '.app-enable-edit',
-                disableEditButton: '.app-disable-edit',
                 motors: '.app-motors',
-                editing: '.app-editing',
                 saveButton: '.app-save-frames',
                 addFrame: '.app-add-frame',
                 deleteAnimation: '.app-delete-animation',
                 addAnimation: '.app-add-animation',
-                adminUI: '.app-admin'
             },
             events: {
-                'click @ui.enableEditButton': 'enableEditing',
-                'click @ui.disableEditButton': 'disableEditing',
                 'click @ui.saveButton': 'updateAnimations',
                 'click @ui.addFrame': 'addFrame',
                 'click @ui.deleteAnimation': 'deleteAnimation',
@@ -23,29 +17,9 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
             },
             regions: {
                 animationButtons: '.app-animations',
-                motors: '.app-motors',
+                animationEdit: '.app-animation-edit',
                 frames: '.app-frames',
-                animationEdit: '.app-animation-edit'
-            },
-            onRender: function () {
-                this.ui.editing.hide();
-                //this.ui.adminUI.hide();
-                this.disableEditing();
-
-                //if (this.options.admin)
-                //    this.ui.adminUI.show();
-            },
-            enableEditing: function () {
-                this.ui.enableEditButton.addClass('active');
-                this.ui.disableEditButton.removeClass('active');
-
-                this.ui.editing.fadeIn();
-            },
-            disableEditing: function () {
-                this.ui.disableEditButton.addClass('active');
-                this.ui.enableEditButton.removeClass('active');
-
-                this.ui.editing.fadeOut();
+                motors: '.app-motors'
             },
             updateAnimations: function () {
                 this.options.animationsCollection.sync();

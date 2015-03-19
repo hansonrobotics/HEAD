@@ -30,7 +30,7 @@
                 <li><a href="#/interactions">Interaction</a></li>
             </ul>
             <ul id="app-admin-nav" class="nav navbar-nav navbar-right">
-                <li><a href="#/status">Status</a></li>
+                <li><a href="#/admin/status">Status</a></li>
                 <li><a href="#/admin/motors">Motors</a></li>
                 <li><a href="#/admin/animations">Animations</a></li>
             </ul>

@@ -12,6 +12,7 @@ define(['application', './views/status', 'lib/api'],
 
                 App.LayoutInstance.setTitle('Status');
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
+                App.LayoutInstance.showNav();
 
                 $.ajax({
                     url: "system/status",

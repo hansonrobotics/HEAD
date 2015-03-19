@@ -4,7 +4,8 @@ define(['application', './controller'], function (App, controller) {
             'appRoutes': {
                 '': 'index',
                 'status': 'index',
-                'admin': 'admin_index'
+                'admin': 'admin_index',
+                'admin/status': 'admin_index'
             }
         });
 

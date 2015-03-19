@@ -17,9 +17,6 @@ define(['application', './views/animations', './views/layout', '../motor/show/mo
                 // show animations
                 this.layoutView.getRegion('animationButtons').show(this.animationsView);
 
-                // hide admin area
-                this.layoutView.ui.adminUI.hide();
-
                 // load data
                 this.animationsCollection.fetch();
             },
@@ -30,9 +27,6 @@ define(['application', './views/animations', './views/layout', '../motor/show/mo
                 this.index();
 
                 App.LayoutInstance.showAdminNav();
-
-                // show admin area
-                this.layoutView.ui.adminUI.show();
 
                 this.motorsCollection = new App.Entities.MotorCollection();
                 this.motorsView = new MotorsView({collection: this.motorsCollection, disable_edit: true});
