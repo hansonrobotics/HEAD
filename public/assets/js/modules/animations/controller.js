@@ -3,10 +3,12 @@ define(['application', './views/animations', './views/layout', '../motor/show/mo
     function (App, AnimationsView, LayoutView, MotorsView, FramesView, AnimationEditView, api) {
         return {
             index: function () {
+                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+                api.pointHead();
+
                 this.animationsCollection = new App.Entities.AnimationsCollection();
                 this.layoutView = new LayoutView({animationsCollection: this.animationsCollection});
                 this.animationsView = new AnimationsView({collection: this.animationsCollection});
-
                 // show views
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
                 App.LayoutInstance.setTitle('Animations');
