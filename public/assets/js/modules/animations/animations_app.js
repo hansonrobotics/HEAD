@@ -1,5 +1,14 @@
 define(['application', './controller'], function (App, controller) {
-    App.module('Animations', function (AnimationsApp, app, Backbone, Marionette, $, _) {
-        controller.init();
+    App.module('Animations', function (Animations, app, Backbone, Marionette, $, _) {
+        Animations.Router = Marionette.AppRouter.extend({
+            'appRoutes': {
+                'animations': 'index',
+                'admin/animations': 'admin_index'
+            }
+        });
+
+        Animations.on('start', function () {
+            new Animations.Router({controller: controller});
+        });
     });
 });

@@ -1,50 +1,58 @@
-define(['jquery', 'application', './views/animations', './views/layout', '../motor/show/motors',
-        './views/frames', './views/animation_edit', 'lib/api', 'entities/animation'],
-    function ($, App, AnimationsView, LayoutView, MotorsView, FramesView, AnimationEditView, api) {
+define(['application', './views/animations', './views/layout', '../motor/show/motors',
+        './views/frames', './views/animation_edit', 'lib/api', 'entities/animation', 'entities/motor'],
+    function (App, AnimationsView, LayoutView, MotorsView, FramesView, AnimationEditView, api) {
         return {
-            init: function () {
-                var self = this;
-
+            index: function () {
                 this.animationsCollection = new App.Entities.AnimationsCollection();
-                this.motorsCollection = new App.Entities.MotorCollection();
-
                 this.layoutView = new LayoutView({animationsCollection: this.animationsCollection});
                 this.animationsView = new AnimationsView({collection: this.animationsCollection});
 
                 // show views
-                $('#app-page-animations').html(this.layoutView.render().el);
+                App.LayoutInstance.getRegion('content').show(this.layoutView);
+                App.LayoutInstance.setTitle('Animations');
+
+                // show animations
                 this.layoutView.getRegion('animationButtons').show(this.animationsView);
+
+                // hide admin area
+                this.layoutView.ui.adminUI.hide();
 
                 // load data
                 this.animationsCollection.fetch();
+            },
+            admin_index: function () {
+                var self = this;
 
-                App.getAdminEnabled(function (enabled) {
-                    if (enabled) {
-                        self.motorsView = new MotorsView({collection: self.motorsCollection, disable_edit: true});
-                        self.layoutView.getRegion('motors').show(self.motorsView);
+                // init index
+                this.index();
 
-                        api.getMotorsFromFile(function (data) {
-                            self.motorsCollection.add(data);
-                        });
+                // show admin area
+                this.layoutView.ui.adminUI.show();
 
-                        App.module('Animations.Views').on('frame_selected', function (frame) {
-                            self.frameSelected(frame);
-                        }).on('animation_selected', function (name) {
-                            self.animationSelected(name);
-                        }).on('add_frame', function () {
-                            self.addFrame();
-                        }).on('delete_animation', function () {
-                            self.deleteAnimation();
-                        }).on('add_animation', function () {
-                            self.addAnimation();
-                        }).on('copy_frame', function (frame) {
-                            self.copyFrame(frame);
-                        });
+                this.motorsCollection = new App.Entities.MotorCollection();
+                this.motorsView = new MotorsView({collection: this.motorsCollection, disable_edit: true});
+                this.layoutView.getRegion('motors').show(this.motorsView);
 
-                        self.motorsCollection.on('change', function () {
-                            self.updateFrame();
-                        });
-                    }
+                api.getMotorsFromFile(function (data) {
+                    self.motorsCollection.add(data);
+                });
+
+                App.module('Animations.Views').on('frame_selected', function (frame) {
+                    self.frameSelected(frame);
+                }).on('animation_selected', function (name) {
+                    self.animationSelected(name);
+                }).on('add_frame', function () {
+                    self.addFrame();
+                }).on('delete_animation', function () {
+                    self.deleteAnimation();
+                }).on('add_animation', function () {
+                    self.addAnimation();
+                }).on('copy_frame', function (frame) {
+                    self.copyFrame(frame);
+                });
+
+                self.motorsCollection.on('change', function () {
+                    self.updateFrame();
                 });
             },
             animationSelected: function (animation) {

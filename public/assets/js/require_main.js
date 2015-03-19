@@ -39,4 +39,8 @@ requirejs.config({
     }
 });
 
-require(['init']);
+require(["eventemitter"], function (EventEmitter2) {
+    window.EventEmitter2 = EventEmitter2;
+});
+
+define(['bootstrap', 'application']);

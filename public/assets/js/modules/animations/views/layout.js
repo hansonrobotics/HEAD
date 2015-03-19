@@ -29,13 +29,11 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
             },
             onRender: function () {
                 this.ui.editing.hide();
-                this.ui.adminUI.hide();
+                //this.ui.adminUI.hide();
                 this.disableEditing();
 
-                var self = this;
-                App.getAdminEnabled(function (enabled) {
-                    if (enabled) self.ui.adminUI.show();
-                });
+                //if (this.options.admin)
+                //    this.ui.adminUI.show();
             },
             enableEditing: function () {
                 this.ui.enableEditButton.addClass('active');

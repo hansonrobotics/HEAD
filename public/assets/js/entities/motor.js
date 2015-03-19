@@ -65,12 +65,14 @@ define(['application', '../lib/api', '../lib/utilities'], function (App, api, ut
                     }
                 });
 
+                var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
+                param.set(data);
+
                 $.ajax("/" + api.config.robot + "/motors/update", {
                     data: JSON.stringify(data),
                     type: 'POST',
                     dataType: "json",
                     success: function () {
-                        api.setMotorsParam(data);
                     }
                 });
             },

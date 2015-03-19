@@ -204,23 +204,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 });
             }
         },
-        getAdminEnabled: function (callback) {
-            var self = this;
-            if (typeof self.admin_enabled == 'undefined') {
-                var param = new ROSLIB.Param({ros: api.ros, name: '/ros_motors_webui/admin'});
-
-                param.get(function (adminEnabled) {
-                    self.admin_enabled = !!adminEnabled;
-                    callback(self.admin_enabled);
-                });
-            } else {
-                callback(self.admin_enabled);
-            }
-        },
-        setMotorsParam: function (motors) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
-            param.set(motors);
-        },
         getMotorsFromParam: function (callback) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'}),
                 self = this;

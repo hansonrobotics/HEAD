@@ -1,20 +1,5 @@
 define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api) {
     var ros = {
-        loadMotorConfig: function (success) {
-            $.ajax({
-                url: "config/motors.yml",
-                dataType: "text",
-                cache: false,
-                success: function (motorsConfig) {
-                    api.config.motors = [];
-
-                    if (motorsConfig != null)
-                        api.config.motors = api.config.motors.concat(jsyaml.load(motorsConfig));
-
-                    success(api.config.motors);
-                }
-            });
-        },
         connect: function (success) {
             //Connect to rosbridge
             api.ros = new ROSLIB.Ros({
@@ -128,14 +113,6 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 return "ws://" + document.domain + ":9090";
             } else {
                 return "wss://" + document.domain + ":9094";
-            }
-        },
-        getMotorConfig: function (name) {
-            var motorConf = api.config.motors;
-
-            for (var i = 0; i < motorConf.length; i++) {
-                if (motorConf[i].name == name)
-                    return motorConf[i];
             }
         }
     };

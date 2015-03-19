@@ -20,12 +20,8 @@ define(["application", "lib/api", "./common/layout", "./show/motors", './express
 
                 layoutView.getRegion('motors').show(motorsView);
 
-                App.getAdminEnabled(function(enabled) {
-                    if (enabled) {
-                        expressions.fetch();
-                        layoutView.getRegion('expressions').show(expressionsView);
-                    }
-                });
+                expressions.fetch();
+                layoutView.getRegion('expressions').show(expressionsView);
 
                 var self = this;
                 api.getMotorsFromParam(function (data) {
