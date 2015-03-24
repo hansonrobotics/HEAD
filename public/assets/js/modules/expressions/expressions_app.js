@@ -2,6 +2,7 @@ define(['application', './controller'], function (App, controller) {
     App.module('Expressions', function (Expressions, app, Backbone, Marionette, $, _) {
         Expressions.Router = Marionette.AppRouter.extend({
             'appRoutes': {
+                '': 'index',
                 'expressions': 'index'
             }
         });

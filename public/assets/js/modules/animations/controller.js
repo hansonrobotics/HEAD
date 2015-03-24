@@ -9,8 +9,11 @@ define(['application', './views/animations', './views/layout', '../motor/show/mo
                 this.animationsCollection = new App.Entities.AnimationsCollection();
                 this.layoutView = new LayoutView({animationsCollection: this.animationsCollection});
                 this.animationsView = new AnimationsView({collection: this.animationsCollection});
+
                 // show views
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
+                this.layoutView.ui.admin.hide();
+
                 App.LayoutInstance.setTitle('Animations');
                 App.LayoutInstance.showNav();
 
@@ -25,6 +28,7 @@ define(['application', './views/animations', './views/layout', '../motor/show/mo
 
                 // init index
                 this.index();
+                this.layoutView.ui.admin.show();
 
                 App.LayoutInstance.showAdminNav();
 

@@ -22,7 +22,6 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul id="app-nav" class="nav navbar-nav navbar-right">
-                <li><a href="#/status">Status</a></li>
                 <li><a href="#/expressions" >Expressions</a></li>
                 <li><a href="#/motors">Motors</a></li>
                 <li><a href="#/animations">Animations</a></li>
