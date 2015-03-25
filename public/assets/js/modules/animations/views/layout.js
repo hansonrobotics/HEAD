@@ -1,4 +1,4 @@
-define(['application', 'tpl!./templates/layout.tpl', 'modules/behaviors/fade_in_effect'],
+define(['application', 'tpl!./templates/layout.tpl'],
     function (App, template) {
         App.module('Animations.Views', function (Views, App, Backbone, Marionette, $, _) {
             Views.Animations = Marionette.LayoutView.extend({

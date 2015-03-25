@@ -1,4 +1,4 @@
-define(["application", "tpl!./templates/motor.tpl", 'modules/behaviors/fade_in_effect'],
+define(["application", "tpl!./templates/motor.tpl"],
     function (App, motorTpl) {
         App.module("Motors.View", function (View, App, Backbone, Marionette, $, _) {
             View.Motor = Marionette.ItemView.extend({
