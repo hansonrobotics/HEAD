@@ -15,9 +15,7 @@ class Playback:
     # Starts animation while it finishes
     def _play(self, animation, fps):
         #start = time()
-        dt = 1.0 / float(5)
-
-        print self._motors
+        dt = 1.0 / float(fps)
         t = time()
         for f in animation.frames():
             for m in f:
