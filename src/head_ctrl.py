@@ -58,7 +58,6 @@ class SpecificRobotCtrl:
 
   def publisher(self, cmd):
       (cmd.joint_name, pubid) = cmd.joint_name.split('@')
-      rospy.loginfo("Pub id: %s", pubid)
       # Maximum speed for visimes
 
       # Dynamixel commands only sends position

@@ -31,7 +31,8 @@ class Playback:
             # Exclude execution for more accurate timing
             t2 = time()
             i = dt - t2 + t
-            sleep(i)
+            if i > 0:
+                sleep(i)
             t = time()
 
     def play(self, animation, fps):
