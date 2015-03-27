@@ -4,7 +4,11 @@ define(['marionette', 'tpl!./templates/layout.tpl'], function (Marionette, templ
         ui: {
             title: '#app-title',
             adminNav: '#app-admin-nav',
-            nav: '#app-nav'
+            nav: '#app-nav',
+            navLinks: '#app-nav a, #app-admin-nav a'
+        },
+        events: {
+            'click @ui.navLinks': 'navLinkClicked'
         },
         regions: {
             content: "#app-content"
@@ -22,6 +26,9 @@ define(['marionette', 'tpl!./templates/layout.tpl'], function (Marionette, templ
         showNav: function () {
             this.ui.nav.show();
             this.ui.adminNav.hide();
+        },
+        navLinkClicked: function () {
+            $('.navbar-toggle').click();
         }
     });
 });

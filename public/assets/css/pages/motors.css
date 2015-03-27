@@ -72,6 +72,11 @@
     display: none;
 }
 
+.ui-slider-handle {
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
 ul.app-motors {
     list-style: none;
     padding: 0;

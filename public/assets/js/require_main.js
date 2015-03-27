@@ -14,7 +14,8 @@ requirejs.config({
         jsyaml: 'vendor/js-yaml.min',
         roslib: 'vendor/roslib',
         eventemitter: 'vendor/eventemitter2',
-        bootstrap: 'vendor/bootstrap.min'
+        bootstrap: 'vendor/bootstrap.min',
+        'touch-punch': 'vendor/jquery.ui.touch-punch.min'
     },
     shim: {
         underscore: {
@@ -24,6 +25,7 @@ requirejs.config({
             deps: ['jquery', 'underscore', 'json2'],
             exports: 'Backbone'
         },
+        'touch-punch': ['jquery-ui'],
         'backbone.picky': ['backbone'],
         'backbone.syphon': ['backbone'],
         marionette: {
@@ -43,4 +45,4 @@ require(["eventemitter"], function (EventEmitter2) {
     window.EventEmitter2 = EventEmitter2;
 });
 
-define(['bootstrap', 'application']);
+define(['bootstrap', 'touch-punch', 'application']);

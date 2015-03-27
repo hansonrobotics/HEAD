@@ -1,4 +1,4 @@
-define(["application", "tpl!./templates/motor.tpl"],
+define(["application", "tpl!./templates/motor.tpl", 'jquery-ui'],
     function (App, motorTpl) {
         App.module("Motors.View", function (View, App, Backbone, Marionette, $, _) {
             View.Motor = Marionette.ItemView.extend({
@@ -54,7 +54,6 @@ define(["application", "tpl!./templates/motor.tpl"],
 
                         this.ui.sliderMinVal.text(min + '°');
                         this.ui.sliderMaxVal.text(max + '°');
-
 
                         if (this.editEnabled()) {
                             this.setSliderMin(-90);
