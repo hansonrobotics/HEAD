@@ -18,6 +18,7 @@ requirejs.config({
         'touch-punch': 'vendor/jquery.ui.touch-punch.min'
     },
     shim: {
+        bootstrap: ['jquery'],
         underscore: {
             exports: '_'
         },
