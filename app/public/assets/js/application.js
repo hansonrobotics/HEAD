@@ -18,7 +18,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout'],
                     'modules/animations/animations_app',
                     'modules/status/status_app',
                     'modules/expressions/expressions_app',
-                    'modules/motor/motor_app',
+                    'modules/expressions_admin/motor_app',
                     'modules/gestures/gestures_app',
                     'modules/interaction/interaction_app'],
                 function () {

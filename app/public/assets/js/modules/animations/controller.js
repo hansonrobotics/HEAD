@@ -1,4 +1,4 @@
-define(['application', './views/animations', './views/layout', '../motor/show/motors',
+define(['application', './views/animations', './views/layout', '../expressions_admin/show/motors',
         './views/frames', './views/animation_edit', 'lib/api', 'entities/animation', 'entities/motor'],
     function (App, AnimationsView, LayoutView, MotorsView, FramesView, AnimationEditView, api) {
         return {

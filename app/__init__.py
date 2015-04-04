@@ -11,17 +11,17 @@ import os.path
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__)
-rep = reporter.Reporter('checks.yaml')
-
-
-@app.route('/system/status')
-def send_status():
-    return json_encode(rep.report())
+rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 
 
 @app.route('/')
 def send_index():
     return send_public('index.html')
+
+
+@app.route('/system/status')
+def send_status():
+    return json_encode(rep.report())
 
 
 @app.route('/<path:filename>')
@@ -161,6 +161,5 @@ def radians_to_pulse(rad):
 def radians_to_degrees(rad):
     return round(rad * 180 / math.pi)
 
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, use_reloader=False)
+    app.run(host='0.0.0.0', debug=True, use_reloader=True)
