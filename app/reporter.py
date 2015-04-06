@@ -1,5 +1,5 @@
 import yaml
-from subprocess import call, check_output, DEVNULL
+from subprocess import call, check_output
 
 
 class Reporter:
@@ -42,7 +42,7 @@ class Reporter:
     @staticmethod
     def check(cmd, env=None):
         """ Checks a single command for success """
-        errcode = call(cmd, stdout=DEVNULL, env=env, shell=True)
+        errcode = call(cmd, stdout=subprocess.DEVNULL, env=env, shell=True)
         return errcode == 0
 
     def _build_env(self):

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 import os
 
 from flask import Flask, send_from_directory, request
@@ -14,22 +14,12 @@ app = Flask(__name__)
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 
 
-@app.route('/')
-def send_index():
-    return send_public('index.html')
-
-
-@app.route('/system/status')
+@app.route('/status')
 def send_status():
     return json_encode(rep.report())
 
 
-@app.route('/<path:filename>')
-def send_public(filename):
-    return send_from_directory('public', filename)
-
-
-@app.route('/<robot_name>/motors/get')
+@app.route('/motors/get/<robot_name>')
 def get_motors(robot_name):
     config_root = "/catkin_ws/src/robots_config/" + robot_name + "/"
     motors = read_yaml(config_root + "motors.yaml")
@@ -52,7 +42,7 @@ def get_motors(robot_name):
     return json_encode(motors)
 
 
-@app.route('/<robot_name>/motors/update', methods=['POST'])
+@app.route('/motors/update/<robot_name>', methods=['POST'])
 def update_motors(robot_name):
     motors = json.loads(request.get_data().decode('utf8'))
 
@@ -92,7 +82,7 @@ def update_motors(robot_name):
     return json_encode(True)
 
 
-@app.route('/expressions/<robot_name>')
+@app.route('/expressions/<robot_name>', methods=['GET'])
 def get_expressions(robot_name):
     expressions = read_yaml("/catkin_ws/src/robots_config/" + robot_name + "/expressions.yaml")
     return json_encode(expressions)
@@ -117,7 +107,7 @@ def update_expressions(robot_name):
     # return True
     return json_encode(True)
 
-@app.route('/<robot_name>/animations/update', methods=['POST'])
+@app.route('/animations/update/<robot_name>', methods=['POST'])
 def update_animations(robot_name):
     data = json.loads(request.get_data().decode('utf8'))
     file_name = "/catkin_ws/src/robots_config/" + robot_name + "/animations.yaml"

@@ -6,7 +6,7 @@
 # with every check.
 setup:
   env:
-    ROSNODELIST: rosnode list
+    ROSNODELIST: sudo rosnode list
   prepend:
     - . ./rosfuncs.sh
 
