@@ -47,7 +47,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         updateAnimations: function (animations, callback) {
             var self = this;
-            $.ajax('/api/animations/update/' + api.config.robot, {
+            $.ajax('/animations/update/' + api.config.robot, {
                 dataType: 'json',
                 data: JSON.stringify({animations: animations}),
                 method: 'POST',
@@ -216,7 +216,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         getMotorsFromFile: function (callback) {
             var self = this;
 
-            $.ajax('/api/motors/get/' + api.config.robot, {
+            $.ajax('/motors/get/' + api.config.robot, {
                 dataType: 'json',
                 success: function (response) {
                     self.createMotorTopics(response.motors);

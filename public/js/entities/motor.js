@@ -68,7 +68,7 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                 var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
                 param.set(data);
 
-                $.ajax("/api/motors/update" + "/" + api.config.robot, {
+                $.ajax("/motors/update" + "/" + api.config.robot, {
                     data: JSON.stringify(data),
                     type: 'POST',
                     dataType: "json",

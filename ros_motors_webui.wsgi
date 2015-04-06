@@ -1,5 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 from os import path, sys
-sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
+sys.path.append( path.dirname( path.dirname( path.abspath(__file__) + "/app" ) ) )
 
-from ros_motors_webui.app import app as application
+from app import app as application

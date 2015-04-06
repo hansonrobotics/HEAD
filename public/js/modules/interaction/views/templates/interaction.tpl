@@ -2,7 +2,7 @@
     <ul id="app-chat">
         <li id="leftMsg" class="left clearfix">
                 <span class="chat-img pull-left">
-                    <img src="assets/img/u.gif" alt="User Avatar" class="img-circle"/>
+                    <img src="/public/img/u.gif" alt="User Avatar" class="img-circle"/>
                 </span>
 
             <div class="chat-body clearfix">
@@ -16,7 +16,7 @@
         </li>
         <li id="rightMsg" class="right clearfix">
                 <span class="chat-img pull-right">
-                    <img src="assets/img/me.gif" alt="User Avatar" class="img-circle"/>
+                    <img src="/public/img/me.gif" alt="User Avatar" class="img-circle"/>
                 </span>
 
             <div class="chat-body clearfix">

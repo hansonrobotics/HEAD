@@ -7,7 +7,7 @@ define(['application', 'lib/api'], function (App, api) {
             fetch: function() {
                 var collection = this;
 
-                $.ajax('/api/expressions/' + api.config.robot, {
+                $.ajax('/expressions/' + api.config.robot, {
                     cache: false,
                     dataType: 'json',
                     success: function (data) {
@@ -40,7 +40,7 @@ define(['application', 'lib/api'], function (App, api) {
                     }
                 });
 
-                $.ajax("/api/expressions/update/" + api.config.robot, {
+                $.ajax("/expressions/update/" + api.config.robot, {
                     method: 'POST',
                     data: JSON.stringify({expressions: expressions}),
                     type: 'POST',

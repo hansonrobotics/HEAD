@@ -10,7 +10,7 @@
             </button>
 
             <a class="navbar-brand" href="#">
-                <img id="logo" class="pull-left" src="/assets/img/H.png" alt=""/>
+                <img id="logo" class="pull-left" src="/public/img/H.png" alt=""/>
                 <span id="app-title"></span>
             </a>
 

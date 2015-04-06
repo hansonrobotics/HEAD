@@ -10,8 +10,13 @@ import os.path
 
 json_encode = json.JSONEncoder().encode
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../public/')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
+
+
+@app.route('/')
+def send_index():
+    return send_from_directory(app.static_folder, 'index.html')
 
 
 @app.route('/status')

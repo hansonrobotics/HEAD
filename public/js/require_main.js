@@ -1,5 +1,5 @@
 requirejs.config({
-    baseUrl: '/assets/js',
+    baseUrl: '/public/js',
     paths: {
         jquery: 'vendor/jquery',
         'jquery-ui': 'vendor/jquery-ui',

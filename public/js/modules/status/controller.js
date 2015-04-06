@@ -15,7 +15,7 @@ define(['application', './views/status', 'lib/api'],
                 App.LayoutInstance.showNav();
 
                 $.ajax({
-                    url: "/api/system/status",
+                    url: "/status",
                     dataType: "json",
 
                     success: function (data) {
