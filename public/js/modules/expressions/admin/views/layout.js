@@ -1,5 +1,5 @@
 define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
-    App.module("Motors.Common", function (Common, App, Backbone, Marionette, $, _) {
+    App.module("Expressions.Admin.Views", function (Common, App, Backbone, Marionette, $, _) {
         Common.Layout = Marionette.LayoutView.extend({
             template: template,
 
@@ -10,5 +10,5 @@ define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
         });
     });
 
-    return App.Motors.Common.Layout;
+    return App.module('Expressions.Admin.Views.Layout');
 });

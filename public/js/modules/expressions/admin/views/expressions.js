@@ -1,6 +1,6 @@
 define(["application", "./expression", 'tpl!./templates/expressions.tpl'],
     function (App, expressionView, template) {
-        App.module("Motors.View", function (View, App, Backbone, Marionette, $, _) {
+        App.module("Expressions.Admin.Views", function (View, App, Backbone, Marionette, $, _) {
             View.Expressions = Marionette.CompositeView.extend({
                 template: template,
                 childViewContainer: '.app-expressions',
@@ -47,5 +47,5 @@ define(["application", "./expression", 'tpl!./templates/expressions.tpl'],
             });
         });
 
-        return App.Motors.View.Expressions;
+        return App.module('Expressions.Admin.Views.Expressions');
     });

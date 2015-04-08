@@ -1,5 +1,5 @@
 define(["application", "tpl!./templates/expression.tpl"], function (App, template) {
-    App.module("Motors.View", function (View, RosApp, Backbone, Marionette, $, _) {
+    App.module("Expressions.Admin.Views", function (View, RosApp, Backbone, Marionette, $, _) {
         View.Expression = Marionette.ItemView.extend({
             template: template,
             modelEvents: {
@@ -62,5 +62,5 @@ define(["application", "tpl!./templates/expression.tpl"], function (App, templat
         });
     });
 
-    return App.Motors.View.Expression;
+    return App.module('Expressions.Admin.Views.Expression');
 });

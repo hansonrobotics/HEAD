@@ -29,9 +29,9 @@
                 <li><a href="#/interactions">Interaction</a></li>
             </ul>
             <ul id="app-admin-nav" class="nav navbar-nav navbar-right">
-                <li><a href="#/admin/status">Status</a></li>
-                <li><a href="#/admin/motors">Motors</a></li>
+                <li><a href="#/admin/expressions">Expressions</a></li>
                 <li><a href="#/admin/animations">Animations</a></li>
+                <!--<li><a href="#/admin/motors">Motors</a></li>-->
             </ul>
         </div>
     </div>

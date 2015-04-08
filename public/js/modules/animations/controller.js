@@ -1,4 +1,4 @@
-define(['application', './views/animations', './views/layout', '../expressions_admin/show/motors',
+define(['application', './views/animations', './views/layout', '../motors/views/motors',
         './views/frames', './views/animation_edit', 'lib/api', 'entities/animation', 'entities/motor'],
     function (App, AnimationsView, LayoutView, MotorsView, FramesView, AnimationEditView, api) {
         return {
@@ -33,7 +33,7 @@ define(['application', './views/animations', './views/layout', '../expressions_a
                 App.LayoutInstance.showAdminNav();
 
                 this.motorsCollection = new App.Entities.MotorCollection();
-                this.motorsView = new MotorsView({collection: this.motorsCollection, disable_edit: true});
+                this.motorsView = new MotorsView({collection: this.motorsCollection, enable_edit: true});
                 this.layoutView.getRegion('motors').show(this.motorsView);
 
                 api.getMotorsFromFile(function (data) {

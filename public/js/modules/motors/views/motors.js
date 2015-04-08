@@ -1,5 +1,5 @@
 define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], function (App, motorView, motorsTemplate) {
-    App.module("Motors.View", function (View, App, Backbone, Marionette, $, _) {
+    App.module("Motors.Views", function (View, App, Backbone, Marionette, $, _) {
         View.Motors = Marionette.CompositeView.extend({
             template: motorsTemplate,
             childViewContainer: '.app-motors',
@@ -20,7 +20,7 @@ define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], fu
                 })
             },
             onRender: function () {
-                if (typeof this.options.disable_edit != 'undefined' && this.options.disable_edit)
+                if (! this.options.enable_edit)
                     this.ui.editButton.hide();
             },
             enableEdit: function () {
@@ -68,5 +68,5 @@ define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], fu
         });
     });
 
-    return App.Motors.View.Motors;
+    return App.module('Motors.Views.Motors');
 });

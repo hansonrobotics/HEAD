@@ -2,7 +2,7 @@ define(['application', './controller'], function (App, controller) {
     App.module('Motors', function (Motors, app, Backbone, Marionette, $, _) {
         Motors.Router = Marionette.AppRouter.extend({
             'appRoutes': {
-                'motors': 'index',
+                'motors': 'public_index',
                 'admin/motors': 'admin_index'
             }
         });

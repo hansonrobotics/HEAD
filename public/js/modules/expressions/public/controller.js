@@ -8,7 +8,6 @@ define(['application', './views/expressions', 'lib/api', 'lib/utilities', 'lib/c
                 App.LayoutInstance.getRegion('content').show(this.expressionsView);
                 App.LayoutInstance.showNav();
 
-                console.log('here');
                 $(".dial").val(0);
                 this.initExpressions();
                 this.createButtons();
