@@ -68,7 +68,7 @@
     display: none;
 }
 
-.app-motors-show-on-edit, .app-save-motors-button {
+.app-motors-show-on-edit, .app-motor-editing {
     display: none;
 }
 

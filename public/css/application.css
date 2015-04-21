@@ -63,3 +63,6 @@ body {
     border: solid 1px #df691a;
     padding: 10px 5px 5px;
 }
+
+.top-buffer { margin-top:20px; }
+.bottom-buffer { margin-bottom:20px; }

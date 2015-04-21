@@ -6,12 +6,15 @@ define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], fu
             childView: motorView,
             ui: {
                 container: '.app-motors',
-                editButton: '.app-edit-motors-button',
-                saveButton: '.app-save-motors-button'
+                saveButton: '.app-save-motors-button',
+                editing: '.app-motor-editing'
             },
             events: {
                 'click @ui.editButton': 'enableEdit',
                 'click @ui.saveButton': 'updateMotors'
+            },
+            collectionEvents: {
+                'add': 'motorAdded'
             },
             initialize: function () {
                 var self = this;
@@ -19,15 +22,14 @@ define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], fu
                     self.showSelectButtons(status);
                 })
             },
-            onRender: function () {
-                if (! this.options.enable_edit)
-                    this.ui.editButton.hide();
+            motorAdded: function () {
+                if (this.options.enable_edit)
+                    this.enableEdit();
             },
             enableEdit: function () {
                 var self = this;
 
-                this.ui.editButton.hide();
-                this.ui.saveButton.show();
+                this.ui.editing.show();
 
                 this.children.each(function (motorView) {
                     motorView.enableEdit();
@@ -51,13 +53,6 @@ define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], fu
                 });
             },
             updateMotors: function () {
-                this.ui.saveButton.hide();
-                this.ui.editButton.show();
-
-                this.children.each(function (motorView) {
-                    motorView.disableEdit();
-                });
-
                 this.collection.sync();
             },
             showSelectButtons: function (status) {

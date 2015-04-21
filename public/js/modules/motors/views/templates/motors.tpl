@@ -1,5 +1,13 @@
+<div class="app-motor-editing">
+    <button class="app-save-motors-button btn btn-default">Save</button>
+    <hr/>
+</div>
+
 <div class="control-stack">
     <ul class="app-motors"></ul>
-    <button class="app-edit-motors-button btn btn-default">Edit</button>
+</div>
+
+<div class="app-motor-editing bottom-buffer">
+    <hr/>
     <button class="app-save-motors-button btn btn-default">Save</button>
 </div>
