@@ -218,9 +218,9 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
 
             $.ajax('/motors/get/' + api.config.robot, {
                 dataType: 'json',
-                success: function (response) {
-                    self.createMotorTopics(response.motors);
-                    callback(response.motors);
+                success: function (motors) {
+                    self.createMotorTopics(motors);
+                    callback(motors);
                 }
             });
         },

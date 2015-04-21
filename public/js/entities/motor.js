@@ -76,13 +76,21 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     }
                 });
             },
-            fetch: function () {
+            fetch: function (admin) {
                 var self = this;
-                api.getMotorsFromParam(function (data) {
-                    self.add(data);
-                    self.loadPololuMotors(self.motorsCollection);
-                });
 
+                if (admin) {
+                    console.log('here');
+                    api.getMotorsFromFile(function (data) {
+                        self.add(data);
+                        self.loadPololuMotors();
+                    });
+                } else {
+                    api.getMotorsFromParam(function (data) {
+                        self.add(data);
+                        self.loadPololuMotors();
+                    });
+                }
             },
             getRelativePositions: function () {
                 var positions = {};

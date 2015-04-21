@@ -15,7 +15,7 @@ define(["application", "lib/api", './views/motors', './views/layout', 'entities/
             },
             show_motors: function (enableEdit) {
                 this.motorsCollection = new App.Entities.MotorCollection();
-                this.motorsCollection.fetch();
+                this.motorsCollection.fetch(enableEdit);
 
                 this.motorsView = new MotorsView({collection: this.motorsCollection, enable_edit: enableEdit});
                 this.layoutView = new LayoutView();
