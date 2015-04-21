@@ -80,7 +80,6 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                 var self = this;
 
                 if (admin) {
-                    console.log('here');
                     api.getMotorsFromFile(function (data) {
                         self.add(data);
                         self.loadPololuMotors();

@@ -13,16 +13,13 @@ define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], fu
                 'click @ui.editButton': 'enableEdit',
                 'click @ui.saveButton': 'updateMotors'
             },
-            collectionEvents: {
-                'add': 'motorAdded'
-            },
             initialize: function () {
                 var self = this;
                 App.vent.on('motors:selection:set', function (status) {
                     self.showSelectButtons(status);
                 })
             },
-            motorAdded: function () {
+            onAddChild: function() {
                 if (this.options.enable_edit)
                     this.enableEdit();
             },

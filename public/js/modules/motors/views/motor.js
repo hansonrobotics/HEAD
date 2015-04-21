@@ -169,18 +169,16 @@ define(["application", "tpl!./templates/motor.tpl", 'jquery-ui'],
                     this.ui.labelLeft.html(label);
                 },
                 enableEdit: function () {
-                    if (! this.editEnabled()) {
-                        this.ui.dragHandle.show();
+                    this.ui.dragHandle.show();
 
-                        if (this.model.get('motor_id') != null) {
-                            this.edit_enabled = true;
+                    if (this.model.get('motor_id') != null) {
+                        this.edit_enabled = true;
 
-                            this.ui.showOnEdit.show();
-                            this.ui.hideOnEdit.hide();
-                        }
-
-                        this.$el.show();
+                        this.ui.showOnEdit.show();
+                        this.ui.hideOnEdit.hide();
                     }
+
+                    this.$el.show();
                 },
                 editEnabled: function () {
                     return typeof this.edit_enabled != 'undefined' && this.edit_enabled;
