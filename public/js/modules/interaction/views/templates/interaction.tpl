@@ -47,7 +47,7 @@
 
                 <div id="record-container" class="col-sm-12">
                     <button class="btn btn-info btn-sm" id="app-record-button">
-                        Start Recording
+                        Say "Hi" to start!
                     </button>
                 </div>
             </div>

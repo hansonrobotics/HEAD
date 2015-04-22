@@ -81,6 +81,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 play_animation: new ROSLIB.Topic({
                     ros: api.ros,
                     name: '/' + api.config.robot + '/play_animation'
+                }),
+                speech_active: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/speech_events',
+                    messageType: 'std_msgs/String'
                 })
             };
         },

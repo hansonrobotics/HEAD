@@ -1,5 +1,5 @@
-define(['application', './views/interaction', 'lib/api'],
-    function (App, InteractionView, api) {
+define(['application', './views/interaction', 'lib/api', 'backbone', 'annyang'],
+    function (App, InteractionView, api, Backbone, annyang) {
         var interaction = {
             index: function () {
                 api.blenderMode.enable();
@@ -14,6 +14,17 @@ define(['application', './views/interaction', 'lib/api'],
 
                 api.topics.chat_responses.subscribe(function (msg) {
                     interaction.addMessage('Robot', msg.data);
+                });
+
+                interaction.speech_active = true;
+                api.topics.speech_active.subscribe(function (msg) {
+                    if (msg.data == 'start') {
+                        console.log('paused');
+                        annyang.pause();
+                    } else {
+                        annyang.resume();
+                    }
+                    console.log('speech active');
                 });
 
                 $('#app-record-button').click(function () {
@@ -32,38 +43,34 @@ define(['application', './views/interaction', 'lib/api'],
                         $('#app-message-input').val('');
                     }
                 });
+
+                annyang.start();
+                annyang.debug();
+                var commands = {
+                    'hi (han)': interaction.hello,
+                    'hello (han)': interaction.hello,
+                    'hello (hun)': interaction.hello,
+                    'hello (hon)': interaction.hello,
+                    'hi (hun)': interaction.hello,
+                    'hi (hon)': interaction.hello,
+                    'bye *bye': interaction.bye,
+                    '*text': interaction.voiceRecognized
+                };
+                annyang.addCommands(commands);
+                interaction.started = false;
+                interaction.checkSleep();
             },
-            recognizeSpeech: function () {
-                if (!('webkitSpeechRecognition' in window)) {
-                    alert('Browser not supported. Use the newest Chrome browser');
-                } else {
-                    var recognition = new webkitSpeechRecognition();
-
-                    recognition.onstart = function () {
-                        document.querySelector('#app-record-button').textContent =
-                            "Cancel recording";
-                    };
-
-                    recognition.onerror = function (event) {
-                        alert('Recognition error');
-                    };
-
-                    recognition.onend = function () {
-                        document.querySelector('#app-record-button').textContent =
-                            "Start recording";
-                    };
-
-                    recognition.onresult = function (event) {
-                        var utterance = event.results[0][0].transcript;
-                        var chat_message = new ROSLIB.Message({
-                            utterance: utterance,
-                            confidence: Math.round(event.results[0][0].confidence * 100)
-                        });
-                        api.topics.speech_topic.publish(chat_message);
-                        interaction.addMessage('Me', utterance);
-                    };
-                    recognition.start();
-                }
+            wakeUp: function () {
+                annyang.start();
+            },
+            checkSleep: function () {
+                var lastSync = new Date().getTime();
+                setInterval(function () {
+                    var now = new Date().getTime();
+                    if ((now - lastSync) > 2000) {
+                        interaction.wakeUp();
+                    }
+                }, 1000);
             },
             addMessage: function (name, message) {
                 var element;
@@ -105,6 +112,40 @@ define(['application', './views/interaction', 'lib/api'],
                     hour = hour - 12;
 
                 return hour + ":" + min + " " + amPm;
+            },
+            hello: function () {
+                console.log('Conversation started');
+                interaction.started = true;
+                var chat_message = new ROSLIB.Message({
+                    utterance: 'hello',
+                    confidence: 99
+                });
+                api.topics.speech_topic.publish(chat_message);
+            },
+            bye: function () {
+                if (interaction.started) {
+                    console.log('Conversation Finished');
+                    var chat_message = new ROSLIB.Message({
+                        utterance: 'bye',
+                        confidence: 99
+                    });
+                    api.topics.speech_topic.publish(chat_message);
+                }
+                interaction.started = false;
+            },
+            voiceRecognized: function (text) {
+                console.log(text);
+                if (interaction.started) {
+                    var chat_message = new ROSLIB.Message({
+                        utterance: text,
+                        confidence: 99
+                    });
+                    api.topics.speech_topic.publish(chat_message);
+                    interaction.addMessage('Me', text);
+                }
+            },
+            recognizeSpeech: function () {
+                alert('Say Hi to start');
             }
         };
 

@@ -13,7 +13,8 @@ requirejs.config({
         roslib: 'vendor/roslib',
         eventemitter: 'vendor/eventemitter2',
         bootstrap: 'vendor/bootstrap.min',
-        'touch-punch': 'vendor/jquery.ui.touch-punch.min'
+        'touch-punch': 'vendor/jquery.ui.touch-punch.min',
+        annyang: 'vendor/annyang'
     },
     shim: {
         'jquery-ui': ['jquery'],
@@ -24,6 +25,9 @@ requirejs.config({
         backbone: {
             deps: ['jquery', 'underscore', 'json2'],
             exports: 'Backbone'
+        },
+        annyang: {
+            exports: 'annyang'
         },
         'touch-punch': ['jquery-ui'],
         'backbone.picky': ['backbone'],
