@@ -157,4 +157,9 @@ def radians_to_degrees(rad):
     return round(rad * 180 / math.pi)
 
 if __name__ == '__main__':
+    @app.route('/public/<path:path>')
+    def send_js(path):
+        return send_from_directory(app.static_folder, path)
+
+
     app.run(host='0.0.0.0', debug=True, use_reloader=True)
