@@ -48,4 +48,4 @@ require(["eventemitter"], function (EventEmitter2) {
     window.EventEmitter2 = EventEmitter2;
 });
 
-define(['jquery', 'bootstrap', 'application']);
+define(['touch-punch', 'jquery', 'bootstrap', 'application']);
