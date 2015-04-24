@@ -26,7 +26,8 @@ blender -y Eva.blend -P autostart.py
 ```
 Eva can be controlled via buttons in the blender GUI (note the panel
 on the right).  A HOWTO guide for manipulating via ROS can be found in
-the [Eva cookbook](https://github.com/hansonrobotics/blender_api_msgs/cookbook.md)
+the [Eva
+cookbook](https://github.com/hansonrobotics/blender_api_msgs/blob/master/cookbook.md)
 in the `blender_api_msgs` project.
 
 
