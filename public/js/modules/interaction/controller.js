@@ -1,4 +1,4 @@
-define(['application', './views/interaction', 'lib/api'],
+define(['application', './views/interaction', 'lib/api', 'entities/interaction'],
     function (App, InteractionView, api) {
         return {
             index: function () {
