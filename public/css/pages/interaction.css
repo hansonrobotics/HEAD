@@ -1,54 +1,50 @@
-#record-container {
+.record-container {
     padding: 10px 0;
 }
 
-#app-record-button {
+.app-record-button {
     display: block;
     width: 100%;
 }
 
-#leftMsg, #rightMsg {
-    display: none;
-}
-
-#app-chat {
+.app-messages {
     list-style: none;
-    margin: 0 0 92px 0;
+    margin: 15px 0 92px 0;
     padding: 0;
     overflow: auto;
     height: auto;
 }
 
-#app-chat li {
+.app-messages li {
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #B3A9A9;
 }
 
-#app-chat li.left .chat-body {
+.app-messages li.left .chat-body {
     margin-left: 60px;
 }
 
-#app-chat li.right .chat-body {
+.app-messages li.right .chat-body {
     margin-right: 60px;
 }
 
-#app-chat li .chat-body p {
+.app-messages li .chat-body p {
     margin: 0;
 }
 
-.slidedown .glyphicon, #app-chat .glyphicon {
+.slidedown .glyphicon, .app-messages .glyphicon {
     margin-right: 5px;
 }
 
-#message-input-container {
+.message-input-container {
     margin-top: 10px;
 }
 
-#app-send-button {
+.app-send-button {
     height: 31px;
 }
 
-#app-send-button {
+.app-send-button {
     margin-left: 0;
 }
