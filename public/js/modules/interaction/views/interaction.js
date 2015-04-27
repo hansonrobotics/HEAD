@@ -1,4 +1,4 @@
-define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', "annyang"],
+define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'annyang'],
     function (App, MessageView, template, api, annyang) {
         var self;
         App.module("Interaction.Views", function (Views, App, Backbone, Marionette, $, _) {
@@ -9,7 +9,10 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 ui: {
                     recordButton: '.app-record-button',
                     messageInput: '.app-message-input',
-                    sendButton: '.app-send-button'
+                    sendButton: '.app-send-button',
+                    unsupported: '.app-unsupported',
+                    supported: '.app-supported',
+                    recordContainer: '.record-container'
                 },
                 events: {
                     'click @ui.recordButton': 'recognizeSpeech',
@@ -21,7 +24,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 onRender: function () {
                     var self = this;
-
                     api.topics.chat_responses.subscribe(function (msg) {
                         self.collection.add({author: 'Robot', message: msg.data});
                     });
@@ -29,31 +31,37 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     api.topics.speech_active.subscribe(function (msg) {
                         if (msg.data == 'start') {
                             console.log('Interaction paused');
-                            annyang.pause();
+                            if (annyang) annyang.pause();
                         } else {
                             console.log('Interaction activated');
-                            annyang.resume();
+                            if (annyang) annyang.resume();
                         }
                     });
 
-                    annyang.start();
-                    annyang.debug();
+                    if (annyang) {
+                        annyang.start();
+                        annyang.debug();
 
-                    var commands = {
-                        'hi (han)': this.hello,
-                        'hello (han)': this.hello,
-                        'hello (hun)': this.hello,
-                        'hello (hon)': this.hello,
-                        'hi (hun)': this.hello,
-                        'hi (hon)': this.hello,
-                        'bye *bye': this.bye,
-                        '*text': this.sendMessage
-                    };
-                    annyang.addCommands(commands);
-                    this.keepAlive();
+                        var commands = {
+                            'hi (han)': this.hello,
+                            'hello (han)': this.hello,
+                            'hello (hun)': this.hello,
+                            'hello (hon)': this.hello,
+                            'hi (hun)': this.hello,
+                            'hi (hon)': this.hello,
+                            'bye *bye': this.bye,
+                            '*text': this.sendMessage
+                        };
+                        annyang.addCommands(commands);
+                        this.keepAlive();
+                    } else {
+                        this.ui.recordContainer.hide();
+                    }
                 },
                 onDestroy: function(){
-                    annyang.abort();
+                    if (annyang)
+                        annyang.abort();
+
                     clearTimeout(self.keepAlive);
                 },
                 messageKeyUp: function (e) {
@@ -72,7 +80,8 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 keepAlive: function () {
                     this.keepAlive = setInterval(function () {
-                        annyang.start();
+                        if (annyang)
+                            annyang.start();
                     }, 10000);
                 },
                 attachHtml: function (collectionView, childView, index) {

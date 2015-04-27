@@ -1,5 +1,5 @@
 .record-container {
-    padding: 10px 0;
+    padding: 0 0 10px 0;
 }
 
 .app-record-button {
@@ -47,4 +47,8 @@
 
 .app-send-button {
     margin-left: 0;
+}
+
+.app-send-button {
+     margin-bottom: 10px;
 }
