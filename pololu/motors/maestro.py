@@ -30,12 +30,7 @@ class Maestro(object):
     Pololu Maestro controller for single device attached on USB Dual Port mode.
     """
     _BAUD_DETECT = 0xAA
-    _CONFIG_RETURN = {
-        0: 'OK',
-        1: 'Invalid Parameter',
-        2: 'Invalid Value',
-        }
-    _BOOL_TO_INT = {False: 0, True: 1}
+
     _COMMAND = {
         'set-target': 0x04,
         'set-multiple-targets': 0x1F,
