@@ -120,6 +120,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableGestures: function (success) {
+            api.topics.available_gestures.unsubscribe();
             api.topics.available_gestures.subscribe(function (message) {
                 success(message.data);
             });
@@ -159,6 +160,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableEmotionStates: function (success) {
+            api.topics.available_emotion_states.unsubscribe();
             api.topics.available_emotion_states.subscribe(function (message) {
                 success(message.data);
             });

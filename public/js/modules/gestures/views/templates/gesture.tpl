@@ -1,0 +1,1 @@
+<button type="button" class="btn btn-default app-gesture-button" data-gesture="<%= name %>"><%= name %></button>

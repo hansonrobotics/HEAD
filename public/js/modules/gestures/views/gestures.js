@@ -1,7 +1,7 @@
-define(["application", "tpl!./templates/gestures.tpl"], function (App, template) {
+define(["application", "./gesture"], function (App, GestureView) {
     App.module("Gestures.Views", function (Views, App, Backbone, Marionette, $, _) {
-        Views.Gestures = Marionette.LayoutView.extend({
-            template: template
+        Views.Gestures = Marionette.CollectionView.extend({
+            childView: GestureView
         });
     });
 
