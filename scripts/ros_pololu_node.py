@@ -7,7 +7,7 @@ import math
 import yaml
 from pololu.motors import Maestro, MicroSSC
 # Temporary messages
-from ros_pololu_servo.msg import MotorCommand
+from ros_pololu.msg import MotorCommand
 
 
 class ConfigError(Exception):
@@ -39,7 +39,7 @@ class PololuMotor:
         # pulses 1/4 of  micro s
         self._pulse = int(self._config['init'] * 4)
         self._setup_calibration()
-        self.id = self._config['motors_id']
+        self.id = self._config['motor_id']
 
     def _setup_calibration(self):
         """
@@ -110,10 +110,11 @@ class RosPololuNode:
             try:
                 yaml_stream = open(config_yaml)
                 config = yaml.load(yaml_stream)
-                for name, config in config:
-                    self._motors[name] = PololuMotor(name, config)
             except:
                 rospy.logwarn("Error loading config files")
+            for name, cfg in config.items():
+                self._motors[name] = PololuMotor(name, cfg)
+
         try:
             if self._controller_type == 'Maestro':
                 self.controller = Maestro(port)
