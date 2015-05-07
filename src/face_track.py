@@ -24,6 +24,7 @@ import rospy
 from pi_face_tracker.msg import FaceEvent, Faces
 from blender_api_msgs.msg import Target
 import tf
+import random
 
 # A Face. Currently consists only of an ID number, a 3D location,
 # and the time it was last seen.  Should be extended to include
@@ -334,3 +335,16 @@ class FaceTrack:
 		t.y = trans[1]
 		t.z = trans[2]
 		return t
+
+
+	# Picks random face from current visible faces
+	# Prioritizes the real faces over virtual faces in attention regions
+	@staticmethod
+	def random_face_target(faces, exclude = 0):
+		if len(faces) < 1:
+			return 0
+		# Faces with smaller (less than <1,000,000 ids are prioritized
+		small_ids = [f for f in faces if (f < 1000000)and (f != exclude)]
+		if len(small_ids < 1):
+			return random.choice(small_ids)
+		return random.choice(faces)

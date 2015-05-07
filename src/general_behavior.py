@@ -704,15 +704,12 @@ class Tree():
 
 	@owyl.taskmethod
 	def select_a_face_target(self, **kwargs):
-		self.blackboard["current_face_target"] = random.choice(self.blackboard["face_targets"])
+		self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"])
 		yield True
 
 	@owyl.taskmethod
 	def select_a_glance_target(self, **kwargs):
-		target = random.choice(self.blackboard["face_targets"])
-		while target == self.blackboard["current_face_target"]:
-			target = random.choice(self.blackboard["face_targets"])
-		self.blackboard["current_glance_target"] = target
+		self.blackboard["current_glance_target"] = FaceTrack.random_face_target(random.choice(self.blackboard["face_targets"]), self.blackboard["current_face_target"])
 		yield True
 
 	@owyl.taskmethod
