@@ -38,7 +38,7 @@ class AnimationManager():
 
 
 		# Head and Eye tracking parameters
-		self.headTargetLoc = BlendedAngle([0,0,0], steps=10, smoothing=10, ang_speed=1, offset=[0, self.face_target_offset, 0])
+		self.headTargetLoc = BlendedAngle([0,0,0], steps=10, smoothing=10, ang_speed=0.5, offset=[0, self.face_target_offset, 0])
 		self.eyeTargetLoc = BlendedNum([0,0,0], steps=4, smoothing=2)
 
 
