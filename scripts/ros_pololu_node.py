@@ -8,7 +8,7 @@ import yaml
 from pololu.motors import Maestro, MicroSSC
 # Temporary messages
 from ros_pololu.msg import MotorCommand
-
+import time
 
 class ConfigError(Exception):
     def __init__(self, value):
@@ -37,9 +37,12 @@ class PololuMotor:
         if 'motor_id' not in config.keys():
             raise ConfigError("motor_id value missing for {0}".format(name))
         # pulses 1/4 of  micro s
-        self._pulse = int(self._config['init'] * 4)
+        self.pulse = int(self._config['init'] * 4)
         self._setup_calibration()
         self.id = self._config['motor_id']
+        # Store speed and acceleration. By default should be small values to slowly turn tu neutral on start
+        self.speed = 0.1
+        self.acceleration = 0
 
     def _setup_calibration(self):
         """
@@ -77,16 +80,21 @@ class PololuMotor:
         if angle < min(self._calibration['min_angle'], self._calibration['max_angle']) or \
                 angle > max(self._calibration['min_angle'], self._calibration['max_angle']):
             raise ConfigError("Value out of config range")
-        self._pulse = int(self._angle_to_pulse(angle))
-        return self._pulse
+        self.pulse = int(self._angle_to_pulse(angle))
+        return self.pulse
 
-    def get_angle(self):
+    def get_angle(self, pulse = 0):
+        """
+        Get pulse angle. If pulse = 0 gets current motor pulse angle.
+        :param pulse: in 1/4 micros
+        :return: angle in radians
+        """
+        if pulse == 0:
+            pulse = self.pulse
         pa = (self._calibration['min_pulse'] - self._calibration['max_pulse']) /\
-             (self._calibration['min_angle'] - self._calibration['max_angle'])
-        return self._calibration['min_angle'] + ((self._pulse - self._calibration['min_pulse']) / pa)
+             float(self._calibration['min_angle'] - self._calibration['max_angle'])
+        return self._calibration['min_angle'] + ((pulse - self._calibration['min_pulse']) / pa)
 
-    def get_pulse(self):
-        return self._pulse
 
     @staticmethod
     def get_default_pulse(angle):
@@ -97,12 +105,28 @@ class PololuMotor:
         angle = max(min(math.pi / 2.0, angle), -math.pi / 2.0)
         return int(3200 + (8800 - 3200) * (angle + math.pi / 2.0) / math.pi)
 
+    def get_calibrated_config(self):
+        """
+        :return: Array of config values with calibration data applied
+        """
+        conf= self._config
+        conf['name'] = self._name
+        conf['min'] = self. _calibration['min_angle']
+        conf['max'] = self. _calibration['max_angle']
+        conf['default'] = self.get_angle(self._config['init']*4)
+        conf['motor_id'] = self.id
+        return conf
+
+
+
 class RosPololuNode:
 
     def __init__(self):
         port = rospy.get_param("~port_name")
         topic_prefix = rospy.get_param("~topic_prefix", "pololu/")
         topic_name = rospy.get_param("~topic_name", "command")
+        # Use specific rate to publish motors commands
+        self._sync = rospy.get_param("~sync", "off")
         self._controller_type = rospy.get_param("~controller", "Maestro")
         self._motors = {}
         if rospy.has_param("~pololu_motors_yaml"):
@@ -112,21 +136,44 @@ class RosPololuNode:
                 config = yaml.load(yaml_stream)
             except:
                 rospy.logwarn("Error loading config files")
+            # Get existing motors config and update those configs if callibration data changed
+            motors = rospy.get_param('motors',[])
             for name, cfg in config.items():
                 self._motors[name] = PololuMotor(name, cfg)
-
+                cfg = self._motors[name].get_calibrated_config()
+                cfg['topic'] = topic_prefix.strip("/")
+                for i, m in enumerate(motors):
+                    if m['name'] == name:
+                        motors[i] = cfg
+                        break
+                else:
+                    motors.append(cfg)
+            rospy.set_param('motors', motors)
         try:
             if self._controller_type == 'Maestro':
                 self.controller = Maestro(port)
             if self._controller_type == 'MicroSSC':
                 self.controller = MicroSSC(port)
+                print "MicroSSC started"
         except:
             rospy.logerr("Error creating the motor controller")
             return
         rospy.Subscriber(topic_prefix + topic_name, MotorCommand, self.motor_command_callback)
 
     def publish_motor_states(self):
-        pass
+        if self._sync == 'on':
+            for i, m in self._motors.items():
+                try:
+                    self.set_speed(m.id, m.speed)
+                    self.set_acceleration(m.id, m.acceleration)
+                    self.set_pulse(m.id, m.pulse)
+                except:
+                    rospy.logerr("Write Timeout")
+                    time.sleep(0.01)
+                    self.controller.clean()
+
+
+            self.controller.clean()
 
     def motor_command_callback(self, msg):
         pulse = 0
@@ -134,21 +181,28 @@ class RosPololuNode:
         if msg.joint_name in self._motors.keys():
             motor = self._motors[msg.joint_name]
             motor_id = motor.id
-            pulse = motor.setAngle(msg.position)
+            pulse = motor.set_angle(msg.position)
+            #motor.speed =  min(max(0, msg.speed), 1)
+            motor.acceleration = min(max(0, msg.acceleration), 1)
         elif msg.joint_name.isdigit():
             try:
                 motor_id = int(msg.joint_name)
             except:
                 rospy.logwarn("Invalid motor specified")
+                return
             pulse = PololuMotor.get_default_pulse(msg.position)
 
-        self.set_speed(motor_id, min(max(0, msg.speed), 1))
-        self.set_acceleration(motor_id, min(max(0, msg.acceleration), 1))
-        self.set_pulse(motor_id, pulse)
+        if not (self._sync == 'on' and (msg.joint_name in self._motors.keys())):
+            self.set_speed(motor_id, min(max(0, msg.speed), 1))
+            self.set_acceleration(motor_id, min(max(0, msg.acceleration), 1))
+            self.set_pulse(motor_id, pulse)
+
 
 
     def set_pulse(self, id, pulse):
         try:
+            print id
+            print pulse
             self.controller.setTarget(id, pulse)
         except AttributeError:
             pass
@@ -177,7 +231,7 @@ class RosPololuNode:
 
 if __name__ == '__main__':
     rospy.init_node("pololu_node")
-    r = rospy.Rate(20)
+    r = rospy.Rate(10)
     node = RosPololuNode()
     while not rospy.is_shutdown():
         node.publish_motor_states()
