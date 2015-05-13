@@ -20,7 +20,8 @@
 <launch>
 	<arg name="model" default="$(find robots_config)/han/description.urdf" />
 	<arg name="gui" default="True" />
-	<arg name="pololu_joints" default="Eyes_Pitch;Eye_L;Eye_R" />
+	<arg name="pololu_joints" default="" />
+	<arg name="pau_joints" default="Eyes_Pitch;Eye_L;Eye_R;roll_base_joint;pitch_base_joint;yaw_joint;roll_neck_joint;pitch_neck_joint" />
 	<!-- fritz.urdf, per above -->
 	<param name="robot_description"
 	       textfile="$(arg model)" />
@@ -42,9 +43,8 @@
 
 	<node name="state_publisher"
 	      pkg="perception"
-	      type="joint_state_publisher.py">
-	    <param name="pololu_joints" value="$(arg pololu_joints)"/>
-
+	      type="joint_state_publisher.py" output="screen">
+	    <param name="pau_joints" value="$(arg pau_joints)"/>
 	</node>
 
 	<!-- Run rviz only if gui set to true... -->
