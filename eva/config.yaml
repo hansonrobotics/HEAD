@@ -60,13 +60,13 @@ Jaw-Up-Down_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: Jaw-Up-Down_joint
-    joint_speed:
+    joint_speed: 
     motor:
         id: 5
-        init: 2300
-        min: 1600
-        max: 2300
-        acceleration:
+        init: 2200
+        min: 1500
+        max: 2200
+        acceleration: 
 
 Upper-Gimbal-L_controller:
     controller:
@@ -77,10 +77,10 @@ Upper-Gimbal-L_controller:
     joint_speed: 20
     motor:
         id: 4
-        init: 1919
+        init: 1720
         min: 1200
         max: 2970
-        acceleration:
+        acceleration: 
 
 Upper-Gimbal-R_controller:
     controller:
@@ -91,10 +91,10 @@ Upper-Gimbal-R_controller:
     joint_speed: 20
     motor:
         id: 3
-        init: 2350
+        init: 2560
         min: 1200
         max: 3090
-        acceleration:
+        acceleration: 
 
 Lower-Gimbal-L_controller:
     controller:
@@ -108,7 +108,7 @@ Lower-Gimbal-L_controller:
         init: 2512
         min: 1700
         max: 2900
-        acceleration:
+        acceleration: 
 
 Lower-Gimbal-R_controller:
     controller:
@@ -122,7 +122,7 @@ Lower-Gimbal-R_controller:
         init: 1510
         min: 1180
         max: 2478
-        acceleration:
+        acceleration: 
 
 Neck-Rotation_controller:
     controller:
@@ -136,4 +136,4 @@ Neck-Rotation_controller:
         init: 1994
         min: 1130
         max: 2830
-        acceleration:
+        acceleration: 

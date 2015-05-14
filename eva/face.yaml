@@ -1,22 +1,22 @@
 EyeTurn-R:
   motor_id: 0
-  init: 1520
+  init: 1431
   min: 1150
   max: 1950
   labelleft: EyeTurn-R
 
 EyeTurn-L:
   motor_id: 1
-  init: 1694
+  init: 1838
   min: 1275
   max: 2200
   labelleft: EyeTurn-L
 
 LowerLid-R:
   motor_id: 2
-  init: 1700
+  init: 1758
   min: 1400
-  max: 2100
+  max: 2096
   labelleft: LowerLid-R
 
 Lower-Lid-L:
@@ -28,15 +28,15 @@ Lower-Lid-L:
 
 Upper-Lid-R:
   motor_id: 4
-  init: 1530
+  init: 1790
   min: 1450
-  max: 2100
+  max: 2320
   labelleft: Upper-Lid-R
 
 Upper-Lid-L:
   motor_id: 5
-  init: 1600
-  min: 1200
+  init: 1625
+  min: 1100
   max: 1900
   labelleft: Upper-Lid-L
 
@@ -103,6 +103,13 @@ Upper-Lip-R:
   max: 1472
   labelleft: Upper-Lip-R
 
+Sneer-L:
+  motor_id: 9
+  init: 
+  min: 
+  max: 
+  labelleft: Sneer-L
+
 Brow-Outer-R:
   motor_id: 16
   init: 1500
@@ -117,9 +124,30 @@ EE-R:
   max: 2043
   labelleft: EE-R
 
+Brow-Inner-R:
+  motor_id: 18
+  init: 1650
+  min: 1000
+  max: 2200
+  labelleft: Brow-Inner-R
+
+Brow-Center:
+  motor_id: 19
+  init: 1400
+  min: 790
+  max: 1950
+  labelleft: Brow-Center
+
+Cheek-Squint:
+  motor_id: 8
+  init: 1600
+  min: 800
+  max: 1950
+  labelleft: Cheek-Squint
+
 Eyes-Up-Down:
   motor_id: 20
   init: 1650
   min: 1400
-  max: 1800
+  max: 1968
   labelleft: Eyes-Up-Down
