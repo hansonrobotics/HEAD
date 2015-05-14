@@ -103,13 +103,6 @@ Upper-Lip-R:
   max: 1472
   labelleft: Upper-Lip-R
 
-Sneer-L:
-  motor_id: 9
-  init: 
-  min: 
-  max: 
-  labelleft: Sneer-L
-
 Brow-Outer-R:
   motor_id: 16
   init: 1500

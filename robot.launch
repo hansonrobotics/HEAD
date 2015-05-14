@@ -6,20 +6,19 @@
 
     <param name="/robot_name" type="str" value="$(arg name)" />
     <group ns="/$(arg name)">
+        <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
+        <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
         <group if="$(arg mini)">
-
-            <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
             <include file="$(find robots_config)/$(arg name)/hardware.launch" />
             <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
-                  output="screen"/>
+                  output="screen" respawn="true"/>
         </group>
         <group unless="$(arg mini)">
-            <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
             <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>
             <include file="$(find robots_config)/$(arg name)/hardware.launch" />
 
-            <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
-            <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
+
             <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
                   output="screen"/>
 
