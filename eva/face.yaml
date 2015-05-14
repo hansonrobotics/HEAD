@@ -1,0 +1,125 @@
+EyeTurn-R:
+  motor_id: 0
+  init: 1520
+  min: 1150
+  max: 1950
+  labelleft: EyeTurn-R
+
+EyeTurn-L:
+  motor_id: 1
+  init: 1694
+  min: 1275
+  max: 2200
+  labelleft: EyeTurn-L
+
+LowerLid-R:
+  motor_id: 2
+  init: 1700
+  min: 1400
+  max: 2100
+  labelleft: LowerLid-R
+
+Lower-Lid-L:
+  motor_id: 3
+  init: 1400
+  min: 980
+  max: 1700
+  labelleft: Lower-Lid-L
+
+Upper-Lid-R:
+  motor_id: 4
+  init: 1530
+  min: 1450
+  max: 2100
+  labelleft: Upper-Lid-R
+
+Upper-Lid-L:
+  motor_id: 5
+  init: 1600
+  min: 1200
+  max: 1900
+  labelleft: Upper-Lid-L
+
+Brow-Outer-L:
+  motor_id: 6
+  init: 1500
+  min: 920
+  max: 2100
+  labelleft: Brow-Outer-L
+
+Lower-Lip-L:
+  motor_id: 7
+  init: 1260
+  min: 860
+  max: 1700
+  labelleft: Lower-Lip-L
+
+Upper-Lip-Center:
+  motor_id: 9
+  init: 1440
+  min: 1021
+  max: 1872
+  labelleft: Upper-Lip-Center
+
+Upper-Lip-L:
+  motor_id: 10
+  init: 1400
+  min: 1100
+  max: 1700
+  labelleft: Upper-Lip-L
+
+Lower-Lip-R:
+  motor_id: 11
+  init: 1890
+  min: 1260
+  max: 2300
+  labelleft: Lower-Lip-R
+
+Lower-Lip-Center:
+  motor_id: 12
+  init: 1472
+  min: 1024
+  max: 1920
+  labelleft: Lower-Lip-Center
+
+Brow-Inner-L:
+  motor_id: 13
+  init: 1500
+  min: 980
+  max: 2100
+  labelleft: Brow-Inner-L
+
+EE-L:
+  motor_id: 14
+  init: 1630
+  min: 1300
+  max: 1760
+  labelleft: EE-L
+
+Upper-Lip-R:
+  motor_id: 15
+  init: 1000
+  min: 720
+  max: 1472
+  labelleft: Upper-Lip-R
+
+Brow-Outer-R:
+  motor_id: 16
+  init: 1500
+  min: 720
+  max: 2100
+  labelleft: Brow-Outer-R
+
+EE-R:
+  motor_id: 17
+  init: 1630
+  min: 1347
+  max: 2043
+  labelleft: EE-R
+
+Eyes-Up-Down:
+  motor_id: 20
+  init: 1650
+  min: 1400
+  max: 1800
+  labelleft: Eyes-Up-Down
