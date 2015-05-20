@@ -211,6 +211,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 self = this;
 
             param.get(function (motors) {
+                motors.sort(function(a,b){return parseFloat(a.sort_no)-parseFloat(b.sort_no)});
                 self.createMotorTopics(motors);
                 callback(motors);
             });
