@@ -1,6 +1,7 @@
 <div class="app-motor-editing">
-    <button class="app-save-motors-button btn btn-default">Save</button>
-    <hr/>
+    <div class="top-buffer">
+        <button class="app-save-motors-button btn btn-default">Save</button>
+    </div>
 </div>
 
 <div class="control-stack">
