@@ -95,3 +95,9 @@ ul.app-motors {
 .app-motor-drag-handle {
     margin-right: 5px;
 }
+
+.motor-group-title {
+    border-bottom: 1px solid #4e5d6c;
+    line-height: 1.5;
+    margin-top: 10px;
+}

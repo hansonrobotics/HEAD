@@ -19,6 +19,24 @@ define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], fu
                     self.showSelectButtons(status);
                 })
             },
+            /**
+             * Pass label of the motor group to motor views when a new group appears
+             *
+             * @param model
+             * @param index
+             * @returns {{motorGroupLabel: *}}
+             */
+            childViewOptions: function(model, index) {
+                var motorGroup = model.get('group');
+                if (motorGroup && (typeof this.lastMotorGroup == 'undefined' || this.lastMotorGroup != motorGroup))
+                    this.lastMotorGroup = motorGroup;
+                else
+                    motorGroup = null;
+
+                return {
+                    motorGroupLabel: motorGroup
+                }
+            },
             onAddChild: function() {
                 if (this.options.enable_edit)
                     this.enableEdit();

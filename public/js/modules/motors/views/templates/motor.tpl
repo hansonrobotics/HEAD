@@ -1,4 +1,7 @@
 <div class="app-slider-container">
+    <% if (typeof groupLabel != 'undefined') { %>
+        <h3 class="motor-group-title"><%= groupLabel %></h3>
+    <% } %>
     <hr class="app-motors-show-on-edit"/>
 
     <div class="app-motor-info app-motors-show-on-edit">

@@ -38,6 +38,16 @@ define(["application", "tpl!./templates/motor.tpl", 'jquery-ui'],
                     'click @ui.calibrationButton': 'calibrationSelected'
 
                 },
+                serializeData: function () {
+                    var model = this.model.toJSON();
+
+                    if (typeof this.options.motorGroupLabel != 'undefined' && this.options.motorGroupLabel) {
+                        return _.extend(model, {
+                            groupLabel: this.options.motorGroupLabel
+                        });
+                    } else
+                        return model;
+                },
                 modelChanged: function () {
                     if (this.calibrationEditEnabled()) {
                         var calibration = this.model.get('calibration');
