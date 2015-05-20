@@ -4,6 +4,8 @@ EyeTurn-R:
   min: 1150
   max: 1950
   labelleft: EyeTurn-R
+  sort_no: 9
+  group: Eyes
 
 EyeTurn-L:
   motor_id: 1
@@ -11,6 +13,8 @@ EyeTurn-L:
   min: 1275
   max: 2200
   labelleft: EyeTurn-L
+  sort_no: 8
+  group: Eyes
 
 LowerLid-R:
   motor_id: 2
@@ -18,6 +22,8 @@ LowerLid-R:
   min: 1400
   max: 2096
   labelleft: LowerLid-R
+  sort_no: 12
+  group: Eyes
 
 Lower-Lid-L:
   motor_id: 3
@@ -25,6 +31,8 @@ Lower-Lid-L:
   min: 980
   max: 1700
   labelleft: Lower-Lid-L
+  sort_no: 11
+  group: Eyes
 
 Upper-Lid-R:
   motor_id: 4
@@ -32,6 +40,8 @@ Upper-Lid-R:
   min: 1450
   max: 2320
   labelleft: Upper-Lid-R
+  sort_no: 7
+  group: Eyes
 
 Upper-Lid-L:
   motor_id: 5
@@ -39,6 +49,8 @@ Upper-Lid-L:
   min: 1100
   max: 1900
   labelleft: Upper-Lid-L
+  sort_no: 6
+  group: Eyes
 
 Brow-Outer-L:
   motor_id: 6
@@ -46,6 +58,8 @@ Brow-Outer-L:
   min: 920
   max: 2100
   labelleft: Brow-Outer-L
+  sort_no: 1
+  group: Brow
 
 Lower-Lip-L:
   motor_id: 7
@@ -53,6 +67,8 @@ Lower-Lip-L:
   min: 860
   max: 1700
   labelleft: Lower-Lip-L
+  sort_no: 25
+  group: Lips
 
 Upper-Lip-Center:
   motor_id: 9
@@ -60,6 +76,8 @@ Upper-Lip-Center:
   min: 1021
   max: 1872
   labelleft: Upper-Lip-Center
+  sort_no: 15
+  group: Lips
 
 Upper-Lip-L:
   motor_id: 10
@@ -67,6 +85,8 @@ Upper-Lip-L:
   min: 1100
   max: 1700
   labelleft: Upper-Lip-L
+  sort_no: 14
+  group: Lips
 
 Lower-Lip-R:
   motor_id: 11
@@ -74,6 +94,8 @@ Lower-Lip-R:
   min: 1260
   max: 2300
   labelleft: Lower-Lip-R
+  sort_no: 27
+  group: Lips
 
 Lower-Lip-Center:
   motor_id: 12
@@ -81,6 +103,8 @@ Lower-Lip-Center:
   min: 1024
   max: 1920
   labelleft: Lower-Lip-Center
+  sort_no: 26
+  group: Lips
 
 Brow-Inner-L:
   motor_id: 13
@@ -88,6 +112,8 @@ Brow-Inner-L:
   min: 980
   max: 2100
   labelleft: Brow-Inner-L
+  sort_no: 2
+  group: Brow
 
 EE-L:
   motor_id: 14
@@ -95,6 +121,8 @@ EE-L:
   min: 1300
   max: 1760
   labelleft: EE-L
+  sort_no: 20
+  group: Lips
 
 Upper-Lip-R:
   motor_id: 15
@@ -102,6 +130,8 @@ Upper-Lip-R:
   min: 720
   max: 1472
   labelleft: Upper-Lip-R
+  sort_no: 16
+  group: Lips
 
 Brow-Outer-R:
   motor_id: 16
@@ -109,6 +139,8 @@ Brow-Outer-R:
   min: 720
   max: 2100
   labelleft: Brow-Outer-R
+  sort_no: 5
+  group: Brow
 
 EE-R:
   motor_id: 17
@@ -116,6 +148,8 @@ EE-R:
   min: 1347
   max: 2043
   labelleft: EE-R
+  sort_no: 21
+  group: Lips
 
 Brow-Inner-R:
   motor_id: 18
@@ -123,6 +157,8 @@ Brow-Inner-R:
   min: 1000
   max: 2200
   labelleft: Brow-Inner-R
+  sort_no: 4
+  group: Brow
 
 Brow-Center:
   motor_id: 19
@@ -130,6 +166,8 @@ Brow-Center:
   min: 790
   max: 1950
   labelleft: Brow-Center
+  sort_no: 3
+  group: Brow
 
 Cheek-Squint:
   motor_id: 8
@@ -137,6 +175,26 @@ Cheek-Squint:
   min: 800
   max: 1950
   labelleft: Cheek-Squint
+  sort_no: 13
+  group: Eyes
+
+oo-Drawstring-Lower-R:
+  motor_id: 21
+  init: 1104
+  min: 1104
+  max: 1600
+  labelleft: oo-Drawstring-Lower-R
+  sort_no: 22
+  group: Lips
+
+oo-Drawstring-Upper-R:
+  motor_id: 22
+  init: 2000
+  min: 1500
+  max: 2000
+  labelleft: oo-Drawstring-Upper-R
+  sort_no: 19
+  group: Lips
 
 Eyes-Up-Down:
   motor_id: 20
@@ -144,3 +202,5 @@ Eyes-Up-Down:
   min: 1400
   max: 1968
   labelleft: Eyes-Up-Down
+  sort_no: 10
+  group: Eyes

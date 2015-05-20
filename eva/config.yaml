@@ -63,9 +63,9 @@ Jaw_Up_Down_controller:
     joint_speed: 1.1
     motor:
         id: 5
-        init: 2200
-        min: 1500
-        max: 2200
+        init: 1970
+        min: 1970
+        max: 3000
         acceleration: 20
 
 Upper_Gimbal_L_controller:
@@ -137,4 +137,20 @@ Neck_Rotation_controller:
         min: 1130
         max: 2830
         acceleration: 20
+
+motor_drivers:
+    Smile_Frown_L:
+        type: dynamixel
+        min: -1
+        max: 1
+        functions:
+            - safe_range:
+                params: [-0.5, 0.5, 3, 2, 2]
+            - decouple:
+                params:
+                  Smile_L: [-0.5, 0, 1]
+                  Frown_L: [0.5, 0, -1]
+        output:
+            - Smile_L_controller
+            - Frown_L_controller
 
