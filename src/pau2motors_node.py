@@ -82,12 +82,13 @@ if __name__ == '__main__':
     msg += "\nCheck robots_config repo to get more config options."
     print(msg)
 
-  #Config name to search in the parameter server.
-  param_name = "pau2motors"
-  config = rospy.get_param(param_name, None)
+  # node specific settings
+  config = rospy.get_param("pau2motors", None)
+  # motors
+  motors = rospy.get_param("motors", None)
 
-  print
-  if config:
+  if config and motors:
+    config["motors"] = motors
     Pau2MotorsNode(config)
     rospy.loginfo(
       "Loaded '%s' from param server.",

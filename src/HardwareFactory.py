@@ -23,7 +23,7 @@ class HardwareBase:
 
     if not self.__class__._topics.has_key(args["topic"]):
       self.__class__._topics[args["topic"]] = rospy.Publisher(
-        args["topic"], self.messageType, queue_size=30
+        args["topic"]+"/command", self.messageType, queue_size=30
       )
     self.pub = self.__class__._topics[args["topic"]]
     self.args = args
@@ -38,10 +38,10 @@ class Pololu(HardwareBase):
 
   def build_msg(self, angle):
     msg = MotorCommand()
-    msg.joint_name = self.args["joint_name"]
+    msg.joint_name = self.args["name"]
     msg.position = angle
-    msg.speed = self.args["speed"]/255.0
-    msg.acceleration = self.args["acceleration"]/255.0
+    msg.speed = 0.3
+    msg.acceleration = 0.1
     return msg
 
 
@@ -60,4 +60,4 @@ _hardware_classes = {
 }
 
 def build(yamlobj):
-  return _hardware_classes[yamlobj["name"]](yamlobj)
+  return _hardware_classes[yamlobj["hardware"]](yamlobj)
