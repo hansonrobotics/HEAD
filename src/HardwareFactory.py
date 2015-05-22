@@ -23,11 +23,14 @@ class HardwareBase:
 
     if not self.__class__._topics.has_key(args["topic"]):
       self.__class__._topics[args["topic"]] = rospy.Publisher(
-        args["topic"]+"/command", self.messageType, queue_size=30
+        self.getTopicName(args["topic"]), self.messageType, queue_size=30
       )
     self.pub = self.__class__._topics[args["topic"]]
     self.args = args
 
+  def getTopicName(self, topic):
+      ''' Default topic format '''
+      return topic + "/command"
 
 class Pololu(HardwareBase):
   messageType = MotorCommand
@@ -52,6 +55,10 @@ class Dynamixel(HardwareBase):
 
   def turn(self, angle):
     self.pub.publish(angle)
+
+  def getTopicName(self, topic):
+      ''' Default topic format '''
+      return topic + "_controller/command"
 
 
 _hardware_classes = {
