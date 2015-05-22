@@ -6,6 +6,14 @@ EyeTurn-R:
   labelleft: EyeTurn-R
   sort_no: 9
   group: Eyes
+  pau:
+      parser:
+        name: getproperty
+        property: m_eyeGazeRightYaw
+      function:
+        - name: linear
+          min: -0.44
+          max: 0.44
 
 EyeTurn-L:
   motor_id: 1
@@ -15,6 +23,14 @@ EyeTurn-L:
   labelleft: EyeTurn-L
   sort_no: 8
   group: Eyes
+  pau:
+      parser:
+        name: getproperty
+        property: m_eyeGazeLeftYaw
+      function:
+        - name: linear
+          min: -0.44
+          max: 0.44
 
 LowerLid-R:
   motor_id: 2
@@ -24,6 +40,16 @@ LowerLid-R:
   labelleft: LowerLid-R
   sort_no: 12
   group: Eyes
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: eye-blink.LO.R;eye-flare.LO.R
+      function:
+        - name: weightedsum
+          imin: 0.402
+          terms:
+          - {min: 0, max: 1, imax: 0.2}
+          - {min: 0, max: 1, imax: 0.77}
 
 Lower-Lid-L:
   motor_id: 3
@@ -33,6 +59,16 @@ Lower-Lid-L:
   labelleft: Lower-Lid-L
   sort_no: 11
   group: Eyes
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: eye-flare.LO.L;eye-blink.LO.L
+      function:
+        - name: weightedsum
+          imin: 0.583
+          terms:
+          - {min: 0, max: 1, imax: 0.26}
+          - {min: 0, max: 1, imax: 0.8}
 
 Upper-Lid-R:
   motor_id: 4
@@ -42,6 +78,16 @@ Upper-Lid-R:
   labelleft: Upper-Lid-R
   sort_no: 7
   group: Eyes
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: eye-flare.UP.R;eye-blink.UP.R
+      function:
+        - name: weightedsum
+          imin: 0.391
+          terms:
+          - {min: 0, max: 1, imax: 0.05}
+          - {min: 0, max: 0.8, imax: 0.75}
 
 Upper-Lid-L:
   motor_id: 5
@@ -51,6 +97,16 @@ Upper-Lid-L:
   labelleft: Upper-Lid-L
   sort_no: 6
   group: Eyes
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: eye-blink.UP.L;eye-flare.UP.L
+      function:
+        - name: weightedsum
+          imin: 0.689
+          terms:
+          - {min: 0, max: 0.8, imax: 0.28}
+          - {min: 0, max: 1, imax: 1}
 
 Brow-Outer-L:
   motor_id: 6
@@ -60,6 +116,16 @@ Brow-Outer-L:
   labelleft: Brow-Outer-L
   sort_no: 1
   group: Brow
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: brow_outer_DN.L;brow_outer_UP.L
+      function:
+        - name: weightedsum
+          imin: 0.492
+          terms:
+          - {min: 0, max: 0.25, imax: 0}
+          - {min: 0, max: 0.4, imax: 1}
 
 Lower-Lip-L:
   motor_id: 7
@@ -69,6 +135,16 @@ Lower-Lip-L:
   labelleft: Lower-Lip-L
   sort_no: 25
   group: Lips
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: lip.DN.L;lip.DN.L
+      function:
+        - name: weightedsum
+          imin: 0.364
+          terms:
+          - {min: 0, max: -0.4, imax: 0}
+          - {min: 0, max: 1, imax: 0.8}
 
 Upper-Lip-Center:
   motor_id: 9
@@ -78,6 +154,16 @@ Upper-Lip-Center:
   labelleft: Upper-Lip-Center
   sort_no: 15
   group: Lips
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: lip-UP.C;lip-UP.C
+      function:
+        - name: weightedsum
+          imin: 0.792
+          terms:
+          - {min: 0, max: 0.4, imax: 0}
+          - {min: 0, max: -0.1, imax: 1}
 
 Upper-Lip-L:
   motor_id: 10
@@ -87,6 +173,16 @@ Upper-Lip-L:
   labelleft: Upper-Lip-L
   sort_no: 14
   group: Lips
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: lip.UP.L;lip.UP.L
+      function:
+        - name: weightedsum
+          imin: 0.91
+          terms:
+          - {min: 0, max: 0.7, imax: 0}
+          - {min: 0, max: -0.1, imax: 1}
 
 Lower-Lip-R:
   motor_id: 11
@@ -96,6 +192,16 @@ Lower-Lip-R:
   labelleft: Lower-Lip-R
   sort_no: 27
   group: Lips
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: lip.DN.R;lip.DN.R
+      function:
+        - name: weightedsum
+          imin: 0.706
+          terms:
+          - {min: 0, max: 1, imax: 0.2}
+          - {min: 0, max: -0.4, imax: 1}
 
 Lower-Lip-Center:
   motor_id: 12
@@ -105,6 +211,16 @@ Lower-Lip-Center:
   labelleft: Lower-Lip-Center
   sort_no: 26
   group: Lips
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: lip.DN.C;lip.DN.C
+      function:
+        - name: weightedsum
+          imin: 0.666
+          terms:
+          - {min: 0, max: 0.7, imax: 0}
+          - {min: 0, max: -0.1, imax: 1}
 
 Brow-Inner-L:
   motor_id: 13
@@ -114,6 +230,16 @@ Brow-Inner-L:
   labelleft: Brow-Inner-L
   sort_no: 2
   group: Brow
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: brow_inner_DN.L;brow_inner_UP.L
+      function:
+        - name: weightedsum
+          imin: 0.464
+          terms:
+          - {min: 0, max: 0.4, imax: 0}
+          - {min: 0, max: 0.3, imax: 1}
 
 EE-L:
   motor_id: 14
@@ -123,6 +249,16 @@ EE-L:
   labelleft: EE-L
   sort_no: 20
   group: Lips
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-wide.L;lips-narrow.L
+      function:
+        - name: weightedsum
+          imin: 0.65
+          terms:
+          - {min: 0, max: 0.4, imax: 0}
+          - {min: 0, max: 0.4, imax: 1}
 
 Upper-Lip-R:
   motor_id: 15
@@ -132,6 +268,16 @@ Upper-Lip-R:
   labelleft: Upper-Lip-R
   sort_no: 16
   group: Lips
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: lip.UP.R;lip.UP.R
+      function:
+        - name: weightedsum
+          imin: 0.271
+          terms:
+          - {min: 0, max: -0.1, imax: 0}
+          - {min: 0, max: 0.7, imax: 1}
 
 Brow-Outer-R:
   motor_id: 16
@@ -141,6 +287,16 @@ Brow-Outer-R:
   labelleft: Brow-Outer-R
   sort_no: 5
   group: Brow
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: brow_outer_UP.R;brow_outer_DN.R
+      function:
+        - name: weightedsum
+          imin: 0.565
+          terms:
+          - {min: 0, max: 0.7, imax: 0}
+          - {min: 0, max: 0.4, imax: 1}
 
 EE-R:
   motor_id: 17
@@ -150,6 +306,16 @@ EE-R:
   labelleft: EE-R
   sort_no: 21
   group: Lips
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-narrow.R;lips-wide.R
+      function:
+        - name: weightedsum
+          imin: 0.407
+          terms:
+          - {min: 0, max: 0.4, imax: 0}
+          - {min: 0, max: 0.4, imax: 1}
 
 Brow-Inner-R:
   motor_id: 18
@@ -159,6 +325,16 @@ Brow-Inner-R:
   labelleft: Brow-Inner-R
   sort_no: 4
   group: Brow
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: brow_inner_UP.R;brow_inner_DN.R
+      function:
+        - name: weightedsum
+          imin: 0.542
+          terms:
+          - {min: 0, max: 0.5, imax: 0}
+          - {min: 0, max: 0.5, imax: 1}
 
 Brow-Center:
   motor_id: 19
@@ -168,6 +344,16 @@ Brow-Center:
   labelleft: Brow-Center
   sort_no: 3
   group: Brow
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: brow_center_UP;brow_center_DN
+      function:
+        - name: weightedsum
+          imin: 0.526
+          terms:
+          - {min: 0, max: 0.35, imax: 0}
+          - {min: 0, max: 0.35, imax: 1}
 
 Cheek-Squint:
   motor_id: 8
@@ -177,6 +363,14 @@ Cheek-Squint:
   labelleft: Cheek-Squint
   sort_no: 13
   group: Eyes
+  pau:
+      parser:
+        name: fsshapekey
+        shapekey: wince.L
+      function:
+        - name: linear
+          min: 0.2
+          max: 0
 
 oo-Drawstring-Lower-R:
   motor_id: 21
@@ -186,6 +380,7 @@ oo-Drawstring-Lower-R:
   labelleft: oo-Drawstring-Lower-R
   sort_no: 22
   group: Lips
+
 
 oo-Drawstring-Upper-R:
   motor_id: 22
@@ -204,3 +399,12 @@ Eyes-Up-Down:
   labelleft: Eyes-Up-Down
   sort_no: 10
   group: Eyes
+  pau:
+      parser:
+        name: getproperty
+        property: m_eyeGazeLeftPitch
+      function:
+        - name: linear
+          min: 0.2
+          max: -0.3
+

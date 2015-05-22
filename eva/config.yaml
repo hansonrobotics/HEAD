@@ -154,3 +154,6 @@ motor_drivers:
             - Smile_L_controller
             - Frown_L_controller
 
+pau2motors:
+    topics:
+        head_pau: EyeTurn-R;EyeTurn-L;LowerLid-R;Lower-Lid-L;Upper-Lid-R;Upper-Lid-L;Frown-R

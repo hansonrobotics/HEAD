@@ -7,6 +7,18 @@ motors:
     max: 0.923
     sort_no: 24
     group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-smile.R;lips-frown.R
+      function:
+        - name: weightedsum
+          imin: 0.427
+          terms:
+          - {min: 0, max: 0.3, imax: 0}
+          - {min: 0, max: 0.75, imax: 1}
+
   - name: Smile-R
     topic: Smile_R
     labelleft: Smile-R
@@ -15,6 +27,18 @@ motors:
     max: 0.847
     sort_no: 18
     group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-smile.R;lips-frown.R
+      function:
+        - name: weightedsum
+          imin: 0.52
+          terms:
+          - {min: 0, max: 0.7, imax: 0}
+          - {min: 0, max: 0.3, imax: 1}
+
   - name: Smile-L
     topic: Smile_L
     labelleft: Smile-L
@@ -23,6 +47,18 @@ motors:
     max: 0.847
     sort_no: 17
     group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-smile.L;lips-frown.L
+      function:
+        - name: weightedsum
+          imin: 0.448
+          terms:
+          - {min: 0, max: 0.6, imax: 0.2}
+          - {min: 0, max: 0.3, imax: 1}
+
   - name: Frown-L
     topic: Frown_L
     labelleft: Frown-L
@@ -31,6 +67,18 @@ motors:
     max: 1
     sort_no: 23
     group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-smile.L;lips-frown.L
+      function:
+        - name: weightedsum
+          imin: 0.407
+          terms:
+          - {min: 0, max: 0.3, imax: 0}
+          - {min: 0, max: 0.75, imax: 1}
+
   - name: Jaw-Up-Down
     topic: Jaw_Up_Down
     labelleft: Jaw-Up-Down
@@ -39,6 +87,12 @@ motors:
     max: 1.58
     sort_no: 28
     group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: jaw
+
   - name: Upper-Gimbal-L
     topic: Upper_Gimbal_L
     labelleft: Upper-Gimbal-L
@@ -47,6 +101,12 @@ motors:
     max: 1.917
     sort_no: 29
     group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+
   - name: Upper-Gimbal-R
     topic: Upper_Gimbal_R
     labelleft: Upper-Gimbal-R
@@ -55,6 +115,12 @@ motors:
     max: 0.813
     sort_no: 30
     group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+
   - name: Lower-Gimbal-L
     topic: Lower_Gimbal_L
     labelleft: Lower-Gimbal-L
@@ -63,6 +129,8 @@ motors:
     max: 0.595
     sort_no: 31
     group: Neck
+    hardware: dynamixel
+
   - name: Lower-Gimbal-R
     topic: Lower_Gimbal_R
     labelleft: Lower-Gimbal-R
@@ -71,6 +139,8 @@ motors:
     max: 1.485
     sort_no: 32
     group: Neck
+    hardware: dynamixel
+
   - name: Neck-Rotation
     topic: Neck_Rotation
     labelleft: Neck-Rotation
@@ -79,3 +149,6 @@ motors:
     max: 1.282
     sort_no: 33
     group: Neck
+    hardware: dynamixel
+
+
