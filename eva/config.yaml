@@ -138,22 +138,10 @@ Neck_Rotation_controller:
         max: 2830
         acceleration: 20
 
-motor_drivers:
-    Smile_Frown_L:
-        type: dynamixel
-        min: -1
-        max: 1
-        functions:
-            - safe_range:
-                params: [-0.5, 0.5, 3, 2, 2]
-            - decouple:
-                params:
-                  Smile_L: [-0.5, 0, 1]
-                  Frown_L: [0.5, 0, -1]
-        output:
-            - Smile_L_controller
-            - Frown_L_controller
 
 pau2motors:
     topics:
-        head_pau: EyeTurn-R;EyeTurn-L;LowerLid-R;Lower-Lid-L;Upper-Lid-R;Upper-Lid-L;Frown-R
+        neck_pau: Upper-Gimbal-L;Upper-Gimbal-R;Lower-Gimbal-L;Lower-Gimbal-R;Neck-Rotation
+        head_pau: Frown-R;Frown-L;Smile-R;Smile_L;EyeTurn-R;EyeTurn-L;LowerLid-L;LowerLid-R;Upper-Lid-R;Upper-Lid-L;Brow-Outer-L;Brow-Outer-R;Brow-Inner-L;Brow-Inner-R;Cheek-Squint;Eyes-Up-Down;Brow-Center
+        no_pau: Frown-R;Frown-L;Smile-R;Smile-L;Jaw-Up-Down;EyeTurn-R;EyeTurn-L;LowerLid-R;LowerLid-L;Upper-Lid-R;Upper-Lid-L;Eyes-Up-Down
+        lips_pau: Jaw-Up-Down;Lower-Lip-L;Lower-Lip-R;Lower-Lip-Center;Upper-Lip-L;Upper-Lip-R;Upper-Lip-Center;EE-L;EE-R

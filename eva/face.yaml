@@ -279,6 +279,7 @@ Upper-Lip-R:
           - {min: 0, max: -0.1, imax: 0}
           - {min: 0, max: 0.7, imax: 1}
 
+
 Brow-Outer-R:
   motor_id: 16
   init: 1500
@@ -380,8 +381,7 @@ oo-Drawstring-Lower-R:
   labelleft: oo-Drawstring-Lower-R
   sort_no: 22
   group: Lips
-
-
+  
 oo-Drawstring-Upper-R:
   motor_id: 22
   init: 2000
@@ -390,7 +390,7 @@ oo-Drawstring-Upper-R:
   labelleft: oo-Drawstring-Upper-R
   sort_no: 19
   group: Lips
-
+  
 Eyes-Up-Down:
   motor_id: 20
   init: 1650
@@ -407,4 +407,3 @@ Eyes-Up-Down:
         - name: linear
           min: 0.2
           max: -0.3
-
