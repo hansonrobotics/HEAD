@@ -18,7 +18,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301  USA
 
-import ros_pololu_servo
+#import ros_pololu_servo
 
 __author__ = 'Alex van der Peet, James Diprose'
 
