@@ -1,4 +1,4 @@
-from ros_pololu_servo.msg import MotorCommand
+from ros_pololu.msg import MotorCommand
 
 class MotorCmder:
   """Represents a partially defined motor command. Builds a ROS msg when given an angle."""
