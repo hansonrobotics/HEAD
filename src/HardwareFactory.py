@@ -1,6 +1,6 @@
 import Utils
 import ShapekeyStore
-from ros_pololu_servo.msg import MotorCommand
+from ros_pololu.msg import MotorCommand
 from std_msgs.msg import Float64
 import rospy
 
