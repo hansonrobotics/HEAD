@@ -43,8 +43,9 @@ class Pololu(HardwareBase):
     msg = MotorCommand()
     msg.joint_name = self.args["name"]
     msg.position = angle
-    msg.speed = 0.3
-    msg.acceleration = 0.1
+    # IF speed and acceleration is more than 1 default motor speed will be used
+    msg.speed = 2
+    msg.acceleration = 2
     return msg
 
 
