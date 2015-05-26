@@ -142,6 +142,7 @@ class RosPololuNode:
                 self._motors[name] = PololuMotor(name, cfg)
                 cfg = self._motors[name].get_calibrated_config()
                 cfg['topic'] = topic_prefix.strip("/")
+                cfg['hardware'] = 'pololu'
                 for i, m in enumerate(motors):
                     if m['name'] == name:
                         motors[i] = cfg
