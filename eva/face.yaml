@@ -166,7 +166,7 @@ Upper-Lip-Center:
   motor_id: 9
   init: 1695
   min: 1021
-  max: 1872
+  max: 2002
   labelleft: Upper-Lip-Center
   sort_no: 15
   group: Lips
@@ -178,7 +178,7 @@ Upper-Lip-Center:
         shapekey: lip-UP.C;lip-UP.C
       function:
         - name: weightedsum
-          imin: 0.792
+          imin: 0.687
           terms:
           - {min: 0, max: 0.4, imax: 0}
           - {min: 0, max: -0.1, imax: 1}
@@ -187,7 +187,7 @@ Upper-Lip-L:
   motor_id: 10
   init: 1646
   min: 1100
-  max: 1700
+  max: 1992
   labelleft: Upper-Lip-L
   sort_no: 14
   group: Lips
@@ -199,7 +199,7 @@ Upper-Lip-L:
         shapekey: lip.UP.L;lip.UP.L
       function:
         - name: weightedsum
-          imin: 0.91
+          imin: 0.612
           terms:
           - {min: 0, max: 0.7, imax: 0}
           - {min: 0, max: -0.1, imax: 1}
