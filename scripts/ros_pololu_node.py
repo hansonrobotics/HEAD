@@ -41,8 +41,13 @@ class PololuMotor:
         self._setup_calibration()
         self.id = self._config['motor_id']
         # Store speed and acceleration. By default should be small values to slowly turn tu neutral on start
-        self.speed = 0.1
-        self.acceleration = 0
+        self.speed = 0.3
+        self.acceleration = 0.1
+        if 'speed' not in config.keys():
+            self.speed = self._config['speed']
+        if 'acceleration' not in config.keys():
+            self.acceleration = self._config['acceleration']
+
 
     def _setup_calibration(self):
         """
@@ -185,6 +190,10 @@ class RosPololuNode:
             pulse = motor.set_angle(msg.position)
             #motor.speed =  min(max(0, msg.speed), 1)
             motor.acceleration = min(max(0, msg.acceleration), 1)
+            if msg.speed > 1:
+                msg.speed = motor.speed
+            if msg.acceleration > 1:
+                msg.acceleration = motor.acceleration
         elif msg.joint_name.isdigit():
             try:
                 motor_id = int(msg.joint_name)
