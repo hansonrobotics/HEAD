@@ -25,7 +25,7 @@ __author__ = 'Alex van der Peet, James Diprose'
 import rospy
 from sensor_msgs.msg import JointState
 from threading import Thread, RLock
-from ros_pololu_servo.msg import MotorStateList
+#from ros_pololu.msg import MotorStateList
 from dynamixel_msgs.msg import JointState as DynamixelJointState
 from itertools import repeat 
 from pau2motors.msg import pau
@@ -63,7 +63,7 @@ class JointStatePublisher(Thread):
             self.joint_state.name = self.pololu_joint_names
             num_pololu = len(self.pololu_joint_names)
             self.pololu_joint_positions = list(repeat(0.0, num_pololu))
-            rospy.Subscriber("pololu/motor_states", MotorStateList, self.update_pololu_joint_states)
+           # rospy.Subscriber("pololu/motor_states", MotorStateList, self.update_pololu_joint_states)
 
         if self.dyn_joint_names is not None:
             self.joint_state.name += self.dyn_joint_names
