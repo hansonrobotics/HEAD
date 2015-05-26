@@ -6,7 +6,7 @@ from collections import OrderedDict
 import FaceExpr
 from animation import Animation
 from playback import Playback
-from ros_pololu_servo.msg import MotorCommand
+from ros_pololu.msg import MotorCommand
 from basic_head_api.srv import *
 from basic_head_api.msg import *
 from pau2motors.msg import pau
@@ -15,7 +15,7 @@ from pi_face_tracker.msg import Faces
 import Utils
 from std_msgs.msg import String
 from std_msgs.msg import Float64
-import copy
+import time
 
 
 def to_dict(list, key):
@@ -71,13 +71,15 @@ class SpecificRobotCtrl:
     self.playback.play(self.animations[animation],fps)
 
   def __init__(self):
+      # Wait for motors to be loaded in param server
+    time.sleep(3)
     motors = rospy.get_param('motors')
-    expressions = rospy.get_param('expressions')
+    expressions = rospy.get_param('expressions',{})
     expressions = OrderedDict((v.keys()[0],v.values()[0]) for k,v in enumerate(expressions))
     #Expressions to motors mapping
     self.faces = FaceExpr.FaceExprMotors.from_expr_yaml(expressions, to_dict(motors, "name"))
     # Animation objects
-    animations = rospy.get_param('animations')
+    animations = rospy.get_param('animations',{})
     animations = OrderedDict((v.keys()[0],v.values()[0]) for k,v in enumerate(animations))
     self.animations = Animation.from_yaml(animations)
     # Motor commands will be sent to this publisher.

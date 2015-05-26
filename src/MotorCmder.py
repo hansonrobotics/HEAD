@@ -11,8 +11,8 @@ class MotorCmder:
     msg.position = self._saturatedAngle(angle or self.target)
     # Default values are set here, if speed or acceleration are not found in
     # the motor entry.
-    msg.speed = self.motor_entry.get('speed', 200)/255.0
-    msg.acceleration = self.motor_entry.get('acceleration', 10)/255.0
+    msg.speed = 2
+    msg.acceleration = 2
     return msg
 
   def msg_intensity(self, intensity=1):
