@@ -6,7 +6,7 @@ from collections import OrderedDict
 import FaceExpr
 from animation import Animation
 from playback import Playback
-from ros_pololu_servo.msg import MotorCommand
+from ros_pololu.msg import MotorCommand
 from basic_head_api.srv import *
 from basic_head_api.msg import *
 from pau2motors.msg import pau
@@ -15,7 +15,7 @@ from pi_face_tracker.msg import Faces
 import Utils
 from std_msgs.msg import String
 from std_msgs.msg import Float64
-import copy
+import time
 
 
 def to_dict(list, key):
@@ -72,6 +72,8 @@ class SpecificRobotCtrl:
     self.playback.play(self.animations[animation],fps)
 
   def __init__(self):
+      # Wait for motors to be loaded in param server
+    time.sleep(3)
     motors = rospy.get_param('motors')
     expressions = rospy.get_param('expressions',{})
     expressions = OrderedDict((v.keys()[0],v.values()[0]) for k,v in enumerate(expressions))
