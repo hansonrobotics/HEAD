@@ -1,0 +1,49 @@
+<!--
+ - tracker.launch
+ -
+ - Launch file for pi_vision face tracking, with inputs from two
+ - cameras: a (stationary) body camera, and an eye camera (which
+ - moves with the eyes, and thus has a constantly changing
+ - field-of-view).
+ -
+-->
+<launch>
+    <node pkg="usb_cam" type="usb_cam_node" name="camera">
+      <param name="video_device" value="/dev/v4l/by-id/usb-KYE_Systems_Corp._USB_Camera_200901010001-video-index0"/>
+      <param name="pixel_format" value="yuyv"/>
+      <param name="width" value="640"/>
+      <param name="height" value="480"/>
+    </node>
+
+    <arg name="auto_face_tracking" default="True" />
+    <node pkg="pi_face_tracker" name="body_face_tracker"
+          type="face_tracker.py" output="screen">
+
+        <!--remap the topics if using multiple cameras -->
+        <remap from="input_rgb_image" to="camera/image_raw" />
+        <remap from="output_image" to="camera/pi_face_tracker/image" />
+
+        <param name="auto_face_tracking" value="$(arg auto_face_tracking)" />
+
+        <param name="camera_name" value="camera" />
+
+        <rosparam>
+          use_haar_only: False
+          auto_min_features: True
+          min_features: 50
+          abs_min_features: 6
+          good_feature_distance: 5
+          add_feature_distance: 10
+          max_face_size: 0.28
+          expand_roi: 1.02
+          flip_image: False
+          feature_type: 0
+          camera_fov_x: 1.42
+        </rosparam>
+
+        <param name="cascade_frontal_alt"
+               value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+        <param name="cascade_frontal_alt2"
+               value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt2.xml" />
+  </node>
+</launch>

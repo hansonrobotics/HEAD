@@ -142,6 +142,10 @@ Neck_Rotation_controller:
 pau2motors:
     topics:
         neck_pau: Upper-Gimbal-L;Upper-Gimbal-R;Lower-Gimbal-L;Lower-Gimbal-R;Neck-Rotation
-        head_pau: Frown-R;Frown-L;Smile-R;Smile_L;EyeTurn-R;EyeTurn-L;LowerLid-L;LowerLid-R;Upper-Lid-R;Upper-Lid-L;Brow-Outer-L;Brow-Outer-R;Brow-Inner-L;Brow-Inner-R;Cheek-Squint;Eyes-Up-Down;Brow-Center
-        no_pau: Frown-R;Frown-L;Smile-R;Smile-L;Jaw-Up-Down;EyeTurn-R;EyeTurn-L;LowerLid-R;LowerLid-L;Upper-Lid-R;Upper-Lid-L;Eyes-Up-Down
+        head_pau: Frown-R;Frown-L;Smile-R;Smile-L;EyeTurn-R;EyeTurn-L;Lower-Lid-L;LowerLid-R;Upper-Lid-R;Upper-Lid-L;Brow-Outer-L;Brow-Outer-R;Brow-Inner-L;Brow-Inner-R;Cheek-Squint;Eyes-Up-Down;Brow-Center
+        no_pau: Frown-R;Frown-L;Smile-R;Smile-L;Jaw-Up-Down;EyeTurn-R;EyeTurn-L;LowerLid-R;Lower-Lid-L;Upper-Lid-R;Upper-Lid-L;Eyes-Up-Down
         lips_pau: Jaw-Up-Down;Lower-Lip-L;Lower-Lip-R;Lower-Lip-Center;Upper-Lip-L;Upper-Lip-R;Upper-Lip-Center;EE-L;EE-R
+
+# Robot voice
+voice: heather
+lipsync: False

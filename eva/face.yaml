@@ -6,6 +6,8 @@ EyeTurn-R:
   labelleft: EyeTurn-R
   sort_no: 9
   group: Eyes
+  speed: 0
+  acceleration: 0
   pau:
       parser:
         name: getproperty
@@ -23,6 +25,8 @@ EyeTurn-L:
   labelleft: EyeTurn-L
   sort_no: 8
   group: Eyes
+  speed: 0
+  acceleration: 0
   pau:
       parser:
         name: getproperty
@@ -40,6 +44,8 @@ LowerLid-R:
   labelleft: LowerLid-R
   sort_no: 12
   group: Eyes
+  speed: 0
+  acceleration: 0
   pau:
       parser:
         name: fsshapekey
@@ -59,6 +65,8 @@ Lower-Lid-L:
   labelleft: Lower-Lid-L
   sort_no: 11
   group: Eyes
+  speed: 0
+  acceleration: 0
   pau:
       parser:
         name: fsshapekey
@@ -78,6 +86,8 @@ Upper-Lid-R:
   labelleft: Upper-Lid-R
   sort_no: 7
   group: Eyes
+  speed: 0
+  acceleration: 0
   pau:
       parser:
         name: fsshapekey
@@ -97,6 +107,8 @@ Upper-Lid-L:
   labelleft: Upper-Lid-L
   sort_no: 6
   group: Eyes
+  speed: 0
+  acceleration: 0
   pau:
       parser:
         name: fsshapekey
@@ -116,6 +128,8 @@ Brow-Outer-L:
   labelleft: Brow-Outer-L
   sort_no: 1
   group: Brow
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -135,6 +149,8 @@ Lower-Lip-L:
   labelleft: Lower-Lip-L
   sort_no: 25
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -154,6 +170,8 @@ Upper-Lip-Center:
   labelleft: Upper-Lip-Center
   sort_no: 15
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -173,6 +191,8 @@ Upper-Lip-L:
   labelleft: Upper-Lip-L
   sort_no: 14
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -192,6 +212,8 @@ Lower-Lip-R:
   labelleft: Lower-Lip-R
   sort_no: 27
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -211,6 +233,8 @@ Lower-Lip-Center:
   labelleft: Lower-Lip-Center
   sort_no: 26
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -230,6 +254,8 @@ Brow-Inner-L:
   labelleft: Brow-Inner-L
   sort_no: 2
   group: Brow
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -249,6 +275,8 @@ EE-L:
   labelleft: EE-L
   sort_no: 20
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -268,6 +296,8 @@ Upper-Lip-R:
   labelleft: Upper-Lip-R
   sort_no: 16
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -279,7 +309,6 @@ Upper-Lip-R:
           - {min: 0, max: -0.1, imax: 0}
           - {min: 0, max: 0.7, imax: 1}
 
-
 Brow-Outer-R:
   motor_id: 16
   init: 1500
@@ -288,6 +317,8 @@ Brow-Outer-R:
   labelleft: Brow-Outer-R
   sort_no: 5
   group: Brow
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -307,6 +338,8 @@ EE-R:
   labelleft: EE-R
   sort_no: 21
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -326,6 +359,8 @@ Brow-Inner-R:
   labelleft: Brow-Inner-R
   sort_no: 4
   group: Brow
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -345,6 +380,8 @@ Brow-Center:
   labelleft: Brow-Center
   sort_no: 3
   group: Brow
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -364,6 +401,8 @@ Cheek-Squint:
   labelleft: Cheek-Squint
   sort_no: 13
   group: Eyes
+  speed: 0.3
+  acceleration: 0.1
   pau:
       parser:
         name: fsshapekey
@@ -381,6 +420,8 @@ oo-Drawstring-Lower-R:
   labelleft: oo-Drawstring-Lower-R
   sort_no: 22
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   
 oo-Drawstring-Upper-R:
   motor_id: 22
@@ -390,6 +431,8 @@ oo-Drawstring-Upper-R:
   labelleft: oo-Drawstring-Upper-R
   sort_no: 19
   group: Lips
+  speed: 0.3
+  acceleration: 0.1
   
 Eyes-Up-Down:
   motor_id: 20
@@ -399,6 +442,8 @@ Eyes-Up-Down:
   labelleft: Eyes-Up-Down
   sort_no: 10
   group: Eyes
+  speed: 0
+  acceleration: 0
   pau:
       parser:
         name: getproperty
@@ -407,3 +452,4 @@ Eyes-Up-Down:
         - name: linear
           min: 0.2
           max: -0.3
+

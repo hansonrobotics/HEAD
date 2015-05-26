@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<robot name="han">
+    <link name="world" />
+    <link name="blender" />
+    <link name="body">
+        <visual>
+            <geometry>
+                <box size="0.3 0.4 0.5"/>
+            </geometry>
+            <origin xyz="0 0 0.25" />
+            <material name="red">
+                <color rgba="1 0 0 0.25"/>
+            </material>
+        </visual>
+    </link>
+    <!--body camera -->
+    <link name="camera">
+        <visual>
+            <geometry>
+                <box size="0.03 0.003 0.003"/>
+            </geometry>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+            <origin xyz="0.015 0 0"/>
+        </visual>
+    </link>
+
+    <link name="yaw">
+    </link>
+
+    <link name="base_joint_link">
+    </link>
+
+
+    <link name="neck">
+        <visual>
+            <geometry>
+                <cylinder length="0.3" radius="0.01"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+            <origin xyz="0.0 0 0" />
+        </visual>
+    </link>
+
+    <link name="neck_joint_link">
+    </link>
+    <link name="eyes">
+    </link>
+    <link name="eye_pitch">
+        <visual>
+            <geometry>
+                 <box size="0.01 0.066 0.01"/>
+            </geometry>
+            <origin xyz="0 0 0" />
+        </visual>
+    </link>
+
+    <link name="left_eye">
+        <visual>
+            <geometry>
+                <box size="0.1 0.005 0.005"/>
+            </geometry>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+            <origin xyz="0.05 0 0" />
+        </visual>
+    </link>
+    <link name="right_eye">
+        <visual>
+            <geometry>
+                <box size="0.1 0.005 0.005"/>
+            </geometry>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+            <origin xyz="0.05 0 0" />
+        </visual>
+    </link>
+
+
+    <joint name="fix" type="fixed">
+        <parent link="world"/>
+        <child link="body"/>
+        <origin xyz="0 0 0"/>
+    </joint>
+
+
+    <joint name="body_camera" type="fixed">
+        <parent link="body"/>
+        <child link="camera"/>
+        <origin xyz="0.15 0 0.25" rpy="0 -0.25 0" />
+    </joint>
+
+    <joint name="blender_joint" type="fixed">
+        <parent link="body"/>
+        <child link="blender"/>
+        <origin xyz="0 0 0.62" rpy="0 0 0" />
+    </joint>
+
+    <joint name="roll_base_joint" type="revolute">
+        <parent link="body"/>
+        <child link="base_joint_link"/>
+        <axis xyz="1 0 0"/>
+        <origin xyz="0 0 0.45" rpy="0 0 0" />
+        <limit lower="-1" upper="1" effort="1000" velocity="1" />
+    </joint>
+
+
+    <joint name="pitch_base_joint" type="revolute">
+        <parent link="base_joint_link"/>
+        <child link="yaw"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <limit lower="-1" upper="1" effort="1000" velocity="1" />
+    </joint>
+
+    <joint name="yaw_joint" type="revolute">
+        <parent link="yaw"/>
+        <child link="neck"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <axis xyz="0 0 1"/>
+        <limit lower="-1" upper="1" effort="1000" velocity="1" />
+    </joint>
+    <joint name="roll_neck_joint" type="revolute">
+        <parent link="neck"/>
+        <child link="neck_joint_link"/>
+        <origin xyz="0.009 0 0.112" rpy="0 0 0" />
+        <axis xyz="1 0 0"/>
+        <limit lower="-1" upper="1" effort="1000" velocity="1" />
+    </joint>
+
+    <joint name="pitch_neck_joint" type="revolute">
+        <parent link="neck_joint_link"/>
+        <child link="eyes"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <limit lower="-1" upper="1" effort="1000" velocity="1" />
+    </joint>
+    <joint name="Eyes_Pitch" type="revolute">
+        <parent link="eyes"/>
+        <child link="eye_pitch"/>
+        <origin xyz="0.103 0 0.06" rpy="0 0 0" />
+        <axis xyz="0 1 0"/>
+        <limit lower="-0.3" upper="0.3" effort="1000" velocity="1" />
+    </joint>
+    <joint name="Eye_L" type="revolute">
+        <parent link="eye_pitch"/>
+        <child link="left_eye"/>
+        <origin xyz="0 0.033 0" rpy="0 0 0" />
+        <axis xyz="0 0 1"/>
+        <limit lower="-0.7" upper="0.7" effort="1000" velocity="1" />
+    </joint>
+    <joint name="Eye_R" type="revolute">
+        <parent link="eye_pitch"/>
+        <child link="right_eye"/>
+        <origin xyz="0 -0.033 0" rpy="0 0 0" />
+        <axis xyz="0 0 1"/>
+        <limit lower="-0.7" upper="0.7" effort="1000" velocity="1" />
+    </joint>
+</robot>
