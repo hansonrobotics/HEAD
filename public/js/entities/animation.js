@@ -19,7 +19,7 @@ define(['application', 'lib/api'], function (App, api) {
                     });
                 });
             },
-            sync: function () {
+            sync: function (successCallback, errorCallback) {
                 var animations = [];
 
                 this.each(function (model) {
@@ -38,7 +38,7 @@ define(['application', 'lib/api'], function (App, api) {
                     animations.push(animation);
                 });
 
-                api.updateAnimations(animations);
+                api.updateAnimations(animations, successCallback, errorCallback);
             }
         });
     });

@@ -52,7 +52,7 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
         Entities.MotorCollection = Backbone.Collection.extend({
             model: Entities.Motor,
             comparator: 'order_no',
-            sync: function () {
+            sync: function (successCallback, errorCallback) {
                 var data = [];
 
                 this.each(function (motor) {
@@ -73,6 +73,12 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     type: 'POST',
                     dataType: "json",
                     success: function () {
+                        if (typeof successCallback == 'function')
+                            successCallback();
+                    },
+                    error: function () {
+                        if (typeof errorCallback == 'function')
+                            errorCallback();
                     }
                 });
             },

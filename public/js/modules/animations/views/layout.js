@@ -1,4 +1,4 @@
-define(['application', 'tpl!./templates/layout.tpl'],
+define(['application', 'tpl!./templates/layout.tpl', 'bootstrap'],
     function (App, template) {
         App.module('Animations.Views', function (Views, App, Backbone, Marionette, $, _) {
             Views.Animations = Marionette.LayoutView.extend({
@@ -24,7 +24,13 @@ define(['application', 'tpl!./templates/layout.tpl'],
                     motors: '.app-motors'
                 },
                 updateAnimations: function () {
-                    this.options.animationsCollection.sync();
+                    var self = this;
+
+                    this.options.animationsCollection.sync(function () {
+                        App.Utilities.showPopover(self.ui.saveButton, 'Saved')
+                    }, function () {
+                        App.Utilities.showPopover(self.ui.saveButton, 'Error saving animations')
+                    });
                 },
                 addFrame: function () {
                     Views.trigger('add_frame');

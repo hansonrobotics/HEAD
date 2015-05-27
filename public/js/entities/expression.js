@@ -4,7 +4,7 @@ define(['application', 'lib/api'], function (App, api) {
         Entities.ExpressionCollection = Backbone.Collection.extend({
             model: Entities.Expression,
             comparator: 'order',
-            fetch: function() {
+            fetch: function () {
                 var collection = this;
 
                 $.ajax('/expressions/' + api.config.robot, {
@@ -14,7 +14,7 @@ define(['application', 'lib/api'], function (App, api) {
                         var expressions = data.expressions;
 
                         _.each(expressions, function (expression, i) {
-                            _.each(expression, function(motorPositions, name) {
+                            _.each(expression, function (motorPositions, name) {
                                 var model = new Entities.Motor({
                                     name: name,
                                     motor_positions: motorPositions,
@@ -27,7 +27,7 @@ define(['application', 'lib/api'], function (App, api) {
                     }
                 });
             },
-            sync: function () {
+            sync: function (successCallback, errorCallback) {
                 var expressions = [];
 
                 this.each(function (model) {
@@ -47,6 +47,13 @@ define(['application', 'lib/api'], function (App, api) {
                     dataType: "json",
                     success: function () {
                         api.setExpressionsParam(expressions);
+
+                        if (typeof successCallback == 'function')
+                            successCallback();
+                    },
+                    error: function () {
+                        if (typeof errorCallback == 'function')
+                            errorCallback();
                     }
                 });
             }

@@ -67,8 +67,12 @@ define(["application", "./motor", 'tpl!./templates/motors.tpl', 'jquery-ui'], fu
                     }
                 });
             },
-            updateMotors: function () {
-                this.collection.sync();
+            updateMotors: function (e) {
+                this.collection.sync(function () {
+                    App.Utilities.showPopover(e.target, 'Saved')
+                }, function () {
+                    App.Utilities.showPopover(e.target, 'Error saving motors')
+                });
             },
             showSelectButtons: function (status) {
                 this.children.each(function (motorView) {

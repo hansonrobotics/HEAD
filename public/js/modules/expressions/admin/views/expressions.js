@@ -30,7 +30,13 @@ define(["application", "./expression", 'tpl!./templates/expressions.tpl'],
                     this.collection.add(expression);
                 },
                 updateExpressions: function () {
-                    this.collection.sync();
+                    var self = this;
+
+                    this.collection.sync(function () {
+                        App.Utilities.showPopover(self.ui.saveButton, 'Saved')
+                    }, function () {
+                        App.Utilities.showPopover(self.ui.saveButton, 'Error saving expressions')
+                    });
                 },
                 expressionButtonClicked: function (view) {
                     App.vent.trigger('motors:selection:set', true);

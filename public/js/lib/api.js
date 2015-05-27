@@ -45,7 +45,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/animations'});
             param.set(animations);
         },
-        updateAnimations: function (animations, callback) {
+        updateAnimations: function (animations, successCallback, errorCallback) {
             var self = this;
             $.ajax('/animations/update/' + api.config.robot, {
                 dataType: 'json',
@@ -54,9 +54,12 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 success: function (response) {
                     self.setAnimations(animations);
 
-                    if (typeof callback == 'function') {
-                        callback(response);
-                    }
+                    if (typeof successCallback == 'function')
+                        successCallback(response);
+                },
+                error: function (xhr, status, error) {
+                    if (typeof errorCallback == 'function')
+                        errorCallback(xhr, status, error)
                 }
             });
         },

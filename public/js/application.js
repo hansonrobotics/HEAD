@@ -13,6 +13,24 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout'],
         // add layout to page body
         $('body').prepend(Application.LayoutInstance.render().el);
 
+        Application.Utilities = {
+            showPopover: function (el, label) {
+                $(el).popover({
+                    content: label,
+                    trigger: 'manual focus',
+                    container: 'body'
+                }).on('remove', function () {
+                    // destroy popover if element is destroyed
+                    $(el).popover('destroy');
+                }).popover('show');
+
+                // destroy popover after 2 seconds
+                setTimeout(function () {
+                    $(el).popover('destroy');
+                }, 2000)
+            }
+        };
+
         ros.connect(function () {
             require([
                     'modules/animations/animations_app',
