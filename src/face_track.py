@@ -74,7 +74,7 @@ class FaceTrack:
 		self.glance_howlong = -1
 
 		# How often we update the look-at target.
-		self.LOOKAT_INTERVAL = 1
+		self.LOOKAT_INTERVAL = 0.1
 		self.last_lookat = 0
 
 		# Last time that the list of active faces was vacuumed out.
@@ -345,6 +345,6 @@ class FaceTrack:
 			return 0
 		# Faces with smaller (less than <1,000,000 ids are prioritized
 		small_ids = [f for f in faces if (f < 1000000)and (f != exclude)]
-		if len(small_ids < 1):
+		if len(small_ids) < 1:
 			return random.choice(small_ids)
 		return random.choice(faces)
