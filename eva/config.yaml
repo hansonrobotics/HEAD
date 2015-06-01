@@ -77,7 +77,7 @@ Upper_Gimbal_L_controller:
     joint_speed: 1.1
     motor:
         id: 4
-        init: 1720
+        init: 1940
         min: 1200
         max: 2970
         acceleration: 20
@@ -91,7 +91,7 @@ Upper_Gimbal_R_controller:
     joint_speed: 1.1
     motor:
         id: 3
-        init: 2560
+        init: 2340
         min: 1200
         max: 3090
         acceleration: 20
@@ -142,10 +142,10 @@ Neck_Rotation_controller:
 pau2motors:
     topics:
         neck_pau: Upper-Gimbal-L;Upper-Gimbal-R;Lower-Gimbal-L;Lower-Gimbal-R;Neck-Rotation
-        head_pau: Frown-R;Frown-L;Smile-R;Smile-L;EyeTurn-R;EyeTurn-L;Lower-Lid-L;LowerLid-R;Upper-Lid-R;Upper-Lid-L;Brow-Outer-L;Brow-Outer-R;Brow-Inner-L;Brow-Inner-R;Cheek-Squint;Eyes-Up-Down;Brow-Center
+        head_pau: EyeTurn-R;EyeTurn-L;Lower-Lid-L;LowerLid-R;Upper-Lid-R;Upper-Lid-L;Brow-Outer-L;Brow-Outer-R;Brow-Inner-L;Brow-Inner-R;Cheek-Squint;Eyes-Up-Down;Brow-Center
         no_pau: Frown-R;Frown-L;Smile-R;Smile-L;Jaw-Up-Down;EyeTurn-R;EyeTurn-L;LowerLid-R;Lower-Lid-L;Upper-Lid-R;Upper-Lid-L;Eyes-Up-Down
-        lips_pau: Jaw-Up-Down;Lower-Lip-L;Lower-Lip-R;Lower-Lip-Center;Upper-Lip-L;Upper-Lip-R;Upper-Lip-Center;EE-L;EE-R
+        lips_pau: Jaw-Up-Down;Lower-Lip-L;Lower-Lip-R;Lower-Lip-Center;Upper-Lip-L;Upper-Lip-R;Upper-Lip-Center;EE-L;EE-R;Frown-R;Frown-L;Smile-R;Smile-L
 
 # Robot voice
 voice: heather
-lipsync: False
+lipsync: True

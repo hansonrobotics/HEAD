@@ -92,13 +92,13 @@
     <joint name="body_camera" type="fixed">
         <parent link="body"/>
         <child link="camera"/>
-        <origin xyz="0.15 0 0.25" rpy="0 -0.25 0" />
+        <origin xyz="0.15 0 0.35" rpy="0 0 0" />
     </joint>
 
     <joint name="blender_joint" type="fixed">
         <parent link="body"/>
         <child link="blender"/>
-        <origin xyz="0 0 0.62" rpy="0 0 0" />
+        <origin xyz="0 0 0.62" rpy="0 0.15 0" />
     </joint>
 
     <joint name="roll_base_joint" type="revolute">
