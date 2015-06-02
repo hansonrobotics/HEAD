@@ -202,7 +202,7 @@ Upper-Lip-L:
           imin: 0.612
           terms:
           - {min: 0, max: 0.7, imax: 0}
-          - {min: 0, max: -0.1, imax: 1}
+          - {min: 0, max: -0.5, imax: 1}
 
 Lower-Lip-R:
   motor_id: 11
