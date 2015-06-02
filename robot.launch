@@ -3,7 +3,7 @@
     <arg name="name"/>
     <arg name="mini" default="False"/>
     <arg name="rviz" default="True" />
-
+    <arg name="dev" default="False" />
     <param name="/robot_name" type="str" value="$(arg name)" />
     <group ns="/$(arg name)">
         <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
@@ -49,17 +49,20 @@
     </group>
 
     <!-- Perception outside the namespace -->
-    <include file="$(find perception)/launch/geometry.launch" unless="$(arg mini)">
-        <arg name="model" value="$(find robots_config)/$(arg name)/description.urdf" />
-        <arg name="gui" value="$(arg rviz)" />
-    </include>
-    <include file="$(find robots_config)/$(arg name)/tracker.launch" unless="$(arg mini)" />
+    <group unless="$(arg mini)">
+        <include file="$(find perception)/launch/geometry.launch">
+            <arg name="model" value="$(find robots_config)/$(arg name)/description.urdf" />
+            <arg name="gui" value="$(arg rviz)" />
+        </include>
 
+        <include file="$(find robots_config)/$(arg name)/tracker.launch" unless="$(arg dev)" />
+        <include file="$(find perception)/launch/tracker-single-cam.launch" if="$(arg dev)" />
+    </group>
     <!-- Rosbridge for webui -->
     <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket">
       <param name="authenticate" value="false" />
       <param name="port" value="9090"/>
       <param name="address" value=""/>
     </node>
-    <node name="rosapi" pkg="rosapi" type="rosapi_node" />
+    <node name="rosapi" pkg="rosapi" type="rosapi" />
 </launch>
