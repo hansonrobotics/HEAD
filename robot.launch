@@ -64,5 +64,5 @@
       <param name="port" value="9090"/>
       <param name="address" value=""/>
     </node>
-    <node name="rosapi" pkg="rosapi" type="rosapi" />
+    <node name="rosapi" pkg="rosapi" type="rosapi_node" />
 </launch>
