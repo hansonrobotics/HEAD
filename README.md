@@ -4,11 +4,16 @@ Robots configuration package.
 
 All robot-specific configs should be in this package.
 
-### Example: Running Arthur
+### Arguments
+ * name: (required) robot name
+ * mini: (default: `false`) launch only nodes required for basic expressions and webui to work
+ * rviz: (default: `true`)  Determines iof rviz needs to be launched
+ * dev: (default: `false`) Determines if it is runing for development purposes. Currently it launches the generic face tracker from perception node instead of launching the robot specific camera and tracking settings.
+### Example: Running Eva
 
 Start robot:
 ```
-roslaunch robots_config robot.launch name:=arthur rviz:=True
+roslaunch robots_config robot.launch name:=eva rviz:=True
 ```
 
 It launches the following nodes:
@@ -34,7 +39,6 @@ Following parmas has to be set:
   * dynamixel controllers settings
   * voice (currently jak, giles and heather supported)
   * lipsync (True/False) - lypsinc enabled or not
-  * pau2motors settings to map motors with pau coefficients
 
 ##### description.urdf
 URDF description of robot. Following frames required:
@@ -46,22 +50,18 @@ URDF description of robot. Following frames required:
 Expressions for [basic_head_api](https://github.com/hansonrobotics/basic_head_api)
 Expressions starting with "vis_" are considered to be visimes.
 
+##### animations.yaml
+Animations for [basic_head_api](https://github.com/hansonrobotics/basic_head_api)
 
 ##### hardware.launch
 Launch file with robot specific motor controllers.
-_Each of pololu controllers should have sparate yaml files for callibration data_
 
 ##### motors.yaml
-Individual motors settings for WebUI and basic_head_api
+Non-pololu (currently only dynamixel) motors settings pau mappings and etc.
+
+##### pololu
+Each pololu board has separate yanl file where all configs including PAU mappings are stored. Pololu node process calibration data and adds to motors parameter in similar format as in motors.yaml
 
 ##### tracker.launch
 Robot specific camera drivers and pi_vision settings.
-
-
-
-
-
-
-
-
 
