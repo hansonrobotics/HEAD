@@ -51,7 +51,7 @@ Check the **robots_config** repo to get more config options.
 ##Dependencies
 
 Depends on
-**[ros_servo_pololu](https://github.com/hansonrobotics/ros_pololu_servo)**
+**[ros_pololu](https://github.com/hansonrobotics/ros_pololu)**
 and **[dynamixel_motor](https://github.com/arebgun/dynamixel_motor)**
 packages. These are the packages that this node sends commands to.
 
@@ -62,7 +62,9 @@ Currently, the configuration for different robots are stored in the
 package, in yaml config files, in dictionaries called `pau2motors`
 (e.g.  [Han]
 (https://github.com/hansonrobotics/robots_config/blob/master/han/config.yaml)).
-The `hardware`, `parser` and `function` properties in the config files
-refer to classes in this repo's modules **HardwareFactory.py**,
-**ParserFactory.py** and **MapperFactory.py**, which may be extended
+Node gets the **motors** param from param server.
+**HardwareFactory.py** makes the motor controller from motor entries.
+The `parser` and `function` properties in the 
+refer to classes in this repo's modules ,
+**ParserFactory.py** and **MapperFactory.py** which may be extended
 with new classes.
