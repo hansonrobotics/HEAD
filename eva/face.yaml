@@ -80,9 +80,9 @@ Lower-Lid-L:
 
 Upper-Lid-R:
   motor_id: 4
-  init: 1790
-  min: 1450
-  max: 2320
+  init: 1480
+  min: 1224
+  max: 2110
   labelleft: Upper-Lid-R
   sort_no: 7
   group: Eyes
@@ -94,7 +94,7 @@ Upper-Lid-R:
         shapekey: eye-flare.UP.R;eye-blink.UP.R
       function:
         - name: weightedsum
-          imin: 0.391
+          imin: 0.289
           terms:
           - {min: 0, max: 1, imax: 0.05}
           - {min: 0, max: 0.8, imax: 0.75}
@@ -202,7 +202,7 @@ Upper-Lip-L:
           imin: 0.612
           terms:
           - {min: 0, max: 0.7, imax: 0}
-          - {min: 0, max: -0.5, imax: 1}
+          - {min: 0, max: -0.1, imax: 1}
 
 Lower-Lip-R:
   motor_id: 11
