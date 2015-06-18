@@ -104,7 +104,7 @@ class BLPlayback(bpy.types.Operator):
 					viseme.magnitude.target = viseme.time / rampPoint
 				# ramp out to 0
 				rampOutPoint = viseme.duration - viseme.duration * viseme.rampOutRatio
-				if viseme.rampoutratio > 0 and  viseme.time >= rampOutPoint:
+				if viseme.rampOutRatio > 0 and  viseme.time >= rampOutPoint:
 					# compute ramp in factor
 					viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration * viseme.rampOutRatio)
 				# update action
