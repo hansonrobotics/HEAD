@@ -95,21 +95,18 @@ class BLPlayback(bpy.types.Operator):
 					eva._deleteViseme(viseme)
 					continue
 
-				# ramp in from 0
-				rampPoint = viseme.duration * viseme.rampInRatio
-				if viseme.time <= rampPoint:
-					# compute ramp in factor
-					# TODO fix this so no div/0
-					#viseme.magnitude.target = viseme.time / rampPoint
-					viseme.magnitude.target = 1
-				# ramp out to 0
-				rampOutPoint = viseme.duration - viseme.duration*viseme.rampOutRatio
-				if viseme.time >= rampOutPoint:
-					# compute ramp in factor
-					# TODO fix this
-					#viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
-					viseme.magnitude.target = 0
+				# Default target if outside rampin and rampout phases
+				viseme.magnitude.target = 1
 
+				rampPoint = viseme.duration * viseme.rampInRatio
+				if viseme.rampInRatio > 0 and viseme.time <= rampPoint:
+					# compute ramp in factor
+					viseme.magnitude.target = viseme.time / rampPoint
+				# ramp out to 0
+				rampOutPoint = viseme.duration - viseme.duration * viseme.rampOutRatio
+				if viseme.rampoutratio > 0 and  viseme.time >= rampOutPoint:
+					# compute ramp in factor
+					viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration * viseme.rampOutRatio)
 				# update action
 				viseme.magnitude.blend()
 				viseme.stripRef.influence = viseme.magnitude.current
