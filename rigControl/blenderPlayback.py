@@ -12,16 +12,16 @@ class EvaDebug(bpy.types.Operator):
 	"""Eva Debug Control"""
 	bl_idname = "eva.debug"
 	bl_label = "Eva Debug"
-	
+
 	action = bpy.props.StringProperty()
 
 	# register some helper bpy props for dev purposes
 	bpy.types.Scene.evaFollowMouse = bpy.props.BoolProperty(name = "evaFollowMouse")
 	bpy.context.scene['evaFollowMouse'] = False
-	
+
 	bpy.types.Scene.evaFPS = bpy.props.IntProperty(name = "evaFPS", soft_min = 10, soft_max = 60)
 	bpy.context.scene['evaFPS'] = 0
-	
+
 	bpy.types.Scene.evaEmotion = bpy.props.StringProperty(name = "evaEmotion")
 	bpy.context.scene['evaEmotion'] = "{'happy': {'magnitude': 0.9, 'duration': 10}}"
 
@@ -60,7 +60,7 @@ class BLPlayback(bpy.types.Operator):
 				# compute mouse pos
 				normalX = (event.mouse_region_x - 500) /1000
 				normalY = (event.mouse_region_y - 500)/1000
-			
+
 				eyeLoc = eva.eyeTargetLoc.target
 				eyeLoc[0] = -normalX * 0.6
 				eyeLoc[2] = normalY * 0.5
@@ -86,6 +86,7 @@ class BLPlayback(bpy.types.Operator):
 			visemes = eva.visemesList[:]
 			for viseme in visemes:
 				# wait to start
+				# TODO fix so visimes would start if scheduled in the past
 				if viseme.time < 0:
 					continue
 
@@ -93,19 +94,21 @@ class BLPlayback(bpy.types.Operator):
 				if viseme.time > viseme.duration*1.5:
 					eva._deleteViseme(viseme)
 					continue
-				
+
 				# ramp in from 0
 				rampPoint = viseme.duration * viseme.rampInRatio
 				if viseme.time <= rampPoint:
 					# compute ramp in factor
-					viseme.magnitude.target = viseme.time / rampPoint
-
+					# TODO fix this so no div/0
+					#viseme.magnitude.target = viseme.time / rampPoint
+					viseme.magnitude.target = 1
 				# ramp out to 0
 				rampOutPoint = viseme.duration - viseme.duration*viseme.rampOutRatio
 				if viseme.time >= rampOutPoint:
 					# compute ramp in factor
-					viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
-
+					# TODO fix this
+					#viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
+					viseme.magnitude.target = 0
 
 				# update action
 				viseme.magnitude.blend()
@@ -114,7 +117,7 @@ class BLPlayback(bpy.types.Operator):
 				# update time
 				viseme.time += (1/framerateHz)*timeScale
 
-				
+
 
 			# update eye and head blending
 			headControl = eva.bones["head_target"]
@@ -125,14 +128,14 @@ class BLPlayback(bpy.types.Operator):
 
 			headControl.location = eva.headTargetLoc.current
 			eyeControl.location = eva.eyeTargetLoc.current
-			
+
 			# udpate emotions
 			for emotion in eva.emotionsList:
 				control = eva.bones['EMO-'+emotion.name]
 				control['intensity'] = emotion.magnitude.current
 				emotion.duration -= timeScale
 				emotion.magnitude.blend()
-				
+
 				if emotion.duration < 0:
 					emotion.magnitude._target *= 0.99
 
