@@ -355,6 +355,7 @@ class FacesRegistry():
                 face = Face()
                 face.id = f
                 face.point = self.faces[f].get_filtered_3d_point()
+                face.attention = self.faces[f].attention
                 faces.append(face)
         msg = Faces()
         msg.faces = faces
