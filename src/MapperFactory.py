@@ -171,8 +171,8 @@ class WeightedSum(MapperBase):
 
 # --------------------------------------------------------------
 
-# class Quaternion2EulerYZX(MapperBase):
-class Quaternion2EulerYZY(MapperBase):
+class Quaternion2EulerYZX(MapperBase):
+# class Quaternion2EulerYZY(MapperBase):
 
   def __init__(self, args, motor_entry):
 
@@ -205,8 +205,8 @@ class Quaternion2EulerYZY(MapperBase):
     }
     self.map = funcsByAxis[args['axis'].lower()]
 
-# class Quaternion2EulerYZY(MapperBase):
-class Quaternion2EulerYZX(MapperBase):
+class Quaternion2EulerYZY(MapperBase):
+# class Quaternion2EulerYZX(MapperBase):
 
   def __init__(self, args, motor_entry):
 
@@ -228,7 +228,7 @@ class Quaternion2EulerYZX(MapperBase):
         by = 180 * math.acos(cy) / 3.141592653
         bz = 180 * math.acos(cz) / 3.141592653
         # print("beta = ", bx, by, bz)
- 
+
         tx = math.atan2(
             -2 *(q.y * q.z - q.w * q.x),
             q.w**2 + q.y**2 - q.z**2 - q.x**2
@@ -248,7 +248,7 @@ class Quaternion2EulerYZX(MapperBase):
           -2 * (q.z * q.x - q.w * q.y),
           q.w**2 - q.y**2 - q.z**2 + q.x**2
         )
-        
+
     funcsByAxis = {
       'x': lambda q: why(q),
       'z': lambda q:
