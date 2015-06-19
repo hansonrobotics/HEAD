@@ -20,6 +20,11 @@
 # rostopic echo /foo/left_motor
 # rostopic echo /foo/right_motor
 # rostopic echo /foo/axis_motor
+#
+# Coordinate conventions:
+# Curent Eva blender model uses:
+# Nods pitch the head back and forth changing the X cosine
+# Shakes yaw the head side to side, changing the Y and Z cosines
 
 pau2motors:
     # --- topics to be publsihed: one per motor
