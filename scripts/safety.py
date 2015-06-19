@@ -64,7 +64,7 @@ class Safety():
     def rule_prevent(self, motor, v, rule):
         # Check if its over extreme
         if self.get_relative_pos(motor, rule['direction'], v) <= rule['extreme']:
-            return
+            return v
         # Check dependency
         if self.get_relative_pos(rule['depends'], rule['dep_dir'], self.motor_positions[rule['depends']]) > rule['dep_extreme']:
             # Preventing form getting over limit. sets motor position to limit before extreme
