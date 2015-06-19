@@ -1,4 +1,3 @@
-from ros_pololu_servo.msg import MotorCommand
 import ParserFactory
 import MapperFactory
 import HardwareFactory
@@ -22,7 +21,8 @@ class MotorCmder:
     return min(max(angle, self.motor_entry['min']), self.motor_entry['max'])  
 
   def __init__(self, motor_entry):
-    binding_obj = motor_entry["binding"]
+
+    binding_obj = motor_entry["pau"]
 
     self.parser = ParserFactory.build(
       binding_obj["parser"]
@@ -32,6 +32,6 @@ class MotorCmder:
       motor_entry
     )
     self.hardware = HardwareFactory.build(
-      binding_obj["hardware"]
+        motor_entry
     )
     self.motor_entry = motor_entry
