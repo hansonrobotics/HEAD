@@ -43,9 +43,9 @@ class PololuMotor:
         # Store speed and acceleration. By default should be small values to slowly turn tu neutral on start
         self.speed = 0.3
         self.acceleration = 0.1
-        if 'speed' not in config.keys():
+        if 'speed' in config.keys():
             self.speed = self._config['speed']
-        if 'acceleration' not in config.keys():
+        if 'acceleration' in config.keys():
             self.acceleration = self._config['acceleration']
 
 
@@ -130,6 +130,8 @@ class RosPololuNode:
         port = rospy.get_param("~port_name")
         topic_prefix = rospy.get_param("~topic_prefix", "pololu/")
         topic_name = rospy.get_param("~topic_name", "command")
+        # Use safety proxy to filter motor comamnds
+        safety = rospy.get_param("~safety", False)
         # Use specific rate to publish motors commands
         self._sync = rospy.get_param("~sync", "off")
         self._controller_type = rospy.get_param("~controller", "Maestro")
@@ -154,6 +156,7 @@ class RosPololuNode:
                         break
                 else:
                     motors.append(cfg)
+            print(motors)
             rospy.set_param('motors', motors)
         try:
             if self._controller_type == 'Maestro':
@@ -164,6 +167,9 @@ class RosPololuNode:
         except:
             rospy.logerr("Error creating the motor controller")
             return
+        # Listen for outputs from proxy
+        if safety:
+            topic_prefix = 'safe/'+topic_prefix
         rospy.Subscriber(topic_prefix + topic_name, MotorCommand, self.motor_command_callback)
 
     def publish_motor_states(self):
