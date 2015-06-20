@@ -264,12 +264,32 @@ class Quaternion2EulerYZY(MapperBase):
     self.map = funcsByAxis[args['axis'].lower()]
 
 # --------------------------------------------------------------
+class Quaternion2Neck(MapperBase):
+
+  def __init__(self, args, motor_entry):
+
+    funcs = {
+      'ul': lambda q:
+            0.42,
+      'z': lambda q:
+          math.asin(
+            2 * (q.y * q.x + q.w * q.z)
+          ),
+      'x': lambda q:
+          math.atan2(
+            -2 *(q.y * q.z - q.w * q.x),
+            q.w**2 + q.y**2 - q.z**2 - q.x**2
+          )
+    }
+    self.map = funcs[args['axis'].lower()]
+
 
 _mapper_classes = {
   "linear": Linear,
   "weightedsum": WeightedSum,
   "quaternion2euler": Quaternion2EulerYZX,
-  "quaternion2YZY": Quaternion2EulerYZY
+  "quaternion2YZY": Quaternion2EulerYZY,
+  "quaternion2neck": Quaternion2Neck
 }
 
 def build(yamlobj, motor_entry):

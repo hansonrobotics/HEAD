@@ -51,11 +51,8 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2euler
-          axis: x
-        - name: linear
-          scale: -1.3
-          translate: -0.1
+        - name: quaternion2neck
+          axis: ul
 
   - name: Upper-Gimbal-R
     topic: Upper_Gimbal_R
