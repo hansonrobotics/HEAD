@@ -43,10 +43,10 @@ parameters in the current namespace:
 
 ```
 Couldn't find 'pau2motors' param in namespace '/'.
-Change namespace with `export ROS_NAMESPACE=<ns>`
-Current valid <ns>: /arthur.
-Check the **robots_config** repo to get more config options.
 ```
+The **robots_config** repo contains the various valid namespaces;
+these include `han`, `eva`, `george` and `arthur`. Set the namespace
+by saying `export ROS_NAMESPACE=<ns>` before the rosrun.
 
 ##Dependencies
 
