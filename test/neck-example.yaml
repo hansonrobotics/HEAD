@@ -11,17 +11,17 @@
 # 5) rosservice call neck_pau_mux/select /blender_api/get_pau
 # 6) blender -y Eva.blend -P autostart.py
 #
-# or alternately:
+# For the older robots, use this:
 # 5) rosservice call neck_pau_mux/select /cmd_neck_pau
 # 6) rosrun basic_head_api head_ctrl.py
-#
-# Then
 # 7) rostopic pub --once /point_head basic_head_api/PointHead '{yaw: 0.1, pitch:0.2, roll:0.3}' 
 #
 # Verify operation:
-# rostopic echo /foo/left_motor
-# rostopic echo /foo/right_motor
-# rostopic echo /foo/axis_motor
+# rostopic echo /foo/Lower_Gimbal_L_controller/command
+# rostopic echo /foo/Lower_Gimbal_R_controller/command
+# rostopic echo /foo/Upper_Gimbal_L_controller/command
+# rostopic echo /foo/Upper_Gimbal_R_controller/command
+# rostopic echo /foo/Neck_Rotation_controller/command
 #
 # Coordinate conventions:
 # Curent Eva blender model uses:
