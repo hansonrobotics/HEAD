@@ -171,8 +171,8 @@ class WeightedSum(MapperBase):
 
 # --------------------------------------------------------------
 
-# class Quaternion2EulerYZX(MapperBase):
-class Quaternion2EulerYZY(MapperBase):
+class Quaternion2EulerYZX(MapperBase):
+# class Quaternion2EulerYZY(MapperBase):
 
   def __init__(self, args, motor_entry):
 
@@ -205,8 +205,8 @@ class Quaternion2EulerYZY(MapperBase):
     }
     self.map = funcsByAxis[args['axis'].lower()]
 
-# class Quaternion2EulerYZY(MapperBase):
-class Quaternion2EulerYZX(MapperBase):
+class Quaternion2EulerYZY(MapperBase):
+# class Quaternion2EulerYZX(MapperBase):
 
   def __init__(self, args, motor_entry):
 
