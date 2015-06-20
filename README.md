@@ -32,7 +32,7 @@ rosrun pau2motors pau2motors_node.py
 rosrun topic_tools mux /han/neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux
 rosservice call neck_pau_mux/select /blender_api/get_pau
 ```
-The mux that is started ans switched on in the last two lines serves
+The mux that is started and switched on in the last two lines serves
 to attach the output of the Eva blender model to the topics that the
 pau2motors listens to. The head_pau should also be attached.
 
