@@ -52,7 +52,7 @@ class Chatbot():
 
   # Tell the world the emotion that the chatbot is perceiving.
   # Use the blender_api_msgs/EmotionState messae type to
-  # describe the perceived emotion.
+  # describe the perceived emotion.  Argument is just a string.
   def _affect_perceive(self, emo):
     rospy.logwarn("Chatbot perceived emo:", emo)
     exp = EmotionState()
