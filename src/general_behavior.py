@@ -235,6 +235,9 @@ class Tree():
 		rospy.Subscriber("/blender_api/available_gestures",
 			AvailableGestures, self.get_gestures_cb)
 
+		# Affects obtained from the chatbot
+		rospy.Subscriber("/chatbot/affect", String, self.chatbot_affect_callback)
+
 		# cmd_blendermode needs to go away eventually...
 		self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
 
@@ -805,8 +808,8 @@ class Tree():
 		print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ") for " + str(duration)[:4] + " seconds"
 		self.blackboard["show_expression_since"] = time.time()
 
-	# Accept an gesture name, intensity, repeat (perform how many times) and speed
-	# and then publish it as a ros message.
+	# Accept an gesture name, intensity, repeat (perform how many times)
+	# and speed and then publish it as a ros message.
 	def show_gesture(self, gesture, intensity, repeat, speed):
 		ges = SetGesture()
 		ges.name = gesture
@@ -1033,3 +1036,6 @@ class Tree():
 			self.blackboard["performance_system_on"] = False
 			self.blackboard["stage_mode"] = False
 			print("---- Behavior tree disabled")
+
+	def chatbot_affect_callback(self, data):
+		print "Chatbot feels this:", data.data
