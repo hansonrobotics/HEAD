@@ -3,7 +3,6 @@ define(['application', './public/controller', './admin/controller'],
         App.module('Expressions', function (Expressions, app, Backbone, Marionette, $, _) {
             Expressions.PublicRouter = Marionette.AppRouter.extend({
                 'appRoutes': {
-                    '': 'index',
                     'expressions': 'index'
                 }
             });
