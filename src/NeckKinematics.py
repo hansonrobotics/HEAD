@@ -1,4 +1,3 @@
-#! /usr/bin/env python3
 #
 # Double U-joint neck inverse kinematics.
 # Copyright (c) 2015 Hanson Robotics
@@ -31,7 +30,7 @@ def quad_trig(alpha, beta, gamma, sign):
 # Newtonian interpolation. Finds the zero of function func.
 # Assumes that there is one unique zero.  Assumes that func(pi/2)
 # is of oppsite sign from func(-pi/2).  Throws an exception if
-# there are no solutions. In the context of the eck linkage, this
+# there are no solutions. In the context of the neck linkage, this
 # means that a neck position was requested that the mechanical linkage
 # simply cannot get to; even at full extension, the neck cannot be moved
 # to there.
@@ -308,40 +307,3 @@ class upper_neck(neck_linkage):
 		# Motor neutral position
 		self.theta_r = 0.0
 		self.theta_l = 0.0
-
-def main():
-
-	if len(sys.argv) < 3:
-		print ("Usage: neck-kine <theta> <phi>")
-		return 1
-
-	theta = float(sys.argv[1])
-	phi = float(sys.argv[2])
-
-	lon = lower_neck()
-	upn = upper_neck()
-	lon.inverse_kinematics(theta, phi)
-	upn.inverse_kinematics(theta, phi)
-	print ("Input theta=", theta, " phi=", phi)
-	print ("Lower Motor angles", lon.theta_l, lon.theta_r)
-	print ("Upper motor angles", upn.theta_l, upn.theta_r)
-
-
-	thetas = [0.01*i for i in range(1,53)]
-	phis = [0.1*i for i in range(-15,15)]
-	for theta in thetas :
-		for phi in phis :
-			try:
-				lon.inverse_kinematics(theta, phi)
-			except OverflowError:
-				print ("Lower jam at theta=", theta, phi)
-
-			try:
-				upn.inverse_kinematics(theta, phi)
-			except OverflowError:
-				print ("Upper jam at theta=", theta, phi)
-
-#			# print ("Input theta=", theta, " phi=", phi)
-#			# print ("Motor angles", lon.theta_l, lon.theta_r)
-
-main()

@@ -18,6 +18,7 @@
 # 02110-1301  USA
 
 import math
+import NeckKinematics
 
 class MapperBase:
   """
@@ -268,18 +269,43 @@ class Quaternion2Neck(MapperBase):
 
   def __init__(self, args, motor_entry):
 
-    funcs = {
-      'ul': lambda q:
-            0.42,
-      'z': lambda q:
-          math.asin(
-            2 * (q.y * q.x + q.w * q.z)
-          ),
-      'x': lambda q:
-          math.atan2(
-            -2 *(q.y * q.z - q.w * q.x),
-            q.w**2 + q.y**2 - q.z**2 - q.x**2
+    self.hijoint = NeckKinematics.upper_neck()
+    self.lojoint = NeckKinematics.lower_neck()
+    self.phi = 0.0
+    self.theta = 0.0
+    self.psi = 0.0
+
+
+    def quat_to_euler(q) :
+        self.phi = math.atan2(
+            2 * (q.w * q.x + q.y * q.z),
+            1 - 2 * (q.x**2 + q.y**2)
           )
+        self.theta = math.asin(
+            2 * (q.w * q.y - q.x * q.z)
+          )
+        self.psi = math.atan2(
+            2 * (q.w * q.z + q.x * q.y),
+            1 - 2 * (q.y**2 + q.z**2)
+          )
+        print "duuuuude phi theta psi", self.phi, self.theta, self.psi
+
+    def get_upper_left(q) :
+        quat_to_euler(q)
+        self.hijoint.inverse_kinematics(self.theta, self.phi)
+        print "duude left mot", self.hijoint.theta_l
+        return self.hijoint.theta_l
+
+    def get_upper_right(q) :
+        quat_to_euler(q)
+        self.hijoint.inverse_kinematics(self.theta, self.phi)
+        print "duude right mot", self.hijoint.theta_r
+        return self.hijoint.theta_r
+
+
+    funcs = {
+      'ul': lambda q: get_upper_left(q),
+      'ur': lambda q: get_upper_right(q)
     }
     self.map = funcs[args['axis'].lower()]
 
