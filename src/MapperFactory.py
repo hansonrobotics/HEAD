@@ -173,7 +173,6 @@ class WeightedSum(MapperBase):
 # --------------------------------------------------------------
 
 class Quaternion2EulerYZX(MapperBase):
-# class Quaternion2EulerYZY(MapperBase):
 
   def __init__(self, args, motor_entry):
 
@@ -192,20 +191,26 @@ class Quaternion2EulerYZX(MapperBase):
         z = math.asin(2 * (q.y * q.x + q.w * q.z))
         return z
 
-    funcsByAxis = {
-      'y': lambda q:
-          math.atan2(
+    def tate_y(q) :
+        y = math.atan2(
             -2 * (q.z * q.x - q.w * q.y),
             q.w**2 - q.y**2 - q.z**2 + q.x**2
-          ),
-      'z': lambda q :
-          tate_z(q),
+          )
+        # print "tate y=", y
+        return y
 
-      'x': lambda q:
-          math.atan2(
+    def tate_x(q) :
+        x = math.atan2(
             -2 *(q.y * q.z - q.w * q.x),
             q.w**2 + q.y**2 - q.z**2 - q.x**2
           )
+        # print "tate x=", x
+        return x
+
+    funcsByAxis = {
+      'y': lambda q : tate_y(q),
+      'z': lambda q : tate_z(q),
+      'x': lambda q : tate_x(q)
     }
     self.map = funcsByAxis[args['axis'].lower()]
 
@@ -279,6 +284,13 @@ class Quaternion2Neck(MapperBase):
     self.psi = 0.0
 
 
+    # The formulas below are taken from Wikipedia, with the convention
+    # that     q_0 = q.w      q_1 = q.x     q_2 = q.y     q_3 = q.z
+    # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+    # and that phi == roll == rotate about body X
+    #          theta == pitch == rot about body Y
+    #          psi == yaw ==  rotate about body Z
+    # with X == foreward    Y == to right    and Z == down
     def quat_to_euler(q) :
         self.phi = math.atan2(
             2 * (q.w * q.x + q.y * q.z),
@@ -296,7 +308,7 @@ class Quaternion2Neck(MapperBase):
     def get_upper_left(q) :
         quat_to_euler(q)
         self.hijoint.inverse_kinematics(self.theta, self.phi)
-        # print "duude left mot", self.hijoint.theta_l
+        print "duude left right mot", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     def get_upper_right(q) :
@@ -313,7 +325,7 @@ class Quaternion2Neck(MapperBase):
 
     funcs = {
       'ul': lambda q: get_upper_left(q),
-      'ur': lambda q: get_upper_right(q)
+      'ur': lambda q: get_upper_right(q),
       'yaw': lambda q: get_yaw(q)
     }
     self.map = funcs[args['axis'].lower()]
