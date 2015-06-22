@@ -3,8 +3,11 @@
 import rospy
 from ros_pololu.msg import MotorCommand
 from std_msgs.msg import Float64
+from dynamixel_msgs.msg import MotorStateList
+
 import time
 
+ROS_RATE = 20
 
 class Safety():
     def __init__(self):
@@ -20,6 +23,8 @@ class Safety():
         self.motors = {}
         self.timers = {}
         self.motors_msgs = {}
+        # Dynamixel loads
+        self.motor_loads = [0]*256
         # Create proxy topics and subscribers
         for m in motors:
             self.motor_positions[m['name']] = m['default']
@@ -34,6 +39,8 @@ class Safety():
                     self.publishers[m['topic']] = rospy.Publisher("safe/"+m['topic']+"_controller/command",Float64, queue_size=30)
                     self.subscribers[m['topic']] = rospy.Subscriber(m['topic']+"_controller/command", Float64,
                                         lambda msg, m=m: self.callback(m, True, msg))
+        # Subscribe motor states
+        rospy.Subscriber('safe/motor_states', MotorStateList, self.update_load)
         # Init timing rules
         for m, rules in self.rules.iteritems():
             for i,r in enumerate(rules):
@@ -42,6 +49,13 @@ class Safety():
                     # Init rule variables
                     self.rules[m][i]['started'] = False
                     self.rules[m][i]['limit'] = 1
+                if r['type'] == 'load':
+                    self.rules[m][i]['started'] = False
+                    self.rules[m][i]['limit'] = 1
+
+    def update_load(self, msg):
+        for s in msg.motor_states:
+            self.motor_loads[s['id']] = s['load']
 
     # check if motor is dynamixel
     def is_dynamixel(self, m):
@@ -72,7 +86,7 @@ class Safety():
         for r in rules:
             if r['type'] == 'prevent':
                 v = self.rule_prevent(motor, v, r)
-            if r['type'] == 'timing':
+            if (r['type'] == 'timing') or (r['type'] == 'load'):
                 v = self.rule_time(motor, v, r)
         if dynamixel:
             msg.data = v
@@ -89,7 +103,7 @@ class Safety():
             return self.get_abs_pos(motor, rule['direction'], rule['extreme'])
         return v
 
-    # Prevents motor from staying in extreme for extended period of time
+    # Check if motor is not over current limit set by existing rule. Applies for timing and load rules
     def rule_time(self, motor, v, rule):
         # Check if its over limit
         relative = self.get_relative_pos(motor, rule['direction'], v)
@@ -118,6 +132,8 @@ class Safety():
                 # Process timing rules
                 if r['type'] == 'timing':
                     self.rule_timing(m,i)
+                if r['type'] == 'load':
+                    self.rule_loading(m,i)
 
     def rule_timing(self, m, r):
         # Rule is active
@@ -155,7 +171,44 @@ class Safety():
             if self.get_relative_pos(m, self.rules[m][r]['direction'], self.motor_positions[m]) > self.rules[m][r]['extreme']:
                 self.rules[m][r]['started'] = time.time()
 
+    def rule_loading(self,m,r):
+        rule = self.rules[m][r]
+        dir = 1 if rule['direction']=='max' else -1
+        extreme = self.motor_loads[rule['motor_id']]*dir > rule['extreme']
+        if rule['started']:
+            # Allow t1 time for rule to take meassures
+            if rule['started'] + rule['t1'] > time.time():
+                if extreme:
+                    return
+                else:
+                    self.rules[m][r]['started'] = False
+                    self.rules[m][r]['limit'] = 1
+                    return
+            limit = 1.0
+            if rule['started'] + rule['t1']+rule['t2'] > time.time():
+                if rule['limit'] == 1:
+                    # Prevent motor for going further
+                    limit = self.get_relative_pos(m,rule['direction'], self.motor_positions['m'])
+                if extreme:
+                    # Rapidly decrease limit towards neutral
+                    limit -= 1.0 / ROS_RATE
+                limit = max(0,limit)
+            else:
+                # Increase limit gradually
+                limit += 1.0/ ROS_RATE
+                if limit >= 1:
+                    #Rule Expired
+                    limit = 1
+                    self.rules[m][r]['started'] = False
 
+            relative = self.get_relative_pos(m, rule['direction'], self.motor_positions[m])
+            self.rules[m][r]['limit'] = limit
+            if relative > limit:
+                self.set_motor_relative_pos(m,relative,rule['direction'])
+        else:
+            if extreme:
+                self.rules[m][r]['started'] = time.time()
+        pass
 
     def set_motor_relative_pos(self, m, pos, dir):
         v = self.get_abs_pos(m,dir,pos)
@@ -173,7 +226,7 @@ class Safety():
 if __name__ == '__main__':
     rospy.init_node('motors_safety')
     MS = Safety()
-    r = rospy.Rate(20)
+    r = rospy.Rate(ROS_RATE)
     while not rospy.is_shutdown():
         MS.timing()
         r.sleep()
