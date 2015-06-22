@@ -981,6 +981,8 @@ class Tree():
 	# Turn behaviors on and off.
 	def behavior_switch_callback(self, data):
 		if data.data == "btree_on":
+			self.do_pub_gestures = True
+			self.do_pub_emotions = True
 			self.blackboard["is_interruption"] = False
 
 			emo_scale = self.blackboard["emotion_scale_closeup"]
@@ -1000,6 +1002,8 @@ class Tree():
 			self.blackboard["performance_system_on"] = True
 
 		elif data.data == "btree_on_stage":
+			self.do_pub_gestures = True
+			self.do_pub_emotions = True
 			self.blackboard["is_interruption"] = False
 
 			emo_scale = self.blackboard["emotion_scale_stage"]
@@ -1017,6 +1021,12 @@ class Tree():
 			self.rescale_intensity(emo_scale, ges_scale)
 			self.blackboard["stage_mode"] = True
 			self.blackboard["performance_system_on"] = True
+
+		elif data.data == "emotion_off":
+			self.do_pub_emotions = False
+
+		elif data.data == "gesture_off":
+			self.do_pub_gestures = False
 
 		elif data.data == "btree_off":
 			self.blackboard["is_interruption"] = True
