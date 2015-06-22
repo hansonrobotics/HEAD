@@ -235,16 +235,22 @@ class Tree():
 		rospy.Subscriber("/blender_api/available_gestures",
 			AvailableGestures, self.get_gestures_cb)
 
-		# Affects obtained from the chatbot
-		rospy.Subscriber("/chatbot/affect", String, self.chatbot_affect_callback)
+		# Emotional content that the chatbot perceived i.e. did it hear
+		# angry words, polite words, etc?
+		rospy.Subscriber("/chatbot_affect_perceive", String,
+			self.chatbot_affect_perceive_callback)
 
 		# cmd_blendermode needs to go away eventually...
 		self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
 
 		self.do_pub_gestures = True
 		self.do_pub_emotions = True
-		self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state", EmotionState, queue_size=1)
-		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture", SetGesture, queue_size=1)
+		self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state",
+			EmotionState, queue_size=1)
+		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture",
+			SetGesture, queue_size=1)
+		self.affect_pub = rospy.Publisher("/chatbot_affect_express",
+			String, queue_size=1)
 		self.tree = self.build_tree()
 		time.sleep(0.1)
 
@@ -1037,5 +1043,5 @@ class Tree():
 			self.blackboard["stage_mode"] = False
 			print("---- Behavior tree disabled")
 
-	def chatbot_affect_callback(self, data):
+	def chatbot_affect_perceive_callback(self, data):
 		print "Chatbot feels this:", data.data
