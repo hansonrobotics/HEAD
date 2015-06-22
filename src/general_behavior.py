@@ -235,13 +235,22 @@ class Tree():
 		rospy.Subscriber("/blender_api/available_gestures",
 			AvailableGestures, self.get_gestures_cb)
 
+		# Emotional content that the chatbot perceived i.e. did it hear
+		# angry words, polite words, etc?
+		rospy.Subscriber("/chatbot_affect_perceive", EmotionState,
+			self.chatbot_affect_perceive_callback)
+
 		# cmd_blendermode needs to go away eventually...
 		self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
 
 		self.do_pub_gestures = True
 		self.do_pub_emotions = True
-		self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state", EmotionState, queue_size=1)
-		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture", SetGesture, queue_size=1)
+		self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state",
+			EmotionState, queue_size=1)
+		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture",
+			SetGesture, queue_size=1)
+		self.affect_pub = rospy.Publisher("/chatbot_affect_express",
+			EmotionState, queue_size=1)
 		self.tree = self.build_tree()
 		time.sleep(0.1)
 
@@ -784,7 +793,9 @@ class Tree():
 		yield True
 
 	# Accept an expression name, intensity and duration, and publish it
-	# as a ros message.
+	# as a ROS message both to blender, and to the chatbot.  Currently,
+	# exactly the same message format is used for both blender and the
+	# chatbot. This may change in the future(?)
 	def show_emotion(self, expression, intensity, duration):
 
 		# Update the blackboard
@@ -799,14 +810,16 @@ class Tree():
 		intsecs = int(duration)
 		exp.duration.secs = intsecs
 		exp.duration.nsecs = 1000000000 * (duration - intsecs)
+		# affect_pub goes to chatbot, emotion_pub goes to blender.
+		self.affect_pub.publish(exp)
 		if (self.do_pub_emotions) :
 			self.emotion_pub.publish(exp)
 
 		print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ") for " + str(duration)[:4] + " seconds"
 		self.blackboard["show_expression_since"] = time.time()
 
-	# Accept an gesture name, intensity, repeat (perform how many times) and speed
-	# and then publish it as a ros message.
+	# Accept an gesture name, intensity, repeat (perform how many times)
+	# and speed and then publish it as a ros message.
 	def show_gesture(self, gesture, intensity, repeat, speed):
 		ges = SetGesture()
 		ges.name = gesture
@@ -1033,3 +1046,8 @@ class Tree():
 			self.blackboard["performance_system_on"] = False
 			self.blackboard["stage_mode"] = False
 			print("---- Behavior tree disabled")
+
+	# The perceived emotional content in the message.
+	# emo is of type EmotionState
+	def chatbot_affect_perceive_callback(self, emo):
+		print "Chatbot feels this:", emo.name
