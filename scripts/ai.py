@@ -7,6 +7,7 @@ import sys
 
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
+from blender_api_msgs.msg import EmotionState
 
 class Chatbot():
   def __init__(self):
@@ -17,6 +18,17 @@ class Chatbot():
       'chatbot_responses',
       String
     )
+
+    # Perceived emotional content; and emotion to express
+    # Perceived: based on what chatbot heard, this is how robot should
+    # feel.  Expressed: the emotional content that the chatbot should
+    # put into what it says.
+    self._affect_publisher = rospy.Publisher(
+      'chatbot_affect_perceive',
+      EmotionState
+    )
+    rospy.Subscriber('chatbot_affect_express', EmotionState,
+        self._affect_express_callback)
 
   def initialize(self, aiml_dir):
     self._kernel.learn(os.sep.join([aiml_dir, '*.aiml']))
@@ -39,10 +51,26 @@ class Chatbot():
     message.data = response
     self._response_publisher.publish(message)
 
+  # Tell the world the emotion that the chatbot is perceiving.
+  def _affect_perceive(self, emo):
+    print "Chatbot perceived emo:", emo
+    exp = EmotionState()
+    exp.name = emo
+    exp.magnitude = 1.0
+    exp.duration.secs = 0
+    exp.duration.nsecs = 0
+    self._affect_publisher.publish(exp)
+
+  # This is the emotion that the chatbot should convey.
+  # affect_message is of type EmotionState
+  def _affect_express_callback(self, affect_message):
+    #
+    print "Chatbot is verbally expressing this:", affect_message.name
+
 def main():
   chatbot = Chatbot()
   aiml_dir = sys.argv[1]
   chatbot.initialize(aiml_dir)
-    
+
 if __name__ == '__main__':
   main()
