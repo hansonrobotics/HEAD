@@ -8,6 +8,10 @@
             <button type="button" class="app-gesture-bt-gestures-off btn btn-default">No Gestures</button>
             <button type="button" class="app-gesture-bt-off btn btn-default">Off</button>
         </div>
+        <div class="col-md-2">
+            <h4>Say: </h4>
+            <button type="button" class="app-gesture-speak-intro btn btn-default">Introduction</button>
+        </div>
         <div class="col-md-10">
             <h4>Gestures: </h4>
 

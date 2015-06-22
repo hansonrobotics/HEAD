@@ -7,7 +7,8 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
                 btOnStageButton: ".app-gesture-bt-on-stage",
                 btEmotionsOffButton: ".app-gesture-bt-emotions-off",
                 btGesturesOffButton: ".app-gesture-bt-gestures-off",
-                btOffButton: ".app-gesture-bt-off"
+                btOffButton: ".app-gesture-bt-off",
+                sayIntroButton: ".app-gesture-say-intro"
             },
             regions: {
                 gestures: '.app-gesture-buttons',
@@ -18,7 +19,8 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
                 'click @ui.btOnStageButton': "btOnStage",
                 'click @ui.btEmotionsOffButton': "btEmotionsOff",
                 'click @ui.btGesturesOffButton': "btGesturesOff",
-                'click @ui.btOffButton': "btOff"
+                'click @ui.btOffButton': "btOff",
+                'click @ui.sayIntroButton': "sayIntro"
             },
             btOn: function() {
                 api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on'}));
@@ -34,6 +36,9 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
             },
             btOff: function() {
                 api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+            },
+            sayIntro: function() {
+                
             }
         });
     });
