@@ -33,8 +33,19 @@ class EvaAPI(RigAPI):
 	def isAlive(self):
 		return int(bpy.context.scene['animationPlaybackActive'])
 
-	# Emotion and Gesture commands ==========================
+	# Somatic states  --------------------------------
+	# awake, asleep, dazed and confused ...
+	def availableSomaStates(self):
+		return None
 
+	def getSomaState(self):
+		return None
+
+	def setSomaState(self, emotion):
+		return None
+
+	# Emotion expressions ----------------------------
+	# smiling, frowning, bored ...
 	def availableEmotionStates(self):
 		emotionStates = []
 		for emo in bpy.data.objects['control'].pose.bones:
@@ -60,6 +71,7 @@ class EvaAPI(RigAPI):
 
 
 	# Gestures --------------------------------------
+	# blinking, nodding, shaking...
 	def availableGestures(self):
 		emotionGestures = []
 		for gesture in bpy.data.actions:
