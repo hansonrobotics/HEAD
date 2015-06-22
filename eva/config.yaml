@@ -152,23 +152,42 @@ voice: heather
 lipsync: True
 safety_rules:
     Smile-L:
-        - type: prevent
-          direction: max
+        - type: timing
+          direction: min
+          extreme: 0.35
+          t1: 1
+          t2: 1
+          t3: 5
+          t4: 1
+    Smile-R:
+        - type: timing
+          direction: min
           extreme: 0.5
-          depends: Frown-L
-          dep_dir: max
-          dep_extreme: 0.5
+          t1: 1
+          t2: 1
+          t3: 5
+          t4: 1
+    Frown-L:
         - type: timing
           direction: max
           extreme: 0.6
           t1: 1
           t2: 1
-          t3: 3
+          t3: 5
           t4: 1
-        - type: load
-          direction: min
-          extreme: 0.2
-          motor_id: 8
-          rest: 0.1
+    Frown-R:
+        - type: timing
+          direction: max
+          extreme: 0.6
           t1: 1
-          t2: 4
+          t2: 1
+          t3: 5
+          t4: 1
+    Jaw-Up-Down:
+        - type: timing
+          direction: max
+          extreme: 0.3
+          t1: 1
+          t2: 1
+          t3: 5
+          t4: 1
