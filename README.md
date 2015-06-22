@@ -74,10 +74,10 @@ Other behavior is configued in this same file.
 
 ##### Topics subscribed :
 
-* `behavior_switch (std_msgs/String)`. Values: ("btree_on",
-  "btree_on_stage", "btree_off", "emotion_off", "gestue_off").
+* `behavior_switch (std_msgs/String)`. Values: (`btree_on`,
+  `btree_on_stage`, `btree_off`, `emotion_off`, `gestue_off`).
   By default, the behaviour tree is off and it needs to receive
-  btree_on or btree_on_stage (for stage mode) to start.
+  `btree_on` or `btree_on_stage` (for stage mode) to start.
 
   * `btree_on`: Facial expressions are scaled for up-close interaction;
     robot and human approx 1 meter apart.
@@ -86,7 +86,7 @@ Other behavior is configued in this same file.
   * `emotion_off`: disable publication of ROS emotion messages.
   * `gesture_off`: disable publication of ROS gesture messages.
 
-  The btree_on and btree_on_stage messages re-enable emotion and
+  The `btree_on` and `btree_on_stage` messages re-enable emotion and
   gesture publication.
 
 * `tracking_event (eva_behavior/event)`. Event received from the
