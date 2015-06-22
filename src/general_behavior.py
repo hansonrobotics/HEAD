@@ -250,7 +250,7 @@ class Tree():
 		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture",
 			SetGesture, queue_size=1)
 		self.affect_pub = rospy.Publisher("/chatbot_affect_express",
-			String, queue_size=1)
+			EmotionState, queue_size=1)
 		self.tree = self.build_tree()
 		time.sleep(0.1)
 
@@ -793,7 +793,9 @@ class Tree():
 		yield True
 
 	# Accept an expression name, intensity and duration, and publish it
-	# as a ros message.
+	# as a ROS message both to blender, and to the chatbot.  Currently,
+	# exactly the same message format is used for both blender and the
+	# chatbot. This may change in the future(?)
 	def show_emotion(self, expression, intensity, duration):
 
 		# Update the blackboard
@@ -808,6 +810,8 @@ class Tree():
 		intsecs = int(duration)
 		exp.duration.secs = intsecs
 		exp.duration.nsecs = 1000000000 * (duration - intsecs)
+		# affect_pub goes to chatbot, emotion_pub goes to blender.
+		self.affect_pub.publish(exp)
 		if (self.do_pub_emotions) :
 			self.emotion_pub.publish(exp)
 
@@ -1043,5 +1047,7 @@ class Tree():
 			self.blackboard["stage_mode"] = False
 			print("---- Behavior tree disabled")
 
-	def chatbot_affect_perceive_callback(self, data):
-		print "Chatbot feels this:", data.data
+	# The perceived emotional content in the message.
+	# emo is of type EmotionState
+	def chatbot_affect_perceive_callback(self, emo):
+		print "Chatbot feels this:", emo.name
