@@ -237,6 +237,9 @@ class Tree():
 
 		# cmd_blendermode needs to go away eventually...
 		self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
+
+		self.do_pub_gestures = True
+		self.do_pub_emotions = True
 		self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state", EmotionState, queue_size=1)
 		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture", SetGesture, queue_size=1)
 		self.tree = self.build_tree()
@@ -796,7 +799,8 @@ class Tree():
 		intsecs = int(duration)
 		exp.duration.secs = intsecs
 		exp.duration.nsecs = 1000000000 * (duration - intsecs)
-		self.emotion_pub.publish(exp)
+		if (self.do_pub_emotions) :
+			self.emotion_pub.publish(exp)
 
 		print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ") for " + str(duration)[:4] + " seconds"
 		self.blackboard["show_expression_since"] = time.time()
@@ -809,7 +813,8 @@ class Tree():
 		ges.magnitude = intensity
 		ges.repeat = repeat
 		ges.speed = speed
-		self.gesture_pub.publish(ges)
+		if (self.do_pub_gestures) :
+			self.gesture_pub.publish(ges)
 
 		print "----- Show gesture: " + gesture + " (" + str(intensity)[:5] + ")"
 
