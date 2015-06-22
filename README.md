@@ -79,12 +79,12 @@ Other behavior is configued in this same file.
   By default, the behaviour tree is off and it needs to receive
   btree_on or btree_on_stage (for stage mode) to start.
 
-** btree_on: Facial expressions are scaled for up-close interaction;
-   robot and human approx 1 meter apart.
-** btree_on_stage: Facial expressions are scaled for a distant
-   audience; multiple spectators are more than 3 meters away.
-** emotion_off: disable publication of ROS emotion messages.
-** gesture_off: disable publication of ROS gesture messages.
+  * `btree_on`: Facial expressions are scaled for up-close interaction;
+    robot and human approx 1 meter apart.
+  * `btree_on_stage`: Facial expressions are scaled for a distant
+    audience; multiple spectators are more than 3 meters away.
+  * `emotion_off`: disable publication of ROS emotion messages.
+  * `gesture_off`: disable publication of ROS gesture messages.
 
   The btree_on and btree_on_stage messages re-enable emotion and
   gesture publication.
