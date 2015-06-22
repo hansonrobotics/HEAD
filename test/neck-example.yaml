@@ -128,8 +128,8 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2euler
-          axis: z
+        - name: quaternion2neck
+          axis: yaw
         - name: linear
           scale: -2.0
           translate: 0

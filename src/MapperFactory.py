@@ -185,19 +185,22 @@ class Quaternion2EulerYZX(MapperBase):
     #
     # Properly speaking, these are not Euler angles, but Tate-Bryan angles.
     #
-    # Note: Kudos to anyone who manages to put this swapping mechanism into code,
-    # which also builds functions to compute only one of the rotations like
-    # below. (it's harder than it looks)
+    # Note: Kudos to anyone who manages to put this swapping mechanism into
+    # code, which also builds functions to compute only one of the rotations
+    # like below. (it's harder than it looks)
+    def tate_z(q) :
+        z = math.asin(2 * (q.y * q.x + q.w * q.z))
+        return z
+
     funcsByAxis = {
       'y': lambda q:
           math.atan2(
             -2 * (q.z * q.x - q.w * q.y),
             q.w**2 - q.y**2 - q.z**2 + q.x**2
           ),
-      'z': lambda q:
-          math.asin(
-            2 * (q.y * q.x + q.w * q.z)
-          ),
+      'z': lambda q :
+          tate_z(q),
+
       'x': lambda q:
           math.atan2(
             -2 *(q.y * q.z - q.w * q.x),
@@ -293,7 +296,7 @@ class Quaternion2Neck(MapperBase):
     def get_upper_left(q) :
         quat_to_euler(q)
         self.hijoint.inverse_kinematics(self.theta, self.phi)
-        print "duude left mot", self.hijoint.theta_l
+        # print "duude left mot", self.hijoint.theta_l
         return self.hijoint.theta_l
 
     def get_upper_right(q) :
@@ -302,10 +305,16 @@ class Quaternion2Neck(MapperBase):
         print "duude right mot", self.hijoint.theta_r
         return self.hijoint.theta_r
 
+    # Yaw (spin about neck-skull) axis appears to be psi in the
+    # canonical quat-to-euler transform...
+    def get_yaw(q) :
+        quat_to_euler(q)
+        return self.psi
 
     funcs = {
       'ul': lambda q: get_upper_left(q),
       'ur': lambda q: get_upper_right(q)
+      'yaw': lambda q: get_yaw(q)
     }
     self.map = funcs[args['axis'].lower()]
 
