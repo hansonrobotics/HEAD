@@ -237,7 +237,7 @@ class Tree():
 
 		# Emotional content that the chatbot perceived i.e. did it hear
 		# angry words, polite words, etc?
-		rospy.Subscriber("/chatbot_affect_perceive", String,
+		rospy.Subscriber("/chatbot_affect_perceive", EmotionState,
 			self.chatbot_affect_perceive_callback)
 
 		# cmd_blendermode needs to go away eventually...
