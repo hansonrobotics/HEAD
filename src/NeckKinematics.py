@@ -29,7 +29,7 @@ def quad_trig(alpha, beta, gamma, sign):
 
 # Newtonian interpolation. Finds the zero of function func.
 # Assumes that there is one unique zero.  Assumes that func(pi/2)
-# is of oppsite sign from func(-pi/2).  Throws an exception if
+# is of opposite sign from func(-pi/2).  Throws an exception if
 # there are no solutions. In the context of the neck linkage, this
 # means that a neck position was requested that the mechanical linkage
 # simply cannot get to; even at full extension, the neck cannot be moved
@@ -60,7 +60,7 @@ def newton(func):
 # Inverse kinematics solver for the Eva/Han neck linkage mechanism.
 # Given desired sphere angles theta, phi for the neck U-joint
 # orientation, the inverse_kinematics(theta, phi) will compute the
-# motor angles to achive that position.  The two motor angles will
+# motor angles to achieve that position.  The two motor angles will
 # be set in self.theta_l and self.theta_r i.e. the left and right
 # motors.  Rotation follows the right-hand-rule.  See the accompanying
 # documentation in PDF or LyX format to see the drawings that these

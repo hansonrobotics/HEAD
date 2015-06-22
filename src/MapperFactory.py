@@ -291,6 +291,10 @@ class Quaternion2Neck(MapperBase):
     #          theta == pitch == rot about body Y
     #          psi == yaw ==  rotate about body Z
     # with X == foreward    Y == to right    and Z == down
+    #
+    # XXX however, the above is NOT the correct interpretation for
+    # quaternions that blender is giving to us. In the blender system,
+    # phi seems to be the pitch... and theta is always approx zero ...
     def quat_to_euler(q) :
         self.phi = math.atan2(
             2 * (q.w * q.x + q.y * q.z),
