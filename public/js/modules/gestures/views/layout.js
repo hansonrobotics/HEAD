@@ -1,50 +1,39 @@
-define(["application", "tpl!./templates/layout.tpl"], function (App, template) {
+define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, template, api) {
     App.module("Gestures.Views", function (Views, App, Backbone, Marionette, $, _) {
         Views.Layout = Marionette.LayoutView.extend({
             template: template,
             ui: {
-                startButton: '.app-gesture-demo-start',
-                stopButton: '.app-gesture-demo-stop',
-                gestures: '.app-gesture-buttons',
-                emotions: '.app-emotion-sliders'
+                btOnButton: ".app-gesture-bt-on",
+                btOnStageButton: ".app-gesture-bt-on-stage",
+                btEmotionsOffButton: ".app-gesture-bt-emotions-off",
+                btGesturesOffButton: ".app-gesture-bt-gestures-off",
+                btOffButton: ".app-gesture-bt-off"
             },
             regions: {
                 gestures: '.app-gesture-buttons',
                 emotions: '.app-emotion-sliders'
             },
             events: {
-                'click @ui.startButton': 'startDemo',
-                'click @ui.stopButton': 'stopDemo'
+                'click @ui.btOnButton': "btOn",
+                'click @ui.btOnStageButton': "btOnStage",
+                'click @ui.btEmotionsOffButton': "btEmotionsOff",
+                'click @ui.btGesturesOffButton': "btGesturesOff",
+                'click @ui.btOffButton': "btOff"
             },
-            onDestroy: function () {
-                this.stopDemo();
+            btOn: function() {
+                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on'}));
             },
-            setRandomGesture: function () {
-                var emotionSliders = $('.app-slider', this.ui.emotions),
-                    randomSlider = $(emotionSliders).get(Math.floor(Math.random() * $(emotionSliders).length));
-
-                $(randomSlider).slider('value', Math.floor(Math.random() * 30) + 40);
-
-                var gestureButtons = $('button', this.ui.gestures),
-                    randomButton = $(gestureButtons).get(Math.floor(Math.random() * $(gestureButtons).length));
-
-                $(randomButton).click();
+            btOnStage: function() {
+                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on_stage'}));
             },
-            startDemo: function () {
-                this.ui.startButton.addClass('active');
-                this.ui.stopButton.removeClass('active');
-
-                var self = this;
-                this.demo = setInterval(function () {
-                    self.setRandomGesture();
-                }, 2000);
+            btEmotionsOff: function() {
+                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_emotions_off'}));
             },
-            stopDemo: function () {
-                this.ui.startButton.removeClass('active');
-                this.ui.stopButton.addClass('active');
-
-                if (this.demo)
-                    clearTimeout(this.demo);
+            btGesturesOff: function() {
+                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_gestures_off'}));
+            },
+            btOff: function() {
+                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
             }
         });
     });

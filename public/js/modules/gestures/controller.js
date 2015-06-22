@@ -4,17 +4,13 @@ define(['application', './views/layout', './views/gestures',
         var gestures = {
             index: function () {
                 this.layoutView = new LayoutView();
-    
+
                 App.LayoutInstance.setTitle('Gestures');
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
                 App.LayoutInstance.showNav();
 
                 gestures.createGestureButtons();
                 gestures.createEmotionSliders();
-
-                api.blenderMode.enable();
-                api.setExpression("Neutral", 0);
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
             },
             createGestureButtons: function () {
                 var gestureCollection = new App.Entities.GestureCollection(),

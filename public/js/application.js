@@ -1,8 +1,12 @@
-define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout'],
-    function (Backbone, Marionette, ros, LayoutView) {
+define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api'],
+    function (Backbone, Marionette, ros, LayoutView, api) {
         var Application = new Marionette.Application();
 
         Application.on("start", function () {
+
+            // Enable for the whole app - blenderMode is the only mode for APAC demo
+            api.blenderMode.enable();
+
             if (Backbone.history)
                 Backbone.history.start();
         });
