@@ -36,7 +36,11 @@ class EvaAPI(RigAPI):
 	# Somatic states  --------------------------------
 	# awake, asleep, dazed and confused ...
 	def availableSomaStates(self):
-		return None
+		somaStates = []
+		for state in bpy.data.actions:
+			if state.name.startswith("CYC-"):
+				somaStates.append(gesture.name[4:])
+		return somaStates
 
 	def getSomaState(self):
 		return None
