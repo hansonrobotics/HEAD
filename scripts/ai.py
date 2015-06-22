@@ -15,8 +15,7 @@ class Chatbot():
     rospy.init_node('chatbot_ai')
     rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
     self._response_publisher = rospy.Publisher(
-      'chatbot_responses',
-      String
+      'chatbot_responses', String, queue_size=1
     )
 
     # Perceived emotional content; and emotion to express
@@ -25,7 +24,7 @@ class Chatbot():
     # put into what it says.
     self._affect_publisher = rospy.Publisher(
       'chatbot_affect_perceive',
-      EmotionState
+      EmotionState, queue_size=1
     )
     rospy.Subscriber('chatbot_affect_express', EmotionState,
         self._affect_express_callback)
@@ -52,8 +51,10 @@ class Chatbot():
     self._response_publisher.publish(message)
 
   # Tell the world the emotion that the chatbot is perceiving.
+  # Use the blender_api_msgs/EmotionState messae type to
+  # describe the perceived emotion.
   def _affect_perceive(self, emo):
-    print "Chatbot perceived emo:", emo
+    rospy.logwarn("Chatbot perceived emo:", emo)
     exp = EmotionState()
     exp.name = emo
     exp.magnitude = 1.0
@@ -62,10 +63,12 @@ class Chatbot():
     self._affect_publisher.publish(exp)
 
   # This is the emotion that the chatbot should convey.
-  # affect_message is of type EmotionState
+  # affect_message is of type blender_api_msgs/EmotionState
+  # Fields are name (String) magnitude (float), duration (time)
   def _affect_express_callback(self, affect_message):
     #
-    print "Chatbot is verbally expressing this:", affect_message.name
+    rospy.logwarn("Chatbot is verbally expressing this: " +
+       affect_message.name)
 
 def main():
   chatbot = Chatbot()
