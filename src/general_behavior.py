@@ -373,8 +373,8 @@ class Tree():
 				##### Was Interacting With That Person #####
 				owyl.sequence(
 					self.was_interacting_with_that_person(),
-					self.show_frustrated_expression(),
-					self.return_to_neutral_position()
+					self.return_to_neutral_position(),
+					self.show_frustrated_expression()
 				),
 
 				##### Is Interacting With Someone Else #####
