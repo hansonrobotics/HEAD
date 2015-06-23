@@ -9,11 +9,11 @@ from .helpers import *
 import pprint, time
 
 class EvaDebug(bpy.types.Operator):
-	"""Eva Debug Control"""
-	bl_idname = "eva.debug"
-	bl_label = "Eva Debug"
-
-	action = bpy.props.StringProperty()
+    """Eva Debug Control"""
+    bl_idname = "eva.debug"
+    bl_label = "Eva Debug"
+	
+    action = bpy.props.StringProperty()
 
 	# register some helper bpy props for dev purposes
 	bpy.types.Scene.evaFollowMouse = bpy.props.BoolProperty(name = "evaFollowMouse")
@@ -33,38 +33,38 @@ class EvaDebug(bpy.types.Operator):
 
 
 class BLPlayback(bpy.types.Operator):
-	"""Playback Control"""
-	bl_label = "Start Animation"
-	bl_idname = 'wm.animation_playback'
+    """Playback Control"""
+    bl_label = "Start Animation"
+    bl_idname = 'wm.animation_playback'
 
-	bpy.types.Scene.animationPlaybackActive = bpy.props.BoolProperty( name = "animationPlaybackActive", default=False)
-	bpy.context.scene['animationPlaybackActive'] = False
+    bpy.types.Scene.animationPlaybackActive = bpy.props.BoolProperty( name = "animationPlaybackActive", default=False)
+    bpy.context.scene['animationPlaybackActive'] = False
 
-	_timer = None
+    _timer = None
 
-	timeList = []
+    timeList = []
 
-	def modal(self, context, event):
-		if event.type in {'ESC'}:
-			return self.cancel(context)
+    def modal(self, context, event):
+        if event.type in {'ESC'}:
+            return self.cancel(context)
 
-		if event.type == 'TIMER':
+        if event.type == 'TIMER':
 
-			eva = bpy.evaAnimationManager
+            eva = bpy.evaAnimationManager
 
-			# compute fps
-			context.scene['evaFPS'] = fps = self.computeFPS(context)
-			timeScale = framerateHz/fps
+            # compute fps
+            context.scene['evaFPS'] = fps = self.computeFPS(context)
+            timeScale = framerateHz/fps
 
-			if bpy.context.scene['evaFollowMouse']:
-				# compute mouse pos
-				normalX = (event.mouse_region_x - 500) /1000
-				normalY = (event.mouse_region_y - 500)/1000
+            if bpy.context.scene['evaFollowMouse']:
+                # compute mouse pos
+                normalX = (event.mouse_region_x - 500) /1000
+                normalY = (event.mouse_region_y - 500)/1000
 
 				eyeLoc = eva.eyeTargetLoc.target
 				eyeLoc[0] = -normalX * 0.6
 				eyeLoc[2] = normalY * 0.5
-
+				
 				headLoc = eva.headTargetLoc.target
 				headLoc[0] = -normalX * 0.2
 				headLoc[2] = normalY * 0.2
@@ -81,12 +81,10 @@ class BLPlayback(bpy.types.Operator):
 					else:
 						eva._deleteGesture(gesture)
 
-
 			# update visemes
 			visemes = eva.visemesList[:]
 			for viseme in visemes:
 				# wait to start
-				# TODO fix so visimes would start if scheduled in the past
 				if viseme.time < 0:
 					continue
 
@@ -94,27 +92,25 @@ class BLPlayback(bpy.types.Operator):
 				if viseme.time > viseme.duration*1.5:
 					eva._deleteViseme(viseme)
 					continue
-
-				# Default target if outside rampin and rampout phases
-				viseme.magnitude.target = 1
-
+				
+				# ramp in from 0
 				rampPoint = viseme.duration * viseme.rampInRatio
-				if viseme.rampInRatio > 0 and viseme.time <= rampPoint:
+				if viseme.time <= rampPoint:
 					# compute ramp in factor
 					viseme.magnitude.target = viseme.time / rampPoint
+
 				# ramp out to 0
-				rampOutPoint = viseme.duration - viseme.duration * viseme.rampOutRatio
-				if viseme.rampOutRatio > 0 and  viseme.time >= rampOutPoint:
+				rampOutPoint = viseme.duration - viseme.duration*viseme.rampOutRatio
+				if viseme.time >= rampOutPoint:
 					# compute ramp in factor
-					viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration * viseme.rampOutRatio)
+					viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
+
 				# update action
 				viseme.magnitude.blend()
 				viseme.stripRef.influence = viseme.magnitude.current
 
 				# update time
 				viseme.time += (1/framerateHz)*timeScale
-
-
 
 			# update eye and head blending
 			headControl = eva.bones["head_target"]
@@ -153,7 +149,6 @@ class BLPlayback(bpy.types.Operator):
 			eva.keepAlive()
 
 			# send ROS data
-			...
 
 			# force update
 			bpy.data.scenes['Scene'].frame_set(1)
