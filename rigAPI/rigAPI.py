@@ -11,11 +11,11 @@ class RigAPI:
 		return None
 
 	# Somatic states  --------------------------------
-	# awake, asleep, dazed and confused ...
+	# awake, asleep, drunk, dazed and confused ...
 	def availableSomaStates(self):
 		return None
 
-	def getSomaState(self):
+	def getSomaStates(self):
 		return None
 
 	def setSomaState(self, emotion):
