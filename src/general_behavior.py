@@ -318,7 +318,8 @@ class Tree():
 			tense = random.uniform(emo.min_intensity, emo.max_intensity)
 			durat = random.uniform(emo.min_duration, emo.max_duration)
 			self.show_emotion(emo_name, tense, durat)
-			# time.sleep(durat) # XXX Sleep is a bad idea, blocks events ...
+			print "----- Instant expression: " + emo_name + " (" +
+			     str(tense) + ") for " + str(durat) + " seconds"
 		return emo_name
 
 	# ------------------------------------------------------------------
