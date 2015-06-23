@@ -142,8 +142,6 @@ class BLPlayback(bpy.types.Operator):
             eva.eyeWander = eva.deformObj.pose.bones['eye_wander']['value']
             eva.blinkRate = eva.deformObj.pose.bones['blink_rate']['value']
             eva.blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
-            eva.breathRate = eva.deformObj.pose.bones['breath_rate']['value']
-            eva.breathIntensity = eva.deformObj.pose.bones['breath_intensity']['value']
 
             # keep alive
             eva.keepAlive()
@@ -213,4 +211,3 @@ def refresh():
     except Exception as E:
         unregister()
         register()
-

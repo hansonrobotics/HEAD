@@ -26,6 +26,13 @@ class AnimationManager():
         self.gesturesList = []
         self.emotionsList = []
         self.visemesList = []
+        self.cyclesList = []
+
+
+        # Start default cycles
+        self.newCycle('CYC-normal')
+        self.newCycle('CYC-breathing')
+
 
         # Scale for Blender coordinates 1 BU in m.
         self.scale = 0.25
@@ -49,8 +56,6 @@ class AnimationManager():
         self.eyeWander = 1.0
         self.blinkRate = 0.0
         self.blinkDuration = 0.0
-        self.breathRate = 0.0
-        self.breathIntensity = 0.0
 
         # Emotional parameters
         self.swiftness = 1.0
@@ -99,11 +104,14 @@ class AnimationManager():
         '''Called every frame, used to dispatch animation actuators'''
         self.idle += 1.0
 
-        if True:
-            actuators.idleCycle(self)
+        # if True:
+        #     actuators.idleCycle(self)
+        #
+        # if True:
+        #     actuators.breathingCycle(self, self.breathRate, self.breathIntensity)
 
-        if True:
-            actuators.breathingCycle(self, self.breathRate, self.breathIntensity)
+        for cycle in self.cyclesList:
+            actuators.doCycle(self, cycle)
 
         if True and self.randomFrequency('dart', self.eyeDartRate):
             actuators.eyeSaccades(self, self.eyeWander)
@@ -239,6 +247,14 @@ class AnimationManager():
         self.visemesList.append(v)
 
         return True
+
+
+    def newCycle(self, name, rate=1.0, magnitude=1.0):
+        # Check value for sanity
+        checkValue(rate, 0.1, 10)
+        checkValue(magnitude, 0, 1)
+
+        self.cyclesList.append(Cycle(name, rate, magnitude))
 
 
     def _deleteViseme(self, viseme):
@@ -386,6 +402,14 @@ class Viseme():
         self.magnitude = BlendedNum(0, steps=2, smoothing=4) 	# normalized amplitude
         self.rampInRatio = rampInRatio 		# percentage of time spent blending in
         self.rampOutRatio = rampOutRatio 	# percentage of time spent blending out
+
+
+class Cycle():
+    ''' Represents a cyclic gesture, or 'soma' '''
+    def __init__(self, name, rate, magnitude):
+        self.name = name
+        self.rate = rate
+        self.magnitude = magnitude
 
 
 def init():

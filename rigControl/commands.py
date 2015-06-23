@@ -117,9 +117,7 @@ class EvaAPI(RigAPI):
         return {'eyeDartRate': round(eva.eyeDartRate, 3),
                 'eyeWander': round(eva.eyeWander, 3),
                 'blinkRate': round(eva.blinkRate, 3),
-                'blinkDuration': round(eva.blinkDuration, 3),
-                'breathRate': round(eva.breathRate, 3),
-                'breathIntensity': round(eva.breathIntensity, 3)}
+                'blinkDuration': round(eva.blinkDuration, 3)}
 
 
     # Visemes --------------------------------------
