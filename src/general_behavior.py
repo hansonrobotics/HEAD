@@ -428,11 +428,11 @@ class Tree():
 
 
 	# -------------------
-	# Nothing interesting is happening
-	# she will look around and search for attention
-	# she may go to sleep, and it's more likely to happen if she has been bored for a while
-	# she wakes up whenever there's an interruption, e.g. someone arrives
-	# or after timeout
+	# Nothing interesting is happening.
+	# She will look around and search for attention.  She may go to sleep,
+	# and it's more likely to happen if she has been bored for a while.
+	# She wakes up whenever there's an interruption, e.g. someone arrives
+	# or after a timeout.
 	def nothing_is_happening(self) :
 		tree = owyl.sequence(
 			owyl.selector(
