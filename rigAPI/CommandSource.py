@@ -7,17 +7,17 @@
 # source to the blender api.
 class CommandSource:
 
-	# When called, should return the next command that blender will run.
-	def poll(self):
-		return None
+    # When called, should return the next command that blender will run.
+    def poll(self):
+        return None
 
-	def push(self):
-		return
+    def push(self):
+        return
 
-	def init(self):
-		return False
+    def init(self):
+        return False
 
-	# After this is called, blender will never again poll for more
-	# commands. This is a great time to empty out any pending queues.
-	def drop(self):
-		return
+    # After this is called, blender will never again poll for more
+    # commands. This is a great time to empty out any pending queues.
+    def drop(self):
+        return
