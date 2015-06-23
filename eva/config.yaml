@@ -1,142 +1,143 @@
-Frown_R_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Frown-R_joint
-    joint_speed: 1.1
-    motor:
-        id: 6
-        init: 2048
-        min: 1600
-        max: 2650
-        acceleration: 20
+safe:
+    Frown_R_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Frown-R_joint
+        joint_speed: 1.1
+        motor:
+            id: 6
+            init: 2048
+            min: 1600
+            max: 2650
+            acceleration: 20
 
-Smile_R_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Smile-R_joint
-    joint_speed: 1.1
-    motor:
-        id: 9
-        init: 2048
-        min: 1450
-        max: 2600
-        acceleration: 20
+    Smile_R_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Smile-R_joint
+        joint_speed: 1.1
+        motor:
+            id: 9
+            init: 2048
+            min: 1450
+            max: 2600
+            acceleration: 20
 
-Smile_L_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Smile-L_joint
-    joint_speed: 1.1
-    motor:
-        id: 8
-        init: 2048
-        min: 1600
-        max: 2600
-        acceleration: 20
+    Smile_L_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Smile-L_joint
+        joint_speed: 1.1
+        motor:
+            id: 8
+            init: 2048
+            min: 1600
+            max: 2600
+            acceleration: 20
 
-Frown_L_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Frown-L_joint
-    joint_speed: 1.1
-    motor:
-        id: 7
-        init: 2048
-        min: 1600
-        max: 2700
-        acceleration: 20
+    Frown_L_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Frown-L_joint
+        joint_speed: 1.1
+        motor:
+            id: 7
+            init: 2048
+            min: 1600
+            max: 2700
+            acceleration: 20
 
-Jaw_Up_Down_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Jaw-Up-Down_joint
-    joint_speed: 1.1
-    motor:
-        id: 5
-        init: 1970
-        min: 1970
-        max: 3000
-        acceleration: 20
+    Jaw_Up_Down_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Jaw-Up-Down_joint
+        joint_speed: 1.1
+        motor:
+            id: 5
+            init: 1970
+            min: 1970
+            max: 3000
+            acceleration: 20
 
-Upper_Gimbal_L_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Upper-Gimbal-L_joint
-    joint_speed: 1.1
-    motor:
-        id: 4
-        init: 1940
-        min: 1200
-        max: 2970
-        acceleration: 20
+    Upper_Gimbal_L_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Upper-Gimbal-L_joint
+        joint_speed: 1.1
+        motor:
+            id: 4
+            init: 1940
+            min: 1200
+            max: 2970
+            acceleration: 20
 
-Upper_Gimbal_R_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Upper-Gimbal-R_joint
-    joint_speed: 1.1
-    motor:
-        id: 3
-        init: 2340
-        min: 1200
-        max: 3090
-        acceleration: 20
+    Upper_Gimbal_R_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Upper-Gimbal-R_joint
+        joint_speed: 1.1
+        motor:
+            id: 3
+            init: 2340
+            min: 1200
+            max: 3090
+            acceleration: 20
 
-Lower_Gimbal_L_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Lower-Gimbal-L_joint
-    joint_speed: 1.1
-    motor:
-        id: 2
-        init: 2512
-        min: 1700
-        max: 2900
-        acceleration: 20
+    Lower_Gimbal_L_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Lower-Gimbal-L_joint
+        joint_speed: 1.1
+        motor:
+            id: 2
+            init: 2512
+            min: 1700
+            max: 2900
+            acceleration: 20
 
-Lower_Gimbal_R_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Lower-Gimbal-R_joint
-    joint_speed: 1.1
-    motor:
-        id: 1
-        init: 1510
-        min: 1180
-        max: 2478
-        acceleration: 20
+    Lower_Gimbal_R_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Lower-Gimbal-R_joint
+        joint_speed: 1.1
+        motor:
+            id: 1
+            init: 1510
+            min: 1180
+            max: 2478
+            acceleration: 20
 
-Neck_Rotation_controller:
-    controller:
-        package: dynamixel_controllers
-        module: joint_position_controller
-        type: JointPositionController
-    joint_name: Neck-Rotation_joint
-    joint_speed: 1.1
-    motor:
-        id: 0
-        init: 1994
-        min: 1130
-        max: 2830
-        acceleration: 20
+    Neck_Rotation_controller:
+        controller:
+            package: dynamixel_controllers
+            module: joint_position_controller
+            type: JointPositionController
+        joint_name: Neck-Rotation_joint
+        joint_speed: 1.1
+        motor:
+            id: 0
+            init: 1994
+            min: 1130
+            max: 2830
+            acceleration: 20
 
 
 pau2motors:
@@ -149,3 +150,44 @@ pau2motors:
 # Robot voice
 voice: heather
 lipsync: True
+safety_rules:
+    Smile-L:
+        - type: timing
+          direction: min
+          extreme: 0.35
+          t1: 1
+          t2: 1
+          t3: 5
+          t4: 1
+    Smile-R:
+        - type: timing
+          direction: min
+          extreme: 0.5
+          t1: 1
+          t2: 1
+          t3: 5
+          t4: 1
+    Frown-L:
+        - type: timing
+          direction: max
+          extreme: 0.6
+          t1: 1
+          t2: 1
+          t3: 5
+          t4: 1
+    Frown-R:
+        - type: timing
+          direction: max
+          extreme: 0.6
+          t1: 1
+          t2: 1
+          t3: 5
+          t4: 1
+    Jaw-Up-Down:
+        - type: timing
+          direction: max
+          extreme: 0.3
+          t1: 1
+          t2: 1
+          t3: 5
+          t4: 1
