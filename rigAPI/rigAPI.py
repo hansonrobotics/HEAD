@@ -10,7 +10,19 @@ class RigAPI:
 	def isAlive(self):
 		return None
 
-	# Emotion and Gesture commands ==========================
+	# Somatic states  --------------------------------
+	# awake, asleep, drunk, dazed and confused ...
+	def availableSomaStates(self):
+		return None
+
+	def getSomaStates(self):
+		return None
+
+	def setSomaState(self, emotion):
+		return None
+
+	# Emotion expressions ----------------------------
+	# smiling, frowning, bored ...
 	def availableEmotionStates(self):
 		return None
 
@@ -21,6 +33,7 @@ class RigAPI:
 		return None
 
 	# Gestures --------------------------------------
+	# blinking, nodding, shaking...
 	def availableGestures(self):
 		return None
 

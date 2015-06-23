@@ -23,8 +23,8 @@ class BLCommandListener(bpy.types.Operator):
 	bpy.context.scene['commandListenerActive'] = False
 
 	def modal(self, context, event):
-		if debug and event.type in {'ESC'}:
-			return self.cancel(context)
+		#if debug and event.type in {'ESC'}:
+			#return self.cancel(context)
 
 		if debug and event.type == 'TIMER':
 			# print('Running Command Listener', round(self._timer.time_duration,3))

@@ -1,5 +1,5 @@
 # Functions that control autonomous behaviors in the Eva character
-# Breathing, blinking, eye saccades, head drift.
+# Breathing, blinking, eye saccades, head drift, sleeping.
 #
 # All of the functions here take AnimationManager as the argument.
 
