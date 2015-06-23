@@ -43,15 +43,21 @@ class EvaAPI(RigAPI):
     def getSomaStates(self):
         eva = bpy.evaAnimationManager
         somaStates = {}
-        #for emotion in eva.emotionsList:
-        #	magnitude = round(emotion.magnitude.current, 3)
-        #	duration = round(emotion.duration, 3)
-        #	emotionStates[emotion.name] = {'magnitude': magnitude, 'duration': duration}
+        for cycle in eva.cyclesSet:
+            magnitude = round(cycle.magnitude, 3)
+            rate = round(cycle.rate, 3)
+            ease_in = round(cycle.ease_in, 3)
+            somaStates[cycle.name] = {'magnitude': magnitude, 'rate': rate,
+                'ease_in': ease_in}
         return somaStates
 
     def setSomaState(self, state):
-        # print "duuude it is:", state
-        # bpy.evaAnimationManager.setSomaState(eval(state))
+        name = 'CYC-' + state['name']
+        rate = state['rate']
+        magnitude = state['magnitude']
+        ease_in = state['ease_in']
+        bpy.evaAnimationManager.setCycle(name=name,
+            rate=rate, magnitude=magnitude, ease_in=ease_in)
         return 0
 
     # Emotion expressions ----------------------------
@@ -117,9 +123,7 @@ class EvaAPI(RigAPI):
         return {'eyeDartRate': round(eva.eyeDartRate, 3),
                 'eyeWander': round(eva.eyeWander, 3),
                 'blinkRate': round(eva.blinkRate, 3),
-                'blinkDuration': round(eva.blinkDuration, 3),
-                'breathRate': round(eva.breathRate, 3),
-                'breathIntensity': round(eva.breathIntensity, 3)}
+                'blinkDuration': round(eva.blinkDuration, 3)}
 
 
     # Visemes --------------------------------------

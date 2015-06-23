@@ -26,6 +26,13 @@ class AnimationManager():
         self.gesturesList = []
         self.emotionsList = []
         self.visemesList = []
+        self.cyclesSet = set()
+
+
+        # Start default cycles
+        self.setCycle('CYC-normal', rate=1.0, magnitude=1.0, ease_in=0.0)
+        self.setCycle('CYC-breathing', rate=1.0, magnitude=1.0, ease_in=0.0)
+
 
         # Scale for Blender coordinates 1 BU in m.
         self.scale = 0.25
@@ -49,8 +56,6 @@ class AnimationManager():
         self.eyeWander = 1.0
         self.blinkRate = 0.0
         self.blinkDuration = 0.0
-        self.breathRate = 0.0
-        self.breathIntensity = 0.0
 
         # Emotional parameters
         self.swiftness = 1.0
@@ -99,11 +104,8 @@ class AnimationManager():
         '''Called every frame, used to dispatch animation actuators'''
         self.idle += 1.0
 
-        if True:
-            actuators.idleCycle(self)
-
-        if True:
-            actuators.breathingCycle(self, self.breathRate, self.breathIntensity)
+        for cycle in self.cyclesSet:
+            actuators.doCycle(self, cycle)
 
         if True and self.randomFrequency('dart', self.eyeDartRate):
             actuators.eyeSaccades(self, self.eyeWander)
@@ -239,6 +241,28 @@ class AnimationManager():
         self.visemesList.append(v)
 
         return True
+
+
+    def setCycle(self, name, rate, magnitude, ease_in):
+        if magnitude == 0:
+            # Remove cycle
+            toRemove = [cycle for cycle in self.cyclesSet if cycle.name == name]
+            for cycle in toRemove:
+                self.cyclesSet.remove(cycle)
+
+            toRemove = [gesture for gesture in self.gesturesList if gesture.name == name]
+            for gesture in toRemove:
+                self._deleteGesture(gesture)
+            return 0
+        else:
+            # Check value for sanity
+            checkValue(rate, 0.1, 10)
+            checkValue(magnitude, 0, 1)
+
+            # Add or update cycle with new parameters
+            newCycle = Cycle(name, rate, magnitude, ease_in)
+            self.cyclesSet.discard(newCycle)
+            self.cyclesSet.add(newCycle)
 
 
     def _deleteViseme(self, viseme):
@@ -386,6 +410,21 @@ class Viseme():
         self.magnitude = BlendedNum(0, steps=2, smoothing=4) 	# normalized amplitude
         self.rampInRatio = rampInRatio 		# percentage of time spent blending in
         self.rampOutRatio = rampOutRatio 	# percentage of time spent blending out
+
+
+class Cycle():
+    ''' Represents a cyclic gesture, or 'soma' '''
+    def __init__(self, name, rate, magnitude, ease_in):
+        self.name = name
+        self.rate = rate
+        self.magnitude = magnitude
+        self.ease_in = ease_in
+
+    def __eq__(self, other):
+        return self.name == other.name
+
+    def __hash__(self):
+        return hash(self.name)
 
 
 def init():

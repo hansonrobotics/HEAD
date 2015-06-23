@@ -8,21 +8,33 @@ from .helpers import *
 import random
 
 
-def idleCycle(self):
-    if 'CYC-normal' not in [gesture.name for gesture in self.gesturesList]:
-        self.newGesture('CYC-normal', repeat = 10, speed=1, magnitude=1.0, priority=1)
+# def idleCycle(self):
+#     if 'CYC-normal' not in [gesture.name for gesture in self.gesturesList]:
+#         self.newGesture('CYC-normal', repeat = 10, speed=1, magnitude=1.0, priority=1)
+#
+#
+# def breathingCycle(self, rate, intensity):
+#     if 'CYC-breathing' not in [gesture.name for gesture in self.gesturesList]:
+#         # create new strip
+#         self.newGesture('CYC-breathing', repeat=10, speed=rate, magnitude=intensity)
+#     else:
+#         # update strip property
+#         for gesture in self.gesturesList:
+#             if gesture.name == 'CYC-breathing':
+#                 gesture.stripRef.influence = intensity
+#                 gesture.speed = rate
 
 
-def breathingCycle(self, rate, intensity):
-    if 'CYC-breathing' not in [gesture.name for gesture in self.gesturesList]:
+def doCycle(self, cycle):
+    if cycle.name not in [gesture.name for gesture in self.gesturesList]:
         # create new strip
-        self.newGesture('CYC-breathing', repeat=10, speed=rate, magnitude=intensity)
+        self.newGesture(cycle.name, repeat=10, speed=cycle.rate, magnitude=cycle.magnitude)
     else:
         # update strip property
         for gesture in self.gesturesList:
-            if gesture.name == 'CYC-breathing':
-                gesture.stripRef.influence = intensity
-                gesture.speed = rate
+            if gesture.name == cycle.name:
+                gesture.stripRef.influence = cycle.magnitude
+                gesture.speed = cycle.rate
 
 
 def emotionJitter(self):

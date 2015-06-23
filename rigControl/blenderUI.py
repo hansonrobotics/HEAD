@@ -132,8 +132,6 @@ class BLRigControl(bpy.types.Panel):
         col.prop(bones['eye_wander'], '["value"]', text='eyeWander', slider = True)
         col.prop(bones['blink_rate'], '["value"]', text='blinkRate', slider = True)
         col.prop(bones['blink_duration'], '["value"]', text='blinkDuration', slider = True)
-        col.prop(bones['breath_rate'], '["value"]', text='breathRate', slider = True)
-        col.prop(bones['breath_intensity'], '["value"]', text='breathIntensity', slider = True)
 
         row = layout.row()
         layout.label(text="Debug:")
@@ -163,4 +161,3 @@ def refresh():
     except ValueError:
         unregister()
         register()
-
