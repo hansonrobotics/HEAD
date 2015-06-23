@@ -254,7 +254,7 @@ class FaceTrack:
 			# is also a pending look-at to perform.
 
 			if 0 < self.gaze_at and self.look_at <= 0:
-				print("Gaze at id " + str(self.gaze_at))
+				# print("Gaze at id " + str(self.gaze_at))
 				try:
 					if not self.gaze_at in self.visible_faces:
 						raise Exception("Face not visible")
