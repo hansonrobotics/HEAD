@@ -29,16 +29,16 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
                 api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on_stage'}));
             },
             btEmotionsOff: function() {
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_emotions_off'}));
+                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'emotion_off'}));
             },
             btGesturesOff: function() {
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_gestures_off'}));
+                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'gesture_off'}));
             },
             btOff: function() {
                 api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
             },
             sayIntro: function() {
-                
+                api.sendChatMessage('start demo');
             }
         });
     });
