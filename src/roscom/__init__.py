@@ -133,19 +133,33 @@ class CommandWrappers:
         return msg.GetAPIVersion(api.getAPIVersion())
 
     # Somatic states  --------------------------------
-    # awake, asleep, dazed and confused ...
+    # awake, asleep, breathing, drunk, dazed and confused ...
     @publish_once("~available_soma_states", msg.AvailableSomaStates)
     def availableSomaStates():
         return msg.AvailableSomaStates(api.availableSomaStates())
 
 
-    @subscribe("~set_soma_state", stdmsg.String)
-    def setSomaState(state):
+    @subscribe("~set_soma_state", msg.SomaState)
+    def setSomaState(mesg):
+        state = str({
+            mesg.name: {
+                'magnitude': mesg.magnitude,
+                'rate': mesg.rate,
+                'ease_in': mesg.ease_in.to_sec()
+            }
+        })
         api.setSomaState(state)
 
-    @publish_live("~get_soma_state", stdmsg.String)
-    def getSomaState():
-        return stdmsg.String(api.getSomaState())
+    @publish_live("~get_soma_states", msg.SomaStates)
+    def getSomaStates():
+        return msg.SomaStates(api.getSomaStates())
+        return msg.SomaStates([
+            msg.SomaState(name,
+                vals['magnitude'],
+                vals['rate'],
+                rospy.Duration(vals['ease_in']))
+            for name, vals in api.getSomaStates().items()
+        ])
 
 
     # Emotion expressions ----------------------------
@@ -158,17 +172,19 @@ class CommandWrappers:
     @publish_live("~get_emotion_states", msg.EmotionStates)
     def getEmotionStates():
         return msg.EmotionStates([
-            msg.EmotionState(name, vals['magnitude'], rospy.Duration(vals['duration']))
+            msg.EmotionState(name,
+                vals['magnitude'],
+                rospy.Duration(vals['duration']))
             for name, vals in api.getEmotionStates().items()
         ])
 
     # Message is a single emotion state
     @subscribe("~set_emotion_state", msg.EmotionState)
-    def setEmotionState(msg):
+    def setEmotionState(mesg):
         emotion = str({
-            msg.name: {
-                'magnitude': msg.magnitude,
-                'duration': msg.duration.to_sec()
+            mesg.name: {
+                'magnitude': mesg.magnitude,
+                'duration': mesg.duration.to_sec()
             }
         })
         api.setEmotionState(emotion)
@@ -184,8 +200,10 @@ class CommandWrappers:
     @publish_live("~get_gestures", msg.Gestures)
     def getGestures():
         return msg.Gestures([
-            msg.Gesture(
-                name, vals['magnitude'], rospy.Duration(vals['duration']), vals['speed']
+            msg.Gesture(name,
+                vals['magnitude'],
+                rospy.Duration(vals['duration']),
+                vals['speed']
             ) for name, vals in api.getGestures().items()
         ])
 
