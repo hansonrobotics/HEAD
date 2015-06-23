@@ -904,9 +904,9 @@ class Tree():
 
 	@owyl.taskmethod
 	def clear_new_face_target(self, **kwargs):
-		if not self.blackboard["is_interruption"]:
-			print "----- Cleared new face: " + str(self.blackboard["new_face"])
-			self.blackboard["new_face"] = 0
+		#if not self.blackboard["is_interruption"]:
+		print "----- Cleared new face: " + str(self.blackboard["new_face"])
+		self.blackboard["new_face"] = 0
 		yield True
 
 	@owyl.taskmethod
