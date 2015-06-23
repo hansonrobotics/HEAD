@@ -24,44 +24,44 @@ class EvaAPI(RigAPI):
     def __init__(self):
         pass
 
-	# System control and information commands ===========
-	def getAPIVersion(self):
-		return 3
+    # System control and information commands ===========
+    def getAPIVersion(self):
+        return 3
 
     def isAlive(self):
         return int(bpy.context.scene['animationPlaybackActive'])
 
-	# Somatic states  --------------------------------
-	# awake, asleep, drunk, dazed and confused ...
-	def availableSomaStates(self):
-		somaStates = []
-		for state in bpy.data.actions:
-			if state.name.startswith("CYC-"):
-				somaStates.append(state.name[4:])
-		return somaStates
+    # Somatic states  --------------------------------
+    # awake, asleep, drunk, dazed and confused ...
+    def availableSomaStates(self):
+        somaStates = []
+        for state in bpy.data.actions:
+            if state.name.startswith("CYC-"):
+                somaStates.append(state.name[4:])
+        return somaStates
 
-	def getSomaStates(self):
-		eva = bpy.evaAnimationManager
-		somaStates = {}
-		#for emotion in eva.emotionsList:
-		#	magnitude = round(emotion.magnitude.current, 3)
-		#	duration = round(emotion.duration, 3)
-		#	emotionStates[emotion.name] = {'magnitude': magnitude, 'duration': duration}
-		return somaStates
+    def getSomaStates(self):
+        eva = bpy.evaAnimationManager
+        somaStates = {}
+        #for emotion in eva.emotionsList:
+        #	magnitude = round(emotion.magnitude.current, 3)
+        #	duration = round(emotion.duration, 3)
+        #	emotionStates[emotion.name] = {'magnitude': magnitude, 'duration': duration}
+        return somaStates
 
-	def setSomaState(self, state):
-		# print "duuude it is:", state
-		# bpy.evaAnimationManager.setSomaState(eval(state))
-		return 0
+    def setSomaState(self, state):
+        # print "duuude it is:", state
+        # bpy.evaAnimationManager.setSomaState(eval(state))
+        return 0
 
-	# Emotion expressions ----------------------------
-	# smiling, frowning, bored ...
-	def availableEmotionStates(self):
-		emotionStates = []
-		for emo in bpy.data.objects['control'].pose.bones:
-			if emo.name.startswith('EMO-'):
-				emotionStates.append(emo.name[4:])
-		return emotionStates
+    # Emotion expressions ----------------------------
+    # smiling, frowning, bored ...
+    def availableEmotionStates(self):
+        emotionStates = []
+        for emo in bpy.data.objects['control'].pose.bones:
+            if emo.name.startswith('EMO-'):
+                emotionStates.append(emo.name[4:])
+        return emotionStates
 
 
     def getEmotionStates(self):
@@ -80,14 +80,14 @@ class EvaAPI(RigAPI):
         return 0
 
 
-	# Gestures --------------------------------------
-	# blinking, nodding, shaking...
-	def availableGestures(self):
-		emotionGestures = []
-		for gesture in bpy.data.actions:
-			if gesture.name.startswith("GST-"):
-				emotionGestures.append(gesture.name[4:])
-		return emotionGestures
+    # Gestures --------------------------------------
+    # blinking, nodding, shaking...
+    def availableGestures(self):
+        emotionGestures = []
+        for gesture in bpy.data.actions:
+            if gesture.name.startswith("GST-"):
+                emotionGestures.append(gesture.name[4:])
+        return emotionGestures
 
 
     def getGestures(self):
@@ -122,80 +122,80 @@ class EvaAPI(RigAPI):
                 'breathIntensity': round(eva.breathIntensity, 3)}
 
 
-	# Visemes --------------------------------------
-	def availableVisemes(self):
-		visemes = []
-		for viseme in bpy.data.actions:
-			if viseme.name.startswith("VIS-"):
-				visemes.append(viseme.name[4:])
-		return visemes
+    # Visemes --------------------------------------
+    def availableVisemes(self):
+        visemes = []
+        for viseme in bpy.data.actions:
+            if viseme.name.startswith("VIS-"):
+                visemes.append(viseme.name[4:])
+        return visemes
 
 
-	def queueViseme(self, vis, start=0, duration=0.5, \
-			rampin=0.1, rampout=0.8, magnitude=1):
-		return bpy.evaAnimationManager.newViseme("VIS-"+vis, duration, \
-			rampin, rampout, start)
+    def queueViseme(self, vis, start=0, duration=0.5, \
+            rampin=0.1, rampout=0.8, magnitude=1):
+        return bpy.evaAnimationManager.newViseme("VIS-"+vis, duration, \
+            rampin, rampout, start)
 
-	# Eye look-at targets ==========================
-	# The coordinate system used is head-relative, in 'engineering'
-	# coordinates: 'x' is forward, 'y' to the left, and 'z' up.
-	# Distances are measured in meters.  Origin of the coordinate
-	# system is somewhere (where?) in the middle of the head.
+    # Eye look-at targets ==========================
+    # The coordinate system used is head-relative, in 'engineering'
+    # coordinates: 'x' is forward, 'y' to the left, and 'z' up.
+    # Distances are measured in meters.  Origin of the coordinate
+    # system is somewhere (where?) in the middle of the head.
 
-	def setFaceTarget(self, loc):
-		# Eva uses y==forward x==right. Distances in meters from
-		# somewhere in the middle of the head.
-		mloc = [-loc[1], loc[0], loc[2]]
-		bpy.evaAnimationManager.setFaceTarget(mloc)
-		return 0
+    def setFaceTarget(self, loc):
+        # Eva uses y==forward x==right. Distances in meters from
+        # somewhere in the middle of the head.
+        mloc = [-loc[1], loc[0], loc[2]]
+        bpy.evaAnimationManager.setFaceTarget(mloc)
+        return 0
 
-	def setGazeTarget(self, loc):
-		mloc = [-loc[1],  loc[0], loc[2]]
-		bpy.evaAnimationManager.setGazeTarget(mloc)
-		return 0
+    def setGazeTarget(self, loc):
+        mloc = [-loc[1],  loc[0], loc[2]]
+        bpy.evaAnimationManager.setGazeTarget(mloc)
+        return 0
 
-	# ========== info dump for ROS, Should return non-blender data structures
+    # ========== info dump for ROS, Should return non-blender data structures
 
-	# Gets Head rotation quaternion in XYZ format in blender independamt
-	# data structure.
-	# Pitch: X (positive down, negative up)?
-	# Yaw: Z (negative right to positive left)
+    # Gets Head rotation quaternion in XYZ format in blender independamt
+    # data structure.
+    # Pitch: X (positive down, negative up)?
+    # Yaw: Z (negative right to positive left)
 
-	def getHeadData(self):
-		bones = bpy.evaAnimationManager.deformObj.pose.bones
-		q = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
-		return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
+    def getHeadData(self):
+        bones = bpy.evaAnimationManager.deformObj.pose.bones
+        q = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
+        return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
 
-	# Gets Eye rotation angles:
-	# Pitch: down(negative) to up(positive)
-	# Yaw: left (negative) to right(positive)
+    # Gets Eye rotation angles:
+    # Pitch: down(negative) to up(positive)
+    # Yaw: left (negative) to right(positive)
 
-	def getEyesData(self):
-		bones = bpy.evaAnimationManager.deformObj.pose.bones
-		head = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_euler()
-		leye = bones['eye.L'].matrix.to_euler()
-		reye = bones['eye.R'].matrix.to_euler()
-		# Relative to head. Head angles are inversed.
-		leye_p = leye.x + head.x
-		leye_y = pi - leye.z if leye.z >= 0 else -(pi+leye.z)
-		reye_p = reye.x + head.x
-		reye_y = pi - reye.z if reye.z >= 0 else -(pi+reye.z)
-		# Add head target
-		leye_y += head.z
-		reye_y += head.z
-		return {'l':{'p':leye_p,'y':leye_y},'r':{'p':reye_p,'y':reye_y}}
+    def getEyesData(self):
+        bones = bpy.evaAnimationManager.deformObj.pose.bones
+        head = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_euler()
+        leye = bones['eye.L'].matrix.to_euler()
+        reye = bones['eye.R'].matrix.to_euler()
+        # Relative to head. Head angles are inversed.
+        leye_p = leye.x + head.x
+        leye_y = pi - leye.z if leye.z >= 0 else -(pi+leye.z)
+        reye_p = reye.x + head.x
+        reye_y = pi - reye.z if reye.z >= 0 else -(pi+reye.z)
+        # Add head target
+        leye_y += head.z
+        reye_y += head.z
+        return {'l':{'p':leye_p,'y':leye_y},'r':{'p':reye_p,'y':reye_y}}
 
 
-	def getFaceData(self):
-		shapekeys = OrderedDict()
-		for shapekeyGroup in bpy.data.shape_keys:
-			# Hardcoded to find the correct group
-			if shapekeyGroup.name == 'Key.007':
-				for kb in shapekeyGroup.key_blocks:
-					shapekeys[kb.name] = kb.value
+    def getFaceData(self):
+        shapekeys = OrderedDict()
+        for shapekeyGroup in bpy.data.shape_keys:
+            # Hardcoded to find the correct group
+            if shapekeyGroup.name == 'Key.007':
+                for kb in shapekeyGroup.key_blocks:
+                    shapekeys[kb.name] = kb.value
 
-		# Fake the jaw shapekey from its z coordinate
-		jawz = bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]
-		shapekeys['jaw'] = min(max(jawz/0.3, 0), 1)
+        # Fake the jaw shapekey from its z coordinate
+        jawz = bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]
+        shapekeys['jaw'] = min(max(jawz/0.3, 0), 1)
 
-		return shapekeys
+        return shapekeys
