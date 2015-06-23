@@ -43,7 +43,6 @@ class BLRigControl(bpy.types.Panel):
         col.operator("wm.command_listener", text=text, icon='CONSOLE')
         col.operator('eva.debug', text='Start Animation', icon='ARMATURE_DATA').action = 'commands.init()'
 
-
         # speech
         col = layout.column(align=True)
         col.label(text="Speech:")
@@ -71,7 +70,6 @@ class BLRigControl(bpy.types.Panel):
                 # row.operator("eva.gestures", text=action.name[4:]).evaAction = action.name
                 row.operator('eva.debug', text=action.name[4:]).action = 'commands.EvaAPI().setGesture("'+ action.name[4:] +'")'
 
-
         ###  Emotions  ###
         row = layout.row()
         layout.label(text="Emotions:")
@@ -90,7 +88,6 @@ class BLRigControl(bpy.types.Panel):
         col.operator('eva.debug', text = 'Set Emotion').action =  'commands.EvaAPI().setEmotionState("'+ context.scene.evaEmotion + '")'
         col.prop(context.scene, 'evaEmotion', text='')
 
-
         # row = layout.row()
         # op = row.operator('eva.debug', text='Happy')
         # op.action = 'commands.EvaAPI().setEmotionStates({"happy":0.8},bpy.evaAnimationManager)'
@@ -106,23 +103,23 @@ class BLRigControl(bpy.types.Panel):
         row.active = runningAnimation
         row.prop(context.scene, 'evaFollowMouse', text='Follow Mouse')
 
-        # Warning: X and Y Axis are rotated to accomodate Command Lisenter
+        # Warning: X and Y Axis are rotated to accommodate Command Listener
         col = layout.column(align = True)
-        col.operator('eva.debug', text='Face Up').action = 'commands.EvaAPI().setFaceTarget([1, 0, 0.5])'
+        col.operator('eva.debug', text='Face Up').action = 'commands.EvaAPI().setFaceTarget([1, 0, 0.35])'
         row = col.row(align=True)
         row.operator('eva.debug', text='Left').action = 'commands.EvaAPI().setFaceTarget([1, -0.5, 0])'
         row.operator('eva.debug', text='Centre').action = 'commands.EvaAPI().setFaceTarget([1, 0,0])'
         row.operator('eva.debug', text='Right').action = 'commands.EvaAPI().setFaceTarget([1, 0.5, 0])'
-        col.operator('eva.debug', text='Face Down').action = 'commands.EvaAPI().setFaceTarget([1, 0, -0.5])'
+        col.operator('eva.debug', text='Face Down').action = 'commands.EvaAPI().setFaceTarget([1, 0, -0.35])'
         col.operator('eva.debug', text='Face Nil').action = 'commands.EvaAPI().setFaceTarget([0, 0, 0])'
 
         col = layout.column(align = True)
-        col.operator('eva.debug', text='Gaze Up').action = 'commands.EvaAPI().setGazeTarget([1, 0, 0.5])'
+        col.operator('eva.debug', text='Gaze Up').action = 'commands.EvaAPI().setGazeTarget([1, 0, 0.3])'
         row = col.row(align=True)
         row.operator('eva.debug', text='Left').action = 'commands.EvaAPI().setGazeTarget([1, -0.5, 0])'
         row.operator('eva.debug', text='Centre').action = 'commands.EvaAPI().setGazeTarget([1, 0,0])'
         row.operator('eva.debug', text='Right').action = 'commands.EvaAPI().setGazeTarget([1, 0.5, 0])'
-        col.operator('eva.debug', text='Gaze Down').action = 'commands.EvaAPI().setGazeTarget([1, 0, -0.5])'
+        col.operator('eva.debug', text='Gaze Down').action = 'commands.EvaAPI().setGazeTarget([1, 0, -0.3])'
         col.operator('eva.debug', text='Gaze Nil').action = 'commands.EvaAPI().setGazeTarget([0, 0, 0])'
 
         row = layout.row()
@@ -152,16 +149,13 @@ class BLRigControl(bpy.types.Panel):
         col.operator('eva.debug', text='getEyesData()').action = 'commands.EvaAPI().getEyesData()'
         col.operator('eva.debug', text='getFaceData()').action = 'commands.EvaAPI().getFaceData()'
 
-
 def register():
     bpy.utils.register_class(BLRigControl)
     bpy.utils.register_class(BLRigConsole)
 
-
 def unregister():
     bpy.utils.unregister_class(BLRigControl)
     bpy.utils.unregister_class(BLRigConsole)
-
 
 def refresh():
     try:
