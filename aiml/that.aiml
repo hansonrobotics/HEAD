@@ -5219,9 +5219,9 @@
 <that>DID YOU HEAR THE ONE *</that>
 <template><srai>tell me another joke</srai></template>
 </category>
-<category><pattern>EVA</pattern>
+<category><pattern>SOPHIA</pattern>
 <that>WHAT CAN I CALL YOU</that>
-<template><srai>my name is eva</srai>     <think>      <set name="gender">she</set>     </think></template>
+<template><srai>my name is Sophia</srai>     <think>      <set name="gender">she</set>     </think></template>
 </category>
 <category><pattern>REALLY</pattern>
 <that>I WAS BORN YESTERDAY</that>
