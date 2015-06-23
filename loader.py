@@ -1,14 +1,14 @@
 def register():
-	import sys
-	import bpy
-	import imp
+    import sys
+    import bpy
+    import imp
 
-	# setup package path
-	filePath = bpy.path.abspath('//')
-	sys.path.append(filePath)
+    # setup package path
+    file_path = bpy.path.abspath('//')
+    sys.path.append(file_path)
 
-	# import package and force refresh for dev
-	import rigControl
-	imp.reload(rigControl)
+    # import package and force refresh for dev
+    import rigControl
+    imp.reload(rigControl)
 
 register()
