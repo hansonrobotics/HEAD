@@ -13,35 +13,35 @@ import imp
 imp.reload(commands)
 
 class BLCommandListener(bpy.types.Operator):
-	"""Listens for external commands"""
-	bl_label = "Command Listener"
-	bl_idname = 'wm.command_listener'
+    """Listens for external commands"""
+    bl_label = "Command Listener"
+    bl_idname = 'wm.command_listener'
 
-	cmd_sources = None
-	_timer = None
-	bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
-	bpy.context.scene['commandListenerActive'] = False
+    cmd_sources = None
+    _timer = None
+    bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
+    bpy.context.scene['commandListenerActive'] = False
 
 	def modal(self, context, event):
 		#if debug and event.type in {'ESC'}:
 			#return self.cancel(context)
 
-		if debug and event.type == 'TIMER':
-			# print('Running Command Listener', round(self._timer.time_duration,3))
+        if debug and event.type == 'TIMER':
+            # print('Running Command Listener', round(self._timer.time_duration,3))
 
-			# Poll each possible command source, see if it has anything
-			# for us to do.
-			while True:
-				have_more = False
-				for src in self.cmd_sources:
-					command = src.poll()
-					if command:
-						command.execute()
-						have_more = True
-				if not have_more:
-					break
-			for src in self.cmd_sources:
-				src.push()
+            # Poll each possible command source, see if it has anything
+            # for us to do.
+            while True:
+                have_more = False
+                for src in self.cmd_sources:
+                    command = src.poll()
+                    if command:
+                        command.execute()
+                        have_more = True
+                if not have_more:
+                    break
+            for src in self.cmd_sources:
+                src.push()
 
 
 		# set status
@@ -64,7 +64,6 @@ class BLCommandListener(bpy.types.Operator):
 		for src in self.cmd_sources:
 			src.push()
 			success = success and src.init()
-		...
 
 		if success:
 			wm = context.window_manager
@@ -87,7 +86,7 @@ class BLCommandListener(bpy.types.Operator):
 
 		for src in self.cmd_sources:
 			src.drop()
-		...
+
 		bpy.context.scene['commandListenerActive'] = False
 		return {'CANCELLED'}
 
