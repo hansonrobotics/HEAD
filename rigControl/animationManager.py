@@ -272,13 +272,11 @@ class AnimationManager():
         # Behavior: if the point being looked at changed
         # significantly, then micro-blink.
 
-        if (distance + abs(offset)) > 7.9:
-            self.newGesture('GST-blink', priority=1)
-        elif (distance + abs(offset)) > 6.5:
-            self.newGesture('TRN-waitBlink', priority=1)
-            if self.randomFrequency('blink', 20):
-                pass
-                # self.newGesture('GST-blink-micro')
+        if self.randomFrequency('blink', 20):
+            if (distance + abs(offset)) > 7.9:
+                self.newGesture('GST-blink', priority=1)
+            elif (distance + abs(offset)) > 6.5:
+                self.newGesture('TRN-waitBlink', priority=1)
 
         return locBU
 
