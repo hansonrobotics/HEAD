@@ -28,25 +28,33 @@ class EvaAPI(RigAPI):
 
 	# System control and information commands ===========
 	def getAPIVersion(self):
-		return 1
+		return 3
 
 	def isAlive(self):
 		return int(bpy.context.scene['animationPlaybackActive'])
 
 	# Somatic states  --------------------------------
-	# awake, asleep, dazed and confused ...
+	# awake, asleep, drunk, dazed and confused ...
 	def availableSomaStates(self):
 		somaStates = []
 		for state in bpy.data.actions:
 			if state.name.startswith("CYC-"):
-				somaStates.append(gesture.name[4:])
+				somaStates.append(state.name[4:])
 		return somaStates
 
-	def getSomaState(self):
-		return None
+	def getSomaStates(self):
+		eva = bpy.evaAnimationManager
+		somaStates = {}
+		#for emotion in eva.emotionsList:
+		#	magnitude = round(emotion.magnitude.current, 3)
+		#	duration = round(emotion.duration, 3)
+		#	emotionStates[emotion.name] = {'magnitude': magnitude, 'duration': duration}
+		return somaStates
 
-	def setSomaState(self, emotion):
-		return None
+	def setSomaState(self, state):
+		# print "duuude it is:", state
+		# bpy.evaAnimationManager.setSomaState(eval(state))
+		return 0
 
 	# Emotion expressions ----------------------------
 	# smiling, frowning, bored ...
