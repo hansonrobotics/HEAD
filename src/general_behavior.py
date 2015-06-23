@@ -318,7 +318,8 @@ class Tree():
 			tense = random.uniform(emo.min_intensity, emo.max_intensity)
 			durat = random.uniform(emo.min_duration, emo.max_duration)
 			self.show_emotion(emo_name, tense, durat)
-			# time.sleep(durat) # XXX Sleep is a bad idea, blocks events ...
+			print "----- Instant expression: " + emo_name + " (" + \
+			     str(tense) + ") for " + str(durat) + " seconds"
 		return emo_name
 
 	# ------------------------------------------------------------------
@@ -798,6 +799,13 @@ class Tree():
 	# chatbot. This may change in the future(?)
 	def show_emotion(self, expression, intensity, duration):
 
+		# Try to avoid showing more than one expression at once
+		now = time.time()
+		since = self.blackboard["show_expression_since"]
+		durat = self.blackboard["current_emotion_duration"]
+		if (now - since < 0.7 * durat) :
+			return
+
 		# Update the blackboard
 		self.blackboard["current_emotion"] = expression
 		self.blackboard["current_emotion_intensity"] = intensity
@@ -896,9 +904,9 @@ class Tree():
 
 	@owyl.taskmethod
 	def clear_new_face_target(self, **kwargs):
-		if not self.blackboard["is_interruption"]:
-			print "----- Cleared new face: " + str(self.blackboard["new_face"])
-			self.blackboard["new_face"] = 0
+		#if not self.blackboard["is_interruption"]:
+		print "----- Cleared new face: " + str(self.blackboard["new_face"])
+		self.blackboard["new_face"] = 0
 		yield True
 
 	@owyl.taskmethod
