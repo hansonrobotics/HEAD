@@ -799,6 +799,13 @@ class Tree():
 	# chatbot. This may change in the future(?)
 	def show_emotion(self, expression, intensity, duration):
 
+		# Try to avoid showing more than one expression at once
+		now = time.time()
+		since = self.blackboard["show_expression_since"]
+		durat = self.blackboard["current_emotion_duration"]
+		if (now - since < 0.7 * durat) :
+			return
+
 		# Update the blackboard
 		self.blackboard["current_emotion"] = expression
 		self.blackboard["current_emotion_intensity"] = intensity
