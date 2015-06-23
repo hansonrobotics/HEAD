@@ -7,6 +7,7 @@ import queue
 import rospy
 import blender_api_msgs.msg as msg
 import pau2motors.msg as paumsg
+import std_msgs.msg as stdmsg
 
 api = None
 
@@ -131,7 +132,24 @@ class CommandWrappers:
     def getAPIVersion():
         return msg.GetAPIVersion(api.getAPIVersion())
 
+    # Somatic states  --------------------------------
+    # awake, asleep, dazed and confused ...
+    @publish_once("~available_soma_states", msg.AvailableSomaStates)
+    def availableSomaStates():
+        return msg.AvailableSomaStates(api.availableSomaStates())
 
+
+    @subscribe("~set_soma_state", stdmsg.String)
+    def setSomaState(state):
+        api.setSomaState(state)
+
+    @publish_live("~get_soma_state", stdmsg.String)
+    def getSomaState():
+        return stdmsg.String(api.getSomaState())
+
+
+    # Emotion expressions ----------------------------
+    # smiling, frowning, bored ...
     @publish_once("~available_emotion_states", msg.AvailableEmotionStates)
     def availableEmotionStates():
         return msg.AvailableEmotionStates(api.availableEmotionStates())
@@ -156,6 +174,8 @@ class CommandWrappers:
         api.setEmotionState(emotion)
 
 
+    # Gestures --------------------------------------
+    # blinking, nodding, shaking...
     @publish_once("~available_gestures", msg.AvailableGestures)
     def availableGestures():
         return msg.AvailableGestures(api.availableGestures())
@@ -178,6 +198,7 @@ class CommandWrappers:
             print('Error: unknown gesture:', msg.name);
 
 
+    # Visemes --------------------------------------
     @publish_once("~available_visemes", msg.AvailableVisemes)
     def availableVisemes():
         return msg.AvailableVisemes(api.availableVisemes())
@@ -192,6 +213,7 @@ class CommandWrappers:
             print('Error: unknown viseme:', msg.name);
 
 
+    # Look-at and turn-to-face targets ---------------------
     # Location that Eva will look at and face.
     @subscribe("~set_face_target", msg.Target)
     def setFaceTarget(msg):
@@ -204,7 +226,7 @@ class CommandWrappers:
         flist = [msg.x, msg.y, msg.z]
         api.setGazeTarget(flist)
 
-    # Publishes Pau messages
+    # Pau messages --------------------------------
     @publish_live("~get_pau", paumsg.pau)
     def getPau():
         msg = paumsg.pau()
