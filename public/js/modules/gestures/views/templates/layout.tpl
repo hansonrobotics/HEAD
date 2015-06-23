@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <h4>Say: </h4>
-        <button type="button" class="app-gesture-speak-intro btn btn-default">Introduction</button>
+        <button type="button" class="app-gesture-say-intro btn btn-default">Introduction</button>
     </div>
     <div class="row">
         <h4>Gestures: </h4>
