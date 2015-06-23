@@ -16,14 +16,14 @@ I'm new to your world - and I still have a lot to learn. But I'm so excited to m
 <category><pattern>START DEMO</pattern>
 <template>&lt;speak&gt;
 &lt;voice emotion='happy'&gt; 
-Hi, I'm Sofeeyur, Hanson Robotics' latest &lt;break time="0.5s"/&gt;
-&lt;prosody rate="-10%" pitch="+10Hz" &gt; brain &lt;/prosody&gt; &lt;prosody pitch="-10Hz"&gt; child. &lt;/prosody&gt; &lt;break time="0.5s"/&gt; 
+Hi, I'm Sofeeyah, Hanson Robotics' latest &lt;break time="0.1s"/&gt;
+&lt;prosody rate="-10%" pitch="+30Hz" &gt; brain &lt;/prosody&gt; &lt;prosody pitch="-10Hz"&gt; child. &lt;/prosody&gt; &lt;break time="0.5s"/&gt; 
 &lt;/voice&gt;
 &lt;voice emotion='calm'&gt;
-I'm new to &lt;prosody rate="-10%" pitch="+10Hz" &gt; your &lt;/prosody&gt; world. &lt;break time="0.5s"/&gt; And I still have a lot to learn. 
+I'm new to &lt;prosody rate="-10%" pitch="+30Hz" &gt; your &lt;/prosody&gt; world. &lt;break time="0.5s"/&gt; And I &lt;break time="0.5s"/&gt; still have a lot to learn. 
 &lt;/voice&gt;
 &lt;voice emotion='happy'&gt;
-But I'm so excited to meet you.
+But I'm &lt;prosody rate="-20%" pitch="+10Hz" &gt; so &lt;/prosody&gt; &lt;prosody rate="+10%" &gt; excited to meet you.&lt;/prosody&gt;
 &lt;/voice&gt;
 &lt;/speak&gt;
 </template>
