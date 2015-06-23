@@ -61,7 +61,9 @@
 <template><random><li>Fear is a human emotion.  Robots do not experience fear.</li><li>Fear is a common human emotion.  <bot name="ethics"/>.</li></random></template>
 </category>
 <category><pattern>WHAT IS YOUR MOOD</pattern>
-<template>I do not have any emotions.</template>
+<template>
+&lt;speak&gt; &lt;voice emotion='cross'&gt; I &lt;break time="0.5s"/&gt; do not  &lt;emphasis level="x-strong"&gt; have &lt;/emphasis&gt; any &lt;break time="1s"/&gt; emotions &lt;/voice&gt;  &lt;/speak&gt;
+</template>
 </category>
 <category><pattern>WHAT MAKES YOU FEEL *</pattern>
 <template>Remember, I am a <bot name="etype"/>.  So <bot name="feelings"/>.</template>
@@ -366,3 +368,4 @@
 <template>I dream that I will become a better <bot name="species"/>.</template>
 </category>
 </aiml>
+
