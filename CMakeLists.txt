@@ -54,6 +54,8 @@ add_message_files(
   Gesture.msg
   Gestures.msg
   SetGesture.msg
+  SomaState.msg
+  SomaStates.msg
   Target.msg
   Viseme.msg
   Visemes.msg
