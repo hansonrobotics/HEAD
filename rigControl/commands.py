@@ -9,29 +9,27 @@ from rigAPI.rigAPI import RigAPI
 # ====================================================
 
 def init():
-	bpy.ops.wm.animation_playback()
-	return 0
+    bpy.ops.wm.animation_playback()
+    return 0
 
 def getEnvironment():
-	...
-	return None
+    return None
 
 def terminate():
-	...
-	return 0
+    return 0
 
 
 class EvaAPI(RigAPI):
 
-	def __init__(self):
-		pass
+    def __init__(self):
+        pass
 
 	# System control and information commands ===========
 	def getAPIVersion(self):
 		return 3
 
-	def isAlive(self):
-		return int(bpy.context.scene['animationPlaybackActive'])
+    def isAlive(self):
+        return int(bpy.context.scene['animationPlaybackActive'])
 
 	# Somatic states  --------------------------------
 	# awake, asleep, drunk, dazed and confused ...
@@ -66,20 +64,20 @@ class EvaAPI(RigAPI):
 		return emotionStates
 
 
-	def getEmotionStates(self):
-		eva = bpy.evaAnimationManager
-		emotionStates = {}
-		for emotion in eva.emotionsList:
-			magnitude = round(emotion.magnitude.current, 3)
-			duration = round(emotion.duration, 3)
-			emotionStates[emotion.name] = {'magnitude': magnitude, 'duration': duration}
-		return emotionStates
+    def getEmotionStates(self):
+        eva = bpy.evaAnimationManager
+        emotionStates = {}
+        for emotion in eva.emotionsList:
+            magnitude = round(emotion.magnitude.current, 3)
+            duration = round(emotion.duration, 3)
+            emotionStates[emotion.name] = {'magnitude': magnitude, 'duration': duration}
+        return emotionStates
 
 
-	def setEmotionState(self, emotion):
-		# TODO: expand arguments and update doc
-		bpy.evaAnimationManager.setEmotion(eval(emotion))
-		return 0
+    def setEmotionState(self, emotion):
+        # TODO: expand arguments and update doc
+        bpy.evaAnimationManager.setEmotion(eval(emotion))
+        return 0
 
 
 	# Gestures --------------------------------------
@@ -92,36 +90,36 @@ class EvaAPI(RigAPI):
 		return emotionGestures
 
 
-	def getGestures(self):
-		eva = bpy.evaAnimationManager
-		emotionGestures = {}
-		for gesture in eva.gesturesList:
-			duration = round(gesture.duration*gesture.repeat - gesture.stripRef.strip_time, 3)
-			magnitude = round(gesture.magnitude, 3)
-			speed = round(gesture.speed, 3)
-			emotionGestures[gesture.name] = {'duration': duration, \
-				'magnitude': magnitude, 'speed': speed}
-		return emotionGestures
+    def getGestures(self):
+        eva = bpy.evaAnimationManager
+        emotionGestures = {}
+        for gesture in eva.gesturesList:
+            duration = round(gesture.duration*gesture.repeat - gesture.stripRef.strip_time, 3)
+            magnitude = round(gesture.magnitude, 3)
+            speed = round(gesture.speed, 3)
+            emotionGestures[gesture.name] = {'duration': duration, \
+                'magnitude': magnitude, 'speed': speed}
+        return emotionGestures
 
 
-	def setGesture(self, name, repeat=1, speed=1, magnitude=0.5):
-		bpy.evaAnimationManager.newGesture(name='GST-'+name, \
-			repeat=repeat, speed=speed, magnitude=magnitude)
-		return 0
+    def setGesture(self, name, repeat=1, speed=1, magnitude=1.0):
+        bpy.evaAnimationManager.newGesture(name='GST-'+name, \
+            repeat=repeat, speed=speed, magnitude=magnitude)
+        return 0
 
 
-	def stopGesture(self, gestureID, smoothing):
-		## TODO
-		return 0
+    def stopGesture(self, gestureID, smoothing):
+        ## TODO
+        return 0
 
-	def getGestureParams(self):
-		eva = bpy.evaAnimationManager
-		return {'eyeDartRate': round(eva.eyeDartRate, 3),
-				'eyeWander': round(eva.eyeWander, 3),
-				'blinkRate': round(eva.blinkRate, 3),
-				'blinkDuration': round(eva.blinkDuration, 3),
-				'breathRate': round(eva.breathRate, 3),
-				'breathIntensity': round(eva.breathIntensity, 3)}
+    def getGestureParams(self):
+        eva = bpy.evaAnimationManager
+        return {'eyeDartRate': round(eva.eyeDartRate, 3),
+                'eyeWander': round(eva.eyeWander, 3),
+                'blinkRate': round(eva.blinkRate, 3),
+                'blinkDuration': round(eva.blinkDuration, 3),
+                'breathRate': round(eva.breathRate, 3),
+                'breathIntensity': round(eva.breathIntensity, 3)}
 
 
 	# Visemes --------------------------------------
