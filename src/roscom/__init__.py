@@ -141,18 +141,16 @@ class CommandWrappers:
 
     @subscribe("~set_soma_state", msg.SomaState)
     def setSomaState(mesg):
-        state = str({
-            mesg.name: {
-                'magnitude': mesg.magnitude,
-                'rate': mesg.rate,
-                'ease_in': mesg.ease_in.to_sec()
-            }
-        })
+        state = {
+            'name': mesg.name,
+            'magnitude': mesg.magnitude,
+            'rate': mesg.rate,
+            'ease_in': mesg.ease_in.to_sec()
+        }
         api.setSomaState(state)
 
     @publish_live("~get_soma_states", msg.SomaStates)
     def getSomaStates():
-        return msg.SomaStates(api.getSomaStates())
         return msg.SomaStates([
             msg.SomaState(name,
                 vals['magnitude'],
