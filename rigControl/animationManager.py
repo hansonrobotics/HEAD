@@ -271,7 +271,6 @@ class AnimationManager():
 
         # Behavior: if the point being looked at changed
         # significantly, then micro-blink.
-        print('dist: ', distance + abs(offset))
 
         if (distance + abs(offset)) > 7.9:
             self.newGesture('GST-blink', priority=1)
@@ -288,7 +287,6 @@ class AnimationManager():
         '''Set the target used by eye and face tracking.'''
 
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.face_target_offset)
-        print("loc and locBU: ", loc, locBU)
         self.headTargetLoc.target = locBU
         # Change offset for the eyes
         locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
