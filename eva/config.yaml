@@ -147,5 +147,5 @@ pau2motors:
         lips_pau: Jaw-Up-Down;Lower-Lip-L;Lower-Lip-R;Lower-Lip-Center;Upper-Lip-L;Upper-Lip-R;Upper-Lip-Center;EE-L;EE-R;Frown-R;Frown-L;Smile-R;Smile-L
 
 # Robot voice
-voice: heather
+voice: katherine 
 lipsync: True
