@@ -1,6 +1,6 @@
-define(['application', './views/layout', './views/gestures',
-        './views/emotions', 'lib/api', 'entities/gesture', 'entities/emotion'],
-    function (App, LayoutView, GesturesView, EmotionsView, api) {
+define(['application', './views/layout', './views/gestures', './views/cycles',
+        './views/emotions', 'lib/api', 'entities/gesture', 'entities/cycle', 'entities/emotion'],
+    function (App, LayoutView, GesturesView, CyclesView, EmotionsView, api) {
         var gestures = {
             index: function () {
                 this.layoutView = new LayoutView();
@@ -10,6 +10,7 @@ define(['application', './views/layout', './views/gestures',
                 App.LayoutInstance.showNav();
 
                 gestures.createGestureButtons();
+                gestures.createCycleButtons();
                 gestures.createEmotionSliders();
             },
             createGestureButtons: function () {
@@ -20,6 +21,15 @@ define(['application', './views/layout', './views/gestures',
 
                 this.layoutView.getRegion('gestures').show(gesturesView);
                 gestureCollection.fetch();
+            },
+            createCycleButtons: function () {
+                var cycleCollection = new App.Entities.CycleCollection(),
+                    cyclesView = new CyclesView({
+                        collection: cycleCollection
+                    });
+
+                this.layoutView.getRegion('cycles').show(cyclesView);
+                cycleCollection.fetch();
             },
             createEmotionSliders: function () {
                 var emotionCollection = new App.Entities.EmotionCollection(),

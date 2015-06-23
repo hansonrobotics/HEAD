@@ -68,6 +68,10 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/blender_api/available_emotion_states'
                 }),
+                available_soma_states: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/blender_api/available_soma_states'
+                }),
                 set_gesture: new ROSLIB.Topic({
                     ros: api.ros,
                     name: '/blender_api/set_gesture',
@@ -77,6 +81,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/blender_api/set_emotion_state',
                     messageType: 'blender_api_msgs/EmotionState'
+                }),
+                set_soma_state: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/blender_api/set_soma_state',
+                    messageType: 'blender_api_msgs/SomaState'
                 }),
                 play_animation: new ROSLIB.Topic({
                     ros: api.ros,

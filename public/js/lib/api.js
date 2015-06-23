@@ -118,6 +118,44 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             });
         },
         /**
+         * Passes a list of available soma states to success function
+         *
+         * @param success
+         */
+        getAvailableSomaStates: function (success) {
+            api.topics.available_soma_states.unsubscribe();
+            api.topics.available_soma_states.subscribe(function (message) {
+                success(message.data);
+            });
+        },
+        /**
+         * Set a soma state
+         *
+         * @param name
+         * @param rate
+         * @param magnitude
+         * @param ease_in
+         */
+        setSomaState: function (name, rate, magnitude, ease_in) {
+            if (typeof rate == 'undefined')
+                rate = 1.0;
+
+            if (typeof magnitude == 'undefined')
+                magnitude = 1.0;
+
+            if (typeof ease_in == 'undefined')
+                ease_in = 0.5;
+
+            api.topics.set_soma_state.publish(
+                new ROSLIB.Message({
+                    name: name,
+                    rate: rate,
+                    magnitude: magnitude,
+                    ease_in: ease_in
+                })
+            );
+        },
+        /**
          * Passes a list of available gestures to success function
          *
          * @param success
@@ -128,7 +166,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 success(message.data);
             });
         },
-
         /**
          * Set a gesture
          *
