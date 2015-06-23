@@ -61,13 +61,13 @@ safe:
             module: joint_position_controller
             type: JointPositionController
         joint_name: Jaw-Up-Down_joint
-        joint_speed: 1.1
+        joint_speed: 5
         motor:
             id: 5
             init: 1970
             min: 1970
             max: 3000
-            acceleration: 20
+            acceleration: 50
 
     Upper_Gimbal_L_controller:
         controller:
