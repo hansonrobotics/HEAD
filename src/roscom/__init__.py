@@ -198,10 +198,11 @@ class CommandWrappers:
     @publish_live("~get_gestures", msg.Gestures)
     def getGestures():
         return msg.Gestures([
-            msg.Gesture(name,
+            msg.Gesture(
+                name,
+                vals['speed'],
                 vals['magnitude'],
-                rospy.Duration(vals['duration']),
-                vals['speed']
+                rospy.Duration(vals['duration'])
             ) for name, vals in api.getGestures().items()
         ])
 
