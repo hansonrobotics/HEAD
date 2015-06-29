@@ -234,9 +234,6 @@ class Tree():
 		rospy.Subscriber("/chatbot_affect_perceive", EmotionState,
 			self.chatbot_affect_perceive_callback)
 
-		# cmd_blendermode needs to go away eventually...
-		self.tracking_mode_pub = rospy.Publisher("/cmd_blendermode", String, queue_size=1, latch=True)
-
 		self.do_pub_gestures = True
 		self.do_pub_emotions = True
 		self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state",
