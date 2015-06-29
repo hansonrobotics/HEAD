@@ -305,7 +305,7 @@ class FaceTrack:
 								  math.pow((current_trg.z - gaze_trg.z), 2))
 		if gaze_distance > self.blackboard["max_glance_distance"]:
 			print("Reached max_glance_distance, look at the face instead")
-			self.look_pub(gaze_trg)
+			self.look_pub.publish(gaze_trg)
 		else:
 			self.gaze_pub.publish(gaze_trg)
 
