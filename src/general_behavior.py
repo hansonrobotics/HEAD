@@ -150,11 +150,6 @@ class Tree():
 
 		config = ConfigParser.ConfigParser()
 		config.readfp(open(os.path.join(os.path.dirname(__file__), "../behavior.cfg")))
-		self.blackboard["sadness_happiness"] = config.getfloat("emotion", "sadness_happiness")
-		self.blackboard["irritation_amusement"] = config.getfloat("emotion", "irritation_amusement")
-		self.blackboard["confusion_comprehension"] = config.getfloat("emotion", "confusion_comprehension")
-		self.blackboard["boredom_engagement"] = config.getfloat("emotion", "boredom_engagement")
-		self.blackboard["recoil_surprise"] = config.getfloat("emotion", "recoil_surprise")
 		self.blackboard["current_emotion"] = config.get("emotion", "default_emotion")
 		self.blackboard["current_emotion_intensity"] = config.getfloat("emotion", "default_emotion_intensity")
 		self.blackboard["current_emotion_duration"] = config.getfloat("emotion", "default_emotion_duration")
@@ -220,8 +215,7 @@ class Tree():
 		self.blackboard["bored_since"] = 0.0
 		self.blackboard["is_interruption"] = False
 		self.blackboard["is_sleeping"] = False
-		self.blackboard["blender_mode"] = ""
-		self.blackboard["performance_system_on"] = False
+		self.blackboard["behavior_tree_on"] = False
 		self.blackboard["stage_mode"] = False
 		self.blackboard["random"] = 0.0
 
@@ -497,7 +491,7 @@ class Tree():
 			owyl.repeatAlways(
 				owyl.selector(
 					owyl.sequence(
-						self.is_scripted_performance_system_on(),
+						self.is_behavior_tree_on(),
 						self.sync_variables(),
 						########## Main Events ##########
 						owyl.selector(
@@ -507,14 +501,7 @@ class Tree():
 							self.nothing_is_happening()
 						)
 					),
-
-					# Turn on scripted performances
-					# This point is reached only when scripting is turned off.
-					owyl.sequence(
-						self.idle_spin(),
-						self.is_scripted_performance_system_off(),
-						self.start_scripted_performance_system()
-					)
+					self.idle_spin()
 				)
 			)
 		return owyl.visit(eva_behavior_tree, blackboard=self.blackboard)
@@ -529,31 +516,7 @@ class Tree():
 	@owyl.taskmethod
 	def sync_variables(self, **kwargs):
 		self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
-		# print "\n========== Emotion Space =========="
-		# print "Looking at face: " + str(self.blackboard["current_face_target"])
-		# print "sadness_happiness: " + str(self.blackboard["sadness_happiness"])[:5]
-		# print "irritation_amusement: " + str(self.blackboard["irritation_amusement"])[:5]
-		# print "confusion_comprehension: " + str(self.blackboard["confusion_comprehension"])[:5]
-		# print "boredom_engagement: " + str(self.blackboard["boredom_engagement"])[:5]
-		# print "recoil_surprise: " + str(self.blackboard["recoil_surprise"])[:5]
-		# print "Current Emotion: " + self.blackboard["current_emotion"] + " (" + str(self.blackboard["current_emotion_intensity"])[:5] + ")"
 		yield True
-
-	# @owyl.taskmethod
-	# def set_emotion(self, **kwargs):
-	# 	self.blackboard[kwargs["variable"]] = kwargs["value"]
-	# 	yield True
-
-	# @owyl.taskmethod
-	# def update_emotion(self, **kwargs):
-	# 	if kwargs["lower_limit"] > 0.0:
-	# 		self.blackboard[kwargs["variable"]] = kwargs["lower_limit"]
-	# 	self.blackboard[kwargs["variable"]] *= random.uniform(kwargs["min"], kwargs["max"])
-	# 	if self.blackboard[kwargs["variable"]] > 1.0:
-	# 		self.blackboard[kwargs["variable"]] = 1.0
-	# 	elif self.blackboard[kwargs["variable"]] <= 0.0:
-	# 		self.blackboard[kwargs["variable"]] = 0.01
-	# 	yield True
 
 	@owyl.taskmethod
 	def dice_roll(self, **kwargs):
@@ -697,15 +660,15 @@ class Tree():
 			yield False
 
 	@owyl.taskmethod
-	def is_scripted_performance_system_on(self, **kwargs):
-		if self.blackboard["performance_system_on"]:
+	def is_behavior_tree_on(self, **kwargs):
+		if self.blackboard["behavior_tree_on"]:
 			yield True
 		else:
 			yield False
 
 	@owyl.taskmethod
 	def is_scripted_performance_system_off(self, **kwargs):
-		if not self.blackboard["performance_system_on"]:
+		if not self.blackboard["behavior_tree_on"]:
 			yield True
 		else:
 			yield False
@@ -732,10 +695,6 @@ class Tree():
 
 	@owyl.taskmethod
 	def interact_with_face_target(self, **kwargs):
-		if self.blackboard["blender_mode"] != "TrackDev":
-			self.tracking_mode_pub.publish("TrackDev")
-			self.blackboard["blender_mode"] = "TrackDev"
-			time.sleep(0.1)
 		face_id = self.blackboard[kwargs["id"]]
 		self.facetrack.look_at_face(face_id)
 
@@ -844,9 +803,6 @@ class Tree():
 		print("----- Search for attention")
 		if self.blackboard["bored_since"] == 0:
 			self.blackboard["bored_since"] = time.time()
-		if self.blackboard["blender_mode"] != "LookAround":
-			self.tracking_mode_pub.publish("LookAround")
-			self.blackboard["blender_mode"] = "LookAround"
 
 		if self.should_show_expression("bored_emotions"):
 			# Show a bored expression, either with or without an instant expression in advance
@@ -915,21 +871,11 @@ class Tree():
 		self.blackboard["lost_face"] = 0
 		yield True
 
-	# XXX old-style API -- should be removed.
-	@owyl.taskmethod
-	def start_scripted_performance_system(self, **kwargs):
-		if self.blackboard["blender_mode"] != "Dummy":
-			# No need to set Dummy mode
-			#self.tracking_mode_pub.publish("Dummy")
-			self.blackboard["blender_mode"] = "Dummy"
-		yield True
-
-
 	# This avoids burning CPU time when the behavior system is off.
 	# Mostly it sleeps, and periodically checks for interrpt messages.
 	@owyl.taskmethod
 	def idle_spin(self, **kwargs):
-		if self.blackboard["performance_system_on"]:
+		if self.blackboard["behavior_tree_on"]:
 			yield True
 
 		# Sleep for 1 second.
@@ -1020,7 +966,7 @@ class Tree():
 
 			self.rescale_intensity(emo_scale, ges_scale)
 			self.blackboard["stage_mode"] = False
-			self.blackboard["performance_system_on"] = True
+			self.blackboard["behavior_tree_on"] = True
 
 		elif data.data == "btree_on_stage":
 			self.do_pub_gestures = True
@@ -1032,7 +978,7 @@ class Tree():
 
 			# If previously in close-up mode, exaggerate the emotions
 			# for the stage settting.
-			if self.blackboard["performance_system_on"] and not self.blackboard["stage_mode"]:
+			if self.blackboard["behavior_tree_on"] and not self.blackboard["stage_mode"]:
 				print("----- Switch to stage mode")
 				emo_scale /= self.blackboard["emotion_scale_closeup"]
 				ges_scale /= self.blackboard["gesture_scale_closeup"]
@@ -1041,7 +987,7 @@ class Tree():
 
 			self.rescale_intensity(emo_scale, ges_scale)
 			self.blackboard["stage_mode"] = True
-			self.blackboard["performance_system_on"] = True
+			self.blackboard["behavior_tree_on"] = True
 
 		elif data.data == "emotion_off":
 			self.do_pub_emotions = False
@@ -1051,7 +997,7 @@ class Tree():
 
 		elif data.data == "btree_off":
 			self.blackboard["is_interruption"] = True
-			self.blackboard["performance_system_on"] = False
+			self.blackboard["behavior_tree_on"] = False
 			self.blackboard["stage_mode"] = False
 			print("---- Behavior tree disabled")
 
