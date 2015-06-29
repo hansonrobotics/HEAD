@@ -283,6 +283,11 @@ class Quaternion2Neck(MapperBase):
     self.theta = 0.0
     self.psi = 0.0
 
+    # Blender provides us with quaternions in the coordinate frame:
+    # x-axis == body-left (Eva's left side)
+    # y-axis == straight ahead
+    # z-axis == down
+
 
     # The formulas below are taken from Wikipedia, with the convention
     # that     q_0 = q.w      q_1 = q.x     q_2 = q.y     q_3 = q.z
@@ -307,12 +312,21 @@ class Quaternion2Neck(MapperBase):
             2 * (q.w * q.z + q.x * q.y),
             1 - 2 * (q.y**2 + q.z**2)
           )
-        print "duuuuude phi theta psi", self.phi, self.theta, self.psi
+        # print "duuuuude phi theta psi", self.phi, self.theta, self.psi
 
     def get_upper_left(q) :
+        print "duude quat", q.w, q.x, q.y, q.z
+        e = q.x*q.x + q.y*q.y + q.z*q.z
+        n = q.w*q.w + e
+        e = math.sqrt(e)
+        alpha = 2 * math.asin (e)
+        nex = q.x / e
+        ney = q.y / e
+        nez = q.z / e
+        print "duuu al=", alpha, nex, ney, nez
         quat_to_euler(q)
         self.hijoint.inverse_kinematics(self.theta, self.phi)
-        print "duude left right mot", self.hijoint.theta_l, self.hijoint.theta_r
+        # print "duude left right mot", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     def get_upper_right(q) :
