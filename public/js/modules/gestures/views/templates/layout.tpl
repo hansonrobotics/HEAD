@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <h4>Emotions: </h4>
 
-            <ul class="app-emotion-sliders"></ul>
+            <div class="app-emotions-container"></div>
         </div>
     </div>
 </div>

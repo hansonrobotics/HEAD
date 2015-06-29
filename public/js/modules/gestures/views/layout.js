@@ -6,11 +6,11 @@ define(["application", "tpl!./templates/layout.tpl"], function (App, template) {
                 startButton: '.app-gesture-demo-start',
                 stopButton: '.app-gesture-demo-stop',
                 gestures: '.app-gesture-buttons',
-                emotions: '.app-emotion-sliders'
+                emotions: '.app-emotions-container'
             },
             regions: {
                 gestures: '.app-gesture-buttons',
-                emotions: '.app-emotion-sliders'
+                emotions: '.app-emotions-container'
             },
             events: {
                 'click @ui.startButton': 'startDemo',
@@ -20,15 +20,18 @@ define(["application", "tpl!./templates/layout.tpl"], function (App, template) {
                 this.stopDemo();
             },
             setRandomGesture: function () {
-                var emotionSliders = $('.app-slider', this.ui.emotions),
-                    randomSlider = $(emotionSliders).get(Math.floor(Math.random() * $(emotionSliders).length));
+                $('.app-duration-slider', this.ui.emotions).slider('value', Math.floor(Math.random() * 100));
+                $('.app-magnitude-slider', this.ui.emotions).slider('value', Math.floor(Math.random() * 100));
 
-                $(randomSlider).slider('value', Math.floor(Math.random() * 30) + 40);
+                // click random emotion
+                var emotionButtons = $('button', this.ui.emotions),
+                    randomEmotionButton = $(emotionButtons).get(Math.floor(Math.random() * $(emotionButtons).length));
+                $(randomEmotionButton).click();
 
+                // click random gesture
                 var gestureButtons = $('button', this.ui.gestures),
-                    randomButton = $(gestureButtons).get(Math.floor(Math.random() * $(gestureButtons).length));
-
-                $(randomButton).click();
+                    randomGestureButton = $(gestureButtons).get(Math.floor(Math.random() * $(gestureButtons).length));
+                $(randomGestureButton).click();
             },
             startDemo: function () {
                 this.ui.startButton.addClass('active');

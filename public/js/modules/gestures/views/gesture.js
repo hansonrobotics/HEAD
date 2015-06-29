@@ -10,14 +10,12 @@ define(["application", "tpl!./templates/gesture.tpl", 'lib/api'], function (App,
                 'click @ui.button': 'gestureClicked'
             },
             gestureClicked: function () {
-                var button = this.ui.button;
-                $(button).addClass('active');
-
                 api.setGesture(this.model.get('name'));
+                $(this.ui.button).addClass('active');
 
+                var self = this;
                 setTimeout(function () {
-                    $(button).removeClass('active');
-                    $(button).blur();
+                    $(self.ui.button).removeClass('active');
                 }, 2000)
             }
         });
