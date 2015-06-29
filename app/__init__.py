@@ -7,6 +7,7 @@ import json
 import yaml
 import math
 import os.path
+from optparse import OptionParser
 
 json_encode = json.JSONEncoder().encode
 
@@ -161,5 +162,22 @@ if __name__ == '__main__':
     def send_js(path):
         return send_from_directory(app.static_folder, path)
 
-
-    app.run(host='0.0.0.0', debug=True, use_reloader=True)
+    parser = OptionParser()
+    parser.add_option("-s", action="store_true", dest="ssl", default=False, help="Use SSL")
+    parser.add_option("-c", "--cert", dest="cert", default="", help="SSL Certificate", metavar="CERT_FILE")
+    parser.add_option("-k", "--key", dest="key", default="", help="SSL Key", metavar="KEY_FILE")
+    parser.add_option("-p", "--port", dest="port", default=None, help="Port", metavar="KEY_FILE", type="int")
+    (options, args) = parser.parse_args()
+    if options.ssl:
+        if not options.cert:
+            parser.error("Certificate must be specified for SSL")
+        if not os.path.isfile(options.cert):
+            parser.error("Certificate file does not exists")
+        if not options.key:
+            parser.error("Key must be specified for SSL")
+        if not os.path.isfile(options.key):
+            parser.error("Key file does not exists")
+        context = (options.cert, options.key)
+        app.run(host='0.0.0.0', debug=True, use_reloader=True, ssl_context=context, port=options.port)
+    else:
+        app.run(host='0.0.0.0', debug=True, use_reloader=True, port=options.port)
