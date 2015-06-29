@@ -215,7 +215,7 @@ class Tree():
 		self.blackboard["bored_since"] = 0.0
 		self.blackboard["is_interruption"] = False
 		self.blackboard["is_sleeping"] = False
-		self.blackboard["performance_system_on"] = False
+		self.blackboard["behavior_tree_on"] = False
 		self.blackboard["stage_mode"] = False
 		self.blackboard["random"] = 0.0
 
@@ -491,7 +491,7 @@ class Tree():
 			owyl.repeatAlways(
 				owyl.selector(
 					owyl.sequence(
-						self.is_scripted_performance_system_on(),
+						self.is_behavior_tree_on(),
 						self.sync_variables(),
 						########## Main Events ##########
 						owyl.selector(
@@ -660,15 +660,15 @@ class Tree():
 			yield False
 
 	@owyl.taskmethod
-	def is_scripted_performance_system_on(self, **kwargs):
-		if self.blackboard["performance_system_on"]:
+	def is_behavior_tree_on(self, **kwargs):
+		if self.blackboard["behavior_tree_on"]:
 			yield True
 		else:
 			yield False
 
 	@owyl.taskmethod
 	def is_scripted_performance_system_off(self, **kwargs):
-		if not self.blackboard["performance_system_on"]:
+		if not self.blackboard["behavior_tree_on"]:
 			yield True
 		else:
 			yield False
@@ -875,7 +875,7 @@ class Tree():
 	# Mostly it sleeps, and periodically checks for interrpt messages.
 	@owyl.taskmethod
 	def idle_spin(self, **kwargs):
-		if self.blackboard["performance_system_on"]:
+		if self.blackboard["behavior_tree_on"]:
 			yield True
 
 		# Sleep for 1 second.
@@ -966,7 +966,7 @@ class Tree():
 
 			self.rescale_intensity(emo_scale, ges_scale)
 			self.blackboard["stage_mode"] = False
-			self.blackboard["performance_system_on"] = True
+			self.blackboard["behavior_tree_on"] = True
 
 		elif data.data == "btree_on_stage":
 			self.do_pub_gestures = True
@@ -978,7 +978,7 @@ class Tree():
 
 			# If previously in close-up mode, exaggerate the emotions
 			# for the stage settting.
-			if self.blackboard["performance_system_on"] and not self.blackboard["stage_mode"]:
+			if self.blackboard["behavior_tree_on"] and not self.blackboard["stage_mode"]:
 				print("----- Switch to stage mode")
 				emo_scale /= self.blackboard["emotion_scale_closeup"]
 				ges_scale /= self.blackboard["gesture_scale_closeup"]
@@ -987,7 +987,7 @@ class Tree():
 
 			self.rescale_intensity(emo_scale, ges_scale)
 			self.blackboard["stage_mode"] = True
-			self.blackboard["performance_system_on"] = True
+			self.blackboard["behavior_tree_on"] = True
 
 		elif data.data == "emotion_off":
 			self.do_pub_emotions = False
@@ -997,7 +997,7 @@ class Tree():
 
 		elif data.data == "btree_off":
 			self.blackboard["is_interruption"] = True
-			self.blackboard["performance_system_on"] = False
+			self.blackboard["behavior_tree_on"] = False
 			self.blackboard["stage_mode"] = False
 			print("---- Behavior tree disabled")
 
