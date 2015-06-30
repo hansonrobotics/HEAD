@@ -95,6 +95,16 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/' + api.config.robot + '/speech_events',
                     messageType: 'std_msgs/String'
+                }),
+                execute_scripts: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/execute_script',
+                    messageType: 'std_msgs/String'
+                }),
+                scripts_available: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/scripts',
+                    messageType: 'std_msgs/String'
                 })
             };
         },

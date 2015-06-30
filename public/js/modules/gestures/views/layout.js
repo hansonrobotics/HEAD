@@ -12,6 +12,7 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
             },
             regions: {
                 gestures: '.app-gesture-buttons',
+                performances: '.app-performance-buttons',
                 cycles: '.app-cycle-buttons',
                 emotions: '.app-emotion-sliders'
             },

@@ -8,8 +8,9 @@
         <button type="button" class="app-gesture-bt-off btn btn-default">Off</button>
     </div>
     <div class="row">
-        <h4>Say: </h4>
-        <button type="button" class="app-gesture-say-intro btn btn-default">Introduction</button>
+        <h4>Performances: </h4>
+
+        <div class="app-performance-buttons"></div>
     </div>
     <div class="row">
         <h4>Gestures: </h4>
@@ -17,13 +18,13 @@
         <div class="app-gesture-buttons"></div>
     </div>
     <div class="row">
-        <h4>Cycles: </h4>
-
-        <div class="app-cycle-buttons"></div>
-    </div>
-    <div class="row">
         <h4>Emotions: </h4>
 
         <ul class="app-emotion-sliders"></ul>
+    </div>
+    <div class="row">
+        <h4>Cycles: </h4>
+
+        <div class="app-cycle-buttons"></div>
     </div>
 </div>
