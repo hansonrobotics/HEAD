@@ -39,4 +39,7 @@
         </node>
 
     <node name="motors_safety" pkg="motors_safety" type="safety.py" output="screen" />
+    <node name="scripts_launcher" pkg="robots_config" type="scripts_launcher.py" output="screen" >
+        <param name="scripts_dir" value="$(find robots_config)/eva/scripts" />
+    </node>
 </launch>
