@@ -294,6 +294,26 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         getRobotName: function (callback) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/robot_name'});
             param.get(callback);
+        },
+        /**
+         * Passes a "|" separated string of available scripts
+         *
+         * @param success
+         */
+        getAvailableScripts: function (success) {
+            api.topics.scripts_available.unsubscribe();
+            api.topics.scripts_available.subscribe(function (message) {
+                success(message.data.split("|"));
+            });
+        },
+        /**
+         * Executes given script
+         *
+         * @param scripts
+         */
+        executeScript: function (script) {
+            cmd = new ROSLIB.Message({data: script})
+            api.topics.execute_scripts.publish(cmd)
         }
     };
 
