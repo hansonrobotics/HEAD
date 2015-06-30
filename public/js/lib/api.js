@@ -182,7 +182,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 speed = 0.5;
 
             if (typeof magnitude == 'undefined')
-                magnitude = 0.5;
+                magnitude = 1;
 
             api.topics.set_gesture.publish(
                 new ROSLIB.Message({
@@ -215,7 +215,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         setEmotion: function (name, magnitude, duration) {
             if (typeof magnitude == 'undefined')
-                magnitude = 0.5;
+                magnitude = 1;
 
             if (typeof duration == 'undefined')
                 duration = {secs: 1, nsecs: 0};
