@@ -303,14 +303,16 @@ class Quaternion2Neck(MapperBase):
     #
     # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
     #
-    # To reconcile what blender is giving us, with the desired coordinates,
-    # above, we make the following substitutions
-    q_0 = q.w
-    q_1 = q.y
-    q_2 = q.x
-    q_3 = -q.z
-    #
+    # Status: 1 July 2015: this now works exactly as expected! Woot!
     def quat_to_euler(q) :
+        # To reconcile what blender is giving us, with the desired
+        # coordinates, above, we make the following substitutions.
+        #
+        q_0 = q.w
+        q_1 = q.y
+        q_2 = q.x
+        q_3 = -q.z
+        #
         self.phi = math.atan2(
             (-q_0 * q_1 + q_2 * q_3),
             (q_0 * q_2 + q_1 * q_3)
@@ -318,25 +320,26 @@ class Quaternion2Neck(MapperBase):
         self.theta = math.acos(
             q_0 * q_0 - q_1 * q_1 - q_2 * q_2 + q_3 * q_3
           )
-        self.psi = - math.atan2(
+        self.psi = math.atan2(
             q_0 * q_1 + q_2 * q_3,
-            q_1 * q_3 - q_0 * q_2
+            - q_1 * q_3 + q_0 * q_2
           )
-        # print "duuuuude phi theta psi", self.phi, self.theta, self.psi
+        #
+        # print "Euler phi theta psi", self.phi, self.theta, self.psi, self.phi + self.psi 
 
     def get_upper_left(q) :
-        print "duude quat", q.w, q.x, q.y, q.z
-        e = q.x*q.x + q.y*q.y + q.z*q.z
-        n = q.w*q.w + e
-        e = math.sqrt(e)
-        alpha = 2 * math.asin (e)
-        nex = q.x / e
-        ney = q.y / e
-        nez = q.z / e
-        print "duuu al=", alpha, nex, ney, nez
+        # print "Quaternions:", q.w, q.x, q.y, q.z
+        # e = q.x*q.x + q.y*q.y + q.z*q.z
+        # n = q.w*q.w + e
+        # e = math.sqrt(e)
+        # alpha = 2 * math.asin (e)
+        # nex = q.x / e
+        # ney = q.y / e
+        # nez = q.z / e
+        # print "alpha, axis:", alpha, nex, ney, nez
         quat_to_euler(q)
         self.hijoint.inverse_kinematics(self.theta, self.phi)
-        # print "duude left right mot", self.hijoint.theta_l, self.hijoint.theta_r
+        print "duude left right mot", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     def get_upper_right(q) :
