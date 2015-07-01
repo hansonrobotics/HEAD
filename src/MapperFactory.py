@@ -373,6 +373,8 @@ class Quaternion2Neck(MapperBase):
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
         (phi, theta, psi) = quat_to_asa(q)
+        phi *= self.upper_split
+        theta *= self.upper_split
         self.hijoint.inverse_kinematics(theta, phi)
         # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
@@ -380,8 +382,27 @@ class Quaternion2Neck(MapperBase):
     # Returns the upper-neck right motor position, in radians
     def get_upper_right(q) :
         (phi, theta, psi) = quat_to_asa(q)
+        phi *= self.upper_split
+        theta *= self.upper_split
         self.hijoint.inverse_kinematics(theta, phi)
         return self.hijoint.theta_r
+
+    # Returns the lower-neck left motor position, in radians
+    def get_lower_left(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        phi *= self.lower_split
+        theta *= self.lower_split
+        self.lojoint.inverse_kinematics(theta, phi)
+        # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
+        return self.lojoint.theta_l
+
+    # Returns the lower-neck right motor position, in radians
+    def get_lower_right(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        phi *= self.lower_split
+        theta *= self.lower_split
+        self.lojoint.inverse_kinematics(theta, phi)
+        return self.lojoint.theta_r
 
     # Yaw (spin about neck-skull) axis, in radians, right hand rule.
     def get_yaw(q) :
@@ -414,8 +435,10 @@ class Quaternion2Neck(MapperBase):
         return yaw
 
     funcs = {
-      'upleft': lambda q: get_upper_left(q),
+      'upleft':  lambda q: get_upper_left(q),
       'upright': lambda q: get_upper_right(q),
+      'loleft':  lambda q: get_lower_left(q),
+      'loright': lambda q: get_lower_right(q),
       'yaw': lambda q: get_yaw(q)
     }
     self.map = funcs[args['axis'].lower()]
