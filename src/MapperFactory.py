@@ -214,64 +214,6 @@ class Quaternion2EulerYZX(MapperBase):
     }
     self.map = funcsByAxis[args['axis'].lower()]
 
-class Quaternion2EulerYZY(MapperBase):
-# class Quaternion2EulerYZX(MapperBase):
-
-  def __init__(self, args, motor_entry):
-
-    # These functions convert a quaternion to Y-Z-Y rotations.
-    # The convention here is different than above, with X axis the line
-    # of sight, Y axis to the left, and Z upwards.
-    #  For a different rotation order, swap
-    # q.x, q.y, q.z variables and 'x', 'y', 'z' keys.
-    #
-    def why(q) :
-        # print("duuude q=", q)
-        alpha = 2.0 * math.acos(q.w)
-        # print("alpha = ", 180 *  alpha / 3.141592653)
-        sina = math.sin(0.5 * alpha)
-        cx = q.x / sina
-        cy = q.y / sina
-        cz = q.z / sina
-        bx = 180 * math.acos(cx) / 3.141592653
-        by = 180 * math.acos(cy) / 3.141592653
-        bz = 180 * math.acos(cz) / 3.141592653
-        # print("beta = ", bx, by, bz)
-
-        tx = math.atan2(
-            -2 *(q.y * q.z - q.w * q.x),
-            q.w**2 + q.y**2 - q.z**2 - q.x**2
-          )
-        ty = math.atan2(
-            -2 * (q.z * q.x - q.w * q.y),
-            q.w**2 - q.y**2 - q.z**2 + q.x**2
-          )
-        tz = math.asin(
-            2 * (q.y * q.x + q.w * q.z)
-          )
-        tx = 180 * tx / 3.14159
-        ty = 180 * ty / 3.14159
-        tz = 180 * tz / 3.14159
-        print("duude pry=", tx, ty, tz)
-        return math.atan2(
-          -2 * (q.z * q.x - q.w * q.y),
-          q.w**2 - q.y**2 - q.z**2 + q.x**2
-        )
-
-    funcsByAxis = {
-      'x': lambda q: why(q),
-      'z': lambda q:
-          math.asin(
-            2 * (q.y * q.x + q.w * q.z)
-          ),
-      'y': lambda q:
-          math.atan2(
-            -2 *(q.y * q.z - q.w * q.x),
-            q.w**2 + q.y**2 - q.z**2 - q.x**2
-          )
-    }
-    self.map = funcsByAxis[args['axis'].lower()]
-
 # --------------------------------------------------------------
 class Quaternion2Neck(MapperBase):
 
@@ -370,7 +312,6 @@ _mapper_classes = {
   "linear": Linear,
   "weightedsum": WeightedSum,
   "quaternion2euler": Quaternion2EulerYZX,
-  "quaternion2YZY": Quaternion2EulerYZY,
   "quaternion2neck": Quaternion2Neck
 }
 
