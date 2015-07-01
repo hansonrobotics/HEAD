@@ -42,6 +42,8 @@ pau2motors:
 
 motors:
   # ---Neck---
+  # XXX to-do: output values are in radians.... need to convert
+  # to motor values ...XXX
 
   - name: Upper-Gimbal-L
     topic: Upper_Gimbal_L
