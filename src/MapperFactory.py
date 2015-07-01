@@ -18,6 +18,7 @@
 # 02110-1301  USA
 
 import math
+import NeckKinematics
 
 class MapperBase:
   """
@@ -172,7 +173,6 @@ class WeightedSum(MapperBase):
 # --------------------------------------------------------------
 
 class Quaternion2EulerYZX(MapperBase):
-# class Quaternion2EulerYZY(MapperBase):
 
   def __init__(self, args, motor_entry):
 
@@ -184,92 +184,144 @@ class Quaternion2EulerYZX(MapperBase):
     #
     # Properly speaking, these are not Euler angles, but Tate-Bryan angles.
     #
-    # Note: Kudos to anyone who manages to put this swapping mechanism into code,
-    # which also builds functions to compute only one of the rotations like
-    # below. (it's harder than it looks)
-    funcsByAxis = {
-      'y': lambda q:
-          math.atan2(
-            -2 * (q.z * q.x - q.w * q.y),
-            q.w**2 - q.y**2 - q.z**2 + q.x**2
-          ),
-      'z': lambda q:
-          math.asin(
-            2 * (q.y * q.x + q.w * q.z)
-          ),
-      'x': lambda q:
-          math.atan2(
-            -2 *(q.y * q.z - q.w * q.x),
-            q.w**2 + q.y**2 - q.z**2 - q.x**2
-          )
-    }
-    self.map = funcsByAxis[args['axis'].lower()]
+    # Note: Kudos to anyone who manages to put this swapping mechanism into
+    # code, which also builds functions to compute only one of the rotations
+    # like below. (it's harder than it looks)
+    def tate_z(q) :
+        z = math.asin(2 * (q.y * q.x + q.w * q.z))
+        return z
 
-class Quaternion2EulerYZY(MapperBase):
-# class Quaternion2EulerYZX(MapperBase):
-
-  def __init__(self, args, motor_entry):
-
-    # These functions convert a quaternion to Y-Z-Y rotations.
-    # The convention here is different than above, with X axis the line
-    # of sight, Y axis to the left, and Z upwards.
-    #  For a different rotation order, swap
-    # q.x, q.y, q.z variables and 'x', 'y', 'z' keys.
-    #
-    def why(q) :
-        # print("duuude q=", q)
-        alpha = 2.0 * math.acos(q.w)
-        # print("alpha = ", 180 *  alpha / 3.141592653)
-        sina = math.sin(0.5 * alpha)
-        cx = q.x / sina
-        cy = q.y / sina
-        cz = q.z / sina
-        bx = 180 * math.acos(cx) / 3.141592653
-        by = 180 * math.acos(cy) / 3.141592653
-        bz = 180 * math.acos(cz) / 3.141592653
-        # print("beta = ", bx, by, bz)
- 
-        tx = math.atan2(
-            -2 *(q.y * q.z - q.w * q.x),
-            q.w**2 + q.y**2 - q.z**2 - q.x**2
-          )
-        ty = math.atan2(
+    def tate_y(q) :
+        y = math.atan2(
             -2 * (q.z * q.x - q.w * q.y),
             q.w**2 - q.y**2 - q.z**2 + q.x**2
           )
-        tz = math.asin(
-            2 * (q.y * q.x + q.w * q.z)
-          )
-        tx = 180 * tx / 3.14159
-        ty = 180 * ty / 3.14159
-        tz = 180 * tz / 3.14159
-        print("duude pry=", tx, ty, tz)
-        return math.atan2(
-          -2 * (q.z * q.x - q.w * q.y),
-          q.w**2 - q.y**2 - q.z**2 + q.x**2
-        )
-        
-    funcsByAxis = {
-      'x': lambda q: why(q),
-      'z': lambda q:
-          math.asin(
-            2 * (q.y * q.x + q.w * q.z)
-          ),
-      'y': lambda q:
-          math.atan2(
+        # print "tate y=", y
+        return y
+
+    def tate_x(q) :
+        x = math.atan2(
             -2 *(q.y * q.z - q.w * q.x),
             q.w**2 + q.y**2 - q.z**2 - q.x**2
           )
+        # print "tate x=", x
+        return x
+
+    funcsByAxis = {
+      'y': lambda q : tate_y(q),
+      'z': lambda q : tate_z(q),
+      'x': lambda q : tate_x(q)
     }
     self.map = funcsByAxis[args['axis'].lower()]
 
 # --------------------------------------------------------------
+#
+# This class accepts a single quaternion from blender, and converts
+# it to motor angles for a single u-joint; by default, the upper-neck
+# u-joint.  The blender quaternion coordinate system is described
+# below.  The motor angles are computed using geometry appropriate
+# for the Han neck mechanism; note that the Eva mechanism has different
+# dimensions; these dimensions are currently hard-coded in
+# NeckKinematics.py
+#
+class Quaternion2Neck(MapperBase):
+
+  def __init__(self, args, motor_entry):
+
+    self.hijoint = NeckKinematics.upper_neck()
+    self.lojoint = NeckKinematics.lower_neck()
+    self.phi = 0.0
+    self.theta = 0.0
+    self.psi = 0.0
+
+    # Blender provides us with quaternions in the coordinate frame:
+    # x-axis == body-left (Eva's left side)
+    # y-axis == straight ahead
+    # z-axis == down
+    #
+    # We want to convert to Euler ngles with the following coordinates:
+    # x-axis == straight ahead
+    # y-axis == body-left
+    # z-axis == up
+    #
+    # The formulas below are taken from Wikipedia, but in modified form.
+    # We use the sphere-angle coordinates:
+    # theta == angle w.r.t. z-axis
+    # phi == azimuthal angle, from x axis
+    # psi == body roll
+    # that is,
+    # Rot = Rot(z, phi) Rot (y, theta) Rot (z, psi)
+    #
+    # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+    #
+    # Status: 1 July 2015: this now works exactly as expected! Woot!
+    def quat_to_euler(q) :
+        # To reconcile what blender is giving us, with the desired
+        # coordinates, above, we make the following substitutions.
+        #
+        q_0 = q.w
+        q_1 = q.y
+        q_2 = q.x
+        q_3 = -q.z
+        #
+        self.phi = math.atan2(
+            (-q_0 * q_1 + q_2 * q_3),
+            (q_0 * q_2 + q_1 * q_3)
+          )
+        self.theta = math.acos(
+            q_0 * q_0 - q_1 * q_1 - q_2 * q_2 + q_3 * q_3
+          )
+        self.psi = math.atan2(
+            q_0 * q_1 + q_2 * q_3,
+            - q_1 * q_3 + q_0 * q_2
+          )
+        #
+        # print "Euler phi theta psi", self.phi, self.theta, self.psi, self.phi + self.psi
+
+    # Returns the upper-neck left motor position, in radians
+    def get_upper_left(q) :
+        # print "Quaternions:", q.w, q.x, q.y, q.z
+        # e = q.x*q.x + q.y*q.y + q.z*q.z
+        # n = q.w*q.w + e
+        # e = math.sqrt(e)
+        # alpha = 2 * math.asin (e)
+        # nex = q.x / e
+        # ney = q.y / e
+        # nez = q.z / e
+        # print "alpha, axis:", alpha, nex, ney, nez
+        quat_to_euler(q)
+        self.hijoint.inverse_kinematics(self.theta, self.phi)
+        print "Motors: left right yaw", self.hijoint.theta_l, self.hijoint.theta_r, get_yaw(q)
+        return self.hijoint.theta_l
+
+    # Returns the upper-neck right motor position, in radians
+    def get_upper_right(q) :
+        quat_to_euler(q)
+        self.hijoint.inverse_kinematics(self.theta, self.phi)
+        return self.hijoint.theta_r
+
+    # Yaw (spin about neck-skull) axis, in radians, right hand rule.
+    def get_yaw(q) :
+        quat_to_euler(q)
+        # glurgle this is not really right ...
+        yaw = self.psi + self.phi
+        if 3.1415926 < yaw:
+            yaw -= 2 * 3.14159265358979
+        return yaw
+
+    funcs = {
+      'upleft': lambda q: get_upper_left(q),
+      'upright': lambda q: get_upper_right(q),
+      'yaw': lambda q: get_yaw(q)
+    }
+    self.map = funcs[args['axis'].lower()]
+
 
 _mapper_classes = {
   "linear": Linear,
   "weightedsum": WeightedSum,
   "quaternion2euler": Quaternion2EulerYZX,
-  "quaternion2YZY": Quaternion2EulerYZY
+  "quaternion2neck": Quaternion2Neck
 }
 
 def build(yamlobj, motor_entry):

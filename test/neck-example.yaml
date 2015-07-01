@@ -7,19 +7,27 @@
 # 1) restart roscore
 # 2) rosparam load pau2motors/test/neck-example.yaml
 # 3) rosrun pau2motors pau2motors_node.py
+#    This publishes the /foo/Lower_Gimbal_L_controller/command etc
+#    and the /foo/neck_pau topics
+#
 # 4) rosrun topic_tools mux /foo/neck_pau  cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux
 # 5) rosservice call neck_pau_mux/select /blender_api/get_pau
 # 6) blender -y Eva.blend -P autostart.py
 #
-# or alternately:
+# For the older robots, use this:
 # 5) rosservice call neck_pau_mux/select /cmd_neck_pau
 # 6) rosrun basic_head_api head_ctrl.py
 # 7) rostopic pub --once /point_head basic_head_api/PointHead '{yaw: 0.1, pitch:0.2, roll:0.3}' 
 #
 # Verify operation:
-# rostopic echo /foo/left_motor
-# rostopic echo /foo/right_motor
-# rostopic echo /foo/axis_motor
+# Make her look in different directions:
+# The external coord system is x==straight-ahead; y==body-left, z==up
+# rostopic pub --once /blender_api/set_face_target blender_api_msgs/Target '{x: 1.0, y: -0.3 , z: -0.3}'
+# rostopic echo /foo/Lower_Gimbal_L_controller/command
+# rostopic echo /foo/Lower_Gimbal_R_controller/command
+# rostopic echo /foo/Upper_Gimbal_L_controller/command
+# rostopic echo /foo/Upper_Gimbal_R_controller/command
+# rostopic echo /foo/Neck_Rotation_controller/command
 #
 # Coordinate conventions:
 # Curent Eva blender model uses:
@@ -27,60 +35,107 @@
 # Shakes yaw the head side to side, changing the Y and Z cosines
 
 pau2motors:
-    # --- topics to be publsihed: one per motor
+    # --- topics to be published: one per motor
     topics:
-        neck_pau: neck_axis;neck_left;neck_right
+        neck_pau: Upper-Gimbal-L;Upper-Gimbal-R;Lower-Gimbal-L;Lower-Gimbal-R;Neck-Rotation
 
-    motors:
-      # ---Neck---
-      neck_axis:
-        binding:
-          parser:
-            name: getproperty
-            property: m_headRotation
-          function:
-            - name: quaternion2euler
-              axis: z
-            - name: linear
-              scale: -2.92
-              translate: 0
-          hardware:
-            name: dynamixel
-            topic: axis
-        min: -1.57
-        max: 1.57
 
-      neck_left:
-        binding:
-          parser:
-            name: getproperty
-            property: m_headRotation
-          function:
-            - name: quaternion2euler
-              axis: x
-            - name: linear
-              scale: 1.3
-              translate: 0
-          hardware:
-            name: dynamixel
-            topic: left_motor
-        min: -1.57
-        max: 1.57
+motors:
+  # ---Neck---
+  # XXX to-do: output values are in radians.... need to convert
+  # to motor values ...XXX
 
-      neck_right:
-        binding:
-          parser:
-            name: getproperty
-            property: m_headRotation
-          function:
-            - name: quaternion2euler
-              axis: x
-            - name: linear
-              scale: -1.3
-              translate: 0
-          hardware:
-            name: dynamixel
-            topic: right_motor
-        min: -1.57
-        max: 1.57
+  - name: Upper-Gimbal-L
+    topic: Upper_Gimbal_L
+    labelleft: Upper-Gimbal-L
+    default: 0
+    min: -0.798
+    max: 1.917
+    sort_no: 29
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2neck
+          axis: upleft
+
+  - name: Upper-Gimbal-R
+    topic: Upper_Gimbal_R
+    labelleft: Upper-Gimbal-R
+    default: 0
+    min: -2.086
+    max: 0.813
+    sort_no: 30
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2neck
+          axis: upright
+
+  - name: Lower-Gimbal-L
+    topic: Lower_Gimbal_L
+    labelleft: Lower-Gimbal-L
+    default: 0
+    min: -1.246
+    max: 0.595
+    sort_no: 31
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: x
+        - name: linear
+          scale: 0
+          translate: 0
+
+  - name: Lower-Gimbal-R
+    topic: Lower_Gimbal_R
+    labelleft: Lower-Gimbal-R
+    default: 0
+    min: -0.506
+    max: 1.485
+    sort_no: 32
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: x
+        - name: linear
+          scale: 0
+          translate: 0
+
+  - name: Neck-Rotation
+    topic: Neck_Rotation
+    labelleft: Neck-Rotation
+    default: 0
+    min: -1.325
+    max: 1.282
+    sort_no: 33
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2neck
+          axis: yaw
+        - name: linear
+          scale: -2.0
+          translate: 0
 
