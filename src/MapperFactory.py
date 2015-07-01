@@ -327,6 +327,7 @@ class Quaternion2Neck(MapperBase):
         #
         # print "Euler phi theta psi", self.phi, self.theta, self.psi, self.phi + self.psi 
 
+    # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
         # print "Quaternions:", q.w, q.x, q.y, q.z
         # e = q.x*q.x + q.y*q.y + q.z*q.z
@@ -339,20 +340,23 @@ class Quaternion2Neck(MapperBase):
         # print "alpha, axis:", alpha, nex, ney, nez
         quat_to_euler(q)
         self.hijoint.inverse_kinematics(self.theta, self.phi)
-        print "duude left right mot", self.hijoint.theta_l, self.hijoint.theta_r
+        print "Motors: left right yaw", self.hijoint.theta_l, self.hijoint.theta_r, get_yaw(q)
         return self.hijoint.theta_l
 
+    # Returns the upper-neck right motor position, in radians
     def get_upper_right(q) :
         quat_to_euler(q)
         self.hijoint.inverse_kinematics(self.theta, self.phi)
-        print "duude right mot", self.hijoint.theta_r
         return self.hijoint.theta_r
 
-    # Yaw (spin about neck-skull) axis appears to be psi in the
-    # canonical quat-to-euler transform...
+    # Yaw (spin about neck-skull) axis, in radians, right hand rule.
     def get_yaw(q) :
         quat_to_euler(q)
-        return self.psi
+        # glurgle this is not really right ...
+        yaw = self.psi + self.phi
+        if 3.1415926 < yaw:
+            yaw -= 2 * 3.14159265358979
+        return yaw
 
     funcs = {
       'upleft': lambda q: get_upper_left(q),
