@@ -215,6 +215,15 @@ class Quaternion2EulerYZX(MapperBase):
     self.map = funcsByAxis[args['axis'].lower()]
 
 # --------------------------------------------------------------
+#
+# This class accepts a single quaternion from blender, and converts
+# it to motor angles for a single u-joint; by default, the upper-neck
+# u-joint.  The blender quaternion coordinate system is described
+# below.  The motor angles are computed using geometry appropriate
+# for the Han neck mechanism; note that the Eva mechanism has different
+# dimensions; these dimensions are currently hard-coded in
+# NeckKinematics.py
+#
 class Quaternion2Neck(MapperBase):
 
   def __init__(self, args, motor_entry):
@@ -267,7 +276,7 @@ class Quaternion2Neck(MapperBase):
             - q_1 * q_3 + q_0 * q_2
           )
         #
-        # print "Euler phi theta psi", self.phi, self.theta, self.psi, self.phi + self.psi 
+        # print "Euler phi theta psi", self.phi, self.theta, self.psi, self.phi + self.psi
 
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
