@@ -355,8 +355,8 @@ class Quaternion2Neck(MapperBase):
         return self.psi
 
     funcs = {
-      'ul': lambda q: get_upper_left(q),
-      'ur': lambda q: get_upper_right(q),
+      'upleft': lambda q: get_upper_left(q),
+      'upright': lambda q: get_upper_right(q),
       'yaw': lambda q: get_yaw(q)
     }
     self.map = funcs[args['axis'].lower()]
