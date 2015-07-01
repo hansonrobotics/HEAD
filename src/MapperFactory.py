@@ -291,7 +291,7 @@ class Quaternion2Neck(MapperBase):
         # print "alpha, axis:", alpha, nex, ney, nez
         quat_to_euler(q)
         self.hijoint.inverse_kinematics(self.theta, self.phi)
-        print "Motors: left right yaw", self.hijoint.theta_l, self.hijoint.theta_r, get_yaw(q)
+        # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     # Returns the upper-neck right motor position, in radians
@@ -303,10 +303,28 @@ class Quaternion2Neck(MapperBase):
     # Yaw (spin about neck-skull) axis, in radians, right hand rule.
     def get_yaw(q) :
         quat_to_euler(q)
-        # glurgle this is not really right ...
-        yaw = self.psi + self.phi
+
+        # The twist factor is the actual correction for the fact
+        # that the gimbal in the neck assembly prevents the u-joint
+        # from rotating.
+        twist = math.atan2 (math.tan(self.phi), math.cos(self.theta))
+        if twist < 0 :
+            twist += 3.14159265358979
+
+        # The actual neck yaw.
+        yaw = self.psi + twist
         if 3.1415926 < yaw:
             yaw -= 2 * 3.14159265358979
+
+        # The bad_yaw is a "crude" approximation to the correct
+        # yaw .. but in fact, its usually correct to about one
+        # percent or better.
+        bad_yaw = self.psi + self.phi
+        if 3.1415926 < bad_yaw:
+            bad_yaw -= 2 * 3.14159265358979
+
+        # print "Yaw:", bad_yaw, self.psi, self.phi, twist, yaw
+        # print "Yaw and approximation error", yaw, yaw-baw
         return yaw
 
     funcs = {
