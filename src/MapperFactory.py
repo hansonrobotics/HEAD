@@ -287,30 +287,40 @@ class Quaternion2Neck(MapperBase):
     # x-axis == body-left (Eva's left side)
     # y-axis == straight ahead
     # z-axis == down
-
-
-    # The formulas below are taken from Wikipedia, with the convention
-    # that     q_0 = q.w      q_1 = q.x     q_2 = q.y     q_3 = q.z
-    # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-    # and that phi == roll == rotate about body X
-    #          theta == pitch == rot about body Y
-    #          psi == yaw ==  rotate about body Z
-    # with X == foreward    Y == to right    and Z == down
     #
-    # XXX however, the above is NOT the correct interpretation for
-    # quaternions that blender is giving to us. In the blender system,
-    # phi seems to be the pitch... and theta is always approx zero ...
+    # We want to convert to Euler ngles with the following coordinates:
+    # x-axis == straight ahead
+    # y-axis == body-left
+    # z-axis == up
+    #
+    # The formulas below are taken from Wikipedia, but in modified form.
+    # We use the sphere-angle coordinates:
+    # theta == angle w.r.t. z-axis
+    # phi == azimuthal angle, from x axis
+    # psi == body roll
+    # that is,
+    # Rot = Rot(z, phi) Rot (y, theta) Rot (z, psi)
+    #
+    # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+    #
+    # To reconcile what blender is giving us, with the desired coordinates,
+    # above, we make the following substitutions
+    q_0 = q.w
+    q_1 = q.y
+    q_2 = q.x
+    q_3 = -q.z
+    #
     def quat_to_euler(q) :
         self.phi = math.atan2(
-            2 * (q.w * q.x + q.y * q.z),
-            1 - 2 * (q.x**2 + q.y**2)
+            (-q_0 * q_1 + q_2 * q_3),
+            (q_0 * q_2 + q_1 * q_3)
           )
-        self.theta = math.asin(
-            2 * (q.w * q.y - q.x * q.z)
+        self.theta = math.acos(
+            q_0 * q_0 - q_1 * q_1 - q_2 * q_2 + q_3 * q_3
           )
-        self.psi = math.atan2(
-            2 * (q.w * q.z + q.x * q.y),
-            1 - 2 * (q.y**2 + q.z**2)
+        self.psi = - math.atan2(
+            q_0 * q_1 + q_2 * q_3,
+            q_1 * q_3 - q_0 * q_2
           )
         # print "duuuuude phi theta psi", self.phi, self.theta, self.psi
 
