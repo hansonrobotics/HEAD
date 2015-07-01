@@ -323,8 +323,11 @@ class Quaternion2Neck(MapperBase):
         if 3.1415926 < bad_yaw:
             bad_yaw -= 2 * 3.14159265358979
 
+        if 0.02 < yaw-bad_yaw or yaw-bad_yaw < -0.02:
+            print "Aieeeee! bad yaw!", yaw, bad_yaw, yaw-bad_yaw
+            exit
         # print "Yaw:", bad_yaw, self.psi, self.phi, twist, yaw
-        # print "Yaw and approximation error", yaw, yaw-baw
+        # print "Yaw and approximation error", yaw, yaw-bad_yaw
         return yaw
 
     funcs = {
