@@ -357,7 +357,7 @@ class Quaternion2Upper(MapperBase):
 # quaternion into two parts, sending some of it to the upper and some
 # to the lower u-joint.
 #
-class Quaternion2Neck(MapperBase):
+class Quaternion2Split(MapperBase):
 
   def __init__(self, args, motor_entry):
 
@@ -449,7 +449,7 @@ _mapper_classes = {
   "weightedsum": WeightedSum,
   "quaternion2euler": Quaternion2EulerYZX,
   "quaternion2upper": Quaternion2Upper
-  "quaternion2neck": Quaternion2Neck
+  "quaternion2split": Quaternion2Split
 }
 
 def build(yamlobj, motor_entry):
