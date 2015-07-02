@@ -40,7 +40,7 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                     this.ui.durationSlider.slider({
                         range: "min",
                         min: 0,
-                        max: 100,
+                        max: 1000,
                         value: this.config.duration * 100,
                         change: function (e, ui) {
                             var duration = ui.value / 100.0;
