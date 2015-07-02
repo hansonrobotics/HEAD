@@ -19,6 +19,7 @@
 
 import math
 import NeckKinematics
+import NeckVertical
 
 class MapperBase:
   """
@@ -370,6 +371,11 @@ class Quaternion2Split(MapperBase):
     self.upper_split = 0.5
     self.lower_split = 1.0 - self.upper_split
 
+    # XXX TODO remove hard-coded physical dimensions
+    # Han neck mechanism has the upper joint being 8.93 centimeters
+    # in front of the lower joint, and 112.16 centimeters above it.
+    self.kappa = atan2(8.93, 112.16)
+
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
         (phi, theta, psi) = quat_to_asa(q)
@@ -392,6 +398,7 @@ class Quaternion2Split(MapperBase):
         (phi, theta, psi) = quat_to_asa(q)
         phi *= self.lower_split
         theta *= self.lower_split
+        (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
         self.lojoint.inverse_kinematics(theta, phi)
         # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
         return self.lojoint.theta_l
@@ -401,6 +408,7 @@ class Quaternion2Split(MapperBase):
         (phi, theta, psi) = quat_to_asa(q)
         phi *= self.lower_split
         theta *= self.lower_split
+        (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
         self.lojoint.inverse_kinematics(theta, phi)
         return self.lojoint.theta_r
 
@@ -419,6 +427,10 @@ class Quaternion2Split(MapperBase):
         yaw = psi + twist
         if 3.1415926 < yaw:
             yaw -= 2 * 3.14159265358979
+
+        # XXX TODO The neck cant produces a small correction to the yaw,
+        # the formulas are there in neck_cant, but need to be integrated
+        # here...
 
         # The bad_yaw is a "crude" approximation to the correct
         # yaw .. but in fact, its usually correct to about one
