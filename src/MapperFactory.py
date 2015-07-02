@@ -251,7 +251,7 @@ class Quaternion2EulerYZX(MapperBase):
 # Status: 1 July 2015: this now works exactly as expected! Woot!
 def quat_to_asa(q) :
 
-    # print "Quaternions:", q.w, q.x, q.y, q.z
+    # print "Quaternions: %7f" %q.w, "%10.7f" % q.x, "%10.7f" % q.y, "%10.7f" % q.z
     # e = q.x*q.x + q.y*q.y + q.z*q.z
     # n = q.w*q.w + e
     # e = math.sqrt(e)
