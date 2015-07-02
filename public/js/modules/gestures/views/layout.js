@@ -11,10 +11,12 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
                 sayIntroButton: ".app-gesture-say-intro"
             },
             regions: {
-                gestures: '.app-gesture-buttons',
                 performances: '.app-performance-buttons',
                 cycles: '.app-cycle-buttons',
-                emotions: '.app-emotion-sliders'
+                startButton: '.app-gesture-demo-start',
+                stopButton: '.app-gesture-demo-stop',
+                gestures: '.app-gesture-buttons',
+                emotions: '.app-emotions-container'
             },
             events: {
                 'click @ui.btOnButton': "btOn",
@@ -29,6 +31,20 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
             },
             btOnStage: function() {
                 api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on_stage'}));
+            },
+            setRandomGesture: function () {
+                $('.app-duration-slider', this.ui.emotions).slider('value', Math.floor(Math.random() * 100));
+                $('.app-magnitude-slider', this.ui.emotions).slider('value', Math.floor(Math.random() * 100));
+
+                // click random emotion
+                var emotionButtons = $('button', this.ui.emotions),
+                    randomEmotionButton = $(emotionButtons).get(Math.floor(Math.random() * $(emotionButtons).length));
+                $(randomEmotionButton).click();
+
+                // click random gesture
+                var gestureButtons = $('button', this.ui.gestures),
+                    randomGestureButton = $(gestureButtons).get(Math.floor(Math.random() * $(gestureButtons).length));
+                $(randomGestureButton).click();
             },
             btEmotionsOff: function() {
                 api.topics.cmdTree.publish(new ROSLIB.Message({data: 'emotion_off'}));

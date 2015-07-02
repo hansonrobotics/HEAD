@@ -1,36 +1,24 @@
-define(["application", "tpl!./templates/emotion.tpl", 'lib/api'], function (App, template, api) {
+define(["application", "tpl!./templates/emotion.tpl"], function (App, template) {
     App.module("Gestures.Views", function (Views, App, Backbone, Marionette, $, _) {
         Views.Emotion = Marionette.ItemView.extend({
             template: template,
-            tagName: 'li',
+            tagName: 'span',
             className: 'app-emotion-slider-container',
             ui: {
-                slider: '.app-slider',
-                value: '.app-slider-value'
+                button: 'button'
             },
-            onRender: function () {
+            events: {
+                'click @ui.button': 'setEmotion'
+            },
+            setEmotion: function () {
+                this.options.setEmotion(this.model.get('name'));
+
                 var self = this;
+                $(self.ui.button).addClass('active');
 
-                this.ui.slider.slider({
-                    range: "min",
-                    value: 0,
-                    min: 0,
-                    max: 100,
-                    change: function (e, ui) {
-                        self.model.set('value', ui.value / 100.0);
-                        self.ui.value.html(ui.value);
-
-                        self.resetTimeout = setTimeout(function () {
-                            self.model.set('value', 0);
-                            self.ui.value.html(0);
-                            self.ui.slider.slider('value', 0);
-                        }, 3000);
-                    }
-                });
-            },
-            onDestroy: function () {
-                if (this.resetTimeout)
-                    clearTimeout(this.resetTimeout);
+                setTimeout(function () {
+                    $(self.ui.button).removeClass('active');
+                }, 2000)
             }
         });
     });

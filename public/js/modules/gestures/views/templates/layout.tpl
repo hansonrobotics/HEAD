@@ -20,11 +20,12 @@
     <div class="row">
         <h4>Emotions: </h4>
 
-        <ul class="app-emotion-sliders"></ul>
+        <div class="app-emotions-container"></div>
     </div>
     <div class="row">
         <h4>Cycles: </h4>
 
         <div class="app-cycle-buttons"></div>
+        </div>
     </div>
 </div>
