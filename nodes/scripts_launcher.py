@@ -46,7 +46,6 @@ def execute_script(msg):
         execfile(file)
     except:
         rospy.logwarn("Error executing script")
-        #execfile(file)
 
 if __name__ == '__main__':
     tts_pub = rospy.Publisher("chatbot_responses", String, queue_size=10)
