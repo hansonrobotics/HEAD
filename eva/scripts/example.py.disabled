@@ -18,3 +18,11 @@ say(s)
 sleep(5)
 #Play Gestrue
 play("all")
+# Can set magnitude and/or speed:
+# play("all",speed=0.5, magnitude=0.8)
+#Sleep some more time:
+sleep(5)
+# Emotions
+emotion("happy")
+# Can set the duration and magnitude
+#emotion("happy", duration=3.5, magnitude=0.6)
