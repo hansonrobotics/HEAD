@@ -12,8 +12,8 @@ pau2motors:
 
 motors:
   # ---Neck---
-  # XXX to-do: output values are in radians.... need to convert
-  # to motor values ...XXX
+  # A linear scaling at the end of each stanza allows adjustments for
+  # the actual motor zero/neutral values.
 
   - name: Upper-Gimbal-L
     topic: Upper_Gimbal_L
@@ -31,6 +31,9 @@ motors:
       function:
         - name: quaternion2split
           axis: upleft
+        - name: linear
+          scale: 1.0
+          translate: 0
 
   - name: Upper-Gimbal-R
     topic: Upper_Gimbal_R
@@ -48,6 +51,9 @@ motors:
       function:
         - name: quaternion2split
           axis: upright
+        - name: linear
+          scale: 1.0
+          translate: 0
 
   - name: Lower-Gimbal-L
     topic: Lower_Gimbal_L
@@ -65,6 +71,9 @@ motors:
       function:
         - name: quaternion2split
           axis: loleft
+        - name: linear
+          scale: 1.0
+          translate: 0
 
   - name: Lower-Gimbal-R
     topic: Lower_Gimbal_R
@@ -82,6 +91,9 @@ motors:
       function:
         - name: quaternion2split
           axis: loright
+        - name: linear
+          scale: 1.0
+          translate: 0
 
   - name: Neck-Rotation
     topic: Neck_Rotation
@@ -100,6 +112,6 @@ motors:
         - name: quaternion2split
           axis: yaw
         - name: linear
-          scale: -2.0
+          scale: 1.0
           translate: 0
 
