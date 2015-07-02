@@ -17,4 +17,4 @@ say(s)
 # wait for 5s
 sleep(5)
 #Play Gestrue
-play("all")
+play("all", magnitude=0.8)
