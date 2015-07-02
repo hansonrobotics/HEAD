@@ -167,7 +167,13 @@ class EvaAPI(RigAPI):
 
     def getHeadData(self):
         bones = bpy.evaAnimationManager.deformObj.pose.bones
-        q = (bones['DEF-head'].id_data.matrix_world*bones['DEF-head'].matrix*Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
+        q = (bones['DEF-head'].id_data.matrix_world * bones['DEF-head'].matrix * Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
+        return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
+
+    # Same as head, but for the lower neck joint.
+    def getNeckData(self):
+        bones = bpy.evaAnimationManager.deformObj.pose.bones
+        q = (bones['DEF-neck'].id_data.matrix_world * bones['DEF-neck'].matrix * Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
         return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
 
     # Gets Eye rotation angles:

@@ -144,6 +144,7 @@ class BLRigControl(bpy.types.Panel):
         col.operator('eva.debug', text='getGestures()').action = 'commands.EvaAPI().getGestures()'
         col.operator('eva.debug', text='getGestureParams()').action = 'commands.EvaAPI().getGestureParams()'
         col.operator('eva.debug', text='getHeadData()').action = 'commands.EvaAPI().getHeadData()'
+        col.operator('eva.debug', text='getNeckData()').action = 'commands.EvaAPI().getNeckData()'
         col.operator('eva.debug', text='getEyesData()').action = 'commands.EvaAPI().getEyesData()'
         col.operator('eva.debug', text='getFaceData()').action = 'commands.EvaAPI().getFaceData()'
 
