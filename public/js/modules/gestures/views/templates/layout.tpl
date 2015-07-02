@@ -26,6 +26,5 @@
         <h4>Cycles: </h4>
 
         <div class="app-cycle-buttons"></div>
-        </div>
     </div>
 </div>
