@@ -20,11 +20,11 @@ def play(gesture, speed=1, magnitude=1, repeat=1):
     msg.name = gesture
     gestures_pub.publish(msg)
 
-def emotion(emo, scale=1, duration=1):
+def emotion(emo, magnitude=1, duration=1):
     msg = EmotionState()
     msg.name = emo
-    msg.scale = scale
-    msg.duration = duration
+    msg.magnitude = magnitude
+    msg.duration = rospy.Duration.from_sec(duration)
     emotions_pub.publish(msg)
 
 
@@ -46,6 +46,7 @@ def execute_script(msg):
         execfile(file)
     except:
         rospy.logwarn("Error executing script")
+        #execfile(file)
 
 if __name__ == '__main__':
     tts_pub = rospy.Publisher("chatbot_responses", String, queue_size=10)
@@ -55,7 +56,6 @@ if __name__ == '__main__':
     rospy.Subscriber("execute_script", String, execute_script, queue_size=10)
     rospy.init_node('performances')
     scripts_dir = rospy.get_param('~scripts_dir')
-    print scripts_dir
     r= rospy.Rate(1.0)
     while not rospy.is_shutdown():
         publish_scripts()
