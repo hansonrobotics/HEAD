@@ -374,7 +374,7 @@ class Quaternion2Split(MapperBase):
     # XXX TODO remove hard-coded physical dimensions
     # Han neck mechanism has the upper joint being 8.93 centimeters
     # in front of the lower joint, and 112.16 centimeters above it.
-    self.kappa = atan2(8.93, 112.16)
+    self.kappa = math.atan2(8.93, 112.16)
 
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
@@ -460,7 +460,7 @@ _mapper_classes = {
   "linear": Linear,
   "weightedsum": WeightedSum,
   "quaternion2euler": Quaternion2EulerYZX,
-  "quaternion2upper": Quaternion2Upper
+  "quaternion2upper": Quaternion2Upper,
   "quaternion2split": Quaternion2Split
 }
 
