@@ -12,8 +12,8 @@ pau2motors:
 
 motors:
   # ---Neck---
-  # XXX to-do: output values are in radians.... need to convert
-  # to motor values ...XXX
+  # Output values are in radians. The linear scaling after the angle
+  # conversion can be used to adjust for motor offsets.
 
   - name: Upper-Gimbal-L
     topic: Upper_Gimbal_L
@@ -31,6 +31,9 @@ motors:
       function:
         - name: quaternion2upper
           axis: upleft
+        - name: linear
+          scale: 1.0
+          translate: 0
 
   - name: Upper-Gimbal-R
     topic: Upper_Gimbal_R
@@ -48,6 +51,9 @@ motors:
       function:
         - name: quaternion2upper
           axis: upright
+        - name: linear
+          scale: 1.0
+          translate: 0
 
   - name: Lower-Gimbal-L
     topic: Lower_Gimbal_L
@@ -65,6 +71,7 @@ motors:
       function:
         - name: quaternion2euler
           axis: x
+          # Note: scale == 0.0 means the lower gimbal does not move at all
         - name: linear
           scale: 0
           translate: 0
@@ -85,6 +92,7 @@ motors:
       function:
         - name: quaternion2euler
           axis: x
+          # Note: scale == 0.0 means the lower gimbal does not move at all
         - name: linear
           scale: 0
           translate: 0
@@ -106,6 +114,6 @@ motors:
         - name: quaternion2upper
           axis: yaw
         - name: linear
-          scale: -2.0
+          scale: 1.0
           translate: 0
 
