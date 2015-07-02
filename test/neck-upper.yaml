@@ -1,8 +1,8 @@
 #
 # Demo neck yaml file.
 # Used for testing and development of complex neck mechanisms.
-# Splits a single qaternion from blender 50%-50% between the
-# upper and the lower neck mechanisms.
+# A single blender quaternion is sent to the upper u-jopint only.
+# The lower u-joint does not move at all.
 
 pau2motors:
     # --- topics to be published: one per motor
@@ -29,7 +29,7 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2split
+        - name: quaternion2upper
           axis: upleft
 
   - name: Upper-Gimbal-R
@@ -46,7 +46,7 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2split
+        - name: quaternion2upper
           axis: upright
 
   - name: Lower-Gimbal-L
@@ -63,8 +63,11 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2split
-          axis: loleft
+        - name: quaternion2euler
+          axis: x
+        - name: linear
+          scale: 0
+          translate: 0
 
   - name: Lower-Gimbal-R
     topic: Lower_Gimbal_R
@@ -80,8 +83,11 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2split
-          axis: loright
+        - name: quaternion2euler
+          axis: x
+        - name: linear
+          scale: 0
+          translate: 0
 
   - name: Neck-Rotation
     topic: Neck_Rotation
@@ -97,7 +103,7 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2split
+        - name: quaternion2upper
           axis: yaw
         - name: linear
           scale: -2.0

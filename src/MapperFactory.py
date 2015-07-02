@@ -19,6 +19,7 @@
 
 import math
 import NeckKinematics
+import NeckVertical
 
 class MapperBase:
   """
@@ -216,6 +217,76 @@ class Quaternion2EulerYZX(MapperBase):
 
 # --------------------------------------------------------------
 #
+# This is a small utility function that accepts a single quaternion from
+# blender, and converts it to "animator sphere angles" (ASA).  These are
+# actually Euler angles, but we give them the funny ASA name to avoid
+# confusion with other euler-angle conventions.  The ASA convention used
+# here is the same one documented in the neck_kinematics PDF. Its
+# identical to the standard Euler angles used in undergraduate physics
+# textbooks on rigid body motion (classical mechanics) but differs from
+# the conventions used in ... other places (engineering, computer
+# graphics).  That's OK; there are at least 24 different conventions.
+#
+# Blender provides us with quaternions in the coordinate frame:
+# x-axis == body-left (Eva's left side)
+# y-axis == straight ahead
+# z-axis == down
+#
+# We want to convert to Euler ngles with the following coordinates:
+# x-axis == straight ahead
+# y-axis == body-left
+# z-axis == up
+# The above is the textbook convention in undergraduate physics.
+#
+# The formulas below are taken from Wikipedia, but in modified form.
+# We use the sphere-angle coordinates:
+# theta == angle w.r.t. z-axis
+# phi == azimuthal angle, from x axis
+# psi == body roll
+# that is,
+# Rot = Rot(z, phi) Rot (y, theta) Rot (z, psi)
+#
+# https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+#
+# Status: 1 July 2015: this now works exactly as expected! Woot!
+def quat_to_asa(q) :
+
+    # print "Quaternions:", q.w, q.x, q.y, q.z
+    # e = q.x*q.x + q.y*q.y + q.z*q.z
+    # n = q.w*q.w + e
+    # e = math.sqrt(e)
+    # alpha = 2 * math.asin (e)
+    # nex = q.x / e
+    # ney = q.y / e
+    # nez = q.z / e
+    # print "alpha, axis:", alpha, nex, ney, nez
+    #
+    # To reconcile what blender is giving us, with the desired
+    # coordinates, above, we make the following substitutions.
+    #
+    q_0 = q.w
+    q_1 = q.y
+    q_2 = q.x
+    q_3 = -q.z
+    #
+    phi = math.atan2(
+        (-q_0 * q_1 + q_2 * q_3),
+        (q_0 * q_2 + q_1 * q_3)
+      )
+    theta = math.acos(
+        q_0 * q_0 - q_1 * q_1 - q_2 * q_2 + q_3 * q_3
+      )
+    psi = math.atan2(
+        q_0 * q_1 + q_2 * q_3,
+        - q_1 * q_3 + q_0 * q_2
+      )
+    #
+    # print "Euler phi theta psi", phi, theta, psi
+    return [phi, theta, psi]
+
+
+# --------------------------------------------------------------
+#
 # This class accepts a single quaternion from blender, and converts
 # it to motor angles for a single u-joint; by default, the upper-neck
 # u-joint.  The blender quaternion coordinate system is described
@@ -224,89 +295,53 @@ class Quaternion2EulerYZX(MapperBase):
 # dimensions; these dimensions are currently hard-coded in
 # NeckKinematics.py
 #
-class Quaternion2Neck(MapperBase):
+class Quaternion2Upper(MapperBase):
 
   def __init__(self, args, motor_entry):
 
     self.hijoint = NeckKinematics.upper_neck()
-    self.lojoint = NeckKinematics.lower_neck()
-    self.phi = 0.0
-    self.theta = 0.0
-    self.psi = 0.0
-
-    # Blender provides us with quaternions in the coordinate frame:
-    # x-axis == body-left (Eva's left side)
-    # y-axis == straight ahead
-    # z-axis == down
-    #
-    # We want to convert to Euler ngles with the following coordinates:
-    # x-axis == straight ahead
-    # y-axis == body-left
-    # z-axis == up
-    #
-    # The formulas below are taken from Wikipedia, but in modified form.
-    # We use the sphere-angle coordinates:
-    # theta == angle w.r.t. z-axis
-    # phi == azimuthal angle, from x axis
-    # psi == body roll
-    # that is,
-    # Rot = Rot(z, phi) Rot (y, theta) Rot (z, psi)
-    #
-    # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-    #
-    # Status: 1 July 2015: this now works exactly as expected! Woot!
-    def quat_to_euler(q) :
-        # To reconcile what blender is giving us, with the desired
-        # coordinates, above, we make the following substitutions.
-        #
-        q_0 = q.w
-        q_1 = q.y
-        q_2 = q.x
-        q_3 = -q.z
-        #
-        self.phi = math.atan2(
-            (-q_0 * q_1 + q_2 * q_3),
-            (q_0 * q_2 + q_1 * q_3)
-          )
-        self.theta = math.acos(
-            q_0 * q_0 - q_1 * q_1 - q_2 * q_2 + q_3 * q_3
-          )
-        self.psi = math.atan2(
-            q_0 * q_1 + q_2 * q_3,
-            - q_1 * q_3 + q_0 * q_2
-          )
-        #
-        # print "Euler phi theta psi", self.phi, self.theta, self.psi, self.phi + self.psi
 
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
-        # print "Quaternions:", q.w, q.x, q.y, q.z
-        # e = q.x*q.x + q.y*q.y + q.z*q.z
-        # n = q.w*q.w + e
-        # e = math.sqrt(e)
-        # alpha = 2 * math.asin (e)
-        # nex = q.x / e
-        # ney = q.y / e
-        # nez = q.z / e
-        # print "alpha, axis:", alpha, nex, ney, nez
-        quat_to_euler(q)
-        self.hijoint.inverse_kinematics(self.theta, self.phi)
-        print "Motors: left right yaw", self.hijoint.theta_l, self.hijoint.theta_r, get_yaw(q)
+        (phi, theta, psi) = quat_to_asa(q)
+        self.hijoint.inverse_kinematics(theta, phi)
+        # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     # Returns the upper-neck right motor position, in radians
     def get_upper_right(q) :
-        quat_to_euler(q)
-        self.hijoint.inverse_kinematics(self.theta, self.phi)
+        (phi, theta, psi) = quat_to_asa(q)
+        self.hijoint.inverse_kinematics(theta, phi)
         return self.hijoint.theta_r
 
     # Yaw (spin about neck-skull) axis, in radians, right hand rule.
     def get_yaw(q) :
-        quat_to_euler(q)
-        # glurgle this is not really right ...
-        yaw = self.psi + self.phi
+        (phi, theta, psi) = quat_to_asa(q)
+
+        # The twist factor is the actual correction for the fact
+        # that the gimbal in the neck assembly prevents the u-joint
+        # from rotating.
+        twist = math.atan2 (math.tan(phi), math.cos(theta))
+        if twist < 0 :
+            twist += 3.14159265358979
+
+        # The actual neck yaw.
+        yaw = psi + twist
         if 3.1415926 < yaw:
             yaw -= 2 * 3.14159265358979
+
+        # The bad_yaw is a "crude" approximation to the correct
+        # yaw .. but in fact, its usually correct to about one
+        # percent or better.
+        bad_yaw = psi + phi
+        if 3.1415926 < bad_yaw:
+            bad_yaw -= 2 * 3.14159265358979
+
+        if 0.02 < yaw-bad_yaw or yaw-bad_yaw < -0.02:
+            print "Aieeeee! bad yaw!", yaw, bad_yaw, yaw-bad_yaw
+            exit
+        # print "Yaw:", bad_yaw, psi, phi, twist, yaw
+        # print "Yaw and approximation error", yaw, yaw-bad_yaw
         return yaw
 
     funcs = {
@@ -316,12 +351,117 @@ class Quaternion2Neck(MapperBase):
     }
     self.map = funcs[args['axis'].lower()]
 
+# --------------------------------------------------------------
+#
+# This class accepts a single quaternion from blender, and converts
+# it to motor angles for two stacked u-joints; it splits up the
+# quaternion into two parts, sending some of it to the upper and some
+# to the lower u-joint.
+#
+class Quaternion2Split(MapperBase):
+
+  def __init__(self, args, motor_entry):
+
+    self.hijoint = NeckKinematics.upper_neck()
+    self.lojoint = NeckKinematics.lower_neck()
+
+    # split the angles in two, giving sume to the upper and some to the
+    # lower ujoint. Valid values for split are -1.0 to 2.0, with a
+    # 50%-50% given by setting split to 0.5.
+    self.upper_split = 0.5
+    self.lower_split = 1.0 - self.upper_split
+
+    # XXX TODO remove hard-coded physical dimensions
+    # Han neck mechanism has the upper joint being 8.93 centimeters
+    # in front of the lower joint, and 112.16 centimeters above it.
+    self.kappa = atan2(8.93, 112.16)
+
+    # Returns the upper-neck left motor position, in radians
+    def get_upper_left(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        phi *= self.upper_split
+        theta *= self.upper_split
+        self.hijoint.inverse_kinematics(theta, phi)
+        # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
+        return self.hijoint.theta_l
+
+    # Returns the upper-neck right motor position, in radians
+    def get_upper_right(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        phi *= self.upper_split
+        theta *= self.upper_split
+        self.hijoint.inverse_kinematics(theta, phi)
+        return self.hijoint.theta_r
+
+    # Returns the lower-neck left motor position, in radians
+    def get_lower_left(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        phi *= self.lower_split
+        theta *= self.lower_split
+        (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
+        self.lojoint.inverse_kinematics(theta, phi)
+        # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
+        return self.lojoint.theta_l
+
+    # Returns the lower-neck right motor position, in radians
+    def get_lower_right(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        phi *= self.lower_split
+        theta *= self.lower_split
+        (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
+        self.lojoint.inverse_kinematics(theta, phi)
+        return self.lojoint.theta_r
+
+    # Yaw (spin about neck-skull) axis, in radians, right hand rule.
+    def get_yaw(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+
+        # The twist factor is the actual correction for the fact
+        # that the gimbal in the neck assembly prevents the u-joint
+        # from rotating.
+        twist = math.atan2 (math.tan(phi), math.cos(theta))
+        if twist < 0 :
+            twist += 3.14159265358979
+
+        # The actual neck yaw.
+        yaw = psi + twist
+        if 3.1415926 < yaw:
+            yaw -= 2 * 3.14159265358979
+
+        # XXX TODO The neck cant produces a small correction to the yaw,
+        # the formulas are there in neck_cant, but need to be integrated
+        # here...
+
+        # The bad_yaw is a "crude" approximation to the correct
+        # yaw .. but in fact, its usually correct to about one
+        # percent or better.
+        bad_yaw = psi + phi
+        if 3.1415926 < bad_yaw:
+            bad_yaw -= 2 * 3.14159265358979
+
+        if 0.02 < yaw-bad_yaw or yaw-bad_yaw < -0.02:
+            print "Aieeeee! bad yaw!", yaw, bad_yaw, yaw-bad_yaw
+            exit
+        # print "Yaw:", bad_yaw, psi, phi, twist, yaw
+        # print "Yaw and approximation error", yaw, yaw-bad_yaw
+        return yaw
+
+    funcs = {
+      'upleft':  lambda q: get_upper_left(q),
+      'upright': lambda q: get_upper_right(q),
+      'loleft':  lambda q: get_lower_left(q),
+      'loright': lambda q: get_lower_right(q),
+      'yaw': lambda q: get_yaw(q)
+    }
+    self.map = funcs[args['axis'].lower()]
+
 
 _mapper_classes = {
   "linear": Linear,
   "weightedsum": WeightedSum,
   "quaternion2euler": Quaternion2EulerYZX,
-  "quaternion2neck": Quaternion2Neck
+  "quaternion2upper": Quaternion2Upper
+  "quaternion2split": Quaternion2Split
 }
 
 def build(yamlobj, motor_entry):
