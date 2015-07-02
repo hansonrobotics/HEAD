@@ -1,8 +1,9 @@
 #
 # Demo neck yaml file.
 # Used for testing and development of complex neck mechanisms.
-# Splits a single quaternion from blender 50%-50% between the
-# upper and the lower neck mechanisms.
+# Accepts two quaternions from blender, one describing the position
+# of the lower gimbal, and one describng the position of the upper
+# gimbal.
 
 pau2motors:
     # --- topics to be published: one per motor
@@ -29,7 +30,7 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2split
+        - name: quaternion2dual
           axis: upleft
         - name: linear
           scale: 1.0
@@ -49,7 +50,7 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2split
+        - name: quaternion2dual
           axis: upright
         - name: linear
           scale: 1.0
@@ -67,9 +68,9 @@ motors:
     pau:
       parser:
         name: getproperty
-        property: m_headRotation
+        property: m_neckRotation
       function:
-        - name: quaternion2split
+        - name: quaternion2dual
           axis: loleft
         - name: linear
           scale: 1.0
@@ -87,9 +88,9 @@ motors:
     pau:
       parser:
         name: getproperty
-        property: m_headRotation
+        property: m_neckRotation
       function:
-        - name: quaternion2split
+        - name: quaternion2dual
           axis: loright
         - name: linear
           scale: 1.0
@@ -109,7 +110,7 @@ motors:
         name: getproperty
         property: m_headRotation
       function:
-        - name: quaternion2split
+        - name: quaternion2dual
           axis: yaw
         - name: linear
           scale: 1.0
