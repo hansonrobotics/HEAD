@@ -32,7 +32,7 @@ motors:
         - name: quaternion2upper
           axis: upleft
         - name: linear
-          scale: 1.0
+          scale: -1.0
           translate: 0
 
   - name: Upper-Gimbal-R
@@ -52,7 +52,7 @@ motors:
         - name: quaternion2upper
           axis: upright
         - name: linear
-          scale: 1.0
+          scale: -1.0
           translate: 0
 
   - name: Lower-Gimbal-L

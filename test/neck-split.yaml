@@ -32,7 +32,7 @@ motors:
         - name: quaternion2split
           axis: upleft
         - name: linear
-          scale: 1.0
+          scale: -1.0
           translate: 0
 
   - name: Upper-Gimbal-R
@@ -52,7 +52,7 @@ motors:
         - name: quaternion2split
           axis: upright
         - name: linear
-          scale: 1.0
+          scale: -1.0
           translate: 0
 
   - name: Lower-Gimbal-L
@@ -72,7 +72,7 @@ motors:
         - name: quaternion2split
           axis: loleft
         - name: linear
-          scale: 1.0
+          scale: -1.0
           translate: 0
 
   - name: Lower-Gimbal-R
@@ -92,7 +92,7 @@ motors:
         - name: quaternion2split
           axis: loright
         - name: linear
-          scale: 1.0
+          scale: -1.0
           translate: 0
 
   - name: Neck-Rotation
