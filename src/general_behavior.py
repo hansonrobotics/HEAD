@@ -190,6 +190,7 @@ class Tree():
 		self.blackboard["glance_probability"] = config.getfloat("interaction", "glance_probability")
 		self.blackboard["glance_probability_for_new_faces"] = config.getfloat("interaction", "glance_probability_for_new_faces")
 		self.blackboard["glance_probability_for_lost_faces"] = config.getfloat("interaction", "glance_probability_for_lost_faces")
+		self.blackboard["z_pitch_eyes"] = config.getfloat("interaction", "z_pitch_eyes")
 		self.blackboard["max_glance_distance"] = config.getfloat("interaction", "max_glance_distance")
 		self.blackboard["sleep_probability"] = config.getfloat("boredom", "sleep_probability")
 		self.blackboard["sleep_duration_min"] = config.getfloat("boredom", "sleep_duration_min")
