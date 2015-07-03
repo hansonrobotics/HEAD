@@ -32,7 +32,7 @@ motors:
         - name: quaternion2upper
           axis: upleft
         - name: linear
-          scale: 1.0
+          scale: -1.0
           translate: 0
 
   - name: Upper-Gimbal-R
@@ -52,7 +52,7 @@ motors:
         - name: quaternion2upper
           axis: upright
         - name: linear
-          scale: 1.0
+          scale: -1.0
           translate: 0
 
   - name: Lower-Gimbal-L
@@ -113,7 +113,8 @@ motors:
       function:
         - name: quaternion2upper
           axis: yaw
+          # The neck motor is geared 2-1 and is upside-down
         - name: linear
-          scale: 1.0
+          scale: -2.0
           translate: 0
 
