@@ -26,7 +26,7 @@ class EvaAPI(RigAPI):
 
     # System control and information commands ===========
     def getAPIVersion(self):
-        return 3
+        return 4
 
     def isAlive(self):
         return int(bpy.context.scene['animationPlaybackActive'])
