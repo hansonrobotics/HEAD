@@ -244,7 +244,7 @@ class Quaternion2EulerYZX(MapperBase):
 # phi == azimuthal angle, from x axis
 # psi == body roll
 # that is,
-# Rot = Rot(z, phi) Rot (y, theta) Rot (z, psi)
+# Rot = Rot(Z, phi) Rot (Y, theta) Rot (Z, psi)
 #
 # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
 #
@@ -465,6 +465,10 @@ class Quaternion2Split(MapperBase):
 # motor angles for the two stacked u-joints.  This is the "full
 # function" neck, unlike the to classes above, which don't offer the
 # full set of motions.
+#
+# XXX untested; blender is not currently generating two quaternions.
+# Some fiddling to get the corrdinate systems all korrect might be
+# needed.
 #
 class Quaternion2Dual(MapperBase):
 
