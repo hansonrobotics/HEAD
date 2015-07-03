@@ -69,10 +69,23 @@ class RigAPI:
         return None
 
     # ========== info dump for ROS
-    # Get Head rotation quaternion in XYZ format data structure.
-    # Pitch: X (positive down, negative up)?
-    # Yaw: Z (negative right to positive left)
+    # Get Head and Neck rotation quaternion in XYZ format data structure.
+    # Its assumed that the robot neck assembly has two joints; the upper
+    # joint is the "head" joint, the lower one is the "neck" joint.
+    #
+    # Pitch: Z (positive down, negative up)
+    # Yaw: X (negative left to positive right)
+    #
+    # XXX TODO It does not really make sense to specify two quaternions,
+    # without also specifying the physical distance between the two
+    # joints.  Right now, this distanc is hard-coded in various random
+    # places, but this should be fixed in some way.  (For example, maybe
+    # the blender rig should use physical dimensions queried from the
+    # actual robot being modelled??)
     def getHeadData(self):
+        return None
+
+    def getNeckData(self):
         return None
 
     # Get Eye rotation angles:
