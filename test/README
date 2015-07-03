@@ -11,6 +11,9 @@ There are several files here:
 * neck-split.yaml -- a single blender quaternion is split 50-50
   between the upper and lower u-joints.
 
+* neck-dual.yaml -- two quaternions from blender, one describing the
+  upper, and one describing the lower u-joints.
+
 == Running
 To run:
 0) start roscore

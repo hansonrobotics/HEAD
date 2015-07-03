@@ -1,5 +1,6 @@
 geometry_msgs/Quaternion m_headRotation
 geometry_msgs/Vector3    m_headTranslation
+geometry_msgs/Quaternion m_neckRotation
 
 float32 m_eyeGazeLeftPitch
 float32 m_eyeGazeLeftYaw
