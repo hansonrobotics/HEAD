@@ -111,7 +111,8 @@ motors:
       function:
         - name: quaternion2split
           axis: yaw
+          # The neck motor is geared 2-1 and is upside-down
         - name: linear
-          scale: 1.0
+          scale: -2.0
           translate: 0
 
