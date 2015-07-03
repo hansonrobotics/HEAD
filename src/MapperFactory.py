@@ -368,6 +368,8 @@ class Quaternion2Split(MapperBase):
     # split the angles in two, giving sume to the upper and some to the
     # lower ujoint. Valid values for split are -1.0 to 2.0, with a
     # 50%-50% given by setting split to 0.5.
+    # Setting upper_split to 1.0 should result in exactly the same
+    # behavior as the Quaternion2Upper class above.
     self.upper_split = 0.5
     self.lower_split = 1.0 - self.upper_split
 
@@ -456,12 +458,105 @@ class Quaternion2Split(MapperBase):
     self.map = funcs[args['axis'].lower()]
 
 
+# --------------------------------------------------------------
+#
+# This class accepts two diferent quaternions from blender, one for the
+# upper neck joint, and one for the lower joint, and converts them to
+# motor angles for the two stacked u-joints.  This is the "full
+# function" neck, unlike the to classes above, which don't offer the
+# full set of motions.
+#
+class Quaternion2Dual(MapperBase):
+
+  def __init__(self, args, motor_entry):
+
+    self.hijoint = NeckKinematics.upper_neck()
+    self.lojoint = NeckKinematics.lower_neck()
+
+    # XXX TODO remove hard-coded physical dimensions
+    # Han neck mechanism has the upper joint being 8.93 centimeters
+    # in front of the lower joint, and 112.16 centimeters above it.
+    self.kappa = math.atan2(8.93, 112.16)
+
+    # Returns the upper-neck left motor position, in radians
+    def get_upper_left(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        self.hijoint.inverse_kinematics(theta, phi)
+        # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
+        return self.hijoint.theta_l
+
+    # Returns the upper-neck right motor position, in radians
+    def get_upper_right(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        self.hijoint.inverse_kinematics(theta, phi)
+        return self.hijoint.theta_r
+
+    # Returns the lower-neck left motor position, in radians
+    def get_lower_left(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
+        self.lojoint.inverse_kinematics(theta, phi)
+        # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
+        return self.lojoint.theta_l
+
+    # Returns the lower-neck right motor position, in radians
+    def get_lower_right(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+        (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
+        self.lojoint.inverse_kinematics(theta, phi)
+        return self.lojoint.theta_r
+
+    # Yaw (spin about neck-skull) axis, in radians, right hand rule.
+    def get_yaw(q) :
+        (phi, theta, psi) = quat_to_asa(q)
+
+        # The twist factor is the actual correction for the fact
+        # that the gimbal in the neck assembly prevents the u-joint
+        # from rotating.
+        twist = math.atan2 (math.tan(phi), math.cos(theta))
+        if twist < 0 :
+            twist += 3.14159265358979
+
+        # The actual neck yaw.
+        yaw = psi + twist
+        if 3.1415926 < yaw:
+            yaw -= 2 * 3.14159265358979
+
+        # XXX TODO The neck cant produces a small correction to the yaw,
+        # the formulas are there in neck_cant, but need to be integrated
+        # here...
+
+        # The bad_yaw is a "crude" approximation to the correct
+        # yaw .. but in fact, its usually correct to about one
+        # percent or better.
+        bad_yaw = psi + phi
+        if 3.1415926 < bad_yaw:
+            bad_yaw -= 2 * 3.14159265358979
+
+        if 0.02 < yaw-bad_yaw or yaw-bad_yaw < -0.02:
+            print "Aieeeee! bad yaw!", yaw, bad_yaw, yaw-bad_yaw
+            exit
+        # print "Yaw:", bad_yaw, psi, phi, twist, yaw
+        # print "Yaw and approximation error", yaw, yaw-bad_yaw
+        return yaw
+
+    funcs = {
+      'upleft':  lambda q: get_upper_left(q),
+      'upright': lambda q: get_upper_right(q),
+      'loleft':  lambda q: get_lower_left(q),
+      'loright': lambda q: get_lower_right(q),
+      'yaw': lambda q: get_yaw(q)
+    }
+    self.map = funcs[args['axis'].lower()]
+
+
 _mapper_classes = {
   "linear": Linear,
   "weightedsum": WeightedSum,
   "quaternion2euler": Quaternion2EulerYZX,
   "quaternion2upper": Quaternion2Upper,
-  "quaternion2split": Quaternion2Split
+  "quaternion2split": Quaternion2Split,
+  "quaternion2dual": Quaternion2Dual
 }
 
 def build(yamlobj, motor_entry):
