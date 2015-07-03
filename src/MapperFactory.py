@@ -300,6 +300,7 @@ class Quaternion2Upper(MapperBase):
   def __init__(self, args, motor_entry):
 
     self.hijoint = NeckKinematics.upper_neck()
+    self.worst = 0
 
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
@@ -330,17 +331,28 @@ class Quaternion2Upper(MapperBase):
         if 3.1415926 < yaw:
             yaw -= 2 * 3.14159265358979
 
-        # The bad_yaw is a "crude" approximation to the correct
-        # yaw .. but in fact, its usually correct to about one
-        # percent or better.
+        # The bad_yaw is a "crude" approximation to the correct yaw ...
+        # but in fact, the worst-case error is about half a percent,
+        # and usually much much better (less than 1/20th of a percent)
         bad_yaw = psi + phi
         if 3.1415926 < bad_yaw:
             bad_yaw -= 2 * 3.14159265358979
 
-        if 0.02 < yaw-bad_yaw or yaw-bad_yaw < -0.02:
+        # Hacky corrections to bad quadrant of the arctan...
+        if 2 < yaw-bad_yaw :
+            yaw -= 3.14159265358979
+        if yaw-bad_yaw < -2:
+            yaw += 3.14159265358979
+
+        if self.worst < abs(yaw-bad_yaw) :
+            self.worst = abs(yaw-bad_yaw)
+            print "worst: ", self.worst, self.worst * 180 / 3.14159
+
+        if 0.01 < yaw-bad_yaw or yaw-bad_yaw < -0.01:
             print "Aieeeee! bad yaw!", yaw, bad_yaw, yaw-bad_yaw
             exit
-        # print "Yaw:", bad_yaw, psi, phi, twist, yaw
+        # print "Yaw: %9f" % bad_yaw, "%9.6f" % psi, "%9.6f" % phi,  \
+        #      "%9.6f" % twist, "%10.7f" % yaw, "delta %10.7f" % (yaw-bad_yaw)
         # print "Yaw and approximation error", yaw, yaw-bad_yaw
         return yaw
 
@@ -418,35 +430,18 @@ class Quaternion2Split(MapperBase):
     def get_yaw(q) :
         (phi, theta, psi) = quat_to_asa(q)
 
-        # The twist factor is the actual correction for the fact
-        # that the gimbal in the neck assembly prevents the u-joint
-        # from rotating.
-        twist = math.atan2 (math.tan(phi), math.cos(theta))
-        if twist < 0 :
-            twist += 3.14159265358979
-
-        # The actual neck yaw.
-        yaw = psi + twist
-        if 3.1415926 < yaw:
-            yaw -= 2 * 3.14159265358979
-
         # XXX TODO The neck cant produces a small correction to the yaw,
         # the formulas are there in neck_cant, but need to be integrated
         # here...
 
-        # The bad_yaw is a "crude" approximation to the correct
-        # yaw .. but in fact, its usually correct to about one
-        # percent or better.
-        bad_yaw = psi + phi
-        if 3.1415926 < bad_yaw:
-            bad_yaw -= 2 * 3.14159265358979
+        # The byaw is a "crude" approximation to the correct yaw ...
+        # but in fact, the worst-case error is about half a percent,
+        # and usually much much better (less than 1/20th of a percent)
+        byaw = psi + phi
+        if 3.1415926 < byaw:
+            byaw -= 2 * 3.14159265358979
 
-        if 0.02 < yaw-bad_yaw or yaw-bad_yaw < -0.02:
-            print "Aieeeee! bad yaw!", yaw, bad_yaw, yaw-bad_yaw
-            exit
-        # print "Yaw:", bad_yaw, psi, phi, twist, yaw
-        # print "Yaw and approximation error", yaw, yaw-bad_yaw
-        return yaw
+        return byaw
 
     funcs = {
       'upleft':  lambda q: get_upper_left(q),
@@ -514,35 +509,18 @@ class Quaternion2Dual(MapperBase):
     def get_yaw(q) :
         (phi, theta, psi) = quat_to_asa(q)
 
-        # The twist factor is the actual correction for the fact
-        # that the gimbal in the neck assembly prevents the u-joint
-        # from rotating.
-        twist = math.atan2 (math.tan(phi), math.cos(theta))
-        if twist < 0 :
-            twist += 3.14159265358979
-
-        # The actual neck yaw.
-        yaw = psi + twist
-        if 3.1415926 < yaw:
-            yaw -= 2 * 3.14159265358979
-
         # XXX TODO The neck cant produces a small correction to the yaw,
         # the formulas are there in neck_cant, but need to be integrated
         # here...
 
-        # The bad_yaw is a "crude" approximation to the correct
-        # yaw .. but in fact, its usually correct to about one
-        # percent or better.
-        bad_yaw = psi + phi
-        if 3.1415926 < bad_yaw:
-            bad_yaw -= 2 * 3.14159265358979
+        # The byaw is a "crude" approximation to the correct yaw ...
+        # but in fact, the worst-case error is about half a percent,
+        # and usually much much better (less than 1/20th of a percent)
+        byaw = psi + phi
+        if 3.1415926 < byaw:
+            byaw -= 2 * 3.14159265358979
 
-        if 0.02 < yaw-bad_yaw or yaw-bad_yaw < -0.02:
-            print "Aieeeee! bad yaw!", yaw, bad_yaw, yaw-bad_yaw
-            exit
-        # print "Yaw:", bad_yaw, psi, phi, twist, yaw
-        # print "Yaw and approximation error", yaw, yaw-bad_yaw
-        return yaw
+        return byaw
 
     funcs = {
       'upleft':  lambda q: get_upper_left(q),
