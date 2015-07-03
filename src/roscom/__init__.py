@@ -254,6 +254,12 @@ class CommandWrappers:
         msg.m_headRotation.z = -head['z']
         msg.m_headRotation.w = head['w']
 
+        neck = api.getNeckData()
+        msg.m_neckRotation.x = neck['x']
+        msg.m_neckRotation.y = neck['y']
+        msg.m_neckRotation.z = -neck['z']
+        msg.m_neckRotation.w = neck['w']
+
         eyes = api.getEyesData()
         msg.m_eyeGazeLeftPitch = eyes['l']['p']
         msg.m_eyeGazeLeftYaw = eyes['l']['y']
