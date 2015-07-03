@@ -219,7 +219,6 @@ class Tree():
 		self.blackboard["is_sleeping"] = False
 		self.blackboard["behavior_tree_on"] = False
 		self.blackboard["stage_mode"] = False
-		self.blackboard["random"] = 0.0
 
 		##### ROS Connections #####
 		self.facetrack = FaceTrack(self.blackboard)
@@ -661,13 +660,6 @@ class Tree():
 	@owyl.taskmethod
 	def is_behavior_tree_on(self, **kwargs):
 		if self.blackboard["behavior_tree_on"]:
-			yield True
-		else:
-			yield False
-
-	@owyl.taskmethod
-	def is_scripted_performance_system_off(self, **kwargs):
-		if not self.blackboard["behavior_tree_on"]:
 			yield True
 		else:
 			yield False
