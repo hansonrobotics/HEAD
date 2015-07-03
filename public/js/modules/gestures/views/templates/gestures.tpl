@@ -26,4 +26,4 @@
 
 <br/>
 
-<div class="app-emotions-container"></div>
+<div class="app-gestures"></div>

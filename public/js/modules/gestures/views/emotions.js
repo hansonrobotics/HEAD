@@ -6,13 +6,13 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                 childViewContainer: '.app-emotions-container',
                 template: template,
                 ui: {
-                    durationSlider: '.app-duration-slider',
-                    durationValue: '.app-duration-value',
+                    speedSlider: '.app-speed-slider',
+                    durationValue: '.app-speed-value',
                     magnitudeSlider: '.app-magnitude-slider',
                     magnitudeValue: '.app-magnitude-value'
                 },
                 config: {
-                    duration: 0.5,
+                    speed: 0.5,
                     magnitude: 0.5
                 },
                 childViewOptions: function () {
@@ -21,14 +21,14 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                     // pass child views a method for changing emotions
                     return {
                         setEmotion: function (name) {
-                            api.setEmotion(name, self.config.magnitude, self.config.duration)
+                            api.setEmotion(name, self.config.magnitude, self.config.speed)
                         }
                     };
                 },
                 /**
                  * Pass data to the template
                  *
-                 * @returns {Views.Emotions.config|{duration, magnitude}}
+                 * @returns {Views.Emotions.config|{speed, magnitude}}
                  */
                 serializeData: function () {
                     return this.config;
@@ -36,20 +36,20 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                 onRender: function () {
                     var self = this;
 
-                    // init duration slider
-                    this.ui.durationSlider.slider({
+                    // init speed slider
+                    this.ui.speedSlider.slider({
                         range: "min",
                         min: 0,
                         max: 1000,
-                        value: this.config.duration * 100,
+                        value: this.config.speed * 100,
                         change: function (e, ui) {
-                            var duration = ui.value / 100.0;
+                            var speed = ui.value / 100.0;
 
                             // update ui label
-                            self.ui.durationValue.html(duration);
+                            self.ui.durationValue.html(speed);
 
                             // update config
-                            self.config.duration = duration;
+                            self.config.speed = speed;
                         }
                     });
 

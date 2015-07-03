@@ -17,7 +17,7 @@ define(["application", "tpl!./templates/emotion.tpl"], function (App, template) 
                 $(self.ui.button).addClass('active');
 
                 setTimeout(function () {
-                    $(self.ui.button).removeClass('active');
+                    $(self.ui.button).removeClass('active').blur();
                 }, 2000)
             }
         });

@@ -1,4 +1,4 @@
-define(["application", "tpl!./templates/gesture.tpl", 'lib/api'], function (App, template, api) {
+define(["application", "tpl!./templates/gesture.tpl"], function (App, template) {
     App.module("Gestures.Views", function (Views, App, Backbone, Marionette, $, _) {
         Views.Gesture = Marionette.ItemView.extend({
             tagName: 'span',
@@ -10,12 +10,12 @@ define(["application", "tpl!./templates/gesture.tpl", 'lib/api'], function (App,
                 'click @ui.button': 'gestureClicked'
             },
             gestureClicked: function () {
-                api.setGesture(this.model.get('name'));
+                this.options.setGesture(this.model.get('name'));
                 $(this.ui.button).addClass('active');
 
                 var self = this;
                 setTimeout(function () {
-                    $(self.ui.button).removeClass('active');
+                    $(self.ui.button).removeClass('active').blur();
                 }, 2000)
             }
         });
