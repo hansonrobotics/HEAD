@@ -34,6 +34,7 @@ from std_msgs.msg import String
 from blender_api_msgs.msg import AvailableEmotionStates, AvailableGestures
 from blender_api_msgs.msg import EmotionState
 from blender_api_msgs.msg import SetGesture
+from blender_api_msgs.msg import Target
 
 # local stuff.
 from face_track import FaceTrack
@@ -144,6 +145,30 @@ class Tree():
 
 		self.blackboard[ges_class] = gestures
 
+	def unpack_config_look_around(self, config):
+		def get_values(from_config, num_values):
+			rtn_values = [float(z.strip()) for z in from_config.split(",")]
+			if len(rtn_values) != num_values:
+				raise Exception("List lengths don't match!")
+			return rtn_values
+
+		x_coordinates = [x.strip() for x in config.get("boredom", "search_for_attention_x").split(",")]
+		numb = len(x_coordinates)
+
+		y_coordinates = get_values(config.get("gesture", "search_for_attention_y"), numb)
+		z_coordinates = get_values(config.get("gesture", "search_for_attention_z"), numb)
+
+		targets = []
+		for (x, y, z) in zip (x_coordinates, y_coordinates, z_coordinates):
+			trg = Target()
+			trg.x = x
+			trg.y = y
+			trg.z = z
+			targets.append(trg)
+
+		self.blackboard["search_for_attention_targets"] = targets
+
+
 	def __init__(self):
 
 		self.blackboard = blackboard.Blackboard("rig expressions")
@@ -195,8 +220,10 @@ class Tree():
 		self.blackboard["sleep_probability"] = config.getfloat("boredom", "sleep_probability")
 		self.blackboard["sleep_duration_min"] = config.getfloat("boredom", "sleep_duration_min")
 		self.blackboard["sleep_duration_max"] = config.getfloat("boredom", "sleep_duration_max")
+		self.blackboard["search_for_attention_index"] = 0
 		self.blackboard["search_for_attention_duration_min"] = config.getfloat("boredom", "search_for_attention_duration_min")
 		self.blackboard["search_for_attention_duration_max"] = config.getfloat("boredom", "search_for_attention_duration_max")
+		self.unpack_config_look_around(config)
 		self.blackboard["wake_up_probability"] = config.getfloat("boredom", "wake_up_probability")
 		self.blackboard["time_to_wake_up"] = config.getfloat("boredom", "time_to_wake_up")
 
@@ -794,6 +821,17 @@ class Tree():
 		print("----- Search for attention")
 		if self.blackboard["bored_since"] == 0:
 			self.blackboard["bored_since"] = time.time()
+
+		# Send out the look around msg
+		current_idx = self.blackboard["search_for_attention_index"]
+		look_around_trg = self.blackboard["search_for_attention_targets"][current_idx]
+		self.facetrack.look_pub.publish(look_around_trg)
+
+		# Update / reset the index
+		if self.blackboard["search_for_attention_index"] + 1 < len(self.blackboard["search_for_attention_targets"]):
+			self.blackboard["search_for_attention_index"] += 1
+		else:
+			self.blackboard["search_for_attention_index"] = 0
 
 		if self.should_show_expression("bored_emotions"):
 			# Show a bored expression, either with or without an instant expression in advance
