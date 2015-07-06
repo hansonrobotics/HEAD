@@ -1,11 +1,13 @@
+#!/usr/bin/env python
+
 import unittest
 import time
-import os
 from functools import partial
 
 import rospy
 from ros_pololu.msg import *
 from std_msgs.msg import Float64
+from motors_safety import Safety
 
 def motor_type(motor):
     if 'motor_id' in motor:
@@ -13,100 +15,124 @@ def motor_type(motor):
     else:
         return 'dynamixel'
 
-MSG_TYPES = {'pololu': MotorCommand, 'dynamixel': Float64}
-MOTOR_COMMAND_TOPICS = {
-    'pololu': '%s/command',
-    'dynamixel': '%s_controller/command'
-    }
-
-class Timeout(Exception):
-    pass
-
 class MotorSafetyTest(unittest.TestCase):
-    def setUp(self):
-        os.system('rosparam load safety_rules.yaml test')
+    # Test data for the motor rules
+    _TEST_MOTORS = [
+        {
+            'name': 'motor1',
+            'topic': 'motor1',
+            'motor_id': 3,
+            'default': 0.1,
+            'min': -0.5,
+            'max': 1.5,
+        },
+        {
+            'name': 'motor2',
+            'topic': 'motor2',
+            'default': 0,
+            'min': -0.5,
+            'max': 1.2,
+        },
+    ]
+    _TEST_RULES = {
+        'motor1': [
+            {
+                'type': 'timing',
+                'direction': 'min',
+                'extreme': -0.4,
+                't1': 1,
+                't2': 1,
+                't3': 5,
+                't4': 1,
+            }
+        ]
+    }
+    _TIMEOUT  = 0.1
+
+    def __init__(self, *args, **kwargs):
+        super(MotorSafetyTest, self).__init__(*args, **kwargs)
         rospy.init_node('motors_safety_test')
-        self.ns = '/eva'
-        motors = rospy.get_param('%s/motors' % self.ns)
-        self.rules = rospy.get_param('test/safety_rules')
-        self.motors = {m['name']: m for m in motors}
-        self.timeout = 5
-        self.got_msg = False
+        # Data for actual motors
+        rospy.set_param('motors', self._TEST_MOTORS)
+        rospy.set_param('safety_rules', self._TEST_RULES)
 
-    def check(self, msg, msg_orig, motor, timestamp, rule):
-        """
-        pololu msg:
-            string joint_name
-            float64 position
-            float32 speed
-            float32 acceleration
-        """
-        delta = time.time() - timestamp
-        self.assertLess(delta, self.timeout, "Timeout")
-        extreme = rule['extreme']
+    def setUp(self):
+        self.motors = self._TEST_MOTORS
+        self.safety = Safety()
+        # Message was passed
+        self.proxy_pass = False
+        # Wrong value
+        self.safe_val = 100
+        # In case there are issues
+        self.ignore_msgs = False
+        # Create publishers and subscribers for testing
+        self.pub = {}
+        self.sub = {}
+        for m in self.motors:
+            if motor_type(m) == 'pololu':
+                topic = '%s/command' % m['topic']
+                self.pub[m['topic']] = rospy.Publisher(topic, MotorCommand, queue_size=30)
+                safe_topic = 'safe/%s/command' % m['topic']
+                self.sub[m['topic']] = rospy.Subscriber(safe_topic, MotorCommand, partial(self.check_safe_msgs, motor=m))
+            else:
+                topic = '%s_controller/command' % m['topic']
+                self.pub[m['topic']] = rospy.Publisher(topic, Float64, queue_size=30)
+                safe_topic = 'safe/%s_controller/command' % m['topic']
+                self.sub[m['topic']] = rospy.Subscriber(safe_topic, Float64, partial(self.check_safe_msgs, motor=m))
+        time.sleep(self._TIMEOUT)
+
+        pass
+    # Checks the recieved messages for given values
+    def check_safe_msgs(self, msg, motor):
+        if self.ignore_msgs:
+            return
         if motor_type(motor) == 'pololu':
-            self.assertEqual(motor['topic'], msg_orig['joint_name'])
-            self.assertEqual(motor['topic'], msg['joint_name'])
-            self.assertLessEqual(msg.position/motor['max'], extreme)
+            self.safe_val = msg.position
         else:
-            self.assertLessEqual(msg.data/motor['max'], extreme)
-        self.got_msg = True
+            self.safe_val = msg.data
+        self.proxy_pass = True
 
-    def send_motor_cmd(self, motor, position):
-        topic = MOTOR_COMMAND_TOPICS[motor_type(motor)] % motor['topic']
-        topic = '%s/%s' % (self.ns, topic)
-        msg_type = MSG_TYPES[motor_type(motor)]
-        pub = rospy.Publisher(topic, msg_type, queue_size=30)
+
+    # Creates message with value
+    def create_msg(self, motor, v):
         if motor_type(motor) == 'pololu':
-            msg = MotorCommand(
-                joint_name=motor['topic'], position=position,
-                speed=0.5, acceleration=0.5)
+            msg = MotorCommand()
+            msg.position = v
+            msg.joint_name = motor['name']
         else:
-            msg = Float64(position)
-        pub.publish(msg)
-        return topic, msg
+            msg = Float64()
+            msg.data = v
+        return msg
 
-    def get_command_safe_topic(self, motor):
-        return 'safe/%s' % self.get_command_topic(motor)
+    def assertMessageVal(self, expected, motor):
+        self.assertTrue(self.proxy_pass, 'Message was not forwarded for %s' % motor['name'])
+        self.assertAlmostEqual(expected, self.safe_val, msg="Wrong safe value. Expected %1.3f got %1.3f for %s" %
+                                                            (expected,self.safe_val,motor['name']))
+    # Messages should pass without changes to the safe topic for neutral values.
+    def send_default_messages(self):
+        for m in self.motors:
+            self.proxy_pass = False
+            msg = self.create_msg(m, m['default'])
+            self.pub[m['topic']].publish(msg)
+            time.sleep(self._TIMEOUT)
+            self.assertMessageVal(m['default'], m)
 
-    def get_msg_type(self, motor):
-        if motor_type(motor) == 'pololu':
-            msg_type = MotorCommand
-        else:
-            msg_type = Float64
-        return msg_type
+    #Simple test for default messages
+    def test_default_messages(self):
+        self.send_default_messages()
 
-    def test(self):
-        for name in self.rules:
-            motor = self.motors[name]
-            rules = self.rules[name]
-            # Send two related motor commands at the same time and
-            # expect the position in safe/*/command topic to send to motor
-            # is limited.
-            for rule in rules:
-                dep_motor = self.motors[rule['depends']]
-                self.send_motor_cmd(dep_motor, dep_motor['max'])
-                topic, msg = self.send_motor_cmd(motor, motor['max'])
 
-                safe_topic = '%s/safe/%s' % (
-                    self.ns,
-                    MOTOR_COMMAND_TOPICS[motor_type(motor)] % motor['topic'])
 
-                sub = rospy.Subscriber(
-                    safe_topic, MSG_TYPES[motor_type(motor)],
-                    partial(self.check, msg_orig=msg,
-                            motor=motor, timestamp=time.time(), rule=rule))
+    def test_set_motor_relative_position(self):
+        # Sends initial default messages
+        self.send_default_messages()
+    #
+    #     for m in self.motors:
+    #         self.proxy_pass = False
+    #         self.expected_val = m['default'] + (m['max']-m['default'])*0.9
+    #         self.safety.set_motor_relative_pos(m['name'], 0.9, 'max')
+    #         time.sleep(self._TIMEOUT)
+    #         self.assertTrue(self.proxy_pass, 'Message was not forwarded for %s' % m['name'])
 
-                while not self.got_msg:
-                    time.sleep(self.timeout)
-
-                if not self.got_msg:
-                    raise Timeout
-                self.got_msg = False
-
-    def tearDown(self):
-        os.system('rosparam delete test')
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
-
