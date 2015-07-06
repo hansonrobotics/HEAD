@@ -195,6 +195,7 @@ class Tree():
 		self.blackboard["face_study_probabilities"] = config.getfloat("interaction", "face_study_probabilities")
 		self.blackboard["face_study_duration_min"] = config.getfloat("interaction", "face_study_duration_min")
 		self.blackboard["face_study_duration_max"] = config.getfloat("interaction", "face_study_duration_max")
+		self.blackboard["face_study_z_pitch_nose"] = config.getfloat("interaction", "face_study_z_pitch_nose")
 		self.blackboard["face_study_z_pitch_mouth"] = config.getfloat("interaction", "face_study_z_pitch_mouth")
 		self.blackboard["face_study_y_pitch_left_ear"] = config.getfloat("interaction", "face_study_y_pitch_left_ear")
 		self.blackboard["face_study_y_pitch_right_ear"] = config.getfloat("interaction", "face_study_y_pitch_right_ear")

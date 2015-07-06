@@ -315,8 +315,7 @@ class FaceTrack:
 		else:
 			# For face study saccade
 			if self.blackboard["face_study_nose"]:
-				# Just look at the center position
-				gaze_trg.z -= self.blackboard["z_pitch_eyes"]
+				gaze_trg.z += self.blackboard["face_study_z_pitch_nose"]
 			elif self.blackboard["face_study_mouth"]:
 				gaze_trg.z += self.blackboard["face_study_z_pitch_mouth"]
 			elif self.blackboard["face_study_left_ear"]:
