@@ -15,8 +15,6 @@ class Safety():
 
     def __init__(self):
         self.topics = []
-        # Wait for motors to be loaded in param server
-        time.sleep(3)
         motors = rospy.get_param('motors')
         self.rules = rospy.get_param('safety_rules', {})
         # subscribe
@@ -223,7 +221,7 @@ class Safety():
             msg.data = pos
         else:
             msg.position = pos
-        self.motor_positions[m]= pos
+        self.motor_positions[m] = pos
         self.publishers[self.motors[m]['topic']].publish(msg)
 
 
