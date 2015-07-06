@@ -242,7 +242,7 @@ class FaceTrack:
 				except:
 					print("Error: no face to glance at!")
 					self.glance_at = 0
-					self.first_flance = -1
+					self.first_glance = -1
 			else :
 				# We are done with the glance. Resume normal operations.
 				self.glance_at = 0
@@ -348,7 +348,7 @@ class FaceTrack:
 		t = Target()
 		t.x = trans[0]
 		t.y = trans[1]
-		t.z = trans[2]
+		t.z = trans[2] + self.blackboard["z_pitch_eyes"]
 		return t
 
 

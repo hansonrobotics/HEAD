@@ -190,6 +190,7 @@ class Tree():
 		self.blackboard["glance_probability"] = config.getfloat("interaction", "glance_probability")
 		self.blackboard["glance_probability_for_new_faces"] = config.getfloat("interaction", "glance_probability_for_new_faces")
 		self.blackboard["glance_probability_for_lost_faces"] = config.getfloat("interaction", "glance_probability_for_lost_faces")
+		self.blackboard["z_pitch_eyes"] = config.getfloat("interaction", "z_pitch_eyes")
 		self.blackboard["max_glance_distance"] = config.getfloat("interaction", "max_glance_distance")
 		self.blackboard["sleep_probability"] = config.getfloat("boredom", "sleep_probability")
 		self.blackboard["sleep_duration_min"] = config.getfloat("boredom", "sleep_duration_min")
@@ -218,7 +219,6 @@ class Tree():
 		self.blackboard["is_sleeping"] = False
 		self.blackboard["behavior_tree_on"] = False
 		self.blackboard["stage_mode"] = False
-		self.blackboard["random"] = 0.0
 
 		##### ROS Connections #####
 		self.facetrack = FaceTrack(self.blackboard)
@@ -660,13 +660,6 @@ class Tree():
 	@owyl.taskmethod
 	def is_behavior_tree_on(self, **kwargs):
 		if self.blackboard["behavior_tree_on"]:
-			yield True
-		else:
-			yield False
-
-	@owyl.taskmethod
-	def is_scripted_performance_system_off(self, **kwargs):
-		if not self.blackboard["behavior_tree_on"]:
 			yield True
 		else:
 			yield False
