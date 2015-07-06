@@ -126,13 +126,12 @@ class MotorSafetyTest(unittest.TestCase):
     def test_set_motor_relative_position(self):
         # Sends initial default messages
         self.send_default_messages()
-    #
-    #     for m in self.motors:
-    #         self.proxy_pass = False
-    #         self.expected_val = m['default'] + (m['max']-m['default'])*0.9
-    #         self.safety.set_motor_relative_pos(m['name'], 0.9, 'max')
-    #         time.sleep(self._TIMEOUT)
-    #         self.assertTrue(self.proxy_pass, 'Message was not forwarded for %s' % m['name'])
+
+        for m in self.motors:
+            self.proxy_pass = False
+            self.safety.set_motor_relative_pos(m['name'], 0.9, 'max')
+            time.sleep(self._TIMEOUT)
+            self.assertMessageVal(m['default'] + (m['max']-m['default'])*0.9, m)
 
 if __name__ == "__main__":
     unittest.main()
