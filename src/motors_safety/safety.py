@@ -7,9 +7,12 @@ from dynamixel_msgs.msg import MotorStateList
 
 import time
 
-ROS_RATE = 20
+
 
 class Safety():
+
+    ros_rate = 20
+
     def __init__(self):
         self.topics = []
         # Wait for motors to be loaded in param server
@@ -191,11 +194,11 @@ class Safety():
                     limit = self.get_relative_pos(m,rule['direction'], self.motor_positions['m'])
                 if extreme:
                     # Rapidly decrease limit towards neutral
-                    limit -= 1.0 / ROS_RATE
+                    limit -= 1.0 / self.ros_rate
                 limit = max(0,limit)
             else:
                 # Increase limit gradually
-                limit += 1.0/ ROS_RATE
+                limit += 1.0/ self.ros_rate
                 if limit >= 1:
                     #Rule Expired
                     limit = 1
@@ -223,10 +226,4 @@ class Safety():
         self.motor_positions[m]= pos
         self.publishers[self.motors[m]['topic']].publish(msg)
 
-if __name__ == '__main__':
-    rospy.init_node('motors_safety')
-    MS = Safety()
-    r = rospy.Rate(ROS_RATE)
-    while not rospy.is_shutdown():
-        MS.timing()
-        r.sleep()
+
