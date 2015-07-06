@@ -192,6 +192,12 @@ class Tree():
 		self.blackboard["glance_probability_for_lost_faces"] = config.getfloat("interaction", "glance_probability_for_lost_faces")
 		self.blackboard["z_pitch_eyes"] = config.getfloat("interaction", "z_pitch_eyes")
 		self.blackboard["max_glance_distance"] = config.getfloat("interaction", "max_glance_distance")
+		self.blackboard["face_study_probabilities"] = config.getfloat("interaction", "face_study_probabilities")
+		self.blackboard["face_study_duration_min"] = config.getfloat("interaction", "face_study_duration_min")
+		self.blackboard["face_study_duration_max"] = config.getfloat("interaction", "face_study_duration_max")
+		self.blackboard["face_study_z_pitch_mouth"] = config.getfloat("interaction", "face_study_z_pitch_mouth")
+		self.blackboard["face_study_y_pitch_left_ear"] = config.getfloat("interaction", "face_study_y_pitch_left_ear")
+		self.blackboard["face_study_y_pitch_right_ear"] = config.getfloat("interaction", "face_study_y_pitch_right_ear")
 		self.blackboard["sleep_probability"] = config.getfloat("boredom", "sleep_probability")
 		self.blackboard["sleep_duration_min"] = config.getfloat("boredom", "sleep_duration_min")
 		self.blackboard["sleep_duration_max"] = config.getfloat("boredom", "sleep_duration_max")
@@ -219,6 +225,12 @@ class Tree():
 		self.blackboard["is_sleeping"] = False
 		self.blackboard["behavior_tree_on"] = False
 		self.blackboard["stage_mode"] = False
+		# Flags to indicate which part of the face will be studied
+		self.blackboard["face_study_nose"] = False
+		self.blackboard["face_study_mouth"] = False
+		self.blackboard["face_study_left_ear"] = False
+		self.blackboard["face_study_right_ear"] = False
+
 
 		##### ROS Connections #####
 		self.facetrack = FaceTrack(self.blackboard)
@@ -422,7 +434,14 @@ class Tree():
 						),
 						owyl.succeed()
 					),
-					self.interact_with_face_target(id="current_face_target", new_face=False)
+					self.interact_with_face_target(id="current_face_target", new_face=False),
+					owyl.selector(
+						owyl.sequence(
+							self.dice_roll(event="face_study_saccade"),
+							self.face_study_saccade(id="current_face_target")
+						),
+						owyl.succeed()
+					)
 				)
 			)
 		)
@@ -529,6 +548,11 @@ class Tree():
 				yield False
 		elif kwargs["event"] == "group_interaction":
 			if random.random() < self.blackboard["glance_probability"]:
+				yield True
+			else:
+				yield False
+		elif kwargs["event"] == "face_study_saccade":
+			if random.random() < self.blackboard["face_study_probabilities"]:
 				yield True
 			else:
 				yield False
@@ -703,6 +727,29 @@ class Tree():
 		duration = random.uniform(self.blackboard["min_duration_for_interaction"], self.blackboard["max_duration_for_interaction"])
 		print "----- Interacting w/face id:" + str(face_id) + " for " + str(duration)[:5] + " seconds"
 		self.break_if_interruptions(interval, duration)
+		yield True
+
+	@owyl.taskmethod
+	def face_study_saccade(self, **kwargs):
+		face_id = self.blackboard[kwargs["id"]]
+		duration = random.uniform(self.blackboard["face_study_duration_min"], self.blackboard["face_study_duration_max"])
+
+		# Randomly pick which part of the face to study
+		which_part = random.randint(1, 4)
+		if which_part == 1:
+			self.blackboard["face_study_nose"] = True
+			print "----- Studying face:" + str(face_id) + " (nose)"
+		elif which_part == 2:
+			self.blackboard["face_study_mouth"] = True
+			print "----- Studying face:" + str(face_id) + " (mouth)"
+		elif which_part == 3:
+			self.blackboard["face_study_left_ear"] = True
+			print "----- Studying face:" + str(face_id) + " (left ear)"
+		elif which_part == 4:
+			self.blackboard["face_study_right_ear"] = True
+			print "----- Studying face:" + str(face_id) + " (right ear)"
+
+		self.facetrack.study_face(face_id, duration)
 		yield True
 
 	@owyl.taskmethod

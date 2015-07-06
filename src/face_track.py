@@ -162,6 +162,12 @@ class FaceTrack:
 		self.glance_howlong = howlong
 		self.first_glance = -1
 
+	def study_face(self, faceid, howlong):
+		print("study: " + str(faceid) + " for " + str(howlong) + " seconds")
+		self.glance_at = faceid
+		self.glance_howlong = howlong
+		self.first_glance = -1
+
 	# ---------------------------------------------------------------
 	# Private functions, not for use outside of this class.
 	# Add a face to the Owyl blackboard.
@@ -234,7 +240,7 @@ class FaceTrack:
 			if (now - self.first_glance < self.glance_howlong):
 				face = None
 
-				# Find latest postion known
+				# Find latest position known
 				try:
 					current_trg = self.face_target(self.blackboard["current_face_target"])
 					gaze_trg = self.face_target(self.glance_at)
@@ -307,7 +313,26 @@ class FaceTrack:
 			print("Reached max_glance_distance, look at the face instead")
 			self.look_pub.publish(gaze_trg)
 		else:
+			# For face study saccade
+			if self.blackboard["face_study_nose"]:
+				# Just look at the center position
+				gaze_trg.z -= self.blackboard["z_pitch_eyes"]
+			elif self.blackboard["face_study_mouth"]:
+				gaze_trg.z += self.blackboard["face_study_z_pitch_mouth"]
+			elif self.blackboard["face_study_left_ear"]:
+				gaze_trg.y += self.blackboard["face_study_y_pitch_left_ear"]
+			elif self.blackboard["face_study_right_ear"]:
+				gaze_trg.y += self.blackboard["face_study_y_pitch_right_ear"]
+
+			# Publish the gaze_at ROS message
 			self.gaze_pub.publish(gaze_trg)
+
+			# Reset face study saccade related flags
+			self.blackboard["face_study_nose"] = False
+			self.blackboard["face_study_mouth"] = False
+			self.blackboard["face_study_left_ear"] = False
+			self.blackboard["face_study_right_ear"] = False
+
 
 	# ----------------------------------------------------------
 	# pi_vision ROS callbacks
