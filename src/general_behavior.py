@@ -152,21 +152,18 @@ class Tree():
 				raise Exception("List lengths don't match!")
 			return rtn_values
 
-		x_coordinates = [x.strip() for x in config.get("boredom", "search_for_attention_x").split(",")]
+		x_coordinates = [float(x.strip()) for x in config.get("boredom", "search_for_attention_x").split(",")]
 		numb = len(x_coordinates)
 
-		y_coordinates = get_values(config.get("gesture", "search_for_attention_y"), numb)
-		z_coordinates = get_values(config.get("gesture", "search_for_attention_z"), numb)
+		y_coordinates = get_values(config.get("boredom", "search_for_attention_y"), numb)
+		z_coordinates = get_values(config.get("boredom", "search_for_attention_z"), numb)
 
-		targets = []
 		for (x, y, z) in zip (x_coordinates, y_coordinates, z_coordinates):
 			trg = Target()
 			trg.x = x
 			trg.y = y
 			trg.z = z
-			targets.append(trg)
-
-		self.blackboard["search_for_attention_targets"] = targets
+			self.blackboard["search_for_attention_targets"].append(trg)
 
 
 	def __init__(self):
@@ -223,6 +220,7 @@ class Tree():
 		self.blackboard["search_for_attention_index"] = 0
 		self.blackboard["search_for_attention_duration_min"] = config.getfloat("boredom", "search_for_attention_duration_min")
 		self.blackboard["search_for_attention_duration_max"] = config.getfloat("boredom", "search_for_attention_duration_max")
+		self.blackboard["search_for_attention_targets"] = []
 		self.unpack_config_look_around(config)
 		self.blackboard["wake_up_probability"] = config.getfloat("boredom", "wake_up_probability")
 		self.blackboard["time_to_wake_up"] = config.getfloat("boredom", "time_to_wake_up")
