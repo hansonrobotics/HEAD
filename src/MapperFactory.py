@@ -482,7 +482,7 @@ class Quaternion2Dual(MapperBase):
     def get_upper_left(q) :
         (phi, theta, psi) = quat_to_asa(q)
         self.hijoint.inverse_kinematics(theta, phi)
-        # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
+        # print "Upper motors:", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     # Returns the upper-neck right motor position, in radians
@@ -496,7 +496,7 @@ class Quaternion2Dual(MapperBase):
         (phi, theta, psi) = quat_to_asa(q)
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
         self.lojoint.inverse_kinematics(theta, phi)
-        # print "Motors: left right", self.hijoint.theta_l, self.hijoint.theta_r
+        # print "Lower motors:", self.lojoint.theta_l, self.lojoint.theta_r
         return self.lojoint.theta_l
 
     # Returns the lower-neck right motor position, in radians
