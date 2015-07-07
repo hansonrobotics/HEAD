@@ -252,6 +252,12 @@ class Quaternion2EulerYZX(MapperBase):
 # Status: 1 July 2015: this now works exactly as expected! Woot!
 def quat_to_asa(q) :
 
+    # Sometimes someone sends a null quaternion, which is bad.
+    # Handle it gracefully.
+    if q.w < 0.5 :
+        e = q.x*q.x + q.y*q.y + q.z*q.z
+        q.w = math.sqrt(1.0 - e)
+
     # print "Quaternions: %7f" %q.w, "%10.7f" % q.x, "%10.7f" % q.y, "%10.7f" % q.z
     # e = q.x*q.x + q.y*q.y + q.z*q.z
     # n = q.w*q.w + e
@@ -531,6 +537,7 @@ class Quaternion2Dual(MapperBase):
     def get_lower_right(q) :
         (phi, theta, psi) = quat_to_asa(q)
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
+        # print "Lower theta-phi:", theta, phi
         self.lojoint.inverse_kinematics(theta, phi)
         return self.lojoint.theta_r
 
