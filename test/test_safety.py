@@ -346,4 +346,5 @@ class MotorSafetyTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    import rostest
+    rostest.rosrun('motors_safety', 'test', MotorSafetyTest)

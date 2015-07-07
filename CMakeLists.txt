@@ -7,7 +7,7 @@ project(motors_safety)
 find_package(catkin REQUIRED)
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(catkin COMPONENTS rostest)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -155,3 +155,5 @@ catkin_package(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_rostest(test/test_safety.test)
