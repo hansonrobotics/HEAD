@@ -285,6 +285,34 @@ def quat_to_asa(q) :
     # print "Euler phi theta psi", phi, theta, psi
     return [phi, theta, psi]
 
+# quat_fraction
+# Given a quaternion 'q' and a fraction 'frac', return q times frac
+# i.e. return a quaternion that is only a fraction of the total
+# rotation given in q.
+def quat_fraction(q, frac) :
+
+    # print "Quaternions: %7f" %q.w, "%10.7f" % q.x, "%10.7f" % q.y, "%10.7f" % q.z
+    e = q.x*q.x + q.y*q.y + q.z*q.z
+    # one = q.w*q.w + e
+    e = math.sqrt(e)
+    # nex, ney, nez form a normalized unit vector.
+    nex = q.x / e
+    ney = q.y / e
+    nez = q.z / e
+
+    # alpha is the amount of rotation around the unit vector...
+    alpha = 2 * math.asin (e)
+    # print "alpha, axis:", alpha, nex, ney, nez
+    # of which we take only a fraction...
+    alpha *= frac
+    e = math.sin(0.5 * alpha)
+    q.x = nex * e
+    q.y = ney * e
+    q.z = nez * e
+    q.w = math.sqrt(1.0 - e*e)
+
+    return q
+
 
 # --------------------------------------------------------------
 #
@@ -393,26 +421,23 @@ class Quaternion2Split(MapperBase):
 
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
+        q = quat_fraction(q, self.upper_split)
         (phi, theta, psi) = quat_to_asa(q)
-        phi *= self.upper_split
-        theta *= self.upper_split
         self.hijoint.inverse_kinematics(theta, phi)
         # print "Upper motors:", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     # Returns the upper-neck right motor position, in radians
     def get_upper_right(q) :
+        q = quat_fraction(q, self.upper_split)
         (phi, theta, psi) = quat_to_asa(q)
-        phi *= self.upper_split
-        theta *= self.upper_split
         self.hijoint.inverse_kinematics(theta, phi)
         return self.hijoint.theta_r
 
     # Returns the lower-neck left motor position, in radians
     def get_lower_left(q) :
+        q = quat_fraction(q, self.lower_split)
         (phi, theta, psi) = quat_to_asa(q)
-        phi *= self.lower_split
-        theta *= self.lower_split
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
         self.lojoint.inverse_kinematics(theta, phi)
         # print "Lower motors:", self.lojoint.theta_l, self.lojoint.theta_r
@@ -420,9 +445,8 @@ class Quaternion2Split(MapperBase):
 
     # Returns the lower-neck right motor position, in radians
     def get_lower_right(q) :
+        q = quat_fraction(q, self.lower_split)
         (phi, theta, psi) = quat_to_asa(q)
-        phi *= self.lower_split
-        theta *= self.lower_split
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
         self.lojoint.inverse_kinematics(theta, phi)
         return self.lojoint.theta_r
