@@ -273,9 +273,10 @@ def quat_to_asa(q) :
         (-q_0 * q_1 + q_2 * q_3),
         (q_0 * q_2 + q_1 * q_3)
       )
-    theta = math.acos(
-        q_0 * q_0 - q_1 * q_1 - q_2 * q_2 + q_3 * q_3
-      )
+    costh = q_0 * q_0 - q_1 * q_1 - q_2 * q_2 + q_3 * q_3
+    if 1.0 < costh:
+        costh = 1.0
+    theta = math.acos(costh)
     psi = math.atan2(
         q_0 * q_1 + q_2 * q_3,
         - q_1 * q_3 + q_0 * q_2
