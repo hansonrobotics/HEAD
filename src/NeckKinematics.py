@@ -191,6 +191,9 @@ class neck_linkage:
 		if abs(self.theta_r - the_r) > 1.0e-10:
 			raise ArithmeticError("Miscalculation of right motor angle!")
 
+		self.theta_l -= self.theta_l_neutral
+		self.theta_r -= self.theta_r_neutral
+
 
 # The lower neck linkage
 class lower_neck(neck_linkage):
@@ -248,6 +251,9 @@ class lower_neck(neck_linkage):
 		self.fz = self.fz0
 
 		# Motor neutral position
+		self.theta_r_neutral = -0.41528994045450957
+		self.theta_l_neutral = -self.theta_r_neutral
+
 		self.theta_r = 0.0
 		self.theta_l = 0.0
 
@@ -305,5 +311,8 @@ class upper_neck(neck_linkage):
 		self.fz = self.fz0
 
 		# Motor neutral position
+		self.theta_r_neutral = 0.00026534463349803163
+		self.theta_l_neutral = -self.theta_r_neutral
+
 		self.theta_r = 0.0
 		self.theta_l = 0.0
