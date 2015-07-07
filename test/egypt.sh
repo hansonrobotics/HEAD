@@ -15,7 +15,7 @@ m_neckRotation:
   x: 0.0 
   y: 0.0 
   z: 0.0 
-  w: 0.0 
+  w: 1.0 
 m_eyeGazeLeftPitch: -0.0216188617051 
 m_eyeGazeLeftYaw: -0.00167124893051 
 m_eyeGazeRightPitch: -0.0209033191204 
@@ -39,7 +39,7 @@ m_neckRotation:
   x: 0.0 
   y: 0.0 
   z: 0.0 
-  w: 0.0 
+  w: 1.0 
 m_eyeGazeLeftPitch: -0.0216188617051 
 m_eyeGazeLeftYaw: -0.00167124893051 
 m_eyeGazeRightPitch: -0.0209033191204 
