@@ -59,10 +59,19 @@ class MotorSafetyTest(unittest.TestCase):
                 'depends': 'motor1',
                 'dep_dir': 'max',
                 'dep_extreme': 0.6
+            },
+            {
+                'type': 'load',
+                'direction': 'min',
+                'extreme': 0.4,
+                'motor_id': 2,
+                'rest': 0.1,
+                't1': 1,
+                't2': 4,
             }
         ]
     }
-    _TIMEOUT  = 0.1
+    _TIMEOUT = 0.1
 
     def __init__(self, *args, **kwargs):
         super(MotorSafetyTest, self).__init__(*args, **kwargs)
@@ -83,6 +92,8 @@ class MotorSafetyTest(unittest.TestCase):
         # Create publishers and subscribers for testing
         self.pub = {}
         self.sub = {}
+        self.motor_states_pub = rospy.Publisher("safe/motor_states", MotorStateList, queue_size=10)
+
         for m in self.motors:
             if motor_type(m) == 'pololu':
                 topic = '%s/command' % m['topic']
@@ -234,6 +245,104 @@ class MotorSafetyTest(unittest.TestCase):
         time.sleep(self._TIMEOUT)
         # Expects the value to not be limited to its limit before extreme position
         self.assertMessageVal(m['default'] + (m['max']-m['default'])*0.5, m)
+
+
+    def send_motor_state(self, id, load):
+        state = MotorState()
+        state.id = id
+        state.load = load
+        states = MotorStateList()
+        states.motor_states = [state]
+        self.motor_states_pub.publish(states)
+
+    # Test the laod related changes. Applies only for dynamixels
+    @patch('time.time', mock_time)
+    def test_load(self):
+        # Send the default messages
+        # Send load not reaching threshold
+        m = self.motors[1]
+        self.send_motor_state(2, -0.35)
+        time.sleep(self._TIMEOUT)
+        self.safety.timing()
+        self.assertFalse(self.safety.rules['motor2'][1]['started'],msg= "Unexpected rule start")
+        # Send extreme message
+        msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.95))
+        self.pub['motor2'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        #Start
+        start = time.time()
+        self.send_motor_state(2, -0.45)
+        time.sleep(self._TIMEOUT)
+        self.safety.timing()
+        self.assertEqual(self.safety.rules['motor2'][1]['started'], start, msg="Wrong starting time")
+        # Check value before starting to decline
+        mock_time.return_value = start + 0.99
+        self.safety.timing()
+        self.proxy_pass = False
+        msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.95))
+        self.pub['motor2'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        self.assertMessageVal(m['default'] + (m['min']-m['default'])*0.95, m)
+
+        # Limit should start declining
+        mock_time.return_value = start + 1.1
+        self.safety.timing()
+        msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.95))
+        self.pub['motor2'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        #Expects the value to be changed by filter
+        self.assertMessageVal(m['default'] + (m['min']-m['default'])*0.95, m, equal=False)
+        # Each timing call should decrease the motor limit towards natural
+        self.safety.timing()
+        # previous value
+        expected = self.safe_val
+        self.proxy_pass = False
+        msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.95))
+        self.pub['motor2'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        self.assertMessageVal(expected, m, equal=False)
+
+        # Send the motor to recovered state
+        self.send_motor_state(2,0.18)
+        time.sleep(self._TIMEOUT)
+        self.safety.timing()
+
+        # The expected value should be same as the last value after motor is recovered
+        expected = self.safe_val
+        self.assertNotEqual(expected, self.safety.get_abs_pos('motor2','min',0.95), msg="Expected value should be different")
+        self.proxy_pass = False
+        msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.95))
+        self.pub['motor2'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        # value should keep consistent
+        self.assertMessageVal(expected, m)
+        # Keeps motor until rule expires
+        mock_time.return_value = start + 4.9
+        self.safety.timing()
+        self.proxy_pass = False
+        msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.95))
+        self.pub['motor2'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        # Check if same limit applies
+        self.assertMessageVal(expected,m)
+        # After time is passed limit is gradually increased with timing call
+        mock_time.return_value = start + 5.1
+        self.safety.timing()
+        msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.95))
+        self.pub['motor2'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        self.assertMessageVal(expected, m, equal=False)
+        # Limit is beack to extreme position after multiple timing calls
+        # Should be similar number of calls as for decreasing the limit
+        self.safety.timing()
+        self.safety.timing()
+        self.safety.timing()
+        # Check if extreme messages are not modified after returniong back to normal value
+        self.proxy_pass = False
+        msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.99))
+        self.pub['motor2'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        self.assertMessageVal(m['default'] + (m['min']-m['default'])*0.99,m)
 
 
 if __name__ == "__main__":
