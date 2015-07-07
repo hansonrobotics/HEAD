@@ -17,6 +17,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301  USA
 
+import copy
 import math
 import NeckKinematics
 import NeckVertical
@@ -306,12 +307,13 @@ def quat_fraction(q, frac) :
     # of which we take only a fraction...
     alpha *= frac
     e = math.sin(0.5 * alpha)
-    q.x = nex * e
-    q.y = ney * e
-    q.z = nez * e
-    q.w = math.sqrt(1.0 - e*e)
+    fq = copy.deepcopy(q)
+    fq.x = nex * e
+    fq.y = ney * e
+    fq.z = nez * e
+    fq.w = math.sqrt(1.0 - e*e)
 
-    return q
+    return fq
 
 
 # --------------------------------------------------------------
@@ -421,32 +423,34 @@ class Quaternion2Split(MapperBase):
 
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
-        q = quat_fraction(q, self.upper_split)
-        (phi, theta, psi) = quat_to_asa(q)
+        fq = quat_fraction(q, self.upper_split)
+        (phi, theta, psi) = quat_to_asa(fq)
         self.hijoint.inverse_kinematics(theta, phi)
+        # print "Upper theta-phi:", theta, phi
         # print "Upper motors:", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     # Returns the upper-neck right motor position, in radians
     def get_upper_right(q) :
-        q = quat_fraction(q, self.upper_split)
-        (phi, theta, psi) = quat_to_asa(q)
+        fq = quat_fraction(q, self.upper_split)
+        (phi, theta, psi) = quat_to_asa(fq)
         self.hijoint.inverse_kinematics(theta, phi)
         return self.hijoint.theta_r
 
     # Returns the lower-neck left motor position, in radians
     def get_lower_left(q) :
-        q = quat_fraction(q, self.lower_split)
-        (phi, theta, psi) = quat_to_asa(q)
+        fq = quat_fraction(q, self.lower_split)
+        (phi, theta, psi) = quat_to_asa(fq)
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
         self.lojoint.inverse_kinematics(theta, phi)
+        # print "Lower theta-phi:", theta, phi
         # print "Lower motors:", self.lojoint.theta_l, self.lojoint.theta_r
         return self.lojoint.theta_l
 
     # Returns the lower-neck right motor position, in radians
     def get_lower_right(q) :
-        q = quat_fraction(q, self.lower_split)
-        (phi, theta, psi) = quat_to_asa(q)
+        fq = quat_fraction(q, self.lower_split)
+        (phi, theta, psi) = quat_to_asa(fq)
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
         self.lojoint.inverse_kinematics(theta, phi)
         return self.lojoint.theta_r
