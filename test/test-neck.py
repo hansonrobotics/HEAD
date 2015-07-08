@@ -28,12 +28,12 @@ def neckrot(hx, hy, nx, ny) :
 	msg.m_headRotation.x = hx
 	msg.m_headRotation.y = hy
 	msg.m_headRotation.z = 0.0
-	msg.m_headRotation.w = 1.0 - math.sqrt(hx*hx + hy*hy)
+	msg.m_headRotation.w = math.sqrt(1.0 - hx*hx + hy*hy)
 
 	msg.m_neckRotation.x = nx
 	msg.m_neckRotation.y = ny
 	msg.m_neckRotation.z = 0.0
-	msg.m_neckRotation.w = 1.0 - math.sqrt(nx*nx + ny*ny)
+	msg.m_neckRotation.w = math.sqrt(1.0 - nx*nx + ny*ny)
 
 	neck.publish(msg)
 
