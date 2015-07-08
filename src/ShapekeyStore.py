@@ -99,49 +99,15 @@ _shkey_list2 = [
   "47_CheekSquint_R"
 ]
 
-_shkey_list_eva = [
-  "Basis",
-  "adjustments",
-  "brow_center_UP",
-  "brow_inner_UP.L",
-  "brow_inner_UP.R",
-  "brow_outer_UP.L",
-  "brow_outer_UP.R",
-  "brow_center_DN",
-  "brow_inner_DN.L",
-  "brow_inner_DN.R",
-  "brow_outer_DN.L",
-  "brow_outer_DN.R",
-  "eye-blink.UP.L",
-  "eye-blink.LO.L",
-  "eye-blink.UP.R",
-  "eye-blink.LO.R",
-  "eye-flare.UP.L",
-  "eye-flare.LO.L",
-  "eye-flare.UP.R",
-  "eye-flare.LO.R",
-  "eyes-look.dn",
-  "eyes-look.up",
-  "wince.L",
-  "wince.R",
-  "sneer.L",
-  "sneer.R",
-  "lips-wide.L",
-  "lips-wide.R",
-  "lips-narrow.L",
-  "lips-narrow.R",
-  "lips-frown.L",
-  "lips-frown.R",
-  "lips-smile.L",
-  "lips-smile.R",
-  "lip-UP.C",
-  "lip.UP.L",
-  "lip.UP.R",
-  "lip.DN.C",
-  "lip.DN.L",
-  "lip.DN.R",
-  "jaw"
-]
+_shkey_list_eva = ['Basis', 'adjustments', 'brow_center_UP', 'brow_inner_UP.L', 'brow_inner_UP.R', 'brow_outer_UP.L',
+                   'brow_outer_up.R', 'brow_center_DN', 'brow_inner_DN.L', 'brow_inner_DN.R', 'brow_outer_DN.L',
+                   'brow_outer_DN.R', 'eye-blink.UP.L', 'eye-blink.LO.L', 'eye-blink.UP.R', 'eye-blink.LO.R',
+                   'eye-flare.UP.L', 'eye-flare.LO.L', 'eye-flare.UP.R', 'eye-flare.LO.R', 'eyes-look.dn',
+                   'eyes-look.up', 'wince.L', 'wince.R', 'sneer.L', 'sneer.R', 'lips-wide.L', 'lips-wide.R',
+                   'lips-narrow.L', 'lips-narrow.R', 'lips-frown.L', 'lips-frown.R', 'lips-smile.L', 'lips-smile.R',
+                   'lip-UP.C.UP', 'lip-UP.C.DN', 'lip-UP.L.UP', 'lip-UP.L.DN', 'lip-UP.R.UP', 'lip-UP.R.DN',
+                   'lip-DN.C.UP', 'lip-DN.C.DN', 'lip-DN.L.UP', 'lip-DN.L.DN', 'lip.DN.R.UP', 'lip-DN.R.DN',
+                   'lip-JAW.DN', 'jaw']
 
 
 def _build_index(lst):
