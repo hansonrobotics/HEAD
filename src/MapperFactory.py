@@ -230,8 +230,8 @@ class Quaternion2EulerYZX(MapperBase):
 #
 # Blender provides us with quaternions in the coordinate frame:
 # x-axis == body-left (Eva's left side)
-# y-axis == straight ahead
-# z-axis == down
+# y-axis == straight backwards (pointing out of Eva's backside)
+# z-axis == up
 #
 # We want to convert to Euler ngles with the following coordinates:
 # x-axis == straight ahead
@@ -273,9 +273,9 @@ def quat_to_asa(q) :
     # coordinates, above, we make the following substitutions.
     #
     q_0 = q.w
-    q_1 = q.y
+    q_1 = -q.y
     q_2 = q.x
-    q_3 = -q.z
+    q_3 = q.z
     #
     phi = math.atan2(
         (-q_0 * q_1 + q_2 * q_3),
