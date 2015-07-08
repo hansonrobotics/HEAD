@@ -164,16 +164,26 @@ class EvaAPI(RigAPI):
     # data structure.
     # Pitch: X (positive down, negative up)?
     # Yaw: Z (negative right to positive left)
+    #
+    # The bones['DEF-head'].id_data.matrix_world currently return the
+    # unit matrix, and so are not really needed.
 
     def getHeadData(self):
         bones = bpy.evaAnimationManager.deformObj.pose.bones
-        q = (bones['DEF-head'].id_data.matrix_world * bones['DEF-head'].matrix * Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
+        rhead = bones['DEF-head'].matrix * Matrix.Rotation(-pi/2, 4, 'X')
+        rneck = bones['DEF-neck'].matrix * Matrix.Rotation(-pi/2, 4, 'X')
+        rneck.invert()
+
+        # I think this is the correct order for the neck rotations.
+        q = (rneck * rhead).to_quaternion()
+        # q = (rhead * rneck).to_quaternion()
         return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
 
     # Same as head, but for the lower neck joint.
     def getNeckData(self):
         bones = bpy.evaAnimationManager.deformObj.pose.bones
-        q = (bones['DEF-neck'].id_data.matrix_world * bones['DEF-neck'].matrix * Matrix.Rotation(-pi/2, 4, 'X')).to_quaternion()
+        rneck = bones['DEF-neck'].matrix * Matrix.Rotation(-pi/2, 4, 'X')
+        q = rneck.to_quaternion()
         return {'x':q.x, 'y':q.y, 'z':q.z, 'w':q.w}
 
     # Gets Eye rotation angles:
