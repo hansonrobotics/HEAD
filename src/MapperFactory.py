@@ -239,7 +239,6 @@ class Quaternion2EulerYZX(MapperBase):
 # z-axis == up
 # The above is the textbook convention in undergraduate physics.
 #
-# The formulas below are taken from Wikipedia, but in modified form.
 # We use the sphere-angle coordinates:
 # theta == angle w.r.t. z-axis
 # phi == azimuthal angle, from x axis
@@ -247,12 +246,14 @@ class Quaternion2EulerYZX(MapperBase):
 # that is,
 # Rot = Rot(Z, phi) Rot (Y, theta) Rot (Z, psi)
 #
+# The formulas below are taken from Wikipedia, but modified so that
+# they work for the spehre coordinates above.
 # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
 #
 # Status: 1 July 2015: this now works exactly as expected! Woot!
 def quat_to_asa(q) :
 
-    # Sometimes someone sends a null quaternion, which is bad.
+    # Sometimes someone sends us a null quaternion, which is bad.
     # Handle it gracefully.
     if q.w < 0.5 :
         e = q.x*q.x + q.y*q.y + q.z*q.z
