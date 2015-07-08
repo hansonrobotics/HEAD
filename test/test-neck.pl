@@ -5,7 +5,7 @@
 
 # Set neck to an initial neutral position.
 
-`rostopic pub --once /blender_api/get_pau  pau2motors/pau "m_headRotation:  
+`rostopic pub -r 3 --once /blender_api/get_pau  pau2motors/pau "m_headRotation:  
   x: 0.0 
   y: 0.0 
   z: 0.0 
@@ -27,7 +27,13 @@ m_coeffs: [0.0, 0.75, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 0.6212145090103149, 0.26078522205352783, 0.6212085485458374, 
 0.29769060015678406, 0.0, 0.0, 0.0, 0.0, 0.0075283292680978775, 0.0, 
 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
-0.0, 0.0, 0.0, 0.0, 0.0]"`
+0.0, 0.0, 0.0, 0.0, 0.0]"`;
+
+for (my $r = 0.0; $r < 0.085; $r = $r + 0.01 ) {
+	for (my $t = 0.0; $t < 6.3; $t = $t + 0.2) {
+		print "its $r $t\n";
+	}
+}
 
 #
 #rostopic pub --once /blender_api/get_pau  pau2motors/pau "m_headRotation:  
