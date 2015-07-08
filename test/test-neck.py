@@ -2,21 +2,26 @@
 #
 # Neck motors unit test.
 #
-
-# Set neck to an initial neutral position.
+# To test, run this by hand at the command line.  The head should
+# spiral around doing an egyptian/persian neck dance, and then return
+# to center.
+#
+# Linas Vepstas July 2015
+#
 
 import math
 import rospy
 import time
 import pau2motors.msg as paumsg
 
-
+# Create a new ros node for the test...
 rospy.init_node('test_neck')
 neck = rospy.Publisher("/blender_api/get_pau", paumsg.pau, queue_size=1)
-# Give the thing some time to get registered with roscore.
+# Give the ros node some time to get registered with roscore and any
+# subscribers.
 time.sleep(1)
 
-# Neck rotation --- create some quaternions, quick-n-dirty
+# Neck rotation --- create some quaternions, quick-n-dirty hack.
 def neckrot(hx, hy, nx, ny) :
 	global neck
 	msg = paumsg.pau()
@@ -32,7 +37,7 @@ def neckrot(hx, hy, nx, ny) :
 
 	neck.publish(msg)
 
-# Initialize to a neutral position
+# Set neck to an initial neutral position.
 neckrot(0, 0, 0, 0)
 
 # Rotate the neck in a spiral
@@ -50,4 +55,5 @@ for ir in range (0, 85, 10) :
 		time.sleep(0.2)
 
 neckrot(0, 0, 0, 0)
-
+time.sleep(1)
+print "Done with the neck test"
