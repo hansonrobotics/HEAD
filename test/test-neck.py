@@ -41,7 +41,7 @@ def neckrot(hx, hy, nx, ny) :
 neckrot(0, 0, 0, 0)
 
 # Rotate the neck in a spiral
-for ir in range (0, 85, 10) :
+for ir in range (5, 85, 10) :
 	r = ir * 0.001
 	for it in range (0, 63, 2) :
 		t = it * 0.1
