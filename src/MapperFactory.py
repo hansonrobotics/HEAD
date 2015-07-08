@@ -515,21 +515,30 @@ class Quaternion2Dual(MapperBase):
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
         (phi, theta, psi) = quat_to_asa(q)
-        self.hijoint.inverse_kinematics(theta, phi)
+        try:
+            self.hijoint.inverse_kinematics(theta, phi)
+        except OverflowError:
+            print "Upper left motor jam", theta, phi
         # print "Upper motors:", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     # Returns the upper-neck right motor position, in radians
     def get_upper_right(q) :
         (phi, theta, psi) = quat_to_asa(q)
-        self.hijoint.inverse_kinematics(theta, phi)
+        try:
+            self.hijoint.inverse_kinematics(theta, phi)
+        except OverflowError:
+            print "Upper right motor jam", theta, phi
         return self.hijoint.theta_r
 
     # Returns the lower-neck left motor position, in radians
     def get_lower_left(q) :
         (phi, theta, psi) = quat_to_asa(q)
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
-        self.lojoint.inverse_kinematics(theta, phi)
+        try:
+            self.lojoint.inverse_kinematics(theta, phi)
+        except OverflowError:
+            print "Lower left motor jam", theta, phi
         # print "Lower motors:", self.lojoint.theta_l, self.lojoint.theta_r
         return self.lojoint.theta_l
 
@@ -538,7 +547,10 @@ class Quaternion2Dual(MapperBase):
         (phi, theta, psi) = quat_to_asa(q)
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
         # print "Lower theta-phi:", theta, phi
-        self.lojoint.inverse_kinematics(theta, phi)
+        try:
+            self.lojoint.inverse_kinematics(theta, phi)
+        except OverflowError:
+            print "Lower right motor jam", theta, phi
         return self.lojoint.theta_r
 
     # Yaw (spin about neck-skull) axis, in radians, right hand rule.
