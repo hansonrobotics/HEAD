@@ -12,13 +12,11 @@ import pau2motors.msg as paumsg
 
 
 rospy.init_node('test_neck')
-
-# neck = rospy.Publisher("/blender_api/get_pau", paumsg.pau, queue_size=10, latch=True)
-neck = rospy.Publisher("/blender_api/get_pau", paumsg.pau, queue_size=10)
-# rate = rospy.Rate(3)
-
+neck = rospy.Publisher("/blender_api/get_pau", paumsg.pau, queue_size=1)
+# Give the thing some time to get registered with roscore.
 time.sleep(1)
 
+# Neck rotation --- create some quaternions, quick-n-dirty
 def neckrot(hx, hy, nx, ny) :
 	global neck
 	msg = paumsg.pau()
@@ -32,21 +30,12 @@ def neckrot(hx, hy, nx, ny) :
 	msg.m_neckRotation.z = 0.0
 	msg.m_neckRotation.w = 1.0 - math.sqrt(nx*nx + ny*ny)
 
-	print "duude", neck
-	print "duuude wtf", hx, hy, nx, ny
 	neck.publish(msg)
-	print "duuuu ehhhh"
 
-# rate.sleep()
-neckrot(0, 0, 0, 0.1222)
+# Initialize to a neutral position
+neckrot(0, 0, 0, 0)
 
-# neck.unregister()
-
-# while not rospy.is_shutdown():
-# 	rospy.spin()
-# 	time.sleep(1)
-exit (1)
-
+# Rotate the neck in a spiral
 for ir in range (0, 85, 10) :
 	r = ir * 0.001
 	for it in range (0, 63, 2) :
@@ -58,6 +47,7 @@ for ir in range (0, 85, 10) :
 		ny = -hy
 		neckrot(hx, hy, nx, ny)
 
-		
+		time.sleep(0.2)
+
 neckrot(0, 0, 0, 0)
 
