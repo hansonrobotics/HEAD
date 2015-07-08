@@ -7,12 +7,17 @@
 
 import math
 import rospy
+import time
 import pau2motors.msg as paumsg
 
 
 rospy.init_node('test_neck')
 
-neck = rospy.Publisher("/blender_api/get_pau", paumsg.pau, queue_size=1, latch=True)
+# neck = rospy.Publisher("/blender_api/get_pau", paumsg.pau, queue_size=10, latch=True)
+neck = rospy.Publisher("/blender_api/get_pau", paumsg.pau, queue_size=10)
+# rate = rospy.Rate(3)
+
+time.sleep(1)
 
 def neckrot(hx, hy, nx, ny) :
 	global neck
@@ -27,11 +32,19 @@ def neckrot(hx, hy, nx, ny) :
 	msg.m_neckRotation.z = 0.0
 	msg.m_neckRotation.w = 1.0 - math.sqrt(nx*nx + ny*ny)
 
-	print "duuude wtf"
+	print "duude", neck
+	print "duuude wtf", hx, hy, nx, ny
 	neck.publish(msg)
+	print "duuuu ehhhh"
 
-neckrot(0, 0, 0, 0.1)
+# rate.sleep()
+neckrot(0, 0, 0, 0.1222)
 
+# neck.unregister()
+
+# while not rospy.is_shutdown():
+# 	rospy.spin()
+# 	time.sleep(1)
 exit (1)
 
 for ir in range (0, 85, 10) :
