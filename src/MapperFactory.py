@@ -230,8 +230,8 @@ class Quaternion2EulerYZX(MapperBase):
 #
 # Blender provides us with quaternions in the coordinate frame:
 # x-axis == body-left (Eva's left side)
-# y-axis == straight ahead
-# z-axis == down
+# y-axis == straight backwards (pointing out of Eva's backside)
+# z-axis == up
 #
 # We want to convert to Euler ngles with the following coordinates:
 # x-axis == straight ahead
@@ -239,7 +239,6 @@ class Quaternion2EulerYZX(MapperBase):
 # z-axis == up
 # The above is the textbook convention in undergraduate physics.
 #
-# The formulas below are taken from Wikipedia, but in modified form.
 # We use the sphere-angle coordinates:
 # theta == angle w.r.t. z-axis
 # phi == azimuthal angle, from x axis
@@ -247,12 +246,14 @@ class Quaternion2EulerYZX(MapperBase):
 # that is,
 # Rot = Rot(Z, phi) Rot (Y, theta) Rot (Z, psi)
 #
+# The formulas below are taken from Wikipedia, but modified so that
+# they work for the spehre coordinates above.
 # https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
 #
 # Status: 1 July 2015: this now works exactly as expected! Woot!
 def quat_to_asa(q) :
 
-    # Sometimes someone sends a null quaternion, which is bad.
+    # Sometimes someone sends us a null quaternion, which is bad.
     # Handle it gracefully.
     if q.w < 0.5 :
         e = q.x*q.x + q.y*q.y + q.z*q.z
@@ -272,9 +273,9 @@ def quat_to_asa(q) :
     # coordinates, above, we make the following substitutions.
     #
     q_0 = q.w
-    q_1 = q.y
+    q_1 = -q.y
     q_2 = q.x
-    q_3 = -q.z
+    q_3 = q.z
     #
     phi = math.atan2(
         (-q_0 * q_1 + q_2 * q_3),
@@ -515,21 +516,30 @@ class Quaternion2Dual(MapperBase):
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
         (phi, theta, psi) = quat_to_asa(q)
-        self.hijoint.inverse_kinematics(theta, phi)
+        try:
+            self.hijoint.inverse_kinematics(theta, phi)
+        except OverflowError:
+            print "Upper left motor jam", theta, phi
         # print "Upper motors:", self.hijoint.theta_l, self.hijoint.theta_r
         return self.hijoint.theta_l
 
     # Returns the upper-neck right motor position, in radians
     def get_upper_right(q) :
         (phi, theta, psi) = quat_to_asa(q)
-        self.hijoint.inverse_kinematics(theta, phi)
+        try:
+            self.hijoint.inverse_kinematics(theta, phi)
+        except OverflowError:
+            print "Upper right motor jam", theta, phi
         return self.hijoint.theta_r
 
     # Returns the lower-neck left motor position, in radians
     def get_lower_left(q) :
         (phi, theta, psi) = quat_to_asa(q)
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
-        self.lojoint.inverse_kinematics(theta, phi)
+        try:
+            self.lojoint.inverse_kinematics(theta, phi)
+        except OverflowError:
+            print "Lower left motor jam", theta, phi
         # print "Lower motors:", self.lojoint.theta_l, self.lojoint.theta_r
         return self.lojoint.theta_l
 
@@ -538,7 +548,10 @@ class Quaternion2Dual(MapperBase):
         (phi, theta, psi) = quat_to_asa(q)
         # (phi, theta, eta) = NeckVertical.neck_cant(phi, theta, psi, self.kappa)
         # print "Lower theta-phi:", theta, phi
-        self.lojoint.inverse_kinematics(theta, phi)
+        try:
+            self.lojoint.inverse_kinematics(theta, phi)
+        except OverflowError:
+            print "Lower right motor jam", theta, phi
         return self.lojoint.theta_r
 
     # Yaw (spin about neck-skull) axis, in radians, right hand rule.
