@@ -68,7 +68,7 @@ class FaceBox():
         self.attention = 1.0
         self.attention_decay_rate = 0.99
         # minimum attention needed.
-        self.min_attention = rospy.get_param('~face_min_attention',0.7)
+        self.min_attention = rospy.get_param('~face_min_attention',0.9)
 
         # Allow to restore same face within this time
         self.time_to_keep = rospy.get_param('~face_time_to_keep',2.0)
