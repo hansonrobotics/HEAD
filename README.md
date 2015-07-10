@@ -33,7 +33,7 @@ rosrun topic_tools mux /han/neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck
 rosservice call neck_pau_mux/select /blender_api/get_pau
 ```
 The mux that is started and switched on in the last two lines serves
-to attach the output of the Eva blender model to the topics that the
+to attach the output of the Sophia blender model to the topics that the
 pau2motors listens to. The head_pau should also be attached.
 
 
@@ -45,7 +45,7 @@ parameters in the current namespace:
 Couldn't find 'pau2motors' param in namespace '/'.
 ```
 The **robots_config** repo contains the various valid namespaces;
-these include `han`, `eva`, `george` and `arthur`. Set the namespace
+these include `han`, `sophia`, `george` and `arthur`. Set the namespace
 by saying `export ROS_NAMESPACE=<ns>` before the rosrun.
 
 ##Dependencies

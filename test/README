@@ -25,7 +25,7 @@ To run:
 
 4) rosrun topic_tools mux /foo/neck_pau  cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux
 5) rosservice call neck_pau_mux/select /blender_api/get_pau
-6) blender -y Eva.blend -P autostart.py
+6) blender -y Sophia.blend -P autostart.py
 
 For the older robots, use this:
 5) rosservice call neck_pau_mux/select /cmd_neck_pau
@@ -45,7 +45,7 @@ rostopic echo /foo/Neck_Rotation_controller/command
 ```
 
 Coordinate conventions:
-Curent Eva blender model uses:
+Curent Sophia blender model uses:
 Nods pitch the head back and forth changing the X cosine
 Shakes yaw the head side to side, changing the Y and Z cosines
 
