@@ -58,8 +58,6 @@ class PiFaceTrackerTest(unittest.TestCase):
                 rospy.loginfo(e)
                 face_event_msg = None
             if face_event_msg:
-                print face_event_msg
-                print face_detected
                 if not face_detected:
                     self.assertEqual(face_event_msg.face_event, 'new_face')
                     face_detected = True
@@ -95,14 +93,38 @@ class PiFaceTrackerTest(unittest.TestCase):
                 rospy.loginfo(e)
                 face_event_msg = None
             if face_event_msg:
-                print face_event_msg
-                print face_detected
                 if not face_detected:
                     self.assertEqual(face_event_msg.face_event, 'new_face')
                     face_detected = True
                 else:
                     self.assertEqual(face_event_msg.face_event, 'lost_face')
                     face_detected = False
+        job.join()
+
+    def test_noface(self):
+        bag_file = '%s/noface.bag' % self.test_data_path
+        job = play_rosbag([bag_file, '-q'])
+
+        face_location_msg = None
+        face_event_msg = None
+        timeout = 2
+        while job.is_alive():
+            try:
+                face_location_msg = rospy.wait_for_message(
+                    '/camera/face_locations', Faces, timeout)
+            except rospy.exceptions.ROSException as e:
+                rospy.loginfo(e)
+                face_location_msg = None
+            self.assertIsNone(face_location_msg)
+
+            try:
+                face_event_msg = rospy.wait_for_message(
+                    '/camera/face_event', FaceEvent, timeout)
+            except rospy.exceptions.ROSException as e:
+                rospy.loginfo(e)
+                face_event_msg = None
+            self.assertIsNone(face_event_msg)
+
         job.join()
 
 if __name__ == '__main__':
