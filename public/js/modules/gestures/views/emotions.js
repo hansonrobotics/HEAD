@@ -12,23 +12,29 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                     magnitudeValue: '.app-magnitude-value'
                 },
                 config: {
-                    speed: 0.5,
-                    magnitude: 0.5
+                    speed: {
+                        default: 0.5,
+                        current: 0.5,
+                        min: 0,
+                        max: 10
+                    },
+                    magnitude: {
+                        default: 0.5,
+                        current: 0.5,
+                        min: 0,
+                        max: 1
+                    }
                 },
+                /**
+                 * Pass data to child views
+                 *
+                 * @returns {{config: *}}
+                 */
                 childViewOptions: function () {
-                    var self = this;
-
-                    // pass child views a method for changing emotions
-                    return {
-                        setEmotion: function (name) {
-                            api.setEmotion(name, self.config.magnitude, self.config.speed)
-                        }
-                    };
+                    return {config: this.config};
                 },
                 /**
                  * Pass data to the template
-                 *
-                 * @returns {Views.Emotions.config|{speed, magnitude}}
                  */
                 serializeData: function () {
                     return this.config;
@@ -41,7 +47,7 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                         range: "min",
                         min: 0,
                         max: 1000,
-                        value: this.config.speed * 100,
+                        value: this.config.speed.default * 100,
                         change: function (e, ui) {
                             var speed = ui.value / 100.0;
 
@@ -49,7 +55,7 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                             self.ui.durationValue.html(speed);
 
                             // update config
-                            self.config.speed = speed;
+                            self.config.speed.current = speed;
                         }
                     });
 
@@ -58,13 +64,13 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                         range: "min",
                         min: 0,
                         max: 100,
-                        value: this.config.magnitude * 100,
+                        value: this.config.magnitude.default * 100,
                         change: function (e, ui) {
                             // update ui label
                             self.ui.magnitudeValue.html(ui.value);
 
                             // update config
-                            self.config.magnitude = ui.value / 100.0;
+                            self.config.magnitude.current = ui.value / 100.0;
                         }
                     });
                 }
