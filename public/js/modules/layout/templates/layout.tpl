@@ -23,6 +23,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul id="app-nav" class="nav navbar-nav navbar-right">
                 <li><a href="#/gestures">Gestures</a></li>
+                <li><a href="#/motors">Motors</a></li>
                 <li><a href="#/interactions">Chat</a></li>
             </ul>
             <ul id="app-admin-nav" class="nav navbar-nav navbar-right">

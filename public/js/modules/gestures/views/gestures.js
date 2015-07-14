@@ -1,5 +1,5 @@
-define(["application", "./gesture", 'tpl!./templates/gestures.tpl', 'lib/api'],
-    function (App, GestureView, template, api) {
+define(["application", "./gesture", 'tpl!./templates/gestures.tpl'],
+    function (App, GestureView, template) {
         App.module("Gestures.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Gestures = Marionette.CompositeView.extend({
                 childView: GestureView,
@@ -12,18 +12,21 @@ define(["application", "./gesture", 'tpl!./templates/gestures.tpl', 'lib/api'],
                     magnitudeValue: '.app-magnitude-value'
                 },
                 config: {
-                    speed: 0.5,
-                    magnitude: 0.5
+                    speed: {
+                        default: 0.5,
+                        current: 0.5,
+                        min: 0,
+                        max: 10
+                    },
+                    magnitude: {
+                        default: 0.5,
+                        current: 0.5,
+                        min: 0,
+                        max: 1
+                    }
                 },
                 childViewOptions: function () {
-                    var self = this;
-
-                    // pass child views a method for changing emotions
-                    return {
-                        setGesture: function (name) {
-                            api.setGesture(name, 1, self.config.speed, self.config.magnitude)
-                        }
-                    };
+                    return {config: this.config};
                 },
                 serializeData: function () {
                     return this.config;
@@ -36,7 +39,7 @@ define(["application", "./gesture", 'tpl!./templates/gestures.tpl', 'lib/api'],
                         range: "min",
                         min: 0,
                         max: 1000,
-                        value: this.config.speed * 100,
+                        value: this.config.speed.current * 100,
                         change: function (e, ui) {
                             var duration = ui.value / 100.0;
 
@@ -44,7 +47,7 @@ define(["application", "./gesture", 'tpl!./templates/gestures.tpl', 'lib/api'],
                             self.ui.durationValue.html(duration);
 
                             // update config
-                            self.config.speed = duration;
+                            self.config.speed.current = duration;
                         }
                     });
 
@@ -53,13 +56,13 @@ define(["application", "./gesture", 'tpl!./templates/gestures.tpl', 'lib/api'],
                         range: "min",
                         min: 0,
                         max: 100,
-                        value: this.config.magnitude * 100,
+                        value: this.config.magnitude.current * 100,
                         change: function (e, ui) {
                             // update ui label
                             self.ui.magnitudeValue.html(ui.value);
 
                             // update config
-                            self.config.magnitude = ui.value / 100.0;
+                            self.config.magnitude.current = ui.value / 100.0;
                         }
                     });
                 }

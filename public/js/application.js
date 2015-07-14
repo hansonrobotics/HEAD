@@ -3,7 +3,6 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
         var Application = new Marionette.Application();
 
         Application.on("start", function () {
-
             // Enable for the whole app - blenderMode is the only mode for APAC demo
             api.blenderMode.enable();
 
