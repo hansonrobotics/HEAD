@@ -94,10 +94,6 @@ Other behavior is configued in this same file.
 
 ##### Topics published
 
-* `cmd_blendermode (std_msgs/String)`. Blender mode used for tracking:
-  Dummy (do nothing), TrackDev(tracking objects), LookAround (looking
-  for attention).
-
 * `/blender_api/set_face_target (blender_api_msg/Target)`. Sends
   location that the robot head should face and look at.
 

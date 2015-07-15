@@ -25,6 +25,7 @@ from pi_face_tracker.msg import FaceEvent, Faces
 from blender_api_msgs.msg import Target
 import tf
 import random
+import math
 
 # A Face. Currently consists only of an ID number, a 3D location,
 # and the time it was last seen.  Should be extended to include
@@ -161,6 +162,12 @@ class FaceTrack:
 		self.glance_howlong = howlong
 		self.first_glance = -1
 
+	def study_face(self, faceid, howlong):
+		print("study: " + str(faceid) + " for " + str(howlong) + " seconds")
+		self.glance_at = faceid
+		self.glance_howlong = howlong
+		self.first_glance = -1
+
 	# ---------------------------------------------------------------
 	# Private functions, not for use outside of this class.
 	# Add a face to the Owyl blackboard.
@@ -233,14 +240,15 @@ class FaceTrack:
 			if (now - self.first_glance < self.glance_howlong):
 				face = None
 
-				# Find latest postion known
+				# Find latest position known
 				try:
-					trg = self.face_target(self.glance_at)
-					self.gaze_pub.publish(trg)
+					current_trg = self.face_target(self.blackboard["current_face_target"])
+					gaze_trg = self.face_target(self.glance_at)
+					self.glance_or_look_at(current_trg, gaze_trg)
 				except:
 					print("Error: no face to glance at!")
 					self.glance_at = 0
-					self.first_flance = -1
+					self.first_glance = -1
 			else :
 				# We are done with the glance. Resume normal operations.
 				self.glance_at = 0
@@ -258,8 +266,9 @@ class FaceTrack:
 				try:
 					if not self.gaze_at in self.visible_faces:
 						raise Exception("Face not visible")
-					trg = self.face_target(self.gaze_at)
-					self.gaze_pub.publish(trg)
+					current_trg = self.face_target(self.blackboard["current_face_target"])
+					gaze_trg = self.face_target(self.gaze_at)
+					self.glance_or_look_at(current_trg, gaze_trg)
 				except tf.LookupException as lex:
 					print("Warning: TF has forgotten about face id:" +
 						str(self.look_at))
@@ -293,6 +302,35 @@ class FaceTrack:
 				# again; instead, just track with the eyes.
 				self.gaze_at = self.look_at
 				self.look_at = -1
+
+	# If the distance between the current face target and the glace_at target > max_glance_distance
+	# Look at that face instead (so that the neck will also move instead of the eyes only)
+	def glance_or_look_at(self, current_trg, gaze_trg):
+		gaze_distance = math.sqrt(math.pow((current_trg.x - gaze_trg.x), 2) + \
+					  math.pow((current_trg.y - gaze_trg.y), 2)) / z
+		if gaze_distance > self.blackboard["max_glance_distance"]:
+			print("Reached max_glance_distance, look at the face instead")
+			self.look_pub.publish(gaze_trg)
+		else:
+			# For face study saccade
+			if self.blackboard["face_study_nose"]:
+				gaze_trg.z += self.blackboard["face_study_z_pitch_nose"]
+			elif self.blackboard["face_study_mouth"]:
+				gaze_trg.z += self.blackboard["face_study_z_pitch_mouth"]
+			elif self.blackboard["face_study_left_ear"]:
+				gaze_trg.y += self.blackboard["face_study_y_pitch_left_ear"]
+			elif self.blackboard["face_study_right_ear"]:
+				gaze_trg.y += self.blackboard["face_study_y_pitch_right_ear"]
+
+			# Publish the gaze_at ROS message
+			self.gaze_pub.publish(gaze_trg)
+
+			# Reset face study saccade related flags
+			self.blackboard["face_study_nose"] = False
+			self.blackboard["face_study_mouth"] = False
+			self.blackboard["face_study_left_ear"] = False
+			self.blackboard["face_study_right_ear"] = False
+
 
 	# ----------------------------------------------------------
 	# pi_vision ROS callbacks
@@ -333,7 +371,7 @@ class FaceTrack:
 		t = Target()
 		t.x = trans[0]
 		t.y = trans[1]
-		t.z = trans[2]
+		t.z = trans[2] + self.blackboard["z_pitch_eyes"]
 		return t
 
 
