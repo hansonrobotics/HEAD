@@ -1,0 +1,5 @@
+<launch>
+    <param name="/run_id" value="test_pau2motors" />
+    <test name="test_pau2motors" pkg="pau2motors" type="test_pau2motors.py" test-name="pau2motors" />
+</launch>
+
