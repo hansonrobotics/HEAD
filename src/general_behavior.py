@@ -1073,7 +1073,7 @@ class Tree():
 	# emo is of type EmotionState
 	def chatbot_affect_perceive_callback(self, emo):
 
-		rospy.logwarn('chatbot said emo class ='+emo.data)
+		rospy.loginfo('chatbot perceived emo class ='+emo.data)
 		# for now pass through to blender using random positive or non_positive class
 		# in future we want more cognitive / behavior
 		# pick random emotions may not do anything depending on random number so add force optional arg
@@ -1094,4 +1094,4 @@ class Tree():
 		exp.duration.secs = 3.0
 		exp.duration.nsecs = 0
 		self.affect_pub.publish(exp)
-		rospy.logwarn('picked and expressed '+chosen_emo.name)
+		rospy.loginfo('picked and expressed '+chosen_emo.name)
