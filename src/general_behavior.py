@@ -236,8 +236,11 @@ class Tree():
 			AvailableGestures, self.get_gestures_cb)
 
 		# Emotional content that the chatbot perceived i.e. did it hear
-		# angry words, polite words, etc?
-		rospy.Subscriber("/chatbot_affect_perceive", EmotionState,
+		# (or reply with) angry words, polite words, etc?
+		# currently supplying string rather than specific EmotionState with timing,
+		# allowing that to be handled here where timings have been tuned
+		print ' setting up chatbot_affect link'
+		rospy.Subscriber("/eva/chatbot_affect_perceive", String,
 			self.chatbot_affect_perceive_callback)
 
 		# cmd_blendermode needs to go away eventually...
@@ -249,7 +252,7 @@ class Tree():
 			EmotionState, queue_size=1)
 		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture",
 			SetGesture, queue_size=1)
-		self.affect_pub = rospy.Publisher("/chatbot_affect_express",
+		self.affect_pub = rospy.Publisher("/eva/chatbot_affect_express",
 			EmotionState, queue_size=1)
 		self.tree = self.build_tree()
 		time.sleep(0.1)
@@ -260,21 +263,32 @@ class Tree():
 
 	# Pick a random expression out of the class of expressions,
 	# and display it. Return the display emotion, or None if none
-	# were picked.
-	def pick_random_expression(self, emo_class_name):
+	# were picked.  Optional argument force guarantees a return.
+	def pick_random_expression(self, emo_class_name,force=False):
 		random_number = random.random()
 		tot = 0
 		emo = None
 		emos = self.blackboard[emo_class_name]
+		print emos
 		for emotion in emos:
 			tot += emotion.probability
 			if random_number <= tot:
 				emo = emotion
 				break
-
 		if emo:
-			intensity = random.uniform(emo.min_intensity, emo.max_intensity)
-			duration = random.uniform(emo.min_duration, emo.max_duration)
+			if force==True:
+				intensity = (emo.min_intensity + emo.max_intensity)/2.0
+				duration = emo.max_duration
+			else:
+				intensity = random.uniform(emo.min_intensity, emo.max_intensity)
+				duration = random.uniform(emo.min_duration, emo.max_duration)
+			self.show_emotion(emo.name, intensity, duration)
+		elif force==True:
+			# force said show something but nothing picked, so choose first
+			print 'force branch chosen'
+			emo=emos[0]
+			intensity = 0.6 * emo.max_intensity
+			duration = emo.max_duration
 			self.show_emotion(emo.name, intensity, duration)
 
 		return emo
@@ -818,8 +832,7 @@ class Tree():
 		intsecs = int(duration)
 		exp.duration.secs = intsecs
 		exp.duration.nsecs = 1000000000 * (duration - intsecs)
-		# affect_pub goes to chatbot, emotion_pub goes to blender.
-		self.affect_pub.publish(exp)
+		# emotion_pub goes to blender and tts;
 		if (self.do_pub_emotions) :
 			self.emotion_pub.publish(exp)
 
@@ -1044,6 +1057,7 @@ class Tree():
 			self.blackboard["performance_system_on"] = True
 
 		elif data.data == "emotion_off":
+			rospy.logwarn("emotion expression disabled)")
 			self.do_pub_emotions = False
 
 		elif data.data == "gesture_off":
@@ -1058,4 +1072,26 @@ class Tree():
 	# The perceived emotional content in the message.
 	# emo is of type EmotionState
 	def chatbot_affect_perceive_callback(self, emo):
-		print "Chatbot feels this:", emo.name
+
+		rospy.logwarn('chatbot said emo class ='+emo.data)
+		# for now pass through to blender using random positive or non_positive class
+		# in future we want more cognitive / behavior
+		# pick random emotions may not do anything depending on random number so add force optional arg
+		force=True
+
+		if emo.data == 'happy':
+		  chosen_emo=self.pick_random_expression("positive_emotions",force)
+		else:
+		  chosen_emo=self.pick_random_expression("frustrated_emotions",force)
+		# publish this message to cause chatbot to emit response if it's waiting
+		#
+
+		exp = EmotionState()
+		#  getting from blackboard seems to be inconsistent with expected state
+		exp.name = self.blackboard["current_emotion"]
+		exp.magnitude = 0.5
+		# use zero for duration, tts can compute if needed
+		exp.duration.secs = 3.0
+		exp.duration.nsecs = 0
+		self.affect_pub.publish(exp)
+		rospy.logwarn('picked and expressed '+chosen_emo.name)
