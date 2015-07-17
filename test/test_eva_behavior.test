@@ -1,4 +1,4 @@
 <launch>
     <param name="/run_id" value="test_eva_behavior" />
-    <test name="test_eva_behavior" pkg="eva_behavior" type="test_eva_behavior.py" test-name="eva_behavior" />
+    <test name="test_eva_behavior" pkg="eva_behavior" type="test_eva_behavior.py" test-name="eva_behavior" time-limit="150.0"/>
 </launch>
