@@ -51,7 +51,10 @@ class AnimationManager():
                               Transitions.moving_average(duration=0.6)),
             Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
         ))
-        self.eyeTargetLoc = BlendedNum([0,0,0], transition=Transitions.linear(speed=1))
+        self.eyeTargetLoc = BlendedNum([0,0,0], transition=Wrappers.wrap(
+            Transitions.linear(speed=3),
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
+        ))
 
 
         # Autonomous (unconscious) behavior parameters
@@ -324,35 +327,29 @@ class AnimationManager():
 
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.face_target_offset)
         self.headTargetLoc.target.base = locBU
+
+
         # Change offset for the eyes
         locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
 
-        # Change eye speed for tracking depending on delta of current to new location
-        # self.eyeTargetLoc.transition = Wrappers.wrap(
-        #     Transitions.chain(Transitions.linear(speed=0.5),
-        #                       Transitions.moving_average(duration=0.3)),
-        #     Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
-        # ))
-        # if (abs((Vector(locBU) - Vector(self.eyeTargetLoc.current)).length) > 2.2):
-        #     self.eyeTargetLoc.smoothing = 1
-        #     self.eyeTargetLoc.steps = 30
-        # else:
-        #     self.eyeTargetLoc.smoothing = 1
-        #     self.eyeTargetLoc.steps = 18
-        # self.eyeTargetLoc.target = locBU
+        # Move eyes too, slowly
+        self.eyeTargetLoc.transition = Wrappers.wrap(
+            Transitions.chain(Transitions.linear(speed=0.5),
+                              Transitions.moving_average(duration=0.6)),
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
+        )
+        self.eyeTargetLoc.target.base = locBU
 
     def setGazeTarget(self, loc):
         '''Set the target used for eye tracking only.'''
 
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.eye_target_offset)
-        # Change eye speed for tracking depending on delta of current to new location
-        if (abs((Vector(locBU) - Vector(self.eyeTargetLoc.current)).length) > 2.2):
-            self.eyeTargetLoc.smoothing = 5
-            self.eyeTargetLoc.steps = 5
-        else:
-            self.eyeTargetLoc.smoothing = 2
-            self.eyeTargetLoc.steps = 5
-        self.eyeTargetLoc.target = locBU
+
+        self.eyeTargetLoc.transition = Wrappers.wrap(
+            Transitions.linear(speed=3),
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
+        )
+        self.eyeTargetLoc.target.base = locBU
 
     def setViseme(self):
         pass

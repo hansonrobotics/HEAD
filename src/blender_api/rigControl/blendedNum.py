@@ -10,11 +10,7 @@ class BlendedNum():
         self._current = value
         self._target = Target(value)
 
-        self.transition = transition or Transitions.chain(
-            Transitions.linear(1.0),
-            Transitions.moving_average(1.0)
-        )
-        self.transition.send(None)
+        self.transition = transition or Transitions.identity()
 
     @property
     def current(self):
@@ -32,6 +28,21 @@ class BlendedNum():
         procedural animations). """
         target_val = self._target.clear()
         self._current = self.transition.send((target_val, time, dt))
+        return self._current
+
+    @property
+    def transition(self):
+        return self._transition
+
+    @transition.setter
+    def transition(self, val):
+        val.send(None)
+        val.send((self._current, 0, 0))
+        self._transition = val
+
+    def __repr__(self):
+        return "<BlendedNum current={} target.base={}>".format(
+            self._current, self._target._base)
 
 
 class Transitions:
@@ -67,6 +78,12 @@ class Transitions:
             buffer.append((target, dt))
             buffer.cut_to_fit(duration)
             target, time, dt = yield buffer.weighted_mean()
+
+    @staticmethod
+    def identity():
+        target, time, dt = yield None
+        while True:
+            target, time, dt = yield target
 
     @staticmethod
     def chain(*transitions):
