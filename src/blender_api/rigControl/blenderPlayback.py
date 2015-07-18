@@ -106,6 +106,9 @@ class BLPlayback(bpy.types.Operator):
             # compute fps
             context.scene['evaFPS'] = fps = self.computeFPS(context)
             timeScale = framerateHz/fps
+            time = self.timeList[-1]
+            dt = self.timeList[-1] - self.timeList[-2] if len(self.timeList) > 1 else 0
+
             if bpy.context.scene['evaFollowMouse']:
                 # compute mouse pos
                 normalX = (event.mouse_region_x - 500) /1000
@@ -147,16 +150,16 @@ class BLPlayback(bpy.types.Operator):
                 rampPoint = viseme.duration * viseme.rampInRatio
                 if viseme.time <= rampPoint:
                     # compute ramp in factor
-                    viseme.magnitude.target = viseme.time / rampPoint
+                    viseme.magnitude.target.base = viseme.time / rampPoint
 
                 # ramp out to 0
                 rampOutPoint = viseme.duration - viseme.duration*viseme.rampOutRatio
                 if viseme.time >= rampOutPoint:
                     # compute ramp in factor
-                    viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
+                    viseme.magnitude.target.base = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
 
                 # update action
-                viseme.magnitude.blend()
+                viseme.magnitude.blend(time, dt)
                 viseme.stripRef.influence = viseme.magnitude.current
                 viseme.influence_kfp.co[1] = viseme.magnitude.current
 
@@ -167,14 +170,14 @@ class BLPlayback(bpy.types.Operator):
             headControl = eva.bones["head_target"]
             eyeControl = eva.bones["eye_target"]
 
-            eva.headTargetLoc.blend()
-            eva.eyeTargetLoc.blend()
-            eye_loc = eva.eyeTargetLoc.current
+            eva.headTargetLoc.blend(time, dt)
+            eva.eyeTargetLoc.blend(time, dt)
+
             head_loc = eva.headTargetLoc.current
             head_loc[1] = -head_loc[1]
             head_loc[0] = -head_loc[0]
-            eyeControl.location = eye_loc
             headControl.location = head_loc
+            eyeControl.location = eva.eyeTargetLoc.current
 
             # udpate emotions
             for emotion in eva.emotionsList:

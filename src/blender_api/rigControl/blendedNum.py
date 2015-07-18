@@ -1,10 +1,14 @@
-from collections import deque
+from collections import deque, Sequence
 from math import tan, atan, sqrt
+from copy import copy
 
 class BlendedNum():
     def __init__(self, value, transition=None):
+        if not isinstance(value, Sequence):
+            value = [value]
+
         self._current = value
-        self._target = Target()
+        self._target = Target(value)
 
         self.transition = transition or Transitions.chain(
             Transitions.linear(1.0),
@@ -19,13 +23,13 @@ class BlendedNum():
     @property
     def target(self):
         """ The target only has a getter to discourage overriding it.
-        Using target.add(val) as the default method will result in
-        more scalable use of BlendedNum instances. """
+        Use one of two methods to set the target: target.base or target.add()."""
         return self._target
 
     def blend(self, time, dt):
-        """ Updates the 'current' value and clears the 'target' to encourage
-        adding all target components before each 'blend' call."""
+        """ Updates the 'current' value and clears any modifications added to
+        the 'target' with target.add(val) method (used by actuators,
+        procedural animations). """
         target_val = self._target.clear()
         self._current = self.transition.send((target_val, time, dt))
 
@@ -52,7 +56,6 @@ class Transitions:
                 current = target
 
             target, time, dt = yield current
-
 
     @staticmethod
     def moving_average(duration):
@@ -131,7 +134,10 @@ class WeightBuffer(deque):
     def _weighted_mean_scalar(self):
         weighted_sum = sum(val * weight for val, weight in self)
         sum_of_weights = sum(weight for val, weight in self)
-        return weighted_sum / sum_of_weights
+        if weighted_sum == 0:
+            return 0 # Mitigate weighted_sum, sum_of_weights = 0, 0 cases.
+        else:
+            return weighted_sum / sum_of_weights
 
     def cut_to_fit(self, capacity):
         """ Works similary to a circular buffer, but in terms of a fixed
@@ -165,13 +171,42 @@ def fixed_fps(transition, fps):
 
 class Target:
 
-    def __init__(self):
-        self._accumulator = 0
+    def __init__(self, base):
+        print("call init")
+        self.base = base
+        self._accumulator = None
+
+    @property
+    def base(self):
+        return copy(self._base)
+
+    @base.setter
+    def base(self, val):
+        """ A value that will not be cleared with the clear() method.
+        Unlike add(), this method uses only the last value. """
+        val = copy(val)
+        if not isinstance(val, Sequence):
+            val = [val]
+
+        self._base = val
 
     def add(self, val):
-        self._accumulator += val
+        """ Values that will be summed, added with 'base' and cleared on every
+        call to clear(). """
+        if not isinstance(val, Sequence):
+            val = [val]
+
+        if self._accumulator == None:
+            self._accumulator = val
+        else:
+            self._accumulator = [a + b for a, b in zip(self._accumulator, val)]
 
     def clear(self):
-        value = self._accumulator
-        self._accumulator = 0
-        return value
+        maxlen = max(len(vec) if isinstance(vec, Sequence) else 0
+                     for vec in [self._accumulator, self._base])
+
+        # If any of the vectors are None, fill them with zeros.
+        base = self._base or [0] * maxlen
+        accumulator = self._accumulator or [0] * maxlen
+
+        return [a + b for a, b in zip(accumulator, base)]

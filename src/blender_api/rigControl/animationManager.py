@@ -2,8 +2,7 @@
 # that define the Eva character.
 
 from . import actuators
-from .blendedNum import BlendedNum
-from .blendedAngle import BlendedAngle
+from .blendedNum import BlendedNum, Transitions, Wrappers
 from .helpers import *
 
 import math
@@ -47,8 +46,12 @@ class AnimationManager():
 
 
         # Head and Eye tracking parameters
-        self.headTargetLoc = BlendedAngle([0,0,0], steps=10, smoothing=10, ang_speed=0.5, offset=[0, self.face_target_offset, 0])
-        self.eyeTargetLoc = BlendedNum([0,0,0], steps=18, smoothing=1)
+        self.headTargetLoc = BlendedNum([0,0,0], transition=Wrappers.wrap(
+            Transitions.chain(Transitions.linear(speed=0.5),
+                              Transitions.moving_average(duration=0.6)),
+            Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
+        ))
+        self.eyeTargetLoc = BlendedNum([0,0,0], transition=Transitions.linear(speed=1))
 
 
         # Autonomous (unconscious) behavior parameters
@@ -108,14 +111,14 @@ class AnimationManager():
             for cycle in self.cyclesSet:
                 actuators.doCycle(self, cycle)
 
-            if True and self.randomFrequency('dart', self.eyeDartRate):
-                actuators.eyeSaccades(self, self.eyeWander)
+            # if True and self.randomFrequency('dart', self.eyeDartRate):
+            #     actuators.eyeSaccades(self, self.eyeWander)
 
             if True and self.randomFrequency('blink', self.blinkRate):
                 actuators.blink(self, self.blinkDuration)
 
-            if True and self.randomFrequency('headTargetLoc', 1):
-                actuators.headDrift(self)
+            # if True and self.randomFrequency('headTargetLoc', 1):
+            #     actuators.headDrift(self)
 
             if True and self.randomFrequency('emotionJitter', 20):
                 actuators.emotionJitter(self)
@@ -320,18 +323,23 @@ class AnimationManager():
         '''Set the target used by eye and face tracking.'''
 
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.face_target_offset)
-        self.headTargetLoc.target = locBU
+        self.headTargetLoc.target.base = locBU
         # Change offset for the eyes
         locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
 
         # Change eye speed for tracking depending on delta of current to new location
-        if (abs((Vector(locBU) - Vector(self.eyeTargetLoc.current)).length) > 2.2):
-            self.eyeTargetLoc.smoothing = 1
-            self.eyeTargetLoc.steps = 30
-        else:
-            self.eyeTargetLoc.smoothing = 1
-            self.eyeTargetLoc.steps = 18
-        self.eyeTargetLoc.target = locBU
+        # self.eyeTargetLoc.transition = Wrappers.wrap(
+        #     Transitions.chain(Transitions.linear(speed=0.5),
+        #                       Transitions.moving_average(duration=0.3)),
+        #     Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
+        # ))
+        # if (abs((Vector(locBU) - Vector(self.eyeTargetLoc.current)).length) > 2.2):
+        #     self.eyeTargetLoc.smoothing = 1
+        #     self.eyeTargetLoc.steps = 30
+        # else:
+        #     self.eyeTargetLoc.smoothing = 1
+        #     self.eyeTargetLoc.steps = 18
+        # self.eyeTargetLoc.target = locBU
 
     def setGazeTarget(self, loc):
         '''Set the target used for eye tracking only.'''
