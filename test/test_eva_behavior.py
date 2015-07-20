@@ -4,20 +4,31 @@ import unittest
 import os
 import sys
 import time
+import ConfigParser
 
 import rospy
 import roslaunch
 from roslaunch import core
 import rostopic
 
-from blender_api_msgs.msg import SetGesture, EmotionState
-from testing_tools import wait_for_message
+from blender_api_msgs.msg import SetGesture, EmotionState, Target
+from testing_tools import wait_for_message, wait_for_messages, ThreadWorker
 
 PKG = 'eva_behavior'
 
-from rospy import SubscribeListener
+def create_msg_listener(topic, topic_class, timeout):
+    return ThreadWorker(target=wait_for_message,
+                        args=(topic, topic_class, timeout))
 
 class EvaBehaviorTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.hehavior_config = ConfigParser.ConfigParser()
+        config_file = os.path.join(os.path.dirname(__file__), '../behavior.cfg')
+        assert os.path.isfile(config_file)
+        cls.hehavior_config.read(config_file)
+
     def setUp(self):
         self.run_id = 'test_eva_behavior'
         config = roslaunch.config.ROSLaunchConfig()
@@ -46,46 +57,71 @@ class EvaBehaviorTest(unittest.TestCase):
         self.behavior_switch('btree_on')
         msg = wait_for_message(
             '/blender_api/set_gesture', SetGesture, timeout)
-        rospy.loginfo("Got msg %s" % msg)
         self.assertIsNotNone(msg)
 
         self.behavior_switch('btree_off')
+        pub, msg_class = rostopic.create_publisher(
+            '/camera/face_event', 'pi_face_tracker/FaceEvent', True)
+        pub.publish(msg_class('new_face', 1))
         msg = wait_for_message(
             '/blender_api/set_gesture', SetGesture, timeout)
         self.assertIsNone(msg)
 
     def test_face_interaction1(self):
-        timeout = 30
+        timeout = 60
         self.behavior_switch('btree_on')
+        positive_gestures = [
+            x.strip() for x in self.hehavior_config.get(
+                    'gesture', 'positive_gestures').split(',')]
 
         pub, msg_class = rostopic.create_publisher(
             '/blender_api/available_emotion_states',
             'blender_api_msgs/AvailableEmotionStates', True)
         pub.publish(msg_class(['happy']))
 
+        emo_msg_listener = create_msg_listener(
+            '/blender_api/set_emotion_state', EmotionState, timeout)
+        ges_msg_listener = create_msg_listener(
+            '/blender_api/set_gesture', SetGesture, timeout)
+        emo_msg_listener.start()
+        ges_msg_listener.start()
+        time.sleep(1) # wait for topic connection established
+
         pub, msg_class = rostopic.create_publisher(
             '/camera/face_event', 'pi_face_tracker/FaceEvent', True)
         pub.publish(msg_class('new_face', 1))
 
-        ges_msg = wait_for_message(
-            '/blender_api/set_gesture', SetGesture, timeout)
-        self.assertIn(ges_msg.name, ['nod-1', 'nod-2'])
-        emo_msg = wait_for_message(
-            '/blender_api/set_emotion_state', EmotionState, timeout)
+        emo_msg = emo_msg_listener.join()
+        ges_msg = ges_msg_listener.join()
         self.assertIn(emo_msg.name, ['happy'])
+        self.assertIn(ges_msg.name, positive_gestures)
 
     def test_face_interaction2(self):
-        timeout = 30
+        timeout = 60
         self.behavior_switch('btree_on')
+        new_arrival_emotions = [
+            x.strip() for x in self.hehavior_config.get(
+                    'emotion', 'new_arrival_emotions').split(',')]
+        positive_gestures = [
+            x.strip() for x in self.hehavior_config.get(
+                    'gesture', 'positive_gestures').split(',')]
+
+        emo_msg_listener = create_msg_listener(
+            '/blender_api/set_emotion_state', EmotionState, timeout)
+        ges_msg_listener = create_msg_listener(
+            '/blender_api/set_gesture', SetGesture, timeout)
+        emo_msg_listener.start()
+        ges_msg_listener.start()
+        time.sleep(1) # wait for topic connection established
 
         pub, msg_class = rostopic.create_publisher(
             '/camera/face_event', 'pi_face_tracker/FaceEvent', True)
         pub.publish(msg_class('new_face', 1))
 
-        positive_emotions = ['happy', 'comprehending', 'engaged']
-        emo_msg = wait_for_message(
-            '/blender_api/set_emotion_state', EmotionState, timeout)
-        self.assertIn(emo_msg.name, positive_emotions)
+        emo_msg = emo_msg_listener.join()
+        ges_msg = ges_msg_listener.join()
+        self.assertIn(emo_msg.name, new_arrival_emotions)
+        self.assertIn(ges_msg.name, positive_gestures)
 
 if __name__ == '__main__':
     import rostest
