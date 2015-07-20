@@ -226,7 +226,7 @@ class Tree():
 		self.blackboard["time_to_wake_up"] = config.getfloat("boredom", "time_to_wake_up")
 
 		##### Other System Variables #####
-		self.blackboard["show_expression_since"] = time.time()
+		self.blackboard["show_expression_since"] = None
 
 		# ID's of faces newly seen, or lost. Integer ID.
 		self.blackboard["new_face"] = 0
@@ -778,7 +778,7 @@ class Tree():
 		now = time.time()
 		since = self.blackboard["show_expression_since"]
 		durat = self.blackboard["current_emotion_duration"]
-		if (now - since < 0.7 * durat) :
+		if since is not None and (now - since < 0.7 * durat) :
 			return
 
 		# Update the blackboard
