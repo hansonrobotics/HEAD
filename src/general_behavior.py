@@ -849,7 +849,7 @@ class Tree():
 	# To determine whether it is a good time to show another expression
 	# Can be used to avoid making expressions too frequently
 	def should_show_expression(self, emo_class):
-                since = self.blackboard["show_expression_since"]
+		since = self.blackboard["show_expression_since"]
 		if since is not None and (time.time() - since) >= (self.blackboard["current_emotion_duration"] / 4):
 			return True
 		else:
