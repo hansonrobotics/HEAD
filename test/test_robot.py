@@ -11,6 +11,9 @@ import rosnode
 import rostopic
 import rospkg
 from roslaunch import core
+from roslaunch import nodeprocess
+nodeprocess._TIMEOUT_SIGINT = 2
+nodeprocess._TIMEOUT_SIGTERM = 1
 
 from testing_tools import wait_for
 
