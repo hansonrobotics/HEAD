@@ -24,10 +24,10 @@ class EvaBehaviorTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.hehavior_config = ConfigParser.ConfigParser()
+        cls.behavior_config = ConfigParser.ConfigParser()
         config_file = os.path.join(os.path.dirname(__file__), '../behavior.cfg')
         assert os.path.isfile(config_file)
-        cls.hehavior_config.read(config_file)
+        cls.behavior_config.read(config_file)
 
     def setUp(self):
         self.run_id = 'test_eva_behavior'
@@ -71,7 +71,7 @@ class EvaBehaviorTest(unittest.TestCase):
         timeout = 60
         self.behavior_switch('btree_on')
         positive_gestures = [
-            x.strip() for x in self.hehavior_config.get(
+            x.strip() for x in self.behavior_config.get(
                     'gesture', 'positive_gestures').split(',')]
 
         pub, msg_class = rostopic.create_publisher(
@@ -100,10 +100,10 @@ class EvaBehaviorTest(unittest.TestCase):
         timeout = 60
         self.behavior_switch('btree_on')
         new_arrival_emotions = [
-            x.strip() for x in self.hehavior_config.get(
+            x.strip() for x in self.behavior_config.get(
                     'emotion', 'new_arrival_emotions').split(',')]
         positive_gestures = [
-            x.strip() for x in self.hehavior_config.get(
+            x.strip() for x in self.behavior_config.get(
                     'gesture', 'positive_gestures').split(',')]
 
         emo_msg_listener = create_msg_listener(
