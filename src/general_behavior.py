@@ -288,8 +288,15 @@ class Tree():
 		self.tree = self.build_tree()
 		time.sleep(0.1)
 
-		while not rospy.is_shutdown():
-			self.tree.next()
+		log_filename = os.path.join(os.path.abspath(
+				os.path.dirname(__file__)), "../bhlog.csv")
+		self.log_file = open(log_filename, 'wb')
+		self.log_file.write('Action,Timestamp,Event\n')
+		try:
+			while not rospy.is_shutdown():
+				self.tree.next()
+		finally:
+			self.log_file.close()
 
 
 	# Pick a random expression out of the class of expressions,
@@ -1022,10 +1029,10 @@ class Tree():
 		self.write_log(kwargs["behavior"], time.time(), kwargs["trigger"])
 
 	def write_log(self, behavior, log_time, trigger):
-		with open(os.path.join(os.path.dirname(__file__)) + "/../log.csv", "a") as fp:
-			logger = csv.writer(fp, delimiter=",")
-			logger.writerow([behavior, log_time, trigger])
-			fp.close()
+		logger = csv.writer(
+			self.log_file, delimiter=",", lineterminator='\n')
+		logger.writerow([behavior, log_time, trigger])
+		self.log_file.flush()
 
 	# Get the list of available emotions. Update our master list,
 	# and cull the various subclasses appropriately.
