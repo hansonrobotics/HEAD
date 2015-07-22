@@ -300,7 +300,7 @@ class Tree():
 		tot = 0
 		emo = None
 		emos = self.blackboard[emo_class_name]
-		print emos
+		# print emos
 		for emotion in emos:
 			tot += emotion.probability
 			if random_number <= tot:
@@ -399,7 +399,7 @@ class Tree():
 				##### Does Nothing #####
 				owyl.sequence(
 					self.print_status(str="----- Ignoring the new face!"),
-					self.write_log(behavior="ignore_face", trigger="someone_arrived"),
+					self.log(behavior="ignore_face", trigger="someone_arrived"),
 					owyl.succeed()
 				)
 			),
@@ -433,7 +433,7 @@ class Tree():
 				##### Does Nothing #####
 				owyl.sequence(
 					self.print_status(str="----- Ignoring the lost face!"),
-					self.write_log(behavior="ignore_face", trigger="someone_left"),
+					self.log(behavior="ignore_face", trigger="someone_left"),
 					owyl.succeed()
 				)
 			),
@@ -756,7 +756,7 @@ class Tree():
 		face_id = self.blackboard[kwargs["id"]]
 		trigger = kwargs["trigger"]
 		self.facetrack.look_at_face(face_id)
-		self.write_log("look_at_" + face_id, time.time(), trigger)
+		self.write_log("look_at_" + str(face_id), time.time(), trigger)
 
 		if self.should_show_expression("positive_emotions") or kwargs["new_face"]:
 			# Show a positive expression, either with or without an instant expression in advance
@@ -804,7 +804,7 @@ class Tree():
 		print "----- Glancing at face:" + str(face_id)
 		glance_seconds = 1
 		self.facetrack.glance_at_face(face_id, glance_seconds)
-		self.write_log("glance_at_" + face_id, time.time(), kwargs["trigger"])
+		self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
 		yield True
 
 	@owyl.taskmethod
@@ -813,7 +813,7 @@ class Tree():
 		print "----- Glancing at new face:" + str(face_id)
 		glance_seconds = 1
 		self.facetrack.glance_at_face(face_id, glance_seconds)
-		self.write_log("glance_at_" + face_id, time.time(), kwargs["trigger"])
+		self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
 		yield True
 
 	@owyl.taskmethod
@@ -821,7 +821,7 @@ class Tree():
 		print "----- Glancing at lost face:" + str(self.blackboard["lost_face"])
 		face_id = self.blackboard["lost_face"]
 		self.facetrack.glance_at_face(face_id, 1)
-		self.write_log("glance_at_" + face_id, time.time(), kwargs["trigger"])
+		self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
 		yield True
 
 	@owyl.taskmethod
@@ -1018,13 +1018,14 @@ class Tree():
 		self.blackboard[emo_class] = rev
 
 	@owyl.taskmethod
-	def write_log(self, **kwargs):
+	def log(self, **kwargs):
 		self.write_log(kwargs["behavior"], time.time(), kwargs["trigger"])
 
 	def write_log(self, behavior, log_time, trigger):
-		with open('../log.csv', 'a') as fp:
-			logger = csv.writer(fp, delimiter=',')
-			logger.writerows([behavior, log_time, trigger])
+		with open(os.path.join(os.path.dirname(__file__)) + "/../log.csv", "a") as fp:
+			logger = csv.writer(fp, delimiter=",")
+			logger.writerow([behavior, log_time, trigger])
+			fp.close()
 
 	# Get the list of available emotions. Update our master list,
 	# and cull the various subclasses appropriately.
