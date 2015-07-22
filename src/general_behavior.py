@@ -28,6 +28,7 @@ from owyl import blackboard
 import rospy
 import roslib
 import ConfigParser
+import csv
 
 # message imports
 from std_msgs.msg import String
@@ -287,19 +288,26 @@ class Tree():
 		self.tree = self.build_tree()
 		time.sleep(0.1)
 
-		while not rospy.is_shutdown():
-			self.tree.next()
+		log_filename = os.path.join(os.path.abspath(
+				os.path.dirname(__file__)), "../bhlog.csv")
+		self.log_file = open(log_filename, 'wb')
+		self.log_file.write('Action,Timestamp,Event\n')
+		try:
+			while not rospy.is_shutdown():
+				self.tree.next()
+		finally:
+			self.log_file.close()
 
 
 	# Pick a random expression out of the class of expressions,
 	# and display it. Return the display emotion, or None if none
 	# were picked.  Optional argument force guarantees a return.
-	def pick_random_expression(self, emo_class_name,force=False):
+	def pick_random_expression(self, emo_class_name, trigger, force=False):
 		random_number = random.random()
 		tot = 0
 		emo = None
 		emos = self.blackboard[emo_class_name]
-		print emos
+		# print emos
 		for emotion in emos:
 			tot += emotion.probability
 			if random_number <= tot:
@@ -312,18 +320,18 @@ class Tree():
 			else:
 				intensity = random.uniform(emo.min_intensity, emo.max_intensity)
 				duration = random.uniform(emo.min_duration, emo.max_duration)
-			self.show_emotion(emo.name, intensity, duration)
+			self.show_emotion(emo.name, intensity, duration, trigger)
 		elif force==True:
 			# force said show something but nothing picked, so choose first
 			print 'force branch chosen'
 			emo=emos[0]
 			intensity = 0.6 * emo.max_intensity
 			duration = emo.max_duration
-			self.show_emotion(emo.name, intensity, duration)
+			self.show_emotion(emo.name, intensity, duration, trigger)
 
 		return emo
 
-	def pick_random_gesture(self, ges_class_name):
+	def pick_random_gesture(self, ges_class_name, trigger):
 		random_number = random.random()
 		tot = 0
 		ges = None
@@ -338,7 +346,7 @@ class Tree():
 			intensity = random.uniform(ges.min_intensity, ges.max_intensity)
 			repeat = random.uniform(ges.min_repeat, ges.max_repeat)
 			speed = random.uniform(ges.min_speed, ges.max_speed)
-			self.show_gesture(ges.name, intensity, repeat, speed)
+			self.show_gesture(ges.name, intensity, repeat, speed, trigger)
 
 		return ges
 
@@ -354,14 +362,14 @@ class Tree():
 		return emo_name
 
 	# Pick a  so-called "instant" or "flash" expression
-	def pick_instant(self, emo_class, exclude_class) :
+	def pick_instant(self, emo_class, exclude_class, trigger) :
 		emo = self.pick_random_expression(exclude_class)
 		if emo :
 			exclude = self.blackboard[emo_class]
 			emo_name = self.pick_random_emotion_name(exclude)
 			tense = random.uniform(emo.min_intensity, emo.max_intensity)
 			durat = random.uniform(emo.min_duration, emo.max_duration)
-			self.show_emotion(emo_name, tense, durat)
+			self.show_emotion(emo_name, tense, durat, trigger)
 			print "----- Instant expression: " + emo_name + " (" + \
 			     str(tense) + ") for " + str(durat) + " seconds"
 		return emo_name
@@ -384,20 +392,21 @@ class Tree():
 					self.were_no_people_in_the_scene(),
 					self.assign_face_target(variable="current_face_target", value="new_face"),
 					self.record_start_time(variable="interact_with_face_target_since"),
-					self.show_expression(emo_class="new_arrival_emotions"),
-					self.interact_with_face_target(id="current_face_target", new_face=True)
+					self.show_expression(emo_class="new_arrival_emotions", trigger="someone_arrived"),
+					self.interact_with_face_target(id="current_face_target", new_face=True, trigger="someone_arrived")
 				),
 
 				##### Currently interacting with someone #####
 				owyl.sequence(
 					self.is_interacting_with_someone(),
 					self.dice_roll(event="glance_new_face"),
-					self.glance_at_new_face()
+					self.glance_at_new_face(trigger="someone_arrived")
 				),
 
 				##### Does Nothing #####
 				owyl.sequence(
 					self.print_status(str="----- Ignoring the new face!"),
+					self.log(behavior="ignore_face", trigger="someone_arrived"),
 					owyl.succeed()
 				)
 			),
@@ -417,20 +426,21 @@ class Tree():
 				##### Was Interacting With That Person #####
 				owyl.sequence(
 					self.was_interacting_with_that_person(),
-					self.return_to_neutral_position(),
-					self.show_frustrated_expression()
+					self.return_to_neutral_position(trigger="someone_left"),
+					self.show_frustrated_expression(trigger="someone_left")
 				),
 
 				##### Is Interacting With Someone Else #####
 				owyl.sequence(
 					self.is_interacting_with_someone(),
 					self.dice_roll(event="glance_lost_face"),
-					self.glance_at_lost_face()
+					self.glance_at_lost_face(trigger="someone_left")
 				),
 
 				##### Does Nothing #####
 				owyl.sequence(
 					self.print_status(str="----- Ignoring the lost face!"),
+					self.log(behavior="ignore_face", trigger="someone_left"),
 					owyl.succeed()
 				)
 			),
@@ -459,7 +469,7 @@ class Tree():
 					),
 					self.select_a_face_target(),
 					self.record_start_time(variable="interact_with_face_target_since"),
-					self.interact_with_face_target(id="current_face_target", new_face=False)
+					self.interact_with_face_target(id="current_face_target", new_face=False, trigger="people_in_scene")
 				),
 
 				##### Glance At Other Faces & Continue With The Last Interaction #####
@@ -470,15 +480,15 @@ class Tree():
 							self.is_more_than_one_face_target(),
 							self.dice_roll(event="group_interaction"),
 							self.select_a_glance_target(),
-							self.glance_at(id="current_glance_target")
+							self.glance_at(id="current_glance_target", trigger="people_in_scene")
 						),
 						owyl.succeed()
 					),
-					self.interact_with_face_target(id="current_face_target", new_face=False),
+					self.interact_with_face_target(id="current_face_target", new_face=False, trigger="people_in_scene"),
 					owyl.selector(
 						owyl.sequence(
 							self.dice_roll(event="face_study_saccade"),
-							self.face_study_saccade(id="current_face_target")
+							self.face_study_saccade(id="current_face_target", trigger="people_in_scene")
 						),
 						owyl.succeed()
 					)
@@ -506,11 +516,11 @@ class Tree():
 							self.dice_roll(event="go_to_sleep"),
 							self.record_start_time(variable="sleep_since"),
 							self.print_status(str="----- Go to sleep!"),
-							self.go_to_sleep()
+							self.go_to_sleep(trigger="nothing_is_happening")
 						),
 
 						##### Search For Attention #####
-						self.search_for_attention()
+						self.search_for_attention(trigger="nothing_is_happening")
 					)
 				),
 
@@ -520,13 +530,13 @@ class Tree():
 					owyl.sequence(
 						self.dice_roll(event="wake_up"),
 						self.is_time_to_wake_up(),
-						self.wake_up(),
+						self.wake_up(trigger="time_to_wake_up"),
 					),
 
 					##### Continue To Sleep #####
 					owyl.sequence(
 						self.print_status(str="----- Continue to sleep."),
-						self.go_to_sleep()
+						self.go_to_sleep(trigger="nothing_is_happening")
 					)
 				)
 			),
@@ -535,7 +545,7 @@ class Tree():
 			owyl.sequence(
 				self.is_interruption(),
 				self.is_sleeping(),
-				self.wake_up(),
+				self.wake_up(trigger="interruption"),
 				self.print_status(str="----- Interruption: Wake up!"),
 			)
 		)
@@ -751,17 +761,19 @@ class Tree():
 	@owyl.taskmethod
 	def interact_with_face_target(self, **kwargs):
 		face_id = self.blackboard[kwargs["id"]]
+		trigger = kwargs["trigger"]
 		self.facetrack.look_at_face(face_id)
+		self.write_log("look_at_" + str(face_id), time.time(), trigger)
 
 		if self.should_show_expression("positive_emotions") or kwargs["new_face"]:
 			# Show a positive expression, either with or without an instant expression in advance
 			if random.random() < self.blackboard["non_positive_emotion_probabilities"]:
-				self.pick_instant("positive_emotions", "non_positive_emotion")
+				self.pick_instant("positive_emotions", "non_positive_emotion", trigger)
 			else:
-				self.pick_random_expression("positive_emotions")
+				self.pick_random_expression("positive_emotions", trigger)
 
 		##### Show A Positive Gesture #####
-		self.pick_random_gesture("positive_gestures")
+		self.pick_random_gesture("positive_gestures", trigger)
 
 		interval = 0.01
 		duration = random.uniform(self.blackboard["min_duration_for_interaction"], self.blackboard["max_duration_for_interaction"])
@@ -790,6 +802,7 @@ class Tree():
 			print "----- Studying face:" + str(face_id) + " (right ear)"
 
 		self.facetrack.study_face(face_id, duration)
+		self.write_log("face_study", time.time(), kwargs["trigger"])
 		yield True
 
 	@owyl.taskmethod
@@ -798,6 +811,7 @@ class Tree():
 		print "----- Glancing at face:" + str(face_id)
 		glance_seconds = 1
 		self.facetrack.glance_at_face(face_id, glance_seconds)
+		self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
 		yield True
 
 	@owyl.taskmethod
@@ -806,6 +820,7 @@ class Tree():
 		print "----- Glancing at new face:" + str(face_id)
 		glance_seconds = 1
 		self.facetrack.glance_at_face(face_id, glance_seconds)
+		self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
 		yield True
 
 	@owyl.taskmethod
@@ -813,28 +828,30 @@ class Tree():
 		print "----- Glancing at lost face:" + str(self.blackboard["lost_face"])
 		face_id = self.blackboard["lost_face"]
 		self.facetrack.glance_at_face(face_id, 1)
+		self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
 		yield True
 
 	@owyl.taskmethod
 	def show_expression(self, **kwargs):
-		self.pick_random_expression(kwargs["emo_class"])
+		self.pick_random_expression(kwargs["emo_class"], kwargs["trigger"])
 		yield True
 
 	@owyl.taskmethod
 	def show_frustrated_expression(self, **kwargs):
-		self.pick_random_expression("frustrated_emotions")
+		self.pick_random_expression("frustrated_emotions", kwargs["trigger"])
 		yield True
 
 	@owyl.taskmethod
 	def return_to_neutral_position(self, **kwargs):
 		self.facetrack.look_at_face(0)
+		self.write_log("look_at_neutral", time.time(), kwargs["trigger"])
 		yield True
 
 	# Accept an expression name, intensity and duration, and publish it
 	# as a ROS message both to blender, and to the chatbot.  Currently,
 	# exactly the same message format is used for both blender and the
 	# chatbot. This may change in the future(?)
-	def show_emotion(self, expression, intensity, duration):
+	def show_emotion(self, expression, intensity, duration, trigger):
 
 		# Try to avoid showing more than one expression at once
 		now = time.time()
@@ -858,13 +875,14 @@ class Tree():
 		# emotion_pub goes to blender and tts;
 		if (self.do_pub_emotions) :
 			self.emotion_pub.publish(exp)
+			self.write_log(exp.name, time.time(), trigger)
 
 		print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ") for " + str(duration)[:4] + " seconds"
 		self.blackboard["show_expression_since"] = time.time()
 
 	# Accept an gesture name, intensity, repeat (perform how many times)
 	# and speed and then publish it as a ros message.
-	def show_gesture(self, gesture, intensity, repeat, speed):
+	def show_gesture(self, gesture, intensity, repeat, speed, trigger):
 		ges = SetGesture()
 		ges.name = gesture
 		ges.magnitude = intensity
@@ -872,12 +890,14 @@ class Tree():
 		ges.speed = speed
 		if (self.do_pub_gestures) :
 			self.gesture_pub.publish(ges)
+			self.write_log(ges.name, time.time(), trigger)
 
 		print "----- Show gesture: " + gesture + " (" + str(intensity)[:5] + ")"
 
 	@owyl.taskmethod
 	def search_for_attention(self, **kwargs):
 		print("----- Search for attention")
+		trigger = kwargs["trigger"]
 		if self.blackboard["bored_since"] == 0:
 			self.blackboard["bored_since"] = time.time()
 
@@ -885,6 +905,7 @@ class Tree():
 		current_idx = self.blackboard["search_for_attention_index"]
 		look_around_trg = self.blackboard["search_for_attention_targets"][current_idx]
 		self.facetrack.look_pub.publish(look_around_trg)
+		self.write_log("look_around", time.time(), trigger)
 
 		# Update / reset the index
 		if self.blackboard["search_for_attention_index"] + 1 < len(self.blackboard["search_for_attention_targets"]):
@@ -895,12 +916,12 @@ class Tree():
 		if self.should_show_expression("bored_emotions"):
 			# Show a bored expression, either with or without an instant expression in advance
 			if random.random() < self.blackboard["non_bored_emotion_probabilities"]:
-				self.pick_instant("bored_emotions", "non_bored_emotion")
+				self.pick_instant("bored_emotions", "non_bored_emotion", trigger)
 			else:
-				self.pick_random_expression("bored_emotions")
+				self.pick_random_expression("bored_emotions", trigger)
 
 		##### Show A Bored Gesture #####
-		self.pick_random_gesture("bored_gestures")
+		self.pick_random_gesture("bored_gestures", trigger)
 
 		interval = 0.01
 		duration = random.uniform(self.blackboard["search_for_attention_duration_min"], self.blackboard["search_for_attention_duration_max"])
@@ -924,7 +945,7 @@ class Tree():
 		self.pick_random_emotion_name(self.blackboard["sleep_emotions"])
 
 		##### Show A Sleep Gesture #####
-		self.pick_random_gesture("sleep_gestures")
+		self.pick_random_gesture("sleep_gestures", "nothing_is_happening")
 
 		interval = 0.01
 		duration = random.uniform(self.blackboard["sleep_duration_min"], self.blackboard["sleep_duration_max"])
@@ -934,15 +955,16 @@ class Tree():
 	@owyl.taskmethod
 	def wake_up(self, **kwargs):
 		print "----- Wake up!"
+		trigger = kwargs["trigger"]
 		self.blackboard["is_sleeping"] = False
 		self.blackboard["sleep_since"] = 0.0
 		self.blackboard["bored_since"] = 0.0
 
 		##### Show A Wake Up Expression #####
-		self.pick_random_expression("wake_up_emotions")
+		self.pick_random_expression("wake_up_emotions", trigger)
 
 		##### Show A Wake Up Gesture #####
-		self.pick_random_gesture("wake_up_gestures")
+		self.pick_random_gesture("wake_up_gestures", trigger)
 
 		yield True
 
@@ -1001,6 +1023,16 @@ class Tree():
 			emo.probability /= tot
 
 		self.blackboard[emo_class] = rev
+
+	@owyl.taskmethod
+	def log(self, **kwargs):
+		self.write_log(kwargs["behavior"], time.time(), kwargs["trigger"])
+
+	def write_log(self, behavior, log_time, trigger):
+		logger = csv.writer(
+			self.log_file, delimiter=",", lineterminator='\n')
+		logger.writerow([behavior, log_time, trigger])
+		self.log_file.flush()
 
 	# Get the list of available emotions. Update our master list,
 	# and cull the various subclasses appropriately.
@@ -1101,9 +1133,9 @@ class Tree():
 		force=True
 
 		if emo.data == 'happy':
-		  chosen_emo=self.pick_random_expression("positive_emotions",force)
+			chosen_emo=self.pick_random_expression("positive_emotions",force)
 		else:
-		  chosen_emo=self.pick_random_expression("frustrated_emotions",force)
+			chosen_emo=self.pick_random_expression("frustrated_emotions",force)
 		# publish this message to cause chatbot to emit response if it's waiting
 		#
 
