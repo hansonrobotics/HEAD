@@ -306,6 +306,10 @@ class FaceTrack:
 	# If the distance between the current face target and the glace_at target > max_glance_distance
 	# Look at that face instead (so that the neck will also move instead of the eyes only)
 	def glance_or_look_at(self, current_trg, gaze_trg):
+		z = (current_trg.z - gaze_trg.z)
+		# Avoid division by zero
+		if z == 0:
+			z = 1
 		gaze_distance = math.sqrt(math.pow((current_trg.x - gaze_trg.x), 2) + \
 					  math.pow((current_trg.y - gaze_trg.y), 2)) / z
 		if gaze_distance > self.blackboard["max_glance_distance"]:
