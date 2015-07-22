@@ -12,13 +12,9 @@ from roslaunch import core
 import rostopic
 
 from blender_api_msgs.msg import SetGesture, EmotionState, Target
-from testing_tools import wait_for_message, wait_for_messages, ThreadWorker
+from testing_tools import wait_for_message, create_msg_listener
 
 PKG = 'eva_behavior'
-
-def create_msg_listener(topic, topic_class, timeout):
-    return ThreadWorker(target=wait_for_message,
-                        args=(topic, topic_class, timeout))
 
 class EvaBehaviorTest(unittest.TestCase):
 
