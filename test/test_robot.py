@@ -19,7 +19,7 @@ nodeprocess._TIMEOUT_SIGTERM = 1
 from pi_face_tracker.msg import FaceEvent
 from blender_api_msgs.msg import EmotionState
 from testing_tools import (wait_for, play_rosbag, create_msg_listener,
-                            capture_screen, capture_camera)
+                            capture_screen, capture_camera, startxvfb, stopxvfb)
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'robots_config'
@@ -72,13 +72,20 @@ class RobotTest(unittest.TestCase):
 
         self.runner = roslaunch.launch.ROSLaunchRunner(
             self.run_id, config, is_rostest=True)
+
+        self.display = ':98'
+        os.environ['DISPLAY'] = self.display
+        startxvfb(self.display)
         self.runner.launch()
 
         for node in config.nodes:
             wait_for('%s/%s' % (node.namespace, node.name))
 
+        time.sleep(5) # Wait for blender rendering done
+
     def tearDown(self):
         self.runner.stop()
+        stopxvfb(self.display)
 
     def test(self):
         new_arrival_emotions = [
