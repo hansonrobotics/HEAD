@@ -73,9 +73,8 @@ class RobotTest(unittest.TestCase):
         self.runner = roslaunch.launch.ROSLaunchRunner(
             self.run_id, config, is_rostest=True)
 
-        self.display = ':98'
-        os.environ['DISPLAY'] = self.display
-        startxvfb(self.display)
+        self.display = os.environ.get('DISPLAY', ':0')
+        startxvfb(self.display, '1920x1080x24')
         self.runner.launch()
 
         for node in config.nodes:
@@ -103,7 +102,7 @@ class RobotTest(unittest.TestCase):
                         self.output_data_path
         screen_output = '%s/screen_new_arrival_emotion.avi' % \
                         self.output_data_path
-        duration = 10
+        duration = 15
         with capture_camera(cam_output, duration):
             with capture_screen(screen_output, duration):
                 job = play_rosbag([bag_file, '-q'])
