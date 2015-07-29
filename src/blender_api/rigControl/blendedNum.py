@@ -1,6 +1,8 @@
 from collections import deque, Sequence
 from math import tan, atan, sqrt
 from copy import copy
+import random
+from time import time as systime
 
 class BlendedNum():
     def __init__(self, value, transition=None):
@@ -10,6 +12,7 @@ class BlendedNum():
         self._current = value
         self._target = Target(value)
 
+        self._transition = None
         self.transition = transition or Transitions.identity()
 
     @property
@@ -36,8 +39,21 @@ class BlendedNum():
 
     @transition.setter
     def transition(self, val):
-        val.send(None)
-        val.send((self._current, 0, 0))
+        if val == self._transition:
+            return
+
+        # Make the transition think it's been at the current position for 10 seconds
+        # for initialization purposes.
+        send_current = lambda: val.send((self._current, systime(), 10.0))
+
+        try:
+            send_current()
+        except TypeError:
+            # It appears the generator was expecting None.
+            # First sent value has to be None for any non-initialized generator.
+            val.send(None)
+            send_current()
+
         self._transition = val
 
     def __repr__(self):
@@ -49,7 +65,6 @@ class Transitions:
 
     @staticmethod
     def linear(speed):
-        # 'target' type: List[int]
         target, time, dt = yield None
         current = target
         while True:
@@ -71,13 +86,52 @@ class Transitions:
     @staticmethod
     def moving_average(duration):
         """ Duration in seconds. """
-        # 'target' type: List[int]
         target, time, dt = yield None
         buffer = WeightBuffer()
         while True:
             buffer.append((target, dt))
             buffer.cut_to_fit(duration)
             target, time, dt = yield buffer.weighted_mean()
+
+    @staticmethod
+    def stick(duration, deviation=0.5):
+        target, time, dt = yield None
+        buffer = WeightBuffer()
+        timerandom = lambda: min(max(random.gauss(0.35, 0.1), 0.2), 0.5)
+        spacerandom = lambda sigma: [random.gauss(a, b) for a, b in
+                                     zip(buffer.weighted_mean(), sigma)]
+        nexttime = time
+        while True:
+            buffer.append((target, dt))
+            buffer.cut_to_fit(duration)
+
+            buffer_variance = buffer.weighted_variance()
+            buffer_deviation = [sqrt(a) for a in buffer_variance]
+            total_buffer_deviation = sqrt(sum(buffer_variance))
+
+            if time >= nexttime:
+                nexttime = timerandom() + time
+                old_target = spacerandom(
+                    [(0.5*a + 0.5*total_buffer_deviation) * deviation
+                     for a in buffer_deviation]
+                )
+
+            target, time, dt = yield old_target
+
+    @staticmethod
+    def circles():
+        target, time, dt = yield None
+        start = time
+        buffer = WeightBuffer()
+        while True:
+            buffer.append((target, dt))
+            buffer.cut_to_fit(1.0)
+            radius = sum(buffer.weighted_variance()) * 8
+            mean = buffer.weighted_mean()
+
+            from math import sin, cos
+            x, y = sin((time - start)*6) * radius, cos((time - start)*6) * radius
+            target, time, dt = yield mean[0] + x, mean[1] + y
 
     @staticmethod
     def identity():
@@ -138,23 +192,12 @@ class WeightBuffer(deque):
     See their docstrings. """
 
     def weighted_mean(self):
-        """ Return a weighted average vector. """
-        result = []
+        """ Returns the average vector taking weights into account. """
+        return [buf._scalar_weighted_mean() for buf in self._by_dimension()]
 
-        vectors, weights = zip(*self)
-        for dimension in zip(*vectors):
-            single_dimension_result = WeightBuffer(zip(dimension, weights))._weighted_mean_scalar()
-            result.append(single_dimension_result)
-
-        return result
-
-    def _weighted_mean_scalar(self):
-        weighted_sum = sum(val * weight for val, weight in self)
-        sum_of_weights = sum(weight for val, weight in self)
-        if weighted_sum == 0:
-            return 0 # Mitigate weighted_sum, sum_of_weights = 0, 0 cases.
-        else:
-            return weighted_sum / sum_of_weights
+    def weighted_variance(self):
+        """ Returns the statistical variance vector taking weights into account. """
+        return [buf._scalar_weighted_variance() for buf in self._by_dimension()]
 
     def cut_to_fit(self, capacity):
         """ Works similary to a circular buffer, but in terms of a fixed
@@ -176,6 +219,27 @@ class WeightBuffer(deque):
         if overflow < 0:
             self.appendleft((val, abs(overflow)))
 
+    def _scalar_weighted_mean(self):
+        weighted_sum = sum(val * weight for val, weight in self)
+        sum_of_weights = sum(weight for val, weight in self)
+        if weighted_sum == 0:
+            return 0 # Mitigate weighted_sum, sum_of_weights = 0, 0 cases.
+        return weighted_sum / sum_of_weights
+
+    def _scalar_weighted_variance(self):
+        weighted_sum = sum(val * weight for val, weight in self)
+        sum_of_weights = sum(weight for val, weight in self)
+        if weighted_sum == 0:
+            return 0 # Mitigate weighted_sum, sum_of_weights = 0, 0 cases.
+        mean = weighted_sum / sum_of_weights
+        variance = sum(weight * (val - mean)**2 for val, weight in self) / sum_of_weights
+        return variance
+
+    def _by_dimension(self):
+        vectors, weights = zip(*self)
+        for dimension in zip(*vectors):
+            yield WeightBuffer(zip(dimension, weights))
+
 def fixed_fps(transition, fps):
     transition.send(None)
     target = yield None
@@ -189,7 +253,6 @@ def fixed_fps(transition, fps):
 class Target:
 
     def __init__(self, base):
-        print("call init")
         self.base = base
         self._accumulator = None
 

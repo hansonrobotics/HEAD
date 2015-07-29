@@ -335,7 +335,8 @@ class AnimationManager():
         # Move eyes too, slowly
         self.eyeTargetLoc.transition = Wrappers.wrap(
             Transitions.chain(Transitions.linear(speed=0.5),
-                              Transitions.moving_average(duration=0.6)),
+                              Transitions.stick(duration=0.5),
+                              Transitions.moving_average(duration=0.1)),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
         )
         self.eyeTargetLoc.target.base = locBU
