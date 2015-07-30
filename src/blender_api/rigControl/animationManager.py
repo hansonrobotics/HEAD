@@ -216,7 +216,7 @@ class AnimationManager():
                         found = True
 
                 if not found:
-                    emotion = Emotion(emotionName, magnitude = BlendedNum(data['magnitude'], steps = 10, smoothing = 10), duration = data['duration'])
+                    emotion = Emotion(emotionName, magnitude = BlendedNum(data['magnitude'], transition=Transitions.moving_average(0.2)), duration = data['duration'])
                     self.emotionsList.append(emotion)
 
 

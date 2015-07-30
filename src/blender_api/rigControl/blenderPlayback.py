@@ -184,10 +184,10 @@ class BLPlayback(bpy.types.Operator):
                 control = eva.bones['EMO-'+emotion.name]
                 control['intensity'] = emotion.magnitude.current
                 emotion.duration -= timeScale
-                emotion.magnitude.blend()
+                emotion.magnitude.blend(time, dt)
 
                 if emotion.duration < 0:
-                    emotion.magnitude._target *= 0.99
+                    emotion.magnitude.target.base *= 0.99
 
                     if emotion.magnitude.current < 0.1:
                         eva.emotionsList.remove(emotion)

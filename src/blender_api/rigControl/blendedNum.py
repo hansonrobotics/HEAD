@@ -6,8 +6,7 @@ from time import time as systime
 
 class BlendedNum():
     def __init__(self, value, transition=None):
-        if not isinstance(value, Sequence):
-            value = [value]
+        value = _vectorize(value)
 
         self._current = value
         self._target = Target(value)
@@ -17,13 +16,17 @@ class BlendedNum():
 
     @property
     def current(self):
-        return self._current
+        return _devectorize(self._current)
 
     @property
     def target(self):
         """ The target only has a getter to discourage overriding it.
         Use one of two methods to set the target: target.base or target.add()."""
         return self._target
+
+    @target.setter
+    def target(self, val):
+        self._target.base = val
 
     def blend(self, time, dt):
         """ Updates the 'current' value and clears any modifications added to
@@ -253,28 +256,23 @@ def fixed_fps(transition, fps):
 class Target:
 
     def __init__(self, base):
-        self.base = base
+        self.base = _vectorize(base)
         self._accumulator = None
 
     @property
     def base(self):
-        return copy(self._base)
+        return _devectorize(self._base)
 
     @base.setter
     def base(self, val):
         """ A value that will not be cleared with the clear() method.
         Unlike add(), this method uses only the last value. """
-        val = copy(val)
-        if not isinstance(val, Sequence):
-            val = [val]
-
-        self._base = val
+        self._base = _vectorize(val)
 
     def add(self, val):
         """ Values that will be summed, added with 'base' and cleared on every
         call to clear(). """
-        if not isinstance(val, Sequence):
-            val = [val]
+        val = _vectorize(val)
 
         if self._accumulator == None:
             self._accumulator = val
@@ -290,3 +288,16 @@ class Target:
         accumulator = self._accumulator or [0] * maxlen
 
         return [a + b for a, b in zip(accumulator, base)]
+
+
+def _vectorize(value):
+    if not isinstance(value, Sequence):
+        return [value]
+    else:
+        return copy(value)
+
+def _devectorize(vector):
+    if len(vector) == 1:
+        return vector[0]
+    else:
+        return copy(vector)
