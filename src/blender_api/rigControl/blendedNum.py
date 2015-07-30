@@ -287,6 +287,9 @@ class Target:
         base = self._base or [0] * maxlen
         accumulator = self._accumulator or [0] * maxlen
 
+        # Clear the accumulator
+        self._accumulator = None
+
         return [a + b for a, b in zip(accumulator, base)]
 
 

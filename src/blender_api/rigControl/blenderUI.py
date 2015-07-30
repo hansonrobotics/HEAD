@@ -148,13 +148,40 @@ class BLRigControl(bpy.types.Panel):
         col.operator('eva.debug', text='getEyesData()').action = 'commands.EvaAPI().getEyesData()'
         col.operator('eva.debug', text='getFaceData()').action = 'commands.EvaAPI().getFaceData()'
 
+class BLActuatorControl(bpy.types.Panel):
+    bl_label = "Actuator Control"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_context = "object"
+
+
+    def draw(self, context):
+        layout = self.layout
+        if not hasattr(bpy.context.scene, 'actuators'):
+            return
+
+        for attr in dir(bpy.context.scene.actuators):
+            if not attr.startswith('ACT_'):
+                continue
+            row = layout.row()
+            layout.label(text='{}:'.format(attr[4:]).capitalize(), icon='FORCE_TURBULENCE')
+
+            bl_actuator = getattr(bpy.context.scene.actuators, attr)
+            for attr in dir(bl_actuator):
+                if not attr.startswith('PARAM_'):
+                    continue
+                row = layout.row()
+                row.prop(bl_actuator, attr, slider=True)
+
 def register():
     bpy.utils.register_class(BLRigControl)
     bpy.utils.register_class(BLRigConsole)
+    bpy.utils.register_class(BLActuatorControl)
 
 def unregister():
     bpy.utils.unregister_class(BLRigControl)
     bpy.utils.unregister_class(BLRigConsole)
+    bpy.utils.unregister_class(BLActuatorControl)
 
 def refresh():
     try:

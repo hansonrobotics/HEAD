@@ -1,36 +1,66 @@
 import random
-# import bpy
-from rigControl.actuators import Parameter, sleep, actuator
+import bpy
+from rigControl.actuators import sleep, actuator
 
 
 @actuator
-def test():
+def test(self):
+    self.add_parameter(bpy.props.FloatProperty(name='my slider', min=0.0, max=5.0))
     while True:
         yield from sleep(2.0)
         print("Look, I'm executing.")
 
-#@actuator
-def saccade():
+@actuator
+def saccade(self):
     # Register GUI-controllable parameters
-    frequencyMean = Parameter('frequency mean', min=0.0, max=5.0)
-    frequencyVariation = Parameter('frequency variation', min=0.0, max=1.0)
-    eyeWander = Parameter('eye wander', min=0.0, max=2.0)
+    eyeWander, intervalMean, intervalVariation = (
+        self.add_parameter(prop) for prop in [
+            bpy.props.FloatProperty(name='eye wander', min=0.0, max=1.0, default=0.3),
+            bpy.props.FloatProperty(name='interval mean', min=0.0, max=3.0, default=1.0),
+            bpy.props.FloatProperty(name='interval variation', min=0.0, max=1.0, default=0.5)
+        ]
+    )
+
+
+    # Register GUI-displayable parameter
+    interval = 0
+    self.add_parameter(bpy.props.StringProperty(name="interval",
+        get=lambda _: '{:0.3f}s'.format(interval)))
+
+    # Yield execution to get current time
+    time, dt = yield
+
+    # Initialize some variables
+    lasttime = time
+    offset = [0,0,0]
+    unitgauss = random.gauss(0, 1)
 
     # Get the reference to eva's eye target.
-    # eyeTargetLoc = bpy.evaAnimationManager.eyeTargetLoc
+    eyeTargetLoc = bpy.evaAnimationManager.eyeTargetLoc
 
     while True:
-        # Wait a random amount of time before the next saccade
-        yield from sleep(frequencyMean.get() * random.gauss(1, frequencyVariation.get()))
 
-        # Calculate new eye position
-        newLoc = [0,0,0]
-        newLoc[0] = random.gauss(eyeTargetLoc.current[0], eyeWander.get())
-        newLoc[1] = eyeTargetLoc.current[1]
-        newLoc[2] = random.gauss(eyeTargetLoc.current[2], eyeWander.get() * 0.5)
+        # Calculate the time to the next saccade
+        #denominator = frequencyMean.val + unitgauss * frequencyVariation.val
+        interval = intervalMean.val + unitgauss * intervalVariation.val
+        nexttime = lasttime + interval
 
-        # Override eye position
-        eyeTargetLoc.current = newLoc
+        if time >= nexttime:
+            # Calculate new eye offset
+            offset = [0,0,0]
+            offset[0] = random.gauss(0, eyeWander.val) # Horizontal
+            offset[1] = 0
+            offset[2] = random.gauss(0, eyeWander.val * 0.5) # Vertical
+
+            # Generate new random factor and store current time for the next saccade.
+            unitgauss = random.gauss(0, 1)
+            lasttime = time
+
+        # Apply offset to eye position
+        eyeTargetLoc.target.add(offset)
+
+        # Yield execution until next frame
+        time, dt = yield
 
 
 def doCycle(self, cycle):
@@ -73,7 +103,7 @@ def blink(self, duration):
     relaxed = max(relaxed, 0)
     sleepy = max(sleepy, 0)
 
-    index = randomSelect([micro, normal, relaxed, sleepy])
+    index = 0 #randomSelect([micro, normal, relaxed, sleepy])
     action = ['GST-blink-micro', 'GST-blink', 'GST-blink-relaxed', 'GST-blink-sleepy']
     self.newGesture(action[index])
 
