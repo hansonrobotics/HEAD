@@ -203,7 +203,8 @@ class BLPlayback(bpy.types.Operator):
             # keep alive
             eva.keepAlive(bpy.context.scene['keepAlive'])
 
-            # send ROS data
+            # apply actuators
+            eva.actuatorManager.tick(time, dt)
 
             # force update
             bpy.data.scenes['Scene'].frame_set(1)

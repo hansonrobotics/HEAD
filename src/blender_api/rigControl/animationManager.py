@@ -1,6 +1,8 @@
 # AnimationManager is the primary datastore for the various paramters
 # that define the Eva character.
 
+from .actuators import ActuatorManager
+
 from . import actuators
 from .blendedNum import BlendedNum, Transitions, Wrappers
 from .helpers import *
@@ -56,6 +58,7 @@ class AnimationManager():
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
         ))
 
+        self.actuatorManager = ActuatorManager()
 
         # Autonomous (unconscious) behavior parameters
         self.eyeDartRate = 1.0
@@ -111,20 +114,21 @@ class AnimationManager():
         if alive:
             self.idle += 1.0
 
-            for cycle in self.cyclesSet:
-                actuators.doCycle(self, cycle)
+            # for cycle in self.cyclesSet:
+            #     actuators.doCycle(self, cycle)
 
             # if True and self.randomFrequency('dart', self.eyeDartRate):
             #     actuators.eyeSaccades(self, self.eyeWander)
 
-            if True and self.randomFrequency('blink', self.blinkRate):
-                actuators.blink(self, self.blinkDuration)
+            # if True and self.randomFrequency('blink', self.blinkRate):
+            #     actuators.blink(self, self.blinkDuration)
 
             # if True and self.randomFrequency('headTargetLoc', 1):
             #     actuators.headDrift(self)
 
-            if True and self.randomFrequency('emotionJitter', 20):
-                actuators.emotionJitter(self)
+            # if True and self.randomFrequency('emotionJitter', 20):
+            #     actuators.emotionJitter(self)
+
         else:
             for cycle in self.cyclesSet:
                 for gesture in self.gesturesList:
