@@ -5,13 +5,16 @@ import rospy
 import os
 import sys
 import time
+import glob
 
 import rospkg
 import roslaunch
 import rostopic
 from roslaunch import core
 from testing_tools import (wait_for, wait_for_message, wait_for_messages,
-                            startxvfb, stopxvfb, capture_screen, run_shell_cmd)
+                            startxvfb, stopxvfb, capture_screen,
+                            run_shell_cmd, add_text_to_video,
+                            concatenate_videos)
 from blender_api_msgs.msg import *
 from genpy import Duration
 
@@ -28,14 +31,9 @@ def parse_msg(msg):
 class BlenderAPITest(unittest.TestCase):
 
     def setUp(self):
-        self.run_id = 'test_blender_api'
         rospack = rospkg.RosPack()
-        config = roslaunch.config.ROSLaunchConfig()
-        self.output_dir = 'output_video'
-        if not os.path.isdir(self.output_dir):
-            os.makedirs(self.output_dir)
-
         blender_api_path = rospack.get_path('blender_api')
+        config = roslaunch.config.ROSLaunchConfig()
         config.add_node(
             core.Node(
                 package='blender_api', node_type='blender',
@@ -45,9 +43,6 @@ class BlenderAPITest(unittest.TestCase):
             )
         self.runner = roslaunch.launch.ROSLaunchRunner(
             self.run_id, config, is_rostest=True)
-
-        self.display = os.environ.get('DISPLAY', ':0')
-        startxvfb(self.display, '1920x1080x24')
         self.runner.launch()
 
         for node in config.nodes:
@@ -57,7 +52,25 @@ class BlenderAPITest(unittest.TestCase):
 
     def tearDown(self):
         self.runner.stop()
+
+    @classmethod
+    def setUpClass(self):
+        self.run_id = 'test_blender_api'
+        self.output_dir = 'output_video'
+        if not os.path.isdir(self.output_dir):
+            os.makedirs(self.output_dir)
+        self.display = os.environ.get('DISPLAY', ':0')
+        startxvfb(self.display, '1920x1080x24')
+
+    @classmethod
+    def tearDownClass(self):
         stopxvfb(self.display)
+        videos = glob.glob('%s/*.avi' % self.output_dir)
+        videos = [f for f in videos if not f.endswith('all.avi')]
+        if len(videos) > 1:
+            ofile = '%s/all.avi' % self.output_dir
+            concatenate_videos(videos, ofile, True)
+
 
     def test_emotion_state(self):
         available_emotions = parse_msg(run_shell_cmd(
@@ -66,9 +79,15 @@ class BlenderAPITest(unittest.TestCase):
             '/blender_api/set_emotion_state',
             'blender_api_msgs/EmotionState', True)
         timeout = 2
+        videos = []
         for emotion in available_emotions:
-            with capture_screen('%s/%s.avi' % (self.output_dir, emotion), timeout):
+            video =  '%s/emotion-%s.avi' % (self.output_dir, emotion)
+            with capture_screen(video, timeout):
                 pub.publish(msg_class(emotion, 1, Duration(1, 0)))
+            add_text_to_video(video)
+            videos.append(video)
+        ofile = '%s/emotions.avi' % self.output_dir
+        concatenate_videos(videos, ofile, True)
 
     def test_gesture(self):
         available_gestures = parse_msg(run_shell_cmd(
@@ -77,10 +96,16 @@ class BlenderAPITest(unittest.TestCase):
             '/blender_api/set_gesture',
             'blender_api_msgs/SetGesture', True)
         timeout = 2
+        videos = []
         for gesture in available_gestures:
             if gesture == 'all': continue
-            with capture_screen('%s/%s.avi' % (self.output_dir, gesture), timeout):
+            video =  '%s/gesture-%s.avi' % (self.output_dir, gesture)
+            with capture_screen(video, timeout):
                 pub.publish(msg_class(gesture, 1, 1, 1))
+            add_text_to_video(video)
+            videos.append(video)
+        ofile = '%s/gestures.avi' % self.output_dir
+        concatenate_videos(videos, ofile, True)
 
     def test_viseme(self):
         available_visemes = parse_msg(run_shell_cmd(
@@ -89,28 +114,38 @@ class BlenderAPITest(unittest.TestCase):
             '/blender_api/queue_viseme',
             'blender_api_msgs/Viseme', True)
         timeout = 2
+        videos = []
         for viseme in available_visemes:
             if 'old' in viseme: continue
-            with capture_screen('%s/%s.avi' % (self.output_dir, viseme), timeout):
+            video =  '%s/viseme-%s.avi' % (self.output_dir, viseme)
+            with capture_screen(video, timeout):
                 pub.publish(msg_class(
                         viseme, Duration(0, 0), Duration(0, 5*1e8), 0.1, 0.8, 1))
+            add_text_to_video(video)
+            videos.append(video)
+        ofile = '%s/viseme.avi' % self.output_dir
+        concatenate_videos(videos, ofile, True)
 
     def test_gaze_target(self):
         pub, msg_class = rostopic.create_publisher(
             '/blender_api/set_gaze_target',
             'blender_api_msgs/Target', True)
-        timeout = 2
+        timeout = 1
         targets = {
-            'gaze_center': (1,0,0),
-            'gaze_right':(0,1,0),
-            'gaze_left':(0,-1,0),
-            'gaze_up':(1,0,0.5),
-            'gaze_down':(1,0,-0.5)}
-        with capture_screen('%s/gaze_target.avi' % self.output_dir, len(targets)*timeout):
-            for name in ['gaze_right', 'gaze_up', 'gaze_left',
-                        'gaze_down', 'gaze_center']:
+            'center': (1,0,0),
+            'right':(0,1,0),
+            'left':(0,-1,0),
+            'up':(1,0,0.5),
+            'down':(1,0,-0.5)}
+        videos = []
+        for name in ['right', 'up', 'left', 'down', 'center']:
+            video = '%s/gaze-%s.avi' % (self.output_dir, name)
+            with capture_screen(video, timeout):
                 pub.publish(msg_class(*targets[name]))
-                time.sleep(timeout)
+            add_text_to_video(video)
+            videos.append(video)
+        ofile = '%s/gaze.avi' % self.output_dir
+        concatenate_videos(videos, ofile, True)
 
     def test_face_target(self):
         pub, msg_class = rostopic.create_publisher(
@@ -118,16 +153,20 @@ class BlenderAPITest(unittest.TestCase):
             'blender_api_msgs/Target', True)
         timeout = 2
         targets = {
-            'face_center': (1,0,0),
-            'face_right':(0,1,0),
-            'face_left':(0,-1,0),
-            'face_up':(1,0,0.5),
-            'face_down':(1,0,-0.5)}
-        with capture_screen('%s/face_target.avi' % self.output_dir, len(targets)*timeout):
-            for name in ['face_right', 'face_up', 'face_left',
-                        'face_down', 'face_center']:
+            'center': (1,0,0),
+            'right':(0,1,0),
+            'left':(0,-1,0),
+            'up':(1,0,0.5),
+            'down':(1,0,-0.5)}
+        videos = []
+        for name in ['right', 'up', 'left', 'down', 'center']:
+            video = '%s/face-%s.avi' % (self.output_dir, name)
+            with capture_screen(video, timeout):
                 pub.publish(msg_class(*targets[name]))
-                time.sleep(timeout)
+            add_text_to_video(video)
+            videos.append(video)
+        ofile = '%s/face.avi' % self.output_dir
+        concatenate_videos(videos, ofile, True)
 
 if __name__ == '__main__':
     import rostest
