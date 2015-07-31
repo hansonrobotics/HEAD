@@ -19,7 +19,8 @@ nodeprocess._TIMEOUT_SIGTERM = 1
 from pi_face_tracker.msg import FaceEvent
 from blender_api_msgs.msg import EmotionState
 from testing_tools import (wait_for, play_rosbag, create_msg_listener,
-                            capture_screen, capture_camera, startxvfb, stopxvfb)
+                            capture_screen, capture_camera, startxvfb, stopxvfb,
+                            get_rosbag_file)
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'robots_config'
@@ -93,7 +94,7 @@ class RobotTest(unittest.TestCase):
         pub, msg_class = rostopic.create_publisher(
             '/behavior_switch', 'std_msgs/String', True)
         pub.publish(msg_class('btree_on'))
-        bag_file = '%s/face_in.bag' % self.test_data_path
+        bag_file = get_rosbag_file('face')
 
         emo_msg_listener = create_msg_listener(
             '/blender_api/set_emotion_state', EmotionState, 10)
