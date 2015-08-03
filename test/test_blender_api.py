@@ -56,7 +56,7 @@ class BlenderAPITest(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.run_id = 'test_blender_api'
-        self.output_dir = 'output_video'
+        self.output_dir = '%s/output_video' % CWD
         if not os.path.isdir(self.output_dir):
             os.makedirs(self.output_dir)
         self.display = os.environ.get('DISPLAY', ':0')
