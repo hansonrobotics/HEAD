@@ -14,6 +14,7 @@ from roslaunch import core
 from testing_tools import wait_for, wait_for_message
 from genpy.message import fill_message_args
 from sensor_msgs.msg import JointState
+from tf.msg import tfMessage
 
 from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
@@ -215,7 +216,55 @@ m_coeffs: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
             'position': [0, 0, 0, 0, pitch_neck_joint, 0, 0, pitch_neck_joint]
             }
         self.check_msg(msg_str, expects)
+
+    def test_face_tf(self):
+        pub, msg_class = rostopic.create_publisher(
+            '/camera/face_locations', 'pi_face_tracker/Faces', True)
+        msg = msg_class()
+        msg_str = """faces:
+- id: 1
+  point:
+    x: 0.76837966452
+    y: -0.132697071241
+    z: 0.0561996095957
+  attention: 0.990000009537
+- id: 2
+  point:
+    x: 0.807249662369
+    y: -0.00428759906469
+    z: 0.035407830253
+  attention: 0.990000009537"""
+        fill_message_args(msg, [yaml.load(msg_str)])
+        pub.publish(msg)
+        msg = wait_for_message('/tf', tfMessage, 5)
+        expect_str = """
+transforms:
+  -
+    header:
+      seq: 0
+      stamp:
+        nsecs: 752310037
+      frame_id: camera
+    child_frame_id: face_base1
+    transform:
+      translation:
+        x: 0.76837966452
+        y: -0.132697071241
+        z: 0.0561996095957
+      rotation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+"""
+        expect = tfMessage()
+        fill_message_args(expect, [yaml.load(expect_str)])
+        self.assertEqual(msg.transforms[0].child_frame_id,
+            expect.transforms[0].child_frame_id)
+        self.assertEqual(msg.transforms[0].transform,
+            expect.transforms[0].transform)
+        pub.unregister()
+
 if __name__ == '__main__':
-    #import rostest
-    #rostest.rosrun(PKG, 'perception', PerceptionTest)
-    unittest.main()
+    import rostest
+    rostest.rosrun(PKG, 'perception', PerceptionTest)
