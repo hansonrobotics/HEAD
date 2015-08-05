@@ -60,16 +60,18 @@ class BlenderAPITest(unittest.TestCase):
         if not os.path.isdir(self.output_dir):
             os.makedirs(self.output_dir)
         self.display = os.environ.get('DISPLAY', ':0')
-        startxvfb(self.display, '1920x1080x24')
+        if self.display != ':0':
+            startxvfb(self.display, '1920x1080x24')
 
     @classmethod
     def tearDownClass(self):
-        stopxvfb(self.display)
+        if self.display != ':0':
+            stopxvfb(self.display)
         videos = glob.glob('%s/*.avi' % self.output_dir)
         videos = [f for f in videos if not f.endswith('all.avi')]
         if len(videos) > 1:
             ofile = '%s/all.avi' % self.output_dir
-            concatenate_videos(videos, ofile, True)
+            concatenate_videos(videos, ofile, False)
 
 
     def test_emotion_state(self):
