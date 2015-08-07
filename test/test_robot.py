@@ -5,6 +5,7 @@ import os
 import sys
 import time
 import ConfigParser
+import shutil
 
 import rospy
 import roslaunch
@@ -18,9 +19,10 @@ nodeprocess._TIMEOUT_SIGTERM = 1
 
 from pi_face_tracker.msg import FaceEvent
 from blender_api_msgs.msg import EmotionState
+from std_msgs.msg import String
 from testing_tools import (wait_for, play_rosbag, create_msg_listener,
                             capture_screen, capture_camera, startxvfb, stopxvfb,
-                            get_rosbag_file)
+                            get_rosbag_file, MessageQueue)
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'robots_config'
@@ -37,10 +39,11 @@ class RobotTest(unittest.TestCase):
             os.makedirs(self.output_data_path)
 
         # blender_api
-        blender_api_path = rospack.get_path('blender_api')
+        blender_api_path = os.path.join(
+            rospack.get_path('blender_api_msgs'), '../blender_api')
         config.add_node(
             core.Node(
-                package='blender_api', node_type='blender',
+                package='blender_api_msgs', node_type='blender',
                 args='-y %s/Eva.blend -P %s/autostart.py' % (
                         blender_api_path, blender_api_path),
                 name='blender_api')
@@ -64,28 +67,39 @@ class RobotTest(unittest.TestCase):
         loader = roslaunch.xmlloader.XmlLoader()
         loader.load(config_file, config)
 
-        # camera
-        # config.add_node(
-        #     core.Node(
-        #         package='usb_cam', node_type='usb_cam_node',
-        #         name='camera')
-        #     )
+        # tts
+        config.add_node(
+            core.Node(
+                package='tts', node_type='tts_talker.py',
+                name='tts')
+            )
 
+        # chatbot
+        config.add_node(
+            core.Node(
+                package='chatbot', node_type='ai.py',
+                args='%s/../../chatbot/aiml' % CWD,
+                name='chatbot_ai')
+            )
+
+        config.add_param(core.Param('/tts/topic_name', 'chatbot_responses'))
         self.runner = roslaunch.launch.ROSLaunchRunner(
             self.run_id, config, is_rostest=True)
 
         self.display = os.environ.get('DISPLAY', ':0')
-        startxvfb(self.display, '1920x1080x24')
+        if not self.display == ':0':
+            startxvfb(self.display)
         self.runner.launch()
 
         for node in config.nodes:
             wait_for('%s/%s' % (node.namespace, node.name))
 
-        time.sleep(5) # Wait for blender rendering done
+        time.sleep(15) # Wait for blender rendering done and chatbot
 
     def tearDown(self):
         self.runner.stop()
-        stopxvfb(self.display)
+        if not self.display == ':0':
+            stopxvfb(self.display)
 
     def test(self):
         new_arrival_emotions = [
@@ -103,7 +117,7 @@ class RobotTest(unittest.TestCase):
                         self.output_data_path
         screen_output = '%s/screen_new_arrival_emotion.avi' % \
                         self.output_data_path
-        duration = 15
+        duration = 5
         with capture_camera(cam_output, duration):
             with capture_screen(screen_output, duration):
                 job = play_rosbag([bag_file, '-q'])
@@ -111,6 +125,31 @@ class RobotTest(unittest.TestCase):
         emo_msg = emo_msg_listener.join()
 
         self.assertIn(emo_msg.name, new_arrival_emotions)
+
+    def test_chat(self):
+        import re
+        r = re.compile('[\W_]+')
+        pub, msg_class = rostopic.create_publisher(
+            '/chatbot_speech', 'chatbot/ChatMessage', True)
+        words = ['Hi', 'How are you', 'What\'s your name']
+        duration = 5
+        queue = MessageQueue()
+        queue.subscribe('/chatbot_responses', String)
+        for word in words:
+            cam_output = '%s/cam_%s.avi' % (
+                self.output_data_path, r.sub('', word))
+            screen_output = '%s/screen_%s.avi' % (
+                self.output_data_path, r.sub('',word))
+            with capture_camera(cam_output, duration):
+                with capture_screen(screen_output, duration):
+                    pub.publish(msg_class(word, 100))
+            msg = queue.get()
+            cam_output_new = '%s/cam_%s_%s.avi' % (
+                self.output_data_path, r.sub('', word), r.sub('', msg.data))
+            shutil.move(cam_output, cam_output_new)
+            screen_output_new = '%s/screen_%s_%s.avi' % (
+                self.output_data_path, r.sub('', word), r.sub('', msg.data))
+            shutil.move(screen_output, screen_output_new)
 
 if __name__ == '__main__':
     import rostest
