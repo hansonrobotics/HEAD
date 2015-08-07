@@ -6,6 +6,7 @@ import sys
 import time
 import ConfigParser
 import shutil
+import glob
 
 import rospy
 import roslaunch
@@ -34,9 +35,20 @@ class RobotTest(unittest.TestCase):
         rospack = rospkg.RosPack()
         config = roslaunch.config.ROSLaunchConfig()
         self.test_data_path = '%s/test_data' % CWD
-        self.output_data_path = '%s/output' % CWD
-        if not os.path.isdir(self.output_data_path):
-            os.makedirs(self.output_data_path)
+        tts_path = rospack.get_path('tts')
+        self.tts_output = os.path.join(tts_path, 'tmp')
+        files = glob.glob('%s/*.wav' % self.tts_output)
+        if files:
+            shutil.rmtree('%s.bak' % self.tts_output)
+            shutil.move(self.tts_output, '%s.bak' % self.tts_output)
+            os.makedirs(self.tts_output)
+
+        self.output_video = '%s/output_video' % CWD
+        if not os.path.isdir(self.output_video):
+            os.makedirs(self.output_video)
+        self.output_audio = '%s/output_audio' % CWD
+        if not os.path.isdir(self.output_audio):
+            os.makedirs(self.output_audio)
 
         # blender_api
         blender_api_path = os.path.join(
@@ -114,9 +126,9 @@ class RobotTest(unittest.TestCase):
             '/blender_api/set_emotion_state', EmotionState, 10)
         emo_msg_listener.start()
         cam_output = '%s/cam_new_arrival_emotion.avi' % \
-                        self.output_data_path
+                        self.output_video
         screen_output = '%s/screen_new_arrival_emotion.avi' % \
-                        self.output_data_path
+                        self.output_video
         duration = 5
         with capture_camera(cam_output, duration):
             with capture_screen(screen_output, duration):
@@ -137,19 +149,23 @@ class RobotTest(unittest.TestCase):
         queue.subscribe('/chatbot_responses', String)
         for word in words:
             cam_output = '%s/cam_%s.avi' % (
-                self.output_data_path, r.sub('', word))
+                self.output_video, r.sub('', word))
             screen_output = '%s/screen_%s.avi' % (
-                self.output_data_path, r.sub('',word))
+                self.output_video, r.sub('',word))
             with capture_camera(cam_output, duration):
                 with capture_screen(screen_output, duration):
                     pub.publish(msg_class(word, 100))
             msg = queue.get()
             cam_output_new = '%s/cam_%s_%s.avi' % (
-                self.output_data_path, r.sub('', word), r.sub('', msg.data))
+                self.output_video, r.sub('', word), r.sub('', msg.data))
             shutil.move(cam_output, cam_output_new)
             screen_output_new = '%s/screen_%s_%s.avi' % (
-                self.output_data_path, r.sub('', word), r.sub('', msg.data))
+                self.output_video, r.sub('', word), r.sub('', msg.data))
             shutil.move(screen_output, screen_output_new)
+            files = glob.glob('%s/*.wav' % self.tts_output)
+            self.assertEqual(len(files), 1)
+            shutil.move(
+                files[0], '%s/%s.wav' % (self.output_audio, r.sub('', msg.data)))
 
 if __name__ == '__main__':
     import rostest
