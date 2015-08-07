@@ -1,0 +1,5 @@
+<launch>
+    <param name="/run_id" value="test_blender_api" />
+    <test name="blender_api_test" pkg="blender_api_msgs" type="test_blender_api.py" test-name="blender_api" time-limit="300.0" />
+</launch>
+
