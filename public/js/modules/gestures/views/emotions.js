@@ -1,18 +1,18 @@
-define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
-    function (App, EmotionView, template, api) {
+define(["application", "./emotion", 'tpl!./templates/emotions.tpl'],
+    function (App, EmotionView, template) {
         App.module("Gestures.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Emotions = Marionette.CompositeView.extend({
                 childView: EmotionView,
                 childViewContainer: '.app-emotions-container',
                 template: template,
                 ui: {
-                    speedSlider: '.app-speed-slider',
-                    durationValue: '.app-speed-value',
+                    durationSlider: '.app-duration-slider',
+                    durationValue: '.app-duration-value',
                     magnitudeSlider: '.app-magnitude-slider',
                     magnitudeValue: '.app-magnitude-value'
                 },
                 config: {
-                    speed: {
+                    duration: {
                         default: 0.5,
                         current: 0.5,
                         min: 0,
@@ -31,7 +31,15 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                  * @returns {{config: *}}
                  */
                 childViewOptions: function () {
-                    return {config: this.config};
+                    return {
+                        config: this.config,
+                        getSliderValues: function () {
+                            return {
+                                duration: this.config.duration.current.toFixed(2),
+                                magnitude: this.config.magnitude.current.toFixed(2)
+                            }
+                        }
+                    };
                 },
                 /**
                  * Pass data to the template
@@ -42,28 +50,28 @@ define(["application", "./emotion", 'tpl!./templates/emotions.tpl', 'lib/api'],
                 onRender: function () {
                     var self = this;
 
-                    // init speed slider
-                    this.ui.speedSlider.slider({
+                    // init duration slider
+                    this.ui.durationSlider.slider({
                         range: "min",
-                        min: 0,
-                        max: 1000,
-                        value: this.config.speed.default * 100,
+                        min: this.config.duration.min * 100,
+                        max: this.config.duration.max * 100,
+                        value: this.config.duration.default * 100,
                         change: function (e, ui) {
-                            var speed = ui.value / 100.0;
+                            var duration = ui.value / 100.0;
 
                             // update ui label
-                            self.ui.durationValue.html(speed);
+                            self.ui.durationValue.html(duration);
 
                             // update config
-                            self.config.speed.current = speed;
+                            self.config.duration.current = duration;
                         }
                     });
 
                     // init magnitude slider
                     this.ui.magnitudeSlider.slider({
                         range: "min",
-                        min: 0,
-                        max: 100,
+                        min: this.config.magnitude.min * 100,
+                        max: this.config.magnitude.max * 100,
                         value: this.config.magnitude.default * 100,
                         change: function (e, ui) {
                             // update ui label

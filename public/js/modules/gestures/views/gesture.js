@@ -16,40 +16,27 @@ define(["application", "tpl!./templates/gesture.tpl", 'lib/api', 'lib/behaviors/
                     'click @ui.button': 'onClick'
                 },
                 /**
-                 * Handles regular click event on a desktop
-                 */
-                onClick: function () {
-                    var duration = this.config.speed.current,
-                        self = this;
-
-                    if (duration > 0) {
-                        api.setGesture(this.model.get('name'), 1, duration, this.config.magnitude.current);
-                        setTimeout(function () {
-                            self.hideIndicators();
-                        }, duration * 1000)
-                    }
-                },
-                /**
                  * Store config, hook on to TouchButton behavior events
-                 * @param options
                  */
                 initialize: function (options) {
-                    this.config = options.config;
-
-                    this.on('touch_button:start', this.touchStart);
-                    this.on('touch_button:change', this.touchMove);
-                    this.on('touch_button:end', this.touchEnd);
-                },
-                /**
-                 * Handle TouchButton start event
-                 */
-                touchStart: function () {
-                    this.showIndicators();
+                    // recursive object clone
+                    this.config = JSON.parse(JSON.stringify(options.config));
 
                     // set current parameter values to default
                     this.config.speed.current = this.config.speed.default;
                     this.config.magnitude.current = this.config.magnitude.default;
 
+                    this.on('touch_button:start', this.touchStart);
+                    this.on('touch_button:change', this.touchMove);
+                    this.on('touch_button:end', this.setGesture);
+                },
+                /**
+                 * Handle TouchButton start event
+                 */
+                touchStart: function () {
+                    this.touch = true;
+
+                    this.showIndicators();
                     this.updateIndicators();
                 },
                 /**
@@ -66,29 +53,19 @@ define(["application", "tpl!./templates/gesture.tpl", 'lib/api', 'lib/behaviors/
 
                     this.updateIndicators();
                 },
-                /**
-                 * Handle TouchButton end event
-                 */
-                touchEnd: function () {
-                    var duration = this.config.speed.current.toFixed(2);
-
-                    if (duration > 0) {
-                        api.setGesture(this.model.get('name'), 1, duration, this.config.magnitude.current);
-
-                        // hide indicators after duration
-                        var self = this;
-                        setTimeout(function () {
-                            self.hideIndicators();
-                        }, duration * 1000)
-                    } else {
-                        this.hideIndicators();
+                onClick: function () {
+                    if (!this.touch) {
+                        var config = this.options.getSliderValues();
+                        this.setGesture(config.speed, config.magnitude);
                     }
+
+                    this.touch = false;
                 },
                 /**
                  * Pass data to the template
                  */
                 serializeData: function () {
-                    return _.extend(this.model.toJSON(), this.config);
+                    return _.extend(this.model.toJSON(), this.options.config);
                 },
                 /**
                  * Hide indicators initially
@@ -111,6 +88,25 @@ define(["application", "tpl!./templates/gesture.tpl", 'lib/api', 'lib/behaviors/
 
                     this.ui.duration.fadeIn();
                     this.ui.intensity.fadeIn();
+                },
+                setGesture: function (speed, magnitude) {
+                    if (typeof speed == 'undefined')
+                        speed = this.config.speed.current.toFixed(2);
+
+                    if (typeof magnitude == 'undefined')
+                        magnitude = this.config.magnitude.current.toFixed(2);
+
+                    if (speed > 0) {
+                        api.setGesture(this.model.get('name'), 1, speed, magnitude);
+
+                        // hide indicators after duration
+                        var self = this;
+                        setTimeout(function () {
+                            self.hideIndicators();
+                        }, speed * 1000)
+                    } else {
+                        this.hideIndicators();
+                    }
                 }
             });
         });

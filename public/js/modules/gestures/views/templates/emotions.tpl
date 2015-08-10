@@ -1,13 +1,13 @@
 <div class="hidden-xs">
     <div class="pull-left">
-        <strong>Speed</strong>
+        <strong>Duration</strong>
     </div>
 
     <div class="app-slider-value-container">
-        <span class="app-speed-value"><%= speed.default %></span> seconds
+        <span class="app-duration-value"><%= duration.default %></span> seconds
     </div>
 
-    <div class="app-speed-slider"></div>
+    <div class="app-duration-slider"></div>
     <br/>
 </div>
 

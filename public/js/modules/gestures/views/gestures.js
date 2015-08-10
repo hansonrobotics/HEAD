@@ -7,7 +7,7 @@ define(["application", "./gesture", 'tpl!./templates/gestures.tpl'],
                 childItemContainer: '.app-gestures',
                 ui: {
                     speedSlider: '.app-speed-slider',
-                    durationValue: '.app-speed-value',
+                    speedValue: '.app-speed-value',
                     magnitudeSlider: '.app-magnitude-slider',
                     magnitudeValue: '.app-magnitude-value'
                 },
@@ -26,7 +26,15 @@ define(["application", "./gesture", 'tpl!./templates/gestures.tpl'],
                     }
                 },
                 childViewOptions: function () {
-                    return {config: this.config};
+                    return {
+                        config: this.config,
+                        getSliderValues: function () {
+                            return {
+                                speed: this.config.speed.current.toFixed(2),
+                                magnitude: this.config.magnitude.current.toFixed(2)
+                            }
+                        }
+                    };
                 },
                 serializeData: function () {
                     return this.config;
@@ -37,25 +45,25 @@ define(["application", "./gesture", 'tpl!./templates/gestures.tpl'],
                     // init speed slider
                     this.ui.speedSlider.slider({
                         range: "min",
-                        min: 0,
-                        max: 1000,
+                        min: this.config.speed.min * 100,
+                        max: this.config.speed.max * 100,
                         value: this.config.speed.current * 100,
                         change: function (e, ui) {
-                            var duration = ui.value / 100.0;
+                            var speed = ui.value / 100.0;
 
                             // update ui label
-                            self.ui.durationValue.html(duration);
+                            self.ui.speedValue.html(speed);
 
                             // update config
-                            self.config.speed.current = duration;
+                            self.config.speed.current = speed;
                         }
                     });
 
                     // init magnitude slider
                     this.ui.magnitudeSlider.slider({
                         range: "min",
-                        min: 0,
-                        max: 100,
+                        min: this.config.magnitude.min * 100,
+                        max: this.config.magnitude.max * 100,
                         value: this.config.magnitude.current * 100,
                         change: function (e, ui) {
                             // update ui label
