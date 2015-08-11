@@ -13,8 +13,13 @@ requirejs.config({
         roslib: 'vendor/roslib',
         eventemitter: 'vendor/eventemitter2',
         bootstrap: 'vendor/bootstrap.min',
-        'touch-punch': 'vendor/jquery.ui.touch-punch.min',
-        annyang: 'vendor/annyang'
+        touch_punch: 'vendor/jquery.ui.touch-punch.min',
+        annyang: 'vendor/annyang',
+        backgrid: 'vendor/backgrid-0.3.5',
+        backgrid_filter: 'vendor/backgrid-filter',
+        backgrid_paginator: 'vendor/backgrid-paginator',
+        backgrid_select_all: 'vendor/backgrid-select-all',
+        backbone_pageable: 'vendor/backbone-pageable'
     },
     shim: {
         'jquery-ui': ['jquery'],
@@ -29,7 +34,7 @@ requirejs.config({
         annyang: {
             exports: 'annyang'
         },
-        'touch-punch': ['jquery-ui'],
+        touch_punch: ['jquery-ui'],
         'backbone.picky': ['backbone'],
         'backbone.syphon': ['backbone'],
         marionette: {
@@ -40,6 +45,22 @@ requirejs.config({
         roslib: {
             deps: ['eventemitter'],
             exports: 'ROSLIB'
+        },
+        backgrid: {
+            deps: ['backbone'],
+            exports: 'Backgrid'
+        },
+        backbone_pageable: {
+            deps: ['backbone']
+        },
+        backgrid_select_all: {
+            deps: ['backgrid']
+        },
+        backgrid_filter: {
+            deps: ['backgrid']
+        },
+        backgrid_paginator: {
+            deps: ['backgrid']
         }
     }
 });
@@ -48,4 +69,4 @@ require(["eventemitter"], function (EventEmitter2) {
     window.EventEmitter2 = EventEmitter2;
 });
 
-define(['touch-punch', 'jquery', 'bootstrap', 'application']);
+define(['touch_punch', 'jquery', 'bootstrap', 'application']);

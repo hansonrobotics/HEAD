@@ -1,30 +1,30 @@
-define(["application", "lib/api", './views/motors', './views/layout', 'entities/motor'],
-    function (App, api, MotorsView, LayoutView) {
+define(["application", "lib/api", './views/motors', './views/layout', './views/configuration', 'entities/motor'],
+    function (App, api, MotorsView, LayoutView, ConfigurationView) {
         return {
             public_index: function () {
                 // reset robot
                 api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
                 api.pointHead();
 
+                // init collection and views
+                var motorsCollection = new App.Entities.MotorCollection(),
+                    motorsView = new MotorsView({collection: motorsCollection}),
+                    layoutView = new LayoutView();
+
+                motorsCollection.fetch();
+
                 App.LayoutInstance.showNav();
-                this.show_motors(false);
+                App.LayoutInstance.setTitle('Motors');
+                App.LayoutInstance.getRegion('content').show(layoutView);
+
+                layoutView.getRegion('motors').show(motorsView);
             },
             admin_index: function () {
                 App.LayoutInstance.showAdminNav();
-                this.show_motors(true);
-            },
-            show_motors: function (enableEdit) {
-                this.motorsCollection = new App.Entities.MotorCollection();
-                this.motorsCollection.fetch(enableEdit);
-
-                this.motorsView = new MotorsView({collection: this.motorsCollection, enable_edit: enableEdit});
-                this.layoutView = new LayoutView();
-
                 App.LayoutInstance.setTitle('Motors');
-                App.LayoutInstance.getRegion('content').show(this.layoutView);
 
-                this.layoutView.getRegion('motors').show(this.motorsView);
+                var configurationView = new ConfigurationView();
+                App.LayoutInstance.getRegion('content').show(configurationView);
             }
-
         };
     });
