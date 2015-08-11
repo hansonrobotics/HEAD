@@ -1,0 +1,12 @@
+- {acceleration: 20, function: linear, group: Eyes, hardware: dynamixel, imax1: null,
+  imax2: null, imin: 0.35, init: 800, lin_max: 0.4, lin_min: -0.4, max: 1550, max1: null,
+  max2: null, min: 200, motor_id: 5, name: Eye_L, other_func: '', parser: getproperty,
+  parser_param: m_eyeGazeLeftYaw, sort_no: '31', speed: 0.5, topic: Eye_L}
+- {acceleration: 0.2, function: weightedsum, group: Brows, hardware: pololu, imax1: 0,
+  imax2: 1, imin: 0.4814814815, init: 1500, lin_max: null, lin_min: null, max: 2200,
+  max1: 1, max2: 1, min: 850, motor_id: 12, name: Brow_Outer_R, other_func: '', parser: fsshapekey,
+  parser_param: lips-smile.R;lips-frown.R, sort_no: 140, speed: 0.5, topic: head}
+- {acceleration: 0.3, function: weightedsum, group: Brows, hardware: pololu, imax1: 0,
+  imax2: 1, init: 1500, lin_max: null, lin_min: null, max: 2200, max1: 1, max2: 1,
+  min: 200, motor_id: 1, name: Eye_R, other_func: '', parser: getproperty, parser_param: lips-smile.R;lips-frown.R,
+  sort_no: '150', speed: 0.3, topic: head}
