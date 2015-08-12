@@ -147,9 +147,9 @@ var columns = [{
 
 var PageableMotors = Backbone.PageableCollection.extend({
   model: Motor,
-  url: "/motors/get/sophia",
+  url: "/motors/get/han",
   state: {
-    pageSize: 15
+    pageSize: 50
   },
   mode: "client", // page entirely on the client side
   save: function (errorCallback) {
@@ -159,7 +159,7 @@ var PageableMotors = Backbone.PageableCollection.extend({
         data.push(motor);
       });
 
-      $.ajax("/motors/update" + "/sophia", {
+      $.ajax("/motors/update" + "/han", {
           data: JSON.stringify(data),
           type: 'POST',
           dataType: "json",
