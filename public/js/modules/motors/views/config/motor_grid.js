@@ -1,4 +1,4 @@
-define(['backgrid'], function (Backgrid) {
+define(['backgrid', 'backgrid_text_cell'], function (Backgrid) {
     return [{
         // enable the select-all extension
         name: "",
@@ -20,7 +20,9 @@ define(['backgrid'], function (Backgrid) {
     }, {
         name: "hardware",
         label: "Hardware",
-        cell: "string"
+        cell: Backgrid.SelectCell.extend({
+            optionValues: [['Pololu', 'palolu'], ['Dynamixel', 'dynamixel']]
+        })
     }, {
         name: "motor_id",
         label: "Motor ID",
@@ -95,6 +97,6 @@ define(['backgrid'], function (Backgrid) {
     }, {
         name: "other_func",
         label: "Other Func (in JSON)",
-        cell: "string"
+        cell: "text"
     }];
 });

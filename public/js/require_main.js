@@ -19,6 +19,7 @@ requirejs.config({
         backgrid_filter: 'vendor/backgrid-filter',
         backgrid_paginator: 'vendor/backgrid-paginator',
         backgrid_select_all: 'vendor/backgrid-select-all',
+        backgrid_text_cell: 'vendor/backgrid-text-cell',
         backbone_pageable: 'vendor/backbone-pageable'
     },
     shim: {
@@ -61,6 +62,9 @@ requirejs.config({
         },
         backgrid_paginator: {
             deps: ['backgrid']
+        },
+        backgrid_text_cell: {
+            deps: ['backgrid', 'backbone']
         }
     }
 });

@@ -135,3 +135,7 @@ ul.app-motors {
 .backgrid-paginator ul > .disabled > span, .backgrid-paginator ul > .disabled > a, .backgrid-paginator ul > .disabled > a:hover {
     color: #FFF;
 }
+
+.backgrid select {
+    color: #000;
+}
