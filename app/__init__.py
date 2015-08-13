@@ -15,7 +15,7 @@ json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
-config_root = os.path.dirname(os.path.abspath(__file__))
+config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)),os.pardir,os.pardir,"robots_config")
 
 @app.route('/')
 def send_index():
@@ -29,12 +29,22 @@ def send_status():
 
 @app.route('/motors/get/<robot_name>')
 def get_motors(robot_name):
-    motors = read_yaml(os.path.join(config_root, 'motors_settings.yaml'))
+    motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     return json_encode(motors)
 
-def set_configs(motors):
+def set_configs(motors,config_dir):
     configs = Configs()
     configs.parseMotors(motors)
+    if len(configs.dynamixel) > 0:
+        file_name = os.path.join(config_dir,"dynamixel.yaml")
+        write_yaml(file_name,configs.dynamixel)
+    if len(configs.motors) > 0:
+        file_name = os.path.join(config_dir,"motors.yaml")
+        write_yaml(file_name,{'motors': configs.motors})
+    if len(configs.pololu) > 0:
+        for board, config in configs.pololu.iteritems():
+            file_name = os.path.join(config_dir,board + ".yaml")
+            write_yaml(file_name,config)
     return configs
 
 
@@ -44,10 +54,9 @@ def update_motors(robot_name):
 
     # write to motor config
     try:
-        file_name = os.path.join(config_root, 'motors_settings.yaml')
-        c = set_configs(motors)
+        file_name = os.path.join(config_root,robot_name, 'motors_settings.yaml')
+        set_configs(motors,os.path.join(config_root,robot_name))
         write_yaml(file_name, motors)
-        cfgs = {'motors': c.motors, 'pololu': c.pololu, 'dynamixel': c.dynamixel}
     except Exception as e:
         return json_encode({'error': str(e)})
     return json_encode({'error': False})

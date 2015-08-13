@@ -52,7 +52,7 @@ class Configs:
     _DYNAMIXELS_TPL = {
         'controller': {
             'package': 'dynamixel_controllers',
-            'module': 'joint_position_controleller',
+            'module': 'joint_position_controller',
             'type': 'JointPositionController',
         },
         'joint_name': None,
@@ -73,7 +73,7 @@ class Configs:
         'labelleft': '',
         'sort_no': 0,
         'group': 'Default',
-        'spped': 0,
+        'speed': 0,
         'acceleration': 0,
     }
     def __init__(self):
@@ -114,6 +114,8 @@ class Configs:
     def _get_pau(self,m):
         p = copy.deepcopy(self._PAU_TPL)
         # Parsers
+        if not m['parser']:
+            return False
         p['parser']['name'] = m['parser']
         if m['parser'] == 'getproperty':
             p['parser']['property'] = m['parser_param']
@@ -136,7 +138,7 @@ class Configs:
             p['function'][0]['terms'][1]['imax'] = m['imax2']
         # Other additional functions can be added
         if m['other_func']:
-            other_func = json.load(m['other_func'])
+            other_func = json.loads(m['other_func'])
             if isinstance(other_func, list):
                 p['function'] += other_func
             else:
@@ -178,11 +180,14 @@ class Configs:
         c['group'] = m['group']
         c['speed'] = m['speed']
         c['acceleration'] = m['acceleration']
-
+        c['motor_id'] = m['motor_id']
         pau = self._get_pau(m)
         if pau:
             c['pau'] = pau
-        self.pololu[m['name']] = c
+        board = m['topic']
+        if not board in self.pololu.keys():
+            self.pololu[board] = {}
+        self.pololu[board][m['name']] = c
 
 
 

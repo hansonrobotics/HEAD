@@ -19,10 +19,16 @@ define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './confi
                     filter: '.app-filter'
                 },
                 onRender: function () {
-                    var self = this;
+                    var self = this,
+                        PageableCollection = Backbone.PageableCollection.extend({
+                            mode: 'client',
+                            state: {
+                                pageSize: 45
+                            }
+                        });
 
                     this.motorsCollection = new App.Entities.MotorCollection();
-                    this.pageableMotors = new Backbone.PageableCollection();
+                    this.pageableMotors = new PageableCollection();
 
                     this.motorsCollection.fetch(true, function () {
                         self.pageableMotors.add(self.motorsCollection.models);

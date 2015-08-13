@@ -9,7 +9,6 @@
         </div>
         <div class="app-filter col-xs-7"></div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div class="app-motor-grid backgrid-container"></div>
