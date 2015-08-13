@@ -1,5 +1,5 @@
 define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './config/motor_grid', 'lib/api',
-        'backbone_pageable', 'backgrid_select_all', 'backgrid_filter', 'backgrid_paginator'],
+        'entities/motor', 'backbone_pageable', 'backgrid_select_all', 'backgrid_filter', 'backgrid_paginator'],
     function (App, template, Backgrid, columns, api) {
         App.module("Motors.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Configuration = Marionette.LayoutView.extend({
@@ -19,39 +19,14 @@ define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './confi
                     filter: '.app-filter'
                 },
                 onRender: function () {
-                    var Motor = Backbone.Model.extend({}),
-                        MotorCollection = Backbone.PageableCollection.extend({
-                            model: Motor,
-                            url: "/motors/get/" + api.config.robot,
-                            state: {
-                                pageSize: 15
-                            },
-                            mode: "client", // page entirely on the client side
-                            save: function (errorCallback) {
-                                var data = [];
-                                this.each(function (motor) {
-                                    motor = motor.toJSON();
-                                    data.push(motor);
-                                });
+                    var self = this;
 
-                                $.ajax("/motors/update/" + api.config.robot, {
-                                    data: JSON.stringify(data),
-                                    type: 'POST',
-                                    dataType: "json",
-                                    success: function (data) {
-                                        if (data.error) {
-                                            alert(data.error);
-                                        }
-                                    },
-                                    error: function () {
-                                        if (typeof errorCallback == 'function')
-                                            errorCallback();
-                                    }
-                                });
-                            }
-                        });
+                    this.motorsCollection = new App.Entities.MotorCollection();
+                    this.pageableMotors = new Backbone.PageableCollection();
 
-                    this.pageableMotors = new MotorCollection();
+                    this.motorsCollection.fetch(true, function () {
+                        self.pageableMotors.add(self.motorsCollection.models);
+                    });
 
                     // Set up a grid to use the pageable collection
                     this.pageableGrid = new Backgrid.Grid({
@@ -79,20 +54,18 @@ define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './confi
 
                     // Render the filter
                     this.getRegion('filter').show(filter);
-
-                    // Fetch some data
-                    this.pageableMotors.fetch({
-                        reset: true,
-                        success: function (data) {
-                            console.log(data);
-                        }
-                    });
                 },
                 add: function () {
                     this.pageableGrid.insertRow({name: "New"})
                 },
                 save: function () {
-                    this.pageableMotors.save();
+                    var el = this.ui.saveButton;
+
+                    this.motorsCollection.sync(function () {
+                        App.Utilities.showPopover(el, 'Motors saved')
+                    }, function () {
+                        App.Utilities.showPopover(el, 'Error saving motors')
+                    });
                 },
                 delete: function () {
                     var self = this;
