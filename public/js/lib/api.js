@@ -267,9 +267,8 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 }
             });
         },
-
         createMotorTopics: function (motors) {
-            for (var i = 0; i < motors.length; i++) {
+            for (var i = 0; motors && i < motors.length; i++) {
                 // Create topics for specific motors
                 if (!(motors[i]['topic'] in api.topics)) {
                     if ('motor_id' in motors[i]) {

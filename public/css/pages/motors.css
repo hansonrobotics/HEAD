@@ -101,3 +101,37 @@ ul.app-motors {
     line-height: 1.5;
     margin-top: 10px;
 }
+
+#motor-configuration-container .app-motor-grid {
+    height: auto;
+}
+
+#motor-configuration-container .app-filter form {
+    margin: 10px 0 !important;
+    float: right;
+}
+
+.backgrid thead th {
+    background-color: #4e5d6c;
+}
+
+.backgrid td.editor input[type=text] {
+    color: #FFFFFF;
+}
+
+#motor-configuration-container .btn-group {
+    margin: 10px 0;
+}
+
+.backgrid th, .backgrid td {
+    padding: 6px 7px;
+}
+
+.backgrid-paginator ul > li > a:hover, .backgrid-paginator ul > .active > a, .backgrid-paginator ul > .active > span {
+    background-color: #df691a;
+    color: #FFF;
+}
+
+.backgrid-paginator ul > .disabled > span, .backgrid-paginator ul > .disabled > a, .backgrid-paginator ul > .disabled > a:hover {
+    color: #FFF;
+}
