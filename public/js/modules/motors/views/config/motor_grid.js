@@ -72,11 +72,6 @@ define(['backgrid'], function (Backgrid) {
         label: "Linear Max",
         cell: "number"
     }, {
-        name: "imin",
-        label: "Name",
-        cell: "string",
-        editable: false
-    }, {
         name: "max1",
         label: "Max1",
         cell: "number"

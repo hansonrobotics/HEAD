@@ -24,7 +24,7 @@ define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './confi
                             model: Motor,
                             url: "/motors/get/" + api.config.robot,
                             state: {
-                                pageSize: 15
+                                pageSize: 45
                             },
                             mode: "client", // page entirely on the client side
                             save: function (errorCallback) {

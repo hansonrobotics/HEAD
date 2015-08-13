@@ -73,7 +73,7 @@ class Configs:
         'labelleft': '',
         'sort_no': 0,
         'group': 'Default',
-        'spped': 0,
+        'speed': 0,
         'acceleration': 0,
     }
     def __init__(self):
