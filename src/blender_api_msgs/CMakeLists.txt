@@ -171,3 +171,5 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+find_package(catkin COMPONENTS rostest)
+add_rostest(test/test_blender_api.test)
