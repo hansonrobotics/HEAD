@@ -1,14 +1,79 @@
 import random
+import numpy as np
 import bpy
 from rigControl.actuators import sleep, actuator
 
+class Matrix:
+    def circle(pos, radius, imgsize):
+        xx, yy = np.mgrid[:imgsize[0], :imgsize[1]]
+        distances = (xx - pos[0]) ** 2 + (yy - pos[1]) ** 2
+        radius2 = radius**2
+        result = distances.clip(0, radius2)/radius2 * -1 + 1
+        return result
+
+    def ellipse(pos, size, imgsize):
+        xx, yy = np.mgrid[:imgsize[0], :imgsize[1]]
+        ratio = size[0]/size[1]
+        distances = (xx - pos[0]) ** 2 + ((yy - pos[1]) * ratio) ** 2
+        ceiling = size[0]**2
+        result = distances.clip(0, ceiling)/ceiling * -1 + 1
+        return result
+
+    def color(mat, color):
+        mat.shape = mat.shape + (1,)
+        result = mat.repeat(4, axis=-1)
+        mat.shape = mat.shape[:-1]
+        result *= color
+        return result.flatten()
+
+def constant_sum(*params):
+    lastvals = {(param, param.val) for param in params}
+    def tick():
+        # Pick parameters which were not updated since last tick
+        vals = {(param, param.val) for param in params}
+        unchanged = vals.intersection(lastvals)
+
+        # Increase or decrease those parameters to fit the constant sum
+        if len(unchanged) > 0:
+            overflow = sum([val for _, val in vals]) - 1
+            correction = -overflow/len(unchanged)
+            for param, val in unchanged:
+                param.val = val + correction
+
+        lastvals.clear()
+        lastvals.update(vals)
+    return tick
 
 @actuator
-def test(self):
-    self.add_parameter(bpy.props.FloatProperty(name='my slider', min=0.0, max=5.0))
+def paint_face(self):
+    img_size = (100, 100)
+    img = self.add_image('probabilities', img_size)
+
+    eyeSize, eyeDist, mouthWidth, mouthHeight, eyeWeight,  mouthWeight = (
+        self.add_parameter(prop) for prop in [
+            bpy.props.FloatProperty(name='eye size', min=1.0, max=50, default=20),
+            bpy.props.FloatProperty(name='eye distance', min=0.0, max=100, default=40),
+            bpy.props.FloatProperty(name='mouth width', min=1.0, max=100, default=50),
+            bpy.props.FloatProperty(name='mouth height', min=1.0, max=100, default=30),
+            bpy.props.FloatProperty(name='weight eyes', min=0.0, max=1.0, default=0.5),
+            bpy.props.FloatProperty(name='weight mouth', min=0.0, max=1.0, default=0.5)
+        ]
+    )
+
+    constant_sum_tick = constant_sum(eyeWeight, mouthWeight)
     while True:
-        yield from sleep(2.0)
-        print("Look, I'm executing.")
+        constant_sum_tick()
+
+        eyes_mat = Matrix.circle((70, 50 - eyeDist.val/2), eyeSize.val, img_size)
+        eyes_mat += Matrix.circle((70, 50 + eyeDist.val/2), eyeSize.val, img_size)
+        eyes_mat *= eyeWeight.val / eyes_mat.sum()
+
+        mouth_mat = Matrix.ellipse((20, 50), (mouthHeight.val, mouthWidth.val), img_size)
+        mouth_mat *= mouthWeight.val / mouth_mat.sum()
+
+        mat = eyes_mat + mouth_mat
+        img.set_pixels(Matrix.color(mat/mat.max(), [1,1,0,1]))
+        time, dt = yield
 
 @actuator
 def saccade(self):
@@ -24,7 +89,7 @@ def saccade(self):
 
     # Register GUI-displayable parameter
     interval = 0
-    self.add_parameter(bpy.props.StringProperty(name="interval",
+    self.add_parameter(bpy.props.StringProperty(name='interval',
         get=lambda _: '{:0.3f}s'.format(interval)))
 
     # Yield execution to get current time

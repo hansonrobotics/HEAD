@@ -152,7 +152,7 @@ class BLActuatorControl(bpy.types.Panel):
     bl_label = "Actuator Control"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_context = "object"
+    bl_context = 'object'
 
 
     def draw(self, context):
@@ -160,18 +160,25 @@ class BLActuatorControl(bpy.types.Panel):
         if not hasattr(bpy.context.scene, 'actuators'):
             return
 
+        # Draw UI for every actuator
         for attr in dir(bpy.context.scene.actuators):
             if not attr.startswith('ACT_'):
                 continue
             row = layout.row()
-            layout.label(text='{}:'.format(attr[4:]).capitalize(), icon='FORCE_TURBULENCE')
+            layout.label(icon='FORCE_TURBULENCE',
+                text='{}:'.format(attr[4:]).capitalize().replace('_', ' '))
 
+            # Draw UI for every parameter
             bl_actuator = getattr(bpy.context.scene.actuators, attr)
             for attr in dir(bl_actuator):
-                if not attr.startswith('PARAM_'):
-                    continue
-                row = layout.row()
-                row.prop(bl_actuator, attr, slider=True)
+                if attr.startswith('PARAM_'):
+                    row = layout.row()
+                    row.prop(bl_actuator, attr, slider=True)
+                elif attr.startswith('IMG_'):
+                    row = layout.row()
+                    row.label(text='Open "{}" in image editor'.format(getattr(bl_actuator, attr)))
+                    # texture = bpy.data.textures[getattr(bl_actuator, attr)]
+                    # row.template_preview(texture, show_buttons=False)
 
 def register():
     bpy.utils.register_class(BLRigControl)
