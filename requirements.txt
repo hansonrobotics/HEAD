@@ -1,0 +1,11 @@
+# PIP requirements
+#
+# $ pip install -r requirments.txt
+#
+
+# http://pyserial.sourceforge.net
+pyserial
+
+# Misc packages for docs and building.
+ipython
+pylint
