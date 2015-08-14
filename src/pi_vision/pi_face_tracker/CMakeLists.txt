@@ -72,3 +72,7 @@ catkin_package(
     INCLUDE_DIRS # TODO include
     LIBRARIES # TODO
 )
+
+find_package(catkin COMPONENTS rostest)
+add_rostest(test/test_pi_face_tracker.test)
+

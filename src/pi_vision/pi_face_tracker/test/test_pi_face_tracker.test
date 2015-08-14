@@ -1,0 +1,4 @@
+<launch>
+    <param name="/run_id" value="test_pi_face_tracker" />
+    <test name="pi_face_tracker_test" pkg="pi_face_tracker" type="test_pi_face_tracker.py" test-name="pi_face_tracker" />
+</launch>
