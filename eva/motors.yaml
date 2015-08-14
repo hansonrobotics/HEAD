@@ -1,0 +1,196 @@
+motors:
+  - name: Frown-R
+    topic: Frown_R
+    labelleft: Frown-R
+    default: 0
+    min: -0.687
+    max: 0.923
+    sort_no: 24
+    group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-smile.R;lips-frown.R
+      function:
+        - name: weightedsum
+          imin: 0.427
+          terms:
+          - {min: 0, max: 0.3, imax: 0}
+          - {min: 0, max: 0.75, imax: 1}
+
+  - name: Smile-R
+    topic: Smile_R
+    labelleft: Smile-R
+    default: 0
+    min: -0.917
+    max: 0.847
+    sort_no: 18
+    group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-smile.R;lips-frown.R
+      function:
+        - name: weightedsum
+          imin: 0.52
+          terms:
+          - {min: 0, max: 0.7, imax: 0}
+          - {min: 0, max: 0.3, imax: 1}
+
+  - name: Smile-L
+    topic: Smile_L
+    labelleft: Smile-L
+    default: 0
+    min: -0.687
+    max: 0.847
+    sort_no: 17
+    group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-smile.L;lips-frown.L
+      function:
+        - name: weightedsum
+          imin: 0.448
+          terms:
+          - {min: 0, max: 0.6, imax: 0.2}
+          - {min: 0, max: 0.3, imax: 1}
+
+  - name: Frown-L
+    topic: Frown_L
+    labelleft: Frown-L
+    default: 0
+    min: -0.687
+    max: 1
+    sort_no: 23
+    group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: lips-smile.L;lips-frown.L
+      function:
+        - name: weightedsum
+          imin: 0.407
+          terms:
+          - {min: 0, max: 0.3, imax: 0}
+          - {min: 0, max: 0.75, imax: 1}
+
+  - name: Jaw-Up-Down
+    topic: Jaw_Up_Down
+    labelleft: Jaw-Up-Down
+    default: 0
+    min: 0
+    max: 1.58
+    sort_no: 28
+    group: Lips
+    hardware: dynamixel
+    pau:
+      parser:
+        name: fsshapekey
+        shapekey: jaw
+      function:
+        - name: linear
+          min: 0
+          max: 1
+
+  - name: Upper-Gimbal-L
+    topic: Upper_Gimbal_L
+    labelleft: Upper-Gimbal-L
+    default: 0
+    min: -0.798
+    max: 1.917
+    sort_no: 29
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: x
+        - name: linear
+          scale: -1.3
+          translate: -0.1
+  - name: Upper-Gimbal-R
+    topic: Upper_Gimbal_R
+    labelleft: Upper-Gimbal-R
+    default: 0
+    min: -2.086
+    max: 0.813
+    sort_no: 30
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: x
+        - name: linear
+          scale: 1.3
+          translate: 0.1
+  - name: Lower-Gimbal-L
+    topic: Lower_Gimbal_L
+    labelleft: Lower-Gimbal-L
+    default: 0
+    min: -1.246
+    max: 0.595
+    sort_no: 31
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: x
+        - name: linear
+          scale: -1.5
+          translate: 0
+  - name: Lower-Gimbal-R
+    topic: Lower_Gimbal_R
+    labelleft: Lower-Gimbal-R
+    default: 0
+    min: -0.506
+    max: 1.485
+    sort_no: 32
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: x
+        - name: linear
+          scale: 1.5
+          translate: 0
+  - name: Neck-Rotation
+    topic: Neck_Rotation
+    labelleft: Neck-Rotation
+    default: 0
+    min: -1.325
+    max: 1.282
+    sort_no: 33
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: z
+        - name: linear
+          scale: -2.0
+          translate: 0
+
+

@@ -1,0 +1,68 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <arg name="name"/>
+    <arg name="mini" default="False"/>
+    <arg name="rviz" default="True" />
+    <arg name="dev" default="False" />
+    <param name="/robot_name" type="str" value="$(arg name)" />
+    <group ns="/$(arg name)">
+        <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
+        <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
+        <group if="$(arg mini)">
+            <include file="$(find robots_config)/$(arg name)/hardware.launch" />
+            <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
+                  output="screen" respawn="true"/>
+        </group>
+        <group unless="$(arg mini)">
+            <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>
+            <include file="$(find robots_config)/$(arg name)/hardware.launch" />
+
+
+            <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
+                  output="screen"/>
+
+            <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py"
+                  output="screen">
+            </node>
+
+
+
+            <node pkg="topic_tools" type="mux" name="neck_pau" args="neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux"/>
+            <node pkg="topic_tools" type="mux" name="head_pau" args="head_pau no_pau /blender_api/get_pau mux:=head_pau_mux"/>
+            <node pkg="topic_tools" type="mux" name="lips_pau" args="lips_pau head_pau lipsync_pau mux:=lips_pau_mux"/>
+
+            <node name="chatbot_ai" pkg="chatbot" type="ai.py" args="/catkin_ws/src/chatbot/aiml/" output="screen">
+                <param name="properties" value="$(find robots_config)/$(arg name)/bot.properties" />
+            </node>
+
+            <node name="tts" pkg="tts" type="tts_talker.py">
+                <param name="topic_name" value="chatbot_responses" />
+                <param name="voice" value="$(find robots_config)/$(arg name)/bot.properties" />
+                <param name="license" value="" />
+            </node>
+
+            <node name="faceshift" pkg="ros_faceshift" type="ros_faceshift_node.py">
+                <param name="topic_name" value="chatbot_responses" />
+            </node>
+        </group>
+    </group>
+
+    <!-- Perception outside the namespace -->
+    <group unless="$(arg mini)">
+        <include file="$(find perception)/launch/geometry.launch">
+            <arg name="model" value="$(find robots_config)/$(arg name)/description.urdf" />
+            <arg name="gui" value="$(arg rviz)" />
+        </include>
+
+        <include file="$(find robots_config)/$(arg name)/tracker.launch" unless="$(arg dev)" />
+        <include file="$(find perception)/launch/tracker-single-cam.launch" if="$(arg dev)" />
+    </group>
+    <!-- Rosbridge for webui -->
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket">
+      <param name="authenticate" value="false" />
+      <param name="port" value="9090"/>
+      <param name="address" value=""/>
+    </node>
+    <node name="rosapi" pkg="rosapi" type="rosapi_node" />
+</launch>

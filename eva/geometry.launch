@@ -1,0 +1,58 @@
+<!--
+ - geometry.launch
+ -
+ - Run several nodes that provide transformations for the neck and eyes
+ - geometry. These transformations are requied to publish the location
+ - of detected faces in global coordinates, and to publish the location
+ - of the eyes, which is needed so that we can know where the eye
+ - cameras are actually looking.
+ -
+ - Default: use the han geometry, and launch rviz so that we can
+ - visualize what is going on.
+ -
+ - To disable rviz, start with
+ - roslaunch perception display.launch gui:=false
+ -
+ - To use a different urdf file, start with
+ - roslaunch perception geometry.launch model:=arthur.urdf
+ -
+-->
+<launch>
+	<arg name="model" default="$(find robots_config)/han/description.urdf" />
+	<arg name="gui" default="True" />
+	<arg name="pololu_joints" default="Eyes_Pitch;Eye_L;Eye_R" />
+	<!-- han.urdf, per above -->
+	<param name="robot_description"
+	       textfile="$(arg model)" />
+
+	<!-- This param for joint_state_publisher -->
+	<param name="use_gui" value="$(arg gui)"/>
+
+	<node name="joint_state_publisher"
+	      pkg="joint_state_publisher"
+	      type="joint_state_publisher" >
+		<rosparam param="source_list">["joint_states_combined"]</rosparam>
+	</node>
+
+	<node name="robot_state_publisher"
+	      pkg="robot_state_publisher"
+	      type="state_publisher" />
+
+	<node name="faces_broadcaster"
+	       pkg="perception"
+	       type="faces_tf2_broadcaster.py" />
+
+	<node name="state_publisher"
+	      pkg="perception"
+	      type="joint_state_publisher.py">
+	    <param name="pololu_joints" value="$(arg pololu_joints)"/>
+
+	</node>
+
+	<!-- Run rviz only if gui set to true... -->
+	<group if="$(arg gui)">
+		<node name="rviz" pkg="rviz"
+		      type="rviz"
+		      args="-d $(find perception)/rviz/urdf.rviz" />
+	</group>
+</launch>

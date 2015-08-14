@@ -1,0 +1,56 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <param name="/robot_name" type="str" value="arthur" />
+    <group ns="/arthur">
+    <rosparam file="$(find robots_config)/arthur/config.yaml" command="load"/>
+    <rosparam file="$(find robots_config)/arthur/motors.yaml" command="load" />
+    <rosparam file="$(find robots_config)/arthur/expressions.yaml" command="load"/>
+
+    <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" output="screen">
+        <rosparam>
+            namespace: dxl_manager
+            serial_ports:
+                pan_tilt_port:
+                    port_name: "/dev/ttyUSB0"
+                    baud_rate: 1000000
+                    min_motor_id: 0
+                    max_motor_id: 4
+                    update_rate: 20
+        </rosparam>
+     </node>
+     <node name="neck_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                rotate_controller
+                hinge_right_controller
+                hinge_left_controller
+                jaw_controller"
+          output="screen"/>
+    <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py"
+          output="screen">
+    </node>
+
+    <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
+          output="screen"/>
+    <node pkg="ros_pololu_servo" type="ros_pololu_servo_node" name="eyes_pololu_node" output="screen">
+        <param name="pololu_motors_yaml" value="$(find robots_config)/arthur/pololu_eyes.yaml" />
+        <param name="port_name" value="/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00080389-if00" />
+        <param name="topic_prefix" value="eyes/" />
+    </node>
+
+    <node pkg="ros_pololu_servo" type="ros_pololu_servo_node" name="face_pololu_node" output="screen">
+        <param name="pololu_motors_yaml" value="$(find robots_config)/arthur/pololu_face.yaml" />
+        <param name="port_name" value="/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00080396-if00" />
+        <param name="topic_prefix" value="face/" />
+    </node>
+
+    <node pkg="topic_tools" type="mux" name="neck_pau" args="neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux"/>
+    <node pkg="topic_tools" type="mux" name="head_pau" args="head_pau no_pau /blender_api/get_pau mux:=head_pau_mux"/>
+
+    <node name="chatbot_ai" pkg="chatbot" type="ai.py" args="/catkin_ws/src/chatbot/aiml/" />
+    <node name="tts" pkg="tts" type="tts_talker.py">
+        <param name="topic_name" value="chatbot_responses" />
+    </node>
+
+    </group>
+</launch>
