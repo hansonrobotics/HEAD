@@ -1,0 +1,13 @@
+.app-frames ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.app-frames ul li {
+    margin-bottom: 5px;
+}
+
+.app-animation-edit {
+    margin-top: 15px;
+}
