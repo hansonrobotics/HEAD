@@ -111,7 +111,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             }
         },
         getPololuMotorTopics: function (success) {
-            api.services.topicsForType.callService({type: 'ros_pololu_servo/MotorCommand'}, function (response) {
+            api.services.topicsForType.callService({type: 'ros_pololu/MotorCommand'}, function (response) {
                 success(response.topics);
             }, function (error) {
                 console.log(error);
@@ -267,9 +267,8 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 }
             });
         },
-
         createMotorTopics: function (motors) {
-            for (var i = 0; i < motors.length; i++) {
+            for (var i = 0; motors && i < motors.length; i++) {
                 // Create topics for specific motors
                 if (!(motors[i]['topic'] in api.topics)) {
                     if ('motor_id' in motors[i]) {
@@ -277,7 +276,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                         api.topics[motors[i]['topic']] = new ROSLIB.Topic({
                             ros: api.ros,
                             name: '/' + api.config.robot + '/' + motors[i]['topic'] + '/command',
-                            messageType: 'ros_pololu_servo/MotorCommand',
+                            messageType: 'ros_pololu/MotorCommand',
                             throttle_rate: 5
                         });
                     } else {

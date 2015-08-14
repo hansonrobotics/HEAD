@@ -53,22 +53,12 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
             model: Entities.Motor,
             comparator: 'order_no',
             sync: function (successCallback, errorCallback) {
-                var data = [];
+                var data = this.toJSON(),
+                    param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
 
-                this.each(function (motor) {
-                    if (motor.get('labelleft')) {
-                        motor = motor.toJSON();
-                        delete motor['selected'];
-                        delete motor['value'];
-
-                        data.push(motor);
-                    }
-                });
-
-                var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
                 param.set(data);
 
-                $.ajax("/motors/update" + "/" + api.config.robot, {
+                $.ajax("/motors/update/" + api.config.robot, {
                     data: JSON.stringify(data),
                     type: 'POST',
                     dataType: "json",
@@ -82,18 +72,24 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     }
                 });
             },
-            fetch: function (admin) {
+            fetch: function (admin, callback) {
                 var self = this;
 
                 if (admin) {
                     api.getMotorsFromFile(function (data) {
                         self.add(data);
                         self.loadPololuMotors();
+
+                        if (typeof callback == 'function')
+                            callback(data);
                     });
                 } else {
                     api.getMotorsFromParam(function (data) {
                         self.add(data);
                         self.loadPololuMotors();
+
+                        if (typeof callback == 'function')
+                            callback(data);
                     });
                 }
             },

@@ -1,6 +1,6 @@
 define(['application', 'tpl!./templates/layout.tpl'], function (App, template) {
-    App.module("Motors.Views", function (Common, App, Backbone, Marionette, $, _) {
-        Common.Layout = Marionette.LayoutView.extend({
+    App.module("Motors.Views", function (Views, App, Backbone, Marionette, $, _) {
+        Views.Layout = Marionette.LayoutView.extend({
             template: template,
 
             regions: {
