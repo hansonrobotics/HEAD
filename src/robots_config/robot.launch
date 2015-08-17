@@ -42,9 +42,6 @@
                 <param name="license" value="" />
             </node>
 
-            <node name="faceshift" pkg="ros_faceshift" type="ros_faceshift_node.py">
-                <param name="topic_name" value="chatbot_responses" />
-            </node>
         </group>
     </group>
 
