@@ -87,6 +87,8 @@ class Configs:
     # Parse motors
     def parseMotors(self,motors):
         for i, m in enumerate(motors):
+            if not 'hardware' in m.keys():
+                continue
             self._add_motor(m)
             self._add_pololu(m)
             self._add_dynamixel(m)

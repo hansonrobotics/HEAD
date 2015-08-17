@@ -21,7 +21,7 @@ define(['backgrid', 'backgrid_text_cell'], function (Backgrid) {
         name: "hardware",
         label: "Hardware",
         cell: Backgrid.SelectCell.extend({
-            optionValues: [['Pololu', 'palolu'], ['Dynamixel', 'dynamixel']]
+            optionValues: [['Pololu', 'pololu'], ['Dynamixel', 'dynamixel']]
         })
     }, {
         name: "motor_id",
