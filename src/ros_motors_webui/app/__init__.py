@@ -64,7 +64,7 @@ def update_motors(robot_name):
 
 @app.route('/expressions/<robot_name>', methods=['GET'])
 def get_expressions(robot_name):
-    expressions = read_yaml(os.path.join(config_root, robot_name, "expressions.yaml")
+    expressions = read_yaml(os.path.join(config_root, robot_name, "expressions.yaml"))
     return json_encode(expressions)
 
 
