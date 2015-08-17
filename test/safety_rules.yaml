@@ -1,0 +1,8 @@
+safety_rules:
+    Smile-L:
+        - type: prevent
+          direction: max
+          extreme: 0.5
+          depends: Frown-L
+          dep_dir: max
+          dep_extreme: 0.5
