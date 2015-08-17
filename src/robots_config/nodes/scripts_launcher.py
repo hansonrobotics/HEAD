@@ -34,6 +34,7 @@ def publish_scripts():
     except:
         rospy.logwarn("Cannot read directory")
         return
+    scripts.sort()
     scripts = '|'.join(os.path.splitext(s)[0] for s in  scripts if os.path.splitext(s)[1] == '.py')
     scripts_pub.publish(scripts)
 
