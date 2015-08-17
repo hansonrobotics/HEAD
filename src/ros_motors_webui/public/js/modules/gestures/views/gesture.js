@@ -6,8 +6,10 @@ define(["application", "tpl!./templates/gesture.tpl", 'lib/api', 'lib/behaviors/
                 template: template,
                 ui: {
                     button: 'button',
-                    duration: '.app-duration',
-                    intensity: '.app-intensity'
+                    speedBar: '.app-speed-bar',
+                    magnitudeBar: '.app-magnitude-bar',
+                    speedIndicator: '.app-speed-indicator',
+                    magnitudeIndicator: '.app-magnitude-indicator'
                 },
                 behaviors: {
                     TouchButton: {}
@@ -74,20 +76,28 @@ define(["application", "tpl!./templates/gesture.tpl", 'lib/api', 'lib/behaviors/
                     this.hideIndicators();
                 },
                 updateIndicators: function () {
-                    this.ui.duration.html(this.config.speed.current.toFixed(2) + 's');
-                    this.ui.intensity.html((this.config.magnitude.current * 100).toFixed(2) + '%');
+                    this.ui.speedIndicator.html(this.config.speed.current.toFixed(2) + 's');
+                    this.ui.magnitudeIndicator.html((this.config.magnitude.current * 100).toFixed(2) + '%');
+
+                    var speed = (this.config.speed.current - this.config.speed.min) /
+                        (this.config.speed.max - this.config.speed.min);
+
+                    // update speed and magnitude bars
+                    this.ui.speedBar.css('width', parseInt(speed * 100) + '%');
+                    this.ui.magnitudeBar.css('height', parseInt(this.config.magnitude.current * 100) + '%');
+
                 },
                 hideIndicators: function () {
                     $(this.ui.button).removeClass('active').blur();
 
-                    this.ui.duration.hide();
-                    this.ui.intensity.hide();
+                    this.ui.speedIndicator.hide();
+                    this.ui.magnitudeIndicator.hide();
                 },
                 showIndicators: function () {
                     this.ui.button.addClass('active');
 
-                    this.ui.duration.fadeIn();
-                    this.ui.intensity.fadeIn();
+                    this.ui.speedIndicator.fadeIn();
+                    this.ui.magnitudeIndicator.fadeIn();
                 },
                 setGesture: function (speed, magnitude) {
                     if (typeof speed == 'undefined')

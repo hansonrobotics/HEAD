@@ -7,3 +7,29 @@
     padding: 0;
     list-style: none;
 }
+
+.app-emotion-button, .app-gesture-button {
+    position: relative;
+    border: none;
+}
+
+.app-duration-bar, .app-speed-bar, .app-magnitude-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #df691a;
+}
+
+button.active .app-duration-bar,
+button.active .app-speed-bar,
+button.active .app-magnitude-bar {
+    background-color: #5cb85c;
+}
+
+.app-duration-bar, .app-speed-bar {
+    height: 2px;
+}
+
+.app-magnitude-bar {
+    width: 2px;
+}

@@ -7,12 +7,13 @@ define(["application", "tpl!./templates/emotion.tpl", 'lib/api', 'lib/behaviors/
                 className: 'app-emotion-slider-container',
                 ui: {
                     button: 'button',
-                    duration: '.app-duration',
-                    intensity: '.app-intensity'
+                    durationIndicator: '.app-duration-indicator',
+                    magnitudeIndicator: '.app-magnitude-indicator',
+                    durationBar: '.app-duration-bar',
+                    magnitudeBar: '.app-magnitude-bar'
                 },
                 behaviors: {
-                    TouchButton: {
-                    }
+                    TouchButton: {}
                 },
                 events: {
                     'click @ui.button': 'onClick'
@@ -99,20 +100,27 @@ define(["application", "tpl!./templates/emotion.tpl", 'lib/api', 'lib/behaviors/
                     this.hideIndicators();
                 },
                 updateIndicators: function () {
-                    this.ui.duration.html(this.config.duration.current.toFixed(2) + 's');
-                    this.ui.intensity.html(this.config.magnitude.current.toFixed(2) * 100 + '%');
+                    this.ui.durationIndicator.html(this.config.duration.current.toFixed(2) + 's');
+                    this.ui.magnitudeIndicator.html(this.config.magnitude.current.toFixed(2) * 100 + '%');
+
+                    var duration = (this.config.duration.current - this.config.duration.min) /
+                        (this.config.duration.max - this.config.duration.min);
+
+                    // update duration and magnitude bars
+                    this.ui.durationBar.css('width', parseInt(duration * 100) + '%');
+                    this.ui.magnitudeBar.css('height', parseInt(this.config.magnitude.current * 100) + '%');
                 },
                 hideIndicators: function () {
                     $(this.ui.button).removeClass('active').blur();
 
-                    this.ui.duration.hide();
-                    this.ui.intensity.hide();
+                    this.ui.durationIndicator.hide();
+                    this.ui.magnitudeIndicator.hide();
                 },
                 showIndicators: function () {
                     this.ui.button.addClass('active');
 
-                    this.ui.duration.fadeIn();
-                    this.ui.intensity.fadeIn();
+                    this.ui.durationIndicator.fadeIn();
+                    this.ui.magnitudeIndicator.fadeIn();
                 }
             });
         });
