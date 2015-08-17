@@ -8,7 +8,12 @@ define(['backgrid', 'backgrid_text_cell'], function (Backgrid) {
         name: "name",
         label: "Name",
         // The cell type can be a reference of a Backgrid.Cell subclass, any Backgrid.Cell subclass instances like *id* above, or a string
-        cell: "string" // This is converted to "StringCell" and a corresponding class in the Backgrid package namespace is looked up
+        cell: "string", // This is converted to "StringCell" and a corresponding class in the Backgrid package namespace is looked up
+        formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+            toRaw: function (val) {
+                return val.length > 0 ? val : undefined;
+            }
+        })
     }, {
         name: "group",
         label: "Group",
@@ -16,7 +21,7 @@ define(['backgrid', 'backgrid_text_cell'], function (Backgrid) {
     }, {
         name: "sort_no",
         label: "Sort NO",
-        cell: "string"
+        cell: "integer"
     }, {
         name: "hardware",
         label: "Hardware",
@@ -34,15 +39,15 @@ define(['backgrid', 'backgrid_text_cell'], function (Backgrid) {
     }, {
         name: "min",
         label: "Min",
-        cell: "integer"
+        cell: "number"
     }, {
         name: "init",
         label: "Init",
-        cell: "integer"
+        cell: "number"
     }, {
         name: "max",
         label: "Max",
-        cell: "integer"
+        cell: "number"
     }, {
         name: "speed",
         label: "Speed",
