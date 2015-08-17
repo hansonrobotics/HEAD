@@ -67,13 +67,13 @@ class Animation:
 
 if __name__ == '__main__':
     import yaml
-    anims = open('/catkin_ws/src/robots_config/arthur/animations.yaml', 'r')
+    import os
+    import rospkg
+    path = rospkg.RosPack().get_path('robots_config')
+    animation_file = '%s/arthur/animations.yaml' % path
+    anims = open(animation_file)
     y = yaml.load(anims)
     a = Animation(y['animations'][0]['Happy'])
     for f in a.frames():
         print f
-
-
-
-
 

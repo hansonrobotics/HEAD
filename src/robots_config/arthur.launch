@@ -47,7 +47,7 @@
     <node pkg="topic_tools" type="mux" name="neck_pau" args="neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux"/>
     <node pkg="topic_tools" type="mux" name="head_pau" args="head_pau no_pau /blender_api/get_pau mux:=head_pau_mux"/>
 
-    <node name="chatbot_ai" pkg="chatbot" type="ai.py" args="/catkin_ws/src/chatbot/aiml/" />
+    <node name="chatbot_ai" pkg="chatbot" type="ai.py" args="$(find chatbot)/aiml/" />
     <node name="tts" pkg="tts" type="tts_talker.py">
         <param name="topic_name" value="chatbot_responses" />
     </node>

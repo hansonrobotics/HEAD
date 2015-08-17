@@ -64,14 +64,14 @@ def update_motors(robot_name):
 
 @app.route('/expressions/<robot_name>', methods=['GET'])
 def get_expressions(robot_name):
-    expressions = read_yaml("/catkin_ws/src/robots_config/" + robot_name + "/expressions.yaml")
+    expressions = read_yaml(os.path.join(config_root, robot_name, "expressions.yaml"))
     return json_encode(expressions)
 
 
 @app.route('/expressions/update/<robot_name>', methods=['POST'])
 def update_expressions(robot_name):
     data = json.loads(request.get_data().decode('utf8'))
-    filename = "/catkin_ws/src/robots_config/" + robot_name + "/expressions.yaml"
+    filename = os.path.join(config_root, robot_name, "expressions.yaml")
 
     # delete existing config
     try:
@@ -90,7 +90,7 @@ def update_expressions(robot_name):
 @app.route('/animations/update/<robot_name>', methods=['POST'])
 def update_animations(robot_name):
     data = json.loads(request.get_data().decode('utf8'))
-    file_name = "/catkin_ws/src/robots_config/" + robot_name + "/animations.yaml"
+    file_name = os.path.join(config_root, robot_name, "animations.yaml")
 
     write_yaml(file_name, data)
     return json_encode(True)
