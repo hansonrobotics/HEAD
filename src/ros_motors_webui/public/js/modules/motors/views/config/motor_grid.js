@@ -1,4 +1,4 @@
-define(['backgrid', 'backgrid_text_cell'], function (Backgrid) {
+define(['backgrid', 'jquery', 'backgrid_text_cell'], function (Backgrid, $) {
     return [{
         // enable the select-all extension
         name: "",
@@ -10,7 +10,7 @@ define(['backgrid', 'backgrid_text_cell'], function (Backgrid) {
         // The cell type can be a reference of a Backgrid.Cell subclass, any Backgrid.Cell subclass instances like *id* above, or a string
         cell: "string", // This is converted to "StringCell" and a corresponding class in the Backgrid package namespace is looked up
         formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-            toRaw: function (val) {
+            toRaw: function (val, model) {
                 return val.length > 0 ? val : undefined;
             }
         })
@@ -39,15 +39,25 @@ define(['backgrid', 'backgrid_text_cell'], function (Backgrid) {
     }, {
         name: "min",
         label: "Min",
-        cell: "number"
+        cell: "integer",
+        formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+            toRaw: function (val, model) {
+                return $.isNumeric(val) && $.isNumeric(model.get('max')) && val > model.get('max') ? undefined : val;
+            }
+        })
     }, {
         name: "init",
         label: "Init",
-        cell: "number"
+        cell: "integer"
     }, {
         name: "max",
         label: "Max",
-        cell: "number"
+        cell: "integer",
+        formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+            toRaw: function (val, model) {
+                return $.isNumeric(model.get('min')) && $.isNumeric(val) && val < model.get('min') ? undefined : val;
+            }
+        })
     }, {
         name: "speed",
         label: "Speed",
@@ -73,11 +83,21 @@ define(['backgrid', 'backgrid_text_cell'], function (Backgrid) {
     }, {
         name: "lin_min",
         label: "Linear Min",
-        cell: "number"
+        cell: "number",
+        formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+            toRaw: function (val, model) {
+                return $.isNumeric(val) && $.isNumeric(model.get('lin_max')) && val > model.get('lin_max') ? undefined : val;
+            }
+        })
     }, {
         name: "lin_max",
         label: "Linear Max",
-        cell: "number"
+        cell: "number",
+        formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+            toRaw: function (val, model) {
+                return $.isNumeric(model.get('lin_min')) && $.isNumeric(val) && val < model.get('lin_min') ? undefined : val;
+            }
+        })
     }, {
         name: "max1",
         label: "Max1",
