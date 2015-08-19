@@ -10,11 +10,14 @@ import glob
 import rospkg
 import roslaunch
 import rostopic
+import rosbag
+import rosnode
 from roslaunch import core
 from testing_tools import (wait_for, wait_for_message, wait_for_messages,
                             startxvfb, stopxvfb, capture_screen,
                             run_shell_cmd, add_text_to_video,
-                            concatenate_videos)
+                            concatenate_videos, play_rosbag,
+                            rosbag_msg_generator, get_rosbag_file)
 from blender_api_msgs.msg import *
 from genpy import Duration
 
@@ -67,11 +70,12 @@ class BlenderAPITest(unittest.TestCase):
     def tearDownClass(self):
         if self.display != ':0':
             stopxvfb(self.display)
-        videos = glob.glob('%s/*.avi' % self.output_dir)
-        videos = [f for f in videos if not f.endswith('all.avi')]
-        if len(videos) > 1:
-            ofile = '%s/all.avi' % self.output_dir
-            concatenate_videos(videos, ofile, False)
+        if not os.path.isfile('%s/all.avi' % self.output_dir):
+            videos = glob.glob('%s/*.avi' % self.output_dir)
+            videos = [f for f in videos if not f.endswith('all.avi')]
+            if len(videos) > 1:
+                ofile = '%s/all.avi' % self.output_dir
+                concatenate_videos(videos, ofile, False)
 
 
     def test_emotion_state(self):
@@ -174,6 +178,24 @@ class BlenderAPITest(unittest.TestCase):
         ofile = '%s/face.avi' % self.output_dir
         concatenate_videos(videos, ofile, True)
         pub.unregister()
+
+    def test_long_viseme(self):
+        filename = get_rosbag_file('long_viseme')
+        #job = play_rosbag(filename)
+        #job.join()
+        pub, msg_class = rostopic.create_publisher(
+            '/blender_api/queue_viseme', 'blender_api_msgs/Viseme', True)
+        bag = rosbag.Bag(filename)
+        duration = bag.get_end_time() - bag.get_start_time()
+        fps = bag.get_message_count() / float(duration)
+        wait = 1.0/fps/10 # 10 times faster than the speed of the msg recoreded
+        for topic, msg in rosbag_msg_generator(filename):
+            pub.publish(msg)
+            time.sleep(wait)
+        # Test if blender is still alive
+        self.assertIn('/blender_api', rosnode.get_node_names())
+        self.assertIn('blender_api-1', self.runner.pm.get_active_names())
+
 
 if __name__ == '__main__':
     import rostest
