@@ -40,7 +40,7 @@ class BlenderAPITest(unittest.TestCase):
         config.add_node(
             core.Node(
                 package='blender_api_msgs', node_type='blender',
-                args='-y %s/Eva.blend -P %s/autostart.py' % (
+                args='-y %s/Sophia.blend -P %s/autostart.py' % (
                         blender_api_path, blender_api_path),
                 name='blender_api')
             )
