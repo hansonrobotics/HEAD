@@ -194,7 +194,9 @@ class BlenderAPITest(unittest.TestCase):
             time.sleep(wait)
         # Test if blender is still alive
         self.assertIn('/blender_api', rosnode.get_node_names())
-        self.assertIn('blender_api-1', self.runner.pm.get_active_names())
+        self.assertTrue(
+            any(['blender_api' in name for name in self.runner.pm.get_active_names()])
+        )
 
 
 if __name__ == '__main__':
