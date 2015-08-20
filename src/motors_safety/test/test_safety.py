@@ -180,9 +180,9 @@ class MotorSafetyTest(unittest.TestCase):
         # Extreme value should be not limited in 1.2s
         mock_time.return_value = start + 1.2
         msg = self.create_msg(m, self.safety.get_abs_pos('motor1','min',0.9))
+        self.proxy_pass = False
         self.pub['motor1'].publish(msg)
         self.safety.timing()
-        self.proxy_pass = False
         time.sleep(self._TIMEOUT)
         self.assertMessageVal(m['default'] + (m['min']-m['default'])*0.9, m)
         # Extreme position should be on its way down in 2nd second
