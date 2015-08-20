@@ -39,8 +39,10 @@ class RobotTest(unittest.TestCase):
         self.tts_output = os.path.join(tts_path, 'tmp')
         files = glob.glob('%s/*.wav' % self.tts_output)
         if files:
-            shutil.rmtree('%s.bak' % self.tts_output)
-            shutil.move(self.tts_output, '%s.bak' % self.tts_output)
+            backup_dir = '%s.bak' % self.tts_output
+            if os.path.isdir(backup_dir):
+                shutil.rmtree(backup_dir)
+            shutil.move(self.tts_output, backup_dir)
             os.makedirs(self.tts_output)
 
         self.output_video = '%s/output_video' % CWD
