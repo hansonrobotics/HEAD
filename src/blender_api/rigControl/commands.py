@@ -210,12 +210,12 @@ class EvaAPI(RigAPI):
         shapekeys = OrderedDict()
         for shapekeyGroup in bpy.data.shape_keys:
             # Hardcoded to find the correct group
-            if shapekeyGroup.name == 'Key.007':
+            if shapekeyGroup.name == 'ShapeKeys':
                 for kb in shapekeyGroup.key_blocks:
                     shapekeys[kb.name] = kb.value
 
         # Fake the jaw shapekey from its z coordinate
         jawz = bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]
-        shapekeys['jaw'] = min(max(jawz/0.3, 0), 1)
+        shapekeys['jaw'] = min(max(jawz*7.142, 0), 1)
 
         return shapekeys
