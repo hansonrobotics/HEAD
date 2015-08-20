@@ -53,17 +53,17 @@ class ChatbotTest(unittest.TestCase):
                 queue.put(msg)
 
     def test_prologue(self):
-        timeout = 2
+        timeout = 5
         from Queue import Queue
         queue = Queue()
         rospy.Subscriber('/chatbot_responses', String, self.cb, queue)
         pub, msg_class = rostopic.create_publisher(
             '/chatbot_speech', 'chatbot/ChatMessage', True)
         pub.publish(msg_class('hi', 100))
-        msg = queue.get()
+        msg = queue.get(timeout=timeout)
         self.assertIn(msg.data, ['Hi there!', 'How are you?'])
         pub.publish(msg_class('what\'s your name', 100))
-        msg = queue.get()
+        msg = queue.get(timeout=timeout)
         self.assertIn('Sophia', msg.data)
 
 if __name__ == '__main__':
