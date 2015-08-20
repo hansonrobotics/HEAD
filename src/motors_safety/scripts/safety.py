@@ -39,6 +39,11 @@ class Safety():
                     self.publishers[m['topic']] = rospy.Publisher("safe/"+m['topic']+"_controller/command",Float64, queue_size=30)
                     self.subscribers[m['topic']] = rospy.Subscriber(m['topic']+"_controller/command", Float64,
                                         lambda msg, m=m: self.callback(m, True, msg))
+
+
+        # Making corrections
+        self.correction_sub = rospy.Subscriber("add_correction", MotorCommand, self.correction_cb)
+        self.corrections = {}
         # Subscribe motor states
         rospy.Subscriber('safe/motor_states', MotorStateList, self.update_load)
         # Init timing rules
@@ -83,6 +88,10 @@ class Safety():
         else:
             v = msg.position
         rules = self.rules[motor]
+        # corrections added before rules
+        if motor in self.corrections.keys():
+            v += self.corrections[motor]
+
         for r in rules:
             if r['type'] == 'prevent':
                 v = self.rule_prevent(motor, v, r)
@@ -222,6 +231,13 @@ class Safety():
             msg.position = pos
         self.motor_positions[m]= pos
         self.publishers[self.motors[m]['topic']].publish(msg)
+
+    def correction_cb(self, msg):
+        if not msg.joint_name in self.corrections.keys():
+            self.corrections[msg.joint_name] += msg.position
+        else:
+            self.corrections[msg.joint_name] = msg.position
+
 
 if __name__ == '__main__':
     rospy.init_node('motors_safety')
