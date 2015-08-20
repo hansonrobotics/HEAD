@@ -5,11 +5,16 @@ import cv2
 import os
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
-
+from std_msgs.msg import Bool
+from ros_pololu.msg import MotorCommand
 
 class EyeTracking:
     def __init__(self):
-        # Node parameters
+        # Eye Tracking enabled for the node
+        self.tracking_params = rospy.get_param("eye_tracking", False)
+        if not self.tracking_params:
+            rospy.signal_shutdown("No Params set")
+        # Node parameters for processing image
         self.topic = rospy.get_param("~topic", "camera/image_raw")
         self.angle = rospy.get_param("~angle", 0)
         self.scale = rospy.get_param("~scale", 0.1)
@@ -22,6 +27,18 @@ class EyeTracking:
         self.bridge = CvBridge()
         # subscribe camera topic
         rospy.Subscriber(self.topic, Image, self.camera_callback)
+        # Where eyes should be looking at (relative w and h of the bounding box). Center by default.
+        # This should be updated from behavior tree or procedural animations
+        self.target = [0.5, 0.5]
+        # Eye tracking parameters
+        self.tracking_params = rospy.get_param("eye_tracking")
+        # Distance which will need to be adjusted to closest face. Relative to picture size.
+        self.face_distance = [0, 0]
+        # Publishing motor messages disabled by default
+        self.publishing = rospy.get_param("~autostart", True)
+        self.pub = rospy.Publisher("add_correction", MotorCommand, queue_size=10)
+
+
 
     def camera_callback(self,img):
         try:
@@ -36,10 +53,16 @@ class EyeTracking:
         self.resize()
         # detect faces
         faces = self.faces()
+        # find face in middle
+        face = self.closest_face(faces)
+        if face is None:
+            self.face_distance = [0,0]
+        else:
+            self.face_distance = self.distance(face)
+        # Draw faces on image
         for f in faces:
             face = [int(x/self.scale) for x in f]
             cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (255,0,0), 3)
-
         cv2.imshow("Eye View", self.image)
         cv2.waitKey(1)
 
@@ -56,7 +79,11 @@ class EyeTracking:
         crop_cols = round(cols*self.crop)
         self.cv_image = self.cv_image[crop_rows:-crop_rows, crop_cols:-crop_cols]
         # resize
-        self.cv_image = cv2.resize(self.cv_image, (cols/2, rows/2), interpolation=cv2.INTER_AREA)
+        self.im_w  = int(cols * self.scale)
+        self.im_h =  int(rows * self.scale)
+        self.cv_image = cv2.resize(self.cv_image, (self.im_w, self.im_h), interpolation=cv2.INTER_AREA)
+
+
 
 
     def faces(self):
@@ -70,10 +97,37 @@ class EyeTracking:
             flags=cv2.cv.CV_HAAR_SCALE_IMAGE
         )
         return faces
+    # Finds face distance from camera to target of where to look at
+    def distance(self, f):
+        return [(f[0] + (f[2])*self.target[0])/self.im_w - self.tracking_params['center']['w'],
+                (f[1] + (f[3])*self.target[1])/self.im_h - self.tracking_params['center']['h']]
+
+    def closest_face(self, faces):
+        min_distance = self.tracking_params['distance-max']
+        face = None
+        for f in faces:
+            d = self.distance(f)
+            # linear distance
+            d = (d[0]**2+d[1]**2)**0.5
+            if d <= min_distance:
+                face = f
+                min_distance = d
+        return face
+
+    def publish(self):
+        if self.publishing:
+            for m in self.tracking_params['motors']:
+                msg = MotorCommand()
+                msg.joint_name = m['name']
+                msg.position = self.face_distance[0 if m['direction']=='h' else 1] * m['angle']
+                self.pub.publish(msg)
 
 
 if __name__ == '__main__':
     rospy.init_node('eye_tracking')
     ET = EyeTracking()
-    rospy.spin()
+    r = rospy.Rate(10)
+    while not rospy.is_shutdown():
+        ET.publish()
+        r.sleep()
 

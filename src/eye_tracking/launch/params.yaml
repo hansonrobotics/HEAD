@@ -1,0 +1,16 @@
+# Eye tracking
+eye_tracking:
+    motors:
+        - name: EyeTurn-R # Motor name
+          direction: h # h - horizontal , v - vertical
+          angle: 1.2 # Angle at which motor needs to be turned for whole camera view in motor direction. Negative if inverse.
+        - name: EyeTurn-L
+          direction: h
+          angle: 1.2
+        - name: Eyes-Up-Down
+          direction: v
+          angle: 1.5
+    center: # relative camera image point which represents point where eyeball is looking at
+        w: 0.5
+        h: 0.5
+    distance-max: 0.2 # Relative distance from camera image center to face target in which face considered to be same.
