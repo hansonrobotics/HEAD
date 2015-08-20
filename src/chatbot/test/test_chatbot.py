@@ -32,7 +32,7 @@ class ChatbotTest(unittest.TestCase):
             )
         robots_config_path = rospkg.RosPack().get_path('robots_config')
         config.add_param(core.Param(
-            '/chatbot_ai/properties', '%s/eva/bot.properties' % robots_config_path))
+            '/chatbot_ai/properties', '%s/sophia/bot.properties' % robots_config_path))
         self.runner = roslaunch.launch.ROSLaunchRunner(
             self.run_id, config, is_rostest=True)
         self.runner.launch()
