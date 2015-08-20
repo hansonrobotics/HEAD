@@ -12,7 +12,10 @@ from roslaunch import core
 import rostopic
 
 from blender_api_msgs.msg import SetGesture, EmotionState, Target
-from testing_tools import wait_for_message, create_msg_listener
+from testing_tools import wait_for_message, create_msg_listener, MessageQueue
+from roslaunch import nodeprocess
+nodeprocess._TIMEOUT_SIGINT = 2
+nodeprocess._TIMEOUT_SIGTERM = 1
 
 PKG = 'eva_behavior'
 
@@ -49,7 +52,7 @@ class EvaBehaviorTest(unittest.TestCase):
         pub.publish(msg_class(msg))
 
     def test_btree_on_off(self):
-        timeout = 60
+        timeout = 30
         self.behavior_switch('btree_on')
         msg = wait_for_message(
             '/blender_api/set_gesture', SetGesture, timeout)
@@ -64,7 +67,6 @@ class EvaBehaviorTest(unittest.TestCase):
         self.assertIsNone(msg)
 
     def test_face_interaction1(self):
-        timeout = 60
         self.behavior_switch('btree_on')
         positive_gestures = [
             x.strip() for x in self.behavior_config.get(
@@ -75,25 +77,30 @@ class EvaBehaviorTest(unittest.TestCase):
             'blender_api_msgs/AvailableEmotionStates', True)
         pub.publish(msg_class(['happy']))
 
-        emo_msg_listener = create_msg_listener(
-            '/blender_api/set_emotion_state', EmotionState, timeout)
-        ges_msg_listener = create_msg_listener(
-            '/blender_api/set_gesture', SetGesture, timeout)
-        emo_msg_listener.start()
-        ges_msg_listener.start()
-        time.sleep(1) # wait for topic connection established
+        queue = MessageQueue()
+        queue.subscribe('/blender_api/set_emotion_state', EmotionState)
+        queue.subscribe('/blender_api/set_gesture', SetGesture)
 
         pub, msg_class = rostopic.create_publisher(
             '/camera/face_event', 'pi_face_tracker/FaceEvent', True)
         pub.publish(msg_class('new_face', 1))
 
-        emo_msg = emo_msg_listener.join()
-        ges_msg = ges_msg_listener.join()
-        self.assertIn(emo_msg.name, ['happy'])
-        self.assertIn(ges_msg.name, positive_gestures)
+        time.sleep(10)
+        self.behavior_switch('btree_off')
+        self.assertTrue(not queue.queue.empty())
+        emotions = []
+        gestures = []
+        while not queue.queue.empty():
+            msg = queue.get(timeout=1)
+            if isinstance(msg, EmotionState):
+                emotions.append(msg.name)
+            elif isinstance(msg, SetGesture):
+                gestures.append(msg.name)
+
+        self.assertTrue(set(['happy']) | set(emotions))
+        self.assertTrue(set(positive_gestures) & set(gestures))
 
     def test_face_interaction2(self):
-        timeout = 60
         self.behavior_switch('btree_on')
         new_arrival_emotions = [
             x.strip() for x in self.behavior_config.get(
@@ -101,26 +108,30 @@ class EvaBehaviorTest(unittest.TestCase):
         positive_gestures = [
             x.strip() for x in self.behavior_config.get(
                     'gesture', 'positive_gestures').split(',')]
-
-        emo_msg_listener = create_msg_listener(
-            '/blender_api/set_emotion_state', EmotionState, timeout)
-        ges_msg_listener = create_msg_listener(
-            '/blender_api/set_gesture', SetGesture, timeout)
-        emo_msg_listener.start()
-        ges_msg_listener.start()
-        time.sleep(1) # wait for topic connection established
+        queue = MessageQueue()
+        queue.subscribe('/blender_api/set_emotion_state', EmotionState)
+        queue.subscribe('/blender_api/set_gesture', SetGesture)
 
         pub, msg_class = rostopic.create_publisher(
             '/camera/face_event', 'pi_face_tracker/FaceEvent', True)
         pub.publish(msg_class('new_face', 1))
 
-        emo_msg = emo_msg_listener.join()
-        ges_msg = ges_msg_listener.join()
-        self.assertIn(emo_msg.name, new_arrival_emotions)
-        self.assertIn(ges_msg.name, positive_gestures)
+        time.sleep(10)
+        self.behavior_switch('btree_off')
+        self.assertTrue(not queue.queue.empty())
+        emotions = []
+        gestures = []
+        while not queue.queue.empty():
+            msg = queue.get(timeout=1)
+            if isinstance(msg, EmotionState):
+                emotions.append(msg.name)
+            elif isinstance(msg, SetGesture):
+                gestures.append(msg.name)
+
+        self.assertTrue(set(new_arrival_emotions) | set(emotions))
+        self.assertTrue(set(positive_gestures) & set(gestures))
 
 if __name__ == '__main__':
     import rostest
     rostest.rosrun(PKG, 'eva_behavior', EvaBehaviorTest)
-    #unittest.main()
 

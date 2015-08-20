@@ -356,8 +356,8 @@ class MessageQueue():
     def subscribe(self, topic, topic_class):
         return rospy.Subscriber(topic, topic_class, self._cb)
 
-    def get(self):
-        return self.queue.get()
+    def get(self, timeout=None):
+        return self.queue.get(timeout=timeout)
 
 if __name__ == '__main__':
     name = 'face_in'
