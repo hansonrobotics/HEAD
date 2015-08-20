@@ -7,13 +7,14 @@ from dynamixel_msgs.msg import MotorStateList
 
 import time
 
-ROS_RATE = 20
+
 
 class Safety():
+
+    ros_rate = 20
+
     def __init__(self):
         self.topics = []
-        # Wait for motors to be loaded in param server
-        time.sleep(3)
         motors = rospy.get_param('motors')
         self.rules = rospy.get_param('safety_rules', {})
         # subscribe
@@ -55,7 +56,7 @@ class Safety():
 
     def update_load(self, msg):
         for s in msg.motor_states:
-            self.motor_loads[s['id']] = s['load']
+            self.motor_loads[s.id] = s.load
 
     # check if motor is dynamixel
     def is_dynamixel(self, m):
@@ -184,18 +185,18 @@ class Safety():
                     self.rules[m][r]['started'] = False
                     self.rules[m][r]['limit'] = 1
                     return
-            limit = 1.0
+            limit = rule['limit']
             if rule['started'] + rule['t1']+rule['t2'] > time.time():
                 if rule['limit'] == 1:
                     # Prevent motor for going further
-                    limit = self.get_relative_pos(m,rule['direction'], self.motor_positions['m'])
+                    limit = self.get_relative_pos(m,rule['direction'], self.motor_positions[m])
                 if extreme:
                     # Rapidly decrease limit towards neutral
-                    limit -= 1.0 / ROS_RATE
+                    limit -= 1.0 / self.ros_rate
                 limit = max(0,limit)
             else:
                 # Increase limit gradually
-                limit += 1.0/ ROS_RATE
+                limit += 1.0/ self.ros_rate
                 if limit >= 1:
                     #Rule Expired
                     limit = 1
@@ -220,13 +221,7 @@ class Safety():
             msg.data = pos
         else:
             msg.position = pos
-        self.motor_positions[m]= pos
+        self.motor_positions[m] = pos
         self.publishers[self.motors[m]['topic']].publish(msg)
 
-if __name__ == '__main__':
-    rospy.init_node('motors_safety')
-    MS = Safety()
-    r = rospy.Rate(ROS_RATE)
-    while not rospy.is_shutdown():
-        MS.timing()
-        r.sleep()
+
