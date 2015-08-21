@@ -76,7 +76,7 @@ define(["application", "tpl!./templates/emotion.tpl", 'lib/api', 'lib/behaviors/
                         magnitude = this.config.magnitude.current.toFixed(2);
 
                     if (duration > 0) {
-                        api.setEmotion(this.model.get('name'), magnitude, duration);
+                        api.setEmotion(this.model.get('name'), parseFloat(magnitude), parseFloat(duration));
 
                         // hide indicators after duration
                         var self = this;

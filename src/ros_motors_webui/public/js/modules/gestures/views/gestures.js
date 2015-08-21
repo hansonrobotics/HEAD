@@ -13,14 +13,14 @@ define(["application", "./gesture", 'tpl!./templates/gestures.tpl'],
                 },
                 config: {
                     speed: {
-                        default: 0.5,
-                        current: 0.5,
+                        default: 1,
+                        current: 1,
                         min: 0,
                         max: 10
                     },
                     magnitude: {
-                        default: 0.5,
-                        current: 0.5,
+                        default: 1,
+                        current: 1,
                         min: 0,
                         max: 1
                     }
