@@ -52,22 +52,26 @@ class EvaBehaviorTest(unittest.TestCase):
         pub.publish(msg_class(msg))
 
     def test_btree_on_off(self):
-        timeout = 30
+        timeout = 10
+        queue = MessageQueue()
+        queue.subscribe('/blender_api/set_gesture', SetGesture)
+        time.sleep(1)
+        self.assertTrue(queue.queue.empty())
         self.behavior_switch('btree_on')
-        msg = wait_for_message(
-            '/blender_api/set_gesture', SetGesture, timeout)
-        self.assertIsNotNone(msg)
+        time.sleep(timeout)
+        self.assertTrue(not queue.queue.empty())
 
+        queue2 = MessageQueue()
+        queue2.subscribe('/blender_api/set_gesture', SetGesture)
+        time.sleep(1)
         self.behavior_switch('btree_off')
         pub, msg_class = rostopic.create_publisher(
             '/camera/face_event', 'pi_face_tracker/FaceEvent', True)
         pub.publish(msg_class('new_face', 1))
-        msg = wait_for_message(
-            '/blender_api/set_gesture', SetGesture, timeout)
-        self.assertIsNone(msg)
+        time.sleep(timeout)
+        self.assertTrue(queue.queue.empty())
 
     def test_face_interaction1(self):
-        self.behavior_switch('btree_on')
         positive_gestures = [
             x.strip() for x in self.behavior_config.get(
                     'gesture', 'positive_gestures').split(',')]
@@ -80,13 +84,14 @@ class EvaBehaviorTest(unittest.TestCase):
         queue = MessageQueue()
         queue.subscribe('/blender_api/set_emotion_state', EmotionState)
         queue.subscribe('/blender_api/set_gesture', SetGesture)
+        time.sleep(1)
 
+        self.behavior_switch('btree_on')
         pub, msg_class = rostopic.create_publisher(
             '/camera/face_event', 'pi_face_tracker/FaceEvent', True)
         pub.publish(msg_class('new_face', 1))
 
-        time.sleep(10)
-        self.behavior_switch('btree_off')
+        time.sleep(20)
         self.assertTrue(not queue.queue.empty())
         emotions = []
         gestures = []
@@ -101,7 +106,6 @@ class EvaBehaviorTest(unittest.TestCase):
         self.assertTrue(set(positive_gestures) & set(gestures))
 
     def test_face_interaction2(self):
-        self.behavior_switch('btree_on')
         new_arrival_emotions = [
             x.strip() for x in self.behavior_config.get(
                     'emotion', 'new_arrival_emotions').split(',')]
@@ -111,13 +115,14 @@ class EvaBehaviorTest(unittest.TestCase):
         queue = MessageQueue()
         queue.subscribe('/blender_api/set_emotion_state', EmotionState)
         queue.subscribe('/blender_api/set_gesture', SetGesture)
+        time.sleep(1)
 
+        self.behavior_switch('btree_on')
         pub, msg_class = rostopic.create_publisher(
             '/camera/face_event', 'pi_face_tracker/FaceEvent', True)
         pub.publish(msg_class('new_face', 1))
 
-        time.sleep(10)
-        self.behavior_switch('btree_off')
+        time.sleep(20)
         self.assertTrue(not queue.queue.empty())
         emotions = []
         gestures = []
