@@ -5,7 +5,7 @@ which coefficients to extract from the incoming PAU messages.
 """
 
 _shkey_list = ['Basis', 'adjustments', 'brow_center_UP', 'brow_inner_UP.L', 'brow_inner_UP.R', 'brow_outer_UP.L',
-                   'brow_outer_up.R', 'brow_center_DN', 'brow_inner_DN.L', 'brow_inner_DN.R', 'brow_outer_DN.L',
+                   'brow_outer_UP.R', 'brow_center_DN', 'brow_inner_DN.L', 'brow_inner_DN.R', 'brow_outer_DN.L',
                    'brow_outer_DN.R', 'eye-blink.UP.L', 'eye-blink.LO.L', 'eye-blink.UP.R', 'eye-blink.LO.R',
                    'eye-flare.UP.L', 'eye-flare.LO.L', 'eye-flare.UP.R', 'eye-flare.LO.R', 'eyes-look.dn',
                    'eyes-look.up', 'wince.L', 'wince.R', 'sneer.L', 'sneer.R', 'lips-wide.L', 'lips-wide.R',
