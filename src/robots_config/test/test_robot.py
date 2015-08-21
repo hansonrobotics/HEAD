@@ -22,8 +22,8 @@ from pi_face_tracker.msg import FaceEvent
 from blender_api_msgs.msg import EmotionState
 from std_msgs.msg import String
 from testing_tools import (wait_for, play_rosbag, create_msg_listener,
-                            capture_screen, capture_camera, startxvfb, stopxvfb,
-                            get_rosbag_file, MessageQueue)
+            capture_screen, capture_camera, startxvfb, stopxvfb,
+            get_rosbag_file, MessageQueue, check_if_ffmpeg_satisfied)
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'robots_config'
@@ -115,7 +115,9 @@ class RobotTest(unittest.TestCase):
         if not self.display == ':0':
             stopxvfb(self.display)
 
-    def test(self):
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
+    def test_face(self):
         new_arrival_emotions = [
             x.strip() for x in self.behavior_config.get(
                     'emotion', 'new_arrival_emotions').split(',')]
@@ -140,6 +142,8 @@ class RobotTest(unittest.TestCase):
 
         self.assertIn(emo_msg.name, new_arrival_emotions)
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_chat(self):
         import re
         r = re.compile('[\W_]+')
