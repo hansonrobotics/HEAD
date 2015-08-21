@@ -107,7 +107,7 @@ define(["application", "tpl!./templates/gesture.tpl", 'lib/api', 'lib/behaviors/
                         magnitude = this.config.magnitude.current.toFixed(2);
 
                     if (speed > 0) {
-                        api.setGesture(this.model.get('name'), 1, speed, magnitude);
+                        api.setGesture(this.model.get('name'), 1, parseFloat(speed), parseFloat(magnitude));
 
                         // hide indicators after duration
                         var self = this;
