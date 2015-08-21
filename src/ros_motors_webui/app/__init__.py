@@ -10,6 +10,8 @@ import math
 import os.path
 from optparse import OptionParser
 from configs import *
+from subprocess import Popen
+
 
 json_encode = json.JSONEncoder().encode
 
@@ -59,6 +61,8 @@ def update_motors(robot_name):
         write_yaml(file_name, motors)
     except Exception as e:
         return json_encode({'error': str(e)})
+    # Kill processes to reload configs. Respawn should be launched
+    kill_node("/"+robot_name+"/pau2motors")
     return json_encode({'error': False})
 
 
@@ -130,6 +134,9 @@ def radians_to_pulse(rad):
 
 def radians_to_degrees(rad):
     return round(rad * 180 / math.pi)
+
+def kill_node(node):
+    Popen(["rosnode", "kill "+node])
 
 if __name__ == '__main__':
     @app.route('/public/<path:path>')
