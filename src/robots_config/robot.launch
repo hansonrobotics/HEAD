@@ -12,7 +12,7 @@
         <group if="$(arg mini)">
             <include file="$(find robots_config)/$(arg name)/hardware.launch" />
             <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
-                  output="screen" respawn="true"/>
+                  respawn="true"/>
         </group>
         <group unless="$(arg mini)">
             <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>

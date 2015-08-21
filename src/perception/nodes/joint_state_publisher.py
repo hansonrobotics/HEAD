@@ -118,7 +118,6 @@ class JointStatePublisher(Thread):
             if('pitch_base_joint' in self.pau_joint_names):
                 angle = self._quaternion_to_euler['x'](msg.m_headRotation) / 2.0
                 self.pau_joint_positions[self.pau_joint_names.index('pitch_base_joint')] = angle
-                print angle
             if('pitch_neck_joint' in self.pau_joint_names):
                 angle = self._quaternion_to_euler['x'](msg.m_headRotation) / 2.0
                 self.pau_joint_positions[self.pau_joint_names.index('pitch_neck_joint')] = angle
@@ -136,7 +135,6 @@ class JointStatePublisher(Thread):
             if('Eye_R' in self.pau_joint_names):
                 angle = -msg.m_eyeGazeLeftYaw
                 self.pau_joint_positions[self.pau_joint_names.index('Eye_R')] = angle
-            print self.pau_joint_positions
     def run(self):
         while not rospy.is_shutdown():
             with self.joint_states_lock:

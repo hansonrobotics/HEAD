@@ -559,7 +559,6 @@ class PatchTracker(ROS2OpenCV):
                 else:
                     face.expand_roi = self.expand_roi_init
         self.detect_box.nextFrame(haar)
-        rospy.loginfo(self.detect_box.faces)
         self.detect_box.publish_faces()
         return cv_image
 

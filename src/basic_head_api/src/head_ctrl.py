@@ -27,10 +27,6 @@ def to_dict(list, key):
 class PauCtrl:
 
   def point_head(self, req):
-    rospy.loginfo(
-      "Point head (yaw: %s, pitch: %s, roll: %s)",
-      req.yaw, req.pitch, req.roll
-    )
     msg = pau()
     msg.m_headRotation = Quaternion(
       *Utils.Quat.fromInYZX(req.roll, -req.yaw, -req.pitch).params
@@ -45,11 +41,9 @@ class PauCtrl:
 class SpecificRobotCtrl:
 
   def valid_exprs(self):
-    rospy.loginfo("Valid face expressions request.")
     return {"exprnames": [x for x in self.faces.keys() if x[:4] != "vis_"]}
 
   def make_face(self, exprname, intensity=1):
-    rospy.loginfo("Face request: %s of %s", intensity, exprname)
     for cmd in self.faces[exprname].new_msgs(intensity):
         if exprname[:4] == 'vis_':
           cmd.speed = 0.9
