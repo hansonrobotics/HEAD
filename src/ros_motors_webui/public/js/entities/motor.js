@@ -53,9 +53,15 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
             model: Entities.Motor,
             comparator: 'order_no',
             sync: function (successCallback, errorCallback) {
-                var data = this.toJSON(),
-                    param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
+                var data = _.filter(this.toJSON(), function (motor) {
+                        delete motor['selected'];
+                        delete motor['editable'];
+                        delete motor['value'];
 
+                        return motor;
+                    });
+
+                var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/motors'});
                 param.set(data);
 
                 $.ajax("/motors/update/" + api.config.robot, {

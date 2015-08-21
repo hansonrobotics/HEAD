@@ -30,7 +30,7 @@ def send_status():
 @app.route('/motors/get/<robot_name>')
 def get_motors(robot_name):
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
-    return json_encode(motors)
+    return json_encode({'motors': motors})
 
 def set_configs(motors,config_dir):
     configs = Configs()

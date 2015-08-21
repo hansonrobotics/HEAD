@@ -11,7 +11,7 @@ _shkey_list = ['Basis', 'adjustments', 'brow_center_UP', 'brow_inner_UP.L', 'bro
                    'eyes-look.up', 'wince.L', 'wince.R', 'sneer.L', 'sneer.R', 'lips-wide.L', 'lips-wide.R',
                    'lips-narrow.L', 'lips-narrow.R', 'lips-frown.L', 'lips-frown.R', 'lips-smile.L', 'lips-smile.R',
                    'lip-UP.C.UP', 'lip-UP.C.DN', 'lip-UP.L.UP', 'lip-UP.L.DN', 'lip-UP.R.UP', 'lip-UP.R.DN',
-                   'lip-DN.C.UP', 'lip-DN.C.DN', 'lip-DN.L.UP', 'lip-DN.L.DN', 'lip.DN.R.UP', 'lip-DN.R.DN',
+                   'lip-DN.C.UP', 'lip-DN.C.DN', 'lip-DN.L.UP', 'lip-DN.L.DN', 'lip-DN.R.UP', 'lip-DN.R.DN',
                    'lip-JAW.DN', 'jaw']
 
 

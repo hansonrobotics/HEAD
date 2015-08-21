@@ -76,6 +76,10 @@ define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './confi
                 delete: function () {
                     var self = this;
                     $.each(this.pageableGrid.getSelectedModels(), function (i, e) {
+                        // remove from collection
+                        self.motorsCollection.remove(e);
+
+                        // remove from the grid
                         self.pageableGrid.removeRow(e);
                     });
                 }
