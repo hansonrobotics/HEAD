@@ -1,0 +1,80 @@
+.list-group .list-group-item {
+    margin-bottom: 1px;
+    height: 43px;
+    padding: 8px 15px;
+}
+
+#app-performance-queue span.ui-icon {
+    margin-right: 10px;
+    cursor: move;
+}
+
+#app-performance-queue button {
+    height: 21px;
+    width: 21px;
+    padding: 2px;
+    margin: 0 0 0 5px;
+    position: relative;
+}
+
+#app-performance-queue button span {
+    position: absolute;
+    left: 1px;
+    top: 3px;
+}
+
+#app-clear-performance-queue {
+    margin: 0;
+}
+
+.app-timeline {
+    background-color: #4e5d6c;
+    border-bottom: dotted 1px #2b3e50;
+    height: 20px;
+}
+
+.app-timeline:last-child {
+    border: none;
+}
+
+.app-timeline-editor {
+    margin-bottom: 5px;
+}
+
+.app-nodes {
+    margin-bottom: 10px;
+}
+
+.app-node {
+    display: inline-block;
+    line-height: 17px;
+    height: 20px;
+    text-align: left;
+}
+
+.app-timeline .app-node {
+    padding-right: 15px;
+}
+
+.app-add-timeline-button {
+    padding: 2px 6px;
+    margin-top: 0;
+    text-align: left;
+}
+
+.select2-container {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.app-slider-demo {
+    height: 26px;
+}
+
+.app-node-resize-handle {
+    position: absolute;
+    right: 0;
+    line-height: 19px;
+    margin: 0 2px;
+}
