@@ -83,21 +83,11 @@ define(['backgrid', 'jquery', 'backgrid_text_cell'], function (Backgrid, $) {
     }, {
         name: "lin_min",
         label: "Linear Min",
-        cell: "number",
-        formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-            toRaw: function (val, model) {
-                return $.isNumeric(val) && $.isNumeric(model.get('lin_max')) && val > model.get('lin_max') ? undefined : val;
-            }
-        })
+        cell: "number"
     }, {
         name: "lin_max",
         label: "Linear Max",
-        cell: "number",
-        formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-            toRaw: function (val, model) {
-                return $.isNumeric(model.get('lin_min')) && $.isNumeric(val) && val < model.get('lin_min') ? undefined : val;
-            }
-        })
+        cell: "number"
     }, {
         name: "max1",
         label: "Max1",

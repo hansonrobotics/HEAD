@@ -10,6 +10,8 @@ import math
 import os.path
 from optparse import OptionParser
 from configs import *
+from subprocess import Popen
+
 
 json_encode = json.JSONEncoder().encode
 
@@ -32,19 +34,23 @@ def get_motors(robot_name):
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     return json_encode({'motors': motors})
 
-def set_configs(motors,config_dir):
+def reload_configs(motors,config_dir, robot_name):
     configs = Configs()
     configs.parseMotors(motors)
     if len(configs.dynamixel) > 0:
         file_name = os.path.join(config_dir,"dynamixel.yaml")
         write_yaml(file_name,configs.dynamixel)
+        load_params(file_name, "/{}/safe".format(robot_name))
     if len(configs.motors) > 0:
         file_name = os.path.join(config_dir,"motors.yaml")
         write_yaml(file_name,{'motors': configs.motors})
+        load_params(file_name, "/{}".format(robot_name))
     if len(configs.pololu) > 0:
         for board, config in configs.pololu.iteritems():
             file_name = os.path.join(config_dir,board + ".yaml")
             write_yaml(file_name,config)
+            kill_node("/{}/pololu_{}".format(robot_name, board))
+    kill_node("/{}/pau2motors".format(robot_name))
     return configs
 
 
@@ -55,10 +61,12 @@ def update_motors(robot_name):
     # write to motor config
     try:
         file_name = os.path.join(config_root,robot_name, 'motors_settings.yaml')
-        set_configs(motors,os.path.join(config_root,robot_name))
+        reload_configs(motors,os.path.join(config_root,robot_name), robot_name)
         write_yaml(file_name, motors)
     except Exception as e:
         return json_encode({'error': str(e)})
+    # Kill processes to reload configs. Respawn should be launched
+    kill_node("/"+robot_name+"/pau2motors")
     return json_encode({'error': False})
 
 
@@ -128,8 +136,16 @@ def radians_to_pulse(rad):
     return round(zero_pulse + one_rad_pulse * rad)
 
 
-def radians_to_degrees(rad):
+def radians_t0o_degrees(rad):
     return round(rad * 180 / math.pi)
+
+
+def kill_node(node):
+    Popen("rosnode kill " + node, shell=True)
+
+def load_params(param_file, namespace):
+    Popen("rosparam load " + param_file +" " + namespace, shell=True)
+
 
 if __name__ == '__main__':
     @app.route('/public/<path:path>')
