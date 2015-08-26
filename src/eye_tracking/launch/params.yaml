@@ -1,15 +1,8 @@
 # Eye tracking
 eye_tracking:
-    motors:
-        - name: EyeTurn-R # Motor name
-          direction: h # h - horizontal , v - vertical
-          angle: 1.2 # Angle at which motor needs to be turned for whole camera view in motor direction. Negative if inverse.
-        - name: EyeTurn-L
-          direction: h
-          angle: 1.2
-        - name: Eyes-Up-Down
-          direction: v
-          angle: 1.5
+    angles:
+        w: 40 # Angle (deg) which will be proportional to full height of image from camera feed and added to PAU
+        h: 60 # Angle (deg) which will be proportional to full width of image from camera feed and added to PAU
     center: # relative camera image point which represents point where eyeball is looking at
         w: 0.5
         h: 0.5

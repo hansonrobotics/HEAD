@@ -12,6 +12,6 @@
         <param name="topic" value="/camera/image_raw" />
         <param name="crop" value="0.1" />
         <param name="scale" value="0.5" />
-        <param name="angle" value="-35" />
+        <param name="angle" value="0" />
     </node>
 </launch>

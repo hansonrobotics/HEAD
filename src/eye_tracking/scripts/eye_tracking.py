@@ -38,13 +38,14 @@ class EyeTracking:
         self.face_distance = [0, 0]
         # Publishing motor messages disabled by default
         self.publishing = rospy.get_param("~autostart", True)
-        self.pub = rospy.Publisher("add_correction", MotorCommand, queue_size=10)
         # Pau messages
         self.pau_pub = rospy.Publisher("eye_tracking_pau", pau, queue_size=10)
         # Subscribe PAU from eyes
         self.pau_sub = rospy.Subscriber("/blender_api/get_pau", pau, self.pau_callback)
         rospy.wait_for_service("eyes_pau_mux/select")
         self.pau_ser = rospy.ServiceProxy("eyes_pau_mux/select", MuxSelect)
+        # Angles to added already
+        self.added = {'w': 0, 'h': 0}
         if self.publishing:
             self.pau_ser.call("eyes_tracking_pau")
             pass
@@ -128,16 +129,20 @@ class EyeTracking:
                 min_distance = d
         return face
 
-    def publish(self):
-        if self.publishing:
-            for m in self.tracking_params['motors']:
-                msg = MotorCommand()
-                msg.joint_name = m['name']
-                msg.position = self.face_distance[0 if m['direction']=='h' else 1] * m['angle']
-                self.pub.publish(msg)
-
     def pau_callback(self, msg):
+        msg = pau()
+        dw = self.face_distance[0]*self.tracking_params['angles']['w']
+        dh = self.face_distance[1]*self.tracking_params['angles']['h']
+        self.added['w'] += dw
+        self.added['h'] += dh
+        # reset distance
+        self.face_distance = [0,0]
         # foward to pau_topic adjusted angles
+        msg.m_eyeGazeLeftPitch += self.added['h']
+        msg.m_eyeGazeRightPitch += self.added['h']
+        msg.m_eyeGazeLeftYaw += self.added['w']
+        msg.m_eyeGazeRightYaw += self.added['w']
+        print self.added
         self.pau_pub.publish(msg)
 
 if __name__ == '__main__':
@@ -145,6 +150,5 @@ if __name__ == '__main__':
     ET = EyeTracking()
     r = rospy.Rate(10)
     while not rospy.is_shutdown():
-        ET.publish()
         r.sleep()
 
