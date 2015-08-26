@@ -7,14 +7,13 @@ from dynamixel_msgs.msg import MotorStateList
 
 import time
 
-
+ROS_RATE = 20
 
 class Safety():
-
-    ros_rate = 20
-
     def __init__(self):
         self.topics = []
+        # Wait for motors to be loaded in param server
+        time.sleep(3)
         motors = rospy.get_param('motors')
         self.rules = rospy.get_param('safety_rules', {})
         # subscribe
@@ -40,6 +39,11 @@ class Safety():
                     self.publishers[m['topic']] = rospy.Publisher("safe/"+m['topic']+"_controller/command",Float64, queue_size=30)
                     self.subscribers[m['topic']] = rospy.Subscriber(m['topic']+"_controller/command", Float64,
                                         lambda msg, m=m: self.callback(m, True, msg))
+
+
+        # Making corrections
+        self.correction_sub = rospy.Subscriber("add_correction", MotorCommand, self.correction_cb)
+        self.corrections = {}
         # Subscribe motor states
         rospy.Subscriber('safe/motor_states', MotorStateList, self.update_load)
         # Init timing rules
@@ -56,7 +60,7 @@ class Safety():
 
     def update_load(self, msg):
         for s in msg.motor_states:
-            self.motor_loads[s.id] = s.load
+            self.motor_loads[s['id']] = s['load']
 
     # check if motor is dynamixel
     def is_dynamixel(self, m):
@@ -84,6 +88,10 @@ class Safety():
         else:
             v = msg.position
         rules = self.rules[motor]
+        # corrections added before rules
+        if motor in self.corrections.keys():
+            v += self.corrections[motor]
+
         for r in rules:
             if r['type'] == 'prevent':
                 v = self.rule_prevent(motor, v, r)
@@ -185,18 +193,18 @@ class Safety():
                     self.rules[m][r]['started'] = False
                     self.rules[m][r]['limit'] = 1
                     return
-            limit = rule['limit']
+            limit = 1.0
             if rule['started'] + rule['t1']+rule['t2'] > time.time():
                 if rule['limit'] == 1:
                     # Prevent motor for going further
-                    limit = self.get_relative_pos(m,rule['direction'], self.motor_positions[m])
+                    limit = self.get_relative_pos(m,rule['direction'], self.motor_positions['m'])
                 if extreme:
                     # Rapidly decrease limit towards neutral
-                    limit -= 1.0 / self.ros_rate
+                    limit -= 1.0 / ROS_RATE
                 limit = max(0,limit)
             else:
                 # Increase limit gradually
-                limit += 1.0/ self.ros_rate
+                limit += 1.0/ ROS_RATE
                 if limit >= 1:
                     #Rule Expired
                     limit = 1
@@ -221,7 +229,20 @@ class Safety():
             msg.data = pos
         else:
             msg.position = pos
-        self.motor_positions[m] = pos
+        self.motor_positions[m]= pos
         self.publishers[self.motors[m]['topic']].publish(msg)
 
+    def correction_cb(self, msg):
+        if not msg.joint_name in self.corrections.keys():
+            self.corrections[msg.joint_name] += msg.position
+        else:
+            self.corrections[msg.joint_name] = msg.position
 
+
+if __name__ == '__main__':
+    rospy.init_node('motors_safety')
+    MS = Safety()
+    r = rospy.Rate(ROS_RATE)
+    while not rospy.is_shutdown():
+        MS.timing()
+        r.sleep()
