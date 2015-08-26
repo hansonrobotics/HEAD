@@ -7,6 +7,8 @@ from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
 from std_msgs.msg import Bool
 from ros_pololu.msg import MotorCommand
+from pau2motors.msg import pau
+from topic_tools.srv import MuxSelect
 
 class EyeTracking:
     def __init__(self):
@@ -37,6 +39,15 @@ class EyeTracking:
         # Publishing motor messages disabled by default
         self.publishing = rospy.get_param("~autostart", True)
         self.pub = rospy.Publisher("add_correction", MotorCommand, queue_size=10)
+        # Pau messages
+        self.pau_pub = rospy.Publisher("eye_tracking_pau", pau, queue_size=10)
+        # Subscribe PAU from eyes
+        self.pau_sub = rospy.Subscriber("/blender_api/get_pau", pau, self.pau_callback)
+        rospy.wait_for_service("eyes_pau_mux/select")
+        self.pau_ser = rospy.ServiceProxy("eyes_pau_mux/select", MuxSelect)
+        if self.publishing:
+            self.pau_ser.call("eyes_tracking_pau")
+            pass
 
 
 
@@ -125,6 +136,9 @@ class EyeTracking:
                 msg.position = self.face_distance[0 if m['direction']=='h' else 1] * m['angle']
                 self.pub.publish(msg)
 
+    def pau_callback(self, msg):
+        # foward to pau_topic adjusted angles
+        self.pau_pub.publish(msg)
 
 if __name__ == '__main__':
     rospy.init_node('eye_tracking')
