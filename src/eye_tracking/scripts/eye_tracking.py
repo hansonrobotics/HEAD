@@ -9,6 +9,7 @@ from std_msgs.msg import Bool
 from ros_pololu.msg import MotorCommand
 from pau2motors.msg import pau
 from topic_tools.srv import MuxSelect
+import time
 
 class EyeTracking:
     def __init__(self):
@@ -31,7 +32,7 @@ class EyeTracking:
         rospy.Subscriber(self.topic, Image, self.camera_callback)
         # Where eyes should be looking at (relative w and h of the bounding box). Center by default.
         # This should be updated from behavior tree or procedural animations
-        self.target = [0.5, 0.5]
+        self.target = [0.3, 0.3]
         # Eye tracking parameters
         self.tracking_params = rospy.get_param("eye_tracking")
         # Distance which will need to be adjusted to closest face. Relative to picture size.
@@ -39,7 +40,7 @@ class EyeTracking:
         # Publishing motor messages disabled by default
         self.publishing = rospy.get_param("~autostart", True)
         # Pau messages
-        self.pau_pub = rospy.Publisher("eye_tracking_pau", pau, queue_size=10)
+        self.pau_pub = rospy.Publisher("eyes_tracking_pau", pau, queue_size=10)
         # Subscribe PAU from eyes
         self.pau_sub = rospy.Subscriber("/blender_api/get_pau", pau, self.pau_callback)
         rospy.wait_for_service("eyes_pau_mux/select")
@@ -48,9 +49,6 @@ class EyeTracking:
         self.added = {'w': 0, 'h': 0}
         if self.publishing:
             self.pau_ser.call("eyes_tracking_pau")
-            pass
-
-
 
     def camera_callback(self,img):
         try:
@@ -98,9 +96,6 @@ class EyeTracking:
         self.im_h =  int(rows * self.scale)
         self.cv_image = cv2.resize(self.cv_image, (self.im_w, self.im_h), interpolation=cv2.INTER_AREA)
 
-
-
-
     def faces(self):
         gray = cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2GRAY)
 
@@ -130,19 +125,23 @@ class EyeTracking:
         return face
 
     def pau_callback(self, msg):
-        msg = pau()
-        dw = self.face_distance[0]*self.tracking_params['angles']['w']
-        dh = self.face_distance[1]*self.tracking_params['angles']['h']
+        if self.face_distance != [0,0]:
+            dw = self.face_distance[0]*self.tracking_params['angles']['w']
+            dh = self.face_distance[1]*self.tracking_params['angles']['h']
+        else:
+            # Gradually remove correction
+            dw = -self.added['w']*0.03
+            dh = -self.added['h']*0.03
+
         self.added['w'] += dw
         self.added['h'] += dh
         # reset distance
         self.face_distance = [0,0]
         # foward to pau_topic adjusted angles
-        msg.m_eyeGazeLeftPitch += self.added['h']
-        msg.m_eyeGazeRightPitch += self.added['h']
+        msg.m_eyeGazeLeftPitch -= self.added['h']
+        msg.m_eyeGazeRightPitch -= self.added['h']
         msg.m_eyeGazeLeftYaw += self.added['w']
         msg.m_eyeGazeRightYaw += self.added['w']
-        print self.added
         self.pau_pub.publish(msg)
 
 if __name__ == '__main__':
@@ -151,4 +150,3 @@ if __name__ == '__main__':
     r = rospy.Rate(10)
     while not rospy.is_shutdown():
         r.sleep()
-
