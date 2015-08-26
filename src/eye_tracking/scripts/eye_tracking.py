@@ -63,6 +63,9 @@ class EyeTracking:
         for f in faces:
             face = [int(x/self.scale) for x in f]
             cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (255,0,0), 3)
+        rows,cols = (self.image.shape)[:2]
+        center = (int(cols*self.tracking_params['center']['w']),int(rows*self.tracking_params['center']['h']))
+        cv2.circle(self.image,center, 3,(0,255,0))
         cv2.imshow("Eye View", self.image)
         cv2.waitKey(1)
 
