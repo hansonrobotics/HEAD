@@ -31,10 +31,31 @@
     background-color: #4e5d6c;
     border-bottom: dotted 1px #2b3e50;
     height: 20px;
+    width: 100%;
 }
 
-.app-timeline:last-child {
-    border: none;
+.app-timeline-checkbox {
+    height: 20px;
+    width: 21px;
+    margin: 0;
+    border-right: 1px solid #2b3e50;
+}
+
+.app-timeline-checkbox input[type="checkbox"] {
+    margin: 3px 0 0 4px;
+}
+
+.app-timeline-select-all {
+    background-color: #4e5d6c;
+    height: 30px;
+    width: 21px;
+    border-right: 1px solid #2b3e50;
+    margin: 0;
+
+}
+
+.app-timeline-select-all input[type="checkbox"] {
+    margin: 9px 0 0 4px;
 }
 
 .app-timeline-editor {
@@ -57,9 +78,11 @@
 }
 
 .app-add-timeline-button {
-    padding: 2px 6px;
-    margin-top: 0;
-    text-align: left;
+    /*padding: 2px 6px;*/
+    /*margin-top: 0;*/
+    /*text-align: left;*/
+    /*max-width: 100px;*/
+    /*margin-left: 21px;*/
 }
 
 .select2-container {
@@ -77,4 +100,8 @@
     right: 0;
     line-height: 19px;
     margin: 0 2px;
+}
+
+.app-timeline-actions button {
+    margin-right: 1px;
 }

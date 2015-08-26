@@ -1,0 +1,11 @@
+define(['application'], function (App) {
+    App.module('Performances.Entities', function (Entities, App, Backbone, Marionette, $, _) {
+        Entities.Performance = Backbone.Model.extend();
+        Entities.PerformanceCollection = Backbone.Collection.extend({
+            model: Entities.Performance,
+            testFetch: function () {
+                this.add(new Entities.Performance({name: "Greet"}));
+            }
+        });
+    });
+});
