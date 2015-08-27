@@ -219,6 +219,7 @@ class RosPololuNode:
         try:
             print id
             print pulse
+            rospy.loginfo('pulse %s %s' % (id, pulse))
             self.controller.setTarget(id, pulse)
         except AttributeError:
             pass
@@ -232,6 +233,7 @@ class RosPololuNode:
         :param speed: speed
         """
         speed = int(512 * speed)
+        rospy.loginfo('speed %s %s' % (id, speed))
         try:
             self.controller.setSpeed(id, speed)
         except AttributeError:
@@ -240,6 +242,7 @@ class RosPololuNode:
     def set_acceleration(self, id, acceleation):
 
         acceleation = int(255 * acceleation)
+        rospy.loginfo('acceleation %s %s' % (id, acceleation))
         try:
             self.controller.setAcceleration(id, acceleation)
         except AttributeError:
