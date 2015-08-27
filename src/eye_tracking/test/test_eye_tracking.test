@@ -1,13 +1,5 @@
 <launch>
     <rosparam file="$(find eye_tracking)/launch/params.yaml" command="load"/>
-    <node pkg="topic_tools" type="mux" name="eyes_pau" args="eyes_pau head_pau eyes_tracking_pau mux:=eyes_pau_mux"/>
-    <node pkg="usb_cam" type="usb_cam_node" name="eye_camera">
-      <param name="video_device" value="/dev/v4l/by-id/usb-Pico_Instruments_LLC_Pico_iCubie_Webcam_689076698948-video-index0"/>
-      <param name="pixel_format" value="yuyv"/>
-      <!-- Image size and type -->
-      <param name="width" value="640"/>
-      <param name="height" value="480"/>
-    </node>
     <node pkg="eye_tracking" type="eye_tracking.py" name="eye_tracking" output="screen">
         <param name="topic" value="eye_camera/image_raw" />
         <param name="crop" value="0.1" />
