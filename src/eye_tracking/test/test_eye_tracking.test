@@ -1,9 +1,16 @@
 <launch>
     <rosparam file="$(find eye_tracking)/launch/params.yaml" command="load"/>
+    <node pkg="topic_tools" type="mux" name="eyes_pau" args="eyes_pau head_pau eyes_tracking_pau mux:=eyes_pau_mux"/>
     <node pkg="eye_tracking" type="eye_tracking.py" name="eye_tracking" output="screen">
         <param name="topic" value="eye_camera/image_raw" />
         <param name="crop" value="0.1" />
         <param name="scale" value="0.5" />
         <param name="angle" value="0" />
     </node>
+    <node pkg="testing_tools" type="video_publisher.py" name="face_publisher">
+        <param name="file" value="$(find testing_tools)/data/face.avi" />
+        <param name="topic" value="eye_camera/image_raw" />
+    </node>
+    <test pkg="eye_tracking" type="test_eye_tracking.py" name="eye_tracking_test"
+        test-name="eye_tracking_test" time-limit="8.0" />
 </launch>
