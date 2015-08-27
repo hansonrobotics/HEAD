@@ -2,38 +2,20 @@
 
 import unittest
 import os
-import sys
 import time
-import shutil
-import glob
 import subprocess
+import serial
 
-import rospy
-import roslaunch
-import rosnode
 import rostopic
-import rospkg
+import roslaunch
 from roslaunch import core
 from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
 
-from blender_api_msgs.msg import EmotionState
-from std_msgs.msg import String
-from testing_tools import (MessageQueue, play_rosbag, run_shell_cmd)
-from rosparam import load_file, upload_params
-import serial
-from threading import Thread
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'ros_pololu'
-
-def link_port(iport, oport):
-    cmd = 'socat -d -d pty,link=%s,raw,echo=0 pty,link=%s,raw,echo=0' % (iport, oport)
-    pid = subprocess.Popen(cmd, shell=True)
-    return pid
-
-
 CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
 
 class SerialReader(object):
