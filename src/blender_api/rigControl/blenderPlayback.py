@@ -203,8 +203,26 @@ class BLPlayback(bpy.types.Operator):
             eva.blinkRate = eva.deformObj.pose.bones['blink_rate']['value']
             eva.blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
 
-            # keep alive
-            eva.keepAlive(bpy.context.scene['keepAlive'])
+
+            if bpy.context.scene['keepAlive']:
+                # Take care of Cycles
+                # Ensure the strip is looping and sync strip props with cycle props.
+                for cycle in eva.cyclesSet:
+                    if cycle.name not in [gesture.name for gesture in eva.gesturesList]:
+                        # Strip finished, create new one
+                        eva.newGesture(cycle.name, repeat=10, speed=cycle.rate, magnitude=cycle.magnitude)
+                    else:
+                        # Update strip properties
+                        for gesture in eva.gesturesList:
+                            if gesture.name == cycle.name:
+                                gesture.stripRef.influence = cycle.magnitude
+                                gesture.speed = cycle.rate
+                                gesture.stripRef.mute = False
+            else:
+                for cycle in self.cyclesSet:
+                    for gesture in self.gesturesList:
+                        if gesture.name == cycle.name:
+                            gesture.stripRef.mute = True
 
             # force update
             bpy.data.scenes['Scene'].frame_set(1)
