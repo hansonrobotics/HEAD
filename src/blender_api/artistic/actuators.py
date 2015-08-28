@@ -79,10 +79,10 @@ def saccade(self):
 
 
 class FaceProbabilityMap:
-    def __init__(self, actuator):
-        self.img_size = (100, 100)
-        self.img = actuator.add_image('probabilities', self.img_size)
+    """ Asks the Actuator Manager to draw a face in the UI made of circles and
+    ellipses. The image can then be updated via parameter sliders. """
 
+    def __init__(self, actuator):
         params = {
             'eyeSize': bpy.props.FloatProperty(name='eye size', min=1.0, max=50, default=20),
             'eyeDist': bpy.props.FloatProperty(name='eye distance', min=0.0, max=100, default=40),
@@ -96,6 +96,9 @@ class FaceProbabilityMap:
         self.params = params
 
         self.constant_sum_tick = constant_sum(params['eyeWeight'], params['mouthWeight'])
+
+        self.img_size = (100, 100)
+        self.img = actuator.add_image('probabilities', self.img_size)
 
     def tick(self):
         self.constant_sum_tick()
@@ -115,6 +118,7 @@ class FaceProbabilityMap:
 
 class Matrix:
     def circle(pos, radius, imgsize):
+        """ Draw a circle on a new matrix of size 'imgsize'. """
         xx, yy = np.mgrid[:imgsize[0], :imgsize[1]]
         distances = (xx - pos[0]) ** 2 + (yy - pos[1]) ** 2
         radius2 = radius**2
@@ -122,6 +126,7 @@ class Matrix:
         return result
 
     def ellipse(pos, size, imgsize):
+        """ Draw an ellipse on a new matrix of size 'imgsize'. """
         xx, yy = np.mgrid[:imgsize[0], :imgsize[1]]
         ratio = size[0]/size[1]
         distances = (xx - pos[0]) ** 2 + ((yy - pos[1]) * ratio) ** 2
@@ -130,13 +135,16 @@ class Matrix:
         return result
 
     def color(mat, color):
+        """ Create an RGB matrix from a single-valued matrix and a color. """
         mat.shape = mat.shape + (1,)
         result = mat.repeat(4, axis=-1)
         mat.shape = mat.shape[:-1]
         result *= color
         return result.flatten()
 
-def constant_sum(*params):
+def constant_sum(*params, target_sum=1.0):
+    """ Takes ActuatorManager.Parameter instances and returns a 'tick' function
+    that keeps their sum at 'target_sum' in case some of the values change. """
     lastvals = {(param, param.val) for param in params}
     def tick():
         # Pick parameters which were not updated since last tick
@@ -145,7 +153,7 @@ def constant_sum(*params):
 
         # Increase or decrease those parameters to fit the constant sum
         if len(unchanged) > 0:
-            overflow = sum([val for _, val in vals]) - 1
+            overflow = sum([val for _, val in vals]) - target_sum
             correction = -overflow/len(unchanged)
             for param, val in unchanged:
                 param.val = val + correction

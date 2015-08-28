@@ -152,19 +152,25 @@ class BLActuatorControl(bpy.types.Panel):
         for attr in dir(bpy.context.scene.actuators):
             if not attr.startswith('ACT_'):
                 continue
+            bl_actuator = getattr(bpy.context.scene.actuators, attr)
+
             row = layout.row()
-            layout.label(icon='FORCE_TURBULENCE',
+            row.label(icon='FORCE_TURBULENCE',
                 text='{}:'.format(attr[4:]).capitalize().replace('_', ' '))
+            col = row.column()
+            col.alignment = 'RIGHT'
+            col.prop(bl_actuator, 'HEAD_PARAM_enabled', text='On', toggle=True)
 
             # Draw UI for every parameter
-            bl_actuator = getattr(bpy.context.scene.actuators, attr)
-            for attr in dir(bl_actuator):
+            for attr in bl_actuator.parameter_order.split(';'):
                 if attr.startswith('PARAM_'):
                     row = layout.row()
                     row.prop(bl_actuator, attr, slider=True)
                 elif attr.startswith('IMG_'):
                     row = layout.row()
                     row.label(text='Open "{}" in image editor'.format(getattr(bl_actuator, attr)))
+                    ## The two lines below would render the image straight in
+                    ## the UI Panel, but the widget doesn't update properly.
                     # texture = bpy.data.textures[getattr(bl_actuator, attr)]
                     # row.template_preview(texture, show_buttons=False)
 
