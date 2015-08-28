@@ -1,7 +1,11 @@
 import inspect
 from collections import namedtuple
 from time import time as systime
-import bpy
+
+try:
+    import bpy
+except ImportError:
+    pass
 
 _context = None
 
@@ -13,7 +17,7 @@ def sleep(delay):
 
 
 actuator_functions = []
-def actuator(func):
+def new(func):
     actuator_functions.append(func)
     return func
 
