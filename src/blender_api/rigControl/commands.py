@@ -118,14 +118,6 @@ class EvaAPI(RigAPI):
         ## TODO
         return 0
 
-    def getGestureParams(self):
-        eva = bpy.evaAnimationManager
-        return {'eyeDartRate': round(eva.eyeDartRate, 3),
-                'eyeWander': round(eva.eyeWander, 3),
-                'blinkRate': round(eva.blinkRate, 3),
-                'blinkDuration': round(eva.blinkDuration, 3)}
-
-
     # Visemes --------------------------------------
     def availableVisemes(self):
         visemes = []

@@ -123,17 +123,6 @@ class BLRigControl(bpy.types.Panel):
         col.operator('eva.debug', text='Gaze Nil').action = 'commands.EvaAPI().setGazeTarget([0, 0, 0])'
 
         row = layout.row()
-        row.label(text="Physiological:")
-        eva = bpy.evaAnimationManager
-        bones = eva.deformObj.pose.bones
-        col = layout.column(align = True)
-        col.active = runningAnimation
-        col.prop(bones['eye_dart_rate'], '["value"]', text='eyeDartRate', slider = True)
-        col.prop(bones['eye_wander'], '["value"]', text='eyeWander', slider = True)
-        col.prop(bones['blink_rate'], '["value"]', text='blinkRate', slider = True)
-        col.prop(bones['blink_duration'], '["value"]', text='blinkDuration', slider = True)
-
-        row = layout.row()
         layout.label(text="Debug:")
         col = layout.column(align=True)
         col.operator('eva.debug', text='getAPIVersion()').action = 'commands.EvaAPI().getAPIVersion()'
@@ -142,7 +131,6 @@ class BLRigControl(bpy.types.Panel):
         col.operator('eva.debug', text='availableGestures()').action = 'commands.EvaAPI().availableGestures()'
         col.operator('eva.debug', text='getEmotionStates()').action = 'commands.EvaAPI().getEmotionStates()'
         col.operator('eva.debug', text='getGestures()').action = 'commands.EvaAPI().getGestures()'
-        col.operator('eva.debug', text='getGestureParams()').action = 'commands.EvaAPI().getGestureParams()'
         col.operator('eva.debug', text='getHeadData()').action = 'commands.EvaAPI().getHeadData()'
         col.operator('eva.debug', text='getNeckData()').action = 'commands.EvaAPI().getNeckData()'
         col.operator('eva.debug', text='getEyesData()').action = 'commands.EvaAPI().getEyesData()'

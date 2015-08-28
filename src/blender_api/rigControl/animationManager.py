@@ -60,17 +60,6 @@ class AnimationManager():
 
         self.actuatorManager = ActuatorManager()
 
-        # Autonomous (unconscious) behavior parameters
-        self.eyeDartRate = 1.0
-        self.eyeWander = 1.0
-        self.blinkRate = 0.0
-        self.blinkDuration = 0.0
-
-        # Emotional parameters
-        self.swiftness = 1.0
-        self.shyness = 1.0
-        self.idle = 0.0
-
         # Internal vars
         self._time = 0
         self.nextTrigger = {}
@@ -108,32 +97,6 @@ class AnimationManager():
         if debug:
             imp.reload(actuators)
 
-
-    def keepAlive(self, alive):
-        '''Called every frame, used to dispatch animation actuators'''
-        if alive:
-            self.idle += 1.0
-
-            # for cycle in self.cyclesSet:
-            #     actuators.doCycle(self, cycle)
-
-            # if True and self.randomFrequency('dart', self.eyeDartRate):
-            #     actuators.eyeSaccades(self, self.eyeWander)
-
-            # if True and self.randomFrequency('blink', self.blinkRate):
-            #     actuators.blink(self, self.blinkDuration)
-
-            # if True and self.randomFrequency('headTargetLoc', 1):
-            #     actuators.headDrift(self)
-
-            # if True and self.randomFrequency('emotionJitter', 20):
-            #     actuators.emotionJitter(self)
-
-        else:
-            for cycle in self.cyclesSet:
-                for gesture in self.gesturesList:
-                    if gesture.name == cycle.name:
-                        gesture.stripRef.mute = True
 
     # Show all attributes
     def __repr__(self):

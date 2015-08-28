@@ -197,13 +197,6 @@ class BLPlayback(bpy.types.Operator):
                         control['intensity'] = 0.0
 
 
-            # Read emotion parameters into eva
-            eva.eyeDartRate = eva.deformObj.pose.bones['eye_dart_rate']['value']
-            eva.eyeWander = eva.deformObj.pose.bones['eye_wander']['value']
-            eva.blinkRate = eva.deformObj.pose.bones['blink_rate']['value']
-            eva.blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
-
-
             if bpy.context.scene['keepAlive']:
                 # Take care of Cycles
                 # Ensure the strip is looping and sync strip props with cycle props.

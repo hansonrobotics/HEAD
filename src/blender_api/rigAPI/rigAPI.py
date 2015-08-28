@@ -46,9 +46,6 @@ class RigAPI:
     def stopGesture(self, gestureID, smoothing):
         return None
 
-    def getGestureParams(self):
-        return None
-
     # Visemes --------------------------------------
     def availableVisemes(self):
         return None
