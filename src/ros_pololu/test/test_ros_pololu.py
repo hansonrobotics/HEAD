@@ -79,14 +79,11 @@ class TestROSPololu(unittest.TestCase):
         pub, msg_class = rostopic.create_publisher(
             topic, 'ros_pololu/MotorCommand', True)
 
-        pub.publish(msg_class('EyeLid_L_R', 0.1, 2.0, 2.0))
         time.sleep(1)
+        pub.publish(msg_class('EyeLid_L_R', 0.1, 2.0, 2.0))
         pub.publish(msg_class('Eyelid_U_R', 0.1, 2.0, 2.0))
-        for i in range(3):
-            id, cmd, value = reader.read()
-            print "set motor %s %s value %s" % (id, cmd, value)
 
-        for i in range(3):
+        for i in range(6):
             id, cmd, value = reader.read()
             print "set motor %s %s value %s" % (id, cmd, value)
 
