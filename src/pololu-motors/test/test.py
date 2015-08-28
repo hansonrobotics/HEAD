@@ -25,23 +25,24 @@ class TestROSPololu(unittest.TestCase):
 
     def test_port_io(self):
         controller = Maestro(self.port0)
-        pulses = [6143, 6122, 5899, 5085, 5352, 5810, 6075, 6143]
-        for pulse in pulses:
-            controller.setAcceleration(12, 255)
-            controller.setSpeed(12, 256)
-            controller.setTarget(12, pulse)
-
         reader = PololuSerialReader(self.port1)
-        pulses_got = []
-        for i in range(3*len(pulses)):
-            id, cmd, value = reader.read()
-            if cmd == 'speed':
-                self.assertEqual(value, 256)
-            if cmd == 'accelaration':
-                self.assertEqual(value, 255)
-            if cmd == 'position':
-                pulses_got.append(value)
-        self.assertListEqual(pulses, pulses_got)
+        for i in range(10):
+            pulses = [6143, 6122, 5899, 5085, 5352, 5810, 6075, 6143]*100
+            for pulse in pulses:
+                controller.setAcceleration(12, 255)
+                controller.setSpeed(12, 256)
+                controller.setTarget(12, pulse)
+
+            pulses_got = []
+            for i in range(3*len(pulses)):
+                id, cmd, value = reader.read()
+                if cmd == 'speed':
+                    self.assertEqual(value, 256)
+                if cmd == 'accelaration':
+                    self.assertEqual(value, 255)
+                if cmd == 'position':
+                    pulses_got.append(value)
+            self.assertListEqual(pulses, pulses_got)
 
 if __name__ == '__main__':
     unittest.main()
