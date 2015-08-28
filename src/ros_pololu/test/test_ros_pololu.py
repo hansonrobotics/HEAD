@@ -73,17 +73,54 @@ class TestROSPololu(unittest.TestCase):
         for proc in self.socat_procs:
             os.killpg(proc.pid, 2)
 
-    def test_ros_message(self):
+    def test_right_pololu_message(self):
         reader = SerialReader('%s/right_pololu1' % CWD)
         topic = '/han/safe/right/command'
         pub, msg_class = rostopic.create_publisher(
             topic, 'ros_pololu/MotorCommand', True)
 
-        time.sleep(1)
-        pub.publish(msg_class('EyeLid_L_R', 0.1, 2.0, 2.0))
-        pub.publish(msg_class('Eyelid_U_R', 0.1, 2.0, 2.0))
+        time.sleep(3) # wait for pololu to be connected
 
-        for i in range(6):
+        loop = 100
+        for i in range(loop):
+            pub.publish(msg_class('EyeLid_L_R', 0.1, 2.0, 2.0)) # 2
+            pub.publish(msg_class('Eyelid_U_R', 0.1, 2.0, 2.0)) # 1
+
+        for i in range(3*2*loop):
+            id, cmd, value = reader.read()
+            print "set motor %s %s value %s" % (id, cmd, value)
+
+    def test_left_pololu_message(self):
+        reader = SerialReader('%s/left_pololu1' % CWD)
+        topic = '/han/safe/left/command'
+        pub, msg_class = rostopic.create_publisher(
+            topic, 'ros_pololu/MotorCommand', True)
+
+        time.sleep(3) # wait for pololu to be connected
+
+        loop = 100
+        for i in range(loop):
+            pub.publish(msg_class('EyeLid_L_L', 0.1, 2.0, 2.0))
+            pub.publish(msg_class('EyeLid_U_L', 0.1, 2.0, 2.0))
+
+        for i in range(3*2*loop):
+            id, cmd, value = reader.read()
+            print "set motor %s %s value %s" % (id, cmd, value)
+
+    def test_middle_pololu_message(self):
+        reader = SerialReader('%s/middle_pololu1' % CWD)
+        topic = '/han/safe/middle/command'
+        pub, msg_class = rostopic.create_publisher(
+            topic, 'ros_pololu/MotorCommand', True)
+
+        time.sleep(3) # wait for pololu to be connected
+
+        loop = 100
+        for i in range(loop):
+            pub.publish(msg_class('Brow_Inner_L', 0.1, 2.0, 2.0)) #1
+            pub.publish(msg_class('Inner_Brow_R_UD', 0.1, 2.0, 2.0)) #4
+
+        for i in range(3*2*loop):
             id, cmd, value = reader.read()
             print "set motor %s %s value %s" % (id, cmd, value)
 
