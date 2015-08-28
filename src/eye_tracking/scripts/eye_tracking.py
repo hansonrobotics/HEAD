@@ -81,16 +81,16 @@ class EyeTracking:
 
     def rotate(self):
         rows,cols = (self.cv_image.shape)[:2]
-
         M = cv2.getRotationMatrix2D((cols/2,rows/2),self.angle,1)
         self.cv_image = cv2.warpAffine(self.cv_image, M, (cols,rows))
 
     def resize(self):
         # crop image after rotation
         rows, cols = (self.cv_image.shape)[:2]
-        crop_rows = round(rows*self.crop)
-        crop_cols = round(cols*self.crop)
-        self.cv_image = self.cv_image[crop_rows:-crop_rows, crop_cols:-crop_cols]
+        if self.crop > 0:
+            crop_rows = round(rows*self.crop)
+            crop_cols = round(cols*self.crop)
+            self.cv_image = self.cv_image[crop_rows:-crop_rows, crop_cols:-crop_cols]
         # resize
         self.im_w  = int(cols * self.scale)
         self.im_h =  int(rows * self.scale)
