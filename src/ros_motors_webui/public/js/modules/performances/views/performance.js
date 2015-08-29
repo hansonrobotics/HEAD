@@ -7,8 +7,14 @@ define(['application'], function (App) {
                 'class': 'btn btn-default',
                 type: 'button'
             },
+            events: {
+                'click': 'click'
+            },
             onRender: function () {
                 this.$el.html(this.model.get('name'));
+            },
+            click: function () {
+                Views.trigger('performance:click', this.model);
             }
         });
     });

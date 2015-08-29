@@ -1,5 +1,5 @@
 define(['application', './views/layout', './views/performances', './views/timelines', './entities/performance',
-        './entities/timeline'],
+        './entities/timeline', './entities/node'],
     function (App) {
         return {
             performances: function () {
@@ -8,17 +8,23 @@ define(['application', './views/layout', './views/performances', './views/timeli
                 App.LayoutInstance.setTitle('Interactions and Performances');
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
 
-                this.timelineCollection = new App.Performances.Entities.TimelineCollection();
                 this.performanceCollection = new App.Performances.Entities.PerformanceCollection();
                 this.performanceCollection.testFetch();
-                this.timelineCollection.testFetch();
 
                 this.layoutView.getRegion('performances').show(new App.Performances.Views.Performances({
                     collection: this.performanceCollection
                 }));
-                this.layoutView.getRegion('timeline').show(new App.Performances.Views.Timelines({
-                    collection: this.timelineCollection
-                }));
+
+                var self = this;
+                App.Performances.Views.on('performance:click', function (performance) {
+                    self.timelineCollection = new App.Performances.Entities.TimelineCollection();
+                    self.timelineCollection.testFetch();
+
+                    self.layoutView.getRegion('timeline').show(new App.Performances.Views.Timelines({
+                        collection: self.timelineCollection,
+                        model: performance
+                    }));
+                });
             }
         };
     });

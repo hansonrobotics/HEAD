@@ -27,11 +27,22 @@
     margin: 0;
 }
 
-.app-timeline {
+.app-timeline-container {
     background-color: #4e5d6c;
     border-bottom: dotted 1px #2b3e50;
-    height: 20px;
+    height: 21px;
     width: 100%;
+}
+
+.app-timeline-nodes {
+    height: 20px;
+    max-height: 20px;
+    margin-left: 21px;
+    position: relative;
+}
+
+.app-timeline-nodes .app-node {
+    position: absolute;
 }
 
 .app-timeline-checkbox {
@@ -39,6 +50,7 @@
     width: 21px;
     margin: 0;
     border-right: 1px solid #2b3e50;
+    position: absolute;
 }
 
 .app-timeline-checkbox input[type="checkbox"] {
@@ -62,27 +74,26 @@
     margin-bottom: 5px;
 }
 
-.app-nodes {
+.app-nodes .app-node {
     margin-bottom: 10px;
 }
 
 .app-node {
+    position: relative;
     display: inline-block;
     line-height: 17px;
     height: 20px;
     text-align: left;
+    z-index: 999;
+    cursor: pointer;
 }
 
-.app-timeline .app-node {
-    padding-right: 15px;
+.app-node.active {
+    border: 1px solid #df691a;
 }
 
-.app-add-timeline-button {
-    /*padding: 2px 6px;*/
-    /*margin-top: 0;*/
-    /*text-align: left;*/
-    /*max-width: 100px;*/
-    /*margin-left: 21px;*/
+.app-timeline {
+    position: relative;
 }
 
 .select2-container {
@@ -104,4 +115,34 @@
 
 .app-timeline-actions button {
     margin-right: 1px;
+}
+
+.app-timeline-container {
+    overflow: visible;
+}
+
+.app-node-settings label {
+    display: block;
+    margin-top: 9px;
+    /*margin:     ;*/
+}
+
+.app-emotion-select {
+    width: 100%;
+}
+
+.app-node-settings hr:first-child {
+    margin: 9px 0 0px;
+}
+
+.app-node-settings hr:last-child {
+    margin: 9px 0;
+}
+
+.app-timeline-editor-container {
+    position: relative;
+}
+
+.app-timelines-container {
+    margin-bottom: 5px;
 }
