@@ -40,7 +40,7 @@ define(['jquery', 'jquery-ui'], function ($) {
             this._on(window, {
                 mouseup: "_stopDrag",
                 touchend: "_stopDrag"
-            })
+            });
 
             this._refresh();
         },

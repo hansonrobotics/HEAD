@@ -28,10 +28,14 @@
 }
 
 .app-timeline-container {
-    background-color: #4e5d6c;
-    border-bottom: dotted 1px #2b3e50;
     height: 21px;
     width: 100%;
+}
+
+.app-timeline-nodes,
+.app-timeline-checkbox
+{
+    background-color: #4e5d6c;
 }
 
 .app-timeline-nodes {
@@ -124,15 +128,10 @@
 .app-node-settings label {
     display: block;
     margin-top: 9px;
-    /*margin:     ;*/
-}
-
-.app-emotion-select {
-    width: 100%;
 }
 
 .app-node-settings hr:first-child {
-    margin: 9px 0 0px;
+    margin: 9px 0 0;
 }
 
 .app-node-settings hr:last-child {
@@ -145,4 +144,18 @@
 
 .app-timelines-container {
     margin-bottom: 5px;
+}
+
+.app-node-settings .select2-container {
+    width: 100%;
+}
+
+.app-node-settings .select2-choice,
+.app-node-settings .ui-slider {
+    height: 39px;
+    line-height: 39px;
+}
+
+.app-node-settings .app-crosshair {
+    margin-top: 10px;
 }

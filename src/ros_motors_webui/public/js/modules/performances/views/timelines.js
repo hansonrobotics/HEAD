@@ -30,7 +30,8 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 var node = new App.Performances.Entities.Node({
                     name: $(e.target).data('name'),
                     offset: 0,
-                    duration: 1
+                    duration: 1,
+                    text: ""
                 });
 
                 this.model.get('nodes').add(node);
@@ -48,12 +49,14 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
 
                     node.set('el', el);
                     node.on('change', function () {
-                        $(this.get('el')).animate({
-                            left: this.get('offset') * self.config.pxPerSec,
-                            width: this.get('duration') * self.config.pxPerSec
-                        });
+                        if (this.changed['offset'] || this.changed['duration']) {
+                            $(this.get('el')).animate({
+                                left: this.get('offset') * self.config.pxPerSec,
+                                width: this.get('duration') * self.config.pxPerSec
+                            });
 
-                        self.arrangeNodes();
+                            self.arrangeNodes();
+                        }
                     }).trigger('change');
                 }
 
@@ -128,6 +131,8 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 // remove empty timelines
                 while (this.children.last() && $('.app-node', this.children.last().ui.nodes).length == 0)
                     this.collection.pop();
+
+                this.updateTimelineWidth();
             },
             addTimeline: function () {
                 this.collection.add(new App.Performances.Entities.Timeline({}));
@@ -167,6 +172,24 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 var checked = this.ui.selectAll.prop('checked');
                 this.children.each(function (view) {
                     view.selected(checked);
+                });
+            },
+            updateTimelineWidth: function () {
+                var self = this,
+                    width = this.children.first().ui.nodes.width();
+
+                this.model.get('nodes').each(function (node) {
+                    console.log(node);
+                    console.log((node.get('offset') + node.get('duration')) * self.config.pxPerSec);
+                    width = Math.max(width, (node.get('offset') + node.get('duration')) * self.config.pxPerSec);
+                });
+
+                if (width == 0)
+                    width = '100%';
+
+                console.log(width);
+                this.children.each(function (timeline) {
+                    timeline.ui.nodes.css('width', width);
                 });
             }
         });
