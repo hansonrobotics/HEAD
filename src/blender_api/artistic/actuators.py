@@ -72,7 +72,7 @@ def saccade(self):
             lasttime = time
 
         # Apply offset to eye position
-        eyeTargetLoc.target.add(offset)
+        eyeTargetLoc.target_add(offset)
 
         # Yield execution until next frame
         time, dt = yield
@@ -83,19 +83,19 @@ class FaceProbabilityMap:
     ellipses. The image can then be updated via parameter sliders. """
 
     def __init__(self, actuator):
-        params = {
-            'eyeSize': bpy.props.FloatProperty(name='eye size', min=1.0, max=50, default=20),
-            'eyeDist': bpy.props.FloatProperty(name='eye distance', min=0.0, max=100, default=40),
-            'mouthWidth': bpy.props.FloatProperty(name='mouth width', min=1.0, max=100, default=50),
-            'mouthHeight': bpy.props.FloatProperty(name='mouth height', min=1.0, max=100, default=30),
-            'eyeWeight': bpy.props.FloatProperty(name='weight eyes', min=0.0, max=1.0, default=0.5),
-            'mouthWeight': bpy.props.FloatProperty(name='weight mouth', min=0.0, max=1.0, default=0.5)
-        }
-        for name, prop in params.items():
-            params[name] = actuator.add_parameter(prop)
-        self.params = params
+        param_list = [
+            ('eyeSize', bpy.props.FloatProperty(name='eye size', min=1.0, max=50, default=20)),
+            ('eyeDist', bpy.props.FloatProperty(name='eye distance', min=0.0, max=100, default=40)),
+            ('mouthWidth', bpy.props.FloatProperty(name='mouth width', min=1.0, max=100, default=50)),
+            ('mouthHeight', bpy.props.FloatProperty(name='mouth height', min=1.0, max=100, default=30)),
+            ('eyeWeight', bpy.props.FloatProperty(name='weight eyes', min=0.0, max=1.0, default=0.5)),
+            ('mouthWeight', bpy.props.FloatProperty(name='weight mouth', min=0.0, max=1.0, default=0.5))
+        ]
+        self.params = {}
+        for name, prop in param_list:
+            self.params[name] = actuator.add_parameter(prop)
 
-        self.constant_sum_tick = constant_sum(params['eyeWeight'], params['mouthWeight'])
+        self.constant_sum_tick = constant_sum(self.params['eyeWeight'], self.params['mouthWeight'])
 
         self.img_size = (100, 100)
         self.img = actuator.add_image('probabilities', self.img_size)

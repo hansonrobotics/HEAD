@@ -179,7 +179,8 @@ class AnimationManager():
                         found = True
 
                 if not found:
-                    emotion = Emotion(emotionName, magnitude = BlendedNum(data['magnitude'], transition=Transitions.moving_average(0.2)), duration = data['duration'])
+                    emotion = Emotion(emotionName, duration = data['duration'],
+                        magnitude=BlendedNum(0, Transitions.moving_average(0.2), target=data['magnitude']))
                     self.emotionsList.append(emotion)
 
 
@@ -293,7 +294,7 @@ class AnimationManager():
         '''Set the target used by eye and face tracking.'''
 
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.face_target_offset)
-        self.headTargetLoc.target.base = locBU
+        self.headTargetLoc.target = locBU
 
 
         # Change offset for the eyes
@@ -306,7 +307,7 @@ class AnimationManager():
                               Transitions.moving_average(duration=0.1)),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
         )
-        self.eyeTargetLoc.target.base = locBU
+        self.eyeTargetLoc.target = locBU
 
     def setGazeTarget(self, loc):
         '''Set the target used for eye tracking only.'''
@@ -317,7 +318,7 @@ class AnimationManager():
             Transitions.linear(speed=3),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
         )
-        self.eyeTargetLoc.target.base = locBU
+        self.eyeTargetLoc.target = locBU
 
     def setViseme(self):
         pass
@@ -390,7 +391,8 @@ class Viseme():
         self.time = 0 - startTime 		# -time is scheduled for the future (seconds)
                                         # 0 is happening right away
                                         # +time is animation in progress (seconds)
-        self.magnitude = BlendedNum(0, steps=2, smoothing=4) 	# normalized amplitude
+        self.magnitude = BlendedNum(0,
+            Transitions.smooth(speed=2, smoothing=0.2)) 	# normalized amplitude
         self.rampInRatio = rampInRatio 		# percentage of time spent blending in
         self.rampOutRatio = rampOutRatio 	# percentage of time spent blending out
         self.influence_kfp = influence_kfp  # Influence keyframe point to change influence

@@ -5,11 +5,11 @@ import random
 from time import time as systime
 
 class BlendedNum():
-    def __init__(self, value, transition=None):
+    def __init__(self, value, transition=None, target=None):
         value = _vectorize(value)
 
         self._current = value
-        self._target = Target(value)
+        self._target = Target(target if target is not None else value)
 
         self._transition = None
         self.transition = transition or Transitions.identity()
@@ -20,18 +20,21 @@ class BlendedNum():
 
     @property
     def target(self):
-        """ The target only has a getter to discourage overriding it.
-        Use one of two methods to set the target: target.base or target.add()."""
-        return self._target
+        return self._target.base
 
     @target.setter
     def target(self, val):
+        """ Set the target to move towards when 'blend' is called. """
         self._target.base = val
+
+    def target_add(self, val):
+        """ Add alterations to the base target value. These alterations are
+        cleared on every 'blend'. """
+        self._target.add(val)
 
     def blend(self, time, dt):
         """ Updates the 'current' value and clears any modifications added to
-        the 'target' with target.add(val) method (used by actuators,
-        procedural animations). """
+        the target with target_add(val). """
         target_val = self._target.clear()
         self._current = self.transition.send((target_val, time, dt))
         return self._current
@@ -60,11 +63,16 @@ class BlendedNum():
         self._transition = val
 
     def __repr__(self):
-        return "<BlendedNum current={} target.base={}>".format(
+        return "<BlendedNum current={} target_base={}>".format(
             self._current, self._target._base)
 
 
 class Transitions:
+
+    @staticmethod
+    def smooth(speed=1.0, smoothing=1.0):
+        return Transitions.chain(
+            Transitions.linear(speed), Transitions.moving_average(smoothing))
 
     @staticmethod
     def linear(speed):

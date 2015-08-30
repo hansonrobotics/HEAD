@@ -150,13 +150,13 @@ class BLPlayback(bpy.types.Operator):
                 rampPoint = viseme.duration * viseme.rampInRatio
                 if viseme.time <= rampPoint:
                     # compute ramp in factor
-                    viseme.magnitude.target.base = viseme.time / rampPoint
+                    viseme.magnitude.target = viseme.time / rampPoint
 
                 # ramp out to 0
                 rampOutPoint = viseme.duration - viseme.duration*viseme.rampOutRatio
                 if viseme.time >= rampOutPoint:
                     # compute ramp in factor
-                    viseme.magnitude.target.base = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
+                    viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
 
                 # update action
                 viseme.magnitude.blend(time, dt)
@@ -190,7 +190,7 @@ class BLPlayback(bpy.types.Operator):
                 emotion.magnitude.blend(time, dt)
 
                 if emotion.duration < 0:
-                    emotion.magnitude.target.base *= 0.99
+                    emotion.magnitude.target *= 0.99
 
                     if emotion.magnitude.current < 0.1:
                         eva.emotionsList.remove(emotion)
