@@ -244,7 +244,7 @@ class RosPololuNode:
 
     def set_acceleration(self, id, acceleation):
 
-        acceleation = int(255 * acceleation)
+        acceleation = 0 # FIXME: disable acceleration because pololu may have problem with acceleration
         rospy.loginfo('acceleation %s %s' % (id, acceleation))
         try:
             self.controller.setAcceleration(id, acceleation)
