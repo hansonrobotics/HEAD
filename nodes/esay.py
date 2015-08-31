@@ -1,6 +1,15 @@
-
  #!/usr/bin/python
+#
+"""
+This module translates simple markup into SSSML expressive markup which can be passed to TTS.
+esay_expand is the function which does the translation
+* key word or modifier  (may want to use on adjective of key word
+/ key word with pitch raise, emphasis, slow
+() key phrase
+Modify the dictionary expressive-subs to adjust the parameters
+If optional argument check=True, the proportion of key words is printed but not subsitition is performed
 
+"""
 import re
 
 expressive_subs={
@@ -16,7 +25,7 @@ def key_words(marked,mark_char):
     start=0
     print 'matching ', mark_char
     while (marked.find(mark_char,start))!=-1:
-        pos=marked.find(mark_char,start)#
+        pos=marked.find(mark_char,start)
         # find end of word marked by space, (, ), comma or semicolon.  Take min of returned
         end=[]
 
@@ -27,11 +36,10 @@ def key_words(marked,mark_char):
         end.append(marked.find(',',pos))
         end.append(marked.find('.',pos))
         end.append(marked.find(';',pos))
-        #end.append(marked.find('/',pos))
         # remove any -1 if we didn't find a possible word termination
         end=[x for x in end if x!=-1]
         end=min(end)
-        print 'key word ', marked[pos:end]
+        #print 'key word ', marked[pos:end]
         marked=marked[0:end]+key_word_end+marked[end:]
         marked=marked.replace(mark_char,expressive_subs[mark_char],1)
         # new end after append
