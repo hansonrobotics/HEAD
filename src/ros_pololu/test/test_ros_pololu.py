@@ -13,30 +13,10 @@ from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
 
+from testing_tools import PololuSerialReader
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'ros_pololu'
-CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
-
-class SerialReader(object):
-    def __init__(self, device):
-        self.ser = serial.Serial(device, baudrate=115200,
-                                bytesize=serial.EIGHTBITS,
-                                parity=serial.PARITY_NONE,
-                                stopbits=serial.STOPBITS_ONE,
-                                timeout=5, writeTimeout=None)
-
-    def read(self):
-        try:
-            num = self.ser.read(size=4)
-            id = ord(num[1])
-            cmd = CMD_DICT[str(ord(num[0]))]
-            value = ord(num[3])*128+ord(num[2])
-        except serial.SerialException as e:
-            raise e
-        except TypeError as e:
-            id, cmd, value = 0, '', 0
-        return (id, cmd, value)
 
 class TestROSPololu(unittest.TestCase):
 
@@ -74,7 +54,7 @@ class TestROSPololu(unittest.TestCase):
             os.killpg(proc.pid, 2)
 
     def test_right_pololu_message(self):
-        reader = SerialReader('%s/right_pololu1' % CWD)
+        reader = PololuSerialReader('%s/right_pololu1' % CWD)
         topic = '/han/right/command'
         pub, msg_class = rostopic.create_publisher(
             topic, 'ros_pololu/MotorCommand', True)
@@ -91,7 +71,7 @@ class TestROSPololu(unittest.TestCase):
             print "set motor %s %s value %s" % (id, cmd, value)
 
     def test_left_pololu_message(self):
-        reader = SerialReader('%s/left_pololu1' % CWD)
+        reader = PololuSerialReader('%s/left_pololu1' % CWD)
         topic = '/han/left/command'
         pub, msg_class = rostopic.create_publisher(
             topic, 'ros_pololu/MotorCommand', True)
@@ -108,7 +88,7 @@ class TestROSPololu(unittest.TestCase):
             print "set motor %s %s value %s" % (id, cmd, value)
 
     def test_middle_pololu_message(self):
-        reader = SerialReader('%s/middle_pololu1' % CWD)
+        reader = PololuSerialReader('%s/middle_pololu1' % CWD)
         topic = '/han/middle/command'
         pub, msg_class = rostopic.create_publisher(
             topic, 'ros_pololu/MotorCommand', True)

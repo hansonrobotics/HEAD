@@ -377,7 +377,7 @@ class PololuSerialReader(object):
             num = self.ser.read(size=4)
             id = ord(num[1])
             cmd = self.CMD_DICT[str(ord(num[0]))]
-            value = ord(num[3])*128+ord(num[2])
+            value = (ord(num[3])<<7) + ord(num[2])
         except serial.SerialException as e:
             raise e
         except TypeError as e:
