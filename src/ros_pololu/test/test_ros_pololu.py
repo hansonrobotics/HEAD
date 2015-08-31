@@ -53,7 +53,7 @@ class TestROSPololu(unittest.TestCase):
             '/han/pololu_left/port_name': ('left_pololu0', 'left_pololu1'),
             '/han/pololu_middle/port_name': ('middle_pololu0', 'middle_pololu1'),
             '/han/pololu_right/port_name': ('right_pololu0', 'right_pololu1'),
-            '/han/safe/dynamixel_manager/serial_ports/pan_tilt_port/port_name': ('ttyUSB0', 'ttyUSB1')
+            '/han/dynamixel_manager/serial_ports/pan_tilt_port/port_name': ('ttyUSB0', 'ttyUSB1')
         }
         for name, ports in serial_ports.items():
             port0 = '%s/%s' % (CWD, ports[0])
@@ -75,7 +75,7 @@ class TestROSPololu(unittest.TestCase):
 
     def test_right_pololu_message(self):
         reader = SerialReader('%s/right_pololu1' % CWD)
-        topic = '/han/safe/right/command'
+        topic = '/han/right/command'
         pub, msg_class = rostopic.create_publisher(
             topic, 'ros_pololu/MotorCommand', True)
 
@@ -92,7 +92,7 @@ class TestROSPololu(unittest.TestCase):
 
     def test_left_pololu_message(self):
         reader = SerialReader('%s/left_pololu1' % CWD)
-        topic = '/han/safe/left/command'
+        topic = '/han/left/command'
         pub, msg_class = rostopic.create_publisher(
             topic, 'ros_pololu/MotorCommand', True)
 
@@ -109,7 +109,7 @@ class TestROSPololu(unittest.TestCase):
 
     def test_middle_pololu_message(self):
         reader = SerialReader('%s/middle_pololu1' % CWD)
-        topic = '/han/safe/middle/command'
+        topic = '/han/middle/command'
         pub, msg_class = rostopic.create_publisher(
             topic, 'ros_pololu/MotorCommand', True)
 
