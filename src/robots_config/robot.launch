@@ -26,7 +26,7 @@
             <node pkg="topic_tools" type="mux" name="eyes_pau" args="eyes_pau head_pau eyes_tracking_pau mux:=eyes_pau_mux"/>
 
 
-            <node name="chatbot_ai" pkg="chatbot" type="ai.py" args="$(find chatbot)/aiml/">
+            <node name="chatbot_ai" pkg="chatbot" type="ai.py" args="/catkin_ws/src/chatbot/aiml/ -sent">
                 <param name="properties" value="$(find robots_config)/$(arg name)/bot.properties" />
             </node>
 

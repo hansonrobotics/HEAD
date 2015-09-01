@@ -30,7 +30,8 @@ __all__ = [
     'has_subscriber', 'wait_for_subscriber', 'wait_for_messages',
     'ThreadWorker', 'create_msg_listener', 'capture_screen', 'capture_camera',
     'startxvfb', 'stopxvfb', 'get_rosbag_file', 'get_data_path',
-    'add_text_to_video', 'concatenate_videos', 'MessageQueue'
+    'add_text_to_video', 'concatenate_videos', 'MessageQueue',
+    'PololuSerialReader'
     ]
 
 def run_shell_cmd(cmd, first=False):
@@ -358,6 +359,31 @@ class MessageQueue():
 
     def get(self):
         return self.queue.get()
+
+
+class PololuSerialReader(object):
+    CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
+
+    def __init__(self, device):
+        import serial
+        self.ser = serial.Serial(device, baudrate=115200,
+                                bytesize=serial.EIGHTBITS,
+                                parity=serial.PARITY_NONE,
+                                stopbits=serial.STOPBITS_ONE,
+                                timeout=5, writeTimeout=None)
+
+    def read(self):
+        try:
+            num = self.ser.read(size=4)
+            id = ord(num[1])
+            cmd = self.CMD_DICT[str(ord(num[0]))]
+            value = (ord(num[3])<<7) + ord(num[2])
+        except serial.SerialException as e:
+            raise e
+        except TypeError as e:
+            id, cmd, value = 0, '', 0
+        return (id, cmd, value)
+
 
 if __name__ == '__main__':
     name = 'face_in'
