@@ -31,7 +31,7 @@ __all__ = [
     'ThreadWorker', 'create_msg_listener', 'capture_screen', 'capture_camera',
     'startxvfb', 'stopxvfb', 'get_rosbag_file', 'get_data_path',
     'add_text_to_video', 'concatenate_videos', 'MessageQueue',
-    'check_if_ffmpeg_satisfied'
+    'check_if_ffmpeg_satisfied', 'check_if_sound_card_exists'
     ]
 
 def run_shell_cmd(cmd, first=False):
@@ -366,4 +366,8 @@ def check_if_ffmpeg_satisfied():
     configuration = [i.strip() for i in configuration.split(':')[1].split('--')]
     requires = ['enable-libx264', 'enable-libfreetype']
     return all([i in configuration for i in requires])
+
+def check_if_sound_card_exists():
+    snd_cards = run_shell_cmd('cat /proc/asound/cards')
+    return not 'no soundcards' in '\n'.join(snd_cards)
 
