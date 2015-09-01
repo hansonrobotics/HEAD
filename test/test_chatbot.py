@@ -12,7 +12,7 @@ import rospkg
 from roslaunch import core
 
 from std_msgs.msg import String
-from testing_tools import wait_for
+from testing_tools import wait_for, MessageQueue
 from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
@@ -46,17 +46,10 @@ class ChatbotTest(unittest.TestCase):
     def tearDown(self):
         self.runner.stop()
 
-    def cb(self, msg, queue=None):
-        if msg is not None:
-            self.msg = msg
-            if queue is not None:
-                queue.put(msg)
-
     def test_prologue(self):
         timeout = 5
-        from Queue import Queue
-        queue = Queue()
-        rospy.Subscriber('/chatbot_responses', String, self.cb, queue)
+        queue = MessageQueue()
+        queue.subscribe('/chatbot_responses', String)
         pub, msg_class = rostopic.create_publisher(
             '/chatbot_speech', 'chatbot/ChatMessage', True)
         pub.publish(msg_class('hi', 100))
@@ -69,3 +62,4 @@ class ChatbotTest(unittest.TestCase):
 if __name__ == '__main__':
     import rostest
     rostest.rosrun(PKG, 'chatbot', ChatbotTest)
+
