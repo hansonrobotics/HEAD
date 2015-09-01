@@ -161,16 +161,19 @@ class RosPololuNode:
         try:
             if self._controller_type == 'Maestro':
                 self.controller = Maestro(port)
+                print "Maestro started"
             if self._controller_type == 'MicroSSC':
                 self.controller = MicroSSC(port)
                 print "MicroSSC started"
-        except:
+        except Exception as ex:
             rospy.logerr("Error creating the motor controller")
+            rospy.logerr(ex)
             return
         # Listen for outputs from proxy
         if safety:
             topic_prefix = 'safe/'+topic_prefix
         rospy.Subscriber(topic_prefix + topic_name, MotorCommand, self.motor_command_callback)
+        rospy.loginfo("ros_pololu Subscribed to %s" % (topic_prefix + topic_name))
 
     def publish_motor_states(self):
         if self._sync == 'on':
@@ -239,7 +242,7 @@ class RosPololuNode:
 
     def set_acceleration(self, id, acceleation):
 
-        acceleation = int(255 * acceleation)
+        acceleation = 0 # FIXME: disable acceleration because pololu may have problem with acceleration
         try:
             self.controller.setAcceleration(id, acceleation)
         except AttributeError:
