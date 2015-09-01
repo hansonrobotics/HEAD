@@ -19,7 +19,8 @@ from blender_api_msgs.msg import EmotionState
 from std_msgs.msg import String
 from testing_tools import (wait_for, play_rosbag, create_msg_listener,
             capture_screen, capture_camera, startxvfb, stopxvfb,
-            get_rosbag_file, MessageQueue, check_if_ffmpeg_satisfied)
+            get_rosbag_file, MessageQueue, check_if_ffmpeg_satisfied,
+            check_if_sound_card_exists)
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'robots_config'
@@ -139,7 +140,8 @@ class RobotTest(unittest.TestCase):
         self.assertIn(emo_msg.name, new_arrival_emotions)
 
     @unittest.skipUnless(
-        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
+        check_if_ffmpeg_satisfied() and check_if_sound_card_exists(),
+        'Skip because ffmpeg is not satisfied or no sound cards.')
     def test_chat(self):
         import re
         r = re.compile('[\W_]+')
