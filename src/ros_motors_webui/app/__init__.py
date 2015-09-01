@@ -57,7 +57,8 @@ def reload_configs(motors,config_dir, robot_name):
 @app.route('/motors/update/<robot_name>', methods=['POST'])
 def update_motors(robot_name):
     motors = json.loads(request.get_data())
-
+    # get rid of false data
+    motors = [m for m in motors if 'hardware' in m.keys()]
     # write to motor config
     try:
         file_name = os.path.join(config_root,robot_name, 'motors_settings.yaml')
