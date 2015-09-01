@@ -2,15 +2,12 @@
 
 import unittest
 import os
-import sys
 import time
 import ConfigParser
 import shutil
 import glob
 
-import rospy
 import roslaunch
-import rosnode
 import rostopic
 import rospkg
 from roslaunch import core
@@ -18,7 +15,6 @@ from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
 
-from pi_face_tracker.msg import FaceEvent
 from blender_api_msgs.msg import EmotionState
 from std_msgs.msg import String
 from testing_tools import (wait_for, play_rosbag, create_msg_listener,

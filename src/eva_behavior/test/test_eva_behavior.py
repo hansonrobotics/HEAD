@@ -2,17 +2,15 @@
 
 import unittest
 import os
-import sys
 import time
 import ConfigParser
 
-import rospy
 import roslaunch
 from roslaunch import core
 import rostopic
 
-from blender_api_msgs.msg import SetGesture, EmotionState, Target
-from testing_tools import wait_for_message, create_msg_listener, MessageQueue
+from blender_api_msgs.msg import SetGesture, EmotionState
+from testing_tools import MessageQueue
 from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
@@ -38,7 +36,6 @@ class EvaBehaviorTest(unittest.TestCase):
         self.runner = roslaunch.launch.ROSLaunchRunner(
             self.run_id, config)
         self.runner.launch()
-        #rospy.init_node('test_eva_behavior')
 
     def tearDown(self):
         self.runner.stop()
@@ -51,18 +48,19 @@ class EvaBehaviorTest(unittest.TestCase):
             topic, 'std_msgs/String', True)
         pub.publish(msg_class(msg))
 
-    def test_btree_on_off(self):
-        timeout = 10
+    def test_btree_off(self):
         queue = MessageQueue()
         queue.subscribe('/blender_api/set_gesture', SetGesture)
         time.sleep(1)
         self.assertTrue(queue.queue.empty())
         self.behavior_switch('btree_on')
-        time.sleep(timeout)
-        self.assertTrue(not queue.queue.empty())
+        msg = queue.get()
+        self.assertTrue(msg is not None)
 
-        queue2 = MessageQueue()
-        queue2.subscribe('/blender_api/set_gesture', SetGesture)
+    def test_btree_on(self):
+        timeout = 30
+        queue = MessageQueue()
+        queue.subscribe('/blender_api/set_gesture', SetGesture)
         time.sleep(1)
         self.behavior_switch('btree_off')
         pub, msg_class = rostopic.create_publisher(
@@ -71,6 +69,7 @@ class EvaBehaviorTest(unittest.TestCase):
         time.sleep(timeout)
         self.assertTrue(queue.queue.empty())
 
+    @unittest.skip("Not stable")
     def test_face_interaction1(self):
         positive_gestures = [
             x.strip() for x in self.behavior_config.get(
@@ -105,6 +104,7 @@ class EvaBehaviorTest(unittest.TestCase):
         self.assertTrue(set(['happy']) | set(emotions))
         self.assertTrue(set(positive_gestures) & set(gestures))
 
+    @unittest.skip("Not stable")
     def test_face_interaction2(self):
         new_arrival_emotions = [
             x.strip() for x in self.behavior_config.get(

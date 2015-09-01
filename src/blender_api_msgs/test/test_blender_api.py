@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import unittest
-import rospy
 import os
 import sys
 import time
@@ -13,10 +12,9 @@ import rostopic
 import rosbag
 import rosnode
 from roslaunch import core
-from testing_tools import (wait_for, wait_for_message, wait_for_messages,
-        startxvfb, stopxvfb, capture_screen, run_shell_cmd, add_text_to_video,
-        concatenate_videos, play_rosbag, rosbag_msg_generator, get_rosbag_file,
-        check_if_ffmpeg_satisfied)
+from testing_tools import (wait_for, startxvfb, stopxvfb, capture_screen,
+        run_shell_cmd, add_text_to_video, concatenate_videos,
+        rosbag_msg_generator, get_rosbag_file, check_if_ffmpeg_satisfied)
 from blender_api_msgs.msg import *
 from genpy import Duration
 
