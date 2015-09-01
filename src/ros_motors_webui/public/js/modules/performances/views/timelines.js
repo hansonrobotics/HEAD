@@ -14,17 +14,32 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 selectAll: '.app-timeline-select-all input',
                 nodes: '.app-nodes .app-node',
                 nodesContainer: '.app-nodes',
-                nodeSettings: '.app-node-settings'
+                nodeSettings: '.app-node-settings',
+                scrollContainer: '.app-scroll-container',
+                performanceName: '.app-performance-name',
+                saveButton: '.app-save-button'
             },
             events: {
                 'click @ui.addButton': 'addTimeline',
                 'click @ui.removeButton': 'removeSelected',
                 'click @ui.selectAll': 'selectAll',
-                'click @ui.nodes': 'nodeClicked'
+                'click @ui.nodes': 'nodeClicked',
+                'click @ui.saveButton': 'saveClicked',
+                'keyup @ui.performanceName': 'setPerformanceName'
             },
-            onRender: function () {
-                $(this.ui.timelines).scrollbar({});
+            onShow: function () {
+                this.addTimeline();
+                $(this.ui.scrollContainer).scrollbar({});
+                var self = this;
+                this.model.get('nodes').each(function (node) {
+                    self.createNodeEl(node);
+                });
+
+                this.arrangeNodes();
                 this.model.get('nodes').bind('add', this.addNode, this);
+            },
+            onDestroy: function () {
+                this.model.get('nodes').unbind('add', this.addNode, this);
             },
             nodeClicked: function (e) {
                 var node = new App.Performances.Entities.Node({
@@ -37,29 +52,36 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 this.model.get('nodes').add(node);
                 this.showNodeSettings(node);
             },
+            createNodeEl: function (node) {
+                var self = this,
+                    el = $('.app-node[data-name="' + node.get('name') + '"]', this.ui.nodesContainer).clone().get(0);
+
+                // show node settings on click
+                $(el).on('click', function () {
+                    self.showNodeSettings(node);
+                });
+
+                var updateNodeMetrics = function (model) {
+                    $(model.get('el')).animate({
+                        left: model.get('offset') * self.config.pxPerSec,
+                        width: model.get('duration') * self.config.pxPerSec
+                    })
+                };
+
+                node.set('el', el);
+                node.on('change', function (model) {
+                    if (typeof model.changed['offset'] != 'undefined' ||
+                        typeof model.changed['duration'] != 'undefined'
+                    ) {
+                        updateNodeMetrics(model);
+                        self.arrangeNodes();
+                    }
+                });
+
+                updateNodeMetrics(node);
+            },
             addNode: function (node) {
-                if (!node.get('el')) {
-                    var self = this,
-                        el = $('.app-node[data-name="' + node.get('name') + '"]', this.ui.nodesContainer).clone().get(0);
-
-                    // show node settings on click
-                    $(el).on('click', function () {
-                        self.showNodeSettings(node);
-                    });
-
-                    node.set('el', el);
-                    node.on('change', function () {
-                        if (this.changed['offset'] || this.changed['duration']) {
-                            $(this.get('el')).animate({
-                                left: this.get('offset') * self.config.pxPerSec,
-                                width: this.get('duration') * self.config.pxPerSec
-                            });
-
-                            self.arrangeNodes();
-                        }
-                    }).trigger('change');
-                }
-
+                this.createNodeEl(node);
                 this.arrangeNodes();
             },
             showNodeSettings: function (node) {
@@ -135,7 +157,7 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 this.updateTimelineWidth();
             },
             addTimeline: function () {
-                this.collection.add(new App.Performances.Entities.Timeline({}));
+                this.collection.add(new Backbone.Model({}));
             },
             removeSelected: function () {
                 var self = this,
@@ -153,8 +175,11 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
 
                 // remove last timeline if none selected
                 if (!any && self.collection.length > 0) {
-                    nodes = $('.app-node', this.children.last().el).toArray();
-                    self.collection.pop();
+                    if (this.children.last()) {
+                        nodes = $('.app-node', this.children.last().el).toArray();
+                        if (nodes.length > 0)
+                            self.collection.pop();
+                    }
                 }
 
                 // destroy node models
@@ -175,22 +200,27 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 });
             },
             updateTimelineWidth: function () {
-                var self = this,
-                    width = this.children.first().ui.nodes.width();
+                if (this.children.length > 0) {
+                    var self = this,
+                        width = this.children.first().ui.nodes.width();
 
-                this.model.get('nodes').each(function (node) {
-                    console.log(node);
-                    console.log((node.get('offset') + node.get('duration')) * self.config.pxPerSec);
-                    width = Math.max(width, (node.get('offset') + node.get('duration')) * self.config.pxPerSec);
-                });
+                    this.model.get('nodes').each(function (node) {
+                        width = Math.max(width, (node.get('offset') + node.get('duration')) * self.config.pxPerSec);
+                    });
 
-                if (width == 0)
-                    width = '100%';
+                    if (width == 0)
+                        width = '100%';
 
-                console.log(width);
-                this.children.each(function (timeline) {
-                    timeline.ui.nodes.css('width', width);
-                });
+                    this.children.each(function (timeline) {
+                        timeline.ui.nodes.css('width', width);
+                    });
+                }
+            },
+            setPerformanceName: function () {
+                this.model.set('name', this.ui.performanceName.val());
+            },
+            saveClicked: function () {
+                Views.trigger('performances:save');
             }
         });
     });

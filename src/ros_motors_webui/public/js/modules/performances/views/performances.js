@@ -3,7 +3,19 @@ define(['application', 'tpl!./templates/performances.tpl', './performance'], fun
         Views.Performances = Marionette.CompositeView.extend({
             template: template,
             childView: App.Performances.Views.Performance,
-            childViewContainer: '.app-performances'
+            childViewContainer: '.app-performances',
+            ui: {
+                newButton: '.app-new'
+            },
+            events: {
+                'click @ui.newButton': 'addNew'
+            },
+            addChild: function(child, ChildView, index){
+                Marionette.CollectionView.prototype.addChild.apply(this, arguments);
+            },
+            addNew: function () {
+                this.collection.add(new App.Performances.Entities.Performance({name: 'New performance'}));
+            }
         });
     });
 });

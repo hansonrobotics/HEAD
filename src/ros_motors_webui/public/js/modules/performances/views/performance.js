@@ -4,16 +4,21 @@ define(['application'], function (App) {
             tagName: 'button',
             template: false,
             attributes: {
-                'class': 'btn btn-default',
+                'class': 'app-performance-button btn btn-default',
                 type: 'button'
             },
             events: {
                 'click': 'click'
             },
+            modelEvents: {
+                'change': 'render'
+            },
             onRender: function () {
                 this.$el.html(this.model.get('name'));
             },
-            click: function () {
+            click: function (e) {
+                $('.app-performance-button').removeClass('active');
+                $(e.target).addClass('active');
                 Views.trigger('performance:click', this.model);
             }
         });

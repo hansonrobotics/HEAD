@@ -104,6 +104,24 @@ def update_animations(robot_name):
     return json_encode(True)
 
 
+@app.route('/performances/get/<robot_name>', methods=['GET'])
+def get_performances(robot_name):
+    performances = read_yaml(os.path.join(config_root,robot_name, 'performances.yaml'))
+    return json_encode(performances)
+
+@app.route('/performances/update/<robot_name>', methods=['POST'])
+def update_performances(robot_name):
+    performances = json.loads(request.get_data())
+
+    try:
+        file_name = os.path.join(config_root, robot_name, 'performances.yaml')
+        write_yaml(file_name, performances)
+    except Exception as e:
+        return json_encode({'error': str(e)})
+
+    return json_encode({'error': False})
+
+
 def write_yaml(file_name, data):
     # delete existing config
     try:

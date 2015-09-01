@@ -5,8 +5,7 @@ define(['application', 'tpl!./templates/timeline.tpl', 'jquery-ui', '../entities
             className: 'app-timeline-container',
             ui: {
                 checkbox: '.app-timeline-checkbox input',
-                nodes: '.app-timeline-nodes',
-                nodesContainer: '.app-nodes'
+                nodes: '.app-timeline-nodes'
             },
             onRender: function () {
                 //var self = this;

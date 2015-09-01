@@ -165,6 +165,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.available_gestures.subscribe(function (message) {
                 success(message.data);
             });
+            success(['Gesture1', 'Gesture2'])
         },
         /**
          * Set a gesture
@@ -204,6 +205,8 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.available_emotion_states.subscribe(function (message) {
                 success(message.data);
             });
+
+            success(['test1', 'test2']);
         },
 
         /**
