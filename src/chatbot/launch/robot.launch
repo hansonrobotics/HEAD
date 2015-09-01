@@ -1,0 +1,4 @@
+<launch>
+  <node name="chatbot_ai" pkg="chatbot" type="ai.py" args="$(find chatbot)/aiml/" />
+  <node name="soundplay_node" pkg="sound_play" type="soundplay_node.py"/>
+</launch>

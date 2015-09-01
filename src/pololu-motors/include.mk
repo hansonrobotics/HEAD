@@ -1,0 +1,9 @@
+#
+# include.mk
+#
+
+# Pololu Motors version info.
+MAJORVERSION	= 0
+MINORVERSION	= 2
+PATCHLEVEL	= 1
+VERSION		= ${MAJORVERSION}.${MINORVERSION}.${PATCHLEVEL}

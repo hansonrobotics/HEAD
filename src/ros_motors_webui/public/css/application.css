@@ -1,0 +1,67 @@
+body {
+    margin-top: 40px;
+}
+
+#logo {
+    padding-right: 10px;
+    height: 20px;
+}
+
+.text-muted {
+    color: #738392;
+}
+
+.glyphicon.white {
+    color: #CCC;
+}
+
+.app-page {
+    display: none;
+}
+
+.expression-button, .app-animation-button, .animation-control {
+    margin: 0 5px 5px 0;
+    padding: 5px 10px;
+}
+
+.app-animation-button {
+    width: 90px;
+}
+
+.animation-control {
+    margin: 0;
+    width: 58px;
+}
+
+#notifications {
+    margin-top: 10px;
+}
+
+#notifications .label {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#app-page-interaction {
+    padding-top: 20px;
+}
+
+.app-expressions.expression-buttons div {
+    float: left;
+}
+
+.ui-state-highlight {
+    height: 132px;
+    padding: 5px;
+    background: #4e5d6c;
+    border: solid 1px #df691a;
+}
+
+.ui-sortable-helper {
+    background-color: #2b3e50;
+    border: solid 1px #df691a;
+    padding: 10px 5px 5px;
+}
+
+.top-buffer { margin-top:20px; }
+.bottom-buffer { margin-bottom:20px; }

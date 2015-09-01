@@ -1,0 +1,118 @@
+#
+# Demo neck yaml file.
+# Used for testing and development of complex neck mechanisms.
+# Splits a single quaternion from blender 50%-50% between the
+# upper and the lower neck mechanisms.
+
+pau2motors:
+    # --- topics to be published: one per motor
+    topics:
+        neck_pau: Upper-Gimbal-L;Upper-Gimbal-R;Lower-Gimbal-L;Lower-Gimbal-R;Neck-Rotation
+
+
+motors:
+  # ---Neck---
+  # A linear scaling at the end of each stanza allows adjustments for
+  # the actual motor zero/neutral values.
+
+  - name: Upper-Gimbal-L
+    topic: Upper_Gimbal_L
+    labelleft: Upper-Gimbal-L
+    default: 0
+    min: -0.798
+    max: 1.917
+    sort_no: 29
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2split
+          axis: upleft
+        - name: linear
+          scale: -1.0
+          translate: 0
+
+  - name: Upper-Gimbal-R
+    topic: Upper_Gimbal_R
+    labelleft: Upper-Gimbal-R
+    default: 0
+    min: -2.086
+    max: 0.813
+    sort_no: 30
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2split
+          axis: upright
+        - name: linear
+          scale: -1.0
+          translate: 0
+
+  - name: Lower-Gimbal-L
+    topic: Lower_Gimbal_L
+    labelleft: Lower-Gimbal-L
+    default: 0
+    min: -1.246
+    max: 0.595
+    sort_no: 31
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2split
+          axis: loleft
+        - name: linear
+          scale: -1.0
+          translate: 0
+
+  - name: Lower-Gimbal-R
+    topic: Lower_Gimbal_R
+    labelleft: Lower-Gimbal-R
+    default: 0
+    min: -0.506
+    max: 1.485
+    sort_no: 32
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2split
+          axis: loright
+        - name: linear
+          scale: -1.0
+          translate: 0
+
+  - name: Neck-Rotation
+    topic: Neck_Rotation
+    labelleft: Neck-Rotation
+    default: 0
+    min: -1.325
+    max: 1.282
+    sort_no: 33
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2split
+          axis: yaw
+          # The neck motor is geared 2-1 and is upside-down
+        - name: linear
+          scale: 2.0
+          translate: 0
+

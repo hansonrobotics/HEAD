@@ -1,0 +1,48 @@
+Gesture state machine mockup
+
+			idle		yawn		scan		think		Blink
+idle		.80			.84			0.8			0.8 		0.3
+yawn		.01			0.01		0.05		0.1			0.2
+scan		.06			0.1			0.06 		.05			0.1
+think		.03			0.05		0.05		.0 			0.1
+blink		0.1			0.1			0.1			.05  		0.3
+
+
+pros:	clean, easy to implement FSM
+cons:	each emotion requires a different state machines for optimum realism
+		harders to design/config
+
+
+
+Metric based emotional behavior: Each emotional state defines these metrics, seprate controllers uses these values accordingly:
+
+Blink Frequency: 1.0
+Blink Speed: 2.0
+Breathing Frequency: 2.0
+Breathing Intensity: 2.0
+Swiftness:
+Shyness:
+
+
+controllers:
+	blink
+	breathing
+	gestures
+	emotions
+	tracking
+
+
+Emotional values:
+All values taper to neutral, except bored. Which increases when no other actions are played.
+
+surprised
+sad
+recoil
+irratated
+happy
+confused
+engaged
+bored
+afraid
+sleep
+
