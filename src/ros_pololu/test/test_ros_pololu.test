@@ -1,0 +1,5 @@
+<launch>
+    <param name="/run_id" value="test_ros_pololu" />
+    <test name="ros_pololu" pkg="ros_pololu" type="test_ros_pololu.py" test-name="test_ros_pololu" />
+</launch>
+

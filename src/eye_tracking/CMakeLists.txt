@@ -1,13 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ros_pololu)
+project(eye_tracking)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS
-  std_msgs
-  message_generation
-)
+find_package(catkin REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -43,10 +40,11 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-  add_message_files(
-   FILES
-   MotorCommand.msg
-  )
+# add_message_files(
+#   FILES
+#   Message1.msg
+#   Message2.msg
+# )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -63,10 +61,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-  generate_messages(
-   DEPENDENCIES
-   std_msgs
-  )
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs  # Or other packages containing msgs
+# )
 
 ###################################
 ## catkin specific configuration ##
@@ -79,8 +77,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES ros_pololu
-#  CATKIN_DEPENDS std_msgs
+#  LIBRARIES eye_tracking
+#  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
 
@@ -91,24 +89,21 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
 
 ## Declare a cpp library
-# add_library(ros_pololu
-#   src/${PROJECT_NAME}/ros_pololu.cpp
+# add_library(eye_tracking
+#   src/${PROJECT_NAME}/eye_tracking.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(ros_pololu_node src/ros_pololu_node.cpp)
+# add_executable(eye_tracking_node src/eye_tracking_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(ros_pololu_node ros_pololu_generate_messages_cpp)
+# add_dependencies(eye_tracking_node eye_tracking_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(ros_pololu_node
+# target_link_libraries(eye_tracking_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -127,7 +122,7 @@ include_directories(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS ros_pololu ros_pololu_node
+# install(TARGETS eye_tracking eye_tracking_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -152,12 +147,10 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_ros_pololu.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_eye_tracking.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-find_package(catkin COMPONENTS rostest)
-add_rostest(test/test_ros_pololu.test)

@@ -1,0 +1,32 @@
+<launch>
+    <param name="/run_id" value="test_ros_pololu" />
+
+    <group ns="/han">
+        <node name="pololu_left" pkg="ros_pololu" type="ros_pololu_node.py" respawn="True">
+            <param name="pololu_motors_yaml" value="$(find robots_config)/han/left.yaml" />
+            <param name="port_name" value="" />
+            <param name="topic_prefix" value="left/" />
+            <param name="controller" value="Maestro" />
+            <param name="sync" value="off" />
+        </node>
+
+        <node name="pololu_right" pkg="ros_pololu" type="ros_pololu_node.py" respawn="True">
+            <param name="pololu_motors_yaml" value="$(find robots_config)/han/right.yaml" />
+            <param name="port_name" value="" />
+            <param name="topic_prefix" value="right/" />
+            <param name="controller" value="Maestro" />
+            <param name="sync" value="off" />
+            <param name="delay" value="1" />
+        </node>
+
+        <node name="pololu_middle" pkg="ros_pololu" type="ros_pololu_node.py" respawn="True">
+            <param name="pololu_motors_yaml" value="$(find robots_config)/han/middle.yaml" />
+            <param name="port_name" value="" />
+            <param name="topic_prefix" value="middle/" />
+            <param name="controller" value="Maestro" />
+            <param name="sync" value="off" />
+            <param name="delay" value="2" />
+        </node>
+    </group>
+</launch>
+
