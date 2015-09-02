@@ -39,12 +39,7 @@ define(['backgrid', 'jquery', 'backgrid_text_cell'], function (Backgrid, $) {
     }, {
         name: "min",
         label: "Min",
-        cell: "integer",
-        formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-            toRaw: function (val, model) {
-                return $.isNumeric(val) && $.isNumeric(model.get('max')) && val > model.get('max') ? undefined : val;
-            }
-        })
+        cell: "integer"
     }, {
         name: "init",
         label: "Init",
@@ -52,12 +47,7 @@ define(['backgrid', 'jquery', 'backgrid_text_cell'], function (Backgrid, $) {
     }, {
         name: "max",
         label: "Max",
-        cell: "integer",
-        formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-            toRaw: function (val, model) {
-                return $.isNumeric(model.get('min')) && $.isNumeric(val) && val < model.get('min') ? undefined : val;
-            }
-        })
+        cell: "integer"
     }, {
         name: "speed",
         label: "Speed",
