@@ -66,8 +66,6 @@ def update_motors(robot_name):
         write_yaml(file_name, motors)
     except Exception as e:
         return json_encode({'error': str(e)})
-    # Kill processes to reload configs. Respawn should be launched
-    kill_node("/"+robot_name+"/pau2motors")
     return json_encode({'error': False})
 
 

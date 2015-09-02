@@ -136,6 +136,7 @@ class RosPololuNode:
         self._sync = rospy.get_param("~sync", "off")
         self._controller_type = rospy.get_param("~controller", "Maestro")
         self._motors = {}
+        self.idle = False
         if rospy.has_param("~pololu_motors_yaml"):
             config_yaml = rospy.get_param("~pololu_motors_yaml")
             try:
@@ -166,8 +167,9 @@ class RosPololuNode:
                 self.controller = MicroSSC(port)
                 print "MicroSSC started"
         except Exception as ex:
-            rospy.logerr("Error creating the motor controller")
-            rospy.logerr(ex)
+            rospy.logwarn("Error creating the motor controller")
+            rospy.logwarn(ex)
+            self.idle = True
             return
         # Listen for outputs from proxy
         if safety:
@@ -191,6 +193,8 @@ class RosPololuNode:
             self.controller.clean()
 
     def motor_command_callback(self, msg):
+        if self.idle:
+            return
         pulse = 0
         motor_id = 0
         if msg.joint_name in self._motors.keys():
