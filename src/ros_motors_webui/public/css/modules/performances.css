@@ -163,3 +163,16 @@
 .app-node-settings .app-crosshair {
     margin-top: 10px;
 }
+
+.app-timelines {
+    position: relative;
+}
+
+.app-run-indicator {
+    position: absolute;
+    height: 100%;
+    width: 2px;
+    background-color: #df691a;
+    z-index: 9999;
+    margin-left: 21px;
+}

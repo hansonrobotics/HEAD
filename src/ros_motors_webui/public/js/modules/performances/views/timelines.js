@@ -17,7 +17,11 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 nodeSettings: '.app-node-settings',
                 scrollContainer: '.app-scroll-container',
                 performanceName: '.app-performance-name',
-                saveButton: '.app-save-button'
+                saveButton: '.app-save-button',
+                runButton: '.app-run-button',
+                loopButton: '.app-loop-button',
+                clearButton: '.app-clear-button',
+                runIndicator: '.app-run-indicator'
             },
             events: {
                 'click @ui.addButton': 'addTimeline',
@@ -25,9 +29,12 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 'click @ui.selectAll': 'selectAll',
                 'click @ui.nodes': 'nodeClicked',
                 'click @ui.saveButton': 'saveClicked',
-                'keyup @ui.performanceName': 'setPerformanceName'
+                'keyup @ui.performanceName': 'setPerformanceName',
+                'click @ui.runButton': 'runPerformance',
+                'click @ui.loopButton': 'loopPerformance'
             },
             onShow: function () {
+                this.ui.runIndicator.hide();
                 this.addTimeline();
                 $(this.ui.scrollContainer).scrollbar({});
                 var self = this;
@@ -199,16 +206,24 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                     view.selected(checked);
                 });
             },
-            updateTimelineWidth: function () {
+            getTimelineWidth: function () {
+                var self = this,
+                    width = 0;
+
                 if (this.children.length > 0) {
-                    var self = this,
-                        width = this.children.first().ui.nodes.width();
 
                     this.model.get('nodes').each(function (node) {
                         width = Math.max(width, (node.get('offset') + node.get('duration')) * self.config.pxPerSec);
                     });
+                }
 
-                    if (width == 0)
+                return width;
+            },
+            updateTimelineWidth: function () {
+                if (this.children.length > 0) {
+                    var width = this.getTimelineWidth();
+
+                    if (width < this.children.first().ui.nodes.width())
                         width = '100%';
 
                     this.children.each(function (timeline) {
@@ -221,6 +236,19 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             },
             saveClicked: function () {
                 Views.trigger('performances:save');
+            },
+            runPerformance: function () {
+                var width = this.getTimelineWidth(),
+                    time = width / this.config.pxPerSec;
+
+                this.ui.runIndicator.css('left', 0).fadeIn().animate({left: width}, time * 1000, 'linear', function () {
+                    $(this).fadeOut();
+                });
+
+                this.model.run();
+            },
+            loopPerformance: function () {
+                
             }
         });
     });

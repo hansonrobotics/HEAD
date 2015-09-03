@@ -22,7 +22,9 @@
 
         <div class="app-timelines-container">
             <div class="app-scroll-container">
-                <div class="app-timelines"></div>
+                <div class="app-timelines">
+                    <div class="app-run-indicator"></div>
+                </div>
             </div>
             <div class="app-timeline-actions clearfix">
                 <div class="app-timeline-select-all checkbox pull-left">
@@ -44,13 +46,13 @@
         </div>
 
         <div class="btn-group" role="group" aria-label="...">
-            <button class="app-save-performance-button btn btn-default" title="Save"><i
+            <button class="app-run-button btn btn-default" title="Save"><i
                         class="glyphicon glyphicon-play-circle"></i> Run
             </button>
-            <button class="app-add-timeline-button btn btn-default" title="Save"><i
+            <button class="app-loop-button btn btn-default" title="Save"><i
                         class="glyphicon glyphicon-repeat"></i> Loop
             </button>
-            <button class="app-add-timeline-button btn btn-default" title="Save"><i
+            <button class="app-clear-button btn btn-default" title="Save"><i
                         class="glyphicon glyphicon-remove"></i> Clear
             </button>
         </div>

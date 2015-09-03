@@ -10,6 +10,13 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 }
 
                 this.set('nodes', nodes);
+            },
+            run: function () {
+                this.get('nodes').each(function (node) {
+                    setTimeout(function () {
+                        node.call();
+                    }, node.get('offset') * 1000)
+                });
             }
         });
         Entities.PerformanceCollection = Backbone.Collection.extend({

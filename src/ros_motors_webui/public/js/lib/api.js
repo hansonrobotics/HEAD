@@ -165,7 +165,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.available_gestures.subscribe(function (message) {
                 success(message.data);
             });
-            success(['Gesture1', 'Gesture2'])
         },
         /**
          * Set a gesture
@@ -205,10 +204,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.available_emotion_states.subscribe(function (message) {
                 success(message.data);
             });
-
-            success(['test1', 'test2']);
         },
-
         /**
          * Set an emotion, call multiple times to blend emotions together
          *
@@ -228,6 +224,22 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                     name: name,
                     magnitude: magnitude,
                     duration: duration
+                })
+            );
+        },
+        setFaceTarget: function (x, y, z) {
+            api.topics.set_face_target.publish(
+                new ROSLIB.Message({
+                    x: x,
+                    y: y,
+                    z: z
+                })
+            );
+        },
+        robotSpeech: function (text) {
+            api.topics.chatbot_responses.publish(
+                new ROSLIB.Message({
+                    data: text
                 })
             );
         },
