@@ -52,7 +52,7 @@
     <% } %>
 
     <div class="col-md-2">
-        <button class="app-delete-button btn btn-default">Delete</button>
+        <button class="app-delete-node-button btn btn-default">Delete</button>
     </div>
 </div>
 <hr/>

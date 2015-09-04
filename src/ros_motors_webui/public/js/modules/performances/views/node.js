@@ -12,7 +12,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     startTime: '.app-node-start-time',
                     duration: '.app-node-duration',
                     crosshair: '.app-crosshair',
-                    deleteButton: '.app-delete-button'
+                    deleteButton: '.app-delete-node-button'
                 },
                 events: {
                     'change @ui.duration': 'setDuration',
