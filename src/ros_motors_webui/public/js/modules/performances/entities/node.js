@@ -10,7 +10,7 @@ define(['application', 'lib/api'], function (App, api) {
                         api.setGesture(this.get('emotion'), this.get('magnitude'), this.get('duration'));
                         break;
                     case 'look_at':
-                        api.setFaceTarget(this.get('x'), 0, this.get('y'));
+                        api.setFaceTarget(this.get('x'), 0.3, -this.get('y'));
                         break;
                     case 'speech':
                         api.robotSpeech(this.get('text'));

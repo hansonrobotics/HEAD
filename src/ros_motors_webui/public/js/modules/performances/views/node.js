@@ -95,15 +95,17 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 buildCrosshair: function () {
                     var self = this;
                     $(this.ui.crosshair).crosshairsl($.extend({}, {
-                        xmin: Math.floor(utilities.radToDeg(-1)),
-                        xmax: Math.ceil(utilities.radToDeg(1)),
-                        xval: this.model.get('x') ? this.model.get('x') : Math.round(utilities.radToDeg(0)),
-                        ymin: Math.floor(utilities.radToDeg(-0.6)),
-                        ymax: Math.ceil(utilities.radToDeg(0.6)),
-                        yval: this.model.get('y') ? this.model.get('y') : Math.round(utilities.radToDeg(0)),
+                        xmin: -1.5,
+                        xmax: 1.5,
+                        xval: this.model.get('x') ? this.model.get('x') : 0,
+                        ymin: -1.5,
+                        ymax: 1.5,
+                        yval: this.model.get('y') ? this.model.get('y') : 0,
                         change: function (e, ui) {
                             self.model.set('x', ui.xval);
                             self.model.set('y', ui.yval);
+
+                            self.model.call();
                         }
                     }, {
                         bgColor: "#485563",
