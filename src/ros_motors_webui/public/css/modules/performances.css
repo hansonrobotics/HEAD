@@ -45,37 +45,11 @@
 .app-timeline-nodes {
     height: 20px;
     max-height: 20px;
-    margin-left: 21px;
     position: relative;
 }
 
 .app-timeline-nodes .app-node {
     position: absolute;
-}
-
-.app-timeline-checkbox {
-    height: 20px;
-    width: 21px;
-    margin: 0;
-    border-right: 1px solid #2b3e50;
-    position: absolute;
-}
-
-.app-timeline-checkbox input[type="checkbox"] {
-    margin: 3px 0 0 4px;
-}
-
-.app-timeline-select-all {
-    background-color: #4e5d6c;
-    height: 30px;
-    width: 21px;
-    border-right: 1px solid #2b3e50;
-    margin: 0;
-
-}
-
-.app-timeline-select-all input[type="checkbox"] {
-    margin: 9px 0 0 4px;
 }
 
 .app-timeline-editor {
@@ -144,6 +118,7 @@
 
 .app-timeline-editor-container {
     position: relative;
+    margin-bottom: 10px;
 }
 
 .app-timelines-container {
@@ -152,6 +127,10 @@
 
 .app-node-settings .select2-container {
     width: 100%;
+}
+
+.app-node-settings .btn {
+    margin-top: 31px;
 }
 
 .app-node-settings .select2-choice,
@@ -174,5 +153,4 @@
     width: 2px;
     background-color: #df691a;
     z-index: 9999;
-    margin-left: 21px;
 }

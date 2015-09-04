@@ -6,19 +6,21 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 template: template,
                 ui: {
                     magnitudeSlider: '.app-magnitide-slider',
-                    emotionSelect: '.app-emotion-select',
-                    gestureSelect: '.app-gesture-select',
+                    emotionSelect: 'select.app-emotion-select',
+                    gestureSelect: 'select.app-gesture-select',
                     textInput: '.app-node-text',
-                    offset: '.app-node-offset',
+                    startTime: '.app-node-start-time',
                     duration: '.app-node-duration',
-                    crosshair: '.app-crosshair'
+                    crosshair: '.app-crosshair',
+                    deleteButton: '.app-delete-button'
                 },
                 events: {
                     'change @ui.duration': 'setDuration',
-                    'change @ui.offset': 'setOffset',
+                    'change @ui.startTime': 'setStartTime',
                     'keyup @ui.textInput': 'setText',
                     'change @ui.emotionSelect': 'setEmotion',
-                    'change @ui.gestureSelect': 'setGesture'
+                    'change @ui.gestureSelect': 'setGesture',
+                    'click @ui.deleteButton': 'deleteNode'
                 },
                 modelEvents: {
                     "change": "modelChanged"
@@ -29,7 +31,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     if (_.contains(['emotion', 'gesture'], this.model.get('name'))) {
                         this.ui.magnitudeSlider.slider({
                             range: 'min',
-                            value: this.model.get('magnitude') ? this.model.get('magnitude') : 50,
+                            value: this.model.get('magnitude') ? this.model.get('magnitude') : 100,
                             slide: function (e, ui) {
                                 self.model.set('magnitude', ui.value)
                             }
@@ -41,27 +43,27 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             // load emotions
                             api.getAvailableEmotionStates(function (emotions) {
                                 _.each(emotions, function (emotion) {
-                                    self.ui.emotionSelect.append($('<option>').prop('value', emotion).html(emotion));
+                                    $(self.ui.emotionSelect).append($('<option>').prop('value', emotion).html(emotion));
                                 });
 
                                 if (self.model.get('emotion'))
-                                    self.ui.emotionSelect.val(self.model.get('emotion'));
+                                    $(self.ui.emotionSelect).val(self.model.get('emotion'));
 
-                                self.ui.emotionSelect.select2();
+                                $(self.ui.emotionSelect).select2();
                             });
                             break;
                         case 'gesture':
                             // load gestures
                             api.getAvailableGestures(function (gestures) {
                                 _.each(gestures, function (gesture) {
-                                    self.ui.gestureSelect.append($('<option>').prop('value', gesture).html(gesture));
-                                })
+                                    $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
+                                });
+
+                                if (self.model.get('gesture'))
+                                    $(self.ui.gestureSelect).val(self.model.get('gesture'));
+
+                                $(self.ui.gestureSelect).select2();
                             });
-
-                            if (self.model.get('gesture'))
-                                self.ui.gestureSelect.val(self.model.get('gesture'));
-
-                            self.ui.gestureSelect.select2({value: this.model.get('gesture')});
 
                             break;
                         case 'look_at':
@@ -79,7 +81,6 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     this.model.set('duration', Number($(this.ui.duration).val()));
                 },
                 setText: function () {
-                    console.log(this.ui.textInput.val());
                     this.model.set('text', this.ui.textInput.val());
                 },
                 setEmotion: function () {
@@ -88,8 +89,8 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 setGesture: function () {
                     this.model.set('gesture', this.ui.gestureSelect.val());
                 },
-                setOffset: function () {
-                    this.model.set('offset', Number($(this.ui.offset).val()));
+                setStartTime: function () {
+                    this.model.set('start_time', Number($(this.ui.startTime).val()));
                 },
                 buildCrosshair: function () {
                     var self = this;
@@ -108,6 +109,14 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                         bgColor: "#485563",
                         fgColor: "#fff"
                     }));
+                },
+                deleteNode: function () {
+                    var self = this;
+
+                    this.model.destroy();
+                    this.$el.slideUp(null, function () {
+                        self.destroy();
+                    });
                 }
             });
         });

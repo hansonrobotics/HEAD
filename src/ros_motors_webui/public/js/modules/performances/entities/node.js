@@ -22,6 +22,13 @@ define(['application', 'lib/api'], function (App, api) {
                 if (this.get('el')) delete json['el'];
 
                 return json;
+            },
+            destroy: function () {
+                // remove an associated element
+                if (this.get('el'))
+                    $(this.get('el')).remove();
+
+                Backbone.Model.prototype.destroy.call(this);
             }
         });
         Entities.NodeCollection = Backbone.Collection.extend({

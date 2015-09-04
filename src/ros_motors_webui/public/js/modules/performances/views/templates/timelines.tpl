@@ -5,6 +5,11 @@
             <input class="app-performance-name form-control" type="text" value="<%= name %>"/>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="btn-group" role="group">
+            <button class="app-delete-button btn btn-default">Delete</button>
+        </div>
+    </div>
 </div>
 
 <div class="app-timeline-editor-container row">
@@ -26,17 +31,6 @@
                     <div class="app-run-indicator"></div>
                 </div>
             </div>
-            <div class="app-timeline-actions clearfix">
-                <div class="app-timeline-select-all checkbox pull-left">
-                    <input type="checkbox" title="Select all"/>
-                </div>
-                <!--<button type="button" class="app-add-timeline-button btn btn-default btn-sm pull-left"-->
-                <!--title="Add timeline"><i class="glyphicon glyphicon-plus"></i> add-->
-                <!--</button>-->
-                <button type="button" class="app-remove-timeline-button btn btn-default btn-sm pull-left"
-                        title="Remove selected"><i class="glyphicon glyphicon-remove"></i> remove
-                </button>
-            </div>
         </div>
 
         <div class="btn-group" role="group" aria-label="...">
@@ -49,9 +43,9 @@
             <button class="app-run-button btn btn-default" title="Save"><i
                         class="glyphicon glyphicon-play-circle"></i> Run
             </button>
-            <button class="app-loop-button btn btn-default" title="Save"><i
-                        class="glyphicon glyphicon-repeat"></i> Loop
-            </button>
+            <!--<button class="app-loop-button btn btn-default" title="Save"><i-->
+            <!--class="glyphicon glyphicon-repeat"></i> Loop-->
+            <!--</button>-->
             <button class="app-clear-button btn btn-default" title="Save"><i
                         class="glyphicon glyphicon-remove"></i> Clear
             </button>

@@ -15,7 +15,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 this.get('nodes').each(function (node) {
                     setTimeout(function () {
                         node.call();
-                    }, node.get('offset') * 1000)
+                    }, node.get('start_time') * 1000)
                 });
             }
         });

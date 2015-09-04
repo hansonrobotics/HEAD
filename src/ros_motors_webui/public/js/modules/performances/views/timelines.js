@@ -21,29 +21,34 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 runButton: '.app-run-button',
                 loopButton: '.app-loop-button',
                 clearButton: '.app-clear-button',
-                runIndicator: '.app-run-indicator'
+                runIndicator: '.app-run-indicator',
+                deleteButton: '.app-delete-button'
             },
             events: {
                 'click @ui.addButton': 'addTimeline',
                 'click @ui.removeButton': 'removeSelected',
                 'click @ui.selectAll': 'selectAll',
                 'click @ui.nodes': 'nodeClicked',
-                'click @ui.saveButton': 'saveClicked',
+                'click @ui.saveButton': 'savePerformances',
                 'keyup @ui.performanceName': 'setPerformanceName',
                 'click @ui.runButton': 'runPerformance',
-                'click @ui.loopButton': 'loopPerformance'
+                'click @ui.loopButton': 'loopPerformance',
+                'click @ui.clearButton': 'clearPerformance',
+                'click @ui.deleteButton': 'deletePerformance'
             },
             onShow: function () {
+                var self = this;
                 this.ui.runIndicator.hide();
                 this.addTimeline();
+
                 $(this.ui.scrollContainer).scrollbar({});
-                var self = this;
                 this.model.get('nodes').each(function (node) {
                     self.createNodeEl(node);
                 });
 
                 this.arrangeNodes();
                 this.model.get('nodes').bind('add', this.addNode, this);
+                this.model.get('nodes').bind('remove', this.arrangeNodes, this);
             },
             onDestroy: function () {
                 this.model.get('nodes').unbind('add', this.addNode, this);
@@ -51,7 +56,7 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             nodeClicked: function (e) {
                 var node = new App.Performances.Entities.Node({
                     name: $(e.target).data('name'),
-                    offset: 0,
+                    start_time: 0,
                     duration: 1,
                     text: ""
                 });
@@ -70,14 +75,14 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
 
                 var updateNodeMetrics = function (model) {
                     $(model.get('el')).animate({
-                        left: model.get('offset') * self.config.pxPerSec,
+                        left: model.get('start_time') * self.config.pxPerSec,
                         width: model.get('duration') * self.config.pxPerSec
                     })
                 };
 
                 node.set('el', el);
                 node.on('change', function (model) {
-                    if (typeof model.changed['offset'] != 'undefined' ||
+                    if (typeof model.changed['start_time'] != 'undefined' ||
                         typeof model.changed['duration'] != 'undefined'
                     ) {
                         updateNodeMetrics(model);
@@ -117,7 +122,7 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                     available = false;
 
                 this.model.get('nodes').each(function (node) {
-                    var begin = node.get('offset'),
+                    var begin = node.get('start_time'),
                         end = begin + node.get('duration');
 
                     self.children.every(function (view) {
@@ -127,7 +132,7 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                             var model = self.model.get('nodes').findWhere({'el': el});
 
                             if (model && model != node) {
-                                var compareBegin = model.get('offset'),
+                                var compareBegin = model.get('start_time'),
                                     compareEnd = compareBegin + model.get('duration');
 
                                 // check if intersects
@@ -166,40 +171,6 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             addTimeline: function () {
                 this.collection.add(new Backbone.Model({}));
             },
-            removeSelected: function () {
-                var self = this,
-                    any = false,
-                    nodes = [];
-
-                // remove selected
-                this.children.each(function (view) {
-                    if (view.selected()) {
-                        nodes = _.union(nodes, $('.app-node', view.el).toArray());
-                        self.collection.remove(view.model);
-                        any = true;
-                    }
-                });
-
-                // remove last timeline if none selected
-                if (!any && self.collection.length > 0) {
-                    if (this.children.last()) {
-                        nodes = $('.app-node', this.children.last().el).toArray();
-                        if (nodes.length > 0)
-                            self.collection.pop();
-                    }
-                }
-
-                // destroy node models
-                _.each(nodes, function (el) {
-                    var node = self.model.get('nodes').findWhere({'el': el});
-
-                    if (node)
-                        node.destroy();
-                });
-
-                // uncheck select all checkbox
-                this.ui.removeButton.prop('checked', false);
-            },
             selectAll: function () {
                 var checked = this.ui.selectAll.prop('checked');
                 this.children.each(function (view) {
@@ -213,7 +184,7 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 if (this.children.length > 0) {
 
                     this.model.get('nodes').each(function (node) {
-                        width = Math.max(width, (node.get('offset') + node.get('duration')) * self.config.pxPerSec);
+                        width = Math.max(width, (node.get('start_time') + node.get('duration')) * self.config.pxPerSec);
                     });
                 }
 
@@ -234,7 +205,7 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             setPerformanceName: function () {
                 this.model.set('name', this.ui.performanceName.val());
             },
-            saveClicked: function () {
+            savePerformances: function () {
                 Views.trigger('performances:save');
             },
             runPerformance: function () {
@@ -249,6 +220,35 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             },
             loopPerformance: function () {
                 
+            },
+            clearPerformance: function () {
+                var self = this,
+                    nodes = [];
+
+                this.children.each(function (view) {
+                    // store node el's
+                    nodes = _.union(nodes, $('.app-node', view.el).toArray());
+
+                    // remove timeline model
+                    self.collection.remove(view.model);
+                });
+
+                // delete nodes
+                _.each(nodes, function (el) {
+                    var node = self.model.get('nodes').findWhere({'el': el});
+
+                    if (node)
+                        node.destroy();
+                });
+            },
+            deletePerformance: function () {
+                var self = this;
+
+                this.$el.fadeOut(null, function () {
+                    self.model.destroy();
+                    self.savePerformances();
+                    self.destroy();
+                })
             }
         });
     });
