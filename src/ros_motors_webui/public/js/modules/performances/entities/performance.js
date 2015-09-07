@@ -3,7 +3,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
         Entities.Performance = Backbone.Model.extend({
             initialize: function (options) {
                 var nodes = new App.Performances.Entities.NodeCollection();
-                if (options.nodes) {
+                if (options && options.nodes) {
                     _.each(options.nodes, function (attrs) {
                         nodes.add(new Entities.Node(attrs));
                     });
@@ -17,6 +17,17 @@ define(['application', 'lib/api', './node'], function (App, api) {
                         node.call();
                     }, node.get('start_time') * 1000)
                 });
+            },
+            getDuration: function () {
+                var duration = 0;
+
+                if (this.get('nodes')) {
+                    this.get('nodes').each(function (node) {
+                        duration = Math.max(duration, node.get('start_time') + node.get('duration'));
+                    });
+                }
+
+                return duration;
             }
         });
         Entities.PerformanceCollection = Backbone.Collection.extend({

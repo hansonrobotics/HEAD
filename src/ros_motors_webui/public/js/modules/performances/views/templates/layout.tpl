@@ -23,53 +23,5 @@
 
     <div class="app-performances-region"></div>
     <div class="app-timeline-region"></div>
-
-
-    <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-            <!--<div class="clearfix">-->
-                <!--<h4 class="pull-left">Event queue</h4>-->
-                <!--<button id="app-clear-performance-queue" class="pull-right btn btn-default">-->
-                    <!--<span class="glyphicon glyphicon-trash"></span>-->
-                    <!--Clear all-->
-                <!--</button>-->
-            <!--</div>-->
-
-            <!--<ul id="app-performance-queue" class="list-group">-->
-                <!--<li class="list-group-item">-->
-                    <!--<span class="pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>-->
-                    <!--Introduce-->
-                    <!--<div class="pull-right">-->
-                        <!--<span class="label label-primary">duration: 1 sec</span>-->
-
-                        <!--<button type="button" class="pull-right btn btn-danger">-->
-                            <!--<span class="glyphicon glyphicon-trash"></span>-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</li>-->
-                <!--<li class="list-group-item">-->
-                    <!--<span class="pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>-->
-                    <!--Tell a joke-->
-                    <!--<div class="pull-right">-->
-                        <!--<span class="label label-primary">duration: 3 sec</span>-->
-
-                        <!--<button type="button" class="pull-right btn btn-danger">-->
-                            <!--<span class="glyphicon glyphicon-trash"></span>-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</li>-->
-                <!--<li class="list-group-item">-->
-                    <!--<span class="pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>-->
-                    <!--Do something else-->
-                    <!--<div class="pull-right">-->
-                        <!--<span class="label label-primary">duration: 2 sec</span>-->
-
-                        <!--<button type="button" class="pull-right btn btn-danger">-->
-                            <!--<span class="glyphicon glyphicon-trash"></span>-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="app-performance-queue-container"></div>
 </div>

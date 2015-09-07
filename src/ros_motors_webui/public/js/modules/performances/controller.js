@@ -1,18 +1,27 @@
-define(['application', 'backbone', './views/layout', './views/performances', './views/timelines', './entities/performance',
-        './entities/node'],
+define(['application', 'backbone', './views/layout', './views/performances', './entities/performance',
+        './entities/node', './views/queue'],
     function (App, Backbone) {
         return {
             performances: function () {
-                var layoutView = new App.Performances.Views.Layout(),
-                    performanceCollection = new App.Performances.Entities.PerformanceCollection();
+                var performanceCollection = new App.Performances.Entities.PerformanceCollection(),
+                    layoutView = new App.Performances.Views.Layout(),
+                    performanceQueueView = new App.Performances.Views.Queue({
+                        layoutView: layoutView
+                    });
+
                 performanceCollection.fetch();
 
+                // show page
                 App.LayoutInstance.setTitle('Interactions and Performances');
                 App.LayoutInstance.getRegion('content').show(layoutView);
 
+                // show performance buttons
                 layoutView.getRegion('performances').show(new App.Performances.Views.Performances({
                     collection: performanceCollection
                 }));
+
+                // show queue
+                layoutView.getRegion('queue').show(performanceQueueView);
 
                 // remove previous event handlers
                 App.Performances.Views.off('performance:click');
@@ -20,11 +29,8 @@ define(['application', 'backbone', './views/layout', './views/performances', './
 
                 // add events
                 App.Performances.Views.on('performance:click', function (performance) {
-                    layoutView.getRegion('timeline').destroy();
-                    layoutView.getRegion('timeline').show(new App.Performances.Views.Timelines({
-                        collection: new Backbone.Collection(),
-                        model: performance
-                    }));
+                    // add to queue
+                    performanceQueueView.addPerformance(performance);
                 }).on('performances:save', function () {
                     performanceCollection.save();
                 });

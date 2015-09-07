@@ -8,12 +8,16 @@
     margin-bottom: 10px;
 }
 
-#app-performance-queue span.ui-icon {
+.app-performance-queue {
+    margin-bottom: 10px;
+}
+
+.app-performance-queue span.ui-icon {
     margin-right: 10px;
     cursor: move;
 }
 
-#app-performance-queue button {
+.app-performance-queue button {
     height: 21px;
     width: 21px;
     padding: 2px;
@@ -21,13 +25,13 @@
     position: relative;
 }
 
-#app-performance-queue button span {
+.app-performance-queue button span {
     position: absolute;
     left: 1px;
     top: 3px;
 }
 
-#app-clear-performance-queue {
+.app-clear-performance-queue {
     margin: 0;
 }
 
@@ -153,4 +157,12 @@
     width: 2px;
     background-color: #df691a;
     z-index: 9999;
+}
+
+.app-performance-template {
+    display: none;
+}
+
+.app-performance-queue .ui-state-highlight {
+    height: 38px;
 }

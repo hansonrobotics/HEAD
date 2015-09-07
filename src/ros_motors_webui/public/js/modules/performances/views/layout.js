@@ -11,6 +11,10 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'ven
                     timeline: {
                         el: '.app-timeline-region',
                         regionClass: FadeInRegion
+                    },
+                    queue: {
+                        el: '.app-performance-queue-container',
+                        regionClass: FadeInRegion
                     }
                 }
             });

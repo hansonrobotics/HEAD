@@ -19,10 +19,10 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 performanceName: '.app-performance-name',
                 saveButton: '.app-save-button',
                 runButton: '.app-run-button',
-                loopButton: '.app-loop-button',
                 clearButton: '.app-clear-button',
                 runIndicator: '.app-run-indicator',
-                deleteButton: '.app-delete-button'
+                deleteButton: '.app-delete-button',
+                editElements: '.app-edit-container'
             },
             events: {
                 'click @ui.addButton': 'addTimeline',
@@ -32,14 +32,14 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 'click @ui.saveButton': 'savePerformances',
                 'keyup @ui.performanceName': 'setPerformanceName',
                 'click @ui.runButton': 'runPerformance',
-                'click @ui.loopButton': 'loopPerformance',
                 'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance'
             },
             onShow: function () {
                 var self = this;
+
                 this.ui.runIndicator.hide();
-                this.addTimeline();
+                this.ui.editElements.hide();
 
                 $(this.ui.scrollContainer).scrollbar({});
                 this.model.get('nodes').each(function (node) {
@@ -47,6 +47,7 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 });
 
                 this.arrangeNodes();
+
                 this.model.get('nodes').bind('add', this.addNode, this);
                 this.model.get('nodes').bind('remove', this.arrangeNodes, this);
             },
@@ -178,17 +179,7 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 });
             },
             getTimelineWidth: function () {
-                var self = this,
-                    width = 0;
-
-                if (this.children.length > 0) {
-
-                    this.model.get('nodes').each(function (node) {
-                        width = Math.max(width, (node.get('start_time') + node.get('duration')) * self.config.pxPerSec);
-                    });
-                }
-
-                return width;
+                return this.model.getDuration() * this.config.pxPerSec;
             },
             updateTimelineWidth: function () {
                 if (this.children.length > 0) {
@@ -208,18 +199,17 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             savePerformances: function () {
                 Views.trigger('performances:save');
             },
-            runPerformance: function () {
-                var width = this.getTimelineWidth(),
-                    time = width / this.config.pxPerSec;
+            runPerformance: function (finishedCallback) {
+                var time = this.model.getDuration(),
+                    width = time * this.config.pxPerSec;
 
-                this.ui.runIndicator.css('left', 0).fadeIn().animate({left: width}, time * 1000, 'linear', function () {
+                $(this.ui.runIndicator).css('left', 0).fadeIn().animate({left: width}, time * 1000, 'linear', function () {
                     $(this).fadeOut();
+                    if (typeof finishedCallback == 'function')
+                        finishedCallback();
                 });
 
                 this.model.run();
-            },
-            loopPerformance: function () {
-                
             },
             clearPerformance: function () {
                 var self = this,
@@ -249,6 +239,12 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                     self.savePerformances();
                     self.destroy();
                 })
+            },
+            enableEdit: function () {
+                $(this.ui.editElements).fadeIn();
+            },
+            disableEdit: function () {
+                $(this.ui.editElements).fadeOut();
             }
         });
     });

@@ -51,6 +51,7 @@ body {
 }
 
 .ui-state-highlight {
+    list-style: none;
     height: 132px;
     padding: 5px;
     background: #4e5d6c;
