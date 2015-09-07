@@ -31,8 +31,11 @@ class ChatbotTest(unittest.TestCase):
                 name='chatbot_ai')
             )
         robots_config_path = rospkg.RosPack().get_path('robots_config')
+        self.bot_property_file = '%s/sophia/bot.properties' % robots_config_path
+        with open(self.bot_property_file) as f:
+            self.properties = dict([l.split('=') for l in f.read().splitlines()])
         config.add_param(core.Param(
-            '/chatbot_ai/properties', '%s/sophia/bot.properties' % robots_config_path))
+            '/chatbot_ai/properties', self.bot_property_file))
         self.runner = roslaunch.launch.ROSLaunchRunner(
             self.run_id, config, is_rostest=True)
         self.runner.launch()
@@ -57,7 +60,7 @@ class ChatbotTest(unittest.TestCase):
         self.assertIn(msg.data, ['Hi there!', 'How are you?'])
         pub.publish(msg_class('what\'s your name', 100))
         msg = queue.get(timeout=timeout)
-        self.assertIn('Sophia', msg.data)
+        self.assertIn(self.properties['name'], msg.data)
 
 if __name__ == '__main__':
     import rostest
