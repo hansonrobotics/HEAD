@@ -18,6 +18,7 @@ import tempfile
 import signal
 import shutil
 from Queue import Queue
+from datetime import datetime
 
 logger = logging.getLogger('testing_tools')
 
@@ -188,7 +189,6 @@ def rosbag_msg_generator(bag_file, topics=None):
 
     pubs = {}
     for topic, message, timestamp in bag.read_messages(topics=topics, raw=True):
-        #yield topic, message, timestamp
         msg_type = message[4]
         data = message[1]
         if topic in pubs:
@@ -199,7 +199,8 @@ def rosbag_msg_generator(bag_file, topics=None):
         msg = msg_type()
         msg.deserialize(data)
         pub.publish(msg)
-        yield topic, msg
+        timestamp = datetime.fromtimestamp(timestamp.to_sec())
+        yield topic, msg, timestamp
     bag.close()
 
 def wait_for_message(topic, topic_class, timeout):
