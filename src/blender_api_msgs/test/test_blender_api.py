@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import unittest
-import rospy
 import os
 import sys
 import time
@@ -13,11 +12,9 @@ import rostopic
 import rosbag
 import rosnode
 from roslaunch import core
-from testing_tools import (wait_for, wait_for_message, wait_for_messages,
-                            startxvfb, stopxvfb, capture_screen,
-                            run_shell_cmd, add_text_to_video,
-                            concatenate_videos, play_rosbag,
-                            rosbag_msg_generator, get_rosbag_file)
+from testing_tools import (wait_for, startxvfb, stopxvfb, capture_screen,
+        run_shell_cmd, add_text_to_video, concatenate_videos,
+        rosbag_msg_generator, get_rosbag_file, check_if_ffmpeg_satisfied)
 from blender_api_msgs.msg import *
 from genpy import Duration
 
@@ -40,7 +37,7 @@ class BlenderAPITest(unittest.TestCase):
         config.add_node(
             core.Node(
                 package='blender_api_msgs', node_type='blender',
-                args='-y %s/Eva.blend -P %s/autostart.py' % (
+                args='-y %s/Sophia.blend -P %s/autostart.py' % (
                         blender_api_path, blender_api_path),
                 name='blender_api')
             )
@@ -78,6 +75,8 @@ class BlenderAPITest(unittest.TestCase):
                 concatenate_videos(videos, ofile, False)
 
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_emotion_state(self):
         available_emotions = parse_msg(run_shell_cmd(
             'rostopic echo -n1 /blender_api/available_emotion_states', True))
@@ -96,6 +95,8 @@ class BlenderAPITest(unittest.TestCase):
         concatenate_videos(videos, ofile, True)
         pub.unregister()
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_gesture(self):
         available_gestures = parse_msg(run_shell_cmd(
             'rostopic echo -n1 /blender_api/available_gestures', True))
@@ -115,6 +116,8 @@ class BlenderAPITest(unittest.TestCase):
         concatenate_videos(videos, ofile, True)
         pub.unregister()
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_viseme(self):
         available_visemes = parse_msg(run_shell_cmd(
             'rostopic echo -n1 /blender_api/available_visemes', True))
@@ -135,6 +138,8 @@ class BlenderAPITest(unittest.TestCase):
         concatenate_videos(videos, ofile, True)
         pub.unregister()
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_gaze_target(self):
         pub, msg_class = rostopic.create_publisher(
             '/blender_api/set_gaze_target',
@@ -157,6 +162,8 @@ class BlenderAPITest(unittest.TestCase):
         concatenate_videos(videos, ofile, True)
         pub.unregister()
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_face_target(self):
         pub, msg_class = rostopic.create_publisher(
             '/blender_api/set_face_target',
@@ -194,10 +201,13 @@ class BlenderAPITest(unittest.TestCase):
             time.sleep(wait)
         # Test if blender is still alive
         self.assertIn('/blender_api', rosnode.get_node_names())
-        self.assertIn('blender_api-1', self.runner.pm.get_active_names())
+        self.assertTrue(
+            any(['blender_api' in name for name in self.runner.pm.get_active_names()])
+        )
 
 
 if __name__ == '__main__':
     import rostest
     rostest.rosrun(PKG, 'blender_api', BlenderAPITest)
+    #unittest.main()
 

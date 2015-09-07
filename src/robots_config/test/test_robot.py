@@ -2,15 +2,12 @@
 
 import unittest
 import os
-import sys
 import time
 import ConfigParser
 import shutil
 import glob
 
-import rospy
 import roslaunch
-import rosnode
 import rostopic
 import rospkg
 from roslaunch import core
@@ -18,12 +15,12 @@ from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
 
-from pi_face_tracker.msg import FaceEvent
 from blender_api_msgs.msg import EmotionState
 from std_msgs.msg import String
 from testing_tools import (wait_for, play_rosbag, create_msg_listener,
-                            capture_screen, capture_camera, startxvfb, stopxvfb,
-                            get_rosbag_file, MessageQueue)
+            capture_screen, capture_camera, startxvfb, stopxvfb,
+            get_rosbag_file, MessageQueue, check_if_ffmpeg_satisfied,
+            check_if_sound_card_exists)
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'robots_config'
@@ -39,8 +36,10 @@ class RobotTest(unittest.TestCase):
         self.tts_output = os.path.join(tts_path, 'tmp')
         files = glob.glob('%s/*.wav' % self.tts_output)
         if files:
-            shutil.rmtree('%s.bak' % self.tts_output)
-            shutil.move(self.tts_output, '%s.bak' % self.tts_output)
+            backup_dir = '%s.bak' % self.tts_output
+            if os.path.isdir(backup_dir):
+                shutil.rmtree(backup_dir)
+            shutil.move(self.tts_output, backup_dir)
             os.makedirs(self.tts_output)
 
         self.output_video = '%s/output_video' % CWD
@@ -56,7 +55,7 @@ class RobotTest(unittest.TestCase):
         config.add_node(
             core.Node(
                 package='blender_api_msgs', node_type='blender',
-                args='-y %s/Eva.blend -P %s/autostart.py' % (
+                args='-y %s/Sophia.blend -P %s/autostart.py' % (
                         blender_api_path, blender_api_path),
                 name='blender_api')
             )
@@ -113,7 +112,9 @@ class RobotTest(unittest.TestCase):
         if not self.display == ':0':
             stopxvfb(self.display)
 
-    def test(self):
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
+    def test_face(self):
         new_arrival_emotions = [
             x.strip() for x in self.behavior_config.get(
                     'emotion', 'new_arrival_emotions').split(',')]
@@ -138,6 +139,9 @@ class RobotTest(unittest.TestCase):
 
         self.assertIn(emo_msg.name, new_arrival_emotions)
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied() and check_if_sound_card_exists(),
+        'Skip because ffmpeg is not satisfied or no sound cards.')
     def test_chat(self):
         import re
         r = re.compile('[\W_]+')

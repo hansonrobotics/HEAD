@@ -31,7 +31,8 @@ __all__ = [
     'ThreadWorker', 'create_msg_listener', 'capture_screen', 'capture_camera',
     'startxvfb', 'stopxvfb', 'get_rosbag_file', 'get_data_path',
     'add_text_to_video', 'concatenate_videos', 'MessageQueue',
-    'PololuSerialReader'
+    'PololuSerialReader', 'check_if_ffmpeg_satisfied',
+    'check_if_sound_card_exists'
     ]
 
 def run_shell_cmd(cmd, first=False):
@@ -357,8 +358,8 @@ class MessageQueue():
     def subscribe(self, topic, topic_class):
         return rospy.Subscriber(topic, topic_class, self._cb)
 
-    def get(self):
-        return self.queue.get()
+    def get(self, timeout=None):
+        return self.queue.get(timeout=timeout)
 
 
 class PololuSerialReader(object):
@@ -385,8 +386,14 @@ class PololuSerialReader(object):
         return (id, cmd, value)
 
 
-if __name__ == '__main__':
-    name = 'face_in'
-    capture_webcam_video('%s.avi' % name, 5)
-    video2rosbag('%s.avi' % name, '%s.bag' % name)
+def check_if_ffmpeg_satisfied():
+    """FFmpeg is used for screencasting."""
+    configuration = run_shell_cmd('ffmpeg -version|grep configuration', True)
+    configuration = [i.strip() for i in configuration.split(':')[1].split('--')]
+    requires = ['enable-libx264', 'enable-libfreetype']
+    return all([i in configuration for i in requires])
+
+def check_if_sound_card_exists():
+    snd_cards = run_shell_cmd('cat /proc/asound/cards')
+    return not 'no soundcards' in '\n'.join(snd_cards)
 
