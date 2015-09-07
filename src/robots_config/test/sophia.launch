@@ -1,0 +1,56 @@
+<launch>
+    <arg name="name" default="sophia"/>
+    <param name="/run_id" value="test_sophia" />
+
+    <!-- blender -->
+    <node name="blender_api" pkg="blender_api_msgs" type="blender" args="-y $(find blender_api_msgs)/../blender_api/Sophia.blend -P $(find blender_api_msgs)/../blender_api/autostart.py" />
+
+    <group ns="/$(arg name)">
+        <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
+        <rosparam file="$(find robots_config)/$(arg name)/dynamixel.yaml" command="load"/>
+
+        <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" output="screen">
+            <rosparam>
+                namespace: dxl_manager
+                serial_ports:
+                    default:
+                        baud_rate: 1000000
+                        min_motor_id: 0
+                        max_motor_id: 9
+                        update_rate: 20
+            </rosparam>
+        </node>
+
+        <node name="neck_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+                args="--manager=dxl_manager
+                    --port default
+                    Frown_R_controller
+                    Smile_R_controller
+                    Smile_L_controller
+                    Frown_L_controller
+                    Jaw_Up_Down_controller
+                    Upper_Gimbal_L_controller
+                    Upper_Gimbal_R_controller
+                    Lower_Gimbal_L_controller
+                    Lower_Gimbal_R_controller
+                    Neck_Rotation_controller
+                    "
+        output="screen"/>
+
+        <node name="pololu_head" pkg="ros_pololu" type="ros_pololu_node.py" output="screen" respawn="True">
+            <param name="pololu_motors_yaml" value="$(find robots_config)/$(arg name)/head.yaml" />
+            <param name="topic_prefix" value="head/" />
+            <param name="controller" value="Maestro" />
+            <param name="sync" value="off" />
+        </node>
+
+        <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py" respawn="True" />
+
+        <node pkg="topic_tools" type="mux" name="neck_pau" args="neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux"/>
+        <node pkg="topic_tools" type="mux" name="head_pau" args="head_pau no_pau /blender_api/get_pau mux:=head_pau_mux"/>
+        <node pkg="topic_tools" type="mux" name="lips_pau" args="lips_pau head_pau lipsync_pau mux:=lips_pau_mux"/>
+    </group>
+
+</launch>
+
