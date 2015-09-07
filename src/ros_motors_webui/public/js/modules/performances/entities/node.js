@@ -4,13 +4,13 @@ define(['application', 'lib/api'], function (App, api) {
             call: function () {
                 switch (this.get('name')) {
                     case 'gesture':
-                        api.setGesture(this.get('gesture'), 1, this.get('duration'), this.get('magnitude'));
+                        api.setGesture(this.get('gesture'), 1, 1, this.get('magnitude'));
                         break;
                     case 'emotion':
-                        api.setGesture(this.get('emotion'), this.get('magnitude'), this.get('duration'));
+                        api.setEmotion(this.get('emotion'), this.get('magnitude'), this.get('duration'));
                         break;
                     case 'look_at':
-                        api.setFaceTarget(this.get('x'), 0.3, -this.get('y'));
+                        api.setFaceTarget(-this.get('x'), 3, -this.get('y'));
                         break;
                     case 'speech':
                         api.robotSpeech(this.get('text'));
