@@ -1,0 +1,5 @@
+<launch>
+  <!-- start unit-test node -->
+  <test pkg="motors_safety" type="test_safety.py" name="motors_safety_test"
+        test-name="motors_safety_test" time-limit="8.0" />
+</launch>
