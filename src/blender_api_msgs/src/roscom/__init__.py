@@ -42,6 +42,8 @@ class RosNode():
             topic.register()
 
     def init(self):
+        for topic in self.topics:
+            topic.paused = False
         return True
 
     def poll(self):
@@ -54,8 +56,13 @@ class RosNode():
     def push(self):
         '''Create and publish messages to '@publish_live' decorated topics '''
         live_topics = [topic for topic in self.topics if isinstance(topic, publish_live)]
-        for topic in live_topics:
-            topic.publish()
+        try:
+            for topic in live_topics:
+                topic.publish()
+        except rospy.ROSException as ex:
+            rospy.logerr(ex)
+            return False
+        return True
 
     # After this is called, blender will not ever poll us again.
     def drop(self):
@@ -84,37 +91,35 @@ class CommandDecorator:
     def __init__(self, topic, dataType):
         self.topic = topic
         self.dataType = dataType
+        self.paused = False
     def __call__(self, cmd_func):
         self.cmd_func = cmd_func
         return self
     def register(self): raise NotImplementedError
-    def drop(self): raise NotImplementedError
+    def drop(self):
+        self.paused = True
 
 class publish_once(CommandDecorator):
     def register(self):
         self.pub = rospy.Publisher(self.topic, self.dataType, queue_size=1, latch=True)
         self.pub.publish(self.cmd_func())
-    def drop(self):
-        self.pub.unregister()
 
 class publish_live(CommandDecorator):
     def register(self):
         self.pub = rospy.Publisher(self.topic, self.dataType, queue_size=1)
     def publish(self):
+        if self.paused: return
         self.pub.publish(self.cmd_func())
-    def drop(self):
-        self.pub.unregister()
 
 class subscribe(CommandDecorator):
     def register(self):
         self.sub = rospy.Subscriber(self.topic, self.dataType, self._handle)
-    def drop(self):
-        self.sub.unregister()
     def _handle(self, msg):
         # XXX ??? Now that ROS is not initialized twice, the
         # self.callback thing is not working.  I cannot tell what
         # it was supposed to do ???
         # self.callback(IncomingCmd(self.cmd_func, msg))
+        if self.paused: return
         self.cmd_func(msg)
 
 
