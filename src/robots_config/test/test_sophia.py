@@ -2,10 +2,7 @@
 
 import unittest
 import os
-import sys
 import time
-import shutil
-import glob
 import subprocess
 from collections import Counter
 
@@ -13,17 +10,15 @@ import rospy
 import roslaunch
 import rosnode
 import rostopic
-import rospkg
 from roslaunch import core
 from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
 
-from blender_api_msgs.msg import EmotionState
 from pau2motors.msg import pau
-from std_msgs.msg import String, Float64
+from std_msgs.msg import Float64
 from ros_pololu.msg import MotorCommand
-from testing_tools import MessageQueue, play_rosbag, get_rosbag_file, rosbag_msg_generator
+from testing_tools import MessageQueue, get_rosbag_file, rosbag_msg_generator
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'robots_config'
@@ -70,6 +65,10 @@ class SophiaTest(unittest.TestCase):
         os.system('rosservice call /sophia/neck_pau_mux/select \"topic: \'/blender_api/get_pau\'\"')
         pau_messages = MessageQueue()
         pau_messages.subscribe('/blender_api/get_pau', pau)
+        head_pau_messages = MessageQueue()
+        head_pau_messages.subscribe('/sophia/head_pau', pau)
+        neck_pau_messages = MessageQueue()
+        neck_pau_messages.subscribe('/sophia/neck_pau', pau)
 
         topics = [
             '/sophia/Frown_L_controller/command',
@@ -88,24 +87,36 @@ class SophiaTest(unittest.TestCase):
 
         head_queue = MessageQueue()
         head_queue.subscribe('/sophia/head/command', MotorCommand)
-        time.sleep(5)
+        time.sleep(1)
 
-        #job = play_rosbag([get_rosbag_file('all_gestures')])
-        #job.join()
-        count = 3
-        for topic, msg, timestamp in rosbag_msg_generator(get_rosbag_file('all_gestures')):
-            print timestamp, topic
+        # send 10 messages for connections to synchronize
+        # we may need to investigate why the first few messages are eaten up
+        count = 10
+        for topic, msg, timestamp in rosbag_msg_generator(
+                                    get_rosbag_file('all_gestures')):
             count -= 1
-            time.sleep(0.05)
+            time.sleep(0.1)
             if count == 0: break
 
-        msg_count = pau_messages.queue.qsize()
-        print 'pau msgs %s' % msg_count
+        # reset the messages in these queues
+        for queue in topic_queues + \
+            [head_pau_messages, neck_pau_messages, pau_messages, head_queue]:
+            queue.clear()
 
-        # for queue in topic_queues:
-        #     while not queue.queue.empty():
-        #         msg = queue.get(10)
-        #         print msg
+        count = 100
+        for topic, msg, timestamp in rosbag_msg_generator(
+                                    get_rosbag_file('all_gestures')):
+            count -= 1
+            time.sleep(0.02)
+            if count == 0: break
+
+        print 'pau %s, head pau %s, neck pau %s' % (
+            pau_messages.queue.qsize(), head_pau_messages.queue.qsize(),
+            neck_pau_messages.queue.qsize())
+
+        num_pau_message = pau_messages.queue.qsize()
+        self.assertEqual(num_pau_message, head_pau_messages.queue.qsize())
+        self.assertEqual(num_pau_message, neck_pau_messages.queue.qsize())
 
         counter = Counter()
         while not head_queue.queue.empty():
@@ -113,11 +124,10 @@ class SophiaTest(unittest.TestCase):
             counter[msg.joint_name] += 1
 
         for topic, queue in zip(topics, topic_queues):
-            print topic, queue.queue.qsize()
+            self.assertEqual(queue.queue.qsize(), num_pau_message)
 
         for k, v in counter.iteritems():
-            print k, v
-
+            self.assertEqual(v, num_pau_message)
 
     def test_blender_ros_message(self):
         self.runner.launch()
@@ -146,25 +156,32 @@ class SophiaTest(unittest.TestCase):
         head_queue.subscribe('/sophia/head/command', MotorCommand)
 
         pub, msg_class = rostopic.create_publisher('/blender_api/set_gesture', 'blender_api_msgs/SetGesture', True)
+        time.sleep(2) # wait for connection to synchronize
+
+        # reset the messages in these queues
+        for queue in topic_queues + [pau_messages, head_queue]:
+            queue.clear()
+
         pub.publish(msg_class('blink', 1, 1, 1))
 
         os.system('rosservice call /sophia/head_pau_mux/select \"topic: \'/sophia/no_pau\'\"')
         os.system('rosservice call /sophia/neck_pau_mux/select \"topic: \'/sophia/cmd_neck_pau\'\"')
-        time.sleep(2)
+        time.sleep(1)
+
+        num_pau_message = pau_messages.queue.qsize()
 
         counter = Counter()
         while not head_queue.queue.empty():
             msg = head_queue.queue.get(1)
             counter[msg.joint_name] += 1
 
-        for topic, queue in zip(topics, topic_queues):
-            print topic, queue.queue.qsize()
+        #for topic, queue in zip(topics, topic_queues):
+        #    self.assertEqual(queue.queue.qsize(), num_pau_message)
 
-        for k, v in counter.iteritems():
-            print k, v
+        #for k, v in counter.iteritems():
+        #    self.assertEqual(v, num_pau_message)
 
 if __name__ == '__main__':
-    #import rostest
-    #rostest.rosrun(PKG, 'test_sophia', SophiaTest)
-    unittest.main()
+    import rostest
+    rostest.rosrun(PKG, 'test_sophia', SophiaTest)
 

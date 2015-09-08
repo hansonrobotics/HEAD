@@ -1,9 +1,8 @@
 <launch>
     <arg name="name" default="sophia"/>
-    <param name="/run_id" value="test_sophia" />
 
     <!-- blender -->
-    <node name="blender_api" pkg="blender_api_msgs" type="blender" args="-y $(find blender_api_msgs)/../blender_api/Sophia.blend -P $(find blender_api_msgs)/../blender_api/autostart.py" />
+    <node name="blender_api" pkg="blender_api_msgs" type="blender" args="-y $(find blender_api_msgs)/../blender_api/Sophia.blend -P $(find blender_api_msgs)/../blender_api/autostart.py" output="screen" />
 
     <group ns="/$(arg name)">
         <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
