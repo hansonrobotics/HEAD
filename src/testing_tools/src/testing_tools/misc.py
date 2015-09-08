@@ -362,6 +362,9 @@ class MessageQueue():
     def get(self, timeout=None):
         return self.queue.get(timeout=timeout)
 
+    def clear(self):
+        while not self.queue.empty():
+            self.queue.get(1)
 
 class PololuSerialReader(object):
     CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
