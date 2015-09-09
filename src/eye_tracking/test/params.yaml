@@ -1,0 +1,9 @@
+# Eye tracking
+eye_tracking:
+    angles:
+        w: 0.32 # Angle (rad) which will be proportional to full height of image from camera feed and added to PAU
+        h: 0.15 # Angle (rad) which will be proportional to full width of image from camera feed and added to PAU
+    center: # relative camera image point which represents point where eyeball is looking at
+        w: 0.5
+        h: 0.5
+    distance-max: 0.3 # Relative distance from camera image center to face target in which face considered to be same.

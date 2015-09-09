@@ -12,8 +12,8 @@ if [[ -z $DISPLAY ]]; then
     export DISPLAY=:0
 fi
 WID=$(xdotool search --screen $DISPLAY --class blender)
-WIDTH=1320
-HEIGHT=800
+WIDTH=924
+HEIGHT=668
 X=100
 Y=100
 xdotool windowsize $WID $WIDTH $HEIGHT
