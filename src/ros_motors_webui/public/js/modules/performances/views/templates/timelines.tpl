@@ -8,7 +8,8 @@
         </div>
         <div class="col-md-3">
             <div class="btn-group" role="group">
-                <button class="app-delete-button btn btn-default">Delete</button>
+                <button class="app-delete-button btn btn-default" title="Delete"><span
+                            class="glyphicon glyphicon-trash"></span></button>
             </div>
         </div>
     </div>
@@ -16,7 +17,7 @@
 
 <div class="app-timeline-editor-container row">
     <div class="col-md-12">
-        <h4>Timeline Editor</h4>
+        <h4>Timeline<span class="app-edit-container"> Editor</span></h4>
 
         <div class="app-edit-container">
             <div class="app-nodes">

@@ -46,7 +46,7 @@
     <% if (name == 'speech') { %>
         <div class="col-sm-6">
             <label title="Text">Text</label>
-            <textarea class="app-node-text form-control" title="Text"><%= text %></textarea>
+            <textarea class="app-node-text form-control" title="Text"></textarea>
         </div>
     <% } else if (name == 'look_at') { %>
         <div class="col-sm-3">

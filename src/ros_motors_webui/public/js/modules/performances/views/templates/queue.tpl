@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-md-12">
         <h4>Event queue</h4>
-        <ul class="app-performance-queue list-group"></ul>
+        <ul class="app-performance-queue list-group">
+            <li class="app-empty-notice list-group-item"><span class="label label-warning">empty</span></li>
+        </ul>
 
         <div class="clearfix">
             <button class="app-run btn btn-default">
@@ -24,12 +26,12 @@
             <div class="pull-right">
                 <span class="label label-primary">duration: <span class="app-duration"></span> sec</span>
 
-                <button type="button" class="pull-right btn btn-success">
-                    <span class="app-edit glyphicon glyphicon-edit"></span>
-                </button>
-
                 <button type="button" class="pull-right btn btn-danger">
                     <span class="app-remove glyphicon glyphicon-trash"></span>
+                </button>
+
+                <button type="button" class="pull-right btn btn-success">
+                    <span class="app-edit glyphicon glyphicon-edit"></span>
                 </button>
             </div>
         </li>

@@ -8,7 +8,8 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 performanceTemplate: '.app-performance-template',
                 runButton: '.app-run',
                 pauseButton: '.app-pause',
-                clearButton: '.app-clear'
+                clearButton: '.app-clear',
+                emptyNotice: '.app-empty-notice'
             },
             events: {
                 'click @ui.runButton': 'run',
@@ -31,16 +32,13 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                         el: el
                     };
 
+                this.ui.emptyNotice.slideUp();
                 this.updateItem(item);
                 this.queue.push(item);
                 this.ui.queue.append(el);
 
                 $('.app-remove', el).click(function () {
-                    var index = _.indexOf(self.queue, item);
-                    if (index != -1) {
-                        $(self.queue[index].el).remove();
-                        delete self.queue[index];
-                    }
+                    self.removeItem(item);
                 });
 
                 $('.app-edit', el).click(function () {
@@ -49,13 +47,34 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                     var timelineView = self.showTimeline(performance);
                     timelineView.enableEdit();
                 });
+
+                performance.on('change', function () {
+                    self.updateItem(item);
+                });
+            },
+            removePerformance: function (performance) {
+                var self = this;
+
+                _.each(this.queue, function (item) {
+                    if (item.model == performance) {
+                        self.removeItem(item)
+
+                    }
+                });
+
+                if (this.queue.length == 0)
+                    this.ui.emptyNotice.slideDown();
+            },
+            removeItem: function (item) {
+                $(item.el).slideUp();
+                this.queue = _.without(this.queue, item);
             },
             updateItem: function (item) {
                 $('.app-name', item.el).html(item.model.get('name'));
                 $('.app-duration', item.el).html(item.model.getDuration());
             },
             run: function () {
-                if (this.queue.length == 0) return;
+                if (this.queue.length == 0 || this.running) return;
                 this.running = true;
 
                 var self = this,
@@ -119,8 +138,11 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
             },
             clear: function () {
                 this.pause();
-                $('ul .app-performance', this.el).remove();
-                this.queue = [];
+
+                var self = this;
+                _.each(this.queue, function (item) {
+                    self.removePerformance(item.model);
+                });
             }
         });
     });

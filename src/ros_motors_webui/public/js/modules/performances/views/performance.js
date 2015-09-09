@@ -17,8 +17,6 @@ define(['application'], function (App) {
                 this.$el.html(this.model.get('name'));
             },
             click: function (e) {
-                $('.app-performance-button').removeClass('active');
-                $(e.target).addClass('active');
                 Views.trigger('performance:click', this.model);
             }
         });

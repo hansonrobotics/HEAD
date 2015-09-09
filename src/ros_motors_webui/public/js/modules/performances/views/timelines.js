@@ -1,11 +1,13 @@
-define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 'scrollbar'], function (App, template) {
+define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 'scrollbar',
+    'lib/extensions/animate_auto'], function (App, template) {
     App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
         Views.Timelines = Marionette.CompositeView.extend({
             template: template,
             childView: App.Performances.Views.Timeline,
             childViewContainer: '.app-timelines',
             config: {
-                pxPerSec: 70
+                pxPerSec: 70,
+                edit: false
             },
             ui: {
                 timelines: '.app-timelines',
@@ -53,13 +55,17 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             },
             onDestroy: function () {
                 this.model.get('nodes').unbind('add', this.addNode, this);
+                this.model.get('nodes').unbind('remove', this.arrangeNodes, this);
+
+                this.model.get('nodes').each(function (node) {
+                    $(node.get('el')).remove();
+                });
             },
             nodeClicked: function (e) {
                 var node = new App.Performances.Entities.Node({
                     name: $(e.target).data('name'),
                     start_time: 0,
-                    duration: 1,
-                    text: ""
+                    duration: 1
                 });
 
                 this.model.get('nodes').add(node);
@@ -71,27 +77,41 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
 
                 // show node settings on click
                 $(el).on('click', function () {
-                    self.showNodeSettings(node);
+                    if (self.config.edit) self.showNodeSettings(node);
+                }).hover(function () {
+                    $(this).animateAuto('width', 500);
+                }, function () {
+                    self.updateNode(node);
                 });
-
-                var updateNodeMetrics = function (model) {
-                    $(model.get('el')).animate({
-                        left: model.get('start_time') * self.config.pxPerSec,
-                        width: model.get('duration') * self.config.pxPerSec
-                    })
-                };
 
                 node.set('el', el);
-                node.on('change', function (model) {
-                    if (typeof model.changed['start_time'] != 'undefined' ||
-                        typeof model.changed['duration'] != 'undefined'
-                    ) {
-                        updateNodeMetrics(model);
-                        self.arrangeNodes();
-                    }
+                node.on('change', this.updateNode, this);
+
+                this.updateNode(node);
+            },
+            /**
+             * Updates node element
+             *
+             * @param node App.Performances.Entities.Node
+             */
+            updateNode: function (node) {
+                var width = node.get('duration') * this.config.pxPerSec;
+
+                $(node.get('el')).animate({
+                    left: node.get('start_time') * this.config.pxPerSec,
+                    width: width,
+                    minWidth: width
                 });
 
-                updateNodeMetrics(node);
+                if (node.changed['duration'] || node.changed['start_time'])
+                    this.arrangeNodes();
+
+                if (node.get('text'))
+                    $(node.get('el')).html(node.get('text'));
+                else if (node.get('emotion'))
+                    $(node.get('el')).html(node.get('emotion'));
+                else if (node.get('gesture'))
+                    $(node.get('el')).html(node.get('gesture'));
             },
             addNode: function (node) {
                 this.createNodeEl(node);
@@ -203,14 +223,17 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 var time = this.model.getDuration(),
                     width = time * this.config.pxPerSec;
 
-                $(this.ui.runIndicator).css('left', 0).fadeIn().animate({left: width}, time * 1000, 'linear', function () {
-                    $(this).fadeOut();
+                $(this.ui.runIndicator).css('left', 0).show().animate({left: width}, time * 1000, 'linear', function () {
+                    $(this).hide();
                     if (typeof finishedCallback == 'function')
                         finishedCallback();
                 });
 
                 this.model.run();
             },
+            /**
+             * Removes all nodes from the performance
+             */
             clearPerformance: function () {
                 var self = this,
                     nodes = [];
@@ -226,13 +249,13 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 // delete nodes
                 _.each(nodes, function (el) {
                     var node = self.model.get('nodes').findWhere({'el': el});
-
-                    if (node)
-                        node.destroy();
+                    if (node) node.destroy();
                 });
             },
             deletePerformance: function () {
                 var self = this;
+
+                Views.trigger('performance:delete', this.model);
 
                 this.$el.fadeOut(null, function () {
                     self.model.destroy();
@@ -242,9 +265,11 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             },
             enableEdit: function () {
                 $(this.ui.editElements).fadeIn();
+                this.config.edit = true;
             },
             disableEdit: function () {
                 $(this.ui.editElements).fadeOut();
+                this.config.edit = false;
             }
         });
     });

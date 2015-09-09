@@ -210,13 +210,15 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          *
          * @param name
          * @param magnitude 0..1
-         * @param duration array [seconds, nanoseconds]
+         * @param duration mixed array or number of seconds [seconds, nanoseconds]
          */
         setEmotion: function (name, magnitude, duration) {
             if (typeof magnitude == 'undefined')
                 magnitude = 1;
 
-            if (typeof duration == 'undefined')
+            if ($.isNumeric(duration))
+                duration = {secs: duration, nsecs: 0};
+            else if (typeof duration != 'object')
                 duration = {secs: 1, nsecs: 0};
 
             api.topics.set_emotion_state.publish(

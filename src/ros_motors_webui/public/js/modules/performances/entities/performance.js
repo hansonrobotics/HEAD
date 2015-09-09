@@ -2,12 +2,17 @@ define(['application', 'lib/api', './node'], function (App, api) {
     App.module('Performances.Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Performance = Backbone.Model.extend({
             initialize: function (options) {
-                var nodes = new App.Performances.Entities.NodeCollection();
+                var self = this,
+                    nodes = new App.Performances.Entities.NodeCollection();
                 if (options && options.nodes) {
                     _.each(options.nodes, function (attrs) {
                         nodes.add(new Entities.Node(attrs));
                     });
                 }
+
+                nodes.on('change', function () {
+                    self.trigger('change');
+                });
 
                 this.set('nodes', nodes);
             },

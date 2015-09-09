@@ -4,10 +4,8 @@
     padding: 8px 15px;
 }
 
-.app-performances-region {
-    margin-bottom: 10px;
-}
-
+.app-performances-region,
+.app-performance-queue-container,
 .app-performance-queue {
     margin-bottom: 10px;
 }
@@ -54,6 +52,7 @@
 
 .app-timeline-nodes .app-node {
     position: absolute;
+    overflow: hidden;
 }
 
 .app-timeline-editor {

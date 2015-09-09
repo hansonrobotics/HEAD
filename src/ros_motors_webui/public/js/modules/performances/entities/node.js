@@ -7,7 +7,7 @@ define(['application', 'lib/api'], function (App, api) {
                         api.setGesture(this.get('gesture'), 1, 1, this.get('magnitude'));
                         break;
                     case 'emotion':
-                        api.setEmotion(this.get('emotion'), this.get('magnitude'), this.get('duration'));
+                        api.setEmotion(this.get('emotion'), this.get('magnitude'), parseFloat(this.get('duration')));
                         break;
                     case 'look_at':
                         api.setFaceTarget(-this.get('x'), 3, -this.get('y'));

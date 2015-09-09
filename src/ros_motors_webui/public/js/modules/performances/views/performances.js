@@ -14,7 +14,9 @@ define(['application', 'tpl!./templates/performances.tpl', './performance'], fun
                 Marionette.CollectionView.prototype.addChild.apply(this, arguments);
             },
             addNew: function () {
-                this.collection.add(new App.Performances.Entities.Performance({name: 'New performance'}));
+                var performance = new App.Performances.Entities.Performance({name: 'New performance'});
+                this.collection.add(performance);
+                Views.trigger('performance:add', performance);
             }
         });
     });

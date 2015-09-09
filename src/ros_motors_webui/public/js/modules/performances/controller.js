@@ -1,5 +1,5 @@
 define(['application', 'backbone', './views/layout', './views/performances', './entities/performance',
-        './entities/node', './views/queue'],
+        './entities/node', './views/queue', './views/timelines'],
     function (App, Backbone) {
         return {
             performances: function () {
@@ -25,6 +25,8 @@ define(['application', 'backbone', './views/layout', './views/performances', './
 
                 // remove previous event handlers
                 App.Performances.Views.off('performance:click');
+                App.Performances.Views.off('performance:delete');
+                App.Performances.Views.off('performance:add');
                 App.Performances.Views.off('performances:save');
 
                 // add events
@@ -33,6 +35,23 @@ define(['application', 'backbone', './views/layout', './views/performances', './
                     performanceQueueView.addPerformance(performance);
                 }).on('performances:save', function () {
                     performanceCollection.save();
+                });
+
+                App.Performances.Views.on('performance:add', function (performance) {
+                    var timelinesView = new App.Performances.Views.Timelines({
+                        collection: new Backbone.Collection(),
+                        model: performance
+                    });
+
+                    // show configuration UI
+                    layoutView.getRegion('timeline').destroy();
+                    layoutView.getRegion('timeline').show(timelinesView);
+
+                    timelinesView.enableEdit();
+                });
+
+                App.Performances.Views.on('performance:delete', function (performance) {
+                    performanceQueueView.removePerformance(performance);
                 });
             }
         };
