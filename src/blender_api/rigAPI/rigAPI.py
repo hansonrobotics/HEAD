@@ -96,3 +96,8 @@ class RigAPI:
 
     def getFaceData(self):
         return None
+
+    # Set the lower neck rotation
+    # Accepts pitch and roll as parameters for the neck
+    def setNeckRotation(self, pitch, roll):
+        return None

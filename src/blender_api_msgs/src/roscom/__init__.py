@@ -8,7 +8,7 @@ import rospy
 import blender_api_msgs.msg as msg
 import pau2motors.msg as paumsg
 import std_msgs.msg as stdmsg
-
+import geometry_msgs.msg as geomsg
 api = None
 
 # This is called by __init__.py
@@ -269,3 +269,8 @@ class CommandWrappers:
 
         msg.m_coeffs = shapekeys.values()
         return msg
+
+    @subscribe("~set_neck_rotation", geomsg.Vector3)
+    def setFaceTarget(msg):
+        #sets only pitch and roll
+        api.setNeckRotation(msg.y, msg.x)
