@@ -48,7 +48,7 @@ class Chatbot():
       'chatbot_affect_perceive',
       String, queue_size=1
     )
-    rospy.Subscriber('/eva/chatbot_affect_express', EmotionState,
+    rospy.Subscriber('chatbot_affect_express', EmotionState,
         self._affect_express_callback)
 
 
