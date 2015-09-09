@@ -35,7 +35,7 @@ class MicroSSC(object):
     }
     DEFAULT_DEVICE_ID = 0x01
 
-    def __init__(self, device, baud=38400, readTimeout=None, writeTimeout=None,
+    def __init__(self, device, baud=38400, readTimeout=None, writeTimeout=0.1,
                  log=None):
         self._log = log
         self._device_numbers = []
@@ -229,3 +229,6 @@ class MicroSSC(object):
             motor,
             self._intToHighLow(position)
         )
+
+    def clean(self):
+        self._serial.flushInput()

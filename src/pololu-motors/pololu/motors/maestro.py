@@ -325,4 +325,5 @@ class Maestro(object):
             ()
         )
 
-
+    def clean(self):
+        self._serial.flushInput()
