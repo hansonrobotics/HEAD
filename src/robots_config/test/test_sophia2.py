@@ -7,7 +7,6 @@ import subprocess
 from collections import Counter
 
 import roslaunch
-import rosservice
 from roslaunch import core
 from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
@@ -16,12 +15,12 @@ nodeprocess._TIMEOUT_SIGTERM = 1
 from pau2motors.msg import pau
 from std_msgs.msg import Float64
 from ros_pololu.msg import MotorCommand
-from testing_tools import MessageQueue
+from testing_tools import MessageQueue, get_rosbag_file, rosbag_msg_generator
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'robots_config'
 
-class SophiaTest(unittest.TestCase):
+class SophiaTest2(unittest.TestCase):
 
     def setUp(self):
         self.run_id = 'test_robot'
@@ -51,11 +50,17 @@ class SophiaTest(unittest.TestCase):
         for proc in self.socat_procs:
             os.killpg(proc.pid, 2)
 
-    def test_blender_ros_message(self):
+    def test_ros_message(self):
+        self.runner.config.nodes = filter(
+            lambda node: node.name != 'blender_api', self.runner.config.nodes)
         self.runner.launch()
-        time.sleep(5) # wait for blender
+
         pau_messages = MessageQueue()
         pau_messages.subscribe('/blender_api/get_pau', pau)
+        head_pau_messages = MessageQueue()
+        head_pau_messages.subscribe('/sophia/head_pau', pau)
+        neck_pau_messages = MessageQueue()
+        neck_pau_messages.subscribe('/sophia/neck_pau', pau)
 
         topics = [
             '/sophia/Frown_L_controller/command',
@@ -74,29 +79,37 @@ class SophiaTest(unittest.TestCase):
 
         head_queue = MessageQueue()
         head_queue.subscribe('/sophia/head/command', MotorCommand)
+        time.sleep(1)
 
-        time.sleep(2) # wait for connection to synchronize
-
-        # pause command listener
-        request, response = rosservice.call_service('/blender_api/set_param', ["bpy.context.scene['commandListenerActive']", "False"])
-        self.assertTrue(response)
-        time.sleep(3) # wait for cached messages to be handled
+        # send N messages for connections to synchronize
+        # we may need to investigate why the first few messages are eaten up
+        count = 10
+        for topic, msg, timestamp in rosbag_msg_generator(
+                                    get_rosbag_file('all_gestures')):
+            count -= 1
+            time.sleep(0.1)
+            if count == 0: break
 
         # reset the messages in these queues
-        for queue in topic_queues + [pau_messages, head_queue]:
+        for queue in topic_queues + \
+            [head_pau_messages, neck_pau_messages, pau_messages, head_queue]:
             queue.clear()
 
-        # re-activate command listener
-        request, response = rosservice.call_service('/blender_api/set_param', ["bpy.context.scene['commandListenerActive']", "True"])
-        self.assertTrue(response)
+        count = 100
+        for topic, msg, timestamp in rosbag_msg_generator(
+                                    get_rosbag_file('all_gestures')):
+            count -= 1
+            time.sleep(0.02)
+            if count == 0: break
+
+        print 'pau %s, head pau %s, neck pau %s' % (
+            pau_messages.queue.qsize(), head_pau_messages.queue.qsize(),
+            neck_pau_messages.queue.qsize())
         time.sleep(2)
 
-        request, response = rosservice.call_service('/blender_api/set_param', ["bpy.context.scene['commandListenerActive']", "False"])
-        self.assertTrue(response)
-        time.sleep(3) # wait for cached messages to be handled
-
         num_pau_message = pau_messages.queue.qsize()
-        self.assertTrue(num_pau_message>0)
+        self.assertEqual(num_pau_message, head_pau_messages.queue.qsize())
+        self.assertEqual(num_pau_message, neck_pau_messages.queue.qsize())
 
         counter = Counter()
         while not head_queue.queue.empty():
@@ -109,7 +122,7 @@ class SophiaTest(unittest.TestCase):
         for k, v in counter.iteritems():
             self.assertEqual(v, num_pau_message)
 
+
 if __name__ == '__main__':
     import rostest
-    rostest.rosrun(PKG, 'test_sophia', SophiaTest)
-
+    rostest.rosrun(PKG, 'test_sophia2', SophiaTest2)

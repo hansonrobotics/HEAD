@@ -65,11 +65,8 @@ class BLCommandListener(bpy.types.Operator):
 
             if success:
                 wm = context.window_manager
-                print('wm %s' % wm)
-                print('timer %s' % self._timer)
                 self._timer = wm.event_timer_add(1/commandRateHz, context.window)
                 wm.modal_handler_add(self)
-                print('handler added')
                 bpy.context.scene['commandListenerActive'] = True
                 return {'RUNNING_MODAL'}
             else:
