@@ -6,6 +6,7 @@ import queue
 
 import rospy
 import blender_api_msgs.msg as msg
+import blender_api_msgs.srv as srv
 import pau2motors.msg as paumsg
 import std_msgs.msg as stdmsg
 
@@ -122,6 +123,11 @@ class subscribe(CommandDecorator):
         if self.paused: return
         self.cmd_func(msg)
 
+class service(CommandDecorator):
+    def register(self):
+        self.serv = rospy.Service(self.topic, self.dataType, self._handle)
+    def _handle(self, msg):
+        return self.cmd_func(msg)
 
 class CommandWrappers:
     '''
@@ -274,3 +280,12 @@ class CommandWrappers:
 
         msg.m_coeffs = shapekeys.values()
         return msg
+
+    @service("~set_param", srv.SetParam)
+    def setParam(msg):
+        return srv.SetParamResponse(api.setParam(msg.key, msg.value))
+
+    @service("~get_param", srv.GetParam)
+    def getParam(msg):
+        return srv.GetParamResponse(api.getParam(msg.param))
+

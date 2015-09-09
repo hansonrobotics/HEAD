@@ -26,7 +26,7 @@ class BLCommandListener(bpy.types.Operator):
         if debug and event.type in {'ESC'}:
             return self.cancel(context)
 
-        if debug and event.type == 'TIMER':
+        if debug and event.type == 'TIMER' and bpy.context.scene['commandListenerActive']:
             # print('Running Command Listener', round(self._timer.time_duration,3))
 
             # Poll each possible command source, see if it has anything
@@ -43,37 +43,38 @@ class BLCommandListener(bpy.types.Operator):
             for src in self.cmd_sources:
                 src.push()
 
-        # set status
-        bpy.context.scene['commandListenerActive'] = True
         return {'PASS_THROUGH'}
 
 
     def execute(self, context):
-        print('Starting Command Listener')
+        if self.poll(context):
+            print('Starting Command Listener')
 
-        # Load cmd sources on first press of the button
-        if self.cmd_sources == None:
-            type(self).cmd_sources, names = load_cmd_sources()
-            if len(self.cmd_sources) > 0:
-                print("Command Source '%s' loaded" % ', '.join(names))
+            # Load cmd sources on first press of the button
+            if self.cmd_sources == None:
+                type(self).cmd_sources, names = load_cmd_sources()
+                if len(self.cmd_sources) > 0:
+                    print("Command Source '%s' loaded" % ', '.join(names))
+                else:
+                    print('No Command Sources found')
+
+            success = True
+            for src in self.cmd_sources:
+                src.init()
+                success = src.push()
+
+            if success:
+                wm = context.window_manager
+                print('wm %s' % wm)
+                print('timer %s' % self._timer)
+                self._timer = wm.event_timer_add(1/commandRateHz, context.window)
+                wm.modal_handler_add(self)
+                print('handler added')
+                bpy.context.scene['commandListenerActive'] = True
+                return {'RUNNING_MODAL'}
             else:
-                print('No Command Sources found')
-
-        success = True
-        for src in self.cmd_sources:
-            src.init()
-            success = src.push()
-
-        if success:
-            wm = context.window_manager
-            self._timer = wm.event_timer_add(1/commandRateHz, context.window)
-            wm.modal_handler_add(self)
-            bpy.context.scene['commandListenerActive'] = True
-            return {'RUNNING_MODAL'}
-        else:
-            print('Error connecting to external interface, stopping')
-            return {'CANCELLED'}
-
+                print('Error connecting to external interface, stopping')
+                return {'CANCELLED'}
 
     def cancel(self, context):
         print('Stopping Command Listener')
@@ -93,7 +94,6 @@ class BLCommandListener(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         return not bpy.context.scene['commandListenerActive']
-        # return True
 
 
 def register():

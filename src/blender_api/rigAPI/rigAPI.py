@@ -96,3 +96,10 @@ class RigAPI:
 
     def getFaceData(self):
         return None
+
+    def setParam(self, key, value):
+        return None
+
+    def getParam(self, param):
+        return None
+
