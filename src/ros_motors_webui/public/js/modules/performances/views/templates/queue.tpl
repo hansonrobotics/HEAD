@@ -26,12 +26,12 @@
             <div class="pull-right">
                 <span class="label label-primary">duration: <span class="app-duration"></span> sec</span>
 
-                <button type="button" class="pull-right btn btn-danger">
-                    <span class="app-remove glyphicon glyphicon-trash"></span>
+                <button type="button" class="app-remove pull-right btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span>
                 </button>
 
-                <button type="button" class="pull-right btn btn-success">
-                    <span class="app-edit glyphicon glyphicon-edit"></span>
+                <button type="button" class="app-edit pull-right btn btn-success">
+                    <span class="glyphicon glyphicon-edit"></span>
                 </button>
             </div>
         </li>
