@@ -18,6 +18,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     'change @ui.duration': 'setDuration',
                     'change @ui.startTime': 'setStartTime',
                     'keyup @ui.textInput': 'setText',
+                    'change @ui.textInput': 'setTextDuration',
                     'change @ui.emotionSelect': 'setEmotion',
                     'change @ui.gestureSelect': 'setGesture',
                     'click @ui.deleteButton': 'deleteNode'
@@ -87,6 +88,12 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 },
                 setText: function () {
                     this.model.set('text', this.ui.textInput.val());
+                },
+                setTextDuration: function () {
+                    var self = this;
+                    api.getTtsLength(this.ui.textInput.val(), function (response) {
+                        self.model.set('duration', response.length);
+                    });
                 },
                 setEmotion: function () {
                     this.model.set('emotion', this.ui.emotionSelect.val());

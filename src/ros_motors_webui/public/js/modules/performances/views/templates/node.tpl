@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <% if (name == 'emotion' || name == 'gesture' || name == 'speech') { %>
+    <% if (name == 'emotion' || name == 'gesture') { %>
         <div class="col-sm-2">
             <label title="Emotion">Duration</label>
 
@@ -44,7 +44,7 @@
     <% } %>
 
     <% if (name == 'speech') { %>
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <label title="Text">Text</label>
             <textarea class="app-node-text form-control" title="Text"></textarea>
         </div>

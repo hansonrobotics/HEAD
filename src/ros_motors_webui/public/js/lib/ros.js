@@ -138,6 +138,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/rosapi/topics_for_type',
                     serviceType: 'rosapi/TopicsForType'
+                }),
+                tts_length: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/tts_length',
+                    messageType: 'tts/TTSLength'
                 })
             };
         },

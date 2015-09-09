@@ -71,7 +71,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
             },
             updateItem: function (item) {
                 $('.app-name', item.el).html(item.model.get('name'));
-                $('.app-duration', item.el).html(item.model.getDuration());
+                $('.app-duration', item.el).html(item.model.getDuration().toFixed(2));
             },
             run: function () {
                 if (this.queue.length == 0 || this.running) return;

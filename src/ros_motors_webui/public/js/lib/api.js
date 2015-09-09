@@ -328,8 +328,13 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param scripts
          */
         executeScript: function (script) {
-            cmd = new ROSLIB.Message({data: script})
+            var cmd = new ROSLIB.Message({data: script})
             api.topics.execute_scripts.publish(cmd)
+        },
+        getTtsLength: function (text, success) {
+            api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text}), success, function (error) {
+                console.log(error);
+            });
         }
     };
 
