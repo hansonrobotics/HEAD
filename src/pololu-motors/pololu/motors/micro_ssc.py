@@ -229,3 +229,6 @@ class MicroSSC(object):
             motor,
             self._intToHighLow(position)
         )
+
+    def clean(self):
+        self._serial.flushInput()
