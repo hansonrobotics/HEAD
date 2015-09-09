@@ -56,18 +56,16 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 var self = this;
 
                 _.each(this.queue, function (item) {
-                    if (item.model == performance) {
+                    if (item.model == performance)
                         self.removeItem(item)
-
-                    }
                 });
-
-                if (this.queue.length == 0)
-                    this.ui.emptyNotice.slideDown();
             },
             removeItem: function (item) {
                 $(item.el).slideUp();
                 this.queue = _.without(this.queue, item);
+
+                if (this.queue.length == 0)
+                    this.ui.emptyNotice.slideDown();
             },
             updateItem: function (item) {
                 $('.app-name', item.el).html(item.model.get('name'));
