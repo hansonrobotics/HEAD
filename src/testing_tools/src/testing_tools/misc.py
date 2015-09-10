@@ -19,6 +19,7 @@ import signal
 import shutil
 from Queue import Queue
 from datetime import datetime
+import serial
 
 logger = logging.getLogger('testing_tools')
 
@@ -370,7 +371,6 @@ class PololuSerialReader(object):
     CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
 
     def __init__(self, device):
-        import serial
         self.ser = serial.Serial(device, baudrate=115200,
                                 bytesize=serial.EIGHTBITS,
                                 parity=serial.PARITY_NONE,
