@@ -216,6 +216,53 @@ class SophiaTest2(unittest.TestCase):
         # every motor has gotten a command message
         self.assertEqual((lips_pau_motors-set(counter.keys())), set([]))
 
+    def test_no_pau_message(self):
+        reader = PololuSerialReader('%s/pololu1' % CWD)
+        self.runner.config.nodes = filter(
+            lambda node: node.name != 'blender_api', self.runner.config.nodes)
+        self.runner.launch()
+        time.sleep(2) # wait for pau2motors
+
+        no_pau_motors = set(rosparam.get_param('/sophia/pau2motors/topics')['no_pau'].split(';'))
+        dynamixel_motors = {'Frown_L', 'Frown_R', 'Smile_L', 'Smile_R', 'Jaw_Up_Down'}
+        no_pau_motors = no_pau_motors - dynamixel_motors
+        motors = rosparam.get_param('/sophia/motors')
+        pololu_motor_config = {}
+        for motor in motors:
+            if 'motor_id' in motor:
+                pololu_motor_config[motor['motor_id']] = motor
+
+        self.assertTrue(len(no_pau_motors)>0)
+
+        no_pau_messages = MessageQueue()
+        no_pau_messages.subscribe('/sophia/no_pau', pau)
+
+        no_queue = MessageQueue()
+        no_queue.subscribe('/sophia/head/command', MotorCommand)
+        time.sleep(1)
+
+        pau_message = pau()
+        pub, msg_class = rostopic.create_publisher('/sophia/no_pau', 'pau2motors/pau', True)
+        pub.publish(msg_class(m_coeffs=[0]*48))
+        time.sleep(2)
+
+        print 'no pau %s' % no_pau_messages.queue.qsize()
+        for _ in range(len(no_pau_motors)*3):
+            motor_id, cmd, value = reader.read()
+            config = pololu_motor_config[motor_id]
+            if cmd == 'position':
+                print motor_id, cmd, value
+                if config['name'] in ['Eyes-Up-Down']: continue # these motors are exceptions
+                self.assertEqual(config['init']*4, value, motor_id)
+
+        counter = Counter()
+        while not no_queue.queue.empty():
+            msg = no_queue.queue.get(1)
+            counter[msg.joint_name] += 1
+
+        # every motor has gotten a command message
+        self.assertEqual((no_pau_motors-set(counter.keys())), set([]))
+
 if __name__ == '__main__':
     import rostest
     rostest.rosrun(PKG, 'test_sophia2', SophiaTest2)
