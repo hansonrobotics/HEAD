@@ -26,8 +26,6 @@ setup(
     name='pololu-motors',
     version=VERSION,
     packages=['pololu', 'pololu/motors'],
-    data_files=[(os.path.join(
-        sys.prefix, 'share', 'doc', 'pololu_motors'), glob("docs/pmcapi/*"))],
     include_package_data=True,
     license='MIT',
     description=('Pololu motor driver APIs.'),
