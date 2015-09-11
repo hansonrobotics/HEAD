@@ -108,3 +108,5 @@ class RigAPI:
     def getParam(self, param):
         return None
 
+    def getAnimationLength(self, animation):
+        return None

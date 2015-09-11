@@ -66,6 +66,7 @@ add_service_files(
   FILES
   SetParam.srv
   GetParam.srv
+  GetAnimationLength.srv
 )
 
 ## Generate actions in the 'action' folder

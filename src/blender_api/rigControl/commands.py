@@ -242,3 +242,12 @@ class EvaAPI(RigAPI):
         except Exception as ex:
             print("Error %s" % ex)
 
+    def getAnimationLength(self, animation):
+        animation = "GST-"+animation
+        if not animation in bpy.data.actions.keys():
+            return 0
+        else:
+            frame_range = bpy.data.actions[animation].frame_range
+            frames = 1+frame_range[1]-frame_range[0]
+            return frames / 24.0
+
