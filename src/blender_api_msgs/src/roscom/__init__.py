@@ -282,7 +282,7 @@ class CommandWrappers:
         return msg
 
     @subscribe("~set_neck_rotation", geomsg.Vector3)
-    def setFaceTarget(msg):
+    def setNeckRotation(msg):
         #sets only pitch and roll
         api.setNeckRotation(msg.y, msg.x)
 
@@ -293,4 +293,8 @@ class CommandWrappers:
     @service("~get_param", srv.GetParam)
     def getParam(msg):
         return srv.GetParamResponse(api.getParam(msg.param))
+
+    @service("~get_animation_length", srv.GetAnimationLength)
+    def getAnimationLength(req):
+        return srv.GetAnimationLengthResponse(api.getAnimationLength(req.animation))
 
