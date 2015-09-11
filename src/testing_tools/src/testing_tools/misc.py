@@ -18,6 +18,8 @@ import tempfile
 import signal
 import shutil
 from Queue import Queue
+from datetime import datetime
+import serial
 
 logger = logging.getLogger('testing_tools')
 
@@ -188,7 +190,6 @@ def rosbag_msg_generator(bag_file, topics=None):
 
     pubs = {}
     for topic, message, timestamp in bag.read_messages(topics=topics, raw=True):
-        #yield topic, message, timestamp
         msg_type = message[4]
         data = message[1]
         if topic in pubs:
@@ -199,7 +200,8 @@ def rosbag_msg_generator(bag_file, topics=None):
         msg = msg_type()
         msg.deserialize(data)
         pub.publish(msg)
-        yield topic, msg
+        timestamp = datetime.fromtimestamp(timestamp.to_sec())
+        yield topic, msg, timestamp
     bag.close()
 
 def wait_for_message(topic, topic_class, timeout):
@@ -361,12 +363,14 @@ class MessageQueue():
     def get(self, timeout=None):
         return self.queue.get(timeout=timeout)
 
+    def clear(self):
+        while not self.queue.empty():
+            self.queue.get(1)
 
 class PololuSerialReader(object):
     CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
 
     def __init__(self, device):
-        import serial
         self.ser = serial.Serial(device, baudrate=115200,
                                 bytesize=serial.EIGHTBITS,
                                 parity=serial.PARITY_NONE,

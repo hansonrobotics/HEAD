@@ -101,3 +101,10 @@ class RigAPI:
     # Accepts pitch and roll as parameters for the neck
     def setNeckRotation(self, pitch, roll):
         return None
+
+    def setParam(self, key, value):
+        return None
+
+    def getParam(self, param):
+        return None
+

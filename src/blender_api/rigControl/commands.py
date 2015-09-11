@@ -220,5 +220,25 @@ class EvaAPI(RigAPI):
 
         return shapekeys
 
+
     def setNeckRotation(self, pitch, roll):
         bpy.evaAnimationManager.deformObj.pose.bones['DEF-neck'].rotation_euler = Euler((pitch, 0, roll))
+
+    def setParam(self, key, value):
+        cmd = "%s=%s" % (str(key), str(value))
+        print("Run %s" % cmd)
+        try:
+            exec(cmd)
+        except Exception as ex:
+            print("Error %s" % ex)
+            return False
+        return True
+
+    def getParam(self, param):
+        param = param.strip()
+        print("Get %s" % param)
+        try:
+            return str(eval(param))
+        except Exception as ex:
+            print("Error %s" % ex)
+
