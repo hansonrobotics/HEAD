@@ -160,7 +160,7 @@ class BLPlayback(bpy.types.Operator):
     def execute(self, context):
         print('Starting Playback')
         wm = context.window_manager
-        self._timer = wm.event_timer_add(1/framerateHz, context.window)
+        self._timer = wm.event_timer_add(1/48, context.window)
         wm.modal_handler_add(self)
         bpy.context.scene['animationPlaybackActive'] = True
         return {'RUNNING_MODAL'}
