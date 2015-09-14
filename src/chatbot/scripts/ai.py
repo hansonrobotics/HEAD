@@ -45,10 +45,10 @@ class Chatbot():
     # feel.  Expressed: the emotional content that the chatbot should
     # put into what it says.
     self._affect_publisher = rospy.Publisher(
-      'chatbot_affect_perceive',
+      '/sophia/chatbot_affect_perceive',
       String, queue_size=1
-    )
-    rospy.Subscriber('/eva/chatbot_affect_express', EmotionState,
+    )  
+    rospy.Subscriber('/sophia/chatbot_affect_express', EmotionState,	
         self._affect_express_callback)
 
 
@@ -162,7 +162,7 @@ class Chatbot():
     response=response.rstrip('.?!')
     words=response.split()
     for word in words:
-      # check if words in sentic, catch exception if not
+      # check if words in sentic
       if word in self._polarity:
         polarity_list.append(self._polarity[word])
         rospy.logwarn(word+' '+str(self._polarity[word]))
@@ -204,7 +204,7 @@ def main():
       sent_f=open(sent3_file,'r')
       chatbot.load_sentiment_csv(sent_f)
     except:
-      rospy.logwarn("exception here even though file read...")
+      rospy.logwarn("exception here even though file read OK...")
     #rospy.logwarn('Done loading '+len(self._polarity)+' sentiment polarity items.')
   # this needs to be at end to see ros msgs in load_sentiment ( spin is hidden inside? )
   chatbot.initialize(aiml_dir)
