@@ -160,7 +160,6 @@ class Chatbot():
     average=0.0
     extreme=0.0
     polarity_list=[]
-    position=0
     negate=1
 
     # strip punctuation prior to word search
@@ -172,12 +171,12 @@ class Chatbot():
         negate=-1
       # check if words in sentic
       if word in self._polarity:
-        # record first polarized term
+
         polarity_list.append(self._polarity[word])
         rospy.logwarn(word+' '+str(self._polarity[word]))
       else:
         not_found+=1
-      position+=1
+  
     # check adjacent pairs as well
 
     pairs=[' '.join(pair) for pair in izip(words[:-1], words[1:])]
