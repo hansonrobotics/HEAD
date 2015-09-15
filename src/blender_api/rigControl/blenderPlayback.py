@@ -1,7 +1,7 @@
 # This module sets up a modal operator in Blender to act
 # as the animation playback service, and hosts other supporting test operators
 
-framerateHz = 48
+framerateHz = 24
 
 import bpy
 from .helpers import *

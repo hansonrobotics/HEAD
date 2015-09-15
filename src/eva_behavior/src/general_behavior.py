@@ -262,7 +262,7 @@ class Tree():
 		##### ROS Connections #####
 		self.facetrack = FaceTrack(self.blackboard)
 
-		rospy.Subscriber("behavior_switch", String, self.behavior_switch_callback)
+		rospy.Subscriber("/behavior_switch", String, self.behavior_switch_callback)
 		rospy.Subscriber("/blender_api/available_emotion_states",
 			AvailableEmotionStates, self.get_emotion_states_cb)
 
@@ -273,17 +273,16 @@ class Tree():
 		# (or reply with) angry words, polite words, etc?
 		# currently supplying string rather than specific EmotionState with timing,
 		# allowing that to be handled here where timings have been tuned
-		print ' setting up chatbot_affect link'
-		rospy.Subscriber("/eva/chatbot_affect_perceive", String,
+		rospy.logwarn("setting up chatbot affect perceive and express links")
+		rospy.Subscriber("chatbot_affect_perceive", String,
 			self.chatbot_affect_perceive_callback)
-
 		self.do_pub_gestures = True
 		self.do_pub_emotions = True
 		self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state",
 			EmotionState, queue_size=1)
 		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture",
 			SetGesture, queue_size=1)
-		self.affect_pub = rospy.Publisher("/eva/chatbot_affect_express",
+		self.affect_pub = rospy.Publisher("chatbot_affect_express",
 			EmotionState, queue_size=1)
 		self.tree = self.build_tree()
 		time.sleep(0.1)
@@ -1147,5 +1146,6 @@ class Tree():
 		# use zero for duration, tts can compute if needed
 		exp.duration.secs = 3.0
 		exp.duration.nsecs = 0
+		rospy.logwarn('publishing affect to chatbot '+chosen_emo.name)
 		self.affect_pub.publish(exp)
 		rospy.loginfo('picked and expressed '+chosen_emo.name)
