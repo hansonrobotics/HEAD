@@ -1,5 +1,5 @@
-define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 'scrollbar',
-    'lib/extensions/animate_auto'], function (App, template) {
+define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './node', 'scrollbar',
+    'lib/extensions/animate_auto'], function (App, template, d3) {
     App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
         Views.Timelines = Marionette.CompositeView.extend({
             template: template,
@@ -21,10 +21,13 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 performanceName: '.app-performance-name',
                 saveButton: '.app-save-button',
                 runButton: '.app-run-button',
+                stopButton: '.app-stop-button',
+                loopButton: '.app-loop-button',
                 clearButton: '.app-clear-button',
                 runIndicator: '.app-run-indicator',
                 deleteButton: '.app-delete-button',
-                editElements: '.app-edit-container'
+                editElements: '.app-edit-container',
+                timeAxis: '.app-time-axis'
             },
             events: {
                 'click @ui.addButton': 'addTimeline',
@@ -33,9 +36,12 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 'click @ui.nodes': 'nodeClicked',
                 'click @ui.saveButton': 'savePerformances',
                 'keyup @ui.performanceName': 'setPerformanceName',
-                'click @ui.runButton': 'runPerformance',
+                'click @ui.runButton': 'runClicked',
                 'click @ui.clearButton': 'clearPerformance',
-                'click @ui.deleteButton': 'deletePerformance'
+                'click @ui.deleteButton': 'deletePerformance',
+                'click @ui.timeAxis': 'runAt',
+                'click @ui.stopButton': 'stop',
+                'click @ui.loopButton': 'loop'
             },
             onShow: function () {
                 var self = this;
@@ -43,7 +49,7 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
                 this.ui.runIndicator.hide();
                 this.ui.editElements.hide();
 
-                $(this.ui.scrollContainer).scrollbar({});
+                //$(this.ui.scrollContainer).scrollbar({showArrows: true});
                 this.model.get('nodes').each(function (node) {
                     self.createNodeEl(node);
                 });
@@ -203,9 +209,16 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             },
             updateTimelineWidth: function () {
                 if (this.children.length > 0) {
-                    var width = this.getTimelineWidth();
+                    var width = this.getTimelineWidth(),
+                        containerWidth = this.ui.timelines.width(),
+                        scaleWidth = Math.max(width, containerWidth),
+                        scale = d3.scale.linear().domain([0, scaleWidth / this.config.pxPerSec]).range([0, scaleWidth]);
 
-                    if (width < this.children.first().ui.nodes.width())
+                    // update axis
+                    this.ui.timeAxis.html('').width(scaleWidth);
+                    d3.select(this.ui.timeAxis.get(0)).call(d3.svg.axis().scale(scale).orient("bottom"));
+
+                    if (width < containerWidth)
                         width = '100%';
 
                     this.children.each(function (timeline) {
@@ -219,17 +232,44 @@ define(['application', 'tpl!./templates/timelines.tpl', './timeline', './node', 
             savePerformances: function () {
                 Views.trigger('performances:save');
             },
-            runPerformance: function (finishedCallback) {
-                var time = this.model.getDuration(),
-                    width = time * this.config.pxPerSec;
+            run: function (startTime, finishedCallback) {
+                var self = this,
+                    duration = this.model.getDuration();
 
-                $(this.ui.runIndicator).css('left', 0).show().animate({left: width}, time * 1000, 'linear', function () {
-                    $(this).hide();
-                    if (typeof finishedCallback == 'function')
-                        finishedCallback();
-                });
+                if (!$.isNumeric(startTime)) startTime = 0;
+                if (startTime > duration) return;
 
-                this.model.run();
+                this.model.run(startTime);
+
+                $(this.ui.runIndicator).stop().css('left', startTime * this.config.pxPerSec).show()
+                    .animate({left: duration * this.config.pxPerSec}, (duration - startTime) * 1000, 'linear',
+                    function () {
+                        $(this).hide();
+
+                        if (typeof finishedCallback == 'function')
+                            finishedCallback();
+                    });
+            },
+            runClicked: function () {
+                this.stop();
+                this.run();
+            },
+            runAt: function (e) {
+                this.stop();
+                this.run(e.offsetX / this.config.pxPerSec);
+            },
+            loop: function () {
+                var self = this;
+                this.stop();
+                this.run();
+                this.loopInterval = setInterval(function () {
+                    self.run();
+                }, this.model.getDuration() * 1000);
+            },
+            stop: function () {
+                this.model.stop();
+                clearInterval(this.loopInterval);
+                $(this.ui.runIndicator).hide();
             },
             /**
              * Removes all nodes from the performance

@@ -21,8 +21,8 @@
 
         <div class="app-edit-container">
             <div class="app-nodes">
-                <div class="app-node label label-info" data-name="emotion">Emotion</div>
-                <div class="app-node label label-danger" data-name="gesture">Gesture</div>
+                <div class="app-node label label-info" data-name="emotion">Pose</div>
+                <div class="app-node label label-danger" data-name="gesture">Animation</div>
                 <div class="app-node label label-success" data-name="speech">Speech</div>
                 <div class="app-node label label-primary" data-name="look_at">LookAt</div>
             </div>
@@ -35,6 +35,7 @@
                 <div class="app-timelines">
                     <div class="app-run-indicator"></div>
                 </div>
+                <svg class="app-time-axis"></svg>
             </div>
         </div>
 
@@ -49,7 +50,13 @@
                 <button class="app-run-button btn btn-default" title="Save"><i
                             class="glyphicon glyphicon-play-circle"></i> Run
                 </button>
-                <button class="app-clear-button btn btn-default" title="Save"><i
+                <button class="app-loop-button btn btn-default" title="Loop"><i
+                            class="glyphicon glyphicon-repeat"></i> Loop
+                </button>
+                <button class="app-stop-button btn btn-default" title="Stop"><i
+                            class="glyphicon glyphicon-stop"></i> Stop
+                </button>
+                <button class="app-clear-button btn btn-default" title="Clear"><i
                             class="glyphicon glyphicon-remove"></i> Clear
                 </button>
             </div>

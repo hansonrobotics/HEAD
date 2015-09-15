@@ -16,12 +16,45 @@ define(['application', 'lib/api', './node'], function (App, api) {
 
                 this.set('nodes', nodes);
             },
-            run: function () {
+            run: function (startTime) {
+                var self = this;
+                this.runQueue = [];
+                this.lastRunTime = new Date().getTime();
+
+                this.stop();
+
+                if (typeof startTime == 'undefined')
+                    if ($.isNumeric(this.resumeStartTime)) {
+                        startTime = this.resumeStartTime;
+                        this.resumeStartTime = null;
+                    } else
+                        startTime = 0;
+
+                if (!$.isNumeric(startTime))
+                    startTime = 0;
+
                 this.get('nodes').each(function (node) {
-                    setTimeout(function () {
-                        node.call();
-                    }, node.get('start_time') * 1000)
+                    if (node.get('start_time') >= startTime)
+                        self.runQueue.push(setTimeout(function () {
+                            node.call();
+                        }, node.get('start_time') * 1000));
                 });
+            },
+            pause: function () {
+                if ($.isNumeric(this.lastRunTime)) {
+                    this.resumeStartTime = new Date().getTime() - this.lastRunTime;
+
+                    _.each(this.runQueue, function (timeout) {
+                        clearTimeout(timeout);
+                    });
+                }
+            },
+            stop: function () {
+                _.each(this.runQueue, function (timeout) {
+                    clearTimeout(timeout);
+                });
+
+                this.runQueue = [];
             },
             getDuration: function () {
                 var duration = 0;

@@ -126,6 +126,7 @@
 
 .app-timelines-container {
     margin-bottom: 5px;
+    overflow: auto;
 }
 
 .app-node-settings .select2-container {
@@ -164,4 +165,27 @@
 
 .app-performance-queue .ui-state-highlight {
     height: 38px;
+}
+
+.app-time-axis {
+    height: 20px;
+    cursor: pointer;
+}
+
+.app-time-axis path {
+    background-color: #df691a;
+    height: 3px;
+}
+
+.app-time-axis path,
+.app-time-axis line {
+    fill: none;
+    stroke: #df691a;
+    shape-rendering: crispEdges;
+}
+
+.app-time-axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+    stroke: #ebebeb;
 }

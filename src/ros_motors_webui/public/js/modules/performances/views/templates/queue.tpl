@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h4>Event queue</h4>
+        <h4>Event sequence</h4>
         <ul class="app-performance-queue list-group">
             <li class="app-empty-notice list-group-item"><span class="label label-warning">empty</span></li>
         </ul>

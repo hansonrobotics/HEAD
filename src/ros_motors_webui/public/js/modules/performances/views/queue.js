@@ -81,7 +81,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                     timelinesView = this.showTimeline(performanceUnion);
 
                 var run = function () {
-                    timelinesView.runPerformance(function () {
+                    timelinesView.run(0, function () {
                         setTimeout(function () {
                             if (self.running)
                                 run();

@@ -33,7 +33,7 @@ define(['application', 'lib/api'], function (App, api) {
         });
         Entities.NodeCollection = Backbone.Collection.extend({
             model: Entities.Node,
-            comparator: 'offset'
+            comparator: 'start_time'
         });
     });
 });
