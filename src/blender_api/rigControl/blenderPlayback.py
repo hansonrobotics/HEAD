@@ -1,12 +1,64 @@
 # This module sets up a modal operator in Blender to act
 # as the animation playback service, and hosts other supporting test operators
 
+# Frame rate for animation playback
 framerateHz = 24
+
+# System timer
+defaultTimerHz = 48
 
 import bpy
 from .helpers import *
 
 import pprint, time
+
+class BLGlobalTimer(bpy.types.Operator):
+    """Timer  Control"""
+    bl_label = "Global Timer"
+    bl_idname = 'wm.global_timer'
+    # New property for global timer
+    bpy.types.Scene.globalTimerStarted = bpy.props.BoolProperty( name = "globalTimerStarted", default=False)
+    bpy.context.scene['globalTimerStarted'] = False
+    # Property to get the
+    bpy.types.Scene.maxFPS = bpy.props.IntProperty(name = "maxFPS", soft_min = 10, soft_max = 100)
+    bpy.context.scene['maxFPS'] = defaultTimerHz
+    _timer = None
+    _maxFPS = defaultTimerHz
+
+    def execute(self, context):
+        print('Starting Timer')
+        wm = context.window_manager
+        self._timer = wm.event_timer_add(1/self._maxFPS, context.window)
+        bpy.context.scene['globalTimerStarted'] = True
+        wm.modal_handler_add(self)
+        return {'RUNNING_MODAL'}
+
+    def modal(self, context, event):
+        if event.type in {'ESC'}:
+            return self.cancel(context)
+        if event.type == 'TIMER':
+            if self._maxFPS != bpy.context.scene['maxFPS']:
+                #Add new timer
+                wm = context.window_manager
+                wm.event_timer_remove(self._timer)
+                self._maxFPS = bpy.context.scene['maxFPS']
+                self._timer = wm.event_timer_add(1/self._maxFPS, context.window)
+
+        return {'PASS_THROUGH'}
+
+    def cancel(self,context):
+        print('Stopping Timer')
+        if self._timer:
+            wm = context.window_manager
+            wm.event_timer_remove(self._timer)
+
+        bpy.context.scene['globalTimerStarted'] = False
+        return {'CANCELLED'}
+
+    @classmethod
+    def poll(cls, context):
+        return not bpy.context.scene['globalTimerStarted']
+
 
 class EvaDebug(bpy.types.Operator):
     """Eva Debug Control"""
@@ -39,8 +91,6 @@ class BLPlayback(bpy.types.Operator):
 
     bpy.types.Scene.animationPlaybackActive = bpy.props.BoolProperty( name = "animationPlaybackActive", default=False)
     bpy.context.scene['animationPlaybackActive'] = False
-
-    _timer = None
 
     timeList = []
 
@@ -160,17 +210,16 @@ class BLPlayback(bpy.types.Operator):
     def execute(self, context):
         print('Starting Playback')
         wm = context.window_manager
-        self._timer = wm.event_timer_add(1/framerateHz, context.window)
         wm.modal_handler_add(self)
         bpy.context.scene['animationPlaybackActive'] = True
+        if not bpy.context.scene['globalTimerStarted']:
+            bpy.ops.wm.global_timer()
         return {'RUNNING_MODAL'}
 
 
     def cancel(self, context):
         print('Stopping Playback')
         bpy.evaAnimationManager.terminate()
-        wm = context.window_manager
-        wm.event_timer_remove(self._timer)
         bpy.context.scene['animationPlaybackActive'] = False
         return {'CANCELLED'}
 
@@ -201,11 +250,12 @@ class BLPlayback(bpy.types.Operator):
 def register():
     bpy.utils.register_class(BLPlayback)
     bpy.utils.register_class(EvaDebug)
-
+    bpy.utils.register_class(BLGlobalTimer)
 
 def unregister():
     bpy.utils.unregister_class(BLPlayback)
     bpy.utils.unregister_class(EvaDebug)
+    bpy.utils.unregister_class(BLGlobalTimer)
 
 
 def refresh():

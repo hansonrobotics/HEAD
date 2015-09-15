@@ -16,7 +16,7 @@ class BLRigConsole(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         layout.prop(context.scene, 'evaFPS', slider = True)
-
+        layout.prop(context.scene, 'maxFPS', slider = True)
 
 
 class BLRigControl(bpy.types.Panel):

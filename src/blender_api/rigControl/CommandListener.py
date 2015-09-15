@@ -1,11 +1,10 @@
 # This module sets up a modal operator in Blender to act
 # as the command listener for external events
 
-commandRateHz = 10
 debug = True
 
 import bpy
-
+import pprint
 from . import commands
 from rigAPI import CommandSource
 
@@ -18,7 +17,6 @@ class BLCommandListener(bpy.types.Operator):
     bl_idname = 'wm.command_listener'
 
     cmd_sources = None
-    _timer = None
     bpy.types.Scene.commandListenerActive = bpy.props.BoolProperty( name = "commandListenerActive", default=False)
     bpy.context.scene['commandListenerActive'] = False
 
@@ -57,7 +55,8 @@ class BLCommandListener(bpy.types.Operator):
                     print("Command Source '%s' loaded" % ', '.join(names))
                 else:
                     print('No Command Sources found')
-
+            if not bpy.context.scene['globalTimerStarted']:
+                bpy.ops.wm.global_timer()
             success = True
             for src in self.cmd_sources:
                 src.init()
@@ -65,7 +64,6 @@ class BLCommandListener(bpy.types.Operator):
 
             if success:
                 wm = context.window_manager
-                self._timer = wm.event_timer_add(1/commandRateHz, context.window)
                 wm.modal_handler_add(self)
                 bpy.context.scene['commandListenerActive'] = True
                 return {'RUNNING_MODAL'}
@@ -75,11 +73,6 @@ class BLCommandListener(bpy.types.Operator):
 
     def cancel(self, context):
         print('Stopping Command Listener')
-        if self._timer:
-            wm = context.window_manager
-            wm.event_timer_remove(self._timer)
-        else:
-            print('no timer')
 
         for src in self.cmd_sources:
             src.drop()

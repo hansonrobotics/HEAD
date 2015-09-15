@@ -5,8 +5,9 @@
 #    blender -y ./Eva269.blend -P ./autostart.py
 #
 import bpy
-
+# Start Timer
+bpy.ops.wm.global_timer()
+# Starts Command Listener
 bpy.ops.wm.command_listener()
-
-from rigControl import commands
-commands.init()
+# Starts animation manager
+bpy.ops.wm.animation_playback()
