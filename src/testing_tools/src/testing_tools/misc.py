@@ -18,6 +18,8 @@ import tempfile
 import signal
 import shutil
 from Queue import Queue
+from datetime import datetime
+import serial
 
 logger = logging.getLogger('testing_tools')
 
@@ -31,7 +33,8 @@ __all__ = [
     'ThreadWorker', 'create_msg_listener', 'capture_screen', 'capture_camera',
     'startxvfb', 'stopxvfb', 'get_rosbag_file', 'get_data_path',
     'add_text_to_video', 'concatenate_videos', 'MessageQueue',
-    'PololuSerialReader'
+    'PololuSerialReader', 'check_if_ffmpeg_satisfied',
+    'check_if_sound_card_exists'
     ]
 
 def run_shell_cmd(cmd, first=False):
@@ -187,7 +190,6 @@ def rosbag_msg_generator(bag_file, topics=None):
 
     pubs = {}
     for topic, message, timestamp in bag.read_messages(topics=topics, raw=True):
-        #yield topic, message, timestamp
         msg_type = message[4]
         data = message[1]
         if topic in pubs:
@@ -198,7 +200,8 @@ def rosbag_msg_generator(bag_file, topics=None):
         msg = msg_type()
         msg.deserialize(data)
         pub.publish(msg)
-        yield topic, msg
+        timestamp = datetime.fromtimestamp(timestamp.to_sec())
+        yield topic, msg, timestamp
     bag.close()
 
 def wait_for_message(topic, topic_class, timeout):
@@ -357,15 +360,17 @@ class MessageQueue():
     def subscribe(self, topic, topic_class):
         return rospy.Subscriber(topic, topic_class, self._cb)
 
-    def get(self):
-        return self.queue.get()
+    def get(self, timeout=None):
+        return self.queue.get(timeout=timeout)
 
+    def clear(self):
+        while not self.queue.empty():
+            self.queue.get(1)
 
 class PololuSerialReader(object):
     CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
 
     def __init__(self, device):
-        import serial
         self.ser = serial.Serial(device, baudrate=115200,
                                 bytesize=serial.EIGHTBITS,
                                 parity=serial.PARITY_NONE,
@@ -385,8 +390,14 @@ class PololuSerialReader(object):
         return (id, cmd, value)
 
 
-if __name__ == '__main__':
-    name = 'face_in'
-    capture_webcam_video('%s.avi' % name, 5)
-    video2rosbag('%s.avi' % name, '%s.bag' % name)
+def check_if_ffmpeg_satisfied():
+    """FFmpeg is used for screencasting."""
+    configuration = run_shell_cmd('ffmpeg -version|grep configuration', True)
+    configuration = [i.strip() for i in configuration.split(':')[1].split('--')]
+    requires = ['enable-libx264', 'enable-libfreetype']
+    return all([i in configuration for i in requires])
+
+def check_if_sound_card_exists():
+    snd_cards = run_shell_cmd('cat /proc/asound/cards')
+    return not 'no soundcards' in '\n'.join(snd_cards)
 

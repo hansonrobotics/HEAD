@@ -254,7 +254,7 @@ class RosPololuNode:
 
 if __name__ == '__main__':
     rospy.init_node("pololu_node")
-    r = rospy.Rate(10)
+    r = rospy.Rate(30)
     # Adding delay in order to avoid nodes loading at same time
     delay = rospy.get_param('~delay', 0)
     time.sleep(delay)

@@ -53,7 +53,7 @@ class PiFaceTrackerTest(unittest.TestCase):
         face_event_msg, face_location_msg = None, None
         fps = 25
         wait = 1.0/fps
-        for _, _ in rosbag_msg_generator(get_rosbag_file('face')):
+        for _, _, _ in rosbag_msg_generator(get_rosbag_file('face')):
             face_location_msg, face_event_msg = wait_for_messages(
                 ['/camera/face_locations', '/camera/face_event'],
                 [Faces, FaceEvent], wait)
@@ -64,7 +64,7 @@ class PiFaceTrackerTest(unittest.TestCase):
             if face_event_msg:
                 self.assertEqual(face_event_msg.face_event, 'new_face')
 
-        for _, _ in rosbag_msg_generator(get_rosbag_file('empty')):
+        for _, _, _ in rosbag_msg_generator(get_rosbag_file('empty')):
             face_event_msg = wait_for_message(
                 '/camera/face_event', FaceEvent, wait)
             if face_event_msg:

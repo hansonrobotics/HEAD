@@ -41,9 +41,9 @@ class AnimationManager():
         # Target minimum distance in m
         self.min_distance  = 0.1
         # Face target offset in BU
-        self.face_target_offset = -1.04
+        self.face_target_offset = -4
         # Eye_target distance in BU from 0 point
-        self.eye_target_offset = -6
+        self.eye_target_offset = -4
 
 
         # Head and Eye tracking parameters
