@@ -262,7 +262,7 @@ class Tree():
 		##### ROS Connections #####
 		self.facetrack = FaceTrack(self.blackboard)
 
-		rospy.Subscriber("behavior_switch", String, self.behavior_switch_callback)
+		rospy.Subscriber("/behavior_switch", String, self.behavior_switch_callback)
 		rospy.Subscriber("/blender_api/available_emotion_states",
 			AvailableEmotionStates, self.get_emotion_states_cb)
 
@@ -274,7 +274,7 @@ class Tree():
 		# currently supplying string rather than specific EmotionState with timing,
 		# allowing that to be handled here where timings have been tuned
 		rospy.logwarn("setting up chatbot affect perceive and express links")
-		rospy.Subscriber("/sophia/chatbot_affect_perceive", String,
+		rospy.Subscriber("chatbot_affect_perceive", String,
 			self.chatbot_affect_perceive_callback)
 		self.do_pub_gestures = True
 		self.do_pub_emotions = True
@@ -282,7 +282,7 @@ class Tree():
 			EmotionState, queue_size=1)
 		self.gesture_pub = rospy.Publisher("/blender_api/set_gesture",
 			SetGesture, queue_size=1)
-		self.affect_pub = rospy.Publisher("/sophia/chatbot_affect_express",
+		self.affect_pub = rospy.Publisher("chatbot_affect_express",
 			EmotionState, queue_size=1)
 		self.tree = self.build_tree()
 		time.sleep(0.1)
