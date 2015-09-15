@@ -49,7 +49,7 @@ class Chatbot():
     self._affect_publisher = rospy.Publisher(
       'chatbot_affect_perceive',
       String, queue_size=1
-    )  
+    )
     rospy.Subscriber('chatbot_affect_express', EmotionState,
         self._affect_express_callback)
 
@@ -171,7 +171,6 @@ class Chatbot():
         negate=-1
       # check if words in sentic
       if word in self._polarity:
-
         polarity_list.append(self._polarity[word])
         rospy.logwarn(word+' '+str(self._polarity[word]))
       else:
@@ -196,6 +195,7 @@ class Chatbot():
          extreme=max(polarity_list)
       else:
         extreme=min(polarity_list)
+    return (average+extreme)/2.0
 
     return negate*(average+extreme)/2.0
 
