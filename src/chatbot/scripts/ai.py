@@ -28,6 +28,8 @@ class Chatbot():
     # sentiment dictionary
     self._polarity={}
     self._polarity_threshold=0.2
+    # a small dictionary of terms which negate polarity
+    self._negates={'not':1,'don\'t':1,'can\'t':1,'won\'t':1,'isn\'t':1,'never':1}
     #
 
     rospy.init_node('chatbot_ai')
@@ -158,17 +160,22 @@ class Chatbot():
     average=0.0
     extreme=0.0
     polarity_list=[]
+    negate=1
+
     # strip punctuation prior to word search
     response=response.rstrip('.?!')
     words=response.split()
     for word in words:
-      # check if words in sentic, catch exception if not
+      # check if word in negates
+      if self._negates.has_key(word):
+        negate=-1
+      # check if words in sentic
       if word in self._polarity:
         polarity_list.append(self._polarity[word])
         rospy.logwarn(word+' '+str(self._polarity[word]))
       else:
         not_found+=1
-
+  
     # check adjacent pairs as well
 
     pairs=[' '.join(pair) for pair in izip(words[:-1], words[1:])]
@@ -190,6 +197,8 @@ class Chatbot():
         extreme=min(polarity_list)
     return (average+extreme)/2.0
 
+    return negate*(average+extreme)/2.0
+
 def main():
   chatbot = Chatbot()
   #sys.argv=['ai.py','/catkin_ws/src/chatbot/aiml/','-sent']
@@ -204,7 +213,7 @@ def main():
       sent_f=open(sent3_file,'r')
       chatbot.load_sentiment_csv(sent_f)
     except:
-      rospy.logwarn("exception here even though file read...")
+      rospy.logwarn("exception here even though file read OK...")
     #rospy.logwarn('Done loading '+len(self._polarity)+' sentiment polarity items.')
   # this needs to be at end to see ros msgs in load_sentiment ( spin is hidden inside? )
   chatbot.initialize(aiml_dir)
