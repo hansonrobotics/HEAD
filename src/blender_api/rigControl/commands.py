@@ -1,6 +1,6 @@
 # Implements the commands defined by the public API
 import bpy
-from  mathutils import Matrix
+from mathutils import Matrix, Euler
 from math import pi
 from collections import OrderedDict
 
@@ -219,3 +219,35 @@ class EvaAPI(RigAPI):
         shapekeys['jaw'] = min(max(jawz*7.142, 0), 1)
 
         return shapekeys
+
+
+    def setNeckRotation(self, pitch, roll):
+        bpy.evaAnimationManager.deformObj.pose.bones['DEF-neck'].rotation_euler = Euler((pitch, 0, roll))
+
+    def setParam(self, key, value):
+        cmd = "%s=%s" % (str(key), str(value))
+        print("Run %s" % cmd)
+        try:
+            exec(cmd)
+        except Exception as ex:
+            print("Error %s" % ex)
+            return False
+        return True
+
+    def getParam(self, param):
+        param = param.strip()
+        print("Get %s" % param)
+        try:
+            return str(eval(param))
+        except Exception as ex:
+            print("Error %s" % ex)
+
+    def getAnimationLength(self, animation):
+        animation = "GST-"+animation
+        if not animation in bpy.data.actions.keys():
+            return 0
+        else:
+            frame_range = bpy.data.actions[animation].frame_range
+            frames = 1+frame_range[1]-frame_range[0]
+            return frames / 24.0
+

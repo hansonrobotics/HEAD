@@ -136,6 +136,7 @@ class RosPololuNode:
         self._sync = rospy.get_param("~sync", "off")
         self._controller_type = rospy.get_param("~controller", "Maestro")
         self._motors = {}
+
         self.idle = False
         if rospy.has_param("~pololu_motors_yaml"):
             config_yaml = rospy.get_param("~pololu_motors_yaml")
@@ -182,7 +183,7 @@ class RosPololuNode:
             for i, m in self._motors.items():
                 try:
                     self.set_speed(m.id, m.speed)
-                    self.set_acceleration(m.id, m.acceleration)
+                    #self.set_acceleration(m.id, m.acceleration)
                     self.set_pulse(m.id, m.pulse)
                 except:
                     rospy.logerr("Write Timeout")
@@ -220,8 +221,6 @@ class RosPololuNode:
             self.set_acceleration(motor_id, min(max(0, msg.acceleration), 1))
             self.set_pulse(motor_id, pulse)
 
-
-
     def set_pulse(self, id, pulse):
         try:
             print id
@@ -245,7 +244,6 @@ class RosPololuNode:
             pass
 
     def set_acceleration(self, id, acceleation):
-
         acceleation = 0 # FIXME: disable acceleration because pololu may have problem with acceleration
         try:
             self.controller.setAcceleration(id, acceleation)
@@ -254,7 +252,7 @@ class RosPololuNode:
 
 if __name__ == '__main__':
     rospy.init_node("pololu_node")
-    r = rospy.Rate(10)
+    r = rospy.Rate(30)
     # Adding delay in order to avoid nodes loading at same time
     delay = rospy.get_param('~delay', 0)
     time.sleep(delay)
