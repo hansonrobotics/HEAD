@@ -238,7 +238,6 @@ class RosPololuNode:
         :param speed: speed
         """
         speed = int(512 * speed)
-        speed = 0
         try:
             self.controller.setSpeed(id, speed)
         except AttributeError:
