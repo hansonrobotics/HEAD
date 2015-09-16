@@ -196,7 +196,7 @@ class BlenderAPITest(unittest.TestCase):
         duration = bag.get_end_time() - bag.get_start_time()
         fps = bag.get_message_count() / float(duration)
         wait = 1.0/fps/10 # 10 times faster than the speed of the msg recoreded
-        for topic, msg in rosbag_msg_generator(filename):
+        for topic, msg, _ in rosbag_msg_generator(filename):
             pub.publish(msg)
             time.sleep(wait)
         # Test if blender is still alive
