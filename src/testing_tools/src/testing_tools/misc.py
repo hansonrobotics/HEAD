@@ -34,7 +34,7 @@ __all__ = [
     'startxvfb', 'stopxvfb', 'get_rosbag_file', 'get_data_path',
     'add_text_to_video', 'concatenate_videos', 'MessageQueue',
     'PololuSerialReader', 'check_if_ffmpeg_satisfied',
-    'check_if_sound_card_exists'
+    'check_if_sound_card_exists', 'SerialPortRecorder'
     ]
 
 def run_shell_cmd(cmd, first=False):
@@ -370,12 +370,12 @@ class MessageQueue():
 class PololuSerialReader(object):
     CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
 
-    def __init__(self, device):
+    def __init__(self, device, timeout=5):
         self.ser = serial.Serial(device, baudrate=115200,
                                 bytesize=serial.EIGHTBITS,
                                 parity=serial.PARITY_NONE,
                                 stopbits=serial.STOPBITS_ONE,
-                                timeout=5, writeTimeout=None)
+                                timeout=timeout, writeTimeout=None)
 
     def read(self):
         try:
@@ -400,4 +400,52 @@ def check_if_ffmpeg_satisfied():
 def check_if_sound_card_exists():
     snd_cards = run_shell_cmd('cat /proc/asound/cards')
     return not 'no soundcards' in '\n'.join(snd_cards)
+
+class SerialPortRecorder(object):
+    """Record data transmitted to the serial port device"""
+
+    def __init__(self, device, ofile=None):
+        """
+        device: str
+            serial port device
+        ofile: str
+            output file (optional)
+        """
+        self.ser = serial.Serial(
+            device, baudrate=115200, bytesize=serial.EIGHTBITS,
+            parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE,
+            timeout=None, writeTimeout=None)
+        self.data = []
+        self.running = False
+        self.job = None
+        self.ofile = ofile
+        signal.signal(signal.SIGINT, self._interrupt)
+
+    def start(self):
+        self.job = Thread(target=self._record)
+        self.job.daemon = True
+        self.running = True
+        self.job.start()
+
+    def _record(self):
+        self.running = True
+        while self.running:
+            try:
+                num = self.ser.read(1)
+            except serial.SerialException as e:
+                self.stop()
+                raise e
+            self.data.append(num)
+
+    def _interrupt(self, signum, frame):
+        self.stop()
+
+    def stop(self):
+        self.running = False
+        self.ser.close()
+        if self.ofile is not None:
+            with open(self.ofile, 'w') as f:
+                for i in self.data:
+                    f.write(i)
+            print "write to file %s" % self.ofile
 
