@@ -37,22 +37,32 @@ def plot():
     groups = df[df.Command == 'position'].groupby('MotorID')
     msgs_group = groups.groups
 
-    df2 = pd.read_csv(os.path.join(CWD, 'shkey_motor_data.csv'))
+    shkey_df = pd.read_csv(os.path.join(CWD, 'shkey_motor_data.csv'))
+    pau_df = pd.read_csv(os.path.join(CWD, 'pau_data.csv'))
+    line_prop = {'linewidth': 1, 'marker': 'o', 'markersize': 2}
     for motor_id, rows in msgs_group.items():
         if motor_id not in id2motor: continue
         motor = id2motor[motor_id]
-        f, axs = plt.subplots(2)
+        f, axs = plt.subplots(3, figsize=(20, 16))
         f.suptitle("Motor %s" % motor, fontsize=14)
         y = df.ix[rows].Value.tolist()
-        axs[0].plot(y)
+        axs[0].plot(y, **line_prop)
         axs[0].set_title("Motor command")
         axs[0].yaxis.grid()
 
-        y2 = (df2[motor]*4).tolist()
-        axs[1].plot(y2)
-        axs[1].set_title("Shape key")
+        pau = (pau_df[motor]*4).tolist()
+        axs[1].plot(pau, **line_prop)
+        axs[1].set_title("Pau Message")
         axs[1].yaxis.grid()
-        f.savefig(os.path.join(output_dir, '%s.png' % motor))
+
+        shkey = (shkey_df[motor]*4).tolist()
+        axs[2].plot(shkey, **line_prop)
+        axs[2].set_title("Shape key")
+        axs[2].yaxis.grid()
+
+        plt.tight_layout()
+        plt.subplots_adjust(top=0.95)
+        f.savefig(os.path.join(output_dir, '%s.png' % motor), dpi=80)
 
 def plot2():
     """/sophia/safe/head/command vs. shape keys"""
@@ -68,7 +78,7 @@ def plot2():
 
     df = pd.read_csv(os.path.join(CWD, 'shkey_motor_data.csv'))
     for motor, msgs in msgs_group.iteritems():
-        f, axs = plt.subplots(2)
+        f, axs = plt.subplots(2, figsize=(12, 16))
         f.suptitle("Motor %s" % motor, fontsize=14)
         y = [msg.position for msg in msgs]
         axs[0].plot(y)
@@ -77,7 +87,7 @@ def plot2():
         y2 = df[motor].tolist()
         axs[1].plot(y2)
         axs[1].set_title("Shape key")
-        f.savefig(os.path.join(output_dir, '%s.png' % motor))
+        f.savefig(os.path.join(output_dir, '%s.png' % motor), dpi=100)
 
 if __name__ == '__main__':
     plot()
