@@ -6,9 +6,10 @@ import rospy
 import math
 import yaml
 from pololu.motors import Maestro, MicroSSC
-# Temporary messages
 from ros_pololu.msg import MotorCommand
 import time
+
+COMMAND_RATE = 24
 
 class ConfigError(Exception):
     def __init__(self, value):
@@ -47,7 +48,7 @@ class PololuMotor:
             self.speed = self._config['speed']
         if 'acceleration' in config.keys():
             self.acceleration = self._config['acceleration']
-
+        self.last_pulse = self.pulse
 
     def _setup_calibration(self):
         """
@@ -110,6 +111,18 @@ class PololuMotor:
         angle = max(min(math.pi / 2.0, angle), -math.pi / 2.0)
         return int(3200 + (8800 - 3200) * (angle + math.pi / 2.0) / math.pi)
 
+    @staticmethod
+    def get_dynamic_speed(previous, current, rate=COMMAND_RATE):
+        """
+        :param previous: Previous pulse of motor
+        :param current: current pulse of the motor
+        :param rate: curraent command rate
+        :return: speed needed to get to position in the given frequency
+        """
+        speed = abs((current-previous)*rate/100.0)
+        return speed
+
+
     def get_calibrated_config(self):
         """
         :return: Array of config values with calibration data applied
@@ -134,6 +147,7 @@ class RosPololuNode:
         safety = rospy.get_param("~safety", False)
         # Use specific rate to publish motors commands
         self._sync = rospy.get_param("~sync", "off")
+        self._dynamic_speed = rospy.get_param("~dyn_speed", "off")
         self._controller_type = rospy.get_param("~controller", "Maestro")
         self._motors = {}
 
@@ -158,7 +172,6 @@ class RosPololuNode:
                         break
                 else:
                     motors.append(cfg)
-            print(motors)
             rospy.set_param('motors', motors)
         try:
             if self._controller_type == 'Maestro':
@@ -182,8 +195,16 @@ class RosPololuNode:
         if self._sync == 'on':
             for i, m in self._motors.items():
                 try:
-                    self.set_speed(m.id, m.speed)
-                    #self.set_acceleration(m.id, m.acceleration)
+                    if self._dynamic_speed == "on":
+                        # Get speed required and normalize it
+                        speed = PololuMotor.get_dynamic_speed(m.last_pulse, m.pulse) / 512.0
+                        m.last_pulse = m.pulse
+                        # Maximum rated speed
+                        # if speed > 0.3:
+                        #     rospy.logdebug("{} {}".format(m.id, speed))
+                    else:
+                        speed = m.speed
+                    self.set_speed(m.id, speed)
                     self.set_pulse(m.id, m.pulse)
                 except:
                     rospy.logerr("Write Timeout")
@@ -191,9 +212,10 @@ class RosPololuNode:
                     self.controller.clean()
 
 
-            self.controller.clean()
+            #self.controller.clean()
 
     def motor_command_callback(self, msg):
+        # Enable command processing for debuging
         if self.idle:
             return
         pulse = 0
@@ -202,7 +224,7 @@ class RosPololuNode:
             motor = self._motors[msg.joint_name]
             motor_id = motor.id
             pulse = motor.set_angle(msg.position)
-            #motor.speed =  min(max(0, msg.speed), 1)
+            motor.speed =  min(max(0, msg.speed), 1)
             motor.acceleration = min(max(0, msg.acceleration), 1)
             if msg.speed > 1:
                 msg.speed = motor.speed
@@ -223,8 +245,6 @@ class RosPololuNode:
 
     def set_pulse(self, id, pulse):
         try:
-            print id
-            print pulse
             self.controller.setTarget(id, pulse)
         except AttributeError:
             pass
@@ -244,7 +264,8 @@ class RosPololuNode:
             pass
 
     def set_acceleration(self, id, acceleation):
-        acceleation = 0 # FIXME: disable acceleration because pololu may have problem with acceleration
+        # FIXME: disable acceleration because pololu may have problem with acceleration
+        pass
         try:
             self.controller.setAcceleration(id, acceleation)
         except AttributeError:
@@ -252,7 +273,8 @@ class RosPololuNode:
 
 if __name__ == '__main__':
     rospy.init_node("pololu_node")
-    r = rospy.Rate(30)
+    COMMAND_RATE =rospy.get_param('~command_rate', COMMAND_RATE)
+    r = rospy.Rate(COMMAND_RATE)
     # Adding delay in order to avoid nodes loading at same time
     delay = rospy.get_param('~delay', 0)
     time.sleep(delay)
