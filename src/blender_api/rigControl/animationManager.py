@@ -4,7 +4,8 @@
 from .actuators import ActuatorManager
 
 from . import actuators
-from .blendedNum import BlendedNum, Transitions, Wrappers
+from . import blendedNum
+from .blendedNum.plumbing import Pipes, Wrappers
 from .helpers import *
 
 import math
@@ -48,13 +49,13 @@ class AnimationManager():
 
 
         # Head and Eye tracking parameters
-        self.headTargetLoc = BlendedNum([0,0,0], transition=Wrappers.wrap(
-            Transitions.chain(Transitions.linear(speed=0.5),
-                              Transitions.moving_average(duration=0.6)),
+        self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
+                Pipes.linear(speed=0.5),
+                Pipes.moving_average(window=0.6)],
             Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
         ))
-        self.eyeTargetLoc = BlendedNum([0,0,0], transition=Wrappers.wrap(
-            Transitions.linear(speed=3),
+        self.eyeTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap(
+            Pipes.linear(speed=3),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
         ))
 
@@ -174,13 +175,18 @@ class AnimationManager():
                 for emotion in self.emotionsList:
                     if emotionName == emotion.name:
                         # update magnitude
-                        emotion.magnitude.target = data['magnitude']
-                        emotion.duration = data['duration']
+                        num = emotion.magnitude
+                        num.keyframes = []
+                        num.add_keyframe(target=data['magnitude'], transition=(0, Pipes.linear(2)))
+                        num.add_keyframe(target=0.0, transition=(0, Pipes.exponential(0.8/data['duration'])))
                         found = True
 
                 if not found:
-                    emotion = Emotion(emotionName, duration = data['duration'],
-                        magnitude=BlendedNum(0, Transitions.moving_average(0.2), target=data['magnitude']))
+                    num = blendedNum.Trajectory(0)
+                    num.add_keyframe(target=data['magnitude'], transition=[
+                        (0, Pipes.linear(2)), (1, Pipes.moving_average(0.2))])
+                    num.add_keyframe(target=0.0, transition=(0, Pipes.exponential(0.8/data['duration'])))
+                    emotion = Emotion(emotionName, magnitude=num)
                     self.emotionsList.append(emotion)
 
 
@@ -301,12 +307,11 @@ class AnimationManager():
         locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
 
         # Move eyes too, slowly
-        self.eyeTargetLoc.transition = Wrappers.wrap(
-            Transitions.chain(Transitions.linear(speed=0.5),
-                              Transitions.stick(duration=0.5),
-                              Transitions.moving_average(duration=0.1)),
-            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
-        )
+        self.eyeTargetLoc.transition = Wrappers.wrap([
+                Pipes.linear(speed=0.5),
+                Pipes.stick(window=0.5),
+                Pipes.moving_average(window=0.1)],
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0]))
         self.eyeTargetLoc.target = locBU
 
     def setGazeTarget(self, loc):
@@ -315,7 +320,7 @@ class AnimationManager():
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.eye_target_offset)
 
         self.eyeTargetLoc.transition = Wrappers.wrap(
-            Transitions.linear(speed=3),
+            Pipes.linear(speed=3),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
         )
         self.eyeTargetLoc.target = locBU
@@ -359,10 +364,9 @@ class AnimationManager():
 
 class Emotion():
     '''Represents an emotion'''
-    def __init__(self, name, magnitude, duration):
+    def __init__(self, name, magnitude):
         self.name = name
         self.magnitude = magnitude
-        self.duration = duration
         self.priority = 0
 
 
@@ -388,15 +392,24 @@ class Viseme():
         self.trackRef = track
         self.stripRef = strip
         self.duration = duration  		# duration of animation in seconds
-        self.time = 0 - startTime 		# -time is scheduled for the future (seconds)
-                                        # 0 is happening right away
-                                        # +time is animation in progress (seconds)
-        self.magnitude = BlendedNum(0,
-            Transitions.smooth(speed=2, smoothing=0.2)) 	# normalized amplitude
-        self.rampInRatio = rampInRatio 		# percentage of time spent blending in
-        self.rampOutRatio = rampOutRatio 	# percentage of time spent blending out
         self.influence_kfp = influence_kfp  # Influence keyframe point to change influence
+        # startTime - seconds to wait before playing this Viseme
+        # rampInRatio - percentage of time spent blending in
+        # rampOutRatio - percentage of time spent blending out
 
+        # Convert time percentages to transition speeds
+        speedIn = 1/(max(rampInRatio * duration, 0.01))
+        speedOut = 1/(max(rampOutRatio * duration, 0.01))
+
+        # Calculate when to start transitioning out
+        startOut = (1-rampOutRatio) * duration + startTime
+
+        # Set up the trajectory for the magnitude
+        num = blendedNum.Trajectory(0)
+        num.add_keyframe(target=0.0, time=startTime, transition=(1, Pipes.moving_average(0.2)))
+        num.add_keyframe(target=1.0, time=startOut, transition=(0, Pipes.linear(speedIn)))
+        num.add_keyframe(target=0.0, transition=(0, Pipes.linear(speedOut)))
+        self.magnitude = num # normalized amplitutde
 
 class Cycle():
     ''' Represents a cyclic gesture, or 'soma' '''

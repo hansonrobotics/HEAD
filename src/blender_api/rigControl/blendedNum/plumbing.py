@@ -1,81 +1,24 @@
-from collections import deque, Sequence
-from math import tan, atan, sqrt
+from collections import Sequence, deque
 from copy import copy
+from math import sqrt, atan, tan
 import random
-from time import time as systime
 
-class BlendedNum():
-    def __init__(self, value, transition=None, target=None):
-        value = _vectorize(value)
+class Pipes:
 
-        self._current = value
-        self._target = Target(target if target is not None else value)
+    """
+    Pipes define how blended numbers should reach the given target in time.
 
-        self._transition = None
-        self.transition = transition or Transitions.identity()
-
-    @property
-    def current(self):
-        return _devectorize(self._current)
-
-    @property
-    def target(self):
-        return self._target.base
-
-    @target.setter
-    def target(self, val):
-        """ Set the target to move towards when 'blend' is called. """
-        self._target.base = val
-
-    def target_add(self, val):
-        """ Add alterations to the base target value. These alterations are
-        cleared on every 'blend'. """
-        self._target.add(val)
-
-    def blend(self, time, dt):
-        """ Updates the 'current' value and clears any modifications added to
-        the target with target_add(val). """
-        target_val = self._target.clear()
-        self._current = self.transition.send((target_val, time, dt))
-        return self._current
-
-    @property
-    def transition(self):
-        return self._transition
-
-    @transition.setter
-    def transition(self, val):
-        if val == self._transition:
-            return
-
-        # Make the transition think it's been at the current position for 10 seconds
-        # for initialization purposes.
-        send_current = lambda: val.send((self._current, systime(), 10.0))
-
-        try:
-            send_current()
-        except TypeError:
-            # It appears the generator was expecting None.
-            # First sent value has to be None for any non-initialized generator.
-            val.send(None)
-            send_current()
-
-        self._transition = val
-
-    def __repr__(self):
-        return "<BlendedNum current={} target_base={}>".format(
-            self._current, self._target._base)
-
-
-class Transitions:
+    Most pipes, on each yield, take a list of arbitrary length as their target
+    and return a list of the same length.
+    """
 
     @staticmethod
     def smooth(speed=1.0, smoothing=1.0):
-        return Transitions.chain(
-            Transitions.linear(speed), Transitions.moving_average(smoothing))
+        return [Pipes.linear(speed), Pipes.moving_average(smoothing)]
 
     @staticmethod
     def linear(speed):
+        """ Speed is in units per second. """
         target, time, dt = yield None
         current = target
         while True:
@@ -95,33 +38,49 @@ class Transitions:
             target, time, dt = yield current
 
     @staticmethod
-    def moving_average(duration):
-        """ Duration in seconds. """
+    def moving_average(window):
+        """ Window is in seconds. """
         target, time, dt = yield None
         buffer = WeightBuffer()
         while True:
             buffer.append((target, dt))
-            buffer.cut_to_fit(duration)
+            buffer.cut_to_fit(window)
             target, time, dt = yield buffer.weighted_mean()
 
     @staticmethod
-    def stick(duration, deviation=0.5):
+    def exponential(alpha):
+        """ Exponential decay or exponential moving average.
+        Alpha defines the fraction of the distance to move towards the target
+        in one second."""
+        target, time, dt = yield None
+        current = target
+        while True:
+            current = [b + alpha*(a-b)*dt for a,b in zip(target, current)]
+            target, time, dt = yield current
+
+
+    @staticmethod
+    def stick(window, deviation=0.5, time_interval_func=lambda: random.uniform(0.2, 0.5)):
+        """ Best works after a 'linear' pipe. Sticks onto target values for a
+        period of time returned by the 'time_interval_func' argument.
+        'window' defines the time in seconds for this pipe to ramp in and ramp out.
+        'deviation' defines how much the output should deviate from the target,
+         when the target is moving. """
         target, time, dt = yield None
         buffer = WeightBuffer()
-        timerandom = lambda: min(max(random.gauss(0.35, 0.1), 0.2), 0.5)
         spacerandom = lambda sigma: [random.gauss(a, b) for a, b in
                                      zip(buffer.weighted_mean(), sigma)]
         nexttime = time
         while True:
             buffer.append((target, dt))
-            buffer.cut_to_fit(duration)
+            buffer.cut_to_fit(window)
 
             buffer_variance = buffer.weighted_variance()
             buffer_deviation = [sqrt(a) for a in buffer_variance]
             total_buffer_deviation = sqrt(sum(buffer_variance))
 
             if time >= nexttime:
-                nexttime = timerandom() + time
+                nexttime = time_interval_func() + time
                 old_target = spacerandom(
                     [(0.5*a + 0.5*total_buffer_deviation) * deviation
                      for a in buffer_deviation]
@@ -150,19 +109,15 @@ class Transitions:
         while True:
             target, time, dt = yield target
 
-    @staticmethod
-    def chain(*transitions):
-        for trans in transitions:
-            trans.send(None)
-        target, time, dt = yield None
-        while True:
-            value = target
-            for trans in transitions:
-                value = trans.send((value, time, dt))
-            target, time, dt = yield value
-
 
 class Wrappers:
+
+    """
+    Pipes that come in pairs and should be placed in front and at the end of an
+    already existing pipeline.
+
+    Useful for temporarily changing the coordinate system.
+    """
 
     @staticmethod
     def in_spherical(origin, radius=3):
@@ -189,9 +144,9 @@ class Wrappers:
         return cartesian_to_spherical(), spherical_to_cartesian()
 
     @staticmethod
-    def wrap(transition, wrapper):
-        prepend_transition, append_transition = wrapper
-        return Transitions.chain(prepend_transition, transition, append_transition)
+    def wrap(pipes, wrapper):
+        prepend_pipes, append_pipes = wrapper
+        return [prepend_pipes, pipes, append_pipes]
 
 
 class WeightBuffer(deque):
@@ -251,61 +206,106 @@ class WeightBuffer(deque):
         for dimension in zip(*vectors):
             yield WeightBuffer(zip(dimension, weights))
 
-def fixed_fps(transition, fps):
-    transition.send(None)
-    target = yield None
-    dt = 1.0/fps
-    time = 0
-    while True:
-        target = yield transition.send((target, time, dt))
-        time += dt
 
+class Sources:
 
-class Target:
-
-    def __init__(self, base):
-        self.base = _vectorize(base)
-        self._accumulator = None
-
-    @property
-    def base(self):
-        return _devectorize(self._base)
-
-    @base.setter
-    def base(self, val):
-        """ A value that will not be cleared with the clear() method.
-        Unlike add(), this method uses only the last value. """
-        self._base = _vectorize(val)
-
-    def add(self, val):
-        """ Values that will be summed, added with 'base' and cleared on every
-        call to clear(). """
+    @staticmethod
+    def constant(val):
+        """ A target that always yields the same value. """
         val = _vectorize(val)
+        while True:
+            yield val
 
-        if self._accumulator == None:
-            self._accumulator = val
-        else:
-            self._accumulator = [a + b for a, b in zip(self._accumulator, val)]
+    class AdditiveTarget:
 
-    def clear(self):
-        maxlen = max(len(vec) if isinstance(vec, Sequence) else 0
-                     for vec in [self._accumulator, self._base])
+        """
+        A target that can be modified permenantly (base property) or temporarily,
+        a change that lasts only for the next frame (add function).
 
-        # If any of the vectors are None, fill them with zeros.
-        base = self._base or [0] * maxlen
-        accumulator = self._accumulator or [0] * maxlen
+        Useful for blending several targets (animations) into one.
+        """
 
-        # Clear the accumulator
-        self._accumulator = None
+        def __init__(self, base):
+            self.base = _vectorize(base)
+            self._accumulator = None
 
-        return [a + b for a, b in zip(accumulator, base)]
+        @property
+        def base(self):
+            return _devectorize(self._base)
+
+        @base.setter
+        def base(self, val):
+            """ A value that will not be cleared with the blend() method.
+            Unlike add(), this method uses only the last value. """
+            self._base = _vectorize(val)
+
+        def add(self, val):
+            """ Values that will be summed, added with 'base' and cleared on every
+            call to blend(). """
+            val = _vectorize(val)
+
+            if self._accumulator == None:
+                self._accumulator = val
+            else:
+                self._accumulator = [a + b for a, b in zip(self._accumulator, val)]
+
+        def blend(self, time, dt):
+            maxlen = max(len(vec) if isinstance(vec, Sequence) else 0
+                         for vec in [self._accumulator, self._base])
+
+            # If any of the vectors are None, fill them with zeros.
+            base = self._base or [0] * maxlen
+            accumulator = self._accumulator or [0] * maxlen
+
+            # Clear the accumulator
+            self._accumulator = None
+
+            return [a + b for a, b in zip(accumulator, base)]
+
+        def send(self, tupl):
+            """ This function ducktypes the class for it to be interchangable with
+            a python generator. """
+            return self.blend(*tupl)
+
+
+class Plumbing:
+
+    def __init__(self, source=None, pipes=[]):
+        self.source = source
+        self.pipes = pipes
+
+    def blend(self, time, dt):
+        try:
+            output = self.source.send((time, dt))
+        except TypeError:
+            # It appears the generator was expecting None.
+            # First sent value has to be None for any non-initialized generator.
+            self.source.send(None)
+            output = self.source.send((time, dt))
+
+        for pipe in self.pipes:
+            try:
+                output = pipe.send((output, time, dt))
+            except TypeError:
+                pipe.send(None)
+                output = pipe.send((output, time, dt))
+        return output
 
 
 def _vectorize(value):
     if not isinstance(value, Sequence):
         return [value]
     else:
-        return copy(value)
+        return _flatten(value)
+
+def _flatten(lst):
+    result = []
+    for item in lst:
+        if isinstance(item, Sequence):
+            result.extend(_flatten(item))
+        else:
+            result.append(item)
+    return result
 
 def _devectorize(vector):
     if len(vector) == 1:

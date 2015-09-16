@@ -137,34 +137,17 @@ class BLPlayback(bpy.types.Operator):
             # update visemes
             visemes = eva.visemesList[:]
             for viseme in visemes:
-                # wait to start
-                if viseme.time < 0:
-                    continue
 
-                # remove if finished (and finalized)
-                if viseme.time > viseme.duration*1.5:
-                    eva._deleteViseme(viseme)
-                    continue
-
-                # ramp in from 0
-                rampPoint = viseme.duration * viseme.rampInRatio
-                if viseme.time <= rampPoint:
-                    # compute ramp in factor
-                    viseme.magnitude.target = viseme.time / rampPoint
-
-                # ramp out to 0
-                rampOutPoint = viseme.duration - viseme.duration*viseme.rampOutRatio
-                if viseme.time >= rampOutPoint:
-                    # compute ramp in factor
-                    viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
-
-                # update action
+                # magnitude is a blendedNum.Trajectory and will internally take
+                # care of the time it needs to activate.
                 viseme.magnitude.blend(time, dt)
-                viseme.stripRef.influence = viseme.magnitude.current
-                viseme.influence_kfp.co[1] = viseme.magnitude.current
 
-                # update time
-                viseme.time += (1/framerateHz)*timeScale
+                if viseme.magnitude.is_done:
+                    eva._deleteViseme(viseme)
+                else:
+                    # update action
+                    viseme.stripRef.influence = viseme.magnitude.current
+                    viseme.influence_kfp.co[1] = viseme.magnitude.current
 
             # update eye and head blending
             headControl = eva.bones["head_target"]
@@ -184,17 +167,15 @@ class BLPlayback(bpy.types.Operator):
 
             # udpate emotions
             for emotion in eva.emotionsList:
-                control = eva.bones['EMO-'+emotion.name]
-                control['intensity'] = emotion.magnitude.current
-                emotion.duration -= timeScale
                 emotion.magnitude.blend(time, dt)
 
-                if emotion.duration < 0:
-                    emotion.magnitude.target *= 0.99
+                control = eva.bones['EMO-'+emotion.name]
 
-                    if emotion.magnitude.current < 0.1:
-                        eva.emotionsList.remove(emotion)
-                        control['intensity'] = 0.0
+                if emotion.magnitude.is_done:
+                    eva.emotionsList.remove(emotion)
+                    control['intensity'] = 0.0
+                else:
+                    control['intensity'] = emotion.magnitude.current
 
 
             if bpy.context.scene['keepAlive']:
