@@ -367,6 +367,13 @@ class MessageQueue():
         while not self.queue.empty():
             self.queue.get(1)
 
+    def tolist(self):
+        data = []
+        while not self.queue.empty():
+            data.append(self.queue.get(1))
+        return data
+
+
 class PololuSerialReader(object):
     CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
 
@@ -438,16 +445,16 @@ class SerialPortRecorder(object):
                 self.stop()
                 raise e
             self.data.append(num)
-            if self.start_time is not None:
+            if self.start_time is None and len(self.data) == 1:
                 self.start_time = time.time()
-        if self.stop_time is not None:
-            self.stop_time = time.time()
 
     def _interrupt(self, signum, frame):
         self.stop()
 
     def stop(self):
         self.running = False
+        if self.stop_time is None:
+            self.stop_time = time.time()
         self.ser.close()
         if self.ofile is not None:
             with open(self.ofile, 'w') as f:
@@ -455,3 +462,6 @@ class SerialPortRecorder(object):
                     f.write(i)
             print "write to file %s" % self.ofile
 
+    def __repr__(self):
+        return "<SerialPortRecorder start_time:%s, stop_time:%s, data:%s>" % (
+            self.start_time, self.stop_time, ''.join(self.data[:80]))
