@@ -420,6 +420,8 @@ class SerialPortRecorder(object):
         self.job = None
         self.ofile = ofile
         signal.signal(signal.SIGINT, self._interrupt)
+        self.start_time = None
+        self.stop_time = None
 
     def start(self):
         self.job = Thread(target=self._record)
@@ -436,6 +438,10 @@ class SerialPortRecorder(object):
                 self.stop()
                 raise e
             self.data.append(num)
+            if self.start_time is not None:
+                self.start_time = time.time()
+        if self.stop_time is not None:
+            self.stop_time = time.time()
 
     def _interrupt(self, signum, frame):
         self.stop()
