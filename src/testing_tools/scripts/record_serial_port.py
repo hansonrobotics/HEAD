@@ -11,6 +11,8 @@ from blender_api_msgs.msg import SetGesture
 from pau2motors.msg import pau
 from datetime import datetime
 import pandas as pd
+from frame2motor import load_motor_configs, get_shkey_motors
+from collections import defaultdict
 
 HR_WORKSPACE = os.environ.get('HR_WORKSPACE', os.path.expanduser('~/hansonrobotics'))
 CWD = os.path.abspath(os.path.dirname(__file__))
@@ -21,11 +23,27 @@ def parse_raw_data(raw_data_file, parsed_data_file):
         data = f.read()
         instructions = parser.parse(data)
 
+    motor_configs = load_motor_configs()
+    shkey_motors = get_shkey_motors(motor_configs)
+    id2motor = {motor_configs[name]['motor_id']: name for name in shkey_motors}
+
+    msgs = defaultdict(list)
+    for i in instructions:
+        cmd, motor_id, value = i
+        if cmd != 'position': continue
+        if motor_id in id2motor:
+            msgs[id2motor[motor_id]].append(value)
+    if len(msgs) == 0: return
+    msg_len = len(msgs.values()[0])
+    for key, value in msgs.iteritems():
+        assert len(value) == msg_len
+
     with open(parsed_data_file, 'w') as f:
-        f.write('MotorID,Command,Value\n')
-        for i in instructions:
-            cmd, id, value = i
-            f.write('%s,%s,%s\n' % (id, cmd, value))
+        header = sorted(msgs.keys())
+        f.write('%s\n' % ','.join(header))
+        for i in range(msg_len):
+            values = [msgs[k][i] for k in header]
+            f.write('%s\n' % ','.join(map(str, values)))
     print "Write serial data to %s" % parsed_data_file
 
 def record(device, serial_port_data_file, pau_data_file, gesture):
@@ -89,4 +107,3 @@ if __name__ == '__main__':
     serial_port_data_file = os.path.join(CWD, 'serial_port_data.csv')
     pau_data_file = os.path.join(CWD, 'pau_data.csv')
     record(device, serial_port_data_file, pau_data_file, 'yawn-1')
-

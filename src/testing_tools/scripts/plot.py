@@ -10,16 +10,9 @@ from frame2motor import frame2motor, load_motor_configs, get_shkey_motors
 HR_WORKSPACE = os.environ.get('HR_WORKSPACE', os.path.expanduser('~/hansonrobotics'))
 CWD = os.path.abspath(os.path.dirname(__file__))
 
-motor_configs = load_motor_configs()
-shkey_motors = get_shkey_motors(motor_configs)
-
 def plot(shkey_data_file, pau_motor_file, serial_port_data_file, output_dir):
     """serial commands vs. shape keys"""
-    id2motor = {motor_configs[name]['motor_id']: name for name in shkey_motors}
-
-    df = pd.read_csv(serial_port_data_file)
-    groups = df[df.Command == 'position'].groupby('MotorID')
-    msgs_group = groups.groups
+    serial_df = pd.read_csv(serial_port_data_file)
     shkey_df = pd.read_csv(shkey_data_file)
     pau_df = pd.read_csv(pau_motor_file)
 
@@ -28,16 +21,14 @@ def plot(shkey_data_file, pau_motor_file, serial_port_data_file, output_dir):
         ymin, ymax = min(y)-0.1*yrange, max(y)+0.1*yrange
         return ymin, ymax
 
-    line_prop = {'linewidth': 1, 'marker': 'o', 'markersize': 2}
-    for motor_id, rows in msgs_group.items():
-        if motor_id not in id2motor: continue
-        motor = id2motor[motor_id]
+    line_prop = {'linewidth': 2, 'markersize': 4, 'alpha': 0.6}
+    for motor, rows in serial_df.iteritems():
         f, axs = plt.subplots(2, figsize=(14, 10))
-        f.suptitle("Motor %s, ID %s" % (motor, motor_id), fontsize=14)
-        y = df.ix[rows].Value.tolist()
+        f.suptitle("Motor %s" % motor, fontsize=14)
+        y = rows.tolist()
         pau = (pau_df[motor]*4).astype(int).tolist()
-        axs[0].plot(y, label='Serial Port', **line_prop)
-        axs[0].plot(pau, label='Pau Message', **line_prop)
+        axs[0].plot(y, label='Serial Port', marker='o', **line_prop)
+        axs[0].plot(pau, label='Pau Message', marker='*', **line_prop)
         axs[0].yaxis.grid()
         ymin, ymax = get_yrange(y)
         ymin2, ymax2 = get_yrange(pau)
@@ -45,7 +36,7 @@ def plot(shkey_data_file, pau_motor_file, serial_port_data_file, output_dir):
         axs[0].legend()
 
         shkey = (shkey_df[motor]*4).astype(int).tolist()
-        axs[1].plot(shkey, label='Shape Key', **line_prop)
+        axs[1].plot(shkey, label='Shape Key', marker='o', **line_prop)
         axs[1].yaxis.grid()
         ymin, ymax = get_yrange(shkey)
         axs[1].set_ylim([ymin, ymax])
