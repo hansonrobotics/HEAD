@@ -46,7 +46,7 @@ def parse_raw_data(raw_data_file, parsed_data_file):
             f.write('%s\n' % ','.join(map(str, values)))
     print "Write serial data to %s" % parsed_data_file
 
-def record(device, serial_port_data_file, pau_data_file, gesture):
+def record(device, serial_port_data_file, pau_data_file, gesture, duration):
     raw_data_file = os.path.join(CWD, 'serial_port_data.raw')
     recorder = SerialPortRecorder(device, raw_data_file)
 
@@ -81,7 +81,7 @@ def record(device, serial_port_data_file, pau_data_file, gesture):
     motor_msg = rospy.wait_for_message('/sophia/safe/head/command', MotorCommand)
     timestamps['motor_command_arrive'] = time.time()
 
-    time.sleep(9) # wait for animation to finish
+    time.sleep(duration) # wait for animation to finish
     blender_set_param("bpy.context.scene['commandListenerActive']", "False")
     recorder.stop()
     print "Stop recording"
@@ -106,4 +106,8 @@ if __name__ == '__main__':
     device = os.path.expanduser('~/workspace/hansonrobotics/scripts/pololu1')
     serial_port_data_file = os.path.join(CWD, 'serial_port_data.csv')
     pau_data_file = os.path.join(CWD, 'pau_data.csv')
-    record(device, serial_port_data_file, pau_data_file, 'yawn-1')
+    #duration = 28
+    #gesture = 'all'
+    duration = 9
+    gesture = 'yawn-1'
+    record(device, serial_port_data_file, pau_data_file, gesture, duration)
