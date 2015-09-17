@@ -43,7 +43,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             value: this.model.get('magnitude') * 100,
                             slide: function (e, ui) {
                                 self.model.set('magnitude', (ui.value / 100).toFixed(2));
-                                self.ui.magnitudeLabel.html(self.model.get('magnitude') * 100 + '%');
+                                self.ui.magnitudeLabel.html(Math.floor(self.model.get('magnitude') * 100) + '%');
 
                             }
                         });

@@ -161,10 +161,14 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableGestures: function (success) {
-            api.topics.available_gestures.unsubscribe();
-            api.topics.available_gestures.subscribe(function (message) {
+            if (typeof this.lastAvailableGesturesCallback == 'function')
+                api.topics.available_gestures.unsubscribe(this.lastAvailableGesturesCallback);
+
+            this.lastAvailableGesturesCallback = function (message) {
                 success(message.data);
-            });
+            };
+
+            api.topics.available_gestures.subscribe(this.lastAvailableGesturesCallback);
         },
         /**
          * Set a gesture
@@ -200,10 +204,14 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableEmotionStates: function (success) {
-            api.topics.available_emotion_states.unsubscribe();
-            api.topics.available_emotion_states.subscribe(function (message) {
+            if (typeof this.lastAvailableEmotionsCallback == 'function')
+                api.topics.available_gestures.unsubscribe(this.lastAvailableEmotionsCallback);
+
+            this.lastAvailableEmotionsCallback = function (message) {
                 success(message.data);
-            });
+            };
+
+            api.topics.available_emotion_states.subscribe(this.lastAvailableEmotionsCallback);
         },
         /**
          * Set an emotion, call multiple times to blend emotions together

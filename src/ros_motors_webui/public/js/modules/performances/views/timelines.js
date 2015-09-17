@@ -57,10 +57,18 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
 
                 this.model.get('nodes').bind('add', this.addNode, this);
                 this.model.get('nodes').bind('remove', this.arrangeNodes, this);
+
+                // add resize event
+                $(window).resize(function () {
+                    self.updateTimelineWidth();
+                });
             },
             onDestroy: function () {
                 this.model.get('nodes').unbind('add', this.addNode, this);
                 this.model.get('nodes').unbind('remove', this.arrangeNodes, this);
+
+                // remove resize event
+                $(window).off('resize');
 
                 this.model.get('nodes').each(function (node) {
                     $(node.get('el')).remove();
