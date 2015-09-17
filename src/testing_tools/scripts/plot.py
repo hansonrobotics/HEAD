@@ -23,6 +23,11 @@ def plot(shkey_data_file, pau_motor_file, serial_port_data_file, output_dir):
     shkey_df = pd.read_csv(shkey_data_file)
     pau_df = pd.read_csv(pau_motor_file)
 
+    def get_yrange(y):
+        yrange = (max(y)-min(y))
+        ymin, ymax = min(y)-0.1*yrange, max(y)+0.1*yrange
+        return ymin, ymax
+
     line_prop = {'linewidth': 1, 'marker': 'o', 'markersize': 2}
     for motor_id, rows in msgs_group.items():
         if motor_id not in id2motor: continue
@@ -30,15 +35,20 @@ def plot(shkey_data_file, pau_motor_file, serial_port_data_file, output_dir):
         f, axs = plt.subplots(2, figsize=(14, 10))
         f.suptitle("Motor %s, ID %s" % (motor, motor_id), fontsize=14)
         y = df.ix[rows].Value.tolist()
-        pau = (pau_df[motor]*4).tolist()
+        pau = (pau_df[motor]*4).astype(int).tolist()
         axs[0].plot(y, label='Serial Port', **line_prop)
         axs[0].plot(pau, label='Pau Message', **line_prop)
         axs[0].yaxis.grid()
+        ymin, ymax = get_yrange(y)
+        ymin2, ymax2 = get_yrange(pau)
+        axs[0].set_ylim([min(ymin, ymin2), max(ymax, ymax2)])
         axs[0].legend()
 
-        shkey = (shkey_df[motor]*4).tolist()
+        shkey = (shkey_df[motor]*4).astype(int).tolist()
         axs[1].plot(shkey, label='Shape Key', **line_prop)
         axs[1].yaxis.grid()
+        ymin, ymax = get_yrange(shkey)
+        axs[1].set_ylim([ymin, ymax])
         axs[1].legend()
 
         plt.tight_layout()
@@ -46,7 +56,7 @@ def plot(shkey_data_file, pau_motor_file, serial_port_data_file, output_dir):
         f.savefig(os.path.join(output_dir, '%s.png' % motor), dpi=80)
 
 if __name__ == '__main__':
-    shkey_data_file = os.path.join(CWD, 'shkey_motor_data.csv')
+    shkey_data_file = os.path.join(CWD, 'shkey_frame_motor_data.csv')
     serial_port_data_file = os.path.join(CWD, 'serial_port_data.csv')
     pau_data_file = os.path.join(CWD, 'pau_data.csv')
     pau_motor_file = os.path.join(CWD, 'pau_motor.csv')
