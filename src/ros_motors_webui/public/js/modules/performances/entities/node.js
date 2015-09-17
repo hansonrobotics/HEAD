@@ -4,7 +4,7 @@ define(['application', 'lib/api'], function (App, api) {
             call: function () {
                 switch (this.get('name')) {
                     case 'gesture':
-                        api.setGesture(this.get('gesture'), 1, 1, this.get('magnitude'));
+                        api.setGesture(this.get('gesture'), 1, this.get('speed'), this.get('magnitude'));
                         break;
                     case 'emotion':
                         api.setEmotion(this.get('emotion'), this.get('magnitude'), parseFloat(this.get('duration')));

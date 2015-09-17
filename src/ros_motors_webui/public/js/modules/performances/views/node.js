@@ -12,7 +12,10 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     startTime: '.app-node-start-time',
                     duration: '.app-node-duration',
                     crosshair: '.app-crosshair',
-                    deleteButton: '.app-delete-node-button'
+                    deleteButton: '.app-delete-node-button',
+                    speedSlider: '.app-speed-slider',
+                    speedLabel: '.app-speed-label',
+                    magnitudeLabel: '.app-magnitude-label'
                 },
                 events: {
                     'change @ui.duration': 'setDuration',
@@ -31,12 +34,17 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                         if (!this.model.get('magnitude'))
                             this.model.set('magnitude', 1);
 
+                        this.ui.magnitudeLabel.html(this.model.get('magnitude') * 100 + '%');
+
                         // init slider
                         this.ui.magnitudeSlider.slider({
+                            animate: true,
                             range: 'min',
                             value: this.model.get('magnitude') * 100,
                             slide: function (e, ui) {
-                                self.model.set('magnitude', ui.value / 100)
+                                self.model.set('magnitude', (ui.value / 100).toFixed(2));
+                                self.ui.magnitudeLabel.html(self.model.get('magnitude') * 100 + '%');
+
                             }
                         });
                     }
@@ -65,8 +73,10 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                                     $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
                                 });
 
-                                if (!self.model.get('gesture') && gestures.length > 0)
+                                if (!self.model.get('gesture') && gestures.length > 0) {
                                     self.model.set('gesture', gestures[0]);
+                                    self.setGestureLength();
+                                }
 
                                 if (self.model.get('gesture'))
                                     $(self.ui.emotionSelect).val(self.model.get('gesture'));
@@ -74,6 +84,21 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                                 $(self.ui.gestureSelect).select2();
                             });
 
+                            if (!this.model.get('speed')) this.model.set('speed', 1);
+
+                            this.ui.speedLabel.html(this.model.get('speed'));
+                            this.ui.speedSlider.slider({
+                                range: 'min',
+                                animate: true,
+                                min: 50,
+                                max: 200,
+                                value: this.model.get('speed') * 100,
+                                slide: function (e, ui) {
+                                    var speed = ui.value / 100;
+                                    self.model.set('speed', speed);
+                                    self.ui.speedLabel.html(speed.toFixed(2));
+                                }
+                            });
                             break;
                         case 'look_at':
                             this.buildCrosshair();
@@ -100,6 +125,13 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 },
                 setGesture: function () {
                     this.model.set('gesture', this.ui.gestureSelect.val());
+                    this.setGestureLength();
+                },
+                setGestureLength: function () {
+                    var self = this;
+                    api.getAnimationLength(this.model.get('gesture'), function (response) {
+                        self.model.set('duration', response.length);
+                    });
                 },
                 setStartTime: function () {
                     this.model.set('start_time', Number($(this.ui.startTime).val()));

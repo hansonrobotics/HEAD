@@ -217,7 +217,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 magnitude = 1;
 
             if ($.isNumeric(duration))
-                duration = {secs: duration, nsecs: 0};
+                duration = {secs: Math.floor(duration), nsecs: Math.floor((duration - Math.floor(duration)) * 1000)};
             else if (typeof duration != 'object')
                 duration = {secs: 1, nsecs: 0};
 
@@ -333,6 +333,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         getTtsLength: function (text, success) {
             api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text}), success, function (error) {
+                console.log(error);
+            });
+        },
+        getAnimationLength: function (animation, success) {
+            api.services.get_animation_length.callService(new ROSLIB.ServiceRequest({animation: animation}), success, function (error) {
                 console.log(error);
             });
         }

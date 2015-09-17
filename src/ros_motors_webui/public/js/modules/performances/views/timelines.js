@@ -1,4 +1,4 @@
-define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './node', 'scrollbar',
+define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './node',
     'lib/extensions/animate_auto'], function (App, template, d3) {
     App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
         Views.Timelines = Marionette.CompositeView.extend({
@@ -49,7 +49,6 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 this.ui.runIndicator.hide();
                 this.ui.editElements.hide();
 
-                //$(this.ui.scrollContainer).scrollbar({showArrows: true});
                 this.model.get('nodes').each(function (node) {
                     self.createNodeEl(node);
                 });

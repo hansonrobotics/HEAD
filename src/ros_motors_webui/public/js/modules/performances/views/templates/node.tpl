@@ -11,9 +11,9 @@
         </div>
     </div>
 
-    <% if (name == 'emotion' || name == 'gesture') { %>
+    <% if (name == 'emotion') { %>
         <div class="col-sm-2">
-            <label title="Emotion">Duration</label>
+            <label>Duration</label>
 
             <div class="input-group">
                 <input type="text" class="app-node-duration form-control" title="Duration" value="<%= duration %>"/>
@@ -21,23 +21,25 @@
                 <div class="input-group-addon">s</div>
             </div>
         </div>
-    <% } %>
-
-    <% if (name == 'emotion') { %>
         <div class="col-sm-2">
-            <label title="Emotion">Emotion</label>
+            <label title="Emotion">Pose</label>
             <select class="app-emotion-select"></select>
         </div>
     <% } else if (name == 'gesture') { %>
         <div class="col-sm-2">
-            <label title="Gesture">Gesture</label>
+            <label>Speed <span class="app-speed-label pull-right label label-default"></span></label>
+
+            <div class="app-speed-slider"></div>
+        </div>
+        <div class="col-sm-2">
+            <label title="Gesture">Animation</label>
             <select class="app-gesture-select"></select>
         </div>
     <% } %>
 
     <% if (name == 'emotion' || name == 'gesture') { %>
         <div class="col-sm-3">
-            <label title="Magnitude">Magnitude</label>
+            <label title="Magnitude">Magnitude <span class="app-magnitude-label pull-right label label-default"></span></label>
 
             <div class="app-magnitide-slider"></div>
         </div>
