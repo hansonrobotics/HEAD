@@ -4,91 +4,55 @@
 #
 import pandas as pd
 import matplotlib.pyplot as plt
-import rosbag
-import sys
 import os
-from collections import defaultdict
-import yaml
+from frame2motor import frame2motor, load_motor_configs, get_shkey_motors
 
 HR_WORKSPACE = os.environ.get('HR_WORKSPACE', os.path.expanduser('~/hansonrobotics'))
 CWD = os.path.abspath(os.path.dirname(__file__))
 
-head_yaml = '{}/head.yaml'.format(os.path.join(HR_WORKSPACE, 'public_ws/src/robots_config/sophia'))
-output_dir = '%s/fig' % CWD
+motor_configs = load_motor_configs()
+shkey_motors = get_shkey_motors(motor_configs)
 
-with open(head_yaml) as stream:
-    motor_configs = yaml.load(stream)
-
-shkey_motors = []
-for motor in sorted(motor_configs.keys()):
-    motor_entry = motor_configs[motor]
-    parser_cfg = motor_entry['pau']['parser']
-    parser_name = parser_cfg['name']
-    if parser_name == 'fsshapekey':
-        shkey_motors.append(motor)
-
-if not os.path.isdir(output_dir):
-    os.makedirs(output_dir)
-
-def plot():
+def plot(shkey_data_file, pau_motor_file, serial_port_data_file, output_dir):
     """serial commands vs. shape keys"""
     id2motor = {motor_configs[name]['motor_id']: name for name in shkey_motors}
-    df = pd.read_csv(os.path.join(CWD, 'yawn-1-serial-commands.csv'))
+
+    df = pd.read_csv(serial_port_data_file)
     groups = df[df.Command == 'position'].groupby('MotorID')
     msgs_group = groups.groups
+    shkey_df = pd.read_csv(shkey_data_file)
+    pau_df = pd.read_csv(pau_motor_file)
 
-    shkey_df = pd.read_csv(os.path.join(CWD, 'shkey_motor_data.csv'))
-    pau_df = pd.read_csv(os.path.join(CWD, 'pau_data.csv'))
     line_prop = {'linewidth': 1, 'marker': 'o', 'markersize': 2}
     for motor_id, rows in msgs_group.items():
         if motor_id not in id2motor: continue
         motor = id2motor[motor_id]
-        f, axs = plt.subplots(3, figsize=(20, 16))
-        f.suptitle("Motor %s" % motor, fontsize=14)
+        f, axs = plt.subplots(2, figsize=(14, 10))
+        f.suptitle("Motor %s, ID %s" % (motor, motor_id), fontsize=14)
         y = df.ix[rows].Value.tolist()
-        axs[0].plot(y, **line_prop)
-        axs[0].set_title("Motor command")
-        axs[0].yaxis.grid()
-
         pau = (pau_df[motor]*4).tolist()
-        axs[1].plot(pau, **line_prop)
-        axs[1].set_title("Pau Message")
-        axs[1].yaxis.grid()
+        axs[0].plot(y, label='Serial Port', **line_prop)
+        axs[0].plot(pau, label='Pau Message', **line_prop)
+        axs[0].yaxis.grid()
+        axs[0].legend()
 
         shkey = (shkey_df[motor]*4).tolist()
-        axs[2].plot(shkey, **line_prop)
-        axs[2].set_title("Shape key")
-        axs[2].yaxis.grid()
+        axs[1].plot(shkey, label='Shape Key', **line_prop)
+        axs[1].yaxis.grid()
+        axs[1].legend()
 
         plt.tight_layout()
         plt.subplots_adjust(top=0.95)
         f.savefig(os.path.join(output_dir, '%s.png' % motor), dpi=80)
 
-def plot2():
-    """/sophia/safe/head/command vs. shape keys"""
-    bag_file = os.path.join(CWD, 'yawn-1_head_command.bag')
-    bag = rosbag.Bag(bag_file)
-    msgs_group = defaultdict(list)
-    for topic, message, timestamp in bag.read_messages():
-        if message.joint_name in shkey_motors:
-            msgs_group[message.joint_name].append(message)
-
+if __name__ == '__main__':
+    shkey_data_file = os.path.join(CWD, 'shkey_motor_data.csv')
+    serial_port_data_file = os.path.join(CWD, 'serial_port_data.csv')
+    pau_data_file = os.path.join(CWD, 'pau_data.csv')
+    pau_motor_file = os.path.join(CWD, 'pau_motor.csv')
+    frame2motor(pau_data_file, pau_motor_file)
+    output_dir = '%s/fig' % CWD
     if not os.path.isdir(output_dir):
         os.makedirs(output_dir)
-
-    df = pd.read_csv(os.path.join(CWD, 'shkey_motor_data.csv'))
-    for motor, msgs in msgs_group.iteritems():
-        f, axs = plt.subplots(2, figsize=(12, 16))
-        f.suptitle("Motor %s" % motor, fontsize=14)
-        y = [msg.position for msg in msgs]
-        axs[0].plot(y)
-        axs[0].set_title("Motor command")
-
-        y2 = df[motor].tolist()
-        axs[1].plot(y2)
-        axs[1].set_title("Shape key")
-        f.savefig(os.path.join(output_dir, '%s.png' % motor), dpi=100)
-
-if __name__ == '__main__':
-    plot()
+    plot(shkey_data_file, pau_motor_file, serial_port_data_file, output_dir)
 
