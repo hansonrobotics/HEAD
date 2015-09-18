@@ -1,0 +1,5 @@
+<launch>
+    <param name="/run_id" value="test_perception" />
+    <test name="perception_test" pkg="perception" type="test_perception.py" test-name="perception" time-limit="300.0" />
+</launch>
+

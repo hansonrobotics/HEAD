@@ -1,0 +1,5 @@
+<launch>
+    <param name="/run_id" value="test_chatbot" />
+    <test name="chatbot_test" pkg="chatbot" type="test_chatbot.py" test-name="chatbot" time-limit="300.0" />
+</launch>
+

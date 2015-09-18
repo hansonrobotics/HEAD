@@ -1,0 +1,51 @@
+
+=Neck mechanism demo yaml files.
+
+Used for testing and development of complex neck mechanisms.
+
+There are several files here:
+
+* neck-upper.yaml -- all of the blender quaternion is sent to the
+  upper u-joint only.
+
+* neck-split.yaml -- a single blender quaternion is split 50-50
+  between the upper and lower u-joints.
+
+* neck-dual.yaml -- two quaternions from blender, one describing the
+  upper, and one describing the lower u-joints.
+
+== Running
+To run:
+0) start roscore
+1) export ROS_NAMESPACE=foo
+2) rosparam load pau2motors/test/neck-example.yaml
+3) rosrun pau2motors pau2motors_node.py
+   This publishes the /foo/Lower_Gimbal_L_controller/command etc
+   and the /foo/neck_pau topics
+
+4) rosrun topic_tools mux /foo/neck_pau  cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux
+5) rosservice call neck_pau_mux/select /blender_api/get_pau
+6) blender -y Sophia.blend -P autostart.py
+
+For the older robots, use this:
+5) rosservice call neck_pau_mux/select /cmd_neck_pau
+6) rosrun basic_head_api head_ctrl.py
+7) rostopic pub --once /point_head basic_head_api/PointHead '{yaw: 0.1, pitch:0.2, roll:0.3}' 
+
+== Verify operation:
+Make her look in different directions:
+The external coord system is x==straight-ahead; y==body-left, z==up
+```
+rostopic pub --once /blender_api/set_face_target blender_api_msgs/Target '{x: 1.0, y: -0.3 , z: -0.3}'
+rostopic echo /foo/Lower_Gimbal_L_controller/command
+rostopic echo /foo/Lower_Gimbal_R_controller/command
+rostopic echo /foo/Upper_Gimbal_L_controller/command
+rostopic echo /foo/Upper_Gimbal_R_controller/command
+rostopic echo /foo/Neck_Rotation_controller/command
+```
+
+Coordinate conventions:
+Curent Sophia blender model uses:
+Nods pitch the head back and forth changing the X cosine
+Shakes yaw the head side to side, changing the Y and Z cosines
+

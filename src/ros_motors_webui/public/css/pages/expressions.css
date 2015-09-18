@@ -1,0 +1,78 @@
+.control-stack {
+    width: 100%;
+    max-width: 590px;
+}
+
+.knobBlock {
+    margin: 5px;
+    float: left;
+}
+
+.knobName {
+    font-size: 24px;
+    display: table;
+    margin: auto;
+    position: relative;
+}
+
+.crosshairsl {
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+    float: right;
+    border: none !important;
+}
+
+/*.btn {*/
+    /*color: #111;*/
+    /*background-color: #dc0;*/
+    /*border-color: #ffec03;*/
+/*}*/
+
+.header .btn-group {
+    margin-left: 10px;
+}
+
+.btn:active, .btn:focus, .btn.active {
+    outline: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.btn-default:active, .btn-default:focus, .btn-default.active {
+    background-color: #df691a !important;
+    border-color: #df691a !important;
+
+    outline: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.highlight:focus {
+    outline: none;
+}
+
+@media screen and (max-width: 500px) {
+    .landscape {
+        display: none;
+    }
+
+    .expression-buttons {
+        margin: 0;
+        display: table;
+        padding-top: 5px;
+    }
+}
+
+@media screen and (min-width: 501px) {
+    .portrait {
+        display: none;
+    }
+
+    .expression-buttons {
+        display: inline-block;
+    }
+}
+.app-expression-name {
+    margin-top: 20px;
+}

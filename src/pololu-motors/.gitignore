@@ -1,0 +1,45 @@
+*.py[cod]
+*.*~
+.#*
+*#*#
+.DS_Store
+**/*.txt
+!LICENSE.txt
+!requirements.txt
+*.pdf
+logs/*.log*
+old
+docs/pmcapi/
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+var
+sdist
+develop-eggs
+.installed.cfg
+#lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
