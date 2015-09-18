@@ -194,7 +194,7 @@ class EvaAPI(RigAPI):
         shapekeys = OrderedDict()
         for shapekeyGroup in bpy.data.shape_keys:
             # Hardcoded to find the correct group
-            if shapekeyGroup.name == 'Key.007':
+            if shapekeyGroup.name == 'ShapeKeys':
                 for kb in shapekeyGroup.key_blocks:
                     shapekeys[kb.name] = kb.value
 
