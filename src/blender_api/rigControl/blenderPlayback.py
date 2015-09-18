@@ -91,6 +91,7 @@ class BLPlayback(bpy.types.Operator):
 
     bpy.types.Scene.animationPlaybackActive = bpy.props.BoolProperty( name = "animationPlaybackActive", default=False)
     bpy.context.scene['animationPlaybackActive'] = False
+    bpy.context.scene['keepAlive'] = True
 
     timeList = []
 
@@ -197,7 +198,7 @@ class BLPlayback(bpy.types.Operator):
             eva.blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
 
             # keep alive
-            eva.keepAlive()
+            eva.keepAlive(bpy.context.scene['keepAlive'])
 
             # send ROS data
 
