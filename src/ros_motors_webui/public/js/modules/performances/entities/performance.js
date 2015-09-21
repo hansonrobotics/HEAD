@@ -18,35 +18,37 @@ define(['application', 'lib/api', './node'], function (App, api) {
             },
             run: function (startTime) {
                 var self = this;
-                this.runQueue = [];
-                this.lastRunTime = new Date().getTime();
-
                 this.stop();
 
-                if (typeof startTime == 'undefined')
-                    if ($.isNumeric(this.resumeStartTime)) {
-                        startTime = this.resumeStartTime;
-                        this.resumeStartTime = null;
-                    } else
+                // set start time
+                if (typeof startTime == 'undefined' && $.isNumeric(this.getResumeTime())) {
+                    startTime = this.getResumeTime();
+                    this.lastRunTime = Date.now() - (startTime * 1000);
+                } else {
+                    if (!$.isNumeric(startTime))
                         startTime = 0;
 
-                if (!$.isNumeric(startTime))
-                    startTime = 0;
+                    this.lastRunTime = Date.now();
+                }
+
+                this.resumeStartTime = null;
 
                 this.get('nodes').each(function (node) {
                     if (node.get('start_time') >= startTime)
                         self.runQueue.push(setTimeout(function () {
                             node.call();
-                        }, node.get('start_time') * 1000));
+                        }, (node.get('start_time') - startTime) * 1000));
                 });
             },
             pause: function () {
                 if ($.isNumeric(this.lastRunTime)) {
-                    this.resumeStartTime = new Date().getTime() - this.lastRunTime;
+                    this.resumeStartTime = Date.now() - this.lastRunTime;
 
                     _.each(this.runQueue, function (timeout) {
                         clearTimeout(timeout);
                     });
+
+                    this.runQueue = [];
                 }
             },
             stop: function () {
@@ -55,6 +57,19 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 });
 
                 this.runQueue = [];
+                this.lastRunTime = null;
+            },
+            /**
+             * Returns resume time in seconds if paused or null otherwise
+             *
+             * @returns {*}
+             */
+            getResumeTime: function () {
+                if ($.isNumeric(this.resumeStartTime)) {
+                    return this.resumeStartTime / 1000;
+                } else {
+                    return null;
+                }
             },
             getDuration: function () {
                 var duration = 0;

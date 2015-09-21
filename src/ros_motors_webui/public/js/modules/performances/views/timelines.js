@@ -64,6 +64,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 });
             },
             onDestroy: function () {
+                this.stop();
                 this.model.get('nodes').unbind('add', this.addNode, this);
                 this.model.get('nodes').unbind('remove', this.arrangeNodes, this);
 
@@ -240,13 +241,18 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 Views.trigger('performances:save');
             },
             run: function (startTime, finishedCallback) {
-                var self = this,
-                    duration = this.model.getDuration();
+                var duration = this.model.getDuration();
 
                 if (!$.isNumeric(startTime)) startTime = 0;
                 if (startTime > duration) return;
 
-                this.model.run(startTime);
+                // set start time if performance was paused
+                if ($.isNumeric(this.model.getResumeTime())) {
+                    startTime = this.model.getResumeTime();
+                    this.model.run();
+                } else {
+                    this.model.run(startTime);
+                }
 
                 $(this.ui.runIndicator).stop().css('left', startTime * this.config.pxPerSec).show()
                     .animate({left: duration * this.config.pxPerSec}, (duration - startTime) * 1000, 'linear',
@@ -257,6 +263,11 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                             finishedCallback();
                     });
             },
+            pause: function () {
+                $(this.ui.runIndicator).stop();
+                this.model.pause();
+                clearInterval(this.loopInterval);
+            },
             runClicked: function () {
                 this.stop();
                 this.run();
@@ -266,12 +277,26 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 this.run(e.offsetX / this.config.pxPerSec);
             },
             loop: function () {
-                var self = this;
-                this.stop();
+                var self = this,
+                    resumeTime = this.model.getResumeTime(),
+                    duration = this.model.getDuration(),
+                    setLoopInterval = function () {
+                        self.loopInterval = setInterval(function () {
+                            self.run();
+                        }, duration * 1000);
+                    };
+
                 this.run();
-                this.loopInterval = setInterval(function () {
-                    self.run();
-                }, this.model.getDuration() * 1000);
+
+                if (resumeTime) {
+                    clearTimeout(this.loopTimeout);
+                    this.loopTimeout = setTimeout(function () {
+                        self.run();
+                        setLoopInterval();
+                    }, (duration - resumeTime) * 1000);
+                } else {
+                    setLoopInterval();
+                }
             },
             stop: function () {
                 this.model.stop();

@@ -119,13 +119,11 @@
     margin: 9px 0;
 }
 
-.app-timeline-editor-container {
+.app-timeline-editortainer {
     position: relative;
-    margin-bottom: 10px;
 }
 
 .app-timelines-container {
-    margin-bottom: 5px;
     overflow: auto;
 }
 
@@ -154,7 +152,7 @@
 .app-run-indicator {
     position: absolute;
     height: 100%;
-    width: 1px;
+    width: 2px;
     background-color: #df691a;
     z-index: 9999;
 }

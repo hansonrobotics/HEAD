@@ -8,12 +8,14 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 performanceTemplate: '.app-performance-template',
                 runButton: '.app-run',
                 pauseButton: '.app-pause',
+                stopButton: '.app-stop',
                 clearButton: '.app-clear',
                 emptyNotice: '.app-empty-notice'
             },
             events: {
                 'click @ui.runButton': 'run',
                 'click @ui.pauseButton': 'pause',
+                'click @ui.stopButton': 'stop',
                 'click @ui.clearButton': 'clear'
             },
             queue: [],
@@ -42,7 +44,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 });
 
                 $('.app-edit', el).click(function () {
-                    self.pause();
+                    self.stop();
 
                     var timelineView = self.showTimeline(performance);
                     timelineView.enableEdit();
@@ -72,26 +74,11 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 $('.app-duration', item.el).html(item.model.getDuration().toFixed(2));
             },
             run: function () {
-                if (this.queue.length == 0 || this.running) return;
-                this.running = true;
+                if (this.queue.length == 0) return;
+                if (! this.timelinesView)
+                    this.timelinesView = this.showTimeline(this.getPerformanceUnion());
 
-                var self = this,
-                    performanceUnion = this.getPerformanceUnion(),
-                    duration = performanceUnion.getDuration(),
-                    timelinesView = this.showTimeline(performanceUnion);
-
-                var run = function () {
-                    timelinesView.run(0, function () {
-                        setTimeout(function () {
-                            if (self.running)
-                                run();
-                            else
-                                timelinesView.destroy();
-                        }, duration * 1000);
-                    });
-                };
-
-                run();
+                this.timelinesView.loop();
             },
             showTimeline: function (performance) {
                 var timelinesView = new App.Performances.Views.Timelines({
@@ -105,8 +92,15 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
 
                 return timelinesView;
             },
+            stop: function () {
+                if (this.timelinesView) {
+                    this.timelinesView.stop();
+                    this.timelinesView.destroy();
+                    this.timelinesView = null;
+                }
+            },
             pause: function () {
-                this.running = false;
+                if (this.timelinesView) this.timelinesView.pause();
             },
             getPerformanceUnion: function () {
                 var self = this,

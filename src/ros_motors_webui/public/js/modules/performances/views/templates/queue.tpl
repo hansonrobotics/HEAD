@@ -14,6 +14,10 @@
                 <span class="glyphicon glyphicon-pause"></span>
                 Pause
             </button>
+            <button class="app-stop btn btn-default">
+                <span class="glyphicon glyphicon-stop"></span>
+                Stop
+            </button>
             <button class="app-clear pull-right btn btn-default">
                 <span class="glyphicon glyphicon-trash"></span>
                 Clear all
