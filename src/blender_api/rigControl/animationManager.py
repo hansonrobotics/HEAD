@@ -156,7 +156,10 @@ class AnimationManager():
         duration = (newStrip.frame_end - newStrip.frame_start)
         newStrip.blend_type = 'ADD'
         newStrip.use_animated_time = True
-
+        # Create the strip time function
+        f = newStrip.fcurves.items()[0][1]
+        # Point at 1st frame
+        strip_time_kfp = f.keyframe_points.insert(1,0,{'FAST'})
         # force blink to play at 1.0 intensity
         if 'blink' in name.lower():
             magnitude = 1
@@ -167,7 +170,7 @@ class AnimationManager():
 
         # Create object and add to list
         g = Gesture(name, newTrack, newStrip, duration=duration, speed=speed, \
-             magnitude=magnitude, priority=priority, repeat=repeat)
+             magnitude=magnitude, priority=priority, repeat=repeat, strip_time_kfp=strip_time_kfp)
         self.gesturesList.append(g)
 
 
@@ -235,9 +238,12 @@ class AnimationManager():
         newStrip.blend_type = 'ADD'
         newStrip.use_animated_influence = True
         newStrip.influence = 0
-
+        # Get influence function
+        f = newStrip.fcurves.items()[0][1]
+        # Point at 1st frame
+        influence_kfp = f.keyframe_points.insert(1,0,{'FAST'})
         # Create object and add to list
-        v = Viseme(action.name, newTrack, newStrip, duration, rampInRatio, rampOutRatio, startTime)
+        v = Viseme(action.name, newTrack, newStrip, duration, rampInRatio, rampOutRatio, startTime, influence_kfp)
         self.visemesList.append(v)
 
         return True
@@ -383,7 +389,7 @@ class Emotion():
 
 class Gesture():
     '''Represents a blender actions'''
-    def __init__(self, name, track, strip, duration, speed, magnitude, priority, repeat):
+    def __init__(self, name, track, strip, duration, speed, magnitude, priority, repeat, strip_time_kfp):
         self.name = name
         self.duration = duration
         self.magnitude = magnitude
@@ -394,10 +400,11 @@ class Gesture():
         self.trackRef = track
         self.stripRef = strip
 
+        self.strip_time_kfp = strip_time_kfp
 
 class Viseme():
     '''Represents a Viseme'''
-    def __init__(self, vis, track, strip, duration, rampInRatio, rampOutRatio, startTime):
+    def __init__(self, vis, track, strip, duration, rampInRatio, rampOutRatio, startTime, influence_kfp):
         self.vis = vis
         self.trackRef = track
         self.stripRef = strip
@@ -408,6 +415,7 @@ class Viseme():
         self.magnitude = BlendedNum(0, steps=2, smoothing=4) 	# normalized amplitude
         self.rampInRatio = rampInRatio 		# percentage of time spent blending in
         self.rampOutRatio = rampOutRatio 	# percentage of time spent blending out
+        self.influence_kfp = influence_kfp  # Influence keyframe point to change influence
 
 
 class Cycle():
