@@ -124,6 +124,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableSomaStates: function (success) {
             api.topics.available_soma_states.unsubscribe();
+            api.topics.available_soma_states.removeAllListeners();
             api.topics.available_soma_states.subscribe(function (message) {
                 success(message.data);
             });
@@ -161,14 +162,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableGestures: function (success) {
-            if (typeof this.lastAvailableGesturesCallback == 'function')
-                api.topics.available_gestures.unsubscribe(this.lastAvailableGesturesCallback);
-
-            this.lastAvailableGesturesCallback = function (message) {
+            api.topics.available_gestures.unsubscribe();
+            api.topics.available_gestures.removeAllListeners();
+            api.topics.available_gestures.subscribe(function (message) {
                 success(message.data);
-            };
-
-            api.topics.available_gestures.subscribe(this.lastAvailableGesturesCallback);
+            });
         },
         /**
          * Set a gesture
@@ -204,14 +202,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableEmotionStates: function (success) {
-            if (typeof this.lastAvailableEmotionsCallback == 'function')
-                api.topics.available_gestures.unsubscribe(this.lastAvailableEmotionsCallback);
-
-            this.lastAvailableEmotionsCallback = function (message) {
+            api.topics.available_emotion_states.unsubscribe();
+            api.topics.available_emotion_states.removeAllListeners();
+            api.topics.available_emotion_states.subscribe(function (message) {
                 success(message.data);
-            };
-
-            api.topics.available_emotion_states.subscribe(this.lastAvailableEmotionsCallback);
+            });
         },
         /**
          * Set an emotion, call multiple times to blend emotions together
@@ -326,6 +321,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableScripts: function (success) {
             api.topics.scripts_available.unsubscribe();
+            api.topics.scripts_available.removeAllListeners();
             api.topics.scripts_available.subscribe(function (message) {
                 success(message.data.split("|"));
             });
