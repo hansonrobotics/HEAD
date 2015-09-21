@@ -3,3 +3,6 @@
 *.sublime-project
 
 *.sublime-workspace
+
+*.blend?
+*.blend??
