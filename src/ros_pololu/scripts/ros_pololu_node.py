@@ -186,14 +186,14 @@ class RosPololuNode:
                 try:
                     if self._dynamic_speed == "on":
                         # Get speed required and normalize it
-                        speed = Maestro.calculateSpeed(m.last_pulse, m.pulse, 1/COMMAND_RATE, 1/self._servo_rate) / 512.0
+                        speed = Maestro.calculateSpeed(m.last_pulse, m.pulse, 1.0/COMMAND_RATE, 1.0/self._servo_rate) / 512.0
                         m.last_pulse = m.pulse
                     else:
                         speed = m.speed
                     self.set_speed(m.id, speed)
                     self.set_pulse(m.id, m.pulse)
-                except:
-                    rospy.logerr("Write Timeout")
+                except Exception as ex:
+                    rospy.logerr("Error %s" % ex)
                     time.sleep(0.01)
                     self.controller.clean()
             self.controller.clean()
