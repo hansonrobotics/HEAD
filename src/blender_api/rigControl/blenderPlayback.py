@@ -2,7 +2,7 @@
 # as the animation playback service, and hosts other supporting test operators
 
 # Frame rate for animation playback
-framerateHz = 24
+framerateHz = 48
 
 # System timer
 defaultTimerHz = 48
