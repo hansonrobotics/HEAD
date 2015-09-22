@@ -111,18 +111,6 @@ class PololuMotor:
         angle = max(min(math.pi / 2.0, angle), -math.pi / 2.0)
         return int(3200 + (8800 - 3200) * (angle + math.pi / 2.0) / math.pi)
 
-    @staticmethod
-    def get_dynamic_speed(previous, current, rate=COMMAND_RATE):
-        """
-        :param previous: Previous pulse of motor
-        :param current: current pulse of the motor
-        :param rate: curraent command rate
-        :return: speed needed to get to position in the given frequency
-        """
-        speed = abs((current-previous)*rate/100.0)
-        return speed
-
-
     def get_calibrated_config(self):
         """
         :return: Array of config values with calibration data applied
@@ -148,9 +136,9 @@ class RosPololuNode:
         # Use specific rate to publish motors commands
         self._sync = rospy.get_param("~sync", "off")
         self._dynamic_speed = rospy.get_param("~dyn_speed", "off")
+        self._servo_rate = rospy.get_param("~servo_rate", 50)
         self._controller_type = rospy.get_param("~controller", "Maestro")
         self._motors = {}
-
         self.idle = False
         if rospy.has_param("~pololu_motors_yaml"):
             config_yaml = rospy.get_param("~pololu_motors_yaml")
@@ -161,6 +149,7 @@ class RosPololuNode:
                 rospy.logwarn("Error loading config files")
             # Get existing motors config and update those configs if callibration data changed
             motors = rospy.get_param('motors',[])
+
             for name, cfg in config.items():
                 self._motors[name] = PololuMotor(name, cfg)
                 cfg = self._motors[name].get_calibrated_config()
@@ -197,11 +186,8 @@ class RosPololuNode:
                 try:
                     if self._dynamic_speed == "on":
                         # Get speed required and normalize it
-                        speed = PololuMotor.get_dynamic_speed(m.last_pulse, m.pulse) / 512.0
+                        speed = Maestro.calculateSpeed(m.last_pulse, m.pulse, 1/COMMAND_RATE, 1/self._servo_rate) / 512.0
                         m.last_pulse = m.pulse
-                        # Maximum rated speed
-                        # if speed > 0.3:
-                        #     rospy.logdebug("{} {}".format(m.id, speed))
                     else:
                         speed = m.speed
                     self.set_speed(m.id, speed)
@@ -210,9 +196,7 @@ class RosPololuNode:
                     rospy.logerr("Write Timeout")
                     time.sleep(0.01)
                     self.controller.clean()
-
-
-            #self.controller.clean()
+            self.controller.clean()
 
     def motor_command_callback(self, msg):
         # Enable command processing for debuging
@@ -265,7 +249,7 @@ class RosPololuNode:
 
     def set_acceleration(self, id, acceleation):
         # FIXME: disable acceleration because pololu may have problem with acceleration
-        pass
+        acceleration = 0
         try:
             self.controller.setAcceleration(id, acceleation)
         except AttributeError:
