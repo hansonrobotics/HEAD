@@ -56,7 +56,7 @@
         </div>
     <% } %>
 
-    <div class="col-md-2">
+    <div class="col-sm-2">
         <button class="app-delete-node-button btn btn-default">Delete</button>
     </div>
 </div>

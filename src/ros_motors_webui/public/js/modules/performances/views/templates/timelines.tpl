@@ -1,16 +1,16 @@
 <div class="app-edit-container">
     <div class="row">
-        <div class="col-md-3">
-            <div class="input-group">
-                <span class="input-group-addon">Name</span>
-                <input class="app-performance-name form-control" type="text" value="<%= name %>"/>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="btn-group" role="group">
+        <div class="col-md-12">
+            <div class="form-inline">
+                <div class="input-group">
+                    <span class="input-group-addon">Name</span>
+                    <input class="app-performance-name form-control" type="text" value="<%= name %>"/>
+                </div>
                 <button class="app-delete-button btn btn-default" title="Delete"><span
                             class="glyphicon glyphicon-trash"></span></button>
             </div>
+        </div>
+        <div class="col-md-3">
         </div>
     </div>
 </div>

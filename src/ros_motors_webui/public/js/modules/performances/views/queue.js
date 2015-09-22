@@ -63,6 +63,8 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 });
             },
             removeItem: function (item) {
+                this.stop();
+
                 $(item.el).slideUp();
                 this.queue = _.without(this.queue, item);
 
@@ -129,7 +131,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 return union;
             },
             clear: function () {
-                this.pause();
+                this.stop();
 
                 var self = this;
                 _.each(this.queue, function (item) {
