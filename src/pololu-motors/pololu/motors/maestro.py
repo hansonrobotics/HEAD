@@ -327,3 +327,20 @@ class Maestro(object):
 
     def clean(self):
         self._serial.flushInput()
+
+    @staticmethod
+    def calculateSpeed(p1, p2, time, period=0.02):
+        """
+        Returns speed needed between two pulses based on servo channel setting
+        more info https://www.pololu.com/docs/0J40/all#4.e
+        :param p1: first pulse
+        :param p2: second pulse
+        :param time: time between pulses
+        :param period: period in s of the servos, by default 0.02 (50Hz)
+        :return: returns speed for maestro board
+        """
+        if period >= 0.02:
+            speed = abs((p1-p2)/time)*(period/2)
+        else:
+            speed = abs((p1-p2)/time)*period
+        return speed
