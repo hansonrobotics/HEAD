@@ -103,6 +103,9 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                         case 'look_at':
                             this.buildCrosshair();
                             break;
+                        case 'gaze_at':
+                            this.buildCrosshair();
+                            break;
                         case 'speech':
                             if (this.model.get('text')) this.ui.textInput.val(this.model.get('text'));
                             break;

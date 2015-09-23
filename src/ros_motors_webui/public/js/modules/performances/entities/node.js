@@ -10,7 +10,10 @@ define(['application', 'lib/api'], function (App, api) {
                         api.setEmotion(this.get('emotion'), this.get('magnitude'), parseFloat(this.get('duration')));
                         break;
                     case 'look_at':
-                        api.setFaceTarget(-this.get('x'), 3, -this.get('y'));
+                        api.setFaceTarget(3, this.get('x'), -this.get('y'));
+                        break;
+                    case 'gaze_at':
+                        api.setGazeTarget(3, this.get('x'), -this.get('y'));
                         break;
                     case 'speech':
                         api.robotSpeech(this.get('text'));

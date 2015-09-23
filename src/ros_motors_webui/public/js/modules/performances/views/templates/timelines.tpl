@@ -25,6 +25,7 @@
                 <div class="app-node label label-danger" data-name="gesture">Animation</div>
                 <div class="app-node label label-success" data-name="speech">Speech</div>
                 <div class="app-node label label-primary" data-name="look_at">LookAt</div>
+                <div class="app-node label label-warning" data-name="gaze_at">GazeAt</div>
             </div>
 
             <div class="app-node-settings"></div>

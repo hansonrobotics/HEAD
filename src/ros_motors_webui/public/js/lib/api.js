@@ -241,6 +241,15 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 })
             );
         },
+        setGazeTarget: function (x, y, z) {
+            api.topics.set_gaze_target.publish(
+                new ROSLIB.Message({
+                    x: x,
+                    y: y,
+                    z: z
+                })
+            );
+        },
         robotSpeech: function (text) {
             api.topics.chatbot_responses.publish(
                 new ROSLIB.Message({

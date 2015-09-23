@@ -50,7 +50,7 @@
             <label title="Text">Text</label>
             <textarea class="app-node-text form-control" title="Text"></textarea>
         </div>
-    <% } else if (name == 'look_at') { %>
+    <% } else if (name == 'look_at' || name == 'gaze_at') { %>
         <div class="col-sm-3">
             <div class="app-crosshair"></div>
         </div>
