@@ -26,6 +26,7 @@
 
         <li class="app-performance-template app-performance list-group-item">
             <span class="app-drag-handle pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>
+            <span class="app-status-indicator"></span>
             <span class="app-name"></span>
             <div class="pull-right">
                 <span class="label label-primary">duration: <span class="app-duration"></span> sec</span>

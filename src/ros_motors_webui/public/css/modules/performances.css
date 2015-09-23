@@ -11,7 +11,7 @@
 }
 
 .app-performance-queue span.ui-icon {
-    margin-right: 10px;
+    margin-right: 5px;
     cursor: move;
 }
 
@@ -159,6 +159,18 @@
 
 .app-performance-template {
     display: none;
+}
+
+li.app-performance .app-status-indicator {
+    height: 14px;
+    width: 14px;
+    background-color: #2b3e50;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+li.app-performance .app-status-indicator.active {
+    background-color: #df691a;
 }
 
 .app-performance-queue .ui-state-highlight {

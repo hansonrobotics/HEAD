@@ -288,8 +288,10 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
 
                 this.run();
 
+                clearInterval(this.loopInterval);
+                clearTimeout(this.loopTimeout);
+
                 if (resumeTime) {
-                    clearTimeout(this.loopTimeout);
                     this.loopTimeout = setTimeout(function () {
                         self.run();
                         setLoopInterval();

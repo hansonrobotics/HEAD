@@ -17,20 +17,17 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 this.set('nodes', nodes);
             },
             run: function (startTime) {
-                var self = this;
                 this.stop();
+                var self = this;
 
                 // set start time
                 if (typeof startTime == 'undefined' && $.isNumeric(this.getResumeTime())) {
                     startTime = this.getResumeTime();
-                    this.lastRunTime = Date.now() - (startTime * 1000);
-                } else {
-                    if (!$.isNumeric(startTime))
-                        startTime = 0;
-
-                    this.lastRunTime = Date.now();
+                } else if (!$.isNumeric(startTime)) {
+                    startTime = 0;
                 }
 
+                this.lastRunTime = Date.now() - (startTime * 1000);
                 this.resumeStartTime = null;
 
                 this.get('nodes').each(function (node) {
@@ -97,7 +94,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
                     }
                 });
             },
-            save: function () {
+            save: function (successCallback, errorCallback) {
                 var data = [];
 
                 this.each(function (model) {

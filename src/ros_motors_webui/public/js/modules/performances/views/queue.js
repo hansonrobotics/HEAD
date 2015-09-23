@@ -35,23 +35,23 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                     };
 
                 this.ui.emptyNotice.slideUp();
-                this.updateItem(item);
+                this._updateItem(item);
                 this.queue.push(item);
                 this.ui.queue.append(el);
 
                 $('.app-remove', el).click(function () {
-                    self.removeItem(item);
+                    self._removeItem(item);
                 });
 
                 $('.app-edit', el).click(function () {
                     self.stop();
 
-                    var timelineView = self.showTimeline(performance);
+                    var timelineView = self._showTimeline(performance);
                     timelineView.enableEdit();
                 });
 
                 performance.on('change', function () {
-                    self.updateItem(item);
+                    self._updateItem(item);
                 });
             },
             removePerformance: function (performance) {
@@ -59,30 +59,92 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
 
                 _.each(this.queue, function (item) {
                     if (item.model == performance)
-                        self.removeItem(item)
+                        self._removeItem(item)
                 });
-            },
-            removeItem: function (item) {
-                this.stop();
-
-                $(item.el).slideUp();
-                this.queue = _.without(this.queue, item);
-
-                if (this.queue.length == 0)
-                    this.ui.emptyNotice.slideDown();
-            },
-            updateItem: function (item) {
-                $('.app-name', item.el).html(item.model.get('name'));
-                $('.app-duration', item.el).html(item.model.getDuration().toFixed(2));
             },
             run: function () {
                 if (this.queue.length == 0) return;
-                if (! this.timelinesView)
-                    this.timelinesView = this.showTimeline(this.getPerformanceUnion());
+                if (! this.timelinesView) {
+                    this.performanceUnion = this._getPerformanceUnion();
+                    this.timelinesView = this._showTimeline(this.performanceUnion);
+                }
 
+                this._setHighlightTimeouts();
                 this.timelinesView.loop();
             },
-            showTimeline: function (performance) {
+            stop: function () {
+                this._clearHighlightIntervals();
+                this._removeHighlights();
+
+                if (this.timelinesView) {
+                    this.timelinesView.stop();
+                    this.timelinesView.destroy();
+                    this.timelinesView = null;
+                }
+            },
+            pause: function () {
+                this._clearHighlightIntervals();
+
+                if (this.timelinesView)
+                    this.timelinesView.pause();
+            },
+            clear: function () {
+                this.stop();
+
+                var self = this;
+                _.each(this.queue, function (item) {
+                    self.removePerformance(item.model);
+                });
+            },
+            _setHighlightTimeouts: function () {
+                // clear any previous timeouts
+                this._clearHighlightIntervals();
+
+                // highlight active performances
+                var self = this,
+                    startTime = 0,
+                    resumeTime = this.performanceUnion.getResumeTime(),
+                    duration = this.performanceUnion.getDuration();
+
+                // default to 0
+                resumeTime = resumeTime ? resumeTime : 0;
+
+                $.each(this.queue, function (i, item) {
+                    var itemDuration = this.model.getDuration(),
+                        timeoutTime;
+
+                    if (startTime >= resumeTime)
+                        timeoutTime = (startTime - resumeTime);
+                    else
+                        timeoutTime = duration - resumeTime + startTime;
+
+                    item.highlightTimeout = setTimeout(function () {
+                        self._highlightItem(item);
+
+                        item.highlightInterval = setInterval(function () {
+                            self._highlightItem(item);
+                        }, duration * 1000);
+                    }, timeoutTime * 1000);
+
+                    startTime += itemDuration;
+                });
+            },
+            _clearHighlightIntervals: function () {
+                $.each(this.queue, function () {
+                    clearTimeout(this.highlightTimeout);
+                    clearInterval(this.highlightInterval);
+                });
+            },
+            _removeHighlights: function () {
+                $.each(this.queue, function () {
+                    $('.app-status-indicator', this.el).removeClass('active');
+                });
+            },
+            _highlightItem: function(item) {
+                this._removeHighlights();
+                $('.app-status-indicator', item.el).addClass('active');
+            },
+            _showTimeline: function (performance) {
                 var timelinesView = new App.Performances.Views.Timelines({
                     collection: new Backbone.Collection(),
                     model: performance
@@ -94,17 +156,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
 
                 return timelinesView;
             },
-            stop: function () {
-                if (this.timelinesView) {
-                    this.timelinesView.stop();
-                    this.timelinesView.destroy();
-                    this.timelinesView = null;
-                }
-            },
-            pause: function () {
-                if (this.timelinesView) this.timelinesView.pause();
-            },
-            getPerformanceUnion: function () {
+            _getPerformanceUnion: function () {
                 var self = this,
                     union = new App.Performances.Entities.Performance(),
                     startTime = 0;
@@ -130,13 +182,18 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
 
                 return union;
             },
-            clear: function () {
+            _removeItem: function (item) {
                 this.stop();
 
-                var self = this;
-                _.each(this.queue, function (item) {
-                    self.removePerformance(item.model);
-                });
+                $(item.el).slideUp();
+                this.queue = _.without(this.queue, item);
+
+                if (this.queue.length == 0)
+                    this.ui.emptyNotice.slideDown();
+            },
+            _updateItem: function (item) {
+                $('.app-name', item.el).html(item.model.get('name'));
+                $('.app-duration', item.el).html(item.model.getDuration().toFixed(2));
             }
         });
     });
