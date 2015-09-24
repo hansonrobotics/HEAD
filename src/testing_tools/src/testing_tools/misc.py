@@ -1,24 +1,15 @@
 import subprocess
-import re
 import os
 import logging
 import time
 import rospy
-import rospkg
 import rosnode
-from rospy.names import canonicalize_name
 import cv2
-from cv_bridge import CvBridge
 import rosbag
-import socket
-from rostopic import ROSTopicIOException
-import rosgraph
 from threading import Thread
-import tempfile
 import signal
 import shutil
 from Queue import Queue
-from datetime import datetime
 import serial
 
 logger = logging.getLogger('testing_tools')
@@ -130,6 +121,7 @@ def wait_for(node, namespace=None):
     @type  node: str
     """
 
+    from rospy.names import canonicalize_name
     node = canonicalize_name(node)
     def is_node_up(node):
         return any([node in upnode for upnode in
@@ -186,6 +178,7 @@ def video2rosbag(ifile, ofile, topic='/camera/image_raw'):
     @type  ofile: str
     """
 
+    from cv_bridge import CvBridge
     cap = cv2.VideoCapture(ifile)
     fps = 20
     wait = 1.0/fps
@@ -241,6 +234,7 @@ def rosbag_msg_generator(bag_file, topics=None):
     """
 
     import rosbag
+    from datetime import datetime
     if not rospy.core.is_initialized():
         rospy.init_node('rosbag_msg_generator', anonymous=True)
     bag = rosbag.Bag(bag_file)
@@ -334,6 +328,8 @@ def get_xvfb_pid_file(display):
     @param display: display identifier
     @type  display: str
     """
+
+    import tempfile
     return os.path.join(
         tempfile.gettempdir(), 'xvfb_%s.pid' % display.replace(':', ''))
 
@@ -379,6 +375,7 @@ def get_data_path():
     Return the absolute test data path.
     """
 
+    import rospkg
     rospack = rospkg.RosPack()
     return os.path.join(rospack.get_path('testing_tools'), 'data')
 
