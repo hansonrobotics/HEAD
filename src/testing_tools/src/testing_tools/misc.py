@@ -26,11 +26,11 @@ logger = logging.getLogger('testing_tools')
 CWD = os.path.abspath(os.path.dirname(__file__))
 
 __all__ = [
-    'run_shell_cmd', 'get_catkin_path', 'wait_for', 'wait_for_master',
-    'wait_for_master_gone', 'capture_webcam_video', 'video2rosbag',
+    'run_shell_cmd', 'wait_for',
+    'capture_webcam_video', 'video2rosbag',
     'play_rosbag', 'rosbag_msg_generator', 'wait_for_message',
-    'has_subscriber', 'wait_for_subscriber', 'wait_for_messages',
-    'ThreadWorker', 'create_msg_listener', 'capture_screen', 'capture_camera',
+    'wait_for_subscriber', 'wait_for_messages',
+    'ThreadWorker', 'capture_screen', 'capture_camera',
     'startxvfb', 'stopxvfb', 'get_rosbag_file', 'get_data_path',
     'add_text_to_video', 'concatenate_videos', 'MessageQueue',
     'PololuSerialReader', 'check_if_ffmpeg_satisfied',
@@ -38,8 +38,15 @@ __all__ = [
     ]
 
 def run_shell_cmd(cmd, first=False):
-    """Execute `cmd` in shell and get the outputs.
-    If `first` is True, then get only the first line of outputs"""
+    """
+    Execute command in shell and get the outputs.
+
+    @param cmd: command that is going to run in shell
+    @type  cmd: str
+
+    @param first: If it's True, return only the first line of outputs.
+    @type  first: bool
+    """
 
     stdout, stderr = subprocess.Popen(
         cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -52,14 +59,15 @@ def run_shell_cmd(cmd, first=False):
         else:
             return stdout.splitlines()
 
-def get_catkin_path(cat):
-    cmd = r"catkin config|grep '%s'|awk '{print $4}'" % cat
-    path = run_shell_cmd(cmd, True)
-    if os.path.isdir(path):
-        return path
-
-
 class capture_screen():
+    """
+    Capture cast screen and save to .avi file.
+
+    Example
+    -------
+    >>> with capture_screen(filename.avi, duration):
+    >>>     do something
+    """
 
     def __init__(self, filename, duration):
         self.filename = filename
@@ -86,6 +94,15 @@ class capture_screen():
         self.proc.wait()
 
 class capture_camera():
+    """
+    Capture webcam video and save to file.
+
+    Example
+    -------
+    >>> with capture_camera(filename.avi, duration):
+    >>>     do something
+
+    """
 
     def __init__(self, filename, duration):
         self.filename = filename
@@ -106,6 +123,13 @@ class capture_camera():
         self.job.join()
 
 def wait_for(node, namespace=None):
+    """
+    Wait for ROS node up.
+
+    @param node: node name
+    @type  node: str
+    """
+
     node = canonicalize_name(node)
     def is_node_up(node):
         return any([node in upnode for upnode in
@@ -114,21 +138,17 @@ def wait_for(node, namespace=None):
         while not is_node_up(node):
             time.sleep(0.1)
 
-from roslaunch import rlutil
-def wait_for_master():
-    rlutil._wait_for_master()
-
-def wait_for_master_gone():
-    def is_running():
-        cmd = r"ps -ef|grep roscore|grep -v grep|grep -v defunct|awk '{print $2}'"
-        core = run_shell_cmd(cmd, True)
-        return True if core else False
-    while is_running():
-        time.sleep(0.1)
-    time.sleep(3)
-
-
 def capture_webcam_video(video_filename, sec=None):
+    """
+    Use OpenCV to capture video from webcam and save the video to file
+
+    @param video_filename: video file name
+    @type  video_filename: str
+
+    @param sec: video duration in seconds
+    @type  sec: double
+    """
+
     cap = cv2.VideoCapture(0)
     fps = 20
 
@@ -155,6 +175,17 @@ def capture_webcam_video(video_filename, sec=None):
     cv2.destroyAllWindows()
 
 def video2rosbag(ifile, ofile, topic='/camera/image_raw'):
+    """
+    Read video file and convert to rosbag file.
+    The default ROS topic is /camera/image_raw.
+
+    @param ifile: Video file name
+    @type  ifile: str
+
+    @param ofile: ROS bag file name
+    @type  ofile: str
+    """
+
     cap = cv2.VideoCapture(ifile)
     fps = 20
     wait = 1.0/fps
@@ -172,6 +203,20 @@ def video2rosbag(ifile, ofile, topic='/camera/image_raw'):
     bag.close()
 
 def play_rosbag(argv):
+    """
+    New a thread and play rosbag.
+
+    Example
+    -------
+    Play rosbag foo.bag
+    >>> job = play_rosbag(['foo.bag'])
+    >>> do something ...
+    >>> job.join()
+
+    @param argv: options and arguments that `rosbag play` supports
+    @type  argv: [str]
+    """
+
     from rosbag import rosbag_main
     if isinstance(argv, basestring):
         argv = [argv]
@@ -180,6 +225,21 @@ def play_rosbag(argv):
     return job
 
 def rosbag_msg_generator(bag_file, topics=None):
+    """
+    Generate ROS message based on rosbag file.
+    It sends one ROS message each time.
+
+    For example, given rosbag file foo.bag
+        >>> for topic, msg, timestamp in rosbag_msg_generator(foo.bag):
+        >>>     do something
+
+    @param bag_file: rosbag file name
+    @type  bag_file: str
+
+    @param topics: topics included in the bag file that you want to send
+    @type  topics: [str]
+    """
+
     import rosbag
     if not rospy.core.is_initialized():
         rospy.init_node('rosbag_msg_generator', anonymous=True)
@@ -205,6 +265,12 @@ def rosbag_msg_generator(bag_file, topics=None):
     bag.close()
 
 def wait_for_message(topic, topic_class, timeout):
+    """
+    Wait a given seconds for a specific message
+
+    @param timeout: timeout time in seconds
+    @type  timeout: double
+    """
     msg = None
     try:
         msg = rospy.wait_for_message(topic, topic_class, timeout)
@@ -215,6 +281,14 @@ def wait_for_message(topic, topic_class, timeout):
 
 
 class ThreadWorker(Thread):
+    """
+    Thread with return values.
+
+    Example
+    -------
+    >>> job = ThreadWorker(target=foo)
+    >>> ret = job.join()
+    """
     def __init__(self, group=None, target=None, name=None,
                  args=(), kwargs=None, verbose=None):
         Thread.__init__(
@@ -234,6 +308,18 @@ class ThreadWorker(Thread):
         return self.retval
 
 def wait_for_messages(topics, topic_classes, timeout):
+    """
+    Get the messages from specific topics.
+
+    @param topics: topics that it subscribes
+    @type  topics: [str]
+
+    @param topic_classes: corresponding topic classes
+    @type  topic_classes: [class]
+
+    @param timeout: timeout time in seconds
+    @type  timeout: double
+    """
     jobs = [ThreadWorker(target=wait_for_message,
                         args=(topic, topic_class, timeout))
             for topic, topic_class in zip(topics, topic_classes)]
@@ -241,39 +327,27 @@ def wait_for_messages(topics, topic_classes, timeout):
     retvalues = [job.join() for job in jobs]
     return retvalues
 
-def has_subscriber(topic, sub):
-    master = rosgraph.Master('/rostopic')
-    try:
-        pubs, subs, srvs = master.getSystemState()
-        for x in subs:
-            if x[0] == topic:
-                return sub in x[1]
-    except socket.error:
-        raise ROSTopicIOException("Unable to communicate with master!")
-        return False
-    return False
-
-def wait_for_subscriber(topic, sub, timeout=None):
-    if timeout is not None:
-        time_t = time.time() + timeout
-        while not has_subscriber(topic, sub):
-            if time.time() >= time_t:
-                break
-            time.sleep(0.01)
-    else:
-        while not has_subscriber(topic, sub):
-            time.sleep(0.01)
-
-def create_msg_listener(topic, topic_class, timeout):
-    return ThreadWorker(target=wait_for_message,
-                        args=(topic, topic_class, timeout))
-
 def get_xvfb_pid_file(display):
+    """
+    Make a temporary xvfb pid file
+
+    @param display: display identifier
+    @type  display: str
+    """
     return os.path.join(
         tempfile.gettempdir(), 'xvfb_%s.pid' % display.replace(':', ''))
 
-
 def startxvfb(display, res='1024x768x24'):
+    """
+    Start Xvfb with the specific display identifier
+
+    @param display: display identifier
+    @type  display: str
+
+    @param res: screen resolution
+    @type  res: str
+    """
+
     proc = subprocess.Popen(
         ['Xvfb', display, '-screen', '0', res, '-ac'],
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -283,6 +357,13 @@ def startxvfb(display, res='1024x768x24'):
 
 
 def stopxvfb(display):
+    """
+    Stop Xvfb with the specific display identifier
+
+    @param display: display identifier
+    @type  display: str
+    """
+
     pid_file = get_xvfb_pid_file(str(display))
     if os.path.isfile(pid_file):
         with open(pid_file) as f:
@@ -294,10 +375,24 @@ def stopxvfb(display):
         os.remove(pid_file)
 
 def get_data_path():
+    """
+    Return the absolute test data path.
+    """
+
     rospack = rospkg.RosPack()
     return os.path.join(rospack.get_path('testing_tools'), 'data')
 
 def get_rosbag_file(rosbag_name):
+    """
+    Find and return the rosbag file path in test data directory. If the
+    ros bag file is found, returns the path of the file. Otherwise trys
+    to file the video file that matches the file name, and convert it to
+    ros bag file, and then return the path of this ros bag file.
+
+    @param rosbag_name: file name of the rosbag without extension
+    @type  rosbag_name: str
+    """
+
     filename = os.path.join(get_data_path(), rosbag_name)
     if os.path.isfile('%s.bag' % filename):
         return '%s.bag' % filename
@@ -305,12 +400,16 @@ def get_rosbag_file(rosbag_name):
         video2rosbag('%s.avi' % filename, '%s.bag' % filename)
         return '%s.bag' % filename
 
-def backup(filename):
-    backup_filename = ''.join([os.path.splitext(filename)[0],
-                '.orig', os.path.splitext(filename)[1]])
-    shutil.copy2(filename, backup_filename)
-
 def add_text_to_video(filename, text=None):
+    """
+    Add text to video
+
+    @param filename: video file name
+    @type  filename: str
+
+    @param text: text to be added
+    @type  text: str
+    """
     if text is None:
         text = os.path.splitext(os.path.basename(filename))[0]
     tmp_file = '/tmp/tmp.avi'
@@ -326,18 +425,42 @@ def add_text_to_video(filename, text=None):
 
 
 def avi2mpg(filename):
+    """
+    Convert avi file to mpg file
+
+    @param filename: avi video file name
+    @type  filename: str
+    """
     assert filename.endswith('.avi')
     ofile = '%s.mpg' % os.path.splitext(filename)[0]
     os.system('ffmpeg -y -i %s -qscale:v 1 %s' % (filename, ofile))
     return ofile
 
 def mpg2avi(filename):
+    """
+    Convert mgp file to avi file
+
+    @param filename: mpg video file name
+    @type  filename: str
+    """
     assert filename.endswith('.mpg')
     ofile = '%s.avi' % os.path.splitext(filename)[0]
     os.system('ffmpeg -y -i %s -qscale:v 2 %s' % (filename, ofile))
     return ofile
 
 def concatenate_videos(filenames, ofile, delete):
+    """
+    Concatenate videos.
+
+    @param filenames: list of file names
+    @type  filenames: [str]
+
+    @param ofile: output file name
+    @type  ofile: str
+
+    @param delete: whether or not to delete the input files
+    @type  delete: bool
+    """
     tmp_file = '/tmp/all.mpg'
     ofiles = [avi2mpg(f) for f in filenames if os.path.isfile(f)]
     ofiles = [f for f in ofiles if f is not None]
@@ -350,6 +473,17 @@ def concatenate_videos(filenames, ofile, delete):
         [os.remove(f) for f in filenames]
 
 class MessageQueue():
+    """
+    MessageQueue is a class that listens to the topic it subscribes and
+    collect the ROS message from those topics.
+
+    Example
+    -------
+    >>> queue = MessageQueue()
+    >>> queue.subscribe(foo_topic, topic_class)
+    >>> msg = queue.get()
+    """
+
     def __init__(self):
         self.queue = Queue()
 
@@ -375,6 +509,16 @@ class MessageQueue():
 
 
 class PololuSerialReader(object):
+    """
+    Read specified serial port, parse the data it reads and return
+    Pololu command.
+
+    Example
+    -------
+    >>> reader = PololuSerialReader('/dev/tty0')
+    >>> motor_id, cmd, value = reader.read()
+    """
+
     CMD_DICT = {'135': 'speed', '137': 'accelaration', '132': 'position'}
 
     def __init__(self, device, timeout=5):
@@ -398,25 +542,34 @@ class PololuSerialReader(object):
 
 
 def check_if_ffmpeg_satisfied():
-    """FFmpeg is used for screencasting."""
+    """
+    Check if ffmpeg is installed and satisfied for screencasting.
+    """
+
     configuration = run_shell_cmd('ffmpeg -version|grep configuration', True)
     configuration = [i.strip() for i in configuration.split(':')[1].split('--')]
     requires = ['enable-libx264', 'enable-libfreetype']
     return all([i in configuration for i in requires])
 
 def check_if_sound_card_exists():
+    """
+    Check if sound card exists.
+    """
+
     snd_cards = run_shell_cmd('cat /proc/asound/cards')
     return not 'no soundcards' in '\n'.join(snd_cards)
 
 class SerialPortRecorder(object):
-    """Record data transmitted to the serial port device"""
+    """
+    Record data transmitted to the serial port device
+    """
 
     def __init__(self, device, ofile=None):
         """
-        device: str
-            serial port device
-        ofile: str
-            output file (optional)
+        @param devide: serial port device
+        @type  device: str
+        @param ofile: output file (optional)
+        @type  ofile: str
         """
         self.ser = serial.Serial(
             device, baudrate=115200, bytesize=serial.EIGHTBITS,
