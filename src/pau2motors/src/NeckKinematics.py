@@ -311,8 +311,8 @@ class upper_neck(neck_linkage):
 		self.fz = self.fz0
 
 		# Motor neutral position
-		self.theta_r_neutral = 0.00026534463349803163
+		self.theta_r_neutral = 0.2
 		self.theta_l_neutral = -self.theta_r_neutral
 
-		self.theta_r = 0.0
-		self.theta_l = 0.0
+		self.theta_r = 0
+		self.theta_l = 0
