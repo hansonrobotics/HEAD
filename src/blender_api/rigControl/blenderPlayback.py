@@ -2,7 +2,7 @@
 # as the animation playback service, and hosts other supporting test operators
 
 # Frame rate for animation playback
-framerateHz = 24
+framerateHz = 48
 
 # System timer
 defaultTimerHz = 48
@@ -17,7 +17,7 @@ class BLGlobalTimer(bpy.types.Operator):
     bl_label = "Global Timer"
     bl_idname = 'wm.global_timer'
     # New property for global timer
-    bpy.types.Scene.globalTimerStarted = bpy.props.BoolProperty( name = "globalTimerStarted", default=False)
+    bpy.types.Scene.globalTimerStarted = bpy.props.BoolProperty(name = "globalTimerStarted", default=False)
     bpy.context.scene['globalTimerStarted'] = False
     # Property to get the
     bpy.types.Scene.maxFPS = bpy.props.IntProperty(name = "maxFPS", soft_min = 10, soft_max = 100)
@@ -91,6 +91,7 @@ class BLPlayback(bpy.types.Operator):
 
     bpy.types.Scene.animationPlaybackActive = bpy.props.BoolProperty( name = "animationPlaybackActive", default=False)
     bpy.context.scene['animationPlaybackActive'] = False
+    bpy.context.scene['keepAlive'] = True
 
     timeList = []
 
@@ -105,7 +106,6 @@ class BLPlayback(bpy.types.Operator):
             # compute fps
             context.scene['evaFPS'] = fps = self.computeFPS(context)
             timeScale = framerateHz/fps
-
             if bpy.context.scene['evaFollowMouse']:
                 # compute mouse pos
                 normalX = (event.mouse_region_x - 500) /1000
@@ -118,19 +118,19 @@ class BLPlayback(bpy.types.Operator):
                 headLoc = eva.headTargetLoc.target
                 headLoc[0] = -normalX * 0.2
                 headLoc[2] = normalY * 0.2
-
             # update NLA based gestures
             gestures = eva.gesturesList[:]  	# prevent in-situ removal while iterating bug
             for gesture in gestures:
+                # Leave strrip time for backward compatable with blender with version lower 2.75
                 gesture.stripRef.strip_time += gesture.speed * timeScale
-
+                gesture.strip_time_kfp.co[1] += gesture.speed * timeScale
                 if gesture.stripRef.strip_time > gesture.duration:
                     if gesture.repeat > 1:
                         gesture.repeat -= 1
                         gesture.stripRef.strip_time = 0
+                        gesture.strip_time_kfp.co[1] = 0
                     else:
                         eva._deleteGesture(gesture)
-
             # update visemes
             visemes = eva.visemesList[:]
             for viseme in visemes:
@@ -158,6 +158,7 @@ class BLPlayback(bpy.types.Operator):
                 # update action
                 viseme.magnitude.blend()
                 viseme.stripRef.influence = viseme.magnitude.current
+                viseme.influence_kfp.co[1] = viseme.magnitude.current
 
                 # update time
                 viseme.time += (1/framerateHz)*timeScale
@@ -197,7 +198,7 @@ class BLPlayback(bpy.types.Operator):
             eva.blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
 
             # keep alive
-            eva.keepAlive()
+            eva.keepAlive(bpy.context.scene['keepAlive'])
 
             # send ROS data
 
@@ -230,7 +231,7 @@ class BLPlayback(bpy.types.Operator):
 
         # trim
         if len(self.timeList)> 100:
-            self.timeList[100:]
+            self.timeList = self.timeList[-100:]
 
         # compute
         counter = 0

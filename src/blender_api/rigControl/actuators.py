@@ -35,6 +35,7 @@ def doCycle(self, cycle):
             if gesture.name == cycle.name:
                 gesture.stripRef.influence = cycle.magnitude
                 gesture.speed = cycle.rate
+                gesture.stripRef.mute = False
 
 
 def emotionJitter(self):

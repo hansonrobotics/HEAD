@@ -4,13 +4,9 @@ import rospy
 from blender_api_msgs.msg import SetGesture
 from blender_api_msgs.msg import EmotionState
 from std_msgs.msg import String
-from esay import esay_expand
+
 from time import sleep
 import os
-
-def esay(phrase,check=False):
-    tts_pub.publish(esay_expand(phrase,check))
-    return
 
 def say(phrase):
     tts_pub.publish(phrase)

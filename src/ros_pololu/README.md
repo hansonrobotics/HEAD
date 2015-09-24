@@ -28,3 +28,14 @@ Once calibrated motors are appended to the ROS param server *motors* parameter, 
 Additional settings can be added to configs, and those will be later passed to motors param for other nodes to process.
 
 In addition if motors are not configured, the motor_id can be sent as joint name, and the angle will be mapped to 820 - 2280 pulse range which corresponds to -90 - 90 degrees angles.
+
+### Parameters
+ - *pololu_motors_yaml* : motor config file
+ - *port_name* : device name (/dev/ttyACM0 by default)
+ - *topic_prefix* : prefix for topics to subscribe
+ - *controller* : Currently Maestro and MicroSSC supported. MicroSSC has limited functionality.
+ - *sync* : If `on` the commands will be sent continiously and at fixed rate
+ - *command_rate* : Rate for commands to be sent. Default: 24
+ - *dyn_speed*: Calculate speed based on the period of the servo and command rate. Only applies to when sync enabled. and applies for Maestro controller only.
+ - *servo_rate*: Servo frequency set on Maestro board. Required for dynamic speed control
+ - *safety*: If motors_safety node enabled the pololu node will subscribe topics with added "safety/" prefix
