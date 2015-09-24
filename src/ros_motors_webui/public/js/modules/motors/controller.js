@@ -3,7 +3,7 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
         return {
             public_index: function () {
                 // reset robot
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+                api.disableInteractionMode();
                 api.pointHead();
 
                 // init collection and views

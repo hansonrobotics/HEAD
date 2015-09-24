@@ -353,6 +353,12 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.services.get_animation_length.callService(new ROSLIB.ServiceRequest({animation: animation}), success, function (error) {
                 console.log(error);
             });
+        },
+        enableInteractionMode: function () {
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on'}));
+        },
+        disableInteractionMode: function () {
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
         }
     };
 

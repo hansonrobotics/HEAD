@@ -3,7 +3,7 @@ define(['application', './views/animations', './views/layout', '../motors/views/
     function (App, AnimationsView, LayoutView, MotorsView, FramesView, AnimationEditView, api) {
         return {
             index: function () {
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+                api.disableInteractionMode();
                 api.pointHead();
 
                 this.animationsCollection = new App.Entities.AnimationsCollection();

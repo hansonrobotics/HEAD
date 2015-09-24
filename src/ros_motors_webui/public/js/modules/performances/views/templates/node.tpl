@@ -10,8 +10,7 @@
             <div class="input-group-addon">s</div>
         </div>
     </div>
-
-    <% if (name == 'emotion') { %>
+    <% if (name == 'emotion' || name == 'interaction') { %>
         <div class="col-sm-2">
             <label>Duration</label>
 
@@ -21,6 +20,8 @@
                 <div class="input-group-addon">s</div>
             </div>
         </div>
+    <% } %>
+    <% if (name == 'emotion') { %>
         <div class="col-sm-2">
             <label title="Emotion">Pose</label>
             <select class="app-emotion-select"></select>
@@ -32,7 +33,7 @@
             <div class="app-speed-slider"></div>
         </div>
         <div class="col-sm-2">
-            <label title="Gesture">Animation</label>
+            <label title="Animation">Animation</label>
             <select class="app-gesture-select"></select>
         </div>
     <% } %>

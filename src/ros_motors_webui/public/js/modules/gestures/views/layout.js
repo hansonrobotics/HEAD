@@ -27,7 +27,7 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
                 'click @ui.sayIntroButton': "sayIntro"
             },
             btOn: function() {
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on'}));
+                api.enableInteractionMode();
             },
             btOnStage: function() {
                 api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on_stage'}));
@@ -39,7 +39,7 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
                 api.topics.cmdTree.publish(new ROSLIB.Message({data: 'gesture_off'}));
             },
             btOff: function() {
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+                api.disableInteractionMode();
             },
             sayIntro: function() {
                 api.sendChatMessage('start demo');

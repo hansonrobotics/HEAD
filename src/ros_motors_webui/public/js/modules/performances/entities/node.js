@@ -18,6 +18,12 @@ define(['application', 'lib/api'], function (App, api) {
                     case 'speech':
                         api.robotSpeech(this.get('text'));
                         break;
+                    case 'interaction':
+                        api.enableInteractionMode();
+
+                        setTimeout(function () {
+                            api.disableInteractionMode();
+                        }, this.get('duration') * 1000);
                 }
             },
             toJSON: function () {

@@ -5,7 +5,7 @@ define(['application', './views/status', 'lib/api'],
                 var self = this;
 
                 api.blenderMode.disable();
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+                api.disableInteractionMode();
                 api.setExpression("Neutral", 0);
 
                 this.layoutView = new StatusView();

@@ -199,3 +199,7 @@ li.app-performance .app-status-indicator.active {
     font-size: 11px;
     stroke: #ebebeb;
 }
+
+.app-node[data-name="interaction"] {
+    background-color: #375748;
+}

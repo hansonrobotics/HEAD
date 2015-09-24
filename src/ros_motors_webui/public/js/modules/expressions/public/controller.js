@@ -15,9 +15,7 @@ define(['application', './views/expressions', 'lib/api', 'lib/utilities', 'lib/c
                 var treeMessage;
 
                 api.blenderMode.disable();
-
-                treeMessage = new ROSLIB.Message({data: 'btree_off'});
-                api.topics.cmdTree.publish(treeMessage);
+                api.disableInteractionMode();
 
                 $('.expression-button.active').removeClass('active');
 
