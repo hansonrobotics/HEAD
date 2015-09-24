@@ -96,6 +96,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                                 slide: function (e, ui) {
                                     var speed = ui.value / 100;
                                     self.model.set('speed', speed);
+                                    self.model.set('duration', self.gestureDuration / speed);
                                     self.ui.speedLabel.html(speed.toFixed(2));
                                 }
                             });
@@ -133,7 +134,8 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 setGestureLength: function () {
                     var self = this;
                     api.getAnimationLength(this.model.get('gesture'), function (response) {
-                        self.model.set('duration', response.length);
+                        self.gestureDuration = response.length;
+                        self.model.set('duration', self.gestureDuration / self.model.get('speed'));
                     });
                 },
                 setStartTime: function () {
