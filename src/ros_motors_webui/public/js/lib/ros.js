@@ -105,6 +105,19 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/' + api.config.robot + '/scripts',
                     messageType: 'std_msgs/String'
+                }),
+                set_face_target: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/blender_api/set_face_target'
+                }),
+                set_gaze_target: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/blender_api/set_gaze_target'
+                }),
+                chatbot_responses: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/chatbot_responses',
+                    messageType: 'std_msgs/String'
                 })
             };
         },
@@ -129,6 +142,16 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/rosapi/topics_for_type',
                     serviceType: 'rosapi/TopicsForType'
+                }),
+                tts_length: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/tts_length',
+                    messageType: 'tts/TTSLength'
+                }),
+                get_animation_length: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/blender_api/get_animation_length',
+                    messageType: '﻿blender_api_msgs/GetAnimationLength'
                 })
             };
         },

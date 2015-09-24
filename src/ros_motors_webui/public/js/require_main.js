@@ -20,7 +20,10 @@ requirejs.config({
         backgrid_paginator: 'vendor/backgrid-paginator',
         backgrid_select_all: 'vendor/backgrid-select-all',
         backgrid_text_cell: 'vendor/backgrid-text-cell',
-        backbone_pageable: 'vendor/backbone-pageable'
+        backbone_pageable: 'vendor/backbone-pageable',
+        scrollbar: 'vendor/jquery.scrollbar',
+        select2: 'vendor/select2.min',
+        d3: 'vendor/d3.min'
     },
     shim: {
         'jquery-ui': ['jquery'],
@@ -65,6 +68,9 @@ requirejs.config({
         },
         backgrid_text_cell: {
             deps: ['backgrid', 'backbone']
+        },
+        d3: {
+            exports: 'd3'
         }
     }
 });

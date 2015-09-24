@@ -124,6 +124,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableSomaStates: function (success) {
             api.topics.available_soma_states.unsubscribe();
+            api.topics.available_soma_states.removeAllListeners();
             api.topics.available_soma_states.subscribe(function (message) {
                 success(message.data);
             });
@@ -162,6 +163,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableGestures: function (success) {
             api.topics.available_gestures.unsubscribe();
+            api.topics.available_gestures.removeAllListeners();
             api.topics.available_gestures.subscribe(function (message) {
                 success(message.data);
             });
@@ -201,23 +203,25 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableEmotionStates: function (success) {
             api.topics.available_emotion_states.unsubscribe();
+            api.topics.available_emotion_states.removeAllListeners();
             api.topics.available_emotion_states.subscribe(function (message) {
                 success(message.data);
             });
         },
-
         /**
          * Set an emotion, call multiple times to blend emotions together
          *
          * @param name
          * @param magnitude 0..1
-         * @param duration array [seconds, nanoseconds]
+         * @param duration mixed array or number of seconds [seconds, nanoseconds]
          */
         setEmotion: function (name, magnitude, duration) {
             if (typeof magnitude == 'undefined')
                 magnitude = 1;
 
-            if (typeof duration == 'undefined')
+            if ($.isNumeric(duration))
+                duration = {secs: Math.floor(duration), nsecs: Math.floor((duration - Math.floor(duration)) * 1000)};
+            else if (typeof duration != 'object')
                 duration = {secs: 1, nsecs: 0};
 
             api.topics.set_emotion_state.publish(
@@ -225,6 +229,31 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                     name: name,
                     magnitude: magnitude,
                     duration: duration
+                })
+            );
+        },
+        setFaceTarget: function (x, y, z) {
+            api.topics.set_face_target.publish(
+                new ROSLIB.Message({
+                    x: x,
+                    y: y,
+                    z: z
+                })
+            );
+        },
+        setGazeTarget: function (x, y, z) {
+            api.topics.set_gaze_target.publish(
+                new ROSLIB.Message({
+                    x: x,
+                    y: y,
+                    z: z
+                })
+            );
+        },
+        robotSpeech: function (text) {
+            api.topics.chatbot_responses.publish(
+                new ROSLIB.Message({
+                    data: text
                 })
             );
         },
@@ -301,6 +330,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableScripts: function (success) {
             api.topics.scripts_available.unsubscribe();
+            api.topics.scripts_available.removeAllListeners();
             api.topics.scripts_available.subscribe(function (message) {
                 success(message.data.split("|"));
             });
@@ -311,8 +341,18 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param scripts
          */
         executeScript: function (script) {
-            cmd = new ROSLIB.Message({data: script})
+            var cmd = new ROSLIB.Message({data: script})
             api.topics.execute_scripts.publish(cmd)
+        },
+        getTtsLength: function (text, success) {
+            api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text}), success, function (error) {
+                console.log(error);
+            });
+        },
+        getAnimationLength: function (animation, success) {
+            api.services.get_animation_length.callService(new ROSLIB.ServiceRequest({animation: animation}), success, function (error) {
+                console.log(error);
+            });
         }
     };
 
