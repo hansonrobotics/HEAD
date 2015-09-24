@@ -2,6 +2,7 @@ import random
 import numpy as np
 from rigControl import actuators
 from rigControl.actuators import sleep
+from rigControl.helpers import randomSelect
 
 try:
     import bpy
@@ -19,9 +20,69 @@ Functions without this decorator can be safely created in this file if, for
 example, the actuators need some "helper" functions.
 """
 
+
+@actuators.new
+def blink(self):
+
+    # Register GUI-displayable parameter
+    interval = 0
+    self.add_parameter(bpy.props.StringProperty(name='interval',
+        get=lambda _: '{:0.3f}s'.format(interval)))
+
+    # Register GUI-controllable parameters
+    intervalMean, intervalVariation, blinkDuration = (
+        self.add_parameter(prop) for prop in [
+            bpy.props.FloatProperty(name='interval mean', min=0.0, max=10.0, default=3.0),
+            bpy.props.FloatProperty(name='interval variation', min=0.0, max=2.0, default=0.8),
+            bpy.props.FloatProperty(name='blink duration', min=0.0, max=2.0, default=0.2)
+        ]
+    )
+
+    # Yield execution to get current time
+    time, dt = yield
+
+    # Initialize some variables
+    lasttime = time
+    unitgauss = random.gauss(0, 1)
+
+    while True:
+
+        # Calculate time to the next blink
+        interval = intervalMean.val + unitgauss * intervalVariation.val
+        nexttime = lasttime + interval
+
+        if time >= nexttime:
+
+            # compute probability
+            micro = -(abs(blinkDuration.val+1)-1)
+            normal = -(abs(blinkDuration.val+0)-1)
+            relaxed = -(abs(blinkDuration.val-1)-1)
+            sleepy = -(abs(blinkDuration.val-2)-1)
+
+            micro = max(micro, 0)
+            normal = max(normal, 0)
+            relaxed = max(relaxed, 0)
+            sleepy = max(sleepy, 0)
+
+            # invoke blink gesture
+            index = randomSelect([micro, normal, relaxed, sleepy])
+            action = ['GST-blink-micro', 'GST-blink', 'GST-blink-relaxed', 'GST-blink-sleepy']
+            bpy.evaAnimationManager.newGesture(action[index])
+
+            # Generate new random factor and store current time for the next blink
+            unitgauss = random.gauss(0, 1)
+            lasttime = time
+
+        # Yield execution until next frame
+        time, dt = yield
+
+
 @actuators.new
 def saccade(self):
-    probability_map = FaceProbabilityMap(self)
+    # Register GUI-displayable parameter
+    interval = 0
+    self.add_parameter(bpy.props.StringProperty(name='interval',
+        get=lambda _: '{:0.3f}s'.format(interval)))
 
     # Register GUI-controllable parameters
     intervalMean, intervalVariation, paintScale = (
@@ -32,10 +93,8 @@ def saccade(self):
         ]
     )
 
-    # Register GUI-displayable parameter
-    interval = 0
-    self.add_parameter(bpy.props.StringProperty(name='interval',
-        get=lambda _: '{:0.3f}s'.format(interval)))
+    # Register the probability map sliders
+    probability_map = FaceProbabilityMap(self)
 
     # Yield execution to get current time
     time, dt = yield
@@ -83,6 +142,9 @@ class FaceProbabilityMap:
     ellipses. The image can then be updated via parameter sliders. """
 
     def __init__(self, actuator):
+        self.img_size = (100, 100)
+        self.img = actuator.add_image('probabilities', self.img_size)
+
         param_list = [
             ('eyeSize', bpy.props.FloatProperty(name='eye size', min=1.0, max=50, default=20)),
             ('eyeDist', bpy.props.FloatProperty(name='eye distance', min=0.0, max=100, default=40)),
@@ -96,9 +158,6 @@ class FaceProbabilityMap:
             self.params[name] = actuator.add_parameter(prop)
 
         self.constant_sum_tick = constant_sum(self.params['eyeWeight'], self.params['mouthWeight'])
-
-        self.img_size = (100, 100)
-        self.img = actuator.add_image('probabilities', self.img_size)
 
     def tick(self):
         self.constant_sum_tick()

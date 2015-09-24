@@ -174,6 +174,10 @@ class BLActuatorControl(bpy.types.Panel):
                     # texture = bpy.data.textures[getattr(bl_actuator, attr)]
                     # row.template_preview(texture, show_buttons=False)
 
+            # Separate actuators with some space
+            layout.row()
+            layout.row()
+
 def register():
     bpy.utils.register_class(BLRigControl)
     bpy.utils.register_class(BLRigConsole)
