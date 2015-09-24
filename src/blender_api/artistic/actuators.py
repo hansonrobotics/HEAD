@@ -22,8 +22,7 @@ example, the actuators need some "helper" functions.
 
 
 @actuators.new
-def blink(self):
-
+def blink_randomly(self):
     # Register GUI-displayable parameter
     interval = 0
     self.add_parameter(bpy.props.StringProperty(name='interval',
@@ -74,6 +73,47 @@ def blink(self):
             lasttime = time
 
         # Yield execution until next frame
+        time, dt = yield
+
+
+@actuators.new
+def blink_when_target_changes(self):
+    """ 'movement' variable accumulates how much the eye target moves around.
+    You could say it measures how irritated eyes are. When it surpasses a
+    specified threshold, the character blinks and 'movement' is reset to 0.
+    """
+    # Register GUI-displayable parameter
+    movement = 0
+    self.add_parameter(bpy.props.StringProperty(name='movement',
+        get=lambda _: '{:0.3f}'.format(movement)))
+
+    # Register GUI-controllable parameters
+    threshold, cooldownRate = (
+        self.add_parameter(prop) for prop in [
+            bpy.props.FloatProperty(name='threshold', min=0.0, max=0.5, default=0.05),
+            bpy.props.FloatProperty(name='cooldown rate', min=0.0, max=0.5, default=0.1)
+        ]
+    )
+
+    # Yield execution to get current time
+    time, dt = yield
+
+    # Get the reference to eva's eye target.
+    eyeTargetLoc = bpy.evaAnimationManager.eyeTargetLoc
+    lastpos = eyeTargetLoc.target
+
+    while True:
+        if movement > threshold.val:
+            movement = 0
+
+        movement += sum(abs(a-b) for a,b in zip(eyeTargetLoc.target, lastpos)) * dt
+        movement = max(0, movement - cooldownRate.val * dt)
+
+        if movement > threshold.val:
+            bpy.evaAnimationManager.newGesture('GST-blink', priority=1)
+
+        # Yield execution until next frame
+        lastpos = eyeTargetLoc.target
         time, dt = yield
 
 

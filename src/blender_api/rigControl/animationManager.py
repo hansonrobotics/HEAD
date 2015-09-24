@@ -265,7 +265,7 @@ class AnimationManager():
             self.deformObj.animation_data.nla_tracks.remove(viseme.trackRef)
 
 
-    def coordConvert(self, loc, currbu, offset= 0):
+    def coordConvert(self, loc, currbu, offset=0):
         '''Convert coordinates from meters to blender units. The
         coordinate frame used here is y is straight-ahead, x is th the
         right, and z is up.
@@ -283,15 +283,6 @@ class AnimationManager():
 
         # Compute distance from previous eye position
         distance = computeDistance(locBU, currbu)
-
-        # Behavior: if the point being looked at changed
-        # significantly, then micro-blink.
-
-        if self.randomFrequency('blink', 20):
-            if (distance + abs(offset)) > 7.9:
-                self.newGesture('GST-blink', priority=1)
-            elif (distance + abs(offset)) > 6.5:
-                self.newGesture('TRN-waitBlink', priority=1)
 
         return locBU
 
