@@ -109,14 +109,14 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
              * @param node App.Performances.Entities.Node
              */
             updateNode: function (node) {
-                if (node.changed['duration'] || node.changed['start_time']) {
-                    var width = node.get('duration') * this.config.pxPerSec;
-                    $(node.get('el')).stop().animate({
-                        left: node.get('start_time') * this.config.pxPerSec,
-                        width: width,
-                        minWidth: width
-                    });
+                var width = node.get('duration') * this.config.pxPerSec;
+                $(node.get('el')).stop().animate({
+                    left: node.get('start_time') * this.config.pxPerSec,
+                    width: width,
+                    minWidth: width
+                });
 
+                if (node.changed['duration'] || node.changed['start_time']) {
                     this.arrangeNodes();
                 }
 
