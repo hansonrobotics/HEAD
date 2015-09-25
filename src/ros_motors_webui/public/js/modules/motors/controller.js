@@ -23,7 +23,9 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
             admin_index: function () {
                 App.LayoutInstance.showAdminNav();
                 App.LayoutInstance.setTitle('Motors');
-
+                api.disableInteractionMode();
+                api.blenderMode.disable();
+                api.setDefaultMotorValues();
                 var configurationView = new ConfigurationView();
                 App.LayoutInstance.getRegion('content').show(configurationView);
             }
