@@ -4,7 +4,8 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
             public_index: function () {
                 // reset robot
                 api.disableInteractionMode();
-                api.pointHead();
+                api.blenderMode.disable();
+                api.setDefaultMotorValues();
 
                 // init collection and views
                 var motorsCollection = new App.Entities.MotorCollection(),
