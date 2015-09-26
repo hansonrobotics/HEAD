@@ -119,6 +119,10 @@ def blink_when_target_changes(self):
 
 @actuators.new
 def saccade(self):
+    """
+    Saccade eyes to a probability map displayed as a Blender image (texture)
+    """
+
     # Register GUI-displayable parameter
     interval = 0
     self.add_parameter(bpy.props.StringProperty(name='interval',
@@ -179,7 +183,10 @@ def saccade(self):
 
 class FaceProbabilityMap:
     """ Asks the Actuator Manager to draw a face in the UI made of circles and
-    ellipses. The image can then be updated via parameter sliders. """
+    ellipses. The image can then be updated via parameter sliders.
+
+    See 'saccade()' actuator for how to use this.
+    """
 
     def __init__(self, actuator):
         self.img_size = (100, 100)
@@ -202,20 +209,22 @@ class FaceProbabilityMap:
     def tick(self):
         self.constant_sum_tick()
 
-        eyes_mat = Matrix.circle((70, 50 - self.params['eyeDist'].val/2), self.params['eyeSize'].val, self.img_size)
-        eyes_mat += Matrix.circle((70, 50 + self.params['eyeDist'].val/2), self.params['eyeSize'].val, self.img_size)
+        eyes_mat = MatrixUtils.circle((70, 50 - self.params['eyeDist'].val/2), self.params['eyeSize'].val, self.img_size)
+        eyes_mat += MatrixUtils.circle((70, 50 + self.params['eyeDist'].val/2), self.params['eyeSize'].val, self.img_size)
         eyes_mat *= self.params['eyeWeight'].val / eyes_mat.sum()
 
-        mouth_mat = Matrix.ellipse((20, 50), (self.params['mouthHeight'].val, self.params['mouthWidth'].val), self.img_size)
+        mouth_mat = MatrixUtils.ellipse((20, 50), (self.params['mouthHeight'].val, self.params['mouthWidth'].val), self.img_size)
         mouth_mat *= self.params['mouthWeight'].val / mouth_mat.sum()
 
         mat = eyes_mat + mouth_mat
         mat /= mat.sum()
-        self.img.set_pixels(Matrix.color(mat/mat.max(), [1,1,0,1]))
+        self.img.set_pixels(MatrixUtils.color(mat/mat.max(), [1,1,0,1]))
         return mat
 
 
-class Matrix:
+class MatrixUtils:
+    """ Useful for drawing and colouring simple shapes. """
+
     def circle(pos, radius, imgsize):
         """ Draw a circle on a new matrix of size 'imgsize'. """
         xx, yy = np.mgrid[:imgsize[0], :imgsize[1]]
@@ -243,7 +252,9 @@ class Matrix:
 
 def constant_sum(*params, target_sum=1.0):
     """ Takes ActuatorManager.Parameter instances and returns a 'tick' function
-    that keeps their sum at 'target_sum' in case some of the values change. """
+    that keeps their sum at 'target_sum' in case some of the values change.
+
+    E.g. For sliders that represent weights and must always sum up to 1.0. """
     lastvals = {(param, param.val) for param in params}
     def tick():
         # Pick parameters which were not updated since last tick
