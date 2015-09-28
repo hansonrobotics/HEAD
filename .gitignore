@@ -6,3 +6,4 @@
 *.sublime-workspace
 *.blend?
 *.blend??
+.DS_Store
