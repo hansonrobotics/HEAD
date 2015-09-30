@@ -75,8 +75,7 @@ class EvaAPI(RigAPI):
         emotionStates = {}
         for emotion in eva.emotionsList:
             magnitude = round(emotion.magnitude.current, 3)
-            duration = round(emotion.duration, 3)
-            emotionStates[emotion.name] = {'magnitude': magnitude, 'duration': duration}
+            emotionStates[emotion.name] = {'magnitude': magnitude}
         return emotionStates
 
 

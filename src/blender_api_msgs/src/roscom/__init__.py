@@ -181,9 +181,8 @@ class CommandWrappers:
     @publish_live("~get_emotion_states", msg.EmotionStates)
     def getEmotionStates():
         return msg.EmotionStates([
-            msg.EmotionState(name,
-                vals['magnitude'],
-                rospy.Duration(vals['duration']))
+            # Emotion state has no current duration
+            msg.EmotionState(name, vals['magnitude'], 0)
             for name, vals in api.getEmotionStates().items()
         ])
 
