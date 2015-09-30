@@ -10,5 +10,6 @@ def register():
     # import package and force refresh for dev
     import rigControl
     imp.reload(rigControl)
+    rigControl.init()
 
 register()
