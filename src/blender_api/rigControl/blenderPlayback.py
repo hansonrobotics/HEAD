@@ -71,6 +71,9 @@ class EvaDebug(bpy.types.Operator):
     bpy.types.Scene.evaFollowMouse = bpy.props.BoolProperty(name = "evaFollowMouse")
     bpy.context.scene['evaFollowMouse'] = False
 
+    bpy.types.Scene.fakeSaccades = bpy.props.BoolProperty(name = "fakeSaccades")
+    bpy.context.scene['fakeSaccades'] = False
+
     bpy.types.Scene.evaFPS = bpy.props.IntProperty(name = "evaFPS", soft_min = 10, soft_max = 60)
     bpy.context.scene['evaFPS'] = 0
 

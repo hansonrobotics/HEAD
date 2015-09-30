@@ -43,6 +43,12 @@ class BLRigControl(bpy.types.Panel):
         col.operator("wm.command_listener", text=text, icon='CONSOLE')
         col.operator('eva.debug', text='Start Animation', icon='ARMATURE_DATA').action = 'commands.init()'
 
+        # saccades
+        col = layout.column(align=True)
+        col.label(text="Saccades:")
+        row = layout.row()
+        row.prop(context.scene, 'fakeSaccades', text='Fake Saccades')
+
         # speech
         col = layout.column(align=True)
         col.label(text="Speech:")
