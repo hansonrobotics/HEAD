@@ -4,7 +4,8 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
             public_index: function () {
                 // reset robot
                 api.disableInteractionMode();
-                api.pointHead();
+                api.blenderMode.disable();
+                api.setDefaultMotorValues();
 
                 // init collection and views
                 var motorsCollection = new App.Entities.MotorCollection(),
@@ -22,7 +23,9 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
             admin_index: function () {
                 App.LayoutInstance.showAdminNav();
                 App.LayoutInstance.setTitle('Motors');
-
+                api.disableInteractionMode();
+                api.blenderMode.disable();
+                api.setDefaultMotorValues();
                 var configurationView = new ConfigurationView();
                 App.LayoutInstance.getRegion('content').show(configurationView);
             }

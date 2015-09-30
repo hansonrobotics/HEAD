@@ -106,9 +106,12 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics[confEntry.topic].publish(cmd);
         },
         setDefaultMotorValues: function () {
-            for (var i = 0; i < api.config.motors.length; i++) {
-                this._sendMotorCommand(api.config.motors[i], api.config.motors[i].default);
-            }
+            api.getMotorsFromParam(function(motors){
+                for (var i = 0; i < motors.length; i++) {
+                    api._sendMotorCommand(motors[i], motors[i].default);
+                }
+            });
+
         },
         getPololuMotorTopics: function (success) {
             api.services.topicsForType.callService({type: 'ros_pololu/MotorCommand'}, function (response) {
