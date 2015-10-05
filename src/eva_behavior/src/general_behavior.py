@@ -276,6 +276,7 @@ class Tree():
 		rospy.logwarn("setting up chatbot affect perceive and express links")
 		rospy.Subscriber("chatbot_affect_perceive", String,
 			self.chatbot_affect_perceive_callback)
+		rospy.Subscriber("chatbot_blink",String,self.chatbot_blink_callback)
 		self.do_pub_gestures = True
 		self.do_pub_emotions = True
 		self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state",
@@ -284,6 +285,7 @@ class Tree():
 			SetGesture, queue_size=1)
 		self.affect_pub = rospy.Publisher("chatbot_affect_express",
 			EmotionState, queue_size=1)
+
 		self.tree = self.build_tree()
 		time.sleep(0.1)
 
@@ -1121,6 +1123,11 @@ class Tree():
 			self.blackboard["behavior_tree_on"] = False
 			self.blackboard["stage_mode"] = False
 			print("---- Behavior tree disabled")
+
+	# chatbot requests blink
+	def chatbot_blink_callback(self, blink):
+		rospy.loginfo(blink.data +' says blink')
+		self.show_gesture('blink', 1.0, 1, 1.0, blink)
 
 	# The perceived emotional content in the message.
 	# emo is of type EmotionState

@@ -11,6 +11,8 @@ from itertools import izip
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState
+#from rigControl.actuators import sleep as nb_sleep
+import random
 
 
 class Chatbot():
@@ -30,7 +32,6 @@ class Chatbot():
     self._polarity_threshold=0.2
     # a small dictionary of terms which negate polarity
     self._negates={'not':1,'don\'t':1,'can\'t':1,'won\'t':1,'isn\'t':1,'never':1}
-    #
 
     rospy.init_node('chatbot_ai')
     rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
@@ -38,9 +39,10 @@ class Chatbot():
 
     rospy.Subscriber('chatbot_speech', ChatMessage, self._affect_perceive_callback)
 
-    self._response_publisher = rospy.Publisher(
-      'chatbot_responses', String, queue_size=1
-    )
+    self._response_publisher = rospy.Publisher('chatbot_responses', String, queue_size=1)
+
+    # send communication non-verbal blink message to behavior
+    self._blink_publisher = rospy.Publisher('chatbot_blink',String,queue_size=1)
 
     # Perceived emotional content; and emotion to express
     # Perceived: based on what chatbot heard, this is how robot should
@@ -85,15 +87,35 @@ class Chatbot():
 
   def _request_callback(self, chat_message):
     response = ''
+    # hear response blink with probability .4 within 0.5 secs
+    #nb_sleep(random.uniform()*0.5)
+    blink=String()
+    if random.random()<0.4:
+      # blink that we heard something
+      blink.data='chat-heard'
+      # can try direct bpy or make independent by publishing blink and letting evaBehavior serve
+      self._blink_publisher.publish(blink)
+
     if chat_message.confidence < 50:
       response = 'Could you say that again?'
+      message = String()
+      message.data = response
+      self._response_publisher.publish(message)
+      # puzzled expression
     else:
+      if random.random() < 0.7:
+        # non blocking sleep for random up to .25 sec
+        #nb_sleep(random.random()< *0.5)
+        # .7 probability of blink
+        blink.data='chat-saying'
+        self._blink_publisher.publish(blink)
+
       response = self._kernel.respond(chat_message.utterance)
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
 
-    # if sentiment active save state and wait for affect_express to publish response
-    # otherwise publish and let tts handle it
+      # if sentiment active save state and wait for affect_express to publish response
+      # otherwise publish and let tts handle it
     self._response_buffer=response
     if self._sentiment_active:
       self._state = 'wait_emo'
@@ -103,6 +125,7 @@ class Chatbot():
       message.data = response
       self._response_publisher.publish(message)
       self._state = 'wait_client'
+
 
   # Tell the world the emotion that the chatbot is perceiving.
   # Use the blender_api_msgs/EmotionState messae type to
