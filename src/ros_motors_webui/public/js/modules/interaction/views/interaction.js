@@ -30,10 +30,13 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                     api.topics.speech_active.subscribe(function (msg) {
                         if (msg.data == 'start') {
-                            console.log('Interaction paused');
-                            if (annyang) annyang.pause();
+                            if (window.location.protocol != "https:"){}
+                                if (annyang) annyang.pause();
+                            }else{
+                                if (annyang) annyang.abort();
+                            }
                         } else {
-                            console.log('Interaction activated');
+
                             if (annyang) annyang.resume();
                         }
                     });
