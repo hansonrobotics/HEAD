@@ -93,7 +93,6 @@ class Reporter:
         while True:
             out = EasyProcess(cmd).call(timeout=1).stdout
             self.dynamixel_motors = [int(filter(str.isdigit, str(id))) for id in re.findall(r"id: \d+",out)]
-            print self.dynamixel_motors
             time.sleep(1)
 
     @staticmethod
