@@ -203,3 +203,7 @@ li.app-performance .app-status-indicator.active {
 .app-node[data-name="interaction"] {
     background-color: #375748;
 }
+
+.app-node[data-name="pause"] {
+    background-color: #335B9E;
+}
