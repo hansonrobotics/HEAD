@@ -1,6 +1,14 @@
 import yaml
 from subprocess import call, check_output
+from easyprocess import EasyProcess
+import threading
+import time
 
+try:
+    from subprocess import DEVNULL
+except ImportError:
+    import os
+    DEVNULL = open(os.devnull, 'wb')
 
 class Reporter:
     # Executes a number of shell commands, interprets their return codes as
@@ -8,6 +16,11 @@ class Reporter:
     def __init__(self, yamlfilename):
         self.filename = yamlfilename
         self.load_config()
+        self.env = None
+        # Dynamixel status updates
+        self.dynamixel_started = False
+        self.dynamixel_motors_states = {}
+        self.robot_name = ''
 
     def load_config(self):
         with open(self.filename, 'r') as f:
@@ -24,7 +37,7 @@ class Reporter:
         self.load_config()
 
         # Execute and store environment variables
-        env = self._build_env()
+        self.env = self._build_env()
         # Build commands to prepend to checks
         cmdlist = self.config['setup']['prepend']
 
@@ -32,17 +45,65 @@ class Reporter:
         statuslist = []
         for check in self.config['checks']:
             cmd = '; '.join(cmdlist + [check['cmd']])
-            status = self.check(cmd, env=env)
+            status = self.check(cmd, env=self.env)
             statuslist.append(status)
 
         # Return a copy of self.config['checks'] with a new parameter 'success'
         return [dict(list(check.items()) + [('success', success)])
                 for check, success in zip(self.config['checks'], statuslist)]
 
+    # Adds the states to the motors:
+    # 0 - Running
+    # 1 - Error
+    # 2 - No Feedback
+    def motor_states(self, motors, robot_name):
+        # Dynamixel monitor start
+        if not self.dynamixel_started:
+            self.start_dynamixel_monitor(robot_name)
+            self.dynamixel_started = True
+            # Sleep some time so first results if motors are alive will have time to return
+            time.sleep(0.5)
+        status = {}
+        pololu_boards = {}
+        for i, m in enumerate(motors):
+            if m['hardware'] == 'pololu':
+                if m['topic'] not in pololu_boards.keys():
+                    cmd = "rosparam get /{}/{}_enabled".format(robot_name, m['topic'])
+                    pololu_boards[m['topic']] = 2 if EasyProcess(cmd).call().stdout == str("true") else 1
+
+                motors[i]['error'] = pololu_boards[m['topic']]
+            #Dynamixel motors
+            else:
+                if m['motor_id'] in self.dynamixel_motors_states.keys():
+                    motors[i]['error'] = 0
+                    motors[i]['motor_state'] = self.dynamixel_motors_states[m['motor_id']]
+                else:
+                    # Motor is not on
+                    motors[i]['error'] = 1
+        return motors
+
+    def start_dynamixel_monitor(self, robot_name):
+        self.robot_name = robot_name
+        thread = threading.Thread(target=self.dynamixel_monitor)
+        thread.daemon = True
+        thread.start()
+
+    def dynamixel_monitor(self):
+        cmd = 'rostopic echo /{}/safe/motor_states/default -n 1'.format(self.robot_name)
+        while True:
+            try:
+                out = EasyProcess(cmd).call(timeout=1).stdout
+                out = out[:out.rfind('\n')]
+                states = yaml.load(out)
+                self.dynamixel_motors_states = {m['id']: m for m in states['motor_states']}
+            except:
+                self.dynamixel_motors_states= {}
+            time.sleep(1)
+
     @staticmethod
     def check(cmd, env=None):
         """ Checks a single command for success """
-        errcode = call(cmd, stdout=subprocess.DEVNULL, env=env, shell=True)
+        errcode = call(cmd, stdout=DEVNULL, env=env, shell=True)
         return errcode == 0
 
     def _build_env(self):
