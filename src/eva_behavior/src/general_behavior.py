@@ -271,11 +271,12 @@ class Tree():
 
 		# Emotional content that the chatbot perceived i.e. did it hear
 		# (or reply with) angry words, polite words, etc?
-		# currently supplying string rather than specific EmotionState with timing,
+		# Currently chatbot supplies string rather than specific EmotionState with timing,
 		# allowing that to be handled here where timings have been tuned
 		rospy.logwarn("setting up chatbot affect perceive and express links")
 		rospy.Subscriber("chatbot_affect_perceive", String,
 			self.chatbot_affect_perceive_callback)
+		#  chatbot can request blinks correlated with hearing and speaking
 		rospy.Subscriber("chatbot_blink",String,self.chatbot_blink_callback)
 		self.do_pub_gestures = True
 		self.do_pub_emotions = True
@@ -1124,10 +1125,16 @@ class Tree():
 			self.blackboard["stage_mode"] = False
 			print("---- Behavior tree disabled")
 
+
+
 	# chatbot requests blink
 	def chatbot_blink_callback(self, blink):
 		rospy.loginfo(blink.data +' says blink')
-		self.show_gesture('blink', 1.0, 1, 1.0, blink)
+		blink_probabilities={'chat-heard':0.4,'chat-saying':0.7,'tts-end':0.7}
+		# if we get a string not in the dictionary return 1.0
+		blink_probability=blink_probabilities[blink.data]
+		if random.random()<blink_probability:
+			self.show_gesture('blink', 1.0, 1, 1.0, blink)
 
 	# The perceived emotional content in the message.
 	# emo is of type EmotionState

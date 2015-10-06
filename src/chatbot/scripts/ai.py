@@ -12,7 +12,7 @@ from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState
 #from rigControl.actuators import sleep as nb_sleep
-import random
+
 
 
 class Chatbot():
@@ -87,14 +87,11 @@ class Chatbot():
 
   def _request_callback(self, chat_message):
     response = ''
-    # hear response blink with probability .4 within 0.5 secs
-    #nb_sleep(random.uniform()*0.5)
+    #nb_sleep(random.uniform(0.0,0.5)
     blink=String()
-    if random.random()<0.4:
-      # blink that we heard something
-      blink.data='chat-heard'
-      # can try direct bpy or make independent by publishing blink and letting evaBehavior serve
-      self._blink_publisher.publish(blink)
+    # blink that we heard something, request, probability defined in callback
+    blink.data='chat-heard'
+    self._blink_publisher.publish(blink)
 
     if chat_message.confidence < 50:
       response = 'Could you say that again?'
@@ -103,12 +100,12 @@ class Chatbot():
       self._response_publisher.publish(message)
       # puzzled expression
     else:
-      if random.random() < 0.7:
-        # non blocking sleep for random up to .25 sec
-        #nb_sleep(random.random()< *0.5)
-        # .7 probability of blink
-        blink.data='chat-saying'
-        self._blink_publisher.publish(blink)
+
+      # non blocking sleep for random up to .25 sec
+      #nb_sleep(random.random()< *0.5)
+      # request blink, probability of blink defined in callback
+      blink.data='chat-saying'
+      self._blink_publisher.publish(blink)
 
       response = self._kernel.respond(chat_message.utterance)
       # Add space after punctuation for multi-sentence responses
@@ -218,9 +215,9 @@ class Chatbot():
          extreme=max(polarity_list)
       else:
         extreme=min(polarity_list)
-    return (average+extreme)/2.0
-
-    return negate*(average+extreme)/2.0
+      return negate*(average+extreme)/2.0
+    else:
+      return 0.0
 
 def main():
   chatbot = Chatbot()
