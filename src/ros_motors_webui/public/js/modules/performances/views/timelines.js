@@ -100,7 +100,10 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
 
                 node.set('el', el);
                 node.on('change', this.updateNode, this);
-
+                // Listen for Pause nodes
+                this.listenTo(node, 'pause', function(){
+                    this.pause();
+                });
                 this.updateNode(node);
             },
             /**

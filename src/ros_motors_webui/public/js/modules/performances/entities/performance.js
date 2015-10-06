@@ -31,15 +31,19 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 this.resumeStartTime = null;
 
                 this.get('nodes').each(function (node) {
-                    if (node.get('start_time') >= startTime)
+                    if (node.get('start_time') >= startTime){
                         self.runQueue.push(setTimeout(function () {
                             node.call();
                         }, (node.get('start_time') - startTime) * 1000));
+                        self.runQueue.push(setTimeout(function () {
+                            node.finish();
+                        }, (node.get('start_time') + node.get('duration') - startTime) * 1000));
+                    }
                 });
             },
             pause: function () {
                 if ($.isNumeric(this.lastRunTime)) {
-                    this.resumeStartTime = Date.now() - this.lastRunTime;
+                    this.resumeStartTime = Date.now()+1 - this.lastRunTime;
 
                     _.each(this.runQueue, function (timeout) {
                         clearTimeout(timeout);
