@@ -39,6 +39,63 @@ def get_motors(robot_name):
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     return json_encode({'motors': motors})
 
+@app.route('/monitor/logs/')
+def get_logs():
+    """
+    Collect all the warnings, errors and fatals from the ros log files.
+    If there is no roscore process running, then it displays the logs
+    from the last run.
+    """
+
+    from roslaunch.roslaunch_logs import get_run_id
+    import rospkg
+    import glob
+    import re
+    log_root = rospkg.get_log_dir()
+    run_id = get_run_id()
+    roscore_running = True
+    if not run_id:
+        roscore_running = False
+        subdirs = [os.path.join(log_root, d) for d in os.listdir(log_root)
+                    if os.path.isdir(os.path.join(log_root, d))]
+        if subdirs:
+            run_id = max(subdirs, key=os.path.getmtime)
+        else:
+            run_id = ''
+    log_dir = os.path.join(log_root, run_id)
+    log_files = sorted(glob.glob(os.path.join(log_dir, '*.log')))
+    logs = {}
+    def get_logs(log_file):
+        warn, error, fatal = [], [], []
+        warn_pattern = '\[WARN\]|\[WARNING\]'
+        error_pattern = '\[ERROR\]'
+        fatal_pattern = '\[FATAL\]'
+        with open(log_file) as f:
+            for line in f.readlines():
+                if re.search(warn_pattern, line):
+                    warn.append(line)
+                if re.search(error_pattern, line):
+                    error.append(line)
+                if re.search(fatal_pattern, line):
+                    fatal.append(line)
+        return warn, error, fatal
+
+    for log_file in log_files:
+        base = os.path.basename(log_file)
+        logs[base] = get_logs(log_file)
+
+    warnings = sum([v[0] for v in logs.values()], [])
+    errors = sum([v[1] for v in logs.values()], [])
+    fatals = sum([v[2] for v in logs.values()], [])
+
+    return json_encode({
+        'log_dir': log_dir,
+        'roscore_running': roscore_running,
+        'warnings': warnings,
+        'errors': errors,
+        'fatals': fatals,
+    })
+
 def reload_configs(motors,config_dir, robot_name):
     configs = Configs()
     configs.parseMotors(motors)
