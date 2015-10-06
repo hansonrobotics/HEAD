@@ -1,15 +1,39 @@
 .app-slider-container {
-    margin: 5px 0;
     padding: 5px 0;
-    list-style: none;
 }
 
 .app-slider-container p {
     margin-bottom: 5px;
 }
 
+.motor-slider-container {
+    position: relative;
+}
+
+.app-motor-status-indicator {
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+    border: 1px solid white;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.app-ok {
+    background-color: #5cb85c;
+}
+
+.app-error {
+    background-color: #d9534f;
+}
+
+.app-inactive {
+    background-color: #f0ad4e;
+}
+
 .app-slider {
-    margin: 5px 0;
+    margin: 5px 30px 5px 0;
 }
 
 .hidden {

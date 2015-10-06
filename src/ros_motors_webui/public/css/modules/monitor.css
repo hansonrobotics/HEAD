@@ -1,0 +1,8 @@
+.system-indicators {
+    list-style: none;
+    padding: 0;
+}
+.system-indicators li {
+    border-bottom: 1px dashed #485563;
+    margin-bottom: 3px;
+}

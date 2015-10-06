@@ -42,7 +42,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
                     'modules/gestures/gestures_app',
                     'modules/performances/performances_app',
                     'modules/interaction/interaction_app',
-                    'modules/monitor/router'
+                    'modules/monitor/router',
                     'modules/status/status_app'],
                 function () {
                     Application.start();

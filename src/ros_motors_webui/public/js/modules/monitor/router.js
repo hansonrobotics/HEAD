@@ -1,17 +1,15 @@
 define(['application', './controller'], function (App, controller) {
     var Router = Marionette.AppRouter.extend({
         'appRoutes': {
-            'monitor': 'motors',
-            'monitor/motors': 'motors',
-            'monitor/messages': 'messages',
-            'monitor/logs': 'logs',
-            'monitor/processes': 'processes',
-            'monitor/speed': 'speed',
-            'monitor/system': 'system'
+            'admin/monitor': 'system',
+            'admin/monitor/motors': 'motors',
+            'admin/monitor/messages': 'messages',
+            'admin/monitor/logs': 'logs',
+            'admin/monitor/processes': 'processes',
+            'admin/monitor/speed': 'speed',
+            'admin/monitor/system': 'system'
         }
     });
 
-    App.on('start', function () {
-        new Router({controller: controller});
-    });
+    new Router({controller: controller});
 });

@@ -20,15 +20,6 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     }
                 };
             },
-            selected: function (selected) {
-                if (typeof selected == 'undefined') {
-                    // return status if arg undefined
-                    return this.get('selected');
-                } else {
-                    // set status otherwise
-                    this.set('selected', !!selected);
-                }
-            },
             getDegrees: function (attribute) {
                 return Math.round(utilities.radToDeg(this.get(attribute)));
             },
@@ -54,12 +45,12 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
             comparator: 'order_no',
             sync: function (successCallback, errorCallback) {
                 var data = _.filter(this.toJSON(), function (motor) {
-                        delete motor['selected'];
-                        delete motor['editable'];
-                        delete motor['value'];
+                    delete motor['selected'];
+                    delete motor['editable'];
+                    delete motor['value'];
 
-                        return motor;
-                    });
+                    return motor;
+                });
 
                 $.ajax("/motors/update/" + api.config.robot, {
                     data: JSON.stringify(data),
@@ -78,23 +69,26 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
             fetch: function (admin, callback) {
                 var self = this;
 
-                if (admin) {
-                    api.getMotorsFromFile(function (data) {
-                        self.add(data);
-                        self.loadPololuMotors();
+                $.ajax('/motors/status/' + api.config.robot, {
+                    dataType: 'json',
+                    success: function (response) {
+                        var motors = response.motors;
+
+                        self.add(motors);
+                        self.setDefaultValues();
+                        //self.loadPololuMotors();
+
+                        api.createMotorTopics(motors);
 
                         if (typeof callback == 'function')
-                            callback(data);
-                    });
-                } else {
-                    api.getMotorsFromParam(function (data) {
-                        self.add(data);
-                        self.loadPololuMotors();
-
-                        if (typeof callback == 'function')
-                            callback(data);
-                    });
-                }
+                            callback(motors);
+                    }
+                });
+            },
+            setDefaultValues: function () {
+                this.each(function (motor) {
+                    motor.set('value', motor.get('init'));
+                })
             },
             getRelativePositions: function () {
                 var positions = {};
