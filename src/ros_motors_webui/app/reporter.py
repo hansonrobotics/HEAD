@@ -3,7 +3,6 @@ from subprocess import call, check_output
 from easyprocess import EasyProcess
 import threading
 import time
-import re
 
 try:
     from subprocess import DEVNULL
@@ -20,7 +19,7 @@ class Reporter:
         self.env = None
         # Dynamixel status updates
         self.dynamixel_started = False
-        self.dynamixel_motors = []
+        self.dynamixel_motors_states = {}
         self.robot_name = ''
 
     def load_config(self):
@@ -63,7 +62,7 @@ class Reporter:
             self.start_dynamixel_monitor(robot_name)
             self.dynamixel_started = True
             # Sleep some time so first results if motors are alive will have time to return
-            time.sleep(0.3)
+            time.sleep(0.5)
         status = {}
         pololu_boards = {}
         for i, m in enumerate(motors):
@@ -75,8 +74,9 @@ class Reporter:
                 motors[i]['error'] = pololu_boards[m['topic']]
             #Dynamixel motors
             else:
-                if m['motor_id'] in self.dynamixel_motors:
+                if m['motor_id'] in self.dynamixel_motors_states.keys():
                     motors[i]['error'] = 0
+                    motors[i]['motor_state'] = self.dynamixel_motors_states[m['motor_id']]
                 else:
                     # Motor is not on
                     motors[i]['error'] = 1
@@ -91,8 +91,13 @@ class Reporter:
     def dynamixel_monitor(self):
         cmd = 'rostopic echo /{}/safe/motor_states/default -n 1'.format(self.robot_name)
         while True:
-            out = EasyProcess(cmd).call(timeout=1).stdout
-            self.dynamixel_motors = [int(filter(str.isdigit, str(id))) for id in re.findall(r"id: \d+",out)]
+            try:
+                out = EasyProcess(cmd).call(timeout=1).stdout
+                out = out[:out.rfind('\n')]
+                states = yaml.load(out)
+                self.dynamixel_motors_states = {m['id']: m for m in states['motor_states']}
+            except:
+                self.dynamixel_motors_states= {}
             time.sleep(1)
 
     @staticmethod
