@@ -165,15 +165,15 @@ class RosPololuNode:
         try:
             if self._controller_type == 'Maestro':
                 self.controller = Maestro(port)
-                print "Maestro started"
             if self._controller_type == 'MicroSSC':
                 self.controller = MicroSSC(port)
-                print "MicroSSC started"
         except Exception as ex:
             rospy.logwarn("Error creating the motor controller")
             rospy.logwarn(ex)
             self.idle = True
+            rospy.set_param(topic_prefix.strip("/")+"_enabled",False)
             return
+        rospy.set_param(topic_prefix.strip("/")+"_enabled",True)
         # Listen for outputs from proxy
         if safety:
             topic_prefix = 'safe/'+topic_prefix
@@ -181,7 +181,7 @@ class RosPololuNode:
         rospy.loginfo("ros_pololu Subscribed to %s" % (topic_prefix + topic_name))
 
     def publish_motor_states(self):
-        if self._sync == 'on':
+        if self._sync == 'on' and not self.idle:
             for i, m in self._motors.items():
                 try:
                     if self._dynamic_speed == "on":
