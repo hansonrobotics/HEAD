@@ -3,6 +3,9 @@ from subprocess import call, check_output
 from easyprocess import EasyProcess
 import threading
 import time
+from pololu_motor import PololuMotor
+from configs import Configs
+
 
 try:
     from subprocess import DEVNULL
@@ -75,9 +78,14 @@ class Reporter:
                     self.pololu_boards[m['topic']] = {}
                 if m['name'] in self.pololu_boards[m['topic']].keys():
                     m['motor_state'] = {'position': self.pololu_boards[m['topic']][m['name']]}
-                else:
                     m['motor_state'] = 0
-                motors[i]['error'] = pololu_boards[m['topic']]
+                else:
+                    m['motor_state'] = 1
+                motor = PololuMotor(m['name'], m)
+                #Conert to angles
+                m['init'] = motor.get_angle(m['init'])
+                m['min'] = motor.get_angle(m['min'])
+                m['max'] = motor.get_angle(m['max'])
             #Dynamixel motors
             else:
                 if m['motor_id'] in self.dynamixel_motors_states.keys():
@@ -86,6 +94,12 @@ class Reporter:
                 else:
                     # Motor is not on
                     motors[i]['error'] = 1
+                m['max'] = Configs.dynamixel_angle(m, m['max'])
+                m['min'] = Configs.dynamixel_angle(m, m['min'])
+                # Init has to be replaced last, because calculation depends on it
+                m['init'] = Configs.dynamixel_angle(m, m['init'])
+
+
         return motors
 
     def start_motors_monitor(self, robot_name):
@@ -94,7 +108,7 @@ class Reporter:
         thread.daemon = True
         thread.start()
 
-    def dynamixel_monitor(self):
+    def motors_monitor(self):
         cmd_dyn = 'rostopic echo /{}/safe/motor_states/default -n 1'.format(self.robot_name)
         cmd_pol = 'rostopic echo /{}/motor_states -n 1'.format(self.robot_name)
         while True:

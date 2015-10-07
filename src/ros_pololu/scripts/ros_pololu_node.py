@@ -8,6 +8,7 @@ import yaml
 from pololu.motors import Maestro, MicroSSC
 from ros_pololu.msg import MotorCommand
 from sensor_msgs.msg import JointState
+from ros_pololu import PololuMotor
 import time
 
 COMMAND_RATE = 24
