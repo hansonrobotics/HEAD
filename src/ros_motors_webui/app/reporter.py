@@ -3,9 +3,9 @@ from subprocess import call, check_output
 from easyprocess import EasyProcess
 import threading
 import time
-from pololu_motor import PololuMotor
+from ros_pololu import PololuMotor
 from configs import Configs
-
+import math
 
 try:
     from subprocess import DEVNULL
@@ -74,18 +74,18 @@ class Reporter:
         pololu_boards = {}
         for i, m in enumerate(motors):
             if m['hardware'] == 'pololu':
-                if not m['topic'] in self.pololu_boards.keys:
+                if not m['topic'] in self.pololu_boards.keys():
                     self.pololu_boards[m['topic']] = {}
                 if m['name'] in self.pololu_boards[m['topic']].keys():
                     m['motor_state'] = {'position': self.pololu_boards[m['topic']][m['name']]}
-                    m['motor_state'] = 0
+                    m['error'] = 0
                 else:
-                    m['motor_state'] = 1
+                    m['error'] = 1
                 motor = PololuMotor(m['name'], m)
                 #Conert to angles
-                m['init'] = motor.get_angle(m['init'])
-                m['min'] = motor.get_angle(m['min'])
-                m['max'] = motor.get_angle(m['max'])
+                m['init'] = round(math.degrees(motor.get_angle(m['init']*4)))
+                m['min'] = round(math.degrees(motor.get_angle(m['min']*4)))
+                m['max'] = round(math.degrees(motor.get_angle(m['max']*4)))
             #Dynamixel motors
             else:
                 if m['motor_id'] in self.dynamixel_motors_states.keys():
@@ -94,10 +94,10 @@ class Reporter:
                 else:
                     # Motor is not on
                     motors[i]['error'] = 1
-                m['max'] = Configs.dynamixel_angle(m, m['max'])
-                m['min'] = Configs.dynamixel_angle(m, m['min'])
+                m['max'] = round(math.degrees(Configs.dynamixel_angle(m, m['max'])))
+                m['min'] = round(math.degrees(Configs.dynamixel_angle(m, m['min'])))
                 # Init has to be replaced last, because calculation depends on it
-                m['init'] = Configs.dynamixel_angle(m, m['init'])
+                m['init'] = round(math.degrees(Configs.dynamixel_angle(m, m['init'])))
 
 
         return motors
@@ -110,7 +110,6 @@ class Reporter:
 
     def motors_monitor(self):
         cmd_dyn = 'rostopic echo /{}/safe/motor_states/default -n 1'.format(self.robot_name)
-        cmd_pol = 'rostopic echo /{}/motor_states -n 1'.format(self.robot_name)
         while True:
             # Dynamixel states
             try:
@@ -121,9 +120,10 @@ class Reporter:
             except:
                 self.dynamixel_motors_states= {}
             # Pololu states
-            for i,b in enumerate(self.pololu_boards):
+            for i in self.pololu_boards.keys():
+                cmd_pol = 'rostopic echo /{}/{}/motor_states -n 1'.format(self.robot_name, i)
                 try:
-                    out = EasyProcess(cmd_dyn).call(timeout=1).stdout
+                    out = EasyProcess(cmd_pol).call(timeout=1).stdout
                     out = out[:out.rfind('\n')]
                     states = yaml.load(out)
                     states = zip(states.name, states.position)
