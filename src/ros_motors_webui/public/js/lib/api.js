@@ -105,14 +105,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
 
             api.topics[confEntry.topic].publish(cmd);
         },
-        setDefaultMotorValues: function () {
-            api.getMotorsFromParam(function(motors){
-                for (var i = 0; i < motors.length; i++) {
-                    api._sendMotorCommand(motors[i], motors[i].default);
-                }
-            });
-
-        },
         getPololuMotorTopics: function (success) {
             api.services.topicsForType.callService({type: 'ros_pololu/MotorCommand'}, function (response) {
                 success(response.topics);
@@ -286,17 +278,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 motors.sort(function(a,b){return parseFloat(a.sort_no)-parseFloat(b.sort_no)});
                 self.createMotorTopics(motors);
                 callback(motors);
-            });
-        },
-        getMotorsFromFile: function (callback) {
-            var self = this;
-
-            $.ajax('/motors/get/' + api.config.robot, {
-                dataType: 'json',
-                success: function (response) {
-                    self.createMotorTopics(response.motors);
-                    callback(response.motors);
-                }
             });
         },
         createMotorTopics: function (motors) {

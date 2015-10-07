@@ -30,29 +30,27 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                     api.topics.speech_active.subscribe(function (msg) {
                         if (msg.data == 'start') {
-                            console.log('Interaction paused');
-                            if (annyang) annyang.pause();
+                            if (window.location.protocol != "https:"){
+                                if (annyang) annyang.pause();
+                            }else{
+                                if (annyang) annyang.abort();
+                            }
                         } else {
-                            console.log('Interaction activated');
                             if (annyang) annyang.resume();
                         }
                     });
 
                     if (annyang) {
                         annyang.start();
-                        annyang.debug();
 
                         var commands = {
-                            'hi (han)': this.hello,
-                            'hello (han)': this.hello,
-                            'hello (hun)': this.hello,
-                            'hello (hon)': this.hello,
-                            'hi (hun)': this.hello,
-                            'hi (hon)': this.hello,
-                            'bye *bye': this.bye,
+                            'hi *': this.hello,
+                            'hello *': this.hello,
+                            'bye *': this.bye,
                             '*text': this.sendMessage
                         };
                         annyang.addCommands(commands);
+                        // keeps speech alive for mobile devices if they went sleep or switched app.
                         this.keepAlive();
                     } else {
                         this.ui.recordContainer.hide();

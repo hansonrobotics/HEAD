@@ -20,10 +20,17 @@ define(['application', 'lib/api'], function (App, api) {
                         break;
                     case 'interaction':
                         api.enableInteractionMode();
-
-                        setTimeout(function () {
-                            api.disableInteractionMode();
-                        }, this.get('duration') * 1000);
+                        break;
+                    case 'pause':
+                        this.trigger('pause');
+                        break;
+                }
+            },
+            finish: function(){
+                switch (this.get('name')) {
+                     case 'interaction':
+                        api.disableInteractionMode();
+                        break;
                 }
             },
             toJSON: function () {
