@@ -7,6 +7,7 @@ import math
 import yaml
 from pololu.motors import Maestro, MicroSSC
 from ros_pololu.msg import MotorCommand
+from sensor_msgs.msg import JointState
 import time
 
 COMMAND_RATE = 24
@@ -175,13 +176,16 @@ class RosPololuNode:
             return
         rospy.set_param(topic_prefix.strip("/")+"_enabled",True)
         # Listen for outputs from proxy
+        self.states_pub = rospy.Publisher(topic_prefix + "motors_states", JointState, queue_size=10)
         if safety:
             topic_prefix = 'safe/'+topic_prefix
         rospy.Subscriber(topic_prefix + topic_name, MotorCommand, self.motor_command_callback)
         rospy.loginfo("ros_pololu Subscribed to %s" % (topic_prefix + topic_name))
 
     def publish_motor_states(self):
-        if self._sync == 'on' and not self.idle:
+        if self.idle:
+            return
+        if self._sync == 'on':
             for i, m in self._motors.items():
                 try:
                     if self._dynamic_speed == "on":
@@ -197,6 +201,14 @@ class RosPololuNode:
                     time.sleep(0.01)
                     self.controller.clean()
             self.controller.clean()
+
+        # Publish the states
+        msg = JointState()
+        for i, m in self._motors.items():
+            msg.name.append(m.name)
+            msg.position.append(m.get_angle)
+        self.state_pub.publish(msg)
+
 
     def motor_command_callback(self, msg):
         # Enable command processing for debuging
