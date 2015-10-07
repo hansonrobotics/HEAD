@@ -222,7 +222,7 @@ class CommandWrappers:
         try:
             api.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
         except TypeError:
-            print('Error: unknown gesture:', msg.name);
+            rospy.logerror('unknown gesture:', msg.name);
 
 
     # Visemes --------------------------------------
@@ -237,7 +237,7 @@ class CommandWrappers:
                 msg.duration.to_sec(),
                 msg.rampin, msg.rampout, msg.magnitude)
         except TypeError:
-            print('Error: unknown viseme:', msg.name);
+            rospy.logerror('unknown viseme:', msg.name);
 
 
     # Look-at and turn-to-face targets ---------------------

@@ -129,10 +129,10 @@ class AVI2ROS:
                 try:
                     image_pub.publish(bridge.cv_to_imgmsg(frame, "bgr8"))
                 except CvBridgeError, e:
-                    print e         
+                    rospy.logerror(e)
     
     def cleanup(self):
-            print "Shutting down vision node."
+            rospy.loginfo("Shutting down vision node.")
             cv.DestroyAllWindows()
 
 def main(args):
@@ -146,7 +146,7 @@ def main(args):
     try:
         a2r = AVI2ROS()
     except KeyboardInterrupt:
-        print "Shutting down avi2ros..."
+        rospy.loginfo("Shutting down avi2ros...")
         cv.DestroyAllWindows()
 
 if __name__ == '__main__':

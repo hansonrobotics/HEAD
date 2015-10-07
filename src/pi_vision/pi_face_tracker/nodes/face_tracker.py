@@ -829,7 +829,7 @@ class PatchTracker(ROS2OpenCV):
             try:
                 z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
             except cv.error:
-                rospy.loginfo("Get2D Index Error: " + str(int(point[1])) + " x " + str(int(point[0])))
+                rospy.logerror("Get2D Index Error: " + str(int(point[1])) + " x " + str(int(point[0])))
                 continue
 
             """ Depth values can be NaN which should be ignored """
@@ -948,7 +948,7 @@ def main(args):
     try:
       rospy.spin()
     except KeyboardInterrupt:
-      print "Shutting down face tracker node."
+      rospy.loginfo("Shutting down face tracker node.")
       cv.DestroyAllWindows()
 
 if __name__ == '__main__':
