@@ -65,7 +65,8 @@ class Reporter:
         # Dynamixel monitor start
         if not self.monitor_started:
             for i,m in enumerate(motors):
-                self.pololu_boards[m['topic']] = {}
+                if m['hardware'] == 'pololu':
+                    self.pololu_boards[m['topic']] = {}
             self.start_motors_monitor(robot_name)
             self.monitor_started = True
             # Sleep some time so first results if motors are alive will have time to return
@@ -78,7 +79,7 @@ class Reporter:
                     self.pololu_boards[m['topic']] = {}
                 if m['name'] in self.pololu_boards[m['topic']].keys():
                     m['motor_state'] = {'position': self.pololu_boards[m['topic']][m['name']]}
-                    m['error'] = 0
+                    m['error'] = 2
                 else:
                     m['error'] = 1
                 motor = PololuMotor(m['name'], m)
@@ -121,12 +122,13 @@ class Reporter:
                 self.dynamixel_motors_states= {}
             # Pololu states
             for i in self.pololu_boards.keys():
-                cmd_pol = 'rostopic echo /{}/{}/motor_states -n 1'.format(self.robot_name, i)
+                cmd_pol = 'rostopic echo /{}/{}/motors_states -n 1'.format(self.robot_name, i)
                 try:
                     out = EasyProcess(cmd_pol).call(timeout=1).stdout
                     out = out[:out.rfind('\n')]
                     states = yaml.load(out)
-                    states = zip(states.name, states.position)
+                    states = dict(zip(states['name'], states['position']))
+                    print states
                     self.pololu_boards[i] = states
                 except:
                     self.pololu_boards[i] = {}
