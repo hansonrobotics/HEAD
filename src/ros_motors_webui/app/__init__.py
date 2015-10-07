@@ -137,6 +137,10 @@ def get_expressions(robot_name):
     return json_encode(expressions)
 
 
+@app.route('/logs/', methods=['GET'])
+def logs():
+    return json_encode({'logs':[]})
+
 @app.route('/expressions/update/<robot_name>', methods=['POST'])
 def update_expressions(robot_name):
     data = json.loads(request.get_data().decode('utf8'))

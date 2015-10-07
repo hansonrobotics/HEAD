@@ -18,9 +18,11 @@ class Reporter:
         self.load_config()
         self.env = None
         # Dynamixel status updates
-        self.dynamixel_started = False
+        self.monitor_started = False
         self.dynamixel_motors_states = {}
         self.robot_name = ''
+        # Pololu status
+        self.pololu_boards = {}
 
     def load_config(self):
         with open(self.filename, 'r') as f:
@@ -58,19 +60,23 @@ class Reporter:
     # 2 - No Feedback
     def motor_states(self, motors, robot_name):
         # Dynamixel monitor start
-        if not self.dynamixel_started:
-            self.start_dynamixel_monitor(robot_name)
-            self.dynamixel_started = True
+        if not self.monitor_started:
+            for i,m in enumerate(motors):
+                self.pololu_boards[m['topic']] = {}
+            self.start_motors_monitor(robot_name)
+            self.monitor_started = True
             # Sleep some time so first results if motors are alive will have time to return
             time.sleep(0.5)
         status = {}
         pololu_boards = {}
         for i, m in enumerate(motors):
             if m['hardware'] == 'pololu':
-                if m['topic'] not in pololu_boards.keys():
-                    cmd = "rosparam get /{}/{}_enabled".format(robot_name, m['topic'])
-                    pololu_boards[m['topic']] = 2 if EasyProcess(cmd).call().stdout == str("true") else 1
-
+                if not m['topic'] in self.pololu_boards.keys:
+                    self.pololu_boards[m['topic']] = {}
+                if m['name'] in self.pololu_boards[m['topic']].keys():
+                    m['motor_state'] = {'position': self.pololu_boards[m['topic']][m['name']]}
+                else:
+                    m['motor_state'] = 0
                 motors[i]['error'] = pololu_boards[m['topic']]
             #Dynamixel motors
             else:
@@ -82,22 +88,34 @@ class Reporter:
                     motors[i]['error'] = 1
         return motors
 
-    def start_dynamixel_monitor(self, robot_name):
+    def start_motors_monitor(self, robot_name):
         self.robot_name = robot_name
-        thread = threading.Thread(target=self.dynamixel_monitor)
+        thread = threading.Thread(target=self.motors_monitor)
         thread.daemon = True
         thread.start()
 
     def dynamixel_monitor(self):
-        cmd = 'rostopic echo /{}/safe/motor_states/default -n 1'.format(self.robot_name)
+        cmd_dyn = 'rostopic echo /{}/safe/motor_states/default -n 1'.format(self.robot_name)
+        cmd_pol = 'rostopic echo /{}/motor_states -n 1'.format(self.robot_name)
         while True:
+            # Dynamixel states
             try:
-                out = EasyProcess(cmd).call(timeout=1).stdout
+                out = EasyProcess(cmd_dyn).call(timeout=1).stdout
                 out = out[:out.rfind('\n')]
                 states = yaml.load(out)
                 self.dynamixel_motors_states = {m['id']: m for m in states['motor_states']}
             except:
                 self.dynamixel_motors_states= {}
+            # Pololu states
+            for i,b in enumerate(self.pololu_boards):
+                try:
+                    out = EasyProcess(cmd_dyn).call(timeout=1).stdout
+                    out = out[:out.rfind('\n')]
+                    states = yaml.load(out)
+                    states = zip(states.name, states.position)
+                    self.pololu_boards[i] = states
+                except:
+                    self.pololu_boards[i] = {}
             time.sleep(1)
 
     @staticmethod
