@@ -11,13 +11,12 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
             },
             onRender: function () {
                 var self = this;
-                node = self.model.get('node')
-                self.ui.title.text(node);
-                self.ui.label.text(self.model.get('log').length);
+                var node = self.model.get('node')
+                var log = self.model.get('log')
+                self.ui.label.text(log.length);
                 self.ui.a.attr("href", "#"+node);
                 self.ui.collapse.attr("id", node);
-                console.log(self.model.get('log'));
-                self.ui.body.text(self.model.get('log'));
+                self.ui.body.text(log);
             },
         });
     });
