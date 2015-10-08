@@ -39,6 +39,68 @@ def get_motors(robot_name):
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     return json_encode({'motors': motors})
 
+@app.route('/monitor/logs/')
+def get_logs():
+    """
+    Collect all the warnings, errors and fatals from the ros log files.
+    If there is no roscore process running, then it displays the logs
+    from the last run.
+    """
+
+    from roslaunch.roslaunch_logs import get_run_id
+    import rospkg
+    import glob
+    import re
+    log_root = rospkg.get_log_dir()
+    run_id = get_run_id()
+    roscore_running = True
+    if not run_id:
+        roscore_running = False
+        subdirs = [os.path.join(log_root, d) for d in os.listdir(log_root)
+                    if os.path.isdir(os.path.join(log_root, d))]
+        if subdirs:
+            run_id = max(subdirs, key=os.path.getmtime)
+        else:
+            run_id = ''
+    log_dir = os.path.join(log_root, run_id)
+    log_files = sorted(glob.glob(os.path.join(log_dir, '*.log')))
+    # ignore stdout log files
+    log_files = [log_file for log_file in log_files if 'stdout' not in log_file]
+    logs = []
+
+    # log format [%(name)s][%(levelname)s] %(asctime)s: %(message)s
+    pattern = r'\[(?P<name>\S+)\]\[(?P<levelname>\S+)\] (?P<asctime>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}): (?P<message>.*)'
+    p = re.compile(pattern)
+
+    def get_log(log_file):
+        _log = []
+        with open(log_file) as f:
+            for line in f.read().splitlines():
+                m = p.match(line)
+                if m:
+                    name, levelname, asctime, message = map(
+                        m.group, ['name', 'levelname', 'asctime', 'message'])
+                    _log.append({
+                        'name': name,
+                        'levelname': levelname,
+                        'asctime': asctime,
+                        'message': message
+                    })
+        return _log
+
+    truncate_threshold = 100
+    truncate = False
+    for log_file in log_files:
+        base = os.path.basename(log_file)
+        node = os.path.splitext(base)[0]
+        log = get_log(log_file)
+        if log:
+            if len(log) > truncate_threshold:
+                truncate = True
+                log = log[:truncate_threshold]
+            logs.append({'node': node, 'log': log, 'truncate': truncate})
+    return json_encode(logs)
+
 def reload_configs(motors,config_dir, robot_name):
     configs = Configs()
     configs.parseMotors(motors)
