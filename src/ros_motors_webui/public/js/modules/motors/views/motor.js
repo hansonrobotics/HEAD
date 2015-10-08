@@ -26,49 +26,50 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                     return model;
             },
             modelChanged: function () {
-                this.setSliderValue(this.model.get('value'));
-
-                this.ui.sliderMinVal.text(this.model.get('min')/* + '°'*/);
-                this.ui.sliderMaxVal.text(this.model.get('max')/* + '°'*/);
+                this.ui.value.text(this.model.getDegrees('value') + '°');
+                this.ui.sliderMinVal.text(this.model.getDegrees('min') + '°');
+                this.ui.sliderMaxVal.text(this.model.getDegrees('max') + '°');
                 this.ui.labelLeft.text(this.model.get('labelleft') || this.model.get('name'));
                 this.ui.labelright.text(this.model.get('labelright'));
 
-                var indicatorStatus;
-                $(this.ui.indicator).removeClass('app-ok app-error app-inactive');
+                if (this.options['monitoring']) {
+                    var indicatorStatus;
 
-                switch (this.model.get('error')) {
-                    case 0:
-                        indicatorStatus = 'ok';
-                        $(this.ui.indicator).addClass('app-ok');
-                        break;
-                    case 1:
-                        $(this.ui.indicator).addClass('app-error');
-                        indicatorStatus = 'error';
-                        break;
-                    case 2:
-                        $(this.ui.indicator).addClass('app-inactive');
-                        indicatorStatus = 'not available';
-                        break;
-                }
+                    $(this.ui.slider).addClass('app-monitoring');
+                    $(this.ui.indicator).removeClass('app-ok app-error app-inactive');
 
-                $(this.ui.indicator).popover({content: indicatorStatus, trigger: 'hover'});
-            },
-            setSliderValue: function (value, degrees) {
-                if (degrees) {
-                    this.ui.value.text(value + (degrees ? '°' : ''));
+                    switch (this.model.get('error')) {
+                        case 0:
+                            $(this.ui.indicator).addClass('app-ok');
+                            indicatorStatus = 'ok';
+                            break;
+                        case 1:
+                            $(this.ui.indicator).addClass('app-error');
+                            indicatorStatus = 'error';
+                            break;
+                        case 2:
+                            $(this.ui.indicator).addClass('app-inactive');
+                            indicatorStatus = 'not available';
+                            break;
+                    }
+
+
+                    $(this.ui.indicator).attr('data-content', indicatorStatus).popover({trigger: 'hover'});
+                } else {
+                    $(this.ui.slider).removeClass('app-monitoring');
+                    $(this.ui.indicator).hide();
                 }
-                this.ui.value.text(value + (degrees ? '°' : ''));
-                this.ui.slider.slider('value', value);
             },
             onRender: function () {
                 var self = this;
                 $(this.ui.slider).slider({
+                    disabled: !!this.options.monitoring,
                     range: "min",
-                    value: this.model.get('init'),
-                    min: this.model.get('min'),
-                    max: this.model.get('max'),
+                    value: this.model.getDegrees('default'),
+                    min: this.model.getDegrees('min'),
+                    max: this.model.getDegrees('max'),
                     slide: function (e, ui) {
-                        self.model.set('value', ui.value)
+                        self.model.setDegrees('value', ui.value)
                     }
                 });
 

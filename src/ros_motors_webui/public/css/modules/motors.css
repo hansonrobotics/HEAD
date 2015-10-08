@@ -33,7 +33,11 @@
 }
 
 .app-slider {
-    margin: 5px 30px 5px 0;
+    margin: 5px 0 5px 0;
+}
+
+.app-slider.app-monitoring {
+    margin-right: 30px;
 }
 
 .hidden {

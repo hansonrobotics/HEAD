@@ -19,6 +19,7 @@ define(["marionette", "./motor", 'jquery-ui'],
                 }
 
                 return {
+                    monitoring: this.options['monitoring'],
                     motorGroupLabel: motorGroup
                 }
             }

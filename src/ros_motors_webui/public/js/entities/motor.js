@@ -9,7 +9,7 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                 this.set('selected', false);
 
                 // send motor command when updating value
-                this.on('change', this.checkUpdatedValue())
+                this.on('change', this.checkUpdatedValue());
             },
             checkUpdatedValue: function () {
                 var self = this;
@@ -42,7 +42,11 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
         });
         Entities.MotorCollection = Backbone.Collection.extend({
             model: Entities.Motor,
-            comparator: 'order_no',
+            comparator: 'sort_no',
+            initialize: function() {
+                // clear error status interval
+                this.on('destroy', this.clearErrorStatusInterval);
+            },
             sync: function (successCallback, errorCallback) {
                 var data = _.filter(this.toJSON(), function (motor) {
                     delete motor['selected'];
@@ -66,28 +70,53 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     }
                 });
             },
-            fetch: function (admin, callback) {
+            fetchFromParam: function (callback) {
                 var self = this;
 
-                $.ajax('/motors/status/' + api.config.robot, {
+                api.getMotorsFromParam(function (motors) {
+                    self.add(motors);
+                    self.loadPololuMotors();
+
+                    if (typeof callback == 'function')
+                        callback(motors);
+                });
+            },
+            fetchFromFile: function (callback) {
+                var self = this;
+
+                $.ajax('/motors/get/' + api.config.robot, {
                     dataType: 'json',
                     success: function (response) {
-                        var motors = response.motors;
-
-                        self.add(motors);
-                        self.setDefaultValues();
-                        //self.loadPololuMotors();
-
-                        api.createMotorTopics(motors);
+                        self.add(response.motors);
 
                         if (typeof callback == 'function')
-                            callback(motors);
+                            callback(response.motors);
                     }
                 });
             },
+            setErrorStatusInterval: function () {
+                var self = this;
+
+                this.clearErrorStatusInterval();
+                this.checkErrorInterval = setInterval(function () {
+                    $.ajax('/motors/status/' + api.config.robot, {
+                        dataType: 'json',
+                        success: function (response) {
+                            _.each(response.motors, function (motor) {
+                                var model = self.findWhere({name: motor['name']});
+                                if (model)
+                                    model.set('error', motor['error']);
+                            });
+                        }
+                    });
+                }, 1000);
+            },
+            clearErrorStatusInterval: function() {
+                clearInterval(this.checkErrorInterval);
+            },
             setDefaultValues: function () {
                 this.each(function (motor) {
-                    motor.set('value', motor.get('init'));
+                    motor.set('value', motor.get('default'));
                 })
             },
             getRelativePositions: function () {

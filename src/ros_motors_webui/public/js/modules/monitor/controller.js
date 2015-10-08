@@ -20,9 +20,13 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
             motors: function () {
                 this.init('motors');
                 this.motorsCollection = new App.Entities.MotorCollection();
-                this.motorsCollection.fetch();
+                this.motorsCollection.fetchFromParam();
+                this.motorsCollection.setErrorStatusInterval();
 
-                this.motorsView = new MotorsView({collection: this.motorsCollection});
+                this.motorsView = new MotorsView({
+                    collection: this.motorsCollection,
+                    monitoring: true
+                });
                 this.layoutView.getRegion('content').show(this.motorsView);
             },
             messages: function () {
@@ -46,6 +50,7 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
                 this.layoutView.getRegion('content').show(this.speedView);
             },
             system: function () {
+                console.log('here');
                 this.init('system');
                 this.systemView = new SystemView();
                 this.layoutView.getRegion('content').show(this.systemView);

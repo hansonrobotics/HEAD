@@ -19,5 +19,5 @@
 
 <div class="motor-slider-container clearfix">
     <div class="app-slider"></div>
-    <div class="app-motor-status-indicator" data-toggle="popover" data-content="ok"></div>
+    <div class="app-motor-status-indicator" data-toggle="popover"></div>
 </div>
