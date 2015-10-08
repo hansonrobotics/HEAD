@@ -86,7 +86,6 @@ if __name__ == '__main__':
     rospy.loginfo("Started")
     rospy.spin()
   else:
-    print(
-      "Couldn't find '%s' param in namespace '%s'." %
-     ("pau2motors", rospy.get_namespace())
+    rospy.logerror("Couldn't find '%s' param in namespace '%s'." %
+        ("pau2motors", rospy.get_namespace())
     )

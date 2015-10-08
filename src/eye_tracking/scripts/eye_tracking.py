@@ -54,7 +54,7 @@ class EyeTracking:
         try:
             self.cv_image = self.bridge.imgmsg_to_cv2(img, "bgr8")
         except CvBridgeError, e:
-            print e
+            rospy.logerror(e)
             return
 
         # pre-processing

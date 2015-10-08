@@ -53,7 +53,7 @@ class FaceTrack:
 
 	def __init__(self, owyl_bboard):
 
-		print("Starting Face Tracker")
+		rospy.loginfo("Starting Face Tracker")
 		self.blackboard = owyl_bboard
 
 		# List of currently visible faces
@@ -116,7 +116,7 @@ class FaceTrack:
 
 	# Turn only the eyes towards the given target face; track that face.
 	def gaze_at_face(self, faceid):
-		print ("gaze at: " + str(faceid))
+		rospy.loginfo("gaze at: " + str(faceid))
 
 		# Look at neutral position, 1 meter in front
 		if 0 == faceid :
@@ -139,7 +139,7 @@ class FaceTrack:
 	# to make the head move again.
 	#
 	def look_at_face(self, faceid):
-		print ("look at: " + str(faceid))
+		rospy.loginfo("look at: " + str(faceid))
 
 		# Look at neutral position, 1 meter in front
 		if 0 == faceid :
@@ -157,13 +157,13 @@ class FaceTrack:
 		self.look_at = faceid
 
 	def glance_at_face(self, faceid, howlong):
-		print("glance at: " + str(faceid) + " for " + str(howlong) + " seconds")
+		rospy.loginfo("glance at: " + str(faceid) + " for " + str(howlong) + " seconds")
 		self.glance_at = faceid
 		self.glance_howlong = howlong
 		self.first_glance = -1
 
 	def study_face(self, faceid, howlong):
-		print("study: " + str(faceid) + " for " + str(howlong) + " seconds")
+		rospy.loginfo("study: " + str(faceid) + " for " + str(howlong) + " seconds")
 		self.glance_at = faceid
 		self.glance_howlong = howlong
 		self.first_glance = -1
@@ -204,7 +204,7 @@ class FaceTrack:
 
 		self.visible_faces.append(faceid)
 
-		print("New face added to visibile faces: " +
+		rospy.loginfo("New face added to visibile faces: " +
 			str(self.visible_faces))
 
 		self.add_face_to_bb(faceid)
@@ -215,7 +215,7 @@ class FaceTrack:
 		if faceid in self.visible_faces:
 			self.visible_faces.remove(faceid)
 
-		print("Lost face; visibile faces now: " + str(self.visible_faces))
+		rospy.loginfo("Lost face; visibile faces now: " + str(self.visible_faces))
 
 
 
@@ -246,7 +246,7 @@ class FaceTrack:
 					gaze_trg = self.face_target(self.glance_at)
 					self.glance_or_look_at(current_trg, gaze_trg)
 				except:
-					print("Error: no face to glance at!")
+					rospy.logerror("no face to glance at!")
 					self.glance_at = 0
 					self.first_glance = -1
 			else :
@@ -262,7 +262,7 @@ class FaceTrack:
 			# is also a pending look-at to perform.
 
 			if 0 < self.gaze_at and self.look_at <= 0:
-				# print("Gaze at id " + str(self.gaze_at))
+				# rospy.loginfo("Gaze at id " + str(self.gaze_at))
 				try:
 					if not self.gaze_at in self.visible_faces:
 						raise Exception("Face not visible")
@@ -270,31 +270,31 @@ class FaceTrack:
 					gaze_trg = self.face_target(self.gaze_at)
 					self.glance_or_look_at(current_trg, gaze_trg)
 				except tf.LookupException as lex:
-					print("Warning: TF has forgotten about face id:" +
+					rospy.logwarn("TF has forgotten about face id:" +
 						str(self.look_at))
 					self.remove_face(self.look_at)
 					self.look_at_face(0)
 					return
 				except Exception as ex:
-					print("Error: no gaze-at target: ", ex)
+					rospy.logerror("no gaze-at target: ", ex)
 					self.gaze_at_face(0)
 					return
 
 			if 0 < self.look_at:
-				print("Look at id: " + str(self.look_at))
+				rospy.loginfo("Look at id: " + str(self.look_at))
 				try:
 					if not self.look_at in self.visible_faces:
 						raise Exception("Face not visible")
 					trg = self.face_target(self.look_at)
 					self.look_pub.publish(trg)
 				except tf.LookupException as lex:
-					print("Warning: TF has forgotten about face id: " +
+					rospy.logwarn("TF has forgotten about face id: " +
 						str(self.look_at))
 					self.remove_face(self.look_at)
 					self.look_at_face(0)
 					return
 				except Exception as ex:
-					print("Error: no look-at target: ", ex)
+					rospy.logerror("no look-at target: ", ex)
 					self.look_at_face(0)
 					return
 
@@ -313,7 +313,7 @@ class FaceTrack:
 		gaze_distance = math.sqrt(math.pow((current_trg.x - gaze_trg.x), 2) + \
 					  math.pow((current_trg.y - gaze_trg.y), 2)) / z
 		if gaze_distance > self.blackboard["max_glance_distance"]:
-			print("Reached max_glance_distance, look at the face instead")
+			rospy.loginfo("Reached max_glance_distance, look at the face instead")
 			self.look_pub.publish(gaze_trg)
 		else:
 			# For face study saccade

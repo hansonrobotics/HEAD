@@ -1,5 +1,5 @@
 define(['application', './views/layout', 'modules/motors/views/motors', './views/messages', './views/logs',
-        './views/speed', './views/system', './views/processes', 'entities/motor'],
+        './views/speed', './views/system', './views/processes', 'entities/motor', 'entities/log'],
     function (App, LayoutView, MotorsView, MessagesView, LogsView, SpeedView, SystemView, processesVIew) {
         return {
             init: function (name) {
@@ -36,7 +36,10 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
             },
             logs: function () {
                 this.init('logs');
-                this.logsView = new LogsView();
+                this.logCollection = new App.Entities.LogCollection();
+                this.logCollection.fetch();
+
+                this.logsView = new LogsView({collection: this.logCollection});
                 this.layoutView.getRegion('content').show(this.logsView);
             },
             processes: function () {

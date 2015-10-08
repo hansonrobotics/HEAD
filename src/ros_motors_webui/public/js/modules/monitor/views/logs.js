@@ -1,9 +1,6 @@
-define(['application', 'tpl!./templates/logs.tpl'], function (App, template) {
-    App.module('Monitor.Views', function (Views, App, Backbone, Marionette, $, _) {
-        Views.Logs = Marionette.ItemView.extend({
-            template: template
+define(["marionette", "./log"],
+    function (Marionette, logView) {
+        return Marionette.CollectionView.extend({
+            childView: logView,
         });
     });
-
-    return App.module('Monitor.Views').Logs;
-});
