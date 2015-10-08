@@ -138,6 +138,34 @@ class Reporter:
         errcode = call(cmd, stdout=DEVNULL, env=env, shell=True)
         return errcode == 0
 
+    def system_status(self):
+        # Template to return
+        # Statuses: 0 - OK, 1 - Error, 2 - N/A
+        status = {
+            'system': {
+                'cpu': 0,
+                'mem': 0,
+                'total_mem': 16,
+                'fps': 0,
+            },
+            'robot': {
+                'current_name': 0,
+                'robots': ['sophia'],
+            },
+            'status': {
+                'ros': 2,
+                'blender': 1,
+                'internet': 0,
+                'pololu': 1,
+                'usb2dynamixel': 2,
+                'camera': 0,
+            },
+            # Ros nodes based on config
+            'ros':{}
+        }
+        return status
+
+
     def _build_env(self):
         return {name: check_output(cmd, shell=True)
                 for name, cmd in self.config['setup']['env'].items()}

@@ -28,6 +28,11 @@ def send_index():
 def send_status():
     return json_encode(rep.report())
 
+@app.route('/monitor/status')
+def monitor_status():
+    return json_encode(rep.system_status())
+
+
 @app.route('/motors/status/<robot_name>')
 def get_motors_status(robot_name):
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))

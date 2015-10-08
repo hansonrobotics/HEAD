@@ -46,9 +46,18 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
                 this.layoutView.getRegion('content').show(this.speedView);
             },
             system: function () {
+                var self = this;
                 this.init('system');
                 this.systemView = new SystemView();
                 this.layoutView.getRegion('content').show(this.systemView);
+                $.ajax({
+                    url: "/monitor/status",
+                    dataType: "json",
+                    success: function (data) {
+                       self.systemView.config = _.extend(self.systemView.config, data);
+                       self.systemView.render();
+                    }
+                });
             }
         };
     });
