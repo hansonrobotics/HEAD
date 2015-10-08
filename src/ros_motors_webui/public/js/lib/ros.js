@@ -1,5 +1,8 @@
 define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api) {
     var ros = {
+        // Current status
+        connected: false,
+        // Connects to ROS
         connect: function (success) {
             //Connect to rosbridge
             api.ros = new ROSLIB.Ros({
@@ -13,7 +16,6 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
 
                             ros.initTopics();
                             ros.initServices();
-
                             success();
                         } else {
                             console.error('Unable to get robot name, closing connection');
@@ -23,14 +25,17 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 }).on('connection', function () {
                     $('#app-connecting').hide();
                     $('#app-pages').fadeIn();
+                    api.ros.connected = true;
                 }).on('close', function () {
                     $('#notifications .label').hide();
                     $('#app-connection-error').show();
-                    $('#app-title').html('');
+                    api.ros.connected = false;
                 }).on('error', function (error) {
                     $('#notifications .label').hide();
                     $('#app-connection-error').show();
-                    $('#app-title').html('');
+                    api.ros.connected = false;
+                    $('#app-pages').fadeIn();
+                    success();
                 });
         },
         initTopics: function () {

@@ -12,12 +12,13 @@ from optparse import OptionParser
 from configs import *
 from subprocess import Popen
 
-
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
-config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)),os.pardir,os.pardir,"robots_config")
+config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir,
+                           "robots_config")
+
 
 @app.route('/')
 def send_index():
@@ -28,16 +29,24 @@ def send_index():
 def send_status():
     return json_encode(rep.report())
 
+
+@app.route('/monitor/status')
+def monitor_status():
+    return json_encode(rep.system_status())
+
+
 @app.route('/motors/status/<robot_name>')
 def get_motors_status(robot_name):
-    motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
+    motors = read_yaml(os.path.join(config_root, robot_name, 'motors_settings.yaml'))
     motors = rep.motor_states(motors, robot_name)
     return json_encode({'motors': motors})
 
+
 @app.route('/motors/get/<robot_name>')
 def get_motors(robot_name):
-    motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
+    motors = read_yaml(os.path.join(config_root, robot_name, 'motors_settings.yaml'))
     return json_encode({'motors': motors})
+
 
 @app.route('/monitor/logs/')
 def get_logs():
@@ -51,94 +60,69 @@ def get_logs():
     import rospkg
     import glob
     import re
+
     log_root = rospkg.get_log_dir()
     run_id = get_run_id()
     roscore_running = True
     if not run_id:
         roscore_running = False
         subdirs = [os.path.join(log_root, d) for d in os.listdir(log_root)
-                    if os.path.isdir(os.path.join(log_root, d))]
+                   if os.path.isdir(os.path.join(log_root, d))]
         if subdirs:
             run_id = max(subdirs, key=os.path.getmtime)
         else:
             run_id = ''
     log_dir = os.path.join(log_root, run_id)
     log_files = sorted(glob.glob(os.path.join(log_dir, '*.log')))
-    # ignore stdout log files
-    log_files = [log_file for log_file in log_files if 'stdout' not in log_file]
-    logs = []
+    logs = {}
 
-    # log format [%(name)s][%(levelname)s] %(asctime)s: %(message)s
-    pattern = r'\[(?P<name>\S+)\]\[(?P<levelname>\S+)\] (?P<asctime>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}): (?P<message>.*)'
-    p = re.compile(pattern)
-
-    def get_log(log_file):
-        _log = []
+    def get_logs(log_file):
+        warn, error, fatal = [], [], []
+        warn_pattern = '\[WARN\]|\[WARNING\]'
+        error_pattern = '\[ERROR\]'
+        fatal_pattern = '\[FATAL\]'
         with open(log_file) as f:
-            for line in f.read().splitlines():
-                m = p.match(line)
-                if m:
-                    name, levelname, asctime, message = map(
-                        m.group, ['name', 'levelname', 'asctime', 'message'])
-                    _log.append({
-                        'name': name,
-                        'levelname': levelname,
-                        'asctime': asctime,
-                        'message': message
-                    })
-        return _log
+            for line in f.readlines():
+                if re.search(warn_pattern, line):
+                    warn.append(line)
+                if re.search(error_pattern, line):
+                    error.append(line)
+                if re.search(fatal_pattern, line):
+                    fatal.append(line)
+        return warn, error, fatal
 
-    def isint(i):
-        try:
-            int(i)
-        except:
-            return False
-        return True
-
-    def parse_node_name(log_file):
-        base = os.path.splitext(os.path.basename(log_file))[0]
-        tokens = base.split('-')
-        if 'roslaunch' in base:
-            return base
-        try:
-            idx = map(isint, tokens).index(True)
-            node = '/'.join(tokens[:idx])
-        except:
-            node = '/'.join(tokens)
-        return node
-
-    truncate_threshold = 100
-    truncate = False
     for log_file in log_files:
-        node = parse_node_name(log_file)
-        log = get_log(log_file)
-        if log:
-            if len(log) > truncate_threshold:
-                truncate = True
-                log = log[:truncate_threshold]
-            logs.append({
-                'node': node,
-                'log': log,
-                'truncate': truncate,
-                'log_file': log_file,
-                })
-    return json_encode(logs)
+        base = os.path.basename(log_file)
+        logs[base] = get_logs(log_file)
 
-def reload_configs(motors,config_dir, robot_name):
+    warnings = sum([v[0] for v in logs.values()], [])
+    errors = sum([v[1] for v in logs.values()], [])
+    fatals = sum([v[2] for v in logs.values()], [])
+
+    return json_encode({
+        'log_dir': log_dir,
+        'roscore_running': roscore_running,
+        'warnings': warnings,
+        'errors': errors,
+        'fatals': fatals,
+    })
+
+
+def reload_configs(motors, config_dir, robot_name):
     configs = Configs()
     configs.parseMotors(motors)
     if len(configs.dynamixel) > 0:
-        file_name = os.path.join(config_dir,"dynamixel.yaml")
-        write_yaml(file_name,configs.dynamixel)
+        file_name = os.path.join(config_dir, "dynamixel.yaml")
+        write_yaml(file_name, configs.dynamixel)
         load_params(file_name, "/{}/safe".format(robot_name))
     if len(configs.motors) > 0:
-        file_name = os.path.join(config_dir,"motors.yaml")
-        write_yaml(file_name,{'motors': configs.motors})
+        file_name = os.path.join(config_dir, "motors.yaml")
+        write_yaml(file_name, {'motors': configs.motors})
         load_params(file_name, "/{}".format(robot_name))
     if len(configs.pololu) > 0:
         for board, config in configs.pololu.iteritems():
-            file_name = os.path.join(config_dir,board + ".yaml")
-            write_yaml(file_name,config)
+            file_name = os.path.join(config_dir, board + ".yaml")
+            write_yaml(file_name, config)
             kill_node("/{}/pololu_{}".format(robot_name, board))
     kill_node("/{}/pau2motors".format(robot_name))
     return configs
@@ -151,8 +135,8 @@ def update_motors(robot_name):
     motors = [m for m in motors if 'hardware' in m.keys()]
     # write to motor config
     try:
-        file_name = os.path.join(config_root,robot_name, 'motors_settings.yaml')
-        reload_configs(motors,os.path.join(config_root,robot_name), robot_name)
+        file_name = os.path.join(config_root, robot_name, 'motors_settings.yaml')
+        reload_configs(motors, os.path.join(config_root, robot_name), robot_name)
         write_yaml(file_name, motors)
     except Exception as e:
         return json_encode({'error': str(e)})
@@ -163,6 +147,11 @@ def update_motors(robot_name):
 def get_expressions(robot_name):
     expressions = read_yaml(os.path.join(config_root, robot_name, "expressions.yaml"))
     return json_encode(expressions)
+
+
+@app.route('/logs/', methods=['GET'])
+def logs():
+    return json_encode({'logs': []})
 
 
 @app.route('/expressions/update/<robot_name>', methods=['POST'])
@@ -184,6 +173,7 @@ def update_expressions(robot_name):
     # return True
     return json_encode(True)
 
+
 @app.route('/animations/update/<robot_name>', methods=['POST'])
 def update_animations(robot_name):
     data = json.loads(request.get_data().decode('utf8'))
@@ -195,8 +185,9 @@ def update_animations(robot_name):
 
 @app.route('/performances/get/<robot_name>', methods=['GET'])
 def get_performances(robot_name):
-    performances = read_yaml(os.path.join(config_root,robot_name, 'performances.yaml'))
+    performances = read_yaml(os.path.join(config_root, robot_name, 'performances.yaml'))
     return json_encode(performances)
+
 
 @app.route('/performances/update/<robot_name>', methods=['POST'])
 def update_performances(robot_name):
@@ -250,8 +241,9 @@ def radians_t0o_degrees(rad):
 def kill_node(node):
     Popen("rosnode kill " + node, shell=True)
 
+
 def load_params(param_file, namespace):
-    Popen("rosparam load " + param_file +" " + namespace, shell=True)
+    Popen("rosparam load " + param_file + " " + namespace, shell=True)
 
 
 if __name__ == '__main__':
@@ -261,9 +253,11 @@ if __name__ == '__main__':
 
     parser = OptionParser()
     parser.add_option("-s", action="store_true", dest="ssl", default=False, help="Use SSL")
-    parser.add_option("-c", "--cert", dest="cert", default="", help="SSL Certificate", metavar="CERT_FILE")
+    parser.add_option("-c", "--cert", dest="cert", default="", help="SSL Certificate",
+                      metavar="CERT_FILE")
     parser.add_option("-k", "--key", dest="key", default="", help="SSL Key", metavar="KEY_FILE")
-    parser.add_option("-p", "--port", dest="port", default=None, help="Port", metavar="KEY_FILE", type="int")
+    parser.add_option("-p", "--port", dest="port", default=None, help="Port", metavar="KEY_FILE",
+                      type="int")
     (options, args) = parser.parse_args()
     if options.ssl:
         if not options.cert:
@@ -275,6 +269,7 @@ if __name__ == '__main__':
         if not os.path.isfile(options.key):
             parser.error("Key file does not exists")
         context = (options.cert, options.key)
-        app.run(host='0.0.0.0', debug=True, use_reloader=True, ssl_context=context, port=options.port)
+        app.run(host='0.0.0.0', debug=True, use_reloader=True, ssl_context=context,
+                port=options.port)
     else:
         app.run(host='0.0.0.0', debug=True, use_reloader=True, port=options.port)

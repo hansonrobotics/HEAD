@@ -4,34 +4,33 @@
 
         <ul class="list-group">
             <li class="list-group-item">
-                Dynamixel adapter
-                <span class="pull-right label label-success">ok</span>
+                USB2Dynamixel
+                <span class="pull-right status-item"  data-status="usb2dynamixel"></span>
             </li>
             <li class="list-group-item">
                 Pololu Board
-                <span class="pull-right label label-success">ok</span>
+                <span class="pull-right status-item"  data-status="pololu"></span>
             </li>
             <li class="list-group-item">
                 Camera
-                <span class="pull-right label label-success">ok</span>
+                <span class="pull-right status-item" data-status="camera"></span>
             </li>
         </ul>
     </div>
     <div class="col-md-6">
         <h4>Software</h4>
-
         <ul class="list-group">
             <li class="list-group-item">
-                Blender
-                <span class="pull-right label label-success">ok</span>
-            </li>
-            <li class="list-group-item">
                 ROS
-                <span class="pull-right label label-success">ok</span>
+                <span class="pull-right label status-item" data-status="ros"></span>
             </li>
             <li class="list-group-item">
                 Blender
-                <span class="pull-right label label-success">ok</span>
+                <span class="pull-right label status-item" data-status="blender"></span>
+            </li>
+            <li class="list-group-item">
+                Internet
+                <span class="pull-right label status-item" data-status="internet"></span>
             </li>
         </ul>
     </div>
