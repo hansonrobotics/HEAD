@@ -88,17 +88,40 @@ def get_logs():
                     })
         return _log
 
+    def isint(i):
+        try:
+            int(i)
+        except:
+            return False
+        return True
+
+    def parse_node_name(log_file):
+        base = os.path.splitext(os.path.basename(log_file))[0]
+        tokens = base.split('-')
+        if 'roslaunch' in base:
+            return base
+        try:
+            idx = map(isint, tokens).index(True)
+            node = '/'.join(tokens[:idx])
+        except:
+            node = '/'.join(tokens)
+        return node
+
     truncate_threshold = 100
     truncate = False
     for log_file in log_files:
-        base = os.path.basename(log_file)
-        node = os.path.splitext(base)[0]
+        node = parse_node_name(log_file)
         log = get_log(log_file)
         if log:
             if len(log) > truncate_threshold:
                 truncate = True
                 log = log[:truncate_threshold]
-            logs.append({'node': node, 'log': log, 'truncate': truncate})
+            logs.append({
+                'node': node,
+                'log': log,
+                'truncate': truncate,
+                'log_file': log_file,
+                })
     return json_encode(logs)
 
 def reload_configs(motors,config_dir, robot_name):

@@ -11,7 +11,8 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
             },
             onRender: function () {
                 var self = this;
-                var node = self.model.get('node')
+                var re = new RegExp('/', 'g');
+                var node = self.model.get('node').replace(re, '-');
                 var log = self.model.get('log')
                 self.ui.label.text(log.length);
                 self.ui.a.attr("href", "#"+node);
