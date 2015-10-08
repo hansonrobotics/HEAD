@@ -99,8 +99,6 @@ class Reporter:
                 m['min'] = round(math.degrees(Configs.dynamixel_angle(m, m['min'])))
                 # Init has to be replaced last, because calculation depends on it
                 m['init'] = round(math.degrees(Configs.dynamixel_angle(m, m['init'])))
-
-
         return motors
 
     def start_motors_monitor(self, robot_name):
@@ -143,7 +141,6 @@ class Reporter:
     def _build_env(self):
         return {name: check_output(cmd, shell=True)
                 for name, cmd in self.config['setup']['env'].items()}
-
 
 def deepupdate(original, new):
     """Updates missing or None values in all 'directly' nested dicts."""
