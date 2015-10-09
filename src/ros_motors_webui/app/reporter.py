@@ -162,7 +162,11 @@ class Reporter:
                 'camera': 0,
             },
             # Ros nodes based on config
-            'ros':{}
+            'nodes': [
+                {'name': 'pololu', 'status':0}
+                {'name': 'dynamixel', 'status':0}
+            ]
+
         }
         return status
 

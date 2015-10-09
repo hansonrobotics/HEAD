@@ -34,6 +34,8 @@ def send_status():
 
 @app.route('/motors/status/<robot_name>')
 def get_motors_status(robot_name):
+    if robot_name == 'undefined':
+        return json_encode({})
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     motors = rep.motor_states(motors, robot_name)
     return json_encode({'motors': motors})
