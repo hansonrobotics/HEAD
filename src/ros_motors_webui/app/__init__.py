@@ -72,12 +72,16 @@ def get_logs():
     pattern = r'\[(?P<name>\S+)\]\[(?P<levelname>\S+)\] (?P<asctime>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}): (?P<message>.*)'
     p = re.compile(pattern)
 
-    def get_log(log_file):
+    def get_log(log_file, truncate_th=100):
         _log = []
+        truncate = False
         with open(log_file) as f:
             for line in f.read().splitlines():
                 m = p.match(line)
                 if m:
+                    if len(_log) >= truncate_th:
+                        truncate = True
+                        break
                     name, levelname, asctime, message = map(
                         m.group, ['name', 'levelname', 'asctime', 'message'])
                     _log.append({
@@ -86,7 +90,7 @@ def get_logs():
                         'asctime': asctime,
                         'message': message
                     })
-        return _log
+        return truncate, _log
 
     def isint(i):
         try:
@@ -107,15 +111,10 @@ def get_logs():
             node = '/'.join(tokens)
         return node
 
-    truncate_threshold = 100
-    truncate = False
     for log_file in log_files:
         node = parse_node_name(log_file)
-        log = get_log(log_file)
+        truncate, log = get_log(log_file)
         if log:
-            if len(log) > truncate_threshold:
-                truncate = True
-                log = log[:truncate_threshold]
             logs.append({
                 'node': node,
                 'log': log,
