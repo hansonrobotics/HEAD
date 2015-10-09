@@ -11,13 +11,14 @@ import os.path
 from optparse import OptionParser
 from configs import *
 from subprocess import Popen
-
+import logging
 
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)),os.pardir,os.pardir,"robots_config")
+logger = logging.getLogger('hr.ros_motors_webui.app')
 
 @app.route('/')
 def send_index():
@@ -53,6 +54,7 @@ def get_logs(loglevel):
     from the last run.
     """
 
+    logger.info('get logs: log level {}'.format(loglevel))
     from roslaunch.roslaunch_logs import get_run_id
     import rospkg
     import glob
@@ -68,10 +70,19 @@ def get_logs(loglevel):
             run_id = max(subdirs, key=os.path.getmtime)
         else:
             run_id = ''
+
+    # some extra log files that not created by roslaunch
+    extra_log_files = [os.path.join(log_root, name) for name in [
+        'ros_motors_webui.log', 'sophia_Eva_Behavior.log', 'blender_api.log']]
+    extra_log_files = [f for f in extra_log_files if os.path.isfile(f)]
+
     log_dir = os.path.join(log_root, run_id)
-    log_files = sorted(glob.glob(os.path.join(log_dir, '*.log')))
+    log_files = glob.glob(os.path.join(log_dir, '*.log'))
+    log_files += extra_log_files
+
     # ignore stdout log files
     log_files = [log_file for log_file in log_files if 'stdout' not in log_file]
+    log_files = sorted(log_files)
     logs = []
 
     # log format [%(name)s][%(levelname)s] %(asctime)s: %(message)s
@@ -270,6 +281,9 @@ def load_params(param_file, namespace):
 
 
 if __name__ == '__main__':
+    from rosgraph.roslogging import configure_logging
+    configure_logging(logger.name, filename='ros_motors_webui.log')
+
     @app.route('/public/<path:path>')
     def send_js(path):
         return send_from_directory(app.static_folder, path)
