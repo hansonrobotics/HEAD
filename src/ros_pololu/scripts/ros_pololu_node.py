@@ -10,9 +10,10 @@ from ros_pololu.msg import MotorCommand
 from sensor_msgs.msg import JointState
 from ros_pololu import PololuMotor
 import time
+import logging
 
 COMMAND_RATE = 24
-
+logger = logging.getLogger('hr.ros_pololu.ros_pololu_node')
 
 class RosPololuNode:
 
@@ -35,7 +36,7 @@ class RosPololuNode:
                 yaml_stream = open(config_yaml)
                 config = yaml.load(yaml_stream)
             except:
-                rospy.logwarn("Error loading config files")
+                logger.warn("Error loading config files")
             # Get existing motors config and update those configs if callibration data changed
             motors = rospy.get_param('motors',[])
 
@@ -57,8 +58,8 @@ class RosPololuNode:
             if self._controller_type == 'MicroSSC':
                 self.controller = MicroSSC(port)
         except Exception as ex:
-            rospy.logwarn("Error creating the motor controller")
-            rospy.logwarn(ex)
+            logger.warn("Error creating the motor controller")
+            logger.warn(ex)
             self.idle = True
             rospy.set_param(topic_prefix.strip("/")+"_enabled",False)
             return
@@ -68,7 +69,7 @@ class RosPololuNode:
         if safety:
             topic_prefix = 'safe/'+topic_prefix
         rospy.Subscriber(topic_prefix + topic_name, MotorCommand, self.motor_command_callback)
-        rospy.loginfo("ros_pololu Subscribed to %s" % (topic_prefix + topic_name))
+        logger.info("ros_pololu Subscribed to %s" % (topic_prefix + topic_name))
 
     def publish_motor_states(self):
         if self.idle:
@@ -85,7 +86,7 @@ class RosPololuNode:
                     self.set_speed(m.id, speed)
                     self.set_pulse(m.id, m.pulse)
                 except Exception as ex:
-                    rospy.logerr("Error %s" % ex)
+                    logger.error("Error %s" % ex)
                     time.sleep(0.01)
                     self.controller.clean()
             self.controller.clean()
@@ -119,7 +120,7 @@ class RosPololuNode:
             try:
                 motor_id = int(msg.joint_name)
             except:
-                rospy.logwarn("Invalid motor specified")
+                logger.warn("Invalid motor specified")
                 return
             pulse = PololuMotor.get_default_pulse(msg.position)
 
