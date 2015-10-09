@@ -7,9 +7,12 @@ import bpy
 import pprint
 from . import commands
 from rigAPI import CommandSource
+import logging
 
 import imp
 imp.reload(commands)
+
+logger = logging.getLogger('hr.blender_api.rigcontrol.commandlistener')
 
 class BLCommandListener(bpy.types.Operator):
     """Listens for external commands"""
@@ -46,15 +49,15 @@ class BLCommandListener(bpy.types.Operator):
 
     def execute(self, context):
         if self.poll(context):
-            print('Starting Command Listener')
+            logger.info('Starting Command Listener')
 
             # Load cmd sources on first press of the button
             if self.cmd_sources == None:
                 type(self).cmd_sources, names = load_cmd_sources()
                 if len(self.cmd_sources) > 0:
-                    print("Command Source '%s' loaded" % ', '.join(names))
+                    logger.info("Command Source '%s' loaded" % ', '.join(names))
                 else:
-                    print('No Command Sources found')
+                    logger.warn('No Command Sources found')
             if not bpy.context.scene['globalTimerStarted']:
                 bpy.ops.wm.global_timer()
             success = True
@@ -68,11 +71,11 @@ class BLCommandListener(bpy.types.Operator):
                 bpy.context.scene['commandListenerActive'] = True
                 return {'RUNNING_MODAL'}
             else:
-                print('Error connecting to external interface, stopping')
+                logger.error('Error connecting to external interface, stopping')
                 return {'CANCELLED'}
 
     def cancel(self, context):
-        print('Stopping Command Listener')
+        logger.info('Stopping Command Listener')
 
         for src in self.cmd_sources:
             src.drop()
@@ -98,8 +101,8 @@ def refresh():
     try:
         register()
     except Exception as E:
-        print('re-registering')
-        print(E)
+        logger.info('re-registering')
+        logger.warn(E)
         unregister()
         register()
 
@@ -121,6 +124,6 @@ def load_cmd_sources():
             cmdsrcs.append(node)
             names.append(point.name)
         except ImportError:
-            print("Command Source '%s' won't build" % point.name)
+            logger.error("Command Source '%s' won't build" % point.name)
 
     return cmdsrcs, names
