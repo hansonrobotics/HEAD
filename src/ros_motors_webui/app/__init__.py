@@ -101,22 +101,37 @@ def get_logs(loglevel):
         _log = []
         truncate = False
         loglevel = loglevels[loglevel.lower()]
+        message_length = 120
         with open(log_file) as f:
+            logrecord = None
             for line in f.read().splitlines():
                 m = p.match(line)
                 if m:
+                    if logrecord:
+                        if loglevels[logrecord['levelname'].lower()] >= loglevel:
+                            _log.append(logrecord)
+                        logrecord = None
                     if len(_log) >= truncate_th:
                         truncate = True
                         break
                     name, levelname, asctime, message = map(
                         m.group, ['name', 'levelname', 'asctime', 'message'])
-                    if loglevels[levelname.lower()] >= loglevel:
-                        _log.append({
-                            'name': name,
-                            'levelname': levelname,
-                            'asctime': asctime,
-                            'message': message
-                        })
+                    extra = []
+                    if len(message) > message_length:
+                        extra.append(message[message_length:])
+                        message = message[:message_length] + ' ...'
+                    logrecord = {
+                        'name': name,
+                        'levelname': levelname,
+                        'asctime': asctime,
+                        'message': message,
+                        'extra': extra,
+                    }
+                # Append message that doesn't match the log format to the
+                # previous matched log record
+                elif logrecord:
+                    logrecord['extra'].append(line)
+
         return truncate, _log
 
     def isint(i):
