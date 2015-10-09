@@ -5,19 +5,33 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
             ui: {
                 label: '.pull-right',
                 title: '.title',
-                body: '.panel-body',
+                body: '.table-body ',
                 collapse: '.panel-collapse',
                 a: '.collapsed',
             },
+            tableBody: function(data) {
+                var tbl_body = "";
+                var odd_even = false;
+                $.each(data, function() {
+                    var tbl_row = "";
+                    $.each(this, function(k , v) {
+                        tbl_row += "<td>"+v+"</td>";
+                    })
+                    tbl_body += "<tr class=\""+( odd_even ? "odd" : "even")+"\">"+tbl_row+"</tr>";
+                    odd_even = !odd_even;
+                })
+                return tbl_body;
+            },
             onRender: function () {
-                var self = this;
                 var re = new RegExp('/', 'g');
-                var node = self.model.get('node').replace(re, '-');
-                var log = self.model.get('log')
-                self.ui.label.text(log.length);
-                self.ui.a.attr("href", "#"+node);
-                self.ui.collapse.attr("id", node);
-                self.ui.body.text(log);
+                var node = this.model.get('node').replace(re, '-');
+                var log = this.model.get('log');
+                tableBody = this.tableBody(log);
+                console.log(tableBody);
+                this.ui.label.text(log.length);
+                this.ui.a.attr("href", "#"+node);
+                this.ui.collapse.attr("id", node);
+                this.ui.body.html(tableBody)
             },
         });
     });

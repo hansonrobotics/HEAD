@@ -6,6 +6,7 @@ import time
 from ros_pololu import PololuMotor
 from configs import Configs
 import math
+import psutil
 
 try:
     from subprocess import DEVNULL
@@ -143,13 +144,13 @@ class Reporter:
         # Statuses: 0 - OK, 1 - Error, 2 - N/A
         status = {
             'system': {
-                'cpu': 0,
-                'mem': 0,
-                'total_mem': 16,
+                'cpu': psutil.cpu_percent(),
+                'mem': psutil.virtual_memory().percent,
+                'total_mem': round(psutil.virtual_memory().total/float(1024*1024*1024)),
                 'fps': 0,
             },
             'robot': {
-                'current_name': 0,
+                'current_name': '',
                 'robots': ['sophia'],
             },
             'status': {
@@ -165,6 +166,8 @@ class Reporter:
         }
         return status
 
+    def get_robot_name(self):
+        pass
 
     def _build_env(self):
         return {name: check_output(cmd, shell=True)

@@ -5,15 +5,15 @@
         <ul class="list-group">
             <li class="list-group-item">
                 USB2Dynamixel
-                <span class="pull-right status-item"  data-status="usb2dynamixel"></span>
+                <span class="pull-right label status-item"  data-status="usb2dynamixel"></span>
             </li>
             <li class="list-group-item">
                 Pololu Board
-                <span class="pull-right status-item"  data-status="pololu"></span>
+                <span class="pull-right label status-item"  data-status="pololu"></span>
             </li>
             <li class="list-group-item">
                 Camera
-                <span class="pull-right status-item" data-status="camera"></span>
+                <span class="pull-right label status-item" data-status="camera"></span>
             </li>
         </ul>
     </div>

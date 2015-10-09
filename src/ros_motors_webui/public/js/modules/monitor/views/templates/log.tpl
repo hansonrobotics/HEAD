@@ -8,9 +8,17 @@
         </h4>
     </div>
     <div id="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
-        <div class="panel-body">
-            xxx
-        </div>
+        <div class="panel-body"><table>
+            <tr>
+                <th>Name</td>
+                <th>Level</td>
+                <th>Time</td>
+                <th>Message</td>
+            </tr>
+        <tbody class="table-body">
+        </tbody>
+        </table>
+       </div>
     </div>
 </div>
 

@@ -2,7 +2,6 @@ define(['application', 'lib/api'], function (App, api) {
     App.module('Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Log = Backbone.Model.extend({
             initialize: function () {
-                console.log("Entities.Log init")
             },
         });
         Entities.LogCollection = Backbone.Collection.extend({
@@ -13,6 +12,7 @@ define(['application', 'lib/api'], function (App, api) {
                     dataType: 'json',
                     success: function (response) {
                         self.add(response);
+                        console.log(response)
                     }
                 });
             }
