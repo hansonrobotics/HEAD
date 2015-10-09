@@ -10,6 +10,9 @@ from ros_pololu.msg import MotorCommand
 from pau2motors.msg import pau
 from topic_tools.srv import MuxSelect
 import time
+import logging
+
+logger = logging.getLogger('hr.eye_tracking')
 
 class EyeTracking:
     def __init__(self):
@@ -54,7 +57,7 @@ class EyeTracking:
         try:
             self.cv_image = self.bridge.imgmsg_to_cv2(img, "bgr8")
         except CvBridgeError, e:
-            rospy.logerror(e)
+            logger.error(e)
             return
 
         # pre-processing
