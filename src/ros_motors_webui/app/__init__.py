@@ -25,8 +25,12 @@ def send_index():
 
 
 @app.route('/status')
-def send_status():
+def send_monitor_status():
     return json_encode(rep.report())
+
+@app.route('/monitor/status')
+def send_status():
+    return json_encode(rep.system_status())
 
 @app.route('/motors/status/<robot_name>')
 def get_motors_status(robot_name):
