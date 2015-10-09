@@ -29,8 +29,10 @@ from geometry_msgs.msg import Vector3
 from std_msgs.msg import Header
 import time
 import math
+import logging
 
 broadcasters = {}
+logger = logging.getLogger('hr.perception.faces_tf2_broadcaster')
 
 class FacesPublisher:
 
@@ -56,7 +58,7 @@ class FacesPublisher:
             self.listener.waitForTransform('camera', 'world', \
                 rospy.Time(0), rospy.Duration(3.0))
         except Exception:
-            rospy.logerr("No camera transforms!")
+            logger.error("No camera transforms!")
             exit(1)
 
         self.last_faces_time = rospy.Time.now()
@@ -108,7 +110,7 @@ class FacesPublisher:
                     if self._sameFace(pst):
                         self.delta[face.id] = pst.point
                 except:
-                    rospy.logwarn("No transform")
+                    logger.warn("No transform")
                     continue
 
 
