@@ -44,6 +44,9 @@ from pi_face_tracker.msg import Face
 from pi_face_tracker.msg import FaceEvent
 from geometry_msgs.msg import Point
 import time
+import logging
+
+logger = logging.getLogger('hr.pi_vision.pi_face_tracker')
 
 ''' Class that trackes a single face. Both 2D and 3D tracking is
 perforrmed.  The 2D tracking is done in camera pixel coords, the
@@ -265,7 +268,7 @@ class FaceBox():
         p = Point()
         # same FOV for both, so calculate the relative distance of one pixel
         dp = 0.22 / float(self.bounding_size) # It should be same in both axis
-        # rospy.logwarn("bbox size=" + str(self.bounding_size))
+        # logger.warn("bbox size=" + str(self.bounding_size))
         w = self.camera_width/2
         h = self.camera_height/2
         # Y is to the left in camera image, Z is to top
@@ -294,7 +297,7 @@ class FaceBox():
         pha = self.x_smooth_factor
         bet = 1.0 - pha
         p.x = pha * self.loc_3d.x + bet * p.x
-        # rospy.logwarn("raw x=" + str(rawx) + " filtered x=" + str(p.x))
+        # logger.warn("raw x=" + str(rawx) + " filtered x=" + str(p.x))
 
         self.loc_3d = p
 
@@ -731,7 +734,7 @@ class PatchTracker(ROS2OpenCV):
             # try:
             #     (roi_center, roi_size, roi_angle) = feature_box
             # except:
-            #     rospy.loginfo("Patch box has shrunk to zeros...")
+            #     logger.info("Patch box has shrunk to zeros...")
             #     feature_box = None
 
             # if feature_box and not self.drag_start and self.is_rect_nonzero(face.track_box):
@@ -762,7 +765,7 @@ class PatchTracker(ROS2OpenCV):
         try:
             ((x,y), (w,h), a) = face.track_box
         except:
-            rospy.loginfo("Track box has shrunk to zero...")
+            logger.info("Track box has shrunk to zero...")
             return
 
         """ Expand the track box to look for new features """
@@ -829,7 +832,7 @@ class PatchTracker(ROS2OpenCV):
             try:
                 z = cv.Get2D(self.depth_image, min(rows - 1, int(point[1])), min(cols - 1, int(point[0])))
             except cv.error:
-                rospy.logerror("Get2D Index Error: " + str(int(point[1])) + " x " + str(int(point[0])))
+                logger.error("Get2D Index Error: " + str(int(point[1])) + " x " + str(int(point[0])))
                 continue
 
             """ Depth values can be NaN which should be ignored """
@@ -839,7 +842,7 @@ class PatchTracker(ROS2OpenCV):
                 sum_z = sum_z + z[0]
                 n_z += 1
 
-        #rospy.loginfo(n_z)
+        #logger.info(n_z)
 
         if n_xy > 0:
             cog_x = sum_x / n_xy
@@ -948,7 +951,7 @@ def main(args):
     try:
       rospy.spin()
     except KeyboardInterrupt:
-      rospy.loginfo("Shutting down face tracker node.")
+      logger.info("Shutting down face tracker node.")
       cv.DestroyAllWindows()
 
 if __name__ == '__main__':
