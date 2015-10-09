@@ -163,7 +163,7 @@ class Reporter:
             },
             # Ros nodes based on config
             'nodes': [
-                {'name': 'pololu', 'status':0}
+                {'name': 'pololu', 'status':0},
                 {'name': 'dynamixel', 'status':0}
             ]
 
