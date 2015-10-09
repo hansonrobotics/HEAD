@@ -7,6 +7,9 @@ import pprint
 import re
 import string
 import sys
+import logging
+
+logger = logging.getLogger('hr.chatbot.aiml.patternmgr')
 
 class PatternMgr:
 	# special dictionary keys
@@ -53,7 +56,7 @@ class PatternMgr:
 			marshal.dump(self._root, outFile)
 			outFile.close()
 		except Exception, e:
-			print "Error saving PatternMgr to file %s:" % filename
+			logger.error("Error saving PatternMgr to file %s:" % filename)
 			raise Exception, e
 
 	def restore(self, filename):
@@ -65,7 +68,7 @@ class PatternMgr:
 			self._root = marshal.load(inFile)
 			inFile.close()
 		except Exception, e:
-			print "Error restoring PatternMgr from file %s:" % filename
+			logger.error("Error restoring PatternMgr from file %s:" % filename)
 			raise Exception, e
 
 	def add(self, (pattern,that,topic), template):
