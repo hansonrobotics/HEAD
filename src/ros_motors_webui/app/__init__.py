@@ -43,8 +43,8 @@ def get_motors(robot_name):
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     return json_encode({'motors': motors})
 
-@app.route('/monitor/logs/')
-def get_logs():
+@app.route('/monitor/logs/<loglevel>')
+def get_logs(loglevel):
     """
     Collect all the warnings, errors and fatals from the ros log files.
     If there is no roscore process running, then it displays the logs
@@ -75,10 +75,19 @@ def get_logs():
     # log format [%(name)s][%(levelname)s] %(asctime)s: %(message)s
     pattern = r'\[(?P<name>\S+)\]\[(?P<levelname>\S+)\] (?P<asctime>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}): (?P<message>.*)'
     p = re.compile(pattern)
+    loglevels = {
+        'debug': 0,
+        'info': 1,
+        'warn': 2,
+        'warning': 2,
+        'error': 3,
+        'fatal': 4,
+    }
 
-    def get_log(log_file, truncate_th=100):
+    def get_log(log_file, loglevel, truncate_th=100):
         _log = []
         truncate = False
+        loglevel = loglevels[loglevel.lower()]
         with open(log_file) as f:
             for line in f.read().splitlines():
                 m = p.match(line)
@@ -88,12 +97,13 @@ def get_logs():
                         break
                     name, levelname, asctime, message = map(
                         m.group, ['name', 'levelname', 'asctime', 'message'])
-                    _log.append({
-                        'name': name,
-                        'levelname': levelname,
-                        'asctime': asctime,
-                        'message': message
-                    })
+                    if loglevels[levelname.lower()] >= loglevel:
+                        _log.append({
+                            'name': name,
+                            'levelname': levelname,
+                            'asctime': asctime,
+                            'message': message
+                        })
         return truncate, _log
 
     def isint(i):
@@ -117,7 +127,7 @@ def get_logs():
 
     for log_file in log_files:
         node = parse_node_name(log_file)
-        truncate, log = get_log(log_file)
+        truncate, log = get_log(log_file, loglevel)
         if log:
             logs.append({
                 'node': node,

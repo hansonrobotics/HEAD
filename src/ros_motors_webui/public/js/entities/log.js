@@ -8,7 +8,7 @@ define(['application', 'lib/api'], function (App, api) {
             model: Entities.Log,
             fetch: function () {
                 var self = this;
-                $.ajax('/monitor/logs/', {
+                $.ajax('/monitor/logs/warn', {
                     dataType: 'json',
                     success: function (response) {
                         self.add(response);
