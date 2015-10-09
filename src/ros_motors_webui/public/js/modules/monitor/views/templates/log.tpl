@@ -3,7 +3,7 @@
         <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
                 href="#collapse" aria-expanded="false" aria-controls="collapse">
-                <%- node %><span class="pull-right label label-info">1</span>
+                <%- node %><span class="pull-right label label-info"></span>
             </a>
         </h4>
     </div>

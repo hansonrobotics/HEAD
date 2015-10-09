@@ -11,27 +11,34 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
             },
             tableBody: function(data) {
                 var tbl_body = "";
-                var odd_even = false;
+                var danger = new RegExp('WARN|WARNING|ERROR|FATAL');
+                var keys = ['name', 'levelname', 'asctime', 'message'];
+                var danger_count = 0;
                 $.each(data, function() {
                     var tbl_row = "";
-                    $.each(this, function(k , v) {
-                        tbl_row += "<td>"+v+"</td>";
-                    })
-                    tbl_body += "<tr class=\""+( odd_even ? "odd" : "even")+"\">"+tbl_row+"</tr>";
-                    odd_even = !odd_even;
+                    for(var key of keys) {
+                        tbl_row += "<td>"+this[key]+"</td>";
+                    }
+                    if (danger.test(this['levelname'])) {
+                        tbl_body += "<tr class=\"text-danger\">"+tbl_row+"</tr>";
+                        danger_count++;
+                    } else {
+                        tbl_body += "<tr>"+tbl_row+"</tr>";
+                    }
                 })
-                return tbl_body;
+                return {'count': danger_count, 'body':tbl_body};
             },
             onRender: function () {
                 var re = new RegExp('/', 'g');
                 var node = this.model.get('node').replace(re, '-');
                 var log = this.model.get('log');
-                tableBody = this.tableBody(log);
-                console.log(tableBody);
-                this.ui.label.text(log.length);
                 this.ui.a.attr("href", "#"+node);
                 this.ui.collapse.attr("id", node);
-                this.ui.body.html(tableBody)
+                var res = this.tableBody(log);
+                if (res.count > 0) {
+                    this.ui.label.text(res.count);
+                }
+                this.ui.body.html(res.body)
             },
         });
     });
