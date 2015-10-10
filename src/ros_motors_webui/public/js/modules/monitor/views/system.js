@@ -1,6 +1,12 @@
-define(['application', 'tpl!./templates/system.tpl'], function (App, template) {
+define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (App, template) {
     App.module('Monitor.Views', function (Views, App, Backbone, Marionette, $, _) {
-        Views.System = Marionette.ItemView.extend({
+        Views.System = Marionette.CompositeView.extend({
+            initialize: function (options) {
+                console.log('init done');
+                this.listenTo(this.collection, 'reset', this.render);
+            },
+            childView: App.Monitor.Views.RosNode,
+            childViewContainer: '.app-ros-nodes',
             config :{
                 'system': {
                     'cpu': 0,
@@ -38,8 +44,8 @@ define(['application', 'tpl!./templates/system.tpl'], function (App, template) {
             },
 
             onRender: function () {
+                this.config = _.extend(this.config, this.collection.config);
                 var self = this;
-                console.log(this.config.hardware);
                 this.$('.status-item').each(function(i,e){
                    var id = $(e).data("status");
                    $(e).addClass(self._statusClass[self.config.status[id]].class).text(self._statusClass[self.config.status[id]].label);

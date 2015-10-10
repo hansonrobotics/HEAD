@@ -103,7 +103,7 @@ class ROS2OpenCV:
         self.image_sub = rospy.Subscriber(self.input_rgb_image, Image, self.image_callback, queue_size=1)
         self.depth_sub = rospy.Subscriber(self.input_depth_image, Image, self.depth_callback, queue_size=1)
         
-        rospy.loginfo("Starting " + self.node_name)
+        logger.info("Starting " + self.node_name)
 
 
     def on_mouse_click(self, event, x, y, flags, param):
@@ -240,7 +240,7 @@ class ROS2OpenCV:
             cv2_image = numpy.asarray(self.display_image[:,:])
             self.output_image_pub.publish(self.bridge.cv2_to_imgmsg(cv2_image, "bgr8"))
         except CvBridgeError, e:
-            rospy.logerror(e)
+            logger.error(e)
         
         """ Process any keyboard commands or command sent via the key_command service """
         if self.key_command:
@@ -278,7 +278,7 @@ class ROS2OpenCV:
 	    cv.SetData(cv_image, cv2_image.tostring(), cv2_image.dtype.itemsize * 3 * cv2_image.shape[1])	
             return cv_image
         except CvBridgeError, e:
-            rospy.logerror(e)
+            logger.error(e)
           
     def convert_depth_image(self, ros_image):
         try:
@@ -286,7 +286,7 @@ class ROS2OpenCV:
             return depth_image
     
         except CvBridgeError, e:
-            rospy.logerror(e)
+            logger.error(e)
           
     def process_image(self, cv_image):
         if not self.grey:
@@ -337,7 +337,7 @@ class ROS2OpenCV:
                 return False
         
     def cleanup(self):
-        rospy.loginfo("Shutting down vision node.")
+        logger.info("Shutting down vision node.")
         cv.DestroyAllWindows()       
 
 def main(args):
@@ -352,7 +352,7 @@ def main(args):
         # Spin so our services will work
         rospy.spin()
     except KeyboardInterrupt:
-        rospy.loginfo("Shutting down vision node.")
+        logger.info("Shutting down vision node.")
         cv.DestroyAllWindows()
 
 if __name__ == '__main__':

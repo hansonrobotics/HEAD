@@ -2,6 +2,9 @@ import ParserFactory
 import MapperFactory
 import HardwareFactory
 import rospy
+import logging
+
+logger = logging.getLogger('hr.pau2motors.motorcmder')
 
 class MotorCmder:
   """
@@ -12,9 +15,8 @@ class MotorCmder:
   def consume(self, incoming_msg):
     coeff = self.parser.get_coeff(incoming_msg)
     angle = self.mapper.map(coeff)
-#    rospy.logdebug("Motor: %s, coeff: %s, angle: %s",
-#     self.motor_entry['name'], coeff, angle
-#  )
+    logger.debug("Motor: %s, coeff: %s, angle: %s",
+                self.motor_entry['name'], coeff, angle)
     self.hardware.turn(self._saturated(angle))
 
   def _saturated(self, angle):

@@ -30,6 +30,9 @@ from dynamixel_msgs.msg import JointState as DynamixelJointState
 from itertools import repeat 
 from pau2motors.msg import pau
 import math
+import logging
+
+logger = logging.getLogger('hr.perception.joint_state_publisher')
 
 class JointStatePublisher(Thread):
     NODE_NAME = 'joint_state_publisher_node'
@@ -72,7 +75,7 @@ class JointStatePublisher(Thread):
             # Subscribe to dynamixels
             for name in self.dyn_joint_positions:
                 controller = name.replace('_joint', '') + '_controller/state'
-                rospy.loginfo('Subscribing to dynamixel controller: {0}'.format(controller))
+                logger.info('Subscribing to dynamixel controller: {0}'.format(controller))
                 rospy.Subscriber(controller, DynamixelJointState, self.update_dyn_joint_state)
 
         if len(self.pau_joint_names)>0:

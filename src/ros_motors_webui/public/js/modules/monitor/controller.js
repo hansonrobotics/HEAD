@@ -1,5 +1,5 @@
 define(['application', './views/layout', 'modules/motors/views/motors', './views/messages', './views/logs',
-        './views/speed', './views/system', './views/processes', 'entities/motor', 'entities/log'],
+        './views/speed', './views/system', './views/processes', 'entities/motor', 'entities/log', './entities/ros_node'],
     function (App, LayoutView, MotorsView, MessagesView, LogsView, SpeedView, SystemView, processesVIew) {
         return {
             init: function (name) {
@@ -57,16 +57,12 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
             system: function () {
                 var self = this;
                 this.init('system');
-                this.systemView = new SystemView();
+                var rosNodeCollection = new App.Monitor.Entities.RosNodeCollection();
+                rosNodeCollection.fetch();
+                this.systemView = new SystemView({
+                        collection: rosNodeCollection
+                    });
                 this.layoutView.getRegion('content').show(this.systemView);
-                $.ajax({
-                    url: "/monitor/status",
-                    dataType: "json",
-                    success: function (data) {
-                       self.systemView.config = _.extend(self.systemView.config, data);
-                       self.systemView.render();
-                    }
-                });
             }
         };
     });

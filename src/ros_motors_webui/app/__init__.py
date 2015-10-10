@@ -11,13 +11,14 @@ import os.path
 from optparse import OptionParser
 from configs import *
 from subprocess import Popen
-
+import logging
 
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)),os.pardir,os.pardir,"robots_config")
+logger = logging.getLogger('hr.ros_motors_webui.app')
 
 @app.route('/')
 def send_index():
@@ -34,6 +35,8 @@ def send_status():
 
 @app.route('/motors/status/<robot_name>')
 def get_motors_status(robot_name):
+    if robot_name == 'undefined':
+        return json_encode({})
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     motors = rep.motor_states(motors, robot_name)
     return json_encode({'motors': motors})
@@ -51,6 +54,7 @@ def get_logs(loglevel):
     from the last run.
     """
 
+    logger.info('get logs: log level {}'.format(loglevel))
     from roslaunch.roslaunch_logs import get_run_id
     import rospkg
     import glob
@@ -66,10 +70,19 @@ def get_logs(loglevel):
             run_id = max(subdirs, key=os.path.getmtime)
         else:
             run_id = ''
+
+    # some extra log files that not created by roslaunch
+    extra_log_files = [os.path.join(log_root, name) for name in [
+        'ros_motors_webui.log', 'sophia_Eva_Behavior.log', 'blender_api.log']]
+    extra_log_files = [f for f in extra_log_files if os.path.isfile(f)]
+
     log_dir = os.path.join(log_root, run_id)
-    log_files = sorted(glob.glob(os.path.join(log_dir, '*.log')))
+    log_files = glob.glob(os.path.join(log_dir, '*.log'))
+    log_files += extra_log_files
+
     # ignore stdout log files
     log_files = [log_file for log_file in log_files if 'stdout' not in log_file]
+    log_files = sorted(log_files)
     logs = []
 
     # log format [%(name)s][%(levelname)s] %(asctime)s: %(message)s
@@ -88,22 +101,37 @@ def get_logs(loglevel):
         _log = []
         truncate = False
         loglevel = loglevels[loglevel.lower()]
+        message_length = 120
         with open(log_file) as f:
+            logrecord = None
             for line in f.read().splitlines():
                 m = p.match(line)
                 if m:
+                    if logrecord:
+                        if loglevels[logrecord['levelname'].lower()] >= loglevel:
+                            _log.append(logrecord)
+                        logrecord = None
                     if len(_log) >= truncate_th:
                         truncate = True
                         break
                     name, levelname, asctime, message = map(
                         m.group, ['name', 'levelname', 'asctime', 'message'])
-                    if loglevels[levelname.lower()] >= loglevel:
-                        _log.append({
-                            'name': name,
-                            'levelname': levelname,
-                            'asctime': asctime,
-                            'message': message
-                        })
+                    extra = []
+                    if len(message) > message_length:
+                        extra.append(message[message_length:])
+                        message = message[:message_length] + ' ...'
+                    logrecord = {
+                        'name': name,
+                        'levelname': levelname,
+                        'asctime': asctime,
+                        'message': message,
+                        'extra': extra,
+                    }
+                # Append message that doesn't match the log format to the
+                # previous matched log record
+                elif logrecord:
+                    logrecord['extra'].append(line)
+
         return truncate, _log
 
     def isint(i):
@@ -268,6 +296,9 @@ def load_params(param_file, namespace):
 
 
 if __name__ == '__main__':
+    from rosgraph.roslogging import configure_logging
+    configure_logging(logger.name, filename='ros_motors_webui.log')
+
     @app.route('/public/<path:path>')
     def send_js(path):
         return send_from_directory(app.static_folder, path)

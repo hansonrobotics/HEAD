@@ -10,7 +10,10 @@ import blender_api_msgs.srv as srv
 import pau2motors.msg as paumsg
 import std_msgs.msg as stdmsg
 import geometry_msgs.msg as geomsg
+import logging
+
 api = None
+logger = logging.getLogger('hr.blender_api_msgs.roscom')
 
 # This is called by __init__.py
 # rigapi should be a (non-abstract-base-class) instance of RigAPI
@@ -61,7 +64,7 @@ class RosNode():
             for topic in live_topics:
                 topic.publish()
         except rospy.ROSException as ex:
-            rospy.logerr(ex)
+            logger.error(ex)
             return False
         return True
 
@@ -222,7 +225,7 @@ class CommandWrappers:
         try:
             api.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
         except TypeError:
-            rospy.logerror('unknown gesture:', msg.name);
+            logger.error('unknown gesture:', msg.name);
 
 
     # Visemes --------------------------------------
@@ -237,7 +240,7 @@ class CommandWrappers:
                 msg.duration.to_sec(),
                 msg.rampin, msg.rampout, msg.magnitude)
         except TypeError:
-            rospy.logerror('unknown viseme:', msg.name);
+            logger.error('unknown viseme:', msg.name);
 
 
     # Look-at and turn-to-face targets ---------------------

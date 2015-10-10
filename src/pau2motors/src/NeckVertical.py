@@ -6,6 +6,9 @@
 # Linas Vepstas February 2015
 
 from math import sin, cos, tan, atan2, pi
+import logging
+
+logger = logging.getLogger('hr.pau2motors.neckvertical')
 
 # Return the 3x3 identity matrix
 def ident():
@@ -36,7 +39,7 @@ def rotate_y(angle):
 # Print a matrix
 def matrix_prt(A) :
 	for row in A:
-		print(row)
+		logger.info(row)
 
 
 # Given the lower-neck animator angles phi, theta, psi and the cant
@@ -122,20 +125,20 @@ def unit_test():
 		if 1.0e-10 < abs(angs[2] - x):
 			raise ArithmeticError("Bad neck math (horiz-psi)")
 
-	print("Unit test passed")
+	logger.info("Unit test passed")
 
 def main():
 	unit_test()
 	kappa = atan2(8.93, 112.16)
-	print("kappa = ", kappa)
-	print("---")
+	logger.info("kappa = ", kappa)
+	logger.info("---")
 
 	phi = 1.11
 	psi = 1.1
 	for i in range(12) :
 		theta = 0.1 - i * 0.01
 		angs = neck_cant(phi, theta, psi, kappa)
-		print("duude angles=", angs)
-		print("---")
+		logger.info("duude angles=", angs)
+		logger.info("---")
 
 # main()
