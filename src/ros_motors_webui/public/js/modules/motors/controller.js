@@ -11,7 +11,9 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
                     motorsView = new MotorsView({collection: motorsCollection}),
                     layoutView = new LayoutView();
 
-                motorsCollection.fetchFromParam();
+                motorsCollection.fetchFromParam(function () {
+                    motorsCollection.setDefaultValues();
+                });
 
                 App.LayoutInstance.showNav();
                 App.LayoutInstance.getRegion('content').show(layoutView);

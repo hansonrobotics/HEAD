@@ -18,10 +18,12 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
                 this.layoutView.setActive(name);
             },
             motors: function () {
+                var self = this;
                 this.init('motors');
                 this.motorsCollection = new App.Entities.MotorCollection();
-                this.motorsCollection.fetchFromParam();
-                this.motorsCollection.setErrorStatusInterval();
+                this.motorsCollection.fetchFromParam(function () {
+                    self.motorsCollection.setMonitorInterval();
+                });
 
                 this.motorsView = new MotorsView({
                     collection: this.motorsCollection,

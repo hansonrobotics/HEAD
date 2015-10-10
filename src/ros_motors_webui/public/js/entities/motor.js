@@ -2,9 +2,6 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
     App.module('Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Motor = Backbone.Model.extend({
             initialize: function () {
-                // set value to default
-                this.set('value', this.get('default'));
-
                 // not selected by default
                 this.set('selected', false);
 
@@ -45,7 +42,7 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
             comparator: 'sort_no',
             initialize: function() {
                 // clear error status interval
-                this.on('destroy', this.clearErrorStatusInterval);
+                this.on('destroy', this.clearMonitorInterval);
             },
             sync: function (successCallback, errorCallback) {
                 var data = _.filter(this.toJSON(), function (motor) {
@@ -94,29 +91,35 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     }
                 });
             },
-            setErrorStatusInterval: function () {
+            setMonitorInterval: function (callback) {
                 var self = this;
 
-                this.clearErrorStatusInterval();
+                this.clearMonitorInterval();
                 this.checkErrorInterval = setInterval(function () {
                     $.ajax('/motors/status/' + api.config.robot, {
                         dataType: 'json',
                         success: function (response) {
-                            _.each(response.motors, function (motor) {
+                            var motors = response.motors;
+
+                            _.each(motors, function (motor) {
                                 var model = self.findWhere({name: motor['name']});
-                                if (model)
+                                if (model) {
                                     model.set('error', motor['error']);
+
+                                    if ($.isNumeric(motor['position']))
+                                        model.set('value', motor['position']);
+                                }
                             });
                         }
                     });
                 }, 1000);
             },
-            clearErrorStatusInterval: function() {
+            clearMonitorInterval: function() {
                 clearInterval(this.checkErrorInterval);
             },
-            setDefaultValues: function () {
+            setDefaultValues: function (silent) {
                 this.each(function (motor) {
-                    motor.set('value', motor.get('default'));
+                    motor.set({value: motor.get('default')}, {silent: !!silent});
                 })
             },
             getRelativePositions: function () {
