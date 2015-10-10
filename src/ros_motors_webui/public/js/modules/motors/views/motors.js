@@ -22,6 +22,19 @@ define(["marionette", "./motor", 'jquery-ui'],
                     monitoring: this.options['monitoring'],
                     motorGroupLabel: motorGroup
                 }
+            },
+            onRender: function () {
+                var self = this;
+
+                clearInterval(this.monitoringInterval);
+                if (this.options['monitoring']) {
+                    this.monitoringInterval = setInterval(function () {
+                        self.collection.updateStatus();
+                    }, 1000)
+                }
+            },
+            onDestroy: function () {
+                clearInterval(this.monitoringInterval);
             }
         });
     });

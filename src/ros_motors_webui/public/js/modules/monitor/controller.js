@@ -13,23 +13,22 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
 
                     App.LayoutInstance.setTitle('Monitoring');
                     App.LayoutInstance.getRegion('content').show(this.layoutView);
+                    App.LayoutInstance.showAdminNav();
                 }
 
                 this.layoutView.setActive(name);
             },
             motors: function () {
-                var self = this;
                 this.init('motors');
-                this.motorsCollection = new App.Entities.MotorCollection();
-                this.motorsCollection.fetchFromParam(function () {
-                    self.motorsCollection.setMonitorInterval();
-                });
-
-                this.motorsView = new MotorsView({
-                    collection: this.motorsCollection,
+                var motorsCollection = new App.Entities.MotorCollection(),
+                    motorsView = new MotorsView({
+                    collection: motorsCollection,
                     monitoring: true
                 });
-                this.layoutView.getRegion('content').show(this.motorsView);
+
+                motorsCollection.fetchFromParam();
+
+                this.layoutView.getRegion('content').show(motorsView);
             },
             messages: function () {
                 this.init('messages');
@@ -60,8 +59,8 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
                 var rosNodeCollection = new App.Monitor.Entities.RosNodeCollection();
                 rosNodeCollection.fetch();
                 this.systemView = new SystemView({
-                        collection: rosNodeCollection
-                    });
+                    collection: rosNodeCollection
+                });
                 this.layoutView.getRegion('content').show(this.systemView);
             }
         };

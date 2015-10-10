@@ -66,3 +66,16 @@ body {
 
 .top-buffer { margin-top:20px; }
 .bottom-buffer { margin-bottom:20px; }
+
+.ui-slider-handle {
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
+.tooltip-inner {
+    background-color: #4e5d6c;
+}
+
+.tooltip.left .tooltip-arrow {
+    border-left-color: #4e5d6c;
+}

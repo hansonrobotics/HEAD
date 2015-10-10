@@ -13,17 +13,21 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                 labelright: '.app-slider-label-right',
                 sliderMinVal: '.app-slider-min-value',
                 sliderMaxVal: '.app-slider-max-value',
-                indicator: '.app-motor-status-indicator'
+                indicator: '.app-motor-status-indicator',
+                dynamixelButtonTooltip: '.app-dynamixel-button-tooltip',
+                dynamixelParams: '.app-dynamixel-params'
             },
             serializeData: function () {
-                var model = this.model.toJSON();
+                var data = _.extend(this.model.toJSON(), {
+                    uniqueId: this.model.cid
+                });
 
                 if (typeof this.options.motorGroupLabel != 'undefined' && this.options.motorGroupLabel) {
-                    return _.extend(model, {
+                    return _.extend(data, {
                         groupLabel: this.options.motorGroupLabel
                     });
                 } else
-                    return model;
+                    return data;
             },
             modelChanged: function () {
                 this.ui.value.text(this.model.getDegrees('value') + '°');
@@ -33,32 +37,64 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                 this.ui.labelright.text(this.model.get('labelright'));
 
                 if (this.options['monitoring']) {
-                    var indicatorStatus;
-
-                    $(this.ui.slider).addClass('app-monitoring');
-                    $(this.ui.indicator).removeClass('app-ok app-error app-inactive');
-
-                    switch (this.model.get('error')) {
-                        case 0:
-                            $(this.ui.indicator).addClass('app-ok');
-                            indicatorStatus = 'ok';
-                            break;
-                        case 1:
-                            $(this.ui.indicator).addClass('app-error');
-                            indicatorStatus = 'error';
-                            break;
-                        case 2:
-                            $(this.ui.indicator).addClass('app-inactive');
-                            indicatorStatus = 'not available';
-                            break;
-                    }
-
-
-                    $(this.ui.indicator).attr('data-content', indicatorStatus).popover({trigger: 'hover'});
-                } else {
-                    $(this.ui.slider).removeClass('app-monitoring');
-                    $(this.ui.indicator).hide();
+                    $(this.ui.slider).slider('value', 0);
+                    this.ui.value.text('0°');
                 }
+
+                if (this.options['monitoring'] && this.model.get('status')) {
+                    this.enableMonitoring();
+                } else {
+                    this.disableMonitoring();
+                }
+            },
+            enableMonitoring: function () {
+                var self = this,
+                    indicatorStatus,
+                    status = this.model.get('status');
+
+                // set value
+                if (status.position) {
+                    $(this.ui.slider).slider('value', status.position);
+                    this.ui.value.text(status.position + '°');
+                }
+
+                // show indicator
+                $(this.ui.slider).addClass('app-monitoring');
+                $(this.ui.indicator).show().removeClass('app-ok app-error app-inactive');
+
+                switch (status.error) {
+                    case 0:
+                        $(this.ui.indicator).addClass('app-ok');
+                        indicatorStatus = 'ok';
+                        break;
+                    case 1:
+                        $(this.ui.indicator).addClass('app-error');
+                        indicatorStatus = 'error';
+                        break;
+                    case 2:
+                        $(this.ui.indicator).addClass('app-inactive');
+                        indicatorStatus = 'not available';
+                        break;
+                }
+
+                // show indicator tooltip
+                $(this.ui.indicator).tooltip({
+                    title: indicatorStatus
+                });
+
+                // show dynamixel collapse button
+                this.ui.dynamixelButtonTooltip.show().tooltip({trigger: 'hover'});
+
+                // show dynamixel params
+                this.ui.dynamixelParams.html('');
+                $.each(this.model.get('status'), function (key, value) {
+                    $(self.ui.dynamixelParams).append($('<dt>').html(key)).append($('<dd>').html(value))
+                })
+            },
+            disableMonitoring: function () {
+                this.ui.dynamixelButtonTooltip.hide();
+                $(this.ui.slider).removeClass('app-monitoring');
+                $(this.ui.indicator).hide();
             },
             onRender: function () {
                 var self = this;
@@ -75,6 +111,9 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
 
                 // deselect by default
                 this.modelChanged();
+            },
+            onDestroy: function () {
+                clearInterval(this.monitoringInterval);
             }
         });
     });

@@ -6,16 +6,11 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                 this.set('selected', false);
 
                 // send motor command when updating value
-                this.on('change', this.checkUpdatedValue());
+                this.on('change:value', this.checkUpdatedValue);
             },
             checkUpdatedValue: function () {
-                var self = this;
-
-                return function () {
-                    if (this.previous('value') != this.get('value')) {
-                        api._sendMotorCommand(self.toJSON(), self.get('value'));
-                    }
-                };
+                if (this.previous('value') != this.get('value'))
+                    api._sendMotorCommand(this.toJSON(), this.get('value'));
             },
             getDegrees: function (attribute) {
                 return Math.round(utilities.radToDeg(this.get(attribute)));
@@ -40,10 +35,6 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
         Entities.MotorCollection = Backbone.Collection.extend({
             model: Entities.Motor,
             comparator: 'sort_no',
-            initialize: function() {
-                // clear error status interval
-                this.on('destroy', this.clearMonitorInterval);
-            },
             sync: function (successCallback, errorCallback) {
                 var data = _.filter(this.toJSON(), function (motor) {
                     delete motor['selected'];
@@ -91,31 +82,24 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     }
                 });
             },
-            setMonitorInterval: function (callback) {
+            updateStatus: function (callback) {
                 var self = this;
 
-                this.clearMonitorInterval();
-                this.checkErrorInterval = setInterval(function () {
-                    $.ajax('/motors/status/' + api.config.robot, {
-                        dataType: 'json',
-                        success: function (response) {
-                            var motors = response.motors;
+                $.ajax('/motors/status/' + api.config.robot, {
+                    dataType: 'json',
+                    success: function (response) {
+                        var motors = response.motors;
 
-                            _.each(motors, function (motor) {
-                                var model = self.findWhere({name: motor['name']});
-                                if (model) {
-                                    model.set('error', motor['error']);
+                        _.each(motors, function (motor) {
+                            var model = self.findWhere({name: motor['name']});
+                            if (model)
+                                model.set('status', motor);
+                        });
 
-                                    if ($.isNumeric(motor['position']))
-                                        model.set('value', motor['position']);
-                                }
-                            });
-                        }
-                    });
-                }, 1000);
-            },
-            clearMonitorInterval: function() {
-                clearInterval(this.checkErrorInterval);
+                        if (typeof callback == 'funtion')
+                            callback(motors);
+                    }
+                });
             },
             setDefaultValues: function (silent) {
                 this.each(function (motor) {
