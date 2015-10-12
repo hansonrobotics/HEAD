@@ -2,27 +2,25 @@
     <div class="col-xs-4">
         CPU
         <div class="progress">
-            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40"
-                aria-valuemin="0" aria-valuemax="100" style="width:70%">
-                70%
+            <div class="progress-bar app-cpu" role="progressbar" style="width:0%">
+                0%
             </div>
         </div>
     </div>
     <div class="col-xs-4">
         Memory
         <div class="progress">
-            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40"
-                aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                40%
+            <div class="progress-bar app-mem" role="progressbar" style="width:0%">
+                0%
             </div>
         </div>
     </div>
     <div class="col-xs-4">
         Blender FPS
         <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="48"
-                aria-valuemin="0" aria-valuemax="60" style="width:80%">
-                48
+            <div class="progress-bar app-fps progress-bar-" role="progressbar"
+                style="width:0%">
+                0
             </div>
         </div>
     </div>

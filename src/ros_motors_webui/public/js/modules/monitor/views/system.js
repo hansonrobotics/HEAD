@@ -42,14 +42,44 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
                     class: 'label-warning',
                 }
             },
-
+            ui: {
+                cpu: '.app-cpu',
+                mem: '.app-mem',
+                fps: '.app-fps',
+            },
+            _progress_bar_class: function(bar,val){
+                var cls = 'danger'
+                switch (bar){
+                    case 'cpu':
+                        if (val < 70) cls = 'warning';
+                        if (val < 40) cls = 'success';
+                        break;
+                    case 'mem':
+                        if (val < 80) cls = 'warning';
+                        if (val < 60) cls = 'success';
+                        break;
+                    case 'fps':
+                        if (val > 30) cls = 'warning';
+                        if (val > 40) cls = 'success';
+                }
+                return 'progress-bar-'+cls;
+            },
             onRender: function () {
                 this.config = _.extend(this.config, this.collection.config);
                 var self = this;
+                // Main checks
                 this.$('.status-item').each(function(i,e){
                    var id = $(e).data("status");
                    $(e).addClass(self._statusClass[self.config.status[id]].class).text(self._statusClass[self.config.status[id]].label);
                 });
+                // Progress bars
+                var sys = this.config.system;
+                this.ui.cpu.text(sys.cpu+"%");
+                $(this.ui.cpu).width(sys.mem+"%").addClass(this._progress_bar_class('cpu',sys.mem ));
+                this.ui.mem.text(sys.mem+"%");
+                $(this.ui.mem).width(sys.mem+"%").addClass(this._progress_bar_class('mem',sys.mem ));
+                this.ui.fps.text(sys.fps);
+                $(this.ui.fps).width(sys.fps+"%").addClass(this._progress_bar_class('fps',sys.fps ));
             },
             template: template
         });

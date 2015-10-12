@@ -144,22 +144,22 @@ class Reporter:
         # Statuses: 0 - OK, 1 - Error, 2 - N/A
         status = {
             'system': {
-                'cpu': psutil.cpu_percent(),
-                'mem': psutil.virtual_memory().percent,
+                'cpu': int(psutil.cpu_percent()),
+                'mem': int(psutil.virtual_memory().percent),
                 'total_mem': round(psutil.virtual_memory().total/float(1024*1024*1024)),
-                'fps': 0,
+                'fps': self.get_blender_fps(),
             },
             'robot': {
                 'current_name': '',
                 'robots': ['sophia'],
             },
             'status': {
-                'ros': 2,
-                'blender': 1,
-                'internet': 0,
-                'pololu': 1,
-                'usb2dynamixel': 2,
-                'camera': 0,
+                'ros': self.get_ros_status(),
+                'blender': self.get_blender_status(),
+                'internet': self.get_internet_status(),
+                'pololu': self.check("test -e /dev/ttyACM0") * -1 +1,
+                'usb2dynamixel': self.check("test -e /dev/ttyUSB0") * -1 +1,
+                'camera': self.check("test -e /dev/video0") * -1 +1,
             },
             # Ros nodes based on config
             'nodes': [
@@ -168,14 +168,56 @@ class Reporter:
             ]
 
         }
+        robot_name = self.get_robot_name()
+        # Check additional parameters only if robot is started
+        if robot_name:
+            status["robot"]['current_name'] = robot_name
+
+
         return status
 
     def get_robot_name(self):
-        pass
+        return self.get_ros_param("/robot_name")
+
+    def get_blender_status(self):
+        return EasyProcess("pgrep blender").call().return_code
+
+    def get_ros_status(self):
+        return EasyProcess("pgrep roscore").call().return_code
+
+    def get_internet_status(self):
+        return EasyProcess("ping 8.8.8.8 -c 1 -W 1").call().return_code
 
     def _build_env(self):
         return {name: check_output(cmd, shell=True)
                 for name, cmd in self.config['setup']['env'].items()}
+
+    def get_ros_param(self, param):
+        cmd = 'rosparam get {}'.format(param)
+        out = EasyProcess(cmd).call()
+        if out.return_code > 0:
+            return False
+        return out.stdout
+
+    def call_ros_service(self, service, args=""):
+        cmd = 'rosservice call {} {}'.format(service, args)
+        out = EasyProcess(cmd).call()
+        if out.return_code > 0:
+            return False
+        return out.stdout
+
+    def get_blender_fps(self):
+        v = self.call_ros_service("/blender_api/get_param ", '"bpy.data.scenes[\'Scene\'].evaFPS"')
+        if v == False:
+            return 0
+        try:
+            s = yaml.load(v)
+            fps = s['value']
+            return fps
+        except:
+            return 0
+        return int(float(v))
+
 
 def deepupdate(original, new):
     """Updates missing or None values in all 'directly' nested dicts."""
