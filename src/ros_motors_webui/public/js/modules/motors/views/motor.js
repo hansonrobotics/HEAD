@@ -82,14 +82,16 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                     title: indicatorStatus
                 });
 
-                // show dynamixel collapse button
-                this.ui.dynamixelButtonTooltip.show().tooltip({trigger: 'hover'});
+                if (status['hardware'] == 'dynamixel' && status['motor_state']) {
+                    // show dynamixel collapse button
+                    this.ui.dynamixelButtonTooltip.show().tooltip({trigger: 'hover'});
 
-                // show dynamixel params
-                this.ui.dynamixelParams.html('');
-                $.each(this.model.get('status'), function (key, value) {
-                    $(self.ui.dynamixelParams).append($('<dt>').html(key)).append($('<dd>').html(value))
-                })
+                    // show dynamixel params
+                    this.ui.dynamixelParams.html('');
+                    $.each(status['motor_state'], function (key, value) {
+                        $(self.ui.dynamixelParams).append($('<dt>').html(key)).append($('<dd>').html(value))
+                    });
+                }
             },
             disableMonitoring: function () {
                 this.ui.dynamixelButtonTooltip.hide();

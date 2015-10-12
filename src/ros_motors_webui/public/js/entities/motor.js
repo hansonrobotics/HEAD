@@ -63,7 +63,6 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
 
                 api.getMotorsFromParam(function (motors) {
                     self.add(motors);
-                    self.loadPololuMotors();
 
                     if (typeof callback == 'function')
                         callback(motors);
