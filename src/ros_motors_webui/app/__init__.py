@@ -296,8 +296,8 @@ def load_params(param_file, namespace):
 
 
 if __name__ == '__main__':
-    from rosgraph.roslogging import configure_logging
-    configure_logging(logger.name, filename='ros_motors_webui.log')
+    #from rosgraph.roslogging import configure_logging
+    #configure_logging(logger.name, filename='ros_motors_webui.log')
 
     @app.route('/public/<path:path>')
     def send_js(path):
