@@ -7,7 +7,7 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                 title: '.title',
                 body: '.table-body ',
                 collapse: '.panel-collapse',
-                a: '.collapsed',
+                a: '.collapsed'
             },
             tableBody: function(data) {
                 var tbl_body = "";

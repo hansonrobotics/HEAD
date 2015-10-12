@@ -1,5 +1,5 @@
 <br/>
-<div class="container">
+<div class="monitor-page container">
     <div class="row">
         <div class="col-md-3">
             <ul class="app-nav nav nav-pills nav-stacked">
