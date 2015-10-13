@@ -6,3 +6,11 @@
     border-bottom: 1px dashed #485563;
     margin-bottom: 3px;
 }
+
+.log-table {
+    margin: 0;
+}
+
+.monitor-page .panel {
+    margin-bottom: 2px;
+}
