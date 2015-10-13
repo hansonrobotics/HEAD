@@ -2,7 +2,6 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
     App.module('Monitor.Views', function (Views, App, Backbone, Marionette, $, _) {
         Views.System = Marionette.CompositeView.extend({
             initialize: function (options) {
-                console.log('init done');
                 this.listenTo(this.collection, 'reset', this.refresh);
             },
             childView: App.Monitor.Views.RosNode,
@@ -78,12 +77,11 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
                 var sys = this.config.system;
                 var cls = 'progress-bar-success progress-bar-warning progress-bar-danger';
                 this.ui.cpu.text(sys.cpu+"%");
-                $(this.ui.cpu).width(sys.mem+"%").removeClass(cls).addClass(this._progress_bar_class('cpu',sys.mem ));
+                $(this.ui.cpu).width(sys.cpu+"%").removeClass(cls).addClass(this._progress_bar_class('cpu',sys.mem ));
                 this.ui.mem.text(sys.mem+"%");
                 $(this.ui.mem).width(sys.mem+"%").removeClass(cls).addClass(this._progress_bar_class('mem',sys.mem ));
                 this.ui.fps.text(sys.fps);
                 $(this.ui.fps).width(sys.fps+"%").removeClass(cls).addClass(this._progress_bar_class('fps',sys.fps ));
-
             },
             refresh: function(){
                 var self = this;
