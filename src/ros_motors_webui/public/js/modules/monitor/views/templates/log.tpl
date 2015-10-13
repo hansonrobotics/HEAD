@@ -3,7 +3,9 @@
         <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
                href="#collapse" aria-expanded="false" aria-controls="collapse">
-                <%- node %><span class="pull-right label label-info"></span>
+                <%- node %>
+                <span id="warning_count" class="pull-right label label-warning"></span>
+                <span id="error_count" class="pull-right label label-danger"></span>
             </a>
         </h4>
     </div>
