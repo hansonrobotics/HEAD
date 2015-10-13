@@ -32,7 +32,7 @@ def send_monitor_status():
 
 @app.route('/monitor/status')
 def send_status():
-    return json_encode(rep.system_status())
+    return json_encode(rep.system_status(config_dir=config_root))
 
 @app.route('/motors/status/<robot_name>')
 def get_motors_status(robot_name):
@@ -302,8 +302,8 @@ def load_params(param_file, namespace):
 
 
 if __name__ == '__main__':
-    from rosgraph.roslogging import configure_logging
-    configure_logging(logger.name, filename='ros_motors_webui.log')
+    #from rosgraph.roslogging import configure_logging
+    #configure_logging(logger.name, filename='ros_motors_webui.log')
 
     @app.route('/public/<path:path>')
     def send_js(path):

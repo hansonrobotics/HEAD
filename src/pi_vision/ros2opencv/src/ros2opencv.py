@@ -42,6 +42,8 @@ from geometry_msgs.msg import PointStamped
 from cv_bridge import CvBridge, CvBridgeError
 import time
 import numpy
+import logging
+logger = logging.getLogger('hr.face_tracker')
 
 class ROS2OpenCV:
     def __init__(self, node_name):

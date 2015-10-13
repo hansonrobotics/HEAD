@@ -27,6 +27,23 @@
 </div>
 <div class="row">
     <div class="col-md-6">
+            <div class="col-sm-6">
+                Robot Name:
+            </div>
+            <div class="col-sm-6">
+            <select class="form-control" id="robot">
+                <option value="sophia">Sophia</option>
+            </select>
+            </div>
+    </div>
+    <div class="col-md-6">
+        <button class="app-start-button btn btn-default">Start</button>
+        <button class="app-restart-button btn btn-default">Restart</button>
+        <button class="app-save-button btn btn-default">Shutdown</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
         <h4>Hardware</h4>
         <ul class="list-group">
             <li class="list-group-item">
@@ -60,5 +77,11 @@
             </li>
         </ul>
     </div>
-    <div class="row app-ros-nodes"></div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <h4>ROS Nodes</h4>
+    </div>
+</div>
+<ul class="row list-inline list-group app-ros-nodes">
+</ul>

@@ -27,6 +27,8 @@ class Reporter:
         self.robot_name = ''
         # Pololu status
         self.pololu_boards = {}
+        self.load_config()
+        self.env = self._build_env()
 
     def load_config(self):
         with open(self.filename, 'r') as f:
@@ -139,7 +141,7 @@ class Reporter:
         errcode = call(cmd, stdout=DEVNULL, env=env, shell=True)
         return errcode == 0
 
-    def system_status(self):
+    def system_status(self, config_dir):
         # Template to return
         # Statuses: 0 - OK, 1 - Error, 2 - N/A
         status = {
@@ -172,7 +174,19 @@ class Reporter:
         # Check additional parameters only if robot is started
         if robot_name:
             status["robot"]['current_name'] = robot_name
+            # ROS Nodes
+            nodes_running = str(EasyProcess("rosnode list").call().stdout).splitlines()
+            print nodes_running
+            nod_file = os.path.join(config_dir,robot_name,'nodes.yaml')
+            with open(nod_file, 'r') as stream:
+                node_cfg = yaml.load(stream)
+            for i,n in enumerate(node_cfg['nodes']):
+                if len([nd for nd in nodes_running if nd == n['node']]) > 0:
+                    node_cfg['nodes'][i]['status'] = 0
+                else:
+                    node_cfg['nodes'][i]['status'] = 1
 
+            status['nodes'] = node_cfg['nodes']
 
         return status
 
