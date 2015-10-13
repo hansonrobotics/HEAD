@@ -1,5 +1,5 @@
 define(['application', './views/layout', 'modules/motors/views/motors', './views/messages', './views/logs',
-        './views/speed', './views/system', './views/processes', 'entities/motor', 'entities/log', './entities/ros_node'],
+        './views/speed', './views/system', './views/processes', 'entities/motor', './entities/log', './entities/ros_node'],
     function (App, LayoutView, MotorsView, MessagesView, LogsView, SpeedView, SystemView, processesVIew) {
         return {
             init: function (name) {
