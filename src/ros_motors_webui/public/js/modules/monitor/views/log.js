@@ -1,7 +1,13 @@
 define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
     App.module('Monitor.Views', function (Views, App, Backbone, Marionette, $, _) {
         Views.Logs = Marionette.ItemView.extend({
+            initialize: function () {
+                this.listenTo(this.model, "log:changed", this.addRows);
+                console.log("added lkistener")
+            },
             template: template,
+            error_count: 0,
+            warning_count: 0,
             ui: {
                 error_count: '#error_count',
                 warning_count: '#warning_count',
@@ -35,6 +41,15 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                         'warning_count': warning_count,
                         'body':tbl_body};
             },
+            addRows: function(){
+
+                var html = this.tableBody(this.model.new_logs);
+                this.ui.body.prepend(html.body);
+                this.error_count += html.error_count;
+                this.warning_count += html.warning_count;
+                this.ui.error_count.text(this.error_count);
+                this.ui.warning_count.text(this.warning_count);
+            },
             onRender: function () {
                 var re = new RegExp('/', 'g');
                 var node = this.model.get('node').replace(re, '-');
@@ -43,10 +58,12 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                 this.ui.collapse.attr("id", node);
                 var res = this.tableBody(log);
                 if (res.warning_count > 0) {
-                    this.ui.warning_count.text(res.warning_count);
+                    this.warning_count =  res.warning_count;
+                    this.ui.warning_count.text(this.warning_count);
                 }
                 if (res.error_count> 0) {
-                    this.ui.error_count.text(res.error_count);
+                    this.error_count = res.error_count;
+                    this.ui.error_count.text(this.error_count);
                 }
                 this.ui.body.html(res.body)
             },

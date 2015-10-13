@@ -12,6 +12,7 @@ from optparse import OptionParser
 from configs import *
 from subprocess import Popen
 import logging
+import time
 
 json_encode = json.JSONEncoder().encode
 
@@ -46,8 +47,8 @@ def get_motors(robot_name):
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     return json_encode({'motors': motors})
 
-@app.route('/monitor/logs/<loglevel>')
-def get_logs(loglevel):
+@app.route('/monitor/logs/<loglevel>/<timestamp>')
+def get_logs(loglevel, timestamp):
     """
     Collect all the warnings, errors and fatals from the ros log files.
     If there is no roscore process running, then it displays the logs
@@ -164,7 +165,11 @@ def get_logs(loglevel):
                 'truncate': truncate,
                 'log_file': log_file,
                 })
-    return json_encode(logs)
+    result = {
+        'logs': logs,
+        'timestamp': time.time()
+    }
+    return json_encode(result)
 
 def reload_configs(motors,config_dir, robot_name):
     configs = Configs()
@@ -297,8 +302,8 @@ def load_params(param_file, namespace):
 
 
 if __name__ == '__main__':
-    #from rosgraph.roslogging import configure_logging
-    #configure_logging(logger.name, filename='ros_motors_webui.log')
+    from rosgraph.roslogging import configure_logging
+    configure_logging(logger.name, filename='ros_motors_webui.log')
 
     @app.route('/public/<path:path>')
     def send_js(path):
