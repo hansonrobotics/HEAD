@@ -3,7 +3,7 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
         Views.System = Marionette.CompositeView.extend({
             initialize: function (options) {
                 console.log('init done');
-                this.listenTo(this.collection, 'reset', this.render);
+                this.listenTo(this.collection, 'reset', this.refresh);
             },
             childView: App.Monitor.Views.RosNode,
             childViewContainer: '.app-ros-nodes',
@@ -61,25 +61,42 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
                     case 'fps':
                         if (val > 30) cls = 'warning';
                         if (val > 40) cls = 'success';
+                        break;
                 }
                 return 'progress-bar-'+cls;
             },
-            onRender: function () {
-                this.config = _.extend(this.config, this.collection.config);
+            updateView: function(){
                 var self = this;
                 // Main checks
                 this.$('.status-item').each(function(i,e){
                    var id = $(e).data("status");
-                   $(e).addClass(self._statusClass[self.config.status[id]].class).text(self._statusClass[self.config.status[id]].label);
+                   $(e).removeClass('label-success label-warning label-danger').
+                        addClass(self._statusClass[self.config.status[id]].class).
+                        text(self._statusClass[self.config.status[id]].label);
                 });
                 // Progress bars
                 var sys = this.config.system;
+                var cls = 'progress-bar-success progress-bar-warning progress-bar-danger';
                 this.ui.cpu.text(sys.cpu+"%");
-                $(this.ui.cpu).width(sys.mem+"%").addClass(this._progress_bar_class('cpu',sys.mem ));
+                $(this.ui.cpu).width(sys.mem+"%").removeClass(cls).addClass(this._progress_bar_class('cpu',sys.mem ));
                 this.ui.mem.text(sys.mem+"%");
-                $(this.ui.mem).width(sys.mem+"%").addClass(this._progress_bar_class('mem',sys.mem ));
+                $(this.ui.mem).width(sys.mem+"%").removeClass(cls).addClass(this._progress_bar_class('mem',sys.mem ));
                 this.ui.fps.text(sys.fps);
-                $(this.ui.fps).width(sys.fps+"%").addClass(this._progress_bar_class('fps',sys.fps ));
+                $(this.ui.fps).width(sys.fps+"%").removeClass(cls).addClass(this._progress_bar_class('fps',sys.fps ));
+
+            },
+            refresh: function(){
+                var self = this;
+                clearInterval(this.statusInterval);
+                this.config = _.extend(this.config, this.collection.config);
+                this.updateView();
+                this.statusInterval = setInterval(function(){self.collection.fetch()}, 2000);
+            },
+            onRender: function () {
+                this.updateView();
+            },
+            onDestroy: function () {
+                clearInterval(this.statusInterval);
             },
             template: template
         });
