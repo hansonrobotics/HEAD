@@ -81,8 +81,9 @@ def get_logs(loglevel):
     log_files += extra_log_files
 
     # ignore stdout log files
-    log_files = [log_file for log_file in log_files if 'stdout' not in log_file]
-    log_files = sorted(log_files)
+    log_files = [log_file for log_file in log_files if ('stdout' not in log_file) and (not os.path.basename(log_file).startswith('roslaunch'))]
+    log_files = sorted(log_files, key=lambda f: os.path.basename(f))
+    logger.info('get log files: {}'.format('\n'.join(log_files)))
     logs = []
 
     # log format [%(name)s][%(levelname)s] %(asctime)s: %(message)s
