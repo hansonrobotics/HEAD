@@ -11,7 +11,8 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
             },
             tableBody: function(data) {
                 var tbl_body = "";
-                var danger = new RegExp('WARN|WARNING|ERROR|FATAL');
+                var warning = new RegExp('WARN|WARNING');
+                var danger = new RegExp('ERROR|FATAL');
                 var keys = ['name', 'levelname', 'asctime', 'message'];
                 var danger_count = 0;
                 $.each(data, function() {
@@ -19,7 +20,10 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                     for(var key of keys) {
                         tbl_row += "<td>"+this[key]+"</td>";
                     }
-                    if (danger.test(this['levelname'])) {
+                    if (warning.test(this['levelname'])) {
+                        tbl_body += "<tr class=\"text-warning\">"+tbl_row+"</tr>";
+                        danger_count++;
+                    } else if (danger.test(this['levelname'])) {
                         tbl_body += "<tr class=\"text-danger\">"+tbl_row+"</tr>";
                         danger_count++;
                     } else {
