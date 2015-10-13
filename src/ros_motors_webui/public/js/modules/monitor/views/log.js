@@ -25,7 +25,14 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                 $.each(data, function() {
                     var tbl_row = "";
                     for(var key of keys) {
-                        tbl_row += "<td>"+this[key]+"</td>";
+                        if (key=='message' && (this['extra'].length > 0)){
+                            tbl_row += "<td>"+this[key]+" <span data-toggle='collapse' data-target='#extra'>...</span><div id='extra' class='collapse'>"
+                            +"Extra msg"
+                            +"</div></td>";
+                        }else{
+                            tbl_row += "<td>"+this[key]+"</td>";
+                        }
+
                     }
                     if (warning.test(this['levelname'])) {
                         tbl_body += "<tr class=\"text-warning\">"+tbl_row+"</tr>";
