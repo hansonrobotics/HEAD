@@ -21,8 +21,8 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
             tableBody: function(data) {
                 var self = this
                 var tbl_body = "";
-                var warning = new RegExp('WARN|WARNING');
-                var danger = new RegExp('ERROR|FATAL');
+                var warning = new RegExp('WARN|WARNING', 'i');
+                var danger = new RegExp('ERROR|FATAL', 'i');
                 var keys = ['name', 'levelname', 'asctime', 'message'];
                 var error_count = 0, warning_count = 0;
                 $.each(data, function() {
