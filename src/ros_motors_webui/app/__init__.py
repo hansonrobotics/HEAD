@@ -47,15 +47,17 @@ def get_motors(robot_name):
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     return json_encode({'motors': motors})
 
-@app.route('/monitor/logs/<loglevel>/<timestamp>')
-def get_logs(loglevel, timestamp):
+@app.route('/monitor/logs/<loglevel>', methods=['POST'])
+def get_logs(loglevel):
     """
-    Collect all the warnings, errors and fatals from the ros log files.
+    Collect the logs from the ros log files.
     If there is no roscore process running, then it displays the logs
     from the last run.
     """
-
     logger.info('get logs: log level {}'.format(loglevel))
+    log_cursors = request.form.copy()
+    logger.info('cursors: {}'.format(log_cursors))
+
     from roslaunch.roslaunch_logs import get_run_id
     import rospkg
     import glob
@@ -82,9 +84,11 @@ def get_logs(loglevel, timestamp):
     log_files += extra_log_files
 
     # ignore stdout log files
-    log_files = [log_file for log_file in log_files if ('stdout' not in log_file) and (not os.path.basename(log_file).startswith('roslaunch'))]
+    log_files = [log_file for log_file in log_files if
+        ('stdout' not in log_file) and
+        (not os.path.basename(log_file).startswith('roslaunch'))]
     log_files = sorted(log_files, key=lambda f: os.path.basename(f))
-    logger.info('get log files: {}'.format('\n'.join(log_files)))
+    logger.debug('get log files: {}'.format('\n'.join(log_files)))
     logs = []
 
     # log format [%(name)s][%(levelname)s] %(asctime)s: %(message)s
@@ -99,42 +103,65 @@ def get_logs(loglevel, timestamp):
         'fatal': 4,
     }
 
-    def get_log(log_file, loglevel, truncate_th=100):
+    def escape(s):
+        if isinstance(s, list):
+            return [escape(i) for i in s]
+        s = s.replace("&", "&amp;") # Must be done first!
+        s = s.replace("<", "&lt;")
+        s = s.replace(">", "&gt;")
+        s = s.replace('"', "&quot;")
+        return s
+
+    def get_log(log_file, loglevel, cursor, message_length=120):
+        """parse log files from the start cursor"""
         _log = []
-        truncate = False
         loglevel = loglevels[loglevel.lower()]
-        message_length = 120
         with open(log_file) as f:
+            for _ in xrange(cursor):
+                try:
+                    next(f)
+                except StopIteration:
+                    pass
             logrecord = None
-            for line in f.read().splitlines():
+            consume = 0
+            for line in f:
                 m = p.match(line)
                 if m:
                     if logrecord:
                         if loglevels[logrecord['levelname'].lower()] >= loglevel:
                             _log.append(logrecord)
+                        cursor += consume
+                        consume = 0
                         logrecord = None
-                    if len(_log) >= truncate_th:
-                        truncate = True
-                        break
                     name, levelname, asctime, message = map(
                         m.group, ['name', 'levelname', 'asctime', 'message'])
+                    consume += 1
                     extra = []
                     if len(message) > message_length:
                         extra.append(message[message_length:])
-                        message = message[:message_length] + ' ...'
+                        message = message[:message_length]
                     logrecord = {
                         'name': name,
                         'levelname': levelname,
                         'asctime': asctime,
-                        'message': message,
-                        'extra': extra,
+                        'message': escape(message),
+                        'extra': escape(extra),
                     }
                 # Append message that doesn't match the log format to the
                 # previous matched log record
                 elif logrecord:
+                    consume += 1
                     logrecord['extra'].append(line)
+            # Append the remaining log record
+            if logrecord:
+                if loglevels[logrecord['levelname'].lower()] >= loglevel:
+                    _log.append(logrecord)
+                cursor += consume
+                consume = 0
+                logrecord = None
 
-        return truncate, _log
+        _log.reverse()
+        return cursor, _log
 
     def isint(i):
         try:
@@ -157,17 +184,19 @@ def get_logs(loglevel, timestamp):
 
     for log_file in log_files:
         node = parse_node_name(log_file)
-        truncate, log = get_log(log_file, loglevel)
+        cursor = int(log_cursors.get(log_file, 0))
+        cursor, log = get_log(log_file, loglevel, cursor)
+        log_cursors[log_file] = cursor
         if log:
             logs.append({
                 'node': node,
                 'log': log,
-                'truncate': truncate,
                 'log_file': log_file,
                 })
+
     result = {
         'logs': logs,
-        'timestamp': time.time()
+        'cursors': log_cursors
     }
     return json_encode(result)
 
@@ -302,8 +331,8 @@ def load_params(param_file, namespace):
 
 
 if __name__ == '__main__':
-    #from rosgraph.roslogging import configure_logging
-    #configure_logging(logger.name, filename='ros_motors_webui.log')
+    from rosgraph.roslogging import configure_logging
+    configure_logging(logger.name, filename='ros_motors_webui.log')
 
     @app.route('/public/<path:path>')
     def send_js(path):

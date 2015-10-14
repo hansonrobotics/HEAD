@@ -3,11 +3,12 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
         Views.Logs = Marionette.ItemView.extend({
             initialize: function () {
                 this.listenTo(this.model, "log:changed", this.addRows);
-                console.log("added lkistener")
             },
             template: template,
             error_count: 0,
             warning_count: 0,
+            row_count: 0,
+            current_row: 0,
             ui: {
                 error_count: '#error_count',
                 warning_count: '#warning_count',
@@ -17,17 +18,21 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                 a: '.collapsed'
             },
             tableBody: function(data) {
+                var self = this
                 var tbl_body = "";
                 var warning = new RegExp('WARN|WARNING');
                 var danger = new RegExp('ERROR|FATAL');
                 var keys = ['name', 'levelname', 'asctime', 'message'];
                 var error_count = 0, warning_count = 0;
+                var re = new RegExp('/', 'g');
+                var node = this.model.get('node').replace(re, '-');
                 $.each(data, function() {
                     var tbl_row = "";
                     for(var key of keys) {
                         if (key=='message' && (this['extra'].length > 0)){
-                            tbl_row += "<td>"+this[key]+" <span data-toggle='collapse' data-target='#extra'>...</span><div id='extra' class='collapse'>"
-                            +"Extra msg"
+                            var id = 'extra_'+node+'_'+self.current_row
+                            tbl_row += "<td>"+this[key]+"<a data-toggle='collapse' data-target='#"+id+"' class='label'>...</a><div id='"+id+"' class='collapse'>"
+                            +this['extra'].join('<br>')
                             +"</div></td>";
                         }else{
                             tbl_row += "<td>"+this[key]+"</td>";
@@ -43,19 +48,28 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                     } else {
                         tbl_body += "<tr>"+tbl_row+"</tr>";
                     }
+                    self.current_row += 1;
                 })
                 return {'error_count': error_count,
                         'warning_count': warning_count,
                         'body':tbl_body};
             },
             addRows: function(){
-
-                var html = this.tableBody(this.model.new_logs);
-                this.ui.body.prepend(html.body);
-                this.error_count += html.error_count;
-                this.warning_count += html.warning_count;
-                this.ui.error_count.text(this.error_count);
-                this.ui.warning_count.text(this.warning_count);
+                console.log('add rows');
+                var res = this.tableBody(this.model.new_logs);
+                this.ui.body.prepend(res.body);
+                this.error_count += res.error_count;
+                this.warning_count += res.warning_count;
+                this.row_count += this.model.new_logs.length;
+                this.setCount();
+            },
+            setCount: function() {
+                if (this.warning_count > 0) {
+                    this.ui.warning_count.text(this.warning_count);
+                }
+                if (this.error_count > 0) {
+                    this.ui.error_count.text(this.error_count);
+                }
             },
             onRender: function () {
                 var re = new RegExp('/', 'g');
@@ -64,15 +78,11 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                 this.ui.a.attr("href", "#"+node);
                 this.ui.collapse.attr("id", node);
                 var res = this.tableBody(log);
-                if (res.warning_count > 0) {
-                    this.warning_count =  res.warning_count;
-                    this.ui.warning_count.text(this.warning_count);
-                }
-                if (res.error_count> 0) {
-                    this.error_count = res.error_count;
-                    this.ui.error_count.text(this.error_count);
-                }
+                this.warning_count =  res.warning_count;
+                this.error_count = res.error_count;
+                this.row_count = log.length;
                 this.ui.body.html(res.body)
+                this.setCount();
             },
         });
     });

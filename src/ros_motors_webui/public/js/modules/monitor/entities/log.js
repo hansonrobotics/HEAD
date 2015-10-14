@@ -5,15 +5,16 @@ define(['application', 'lib/api'], function (App, api) {
         });
         Entities.LogCollection = Backbone.Collection.extend({
             initialize: function () {
-                self.lastUpdated = new Date(new Date().setDate(new Date().getDate()-1));
+                this.cursors = {};
             },
             model: Entities.Log,
             fetch: function () {
                 var self = this;
-                $.ajax('/monitor/logs/warn/'+self.lastUpdated, {
+                $.ajax('/monitor/logs/warn', {
+                    method: 'POST',
                     dataType: 'json',
+                    data: self.cursors,
                     success: function (response) {
-                        console.log(self);
                         _.each(response.logs, function(log){
                             var m = self.get(log.node)
                             if (m){
@@ -25,8 +26,7 @@ define(['application', 'lib/api'], function (App, api) {
                                 self.add(log);
                             }
                         });
-                        self.add(response.logs);
-                        self.lastUpdated = response.timestamp
+                        self.cursors = response.cursors;
                     }
                 });
             }
