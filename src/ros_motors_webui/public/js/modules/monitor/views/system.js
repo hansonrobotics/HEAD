@@ -6,7 +6,7 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
             },
             childView: App.Monitor.Views.RosNode,
             childViewContainer: '.app-ros-nodes',
-            config :{
+            _base_config :{
                 'system': {
                     'cpu': 0,
                     'mem': 0,
@@ -86,11 +86,12 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
             refresh: function(){
                 var self = this;
                 clearInterval(this.statusInterval);
-                this.config = _.extend(this.config, this.collection.config);
+                this.config = _.extend({}, this._base_config, this.collection.config);
                 this.updateView();
                 this.statusInterval = setInterval(function(){self.collection.fetch()}, 2000);
             },
             onRender: function () {
+                this.config = _.extend({}, this._base_config, this.collection.config);
                 this.updateView();
             },
             onDestroy: function () {

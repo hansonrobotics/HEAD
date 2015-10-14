@@ -27,8 +27,6 @@ class Reporter:
         self.robot_name = ''
         # Pololu status
         self.pololu_boards = {}
-        self.load_config()
-        self.env = self._build_env()
 
     def load_config(self):
         with open(self.filename, 'r') as f:
@@ -164,10 +162,7 @@ class Reporter:
                 'camera': self.check("test -e /dev/video0") * -1 +1,
             },
             # Ros nodes based on config
-            'nodes': [
-                {'name': 'pololu', 'status':0},
-                {'name': 'dynamixel', 'status':0}
-            ]
+            'nodes': []
 
         }
         robot_name = self.get_robot_name()
