@@ -3,6 +3,7 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
         Views.Logs = Marionette.ItemView.extend({
             initialize: function () {
                 this.listenTo(this.model, "log:changed", this.addRows);
+                this.node = this.model.get('node').replace(new RegExp('/', 'g'), '-');
             },
             template: template,
             error_count: 0,
@@ -24,13 +25,12 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                 var danger = new RegExp('ERROR|FATAL');
                 var keys = ['name', 'levelname', 'asctime', 'message'];
                 var error_count = 0, warning_count = 0;
-                var re = new RegExp('/', 'g');
-                var node = this.model.get('node').replace(re, '-');
                 $.each(data, function() {
+                    var row_id = self.node+'_'+self.current_row
                     var tbl_row = "";
                     for(var key of keys) {
                         if (key=='message' && (this['extra'].length > 0)){
-                            var id = 'extra_'+node+'_'+self.current_row
+                            var id = 'extra_'+row_id;
                             tbl_row += "<td>"+this[key]+"<a data-toggle='collapse' data-target='#"+id+"' class='label'>...</a><div id='"+id+"' class='collapse'>"
                             +this['extra'].join('<br>')
                             +"</div></td>";
@@ -61,27 +61,43 @@ define(['application', 'tpl!./templates/log.tpl'], function (App, template) {
                 this.error_count += res.error_count;
                 this.warning_count += res.warning_count;
                 this.row_count += this.model.new_logs.length;
+                this.adjustRows();
                 this.setCount();
             },
-            setCount: function() {
-                if (this.warning_count > 0) {
-                    this.ui.warning_count.text(this.warning_count);
-                }
-                if (this.error_count > 0) {
-                    this.ui.error_count.text(this.error_count);
+            adjustRows: function() {
+                var log_to_show = this.model.get('log_to_show');
+                var log_to_remove = [];
+                $('tr', 'tbody#tbl_body_'+this.node).each(function(index){
+                    if (index >= log_to_show) {
+                        log_to_remove.push(this);
+                    }
+                });
+                $.each(log_to_remove, function() {
+                    this.remove();
+                });
+
+                if (log_to_remove.length > 0) {
+                    var error_count = 0, warning_count = 0;
+                    this.warning_count = $('tr.text-warning', 'tbody#tbl_body_'+this.node).length;
+                    this.error_count = $('tr.text-danger', 'tbody#tbl_body_'+this.node).length;
+                    this.setCount();
                 }
             },
+            setCount: function() {
+                this.ui.warning_count.text(this.warning_count);
+                this.ui.error_count.text(this.error_count);
+            },
             onRender: function () {
-                var re = new RegExp('/', 'g');
-                var node = this.model.get('node').replace(re, '-');
                 var log = this.model.get('log');
-                this.ui.a.attr("href", "#"+node);
-                this.ui.collapse.attr("id", node);
+                this.ui.a.attr("href", "#"+this.node);
+                this.ui.collapse.attr("id", this.node);
                 var res = this.tableBody(log);
                 this.warning_count =  res.warning_count;
                 this.error_count = res.error_count;
                 this.row_count = log.length;
                 this.ui.body.html(res.body)
+                this.ui.body.attr("id", "tbl_body_"+this.node);
+                this.adjustRows();
                 this.setCount();
             },
         });

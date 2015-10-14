@@ -20,6 +20,7 @@ app = Flask(__name__, static_folder='../public/')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)),os.pardir,os.pardir,"robots_config")
 logger = logging.getLogger('hr.ros_motors_webui.app')
+LOG_TO_SHOW = 100
 
 @app.route('/')
 def send_index():
@@ -161,7 +162,7 @@ def get_logs(loglevel):
                 logrecord = None
 
         _log.reverse()
-        return cursor, _log
+        return cursor, _log[:LOG_TO_SHOW]
 
     def isint(i):
         try:
@@ -192,6 +193,7 @@ def get_logs(loglevel):
                 'node': node,
                 'log': log,
                 'log_file': log_file,
+                'log_to_show': LOG_TO_SHOW,
                 })
 
     result = {
