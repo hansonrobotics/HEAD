@@ -6,7 +6,7 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
             },
             childView: App.Monitor.Views.RosNode,
             childViewContainer: '.app-ros-nodes',
-            _base_config :{
+            _base_config: {
                 'system': {
                     'cpu': 0,
                     'mem': 0,
@@ -25,30 +25,30 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
                     'usb2dynamixel': 2,
                     'camera': 2
                 },
-                'ros_status':{}
+                'ros_status': {}
             },
-            _statusClass:{
+            _statusClass: {
                 0: {
                     label: 'OK',
-                    class: 'label-success',
+                    class: 'label-success'
                 },
                 1: {
                     label: 'Err',
-                    class: 'label-danger',
+                    class: 'label-danger'
                 },
                 2: {
                     label: 'N/A',
-                    class: 'label-warning',
+                    class: 'label-warning'
                 }
             },
             ui: {
                 cpu: '.app-cpu',
                 mem: '.app-mem',
-                fps: '.app-fps',
+                fps: '.app-fps'
             },
-            _progress_bar_class: function(bar,val){
-                var cls = 'danger'
-                switch (bar){
+            _progress_bar_class: function (bar, val) {
+                var cls = 'danger';
+                switch (bar) {
                     case 'cpu':
                         if (val < 70) cls = 'warning';
                         if (val < 40) cls = 'success';
@@ -62,28 +62,29 @@ define(['application', 'tpl!./templates/system.tpl', './ros_node'], function (Ap
                         if (val > 40) cls = 'success';
                         break;
                 }
-                return 'progress-bar-'+cls;
+                return 'progress-bar-' + cls;
             },
-            updateView: function(){
+            updateView: function () {
                 var self = this;
                 // Main checks
-                this.$('.status-item').each(function(i,e){
-                   var id = $(e).data("status");
-                   $(e).removeClass('label-success label-warning label-danger').
+                this.$('.status-item').each(function (i, e) {
+                    var id = $(e).data("status");
+
+                    $(e).removeClass('label-success label-warning label-danger').
                         addClass(self._statusClass[self.config.status[id]].class).
                         text(self._statusClass[self.config.status[id]].label);
                 });
                 // Progress bars
                 var sys = this.config.system;
                 var cls = 'progress-bar-success progress-bar-warning progress-bar-danger';
-                this.ui.cpu.text(sys.cpu+"%");
-                $(this.ui.cpu).width(sys.cpu+"%").removeClass(cls).addClass(this._progress_bar_class('cpu',sys.mem ));
-                this.ui.mem.text(sys.mem+"%");
-                $(this.ui.mem).width(sys.mem+"%").removeClass(cls).addClass(this._progress_bar_class('mem',sys.mem ));
+                this.ui.cpu.text(sys.cpu + "%");
+                $(this.ui.cpu).width(sys.cpu + "%").removeClass(cls).addClass(this._progress_bar_class('cpu', sys.mem));
+                this.ui.mem.text(sys.mem + "%");
+                $(this.ui.mem).width(sys.mem + "%").removeClass(cls).addClass(this._progress_bar_class('mem', sys.mem));
                 this.ui.fps.text(sys.fps);
-                $(this.ui.fps).width(sys.fps+"%").removeClass(cls).addClass(this._progress_bar_class('fps',sys.fps ));
+                $(this.ui.fps).width(sys.fps + "%").removeClass(cls).addClass(this._progress_bar_class('fps', sys.fps));
             },
-            refresh: function(){
+            refresh: function () {
                 var self = this;
                 clearInterval(this.statusInterval);
                 this.config = _.extend({}, this._base_config, this.collection.config);

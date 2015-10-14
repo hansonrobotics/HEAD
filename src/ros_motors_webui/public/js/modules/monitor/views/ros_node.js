@@ -2,8 +2,8 @@ define(['application', 'tpl!./templates/ros_node.tpl'], function (App, template)
     App.module('Monitor.Views', function (Views, App, Backbone, Marionette, $, _) {
         Views.RosNode = Marionette.ItemView.extend({
             template: template,
-            tagName: 'li',
-            className: 'col-md-6',
+            tagName: 'div',
+            className: 'col-xs-6',
             status_cls: 'label-warning',
             status_label: 'n/a',
             ui: {
