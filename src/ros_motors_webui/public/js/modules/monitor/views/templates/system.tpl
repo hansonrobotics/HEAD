@@ -25,7 +25,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row hidden">
     <div class="col-md-6">
             <div class="col-sm-6">
                 Robot Name:
