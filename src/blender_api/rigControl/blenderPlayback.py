@@ -2,7 +2,7 @@
 # as the animation playback service, and hosts other supporting test operators
 
 # Frame rate for animation playback
-framerateHz = 24
+framerateHz = 48
 
 # System timer
 defaultTimerHz = 48
@@ -71,9 +71,6 @@ class EvaDebug(bpy.types.Operator):
     bpy.types.Scene.evaFollowMouse = bpy.props.BoolProperty(name = "evaFollowMouse")
     bpy.context.scene['evaFollowMouse'] = False
 
-    bpy.types.Scene.fakeSaccades = bpy.props.BoolProperty(name = "fakeSaccades")
-    bpy.context.scene['fakeSaccades'] = False
-
     bpy.types.Scene.evaFPS = bpy.props.IntProperty(name = "evaFPS", soft_min = 10, soft_max = 60)
     bpy.context.scene['evaFPS'] = 0
 
@@ -94,6 +91,7 @@ class BLPlayback(bpy.types.Operator):
 
     bpy.types.Scene.animationPlaybackActive = bpy.props.BoolProperty( name = "animationPlaybackActive", default=False)
     bpy.context.scene['animationPlaybackActive'] = False
+    bpy.context.scene['keepAlive'] = True
 
     timeList = []
 
@@ -199,8 +197,8 @@ class BLPlayback(bpy.types.Operator):
             eva.blinkRate = eva.deformObj.pose.bones['blink_rate']['value']
             eva.blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
 
-            #keep alive
-            eva.keepAlive()
+            # keep alive
+            eva.keepAlive(bpy.context.scene['keepAlive'])
 
             # send ROS data
 

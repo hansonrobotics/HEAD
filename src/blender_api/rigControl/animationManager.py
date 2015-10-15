@@ -30,10 +30,7 @@ class AnimationManager():
 
 
         # Start default cycles
-        if bpy.context.scene['fakeSaccades']:
-            self.setCycle('CYC-normal-saccades', rate=1.0, magnitude=1.0, ease_in=0.0)
-        else:
-            self.setCycle('CYC-normal', rate=1.0, magnitude=1.0, ease_in=0.0)
+        self.setCycle('CYC-normal', rate=1.0, magnitude=1.0, ease_in=0.0)
         self.setCycle('CYC-breathing', rate=1.0, magnitude=1.0, ease_in=0.0)
 
 
@@ -103,25 +100,30 @@ class AnimationManager():
             imp.reload(actuators)
 
 
-    def keepAlive(self):
+    def keepAlive(self, alive):
         '''Called every frame, used to dispatch animation actuators'''
-        self.idle += 1.0
+        if alive:
+            self.idle += 1.0
 
-        for cycle in self.cyclesSet:
-            actuators.doCycle(self, cycle)
+            for cycle in self.cyclesSet:
+                actuators.doCycle(self, cycle)
 
-        if True and self.randomFrequency('dart', self.eyeDartRate):
-            actuators.eyeSaccades(self, self.eyeWander)
+            if True and self.randomFrequency('dart', self.eyeDartRate):
+                actuators.eyeSaccades(self, self.eyeWander)
 
-        if True and self.randomFrequency('blink', self.blinkRate):
-            actuators.blink(self, self.blinkDuration)
+            if True and self.randomFrequency('blink', self.blinkRate):
+                actuators.blink(self, self.blinkDuration)
 
-        if True and self.randomFrequency('headTargetLoc', 1):
-            actuators.headDrift(self)
+            if True and self.randomFrequency('headTargetLoc', 1):
+                actuators.headDrift(self)
 
-        if True and self.randomFrequency('emotionJitter', 20):
-            actuators.emotionJitter(self)
-
+            if True and self.randomFrequency('emotionJitter', 20):
+                actuators.emotionJitter(self)
+        else:
+            for cycle in self.cyclesSet:
+                for gesture in self.gesturesList:
+                    if gesture.name == cycle.name:
+                        gesture.stripRef.mute = True
 
     # Show all attributes
     def __repr__(self):
