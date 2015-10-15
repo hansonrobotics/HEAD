@@ -6,6 +6,9 @@ from sound_play.msg import SoundRequest
 from sound_play.libsoundplay import SoundClient
 from std_msgs.msg import String
 import urllib
+import logging
+
+logger = logging.getLogger('hr.chatbot.speak')
 
 tts_cmd = (
   'simple_google_tts en '
@@ -22,7 +25,7 @@ class ChatbotSpeaker:
 
   def _response_callback(self, data):
     os.system(tts_cmd.format(data.data))
-    rospy.logwarn('tts: %s',tts_cmd.format(data.data))
+    logger.warn('tts: %s',tts_cmd.format(data.data))
     #os.system(sox_cmd)
     #self._client.playWave('/tmp/speech.wav')
 

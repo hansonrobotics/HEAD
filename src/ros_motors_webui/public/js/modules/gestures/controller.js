@@ -8,7 +8,7 @@ define(['application', './views/layout', './views/gestures', './views/cycles','.
                 App.LayoutInstance.setTitle('Gestures');
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
                 App.LayoutInstance.showNav();
-
+                api.blenderMode.enable();
                 gestures.createGestureButtons();
                 gestures.createCycleButtons();
                 gestures.createEmotionSliders();

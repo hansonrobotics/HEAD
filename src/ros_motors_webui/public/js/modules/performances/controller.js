@@ -1,6 +1,6 @@
-define(['application', 'backbone', './views/layout', './views/performances', './entities/performance',
+define(['application', 'backbone', 'lib/api', './views/layout', './views/performances', './entities/performance',
         './entities/node', './views/queue', './views/timelines'],
-    function (App, Backbone) {
+    function (App, Backbone, api) {
         return {
             performances: function () {
                 var performanceCollection = new App.Performances.Entities.PerformanceCollection(),
@@ -10,7 +10,7 @@ define(['application', 'backbone', './views/layout', './views/performances', './
                     });
 
                 performanceCollection.fetch();
-
+                api.blenderMode.enable();
                 // show page
                 App.LayoutInstance.setTitle('Interactions and Performances');
                 App.LayoutInstance.getRegion('content').show(layoutView);

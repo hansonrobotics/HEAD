@@ -1,15 +1,43 @@
 .app-slider-container {
-    margin: 5px 0;
     padding: 5px 0;
-    list-style: none;
 }
 
 .app-slider-container p {
     margin-bottom: 5px;
 }
 
+.motor-slider-container {
+    position: relative;
+}
+
+.app-motor-status-indicator {
+    height: 20px;
+    width: 20px;
+    margin: 5px 0 5px 5px;
+    border: 1px solid white;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.app-ok {
+    background-color: #5cb85c;
+}
+
+.app-error {
+    background-color: #d9534f;
+}
+
+.app-inactive {
+    background-color: #f0ad4e;
+}
+
 .app-slider {
-    margin: 5px 0;
+    margin: 5px 0 5px 0;
+}
+
+.app-slider.app-monitoring {
+    margin-right: 30px;
 }
 
 .hidden {
@@ -26,7 +54,6 @@
     -moz-border-radius: 0 !important;;
     border-radius: 0 !important;;
 
-    background-color: #2b3e50;
     border: none;
 }
 
@@ -59,58 +86,6 @@
     margin: 0 0 5px;
 }
 
-.app-slider-container .app-motor-info {
-    margin-bottom: 5px;
-}
-
-.app-motor-drag-handle {
-    cursor: move;
-    display: none;
-}
-
-.app-motors-show-on-edit, .app-motor-editing {
-    display: none;
-}
-
-.ui-slider-handle {
-    -ms-touch-action: none;
-    touch-action: none;
-}
-
-ul.app-motors {
-    list-style: none;
-    padding: 0;
-}
-
-.app-motors li.app-active {
-    border: 3px solid #df691a;
-    margin-bottom: 5px;
-    padding: 3px;
-}
-
-.motor-action {
-    padding: 2px 6px;
-}
-
-.app-motor-drag-handle {
-    margin-right: 5px;
-}
-
-.motor-group-title {
-    border-bottom: 1px solid #4e5d6c;
-    line-height: 1.5;
-    margin-top: 10px;
-}
-
-#motor-configuration-container .app-motor-grid {
-    height: auto;
-}
-
-#motor-configuration-container .app-filter form {
-    margin: 10px 0 !important;
-    float: right;
-}
-
 .backgrid thead th {
     background-color: #4e5d6c;
 }
@@ -138,4 +113,30 @@ ul.app-motors {
 
 .backgrid select {
     color: #000;
+}
+
+.app-dynamixel-button-tooltip button {
+    position: absolute;
+    height: 19px;
+    width: 19px;
+    padding: 1px 3px 1px 2px;
+}
+
+.app-dynamixel-params {
+    margin-top: 5px;
+}
+
+.app-dynamixel-button-tooltip {
+    width: 19px;
+    height: 19px;
+    position: relative;
+}
+
+.app-dynamixel-params {
+    margin-bottom: 5px;
+}
+
+.app-dynamixel-collapse .well {
+    margin: 5px 0;
+    padding: 5px;
 }

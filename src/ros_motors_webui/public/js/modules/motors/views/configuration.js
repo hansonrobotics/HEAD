@@ -30,7 +30,7 @@ define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './confi
                     this.motorsCollection = new App.Entities.MotorCollection();
                     this.pageableMotors = new PageableCollection();
 
-                    this.motorsCollection.fetch(true, function () {
+                    this.motorsCollection.fetchFromFile(function () {
                         self.pageableMotors.add(self.motorsCollection.models);
                     });
 

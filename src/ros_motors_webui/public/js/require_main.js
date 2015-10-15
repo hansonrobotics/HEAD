@@ -27,7 +27,7 @@ requirejs.config({
     },
     shim: {
         'jquery-ui': ['jquery'],
-        bootstrap: ['jquery'],
+        bootstrap: ['jquery', 'jquery-ui'],
         underscore: {
             exports: '_'
         },
@@ -79,4 +79,4 @@ require(["eventemitter"], function (EventEmitter2) {
     window.EventEmitter2 = EventEmitter2;
 });
 
-define(['touch_punch', 'jquery', 'bootstrap', 'application']);
+define(['touch_punch', 'jquery', 'jquery-ui', 'bootstrap', 'application']);

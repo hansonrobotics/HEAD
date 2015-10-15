@@ -11,7 +11,7 @@ import os.path
 from optparse import OptionParser
 from configs import *
 from subprocess import Popen
-
+import time
 
 json_encode = json.JSONEncoder().encode
 
@@ -19,17 +19,25 @@ app = Flask(__name__, static_folder='../public/')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)),os.pardir,os.pardir,"robots_config")
 
+from monitor import get_logs
+app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
+
 @app.route('/')
 def send_index():
     return send_from_directory(app.static_folder, 'index.html')
 
-
 @app.route('/status')
-def send_status():
+def send_monitor_status():
     return json_encode(rep.report())
+
+@app.route('/monitor/status')
+def send_status():
+    return json_encode(rep.system_status(config_dir=config_root))
 
 @app.route('/motors/status/<robot_name>')
 def get_motors_status(robot_name):
+    if robot_name == 'undefined':
+        return json_encode({})
     motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
     motors = rep.motor_states(motors, robot_name)
     return json_encode({'motors': motors})
@@ -170,6 +178,9 @@ def load_params(param_file, namespace):
 
 
 if __name__ == '__main__':
+    from rosgraph.roslogging import configure_logging
+    configure_logging(None, filename='ros_motors_webui.log')
+
     @app.route('/public/<path:path>')
     def send_js(path):
         return send_from_directory(app.static_folder, path)

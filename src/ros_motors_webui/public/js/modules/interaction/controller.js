@@ -4,7 +4,7 @@ define(['application', './views/interaction', 'lib/api', 'entities/interaction']
             index: function () {
                 var messageCollection = new App.Entities.MessageCollection();
                 this.interactionView = new InteractionView({collection: messageCollection});
-
+                api.blenderMode.enable();
                 App.LayoutInstance.setTitle('Interaction');
                 App.LayoutInstance.getRegion('content').show(this.interactionView);
                 App.LayoutInstance.showNav();

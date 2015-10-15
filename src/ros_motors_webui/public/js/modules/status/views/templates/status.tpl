@@ -1,7 +1,4 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <ul id="app-status-indicators"></ul>
-        </div>
-    </div>
-</div>
+<span class="glyphicon <%= success ? "glyphicon-ok" : "glyphicon-remove" %>"
+      aria-hidden="true"></span>
+<strong><%= label %></strong>
+<%= cmd %>

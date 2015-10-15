@@ -150,7 +150,8 @@ class Configs:
     def imin(self, m):
         return (m['init'] - m['min']) / float(m['max'] - m['min'])
 
-    def dynamixel_angle(self, m, v):
+    @staticmethod
+    def dynamixel_angle(m, v):
         return (v - m['init']) * math.pi / 2048
 
     def _add_dynamixel(self,m):
