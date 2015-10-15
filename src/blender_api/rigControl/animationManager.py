@@ -50,9 +50,12 @@ class AnimationManager():
 
         # Head and Eye tracking parameters
         self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
-                Pipes.linear(speed=0.5),
-                Pipes.moving_average(window=0.6)],
-            Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
+
+                # try exponential ; good is 3.5, window 0.4
+                Pipes.exponential(3.5),
+                # .4 tried, good - try 3, 5
+                Pipes.moving_average(window=0.4)],
+                Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
         ))
         self.eyeTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap(
             Pipes.linear(speed=3),
@@ -255,7 +258,26 @@ class AnimationManager():
             self.cyclesSet.discard(newCycle)
             self.cyclesSet.add(newCycle)
 
+    #========== define unique cycles that don't conform to name rate magnitude parameter ============
+    def setBlinkRandomly(self,interval_mean,interval_variation):
+        '''update the blink rate of the artistic actuator'''
+        checkValue(interval_mean,0.5,10)
+        checkValue(interval_variation,0.0,interval_mean)
+        print('changing blink rate to ',interval_mean)
+        bpy.data.scenes["Scene"].actuators.ACT_blink_randomly.PARAM_interval_mean=interval_mean
+        bpy.data.scenes["Scene"].actuators.ACT_blink_randomly.PARAM_interval_variation=interval_variation
+        # if reset delete and restart actuator
 
+    def setSaccade(self,interval_mean,interval_variation,paint_scale):
+        '''update the saccade rate of the artistic actuator'''
+        checkValue(interval_mean,0.1,5)
+        checkValue(interval_variation,0.0,interval_mean)
+
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_interval_mean=interval_mean
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_interval_variation=interval_variation
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_paint_scale=paint_scale
+
+        # if reset delete and restart actuator
     def _deleteViseme(self, viseme):
             ''' internal use only, stops and deletes a viseme'''
             # remove from list
@@ -415,7 +437,6 @@ class Cycle():
 
     def __hash__(self):
         return hash(self.name)
-
 
 def init():
     '''Create AnimationManager singleton and make it available for global access'''

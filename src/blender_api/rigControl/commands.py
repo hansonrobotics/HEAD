@@ -148,6 +148,15 @@ class EvaAPI(RigAPI):
         mloc = [-loc[1],  loc[0], loc[2]]
         bpy.evaAnimationManager.setGazeTarget(mloc)
         return 0
+    # ========== procedural animations with unique parameters =============
+    def setBlinkRandomly(self,interval_mean,interval_variation):
+        bpy.evaAnimationManager.setBlinkRandomly(interval_mean,interval_variation)
+        return 0
+
+    def setSaccade(self,interval_mean,interval_variation,paint_scale):
+        bpy.evaAnimationManager.setSaccade(interval_mean,interval_variation,paint_scale)
+
+        return 0
 
     # ========== info dump for ROS, Should return non-blender data structures
 

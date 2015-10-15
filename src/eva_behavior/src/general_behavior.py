@@ -36,7 +36,8 @@ from blender_api_msgs.msg import AvailableEmotionStates, AvailableGestures
 from blender_api_msgs.msg import EmotionState
 from blender_api_msgs.msg import SetGesture
 from blender_api_msgs.msg import Target
-
+from blender_api_msgs.msg import BlinkCycle
+from blender_api_msgs.msg import SaccadeCycle
 # local stuff.
 from face_track import FaceTrack
 
@@ -236,8 +237,30 @@ class Tree():
         self.blackboard["chat_heard_probability"] = config.getfloat("blinking", "chat_heard_probability")
         self.blackboard["chat_saying_probability"] = config.getfloat("blinking", "chat_saying_probability")
         self.blackboard["tts_end_probability"] = config.getfloat("blinking", "tts_end_probability")
+        self.blackboard["blink_randomly_interval_mean"] = config.getfloat("blinking", "blink_randomly_interval_mean")
+        self.blackboard["blink_randomly_interval_var"] = config.getfloat("blinking", "blink_randomly_interval_var")
+        self.blackboard["blink_chat_faster_mean"] = config.getfloat("blinking", "blink_chat_faster_mean")
+        self.blackboard["blink_chat_slower_mean"] = config.getfloat("blinking", "blink_chat_slower_mean")
+        self.blackboard["blink_chat_faster_mean"] = config.getfloat("blinking", "blink_chat_faster_mean")
+        ### Saccade probabilities
+        self.blackboard["saccade_explore_interval_mean"] = config.getfloat("saccade", "saccade_explore_interval_mean")
+        self.blackboard["saccade_explore_interval_var"] = config.getfloat("saccade", "saccade_explore_interval_var")
+        self.blackboard["saccade_explore_paint_scale"] = config.getfloat("saccade", "saccade_explore_paint_scale")
 
+        self.blackboard["saccade_study_face_interval_mean"] = config.getfloat("saccade", "saccade_study_face_interval_mean")
+        self.blackboard["saccade_study_face_interval_var"] = config.getfloat("saccade", "saccade_study_face_interval_var")
+        self.blackboard["saccade_study_face_paint_scale"] = config.getfloat("saccade", "saccade_study_face_paint_scale")
 
+        self.blackboard["saccade_study_face_mouth_width"] = config.getfloat("saccade", "saccade_study_face_mouth_width")
+        self.blackboard["saccade_study_face_mouth_height"] = config.getfloat("saccade", "saccade_study_face_mouth_height")
+        self.blackboard["saccade_study_face_eye_size"] = config.getfloat("saccade", "saccade_study_face_eye_size")
+        self.blackboard["saccade_study_face_eye_distance"] = config.getfloat("saccade", "saccade_study_face_eye_distance")
+        self.blackboard["saccade_study_face_eye_weight"] = config.getfloat("saccade", "saccade_study_face_eye_weight")
+        self.blackboard["saccade_study_face_mouth_weight"] = config.getfloat("saccade", "saccade_study_face_mouth_weight")
+
+        self.blackboard["saccade_micro_interval_mean"] = config.getfloat("saccade", "saccade_micro_interval_mean")
+        self.blackboard["saccade_micro_interval_var"] = config.getfloat("saccade", "saccade_micro_interval_var")
+        self.blackboard["saccade_micro_paint_scale"] = config.getfloat("saccade", "saccade_micro_paint_scale")
 
         ##### Other System Variables #####
         self.blackboard["show_expression_since"] = None
@@ -292,6 +315,11 @@ class Tree():
             SetGesture, queue_size=1)
         self.affect_pub = rospy.Publisher("chatbot_affect_express",
             EmotionState, queue_size=1)
+        self.blink_pub = rospy.Publisher("/blender_api/set_blink_randomly",
+            BlinkCycle,queue_size=1)
+        self.saccade_pub = rospy.Publisher("/blender_api/set_saccade",
+            SaccadeCycle,queue_size=1)
+
 
         self.tree = self.build_tree()
         time.sleep(0.1)
@@ -1081,6 +1109,10 @@ class Tree():
             self.do_pub_emotions = True
             self.blackboard["is_interruption"] = False
 
+            # initialize behavior linked procedural cycle defaults
+            self.init_blink()
+            self.init_saccade()
+
             emo_scale = self.blackboard["emotion_scale_closeup"]
             ges_scale = self.blackboard["gesture_scale_closeup"]
 
@@ -1101,6 +1133,11 @@ class Tree():
             self.do_pub_gestures = True
             self.do_pub_emotions = True
             self.blackboard["is_interruption"] = False
+
+            # initialize behavior linked procedural cycle defaults
+            self.init_blink()
+            self.init_saccade()
+
 
             emo_scale = self.blackboard["emotion_scale_stage"]
             ges_scale = self.blackboard["gesture_scale_stage"]
@@ -1154,7 +1191,10 @@ class Tree():
 
         if emo.data == 'happy':
             chosen_emo=self.pick_random_expression("positive_emotions",force)
-        else:
+            # change blink rate
+            self.blink_update(self.blackboard["blink_chat_faster_mean"],0.12,True)
+        else:# change blink rate
+            self.blink_update(self.blackboard["blink_chat_slower_mean"],.12,True)
             chosen_emo=self.pick_random_expression("frustrated_emotions",force)
         # publish this message to cause chatbot to emit response if it's waiting
         #
@@ -1169,3 +1209,40 @@ class Tree():
         rospy.logwarn('publishing affect to chatbot '+chosen_emo.name)
         self.affect_pub.publish(exp)
         rospy.loginfo('picked and expressed '+chosen_emo.name)
+
+
+    # reset blink rate
+    def blink_update(self,mean,variation,reset=False):
+        msg = BlinkCycle()
+        msg.mean=mean
+        msg.variation=variation
+        self.blink_pub.publish(msg)
+
+    # default rates when behavior turned on
+    def init_blink(self):
+        msg = BlinkCycle()
+        msg.mean = self.blackboard["blink_randomly_interval_mean"]
+        msg.variation = self.blackboard["blink_randomly_interval_var"]
+        print 'initialize blink mean', self.blackboard["blink_randomly_interval_mean"]
+        self.blink_pub.publish(msg)
+
+    # default rates and face heat map config
+    def init_saccade(self):
+        msg = SaccadeCycle()
+        msg.mean = self.blackboard["saccade_explore_interval_mean"]
+        msg.variation = self.blackboard["saccade_explore_interval_var"]
+        msg.paint_scale = self.blackboard["saccade_explore_paint_scale"]
+        # from study face, maybe better default should be defined for explore
+        #
+        msg.eye_size= self.blackboard["saccade_study_face_eye_size"]
+        msg.eye_distance = self.blackboard["saccade_study_face_eye_distance"]
+        msg.mouth_width =  self.blackboard["saccade_study_face_mouth_width"]
+
+        msg.mouth_height = self.blackboard["saccade_study_face_mouth_height"]
+        msg.eye_weight = self.blackboard["saccade_study_face_eye_weight"]
+        msg.mouth_weight = self.blackboard["saccade_study_face_mouth_weight"]
+
+        print 'initialize saccade mean', self.blackboard["saccade_explore_interval_mean"]
+        self.saccade_pub.publish(msg)
+
+
