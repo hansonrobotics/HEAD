@@ -7,6 +7,7 @@ from ros_pololu import PololuMotor
 from configs import Configs
 import math
 import psutil
+import time
 
 try:
     from subprocess import DEVNULL
@@ -127,7 +128,6 @@ class Reporter:
                     out = out[:out.rfind('\n')]
                     states = yaml.load(out)
                     states = dict(zip(states['name'], states['position']))
-                    print states
                     self.pololu_boards[i] = states
                 except:
                     self.pololu_boards[i] = {}
@@ -171,7 +171,6 @@ class Reporter:
             status["robot"]['current_name'] = robot_name
             # ROS Nodes
             nodes_running = str(EasyProcess("rosnode list").call().stdout).splitlines()
-            print nodes_running
             nod_file = os.path.join(config_dir,robot_name,'nodes.yaml')
             with open(nod_file, 'r') as stream:
                 node_cfg = yaml.load(stream)
