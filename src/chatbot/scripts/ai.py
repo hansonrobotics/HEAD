@@ -12,6 +12,7 @@ from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState
 import logging
+#from rigControl.actuators import sleep as nb_sleep
 
 logger = logging.getLogger('hr.chatbot.ai')
 
@@ -40,9 +41,10 @@ class Chatbot():
 
     rospy.Subscriber('chatbot_speech', ChatMessage, self._affect_perceive_callback)
 
-    self._response_publisher = rospy.Publisher(
-      'chatbot_responses', String, queue_size=1
-    )
+    self._response_publisher = rospy.Publisher('chatbot_responses', String, queue_size=1)
+
+    # send communication non-verbal blink message to behavior
+    self._blink_publisher = rospy.Publisher('chatbot_blink',String,queue_size=1)
 
     # Perceived emotional content; and emotion to express
     # Perceived: based on what chatbot heard, this is how robot should
@@ -87,15 +89,32 @@ class Chatbot():
 
   def _request_callback(self, chat_message):
     response = ''
+    #nb_sleep(random.uniform(0.0,0.5)
+    blink=String()
+    # blink that we heard something, request, probability defined in callback
+    blink.data='chat-heard'
+    self._blink_publisher.publish(blink)
+
     if chat_message.confidence < 50:
       response = 'Could you say that again?'
+      message = String()
+      message.data = response
+      self._response_publisher.publish(message)
+      # puzzled expression
     else:
+
+      # non blocking sleep for random up to .25 sec
+      #nb_sleep(random.random()< *0.5)
+      # request blink, probability of blink defined in callback
+      blink.data='chat-saying'
+      self._blink_publisher.publish(blink)
+
       response = self._kernel.respond(chat_message.utterance)
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
 
-    # if sentiment active save state and wait for affect_express to publish response
-    # otherwise publish and let tts handle it
+      # if sentiment active save state and wait for affect_express to publish response
+      # otherwise publish and let tts handle it
     self._response_buffer=response
     if self._sentiment_active:
       self._state = 'wait_emo'
@@ -197,9 +216,9 @@ class Chatbot():
          extreme=max(polarity_list)
       else:
         extreme=min(polarity_list)
-    return (average+extreme)/2.0
-
-    return negate*(average+extreme)/2.0
+      return negate*(average+extreme)/2.0
+    else:
+      return 0.0
 
 def main():
   chatbot = Chatbot()
