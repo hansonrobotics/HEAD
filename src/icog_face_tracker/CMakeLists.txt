@@ -168,9 +168,12 @@ include_directories(
 add_executable(tracker_node src/tracker.cpp)
 add_executable(tracker_tld_node src/tracker_tld.cpp)
 
+
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(icog_face_tracker_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(tracker_node icog_face_tracker_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(tracker_tld_node icog_face_tracker_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(icog_face_tracker_node
