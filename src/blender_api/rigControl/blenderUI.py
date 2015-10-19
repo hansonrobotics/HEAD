@@ -123,17 +123,6 @@ class BLRigControl(bpy.types.Panel):
         col.operator('eva.debug', text='Gaze Nil').action = 'commands.EvaAPI().setGazeTarget([0, 0, 0])'
 
         row = layout.row()
-        row.label(text="Physiological:")
-        eva = bpy.evaAnimationManager
-        bones = eva.deformObj.pose.bones
-        col = layout.column(align = True)
-        col.active = runningAnimation
-        col.prop(bones['eye_dart_rate'], '["value"]', text='eyeDartRate', slider = True)
-        col.prop(bones['eye_wander'], '["value"]', text='eyeWander', slider = True)
-        col.prop(bones['blink_rate'], '["value"]', text='blinkRate', slider = True)
-        col.prop(bones['blink_duration'], '["value"]', text='blinkDuration', slider = True)
-
-        row = layout.row()
         layout.label(text="Debug:")
         col = layout.column(align=True)
         col.operator('eva.debug', text='getAPIVersion()').action = 'commands.EvaAPI().getAPIVersion()'
@@ -142,19 +131,62 @@ class BLRigControl(bpy.types.Panel):
         col.operator('eva.debug', text='availableGestures()').action = 'commands.EvaAPI().availableGestures()'
         col.operator('eva.debug', text='getEmotionStates()').action = 'commands.EvaAPI().getEmotionStates()'
         col.operator('eva.debug', text='getGestures()').action = 'commands.EvaAPI().getGestures()'
-        col.operator('eva.debug', text='getGestureParams()').action = 'commands.EvaAPI().getGestureParams()'
         col.operator('eva.debug', text='getHeadData()').action = 'commands.EvaAPI().getHeadData()'
         col.operator('eva.debug', text='getNeckData()').action = 'commands.EvaAPI().getNeckData()'
         col.operator('eva.debug', text='getEyesData()').action = 'commands.EvaAPI().getEyesData()'
         col.operator('eva.debug', text='getFaceData()').action = 'commands.EvaAPI().getFaceData()'
 
+class BLActuatorControl(bpy.types.Panel):
+    bl_label = "Actuator Control"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_context = 'object'
+
+
+    def draw(self, context):
+        layout = self.layout
+        if not hasattr(bpy.context.scene, 'actuators'):
+            return
+
+        # Draw UI for every actuator
+        for attr in dir(bpy.context.scene.actuators):
+            if not attr.startswith('ACT_'):
+                continue
+            bl_actuator = getattr(bpy.context.scene.actuators, attr)
+
+            row = layout.row()
+            row.label(icon='FORCE_TURBULENCE',
+                text='{}:'.format(attr[4:]).capitalize().replace('_', ' '))
+            col = row.column()
+            col.alignment = 'RIGHT'
+            col.prop(bl_actuator, 'HEAD_PARAM_enabled', text='On', toggle=True)
+
+            # Draw UI for every parameter
+            for attr in bl_actuator.parameter_order.split(';'):
+                if attr.startswith('PARAM_'):
+                    row = layout.row()
+                    row.prop(bl_actuator, attr, slider=True)
+                elif attr.startswith('IMG_'):
+                    row = layout.row()
+                    row.label(text='Open "{}" in image editor'.format(getattr(bl_actuator, attr)))
+                    ## The two lines below would render the image straight in
+                    ## the UI Panel, but the widget doesn't update properly.
+                    # texture = bpy.data.textures[getattr(bl_actuator, attr)]
+                    # row.template_preview(texture, show_buttons=False)
+
+            # Separate actuators with some space
+            layout.row()
+            layout.row()
+
 def register():
     bpy.utils.register_class(BLRigControl)
     bpy.utils.register_class(BLRigConsole)
+    bpy.utils.register_class(BLActuatorControl)
 
 def unregister():
     bpy.utils.unregister_class(BLRigControl)
     bpy.utils.unregister_class(BLRigConsole)
+    bpy.utils.unregister_class(BLActuatorControl)
 
 def refresh():
     try:

@@ -20,8 +20,10 @@
 
 import rospy
 from general_behavior import Tree
+import logging
 
 if __name__ == "__main__":
+    logger = logging.getLogger('hr.eva_behavior.main')
     rospy.init_node("Eva_Behavior")
-    print("Starting Behavior Node")
+    logger.info("Starting Behavior Node")
     tree = Tree()

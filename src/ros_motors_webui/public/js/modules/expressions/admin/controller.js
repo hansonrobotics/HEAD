@@ -4,7 +4,7 @@ define(["application", "lib/api", "./views/layout", "../../motors/views/motors",
         return {
             index: function () {
                 // reset robot
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+                api.disableInteractionMode();
                 api.pointHead();
 
                 this.motorsCollection = new App.Entities.MotorCollection();

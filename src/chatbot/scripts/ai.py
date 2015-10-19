@@ -11,7 +11,10 @@ from itertools import izip
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState
+import logging
+#from rigControl.actuators import sleep as nb_sleep
 
+logger = logging.getLogger('hr.chatbot.ai')
 
 class Chatbot():
   def __init__(self):
@@ -38,9 +41,10 @@ class Chatbot():
 
     rospy.Subscriber('chatbot_speech', ChatMessage, self._affect_perceive_callback)
 
-    self._response_publisher = rospy.Publisher(
-      'chatbot_responses', String, queue_size=1
-    )
+    self._response_publisher = rospy.Publisher('chatbot_responses', String, queue_size=1)
+
+    # send communication non-verbal blink message to behavior
+    self._blink_publisher = rospy.Publisher('chatbot_blink',String,queue_size=1)
 
     # Perceived emotional content; and emotion to express
     # Perceived: based on what chatbot heard, this is how robot should
@@ -62,14 +66,14 @@ class Chatbot():
       key = parts[0]
       value = parts[1]
       self._kernel.setBotPredicate(key, value)
-    rospy.logwarn('Done initializing chatbot.')
+    logger.warn('Done initializing chatbot.')
     rospy.spin()
 
   def sentiment_active(self):
     self._sentiment_active=True
 
   def load_sentiment_csv(self,sent3_file):
-    rospy.logwarn('loading sentiment')
+    logger.warn('loading sentiment')
     # for some reason doesn't work to open file here, only in main?
     reader=csv.reader(sent3_file)
     sent3=list(reader)
@@ -81,24 +85,41 @@ class Chatbot():
       if abs(float(phrase[6])) > 0.1:
         self._polarity[phrase[1]]=float(phrase[6])
 
-    rospy.logwarn("loaded "+len(self._polarity)+"items")
+    logger.warn("Loaded "+len(self._polarity)+"items")
 
   def _request_callback(self, chat_message):
     response = ''
+    #nb_sleep(random.uniform(0.0,0.5)
+    blink=String()
+    # blink that we heard something, request, probability defined in callback
+    blink.data='chat-heard'
+    self._blink_publisher.publish(blink)
+
     if chat_message.confidence < 50:
       response = 'Could you say that again?'
+      message = String()
+      message.data = response
+      self._response_publisher.publish(message)
+      # puzzled expression
     else:
+
+      # non blocking sleep for random up to .25 sec
+      #nb_sleep(random.random()< *0.5)
+      # request blink, probability of blink defined in callback
+      blink.data='chat-saying'
+      self._blink_publisher.publish(blink)
+
       response = self._kernel.respond(chat_message.utterance)
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
 
-    # if sentiment active save state and wait for affect_express to publish response
-    # otherwise publish and let tts handle it
+      # if sentiment active save state and wait for affect_express to publish response
+      # otherwise publish and let tts handle it
     self._response_buffer=response
     if self._sentiment_active:
       self._state = 'wait_emo'
     else:
-      rospy.logwarn('sentiment off, immediate publish to tts')
+      logger.warn('Sentiment off, immediate publish to tts')
       message = String()
       message.data = response
       self._response_publisher.publish(message)
@@ -112,19 +133,19 @@ class Chatbot():
     if chat_message.confidence >= 50 and self._sentiment_active:
       polarity=self._get_polarity(chat_message.utterance)
       polmsg='got polarity '+ str(polarity) + ' for ' + chat_message.utterance
-      rospy.loginfo(polmsg)
+      logger.info(polmsg)
       emo = String()
       # change emotion if polarity magnitude exceeds threshold defined in constructor
       # otherwise let top level behaviors control
       if polarity>self._polarity_threshold:
         emo.data = 'happy'
         self._affect_publisher.publish(emo)
-        rospy.loginfo('Chatbot perceived emo:'+emo.data)
+        logger.info('Chatbot perceived emo:'+emo.data)
       elif polarity< 0 and abs(polarity)> self._polarity_threshold:
         emo = String()
         emo.data = 'frustrated'
         self._affect_publisher.publish(emo)
-        rospy.loginfo('Chatbot perceived emo:'+emo.data)
+        logger.info('Chatbot perceived emo:'+emo.data)
       else:
         # if no or below threshold affect, publish message so some response is given.
 
@@ -141,7 +162,7 @@ class Chatbot():
   def _affect_express_callback(self, affect_message):
     #
 
-    rospy.loginfo("Chatbot wants to express: " + affect_message.name+" state='"+self._state)
+    logger.info("Chatbot wants to express: " + affect_message.name+" state='"+self._state)
     # currently general_behavior publishes set emotion and tts listens
     # here we could call some smart markup process instead of letting tts
     # do default behavior.
@@ -172,7 +193,7 @@ class Chatbot():
       # check if words in sentic
       if word in self._polarity:
         polarity_list.append(self._polarity[word])
-        rospy.logwarn(word+' '+str(self._polarity[word]))
+        logger.warn(word+' '+str(self._polarity[word]))
       else:
         not_found+=1
   
@@ -182,7 +203,7 @@ class Chatbot():
     for pair in pairs:
       if pair in self._polarity:
         polarity_list.append(self._polarity[pair])
-        rospy.logwarn(pair+' '+str(self._polarity[pair]))
+        logger.warn(pair+' '+str(self._polarity[pair]))
       else:
         not_found+=1
 
@@ -195,9 +216,9 @@ class Chatbot():
          extreme=max(polarity_list)
       else:
         extreme=min(polarity_list)
-    return (average+extreme)/2.0
-
-    return negate*(average+extreme)/2.0
+      return negate*(average+extreme)/2.0
+    else:
+      return 0.0
 
 def main():
   chatbot = Chatbot()
@@ -205,7 +226,7 @@ def main():
   aiml_dir = sys.argv[1]
 
   if sys.argv[2]=='-sent':
-    rospy.logwarn("got -sent")
+    logger.warn("Got -sent")
     # by default no sentiment so make active if got arg
     chatbot.sentiment_active()
     sent3_file=aiml_dir+'senticnet3.props.csv'
@@ -213,7 +234,7 @@ def main():
       sent_f=open(sent3_file,'r')
       chatbot.load_sentiment_csv(sent_f)
     except:
-      rospy.logwarn("exception here even though file read OK...")
+      logger.warn("Exception here even though file read OK...")
     #rospy.logwarn('Done loading '+len(self._polarity)+' sentiment polarity items.')
   # this needs to be at end to see ros msgs in load_sentiment ( spin is hidden inside? )
   chatbot.initialize(aiml_dir)

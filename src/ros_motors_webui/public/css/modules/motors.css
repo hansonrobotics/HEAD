@@ -1,0 +1,142 @@
+.app-slider-container {
+    padding: 5px 0;
+}
+
+.app-slider-container p {
+    margin-bottom: 5px;
+}
+
+.motor-slider-container {
+    position: relative;
+}
+
+.app-motor-status-indicator {
+    height: 20px;
+    width: 20px;
+    margin: 5px 0 5px 5px;
+    border: 1px solid white;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.app-ok {
+    background-color: #5cb85c;
+}
+
+.app-error {
+    background-color: #d9534f;
+}
+
+.app-inactive {
+    background-color: #f0ad4e;
+}
+
+.app-slider {
+    margin: 5px 0 5px 0;
+}
+
+.app-slider.app-monitoring {
+    margin-right: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* SLIDER */
+.ui-slider-handle {
+    display: none;
+}
+
+.ui-slider  {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;;
+    border-radius: 0 !important;;
+
+    border: none;
+}
+
+.ui-slider-range {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;;
+    border-radius: 0 !important;;
+
+    background-color: #df691a;
+}
+
+.ui-slider {
+    height: 20px;
+}
+
+#app-edit-motors {
+    margin-bottom: 20px;
+}
+
+.app-slider-value-container {
+    text-indent: 5px;
+}
+
+.app-motor-label {
+    padding: 2px 8px;
+    height: 21px;
+}
+
+.app-slider-container hr {
+    margin: 0 0 5px;
+}
+
+.backgrid thead th {
+    background-color: #4e5d6c;
+}
+
+.backgrid td.editor input[type=text] {
+    color: #FFFFFF;
+}
+
+#motor-configuration-container .btn-group {
+    margin: 10px 0;
+}
+
+.backgrid th, .backgrid td {
+    padding: 6px 7px;
+}
+
+.backgrid-paginator ul > li > a:hover, .backgrid-paginator ul > .active > a, .backgrid-paginator ul > .active > span {
+    background-color: #df691a;
+    color: #FFF;
+}
+
+.backgrid-paginator ul > .disabled > span, .backgrid-paginator ul > .disabled > a, .backgrid-paginator ul > .disabled > a:hover {
+    color: #FFF;
+}
+
+.backgrid select {
+    color: #000;
+}
+
+.app-dynamixel-button-tooltip button {
+    position: absolute;
+    height: 19px;
+    width: 19px;
+    padding: 1px 3px 1px 2px;
+}
+
+.app-dynamixel-params {
+    margin-top: 5px;
+}
+
+.app-dynamixel-button-tooltip {
+    width: 19px;
+    height: 19px;
+    position: relative;
+}
+
+.app-dynamixel-params {
+    margin-bottom: 5px;
+}
+
+.app-dynamixel-collapse .well {
+    margin: 5px 0;
+    padding: 5px;
+}

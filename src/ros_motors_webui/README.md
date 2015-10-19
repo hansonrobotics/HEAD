@@ -17,20 +17,14 @@ Application can run on any webserver, which could connect to the rosbridge webso
  1. Start rosbridge server: `roslaunch rosbridge_server rosbridge_websocket.launch`
  2. Run `./app/__init__.py`, then open [localhost:5000](http://localhost:5000).
 
-Components and ROS topics
+Troubleshooting
 ----------
-#### index.html (Emotions)
- 1. Gets the list of expressions from ROS *valid_coupled_face_exprs*  topic served by [basic_head_api](https://github.com/hansonrobotics/basic_head_api) node
- 2. Sends the expression and intensity to the */make_coupled_face_expr* to same [basic_head_api](https://github.com/hansonrobotics/basic_head_api) node
- 3. The joystick control sends the head direction to */point_head* module.
- 
- ----------
+Sometimes not all topics subscribed or beiiing publsihed after refresh. 
 
-#### motors.html (Manual Control)
-Controls individual motors manually. loads config from : `/configs/` dir.
-Currently supported:
+https://github.com/RobotWebTools/rosbridge_suite/issues/138
 
- 1. Dynamixels
- 2. Pololulu using [ros_pololu_servo node](https://github.com/hansonrobotics/ros_pololu_servo)
+Need patch for rosbridge module.
+By default the path on ubuntu:
+`/opt/ros/indigo/lib/python2.7/dist-packages/rosbridge_library/internal/topics.py`
 
-----------
+

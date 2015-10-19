@@ -29,6 +29,9 @@ import cv
 from std_msgs.msg import String
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
+import logging
+
+logger = logging.getLogger('hr.pi_vision.ros2opencv')
 
 class AVI2ROS:
     def __init__(self):
@@ -69,7 +72,7 @@ class AVI2ROS:
         image_size = cv.GetSize(frame)
         
         if self.width and self.height and (self.width != image_size[0] or self.height != image_size[1]):
-            rospy.loginfo("Resizing! " + str(self.width) + " x " + str(self.height))
+            logger.info("Resizing! " + str(self.width) + " x " + str(self.height))
             resized_frame = cv.CreateImage((self.width, self.height), frame.depth, frame.channels)
             cv.Resize(frame, resized_frame)
             frame = cv.CloneImage(resized_frame)
@@ -129,10 +132,10 @@ class AVI2ROS:
                 try:
                     image_pub.publish(bridge.cv_to_imgmsg(frame, "bgr8"))
                 except CvBridgeError, e:
-                    print e         
+                    logger.error(e)
     
     def cleanup(self):
-            print "Shutting down vision node."
+            logger.info("Shutting down vision node.")
             cv.DestroyAllWindows()
 
 def main(args):
@@ -146,7 +149,7 @@ def main(args):
     try:
         a2r = AVI2ROS()
     except KeyboardInterrupt:
-        print "Shutting down avi2ros..."
+        logger.info("Shutting down avi2ros...")
         cv.DestroyAllWindows()
 
 if __name__ == '__main__':

@@ -1,9 +1,11 @@
 # AnimationManager is the primary datastore for the various paramters
 # that define the Eva character.
 
+from .actuators import ActuatorManager
+
 from . import actuators
-from .blendedNum import BlendedNum
-from .blendedAngle import BlendedAngle
+from . import blendedNum
+from .blendedNum.plumbing import Pipes, Wrappers
 from .helpers import *
 
 import math
@@ -13,14 +15,15 @@ import time
 import imp
 import pdb
 from mathutils import Vector
+import logging
 
 debug = True
-
+logger = logging.getLogger('hr.blender_api.rigcontrol.animationmanager')
 
 class AnimationManager():
 
     def __init__(self):
-        print('Starting AnimationManager singleton')
+        logger.info('Starting AnimationManager singleton')
 
         # Gesture params
         self.gesturesList = []
@@ -47,20 +50,17 @@ class AnimationManager():
 
 
         # Head and Eye tracking parameters
-        self.headTargetLoc = BlendedAngle([0,0,0], steps=10, smoothing=10, ang_speed=0.5, offset=[0, self.face_target_offset, 0])
-        self.eyeTargetLoc = BlendedNum([0,0,0], steps=18, smoothing=1)
+        self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
+                Pipes.linear(speed=0.5),
+                Pipes.moving_average(window=0.6)],
+            Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
+        ))
+        self.eyeTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap(
+            Pipes.linear(speed=3),
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
+        ))
 
-
-        # Autonomous (unconscious) behavior parameters
-        self.eyeDartRate = 1.0
-        self.eyeWander = 1.0
-        self.blinkRate = 0.0
-        self.blinkDuration = 0.0
-
-        # Emotional parameters
-        self.swiftness = 1.0
-        self.shyness = 1.0
-        self.idle = 0.0
+        self.actuatorManager = ActuatorManager()
 
         # Internal vars
         self._time = 0
@@ -99,31 +99,6 @@ class AnimationManager():
         if debug:
             imp.reload(actuators)
 
-
-    def keepAlive(self, alive):
-        '''Called every frame, used to dispatch animation actuators'''
-        if alive:
-            self.idle += 1.0
-
-            for cycle in self.cyclesSet:
-                actuators.doCycle(self, cycle)
-
-            if True and self.randomFrequency('dart', self.eyeDartRate):
-                actuators.eyeSaccades(self, self.eyeWander)
-
-            if True and self.randomFrequency('blink', self.blinkRate):
-                actuators.blink(self, self.blinkDuration)
-
-            if True and self.randomFrequency('headTargetLoc', 1):
-                actuators.headDrift(self)
-
-            if True and self.randomFrequency('emotionJitter', 20):
-                actuators.emotionJitter(self)
-        else:
-            for cycle in self.cyclesSet:
-                for gesture in self.gesturesList:
-                    if gesture.name == cycle.name:
-                        gesture.stripRef.mute = True
 
     # Show all attributes
     def __repr__(self):
@@ -194,19 +169,25 @@ class AnimationManager():
             try:
                 control = self.bones['EMO-'+emotionName]
             except KeyError:
-                print('Cannot set emotion. No bone with name ', emotionName)
+                logger.error('Cannot set emotion. No bone with name ', emotionName)
                 continue
             else:
                 found = False
                 for emotion in self.emotionsList:
                     if emotionName == emotion.name:
                         # update magnitude
-                        emotion.magnitude.target = data['magnitude']
-                        emotion.duration = data['duration']
+                        num = emotion.magnitude
+                        num.keyframes = []
+                        num.add_keyframe(target=data['magnitude'], transition=(0, Pipes.linear(2)))
+                        num.add_keyframe(target=0.0, transition=(0, Pipes.exponential(0.8/data['duration'])))
                         found = True
 
                 if not found:
-                    emotion = Emotion(emotionName, magnitude = BlendedNum(data['magnitude'], steps = 10, smoothing = 10), duration = data['duration'])
+                    num = blendedNum.Trajectory(0)
+                    num.add_keyframe(target=data['magnitude'], transition=[
+                        (0, Pipes.linear(2)), (1, Pipes.moving_average(0.2))])
+                    num.add_keyframe(target=0.0, transition=(0, Pipes.exponential(0.8/data['duration'])))
+                    emotion = Emotion(emotionName, magnitude=num)
                     self.emotionsList.append(emotion)
 
 
@@ -285,7 +266,7 @@ class AnimationManager():
             self.deformObj.animation_data.nla_tracks.remove(viseme.trackRef)
 
 
-    def coordConvert(self, loc, currbu, offset= 0):
+    def coordConvert(self, loc, currbu, offset=0):
         '''Convert coordinates from meters to blender units. The
         coordinate frame used here is y is straight-ahead, x is th the
         right, and z is up.
@@ -304,15 +285,6 @@ class AnimationManager():
         # Compute distance from previous eye position
         distance = computeDistance(locBU, currbu)
 
-        # Behavior: if the point being looked at changed
-        # significantly, then micro-blink.
-
-        if self.randomFrequency('blink', 20):
-            if (distance + abs(offset)) > 7.9:
-                self.newGesture('GST-blink', priority=1)
-            elif (distance + abs(offset)) > 6.5:
-                self.newGesture('TRN-waitBlink', priority=1)
-
         return locBU
 
 
@@ -321,29 +293,28 @@ class AnimationManager():
 
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.face_target_offset)
         self.headTargetLoc.target = locBU
+
+
         # Change offset for the eyes
         locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
 
-        # Change eye speed for tracking depending on delta of current to new location
-        if (abs((Vector(locBU) - Vector(self.eyeTargetLoc.current)).length) > 2.2):
-            self.eyeTargetLoc.smoothing = 1
-            self.eyeTargetLoc.steps = 30
-        else:
-            self.eyeTargetLoc.smoothing = 1
-            self.eyeTargetLoc.steps = 18
+        # Move eyes too, slowly
+        self.eyeTargetLoc.transition = Wrappers.wrap([
+                Pipes.linear(speed=0.5),
+                Pipes.stick(window=0.5),
+                Pipes.moving_average(window=0.1)],
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0]))
         self.eyeTargetLoc.target = locBU
 
     def setGazeTarget(self, loc):
         '''Set the target used for eye tracking only.'''
 
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.eye_target_offset)
-        # Change eye speed for tracking depending on delta of current to new location
-        if (abs((Vector(locBU) - Vector(self.eyeTargetLoc.current)).length) > 2.2):
-            self.eyeTargetLoc.smoothing = 5
-            self.eyeTargetLoc.steps = 5
-        else:
-            self.eyeTargetLoc.smoothing = 2
-            self.eyeTargetLoc.steps = 5
+
+        self.eyeTargetLoc.transition = Wrappers.wrap(
+            Pipes.linear(speed=3),
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
+        )
         self.eyeTargetLoc.target = locBU
 
     def setViseme(self):
@@ -385,10 +356,9 @@ class AnimationManager():
 
 class Emotion():
     '''Represents an emotion'''
-    def __init__(self, name, magnitude, duration):
+    def __init__(self, name, magnitude):
         self.name = name
         self.magnitude = magnitude
-        self.duration = duration
         self.priority = 0
 
 
@@ -414,14 +384,24 @@ class Viseme():
         self.trackRef = track
         self.stripRef = strip
         self.duration = duration  		# duration of animation in seconds
-        self.time = 0 - startTime 		# -time is scheduled for the future (seconds)
-                                        # 0 is happening right away
-                                        # +time is animation in progress (seconds)
-        self.magnitude = BlendedNum(0, steps=2, smoothing=4) 	# normalized amplitude
-        self.rampInRatio = rampInRatio 		# percentage of time spent blending in
-        self.rampOutRatio = rampOutRatio 	# percentage of time spent blending out
         self.influence_kfp = influence_kfp  # Influence keyframe point to change influence
+        # startTime - seconds to wait before playing this Viseme
+        # rampInRatio - percentage of time spent blending in
+        # rampOutRatio - percentage of time spent blending out
 
+        # Convert time percentages to transition speeds
+        speedIn = 1/(max(rampInRatio * duration, 0.01))
+        speedOut = 1/(max(rampOutRatio * duration, 0.01))
+
+        # Calculate when to start transitioning out
+        startOut = (1-rampOutRatio) * duration + startTime
+
+        # Set up the trajectory for the magnitude
+        num = blendedNum.Trajectory(0)
+        num.add_keyframe(target=0.0, time=startTime, transition=(1, Pipes.moving_average(0.2)))
+        num.add_keyframe(target=1.0, time=startOut, transition=(0, Pipes.linear(speedIn)))
+        num.add_keyframe(target=0.0, transition=(0, Pipes.linear(speedOut)))
+        self.magnitude = num # normalized amplitutde
 
 class Cycle():
     ''' Represents a cyclic gesture, or 'soma' '''
@@ -441,6 +421,6 @@ class Cycle():
 def init():
     '''Create AnimationManager singleton and make it available for global access'''
     if hasattr(bpy, 'evaAnimationManager'):
-        print('Skipping Singleton instantiation')
+        logger.info('Skipping Singleton instantiation')
     else:
         bpy.evaAnimationManager = AnimationManager()

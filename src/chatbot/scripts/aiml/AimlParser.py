@@ -3,6 +3,9 @@ from xml.sax.xmlreader import Locator
 import sys
 import xml.sax
 import xml.sax.handler
+import logging
+
+logger = logging.getLogger('hr.chatbot.aiml.aimlparser')
 
 class AimlParserError(Exception): pass
 
@@ -96,10 +99,10 @@ class AimlHandler(ContentHandler):
 			self._whitespaceBehaviorStack.append(self._whitespaceBehaviorStack[-1])
 
 	def startElementNS(self, name, qname, attr):
-		print "QNAME:", qname
-		print "NAME:", name
+		logger.info("QNAME:", qname)
+		logger.info("NAME:", name)
 		uri,elem = name
-		if (elem == "bot"): print "name:", attr.getValueByQName("name"), "a'ite?"
+		if (elem == "bot"): logger.info("name:", attr.getValueByQName("name"), "a'ite?")
 		self.startElement(elem, attr)
 		pass
 
@@ -120,7 +123,7 @@ class AimlHandler(ContentHandler):
 		try: self._startElement(name, attr)
 		except AimlParserError, msg:
 			# Print the error message
-			sys.stderr.write("PARSE ERROR: %s\n" % msg)
+			logger.error("PARSE ERROR: %s" % msg)
 			
 			self._numParseErrors += 1 # increment error count
 			# In case of a parse error, if we're inside a category, skip it.
@@ -254,7 +257,7 @@ class AimlHandler(ContentHandler):
 		try: self._characters(ch)
 		except AimlParserError, msg:
 			# Print the message
-			sys.stderr.write("PARSE ERROR: %s\n" % msg)
+			logger.error("PARSE ERROR: %s" % msg)
 			self._numParseErrors += 1 # increment error count
 			# In case of a parse error, if we're inside a category, skip it.
 			if self._state >= self._STATE_InsideCategory:
@@ -335,7 +338,7 @@ class AimlHandler(ContentHandler):
 		try: self._endElement(name)
 		except AimlParserError, msg:
 			# Print the message
-			sys.stderr.write("PARSE ERROR: %s\n" % msg)
+			logger.error("PARSE ERROR: %s" % msg)
 			self._numParseErrors += 1 # increment error count
 			# In case of a parse error, if we're inside a category, skip it.
 			if self._state >= self._STATE_InsideCategory:

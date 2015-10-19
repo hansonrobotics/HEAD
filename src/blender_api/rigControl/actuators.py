@@ -1,89 +1,196 @@
-# Functions that control autonomous behaviors in the Eva character
-# Breathing, blinking, eye saccades, head drift, sleeping.
-#
-# All of the functions here take AnimationManager as the argument.
+import inspect
+from collections import namedtuple
+from time import time as systime
 
-from .helpers import *
+try:
+    import bpy
+except ImportError:
+    pass
 
-import random
+# Global variable that contains current time during the execution of an
+# actuator step. Useful for the sleep method below.
+_context = None
 
-
-# def idleCycle(self):
-#     if 'CYC-normal' not in [gesture.name for gesture in self.gesturesList]:
-#         self.newGesture('CYC-normal', repeat = 10, speed=1, magnitude=1.0, priority=1)
-#
-#
-# def breathingCycle(self, rate, intensity):
-#     if 'CYC-breathing' not in [gesture.name for gesture in self.gesturesList]:
-#         # create new strip
-#         self.newGesture('CYC-breathing', repeat=10, speed=rate, magnitude=intensity)
-#     else:
-#         # update strip property
-#         for gesture in self.gesturesList:
-#             if gesture.name == 'CYC-breathing':
-#                 gesture.stripRef.influence = intensity
-#                 gesture.speed = rate
+def sleep(delay):
+    """ A non-thread-blocking sleep function to be used from inside the
+    actuator function. """
+    end = _context.time + delay
+    yield
+    while _context.time < end:
+        yield
 
 
-def doCycle(self, cycle):
-    if cycle.name not in [gesture.name for gesture in self.gesturesList]:
-        # create new strip
-        self.newGesture(cycle.name, repeat=10, speed=cycle.rate, magnitude=cycle.magnitude)
-    else:
-        # update strip property
-        for gesture in self.gesturesList:
-            if gesture.name == cycle.name:
-                gesture.stripRef.influence = cycle.magnitude
-                gesture.speed = cycle.rate
+actuator_functions = []
+def new(func):
+    """ Decorator that registers actuator functions with the manager. """
+    actuator_functions.append(func)
+    return func
 
 
-def emotionJitter(self):
-    for emotion in self.emotionsList:
-        target = emotion.magnitude.target
-        emotion.magnitude.target = random.gauss(target, target/20)
+class ActuatorManager:
+
+    class Actuator:
+        """ An interface between the actuator functions and the actuator manager.
+        Actuator functions are passed an instance of this class as 'self'. """
+
+        class Parameter:
+            """ An interface returned by add_parameter. """
+            def __init__(self, getter, setter):
+                self.getter = getter
+                self.setter = setter
+            @property
+            def val(self):
+                return self.getter()
+            @val.setter
+            def val(self, val):
+                self.setter(val)
+
+        class Image:
+            """ An interface returned by add_image. """
+            def __init__(self, pixels_setter):
+                self.set_pixels = pixels_setter
+
+        def __init__(self, name, register_parameter, register_image, is_enabled):
+            self.name = name
+            self.register_parameter = register_parameter
+            self.register_image = register_image
+            self.is_enabled = is_enabled
+            self.generator = None
+
+        def add_parameter(self, bl_prop):
+            """ Register a new variable parameter with the actuator manager.
+            Should be called in the beginning of the artistic actuator function.
+            bl_prop - (a Blender property instance of type bpy.props.*)
+            """
+            getter, setter = self.register_parameter(self.name, bl_prop)
+            return self.Parameter(getter, setter)
+
+        def add_image(self, image_name, img_size):
+            """ Register a new image with the actuator manager.
+            Should be called in the beginning of the artistic actuator function.
+            image_name - (string)
+            image_size - (tuple of 2 ints)
+            """
+            pixels_setter = self.register_image(self.name, image_name, img_size)
+            return self.Image(pixels_setter)
+
+    Context = namedtuple('Context', ['time', 'dt'])
+
+    def __init__(self):
+        self.property_store = PropertyStore()
+
+        # Initialize artistic actuator functions.
+        import artistic.actuators
+        self.actuators = []
+        with _set_global('_context', self.Context(systime(), 0)):
+            for func in actuator_functions:
+                enabled_getter = self.property_store.register_actuator(func.__name__)
+                actuator = self.Actuator(func.__name__,
+                    self.property_store.register_parameter,
+                    self.property_store.register_image,
+                    enabled_getter)
+                actuator.generator = func(actuator) if _takes_nargs(func, 1) else func()
+                self.actuators.append(actuator)
+                actuator.generator.send(None)
+
+    def tick(self, time, dt):
+        """ Called every frame from blenderPlayback.py """
+        with _set_global('_context', self.Context(time, dt)):
+            for actuator in self.actuators:
+                if actuator.is_enabled():
+                    actuator.generator.send((time, dt))
 
 
-def eyeSaccades(self, eyeWanderAbs):
-    ''' applies random saccades to eye '''
-    newLoc = [0,0,0]
-    newLoc[0] = random.gauss(self.eyeTargetLoc.current[0], eyeWanderAbs)
-    newLoc[1] = self.eyeTargetLoc.current[1]
-    newLoc[2] = random.gauss(self.eyeTargetLoc.current[2], eyeWanderAbs * 0.5)
+class PropertyStore:
+    """ Manage actuator properties and data in Blender RNA """
 
-    # compute distance from previous eye position
-    distance = computeDistance(newLoc, self.eyeTargetLoc.current)
+    def __init__(self):
+        self.bltype_actuators = type("HR_Actuators", (bpy.types.PropertyGroup,), {})
+        bpy.utils.register_class(self.bltype_actuators)
+        bpy.types.Scene.actuators = bpy.props.PointerProperty(type=self.bltype_actuators)
 
-    if distance > 0.1:
-        if self.randomFrequency('blinkMicro', 1.0):
-            self.newGesture('GST-blink-micro')
+    def register_actuator(self, actuator_name):
+        # Update the scene.actuators type to include the new actuator.
+        bltype_act = type('HR_ACT_{}'.format(actuator_name.capitalize()), (bpy.types.PropertyGroup,), {})
+        bltype_act.parameter_order = bpy.props.StringProperty()
+        bpy.utils.register_class(bltype_act)
+        setattr(self.bltype_actuators, 'ACT_'+actuator_name, bpy.props.PointerProperty(type=bltype_act))
 
-    # override eye movement
-    self.eyeTargetLoc.current = newLoc
+        # Include an on/off boolean in the actuator type.
+        setattr(bltype_act, 'HEAD_PARAM_enabled', bpy.props.BoolProperty())
+
+        bl_act = getattr(bpy.context.scene.actuators, 'ACT_'+actuator_name)
+        def enabled_getter():
+            return bl_act.HEAD_PARAM_enabled
+        return enabled_getter
+
+    def register_parameter(self, actuator_name, bl_prop):
+        # Update the corresponding actuator's type to include the new parameter.
+        bltype_act = getattr(bpy.types, 'HR_ACT_{}'.format(actuator_name.capitalize()))
+        prop_name = 'PARAM_{}'.format(bl_prop[1]['name'].replace(' ', '_'))
+        setattr(bltype_act, prop_name, bl_prop)
+
+        self._update_order('ACT_'+actuator_name, prop_name)
+
+        bl_act = getattr(bpy.context.scene.actuators, 'ACT_'+actuator_name)
+        def getter():
+            return getattr(bl_act, prop_name)
+        def setter(val):
+            return setattr(bl_act, prop_name, val)
+
+        return getter, setter
+
+    def register_image(self, actuator_name, image_name, img_size):
+        # Update the corresponding actuator's type to include the new parameter.
+        bltype_act = getattr(bpy.types, 'HR_ACT_{}'.format(actuator_name.capitalize()))
+        prop_name = 'IMG_{}'.format(image_name.replace(' ', '_'))
+        texture_name = 'HR_ACT_{}_{}'.format(actuator_name.replace(' ', '_'), image_name.replace(' ', '_'))
+        setattr(bltype_act, prop_name, bpy.props.StringProperty(default=texture_name))
+
+        self._update_order('ACT_'+actuator_name, prop_name)
+
+        # Create new texture and image if they don't yet exist.
+        texture = bpy.data.textures.get(texture_name) or bpy.data.textures.new(texture_name, 'IMAGE')
+        texture.extension = 'CLIP'
+        image = bpy.data.images.get(texture_name) or bpy.data.images.new(texture_name, *img_size)
+        texture.image = image
+
+        def set_pixels(pixels):
+            image = bpy.data.images[texture_name]
+            image.pixels = pixels
+
+        return set_pixels
+
+    def _update_order(self, actuator_name, prop_name):
+        """ Remember the order in which parameters were registered by updating
+        the semicolon seperated string: 'parameter_order'. The order is required
+        for UI generation.
+        """
+        bl_act = getattr(bpy.context.scene.actuators, actuator_name)
+        order = bl_act.parameter_order.split(';')
+        if prop_name in order:
+            order.remove(prop_name)
+        order.append(prop_name)
+        bl_act.parameter_order = ';'.join(order)
 
 
-def headDrift(self):
-    ''' applies random head drift '''
-    loc = [0,0,0]
-    loc[0] = random.gauss(self.headTargetLoc.target[0], self.headTargetLoc.target[0]/100)
-    loc[1] = random.gauss(self.headTargetLoc.target[1], self.headTargetLoc.target[1]/100)
-    loc[2] = random.gauss(self.headTargetLoc.target[2], self.headTargetLoc.target[2]/100)
-    self.headTargetLoc.target = loc
+def _takes_nargs(func, n):
+    """ Checks whether the given function takes n arguments either directly or
+    via *args. """
+    spec = inspect.getargspec(func)
+    return len(spec.args) >= n or spec.varargs != None
 
 
-def blink(self, duration):
-    # compute probability
-    micro = -(abs(duration+1)-1)
-    normal = -(abs(duration+0)-1)
-    relaxed = -(abs(duration-1)-1)
-    sleepy = -(abs(duration-2)-1)
-
-    micro = max(micro, 0)
-    normal = max(normal, 0)
-    relaxed = max(relaxed, 0)
-    sleepy = max(sleepy, 0)
-
-    index = randomSelect([micro, normal, relaxed, sleepy])
-    action = ['GST-blink-micro', 'GST-blink', 'GST-blink-relaxed', 'GST-blink-sleepy']
-    self.newGesture(action[index])
-
-    # print(action[index])
+def _set_global(name, value):
+    """ Syntactic sugar for temporarily setting a global variable.
+    The following example would set a global variable 'myvar' to 7 before
+    some_function is called and unset it afterwards:
+    with _set_global('myvar', 7):
+        some_function()
+    """
+    class SetGlobal:
+        def __enter__(self):
+            globals()[name] = value
+        def __exit__(self, type, val, tb):
+            globals()[name] = None
+    return SetGlobal()

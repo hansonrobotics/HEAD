@@ -6,10 +6,10 @@
 # with every check.
 setup:
   env:
-    ROSNODELIST: sudo rosnode list
+    ROSNODELIST: rosnode list
   prepend:
     - . ./rosfuncs.sh
-
+    - . ../../../devel/setup.sh
 # Property 'cmd' will be run as a sh command that should return statuscode 0
 # for success and 1 or other for failure.
 #
@@ -31,7 +31,7 @@ checks:
     cmd: node_running ros_pololu_servo
 
   - label: pau2motors
-    cmd: node_running pau2motors_node
+    cmd: node_running pau2motors
 
   - label: rosbridge
     cmd: node_running rosbridge_websocket
@@ -44,3 +44,6 @@ checks:
 
   - label: blender_api
     cmd: node_running blender_api
+
+  - label: pololu status
+    cmd: check_param_value /sophia/head_enabled true

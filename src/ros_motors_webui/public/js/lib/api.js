@@ -31,18 +31,27 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.services.expressionList.callService(new ROSLIB.ServiceRequest(), success);
         },
         setExpressionsParam: function (expressions) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/expressions'});
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: '/' + api.config.robot + '/expressions'
+            });
             param.set(expressions);
         },
         getAnimations: function (callback) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/animations'});
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: '/' + api.config.robot + '/animations'
+            });
 
             param.get(function (animations) {
                 callback(animations);
             });
         },
         setAnimations: function (animations) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/animations'});
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: '/' + api.config.robot + '/animations'
+            });
             param.set(animations);
         },
         updateAnimations: function (animations, successCallback, errorCallback) {
@@ -105,11 +114,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
 
             api.topics[confEntry.topic].publish(cmd);
         },
-        setDefaultMotorValues: function () {
-            for (var i = 0; i < api.config.motors.length; i++) {
-                this._sendMotorCommand(api.config.motors[i], api.config.motors[i].default);
-            }
-        },
         getPololuMotorTopics: function (success) {
             api.services.topicsForType.callService({type: 'ros_pololu/MotorCommand'}, function (response) {
                 success(response.topics);
@@ -124,6 +128,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableSomaStates: function (success) {
             api.topics.available_soma_states.unsubscribe();
+            api.topics.available_soma_states.removeAllListeners();
             api.topics.available_soma_states.subscribe(function (message) {
                 success(message.data);
             });
@@ -162,6 +167,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableGestures: function (success) {
             api.topics.available_gestures.unsubscribe();
+            api.topics.available_gestures.removeAllListeners();
             api.topics.available_gestures.subscribe(function (message) {
                 success(message.data);
             });
@@ -201,23 +207,28 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableEmotionStates: function (success) {
             api.topics.available_emotion_states.unsubscribe();
+            api.topics.available_emotion_states.removeAllListeners();
             api.topics.available_emotion_states.subscribe(function (message) {
                 success(message.data);
             });
         },
-
         /**
          * Set an emotion, call multiple times to blend emotions together
          *
          * @param name
          * @param magnitude 0..1
-         * @param duration array [seconds, nanoseconds]
+         * @param duration mixed array or number of seconds [seconds, nanoseconds]
          */
         setEmotion: function (name, magnitude, duration) {
             if (typeof magnitude == 'undefined')
                 magnitude = 1;
 
-            if (typeof duration == 'undefined')
+            if ($.isNumeric(duration))
+                duration = {
+                    secs: Math.floor(duration),
+                    nsecs: Math.floor((duration - Math.floor(duration)) * 1000)
+                };
+            else if (typeof duration != 'object')
                 duration = {secs: 1, nsecs: 0};
 
             api.topics.set_emotion_state.publish(
@@ -225,6 +236,31 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                     name: name,
                     magnitude: magnitude,
                     duration: duration
+                })
+            );
+        },
+        setFaceTarget: function (x, y, z) {
+            api.topics.set_face_target.publish(
+                new ROSLIB.Message({
+                    x: x,
+                    y: y,
+                    z: z
+                })
+            );
+        },
+        setGazeTarget: function (x, y, z) {
+            api.topics.set_gaze_target.publish(
+                new ROSLIB.Message({
+                    x: x,
+                    y: y,
+                    z: z
+                })
+            );
+        },
+        robotSpeech: function (text) {
+            api.topics.chatbot_responses.publish(
+                new ROSLIB.Message({
+                    data: text
                 })
             );
         },
@@ -251,20 +287,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 self = this;
 
             param.get(function (motors) {
-                motors.sort(function(a,b){return parseFloat(a.sort_no)-parseFloat(b.sort_no)});
+                motors.sort(function (a, b) {
+                    return parseFloat(a.sort_no) - parseFloat(b.sort_no)
+                });
                 self.createMotorTopics(motors);
                 callback(motors);
-            });
-        },
-        getMotorsFromFile: function (callback) {
-            var self = this;
-
-            $.ajax('/motors/get/' + api.config.robot, {
-                dataType: 'json',
-                success: function (response) {
-                    self.createMotorTopics(response.motors);
-                    callback(response.motors);
-                }
             });
         },
         createMotorTopics: function (motors) {
@@ -301,6 +328,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          */
         getAvailableScripts: function (success) {
             api.topics.scripts_available.unsubscribe();
+            api.topics.scripts_available.removeAllListeners();
             api.topics.scripts_available.subscribe(function (message) {
                 success(message.data.split("|"));
             });
@@ -311,8 +339,24 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param scripts
          */
         executeScript: function (script) {
-            cmd = new ROSLIB.Message({data: script})
+            var cmd = new ROSLIB.Message({data: script})
             api.topics.execute_scripts.publish(cmd)
+        },
+        getTtsLength: function (text, success) {
+            api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text}), success, function (error) {
+                console.log(error);
+            });
+        },
+        getAnimationLength: function (animation, success) {
+            api.services.get_animation_length.callService(new ROSLIB.ServiceRequest({animation: animation}), success, function (error) {
+                console.log(error);
+            });
+        },
+        enableInteractionMode: function () {
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on'}));
+        },
+        disableInteractionMode: function () {
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
         }
     };
 

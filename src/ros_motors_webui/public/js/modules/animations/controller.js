@@ -3,7 +3,7 @@ define(['application', './views/animations', './views/layout', '../motors/views/
     function (App, AnimationsView, LayoutView, MotorsView, FramesView, AnimationEditView, api) {
         return {
             index: function () {
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+                api.disableInteractionMode();
                 api.pointHead();
 
                 this.animationsCollection = new App.Entities.AnimationsCollection();
@@ -33,12 +33,10 @@ define(['application', './views/animations', './views/layout', '../motors/views/
                 App.LayoutInstance.showAdminNav();
 
                 this.motorsCollection = new App.Entities.MotorCollection();
+                this.motorsCollection.fetch();
+
                 this.motorsView = new MotorsView({collection: this.motorsCollection});
                 this.layoutView.getRegion('motors').show(this.motorsView);
-
-                api.getMotorsFromFile(function (data) {
-                    self.motorsCollection.add(data);
-                });
 
                 App.module('Animations.Views').on('frame_selected', function (frame) {
                     self.frameSelected(frame);

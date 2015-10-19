@@ -11,6 +11,9 @@ import bpy
 from .helpers import *
 
 import pprint, time
+import logging
+
+logger = logging.getLogger('hr.blender_api.rigcontrol.blenderplayback')
 
 class BLGlobalTimer(bpy.types.Operator):
     """Timer  Control"""
@@ -26,7 +29,7 @@ class BLGlobalTimer(bpy.types.Operator):
     _maxFPS = defaultTimerHz
 
     def execute(self, context):
-        print('Starting Timer')
+        logger.info('Starting Timer')
         wm = context.window_manager
         self._timer = wm.event_timer_add(1/self._maxFPS, context.window)
         bpy.context.scene['globalTimerStarted'] = True
@@ -47,7 +50,7 @@ class BLGlobalTimer(bpy.types.Operator):
         return {'PASS_THROUGH'}
 
     def cancel(self,context):
-        print('Stopping Timer')
+        logger.info('Stopping Timer')
         if self._timer:
             wm = context.window_manager
             wm.event_timer_remove(self._timer)
@@ -79,7 +82,7 @@ class EvaDebug(bpy.types.Operator):
 
     def execute(self, context):
         from . import commands
-        print(eval(self.action))
+        logger.info(eval(self.action))
         return {'FINISHED'}
 
 
@@ -106,6 +109,9 @@ class BLPlayback(bpy.types.Operator):
             # compute fps
             context.scene['evaFPS'] = fps = self.computeFPS(context)
             timeScale = framerateHz/fps
+            time = self.timeList[-1]
+            dt = self.timeList[-1] - self.timeList[-2] if len(self.timeList) > 1 else 0
+
             if bpy.context.scene['evaFollowMouse']:
                 # compute mouse pos
                 normalX = (event.mouse_region_x - 500) /1000
@@ -134,73 +140,66 @@ class BLPlayback(bpy.types.Operator):
             # update visemes
             visemes = eva.visemesList[:]
             for viseme in visemes:
-                # wait to start
-                if viseme.time < 0:
-                    continue
 
-                # remove if finished (and finalized)
-                if viseme.time > viseme.duration*1.5:
+                # magnitude is a blendedNum.Trajectory and will internally take
+                # care of the time it needs to activate.
+                viseme.magnitude.blend(time, dt)
+
+                if viseme.magnitude.is_done:
                     eva._deleteViseme(viseme)
-                    continue
-
-                # ramp in from 0
-                rampPoint = viseme.duration * viseme.rampInRatio
-                if viseme.time <= rampPoint:
-                    # compute ramp in factor
-                    viseme.magnitude.target = viseme.time / rampPoint
-
-                # ramp out to 0
-                rampOutPoint = viseme.duration - viseme.duration*viseme.rampOutRatio
-                if viseme.time >= rampOutPoint:
-                    # compute ramp in factor
-                    viseme.magnitude.target = 1.0 - (viseme.time - rampOutPoint) / (viseme.duration*viseme.rampOutRatio)
-
-                # update action
-                viseme.magnitude.blend()
-                viseme.stripRef.influence = viseme.magnitude.current
-                viseme.influence_kfp.co[1] = viseme.magnitude.current
-
-                # update time
-                viseme.time += (1/framerateHz)*timeScale
+                else:
+                    # update action
+                    viseme.stripRef.influence = viseme.magnitude.current
+                    viseme.influence_kfp.co[1] = viseme.magnitude.current
 
             # update eye and head blending
             headControl = eva.bones["head_target"]
             eyeControl = eva.bones["eye_target"]
 
-            eva.headTargetLoc.blend()
-            eva.eyeTargetLoc.blend()
-            eye_loc = eva.eyeTargetLoc.current
+            # apply actuators
+            eva.actuatorManager.tick(time, dt)
+
+            eva.headTargetLoc.blend(time, dt)
+            eva.eyeTargetLoc.blend(time, dt)
+
             head_loc = eva.headTargetLoc.current
             head_loc[1] = -head_loc[1]
             head_loc[0] = -head_loc[0]
-            eyeControl.location = eye_loc
             headControl.location = head_loc
+            eyeControl.location = eva.eyeTargetLoc.current
 
             # udpate emotions
             for emotion in eva.emotionsList:
+                emotion.magnitude.blend(time, dt)
+
                 control = eva.bones['EMO-'+emotion.name]
-                control['intensity'] = emotion.magnitude.current
-                emotion.duration -= timeScale
-                emotion.magnitude.blend()
 
-                if emotion.duration < 0:
-                    emotion.magnitude._target *= 0.99
-
-                    if emotion.magnitude.current < 0.1:
-                        eva.emotionsList.remove(emotion)
-                        control['intensity'] = 0.0
+                if emotion.magnitude.is_done:
+                    eva.emotionsList.remove(emotion)
+                    control['intensity'] = 0.0
+                else:
+                    control['intensity'] = emotion.magnitude.current
 
 
-            # Read emotion parameters into eva
-            eva.eyeDartRate = eva.deformObj.pose.bones['eye_dart_rate']['value']
-            eva.eyeWander = eva.deformObj.pose.bones['eye_wander']['value']
-            eva.blinkRate = eva.deformObj.pose.bones['blink_rate']['value']
-            eva.blinkDuration = eva.deformObj.pose.bones['blink_duration']['value']
-
-            # keep alive
-            eva.keepAlive(bpy.context.scene['keepAlive'])
-
-            # send ROS data
+            if bpy.context.scene['keepAlive']:
+                # Take care of Cycles
+                # Ensure the strip is looping and sync strip props with cycle props.
+                for cycle in eva.cyclesSet:
+                    if cycle.name not in [gesture.name for gesture in eva.gesturesList]:
+                        # Strip finished, create new one
+                        eva.newGesture(cycle.name, repeat=10, speed=cycle.rate, magnitude=cycle.magnitude)
+                    else:
+                        # Update strip properties
+                        for gesture in eva.gesturesList:
+                            if gesture.name == cycle.name:
+                                gesture.stripRef.influence = cycle.magnitude
+                                gesture.speed = cycle.rate
+                                gesture.stripRef.mute = False
+            else:
+                for cycle in self.cyclesSet:
+                    for gesture in self.gesturesList:
+                        if gesture.name == cycle.name:
+                            gesture.stripRef.mute = True
 
             # force update
             bpy.data.scenes['Scene'].frame_set(1)
@@ -209,7 +208,7 @@ class BLPlayback(bpy.types.Operator):
 
 
     def execute(self, context):
-        print('Starting Playback')
+        logger.info('Starting Playback')
         wm = context.window_manager
         wm.modal_handler_add(self)
         bpy.context.scene['animationPlaybackActive'] = True
@@ -219,7 +218,7 @@ class BLPlayback(bpy.types.Operator):
 
 
     def cancel(self, context):
-        print('Stopping Playback')
+        logger.info('Stopping Playback')
         bpy.evaAnimationManager.terminate()
         bpy.context.scene['animationPlaybackActive'] = False
         return {'CANCELLED'}
