@@ -34,6 +34,7 @@ import roslib
 roslib.load_manifest('pi_face_tracker')
 import rospy
 import cv
+import cv2
 import sys
 from sensor_msgs.msg import RegionOfInterest, Image
 from math import *
@@ -44,6 +45,7 @@ from pi_face_tracker.msg import Face
 from pi_face_tracker.msg import FaceEvent
 from geometry_msgs.msg import Point
 import time
+import os
 import logging
 
 logger = logging.getLogger('hr.pi_vision.pi_face_tracker')
@@ -380,6 +382,7 @@ class FacesRegistry():
     ''' This adds a set of faces to the registery. It is given an
     array of (pt1,pt2) bounding boxes for each face.'''
     def addFaces(self, face_bbs):
+        added = []
         for f in face_bbs:
 
             # We are not currently tracking any faces. Add the first one.
@@ -388,6 +391,7 @@ class FacesRegistry():
                 self._add_entry(
                     FaceBox(self.face_id, f[0], f[1])
                 )
+                added.append(self.face_id)
             else:
                 found = -1
                 # Have we seen this face before?  Is it already in our
@@ -403,6 +407,7 @@ class FacesRegistry():
                     self._add_entry(
                         FaceBox(self.face_id, f[0], f[1])
                     )
+                    added.append(self.face_id)
 
                 # Oh, hey, we have seen this face!
                 else:
@@ -411,7 +416,9 @@ class FacesRegistry():
                     fface.pt2 = f[1]
                     if fface.status == 'deleted':
                         fface.returned_face()
+                    added.append(found)
                     fface.update_box(fface.face_box())
+        return added
 
     # Returns Face by id. If no id given, it returns the oldest face
     # in the scene.
@@ -517,6 +524,11 @@ class PatchTracker(ROS2OpenCV):
         if self.use_depth_for_detection or self.use_depth_for_tracking:
             rospy.wait_for_message(self.input_depth_image, Image)
 
+        """ Directory to save faces images """
+        self.image_dir = rospy.get_param("~image_dir", os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                                                   os.path.pardir,
+                                                                   'tmp'))
+
     def process_image(self, cv_image):
 
         self.frame_count = self.frame_count + 1
@@ -610,8 +622,17 @@ class PatchTracker(ROS2OpenCV):
             pt1 = (int(x * self.image_scale), int(y * self.image_scale))
             pt2 = (int((x + w) * self.image_scale), int((y + h) * self.image_scale))
             fs.append((pt1,pt2))
-        self.detect_box.addFaces(fs)
+        added = self.detect_box.addFaces(fs)
+        self.save_faces(added)
         return self.detect_box.faces
+
+    def save_faces(self,faces):
+        for f in faces:
+            face = self.detect_box.getFace(f)
+            fname = os.path.join(self.image_dir, "Face{}.jpg".format(f))
+            print fname
+            img = self.cv2_image[face.pt1[1]:face.pt2[1], face.pt1[0]:face.pt2[0]]
+            cv2.imwrite(fname,img)
 
     def track_lk(self, cv_image, face):
         feature_box = None
