@@ -52,3 +52,16 @@
 .app-send-button {
      margin-bottom: 10px;
 }
+
+.select-person-container {
+    margin-top: 10px;
+}
+
+.app-face-thumbnails {
+    padding-right: 10px;
+}
+
+.face-thumbnail {
+     margin: 0 0 10px 10px;
+    float: left;
+}

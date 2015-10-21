@@ -1,5 +1,5 @@
-define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'annyang'],
-    function (App, MessageView, template, api, annyang) {
+define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'annyang', 'jquery'],
+    function (App, MessageView, template, api, annyang, $) {
         var self;
         App.module("Interaction.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Interaction = Marionette.CompositeView.extend({
@@ -12,17 +12,38 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     sendButton: '.app-send-button',
                     unsupported: '.app-unsupported',
                     supported: '.app-supported',
-                    recordContainer: '.record-container'
+                    recordContainer: '.record-container',
+                        faceThumbnails: '.app-face-thumbnails'
                 },
                 events: {
                     'click @ui.recordButton': 'recognizeSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked'
                 },
-                initialize: function () {
-                    self = this;
+                initialize: function (options) {
+                    options.faceCollection.on('add', this.updateFaces, this);
+                    this.faceRefreshInterval = setInterval(function () {
+                        options.faceCollection.fetch();
+                    }, 5000);
+                },
+                onDestroy: function () {
+                    clearInterval(this.faceRefreshInterval);
+                },
+                updateFaces: function () {
+                    this.ui.faceThumbnails.html('');
+
+                    var self = this;
+                    this.options.faceCollection.each(function (face) {
+                        self.ui.faceThumbnails.append($('<img>').prop({
+                            src: face.getThumbnailUrl(),
+                            title: face.get('id'),
+                            'class': 'face-thumbnail thumbnail'
+                        }));
+                    });
                 },
                 onRender: function () {
+                    this.updateFaces();
+
                     var self = this;
                     api.topics.chat_responses.subscribe(function (msg) {
                         self.collection.add({author: 'Robot', message: msg.data});

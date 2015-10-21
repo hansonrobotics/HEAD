@@ -123,6 +123,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/' + api.config.robot + '/chatbot_responses',
                     messageType: 'std_msgs/String'
+                }),
+                face_locations: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/camera/face_locations',
+                    messageType: 'pi_face_tracker/Faces'
                 })
             };
         },
