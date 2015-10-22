@@ -260,7 +260,11 @@ class AnimationManager():
 
     #========== define unique cycles that don't conform to name rate magnitude parameter ============
     def setBlinkRandomly(self,interval_mean,interval_variation):
-        '''update the blink rate of the artistic actuator'''
+        '''enable if necessary and update the blink rate of the artistic actuator'''
+
+        if bpy.data.scenes["Scene"].actuators.ACT_blink_randomly.HEAD_PARAM_enabled == False:
+           bpy.data.scenes["Scene"].actuators.ACT_blink_randomly.HEAD_PARAM_enabled = True
+           print("enabled blinking")
         checkValue(interval_mean,0.5,10)
         checkValue(interval_variation,0.0,interval_mean)
         print('changing blink rate to ',interval_mean)
@@ -269,7 +273,10 @@ class AnimationManager():
         # if reset delete and restart actuator
 
     def setSaccade(self,interval_mean,interval_variation,paint_scale):
-        '''update the saccade rate of the artistic actuator'''
+        '''enable if necessary and update the saccade rate of the artistic actuator'''
+        if bpy.data.scenes["Scene"].actuators.ACT_saccade.HEAD_PARAM_enabled == False:
+            bpy.data.scenes["Scene"].actuators.ACT_saccade.HEAD_PARAM_enabled = True
+            print("enabled saccades")
         checkValue(interval_mean,0.1,5)
         checkValue(interval_variation,0.0,interval_mean)
 

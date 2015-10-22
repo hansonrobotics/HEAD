@@ -223,6 +223,13 @@ class Tree():
         self.blackboard["face_study_z_pitch_mouth"] = config.getfloat("interaction", "face_study_z_pitch_mouth")
         self.blackboard["face_study_y_pitch_left_ear"] = config.getfloat("interaction", "face_study_y_pitch_left_ear")
         self.blackboard["face_study_y_pitch_right_ear"] = config.getfloat("interaction", "face_study_y_pitch_right_ear")
+        # conversational gesture probabilities
+        self.blackboard["chatbot_positive_nod_probability"] = config.getfloat("interaction", "chatbot_positive_nod_probability")
+        self.blackboard["chatbot_positive_nod_speed_min"] = config.getfloat("interaction", "chatbot_positive_nod_speed_min")
+        self.blackboard["chatbot_positive_nod_speed_max"] = config.getfloat("interaction", "chatbot_positive_nod_speed_max")
+        self.blackboard["chatbot_positive_nod_magnitude_min"] = config.getfloat("interaction", "chatbot_positive_nod_magnitude_max")
+        self.blackboard["chatbot_positive_nod_magnitude_max"] = config.getfloat("interaction", "chatbot_positive_nod_magnitude_max")
+
         self.blackboard["sleep_probability"] = config.getfloat("boredom", "sleep_probability")
         self.blackboard["sleep_duration_min"] = config.getfloat("boredom", "sleep_duration_min")
         self.blackboard["sleep_duration_max"] = config.getfloat("boredom", "sleep_duration_max")
@@ -351,7 +358,8 @@ class Tree():
                 break
         if emo:
             if force==True:
-                intensity = (emo.min_intensity + emo.max_intensity)/2.0
+                # may want to make this variable in .cfg
+                intensity = emo.max_intensity
                 duration = emo.max_duration
             else:
                 intensity = random.uniform(emo.min_intensity, emo.max_intensity)
@@ -361,7 +369,7 @@ class Tree():
             # force said show something but nothing picked, so choose first
             print 'force branch chosen'
             emo=emos[0]
-            intensity = 0.6 * emo.max_intensity
+            intensity = emo.max_intensity
             duration = emo.max_duration
             self.show_emotion(emo.name, intensity, duration, trigger)
 
@@ -888,13 +896,14 @@ class Tree():
     # exactly the same message format is used for both blender and the
     # chatbot. This may change in the future(?)
     def show_emotion(self, expression, intensity, duration, trigger):
-
         # Try to avoid showing more than one expression at once
         now = time.time()
         since = self.blackboard["show_expression_since"]
         durat = self.blackboard["current_emotion_duration"]
         if since is not None and (now - since < 0.7 * durat) :
-            return
+        # chat triggers will override random probabilistic emotion choices
+                if trigger !='chat_perceived':
+                    return
 
         # Update the blackboard
         self.blackboard["current_emotion"] = expression
@@ -909,24 +918,27 @@ class Tree():
         exp.duration.secs = intsecs
         exp.duration.nsecs = 1000000000 * (duration - intsecs)
         # emotion_pub goes to blender and tts;
-        if (self.do_pub_emotions) :
+        if (self.do_pub_emotions) or trigger=='chat_perceived' :
             self.emotion_pub.publish(exp)
             self.write_log(exp.name, time.time(), trigger)
 
-        print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ") for " + str(duration)[:4] + " seconds"
-        self.blackboard["show_expression_since"] = time.time()
+            print "----- Show expression: " + expression + " (" + str(intensity)[:5] + ") for " + str(duration)[:4] + " seconds"
+            self.blackboard["show_expression_since"] = time.time()
 
     # Accept an gesture name, intensity, repeat (perform how many times)
     # and speed and then publish it as a ros message.
+    # chat triggers may override general behavior setting
+    # this may be generalized to an admissible trigger set
     def show_gesture(self, gesture, intensity, repeat, speed, trigger):
         ges = SetGesture()
         ges.name = gesture
         ges.magnitude = intensity
         ges.repeat = repeat
         ges.speed = speed
-        if (self.do_pub_gestures) :
+        if (self.do_pub_gestures) or trigger=='chat_perceived':
             self.gesture_pub.publish(ges)
             self.write_log(ges.name, time.time(), trigger)
+
 
         print "----- Show gesture: " + gesture + " (" + str(intensity)[:5] + ")"
 
@@ -1171,9 +1183,9 @@ class Tree():
     # chatbot requests blink
     def chatbot_blink_callback(self, blink):
         rospy.loginfo(blink.data +' says blink')
-        blink_probabilities={'chat-heard':'chat_heard_probability',
-                             'chat-saying':'chat_saying_probability',
-                             'tts-end':'tts_end_probability'}
+        blink_probabilities={'chat_heard':'chat_heard_probability',
+                             'chat_saying':'chat_saying_probability',
+                             'tts_end':'tts_end_probability'}
         # if we get a string not in the dictionary return 1.0
         blink_probability=self.blackboard[blink_probabilities[blink.data]]
         if random.random()<blink_probability:
@@ -1189,27 +1201,42 @@ class Tree():
         # pick random emotions may not do anything depending on random number so add force optional arg
         force=True
 
+        # turn random emotion switch off to block emotion switching except from chat
+
+        cached_pub_emotions = self.do_pub_emotions
+        self.do_pub_emotions=False
+        trigger='chat_perceived'
         if emo.data == 'happy':
-            chosen_emo=self.pick_random_expression("positive_emotions",force)
+
+            chosen_emo=self.pick_random_expression("positive_emotions",trigger,force)
             # change blink rate
             self.blink_update(self.blackboard["blink_chat_faster_mean"],0.12,True)
+            # nod slowly with some probability
+            if random.random()<self.blackboard["chatbot_positive_nod_probability"]:
+                min=self.blackboard["chatbot_positive_nod_speed_min"]
+                max=self.blackboard["chatbot_positive_nod_speed_max"]
+                speed=random.uniform(min,max)
+                min=self.blackboard["chatbot_positive_nod_magnitude_min"]
+                max=self.blackboard["chatbot_positive_nod_magnitude_max"]
+                intensity=random.uniform(min,max)
+                self.show_gesture('nod-2', intensity, 1,speed, trigger="chatbot_happy")
         else:# change blink rate
             self.blink_update(self.blackboard["blink_chat_slower_mean"],.12,True)
-            chosen_emo=self.pick_random_expression("frustrated_emotions",force)
-        # publish this message to cause chatbot to emit response if it's waiting
-        #
+            chosen_emo=self.pick_random_expression("frustrated_emotions",trigger,force)
 
+        # publish this message to cause chatbot to emit response if it's waiting
         exp = EmotionState()
-        #  getting from blackboard seems to be inconsistent with expected state
+        #  should now be consistent after setting show expression since = None upstream
         exp.name = self.blackboard["current_emotion"]
-        exp.magnitude = 0.5
+        #
+        exp.magnitude = 0.8
         # use zero for duration, tts can compute if needed
-        exp.duration.secs = 3.0
+        exp.duration.secs = 4.0
         exp.duration.nsecs = 0
         rospy.logwarn('publishing affect to chatbot '+chosen_emo.name)
         self.affect_pub.publish(exp)
         rospy.loginfo('picked and expressed '+chosen_emo.name)
-
+        self.do_pub_emotions=cached_pub_emotions
 
     # reset blink rate
     def blink_update(self,mean,variation,reset=False):
