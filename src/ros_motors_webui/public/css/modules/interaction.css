@@ -2,7 +2,8 @@
     padding: 0 0 10px 0;
 }
 
-.app-record-button {
+.app-record-button,
+.expand-face-select-button {
     display: block;
     width: 100%;
 }
@@ -50,18 +51,24 @@
 }
 
 .app-send-button {
-     margin-bottom: 10px;
-}
-
-.select-person-container {
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .app-face-thumbnails {
+    white-space: nowrap;
+    width: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     padding-right: 10px;
 }
 
 .face-thumbnail {
-     margin: 0 0 10px 10px;
-    float: left;
+    margin: 0 0 10px 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#app-face-container {
+    background-color: #2b3e50;
+    padding: 10px 0 0;
 }

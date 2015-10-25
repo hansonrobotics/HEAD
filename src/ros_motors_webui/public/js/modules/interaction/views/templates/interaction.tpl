@@ -1,24 +1,3 @@
-<div class="select-person-container container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="log-panel panel panel-default">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                   href="#collapse" aria-expanded="false" aria-controls="collapse">
-                    <div class="panel-heading" role="tab" id="heading">
-                        <h4 class="panel-title">Select a person</h4>
-                    </div>
-                </a>
-                <div id="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
-                    <div class="panel-body">
-                        <div class="app-face-thumbnails row clearfix">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="container content">
     <ul class="app-messages"></ul>
 </div>
@@ -40,8 +19,28 @@
                     <button class="app-record-button btn btn-info btn-sm">
                         Say "Hi" to start!
                     </button>
+
+                    <div class="app-select-person-container">
+                        <button class="expand-face-select-button btn btn-primary btn-sm" type="button"
+                                data-toggle="collapse"
+                                data-target="#app-face-container" aria-expanded="false" aria-controls="collapse">
+                            Select a person
+                        </button>
+
+                        <div id="app-face-container" class="collapse">
+                            <div class="app-face-thumbnails clearfix"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+
+<div class="select-person-container container">
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-define(['backbone', 'lib/api'], function (Backbone, api) {
+define(['backbone', 'lib/api', 'underscore', 'lib/utilities'], function (Backbone, api, _, utilities) {
     var face = Backbone.Model.extend({
         getThumbnailUrl: function () {
             return '/public/faces/Face' + this.id + '.jpg';
@@ -7,18 +7,30 @@ define(['backbone', 'lib/api'], function (Backbone, api) {
 
     return Backbone.Collection.extend({
         model: face,
-        fetch: function () {
+        subscribe: function () {
             var self = this,
                 callback = function (response) {
-                    self.reset();
-                    self.add(response.faces);
+                    this.add(response.faces);
+                    this.each(function (model) {
+                        if (model && !_.findWhere(response.faces, {id: model.get('id')}))
+                            self.remove(model);
+                    });
+
+                    self.trigger('change');
                 };
 
-            api.topics.available_soma_states.unsubscribe();
-            api.topics.available_soma_states.removeAllListeners();
-            api.topics.face_locations.subscribe(callback);
-            api.topics.available_soma_states.unsubscribe();
-            api.topics.available_soma_states.removeAllListeners();
+            this.unsubscribe();
+            this.subscribeCallback = utilities.limitCallRate(1, function () {
+                callback.apply(self, arguments);
+            });
+
+            api.topics.face_locations.subscribe(this.subscribeCallback);
+        },
+        unsubscribe: function () {
+            if (this.subscribeCallback) {
+                api.topics.face_locations.unsubscribe(this.subscribeCallback);
+                api.topics.face_locations.removeAllListeners();
+            }
         }
     });
 });

@@ -13,53 +13,72 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     unsupported: '.app-unsupported',
                     supported: '.app-supported',
                     recordContainer: '.record-container',
-                        faceThumbnails: '.app-face-thumbnails'
+                    faceThumbnails: '.app-face-thumbnails',
+                    faceContainer: '.app-select-person-container'
                 },
                 events: {
                     'click @ui.recordButton': 'recognizeSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked'
                 },
-                initialize: function (options) {
-                    options.faceCollection.on('add', this.updateFaces, this);
-                    this.faceRefreshInterval = setInterval(function () {
-                        options.faceCollection.fetch();
-                    }, 5000);
-                },
                 onDestroy: function () {
-                    clearInterval(this.faceRefreshInterval);
+                    options.faceCollection.unsubscribe();
+
+                    if (annyang)
+                        annyang.abort();
+
+                    clearTimeout(self.keepAliveInterval);
                 },
                 updateFaces: function () {
-                    this.ui.faceThumbnails.html('');
-
                     var self = this;
-                    this.options.faceCollection.each(function (face) {
-                        self.ui.faceThumbnails.append($('<img>').prop({
-                            src: face.getThumbnailUrl(),
-                            title: face.get('id'),
-                            'class': 'face-thumbnail thumbnail'
-                        }));
-                    });
+
+                    if (this.options.faceCollection.isEmpty()) {
+                        this.ui.faceContainer.hide();
+                        this.ui.recordButton.fadeIn();
+                    } else {
+                        this.ui.faceContainer.fadeIn();
+                        this.ui.recordButton.hide();
+
+                        this.ui.faceThumbnails.html('');
+                        this.options.faceCollection.each(function (face) {
+                            self.ui.faceThumbnails.append($('<img>').prop({
+                                src: face.getThumbnailUrl(),
+                                title: face.get('id'),
+                                'class': 'face-thumbnail thumbnail',
+                                width: 100,
+                                height: 100
+                            }));
+                        });
+                    }
+                },
+                serializeData: function () {
+                    return {
+                        faces: this.options.faceCollection
+                    };
                 },
                 onRender: function () {
+                    this.options.faceCollection.on('change add reset remove', this.updateFaces, this);
+                    this.options.faceCollection.subscribe();
                     this.updateFaces();
 
                     var self = this;
-                    api.topics.chat_responses.subscribe(function (msg) {
-                        self.collection.add({author: 'Robot', message: msg.data});
-                    });
-
-                    api.topics.speech_active.subscribe(function (msg) {
-                        if (msg.data == 'start') {
-                            if (window.location.protocol != "https:"){
-                                if (annyang) annyang.pause();
-                            }else{
-                                if (annyang) annyang.abort();
+                    var responseCallback = function (msg) {
+                            self.collection.add({author: 'Robot', message: msg.data});
+                        },
+                        speechActiveCallback = function (msg) {
+                            if (msg.data == 'start') {
+                                if (window.location.protocol != "https:") {
+                                    if (annyang) annyang.pause();
+                                } else {
+                                    if (annyang) annyang.abort();
+                                }
+                            } else {
+                                if (annyang) annyang.resume();
                             }
-                        } else {
-                            if (annyang) annyang.resume();
-                        }
-                    });
+                        };
+
+                    api.topics.chat_responses.subscribe(responseCallback);
+                    api.topics.speech_active.subscribe(speechActiveCallback);
 
                     if (annyang) {
                         annyang.start();
@@ -73,15 +92,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         annyang.addCommands(commands);
                         // keeps speech alive for mobile devices if they went sleep or switched app.
                         this.keepAlive();
-                    } else {
-                        this.ui.recordContainer.hide();
                     }
-                },
-                onDestroy: function(){
-                    if (annyang)
-                        annyang.abort();
-
-                    clearTimeout(self.keepAlive);
                 },
                 messageKeyUp: function (e) {
                     if (e.keyCode == 13)
@@ -98,7 +109,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     this.ui.messageInput.val('');
                 },
                 keepAlive: function () {
-                    this.keepAlive = setInterval(function () {
+                    this.keepAliveInterval = setInterval(function () {
                         if (annyang)
                             annyang.start();
                     }, 10000);
