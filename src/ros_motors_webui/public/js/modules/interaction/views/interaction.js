@@ -42,7 +42,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         this.ui.faceThumbnails.html('');
                         this.options.faceCollection.each(function (face) {
                             self.ui.faceThumbnails.append($('<img>').prop({
-                                src: face.getThumbnailUrl(),
+                                src: face.getThumbnailUrl() + '?' + parseInt(new Date().getTime() / 5000),
                                 title: face.get('id'),
                                 'class': 'face-thumbnail thumbnail',
                                 width: 100,
@@ -57,7 +57,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     };
                 },
                 onRender: function () {
-                    this.options.faceCollection.on('change add reset remove', this.updateFaces, this);
+                    this.options.faceCollection.on('change', this.updateFaces, this);
                     this.options.faceCollection.subscribe();
                     this.updateFaces();
 

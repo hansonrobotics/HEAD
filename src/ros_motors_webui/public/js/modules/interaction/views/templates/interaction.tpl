@@ -28,6 +28,7 @@
                         </button>
 
                         <div id="app-face-container" class="collapse">
+                            <div class="face-select-instruction">touch the image of your face, to talk to me</div>
                             <div class="app-face-thumbnails clearfix"></div>
                         </div>
                     </div>
@@ -36,11 +37,3 @@
         </div>
     </div>
 </footer>
-
-<div class="select-person-container container">
-    <div class="row">
-        <div class="col-md-12">
-
-        </div>
-    </div>
-</div>
