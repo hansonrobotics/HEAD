@@ -68,7 +68,11 @@
     vertical-align: top;
 }
 
-#app-face-container {
+.face-thumbnail.active {
+    background-color: #df691a;
+}
+
+.app-face-container {
     background-color: #2b3e50;
 }
 

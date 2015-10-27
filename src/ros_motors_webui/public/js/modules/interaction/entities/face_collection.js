@@ -31,6 +31,16 @@ define(['backbone', 'lib/api', 'underscore', 'lib/utilities'], function (Backbon
                 api.topics.face_locations.unsubscribe(this.subscribeCallback);
                 api.topics.face_locations.removeAllListeners();
             }
+        },
+        setLookAtFaceId: function (id) {
+            this.look_at_face_id = parseInt(id);
+
+            api.topics.set_look_at_face.publish(new ROSLIB.Message({
+                id: this.look_at_face_id
+            }));
+        },
+        getLookAtFaceId: function () {
+            return this.look_at_face_id;
         }
     });
 });

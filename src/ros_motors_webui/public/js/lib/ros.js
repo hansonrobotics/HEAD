@@ -128,6 +128,14 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/camera/face_locations',
                     messageType: 'pi_face_tracker/Faces'
+                }),
+                set_look_at_face: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/set_look_at_face'
+                }),
+                get_look_at_face: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/get_look_at_face'
                 })
             };
         },

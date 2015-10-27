@@ -16,18 +16,18 @@
                 </div>
 
                 <div class="record-container col-sm-12">
-                    <button class="app-record-button btn btn-info btn-sm">
-                        Say "Hi" to start!
+                    <button class="app-record-button btn btn-sm btn-success">
+                        Enable microphone
                     </button>
 
                     <div class="app-select-person-container">
                         <button class="expand-face-select-button btn btn-primary btn-sm" type="button"
                                 data-toggle="collapse"
-                                data-target="#app-face-container" aria-expanded="false" aria-controls="collapse">
+                                data-target=".app-face-container" aria-expanded="false" aria-controls="collapse">
                             Select a person
                         </button>
 
-                        <div id="app-face-container" class="collapse">
+                        <div class="app-face-container collapse">
                             <div class="face-select-instruction">touch the image of your face, to talk to me</div>
                             <div class="app-face-thumbnails clearfix"></div>
                         </div>

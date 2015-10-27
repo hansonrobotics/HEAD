@@ -1,5 +1,5 @@
-define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'annyang', 'jquery'],
-    function (App, MessageView, template, api, annyang, $) {
+define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'annyang'],
+    function (App, MessageView, template, api, annyang) {
         var self;
         App.module("Interaction.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Interaction = Marionette.CompositeView.extend({
@@ -7,6 +7,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 childView: MessageView,
                 childViewContainer: '.app-messages',
                 ui: {
+                    messages: '.app-messages',
                     recordButton: '.app-record-button',
                     messageInput: '.app-message-input',
                     sendButton: '.app-send-button',
@@ -14,41 +15,83 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     supported: '.app-supported',
                     recordContainer: '.record-container',
                     faceThumbnails: '.app-face-thumbnails',
-                    faceContainer: '.app-select-person-container'
+                    faceContainer: '.app-select-person-container',
+                    faceCollapse: '.app-face-container',
+                    footer: 'footer'
                 },
                 events: {
-                    'click @ui.recordButton': 'recognizeSpeech',
+                    'click @ui.recordButton': 'toggleSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked'
                 },
+                initialize: function () {
+                    self = this;
+                },
                 onDestroy: function () {
-                    options.faceCollection.unsubscribe();
-
-                    if (annyang)
-                        annyang.abort();
-
-                    clearTimeout(self.keepAliveInterval);
+                    this.options.faceCollection.unsubscribe();
+                    this.disableSpeech();
                 },
                 updateFaces: function () {
-                    var self = this;
+                    var currentTime = new Date().getTime();
 
-                    if (this.options.faceCollection.isEmpty()) {
+                    // remove lost faces older than 2 seconds
+                    $('img', this.ui.faceThumbnails).each(function (i, img) {
+                        var id = parseInt($(img).attr('title'));
+
+                        if (!self.options.faceCollection.findWhere({id: id}) && (currentTime - $(img).data('time-added')) > 2000) {
+                            $(img).remove();
+
+                            if (self.options.faceCollection.getLookAtFaceId() == id)
+                                self.ui.faceCollapse.collapse('show');
+                        }
+                    });
+
+                    this.options.faceCollection.each(function (face) {
+                        var img = $('img[title="' + face.get('id') + '"]', self.ui.faceThumbnails),
+                        // update thumbnail every 3 seconds, update time added
+                            thumbnailUrl = face.getThumbnailUrl() + '?' + parseInt(currentTime / 3000);
+
+                        // if image already shown
+                        if (img.length > 0) {
+                            $(img).prop({
+                                src: thumbnailUrl
+                            }).data('time-added', currentTime);
+                        } else {
+                            // create new thumbnail
+                            var setActiveThumbnail = function (el) {
+                                    $('img', self.ui.faceThumbnails).removeClass('active');
+                                    $(el).addClass('active');
+                                },
+                                el = $('<img>').prop({
+                                    src: thumbnailUrl,
+                                    title: face.get('id'),
+                                    'class': 'face-thumbnail thumbnail',
+                                    width: 100,
+                                    height: 100
+                                }).data('time-added', currentTime).click(function () {
+                                    self.options.faceCollection.setLookAtFaceId(face.get('id'));
+                                    self.ui.faceCollapse.collapse('hide');
+                                    setActiveThumbnail(this);
+                                });
+
+                            if (self.options.faceCollection.getLookAtFaceId() == face.get('id'))
+                                setActiveThumbnail(el);
+
+                            self.ui.faceThumbnails.append(el);
+                        }
+                    });
+
+                    if ($('img', this.ui.faceThumbnails).length == 0 && this.options.faceCollection.isEmpty()) {
                         this.ui.faceContainer.hide();
                         this.ui.recordButton.fadeIn();
+                        self.ui.faceCollapse.removeClass('in');
+
+                        this.disableSpeech();
                     } else {
                         this.ui.faceContainer.fadeIn();
                         this.ui.recordButton.hide();
 
-                        this.ui.faceThumbnails.html('');
-                        this.options.faceCollection.each(function (face) {
-                            self.ui.faceThumbnails.append($('<img>').prop({
-                                src: face.getThumbnailUrl() + '?' + parseInt(new Date().getTime() / 5000),
-                                title: face.get('id'),
-                                'class': 'face-thumbnail thumbnail',
-                                width: 100,
-                                height: 100
-                            }));
-                        });
+                        this.enableSpeech();
                     }
                 },
                 serializeData: function () {
@@ -61,7 +104,12 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     this.options.faceCollection.subscribe();
                     this.updateFaces();
 
-                    var self = this;
+                    // update chat margins on face collapse show/hide
+                    this.ui.faceCollapse.on('shown.bs.collapse hidden.bs.collapse', function () {
+                        self.ui.messages.css('margin-bottom', self.ui.footer.height());
+                        self.scrollToChatBottom();
+                    });
+
                     var responseCallback = function (msg) {
                             self.collection.add({author: 'Robot', message: msg.data});
                         },
@@ -79,8 +127,9 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                     api.topics.chat_responses.subscribe(responseCallback);
                     api.topics.speech_active.subscribe(speechActiveCallback);
-
-                    if (annyang) {
+                },
+                enableSpeech: function () {
+                    if (annyang && !this.speechEnabled) {
                         annyang.start();
 
                         var commands = {
@@ -92,6 +141,27 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         annyang.addCommands(commands);
                         // keeps speech alive for mobile devices if they went sleep or switched app.
                         this.keepAlive();
+                        this.speechEnabled = true;
+                        this.ui.recordButton.removeClass('btn-success').addClass('btn-warning').html('Disable microphone')
+                    }
+                },
+                disableSpeech: function () {
+                    if (this.speechEnabled) {
+                        if (annyang)
+                            annyang.abort();
+
+                        clearTimeout(this.keepAliveInterval);
+                        this.speechEnabled = false;
+                        this.ui.recordButton.removeClass('btn-warning').addClass('btn-success').html('Enable microphone')
+                    }
+                },
+                toggleSpeech: function () {
+                    this.ui.recordButton.blur();
+
+                    if (this.speechEnabled) {
+                        this.disableSpeech();
+                    } else {
+                        this.enableSpeech();
                     }
                 },
                 messageKeyUp: function (e) {
@@ -114,20 +184,21 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                             annyang.start();
                     }, 10000);
                 },
-                attachHtml: function (collectionView, childView, index) {
-                    var self = this;
-
+                attachHtml: function (collectionView, childView) {
                     childView.$el.hide();
                     collectionView._insertAfter(childView);
 
                     $(childView.$el).fadeIn(400, function () {
-                        if (!self.scrolling)
-                            $('html, body').animate({scrollTop: $(document).height()}, 'slow', 'swing', function () {
-                                self.scrolling = false;
-                            });
-
-                        self.scrolling = true;
+                        self.scrollToChatBottom();
                     });
+                },
+                scrollToChatBottom: function () {
+                    if (!self.scrolling)
+                        $('html, body').animate({scrollTop: $(document).height()}, 'slow', 'swing', function () {
+                            self.scrolling = false;
+                        });
+
+                    self.scrolling = true;
                 },
                 sendMessage: function (message) {
                     self.collection.add({author: 'Me', message: message});
@@ -144,9 +215,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 bye: function () {
                     self.sendMessage('bye');
-                },
-                recognizeSpeech: function () {
-                    alert('Say Hi to start');
                 }
             });
         });
