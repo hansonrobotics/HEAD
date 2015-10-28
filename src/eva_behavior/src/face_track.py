@@ -28,6 +28,8 @@ import random
 import math
 import logging
 
+from std_msgs.msg import Int32
+
 logger = logging.getLogger('hr.eva_behavior.face_track')
 
 # A Face. Currently consists only of an ID number, a 3D location,
@@ -89,6 +91,11 @@ class FaceTrack:
         self.TOPIC_FACE_EVENT = "/camera/face_event"
         self.EVENT_NEW_FACE = "new_face"
         self.EVENT_LOST_FACE = "lost_face"
+        # Overrides current face beeiing tracked by WebUI
+        self.EVENT_TRACK_FACE = "track_face"
+
+        # Publishes the current tracked face
+        self.TOPIC_LOOK_AT_FACE = "look_at_face"
 
         self.TOPIC_FACE_LOCATIONS = "/camera/face_locations"
 
@@ -103,11 +110,15 @@ class FaceTrack:
         rospy.Subscriber(self.TOPIC_FACE_LOCATIONS, Faces, self.face_loc_cb)
 
         # Where to look
-        self.look_pub = rospy.Publisher(self.TOPIC_FACE_TARGET, \
+        self.look_pub = rospy.Publisher(self.TOPIC_FACE_TARGET,
             Target, queue_size=10)
 
-        self.gaze_pub = rospy.Publisher(self.TOPIC_GAZE_TARGET, \
+        self.gaze_pub = rospy.Publisher(self.TOPIC_GAZE_TARGET,
             Target, queue_size=10)
+
+        self.look_at_face_pub = rospy.Publisher(self.TOPIC_LOOK_AT_FACE,
+            Int32, queue_size=10)
+
 
         # Frame in which coordinates will be returned from transformation
         self.LOCATION_FRAME = "blender"
@@ -279,7 +290,7 @@ class FaceTrack:
                     self.look_at_face(0)
                     return
                 except Exception as ex:
-                    logger.error("no gaze-at target: ", ex)
+                    logger.error("no gaze-at target")
                     self.gaze_at_face(0)
                     return
 
@@ -297,7 +308,7 @@ class FaceTrack:
                     self.look_at_face(0)
                     return
                 except Exception as ex:
-                    logger.error("no look-at target: ", ex)
+                    logger.error("no look-at target")
                     self.look_at_face(0)
                     return
 
@@ -352,6 +363,11 @@ class FaceTrack:
 
         elif data.face_event == self.EVENT_LOST_FACE:
             self.remove_face(data.face_id)
+
+        elif data.face_event == self.EVENT_TRACK_FACE:
+            self.blackboard['new_look_at_face'] = data.face_id
+            self.blackboard['is_interruption'] = True
+
 
     # pi_vision ROS callback, called when pi_vision has new face
     # location data for us. Because this happens frequently (10x/second)

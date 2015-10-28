@@ -15,7 +15,6 @@ define(['backbone', 'lib/api', 'underscore', 'lib/utilities'], function (Backbon
                         if (model && !_.findWhere(response.faces, {id: model.get('id')}))
                             self.remove(model);
                     });
-
                     self.trigger('change');
                 };
 
@@ -23,7 +22,6 @@ define(['backbone', 'lib/api', 'underscore', 'lib/utilities'], function (Backbon
             this.subscribeCallback = utilities.limitCallRate(1, function () {
                 callback.apply(self, arguments);
             });
-
             api.topics.face_locations.subscribe(this.subscribeCallback);
         },
         unsubscribe: function () {
@@ -34,10 +32,7 @@ define(['backbone', 'lib/api', 'underscore', 'lib/utilities'], function (Backbon
         },
         setLookAtFaceId: function (id) {
             this.look_at_face_id = parseInt(id);
-
-            api.topics.set_look_at_face.publish(new ROSLIB.Message({
-                id: this.look_at_face_id
-            }));
+            api.set_look_at_face(this.look_at_face_id);
         },
         getLookAtFaceId: function () {
             return this.look_at_face_id;

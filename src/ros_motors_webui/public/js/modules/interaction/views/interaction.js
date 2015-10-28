@@ -70,7 +70,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                                     height: 100
                                 }).data('time-added', currentTime).click(function () {
                                     self.options.faceCollection.setLookAtFaceId(face.get('id'));
-                                    self.ui.faceCollapse.collapse('hide');
                                     setActiveThumbnail(this);
                                 });
 
