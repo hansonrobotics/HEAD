@@ -34,11 +34,11 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 updateFaces: function () {
                     var currentTime = new Date().getTime();
 
-                    // remove lost faces older than 2 seconds
+                    // remove lost faces older than 3 seconds
                     $('img', this.ui.faceThumbnails).each(function (i, img) {
                         var id = parseInt($(img).attr('title'));
 
-                        if (!self.options.faceCollection.findWhere({id: id}) && (currentTime - $(img).data('time-added')) > 2000) {
+                        if (!self.options.faceCollection.findWhere({id: id}) && (currentTime - $(img).data('time-added')) > 3000) {
                             $(img).remove();
 
                             if (self.options.faceCollection.getLookAtFaceId() == id)
@@ -81,12 +81,18 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     });
 
                     if ($('img', this.ui.faceThumbnails).length == 0 && this.options.faceCollection.isEmpty()) {
-                        this.ui.faceContainer.hide();
-                        this.ui.recordButton.fadeIn();
-                        self.ui.faceCollapse.removeClass('in');
+                        if (! this.recordButtonShown) {
+                            this.recordButtonShown = true;
 
-                        this.disableSpeech();
-                    } else {
+                            this.ui.faceContainer.hide();
+                            this.ui.recordButton.fadeIn();
+                            self.ui.faceCollapse.removeClass('in');
+
+                            this.disableSpeech();
+                        }
+                    } else if (typeof this.recordButtonShown == 'undefined' || this.recordButtonShown) {
+                        this.recordButtonShown = false;
+
                         this.ui.faceContainer.fadeIn();
                         this.ui.recordButton.hide();
 
