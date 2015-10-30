@@ -20,7 +20,9 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     footer: 'footer'
                 },
                 events: {
-                    'click @ui.recordButton': 'toggleSpeech',
+                    'mousedown @ui.recordButton': 'enableSpeech',
+                    'mouseup @ui.recordButton': 'disableSpeech',
+                    'mouseleave @ui.recordButton': 'disableSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked'
                 },
@@ -81,22 +83,15 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     });
 
                     if ($('img', this.ui.faceThumbnails).length == 0 && this.options.faceCollection.isEmpty()) {
-                        if (! this.recordButtonShown) {
-                            this.recordButtonShown = true;
-
-                            this.ui.faceContainer.hide();
-                            this.ui.recordButton.fadeIn();
-                            self.ui.faceCollapse.removeClass('in');
-
-                            this.disableSpeech();
+                        if (!this.facesEmpty) {
+                            this.facesEmpty = true;
+                            this.ui.faceContainer.slideUp();
                         }
-                    } else if (typeof this.recordButtonShown == 'undefined' || this.recordButtonShown) {
-                        this.recordButtonShown = false;
+                    } else if (typeof this.facesEmpty == 'undefined' || this.facesEmpty) {
+                        this.facesEmpty = false;
 
-                        this.ui.faceContainer.fadeIn();
-                        this.ui.recordButton.hide();
-
-                        this.enableSpeech();
+                        this.ui.faceCollapse.removeClass('in');
+                        this.ui.faceContainer.slideDown();
                     }
                 },
                 serializeData: function () {
@@ -135,6 +130,11 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 enableSpeech: function () {
                     if (annyang && !this.speechEnabled) {
+                        this.ui.recordButton.tooltip({
+                            placement: 'left',
+                            title: 'Release to stop'
+                        }).removeClass('btn-info').addClass('btn-danger');
+
                         annyang.start();
 
                         var commands = {
@@ -147,17 +147,17 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         // keeps speech alive for mobile devices if they went sleep or switched app.
                         this.keepAlive();
                         this.speechEnabled = true;
-                        this.ui.recordButton.removeClass('btn-success').addClass('btn-warning').html('Disable microphone')
                     }
                 },
                 disableSpeech: function () {
                     if (this.speechEnabled) {
+                        this.ui.recordButton.tooltip('destroy').removeClass('btn-danger').addClass('btn-info').blur();
+
                         if (annyang)
                             annyang.abort();
 
                         clearTimeout(this.keepAliveInterval);
                         this.speechEnabled = false;
-                        this.ui.recordButton.removeClass('btn-warning').addClass('btn-success').html('Enable microphone')
                     }
                 },
                 toggleSpeech: function () {

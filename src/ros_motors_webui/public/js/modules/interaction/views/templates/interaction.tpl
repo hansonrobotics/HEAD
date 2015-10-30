@@ -7,19 +7,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="message-input-container input-group">
-                    <input type="text" class="app-message-input form-control input-sm"
+                    <input type="text" class="app-message-input form-control"
                            placeholder="Type your message here..."/>
 
                     <span class="input-group-btn">
-                        <button class="app-send-button btn btn-primary btn-sm">Send</button>
+                        <button class="app-send-button btn btn-primary">Send</button>
+                        <button class="app-record-button btn btn-info"><i class="fa fa-microphone"></i></button>
                     </span>
                 </div>
 
                 <div class="record-container col-sm-12">
-                    <button class="app-record-button btn btn-sm btn-success">
-                        Enable microphone
-                    </button>
-
                     <div class="app-select-person-container">
                         <button class="expand-face-select-button btn btn-primary btn-sm" type="button"
                                 data-toggle="collapse"

@@ -2,10 +2,20 @@
     padding: 0 0 10px 0;
 }
 
-.app-record-button,
+.app-record-button {
+    width: 39px;
+    padding: 0 0 0 1px;
+
+    margin-left: 5px !important;
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius: 20px !important;;
+    border-radius: 20px !important;;
+}
+
 .expand-face-select-button {
     display: block;
     width: 100%;
+    margin-top: 10px;
 }
 
 .app-messages {
@@ -40,18 +50,12 @@
 
 .message-input-container {
     margin-top: 10px;
+    height: 39px;
 }
 
-.app-send-button {
-    height: 31px;
-}
-
-.app-send-button {
-    margin-left: 0;
-}
-
-.app-send-button {
-    margin-bottom: 10px;
+.app-send-button,
+.app-record-button{
+    height: 39px;
 }
 
 .app-face-thumbnails {
@@ -60,6 +64,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     padding-right: 10px;
+    height: 110px;
 }
 
 .face-thumbnail {
