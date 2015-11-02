@@ -20,9 +20,9 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     footer: 'footer'
                 },
                 events: {
-                    'mousedown @ui.recordButton': 'enableSpeech',
-                    'mouseup @ui.recordButton': 'disableSpeech',
-                    'mouseleave @ui.recordButton': 'disableSpeech',
+                    'touchstart @ui.recordButton': 'toggleSpeech',
+                    'touchend @ui.recordButton': 'toggleSpeech',
+                    'click @ui.recordButton': 'toggleSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked'
                 },
@@ -128,7 +128,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     api.topics.chat_responses.subscribe(responseCallback);
                     api.topics.speech_active.subscribe(speechActiveCallback);
                 },
-                enableSpeech: function () {
+                enableSpeech: function (e) {
                     if (annyang && !this.speechEnabled) {
                         this.ui.recordButton.tooltip({
                             placement: 'left',
@@ -138,9 +138,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         annyang.start();
 
                         var commands = {
-                            'hi *': this.hello,
-                            'hello *': this.hello,
-                            'bye *': this.bye,
                             '*text': this.sendMessage
                         };
                         annyang.addCommands(commands);
@@ -149,7 +146,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         this.speechEnabled = true;
                     }
                 },
-                disableSpeech: function () {
+                disableSpeech: function (e) {
                     if (this.speechEnabled) {
                         this.ui.recordButton.tooltip('destroy').removeClass('btn-danger').addClass('btn-info').blur();
 
@@ -160,13 +157,23 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         this.speechEnabled = false;
                     }
                 },
-                toggleSpeech: function () {
-                    this.ui.recordButton.blur();
-
+                toggleSpeech: function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    var currentTime = new Date().getTime();
+                    var maxClickTime = 500;
+                    if (e.type == 'touchstart'){
+                        self.touchstarted = currentTime;
+                    }
+                    if (e.type == 'touchend'){
+                        if (currentTime - 500 < self.touchstarted){
+                            return
+                        }
+                    }
                     if (this.speechEnabled) {
-                        this.disableSpeech();
+                        this.disableSpeech(e);
                     } else {
-                        this.enableSpeech();
+                        this.enableSpeech(e);
                     }
                 },
                 messageKeyUp: function (e) {
