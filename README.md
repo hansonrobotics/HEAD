@@ -13,4 +13,4 @@ full performance pipeline and infrastructure:
 
 Install and setup
 -----------------
-
+Many many steps are needed.  Install ROS Indigo. Install blender...
