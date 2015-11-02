@@ -20,17 +20,32 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     footer: 'footer'
                 },
                 events: {
-                    'mousedown @ui.recordButton': 'enableSpeech',
-                    'mouseup @ui.recordButton': 'disableSpeech',
-                    'mouseleave @ui.recordButton': 'disableSpeech',
+                    'touchstart @ui.recordButton': 'toggleSpeech',
+                    'touchend @ui.recordButton': 'toggleSpeech',
+                    'click @ui.recordButton': 'toggleSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked'
                 },
                 initialize: function () {
                     self = this;
+                    var commands = {
+                            '*text': this.sendMessage
+                    };
+                    if (annyang){
+                        annyang.debug();
+                        annyang.addCommands(commands);
+                        annyang.addCallback('start', this.speechStarted);
+                        annyang.addCallback('error', this.speechError);
+                    }
+                    api.enableInteractionMode();
+                    api.topics.chat_responses.subscribe(this.responseCallback);
+                    api.topics.speech_active.subscribe(this.speechActiveCallback);
+                    this.speechPaused = false
                 },
                 onDestroy: function () {
                     this.options.faceCollection.unsubscribe();
+                    api.topics.chat_responses.unsubscribe(this.responseCallback);
+                    api.topics.speech_active.unsubscribe(this.speechActiveCallback);
                     this.disableSpeech();
                 },
                 updateFaces: function () {
@@ -109,64 +124,58 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         self.ui.messages.css('margin-bottom', self.ui.footer.height());
                         self.scrollToChatBottom();
                     });
-
-                    var responseCallback = function (msg) {
-                            self.collection.add({author: 'Robot', message: msg.data});
-                        },
-                        speechActiveCallback = function (msg) {
-                            if (msg.data == 'start') {
-                                if (window.location.protocol != "https:") {
-                                    if (annyang) annyang.pause();
-                                } else {
-                                    if (annyang) annyang.abort();
-                                }
-                            } else {
-                                if (annyang) annyang.resume();
-                            }
-                        };
-
-                    api.topics.chat_responses.subscribe(responseCallback);
-                    api.topics.speech_active.subscribe(speechActiveCallback);
+                },
+                responseCallback: function (msg) {
+                    self.collection.add({author: 'Robot', message: msg.data});
+                },
+                speechActiveCallback: function (msg) {
+                    if (self.speechEnabled){
+                        if (msg.data == 'start') {
+                           self.speechPaused = true;
+                           self.disableSpeech()
+                        }
+                    } else if ((msg.data != 'start') && self.speechPaused) {
+                        self.enableSpeech()
+                    }
                 },
                 enableSpeech: function () {
                     if (annyang && !this.speechEnabled) {
-                        this.ui.recordButton.tooltip({
-                            placement: 'left',
-                            title: 'Release to stop'
-                        }).removeClass('btn-info').addClass('btn-danger');
-
-                        annyang.start();
-
-                        var commands = {
-                            'hi *': this.hello,
-                            'hello *': this.hello,
-                            'bye *': this.bye,
-                            '*text': this.sendMessage
-                        };
-                        annyang.addCommands(commands);
-                        // keeps speech alive for mobile devices if they went sleep or switched app.
-                        this.keepAlive();
-                        this.speechEnabled = true;
+                        annyang.resume();
                     }
+                },
+                speechStarted: function(){
+                    self.ui.recordButton.tooltip({
+                        placement: 'left',
+                        title: 'Release to stop'
+                    }).removeClass('btn-info').addClass('btn-danger');
+                    self.speechEnabled = true;
+                },
+                speechError: function(e){
+                    self.speechEnabled = false;
+                    self.ui.recordButton.tooltip('destroy').removeClass('btn-danger').addClass('btn-info').blur();
                 },
                 disableSpeech: function () {
                     if (this.speechEnabled) {
-                        this.ui.recordButton.tooltip('destroy').removeClass('btn-danger').addClass('btn-info').blur();
-
-                        if (annyang)
-                            annyang.abort();
-
-                        clearTimeout(this.keepAliveInterval);
-                        this.speechEnabled = false;
+                        if (annyang) annyang.abort();
                     }
                 },
-                toggleSpeech: function () {
-                    this.ui.recordButton.blur();
-
+                toggleSpeech: function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    var currentTime = new Date().getTime();
+                    var maxClickTime = 500;
+                    if (e.type == 'touchstart'){
+                        self.touchstarted = currentTime;
+                    }
+                    if (e.type == 'touchend'){
+                        if (currentTime - 500 < self.touchstarted){
+                            return
+                        }
+                    }
                     if (this.speechEnabled) {
-                        this.disableSpeech();
+                        this.disableSpeech(e);
                     } else {
-                        this.enableSpeech();
+                        this.enableSpeech(e);
                     }
                 },
                 messageKeyUp: function (e) {
@@ -183,12 +192,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                     this.ui.messageInput.val('');
                 },
-                keepAlive: function () {
-                    this.keepAliveInterval = setInterval(function () {
-                        if (annyang)
-                            annyang.start();
-                    }, 10000);
-                },
                 attachHtml: function (collectionView, childView) {
                     childView.$el.hide();
                     collectionView._insertAfter(childView);
@@ -202,7 +205,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         $('html, body').animate({scrollTop: $(document).height()}, 'slow', 'swing', function () {
                             self.scrolling = false;
                         });
-
                     self.scrolling = true;
                 },
                 sendMessage: function (message) {
