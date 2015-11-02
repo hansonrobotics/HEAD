@@ -1,0 +1,6 @@
+<launch>
+    <include file="$(find icog_face_tracker)/launch/camera.launch"/>
+    <node name="tracker_tld_node" pkg="icog_face_tracker" type="tracker_tld_node" output="screen">
+        <param name="show_preview" value="true"/>
+    </node>
+</launch>

@@ -2,32 +2,15 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
     App.module('Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Motor = Backbone.Model.extend({
             initialize: function () {
-                // set value to default
-                this.set('value', this.get('default'));
-
                 // not selected by default
                 this.set('selected', false);
 
                 // send motor command when updating value
-                this.on('change', this.checkUpdatedValue())
+                this.on('change:value', this.checkUpdatedValue);
             },
             checkUpdatedValue: function () {
-                var self = this;
-
-                return function () {
-                    if (this.previous('value') != this.get('value')) {
-                        api._sendMotorCommand(self.toJSON(), self.get('value'));
-                    }
-                };
-            },
-            selected: function (selected) {
-                if (typeof selected == 'undefined') {
-                    // return status if arg undefined
-                    return this.get('selected');
-                } else {
-                    // set status otherwise
-                    this.set('selected', !!selected);
-                }
+                if (this.previous('value') != this.get('value'))
+                    api._sendMotorCommand(this.toJSON(), this.get('value'));
             },
             getDegrees: function (attribute) {
                 return Math.round(utilities.radToDeg(this.get(attribute)));
@@ -51,15 +34,15 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
         });
         Entities.MotorCollection = Backbone.Collection.extend({
             model: Entities.Motor,
-            comparator: 'order_no',
+            comparator: 'sort_no',
             sync: function (successCallback, errorCallback) {
                 var data = _.filter(this.toJSON(), function (motor) {
-                        delete motor['selected'];
-                        delete motor['editable'];
-                        delete motor['value'];
+                    delete motor['selected'];
+                    delete motor['editable'];
+                    delete motor['value'];
 
-                        return motor;
-                    });
+                    return motor;
+                });
 
                 $.ajax("/motors/update/" + api.config.robot, {
                     data: JSON.stringify(data),
@@ -75,26 +58,52 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     }
                 });
             },
-            fetch: function (admin, callback) {
+            fetchFromParam: function (callback) {
                 var self = this;
 
-                if (admin) {
-                    api.getMotorsFromFile(function (data) {
-                        self.add(data);
-                        self.loadPololuMotors();
+                api.getMotorsFromParam(function (motors) {
+                    self.add(motors);
+
+                    if (typeof callback == 'function')
+                        callback(motors);
+                });
+            },
+            fetchFromFile: function (callback) {
+                var self = this;
+
+                $.ajax('/motors/get/' + api.config.robot, {
+                    dataType: 'json',
+                    success: function (response) {
+                        self.add(response.motors);
 
                         if (typeof callback == 'function')
-                            callback(data);
-                    });
-                } else {
-                    api.getMotorsFromParam(function (data) {
-                        self.add(data);
-                        self.loadPololuMotors();
+                            callback(response.motors);
+                    }
+                });
+            },
+            updateStatus: function (callback) {
+                var self = this;
 
-                        if (typeof callback == 'function')
-                            callback(data);
-                    });
-                }
+                $.ajax('/motors/status/' + api.config.robot, {
+                    dataType: 'json',
+                    success: function (response) {
+                        var motors = response.motors;
+
+                        _.each(motors, function (motor) {
+                            var model = self.findWhere({name: motor['name']});
+                            if (model)
+                                model.set('status', motor);
+                        });
+
+                        if (typeof callback == 'funtion')
+                            callback(motors);
+                    }
+                });
+            },
+            setDefaultValues: function (silent) {
+                this.each(function (motor) {
+                    motor.set({value: motor.get('default')}, {silent: !!silent});
+                })
             },
             getRelativePositions: function () {
                 var positions = {};

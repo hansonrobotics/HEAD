@@ -15,14 +15,15 @@ import time
 import imp
 import pdb
 from mathutils import Vector
+import logging
 
 debug = True
-
+logger = logging.getLogger('hr.blender_api.rigcontrol.animationmanager')
 
 class AnimationManager():
 
     def __init__(self):
-        print('Starting AnimationManager singleton')
+        logger.info('Starting AnimationManager singleton')
 
         # Gesture params
         self.gesturesList = []
@@ -171,7 +172,7 @@ class AnimationManager():
             try:
                 control = self.bones['EMO-'+emotionName]
             except KeyError:
-                print('Cannot set emotion. No bone with name ', emotionName)
+                logger.error('Cannot set emotion. No bone with name ', emotionName)
                 continue
             else:
                 found = False
@@ -448,6 +449,6 @@ class Cycle():
 def init():
     '''Create AnimationManager singleton and make it available for global access'''
     if hasattr(bpy, 'evaAnimationManager'):
-        print('Skipping Singleton instantiation')
+        logger.info('Skipping Singleton instantiation')
     else:
         bpy.evaAnimationManager = AnimationManager()

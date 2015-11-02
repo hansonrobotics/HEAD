@@ -11,6 +11,9 @@ import bpy
 from .helpers import *
 
 import pprint, time
+import logging
+
+logger = logging.getLogger('hr.blender_api.rigcontrol.blenderplayback')
 
 class BLGlobalTimer(bpy.types.Operator):
     """Timer  Control"""
@@ -26,7 +29,7 @@ class BLGlobalTimer(bpy.types.Operator):
     _maxFPS = defaultTimerHz
 
     def execute(self, context):
-        print('Starting Timer')
+        logger.info('Starting Timer')
         wm = context.window_manager
         self._timer = wm.event_timer_add(1/self._maxFPS, context.window)
         bpy.context.scene['globalTimerStarted'] = True
@@ -47,7 +50,7 @@ class BLGlobalTimer(bpy.types.Operator):
         return {'PASS_THROUGH'}
 
     def cancel(self,context):
-        print('Stopping Timer')
+        logger.info('Stopping Timer')
         if self._timer:
             wm = context.window_manager
             wm.event_timer_remove(self._timer)
@@ -79,7 +82,7 @@ class EvaDebug(bpy.types.Operator):
 
     def execute(self, context):
         from . import commands
-        print(eval(self.action))
+        logger.info(eval(self.action))
         return {'FINISHED'}
 
 
@@ -205,7 +208,7 @@ class BLPlayback(bpy.types.Operator):
 
 
     def execute(self, context):
-        print('Starting Playback')
+        logger.info('Starting Playback')
         wm = context.window_manager
         wm.modal_handler_add(self)
         bpy.context.scene['animationPlaybackActive'] = True
@@ -215,7 +218,7 @@ class BLPlayback(bpy.types.Operator):
 
 
     def cancel(self, context):
-        print('Stopping Playback')
+        logger.info('Stopping Playback')
         bpy.evaAnimationManager.terminate()
         bpy.context.scene['animationPlaybackActive'] = False
         return {'CANCELLED'}

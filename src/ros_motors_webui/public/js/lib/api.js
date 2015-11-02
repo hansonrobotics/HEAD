@@ -31,18 +31,27 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.services.expressionList.callService(new ROSLIB.ServiceRequest(), success);
         },
         setExpressionsParam: function (expressions) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/expressions'});
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: '/' + api.config.robot + '/expressions'
+            });
             param.set(expressions);
         },
         getAnimations: function (callback) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/animations'});
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: '/' + api.config.robot + '/animations'
+            });
 
             param.get(function (animations) {
                 callback(animations);
             });
         },
         setAnimations: function (animations) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/animations'});
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: '/' + api.config.robot + '/animations'
+            });
             param.set(animations);
         },
         updateAnimations: function (animations, successCallback, errorCallback) {
@@ -104,14 +113,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             }
 
             api.topics[confEntry.topic].publish(cmd);
-        },
-        setDefaultMotorValues: function () {
-            api.getMotorsFromParam(function(motors){
-                for (var i = 0; i < motors.length; i++) {
-                    api._sendMotorCommand(motors[i], motors[i].default);
-                }
-            });
-
         },
         getPololuMotorTopics: function (success) {
             api.services.topicsForType.callService({type: 'ros_pololu/MotorCommand'}, function (response) {
@@ -223,7 +224,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 magnitude = 1;
 
             if ($.isNumeric(duration))
-                duration = {secs: Math.floor(duration), nsecs: Math.floor((duration - Math.floor(duration)) * 1000)};
+                duration = {
+                    secs: Math.floor(duration),
+                    nsecs: Math.floor((duration - Math.floor(duration)) * 1000)
+                };
             else if (typeof duration != 'object')
                 duration = {secs: 1, nsecs: 0};
 
@@ -283,20 +287,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 self = this;
 
             param.get(function (motors) {
-                motors.sort(function(a,b){return parseFloat(a.sort_no)-parseFloat(b.sort_no)});
+                motors.sort(function (a, b) {
+                    return parseFloat(a.sort_no) - parseFloat(b.sort_no)
+                });
                 self.createMotorTopics(motors);
                 callback(motors);
-            });
-        },
-        getMotorsFromFile: function (callback) {
-            var self = this;
-
-            $.ajax('/motors/get/' + api.config.robot, {
-                dataType: 'json',
-                success: function (response) {
-                    self.createMotorTopics(response.motors);
-                    callback(response.motors);
-                }
             });
         },
         createMotorTopics: function (motors) {

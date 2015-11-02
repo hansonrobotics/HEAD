@@ -20,7 +20,7 @@ __all__ = [
     'run_shell_cmd', 'wait_for',
     'capture_webcam_video', 'video2rosbag',
     'play_rosbag', 'rosbag_msg_generator', 'wait_for_message',
-    'wait_for_subscriber', 'wait_for_messages',
+    'wait_for_messages',
     'ThreadWorker', 'capture_screen', 'capture_camera',
     'startxvfb', 'stopxvfb', 'get_rosbag_file', 'get_data_path',
     'add_text_to_video', 'concatenate_videos', 'MessageQueue',

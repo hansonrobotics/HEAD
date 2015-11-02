@@ -23,6 +23,9 @@ from pau2motors.msg import pau
 from Pau2Motors import Pau2Motors
 from optparse import OptionParser
 import time
+import logging
+
+logger = logging.getLogger('hr.pau2motors.pau2motors_node')
 
 def get_namespaces_containing(name_piece):
   return set([
@@ -79,14 +82,13 @@ if __name__ == '__main__':
     config["motors"] = dict([i["name"],i] for i in motors)
 
     Pau2MotorsNode(config)
-    rospy.loginfo(
+    logger.info(
       "Loaded '%s' from param server.",
       rospy.get_namespace() + "pau2motors"
     )
-    rospy.loginfo("Started")
+    logger.info("Started")
     rospy.spin()
   else:
-    print(
-      "Couldn't find '%s' param in namespace '%s'." %
-     ("pau2motors", rospy.get_namespace())
+    logger.error("Couldn't find '%s' param in namespace '%s'." %
+        ("pau2motors", rospy.get_namespace())
     )

@@ -114,7 +114,14 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     self.sendMessage('bye');
                 },
                 recognizeSpeech: function () {
-                    alert('Say Hi to start');
+                    alert('Say Hi to start, chatbot is listening');
+                    //var message = this.ui.messageInput.val();
+                    //var chat_message = new ROSLIB.Message({
+                    //    utterance: message,
+                    //    confidence: 99
+                    //});
+
+                    //api.topics.speech_start_topic.publish(chat_message);
                 }
             });
         });

@@ -3,9 +3,11 @@ import bpy
 from mathutils import Matrix, Euler
 from math import pi
 from collections import OrderedDict
+import logging
 
 from rigAPI.rigAPI import RigAPI
 
+logger = logging.getLogger('hr.blender_api.rigcontrol.commands')
 # ====================================================
 
 def init():
@@ -226,21 +228,21 @@ class EvaAPI(RigAPI):
 
     def setParam(self, key, value):
         cmd = "%s=%s" % (str(key), str(value))
-        print("Run %s" % cmd)
+        logger.info("Run %s" % cmd)
         try:
             exec(cmd)
         except Exception as ex:
-            print("Error %s" % ex)
+            logger.error("Error %s" % ex)
             return False
         return True
 
     def getParam(self, param):
         param = param.strip()
-        print("Get %s" % param)
+        logger.info("Get %s" % param)
         try:
             return str(eval(param))
         except Exception as ex:
-            print("Error %s" % ex)
+            logger.error("Error %s" % ex)
 
     def getAnimationLength(self, animation):
         animation = "GST-"+animation

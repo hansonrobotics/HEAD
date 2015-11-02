@@ -17,7 +17,9 @@ import sys
 import time
 import threading
 import xml.sax
+import logging
 
+logger = logging.getLogger('hr.chatbot.aiml.kernel')
 
 class Kernel:
     # module constants
@@ -116,10 +118,10 @@ class Kernel:
         try: cmds = [ commands + "" ]
         except: pass
         for cmd in cmds:
-            print self._respond(cmd, self._globalSessionID)
+            logger.info(self._respond(cmd, self._globalSessionID))
             
         if self._verboseMode:
-            print "Kernel bootstrap completed in %.2f seconds" % (time.clock() - start)
+            logger.info("Kernel bootstrap completed in %.2f seconds" % (time.clock() - start))
 
     def verbose(self, isVerbose = True):
         """Enable/disable verbose output mode."""
@@ -152,20 +154,20 @@ class Kernel:
         NOTE: the current contents of the 'brain' will be discarded!
 
         """
-        if self._verboseMode: print "Loading brain from %s..." % filename,
+        if self._verboseMode: logger.info("Loading brain from %s..." % filename,)
         start = time.clock()
         self._brain.restore(filename)
         if self._verboseMode:
             end = time.clock() - start
-            print "done (%d categories in %.2f seconds)" % (self._brain.numTemplates(), end)
+            logger.info("done (%d categories in %.2f seconds)" % (self._brain.numTemplates(), end))
 
     def saveBrain(self, filename):
         """Dump the contents of the bot's brain to a file on disk."""
-        if self._verboseMode: print "Saving brain to %s..." % filename,
+        if self._verboseMode: logger.info("Saving brain to %s..." % filename,)
         start = time.clock()
         self._brain.save(filename)
         if self._verboseMode:
-            print "done (%.2f seconds)" % (time.clock() - start)
+            logger.info("done (%.2f seconds)" % (time.clock() - start))
 
     def getPredicate(self, name, sessionID = _globalSessionID):
         """Retrieve the current value of the predicate 'name' from the
@@ -279,7 +281,7 @@ class Kernel:
 
         """
         for f in glob.glob(filename):
-            if self._verboseMode: print "Loading %s..." % f,
+            if self._verboseMode: logger.info("Loading %s..." % f,)
             start = time.clock()
             # Load and parse the AIML file.
             parser = AimlParser.create_parser()
@@ -288,14 +290,14 @@ class Kernel:
             try: parser.parse(f)
             except xml.sax.SAXParseException, msg:
                 err = "\nFATAL PARSE ERROR in file %s:\n%s\n" % (f,msg)
-                sys.stderr.write(err)
+                logger.error(err)
                 continue
             # store the pattern/template pairs in the PatternMgr.
             for key,tem in handler.categories.items():
                 self._brain.add(key,tem)
             # Parsing was successful.
             if self._verboseMode:
-                print "done (%.2f seconds)" % (time.clock() - start)
+                logger.info("done (%.2f seconds)" % (time.clock() - start))
 
     def respond(self, input, sessionID = _globalSessionID):
         """Return the Kernel's response to the input string."""
@@ -360,7 +362,7 @@ class Kernel:
         if len(inputStack) > self._maxRecursionDepth:
             if self._verboseMode:
                 err = "WARNING: maximum recursion depth exceeded (input='%s')" % input.encode(self._textEncoding, 'replace')
-                sys.stderr.write(err)
+                logger.error(err)
             return ""
 
         # push the input onto the input stack
@@ -388,7 +390,7 @@ class Kernel:
         if elem is None:
             if self._verboseMode:
                 err = "WARNING: No match found for input: %s\n" % input.encode(self._textEncoding)
-                sys.stderr.write(err)
+                logger.error(err)
         else:
             # Process the element into a response string.
             response += self._processElement(elem, sessionID).strip()
@@ -420,7 +422,7 @@ class Kernel:
             # type!
             if self._verboseMode:
                 err = "WARNING: No handler found for <%s> element\n" % elem[0].encode(self._textEncoding, 'replace')
-                sys.stderr.write(err)
+                logger.error(err)
             return ""
         return handlerFunc(elem, sessionID)
 
@@ -525,7 +527,7 @@ class Kernel:
                     except:
                         # No attributes, no name/value attributes, no
                         # such predicate/session, or processing error.
-                        if self._verboseMode: print "Something amiss -- skipping listitem", li
+                        if self._verboseMode: logger.info("Something amiss -- skipping listitem", li)
                         raise
                 if not foundMatch:
                     # Check the last element of listitems.  If it has
@@ -538,11 +540,11 @@ class Kernel:
                     except:
                         # listitems was empty, no attributes, missing
                         # name/value attributes, or processing error.
-                        if self._verboseMode: print "error in default listitem"
+                        if self._verboseMode: logger.error("error in default listitem")
                         raise
             except:
                 # Some other catastrophic cataclysm
-                if self._verboseMode: print "catastrophic condition failure"
+                if self._verboseMode: logger.error("catastrophic condition failure")
                 raise
         return response
         
@@ -643,7 +645,7 @@ class Kernel:
         except IndexError:
             if self._verboseMode:
                 err = "No such index %d while processing <input> element.\n" % index
-                sys.stderr.write(err)
+                logger.error(err)
             return ""
 
     # <javascript>
@@ -906,7 +908,7 @@ class Kernel:
         except RuntimeError, msg:
             if self._verboseMode:
                 err = "WARNING: RuntimeError while processing \"system\" element:\n%s\n" % msg.encode(self._textEncoding, 'replace')
-                sys.stderr.write(err)
+                logger.error(err)
             return "There was an error while computing my response.  Please inform my botmaster."
         time.sleep(0.01) # I'm told this works around a potential IOError exception.
         for line in out:
@@ -979,7 +981,7 @@ class Kernel:
         except IndexError:
             if self._verboseMode:
                 err = "No such index %d while processing <that> element.\n" % index
-                sys.stderr.write(err)
+                logger.error(err)
             return ""
 
     # <thatstar>
@@ -1085,14 +1087,14 @@ def _testTag(kern, tag, input, outputList):
     """
     global _numTests, _numPassed
     _numTests += 1
-    print "Testing <" + tag + ">:",
+    logger.info("Testing <" + tag + ">:",)
     response = kern.respond(input).decode(kern._textEncoding)
     if response in outputList:
-        print "PASSED"
+        logger.info("PASSED")
         _numPassed += 1
         return True
     else:
-        print "FAILED (response: '%s')" % response.encode(kern._textEncoding, 'replace')
+        logger.error("FAILED (response: '%s')" % response.encode(kern._textEncoding, 'replace'))
         return False
 
 if __name__ == "__main__":
@@ -1127,7 +1129,7 @@ if __name__ == "__main__":
     there's nothing to worry about.
     """
     if not _testTag(k, 'date', 'test date', ["The date is %s" % time.asctime()]):
-        print date_warning
+        logger.warn(date_warning)
     
     _testTag(k, 'formal', 'test formal', ["Formal Test Passed"])
     _testTag(k, 'gender', 'test gender', ["He'd told her he heard that her hernia is history"])
@@ -1173,11 +1175,11 @@ if __name__ == "__main__":
     _testTag(k, 'whitespace preservation', 'test whitespace', ["Extra   Spaces\n   Rule!   (but not in here!)    But   Here   They   Do!"])
 
     # Report test results
-    print "--------------------"
+    logger.info("--------------------")
     if _numTests == _numPassed:
-        print "%d of %d tests passed!" % (_numPassed, _numTests)
+        logger.info("%d of %d tests passed!" % (_numPassed, _numTests))
     else:
-        print "%d of %d tests passed (see above for detailed errors)" % (_numPassed, _numTests)
+        logger.info("%d of %d tests passed (see above for detailed errors)" % (_numPassed, _numTests))
 
     # Run an interactive interpreter
     #print "\nEntering interactive mode (ctrl-c to exit)"

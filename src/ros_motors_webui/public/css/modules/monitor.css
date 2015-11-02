@@ -1,0 +1,39 @@
+.system-indicators {
+    list-style: none;
+    padding: 0;
+}
+.system-indicators li {
+    border-bottom: 1px dashed #485563;
+    margin-bottom: 3px;
+}
+
+.log-table {
+    margin: 0;
+}
+
+.monitor-page .panel {
+    margin-bottom: 2px;
+}
+
+.monitor-page .status-item,
+.monitor-page  .node-status{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.status-list-row {
+    padding: 15px;
+}
+
+.status-list-row .col-xs-6 {
+    padding: 0;
+}
+
+.status-list-row .list-group-item {
+    margin-right: 3px;
+}
+
+.log-panel a {
+    color: #EBEBEB;
+}
