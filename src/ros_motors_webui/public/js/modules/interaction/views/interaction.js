@@ -1,5 +1,5 @@
-define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'annyang'],
-    function (App, MessageView, template, api, annyang) {
+define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'annyang', 'RecordRTC'],
+    function (App, MessageView, template, api, annyang, RecordRTC) {
         var self;
         App.module("Interaction.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Interaction = Marionette.CompositeView.extend({
@@ -17,21 +17,23 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     faceThumbnails: '.app-face-thumbnails',
                     faceContainer: '.app-select-person-container',
                     faceCollapse: '.app-face-container',
-                    footer: 'footer'
+                    footer: 'footer',
+                    languageButton: '.app-language-select button'
                 },
                 events: {
                     'touchstart @ui.recordButton': 'toggleSpeech',
                     'touchend @ui.recordButton': 'toggleSpeech',
                     'click @ui.recordButton': 'toggleSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
-                    'click @ui.sendButton': 'sendClicked'
+                    'click @ui.sendButton': 'sendClicked',
+                    'click @ui.languageButton': 'changeLanguage'
                 },
                 initialize: function () {
                     self = this;
                     var commands = {
-                            '*text': this.sendMessage
+                        '*text': this.sendMessage
                     };
-                    if (annyang){
+                    if (annyang) {
                         annyang.debug();
                         annyang.addCommands(commands);
                         annyang.addCallback('start', this.speechStarted);
@@ -129,10 +131,10 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     self.collection.add({author: 'Robot', message: msg.data});
                 },
                 speechActiveCallback: function (msg) {
-                    if (self.speechEnabled){
+                    if (self.speechEnabled) {
                         if (msg.data == 'start') {
-                           self.speechPaused = true;
-                           self.disableSpeech()
+                            self.speechPaused = true;
+                            self.disableSpeech();
                         }
                     } else if ((msg.data != 'start') && self.speechPaused) {
                         self.enableSpeech()
@@ -140,36 +142,48 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 enableSpeech: function () {
                     if (annyang && !this.speechEnabled) {
-                        annyang.resume();
+                        switch (this.language) {
+                            case 'en':
+                                annyang.resume();
+                                break;
+                            case 'cn':
+                                this.enableAudioRecording();
+                        }
                     }
                 },
-                speechStarted: function(){
-                    self.ui.recordButton.tooltip({
-                        placement: 'left',
-                        title: 'Release to stop'
-                    }).removeClass('btn-info').addClass('btn-danger');
+                speechStarted: function () {
+                    self.ui.recordButton.removeClass('btn-info').addClass('btn-danger');
                     self.speechEnabled = true;
                 },
-                speechError: function(e){
+                speechError: function (e) {
+                    console.log('speech error');
+                    self.ui.recordButton.removeClass('btn-danger').addClass('btn-info').blur();
                     self.speechEnabled = false;
-                    self.ui.recordButton.tooltip('destroy').removeClass('btn-danger').addClass('btn-info').blur();
+                    self.disableSpeech();
                 },
                 disableSpeech: function () {
                     if (this.speechEnabled) {
-                        if (annyang) annyang.abort();
+                        switch (this.language) {
+                            case 'en':
+                                if (annyang) annyang.abort();
+                                break;
+                            case 'cn':
+                                this.disableAudioRecording();
+                        }
                     }
                 },
                 toggleSpeech: function (e) {
                     e.stopPropagation();
                     e.preventDefault();
-                    var currentTime = new Date().getTime();
-                    var maxClickTime = 500;
-                    if (e.type == 'touchstart'){
+                    var currentTime = new Date().getTime(),
+                        maxClickTime = 500;
+
+                    if (e.type == 'touchstart') {
                         self.touchstarted = currentTime;
                     }
-                    if (e.type == 'touchend'){
-                        if (currentTime - 500 < self.touchstarted){
-                            return
+                    if (e.type == 'touchend') {
+                        if (currentTime - maxClickTime < self.touchstarted) {
+                            return;
                         }
                     }
                     if (this.speechEnabled) {
@@ -222,6 +236,50 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 bye: function () {
                     self.sendMessage('bye');
+                },
+                enableAudioRecording: function () {
+                    var session = {
+                        audio: true
+                    }, onError = function () {
+                        console.log('error recording');
+                        self.ui.recordButton.removeClass('btn-danger').addClass('btn-info').blur();
+                    };
+
+                    this.recordRTC = null;
+                    navigator.getUserMedia(session, function (mediaStream) {
+                        self.ui.recordButton.removeClass('btn-info').addClass('btn-danger');
+
+                        self.speechEnabled = true;
+                        self.recordRTC = RecordRTC(mediaStream, {
+                            type: 'audio'
+                        });
+                        self.recordRTC.startRecording();
+                    }, onError);
+                },
+                disableAudioRecording: function () {
+                    if (this.recordRTC)
+                        this.recordRTC.stopRecording(function () {
+                            self.ui.recordButton.removeClass('btn-danger').addClass('btn-info').blur();
+                            self.speechEnabled = false;
+
+                            var formData = new FormData();
+                            formData.append('audio', self.recordRTC.getBlob());
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/chat_audio',
+                                data: formData,
+                                contentType: false,
+                                cache: false,
+                                processData: false
+                            });
+                        });
+                },
+                language: 'en',
+                changeLanguage: function (e) {
+                    this.ui.languageButton.removeClass('active');
+                    this.language = $(e.target).data('lang');
+                    $(e.target).addClass('active');
                 }
             });
         });

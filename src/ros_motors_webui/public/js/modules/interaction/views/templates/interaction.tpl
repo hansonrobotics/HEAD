@@ -1,5 +1,17 @@
 <div class="container content">
-    <ul class="app-messages"></ul>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="app-language-select btn-group pull-right" role="group" aria-label="...">
+                <button type="button" data-lang="en" class="btn btn-default btn-sm active">EN</button>
+                <button type="button" data-lang="cn" class="btn btn-default btn-sm">CN</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="app-messages"></ul>
+        </div>
+    </div>
 </div>
 
 <footer class="navbar-default navbar-fixed-bottom">
@@ -20,6 +32,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
                 <div class="message-input-container input-group">
                     <input type="text" class="app-message-input form-control"
                            placeholder="Type your message here..."/>

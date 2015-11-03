@@ -1,5 +1,8 @@
+.app-language-select {
+    margin-top: 5px;
+}
 .record-container {
-    padding: 0 0 10px 0;
+    padding: 0;
 }
 
 .app-record-button {
@@ -49,7 +52,7 @@
 }
 
 .message-input-container {
-    margin-top: 10px;
+    margin: 10px 0;
     height: 39px;
 }
 
