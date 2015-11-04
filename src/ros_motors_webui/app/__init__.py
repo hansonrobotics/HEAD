@@ -3,65 +3,79 @@ import os
 import os.path
 
 from flask import Flask, send_from_directory, request
+from werkzeug.utils import secure_filename
 import reporter
-import json
 import yaml
-import math
 import os.path
 from optparse import OptionParser
 from configs import *
 from subprocess import Popen
-import time
 
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
+app.config['CHAT_AUDIO_DIR'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, 'chat_audio')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
-config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)),os.pardir,os.pardir,"robots_config")
+config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, "robots_config")
 
 from monitor import get_logs
+
 app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
+
 
 @app.route('/')
 def send_index():
     return send_from_directory(app.static_folder, 'index.html')
 
+
 @app.route('/status')
 def send_monitor_status():
     return json_encode(rep.report())
+
+
+@app.route('/chat_audio', methods=['POST'])
+def chat_audio():
+    audio = request.files['audio']
+    filename = secure_filename(audio.filename + '.wav')
+    audio.save(os.path.join(app.config['CHAT_AUDIO_DIR'], filename))
+    return json_encode({'success': True})
+
 
 @app.route('/monitor/status')
 def send_status():
     return json_encode(rep.system_status(config_dir=config_root))
 
+
 @app.route('/motors/status/<robot_name>')
 def get_motors_status(robot_name):
     if robot_name == 'undefined':
         return json_encode({})
-    motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
+    motors = read_yaml(os.path.join(config_root, robot_name, 'motors_settings.yaml'))
     motors = rep.motor_states(motors, robot_name)
     return json_encode({'motors': motors})
 
+
 @app.route('/motors/get/<robot_name>')
 def get_motors(robot_name):
-    motors = read_yaml(os.path.join(config_root,robot_name, 'motors_settings.yaml'))
+    motors = read_yaml(os.path.join(config_root, robot_name, 'motors_settings.yaml'))
     return json_encode({'motors': motors})
 
-def reload_configs(motors,config_dir, robot_name):
+
+def reload_configs(motors, config_dir, robot_name):
     configs = Configs()
     configs.parseMotors(motors)
     if len(configs.dynamixel) > 0:
-        file_name = os.path.join(config_dir,"dynamixel.yaml")
-        write_yaml(file_name,configs.dynamixel)
+        file_name = os.path.join(config_dir, "dynamixel.yaml")
+        write_yaml(file_name, configs.dynamixel)
         load_params(file_name, "/{}/safe".format(robot_name))
     if len(configs.motors) > 0:
-        file_name = os.path.join(config_dir,"motors.yaml")
-        write_yaml(file_name,{'motors': configs.motors})
+        file_name = os.path.join(config_dir, "motors.yaml")
+        write_yaml(file_name, {'motors': configs.motors})
         load_params(file_name, "/{}".format(robot_name))
     if len(configs.pololu) > 0:
         for board, config in configs.pololu.iteritems():
-            file_name = os.path.join(config_dir,board + ".yaml")
-            write_yaml(file_name,config)
+            file_name = os.path.join(config_dir, board + ".yaml")
+            write_yaml(file_name, config)
             kill_node("/{}/pololu_{}".format(robot_name, board))
     kill_node("/{}/pau2motors".format(robot_name))
     return configs
@@ -74,8 +88,8 @@ def update_motors(robot_name):
     motors = [m for m in motors if 'hardware' in m.keys()]
     # write to motor config
     try:
-        file_name = os.path.join(config_root,robot_name, 'motors_settings.yaml')
-        reload_configs(motors,os.path.join(config_root,robot_name), robot_name)
+        file_name = os.path.join(config_root, robot_name, 'motors_settings.yaml')
+        reload_configs(motors, os.path.join(config_root, robot_name), robot_name)
         write_yaml(file_name, motors)
     except Exception as e:
         return json_encode({'error': str(e)})
@@ -107,6 +121,7 @@ def update_expressions(robot_name):
     # return True
     return json_encode(True)
 
+
 @app.route('/animations/update/<robot_name>', methods=['POST'])
 def update_animations(robot_name):
     data = json.loads(request.get_data().decode('utf8'))
@@ -118,8 +133,9 @@ def update_animations(robot_name):
 
 @app.route('/performances/get/<robot_name>', methods=['GET'])
 def get_performances(robot_name):
-    performances = read_yaml(os.path.join(config_root,robot_name, 'performances.yaml'))
+    performances = read_yaml(os.path.join(config_root, robot_name, 'performances.yaml'))
     return json_encode(performances)
+
 
 @app.route('/performances/update/<robot_name>', methods=['POST'])
 def update_performances(robot_name):
@@ -173,17 +189,21 @@ def radians_t0o_degrees(rad):
 def kill_node(node):
     Popen("rosnode kill " + node, shell=True)
 
+
 def load_params(param_file, namespace):
-    Popen("rosparam load " + param_file +" " + namespace, shell=True)
+    Popen("rosparam load " + param_file + " " + namespace, shell=True)
 
 
 if __name__ == '__main__':
     from rosgraph.roslogging import configure_logging
+
     configure_logging(None, filename='ros_motors_webui.log')
+
 
     @app.route('/public/<path:path>')
     def send_js(path):
         return send_from_directory(app.static_folder, path)
+
 
     parser = OptionParser()
     parser.add_option("-s", action="store_true", dest="ssl", default=False, help="Use SSL")

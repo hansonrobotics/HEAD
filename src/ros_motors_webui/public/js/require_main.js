@@ -23,7 +23,9 @@ requirejs.config({
         backbone_pageable: 'vendor/backbone-pageable',
         scrollbar: 'vendor/jquery.scrollbar',
         select2: 'vendor/select2.min',
-        d3: 'vendor/d3.min'
+        d3: 'vendor/d3.min',
+        RecordRTC: 'vendor/RecordRTC.min',
+        'socket.io': 'vendor/socket.io.min'
     },
     shim: {
         'jquery-ui': ['jquery'],

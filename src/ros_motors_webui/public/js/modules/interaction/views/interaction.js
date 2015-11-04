@@ -1,5 +1,5 @@
-define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'annyang'],
-    function (App, MessageView, template, api, annyang) {
+define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'annyang', 'RecordRTC'],
+    function (App, MessageView, template, api, annyang, RecordRTC) {
         var self;
         App.module("Interaction.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Interaction = Marionette.CompositeView.extend({
@@ -7,60 +7,190 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 childView: MessageView,
                 childViewContainer: '.app-messages',
                 ui: {
+                    messages: '.app-messages',
                     recordButton: '.app-record-button',
                     messageInput: '.app-message-input',
                     sendButton: '.app-send-button',
                     unsupported: '.app-unsupported',
                     supported: '.app-supported',
-                    recordContainer: '.record-container'
+                    recordContainer: '.record-container',
+                    faceThumbnails: '.app-face-thumbnails',
+                    faceContainer: '.app-select-person-container',
+                    faceCollapse: '.app-face-container',
+                    footer: 'footer',
+                    languageButton: '.app-language-select button'
                 },
                 events: {
-                    'click @ui.recordButton': 'recognizeSpeech',
+                    'touchstart @ui.recordButton': 'toggleSpeech',
+                    'touchend @ui.recordButton': 'toggleSpeech',
+                    'click @ui.recordButton': 'toggleSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
-                    'click @ui.sendButton': 'sendClicked'
+                    'click @ui.sendButton': 'sendClicked',
+                    'click @ui.languageButton': 'changeLanguage'
                 },
                 initialize: function () {
                     self = this;
+                    var commands = {
+                        '*text': this.sendMessage
+                    };
+                    if (annyang) {
+                        annyang.debug();
+                        annyang.addCommands(commands);
+                        annyang.addCallback('start', this.speechStarted);
+                        annyang.addCallback('error', this.speechError);
+                    }
+                    api.enableInteractionMode();
+                    api.topics.chat_responses.subscribe(this.responseCallback);
+                    api.topics.speech_active.subscribe(this.speechActiveCallback);
+                    this.speechPaused = false
                 },
-                onRender: function () {
-                    var self = this;
-                    api.topics.chat_responses.subscribe(function (msg) {
-                        self.collection.add({author: 'Robot', message: msg.data});
-                    });
+                onDestroy: function () {
+                    this.options.faceCollection.unsubscribe();
+                    api.topics.chat_responses.unsubscribe(this.responseCallback);
+                    api.topics.speech_active.unsubscribe(this.speechActiveCallback);
+                    this.disableSpeech();
+                },
+                updateFaces: function () {
+                    var currentTime = new Date().getTime();
 
-                    api.topics.speech_active.subscribe(function (msg) {
-                        if (msg.data == 'start') {
-                            if (window.location.protocol != "https:"){
-                                if (annyang) annyang.pause();
-                            }else{
-                                if (annyang) annyang.abort();
-                            }
-                        } else {
-                            if (annyang) annyang.resume();
+                    // remove lost faces older than 3 seconds
+                    $('img', this.ui.faceThumbnails).each(function (i, img) {
+                        var id = parseInt($(img).attr('title'));
+
+                        if (!self.options.faceCollection.findWhere({id: id}) && (currentTime - $(img).data('time-added')) > 3000) {
+                            $(img).remove();
+
+                            if (self.options.faceCollection.getLookAtFaceId() == id)
+                                self.ui.faceCollapse.collapse('show');
                         }
                     });
 
-                    if (annyang) {
-                        annyang.start();
+                    this.options.faceCollection.each(function (face) {
+                        var img = $('img[title="' + face.get('id') + '"]', self.ui.faceThumbnails),
+                        // update thumbnail every 3 seconds, update time added
+                            thumbnailUrl = face.getThumbnailUrl() + '?' + parseInt(currentTime / 3000);
 
-                        var commands = {
-                            'hi *': this.hello,
-                            'hello *': this.hello,
-                            'bye *': this.bye,
-                            '*text': this.sendMessage
-                        };
-                        annyang.addCommands(commands);
-                        // keeps speech alive for mobile devices if they went sleep or switched app.
-                        this.keepAlive();
-                    } else {
-                        this.ui.recordContainer.hide();
+                        // if image already shown
+                        if (img.length > 0) {
+                            $(img).prop({
+                                src: thumbnailUrl
+                            }).data('time-added', currentTime);
+                        } else {
+                            // create new thumbnail
+                            var setActiveThumbnail = function (el) {
+                                    $('img', self.ui.faceThumbnails).removeClass('active');
+                                    $(el).addClass('active');
+                                },
+                                el = $('<img>').prop({
+                                    src: thumbnailUrl,
+                                    title: face.get('id'),
+                                    'class': 'face-thumbnail thumbnail',
+                                    width: 100,
+                                    height: 100
+                                }).data('time-added', currentTime).click(function () {
+                                    self.options.faceCollection.setLookAtFaceId(face.get('id'));
+                                    setActiveThumbnail(this);
+                                });
+
+                            if (self.options.faceCollection.getLookAtFaceId() == face.get('id'))
+                                setActiveThumbnail(el);
+
+                            self.ui.faceThumbnails.append(el);
+                        }
+                    });
+
+                    if ($('img', this.ui.faceThumbnails).length == 0 && this.options.faceCollection.isEmpty()) {
+                        if (!this.facesEmpty) {
+                            this.facesEmpty = true;
+                            this.ui.faceContainer.slideUp();
+                        }
+                    } else if (typeof this.facesEmpty == 'undefined' || this.facesEmpty) {
+                        this.facesEmpty = false;
+
+                        this.ui.faceCollapse.removeClass('in');
+                        this.ui.faceContainer.slideDown();
                     }
                 },
-                onDestroy: function(){
-                    if (annyang)
-                        annyang.abort();
+                serializeData: function () {
+                    return {
+                        faces: this.options.faceCollection
+                    };
+                },
+                onRender: function () {
+                    this.options.faceCollection.on('change', this.updateFaces, this);
+                    this.options.faceCollection.subscribe();
+                    this.updateFaces();
 
-                    clearTimeout(self.keepAlive);
+                    // update chat margins on face collapse show/hide
+                    this.ui.faceCollapse.on('shown.bs.collapse hidden.bs.collapse', function () {
+                        self.ui.messages.css('margin-bottom', self.ui.footer.height());
+                        self.scrollToChatBottom();
+                    });
+                },
+                responseCallback: function (msg) {
+                    self.collection.add({author: 'Robot', message: msg.data});
+                },
+                speechActiveCallback: function (msg) {
+                    if (self.speechEnabled) {
+                        if (msg.data == 'start') {
+                            self.speechPaused = true;
+                            self.disableSpeech();
+                        }
+                    } else if ((msg.data != 'start') && self.speechPaused) {
+                        self.enableSpeech()
+                    }
+                },
+                enableSpeech: function () {
+                    if (annyang && !this.speechEnabled) {
+                        switch (this.language) {
+                            case 'en':
+                                annyang.resume();
+                                break;
+                            case 'cn':
+                                this.enableAudioRecording();
+                        }
+                    }
+                },
+                speechStarted: function () {
+                    self.ui.recordButton.removeClass('btn-info').addClass('btn-danger');
+                    self.speechEnabled = true;
+                },
+                speechError: function (e) {
+                    console.log('speech error');
+                    self.ui.recordButton.removeClass('btn-danger').addClass('btn-info').blur();
+                    self.speechEnabled = false;
+                    self.disableSpeech();
+                },
+                disableSpeech: function () {
+                    if (this.speechEnabled) {
+                        switch (this.language) {
+                            case 'en':
+                                if (annyang) annyang.abort();
+                                break;
+                            case 'cn':
+                                this.disableAudioRecording();
+                        }
+                    }
+                },
+                toggleSpeech: function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    var currentTime = new Date().getTime(),
+                        maxClickTime = 500;
+
+                    if (e.type == 'touchstart') {
+                        self.touchstarted = currentTime;
+                    }
+                    if (e.type == 'touchend') {
+                        if (currentTime - maxClickTime < self.touchstarted) {
+                            return;
+                        }
+                    }
+                    if (this.speechEnabled) {
+                        this.disableSpeech(e);
+                    } else {
+                        this.enableSpeech(e);
+                    }
                 },
                 messageKeyUp: function (e) {
                     if (e.keyCode == 13)
@@ -76,26 +206,20 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                     this.ui.messageInput.val('');
                 },
-                keepAlive: function () {
-                    this.keepAlive = setInterval(function () {
-                        if (annyang)
-                            annyang.start();
-                    }, 10000);
-                },
-                attachHtml: function (collectionView, childView, index) {
-                    var self = this;
-
+                attachHtml: function (collectionView, childView) {
                     childView.$el.hide();
                     collectionView._insertAfter(childView);
 
                     $(childView.$el).fadeIn(400, function () {
-                        if (!self.scrolling)
-                            $('html, body').animate({scrollTop: $(document).height()}, 'slow', 'swing', function () {
-                                self.scrolling = false;
-                            });
-
-                        self.scrolling = true;
+                        self.scrollToChatBottom();
                     });
+                },
+                scrollToChatBottom: function () {
+                    if (!self.scrolling)
+                        $('html, body').animate({scrollTop: $(document).height()}, 'slow', 'swing', function () {
+                            self.scrolling = false;
+                        });
+                    self.scrolling = true;
                 },
                 sendMessage: function (message) {
                     self.collection.add({author: 'Me', message: message});
@@ -114,14 +238,53 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     self.sendMessage('bye');
                 },
                 recognizeSpeech: function () {
-                    alert('Say Hi to start, chatbot is listening');
-                    //var message = this.ui.messageInput.val();
-                    //var chat_message = new ROSLIB.Message({
-                    //    utterance: message,
-                    //    confidence: 99
-                    //});
+                    alert('Say Hi to start');
+                },    
+                enableAudioRecording: function () {
+                    var session = {
+                        audio: true
+                    }, onError = function () {
+                        console.log('error recording');
+                        self.ui.recordButton.removeClass('btn-danger').addClass('btn-info').blur();
+                    };
 
-                    //api.topics.speech_start_topic.publish(chat_message);
+                    this.recordRTC = null;
+                    navigator.getUserMedia(session, function (mediaStream) {
+                        self.ui.recordButton.removeClass('btn-info').addClass('btn-danger');
+
+                        self.speechEnabled = true;
+                        self.recordRTC = RecordRTC(mediaStream, {
+                            type: 'audio',
+                            sampleRate: '16000',
+                            numberOfAudioChannels: 1
+                        });
+                        self.recordRTC.startRecording();
+                    }, onError);
+                },
+                disableAudioRecording: function () {
+                    if (this.recordRTC)
+                        this.recordRTC.stopRecording(function () {
+                            self.ui.recordButton.removeClass('btn-danger').addClass('btn-info').blur();
+                            self.speechEnabled = false;
+
+                            var formData = new FormData();
+                            formData.append('audio', self.recordRTC.getBlob());
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/chat_audio',
+                                data: formData,
+                                contentType: false,
+                                cache: false,
+                                processData: false
+                            });
+                        });
+                },
+                language: 'en',
+                changeLanguage: function (e) {
+                    this.ui.languageButton.removeClass('active');
+                    this.language = $(e.target).data('lang');
+                    $(e.target).addClass('active');
                 }
             });
         });

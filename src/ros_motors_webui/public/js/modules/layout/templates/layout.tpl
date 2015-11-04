@@ -36,4 +36,4 @@
     </div>
 </nav>
 
-<div id="app-content"></div>
+<div id="app-content" class="clearfix"></div>

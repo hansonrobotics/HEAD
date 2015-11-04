@@ -271,13 +271,14 @@ class ROS2OpenCV:
         #         """ user has press the q key, so exit """
         #         rospy.signal_shutdown("User hit q key to quit.")
 
-          
+
     def convert_image(self, ros_image):
         try:
-	    """ Convert to old cv image """
+            """ Convert to old cv image """
             cv2_image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
-	    cv_image = cv.CreateImageHeader((cv2_image.shape[1], cv2_image.shape[0]), 8, 3)
-	    cv.SetData(cv_image, cv2_image.tostring(), cv2_image.dtype.itemsize * 3 * cv2_image.shape[1])	
+            self.cv2_image = cv2_image
+            cv_image = cv.CreateImageHeader((cv2_image.shape[1], cv2_image.shape[0]), 8, 3)
+            cv.SetData(cv_image, cv2_image.tostring(), cv2_image.dtype.itemsize * 3 * cv2_image.shape[1])
             return cv_image
         except CvBridgeError, e:
             logger.error(e)

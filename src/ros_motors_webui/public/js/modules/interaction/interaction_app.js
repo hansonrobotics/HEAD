@@ -5,7 +5,6 @@ define(['application', './controller'], function (App, controller) {
                 'interactions': 'index'
             }
         });
-
         Interaction.on('start', function () {
             new Interaction.Router({controller: controller});
         });
