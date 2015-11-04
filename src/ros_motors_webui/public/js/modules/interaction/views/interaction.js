@@ -251,7 +251,9 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                         self.speechEnabled = true;
                         self.recordRTC = RecordRTC(mediaStream, {
-                            type: 'audio'
+                            type: 'audio',
+                            sampleRate: '16000',
+                            numberOfAudioChannels: 1
                         });
                         self.recordRTC.startRecording();
                     }, onError);

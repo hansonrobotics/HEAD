@@ -15,7 +15,9 @@
       <param name="width" value="640"/>
       <param name="height" value="480"/>
     </node>
-
+    <!--<node name="video_publisher" pkg="testing_tools" type="video_publisher.py">-->
+        <!--<param name="file" value="/home/hr/test.avi" />-->
+    <!--</node>-->
     <arg name="auto_face_tracking" default="True" />
     <node pkg="pi_face_tracker"
           name="body_face_tracker"

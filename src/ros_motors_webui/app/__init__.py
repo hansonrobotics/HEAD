@@ -14,7 +14,7 @@ from subprocess import Popen
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
-app.config['CHAT_AUDIO_DIR'] = './chat_audio'
+app.config['CHAT_AUDIO_DIR'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, 'chat_audio')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, "robots_config")
 
