@@ -13,6 +13,7 @@ from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState
 import logging
+import random
 #from rigControl.actuators import sleep as nb_sleep
 
 logger = logging.getLogger('hr.chatbot.ai')
@@ -170,7 +171,8 @@ class Chatbot():
     # do default behavior.
     # any emotion change will now force tts
     # TODO pass .cfg speech hesitation interval in affect message
-    time.sleep(0.4)
+    hesitation=random.uniform(0.4,0.8)
+    time.sleep(hesitation)
     if self._state == 'wait_emo':
       message = String()
       message.data = self._response_buffer
