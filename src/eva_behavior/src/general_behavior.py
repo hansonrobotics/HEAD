@@ -815,9 +815,13 @@ class Tree():
                 self.pick_instant("positive_emotions", "non_positive_emotion", trigger)
             else:
                 self.pick_random_expression("positive_emotions", trigger)
-
         ##### Show A Positive Gesture #####
         self.pick_random_gesture("positive_gestures", trigger)
+        ##### if new face, show affiliative brow raise  #####
+        if trigger=="someone_arrived":
+          if random.random()<0.7:
+              speed=random.uniform(0.2,0.4)
+              self.show_gesture("think-brows",0.8,1,speed,trigger)
 
         interval = 0.01
         duration = random.uniform(self.blackboard["min_duration_for_interaction"], self.blackboard["max_duration_for_interaction"])
@@ -1219,7 +1223,11 @@ class Tree():
                 min=self.blackboard["chatbot_positive_nod_magnitude_min"]
                 max=self.blackboard["chatbot_positive_nod_magnitude_max"]
                 intensity=random.uniform(min,max)
-                self.show_gesture('nod-2', intensity, 1,speed, trigger="chatbot_happy")
+                self.show_gesture('nod-6', intensity, 1,speed, trigger="chatbot_happy")
+            # raise eyebrows with some probability
+            speed=random.uniform(0.3,0.5)
+            intensity=random.uniform(0.8,1.0)
+            self.show_gesture("think-brows",intensity,1,speed,trigger)
         else:# change blink rate
             self.blink_update(self.blackboard["blink_chat_slower_mean"],.12,True)
             chosen_emo=self.pick_random_expression("frustrated_emotions",trigger,force)
