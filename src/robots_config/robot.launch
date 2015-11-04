@@ -6,6 +6,8 @@
     <arg name="dev" default="False" />
     <param name="/robot_name" type="str" value="$(arg name)" />
     <group ns="/$(arg name)">
+        <!-- lang: en/zh -->
+        <param name="lang" value="en" />
         <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
         <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
@@ -33,6 +35,8 @@
                 <param name="voice" value="$(find robots_config)/$(arg name)/bot.properties" />
                 <param name="license" value="" />
             </node>
+
+            <node name="chatbot_zh" pkg="chinese_chatbot" type="talker.py" />
 
         </group>
     </group>

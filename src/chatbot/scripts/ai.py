@@ -88,6 +88,9 @@ class Chatbot():
     logger.warn("Loaded "+len(self._polarity)+"items")
 
   def _request_callback(self, chat_message):
+    if rospy.get_param('lang') != 'en':
+        logger.info('Ignore non-English language')
+        return
     response = ''
     #nb_sleep(random.uniform(0.0,0.5)
     blink=String()
@@ -124,6 +127,7 @@ class Chatbot():
       message.data = response
       self._response_publisher.publish(message)
       self._state = 'wait_client'
+    logger.info("Ask: {}, answer: {}".format(chat_message.utterance, response))
 
   # Tell the world the emotion that the chatbot is perceiving.
   # Use the blender_api_msgs/EmotionState messae type to
