@@ -251,6 +251,7 @@ class Tree():
         self.blackboard["background_face_targets"] = []
         self.blackboard["current_glance_target"] = 0
         self.blackboard["current_face_target"] = 0
+        self.blackboard["new_look_at_face"] = 0
         self.blackboard["interact_with_face_target_since"] = 0.0
         self.blackboard["sleep_since"] = 0.0
         self.blackboard["bored_since"] = 0.0
@@ -558,6 +559,18 @@ class Tree():
             )
         )
         return tree
+    # ------------------------------------------------------------------
+    # If operator sets face it should change current face target
+    def face_set_by_operator(self):
+        tree = owyl.sequence(
+            self.is_someone_selected(),
+            self.is_not_current_face(id="new_look_at_face"),
+            self.assign_face_target(variable="current_face_target", value="new_look_at_face"),
+            self.record_start_time(variable="interact_with_face_target_since"),
+            self.show_expression(emo_class="new_arrival_emotions", trigger="new_person_selected"),
+            self.interact_with_face_target(id="current_face_target", new_face=True, trigger="new_person_selected")
+        )
+        return tree
 
     # ------------------------------------------------------------------
     # Build the main tree
@@ -570,6 +583,7 @@ class Tree():
                         self.sync_variables(),
                         ########## Main Events ##########
                         owyl.selector(
+                            self.face_set_by_operator(),
                             self.someone_arrived(),
                             self.someone_left(),
                             self.interact_with_people(),
@@ -644,6 +658,24 @@ class Tree():
             yield True
         else:
             yield False
+
+    @owyl.taskmethod
+    def is_someone_selected(self, **kwargs):
+        self.blackboard["is_interruption"] = False
+        if self.blackboard["new_look_at_face"] > 0:
+            self.blackboard["bored_since"] = 0
+            print("----- Someone selected! id: " + str(self.blackboard["new_look_at_face"]))
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
+    def is_not_current_face(self, **kwargs):
+        if self.blackboard["current_face_target"] == self.blackboard[kwargs["id"]]:
+            print("----- Is Interacting with id: {} already".format(self.blackboard[kwargs["id"]]))
+            yield False
+        else:
+            yield True
 
     @owyl.taskmethod
     def is_someone_left(self, **kwargs):

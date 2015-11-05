@@ -1,10 +1,24 @@
+.app-language-select {
+    margin-top: 5px;
+}
 .record-container {
-    padding: 0 0 10px 0;
+    padding: 0;
 }
 
 .app-record-button {
+    width: 39px;
+    padding: 0 0 0 1px;
+
+    margin-left: 5px !important;
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius: 20px !important;;
+    border-radius: 20px !important;;
+}
+
+.expand-face-select-button {
     display: block;
     width: 100%;
+    margin-top: 10px;
 }
 
 .app-messages {
@@ -38,17 +52,40 @@
 }
 
 .message-input-container {
-    margin-top: 10px;
+    margin: 10px 0;
+    height: 39px;
 }
 
-.app-send-button {
-    height: 31px;
+.app-send-button,
+.app-record-button{
+    height: 39px;
 }
 
-.app-send-button {
-    margin-left: 0;
+.app-face-thumbnails {
+    white-space: nowrap;
+    width: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-right: 10px;
+    height: 110px;
 }
 
-.app-send-button {
-     margin-bottom: 10px;
+.face-thumbnail {
+    margin: 0 0 10px 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.face-thumbnail.active {
+    background-color: #df691a;
+}
+
+.app-face-container {
+    background-color: #2b3e50;
+}
+
+.face-select-instruction {
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 0
 }

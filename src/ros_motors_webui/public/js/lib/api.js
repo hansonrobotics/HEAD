@@ -321,6 +321,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/robot_name'});
             param.get(callback);
         },
+        setRobotLang: function (lang) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/'+api.config.robot+'/lang'});
+            param.set(lang);
+        },
         /**
          * Passes a "|" separated string of available scripts
          *
@@ -357,6 +361,9 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         disableInteractionMode: function () {
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+        },
+        set_look_at_face: function (f_id) {
+            api.topics.set_look_at_face.publish(new ROSLIB.Message({face_event: 'track_face', face_id: f_id}));
         }
     };
 

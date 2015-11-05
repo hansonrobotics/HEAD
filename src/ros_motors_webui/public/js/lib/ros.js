@@ -123,7 +123,28 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/' + api.config.robot + '/chatbot_responses',
                     messageType: 'std_msgs/String'
-                })
+                }),
+                face_locations: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/camera/face_locations',
+                    messageType: 'pi_face_tracker/Faces'
+                }),
+                set_look_at_face: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/camera/face_event',
+                    messageType: 'pi_face_tracker/FaceEvent'
+                }),
+                get_look_at_face: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/look_at_face',
+                    messageType: 'std_msgs/Int32'
+                }),
+                voice: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/voice',
+                    messageType: 'std_msgs/String'
+                }),
+
             };
         },
         initServices: function () {
