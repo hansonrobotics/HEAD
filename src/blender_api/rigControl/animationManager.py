@@ -44,17 +44,16 @@ class AnimationManager():
         # Target minimum distance in m
         self.min_distance  = 0.1
         # Face target offset in BU
-        self.face_target_offset = -4
+        # -4 for Sophia 1.0, -2 for blender only
+        self.face_target_offset = -1
         # Eye_target distance in BU from 0 point
-        self.eye_target_offset = -4
+        # -4 for Sophia 1.0 -2 for blender rig
+        self.eye_target_offset = -1
 
 
         # Head and Eye tracking parameters
         self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
-
-                # try exponential ; good is 3.5, window 0.4
                 Pipes.exponential(3.5),
-                # .4 tried, good - try 3, 5
                 Pipes.moving_average(window=0.4)],
                 Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
         ))

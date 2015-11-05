@@ -313,6 +313,12 @@ class Tree():
         rospy.logwarn("setting up chatbot affect perceive and express links")
         rospy.Subscriber("chatbot_affect_perceive", String,
             self.chatbot_affect_perceive_callback)
+
+        #  Handle messages from incoming speech to simulate listening engagement
+        #  String parameter will contain speaker id
+        rospy.Subscriber("chatbot_speech_start",String,
+            self.chatbot_speech_start_callback)
+
         #  chatbot can request blinks correlated with hearing and speaking
         rospy.Subscriber("chatbot_blink",String,self.chatbot_blink_callback)
         self.do_pub_gestures = True
@@ -1216,6 +1222,26 @@ class Tree():
             self.blackboard["stage_mode"] = False
             print("---- Behavior tree disabled")
 
+
+    # chatbot speech started, simulate listening
+    # behavior tree will already cause face orient to speaker via web_ui
+    def chatbot_speech_start_callback(self,speaker):
+        rospy.loginfo("webui starting speech")
+        # do random choice from listening gestures
+        self.pick_random_gesture("listening_gestures", "listening")
+        # also nod with some probability
+        nod_prob=self.blackboard["listening_nod_probability"]
+        min=self.blackboard["chatbot_positive_nod_speed_min"]
+        max=self.blackboard["chatbot_positive_nod_speed_max"]
+        speed=random.uniform(min,max)
+        min=self.blackboard["chatbot_positive_nod_magnitude_min"]
+        max=self.blackboard["chatbot_positive_nod_magnitude_max"]
+        intensity=random.uniform(min,max)
+        if random.random()<nod_prob:
+            self.show_gesture("nod-6",intensity,1,speed,"listening")
+        # TODO switch to conversational saccade parameters
+        # TODO switch to conversational emotion set and probabilities
+
     # chatbot requests blink
     def chatbot_blink_callback(self, blink):
         rospy.loginfo(blink.data +' says blink')
@@ -1259,7 +1285,7 @@ class Tree():
             # raise eyebrows with some probability
             speed=random.uniform(0.3,0.5)
             intensity=random.uniform(0.8,1.0)
-            self.show_gesture("think-brows",intensity,1,speed,trigger)
+            self.show_gesture("think-browsUp",intensity,1,speed,trigger)
         else:# change blink rate
             self.blink_update(self.blackboard["blink_chat_slower_mean"],.12,True)
             chosen_emo=self.pick_random_expression("frustrated_emotions",trigger,force)
