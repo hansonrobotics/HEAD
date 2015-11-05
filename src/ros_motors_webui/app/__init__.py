@@ -10,6 +10,7 @@ import os.path
 from optparse import OptionParser
 from configs import *
 from subprocess import Popen
+import datetime
 
 json_encode = json.JSONEncoder().encode
 
@@ -36,10 +37,10 @@ def send_monitor_status():
 @app.route('/chat_audio', methods=['POST'])
 def chat_audio():
     audio = request.files['audio']
-    filename = secure_filename(time + '.wav')
+    ts = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+    filename = secure_filename(ts + '.wav')
     audio.save(os.path.join(app.config['CHAT_AUDIO_DIR'], filename))
-    return json_encode({'success': True})
-
+    return json_encode({'success': True, 'filename': filename})
 
 @app.route('/monitor/status')
 def send_status():
