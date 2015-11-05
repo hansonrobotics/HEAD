@@ -36,7 +36,7 @@ def send_monitor_status():
 @app.route('/chat_audio', methods=['POST'])
 def chat_audio():
     audio = request.files['audio']
-    filename = secure_filename(audio.filename + '.wav')
+    filename = secure_filename(time + '.wav')
     audio.save(os.path.join(app.config['CHAT_AUDIO_DIR'], filename))
     return json_encode({'success': True})
 
@@ -209,8 +209,17 @@ if __name__ == '__main__':
     parser.add_option("-s", action="store_true", dest="ssl", default=False, help="Use SSL")
     parser.add_option("-c", "--cert", dest="cert", default="", help="SSL Certificate", metavar="CERT_FILE")
     parser.add_option("-k", "--key", dest="key", default="", help="SSL Key", metavar="KEY_FILE")
-    parser.add_option("-p", "--port", dest="port", default=None, help="Port", metavar="KEY_FILE", type="int")
+    parser.add_option("-p", "--port", dest="port", default=None, help="Port", metavar="PORT", type="int")
+    parser.add_option("-a", "--audio", dest="audio_dir", default=None, help="Destination for audio files", metavar="PATH")
     (options, args) = parser.parse_args()
+    if options.audio:
+        if not os.path.isdir(app.config['CHAT_AUDIO_DIR']):
+            try:
+                os.makedirs(options.audio)
+            except OSError as e:
+                parser.error("Cannot create audio directory. Error: {}".format(e))
+        else:
+            app.config['CHAT_AUDIO_DIR'] = options.audio
     if options.ssl:
         if not options.cert:
             parser.error("Certificate must be specified for SSL")
