@@ -282,6 +282,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     this.ui.languageButton.removeClass('active');
                     this.language = $(e.target).data('lang');
                     $(e.target).addClass('active');
+                    api.setRobotLang(this.language);
                 }
             });
         });
