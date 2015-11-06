@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="app-language-select btn-group pull-right" role="group" aria-label="...">
                 <button type="button" data-lang="en" class="btn btn-default btn-sm active">EN</button>
-                <button type="button" data-lang="cn" class="btn btn-default btn-sm">CN</button>
+                <button type="button" data-lang="zh" class="btn btn-default btn-sm">CN</button>
             </div>
         </div>
     </div>

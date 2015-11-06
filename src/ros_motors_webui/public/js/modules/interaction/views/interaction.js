@@ -146,7 +146,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                             case 'en':
                                 annyang.resume();
                                 break;
-                            case 'cn':
+                            case 'zh':
                                 this.enableAudioRecording();
                         }
                     }
@@ -156,7 +156,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     self.speechEnabled = true;
                 },
                 speechError: function (e) {
-                    console.log('speech error');
                     self.ui.recordButton.removeClass('btn-danger').addClass('btn-info').blur();
                     self.speechEnabled = false;
                     self.disableSpeech();
@@ -167,7 +166,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                             case 'en':
                                 if (annyang) annyang.abort();
                                 break;
-                            case 'cn':
+                            case 'zh':
                                 this.disableAudioRecording();
                         }
                     }
@@ -252,7 +251,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         self.speechEnabled = true;
                         self.recordRTC = RecordRTC(mediaStream, {
                             type: 'audio',
-                            sampleRate: '16000',
+                            sampleRate: '44100',
                             numberOfAudioChannels: 1
                         });
                         self.recordRTC.startRecording();
@@ -274,6 +273,12 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                                 contentType: false,
                                 cache: false,
                                 processData: false
+                            }).done(function(res){
+                                if (res.success == true){
+                                    api.topics.voice.publish(new ROSLIB.Message({data: res.filename}))
+                                }else{
+                                    console.log("Error while saving file")
+                                }
                             });
                         });
                 },
@@ -282,6 +287,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     this.ui.languageButton.removeClass('active');
                     this.language = $(e.target).data('lang');
                     $(e.target).addClass('active');
+                    api.setRobotLang(this.language);
                 }
             });
         });

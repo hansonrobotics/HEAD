@@ -1,8 +1,9 @@
 #!/usr/bin/python
+import mimetypes
 import os
 import os.path
 
-from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request, Response
 from werkzeug.utils import secure_filename
 import reporter
 import yaml
@@ -10,6 +11,7 @@ import os.path
 from optparse import OptionParser
 from configs import *
 from subprocess import Popen
+import datetime
 
 json_encode = json.JSONEncoder().encode
 
@@ -36,10 +38,11 @@ def send_monitor_status():
 @app.route('/chat_audio', methods=['POST'])
 def chat_audio():
     audio = request.files['audio']
-    filename = secure_filename(audio.filename + '.wav')
-    audio.save(os.path.join(app.config['CHAT_AUDIO_DIR'], filename))
-    return json_encode({'success': True})
-
+    ts = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+    filename = secure_filename(ts + '.wav')
+    filename = os.path.join(app.config['CHAT_AUDIO_DIR'], filename)
+    audio.save(filename)
+    return Response(json_encode({'success': True, 'filename': filename}), mimetype="application/json")
 
 @app.route('/monitor/status')
 def send_status():
@@ -209,8 +212,17 @@ if __name__ == '__main__':
     parser.add_option("-s", action="store_true", dest="ssl", default=False, help="Use SSL")
     parser.add_option("-c", "--cert", dest="cert", default="", help="SSL Certificate", metavar="CERT_FILE")
     parser.add_option("-k", "--key", dest="key", default="", help="SSL Key", metavar="KEY_FILE")
-    parser.add_option("-p", "--port", dest="port", default=None, help="Port", metavar="KEY_FILE", type="int")
+    parser.add_option("-p", "--port", dest="port", default=None, help="Port", metavar="PORT", type="int")
+    parser.add_option("-a", "--audio", dest="audio", default=None, help="Destination for audio files", metavar="PATH")
     (options, args) = parser.parse_args()
+    if options.audio:
+        if not os.path.isdir(app.config['CHAT_AUDIO_DIR']):
+            try:
+                os.makedirs(options.audio)
+            except OSError as e:
+                parser.error("Cannot create audio directory. Error: {}".format(e))
+        else:
+            app.config['CHAT_AUDIO_DIR'] = options.audio
     if options.ssl:
         if not options.cert:
             parser.error("Certificate must be specified for SSL")
