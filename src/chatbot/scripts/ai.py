@@ -88,7 +88,7 @@ class Chatbot():
     logger.warn("Loaded "+len(self._polarity)+"items")
 
   def _request_callback(self, chat_message):
-    if rospy.get_param('lang') != 'en':
+    if rospy.get_param('lang', None) != 'en':
         logger.info('Ignore non-English language')
         return
     response = ''
