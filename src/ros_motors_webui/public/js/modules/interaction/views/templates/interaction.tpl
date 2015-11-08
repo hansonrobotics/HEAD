@@ -1,14 +1,12 @@
-<div class="container content">
+<div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <div class="app-language-select btn-group pull-right" role="group" aria-label="...">
-                <button type="button" data-lang="en" class="btn btn-default btn-sm active">EN</button>
-                <button type="button" data-lang="zh" class="btn btn-default btn-sm">CN</button>
+        <div class="col-xs-12">
+            <div class="app-language-select-container pull-right">
+                <div class="app-language-select btn-group" role="group" aria-label="...">
+                    <button type="button" data-lang="en" class="btn btn-default btn-sm active">EN</button>
+                    <button type="button" data-lang="zh" class="btn btn-default btn-sm">CN</button>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <ul class="app-messages"></ul>
         </div>
     </div>
@@ -17,7 +15,7 @@
 <footer class="navbar-default navbar-fixed-bottom">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-xs-12">
                 <div class="record-container col-sm-12">
                     <div class="app-select-person-container">
                         <button class="expand-face-select-button btn btn-primary btn-sm" type="button"
@@ -35,7 +33,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-xs-12">
                 <div class="message-input-container input-group">
                     <input type="text" class="app-message-input form-control"
                            placeholder="Type your message here..."/>
