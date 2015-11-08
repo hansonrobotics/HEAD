@@ -44,6 +44,7 @@ def chat_audio():
     audio.save(filename)
     return Response(json_encode({'success': True, 'filename': filename}), mimetype="application/json")
 
+
 @app.route('/monitor/status')
 def send_status():
     return json_encode(rep.system_status(config_dir=config_root))
@@ -136,7 +137,11 @@ def update_animations(robot_name):
 
 @app.route('/performances/get/<robot_name>', methods=['GET'])
 def get_performances(robot_name):
-    performances = read_yaml(os.path.join(config_root, robot_name, 'performances.yaml'))
+    try:
+        performances = read_yaml(os.path.join(config_root, robot_name, 'performances.yaml'))
+    except Exception as e:
+        return json_encode([])
+
     return json_encode(performances)
 
 

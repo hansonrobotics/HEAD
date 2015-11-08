@@ -147,7 +147,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     if (this.speechEnabled) {
                         switch (this.language) {
                             case 'en':
-                                this.disableWebspeech();
+                                this.pauseWebspeech();
                                 break;
                             case 'zh':
                                 this.disableAudioRecording();
