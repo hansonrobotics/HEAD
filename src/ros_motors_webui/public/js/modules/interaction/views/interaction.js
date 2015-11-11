@@ -247,9 +247,15 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                         this.speechRecognition.onstart = function () {
                             console.log('starting webspeech');
+                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'start'}));
                             self.onSpeechEnabled();
                         };
-
+                        this.speechRecognition.onspeechstart = function () {
+                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechstart'}));
+                        };
+                        this.speechRecognition.onspeechend = function () {
+                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechend'}));
+                        };
                         this.speechRecognition.onresult = function (event) {
                             _.each(event.results, function (results) {
                                 _.each(results, function (result) {
@@ -266,6 +272,8 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         };
                         this.speechRecognition.onend = function () {
                             console.log('end of speech');
+                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
+                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
                             self.onSpeechDisabled();
                             if (mostConfidentResult && mostConfidentResult.confidence > 0.5)
                                 self.sendMessage(mostConfidentResult.transcript);

@@ -144,7 +144,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     name: '/' + api.config.robot + '/voice',
                     messageType: 'std_msgs/String'
                 }),
-
+                chat_events: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/chat_events',
+                    messageType: 'std_msgs/String'
+                })
             };
         },
         initServices: function () {
