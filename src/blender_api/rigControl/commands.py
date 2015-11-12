@@ -134,7 +134,7 @@ class EvaAPI(RigAPI):
             rampin, rampout, start)
 
     # Eye look-at targets ==========================
-    # The coordinate system used is head-relative, in 'engineering'
+    # The coordinate system used is head-relative, in 'engineering'public_ws/src/blender_api/rigControl/commands.py:135
     # coordinates: 'x' is forward, 'y' to the left, and 'z' up.
     # Distances are measured in meters.  Origin of the coordinate
     # system is somewhere (where?) in the middle of the head.
@@ -155,9 +155,8 @@ class EvaAPI(RigAPI):
         bpy.evaAnimationManager.setBlinkRandomly(interval_mean,interval_variation)
         return 0
 
-    def setSaccade(self,interval_mean,interval_variation,paint_scale):
-        bpy.evaAnimationManager.setSaccade(interval_mean,interval_variation,paint_scale)
-
+    def setSaccade(self,interval_mean,interval_variation,paint_scale,eye_size,eye_distance,mouth_width,mouth_height,weight_eyes,weight_mouth):
+        bpy.evaAnimationManager.setSaccade(interval_mean,interval_variation,paint_scale,eye_size,eye_distance,mouth_width,mouth_height,weight_eyes,weight_mouth)
         return 0
 
     # ========== info dump for ROS, Should return non-blender data structures

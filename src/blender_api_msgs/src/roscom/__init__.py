@@ -294,7 +294,7 @@ class CommandWrappers:
 
     @subscribe("~set_saccade",msg.SaccadeCycle)
     def setSaccade(msg):
-        api.setSaccade(msg.mean,msg.variation,msg.paint_scale)
+        api.setSaccade(msg.mean,msg.variation,msg.paint_scale,msg.eye_size,msg.eye_distance,msg.mouth_width,msg.mouth_height,msg.weight_eyes,msg.weight_mouth)
 
     @service("~set_param", srv.SetParam)
     def setParam(msg):

@@ -199,6 +199,8 @@ class Tree():
 
         self.unpack_config_emotions(config, "new_arrival_emotions")
 
+        self.unpack_config_emotions(config, "neutral_speech_emotions")
+
         self.unpack_config_gestures(config, "positive_gestures")
 
         self.unpack_config_gestures(config, "bored_gestures")
@@ -206,6 +208,8 @@ class Tree():
         self.unpack_config_gestures(config, "sleep_gestures")
 
         self.unpack_config_gestures(config, "wake_up_gestures")
+
+        self.unpack_config_gestures(config, "listening_gestures")
 
         self.blackboard["min_duration_for_interaction"] = config.getfloat("interaction", "duration_min")
         self.blackboard["max_duration_for_interaction"] = config.getfloat("interaction", "duration_max")
@@ -223,12 +227,22 @@ class Tree():
         self.blackboard["face_study_z_pitch_mouth"] = config.getfloat("interaction", "face_study_z_pitch_mouth")
         self.blackboard["face_study_y_pitch_left_ear"] = config.getfloat("interaction", "face_study_y_pitch_left_ear")
         self.blackboard["face_study_y_pitch_right_ear"] = config.getfloat("interaction", "face_study_y_pitch_right_ear")
+
         # conversational gesture probabilities
+        self.blackboard["chatbot_listening_nod_probability"] = config.getfloat("interaction", "chatbot_listening_nod_probability")
         self.blackboard["chatbot_positive_nod_probability"] = config.getfloat("interaction", "chatbot_positive_nod_probability")
         self.blackboard["chatbot_positive_nod_speed_min"] = config.getfloat("interaction", "chatbot_positive_nod_speed_min")
         self.blackboard["chatbot_positive_nod_speed_max"] = config.getfloat("interaction", "chatbot_positive_nod_speed_max")
         self.blackboard["chatbot_positive_nod_magnitude_min"] = config.getfloat("interaction", "chatbot_positive_nod_magnitude_max")
         self.blackboard["chatbot_positive_nod_magnitude_max"] = config.getfloat("interaction", "chatbot_positive_nod_magnitude_max")
+        self.blackboard["chatbot_negative_shake_probability"] = config.getfloat("interaction", "chatbot_negative_shake_probability")
+        self.blackboard["chatbot_negative_shake_speed_min"] = config.getfloat("interaction", "chatbot_negative_shake_speed_min")
+        self.blackboard["chatbot_negative_shake_speed_max"] = config.getfloat("interaction", "chatbot_negative_shake_speed_max")
+        self.blackboard["chatbot_negative_shake_magnitude_min"] = config.getfloat("interaction", "chatbot_negative_shake_magnitude_max")
+        self.blackboard["chatbot_negative_shake_magnitude_max"] = config.getfloat("interaction", "chatbot_negative_shake_magnitude_max")
+        self.blackboard["chatbot_positive_reply_think_probability"] = config.getfloat("interaction", "chatbot_positive_reply_think_probability")
+        self.blackboard["chatbot_negative_reply_think_probability"] = config.getfloat("interaction", "chatbot_negative_reply_think_probability")
+
 
         self.blackboard["sleep_probability"] = config.getfloat("boredom", "sleep_probability")
         self.blackboard["sleep_duration_min"] = config.getfloat("boredom", "sleep_duration_min")
@@ -237,6 +251,7 @@ class Tree():
         self.blackboard["search_for_attention_duration_min"] = config.getfloat("boredom", "search_for_attention_duration_min")
         self.blackboard["search_for_attention_duration_max"] = config.getfloat("boredom", "search_for_attention_duration_max")
         self.blackboard["search_for_attention_targets"] = []
+
         self.unpack_config_look_around(config)
         self.blackboard["wake_up_probability"] = config.getfloat("boredom", "wake_up_probability")
         self.blackboard["time_to_wake_up"] = config.getfloat("boredom", "time_to_wake_up")
@@ -262,8 +277,8 @@ class Tree():
         self.blackboard["saccade_study_face_mouth_height"] = config.getfloat("saccade", "saccade_study_face_mouth_height")
         self.blackboard["saccade_study_face_eye_size"] = config.getfloat("saccade", "saccade_study_face_eye_size")
         self.blackboard["saccade_study_face_eye_distance"] = config.getfloat("saccade", "saccade_study_face_eye_distance")
-        self.blackboard["saccade_study_face_eye_weight"] = config.getfloat("saccade", "saccade_study_face_eye_weight")
-        self.blackboard["saccade_study_face_mouth_weight"] = config.getfloat("saccade", "saccade_study_face_mouth_weight")
+        self.blackboard["saccade_study_face_weight_eyes"] = config.getfloat("saccade", "saccade_study_face_weight_eyes")
+        self.blackboard["saccade_study_face_weight_mouth"] = config.getfloat("saccade", "saccade_study_face_weight_mouth")
 
         self.blackboard["saccade_micro_interval_mean"] = config.getfloat("saccade", "saccade_micro_interval_mean")
         self.blackboard["saccade_micro_interval_var"] = config.getfloat("saccade", "saccade_micro_interval_var")
@@ -295,6 +310,8 @@ class Tree():
         self.blackboard["face_study_left_ear"] = False
         self.blackboard["face_study_right_ear"] = False
 
+        # flag to indicate in conversation and use different emotion set and weights
+        self.conversing = False
 
         ##### ROS Connections #####
         self.facetrack = FaceTrack(self.blackboard)
@@ -321,8 +338,9 @@ class Tree():
 
         #  chatbot can request blinks correlated with hearing and speaking
         rospy.Subscriber("chatbot_blink",String,self.chatbot_blink_callback)
-        self.do_pub_gestures = True
-        self.do_pub_emotions = True
+
+
+
         self.emotion_pub = rospy.Publisher("/blender_api/set_emotion_state",
             EmotionState, queue_size=1)
         self.gesture_pub = rospy.Publisher("/blender_api/set_gesture",
@@ -334,6 +352,8 @@ class Tree():
         self.saccade_pub = rospy.Publisher("/blender_api/set_saccade",
             SaccadeCycle,queue_size=1)
 
+        self.do_pub_gestures = True
+        self.do_pub_emotions = True
 
         self.tree = self.build_tree()
         time.sleep(0.1)
@@ -848,18 +868,23 @@ class Tree():
         self.write_log("look_at_" + str(face_id), time.time(), trigger)
 
         if self.should_show_expression("positive_emotions") or kwargs["new_face"]:
-            # Show a positive expression, either with or without an instant expression in advance
-            if random.random() < self.blackboard["non_positive_emotion_probabilities"]:
-                self.pick_instant("positive_emotions", "non_positive_emotion", trigger)
+
+            if self.conversing:
+                self.pick_random_expression("neutral_speech_emotions",trigger)
             else:
-                self.pick_random_expression("positive_emotions", trigger)
+                if random.random() < self.blackboard["non_positive_emotion_probabilities"]:
+                    self.pick_instant("positive_emotions", "non_positive_emotion", trigger)
+                else:
+                    self.pick_random_expression("positive_emotions", trigger)
         ##### Show A Positive Gesture #####
         self.pick_random_gesture("positive_gestures", trigger)
         ##### if new face, show affiliative brow raise  #####
         if trigger=="someone_arrived":
           if random.random()<0.7:
-              speed=random.uniform(0.2,0.4)
-              self.show_gesture("think-brows",0.8,1,speed,trigger)
+              # TODO add probability, speed,intensity to config file and read
+              speed=random.uniform(0.6,0.8)
+              intensity=random.uniform(0.5,0.8)
+              self.show_gesture("think-browsUp",intensity,1,speed,trigger)
 
         interval = 0.01
         duration = random.uniform(self.blackboard["min_duration_for_interaction"], self.blackboard["max_duration_for_interaction"])
@@ -1228,19 +1253,37 @@ class Tree():
     def chatbot_speech_start_callback(self,speaker):
         rospy.loginfo("webui starting speech")
         # do random choice from listening gestures
-        self.pick_random_gesture("listening_gestures", "listening")
+        self.pick_random_gesture("listening_gestures", "chat_perceived")
         # also nod with some probability
-        nod_prob=self.blackboard["listening_nod_probability"]
-        min=self.blackboard["chatbot_positive_nod_speed_min"]
-        max=self.blackboard["chatbot_positive_nod_speed_max"]
-        speed=random.uniform(min,max)
-        min=self.blackboard["chatbot_positive_nod_magnitude_min"]
-        max=self.blackboard["chatbot_positive_nod_magnitude_max"]
-        intensity=random.uniform(min,max)
-        if random.random()<nod_prob:
-            self.show_gesture("nod-6",intensity,1,speed,"listening")
-        # TODO switch to conversational saccade parameters
+
+        if random.random()<self.blackboard["listening_nod_probability"]:
+            min=self.blackboard["chatbot_positive_nod_speed_min"]
+            max=self.blackboard["chatbot_positive_nod_speed_max"]
+            speed=random.uniform(min,max)
+            min=self.blackboard["chatbot_positive_nod_magnitude_min"]
+            max=self.blackboard["chatbot_positive_nod_magnitude_max"]
+            intensity=random.uniform(min,max)
+            self.show_gesture("nod-6",intensity,1,speed,"chat_perceived")
+
+        # TODO switch to conversational (micro) saccade parameters
+        msg = SaccadeCycle()
+        msg.mean = self.blackboard["saccade_micro_interval_mean"]
+        msg.variation = self.blackboard["saccade_micro_interval_var"]
+        msg.paint_scale = self.blackboard["saccade_micro_paint_scale"]
+        # from study face, maybe better default should be defined for explore
+        # TODO add heat map parameters to message and animationManager function
+        msg.eye_size= self.blackboard["saccade_study_face_eye_size"]
+        msg.eye_distance = self.blackboard["saccade_study_face_eye_distance"]
+        msg.mouth_width =  self.blackboard["saccade_study_face_mouth_width"]
+
+        msg.mouth_height = self.blackboard["saccade_study_face_mouth_height"]
+        msg.weight_eyes = self.blackboard["saccade_study_face__weight_eyes"]
+        msg.weight_mouth = self.blackboard["saccade_study_face_weight_mouth"]
+        print 'switching to conversational microsaccade settings', self.blackboard["saccade_micro_interval_mean"]
+        self.saccade_pub.publish(msg)
         # TODO switch to conversational emotion set and probabilities
+        # interaction will check this flag and choose alternate emotions
+        self.conversing = True
 
     # chatbot requests blink
     def chatbot_blink_callback(self, blink):
@@ -1267,10 +1310,14 @@ class Tree():
 
         cached_pub_emotions = self.do_pub_emotions
         self.do_pub_emotions=False
+        # pick gesture and expression functions require this trigger or may not work
         trigger='chat_perceived'
         if emo.data == 'happy':
 
-            chosen_emo=self.pick_random_expression("positive_emotions",trigger,force)
+
+            #chosen_emo=self.pick_random_expression("positive_emotions",trigger,force)
+            rospy.loginfo('using neutral speech emotions expressions set')
+            chosen_emo=self.pick_random_expression("neutral_speech_emotions",trigger,force)
             # change blink rate
             self.blink_update(self.blackboard["blink_chat_faster_mean"],0.12,True)
             # nod slowly with some probability
@@ -1281,20 +1328,45 @@ class Tree():
                 min=self.blackboard["chatbot_positive_nod_magnitude_min"]
                 max=self.blackboard["chatbot_positive_nod_magnitude_max"]
                 intensity=random.uniform(min,max)
-                self.show_gesture('nod-6', intensity, 1,speed, trigger="chatbot_happy")
+                rospy.loginfo('invoking nod for response')
+                # TODO alternate affirmation gestures
+                self.show_gesture('nod-6', intensity, 1,speed, trigger)
             # raise eyebrows with some probability
-            speed=random.uniform(0.3,0.5)
-            intensity=random.uniform(0.8,1.0)
-            self.show_gesture("think-browsUp",intensity,1,speed,trigger)
-        else:# change blink rate
+            if random.random()<self.blackboard["chatbot_positive_reply_think_probability"]:
+                speed=random.uniform(0.3,0.5)
+                intensity=random.uniform(0.8,1.0)
+                rospy.loginfo('invoking positive think gesture')
+                # TODO alternate think gestures
+                self.show_gesture("think-browsUp",intensity,1,speed,trigger)
+        else: # negative polarity
+            # change blink rate
             self.blink_update(self.blackboard["blink_chat_slower_mean"],.12,True)
             chosen_emo=self.pick_random_expression("frustrated_emotions",trigger,force)
+            if random.random()<self.blackboard["chatbot_negative_shake_probability"]:
+                min=self.blackboard["chatbot_negative_shake_speed_min"]
+                max=self.blackboard["chatbot_negative_shake_speed_max"]
+                speed=random.uniform(min,max)
+                min=self.blackboard["chatbot_negative_shake_magnitude_min"]
+                max=self.blackboard["chatbot_negative_shake_magnitude_max"]
+                intensity=random.uniform(min,max)
+                rospy.loginfo('invoking shake for response')
+                # TODO alternate shake gestures
+
+                self.show_gesture('shake-3', intensity, 1,speed, trigger)
+            # raise eyebrows with some probability
+            # squint or furrow brows with some probability
+            # TODO add probability test from config
+            if random.random()<self.blackboard["chatbot_negative_reply_think_probability"]:
+                speed=random.uniform(0.3,0.5)
+                intensity=random.uniform(0.5,1.0)
+                rospy.loginfo('invoking negative think gesture')
+                self.show_gesture("think-browsDown.003",intensity,1,speed,trigger)
 
         # publish this message to cause chatbot to emit response if it's waiting
         exp = EmotionState()
         #  should now be consistent after setting show expression since = None upstream
         exp.name = self.blackboard["current_emotion"]
-        #
+        #  TODO replace this hard coding with .cfg values. Neutral speech values are defined but not
         exp.magnitude = 0.8
         # use zero for duration, tts can compute if needed
         exp.duration.secs = 4.0
@@ -1332,10 +1404,8 @@ class Tree():
         msg.mouth_width =  self.blackboard["saccade_study_face_mouth_width"]
 
         msg.mouth_height = self.blackboard["saccade_study_face_mouth_height"]
-        msg.eye_weight = self.blackboard["saccade_study_face_eye_weight"]
-        msg.mouth_weight = self.blackboard["saccade_study_face_mouth_weight"]
-
-        print 'initialize saccade mean', self.blackboard["saccade_explore_interval_mean"]
+        msg.weight_eyes = self.blackboard["saccade_study_face_weight_eyes"]
+        msg.weight_mouth = self.blackboard["saccade_study_face_weight_mouth"]
         self.saccade_pub.publish(msg)
 
 

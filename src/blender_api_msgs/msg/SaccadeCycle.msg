@@ -5,6 +5,6 @@ float32 eye_size
 float32 eye_distance
 float32 mouth_width
 float32 mouth_height
-float32 eye_weight
-float32 mouth_weight
+float32 weight_eyes
+float32 weight_mouth
 

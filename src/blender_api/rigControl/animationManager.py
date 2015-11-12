@@ -272,7 +272,7 @@ class AnimationManager():
         bpy.data.scenes["Scene"].actuators.ACT_blink_randomly.PARAM_interval_variation=interval_variation
         # if reset delete and restart actuator
 
-    def setSaccade(self,interval_mean,interval_variation,paint_scale):
+    def setSaccade(self,interval_mean,interval_variation,paint_scale,eye_size,eye_distance,mouth_width,mouth_height,weight_eyes,weight_mouth):
         '''enable if necessary and update the saccade rate of the artistic actuator'''
         if bpy.data.scenes["Scene"].actuators.ACT_saccade.HEAD_PARAM_enabled == False:
             bpy.data.scenes["Scene"].actuators.ACT_saccade.HEAD_PARAM_enabled = True
@@ -283,6 +283,15 @@ class AnimationManager():
         bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_interval_mean=interval_mean
         bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_interval_variation=interval_variation
         bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_paint_scale=paint_scale
+        # heat map parameters
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_eye_size=eye_size
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_eye_distance=eye_distance
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_mouth_width=mouth_width
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_mouth_height=mouth_height
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_weight_mouth=weight_mouth
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_weight_eyes=weight_eyes
+
+
 
         # if reset delete and restart actuator
     def _deleteViseme(self, viseme):
