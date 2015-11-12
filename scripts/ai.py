@@ -171,7 +171,7 @@ class Chatbot():
     # do default behavior.
     # any emotion change will now force tts
     # TODO pass .cfg speech hesitation interval in affect message
-    hesitation=random.uniform(0.4,0.8)
+    hesitation=random.uniform(0.1,0.4)
     time.sleep(hesitation)
     if self._state == 'wait_emo':
       message = String()
