@@ -16,7 +16,7 @@ define(["application", "lib/api", "./views/layout", "../../motors/views/motors",
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
                 this.layoutView.getRegion('motors').show(this.motorsView);
 
-                this.motorsCollection.fetch();
+                this.motorsCollection.fetchFromParam();
                 var expressions = new App.Entities.ExpressionCollection(),
                     expressionsView = new ExpressionsView({
                         collection: expressions,
