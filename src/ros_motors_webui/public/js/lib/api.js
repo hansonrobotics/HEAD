@@ -321,6 +321,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/robot_name'});
             param.get(callback);
         },
+        setRobotLang: function (lang) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/'+api.config.robot+'/lang'});
+            param.set(lang);
+        },
         /**
          * Passes a "|" separated string of available scripts
          *

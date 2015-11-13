@@ -1,5 +1,10 @@
+.app-language-select-container {
+    width: 75px;
+}
+
 .app-language-select {
     margin-top: 5px;
+    position: fixed;
 }
 .record-container {
     padding: 0;
@@ -87,5 +92,10 @@
 .face-select-instruction {
     font-weight: bold;
     text-align: center;
-    padding: 5px 0
+    padding: 5px 0;
+}
+
+.app-messages .header small{
+    display: inline-block;
+    padding-top: 30px;
 }

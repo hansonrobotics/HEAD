@@ -630,7 +630,7 @@ class PatchTracker(ROS2OpenCV):
         for f in faces:
             face = self.detect_box.getFace(f)
             fname = os.path.join(self.image_dir, "Face{}.jpg".format(f))
-            print fname
+            logger.info(fname)
             img = self.cv2_image[face.pt1[1]:face.pt2[1], face.pt1[0]:face.pt2[0]]
             cv2.imwrite(fname,img)
 
