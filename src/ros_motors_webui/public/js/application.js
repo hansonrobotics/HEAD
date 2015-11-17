@@ -1,22 +1,22 @@
 define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api'],
     function (Backbone, Marionette, ros, LayoutView, api) {
-        var Application = new Marionette.Application();
+        var Application = new Marionette.Application(),
+            checkConnection = function () {
+                // Allow the monitor to be open if not connected
+                if (Backbone.history.getHash().match(/admin\/monitor/)) {
+                    return false;
+                }
+                if (api.ros.connected == false) {
+                    Backbone.history.navigate('admin/monitor', {trigger: true})
+                    return true;
+                }
+                return false;
+            };
         Application.on("start", function () {
             // Enable for the whole app - blenderMode is the only mode for APAC demo
             if (Backbone.history)
                 Backbone.history.start();
         });
-        checkConnection = function(router,route, r2,r3){
-            // Allow the monitor to be open if not connected
-            if (Backbone.history.getHash().match(/admin\/monitor/)){
-                return false;
-            }
-            if (api.ros.connected == false){
-                Backbone.history.navigate('admin/monitor', {trigger:true} )
-                return true;
-            }
-            return false;
-        }
         // store layout instance in App.Layout.Instance
         Application.LayoutInstance = new LayoutView();
 
@@ -41,7 +41,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
             }
         };
         // Make sure only monitor is loaded before connection is made
-        Backbone.Router.prototype.execute = function(callback, args) {
+        Backbone.Router.prototype.execute = function (callback, args) {
             if (checkConnection())
                 return;
             if (callback) callback.apply(this, args);
