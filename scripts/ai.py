@@ -108,8 +108,6 @@ class Chatbot():
       # puzzled expression
     else:
 
-      # non blocking sleep for random up to .25 sec
-      #nb_sleep(random.random()< *0.5)
       # request blink, probability of blink defined in callback
       blink.data='chat_saying'
       self._blink_publisher.publish(blink)
