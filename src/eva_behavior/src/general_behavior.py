@@ -332,9 +332,7 @@ class Tree():
             self.chatbot_affect_perceive_callback)
 
         #  Handle messages from incoming speech to simulate listening engagement
-        #  String parameter will contain speaker id
-        rospy.Subscriber("chatbot_speech_start",String,
-            self.chatbot_speech_start_callback)
+        rospy.Subscriber("chat_events",String,self.chat_event_dispatcher_callback)
 
         #  chatbot can request blinks correlated with hearing and speaking
         rospy.Subscriber("chatbot_blink",String,self.chatbot_blink_callback)
@@ -386,8 +384,8 @@ class Tree():
         if emo:
             if force==True:
                 # may want to make this variable in .cfg
-                intensity = emo.max_intensity
-                duration = emo.max_duration
+                intensity = random.uniform(emo.min_intensity, emo.max_intensity)
+                duration = emo.min_duration
             else:
                 intensity = random.uniform(emo.min_intensity, emo.max_intensity)
                 duration = random.uniform(emo.min_duration, emo.max_duration)
@@ -880,10 +878,12 @@ class Tree():
         self.pick_random_gesture("positive_gestures", trigger)
         ##### if new face, show affiliative brow raise  #####
         if trigger=="someone_arrived":
-          if random.random()<0.7:
+          if random.random()<0.8:
               # TODO add probability, speed,intensity to config file and read
-              speed=random.uniform(0.6,0.8)
-              intensity=random.uniform(0.5,0.8)
+              speed=random.uniform(0.2,0.6)
+              intensity=random.uniform(0.4,0.7)
+              # TODO use non-blocking sleep from GM
+              time.sleep(0.5)
               self.show_gesture("think-browsUp",intensity,1,speed,trigger)
 
         interval = 0.01
@@ -1247,10 +1247,18 @@ class Tree():
             self.blackboard["stage_mode"] = False
             print("---- Behavior tree disabled")
 
+    def chatbot_speech_end(self):
+        # TODO
+        # self.conversing=False
+        print("---- speechend")
 
     # chatbot speech started, simulate listening
     # behavior tree will already cause face orient to speaker via web_ui
-    def chatbot_speech_start_callback(self,speaker):
+    def chatbot_speech_start(self):
+        """
+        Execute changes to blinks, saccades gestures, emotions to mimic conversational dynamics.
+        """
+
         rospy.loginfo("webui starting speech")
         # do random choice from listening gestures
         self.pick_random_gesture("listening_gestures", "chat_perceived")
@@ -1265,25 +1273,32 @@ class Tree():
             intensity=random.uniform(min,max)
             self.show_gesture("nod-6",intensity,1,speed,"chat_perceived")
 
-        # TODO switch to conversational (micro) saccade parameters
+        # switch to conversational (micro) saccade parameters
         msg = SaccadeCycle()
         msg.mean = self.blackboard["saccade_micro_interval_mean"]
         msg.variation = self.blackboard["saccade_micro_interval_var"]
         msg.paint_scale = self.blackboard["saccade_micro_paint_scale"]
         # from study face, maybe better default should be defined for explore
-        # TODO add heat map parameters to message and animationManager function
         msg.eye_size= self.blackboard["saccade_study_face_eye_size"]
         msg.eye_distance = self.blackboard["saccade_study_face_eye_distance"]
         msg.mouth_width =  self.blackboard["saccade_study_face_mouth_width"]
 
         msg.mouth_height = self.blackboard["saccade_study_face_mouth_height"]
-        msg.weight_eyes = self.blackboard["saccade_study_face__weight_eyes"]
+        msg.weight_eyes = self.blackboard["saccade_study_face_weight_eyes"]
         msg.weight_mouth = self.blackboard["saccade_study_face_weight_mouth"]
-        print 'switching to conversational microsaccade settings', self.blackboard["saccade_micro_interval_mean"]
+        print 'switching to conversational microsaccade settings, mean= ', self.blackboard["saccade_micro_interval_mean"]
         self.saccade_pub.publish(msg)
         # TODO switch to conversational emotion set and probabilities
         # interaction will check this flag and choose alternate emotions
         self.conversing = True
+
+
+    def chat_event_dispatcher_callback(self,chat_event):
+        rospy.loginfo('chat_event, type '+chat_event.data)
+        if chat_event.data=="speechstart":
+            self.chatbot_speech_start()
+        elif chat_event.data=="speechend":
+            self.chatbot_speech_end()
 
     # chatbot requests blink
     def chatbot_blink_callback(self, blink):
@@ -1334,7 +1349,7 @@ class Tree():
             # raise eyebrows with some probability
             if random.random()<self.blackboard["chatbot_positive_reply_think_probability"]:
                 speed=random.uniform(0.3,0.5)
-                intensity=random.uniform(0.8,1.0)
+                intensity=random.uniform(0.5,0.7)
                 rospy.loginfo('invoking positive think gesture')
                 # TODO alternate think gestures
                 self.show_gesture("think-browsUp",intensity,1,speed,trigger)
@@ -1358,7 +1373,7 @@ class Tree():
             # TODO add probability test from config
             if random.random()<self.blackboard["chatbot_negative_reply_think_probability"]:
                 speed=random.uniform(0.3,0.5)
-                intensity=random.uniform(0.5,1.0)
+                intensity=random.uniform(0.5,0.7)
                 rospy.loginfo('invoking negative think gesture')
                 self.show_gesture("think-browsDown.003",intensity,1,speed,trigger)
 
