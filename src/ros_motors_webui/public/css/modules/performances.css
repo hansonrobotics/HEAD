@@ -211,3 +211,10 @@ li.app-performance .app-status-indicator.active {
 .app-node[data-name="speech_input"] {
     background-color: #37753B;
 }
+
+.app-performances-page .app-language-select-container {
+    position: absolute;
+    z-index: 9999999;
+    right: 15px;
+    top: 0;
+}

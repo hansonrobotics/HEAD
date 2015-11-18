@@ -7,6 +7,10 @@ body {
     height: 20px;
 }
 
+.container {
+     position: relative;
+}
+
 .text-muted {
     color: #738392;
 }
@@ -83,4 +87,14 @@ body {
 .panel-body {
     background-color: #2b3e50;
     border: 1px solid #485563;
+}
+
+.app-language-select-container {
+    width: 75px;
+    height: 30px;
+}
+
+.app-language-select {
+    margin-top: 5px;
+    position: fixed;
 }

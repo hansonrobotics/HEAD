@@ -10,8 +10,6 @@
                             class="glyphicon glyphicon-trash"></span></button>
             </div>
         </div>
-        <div class="col-md-3">
-        </div>
     </div>
 </div>
 
