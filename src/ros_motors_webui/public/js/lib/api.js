@@ -81,6 +81,8 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             );
         },
         sendChatMessage: function (text) {
+            console.log('Sending message: ' + text);
+            
             var message = new ROSLIB.Message({
                 utterance: text,
                 confidence: Math.round(0.9 * 100)

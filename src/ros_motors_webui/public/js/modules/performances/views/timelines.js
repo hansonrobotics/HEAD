@@ -101,8 +101,12 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 node.set('el', el);
                 node.on('change', this.updateNode, this);
                 // Listen for Pause nodes
-                this.listenTo(node, 'pause', function(){
+                this.listenTo(node, 'pause', function () {
                     this.pause();
+                });
+
+                this.listenTo(node, 'resume', function () {
+                    this.run();
                 });
                 this.updateNode(node);
             },
@@ -259,12 +263,12 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
 
                 $(this.ui.runIndicator).stop().css('left', startTime * this.config.pxPerSec).show()
                     .animate({left: duration * this.config.pxPerSec}, (duration - startTime) * 1000, 'linear',
-                    function () {
-                        $(this).hide();
+                        function () {
+                            $(this).hide();
 
-                        if (typeof finishedCallback == 'function')
-                            finishedCallback();
-                    });
+                            if (typeof finishedCallback == 'function')
+                                finishedCallback();
+                        });
             },
             pause: function () {
                 $(this.ui.runIndicator).stop();

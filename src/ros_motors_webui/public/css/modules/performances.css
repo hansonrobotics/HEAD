@@ -207,3 +207,7 @@ li.app-performance .app-status-indicator.active {
 .app-node[data-name="pause"] {
     background-color: #335B9E;
 }
+
+.app-node[data-name="speech_input"] {
+    background-color: #37753B;
+}
