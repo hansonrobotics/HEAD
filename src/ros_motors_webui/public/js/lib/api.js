@@ -82,7 +82,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         sendChatMessage: function (text) {
             console.log('Sending message: ' + text);
-            
+
             var message = new ROSLIB.Message({
                 utterance: text,
                 confidence: Math.round(0.9 * 100)
@@ -323,8 +323,15 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/robot_name'});
             param.get(callback);
         },
+        getRobotLang: function (success) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/lang'});
+
+            param.get(function (lang) {
+                if (typeof success == 'function') success(lang);
+            });
+        },
         setRobotLang: function (lang) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/'+api.config.robot+'/lang'});
+            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/lang'});
             param.set(lang);
         },
         /**
@@ -366,6 +373,34 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         set_look_at_face: function (f_id) {
             api.topics.set_look_at_face.publish(new ROSLIB.Message({face_event: 'track_face', face_id: f_id}));
+        },
+        enableRecording: function (success, error) {
+            api.services.set_recorder_parameters.callService(new ROSLIB.ServiceRequest({
+                config: {
+                    bools: [{
+                        name: 'recording',
+                        value: true
+                    }]
+                }
+            }), function () {
+                if (typeof success == 'function') success();
+            }, function (error) {
+                if (typeof error == 'function') error();
+            });
+        },
+        disableRecording: function (success, error) {
+            api.services.set_recorder_parameters.callService(new ROSLIB.ServiceRequest({
+                config: {
+                    bools: [{
+                        name: 'recording',
+                        value: false
+                    }]
+                }
+            }), function () {
+                if (typeof success == 'function') success();
+            }, function (error) {
+                if (typeof error == 'function') error();
+            });
         }
     };
 

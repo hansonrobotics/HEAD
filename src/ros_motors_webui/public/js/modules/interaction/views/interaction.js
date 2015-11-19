@@ -26,7 +26,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     'click @ui.recordButton': 'toggleSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked',
-                    'click @ui.languageButton': 'changeLanguage'
+                    'click @ui.languageButton': 'languageButtonClick'
                 },
                 initialize: function () {
                     self = this;
@@ -40,7 +40,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     api.topics.chat_responses.unsubscribe(this.responseCallback);
                     api.topics.speech_active.unsubscribe(this.speechActiveCallback);
                     this.disableWebspeech();
-                    this.disableAudioRecording();
+                    this.disableRecording();
                 },
                 updateFaces: function () {
                     var currentTime = new Date().getTime();
@@ -118,6 +118,11 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         self.ui.messages.css('margin-bottom', self.ui.footer.height());
                         self.scrollToChatBottom();
                     });
+
+                    // set current language
+                    api.getRobotLang(function (language) {
+                        self.changeLanguage(language);
+                    })
                 },
                 responseCallback: function (msg) {
                     self.collection.add({author: 'Robot', message: msg.data});
@@ -139,7 +144,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                                 this.enableWebspeech();
                                 break;
                             case 'zh':
-                                this.enableAudioRecording();
+                                this.enableRecording();
                         }
                     }
                 },
@@ -150,7 +155,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                                 this.pauseWebspeech();
                                 break;
                             case 'zh':
-                                this.disableAudioRecording();
+                                this.disableRecording();
                         }
                     }
                 },
@@ -297,74 +302,45 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         this.speechRecognition = null;
                     }
                 },
-                enableAudioRecording: function () {
-                    var session = {
-                        audio: true
-                    }, onError = function () {
-                        console.log('error recording');
-                        self.onSpeechDisabled();
-                    };
-
-                    this.recordRTC = null;
-                    navigator.getUserMedia(session, function (mediaStream) {
+                enableRecording: function () {
+                    api.enableRecording(function () {
                         self.onSpeechEnabled();
-
-                        self.recordRTC = RecordRTC(mediaStream, {
-                            type: 'audio',
-                            sampleRate: '44100',
-                            numberOfAudioChannels: 1
-                        });
-                        self.recordRTC.startRecording();
-                    }, onError);
+                    }, function () {
+                        console.log('error enabling recording')
+                    });
                 },
-                disableAudioRecording: function () {
-                    if (this.recordRTC)
-                        this.recordRTC.stopRecording(function () {
-                            self.onSpeechDisabled();
-
-                            var formData = new FormData();
-                            formData.append('audio', self.recordRTC.getBlob());
-
-                            $.ajax({
-                                type: 'POST',
-                                url: '/chat_audio',
-                                data: formData,
-                                contentType: false,
-                                cache: false,
-                                processData: false
-                            }).done(function (res) {
-                                if (res.success == true) {
-                                    api.topics.voice.publish(new ROSLIB.Message({data: res.filename}))
-                                } else {
-                                    console.log("Error while saving file")
-                                }
-                            });
-                        });
+                disableRecording: function () {
+                    api.disableRecording(function () {
+                        self.onSpeechDisabled();
+                    }, function () {
+                        console.log('error occurred while to disabling recording')
+                    });
                 },
-                language: 'en',
-                changeLanguage: function (e) {
+                languageButtonClick: function (e) {
                     var language = $(e.target).data('lang');
+                    this.changeLanguage(language);
+                },
+                changeLanguage: function (language) {
+                    if (this.language == language) return;
+                    if (this.speechEnabled) this.disableSpeech();
 
                     this.changeMessageLanguage(language);
+                    this.language = language;
+
                     this.disableSpeech();
 
-                    this.language = language;
                     this.ui.languageButton.removeClass('active');
-                    $(e.target).addClass('active');
+                    $('[data-lang="' + language + '"]', this.el).addClass('active');
 
                     api.setRobotLang(this.language);
                 },
                 changeMessageLanguage: function (language) {
-                    if (this.language == language) return;
+                    if (!self.messages) self.messages = {};
 
-                    if (!this.messages)
-                        this.messages = {};
+                    self.messages[self.language] = self.collection.clone();
+                    self.collection.reset();
 
-                    this.messages[this.language] = this.collection.clone();
-
-                    this.collection.reset();
-                    if (this.messages[language])
-                        this.collection.add(this.messages[language].models);
+                    if (self.messages[language]) self.collection.add(self.messages[language].models);
                 }
             });
         });
