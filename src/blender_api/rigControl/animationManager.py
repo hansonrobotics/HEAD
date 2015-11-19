@@ -45,10 +45,10 @@ class AnimationManager():
         self.min_distance  = 0.1
         # Face target offset in BU
         # -4 for Sophia 1.0, -2 for blender only
-        self.face_target_offset = -1
+        self.face_target_offset = -4
         # Eye_target distance in BU from 0 point
         # -4 for Sophia 1.0 -2 for blender rig
-        self.eye_target_offset = -1
+        self.eye_target_offset = -4
 
 
         # Head and Eye tracking parameters
