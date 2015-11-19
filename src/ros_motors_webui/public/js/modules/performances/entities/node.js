@@ -2,6 +2,7 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
     App.module('Performances.Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Node = Backbone.Model.extend({
             call: function () {
+                var self = this;
                 switch (this.get('name')) {
                     case 'gesture':
                         api.setGesture(this.get('gesture'), 1, this.get('speed'), this.get('magnitude'));
@@ -25,7 +26,20 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                         this.trigger('pause');
                         break;
                     case 'speech_input':
-                        this.speechInput();
+                        this.trigger('pause');
+
+                        api.enableRecording(function () {
+                            var speechEvent = function () {
+                                // resume on any event
+                                self.trigger('resume');
+                                api.topics.speech_active.unsubscribe(speechEvent);
+                                api.disableRecording();
+                            };
+                            api.topics.speech_active.subscribe(speechEvent);
+                        }, function () {
+                            // resume on error
+                            self.trigger('resume');
+                        });
                         break;
                 }
             },
