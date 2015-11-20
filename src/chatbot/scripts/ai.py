@@ -4,6 +4,7 @@ import aiml
 import rospy
 import os
 import sys
+import time
 # csv and itertools for sentiment
 import csv
 from itertools import izip
@@ -12,6 +13,7 @@ from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState
 import logging
+import random
 #from rigControl.actuators import sleep as nb_sleep
 
 logger = logging.getLogger('hr.chatbot.ai')
@@ -92,10 +94,10 @@ class Chatbot():
         logger.info('Ignore non-English language')
         return
     response = ''
-    #nb_sleep(random.uniform(0.0,0.5)
+
     blink=String()
     # blink that we heard something, request, probability defined in callback
-    blink.data='chat-heard'
+    blink.data='chat_heard'
     self._blink_publisher.publish(blink)
 
     if chat_message.confidence < 50:
@@ -106,15 +108,14 @@ class Chatbot():
       # puzzled expression
     else:
 
-      # non blocking sleep for random up to .25 sec
-      #nb_sleep(random.random()< *0.5)
       # request blink, probability of blink defined in callback
-      blink.data='chat-saying'
+      blink.data='chat_saying'
       self._blink_publisher.publish(blink)
 
       response = self._kernel.respond(chat_message.utterance)
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
+      response = response.replace('.','. ')
 
       # if sentiment active save state and wait for affect_express to publish response
       # otherwise publish and let tts handle it
@@ -171,6 +172,9 @@ class Chatbot():
     # here we could call some smart markup process instead of letting tts
     # do default behavior.
     # any emotion change will now force tts
+    # TODO pass .cfg speech hesitation interval in affect message
+    hesitation=random.uniform(0.1,0.4)
+    time.sleep(hesitation)
     if self._state == 'wait_emo':
       message = String()
       message.data = self._response_buffer

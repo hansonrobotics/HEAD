@@ -37,6 +37,7 @@
             </node>
 
             <node name="chatbot_zh" pkg="chinese_chatbot" type="talker.py" />
+            <node name="recorder" pkg="chinese_chatbot" type="recorder.py" />
 
         </group>
     </group>
