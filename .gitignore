@@ -1,8 +1,17 @@
 /src/CMakeLists.txt
 !.gitignore
 !/src
+<<<<<<< HEAD
+*.pyc
+*.sublime-project
+*.sublime-workspace
+*.blend?
+*.blend??
+.DS_Store
+=======
 devel
 build
 .idea
 *.pyc
 .catkin_tools
+>>>>>>> 9a016d09322ad86fdc32707dc14421d496211871

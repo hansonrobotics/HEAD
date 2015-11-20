@@ -288,6 +288,14 @@ class CommandWrappers:
         #sets only pitch and roll
         api.setNeckRotation(msg.y, msg.x)
 
+    @subscribe("~set_blink_randomly",msg.BlinkCycle)
+    def setBlinkRandomly(msg):
+        api.setBlinkRandomly(msg.mean,msg.variation)
+
+    @subscribe("~set_saccade",msg.SaccadeCycle)
+    def setSaccade(msg):
+        api.setSaccade(msg.mean,msg.variation,msg.paint_scale,msg.eye_size,msg.eye_distance,msg.mouth_width,msg.mouth_height,msg.weight_eyes,msg.weight_mouth)
+
     @service("~set_param", srv.SetParam)
     def setParam(msg):
         return srv.SetParamResponse(api.setParam(msg.key, msg.value))
