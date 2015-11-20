@@ -187,11 +187,6 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/blender_api/get_animation_length',
                     messageType: 'blender_api_msgs/GetAnimationLength'
-                }),
-                set_recorder_parameters: new ROSLIB.Service({
-                    ros: api.ros,
-                    name: '/recorder/set_parameters',
-                    messageType: 'dynamic_reconfigure/Reconfigure'
                 })
             };
         },

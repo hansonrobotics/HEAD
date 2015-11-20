@@ -33,13 +33,15 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     api.enableInteractionMode();
                     api.topics.chat_responses.subscribe(this.responseCallback);
                     api.topics.speech_active.subscribe(this.speechActiveCallback);
+                    api.topics.speech_topic.subscribe(this.voiceRecognised);
+
                     this.speechPaused = false
                 },
                 onDestroy: function () {
                     this.options.faceCollection.unsubscribe();
                     api.topics.chat_responses.unsubscribe(this.responseCallback);
                     api.topics.speech_active.unsubscribe(this.speechActiveCallback);
-                    this.disableWebspeech();
+                    api.topics.speech_topic.unsubscribe(this.voiceRecognised);
                     this.disableRecording();
                 },
                 updateFaces: function () {
@@ -131,32 +133,10 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     if (self.speechEnabled) {
                         if (msg.data == 'start') {
                             self.speechPaused = true;
-                            self.disableSpeech();
+                            self.disableRecording();
                         }
                     } else if ((msg.data != 'start') && self.speechPaused) {
-                        self.enableSpeech()
-                    }
-                },
-                enableSpeech: function () {
-                    if (!this.speechEnabled) {
-                        switch (this.language) {
-                            case 'en':
-                                this.enableWebspeech();
-                                break;
-                            case 'zh':
-                                this.enableRecording();
-                        }
-                    }
-                },
-                disableSpeech: function () {
-                    if (this.speechEnabled) {
-                        switch (this.language) {
-                            case 'en':
-                                this.pauseWebspeech();
-                                break;
-                            case 'zh':
-                                this.disableRecording();
-                        }
+                        self.enableRecording()
                     }
                 },
                 onSpeechEnabled: function () {
@@ -185,9 +165,9 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         }
                     }
                     if (this.speechEnabled) {
-                        this.disableSpeech(e);
+                        this.disableRecording(e);
                     } else {
-                        this.enableSpeech(e);
+                        this.enableRecording(e);
                     }
                 },
                 messageKeyUp: function (e) {
@@ -197,10 +177,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 sendClicked: function () {
                     var message = this.ui.messageInput.val();
 
-                    if (message != '') {
-                        this.collection.add({author: 'Me', message: message});
-                        api.sendChatMessage(message);
-                    }
+                    if (message != '') api.sendChatMessage(message);
 
                     this.ui.messageInput.val('');
                 },
@@ -219,88 +196,8 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         });
                     self.scrolling = true;
                 },
-                sendMessage: function (message) {
-                    self.collection.add({author: 'Me', message: message});
-
-                    var chat_message = new ROSLIB.Message({
-                        utterance: message,
-                        confidence: 99
-                    });
-
-                    api.topics.speech_topic.publish(chat_message);
-                },
-                hello: function () {
-                    self.sendMessage('hello');
-                },
-                bye: function () {
-                    self.sendMessage('bye');
-                },
-                enableWebspeech: function () {
-                    if (!this.speechRecognition) {
-                        var mostConfidentResult = null;
-                        if ('webkitSpeechRecognition' in window) {
-                            this.speechRecognition = new webkitSpeechRecognition();
-                        } else if ('SpeechRecognition' in window) {
-                            this.speechRecognition = new SpeechRecognition();
-                        } else {
-                            console.log('webspeech api not supported');
-                            this.speechRecognition = null;
-                        }
-
-                        this.speechRecognition.interimResults = true;
-                        this.speechRecognition.continuous = true;
-
-                        this.speechRecognition.onstart = function () {
-                            console.log('starting webspeech');
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'start'}));
-                            self.onSpeechEnabled();
-                        };
-                        this.speechRecognition.onspeechstart = function () {
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechstart'}));
-                        };
-                        this.speechRecognition.onspeechend = function () {
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechend'}));
-                        };
-                        this.speechRecognition.onresult = function (event) {
-                            _.each(event.results, function (results) {
-                                _.each(results, function (result) {
-                                    if (!mostConfidentResult || mostConfidentResult.confidence <= result.confidence)
-                                        mostConfidentResult = result;
-                                });
-                            });
-                        };
-
-                        this.speechRecognition.onerror = function (event) {
-                            console.log('error recognising speech');
-                            console.log(event);
-                            self.onSpeechDisabled();
-                        };
-                        this.speechRecognition.onend = function () {
-                            console.log('end of speech');
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
-                            self.onSpeechDisabled();
-                            if (mostConfidentResult && mostConfidentResult.confidence > 0.5)
-                                self.sendMessage(mostConfidentResult.transcript);
-
-                            mostConfidentResult = null;
-                        };
-                    }
-
-                    if (this.speechRecognition && !this.speechEnabled)
-                        this.speechRecognition.start();
-
-                    return this.speechRecognition;
-                },
-                pauseWebspeech: function () {
-                    if (this.speechRecognition)
-                        this.speechRecognition.stop();
-                },
-                disableWebspeech: function () {
-                    if (this.speechRecognition) {
-                        this.speechRecognition.abort();
-                        this.speechRecognition = null;
-                    }
+                voiceRecognised: function (message) {
+                    self.collection.add({author: 'Me', message: message.utterance});
                 },
                 enableRecording: function () {
                     api.enableRecording(function () {
@@ -322,12 +219,10 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 changeLanguage: function (language) {
                     if (this.language == language) return;
-                    if (this.speechEnabled) this.disableSpeech();
+                    if (this.speechEnabled) this.disableRecording();
 
                     this.changeMessageLanguage(language);
                     this.language = language;
-
-                    this.disableSpeech();
 
                     this.ui.languageButton.removeClass('active');
                     $('[data-lang="' + language + '"]', this.el).addClass('active');

@@ -331,8 +331,14 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             });
         },
         setRobotLang: function (lang) {
-            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/lang'});
+            var sr_language = null,
+                param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/lang'});
             param.set(lang);
+
+            if (lang == 'en') sr_language = 'en_us';
+            else if (lang == 'zh') sr_language = 'zh_ch';
+
+            if (sr_language) this.setDynParam('/' + this.config.robot + '/chatbot_zh', 'sr_language', sr_language);
         },
         /**
          * Passes a "|" separated string of available scripts
@@ -375,31 +381,54 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.set_look_at_face.publish(new ROSLIB.Message({face_event: 'track_face', face_id: f_id}));
         },
         enableRecording: function (success, error) {
-            api.services.set_recorder_parameters.callService(new ROSLIB.ServiceRequest({
-                config: {
-                    bools: [{
-                        name: 'recording',
-                        value: true
-                    }]
-                }
-            }), function () {
-                if (typeof success == 'function') success();
-            }, function (error) {
-                if (typeof error == 'function') error();
+            this.setDynParam('/' + this.config.robot + '/recorder', 'recording', true, {
+                success: success,
+                error: error
             });
         },
         disableRecording: function (success, error) {
-            api.services.set_recorder_parameters.callService(new ROSLIB.ServiceRequest({
-                config: {
-                    bools: [{
-                        name: 'recording',
-                        value: false
-                    }]
-                }
-            }), function () {
-                if (typeof success == 'function') success();
+            this.setDynParam('/' + this.config.robot + '/recorder', 'recording', false, {
+                success: success,
+                error: error
+            });
+        },
+        setDynParam: function (node, name, value, options) {
+            if (typeof options != 'object') options = {};
+
+            var data = {},
+                type = null,
+                service = new ROSLIB.Service({
+                    ros: this.ros,
+                    name: node + '/set_parameters',
+                    messageType: 'dynamic_reconfigure/Reconfigure'
+                });
+
+            switch (typeof value) {
+                case 'boolean':
+                    type = 'bools';
+                    break;
+                case 'number':
+                    if (value % 1 === 0)
+                        type = 'ints';
+                    else
+                        type = 'doubles';
+                    break;
+                case 'string':
+                    type = 'strs';
+                    break;
+                case 'object':
+                    type = 'groups';
+
+            }
+
+            data[type] = [{}];
+            data[type][0]['name'] = name;
+            data[type][0]['value'] = value;
+
+            service.callService(new ROSLIB.ServiceRequest({config: data}), function () {
+                if (typeof options.success == 'function') options.success();
             }, function (error) {
-                if (typeof error == 'function') error();
+                if (typeof options.error == 'function') options.error(error);
             });
         }
     };
