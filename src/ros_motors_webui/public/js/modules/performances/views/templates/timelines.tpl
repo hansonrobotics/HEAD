@@ -26,7 +26,7 @@
                 <div class="app-node label label-warning" data-name="gaze_at">GazeAt</div>
                 <div class="app-node label label-default" data-name="interaction">Interaction</div>
                 <div class="app-node label label-default" data-name="pause">Pause</div>
-                <div class="app-node label label-default" data-name="speech_input">Wait for speech</div>
+                <!--<div class="app-node label label-default" data-name="speech_input">Wait for speech</div>-->
             </div>
 
             <div class="app-node-settings"></div>
