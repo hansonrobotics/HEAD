@@ -85,6 +85,8 @@ class RosPololuNode:
                         speed = m.speed
                     self.set_speed(m.id, speed)
                     self.set_pulse(m.id, m.pulse)
+                    self.set_acceleration(m.id, 0)
+
                 except Exception as ex:
                     logger.error("Error %s" % ex)
                     time.sleep(0.01)
@@ -153,7 +155,7 @@ class RosPololuNode:
         # FIXME: disable acceleration because pololu may have problem with acceleration
         acceleration = 0
         try:
-            self.controller.setAcceleration(id, acceleation)
+            self.controller.setAcceleration(id, acceleration)
         except AttributeError:
             pass
 
