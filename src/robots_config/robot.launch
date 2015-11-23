@@ -32,11 +32,12 @@
 
             <node name="tts" pkg="tts" type="tts_talker.py">
                 <param name="topic_name" value="chatbot_responses" />
-                <param name="voice" value="$(find robots_config)/$(arg name)/bot.properties" />
                 <param name="license" value="" />
             </node>
 
-            <node name="chatbot_zh" pkg="chinese_chatbot" type="talker.py" />
+            <node name="chatbot_zh" pkg="chinese_chatbot" type="talker.py">
+                <param name="robot_name" value="$(arg name)" />
+            </node>
             <node name="recorder" pkg="chinese_chatbot" type="recorder.py" />
 
         </group>
