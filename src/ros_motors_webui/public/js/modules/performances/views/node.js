@@ -162,14 +162,15 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 setStartTime: function () {
                     this.model.set('start_time', Number($(this.ui.startTime).val()));
                 },
-                buildCrosshair: function () {
+                buildCrosshair: function (params) {
                     var self = this;
+                    params = params || {};
                     $(this.ui.crosshair).crosshairsl($.extend({}, {
-                        xmin: -1.5,
-                        xmax: 1.5,
+                        xmin: -1,
+                        xmax: 1,
                         xval: this.model.get('x') ? this.model.get('x') : 0,
-                        ymin: -1.5,
-                        ymax: 1.5,
+                        ymin: -1,
+                        ymax: 1,
                         yval: this.model.get('y') ? this.model.get('y') : 0,
                         change: function (e, ui) {
                             self.model.set('x', ui.xval);
@@ -180,7 +181,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     }, {
                         bgColor: "#485563",
                         fgColor: "#fff"
-                    }));
+                    }, params));
                 },
                 deleteNode: function () {
                     var self = this;
