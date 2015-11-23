@@ -140,3 +140,9 @@
     margin: 5px 0;
     padding: 5px;
 }
+
+.app-select-motor-button {
+    height: 21px;
+    width: 21px;
+    padding: 0;
+}
