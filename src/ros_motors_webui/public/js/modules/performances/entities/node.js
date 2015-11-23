@@ -10,10 +10,10 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                         api.setEmotion(this.get('emotion'), this.get('magnitude'), parseFloat(this.get('duration')));
                         break;
                     case 'look_at':
-                        api.setFaceTarget(3, this.get('x'), -this.get('y'));
+                        api.setFaceTarget(1, this.get('x'), -this.get('y'));
                         break;
                     case 'gaze_at':
-                        api.setGazeTarget(3, this.get('x'), -this.get('y'));
+                        api.setGazeTarget(1, this.get('x'), -this.get('y'));
                         break;
                     case 'speech':
                         api.robotSpeech(this.get('text'));
@@ -24,8 +24,9 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                     case 'pause':
                         this.trigger('pause');
                         break;
-                    case 'speech_input':
-                        this.speechInput();
+                    case 'expression':
+                        api.blenderMode.disableFace();
+                        api.setExpression(this.get('expression'), this.get('magnitude'));
                         break;
                 }
             },
@@ -33,6 +34,9 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                 switch (this.get('name')) {
                     case 'interaction':
                         api.disableInteractionMode();
+                        break;
+                     case 'expression':
+                        api.blenderMode.enable();
                         break;
                 }
             },
@@ -49,51 +53,6 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
 
                 Backbone.Model.prototype.destroy.call(this);
             },
-            /**
-             * Trigger pause event -> listen for speech -> resume when recognised
-             */
-            speechInput: function () {
-                this.trigger('pause');
-
-                var self = this,
-                    speechRecognition = WebSpeechApi.getSpeechRecognition(),
-                    lastResultTime = new Date().getTime(),
-                    recognised,
-                    checkForSpeech = setInterval(function () {
-                        if (recognised && lastResultTime + 300 < new Date().getTime()) {
-                            speechRecognition.stop();
-                            clearInterval(checkForSpeech);
-                        }
-                    }, 500);
-
-                speechRecognition.continuous = true;
-                speechRecognition.interimResults = true;
-
-                speechRecognition.onresult = function (event) {
-                    var mostConfidentResult;
-
-                    _.each(event.results, function (results) {
-                        _.each(results, function (result) {
-                            if (!mostConfidentResult || mostConfidentResult.confidence <= result.confidence)
-                                mostConfidentResult = result;
-                        });
-                    });
-
-                    var currentTime = new Date().getTime();
-
-                    if (mostConfidentResult && (!recognised || mostConfidentResult != recognised)) {
-                        recognised = mostConfidentResult;
-                        lastResultTime = currentTime;
-                    }
-                };
-
-                speechRecognition.onend = function () {
-                    self.trigger('resume');
-                    if (recognised) api.sendChatMessage(recognised.transcript);
-                };
-
-                speechRecognition.start();
-            }
         });
         Entities.NodeCollection = Backbone.Collection.extend({
             model: Entities.Node,

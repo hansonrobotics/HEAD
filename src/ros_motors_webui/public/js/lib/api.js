@@ -7,7 +7,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.expression.publish(
                 new ROSLIB.Message({
                     exprname: name,
-                    intensity: intensity
+                    intensity: parseFloat(intensity)
                 })
             );
         },
@@ -280,6 +280,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                     return 0;
                 });
                 api.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/" + api.config.robot + "/cmd_neck_pau"}), function () {
+                    return 0;
+                });
+            },
+            disableFace: function () {
+                api.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/" + api.config.robot + "/no_pau"}), function () {
                     return 0;
                 });
             }

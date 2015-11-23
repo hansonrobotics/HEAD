@@ -1,6 +1,12 @@
 /src/CMakeLists.txt
 !.gitignore
 !/src
+*.pyc
+*.sublime-project
+*.sublime-workspace
+*.blend?
+*.blend??
+.DS_Store
 devel
 build
 .idea
