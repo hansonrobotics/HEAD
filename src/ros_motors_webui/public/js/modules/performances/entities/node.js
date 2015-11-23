@@ -24,12 +24,19 @@ define(['application', 'lib/api'], function (App, api) {
                     case 'pause':
                         this.trigger('pause');
                         break;
+                    case 'expression':
+                        api.blenderMode.disableFace();
+                        api.setExpression(this.get('expression'), this.get('magnitude'));
+                        break;
                 }
             },
             finish: function(){
                 switch (this.get('name')) {
                      case 'interaction':
                         api.disableInteractionMode();
+                        break;
+                     case 'expression':
+                        api.blenderMode.enable();
                         break;
                 }
             },

@@ -8,6 +8,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     magnitudeSlider: '.app-magnitide-slider',
                     emotionSelect: 'select.app-emotion-select',
                     gestureSelect: 'select.app-gesture-select',
+                    expressionSelect: 'select.app-expression-select',
                     textInput: '.app-node-text',
                     startTime: '.app-node-start-time',
                     duration: '.app-node-duration',
@@ -24,12 +25,13 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     'change @ui.textInput': 'setTextDuration',
                     'change @ui.emotionSelect': 'setEmotion',
                     'change @ui.gestureSelect': 'setGesture',
+                    'change @ui.expressionSelect': 'setExpression',
                     'click @ui.deleteButton': 'deleteNode'
                 },
                 onRender: function () {
                     var self = this;
 
-                    if (_.contains(['emotion', 'gesture'], this.model.get('name'))) {
+                    if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
                         // set default
                         if (!this.model.get('magnitude'))
                             this.model.set('magnitude', 1);
@@ -64,6 +66,22 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                                     $(self.ui.emotionSelect).val(self.model.get('emotion'));
 
                                 $(self.ui.emotionSelect).select2();
+                            });
+                            break;
+                        case 'expression':
+                            // load emotions
+                            api.expressionList(function (expressions) {
+                                _.each(expressions.exprnames, function (expr) {
+                                    $(self.ui.expressionSelect).append($('<option>').prop('value', expr).html(expr));
+                                });
+
+                                if (!self.model.get('expression') && expressions.length > 0)
+                                    self.model.set('expression', emotions[0]);
+
+                                if (self.model.get('expression'))
+                                    $(self.ui.expressionSelect).val(self.model.get('expression'));
+
+                                $(self.ui.expressionSelect).select2();
                             });
                             break;
                         case 'gesture':
@@ -126,6 +144,9 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 },
                 setEmotion: function () {
                     this.model.set('emotion', this.ui.emotionSelect.val());
+                },
+                setExpression: function () {
+                    this.model.set('expression', this.ui.expressionSelect.val());
                 },
                 setGesture: function () {
                     this.model.set('gesture', this.ui.gestureSelect.val());
