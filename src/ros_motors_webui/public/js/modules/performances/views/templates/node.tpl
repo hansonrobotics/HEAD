@@ -10,7 +10,7 @@
             <div class="input-group-addon">s</div>
         </div>
     </div>
-    <% if (name == 'emotion' || name == 'interaction') { %>
+    <% if (name == 'emotion' || name == 'interaction' || name == 'expression') { %>
         <div class="col-sm-2">
             <label>Duration</label>
 
@@ -37,8 +37,13 @@
             <select class="app-gesture-select"></select>
         </div>
     <% } %>
-
-    <% if (name == 'emotion' || name == 'gesture') { %>
+    <% if (name == 'expression') { %>
+        <div class="col-sm-2">
+            <label title="Expression">Expression</label>
+            <select class="app-expression-select"></select>
+        </div>
+    <% } %>
+    <% if (name == 'emotion' || name == 'gesture' || name == 'expression') { %>
         <div class="col-sm-3">
             <label title="Magnitude">Magnitude <span class="app-magnitude-label pull-right label label-default"></span></label>
 
