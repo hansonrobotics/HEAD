@@ -250,5 +250,5 @@ class EvaAPI(RigAPI):
         else:
             frame_range = bpy.data.actions[animation].frame_range
             frames = 1+frame_range[1]-frame_range[0]
-            return frames / 24.0
+            return frames / bpy.context.scene.render.fps
 
