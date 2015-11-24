@@ -36,7 +36,8 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                         api.disableInteractionMode();
                         break;
                      case 'expression':
-                        api.blenderMode.enable();
+                        api.setExpression(this.get('expression'), 0.01);
+                        setTimeout(api.blenderMode.enable,1000);
                         break;
                 }
             },
