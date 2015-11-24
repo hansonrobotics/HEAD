@@ -16,16 +16,19 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     deleteButton: '.app-delete-node-button',
                     speedSlider: '.app-speed-slider',
                     speedLabel: '.app-speed-label',
-                    magnitudeLabel: '.app-magnitude-label'
+                    magnitudeLabel: '.app-magnitude-label',
+                    langSelect: 'select.app-lang-select'
                 },
                 events: {
                     'change @ui.duration': 'setDuration',
                     'change @ui.startTime': 'setStartTime',
                     'keyup @ui.textInput': 'setText',
                     'change @ui.textInput': 'setTextDuration',
+                    'change @ui.langSelect': 'setLanguage',
                     'change @ui.emotionSelect': 'setEmotion',
                     'change @ui.gestureSelect': 'setGesture',
                     'change @ui.expressionSelect': 'setExpression',
+                    'change @ui.expressionSelect': 'setLanguage',
                     'click @ui.deleteButton': 'deleteNode'
                 },
                 onRender: function () {
@@ -127,6 +130,10 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             break;
                         case 'speech':
                             if (this.model.get('text')) this.ui.textInput.val(this.model.get('text'));
+                            if (!this.model.get('lang'))
+                                this.model.set('lang', 'en');
+                            this.ui.langSelect.val(this.model.get('lang'));
+                            $(self.ui.langSelect).select2();
                             break;
                     }
                 },
@@ -135,6 +142,9 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 },
                 setText: function () {
                     this.model.set('text', this.ui.textInput.val());
+                },
+                setLanguage: function () {
+                    this.model.set('lang', this.ui.langSelect.val());
                 },
                 setTextDuration: function () {
                     var self = this;

@@ -12,7 +12,7 @@ class MotorCmder:
     # Default values are set here, if speed or acceleration are not found in
     # the motor entry.
     if 'speed' in self.motor_entry.keys():
-        msg.speed = self.motor_entry['speed'] / 2.0
+        msg.speed = self.motor_entry['speed'] / 10.0
     else:
         msg.speed = 2
     if 'acceleration' in self.motor_entry.keys():

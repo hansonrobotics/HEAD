@@ -133,6 +133,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                     $(node.get('el')).html(node.get('emotion'));
                 else if (node.get('gesture'))
                     $(node.get('el')).html(node.get('gesture'));
+                else if (node.get('expression'))
+                    $(node.get('el')).html(node.get('expression'));
             },
             addNode: function (node) {
                 this.createNodeEl(node);

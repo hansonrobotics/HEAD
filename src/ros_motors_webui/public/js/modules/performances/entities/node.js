@@ -16,7 +16,8 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                         api.setGazeTarget(1, this.get('x'), -this.get('y'));
                         break;
                     case 'speech':
-                        api.robotSpeech(this.get('text'));
+                        console.log()
+                        api.robotSpeech(this.get('text'), this.get('lang'));
                         break;
                     case 'interaction':
                         api.enableInteractionMode();
@@ -25,8 +26,12 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                         this.trigger('pause');
                         break;
                     case 'expression':
+                        var self = this;
                         api.blenderMode.disableFace();
-                        api.setExpression(this.get('expression'), this.get('magnitude'));
+                        // Wait for blender to disable faces
+                        setTimeout(function(){
+                            api.setExpression(self.get('expression'), self.get('magnitude'));
+                        },50);
                         break;
                 }
             },
@@ -36,7 +41,8 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                         api.disableInteractionMode();
                         break;
                      case 'expression':
-                        api.blenderMode.enable();
+                        api.setExpression(this.get('expression'), 0.01);
+                        setTimeout(api.blenderMode.enable,1000);
                         break;
                 }
             },

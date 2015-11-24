@@ -50,9 +50,15 @@
             <div class="app-magnitide-slider"></div>
         </div>
     <% } %>
-
     <% if (name == 'speech') { %>
-        <div class="col-sm-8">
+        <div class="col-sm-2">
+            <label title="Language">Language</label>
+            <select class="app-lang-select">
+                <option value="en">English</option>
+                <option value="zh">Mandarin</option>
+            </select>
+        </div>
+        <div class="col-sm-6">
             <label title="Text">Text</label>
             <textarea class="app-node-text form-control" title="Text"></textarea>
         </div>
