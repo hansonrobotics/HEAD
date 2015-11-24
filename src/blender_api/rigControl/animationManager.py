@@ -35,6 +35,7 @@ class AnimationManager():
         # Start default cycles
         self.setCycle('CYC-normal', rate=1.0, magnitude=1.0, ease_in=0.0)
         self.setCycle('CYC-breathing', rate=1.0, magnitude=1.0, ease_in=0.0)
+        self.setCycle('CYC-normal-saccades', rate=1.0, magnitude=1.0, ease_in=0.0)
 
 
         # Scale for Blender coordinates 1 BU in m.
