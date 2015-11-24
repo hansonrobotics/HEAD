@@ -259,8 +259,13 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 })
             );
         },
-        robotSpeech: function (text) {
-            api.topics.chatbot_responses.publish(
+        robotSpeech: function (text, lang) {
+            if (!lang){
+                topic = api.topics.chatbot_responses;
+            }else{
+                topic = api.topics.tts[lang];
+            }
+            topic.publish(
                 new ROSLIB.Message({
                     data: text
                 })

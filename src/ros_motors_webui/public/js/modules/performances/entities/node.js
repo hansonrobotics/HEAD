@@ -16,7 +16,8 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                         api.setGazeTarget(1, this.get('x'), -this.get('y'));
                         break;
                     case 'speech':
-                        api.robotSpeech(this.get('text'));
+                        console.log()
+                        api.robotSpeech(this.get('text'), this.get('lang'));
                         break;
                     case 'interaction':
                         api.enableInteractionMode();
