@@ -290,10 +290,14 @@ class Tree():
         # ID's of faces newly seen, or lost. Integer ID.
         self.blackboard["new_face"] = 0
         self.blackboard["lost_face"] = 0
+        # IDs of faces that start or stop talking
+        self.blackboard["new_talking_face"] = 0
         # IDs of faces in the scene, updated once per cycle
         self.blackboard["face_targets"] = []
+        self.blackboard["talking_faces"] = []
         # IDs of faces in the scene, updated immediately
         self.blackboard["background_face_targets"] = []
+        self.blackboard["background_talking_faces"] = []
         self.blackboard["current_glance_target"] = 0
         self.blackboard["current_face_target"] = 0
         self.blackboard["new_look_at_face"] = 0
@@ -665,6 +669,7 @@ class Tree():
     @owyl.taskmethod
     def sync_variables(self, **kwargs):
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
+        self.blackboard["talking_faces"] = self.blackboard["background_talking_faces"]
         yield True
 
     @owyl.taskmethod
