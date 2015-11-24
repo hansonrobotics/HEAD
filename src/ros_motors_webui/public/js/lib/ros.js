@@ -186,7 +186,7 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 get_animation_length: new ROSLIB.Service({
                     ros: api.ros,
                     name: '/blender_api/get_animation_length',
-                    messageType: '﻿blender_api_msgs/GetAnimationLength'
+                    messageType: 'blender_api_msgs/GetAnimationLength'
                 })
             };
         },

@@ -92,6 +92,10 @@ body {
 .app-language-select-container {
     width: 75px;
     height: 30px;
+    position: absolute;
+    z-index: 9999999;
+    right: 15px;
+    top: 0;
 }
 
 .app-language-select {

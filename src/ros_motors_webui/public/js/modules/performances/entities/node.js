@@ -2,6 +2,7 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
     App.module('Performances.Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Node = Backbone.Model.extend({
             call: function () {
+                var self = this;
                 switch (this.get('name')) {
                     case 'gesture':
                         api.setGesture(this.get('gesture'), 1, this.get('speed'), this.get('magnitude'));
@@ -52,7 +53,7 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                     $(this.get('el')).remove();
 
                 Backbone.Model.prototype.destroy.call(this);
-            },
+            }
         });
         Entities.NodeCollection = Backbone.Collection.extend({
             model: Entities.Node,
