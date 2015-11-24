@@ -531,6 +531,26 @@ class Tree():
         tree = owyl.sequence(
             self.is_face_target(),
             owyl.selector(
+                ##### Keep Interact With The Only Talking Person #####
+                owyl.sequence(
+                    self.is_someone_talking(),
+                    # If there is only one person talking, reset the timer and keep interacting with that person
+                    self.is_only_one_person_talking(),
+                    owyl.selector(
+                        owyl.sequence(
+                            self.is_a_new_talking_face(),
+                            self.assign_face_target(variable="current_face_target", value="new_talking_face")
+                        ),
+                        owyl.succeed()
+                    ),
+                    self.record_start_time(variable="interact_with_face_target_since"),
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking"),
+
+                    # Returns "fail" here, so that rest of the tree will still be ran for target
+                    # switching/glancing/quick-looking etc.
+                    owyl.fail()
+                ),
+
                 ##### Start A New Interaction #####
                 owyl.sequence(
                     owyl.selector(
@@ -552,8 +572,18 @@ class Tree():
                         owyl.sequence(
                             self.is_more_than_one_face_target(),
                             self.dice_roll(event="group_interaction"),
-                            self.select_a_glance_target(),
-                            self.glance_at(id="current_glance_target", trigger="people_in_scene")
+                            owyl.selector(
+                                # If someone is talking, quickly look at someone else in the scene
+                                owyl.sequence(
+                                    self.is_someone_talking(),
+                                    self.select_a_quick_look_target(),
+                                    self.quick_look_at(id="current_quick_look_target", trigger="someone_is_talking")
+                                ),
+                                owyl.sequence(
+                                    self.select_a_glance_target(),
+                                    self.glance_at(id="current_glance_target", trigger="people_in_scene")
+                                )
+                            )
                         ),
                         owyl.succeed()
                     ),
@@ -850,6 +880,9 @@ class Tree():
 
     @owyl.taskmethod
     def select_a_face_target(self, **kwargs):
+        # Select those who are talking at the moment, if any
+        if self.blackboard["talking_faces"].size() > 1:
+            self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["talking_faces"])
         self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"])
         yield True
 
