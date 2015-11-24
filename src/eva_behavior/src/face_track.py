@@ -196,6 +196,15 @@ class FaceTrack:
         self.blackboard["new_face"] = faceid
         self.blackboard["background_face_targets"].append(faceid)
 
+    # Add a talking face to Owyl blackboard.
+    def add_talking_face_to_bb(self, faceid):
+        if faceid in self.blackboard["background_talking_faces"]:
+            return
+
+        self.blackboard["is_interruption"] = True
+        self.blackboard["new_talking_face"] = faceid
+        self.blackboard["background_talking_faces"].append(faceid)
+
     # Remove a face from the Owyl blackboard.
     def remove_face_from_bb(self, fid):
 
@@ -211,6 +220,18 @@ class FaceTrack:
         if self.blackboard["new_face"] == fid :
             self.blackboard["new_face"] = ""
 
+    # Remove a talking face from the Owyl blackboard.
+    def remove_talking_face_from_bb(self, faceid):
+        if faceid not in self.blackboard["background_talking_faces"]:
+            return
+
+        self.blackboard["background_talking_faces"].remove(faceid)
+
+        # If the robot lost the new talking face during the initial
+        # interaction, reset new_talking_face variable
+        if self.blackboard["new_talking_face"] == faceid:
+            self.blackboard["new_talking_face"] = ""
+
     # Start tracking a face
     def add_face(self, faceid):
         if faceid in self.visible_faces:
@@ -223,6 +244,14 @@ class FaceTrack:
 
         self.add_face_to_bb(faceid)
 
+    # Start tracking a talking face
+    def add_talking_face(self, faceid):
+        # Add to visible_faces, just in case it is not there
+        if faceid not in self.visible_faces:
+            self.add_face(faceid)
+
+        self.add_talking_face_to_bb(faceid)
+
     # Stop tracking a face
     def remove_face(self, faceid):
         self.remove_face_from_bb(faceid)
@@ -231,6 +260,9 @@ class FaceTrack:
 
         logger.info("Lost face; visibile faces now: " + str(self.visible_faces))
 
+    # Stop tracking a talking face
+    def remove_talking_face(self, faceid):
+        self.remove_face_from_bb(faceid)
 
 
     # ----------------------------------------------------------
@@ -368,6 +400,11 @@ class FaceTrack:
             self.blackboard['new_look_at_face'] = data.face_id
             self.blackboard['is_interruption'] = True
 
+        elif data.face_event == self.EVENT_NEW_TALKING_FACE:
+            self.add_talking_face(data.face_id)
+
+        elif data.face_event == self.EVENT_LOST_TALKING_FACE:
+            self.remove_talking_face(data.face_id)
 
     # pi_vision ROS callback, called when pi_vision has new face
     # location data for us. Because this happens frequently (10x/second)
