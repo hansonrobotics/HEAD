@@ -220,6 +220,8 @@ class Tree():
         self.blackboard["glance_probability_for_lost_faces"] = config.getfloat("interaction", "glance_probability_for_lost_faces")
         self.blackboard["z_pitch_eyes"] = config.getfloat("interaction", "z_pitch_eyes")
         self.blackboard["max_glance_distance"] = config.getfloat("interaction", "max_glance_distance")
+        self.blackboard["min_quick_look_duration"] = config.getfloat("interaction", "min_quick_look_duration")
+        self.blackboard["max_quick_look_duration"] = config.getfloat("interaction", "max_quick_look_duration")
         self.blackboard["face_study_probabilities"] = config.getfloat("interaction", "face_study_probabilities")
         self.blackboard["face_study_duration_min"] = config.getfloat("interaction", "face_study_duration_min")
         self.blackboard["face_study_duration_max"] = config.getfloat("interaction", "face_study_duration_max")
@@ -539,7 +541,8 @@ class Tree():
                     owyl.selector(
                         owyl.sequence(
                             self.is_a_new_talking_face(),
-                            self.assign_face_target(variable="current_face_target", value="new_talking_face")
+                            self.assign_face_target(variable="current_face_target", value="new_talking_face"),
+                            self.clear_new_talking_face()
                         ),
                         owyl.succeed()
                     ),
@@ -571,6 +574,7 @@ class Tree():
                     owyl.selector(
                         owyl.sequence(
                             self.is_more_than_one_face_target(),
+                            # TODO: Maybe to define a new event for the someone is talking case
                             self.dice_roll(event="group_interaction"),
                             owyl.selector(
                                 # If someone is talking, quickly look at someone else in the scene
@@ -782,6 +786,13 @@ class Tree():
             yield False
 
     @owyl.taskmethod
+    def is_a_new_talking_face(self, **kwargs):
+        if self.blackboard["new_talking_face"] > 0:
+            yield True
+        else
+            yield False
+
+    @owyl.taskmethod
     def is_interacting_with_someone(self, **kwargs):
         if self.blackboard["current_face_target"]:
             "----- Is Interacting With Someone!"
@@ -822,10 +833,24 @@ class Tree():
             yield False
 
     @owyl.taskmethod
+    def is_someone_talking(self, **kwargs):
+        if len(self.blackboard["talking_faces"]) > 0:
+            yield True
+        else
+            yield False
+
+    @owyl.taskmethod
     def is_more_than_one_face_target(self, **kwargs):
         if len(self.blackboard["face_targets"]) > 1:
             yield True
         else:
+            yield False
+
+    @owyl.taskmethod
+    def is_only_one_person_talking(self, **kwargs):
+        if len(self.blackboard["talking_faces"]) == 1:
+            yield True
+        else
             yield False
 
     @owyl.taskmethod
@@ -892,8 +917,25 @@ class Tree():
         yield True
 
     @owyl.taskmethod
+    def select_a_quick_look_target(self, **kwargs):
+        self.blackboard["current_quick_look_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"], self.blackboard["current_face_target"])
+        yield True
+
+    @owyl.taskmethod
     def record_start_time(self, **kwargs):
         self.blackboard[kwargs["variable"]] = time.time()
+        yield True
+
+    @owyl.taskmethod
+    def quick_look_at(self, **kwargs):
+        face_id = self.blackboard[kwargs["id"]]
+        trigger = kwargs["trigger"]
+        self.facetrack.look_at_face(face_id)
+        self.write_log("quick_look_at_" + str(face_id), time.time(), trigger)
+
+        interval = 0.01
+        duration = random.uniform(self.blackboard["min_quick_look_duration"], self.blackboard["max_quick_look_duration"])
+        self.break_if_interruptions(interval, duration)
         yield True
 
     @owyl.taskmethod
@@ -1133,6 +1175,11 @@ class Tree():
     def clear_lost_face_target(self, **kwargs):
         print "----- Cleared lost face: " + str(self.blackboard["lost_face"])
         self.blackboard["lost_face"] = 0
+        yield True
+
+    @owyl.taskmethod
+    def clear_new_talking_face(self, **kwargs):
+        self.blackboard["new_talking_face"] = 0
         yield True
 
     # This avoids burning CPU time when the behavior system is off.
