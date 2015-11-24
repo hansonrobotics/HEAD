@@ -225,7 +225,7 @@ class CommandWrappers:
         try:
             api.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
         except TypeError:
-            logger.error('unknown gesture:', msg.name);
+            logger.error('Unknown gesture: {}'.format(msg.name))
 
 
     # Visemes --------------------------------------
@@ -240,7 +240,7 @@ class CommandWrappers:
                 msg.duration.to_sec(),
                 msg.rampin, msg.rampout, msg.magnitude)
         except TypeError:
-            logger.error('unknown viseme:', msg.name);
+            logger.error('Unknown viseme: {}'.format(msg.name))
 
 
     # Look-at and turn-to-face targets ---------------------

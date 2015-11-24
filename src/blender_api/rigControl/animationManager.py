@@ -172,7 +172,7 @@ class AnimationManager():
             try:
                 control = self.bones['EMO-'+emotionName]
             except KeyError:
-                logger.error('Cannot set emotion. No bone with name ', emotionName)
+                logger.error('Cannot set emotion. No bone with name {}'.format(emotionName))
                 continue
             else:
                 found = False
