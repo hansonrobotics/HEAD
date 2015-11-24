@@ -25,8 +25,12 @@ define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, Web
                         this.trigger('pause');
                         break;
                     case 'expression':
+                        var self = this;
                         api.blenderMode.disableFace();
-                        api.setExpression(this.get('expression'), this.get('magnitude'));
+                        // Wait for blender to disable faces
+                        setTimeout(function(){
+                            api.setExpression(self.get('expression'), self.get('magnitude'));
+                        },50);
                         break;
                 }
             },
