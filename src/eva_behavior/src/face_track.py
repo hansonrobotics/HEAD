@@ -93,6 +93,8 @@ class FaceTrack:
         self.EVENT_LOST_FACE = "lost_face"
         # Overrides current face beeiing tracked by WebUI
         self.EVENT_TRACK_FACE = "track_face"
+        self.EVENT_NEW_TALKING_FACE = "new_talking_face"
+        self.EVENT_LOST_TALKING_FACE = "lost_talking_face"
 
         # Publishes the current tracked face
         self.TOPIC_LOOK_AT_FACE = "look_at_face"
@@ -226,11 +228,6 @@ class FaceTrack:
             return
 
         self.blackboard["background_talking_faces"].remove(faceid)
-
-        # If the robot lost the new talking face during the initial
-        # interaction, reset new_talking_face variable
-        if self.blackboard["new_talking_face"] == faceid:
-            self.blackboard["new_talking_face"] = ""
 
     # Start tracking a face
     def add_face(self, faceid):
