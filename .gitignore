@@ -1,7 +1,6 @@
 /src/CMakeLists.txt
 !.gitignore
 !/src
-*.pyc
 *.sublime-project
 *.sublime-workspace
 *.blend?

@@ -26,21 +26,23 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     'click @ui.recordButton': 'toggleSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked',
-                    'click @ui.languageButton': 'changeLanguage'
+                    'click @ui.languageButton': 'languageButtonClick'
                 },
                 initialize: function () {
                     self = this;
                     api.enableInteractionMode();
                     api.topics.chat_responses.subscribe(this.responseCallback);
                     api.topics.speech_active.subscribe(this.speechActiveCallback);
+                    api.topics.speech_topic.subscribe(this.voiceRecognised);
+
                     this.speechPaused = false
                 },
                 onDestroy: function () {
                     this.options.faceCollection.unsubscribe();
                     api.topics.chat_responses.unsubscribe(this.responseCallback);
                     api.topics.speech_active.unsubscribe(this.speechActiveCallback);
-                    this.disableWebspeech();
-                    this.disableAudioRecording();
+                    api.topics.speech_topic.unsubscribe(this.voiceRecognised);
+                    this.disableRecording();
                 },
                 updateFaces: function () {
                     var currentTime = new Date().getTime();
@@ -118,6 +120,11 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         self.ui.messages.css('margin-bottom', self.ui.footer.height());
                         self.scrollToChatBottom();
                     });
+
+                    // set current language
+                    api.getRobotLang(function (language) {
+                        self.changeLanguage(language);
+                    })
                 },
                 responseCallback: function (msg) {
                     self.collection.add({author: 'Robot', message: msg.data});
@@ -126,32 +133,10 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     if (self.speechEnabled) {
                         if (msg.data == 'start') {
                             self.speechPaused = true;
-                            self.disableSpeech();
+                            self.disableRecording();
                         }
                     } else if ((msg.data != 'start') && self.speechPaused) {
-                        self.enableSpeech()
-                    }
-                },
-                enableSpeech: function () {
-                    if (!this.speechEnabled) {
-                        switch (this.language) {
-                            case 'en':
-                                this.enableWebspeech();
-                                break;
-                            case 'zh':
-                                this.enableAudioRecording();
-                        }
-                    }
-                },
-                disableSpeech: function () {
-                    if (this.speechEnabled) {
-                        switch (this.language) {
-                            case 'en':
-                                this.pauseWebspeech();
-                                break;
-                            case 'zh':
-                                this.disableAudioRecording();
-                        }
+                        self.enableRecording()
                     }
                 },
                 onSpeechEnabled: function () {
@@ -180,9 +165,9 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         }
                     }
                     if (this.speechEnabled) {
-                        this.disableSpeech(e);
+                        this.disableRecording(e);
                     } else {
-                        this.enableSpeech(e);
+                        this.enableRecording(e);
                     }
                 },
                 messageKeyUp: function (e) {
@@ -192,10 +177,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 sendClicked: function () {
                     var message = this.ui.messageInput.val();
 
-                    if (message != '') {
-                        this.collection.add({author: 'Me', message: message});
-                        api.sendChatMessage(message);
-                    }
+                    if (message != '') api.sendChatMessage(message);
 
                     this.ui.messageInput.val('');
                 },
@@ -214,157 +196,46 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         });
                     self.scrolling = true;
                 },
-                sendMessage: function (message) {
-                    self.collection.add({author: 'Me', message: message});
-
-                    var chat_message = new ROSLIB.Message({
-                        utterance: message,
-                        confidence: 99
-                    });
-
-                    api.topics.speech_topic.publish(chat_message);
+                voiceRecognised: function (message) {
+                    self.collection.add({author: 'Me', message: message.utterance});
                 },
-                hello: function () {
-                    self.sendMessage('hello');
-                },
-                bye: function () {
-                    self.sendMessage('bye');
-                },
-                enableWebspeech: function () {
-                    if (!this.speechRecognition) {
-                        var mostConfidentResult = null;
-                        if ('webkitSpeechRecognition' in window) {
-                            this.speechRecognition = new webkitSpeechRecognition();
-                        } else if ('SpeechRecognition' in window) {
-                            this.speechRecognition = new SpeechRecognition();
-                        } else {
-                            console.log('webspeech api not supported');
-                            this.speechRecognition = null;
-                        }
-
-                        this.speechRecognition.interimResults = true;
-                        this.speechRecognition.continuous = true;
-
-                        this.speechRecognition.onstart = function () {
-                            console.log('starting webspeech');
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'start'}));
-                            self.onSpeechEnabled();
-                        };
-                        this.speechRecognition.onspeechstart = function () {
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechstart'}));
-                        };
-                        this.speechRecognition.onspeechend = function () {
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechend'}));
-                        };
-                        this.speechRecognition.onresult = function (event) {
-                            _.each(event.results, function (results) {
-                                _.each(results, function (result) {
-                                    if (!mostConfidentResult || mostConfidentResult.confidence <= result.confidence)
-                                        mostConfidentResult = result;
-                                });
-                            });
-                        };
-
-                        this.speechRecognition.onerror = function (event) {
-                            console.log('error recognising speech');
-                            console.log(event);
-                            self.onSpeechDisabled();
-                        };
-                        this.speechRecognition.onend = function () {
-                            console.log('end of speech');
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
-                            self.onSpeechDisabled();
-                            if (mostConfidentResult && mostConfidentResult.confidence > 0.5)
-                                self.sendMessage(mostConfidentResult.transcript);
-
-                            mostConfidentResult = null;
-                        };
-                    }
-
-                    if (this.speechRecognition && !this.speechEnabled)
-                        this.speechRecognition.start();
-
-                    return this.speechRecognition;
-                },
-                pauseWebspeech: function () {
-                    if (this.speechRecognition)
-                        this.speechRecognition.stop();
-                },
-                disableWebspeech: function () {
-                    if (this.speechRecognition) {
-                        this.speechRecognition.abort();
-                        this.speechRecognition = null;
-                    }
-                },
-                enableAudioRecording: function () {
-                    var session = {
-                        audio: true
-                    }, onError = function () {
-                        console.log('error recording');
-                        self.onSpeechDisabled();
-                    };
-
-                    this.recordRTC = null;
-                    navigator.getUserMedia(session, function (mediaStream) {
+                enableRecording: function () {
+                    api.enableRecording(function () {
                         self.onSpeechEnabled();
-
-                        self.recordRTC = RecordRTC(mediaStream, {
-                            type: 'audio',
-                            sampleRate: '44100',
-                            numberOfAudioChannels: 1
-                        });
-                        self.recordRTC.startRecording();
-                    }, onError);
+                    }, function () {
+                        console.log('error enabling recording')
+                    });
                 },
-                disableAudioRecording: function () {
-                    if (this.recordRTC)
-                        this.recordRTC.stopRecording(function () {
-                            self.onSpeechDisabled();
-
-                            var formData = new FormData();
-                            formData.append('audio', self.recordRTC.getBlob());
-
-                            $.ajax({
-                                type: 'POST',
-                                url: '/chat_audio',
-                                data: formData,
-                                contentType: false,
-                                cache: false,
-                                processData: false
-                            }).done(function (res) {
-                                if (res.success == true) {
-                                    api.topics.voice.publish(new ROSLIB.Message({data: res.filename}))
-                                } else {
-                                    console.log("Error while saving file")
-                                }
-                            });
-                        });
+                disableRecording: function () {
+                    api.disableRecording(function () {
+                        self.onSpeechDisabled();
+                    }, function () {
+                        console.log('error occurred while to disabling recording')
+                    });
                 },
-                language: 'en',
-                changeLanguage: function (e) {
+                languageButtonClick: function (e) {
                     var language = $(e.target).data('lang');
+                    this.changeLanguage(language);
+                },
+                changeLanguage: function (language) {
+                    if (this.language == language) return;
+                    if (this.speechEnabled) this.disableRecording();
 
                     this.changeMessageLanguage(language);
-                    this.disableSpeech();
-
                     this.language = language;
+
                     this.ui.languageButton.removeClass('active');
-                    $(e.target).addClass('active');
+                    $('[data-lang="' + language + '"]', this.el).addClass('active');
 
                     api.setRobotLang(this.language);
                 },
                 changeMessageLanguage: function (language) {
-                    if (this.language == language) return;
+                    if (!self.messages) self.messages = {};
 
-                    if (!this.messages)
-                        this.messages = {};
+                    self.messages[self.language] = self.collection.clone();
+                    self.collection.reset();
 
-                    this.messages[this.language] = this.collection.clone();
-
-                    this.collection.reset();
-                    if (this.messages[language])
-                        this.collection.add(this.messages[language].models);
+                    if (self.messages[language]) self.collection.add(self.messages[language].models);
                 }
             });
         });
