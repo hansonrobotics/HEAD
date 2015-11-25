@@ -535,7 +535,7 @@ class Tree():
         tree = owyl.sequence(
             self.is_face_target(),
             owyl.selector(
-                ##### Keep Interact With The Only Talking Person #####
+                ##### Keep Interacting With The Only Talking Person #####
                 owyl.sequence(
                     self.is_someone_talking(),
                     # If there is only one person talking, reset the timer and keep interacting with that person

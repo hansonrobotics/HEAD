@@ -93,8 +93,8 @@ class FaceTrack:
         self.EVENT_LOST_FACE = "lost_face"
         # Overrides current face beeiing tracked by WebUI
         self.EVENT_TRACK_FACE = "track_face"
-        self.EVENT_NEW_TALKING_FACE = "new_talking_face"
-        self.EVENT_LOST_TALKING_FACE = "lost_talking_face"
+        self.EVENT_START_TALKING = "start_talking"
+        self.EVENT_STOP_TALKING = "stop_talking"
 
         # Publishes the current tracked face
         self.TOPIC_LOOK_AT_FACE = "look_at_face"
@@ -397,10 +397,10 @@ class FaceTrack:
             self.blackboard['new_look_at_face'] = data.face_id
             self.blackboard['is_interruption'] = True
 
-        elif data.face_event == self.EVENT_NEW_TALKING_FACE:
+        elif data.face_event == self.EVENT_START_TALKING:
             self.add_talking_face(data.face_id)
 
-        elif data.face_event == self.EVENT_LOST_TALKING_FACE:
+        elif data.face_event == self.EVENT_STOP_TALKING:
             self.remove_talking_face(data.face_id)
 
     # pi_vision ROS callback, called when pi_vision has new face
