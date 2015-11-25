@@ -789,7 +789,7 @@ class Tree():
     def is_a_new_talking_face(self, **kwargs):
         if self.blackboard["new_talking_face"] > 0:
             yield True
-        else
+        else:
             yield False
 
     @owyl.taskmethod
@@ -836,7 +836,7 @@ class Tree():
     def is_someone_talking(self, **kwargs):
         if len(self.blackboard["talking_faces"]) > 0:
             yield True
-        else
+        else:
             yield False
 
     @owyl.taskmethod
@@ -850,7 +850,7 @@ class Tree():
     def is_only_one_person_talking(self, **kwargs):
         if len(self.blackboard["talking_faces"]) == 1:
             yield True
-        else
+        else:
             yield False
 
     @owyl.taskmethod
@@ -906,7 +906,7 @@ class Tree():
     @owyl.taskmethod
     def select_a_face_target(self, **kwargs):
         # Select those who are talking at the moment, if any
-        if self.blackboard["talking_faces"].size() > 1:
+        if len(self.blackboard["talking_faces"]) > 1:
             self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["talking_faces"])
         self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"])
         yield True
