@@ -371,8 +371,8 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             var cmd = new ROSLIB.Message({data: script})
             api.topics.execute_scripts.publish(cmd)
         },
-        getTtsLength: function (text, success) {
-            api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text}), success, function (error) {
+        getTtsLength: function (text, lang, success) {
+            api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text, lang: lang}), success, function (error) {
                 console.log(error);
             });
         },

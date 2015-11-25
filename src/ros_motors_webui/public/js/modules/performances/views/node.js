@@ -148,7 +148,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 },
                 setTextDuration: function () {
                     var self = this;
-                    api.getTtsLength(this.ui.textInput.val(), function (response) {
+                    api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function (response) {
                         self.model.set('duration', response.length);
                     });
                 },
