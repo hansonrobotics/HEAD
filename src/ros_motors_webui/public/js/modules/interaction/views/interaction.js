@@ -32,7 +32,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     self = this;
                     api.enableInteractionMode();
                     api.topics.chat_responses.subscribe(this.responseCallback);
-                    api.topics.speech_active.subscribe(this.speechActiveCallback);
+                    /* api.topics.speech_active.subscribe(this.speechActiveCallback); */
                     api.topics.speech_topic.subscribe(this.voiceRecognised);
 
                     this.speechPaused = false
@@ -40,7 +40,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 onDestroy: function () {
                     this.options.faceCollection.unsubscribe();
                     api.topics.chat_responses.unsubscribe(this.responseCallback);
-                    api.topics.speech_active.unsubscribe(this.speechActiveCallback);
+                    /* api.topics.speech_active.unsubscribe(this.speechActiveCallback); */
                     api.topics.speech_topic.unsubscribe(this.voiceRecognised);
                     this.disableRecording();
                 },
@@ -219,7 +219,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 changeLanguage: function (language) {
                     if (this.language == language) return;
-                    if (this.speechEnabled) this.disableRecording();
+                    /* if (this.speechEnabled) this.disableRecording(); */
 
                     this.changeMessageLanguage(language);
                     this.language = language;
