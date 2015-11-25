@@ -215,6 +215,8 @@ class Tree():
         self.blackboard["max_duration_for_interaction"] = config.getfloat("interaction", "duration_max")
         self.blackboard["time_to_change_face_target_min"] = config.getfloat("interaction", "time_to_change_face_target_min")
         self.blackboard["time_to_change_face_target_max"] = config.getfloat("interaction", "time_to_change_face_target_max")
+        self.blackboard["time_to_change_talking_face_target_min"] = config.getfloat("interaction", "time_to_change_talking_face_target_min")
+        self.blackboard["time_to_change_talking_face_target_max"] = config.getfloat("interaction", "time_to_change_talking_face_target_max")
         self.blackboard["glance_probability"] = config.getfloat("interaction", "glance_probability")
         self.blackboard["glance_probability_for_new_faces"] = config.getfloat("interaction", "glance_probability_for_new_faces")
         self.blackboard["glance_probability_for_lost_faces"] = config.getfloat("interaction", "glance_probability_for_lost_faces")
@@ -560,7 +562,16 @@ class Tree():
                         self.is_not_interacting_with_someone(),
                         owyl.sequence(
                             self.is_more_than_one_face_target(),
-                            self.is_time_to_change_face_target()
+                            owyl.selector(
+                                owyl.sequence(
+                                    self.is_someone_talking(),
+                                    self.is_time_to_change_face_target(min="time_to_change_talking_face_target_min", max="time_to_change_talking_face_target_max")
+                                ),
+                                owyl.sequence(
+                                    self.is_no_one_talking(),
+                                    self.is_time_to_change_face_target(min="time_to_change_face_target_min", max="time_to_change_face_target_max")
+                                )
+                            )
                         )
                     ),
                     self.select_a_face_target(),
@@ -840,6 +851,13 @@ class Tree():
             yield False
 
     @owyl.taskmethod
+    def is_no_one_talking(self, **kwargs):
+        if len(self.blackboard["talking_faces"]) == 0:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
     def is_more_than_one_face_target(self, **kwargs):
         if len(self.blackboard["face_targets"]) > 1:
             yield True
@@ -857,7 +875,7 @@ class Tree():
     def is_time_to_change_face_target(self, **kwargs):
         if self.blackboard["interact_with_face_target_since"] > 0 and \
                 (time.time() - self.blackboard["interact_with_face_target_since"]) >= \
-                        random.uniform(self.blackboard["time_to_change_face_target_min"], self.blackboard["time_to_change_face_target_max"]):
+                        random.uniform(self.blackboard[kwargs["min"]], self.blackboard[kwargs["max"]]):
             print "----- Time to start a new interaction!"
             yield True
         else:
