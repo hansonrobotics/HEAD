@@ -46,8 +46,8 @@ class SpecificRobotCtrl:
   def make_face(self, exprname, intensity=1):
     for cmd in self.faces[exprname].new_msgs(intensity):
         if exprname[:4] == 'vis_':
-          cmd.speed = 0.9
-          cmd.acceleration = 0.5
+          cmd.speed = 0.2
+          cmd.acceleration = 0.1
         self.publisher(cmd)
 
   def publisher(self, cmd):
