@@ -91,3 +91,18 @@
     display: inline-block;
     padding-top: 30px;
 }
+
+
+.app-language-select-container {
+    width: 300px;
+    height: 30px;
+    position: absolute;
+    z-index: 9999999;
+    right: 15px;
+    top: 0;
+}
+
+.app-language-select-container .btn-group {
+    margin: 5px 0 0 5px;
+    float: right;
+}

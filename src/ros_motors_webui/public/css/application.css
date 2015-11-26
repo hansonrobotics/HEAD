@@ -88,17 +88,3 @@ body {
     background-color: #2b3e50;
     border: 1px solid #485563;
 }
-
-.app-language-select-container {
-    width: 75px;
-    height: 30px;
-    position: absolute;
-    z-index: 9999999;
-    right: 15px;
-    top: 0;
-}
-
-.app-language-select {
-    margin-top: 5px;
-    position: fixed;
-}

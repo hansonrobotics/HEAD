@@ -18,7 +18,8 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     faceContainer: '.app-select-person-container',
                     faceCollapse: '.app-face-container',
                     footer: 'footer',
-                    languageButton: '.app-language-select button'
+                    languageButton: '.app-language-select button',
+                    recognitionMethodButton: '.app-recognition-select button'
                 },
                 events: {
                     'touchstart @ui.recordButton': 'toggleSpeech',
@@ -26,7 +27,8 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     'click @ui.recordButton': 'toggleSpeech',
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked',
-                    'click @ui.languageButton': 'languageButtonClick'
+                    'click @ui.languageButton': 'languageButtonClick',
+                    'click @ui.recognitionMethodButton': 'recognitionButtonClick'
                 },
                 initialize: function () {
                     self = this;
@@ -264,8 +266,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 enableWebspeech: function () {
                     if (!this.speechRecognition || !this.speechEnabled) {
-                        var mostConfidentResult = null;
-
                         if ('webkitSpeechRecognition' in window) {
                             this.speechRecognition = new webkitSpeechRecognition();
                         } else if ('SpeechRecognition' in window) {
@@ -276,7 +276,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         }
 
                         this.speechRecognition.lang = this.language == 'zh' ? 'zh-CN' : 'en-US';
-                        this.speechRecognition.interimResults = true;
+                        this.speechRecognition.interimResults = false;
                         this.speechRecognition.continuous = true;
 
                         this.speechRecognition.onstart = function () {
@@ -291,13 +291,15 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                             api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechend'}));
                         };
                         this.speechRecognition.onresult = function (event) {
-                            console.log(event);
-                            _.each(event.results, function (results) {
-                                _.each(results, function (result) {
-                                    if (!mostConfidentResult || mostConfidentResult.confidence <= result.confidence)
-                                        mostConfidentResult = result;
-                                });
+                            var mostConfidentResult = null;
+
+                            _.each(event.results[event.results.length - 1], function (result) {
+                                if ((!mostConfidentResult || mostConfidentResult.confidence <= result.confidence))
+                                    mostConfidentResult = result;
                             });
+
+                            if (mostConfidentResult)
+                                api.sendChatMessage(mostConfidentResult.transcript);
                         };
 
                         this.speechRecognition.onerror = function (event) {
@@ -309,11 +311,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                             console.log('end of speech');
                             api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
                             self.onSpeechDisabled();
-
-                            if (mostConfidentResult && mostConfidentResult.confidence > 0.5)
-                                api.sendChatMessage(mostConfidentResult.transcript);
-
-                            mostConfidentResult = null;
                         };
 
                         this.speechRecognition.start();
@@ -321,9 +318,20 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 disableWebspeech: function () {
                     if (this.speechRecognition) {
-                        this.speechRecognition.abort();
+                        this.speechRecognition.stop();
                         this.speechRecognition = null;
                     }
+                },
+                recognitionButtonClick: function (e) {
+                    this.setRecognitionMethod($(e.target).data('method'));
+                },
+                setRecognitionMethod: function (method) {
+                    this.disableSpeech();
+
+                    this.ui.recognitionMethodButton.removeClass('active');
+                    $('[data-method="' + method + '"]', this.el).addClass('active');
+
+                    api.setRosParam('/' + api.config.robot + '/webui/speech_recognition', method);
                 }
             });
         });
