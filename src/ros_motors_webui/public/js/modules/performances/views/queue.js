@@ -70,7 +70,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 }
 
                 this._setHighlightTimeouts();
-                this.timelinesView.loop();
+                this.timelinesView.run();
             },
             stop: function () {
                 this._clearHighlightIntervals();
