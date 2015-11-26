@@ -125,6 +125,11 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     api.getRobotLang(function (language) {
                         self.changeLanguage(language);
                     });
+
+                    // set current speech recognition method
+                    api.getRosParam('/' + api.config.robot + '/webui/speech_recognition', function (method) {
+                        self.setRecognitionMethod(method);
+                    });
                 },
                 responseCallback: function (msg) {
                     self.collection.add({author: 'Robot', message: msg.data});
@@ -326,11 +331,14 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     this.setRecognitionMethod($(e.target).data('method'));
                 },
                 setRecognitionMethod: function (method) {
+                    // set default
+                    if (! method) method = 'webspeech';
                     this.disableSpeech();
 
                     this.ui.recognitionMethodButton.removeClass('active');
                     $('[data-method="' + method + '"]', this.el).addClass('active');
 
+                    // update param
                     api.setRosParam('/' + api.config.robot + '/webui/speech_recognition', method);
                 }
             });
