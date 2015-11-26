@@ -276,6 +276,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 $(this.ui.runIndicator).stop();
                 this.model.pause();
                 clearInterval(this.loopInterval);
+                clearInterval(this.loopTimeout);
             },
             runClicked: function () {
                 this.stop();
