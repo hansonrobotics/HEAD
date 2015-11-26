@@ -274,6 +274,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         blenderMode: {
             enable: function () {
                 api.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function () {
+                    console.log('face enabled');
                     return 0;
                 });
                 api.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function () {
@@ -290,6 +291,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             },
             disableFace: function () {
                 api.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/" + api.config.robot + "/no_pau"}), function () {
+                    console.log('face disabled');
                     return 0;
                 });
             }
