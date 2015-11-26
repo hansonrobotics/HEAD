@@ -122,7 +122,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     // set current language
                     api.getRobotLang(function (language) {
                         self.changeLanguage(language);
-                    })
+                    });
                 },
                 responseCallback: function (msg) {
                     self.collection.add({author: 'Robot', message: msg.data});
@@ -241,8 +241,10 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     var language = $(e.target).data('lang');
                     this.changeLanguage(language);
                 },
+                language: 'en',
                 changeLanguage: function (language) {
                     if (this.language == language) return;
+                    this.disableSpeech();
 
                     this.changeMessageLanguage(language);
                     this.language = language;
@@ -273,6 +275,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                             this.speechRecognition = null;
                         }
 
+                        this.speechRecognition.lang = this.language == 'zh' ? 'zh-CN' : 'en-US';
                         this.speechRecognition.interimResults = true;
                         this.speechRecognition.continuous = true;
 
