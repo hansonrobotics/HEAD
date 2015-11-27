@@ -38,7 +38,7 @@
             <node name="chatbot_zh" pkg="chinese_chatbot" type="talker.py">
                 <param name="robot_name" value="$(arg name)" />
             </node>
-            <node name="recorder" pkg="chinese_chatbot" type="continous_recorder.py" />
+            <node name="recorder" pkg="chinese_chatbot" type="continuous_recorder.py" />
 
         </group>
     </group>
