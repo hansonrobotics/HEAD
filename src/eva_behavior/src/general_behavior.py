@@ -38,6 +38,7 @@ from blender_api_msgs.msg import SetGesture
 from blender_api_msgs.msg import Target
 from blender_api_msgs.msg import BlinkCycle
 from blender_api_msgs.msg import SaccadeCycle
+from chatbot.msg import ChatMessage
 # local stuff.
 from face_track import FaceTrack
 
@@ -311,6 +312,9 @@ class Tree():
         self.blackboard["current_glance_target"] = 0
         self.blackboard["current_face_target"] = 0
         self.blackboard["new_look_at_face"] = 0
+        # A recognized face and its name
+        self.blackboard["recog_face"] = 0
+        self.blackboard["recog_face_name"] = ""
         self.blackboard["interact_with_face_target_since"] = 0.0
         self.blackboard["sleep_since"] = 0.0
         self.blackboard["bored_since"] = 0.0
@@ -363,6 +367,7 @@ class Tree():
             BlinkCycle,queue_size=1)
         self.saccade_pub = rospy.Publisher("/blender_api/set_saccade",
             SaccadeCycle,queue_size=1)
+        self.chat_pub = rospy.Publisher("/chatbot_speech", ChatMessage, queue_size=1)
 
         self.do_pub_gestures = True
         self.do_pub_emotions = True
@@ -688,6 +693,20 @@ class Tree():
         return tree
 
     # ------------------------------------------------------------------
+    def recognized_a_face(self):
+        tree = owyl.sequence(
+            self.see_a_recognized_face(),
+            self.is_no_one_talking(),
+            self.is_not_current_face(id="recog_face"),
+            self.assign_face_target(variable="current_face_target", value="recog_face"),
+            self.record_start_time(variable="interact_with_face_target_since"),
+            self.interact_with_face_target(id="current_face_target", new_face=False, trigger="recognized_someone"),
+            self.greet(id="current_face_target", name="recog_face_name", trigger="recognized_someone"),
+            self.clear_recognized_face()
+        )
+        return tree
+
+    # ------------------------------------------------------------------
     # Build the main tree
     def build_tree(self):
         eva_behavior_tree = \
@@ -699,6 +718,7 @@ class Tree():
                         ########## Main Events ##########
                         owyl.selector(
                             self.face_set_by_operator(),
+                            self.recognized_a_face(),
                             self.someone_arrived(),
                             self.someone_left(),
                             self.interact_with_people(),
@@ -783,6 +803,16 @@ class Tree():
         if self.blackboard["new_look_at_face"] > 0:
             self.blackboard["bored_since"] = 0
             print("----- Someone selected! id: " + str(self.blackboard["new_look_at_face"]))
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
+    def see_a_recognized_face(self, **kwargs):
+        self.blackboard["is_interruption"] = False
+        if self.blackboard["recog_face"] > 0:
+            self.blackboard["bored_since"] = 0
+            print("----- Recognized someone! id: " + str(self.blackboard["recog_face"]))
             yield True
         else:
             yield False
@@ -934,6 +964,9 @@ class Tree():
         # Select those who are talking at the moment, if any
         if len(self.blackboard["talking_faces"]) > 1:
             self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["talking_faces"])
+        # If no one is talking, select a recognized face, if any
+        elif not self.blackboard["recognized_face_targets"]:
+            self.blackboard["current_face_target"] = [random.choice(k) for k, v in self.blackboard["recognized_face_targets"].items()]
         self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"])
         yield True
 
@@ -972,7 +1005,6 @@ class Tree():
         self.write_log("look_at_" + str(face_id), time.time(), trigger)
 
         if self.should_show_expression("positive_emotions") or kwargs["new_face"]:
-
             if self.conversing:
                 self.pick_random_expression("neutral_speech_emotions",trigger)
             else:
@@ -997,6 +1029,19 @@ class Tree():
         print "----- Interacting w/face id:" + str(face_id) + " for " + str(duration)[:5] + " seconds"
         self.break_if_interruptions(interval, duration)
         yield True
+
+    @owyl.taskmethod
+    def greet(self, **kwargs):
+        face_id = self.blackboard[kwargs["id"]]
+        name = self.blackboard[kwargs["name"]]
+        trigger = kwargs["trigger"]
+
+        self.write_log("greeting: " + str(face_id), time.time(), trigger)
+
+        msg = ChatMessage()
+        msg.utterance = "Hi " + name
+        msg.confidence = 100
+        self.chat_pub.publish(msg)
 
     @owyl.taskmethod
     def face_study_saccade(self, **kwargs):
@@ -1207,6 +1252,12 @@ class Tree():
     @owyl.taskmethod
     def clear_new_talking_face(self, **kwargs):
         self.blackboard["new_talking_face"] = 0
+        yield True
+
+    @owyl.taskmethod
+    def clear_recognized_face(self, **kwargs):
+        self.blackboard["recog_face"] = 0
+        self.blackboard["recog_face_name"] = ""
         yield True
 
     # This avoids burning CPU time when the behavior system is off.

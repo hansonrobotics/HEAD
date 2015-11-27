@@ -253,6 +253,9 @@ class FaceTrack:
             return
 
         self.blackboard["background_recognized_face_targets"][faceid] = name
+        self.blackboard["is_interruption"] = True
+        self.blackboard["recog_face"] = faceid
+        self.blackboard["recog_face_name"] = name
 
     # Start tracking a face
     def add_face(self, faceid):
@@ -283,6 +286,8 @@ class FaceTrack:
         if faceid not in self.visible_faces_blobs:
             self.add_face(faceid)
 
+        logger.info("New talking face added: " + str(faceid))
+
         self.add_talking_face_to_bb(faceid)
 
     # Start tracking a recognized face
@@ -290,6 +295,8 @@ class FaceTrack:
         # Add to visible_faces_blobs, just in case it is not there
         if faceid not in self.visible_faces_blobs:
             self.add_face(faceid)
+
+        logger.info("New recognized face added: " + name + " \(" + str(faceid) + "\)")
 
         self.add_recognized_face_to_bb(faceid, name)
 
@@ -303,6 +310,7 @@ class FaceTrack:
 
     # Stop tracking a talking face
     def remove_talking_face(self, faceid):
+        logger.info("Removed a talking face: " + str(faceid))
         self.remove_face_from_bb(faceid)
 
     # Stop tracking a blob
