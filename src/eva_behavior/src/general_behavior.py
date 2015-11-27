@@ -302,10 +302,12 @@ class Tree():
         self.blackboard["face_targets"] = []
         self.blackboard["blob_targets"] = []
         self.blackboard["talking_faces"] = []
+        self.blackboard["recognized_face_targets"] = {}
         # IDs of faces in the scene, updated immediately
         self.blackboard["background_face_targets"] = []
         self.blackboard["background_blob_targets"] = []
         self.blackboard["background_talking_faces"] = []
+        self.blackboard["background_recognized_face_targets"] = {}
         self.blackboard["current_glance_target"] = 0
         self.blackboard["current_face_target"] = 0
         self.blackboard["new_look_at_face"] = 0
@@ -720,6 +722,7 @@ class Tree():
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
         self.blackboard["talking_faces"] = self.blackboard["background_talking_faces"]
         self.blackboard["blob_targets"] = self.blackboard["background_blob_targets"]
+        self.blackboard["recognized_face_targets"] = self.blackboard["background_recognized_face_targets"]
         yield True
 
     @owyl.taskmethod

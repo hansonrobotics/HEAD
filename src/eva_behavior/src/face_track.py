@@ -97,6 +97,7 @@ class FaceTrack:
         self.EVENT_TRACK_FACE = "track_face"
         self.EVENT_START_TALKING = "start_talking"
         self.EVENT_STOP_TALKING = "stop_talking"
+        self.EVENT_RECOGNIZE_FACE = "recognize_"
 
         # Publishes the current tracked face
         self.TOPIC_LOOK_AT_FACE = "look_at_face"
@@ -190,7 +191,6 @@ class FaceTrack:
     # Private functions, not for use outside of this class.
     # Add a face to the Owyl blackboard.
     def add_face_to_bb(self, faceid):
-
         # We already know about it.
         if faceid in self.blackboard["background_face_targets"]:
             return
@@ -211,7 +211,6 @@ class FaceTrack:
 
     # Remove a face from the Owyl blackboard.
     def remove_face_from_bb(self, fid):
-
         if fid not in self.blackboard["background_face_targets"]:
             return
 
@@ -219,6 +218,9 @@ class FaceTrack:
         self.blackboard["is_interruption"] = True
         self.blackboard["lost_face"] = fid
         self.blackboard["background_face_targets"].remove(fid)
+        # If it is a recognized face, remove it as well
+        if fid in self.blackboard["background_recognized_face_targets"]:
+            del self.blackboard["background_recognized_face_targets"][fid]
         # If the robot lost the new face during the initial
         # interaction, reset new_face variable
         if self.blackboard["new_face"] == fid :
@@ -243,7 +245,14 @@ class FaceTrack:
         if blob_id not in self.blackboard["background_blob_targets"]:
             return
 
-        self.blackground["background_blob_targets"].remove(blob_id)
+        self.blackboard["background_blob_targets"].remove(blob_id)
+
+    # Add a recognized face to the Owyl blackboard.
+    def add_recognized_face_to_bb(self, faceid, name):
+        if faceid in self.blackboard["background_recognized_face_targets"]:
+            return
+
+        self.blackboard["background_recognized_face_targets"][faceid] = name
 
     # Start tracking a face
     def add_face(self, faceid):
@@ -275,6 +284,14 @@ class FaceTrack:
             self.add_face(faceid)
 
         self.add_talking_face_to_bb(faceid)
+
+    # Start tracking a recognized face
+    def add_recognized_face(self, faceid, name):
+        # Add to visible_faces_blobs, just in case it is not there
+        if faceid not in self.visible_faces_blobs:
+            self.add_face(faceid)
+
+        self.add_recognized_face_to_bb(faceid, name)
 
     # Stop tracking a face
     def remove_face(self, faceid):
@@ -421,7 +438,13 @@ class FaceTrack:
     # the face_loc_cb accomplishes the same thing. So maybe should
     # remove this someday.
     def face_event_cb(self, data):
-        if data.face_event == self.EVENT_NEW_FACE:
+        if data.face_event.startswith(self.EVENT_RECOGNIZE_FACE):
+            # Extract the name from the event name
+            idx = len(self.EVENT_RECOGNIZE_FACE)
+            name = data.face_event[idx:]
+            self.add_recognized_face(data.face_id, name)
+
+        elif data.face_event == self.EVENT_NEW_FACE:
             self.add_face(data.face_id)
 
         elif data.face_event == self.EVENT_LOST_FACE:
