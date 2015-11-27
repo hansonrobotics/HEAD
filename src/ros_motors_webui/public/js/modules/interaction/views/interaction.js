@@ -130,6 +130,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     api.getRosParam('/' + api.config.robot + '/webui/speech_recognition', function (method) {
                         self.setRecognitionMethod(method);
                     });
+                    this.speechStarted = 0;
                 },
                 responseCallback: function (msg) {
                     self.collection.add({author: 'Robot', message: msg.data});
@@ -170,6 +171,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         }
                     }
                     if (this.speechEnabled) {
+                        self.speechPaused = false;
                         this.disableSpeech(e);
                     } else {
                         this.enableSpeech(e);
@@ -270,6 +272,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     if (self.messages[language]) self.collection.add(self.messages[language].models);
                 },
                 enableWebspeech: function () {
+
                     if (!this.speechRecognition || !this.speechEnabled) {
                         if ('webkitSpeechRecognition' in window) {
                             this.speechRecognition = new webkitSpeechRecognition();
@@ -282,7 +285,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                         this.speechRecognition.lang = this.language == 'zh' ? 'zh-CN' : 'en-US';
                         this.speechRecognition.interimResults = false;
-                        this.speechRecognition.continuous = true;
+                        this.speechRecognition.continuous = false;
 
                         this.speechRecognition.onstart = function () {
                             console.log('starting webspeech');
@@ -308,21 +311,38 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         };
 
                         this.speechRecognition.onerror = function (event) {
+                            switch (event.error) {
+                                case 'not-allowed':
+                                case 'service-not-allowed':
+                                    self.onSpeechDisabled();
+                                    break;
+                            }
                             console.log('error recognising speech');
                             console.log(event);
-                            self.onSpeechDisabled();
+
                         };
                         this.speechRecognition.onend = function () {
-                            console.log('end of speech');
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
-                            self.onSpeechDisabled();
-                        };
+                            if (self.speechEnabled){
+                                var timeSinceLastStart = new Date().getTime()-self.speechStarted;
+                                if (timeSinceLastStart < 1000){
+                                    setTimeout(function(){self.speechRecognition.start();})
+                                }else{
+                                    self.speechRecognition.start();
+                                }
+                            }else{
+                                console.log('end of speech');
+                                api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
+                            }
 
+
+                        };
+                        this.speechStarted = new Date().getTime();
                         this.speechRecognition.start();
                     }
                 },
                 disableWebspeech: function () {
                     if (this.speechRecognition) {
+                        self.onSpeechDisabled();
                         this.speechRecognition.stop();
                         this.speechRecognition = null;
                     }
