@@ -3,6 +3,8 @@ define(["application", "lib/api", "./views/layout", "../../motors/views/motors",
     function (App, api, LayoutView, MotorsView, ExpressionsView) {
         return {
             index: function () {
+                var self = this;
+
                 // reset robot
                 api.disableInteractionMode();
                 api.pointHead();
@@ -16,7 +18,10 @@ define(["application", "lib/api", "./views/layout", "../../motors/views/motors",
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
                 this.layoutView.getRegion('motors').show(this.motorsView);
 
-                this.motorsCollection.fetchFromParam();
+                this.motorsCollection.fetchFromParam(function () {
+                    self.motorsCollection.setDefaultValues();
+                });
+
                 var expressions = new App.Entities.ExpressionCollection(),
                     expressionsView = new ExpressionsView({
                         collection: expressions,
