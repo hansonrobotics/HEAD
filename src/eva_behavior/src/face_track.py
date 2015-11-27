@@ -91,6 +91,8 @@ class FaceTrack:
         self.TOPIC_FACE_EVENT = "/camera/face_event"
         self.EVENT_NEW_FACE = "new_face"
         self.EVENT_LOST_FACE = "lost_face"
+        self.EVENT_NEW_BLOB = "new_blob"
+        self.EVENT_LOST_BLOB = "lost_blob"
         # Overrides current face beeiing tracked by WebUI
         self.EVENT_TRACK_FACE = "track_face"
         self.EVENT_START_TALKING = "start_talking"
@@ -229,6 +231,20 @@ class FaceTrack:
 
         self.blackboard["background_talking_faces"].remove(faceid)
 
+    # Add a blob to the Owyl blackboard.
+    def add_blob_to_bb(self, blob_id):
+        if blob_id in self.blackboard["background_blob_targets"]:
+            return
+
+        self.blackboard["background_blob_targets"].append(blob_id)
+
+    # Remove a blob from the Owyl blackboard.
+    def remove_blob_from_bb(self, blob_id):
+        if blob_id not in self.blackboard["background_blob_targets"]:
+            return
+
+        self.blackground["background_blob_targets"].remove(blob_id)
+
     # Start tracking a face
     def add_face(self, faceid):
         if faceid in self.visible_faces:
@@ -236,10 +252,21 @@ class FaceTrack:
 
         self.visible_faces.append(faceid)
 
-        logger.info("New face added to visibile faces: " +
+        logger.info("New face added to visible faces: " +
             str(self.visible_faces))
 
         self.add_face_to_bb(faceid)
+
+    # Start tracking a blob
+    def add_blob(self, blob_id)
+        if blob_id in self.visible_faces:
+            return
+
+        self.visible_faces.append(blob_id)
+
+        logger.info("New blob added to visible faces: " + str(self.visible_faces))
+
+        self.add_blob_to_bb(blob_id)
 
     # Start tracking a talking face
     def add_talking_face(self, faceid):
@@ -255,12 +282,19 @@ class FaceTrack:
         if faceid in self.visible_faces:
             self.visible_faces.remove(faceid)
 
-        logger.info("Lost face; visibile faces now: " + str(self.visible_faces))
+        logger.info("Lost face; visible faces now: " + str(self.visible_faces))
 
     # Stop tracking a talking face
     def remove_talking_face(self, faceid):
         self.remove_face_from_bb(faceid)
 
+    # Stop tracking a blob
+    def remove_blob(self, blob_id)
+        self.remove_blob_from_bb(blob_id)
+        if blob_id in self.visible_faces:
+            self.visible_faces.remove(blob_id)
+
+        logger.info("Lost blob; visible faces now: " + str(self.visible_faces))
 
     # ----------------------------------------------------------
     # Main look-at action driver.  Should be called at least a few times
@@ -402,6 +436,12 @@ class FaceTrack:
 
         elif data.face_event == self.EVENT_STOP_TALKING:
             self.remove_talking_face(data.face_id)
+
+        elif data.face_event == self.EVENT_NEW_BLOB:
+            self.add_blob(data.face_id)
+
+        elif data.face_event == self.EVENT_LOST_BLOB:
+            self.remove_blob(data.face_id)
 
     # pi_vision ROS callback, called when pi_vision has new face
     # location data for us. Because this happens frequently (10x/second)

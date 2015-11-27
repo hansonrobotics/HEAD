@@ -222,6 +222,8 @@ class Tree():
         self.blackboard["glance_probability_for_lost_faces"] = config.getfloat("interaction", "glance_probability_for_lost_faces")
         self.blackboard["z_pitch_eyes"] = config.getfloat("interaction", "z_pitch_eyes")
         self.blackboard["max_glance_distance"] = config.getfloat("interaction", "max_glance_distance")
+        self.blackboard["glance_face_duration"] = config.getfloat("interaction", "glance_face_duration")
+        self.blackboard["glance_blob_duration"] = config.getfloat("interaction", "glance_blob_duration")
         self.blackboard["min_quick_look_duration"] = config.getfloat("interaction", "min_quick_look_duration")
         self.blackboard["max_quick_look_duration"] = config.getfloat("interaction", "max_quick_look_duration")
         self.blackboard["face_study_probabilities"] = config.getfloat("interaction", "face_study_probabilities")
@@ -298,9 +300,11 @@ class Tree():
         self.blackboard["new_talking_face"] = 0
         # IDs of faces in the scene, updated once per cycle
         self.blackboard["face_targets"] = []
+        self.blackboard["blob_targets"] = []
         self.blackboard["talking_faces"] = []
         # IDs of faces in the scene, updated immediately
         self.blackboard["background_face_targets"] = []
+        self.blackboard["background_blob_targets"] = []
         self.blackboard["background_talking_faces"] = []
         self.blackboard["current_glance_target"] = 0
         self.blackboard["current_face_target"] = 0
@@ -715,6 +719,7 @@ class Tree():
     def sync_variables(self, **kwargs):
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
         self.blackboard["talking_faces"] = self.blackboard["background_talking_faces"]
+        self.blackboard["blob_targets"] = self.blackboard["background_blob_targets"]
         yield True
 
     @owyl.taskmethod
@@ -1016,19 +1021,20 @@ class Tree():
 
     @owyl.taskmethod
     def glance_at(self, **kwargs):
-        face_id = self.blackboard[kwargs["id"]]
-        print "----- Glancing at face:" + str(face_id)
-        glance_seconds = 1
-        self.facetrack.glance_at_face(face_id, glance_seconds)
-        self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
+        target_id = self.blackboard[kwargs["id"]]
+        print "----- Glancing at face/blob:" + str(target_id)
+        if target_id in self.blackboard["face_targets"]:
+            self.facetrack.glance_at_face(target_id, self.blackboard["glance_face_duration"])
+        else:
+            self.facetrack.glance_at_face(target_id, self.blackboard["glance_blob_duration"])
+        self.write_log("glance_at_" + str(target_id), time.time(), kwargs["trigger"])
         yield True
 
     @owyl.taskmethod
     def glance_at_new_face(self, **kwargs):
         face_id = self.blackboard["new_face"]
         print "----- Glancing at new face:" + str(face_id)
-        glance_seconds = 1
-        self.facetrack.glance_at_face(face_id, glance_seconds)
+        self.facetrack.glance_at_face(face_id, self.blackboard["glance_face_duration"])
         self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
         yield True
 
