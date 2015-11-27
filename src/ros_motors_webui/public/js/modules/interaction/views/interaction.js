@@ -283,7 +283,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                             this.speechRecognition = null;
                         }
 
-                        this.speechRecognition.lang = this.language == 'zh' ? 'zh-CN' : 'en-US';
+                        this.speechRecognition.lang = this.language == 'zh' ? 'cmn-Hans-CN' : 'en-US';
                         this.speechRecognition.interimResults = false;
                         this.speechRecognition.continuous = false;
 
