@@ -390,18 +390,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         set_look_at_face: function (f_id) {
             api.topics.set_look_at_face.publish(new ROSLIB.Message({face_event: 'track_face', face_id: f_id}));
         },
-        enableRecording: function (success, error) {
-            this.setDynParam('/' + this.config.robot + '/recorder', 'recording', true, {
-                success: success,
-                error: error
-            });
-        },
-        disableRecording: function (success, error) {
-            this.setDynParam('/' + this.config.robot + '/recorder', 'recording', false, {
-                success: success,
-                error: error
-            });
-        },
         setDynParam: function (node, name, value, options) {
             if (typeof options != 'object') options = {};
 
@@ -440,6 +428,22 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             }, function (error) {
                 if (typeof options.error == 'function') options.error(error);
             });
+        },
+        setRosParam: function (name, value) {
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: name
+            });
+            param.set(value);
+
+        },
+        getRosParam: function (name, success) {
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: name
+            });
+
+            param.get(success);
         }
     };
 

@@ -1,4 +1,4 @@
-define(['application', 'lib/api', 'lib/web_speech_api'], function (App, api, WebSpeechApi) {
+define(['application', 'lib/api'], function (App, api) {
     App.module('Performances.Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Node = Backbone.Model.extend({
             call: function () {
