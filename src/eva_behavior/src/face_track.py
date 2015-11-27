@@ -61,8 +61,8 @@ class FaceTrack:
         logger.info("Starting Face Tracker")
         self.blackboard = owyl_bboard
 
-        # List of currently visible faces
-        self.visible_faces = []
+        # List of currently visible faces or blobs
+        self.visible_faces_blobs = []
         # List of locations of currently visible faces
         self.face_locations = {}
 
@@ -145,7 +145,7 @@ class FaceTrack:
             self.gaze_pub.publish(trg)
 
         self.last_lookat = 0
-        if faceid not in self.visible_faces :
+        if faceid not in self.visible_faces_blobs :
             self.gaze_at = 0
             return
 
@@ -168,7 +168,7 @@ class FaceTrack:
             self.look_pub.publish(trg)
 
         self.last_lookat = 0
-        if faceid not in self.visible_faces :
+        if faceid not in self.visible_faces_blobs :
             self.look_at = 0
             return
 
@@ -247,31 +247,31 @@ class FaceTrack:
 
     # Start tracking a face
     def add_face(self, faceid):
-        if faceid in self.visible_faces:
+        if faceid in self.visible_faces_blobs:
             return
 
-        self.visible_faces.append(faceid)
+        self.visible_faces_blobs.append(faceid)
 
-        logger.info("New face added to visible faces: " +
-            str(self.visible_faces))
+        logger.info("New face added to visible faces/blobs: " +
+            str(self.visible_faces_blobs))
 
         self.add_face_to_bb(faceid)
 
     # Start tracking a blob
-    def add_blob(self, blob_id)
-        if blob_id in self.visible_faces:
+    def add_blob(self, blob_id):
+        if blob_id in self.visible_faces_blobs:
             return
 
-        self.visible_faces.append(blob_id)
+        self.visible_faces_blobs.append(blob_id)
 
-        logger.info("New blob added to visible faces: " + str(self.visible_faces))
+        logger.info("New blob added to visible faces/blobs: " + str(self.visible_faces_blobs))
 
         self.add_blob_to_bb(blob_id)
 
     # Start tracking a talking face
     def add_talking_face(self, faceid):
-        # Add to visible_faces, just in case it is not there
-        if faceid not in self.visible_faces:
+        # Add to visible_faces_blobs, just in case it is not there
+        if faceid not in self.visible_faces_blobs:
             self.add_face(faceid)
 
         self.add_talking_face_to_bb(faceid)
@@ -279,22 +279,22 @@ class FaceTrack:
     # Stop tracking a face
     def remove_face(self, faceid):
         self.remove_face_from_bb(faceid)
-        if faceid in self.visible_faces:
-            self.visible_faces.remove(faceid)
+        if faceid in self.visible_faces_blobs:
+            self.visible_faces_blobs.remove(faceid)
 
-        logger.info("Lost face; visible faces now: " + str(self.visible_faces))
+        logger.info("Lost face; visible faces/blobs now: " + str(self.visible_faces_blobs))
 
     # Stop tracking a talking face
     def remove_talking_face(self, faceid):
         self.remove_face_from_bb(faceid)
 
     # Stop tracking a blob
-    def remove_blob(self, blob_id)
+    def remove_blob(self, blob_id):
         self.remove_blob_from_bb(blob_id)
-        if blob_id in self.visible_faces:
-            self.visible_faces.remove(blob_id)
+        if blob_id in self.visible_faces_blobs:
+            self.visible_faces_blobs.remove(blob_id)
 
-        logger.info("Lost blob; visible faces now: " + str(self.visible_faces))
+        logger.info("Lost blob; visible faces/blobs now: " + str(self.visible_faces_blobs))
 
     # ----------------------------------------------------------
     # Main look-at action driver.  Should be called at least a few times
@@ -341,8 +341,8 @@ class FaceTrack:
             if 0 < self.gaze_at and self.look_at <= 0:
                 # logger.info("Gaze at id " + str(self.gaze_at))
                 try:
-                    if not self.gaze_at in self.visible_faces:
-                        raise Exception("Face not visible")
+                    if not self.gaze_at in self.visible_faces_blobs:
+                        raise Exception("Face/Blob not visible")
                     current_trg = self.face_target(self.blackboard["current_face_target"])
                     gaze_trg = self.face_target(self.gaze_at)
                     self.glance_or_look_at(current_trg, gaze_trg)
@@ -360,8 +360,8 @@ class FaceTrack:
             if 0 < self.look_at:
                 logger.info("Look at id: " + str(self.look_at))
                 try:
-                    if not self.look_at in self.visible_faces:
-                        raise Exception("Face not visible")
+                    if not self.look_at in self.visible_faces_blobs:
+                        raise Exception("Face/Blob not visible")
                     trg = self.face_target(self.look_at)
                     self.look_pub.publish(trg)
                 except tf.LookupException as lex:
