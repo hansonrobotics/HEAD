@@ -365,7 +365,7 @@ class Tree():
             BlinkCycle,queue_size=1)
         self.saccade_pub = rospy.Publisher("/blender_api/set_saccade",
             SaccadeCycle,queue_size=1)
-        self.chat_pub = rospy.Publisher("/chatbot_speech", ChatMessage, queue_size=1)
+        self.chat_pub = rospy.Publisher("/han/chatbot_responses", std_msgs/String, queue_size=1)
 
         self.do_pub_gestures = True
         self.do_pub_emotions = True
@@ -760,6 +760,8 @@ class Tree():
         self.blackboard["talking_faces"] = self.blackboard["background_talking_faces"]
         self.blackboard["blob_targets"] = self.blackboard["background_blob_targets"]
         self.blackboard["recognized_face_targets"] = self.blackboard["background_recognized_face_targets"]
+        print "Visible faces: ", self.blackboard["face_targets"]
+        print "Talking faces: ", self.blackboard["talking_faces"]
         yield True
 
     @owyl.taskmethod
@@ -988,7 +990,7 @@ class Tree():
 
     @owyl.taskmethod
     def select_a_talking_face_target(self, **kwargs):
-        self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["talking_faces"])
+        self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["talking_faces"], self.blackboard["current_face_target"])
         yield True
 
     @owyl.taskmethod
@@ -1068,9 +1070,7 @@ class Tree():
 
         self.write_log("greeting: " + str(face_id), time.time(), trigger)
 
-        msg = ChatMessage()
-        msg.utterance = "Hi " + name
-        msg.confidence = 100
+        msg = "Hi " + name
         self.chat_pub.publish(msg)
 
     @owyl.taskmethod
@@ -1269,13 +1269,11 @@ class Tree():
     @owyl.taskmethod
     def clear_new_face_target(self, **kwargs):
         #if not self.blackboard["is_interruption"]:
-        print "----- Cleared new face: " + str(self.blackboard["new_face"])
         self.blackboard["new_face"] = 0
         yield True
 
     @owyl.taskmethod
     def clear_lost_face_target(self, **kwargs):
-        print "----- Cleared lost face: " + str(self.blackboard["lost_face"])
         self.blackboard["lost_face"] = 0
         yield True
 
@@ -1434,8 +1432,6 @@ class Tree():
             self.blackboard["is_interruption"] = True
             self.blackboard["behavior_tree_on"] = False
             self.blackboard["stage_mode"] = False
-            self.do_pub_gestures = False
-            self.do_pub_emotions = False
             print("---- Behavior tree disabled")
 
     def chatbot_speech_end(self):

@@ -205,11 +205,8 @@ class FaceTrack:
         if faceid in self.blackboard["background_talking_faces"]:
             return
 
-        if faceid not in self.blackboard["background_face_targets"]:
-            self.blackboard["background_face_targets"].append(faceid)
-
-        self.blackboard["is_interruption"] = True
         self.blackboard["background_talking_faces"].append(faceid)
+        self.blackboard["is_interruption"] = True
 
     # Remove a face from the Owyl blackboard.
     def remove_face_from_bb(self, fid):
@@ -217,12 +214,15 @@ class FaceTrack:
             return
 
         # Update the blackboard.
-        self.blackboard["is_interruption"] = True
         self.blackboard["lost_face"] = fid
         self.blackboard["background_face_targets"].remove(fid)
         # If it is a recognized face, remove it as well
         if fid in self.blackboard["background_recognized_face_targets"]:
             del self.blackboard["background_recognized_face_targets"][fid]
+        # If it is a talking face, remove it as well
+        if fid in self.blackboard["background_talking_faces"]:
+            self.blackboard["background_talking_faces"].remove(fid)
+        self.blackboard["is_interruption"] = True
         # If the robot lost the new face during the initial
         # interaction, reset new_face variable
         if self.blackboard["new_face"] == fid :
@@ -257,9 +257,6 @@ class FaceTrack:
         if faceid in self.blackboard["background_recognized_face_targets"]:
             return
 
-        if faceid not in self.blackboard["background_face_targets"]:
-            self.blackboard["background_face_targets"].append(faceid)
-
         self.blackboard["background_recognized_face_targets"][faceid] = name
         self.blackboard["is_interruption"] = True
         self.blackboard["recog_face"] = faceid
@@ -290,23 +287,13 @@ class FaceTrack:
 
     # Start tracking a talking face
     def add_talking_face(self, faceid):
-        # Add to visible_faces_blobs, just in case it is not there
-        if faceid not in self.visible_faces_blobs:
-            self.add_face(faceid)
-
-        logger.info("New talking face added: " + str(faceid))
-
         self.add_talking_face_to_bb(faceid)
+        logger.info("New talking face added: " + str(faceid))
 
     # Start tracking a recognized face
     def add_recognized_face(self, faceid, name):
-        # Add to visible_faces_blobs, just in case it is not there
-        if faceid not in self.visible_faces_blobs:
-            self.add_face(faceid)
-
-        logger.info("New recognized face added: " + name + " \(" + str(faceid) + "\)")
-
         self.add_recognized_face_to_bb(faceid, name)
+        logger.info("New recognized face added: " + name + " \(" + str(faceid) + "\)")
 
     # Stop tracking a face
     def remove_face(self, faceid):
@@ -318,8 +305,8 @@ class FaceTrack:
 
     # Stop tracking a talking face
     def remove_talking_face(self, faceid):
+        self.remove_talking_face_from_bb(faceid)
         logger.info("Removed a talking face: " + str(faceid))
-        self.remove_face_from_bb(faceid)
 
     # Stop tracking a blob
     def remove_blob(self, blob_id):
@@ -518,7 +505,9 @@ class FaceTrack:
         if len(faces) < 1:
             return 0
         # Faces with smaller (less than <1,000,000 ids are prioritized
-        small_ids = [f for f in faces if (f < 1000000)and (f != exclude)]
+        small_ids = [f for f in faces if (f < 1000000) and (f != exclude)]
         if len(small_ids) < 1:
+            # return random.choice(small_ids)
+            return random.choice(faces)
+        else:
             return random.choice(small_ids)
-        return random.choice(faces)
