@@ -95,9 +95,9 @@ class FaceTrack:
         self.EVENT_LOST_BLOB = "lost_blob"
         # Overrides current face beeiing tracked by WebUI
         self.EVENT_TRACK_FACE = "track_face"
-        self.EVENT_START_TALKING = "start_talking"
-        self.EVENT_STOP_TALKING = "stop_talking"
-        self.EVENT_RECOGNIZE_FACE = "recognize_"
+        self.EVENT_START_TALKING = "started_talking"
+        self.EVENT_STOP_TALKING = "stopped_talking"
+        self.EVENT_RECOGNIZE_FACE = "recognized_"
 
         # Publishes the current tracked face
         self.TOPIC_LOOK_AT_FACE = "look_at_face"
@@ -205,8 +205,10 @@ class FaceTrack:
         if faceid in self.blackboard["background_talking_faces"]:
             return
 
+        if faceid not in self.blackboard["background_face_targets"]:
+            self.blackboard["background_face_targets"].append(faceid)
+
         self.blackboard["is_interruption"] = True
-        self.blackboard["new_talking_face"] = faceid
         self.blackboard["background_talking_faces"].append(faceid)
 
     # Remove a face from the Owyl blackboard.
@@ -238,6 +240,9 @@ class FaceTrack:
         if blob_id in self.blackboard["background_blob_targets"]:
             return
 
+        if faceid not in self.blackboard["background_face_targets"]:
+            self.blackboard["background_face_targets"].append(faceid)
+
         self.blackboard["background_blob_targets"].append(blob_id)
 
     # Remove a blob from the Owyl blackboard.
@@ -251,6 +256,9 @@ class FaceTrack:
     def add_recognized_face_to_bb(self, faceid, name):
         if faceid in self.blackboard["background_recognized_face_targets"]:
             return
+
+        if faceid not in self.blackboard["background_face_targets"]:
+            self.blackboard["background_face_targets"].append(faceid)
 
         self.blackboard["background_recognized_face_targets"][faceid] = name
         self.blackboard["is_interruption"] = True

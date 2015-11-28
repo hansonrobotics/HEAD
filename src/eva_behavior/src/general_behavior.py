@@ -297,8 +297,6 @@ class Tree():
         # ID's of faces newly seen, or lost. Integer ID.
         self.blackboard["new_face"] = 0
         self.blackboard["lost_face"] = 0
-        # IDs of faces that start or stop talking
-        self.blackboard["new_talking_face"] = 0
         # IDs of faces in the scene, updated once per cycle
         self.blackboard["face_targets"] = []
         self.blackboard["blob_targets"] = []
@@ -537,6 +535,73 @@ class Tree():
         return tree
 
     # -----------------------------
+    # Interact with people who are talking
+    # If someone is talking and she is not currently interacting with any of them, interact with one of them
+    # If it is time to switch target, interact with someone else who is talking
+    # If only one person is talking, keep interacting with that person
+    # Otherwise she will continue with the current interaction
+    # she may also quickly look at other people if there are more than one people in the scene
+    def interact_with_talking_people(self):
+        tree = owyl.sequence(
+            self.is_someone_talking(),
+            owyl.selector(
+                ##### Interact With A Talking Person #####
+                owyl.sequence(
+                    owyl.selector(
+                        self.is_not_interacting_with_a_talking_person(),
+                        self.is_only_one_person_talking()
+                    ),
+                    self.select_a_talking_face_target(),
+                    self.record_start_time(variable="interact_with_face_target_since"),
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking")
+                ),
+
+                ##### Start A New Interaction #####
+                owyl.sequence(
+                    owyl.selector(
+                        self.is_not_interacting_with_someone(),
+                        owyl.sequence(
+                            self.is_more_than_one_person_talking(),
+                            self.is_time_to_change_face_target(min="time_to_change_talking_face_target_min", max="time_to_change_talking_face_target_max")
+                        )
+                    ),
+                    self.select_a_talking_face_target(),
+                    self.record_start_time(variable="interact_with_face_target_since"),
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking")
+                ),
+
+                ##### Quick-look At Other Faces & Continue With The Last Interaction #####
+                owyl.sequence(
+                    owyl.selector(
+                        owyl.sequence(
+                            self.is_more_than_one_face_target(),
+                            # TODO: Maybe to define a new config for the someone is talking case
+                            self.dice_roll(event="group_interaction"),
+                            self.select_a_quick_look_target(),
+                            self.quick_look_at(id="current_quick_look_target", trigger="someone_is_talking")
+                        ),
+                        owyl.succeed()
+                    ),
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking")
+                )
+            )
+        )
+        return tree
+
+    # -----------------------------
+    def interact_with_recognized_people(self):
+        tree = owyl.sequence(
+            self.see_a_recognized_face(),
+            self.is_not_current_face(id="recog_face"),
+            self.assign_face_target(variable="current_face_target", value="recog_face"),
+            self.record_start_time(variable="interact_with_face_target_since"),
+            self.interact_with_face_target(id="current_face_target", new_face=False, trigger="recognized_someone"),
+            self.greet(id="current_face_target", name="recog_face_name", trigger="recognized_someone"),
+            self.clear_recognized_face()
+        )
+        return tree
+
+    # -----------------------------
     # Interact with people
     # If she is not currently interacting with anyone, or it's time to switch target
     # she will start interacting with someone else
@@ -546,43 +611,13 @@ class Tree():
         tree = owyl.sequence(
             self.is_face_target(),
             owyl.selector(
-                ##### Keep Interacting With The Only Talking Person #####
-                owyl.sequence(
-                    self.is_someone_talking(),
-                    # If there is only one person talking, reset the timer and keep interacting with that person
-                    self.is_only_one_person_talking(),
-                    owyl.selector(
-                        owyl.sequence(
-                            self.is_a_new_talking_face(),
-                            self.assign_face_target(variable="current_face_target", value="new_talking_face"),
-                            self.clear_new_talking_face()
-                        ),
-                        owyl.succeed()
-                    ),
-                    self.record_start_time(variable="interact_with_face_target_since"),
-                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking"),
-
-                    # Returns "fail" here, so that rest of the tree will still be ran for target
-                    # switching/glancing/quick-looking etc.
-                    owyl.fail()
-                ),
-
                 ##### Start A New Interaction #####
                 owyl.sequence(
                     owyl.selector(
                         self.is_not_interacting_with_someone(),
                         owyl.sequence(
                             self.is_more_than_one_face_target(),
-                            owyl.selector(
-                                owyl.sequence(
-                                    self.is_someone_talking(),
-                                    self.is_time_to_change_face_target(min="time_to_change_talking_face_target_min", max="time_to_change_talking_face_target_max")
-                                ),
-                                owyl.sequence(
-                                    self.is_no_one_talking(),
-                                    self.is_time_to_change_face_target(min="time_to_change_face_target_min", max="time_to_change_face_target_max")
-                                )
-                            )
+                            self.is_time_to_change_face_target()
                         )
                     ),
                     self.select_a_face_target(),
@@ -596,20 +631,9 @@ class Tree():
                     owyl.selector(
                         owyl.sequence(
                             self.is_more_than_one_face_target(),
-                            # TODO: Maybe to define a new event for the someone is talking case
                             self.dice_roll(event="group_interaction"),
-                            owyl.selector(
-                                # If someone is talking, quickly look at someone else in the scene
-                                owyl.sequence(
-                                    self.is_someone_talking(),
-                                    self.select_a_quick_look_target(),
-                                    self.quick_look_at(id="current_quick_look_target", trigger="someone_is_talking")
-                                ),
-                                owyl.sequence(
-                                    self.select_a_glance_target(),
-                                    self.glance_at(id="current_glance_target", trigger="people_in_scene")
-                                )
-                            )
+                            self.select_a_glance_target(),
+                            self.glance_at(id="current_glance_target", trigger="people_in_scene")
                         ),
                         owyl.succeed()
                     ),
@@ -625,7 +649,6 @@ class Tree():
             )
         )
         return tree
-
 
     # -------------------
     # Nothing interesting is happening.
@@ -679,6 +702,7 @@ class Tree():
             )
         )
         return tree
+
     # ------------------------------------------------------------------
     # If operator sets face it should change current face target
     def face_set_by_operator(self):
@@ -689,20 +713,6 @@ class Tree():
             self.record_start_time(variable="interact_with_face_target_since"),
             self.show_expression(emo_class="new_arrival_emotions", trigger="new_person_selected"),
             self.interact_with_face_target(id="current_face_target", new_face=True, trigger="new_person_selected")
-        )
-        return tree
-
-    # ------------------------------------------------------------------
-    def recognized_a_face(self):
-        tree = owyl.sequence(
-            self.see_a_recognized_face(),
-            self.is_no_one_talking(),
-            self.is_not_current_face(id="recog_face"),
-            self.assign_face_target(variable="current_face_target", value="recog_face"),
-            self.record_start_time(variable="interact_with_face_target_since"),
-            self.interact_with_face_target(id="current_face_target", new_face=False, trigger="recognized_someone"),
-            self.greet(id="current_face_target", name="recog_face_name", trigger="recognized_someone"),
-            self.clear_recognized_face()
         )
         return tree
 
@@ -718,9 +728,10 @@ class Tree():
                         ########## Main Events ##########
                         owyl.selector(
                             self.face_set_by_operator(),
-                            self.recognized_a_face(),
                             self.someone_arrived(),
                             self.someone_left(),
+                            self.interact_with_talking_people(),
+                            self.interact_with_recognized_people(),
                             self.interact_with_people(),
                             self.nothing_is_happening()
                         )
@@ -743,6 +754,8 @@ class Tree():
         self.blackboard["talking_faces"] = self.blackboard["background_talking_faces"]
         self.blackboard["blob_targets"] = self.blackboard["background_blob_targets"]
         self.blackboard["recognized_face_targets"] = self.blackboard["background_recognized_face_targets"]
+        # Print an empty line, it is slightly clearer to see the print_status msgs in each cycle
+        print ""
         yield True
 
     @owyl.taskmethod
@@ -835,13 +848,6 @@ class Tree():
             yield False
 
     @owyl.taskmethod
-    def is_a_new_talking_face(self, **kwargs):
-        if self.blackboard["new_talking_face"] > 0:
-            yield True
-        else:
-            yield False
-
-    @owyl.taskmethod
     def is_interacting_with_someone(self, **kwargs):
         if self.blackboard["current_face_target"]:
             "----- Is Interacting With Someone!"
@@ -852,6 +858,13 @@ class Tree():
     @owyl.taskmethod
     def is_not_interacting_with_someone(self, **kwargs):
         if not self.blackboard["current_face_target"]:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
+    def is_not_interacting_with_a_talking_person(self, **kwargs):
+        if not self.blackboard["current_face_target"] in self.blackboard["talking_faces"]:
             yield True
         else:
             yield False
@@ -891,6 +904,13 @@ class Tree():
     @owyl.taskmethod
     def is_no_one_talking(self, **kwargs):
         if len(self.blackboard["talking_faces"]) == 0:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
+    def is_more_than_one_person_talking(self, **kwargs):
+        if len(self.blackboard["talking_faces"]) > 1:
             yield True
         else:
             yield False
@@ -960,14 +980,17 @@ class Tree():
         yield True
 
     @owyl.taskmethod
+    def select_a_talking_face_target(self, **kwargs):
+        self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["talking_faces"])
+        yield True
+
+    @owyl.taskmethod
     def select_a_face_target(self, **kwargs):
-        # Select those who are talking at the moment, if any
-        if len(self.blackboard["talking_faces"]) > 1:
-            self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["talking_faces"])
         # If no one is talking, select a recognized face, if any
-        elif not self.blackboard["recognized_face_targets"]:
+        if self.blackboard["recognized_face_targets"]:
             self.blackboard["current_face_target"] = [random.choice(k) for k, v in self.blackboard["recognized_face_targets"].items()]
-        self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"])
+        else:
+            self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"])
         yield True
 
     @owyl.taskmethod
@@ -1247,11 +1270,6 @@ class Tree():
     def clear_lost_face_target(self, **kwargs):
         print "----- Cleared lost face: " + str(self.blackboard["lost_face"])
         self.blackboard["lost_face"] = 0
-        yield True
-
-    @owyl.taskmethod
-    def clear_new_talking_face(self, **kwargs):
-        self.blackboard["new_talking_face"] = 0
         yield True
 
     @owyl.taskmethod
