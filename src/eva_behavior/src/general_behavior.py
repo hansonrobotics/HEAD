@@ -553,10 +553,11 @@ class Tree():
                     ),
                     self.select_a_talking_face_target(),
                     self.record_start_time(variable="interact_with_face_target_since"),
-                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking")
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking"),
+                    self.print_status(str="----- Interact with a talking person")
                 ),
 
-                ##### Start A New Interaction #####
+                ##### Start A New Interaction With A Talking Person #####
                 owyl.sequence(
                     owyl.selector(
                         self.is_not_interacting_with_someone(),
@@ -567,7 +568,8 @@ class Tree():
                     ),
                     self.select_a_talking_face_target(),
                     self.record_start_time(variable="interact_with_face_target_since"),
-                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking")
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking"),
+                    self.print_status(str="----- Started a new interaction with another talking person")
                 ),
 
                 ##### Quick-look At Other Faces & Continue With The Last Interaction #####
@@ -582,7 +584,8 @@ class Tree():
                         ),
                         owyl.succeed()
                     ),
-                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking")
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking"),
+                    self.print_status(str="----- Continue interacting with a talking person")
                 )
             )
         )
@@ -592,7 +595,9 @@ class Tree():
     def interact_with_recognized_people(self):
         tree = owyl.sequence(
             self.see_a_recognized_face(),
+            self.print_status(str="----- See a recognized face"),
             self.is_not_current_face(id="recog_face"),
+            # TODO: Need better handling
             self.assign_face_target(variable="current_face_target", value="recog_face"),
             self.record_start_time(variable="interact_with_face_target_since"),
             self.interact_with_face_target(id="current_face_target", new_face=False, trigger="recognized_someone"),
@@ -617,12 +622,13 @@ class Tree():
                         self.is_not_interacting_with_someone(),
                         owyl.sequence(
                             self.is_more_than_one_face_target(),
-                            self.is_time_to_change_face_target()
+                            self.is_time_to_change_face_target(min="time_to_change_face_target_min", max="time_to_change_face_target_max")
                         )
                     ),
                     self.select_a_face_target(),
                     self.record_start_time(variable="interact_with_face_target_since"),
-                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="people_in_scene")
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="people_in_scene"),
+                    self.print_status(str="----- Started a new interaction")
                 ),
 
                 ##### Glance At Other Faces & Continue With The Last Interaction #####
@@ -754,8 +760,6 @@ class Tree():
         self.blackboard["talking_faces"] = self.blackboard["background_talking_faces"]
         self.blackboard["blob_targets"] = self.blackboard["background_blob_targets"]
         self.blackboard["recognized_face_targets"] = self.blackboard["background_recognized_face_targets"]
-        # Print an empty line, it is slightly clearer to see the print_status msgs in each cycle
-        print ""
         yield True
 
     @owyl.taskmethod
@@ -896,6 +900,7 @@ class Tree():
 
     @owyl.taskmethod
     def is_someone_talking(self, **kwargs):
+        self.blackboard["is_interruption"] = False
         if len(self.blackboard["talking_faces"]) > 0:
             yield True
         else:
@@ -970,6 +975,8 @@ class Tree():
     @owyl.taskmethod
     def is_behavior_tree_on(self, **kwargs):
         if self.blackboard["behavior_tree_on"]:
+            # Print an empty line, it is clearer to see the print_status msgs in each cycle
+            print ""
             yield True
         else:
             yield False
@@ -986,7 +993,7 @@ class Tree():
 
     @owyl.taskmethod
     def select_a_face_target(self, **kwargs):
-        # If no one is talking, select a recognized face, if any
+        # Select a recognized face, if any
         if self.blackboard["recognized_face_targets"]:
             self.blackboard["current_face_target"] = [random.choice(k) for k, v in self.blackboard["recognized_face_targets"].items()]
         else:
@@ -1423,9 +1430,12 @@ class Tree():
             self.do_pub_gestures = False
 
         elif data.data == "btree_off":
+            self.facetrack.look_at_face(0)
             self.blackboard["is_interruption"] = True
             self.blackboard["behavior_tree_on"] = False
             self.blackboard["stage_mode"] = False
+            self.do_pub_gestures = False
+            self.do_pub_emotions = False
             print("---- Behavior tree disabled")
 
     def chatbot_speech_end(self):
