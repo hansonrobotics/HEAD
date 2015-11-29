@@ -19,7 +19,8 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     faceCollapse: '.app-face-container',
                     footer: 'footer',
                     languageButton: '.app-language-select button',
-                    recognitionMethodButton: '.app-recognition-select button'
+                    recognitionMethodButton: '.app-recognition-select button',
+                    adjustButton: '.app-adjust-button',
                 },
                 events: {
                     'touchstart @ui.recordButton': 'toggleSpeech',
@@ -28,7 +29,8 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked',
                     'click @ui.languageButton': 'languageButtonClick',
-                    'click @ui.recognitionMethodButton': 'recognitionButtonClick'
+                    'click @ui.recognitionMethodButton': 'recognitionButtonClick',
+                    'click @ui.adjustButton': 'adjustButtonClick',
                 },
                 initialize: function () {
                     self = this;
@@ -360,7 +362,22 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                     // update param
                     api.setRosParam('/' + api.config.robot + '/webui/speech_recognition', method);
-                }
+                },
+                adjustButtonClick: function (e) {
+                    api.getRosParam('/' + api.config.robot + '/webui/speech_recognition', function (method) {
+                        if (method == 'iflytek') {
+                            api.setDynParam('/' + api.config.robot + '/recorder', 'adjust_noise', true, {
+                                success: function () {
+                                    self.ui.adjustButton.removeClass('active');
+                                    console.log('Adjusted ambient noise');
+                                },
+                                error: function () {
+                                    console.log('error adjusting ambient noise')
+                                }
+                            });
+                        }
+                    });
+                },
             });
         });
 

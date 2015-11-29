@@ -2,6 +2,9 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="app-language-select-container pull-right">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" data-method="adjust_noise" class="app-adjust-button btn btn-default btn-sm">adjust</button>
+                </div>
                 <div class="app-language-select btn-group" role="group" aria-label="...">
                     <button type="button" data-lang="en" class="btn btn-default btn-sm active">EN</button>
                     <button type="button" data-lang="zh" class="btn btn-default btn-sm">CN</button>
