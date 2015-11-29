@@ -19,7 +19,10 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     faceCollapse: '.app-face-container',
                     footer: 'footer',
                     languageButton: '.app-language-select button',
-                    recognitionMethodButton: '.app-recognition-select button'
+                    recognitionMethodButton: '.app-recognition-select button',
+                    adjustButton: '.app-adjust-button',
+                    noiseEnergySlider: '.app-noise-energy-slider',
+                    noiseEnergyValue: '.app-noise-energy-value',
                 },
                 events: {
                     'touchstart @ui.recordButton': 'toggleSpeech',
@@ -28,7 +31,8 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     'keyup @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked',
                     'click @ui.languageButton': 'languageButtonClick',
-                    'click @ui.recognitionMethodButton': 'recognitionButtonClick'
+                    'click @ui.recognitionMethodButton': 'recognitionButtonClick',
+                    'click @ui.adjustButton': 'adjustButtonClick',
                 },
                 initialize: function () {
                     self = this;
@@ -131,6 +135,19 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         self.setRecognitionMethod(method);
                     });
                     this.speechStarted = 0;
+
+                    this.ui.noiseEnergySlider.slider({
+                        range: "min",
+                        min: 0,
+                        max: 5000,
+                        value: 500,
+                        change: function (e, ui) {
+                            self.onNoiseEnergyChange(ui.value);
+                        }
+                    });
+                    api.getRosParam('/' + api.config.robot + '/recorder/energy_threshold', function (value) {
+                        self.ui.noiseEnergySlider.slider('value', value);
+                    });
                 },
                 responseCallback: function (msg) {
                     self.collection.add({author: 'Robot', message: msg.data});
@@ -360,7 +377,40 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                     // update param
                     api.setRosParam('/' + api.config.robot + '/webui/speech_recognition', method);
-                }
+                },
+                adjustButtonClick: function (e) {
+                    api.getRosParam('/' + api.config.robot + '/webui/speech_recognition', function (method) {
+                        if (method == 'iflytek') {
+                            api.setDynParam('/' + api.config.robot + '/recorder', 'adjust_noise', true, {
+                                success: function () {
+                                    self.ui.adjustButton.removeClass('active');
+                                    api.getRosParam('/' + api.config.robot + '/recorder/energy_threshold', function (value) {
+                                        console.log('Ambient noise threshold ' + value);
+                                        self.ui.noiseEnergySlider.slider('value', value);
+                                    });
+                                },
+                                error: function () {
+                                    console.log('error adjusting ambient noise')
+                                }
+                            });
+                        }
+                    });
+                },
+                onNoiseEnergyChange: function (value) {
+                    api.getRosParam('/' + api.config.robot + '/webui/speech_recognition', function (method) {
+                        if (method == 'iflytek') {
+                            api.setDynParam('/' + api.config.robot + '/recorder', 'energy_threshold', value, {
+                                success: function () {
+                                    self.ui.noiseEnergyValue.html(value);
+                                    console.log('Change noise energy');
+                                },
+                                error: function () {
+                                    console.log('error changing noise energy threshold')
+                                }
+                            });
+                        }
+                    });
+                },
             });
         });
 

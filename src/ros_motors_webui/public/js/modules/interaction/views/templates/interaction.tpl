@@ -12,6 +12,16 @@
                     <button type="button" data-method="iflytek" class="btn btn-default btn-sm">iflytek</button>
                 </div>
             </div>
+            <div class="pull-left">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" data-method="adjust_noise" class="app-adjust-button btn btn-default btn-sm">adjust</button>
+                </div>
+                <div class="app-slider-value-container">
+                    <strong>Noise Energy</strong>
+                    <span class="app-noise-energy-value">500</span>
+                </div>
+                <div class="app-noise-energy-slider"></div>
+            </div>
             <ul class="app-messages"></ul>
         </div>
     </div>
