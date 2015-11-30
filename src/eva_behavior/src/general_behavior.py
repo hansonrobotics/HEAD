@@ -301,12 +301,12 @@ class Tree():
         self.blackboard["face_targets"] = []
         self.blackboard["blob_targets"] = []
         self.blackboard["talking_faces"] = []
-        self.blackboard["recognized_face_targets"] = {}
+        self.blackboard["recognized_face_targets"] = []
         # IDs of faces in the scene, updated immediately
         self.blackboard["background_face_targets"] = []
         self.blackboard["background_blob_targets"] = []
         self.blackboard["background_talking_faces"] = []
-        self.blackboard["background_recognized_face_targets"] = {}
+        self.blackboard["background_recognized_face_targets"] = []
         self.blackboard["current_glance_target"] = 0
         self.blackboard["current_face_target"] = 0
         self.blackboard["new_look_at_face"] = 0
@@ -365,7 +365,7 @@ class Tree():
             BlinkCycle,queue_size=1)
         self.saccade_pub = rospy.Publisher("/blender_api/set_saccade",
             SaccadeCycle,queue_size=1)
-        self.chat_pub = rospy.Publisher("/han/chatbot_responses", std_msgs/String, queue_size=1)
+        self.chat_pub = rospy.Publisher("/han/chatbot_responses", String, queue_size=1)
 
         self.do_pub_gestures = True
         self.do_pub_emotions = True
@@ -594,10 +594,8 @@ class Tree():
     # -----------------------------
     def interact_with_recognized_people(self):
         tree = owyl.sequence(
-            self.see_a_recognized_face(),
-            self.print_status(str="----- See a recognized face"),
-            self.is_not_current_face(id="recog_face"),
-            # TODO: Need better handling
+            self.is_a_recognized_face_to_be_greeted(),
+            self.print_status(str="----- Greet a recognized face"),
             self.assign_face_target(variable="current_face_target", value="recog_face"),
             self.record_start_time(variable="interact_with_face_target_since"),
             self.interact_with_face_target(id="current_face_target", new_face=False, trigger="recognized_someone"),
@@ -827,7 +825,7 @@ class Tree():
             yield False
 
     @owyl.taskmethod
-    def see_a_recognized_face(self, **kwargs):
+    def is_a_recognized_face_to_be_greeted(self, **kwargs):
         self.blackboard["is_interruption"] = False
         if self.blackboard["recog_face"] > 0:
             self.blackboard["bored_since"] = 0
@@ -997,7 +995,7 @@ class Tree():
     def select_a_face_target(self, **kwargs):
         # Select a recognized face, if any
         if self.blackboard["recognized_face_targets"]:
-            self.blackboard["current_face_target"] = [random.choice(k) for k, v in self.blackboard["recognized_face_targets"].items()]
+            self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["recognized_face_targets"])
         else:
             self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"])
         yield True

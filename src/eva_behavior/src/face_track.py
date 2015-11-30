@@ -218,7 +218,7 @@ class FaceTrack:
         self.blackboard["background_face_targets"].remove(fid)
         # If it is a recognized face, remove it as well
         if fid in self.blackboard["background_recognized_face_targets"]:
-            del self.blackboard["background_recognized_face_targets"][fid]
+            self.blackboard["background_recognized_face_targets"]
         # If it is a talking face, remove it as well
         if fid in self.blackboard["background_talking_faces"]:
             self.blackboard["background_talking_faces"].remove(fid)
@@ -257,10 +257,10 @@ class FaceTrack:
         if faceid in self.blackboard["background_recognized_face_targets"]:
             return
 
-        self.blackboard["background_recognized_face_targets"][faceid] = name
-        self.blackboard["is_interruption"] = True
+        self.blackboard["background_recognized_face_targets"].append(faceid)
         self.blackboard["recog_face"] = faceid
         self.blackboard["recog_face_name"] = name
+        self.blackboard["is_interruption"] = True
 
     # Start tracking a face
     def add_face(self, faceid):
