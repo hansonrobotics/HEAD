@@ -1426,9 +1426,17 @@ class Tree():
             self.do_pub_gestures = False
 
         elif data.data == "btree_off":
+            # Turn the head to neutral position
             self.facetrack.look_at_face(0)
-            self.blackboard["is_interruption"] = True
+            # Reset the variables that we sync in every cycle
+            self.blackboard["face_targets"] = []
+            self.blackboard["recognized_face_targets"] = []
+            self.blackboard["talking_faces"] = []
+            self.blackboard["blob_targets"] = []
+            self.facetrack.visible_faces_blobs = []
+            # Other flags
             self.blackboard["behavior_tree_on"] = False
+            self.blackboard["is_interruption"] = True
             self.blackboard["stage_mode"] = False
             print("---- Behavior tree disabled")
 

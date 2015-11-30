@@ -441,6 +441,9 @@ class FaceTrack:
     # the face_loc_cb accomplishes the same thing. So maybe should
     # remove this someday.
     def face_event_cb(self, data):
+        if not self.blackboard["behavior_tree_on"]:
+            return
+
         if data.face_event.startswith(self.EVENT_RECOGNIZE_FACE):
             # Extract the name from the event name
             idx = len(self.EVENT_RECOGNIZE_FACE)
@@ -474,6 +477,9 @@ class FaceTrack:
     # we also use this as the main update loop, and drive all look-at
     # actions from here.
     def face_loc_cb(self, data):
+        if not self.blackboard["behavior_tree_on"]:
+            return
+
         for face in data.faces:
             fid = face.id
             loc = face.point
