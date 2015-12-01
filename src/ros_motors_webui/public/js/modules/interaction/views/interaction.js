@@ -20,9 +20,9 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     footer: 'footer',
                     languageButton: '.app-language-select button',
                     recognitionMethodButton: '.app-recognition-select button',
-                    adjustButton: '.app-adjust-button',
-                    noiseEnergySlider: '.app-noise-energy-slider',
-                    noiseEnergyValue: '.app-noise-energy-value',
+                    adjustNoiseButton: '.app-adjust-noise-button',
+                    noiseSlider: '.app-noise-slider',
+                    noiseValue: '.app-noise-value .value'
                 },
                 events: {
                     'touchstart @ui.recordButton': 'toggleSpeech',
@@ -32,7 +32,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     'click @ui.sendButton': 'sendClicked',
                     'click @ui.languageButton': 'languageButtonClick',
                     'click @ui.recognitionMethodButton': 'recognitionButtonClick',
-                    'click @ui.adjustButton': 'adjustButtonClick',
+                    'click @ui.adjustNoiseButton': 'adjustButtonClick'
                 },
                 initialize: function () {
                     self = this;
@@ -136,17 +136,21 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     });
                     this.speechStarted = 0;
 
-                    this.ui.noiseEnergySlider.slider({
+                    this.ui.noiseSlider.slider({
                         range: "min",
                         min: 0,
+                        animate: true,
                         max: 5000,
                         value: 500,
                         change: function (e, ui) {
                             self.onNoiseEnergyChange(ui.value);
+                        },
+                        slide: function (e, ui) {
+                            self.ui.noiseValue.html(ui.value);
                         }
                     });
                     api.getRosParam('/' + api.config.robot + '/recorder/energy_threshold', function (value) {
-                        self.ui.noiseEnergySlider.slider('value', value);
+                        self.ui.noiseSlider.slider('value', value);
                     });
                 },
                 responseCallback: function (msg) {
@@ -289,7 +293,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     if (self.messages[language]) self.collection.add(self.messages[language].models);
                 },
                 enableWebspeech: function () {
-
                     if (!this.speechRecognition || !this.speechEnabled) {
                         if ('webkitSpeechRecognition' in window) {
                             this.speechRecognition = new webkitSpeechRecognition();
@@ -339,14 +342,16 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                         };
                         this.speechRecognition.onend = function () {
-                            if (self.speechEnabled){
-                                var timeSinceLastStart = new Date().getTime()-self.speechStarted;
-                                if (timeSinceLastStart < 1000){
-                                    setTimeout(function(){self.speechRecognition.start();})
-                                }else{
+                            if (self.speechEnabled) {
+                                var timeSinceLastStart = new Date().getTime() - self.speechStarted;
+                                if (timeSinceLastStart < 1000) {
+                                    setTimeout(function () {
+                                        self.speechRecognition.start();
+                                    }, 1000);
+                                } else {
                                     self.speechRecognition.start();
                                 }
-                            }else{
+                            } else {
                                 console.log('end of speech');
                                 api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
                             }
@@ -369,7 +374,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 setRecognitionMethod: function (method) {
                     // set default
-                    if (! method) method = 'webspeech';
+                    if (!method) method = 'webspeech';
                     this.disableSpeech();
 
                     this.ui.recognitionMethodButton.removeClass('active');
@@ -379,14 +384,16 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     api.setRosParam('/' + api.config.robot + '/webui/speech_recognition', method);
                 },
                 adjustButtonClick: function (e) {
+                    this.ui.adjustNoiseButton.blur();
+
                     api.getRosParam('/' + api.config.robot + '/webui/speech_recognition', function (method) {
                         if (method == 'iflytek') {
                             api.setDynParam('/' + api.config.robot + '/recorder', 'adjust_noise', true, {
                                 success: function () {
-                                    self.ui.adjustButton.removeClass('active');
+                                    self.ui.adjustNoiseButton.removeClass('active');
                                     api.getRosParam('/' + api.config.robot + '/recorder/energy_threshold', function (value) {
                                         console.log('Ambient noise threshold ' + value);
-                                        self.ui.noiseEnergySlider.slider('value', value);
+                                        self.ui.noiseSlider.slider('value', value);
                                     });
                                 },
                                 error: function () {
@@ -401,7 +408,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         if (method == 'iflytek') {
                             api.setDynParam('/' + api.config.robot + '/recorder', 'energy_threshold', value, {
                                 success: function () {
-                                    self.ui.noiseEnergyValue.html(value);
+                                    self.ui.noiseValue.html(value);
                                     console.log('Change noise energy');
                                 },
                                 error: function () {
