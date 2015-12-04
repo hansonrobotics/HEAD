@@ -11,6 +11,7 @@ define(['application', 'backbone', 'lib/api', './views/layout', './views/perform
 
                 performanceCollection.fetch();
                 api.blenderMode.enable();
+                api.disableInteractionMode();
                 // show page
                 App.LayoutInstance.setTitle('Interactions and Performances');
                 App.LayoutInstance.getRegion('content').show(layoutView);

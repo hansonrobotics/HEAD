@@ -307,9 +307,11 @@ class Tree():
         self.blackboard["background_blob_targets"] = []
         self.blackboard["background_talking_faces"] = []
         self.blackboard["background_recognized_face_targets"] = []
+        self.blackboard["background_x_recognized_face_targets"] = []
         self.blackboard["current_glance_target"] = 0
         self.blackboard["current_face_target"] = 0
         self.blackboard["new_look_at_face"] = 0
+        self.blackboard["rs_face_targets"] = []
         # A recognized face and its name
         self.blackboard["recog_face"] = 0
         self.blackboard["recog_face_name"] = ""
@@ -714,6 +716,7 @@ class Tree():
             self.is_someone_selected(),
             self.is_not_current_face(id="new_look_at_face"),
             self.assign_face_target(variable="current_face_target", value="new_look_at_face"),
+            self.assign_var_value(variable="new_look_at_face", value=0),
             self.record_start_time(variable="interact_with_face_target_since"),
             self.show_expression(emo_class="new_arrival_emotions", trigger="new_person_selected"),
             self.interact_with_face_target(id="current_face_target", new_face=True, trigger="new_person_selected")
@@ -751,13 +754,18 @@ class Tree():
         print kwargs["str"]
         yield True
 
+    @owyl.taskmethod
+    def assign_var_value(self, **kwargs):
+        self.blackboard[kwargs["variable"]] = kwargs["value"]
+        yield True
+
     # Print emotional state
     @owyl.taskmethod
     def sync_variables(self, **kwargs):
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
         self.blackboard["talking_faces"] = self.blackboard["background_talking_faces"]
         self.blackboard["blob_targets"] = self.blackboard["background_blob_targets"]
-        self.blackboard["recognized_face_targets"] = self.blackboard["background_recognized_face_targets"]
+        self.blackboard["recognized_face_targets"] = self.blackboard["background_x_recognized_face_targets"]
         print "Visible faces: ", self.blackboard["face_targets"]
         print "Talking faces: ", self.blackboard["talking_faces"]
         yield True

@@ -103,6 +103,7 @@ class FaceTrack:
         self.TOPIC_LOOK_AT_FACE = "look_at_face"
 
         self.TOPIC_FACE_LOCATIONS = "/camera/face_locations"
+        self.TOPIC_RS_FACE_LOCATIONS = "/rs_camera/face_locations"
 
         # Published blender_api topics
         self.TOPIC_FACE_TARGET = "/blender_api/set_face_target"
@@ -113,6 +114,7 @@ class FaceTrack:
 
         # Face location information from pi_vision
         rospy.Subscriber(self.TOPIC_FACE_LOCATIONS, Faces, self.face_loc_cb)
+        rospy.Subscriber(self.TOPIC_RS_FACE_LOCATIONS, Faces, self.rs_face_loc_cb)
 
         # Where to look
         self.look_pub = rospy.Publisher(self.TOPIC_FACE_TARGET,
@@ -217,8 +219,8 @@ class FaceTrack:
         self.blackboard["lost_face"] = fid
         self.blackboard["background_face_targets"].remove(fid)
         # If it is a recognized face, remove it as well
-        if fid in self.blackboard["background_recognized_face_targets"]:
-            self.blackboard["background_recognized_face_targets"]
+        if fid in self.blackboard["background_x_recognized_face_targets"]:
+            self.blackboard["background_x_recognized_face_targets"].remove(fid)
         # If it is a talking face, remove it as well
         if fid in self.blackboard["background_talking_faces"]:
             self.blackboard["background_talking_faces"].remove(fid)
@@ -240,8 +242,8 @@ class FaceTrack:
         if blob_id in self.blackboard["background_blob_targets"]:
             return
 
-        if faceid not in self.blackboard["background_face_targets"]:
-            self.blackboard["background_face_targets"].append(faceid)
+        if blob_id not in self.blackboard["background_face_targets"]:
+            self.blackboard["background_face_targets"].append(blob_id)
 
         self.blackboard["background_blob_targets"].append(blob_id)
 
@@ -256,8 +258,11 @@ class FaceTrack:
     def add_recognized_face_to_bb(self, faceid, name):
         if faceid in self.blackboard["background_recognized_face_targets"]:
             return
+        if faceid in self.blackboard["background_x_recognized_face_targets"]:
+            return
 
         self.blackboard["background_recognized_face_targets"].append(faceid)
+        self.blackboard["background_x_recognized_face_targets"].append(faceid)
         self.blackboard["recog_face"] = faceid
         self.blackboard["recog_face_name"] = name
         self.blackboard["is_interruption"] = True
@@ -471,6 +476,20 @@ class FaceTrack:
 
         elif data.face_event == self.EVENT_LOST_BLOB:
             self.remove_blob(data.face_id)
+
+    def rs_face_loc_cb(self,data):
+        if not self.blackboard["behavior_tree_on"]:
+            return
+        current_faces = []
+        for face in data.faces:
+            fid = face.id
+            current_faces.append(fid)
+            if fid not in self.blackboard['rs_face_targets']:
+                self.blackboard['rs_face_targets'].append(fid)
+        for f in self.blackboard['rs_face_targets']:
+            if f not in current_faces:
+                self.remove_face_from_bb(f)
+        self.face_loc_cb(data)
 
     # pi_vision ROS callback, called when pi_vision has new face
     # location data for us. Because this happens frequently (10x/second)
