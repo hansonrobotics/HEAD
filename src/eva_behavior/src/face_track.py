@@ -61,8 +61,8 @@ class FaceTrack:
         logger.info("Starting Face Tracker")
         self.blackboard = owyl_bboard
 
-        # List of currently visible faces
-        self.visible_faces = []
+        # List of currently visible faces or blobs
+        self.visible_faces_blobs = []
         # List of locations of currently visible faces
         self.face_locations = {}
 
@@ -91,13 +91,19 @@ class FaceTrack:
         self.TOPIC_FACE_EVENT = "/camera/face_event"
         self.EVENT_NEW_FACE = "new_face"
         self.EVENT_LOST_FACE = "lost_face"
+        self.EVENT_NEW_BLOB = "new_blob"
+        self.EVENT_LOST_BLOB = "lost_blob"
         # Overrides current face beeiing tracked by WebUI
         self.EVENT_TRACK_FACE = "track_face"
+        self.EVENT_START_TALKING = "started_talking"
+        self.EVENT_STOP_TALKING = "stopped_talking"
+        self.EVENT_RECOGNIZE_FACE = "recognized_"
 
         # Publishes the current tracked face
         self.TOPIC_LOOK_AT_FACE = "look_at_face"
 
         self.TOPIC_FACE_LOCATIONS = "/camera/face_locations"
+        self.TOPIC_RS_FACE_LOCATIONS = "/rs_camera/face_locations"
 
         # Published blender_api topics
         self.TOPIC_FACE_TARGET = "/blender_api/set_face_target"
@@ -108,6 +114,7 @@ class FaceTrack:
 
         # Face location information from pi_vision
         rospy.Subscriber(self.TOPIC_FACE_LOCATIONS, Faces, self.face_loc_cb)
+        rospy.Subscriber(self.TOPIC_RS_FACE_LOCATIONS, Faces, self.rs_face_loc_cb)
 
         # Where to look
         self.look_pub = rospy.Publisher(self.TOPIC_FACE_TARGET,
@@ -141,7 +148,7 @@ class FaceTrack:
             self.gaze_pub.publish(trg)
 
         self.last_lookat = 0
-        if faceid not in self.visible_faces :
+        if faceid not in self.visible_faces_blobs :
             self.gaze_at = 0
             return
 
@@ -164,7 +171,7 @@ class FaceTrack:
             self.look_pub.publish(trg)
 
         self.last_lookat = 0
-        if faceid not in self.visible_faces :
+        if faceid not in self.visible_faces_blobs :
             self.look_at = 0
             return
 
@@ -186,7 +193,6 @@ class FaceTrack:
     # Private functions, not for use outside of this class.
     # Add a face to the Owyl blackboard.
     def add_face_to_bb(self, faceid):
-
         # We already know about it.
         if faceid in self.blackboard["background_face_targets"]:
             return
@@ -196,42 +202,124 @@ class FaceTrack:
         self.blackboard["new_face"] = faceid
         self.blackboard["background_face_targets"].append(faceid)
 
+    # Add a talking face to Owyl blackboard.
+    def add_talking_face_to_bb(self, faceid):
+        if faceid in self.blackboard["background_talking_faces"]:
+            return
+
+        self.blackboard["background_talking_faces"].append(faceid)
+        self.blackboard["is_interruption"] = True
+
     # Remove a face from the Owyl blackboard.
     def remove_face_from_bb(self, fid):
-
         if fid not in self.blackboard["background_face_targets"]:
             return
 
         # Update the blackboard.
-        self.blackboard["is_interruption"] = True
         self.blackboard["lost_face"] = fid
         self.blackboard["background_face_targets"].remove(fid)
+        # If it is a recognized face, remove it as well
+        if fid in self.blackboard["background_x_recognized_face_targets"]:
+            self.blackboard["background_x_recognized_face_targets"].remove(fid)
+        # If it is a talking face, remove it as well
+        if fid in self.blackboard["background_talking_faces"]:
+            self.blackboard["background_talking_faces"].remove(fid)
+        self.blackboard["is_interruption"] = True
         # If the robot lost the new face during the initial
         # interaction, reset new_face variable
         if self.blackboard["new_face"] == fid :
             self.blackboard["new_face"] = ""
 
-    # Start tracking a face
-    def add_face(self, faceid):
-        if faceid in self.visible_faces:
+    # Remove a talking face from the Owyl blackboard.
+    def remove_talking_face_from_bb(self, faceid):
+        if faceid not in self.blackboard["background_talking_faces"]:
             return
 
-        self.visible_faces.append(faceid)
+        self.blackboard["background_talking_faces"].remove(faceid)
 
-        logger.info("New face added to visibile faces: " +
-            str(self.visible_faces))
+    # Add a blob to the Owyl blackboard.
+    def add_blob_to_bb(self, blob_id):
+        if blob_id in self.blackboard["background_blob_targets"]:
+            return
+
+        if blob_id not in self.blackboard["background_face_targets"]:
+            self.blackboard["background_face_targets"].append(blob_id)
+
+        self.blackboard["background_blob_targets"].append(blob_id)
+
+    # Remove a blob from the Owyl blackboard.
+    def remove_blob_from_bb(self, blob_id):
+        if blob_id not in self.blackboard["background_blob_targets"]:
+            return
+
+        self.blackboard["background_blob_targets"].remove(blob_id)
+
+    # Add a recognized face to the Owyl blackboard.
+    def add_recognized_face_to_bb(self, faceid, name):
+        if faceid in self.blackboard["background_recognized_face_targets"]:
+            return
+        if faceid in self.blackboard["background_x_recognized_face_targets"]:
+            return
+
+        self.blackboard["background_recognized_face_targets"].append(faceid)
+        self.blackboard["background_x_recognized_face_targets"].append(faceid)
+        self.blackboard["recog_face"] = faceid
+        self.blackboard["recog_face_name"] = name
+        self.blackboard["is_interruption"] = True
+
+    # Start tracking a face
+    def add_face(self, faceid):
+        if faceid in self.visible_faces_blobs:
+            return
+
+        self.visible_faces_blobs.append(faceid)
+
+        logger.info("New face added to visible faces/blobs: " +
+            str(self.visible_faces_blobs))
 
         self.add_face_to_bb(faceid)
+
+    # Start tracking a blob
+    def add_blob(self, blob_id):
+        if blob_id in self.visible_faces_blobs:
+            return
+
+        self.visible_faces_blobs.append(blob_id)
+
+        logger.info("New blob added to visible faces/blobs: " + str(self.visible_faces_blobs))
+
+        self.add_blob_to_bb(blob_id)
+
+    # Start tracking a talking face
+    def add_talking_face(self, faceid):
+        self.add_talking_face_to_bb(faceid)
+        logger.info("New talking face added: " + str(faceid))
+
+    # Start tracking a recognized face
+    def add_recognized_face(self, faceid, name):
+        self.add_recognized_face_to_bb(faceid, name)
+        logger.info("New recognized face added: " + name + " \(" + str(faceid) + "\)")
 
     # Stop tracking a face
     def remove_face(self, faceid):
         self.remove_face_from_bb(faceid)
-        if faceid in self.visible_faces:
-            self.visible_faces.remove(faceid)
+        if faceid in self.visible_faces_blobs:
+            self.visible_faces_blobs.remove(faceid)
 
-        logger.info("Lost face; visibile faces now: " + str(self.visible_faces))
+        logger.info("Lost face; visible faces/blobs now: " + str(self.visible_faces_blobs))
 
+    # Stop tracking a talking face
+    def remove_talking_face(self, faceid):
+        self.remove_talking_face_from_bb(faceid)
+        logger.info("Removed a talking face: " + str(faceid))
 
+    # Stop tracking a blob
+    def remove_blob(self, blob_id):
+        self.remove_blob_from_bb(blob_id)
+        if blob_id in self.visible_faces_blobs:
+            self.visible_faces_blobs.remove(blob_id)
+
+        logger.info("Lost blob; visible faces/blobs now: " + str(self.visible_faces_blobs))
 
     # ----------------------------------------------------------
     # Main look-at action driver.  Should be called at least a few times
@@ -278,8 +366,8 @@ class FaceTrack:
             if 0 < self.gaze_at and self.look_at <= 0:
                 # logger.info("Gaze at id " + str(self.gaze_at))
                 try:
-                    if not self.gaze_at in self.visible_faces:
-                        raise Exception("Face not visible")
+                    if not self.gaze_at in self.visible_faces_blobs:
+                        raise Exception("Face/Blob not visible")
                     current_trg = self.face_target(self.blackboard["current_face_target"])
                     gaze_trg = self.face_target(self.gaze_at)
                     self.glance_or_look_at(current_trg, gaze_trg)
@@ -297,8 +385,8 @@ class FaceTrack:
             if 0 < self.look_at:
                 logger.info("Look at id: " + str(self.look_at))
                 try:
-                    if not self.look_at in self.visible_faces:
-                        raise Exception("Face not visible")
+                    if not self.look_at in self.visible_faces_blobs:
+                        raise Exception("Face/Blob not visible")
                     trg = self.face_target(self.look_at)
                     self.look_pub.publish(trg)
                 except tf.LookupException as lex:
@@ -325,7 +413,7 @@ class FaceTrack:
         if z == 0:
             z = 1
         gaze_distance = math.sqrt(math.pow((current_trg.x - gaze_trg.x), 2) + \
-                      math.pow((current_trg.y - gaze_trg.y), 2)) / z
+                        math.pow((current_trg.y - gaze_trg.y), 2)) / z
         if gaze_distance > self.blackboard["max_glance_distance"]:
             logger.info("Reached max_glance_distance, look at the face instead")
             self.look_pub.publish(gaze_trg)
@@ -358,7 +446,16 @@ class FaceTrack:
     # the face_loc_cb accomplishes the same thing. So maybe should
     # remove this someday.
     def face_event_cb(self, data):
-        if data.face_event == self.EVENT_NEW_FACE:
+        if not self.blackboard["behavior_tree_on"]:
+            return
+
+        if data.face_event.startswith(self.EVENT_RECOGNIZE_FACE):
+            # Extract the name from the event name
+            idx = len(self.EVENT_RECOGNIZE_FACE)
+            name = data.face_event[idx:]
+            self.add_recognized_face(data.face_id, name)
+
+        elif data.face_event == self.EVENT_NEW_FACE:
             self.add_face(data.face_id)
 
         elif data.face_event == self.EVENT_LOST_FACE:
@@ -368,12 +465,40 @@ class FaceTrack:
             self.blackboard['new_look_at_face'] = data.face_id
             self.blackboard['is_interruption'] = True
 
+        elif data.face_event == self.EVENT_START_TALKING:
+            self.add_talking_face(data.face_id)
+
+        elif data.face_event == self.EVENT_STOP_TALKING:
+            self.remove_talking_face(data.face_id)
+
+        elif data.face_event == self.EVENT_NEW_BLOB:
+            self.add_blob(data.face_id)
+
+        elif data.face_event == self.EVENT_LOST_BLOB:
+            self.remove_blob(data.face_id)
+
+    def rs_face_loc_cb(self,data):
+        if not self.blackboard["behavior_tree_on"]:
+            return
+        current_faces = []
+        for face in data.faces:
+            fid = face.id
+            current_faces.append(fid)
+            if fid not in self.blackboard['rs_face_targets']:
+                self.blackboard['rs_face_targets'].append(fid)
+        for f in self.blackboard['rs_face_targets']:
+            if f not in current_faces:
+                self.remove_face_from_bb(f)
+        self.face_loc_cb(data)
 
     # pi_vision ROS callback, called when pi_vision has new face
     # location data for us. Because this happens frequently (10x/second)
     # we also use this as the main update loop, and drive all look-at
     # actions from here.
     def face_loc_cb(self, data):
+        if not self.blackboard["behavior_tree_on"]:
+            return
+
         for face in data.faces:
             fid = face.id
             loc = face.point
@@ -405,7 +530,9 @@ class FaceTrack:
         if len(faces) < 1:
             return 0
         # Faces with smaller (less than <1,000,000 ids are prioritized
-        small_ids = [f for f in faces if (f < 1000000)and (f != exclude)]
+        small_ids = [f for f in faces if (f < 1000000) and (f != exclude)]
         if len(small_ids) < 1:
+            # return random.choice(small_ids)
+            return random.choice(faces)
+        else:
             return random.choice(small_ids)
-        return random.choice(faces)

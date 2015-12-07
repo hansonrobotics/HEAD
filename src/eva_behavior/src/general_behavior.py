@@ -38,6 +38,7 @@ from blender_api_msgs.msg import SetGesture
 from blender_api_msgs.msg import Target
 from blender_api_msgs.msg import BlinkCycle
 from blender_api_msgs.msg import SaccadeCycle
+from chatbot.msg import ChatMessage
 # local stuff.
 from face_track import FaceTrack
 
@@ -215,11 +216,17 @@ class Tree():
         self.blackboard["max_duration_for_interaction"] = config.getfloat("interaction", "duration_max")
         self.blackboard["time_to_change_face_target_min"] = config.getfloat("interaction", "time_to_change_face_target_min")
         self.blackboard["time_to_change_face_target_max"] = config.getfloat("interaction", "time_to_change_face_target_max")
+        self.blackboard["time_to_change_talking_face_target_min"] = config.getfloat("interaction", "time_to_change_talking_face_target_min")
+        self.blackboard["time_to_change_talking_face_target_max"] = config.getfloat("interaction", "time_to_change_talking_face_target_max")
         self.blackboard["glance_probability"] = config.getfloat("interaction", "glance_probability")
         self.blackboard["glance_probability_for_new_faces"] = config.getfloat("interaction", "glance_probability_for_new_faces")
         self.blackboard["glance_probability_for_lost_faces"] = config.getfloat("interaction", "glance_probability_for_lost_faces")
         self.blackboard["z_pitch_eyes"] = config.getfloat("interaction", "z_pitch_eyes")
         self.blackboard["max_glance_distance"] = config.getfloat("interaction", "max_glance_distance")
+        self.blackboard["glance_face_duration"] = config.getfloat("interaction", "glance_face_duration")
+        self.blackboard["glance_blob_duration"] = config.getfloat("interaction", "glance_blob_duration")
+        self.blackboard["min_quick_look_duration"] = config.getfloat("interaction", "min_quick_look_duration")
+        self.blackboard["max_quick_look_duration"] = config.getfloat("interaction", "max_quick_look_duration")
         self.blackboard["face_study_probabilities"] = config.getfloat("interaction", "face_study_probabilities")
         self.blackboard["face_study_duration_min"] = config.getfloat("interaction", "face_study_duration_min")
         self.blackboard["face_study_duration_max"] = config.getfloat("interaction", "face_study_duration_max")
@@ -292,11 +299,22 @@ class Tree():
         self.blackboard["lost_face"] = 0
         # IDs of faces in the scene, updated once per cycle
         self.blackboard["face_targets"] = []
+        self.blackboard["blob_targets"] = []
+        self.blackboard["talking_faces"] = []
+        self.blackboard["recognized_face_targets"] = []
         # IDs of faces in the scene, updated immediately
         self.blackboard["background_face_targets"] = []
+        self.blackboard["background_blob_targets"] = []
+        self.blackboard["background_talking_faces"] = []
+        self.blackboard["background_recognized_face_targets"] = []
+        self.blackboard["background_x_recognized_face_targets"] = []
         self.blackboard["current_glance_target"] = 0
         self.blackboard["current_face_target"] = 0
         self.blackboard["new_look_at_face"] = 0
+        self.blackboard["rs_face_targets"] = []
+        # A recognized face and its name
+        self.blackboard["recog_face"] = 0
+        self.blackboard["recog_face_name"] = ""
         self.blackboard["interact_with_face_target_since"] = 0.0
         self.blackboard["sleep_since"] = 0.0
         self.blackboard["bored_since"] = 0.0
@@ -349,6 +367,7 @@ class Tree():
             BlinkCycle,queue_size=1)
         self.saccade_pub = rospy.Publisher("/blender_api/set_saccade",
             SaccadeCycle,queue_size=1)
+        self.chat_pub = rospy.Publisher("/han/chatbot_responses", String, queue_size=1)
 
         self.do_pub_gestures = True
         self.do_pub_emotions = True
@@ -518,6 +537,76 @@ class Tree():
         return tree
 
     # -----------------------------
+    # Interact with people who are talking
+    # If someone is talking and she is not currently interacting with any of them, interact with one of them
+    # If it is time to switch target, interact with someone else who is talking
+    # If only one person is talking, keep interacting with that person
+    # Otherwise she will continue with the current interaction
+    # she may also quickly look at other people if there are more than one people in the scene
+    def interact_with_talking_people(self):
+        tree = owyl.sequence(
+            self.is_someone_talking(),
+            owyl.selector(
+                ##### Interact With A Talking Person #####
+                owyl.sequence(
+                    owyl.selector(
+                        self.is_not_interacting_with_a_talking_person(),
+                        self.is_only_one_person_talking()
+                    ),
+                    self.select_a_talking_face_target(),
+                    self.record_start_time(variable="interact_with_face_target_since"),
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking"),
+                    self.print_status(str="----- Interact with a talking person")
+                ),
+
+                ##### Start A New Interaction With A Talking Person #####
+                owyl.sequence(
+                    owyl.selector(
+                        self.is_not_interacting_with_someone(),
+                        owyl.sequence(
+                            self.is_more_than_one_person_talking(),
+                            self.is_time_to_change_face_target(min="time_to_change_talking_face_target_min", max="time_to_change_talking_face_target_max")
+                        )
+                    ),
+                    self.select_a_talking_face_target(),
+                    self.record_start_time(variable="interact_with_face_target_since"),
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking"),
+                    self.print_status(str="----- Started a new interaction with another talking person")
+                ),
+
+                ##### Quick-look At Other Faces & Continue With The Last Interaction #####
+                owyl.sequence(
+                    owyl.selector(
+                        owyl.sequence(
+                            self.is_more_than_one_face_target(),
+                            # TODO: Maybe to define a new config for the someone is talking case
+                            self.dice_roll(event="group_interaction"),
+                            self.select_a_quick_look_target(),
+                            self.quick_look_at(id="current_quick_look_target", trigger="someone_is_talking")
+                        ),
+                        owyl.succeed()
+                    ),
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="someone_is_talking"),
+                    self.print_status(str="----- Continue interacting with a talking person")
+                )
+            )
+        )
+        return tree
+
+    # -----------------------------
+    def interact_with_recognized_people(self):
+        tree = owyl.sequence(
+            self.is_a_recognized_face_to_be_greeted(),
+            self.print_status(str="----- Greet a recognized face"),
+            self.assign_face_target(variable="current_face_target", value="recog_face"),
+            self.record_start_time(variable="interact_with_face_target_since"),
+            self.interact_with_face_target(id="current_face_target", new_face=False, trigger="recognized_someone"),
+            self.greet(id="current_face_target", name="recog_face_name", trigger="recognized_someone"),
+            self.clear_recognized_face()
+        )
+        return tree
+
+    # -----------------------------
     # Interact with people
     # If she is not currently interacting with anyone, or it's time to switch target
     # she will start interacting with someone else
@@ -533,12 +622,13 @@ class Tree():
                         self.is_not_interacting_with_someone(),
                         owyl.sequence(
                             self.is_more_than_one_face_target(),
-                            self.is_time_to_change_face_target()
+                            self.is_time_to_change_face_target(min="time_to_change_face_target_min", max="time_to_change_face_target_max")
                         )
                     ),
                     self.select_a_face_target(),
                     self.record_start_time(variable="interact_with_face_target_since"),
-                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="people_in_scene")
+                    self.interact_with_face_target(id="current_face_target", new_face=False, trigger="people_in_scene"),
+                    self.print_status(str="----- Started a new interaction")
                 ),
 
                 ##### Glance At Other Faces & Continue With The Last Interaction #####
@@ -565,7 +655,6 @@ class Tree():
             )
         )
         return tree
-
 
     # -------------------
     # Nothing interesting is happening.
@@ -619,6 +708,7 @@ class Tree():
             )
         )
         return tree
+
     # ------------------------------------------------------------------
     # If operator sets face it should change current face target
     def face_set_by_operator(self):
@@ -626,6 +716,7 @@ class Tree():
             self.is_someone_selected(),
             self.is_not_current_face(id="new_look_at_face"),
             self.assign_face_target(variable="current_face_target", value="new_look_at_face"),
+            self.assign_var_value(variable="new_look_at_face", value=0),
             self.record_start_time(variable="interact_with_face_target_since"),
             self.show_expression(emo_class="new_arrival_emotions", trigger="new_person_selected"),
             self.interact_with_face_target(id="current_face_target", new_face=True, trigger="new_person_selected")
@@ -646,6 +737,8 @@ class Tree():
                             self.face_set_by_operator(),
                             self.someone_arrived(),
                             self.someone_left(),
+                            self.interact_with_talking_people(),
+                            self.interact_with_recognized_people(),
                             self.interact_with_people(),
                             self.nothing_is_happening()
                         )
@@ -661,10 +754,20 @@ class Tree():
         print kwargs["str"]
         yield True
 
+    @owyl.taskmethod
+    def assign_var_value(self, **kwargs):
+        self.blackboard[kwargs["variable"]] = kwargs["value"]
+        yield True
+
     # Print emotional state
     @owyl.taskmethod
     def sync_variables(self, **kwargs):
         self.blackboard["face_targets"] = self.blackboard["background_face_targets"]
+        self.blackboard["talking_faces"] = self.blackboard["background_talking_faces"]
+        self.blackboard["blob_targets"] = self.blackboard["background_blob_targets"]
+        self.blackboard["recognized_face_targets"] = self.blackboard["background_x_recognized_face_targets"]
+        print "Visible faces: ", self.blackboard["face_targets"]
+        print "Talking faces: ", self.blackboard["talking_faces"]
         yield True
 
     @owyl.taskmethod
@@ -730,6 +833,16 @@ class Tree():
             yield False
 
     @owyl.taskmethod
+    def is_a_recognized_face_to_be_greeted(self, **kwargs):
+        self.blackboard["is_interruption"] = False
+        if self.blackboard["recog_face"] > 0:
+            self.blackboard["bored_since"] = 0
+            print("----- Recognized someone! id: " + str(self.blackboard["recog_face"]))
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
     def is_not_current_face(self, **kwargs):
         if self.blackboard["current_face_target"] == self.blackboard[kwargs["id"]]:
             print("----- Is Interacting with id: {} already".format(self.blackboard[kwargs["id"]]))
@@ -762,6 +875,13 @@ class Tree():
             yield False
 
     @owyl.taskmethod
+    def is_not_interacting_with_a_talking_person(self, **kwargs):
+        if not self.blackboard["current_face_target"] in self.blackboard["talking_faces"]:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
     def were_no_people_in_the_scene(self, **kwargs):
         if len(self.blackboard["face_targets"]) == 1:
             print("----- Previously, no one in the scene!")
@@ -787,8 +907,37 @@ class Tree():
             yield False
 
     @owyl.taskmethod
+    def is_someone_talking(self, **kwargs):
+        self.blackboard["is_interruption"] = False
+        if len(self.blackboard["talking_faces"]) > 0:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
+    def is_no_one_talking(self, **kwargs):
+        if len(self.blackboard["talking_faces"]) == 0:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
+    def is_more_than_one_person_talking(self, **kwargs):
+        if len(self.blackboard["talking_faces"]) > 1:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
     def is_more_than_one_face_target(self, **kwargs):
         if len(self.blackboard["face_targets"]) > 1:
+            yield True
+        else:
+            yield False
+
+    @owyl.taskmethod
+    def is_only_one_person_talking(self, **kwargs):
+        if len(self.blackboard["talking_faces"]) == 1:
             yield True
         else:
             yield False
@@ -797,7 +946,7 @@ class Tree():
     def is_time_to_change_face_target(self, **kwargs):
         if self.blackboard["interact_with_face_target_since"] > 0 and \
                 (time.time() - self.blackboard["interact_with_face_target_since"]) >= \
-                        random.uniform(self.blackboard["time_to_change_face_target_min"], self.blackboard["time_to_change_face_target_max"]):
+                        random.uniform(self.blackboard[kwargs["min"]], self.blackboard[kwargs["max"]]):
             print "----- Time to start a new interaction!"
             yield True
         else:
@@ -834,6 +983,8 @@ class Tree():
     @owyl.taskmethod
     def is_behavior_tree_on(self, **kwargs):
         if self.blackboard["behavior_tree_on"]:
+            # Print an empty line, it is clearer to see the print_status msgs in each cycle
+            print ""
             yield True
         else:
             yield False
@@ -844,8 +995,17 @@ class Tree():
         yield True
 
     @owyl.taskmethod
+    def select_a_talking_face_target(self, **kwargs):
+        self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["talking_faces"], self.blackboard["current_face_target"])
+        yield True
+
+    @owyl.taskmethod
     def select_a_face_target(self, **kwargs):
-        self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"])
+        # Select a recognized face, if any
+        if self.blackboard["recognized_face_targets"]:
+            self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["recognized_face_targets"])
+        else:
+            self.blackboard["current_face_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"])
         yield True
 
     @owyl.taskmethod
@@ -854,8 +1014,25 @@ class Tree():
         yield True
 
     @owyl.taskmethod
+    def select_a_quick_look_target(self, **kwargs):
+        self.blackboard["current_quick_look_target"] = FaceTrack.random_face_target(self.blackboard["face_targets"], self.blackboard["current_face_target"])
+        yield True
+
+    @owyl.taskmethod
     def record_start_time(self, **kwargs):
         self.blackboard[kwargs["variable"]] = time.time()
+        yield True
+
+    @owyl.taskmethod
+    def quick_look_at(self, **kwargs):
+        face_id = self.blackboard[kwargs["id"]]
+        trigger = kwargs["trigger"]
+        self.facetrack.look_at_face(face_id)
+        self.write_log("quick_look_at_" + str(face_id), time.time(), trigger)
+
+        interval = 0.01
+        duration = random.uniform(self.blackboard["min_quick_look_duration"], self.blackboard["max_quick_look_duration"])
+        self.break_if_interruptions(interval, duration)
         yield True
 
     @owyl.taskmethod
@@ -866,7 +1043,6 @@ class Tree():
         self.write_log("look_at_" + str(face_id), time.time(), trigger)
 
         if self.should_show_expression("positive_emotions") or kwargs["new_face"]:
-
             if self.conversing:
                 self.pick_random_expression("neutral_speech_emotions",trigger)
             else:
@@ -891,6 +1067,17 @@ class Tree():
         print "----- Interacting w/face id:" + str(face_id) + " for " + str(duration)[:5] + " seconds"
         self.break_if_interruptions(interval, duration)
         yield True
+
+    @owyl.taskmethod
+    def greet(self, **kwargs):
+        face_id = self.blackboard[kwargs["id"]]
+        name = self.blackboard[kwargs["name"]]
+        trigger = kwargs["trigger"]
+
+        self.write_log("greeting: " + str(face_id), time.time(), trigger)
+
+        msg = "Hi " + name
+        self.chat_pub.publish(msg)
 
     @owyl.taskmethod
     def face_study_saccade(self, **kwargs):
@@ -918,19 +1105,20 @@ class Tree():
 
     @owyl.taskmethod
     def glance_at(self, **kwargs):
-        face_id = self.blackboard[kwargs["id"]]
-        print "----- Glancing at face:" + str(face_id)
-        glance_seconds = 1
-        self.facetrack.glance_at_face(face_id, glance_seconds)
-        self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
+        target_id = self.blackboard[kwargs["id"]]
+        print "----- Glancing at face/blob:" + str(target_id)
+        if target_id in self.blackboard["face_targets"]:
+            self.facetrack.glance_at_face(target_id, self.blackboard["glance_face_duration"])
+        else:
+            self.facetrack.glance_at_face(target_id, self.blackboard["glance_blob_duration"])
+        self.write_log("glance_at_" + str(target_id), time.time(), kwargs["trigger"])
         yield True
 
     @owyl.taskmethod
     def glance_at_new_face(self, **kwargs):
         face_id = self.blackboard["new_face"]
         print "----- Glancing at new face:" + str(face_id)
-        glance_seconds = 1
-        self.facetrack.glance_at_face(face_id, glance_seconds)
+        self.facetrack.glance_at_face(face_id, self.blackboard["glance_face_duration"])
         self.write_log("glance_at_" + str(face_id), time.time(), kwargs["trigger"])
         yield True
 
@@ -1087,14 +1275,18 @@ class Tree():
     @owyl.taskmethod
     def clear_new_face_target(self, **kwargs):
         #if not self.blackboard["is_interruption"]:
-        print "----- Cleared new face: " + str(self.blackboard["new_face"])
         self.blackboard["new_face"] = 0
         yield True
 
     @owyl.taskmethod
     def clear_lost_face_target(self, **kwargs):
-        print "----- Cleared lost face: " + str(self.blackboard["lost_face"])
         self.blackboard["lost_face"] = 0
+        yield True
+
+    @owyl.taskmethod
+    def clear_recognized_face(self, **kwargs):
+        self.blackboard["recog_face"] = 0
+        self.blackboard["recog_face_name"] = ""
         yield True
 
     # This avoids burning CPU time when the behavior system is off.
@@ -1242,8 +1434,17 @@ class Tree():
             self.do_pub_gestures = False
 
         elif data.data == "btree_off":
-            self.blackboard["is_interruption"] = True
+            # Turn the head to neutral position
+            self.facetrack.look_at_face(0)
+            # Reset the variables that we sync in every cycle
+            self.blackboard["face_targets"] = []
+            self.blackboard["recognized_face_targets"] = []
+            self.blackboard["talking_faces"] = []
+            self.blackboard["blob_targets"] = []
+            self.facetrack.visible_faces_blobs = []
+            # Other flags
             self.blackboard["behavior_tree_on"] = False
+            self.blackboard["is_interruption"] = True
             self.blackboard["stage_mode"] = False
             print("---- Behavior tree disabled")
 
