@@ -58,9 +58,8 @@ class RosPololuNode:
             if self._controller_type == 'MicroSSC':
                 self.controller = MicroSSC(port)
         except Exception as ex:
-            logger.error("Error creating the motor controller")
+            logger.warn("Error creating the motor controller")
             logger.warn(ex)
-            rospy.logerror("Error creating the motor controller")
             self.idle = True
             rospy.set_param(topic_prefix.strip("/")+"_enabled",False)
             return
