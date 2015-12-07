@@ -26,19 +26,16 @@
             <node pkg="topic_tools" type="mux" name="head_pau" args="head_pau no_pau /blender_api/get_pau mux:=head_pau_mux"/>
             <node pkg="topic_tools" type="mux" name="lips_pau" args="lips_pau head_pau lipsync_pau mux:=lips_pau_mux"/>
             <node pkg="topic_tools" type="mux" name="eyes_pau" args="eyes_pau head_pau eyes_tracking_pau mux:=eyes_pau_mux"/>
-            <node name="chatbot_ai" pkg="chatbot" type="ai.py" args="$(find chatbot)/aiml/ -sent">
+
+            <node name="chatbot_en" pkg="chatbot" type="ai.py" args="$(find chatbot)/aiml/ -sent">
                 <param name="properties" value="$(find robots_config)/$(arg name)/bot.properties" />
             </node>
+            <node name="chatbot_zh" pkg="chinese_chatbot" type="talker.py" />
 
             <node name="tts" pkg="tts" type="tts_talker.py">
                 <param name="topic_name" value="chatbot_responses" />
-                <param name="license" value="" />
             </node>
 
-            <node name="chatbot_zh" pkg="chinese_chatbot" type="talker.py">
-                <param name="robot_name" value="$(arg name)" />
-            </node>
-            <node name="recorder" pkg="chinese_chatbot" type="continuous_recorder.py" />
 
         </group>
     </group>
