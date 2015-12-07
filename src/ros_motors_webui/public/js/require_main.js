@@ -25,7 +25,7 @@ requirejs.config({
         select2: 'vendor/select2.min',
         d3: 'vendor/d3.min',
         RecordRTC: 'vendor/RecordRTC.min',
-        'socket.io': 'vendor/socket.io.min'
+        json_editor: 'vendor/jsoneditor.min'
     },
     shim: {
         'jquery-ui': ['jquery'],
@@ -73,6 +73,9 @@ requirejs.config({
         },
         d3: {
             exports: 'd3'
+        },
+        json_editor: {
+            exports: 'JSONEditor'
         }
     }
 });

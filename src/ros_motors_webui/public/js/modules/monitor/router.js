@@ -1,4 +1,4 @@
-define(['application', './controller'], function (App, controller) {
+define(['marionette', './controller'], function (Marionette, controller) {
     var Router = Marionette.AppRouter.extend({
         'appRoutes': {
             'admin/monitor': 'system',

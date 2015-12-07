@@ -29,6 +29,25 @@ app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
 def send_index():
     return send_from_directory(app.static_folder, 'index.html')
 
+@app.route('/robot_config/<robot_name>')
+def get_robot_config(robot_name):
+    if robot_name == 'undefined':
+        return json_encode({})
+
+    config = read_yaml(os.path.join(config_root, robot_name, 'config.yaml'))
+    return json_encode(config)
+
+@app.route('/robot_config/<robot_name>', methods=['POST'])
+def set_robot_config(robot_name):
+    motors = json.loads(request.get_data())
+    try:
+        file_name = os.path.join(config_root, robot_name, 'config.yaml')
+        write_yaml(file_name, motors)
+    except Exception as e:
+        return json_encode({'error': str(e)})
+
+    return json_encode(read_yaml(os.path.join(config_root, robot_name, 'config.yaml')))
+
 
 @app.route('/status')
 def send_monitor_status():
