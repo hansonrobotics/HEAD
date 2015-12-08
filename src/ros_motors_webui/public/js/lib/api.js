@@ -343,14 +343,14 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             });
         },
         setRobotLang: function (lang) {
-            var sr_language = null,
+            var language = null,
                 param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/lang'});
             param.set(lang);
 
-            if (lang == 'en') sr_language = 'en_us';
-            else if (lang == 'zh') sr_language = 'zh_ch';
+            if (lang == 'en') language = 'en_us';
+            else if (lang == 'zh') language = 'zh_ch';
 
-            if (sr_language) this.setDynParam('/' + this.config.robot + '/chatbot_zh', 'sr_language', sr_language);
+            if (language) this.setDynParam('/' + this.config.robot + '/speech_recognizer', 'language', language);
         },
         /**
          * Passes a "|" separated string of available scripts

@@ -36,6 +36,8 @@
                 <param name="topic_name" value="chatbot_responses" />
             </node>
 
+            <node name="recorder" pkg="recorder" type="continuous_recorder.py" />
+            <node name="speech_recognizer" pkg="isr" type="speech_recognizer.py" />
 
         </group>
     </group>
