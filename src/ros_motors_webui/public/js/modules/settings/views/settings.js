@@ -16,12 +16,14 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                 this.editor = new JSONEditor(this.ui.settings.get(0), {
                     form_name_root: 'config',
                     theme: 'bootstrap3',
-                    schema: this.model.toJSON(),
+                    schema: this.options.schema,
                     disable_collapse: true,
                     disable_edit_json: true,
                     disable_properties: true,
                     iconlib: "bootstrap3"
                 });
+
+                this.setConfig();
             },
             setConfig: function () {
                 if (this.editor)

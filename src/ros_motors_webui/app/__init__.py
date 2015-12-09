@@ -29,6 +29,11 @@ app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
 def send_index():
     return send_from_directory(app.static_folder, 'index.html')
 
+@app.route('/robot_config_schema')
+def get_robot_config_schema():
+    config = read_yaml(os.path.join(config_root, 'config_schema.yaml'))
+    return json_encode(config)
+
 @app.route('/robot_config/<robot_name>')
 def get_robot_config(robot_name):
     if robot_name == 'undefined':
