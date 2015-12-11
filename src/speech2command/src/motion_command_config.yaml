@@ -93,39 +93,39 @@ gesture:
       magnitude: 1
 
 turn:
-  - pattern: [turn center]
+  - pattern: [turn center, 居中]
     params:
       x: 1
-  - pattern: [turn right]
+  - pattern: [turn right, 右转]
     params:
       y: 1
-  - pattern: [turn left]
+  - pattern: [turn left, 左转]
     params:
       y: -1
-  - pattern: [turn up]
+  - pattern: [turn up, 抬头]
     params:
       x: 1
       z: 0.5
-  - pattern: [turn down]
+  - pattern: [turn down, 低头]
     params:
       x: 1
       z: -0.5
 
 look:
-  - pattern: [look center]
+  - pattern: [look center, 看前面, 看前方]
     params:
       x: 1
-  - pattern: [look right]
+  - pattern: [look right, 看右边]
     params:
       y: 1
-  - pattern: [look left]
+  - pattern: [look left, 看左边]
     params:
       y: -1
-  - pattern: [look up]
+  - pattern: [look up, 看上面]
     params:
       x: 1
       z: 0.5
-  - pattern: [look down]
+  - pattern: [look down, 看下面]
     params:
       x: 1
       z: -0.5
