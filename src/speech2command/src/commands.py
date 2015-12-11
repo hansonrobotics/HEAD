@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import logging
 import rospy
+import yaml
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
-from blender_api_msgs.msg import EmotionState, SetGesture
+from blender_api_msgs.msg import EmotionState, SetGesture, Target
 from calc import calculate
 
 logger = logging.getLogger('hr.speech2command.commands')
@@ -18,7 +19,7 @@ class BaseCommand(object):
         @return True: the command can recognize and handle the message
                 False: otherwise
         """
-        return True
+        return False
 
     def execute(self):
         """
@@ -29,10 +30,11 @@ class BaseCommand(object):
         """
         return True
 
-class DefaultCommand(BaseCommand):
-    def __init__(self):
+class ForwardCommand(BaseCommand):
+    def __init__(self, forward_topic_name):
+        self.forward_topic_name = forward_topic_name
         self.chatbot_speech_pub = rospy.Publisher(
-            'chatbot_speech', ChatMessage, queue_size=1)
+            self.forward_topic_name, ChatMessage, queue_size=1)
 
     def parse(self, msg):
         self.msg = msg
@@ -40,107 +42,81 @@ class DefaultCommand(BaseCommand):
 
     def execute(self):
         self.chatbot_speech_pub.publish(self.msg)
-        logger.info("Publish msg to chat conversation {}".format(self.msg))
+        logger.info("Forward msg {} to {}".format(
+            self.msg, self.forward_topic_name))
         return True
 
-class EmotionCommand(BaseCommand):
-    # Supported emotions: ['irritated', 'happy', 'recoil', 'surprised', 'sad', 'confused', 'worry', 'bored', 'engaged', 'amused', 'comprehending', 'afraid']
-    emotion_command_config = {
-        'irritated': u'irritate',
-        'happy': u'happy|高兴|开心',
-        'recoil': u'recoil',
-        'surprised': u'surprise|惊讶',
-        'sad': u'sad|悲伤|伤心',
-        'confused': u'confuse|疑惑',
-        'worry': u'worry|担心',
-        'bored': u'bore|无聊',
-        'engaged': u'engage',
-        'amused': u'amuse',
-        'comprehending': u'comprehend',
-        'afraid': u'afraid|害怕',
+class MotionCommand(BaseCommand):
+    MSGTYPES = {
+        'gesture': SetGesture,
+        'emotion': EmotionState,
+        'turn': Target,
+        'look': Target,
     }
-
-    def __init__(self):
-        self.emotion_pub = rospy.Publisher(
-            '/blender_api/set_emotion_state', EmotionState, queue_size=1)
+    def __init__(self, yaml_config):
         self.chatbot_response_pub = rospy.Publisher(
             'chatbot_responses', String, queue_size=1)
-        self.emotion_commands = {}
-        for key, value in self.emotion_command_config.iteritems():
-            for cmd in value.split('|'):
-                if cmd:
-                    self.emotion_commands[cmd] = key
-        self.emotion = None
-
-    def parse(self, msg):
-        text = msg.utterance.decode('utf-8').lower()
-        if text in self.emotion_commands:
-            self.emotion = self.emotion_commands[text]
-            return True
-        else:
-            return False
-        
-    def execute(self):
-        msg = EmotionState()
-        msg.name = self.emotion
-        msg.magnitude = 1
-        msg.duration = rospy.Duration(6, 0)
-        self.emotion_pub.publish(msg)
-        lang = rospy.get_param('lang', None)
-        if lang == 'en':
-            self.chatbot_response_pub.publish(String("Okay."))
-        if lang == 'zh':
-            self.chatbot_response_pub.publish(String("好的。"))
-        logger.info("Set emotion {}".format(self.emotion))
-        return True
-
-class GestureCommand(BaseCommand):
-
-    # Supported gestures: ['all', 'amused', 'blink', 'blink-micro', 'blink-relaxed', 'blink-sleepy', 'nod-1', 'nod-2', 'nod-3', 'nod-4', 'nod-5', 'nod-6', 'shake-2', 'shake-3', 'shake-4', 'shake-5', 'shake-6', 'think-brows', 'think-R.UP', 'thoughtful', 'yawn-1']
-    gesture_command_config = {
-        'blink': u'blink|眨眼',
-        'nod-1': u'nod|点头',
-        'shake-2': u'shake|摇头',
-        'think-brows': u'think|思考',
-        'yawn-1': u'yawn|打哈欠'
-    }
-
-    def __init__(self):
+        self.motion_defs = []
+        with open(yaml_config) as f:
+            self.config = yaml.load(f)
+        self._build_commands()
+        self.matched_motion = None
         self.gesture_pub = rospy.Publisher(
             '/blender_api/set_gesture', SetGesture, queue_size=1)
-        self.chatbot_response_pub = rospy.Publisher(
-            'chatbot_responses', String, queue_size=1)
-        self.gesture_commands = {}
-        for key, value in self.gesture_command_config.iteritems():
-            for cmd in value.split('|'):
-                if cmd:
-                    self.gesture_commands[cmd] = key
-        self.gesture = None
+        self.emotion_pub = rospy.Publisher(
+            '/blender_api/set_emotion_state', EmotionState, queue_size=1)
+        self.look_pub = rospy.Publisher(
+            '/blender_api/set_gaze_target', Target, queue_size=1)
+        self.turn_pub = rospy.Publisher(
+            '/blender_api/set_face_target', Target, queue_size=1)
+
+    def _build_commands(self):
+        self.motion_defs = []
+        for motion_type, motions in self.config.items():
+            for motion  in motions:
+                motion['type'] = motion_type
+                self.motion_defs.append(motion)
 
     def parse(self, msg):
         text = msg.utterance.decode('utf-8').lower()
-        if text in self.gesture_commands:
-            self.gesture = self.gesture_commands[text]
-            return True
-        else:
-            return False
-        
-    def execute(self):
-        msg = SetGesture()
-        msg.name = self.gesture
-        msg.repeat = 1
-        msg.speed = 1
-        msg.magnitude = 1
-        self.gesture_pub.publish(msg)
+        for motion in self.motion_defs:
+            if text in motion['pattern']:
+                self.matched_motion = motion
+                return True
+        self.matched_motion = None
+        return False
+
+    def okay(self):
         lang = rospy.get_param('lang', None)
         if lang == 'en':
             self.chatbot_response_pub.publish(String("Okay."))
         if lang == 'zh':
             self.chatbot_response_pub.publish(String("好的。"))
-        logger.info("Set gesture {}".format(self.gesture))
-        return True
 
-class Calculator(BaseCommand):
+    def execute(self):
+        if self.matched_motion is not None:
+            motion_type = self.matched_motion['type']
+            if motion_type not in self.MSGTYPES:
+                logger.error('Motion {} is not defined'.format(motion_type))
+                return False
+            msg = self.MSGTYPES[motion_type]()
+            for name, value in self.matched_motion['params'].items():
+                if name == 'duration':
+                    value = rospy.Duration(value)
+                setattr(msg, name, value)
+            if motion_type == 'gesture':
+                self.gesture_pub.publish(msg)
+            elif motion_type == 'emotion':
+                self.emotion_pub.publish(msg)
+            elif motion_type == 'turn':
+                self.turn_pub.publish(msg)
+            elif motion_type == 'look':
+                self.look_pub.publish(msg)
+            self.okay()
+            logger.info("Execute {} {}".format(motion_type,msg))
+            return True
+
+class MathCommand(BaseCommand):
 
     def __init__(self):
         self.chatbot_response_pub = rospy.Publisher(
@@ -162,5 +138,3 @@ class Calculator(BaseCommand):
         self.chatbot_response_pub.publish(String(str(self.ans)))
         logger.info("Result is {}".format(self.ans))
         return True
-
-command_chain = [EmotionCommand(), GestureCommand(), Calculator(), DefaultCommand()]
