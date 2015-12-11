@@ -85,6 +85,7 @@ class MotionCommand(BaseCommand):
         text = msg.utterance.decode('utf-8').lower()
         text = re.sub(r"\bcan you\b" , "", text)
         text = re.sub(r"\bdo\b" , "", text)
+        text = re.sub(r"\bbe\b" , "", text)
         text = re.sub(r"\s+" , " ", text)
         text = self.regex.sub('', text)
         text = text.strip()
