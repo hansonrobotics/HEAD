@@ -16,9 +16,13 @@ class Speech2Command(object):
 
     def handle_speech(self, msg):
         for command in self.command_chain:
-            if command.parse(msg):
-                command.execute()
-                break
+            try:
+                if command.parse(msg):
+                    command.execute()
+                    break
+            except Exception as ex:
+                logger.error("Handle speech message error: {}".format(ex))
+                continue
 
 if __name__ == '__main__':
     rospy.init_node('speech2command')

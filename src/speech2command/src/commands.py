@@ -2,6 +2,8 @@
 import logging
 import rospy
 import yaml
+import re
+import string
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState, SetGesture, Target
@@ -69,6 +71,8 @@ class MotionCommand(BaseCommand):
             '/blender_api/set_gaze_target', Target, queue_size=1)
         self.turn_pub = rospy.Publisher(
             '/blender_api/set_face_target', Target, queue_size=1)
+        exclude = '[%s]' % (re.escape(string.punctuation+u'你可以会能够吗，。？'))
+        self.regex = re.compile(exclude, re.U)
 
     def _build_commands(self):
         self.motion_defs = []
@@ -79,6 +83,11 @@ class MotionCommand(BaseCommand):
 
     def parse(self, msg):
         text = msg.utterance.decode('utf-8').lower()
+        text = re.sub(r"\bcan you\b" , "", text)
+        text = re.sub(r"\bdo\b" , "", text)
+        text = re.sub(r"\s+" , " ", text)
+        text = self.regex.sub('', text)
+        text = text.strip()
         for motion in self.motion_defs:
             if text in motion['pattern']:
                 self.matched_motion = motion
