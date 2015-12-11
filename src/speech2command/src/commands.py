@@ -4,6 +4,7 @@ import rospy
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState, SetGesture
+from calc import calculate
 
 logger = logging.getLogger('hr.speech2command.commands')
 
@@ -85,7 +86,7 @@ class EmotionCommand(BaseCommand):
         msg.magnitude = 1
         msg.duration = rospy.Duration(6, 0)
         self.emotion_pub.publish(msg)
-        lang = rospy.get_param('lang')
+        lang = rospy.get_param('lang', None)
         if lang == 'en':
             self.chatbot_response_pub.publish(String("Okay."))
         if lang == 'zh':
@@ -131,7 +132,7 @@ class GestureCommand(BaseCommand):
         msg.speed = 1
         msg.magnitude = 1
         self.gesture_pub.publish(msg)
-        lang = rospy.get_param('lang')
+        lang = rospy.get_param('lang', None)
         if lang == 'en':
             self.chatbot_response_pub.publish(String("Okay."))
         if lang == 'zh':
@@ -139,4 +140,27 @@ class GestureCommand(BaseCommand):
         logger.info("Set gesture {}".format(self.gesture))
         return True
 
-command_chain = [EmotionCommand(), GestureCommand(), DefaultCommand()]
+class Calculator(BaseCommand):
+
+    def __init__(self):
+        self.chatbot_response_pub = rospy.Publisher(
+            'chatbot_responses', String, queue_size=1)
+        self.ans = None
+
+    def parse(self, msg):
+        """
+        example: "one plus two minus three"
+        """
+        text = msg.utterance.decode('utf-8').lower()
+        try:
+            self.ans = calculate(text)
+            return True
+        except:
+            return False
+
+    def execute(self):
+        self.chatbot_response_pub.publish(String(str(self.ans)))
+        logger.info("Result is {}".format(self.ans))
+        return True
+
+command_chain = [EmotionCommand(), GestureCommand(), Calculator(), DefaultCommand()]

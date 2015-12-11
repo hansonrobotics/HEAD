@@ -15,6 +15,7 @@ class Speech2Command(object):
         for command in command_chain:
             if command.parse(msg):
                 command.execute()
+                logger.info("Execute command {}".format(command))
                 break
 
 if __name__ == '__main__':
