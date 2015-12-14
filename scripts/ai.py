@@ -56,8 +56,8 @@ class Chatbot():
       'chatbot_affect_perceive',
       String, queue_size=1
     )
-    rospy.Subscriber('chatbot_affect_express', EmotionState,
-        self._affect_express_callback)
+    # rospy.Subscriber('chatbot_affect_express', EmotionState,
+    #     self._affect_express_callback)
 
 
   def initialize(self, aiml_dir):
@@ -146,11 +146,18 @@ class Chatbot():
         emo.data = 'happy'
         self._affect_publisher.publish(emo)
         logger.info('Chatbot perceived emo:'+emo.data)
+        # Currently response is independant of message received so no need to wait
+        # Leave it for Opencog to handle responses later on.
+        self._affect_express_callback()
+
       elif polarity< 0 and abs(polarity)> self._polarity_threshold:
         emo = String()
         emo.data = 'frustrated'
         self._affect_publisher.publish(emo)
         logger.info('Chatbot perceived emo:'+emo.data)
+        # Currently response is independant of message received so no need to wait
+        # Leave it for Opencog to handle responses later on.
+        self._affect_express_callback()
       else:
         # if no or below threshold affect, publish message so some response is given.
 
@@ -164,15 +171,16 @@ class Chatbot():
   # This is the emotion that the chatbot should convey.
   # affect_message is of type blender_api_msgs/EmotionState
   # Fields are name (String) magnitude (float), duration (time)
-  def _affect_express_callback(self, affect_message):
+  def _affect_express_callback(self, affect_message=None):
     #
 
-    logger.info("Chatbot wants to express: " + affect_message.name+" state='"+self._state)
+    #logger.info("Chatbot wants to express: " + affect_message.name+" state='"+self._state)
     # currently general_behavior publishes set emotion and tts listens
     # here we could call some smart markup process instead of letting tts
     # do default behavior.
     # any emotion change will now force tts
     # TODO pass .cfg speech hesitation interval in affect message
+    # Will leave for OpenCog behavior tree to decide for now.
     hesitation=random.uniform(0.1,0.4)
     time.sleep(hesitation)
     if self._state == 'wait_emo':
