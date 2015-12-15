@@ -543,7 +543,10 @@ def check_if_ffmpeg_satisfied():
     Check if ffmpeg is installed and satisfied for screencasting.
     """
 
-    configuration = run_shell_cmd('ffmpeg -version|grep configuration', True)
+    try:
+        configuration = run_shell_cmd('ffmpeg -version|grep configuration', True)
+    except Exception:
+        return False
     configuration = [i.strip() for i in configuration.split(':')[1].split('--')]
     requires = ['enable-libx264', 'enable-libfreetype']
     return all([i in configuration for i in requires])
@@ -553,7 +556,10 @@ def check_if_sound_card_exists():
     Check if sound card exists.
     """
 
-    snd_cards = run_shell_cmd('cat /proc/asound/cards')
+    try:
+        snd_cards = run_shell_cmd('cat /proc/asound/cards')
+    except Exception:
+        return False
     return not 'no soundcards' in '\n'.join(snd_cards)
 
 class SerialPortRecorder(object):
