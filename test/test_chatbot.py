@@ -36,6 +36,7 @@ class ChatbotTest(unittest.TestCase):
             self.properties = dict([l.split('=') for l in f.read().splitlines()])
         config.add_param(core.Param(
             '/chatbot_ai/properties', self.bot_property_file))
+        config.add_param(core.Param('/lang', 'en'))
         self.runner = roslaunch.launch.ROSLaunchRunner(
             self.run_id, config, is_rostest=True)
         self.runner.launch()
