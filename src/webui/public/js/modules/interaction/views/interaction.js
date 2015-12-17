@@ -355,8 +355,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                                 console.log('end of speech');
                                 api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
                             }
-
-
                         };
                         this.speechStarted = new Date().getTime();
                         this.speechRecognition.start();
