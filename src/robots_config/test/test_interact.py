@@ -16,7 +16,7 @@ CWD = os.path.abspath(os.path.dirname(__file__))
 robot_name = 'han'
 cmd = 'roslaunch {}/launch/robot.launch basedir:={basedir} name:={name}'.format(
     CWD, basedir='launch', name=robot_name)
-proc = subprocess.Popen(cmd, shell=True, preexec_fn=os.setsid)
+proc = subprocess.Popen(cmd, shell=True, preexec_fn=os.setsid, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 def shutdown():
     if proc:
         os.killpg(proc.pid, 2)

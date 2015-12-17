@@ -62,7 +62,7 @@ class capture_screen():
         capture_script = os.path.join(
             CWD, 'capture.sh')
         proc = subprocess.Popen(
-            [capture_script, filename, str(duration)])
+            [capture_script, filename, str(duration)], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
         return proc
 
     def __enter__(self):
