@@ -9,7 +9,8 @@
                 <nav>
                     <h2><i class="fa fa-reorder"></i>Settings</h2>
                     <ul>
-                        <li><a href="#/admin/settings"><i class="fa fa-wrench"></i>Robot settings</a></li>
+                        <li><a href="#/admin/settings" class="app-robot-settings"><i class="fa fa-wrench"></i>Robot
+                                settings</a></li>
                         <li>
                             <a href="#"><i class="fa fa-list"></i>Nodes</a>
 

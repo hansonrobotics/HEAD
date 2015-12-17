@@ -31,9 +31,8 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                         console.log('refresh');
                         self.model.fetch()
                     }, 1000);
-
             },
-            onClose: function () {
+            onDestroy: function () {
                 clearInterval(this.refreshInterval);
             },
             setConfig: function () {

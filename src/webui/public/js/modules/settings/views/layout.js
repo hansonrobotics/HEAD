@@ -12,14 +12,19 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jque
             ui: {
                 navigation: '.app-settings-navigation',
                 nodeList: '.app-nav-node-list',
-                nodeLinks: '.app-nav-node-list a'
+                nodeLinks: '.app-nav-node-list a',
+                robotSettingsLink: '.app-robot-settings'
             },
             events: {
-                'click @ui.nodeLinks': 'nodeClicked'
+                'click @ui.nodeLinks': 'nodeClicked',
+                'click @ui.robotSettingsLink': 'robotClicked'
             },
             nodeClicked: function (e) {
-                self.trigger('node_selected', $(e.target).html());
+                self.trigger('node_settings', $(e.target).html());
                 self.collapseNav();
+            },
+            robotClicked: function () {
+                self.trigger('robot_settings');
             },
             initialize: function () {
                 self = this;
@@ -47,7 +52,7 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jque
                     var container = $('<div>');
                     $.each(nodes, function () {
                         var link = $('<a>').prop({
-                            href: '#/admin/settings/node'
+                            href: '#/admin/settings'
                         }).html(this);
                         container.append($('<li>').append(link));
                     });
@@ -60,7 +65,7 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jque
                 self.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(document).height());
                 self.ui.navigation.multilevelpushmenu('redraw');
             },
-            onClose: function () {
+            onDestroy: function () {
                 $(window).off("resize", this.updateNavHeight);
                 clearInterval(this.nodeListInterval);
             }

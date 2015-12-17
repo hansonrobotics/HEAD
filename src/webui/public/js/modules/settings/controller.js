@@ -5,14 +5,15 @@ define(['application', './views/layout', './views/settings', './entities/robot_c
             showLayout: function () {
                 if (!this.layout || this.layout != App.LayoutInstance.getRegion('content').currentView) {
                     this.layout = new LayoutView();
-                    this.layout.on('node_selected', this.node);
+                    this.layout.on('node_settings', this.node);
+                    this.layout.on('robot_settings', this.robot);
                     App.LayoutInstance.showAdminNav();
                     App.LayoutInstance.setTitle('Settings');
                     App.LayoutInstance.getRegion('content').show(this.layout);
                 }
             },
             robot: function () {
-                this.showLayout();
+                self.showLayout();
 
                 var robotConfig = new RobotConfig(),
                     robotConfigSchema = new RobotConfigSchema();
