@@ -142,12 +142,12 @@ class EvaAPI(RigAPI):
     def setFaceTarget(self, loc):
         # Eva uses y==forward x==right. Distances in meters from
         # somewhere in the middle of the head.
-        mloc = [-loc[1], loc[0], loc[2]]
+        mloc = [loc[1], loc[0], loc[2]]
         bpy.evaAnimationManager.setFaceTarget(mloc)
         return 0
 
     def setGazeTarget(self, loc):
-        mloc = [-loc[1],  loc[0], loc[2]]
+        mloc = [loc[1],  loc[0], loc[2]]
         bpy.evaAnimationManager.setGazeTarget(mloc)
         return 0
     # ========== procedural animations with unique parameters =============
