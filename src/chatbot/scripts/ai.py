@@ -23,7 +23,6 @@ class Chatbot():
   def __init__(self, aiml_dir):
     self._kernel = aiml.Kernel()
     self.initialize(aiml_dir)
-    rospy.init_node('chatbot_en')
     # chatbot now saves a bit of simple state to handle sentiment analysis
     # after formulating a response it saves it in a buffer if S.A. active
     # It has a simple state transition - initialized in wait_client
@@ -62,12 +61,19 @@ class Chatbot():
 
   def initialize(self, aiml_dir):
     self._kernel.learn(os.sep.join([aiml_dir, '*.aiml']))
-    properties_file = open(rospy.get_param('~properties',os.sep.join([aiml_dir, 'bot.properties'])))
-    for line in properties_file:
-      parts = line.split('=')
-      key = parts[0]
-      value = parts[1]
-      self._kernel.setBotPredicate(key, value)
+    rospy.init_node('chatbot_en')
+    rospy.sleep(0.2) # wait a little moment for the properties param to be set.
+    properties_file = rospy.get_param(
+        '~properties', os.sep.join([aiml_dir, 'bot.properties']))
+    if os.path.isfile(properties_file):
+      with open(properties_file) as f:
+        for line in f:
+          parts = line.split('=')
+          key = parts[0].strip()
+          value = parts[1].strip()
+          self._kernel.setBotPredicate(key, value)
+    else:
+      logger.warn("Property file {} doesn't exist".format(properties_file))
     logger.info('Done initializing chatbot.')
 
   def sentiment_active(self):
@@ -85,8 +91,7 @@ class Chatbot():
       # 1 is phrase string with spaces, 6 is polarity
       if abs(float(phrase[6])) > 0.1:
         self._polarity[phrase[1]]=float(phrase[6])
-
-    logger.warn("Loaded "+len(self._polarity)+"items")
+    logger.warn("Loaded {} items".format(len(self._polarity)))
 
   def _request_callback(self, chat_message):
     if rospy.get_param('lang', None) != 'en':
@@ -233,9 +238,13 @@ def main():
     'aiml_dir', help='Directory of AIML knowledge files')
   parser.add_argument(
     '-sent', action='store_true', default=False, help='Enable sentiment')
-  option = parser.parse_args()
+  option, unknown = parser.parse_known_args()
 
   chatbot = Chatbot(option.aiml_dir)
+
+  if unknown:
+    logger.warn("Unknown options {}".format(unknown))
+
   if option.sent:
     logger.info("Enable sentiment")
     # by default no sentiment so make active if got arg
@@ -245,7 +254,7 @@ def main():
       sent_f=open(sent3_file,'r')
       chatbot.load_sentiment_csv(sent_f)
     except Exception as ex:
-      logger.warn("Exception {}".format(ex))
+      logger.warn("Load sentiment file error {}".format(ex))
   rospy.spin()
 if __name__ == '__main__':
   main()
