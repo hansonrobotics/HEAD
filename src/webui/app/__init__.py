@@ -2,7 +2,6 @@
 import mimetypes
 import os
 import os.path
-
 from flask import Flask, send_from_directory, request, Response
 from werkzeug.utils import secure_filename
 import reporter
@@ -29,10 +28,12 @@ app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
 def send_index():
     return send_from_directory(app.static_folder, 'index.html')
 
+
 @app.route('/robot_config_schema')
 def get_robot_config_schema():
     config = read_yaml(os.path.join(config_root, 'config_schema.yaml'))
     return json_encode(config)
+
 
 @app.route('/robot_config/<robot_name>')
 def get_robot_config(robot_name):
@@ -41,6 +42,7 @@ def get_robot_config(robot_name):
 
     config = read_yaml(os.path.join(config_root, robot_name, 'config.yaml'))
     return json_encode(config)
+
 
 @app.route('/robot_config/<robot_name>', methods=['POST'])
 def set_robot_config(robot_name):

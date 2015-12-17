@@ -199,6 +199,21 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/blender_api/get_animation_length',
                     messageType: 'blender_api_msgs/GetAnimationLength'
+                }),
+                get_configurable_nodes: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/webui/get_configurable_nodes',
+                    messageType: 'webui/ConfigurableNodes'
+                }),
+                get_node_configuration: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/webui/get_configuration',
+                    messageType: 'webui/NodeConfiguration'
+                }),
+                get_node_description: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/webui/get_description',
+                    messageType: 'webui/NodeDescription'
                 })
             };
         },

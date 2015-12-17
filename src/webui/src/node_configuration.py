@@ -35,10 +35,10 @@ class NodeConfiguration:
         :return:
         """
         node = request.node
-        configurable_nodes = self.configurable_nodes
 
-        if node in configurable_nodes:
+        if node in self.configurable_nodes:
             logger.info('get_node_description service call received for node: ' + node)
+
             client = dynamic_reconfigure.client.Client(node)
             return srv.NodeDescriptionResponse(json.dumps(client.get_parameter_descriptions()))
         else:
@@ -53,15 +53,17 @@ class NodeConfiguration:
         :return:
         """
         node = request.node
-        configurable_nodes = self.configurable_nodes
 
-        if node in configurable_nodes:
+        if node in self.configurable_nodes:
             logger.info('get_node_configuration service call received for node: ' + node)
+
             client = dynamic_reconfigure.client.Client(node)
-            return srv.NodeDescriptionResponse(json.dumps(client.get_configuration()))
+            configuration = client.get_configuration()
+            del configuration['groups']
+            return srv.NodeConfigurationResponse(json.dumps(configuration))
         else:
             logger.info('get_node_configuration service: Invalid node name')
-            return srv.NodeDescriptionResponse(json.dumps({}))
+            return srv.NodeConfigurationResponse(json.dumps({}))
 
     @property
     def configurable_nodes(self):

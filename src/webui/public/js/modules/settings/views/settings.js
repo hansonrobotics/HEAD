@@ -4,10 +4,10 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
             template: template,
             ui: {
                 settings: '.app-settings',
-                save: '.app-save'
+                update: '.app-update'
             },
             events: {
-                'click @ui.save': 'save'
+                'click @ui.update': 'update'
             },
             modelEvents: {
                 change: 'setConfig'
@@ -29,19 +29,21 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                 if (this.editor)
                     this.editor.setValue(this.model.toJSON());
             },
-            save: function (e) {
-                this.model.save(this.editor.getValue(), {
-                    success: function (model) {
-                        if (model.get('error')) {
-                            model.unset('error');
+            update: function (e) {
+                if (this.editor.validate().length === 0) {
+                    this.model.save(this.editor.getValue(), {
+                        success: function (model) {
+                            if (model.get('error')) {
+                                model.unset('error');
+                                App.Utilities.showPopover(e.target, 'Unable to save configuration')
+                            } else
+                                App.Utilities.showPopover(e.target, 'Success')
+                        },
+                        error: function () {
                             App.Utilities.showPopover(e.target, 'Unable to save configuration')
-                        } else
-                            App.Utilities.showPopover(e.target, 'Success')
-                    },
-                    error: function () {
-                        App.Utilities.showPopover(e.target, 'Unable to save configuration')
-                    }
-                });
+                        }
+                    });
+                }
             }
         });
     });

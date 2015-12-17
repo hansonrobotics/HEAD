@@ -25,7 +25,8 @@ requirejs.config({
         select2: 'vendor/select2.min',
         d3: 'vendor/d3.min',
         RecordRTC: 'vendor/RecordRTC.min',
-        json_editor: 'vendor/jsoneditor.min'
+        json_editor: 'vendor/jsoneditor.min',
+        push_menu: 'vendor/jquery.multilevelpushmenu.min'
     },
     shim: {
         'jquery-ui': ['jquery'],
@@ -76,7 +77,8 @@ requirejs.config({
         },
         json_editor: {
             exports: 'JSONEditor'
-        }
+        },
+        push_menu: ['jquery']
     }
 });
 
