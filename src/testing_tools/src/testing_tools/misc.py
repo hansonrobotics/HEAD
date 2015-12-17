@@ -112,8 +112,12 @@ def wait_for(node, namespace=None):
     from rospy.names import canonicalize_name
     node = canonicalize_name(node)
     def is_node_up(node):
-        return any([node in upnode for upnode in
-                    rosnode.get_node_names(namespace)])
+        try:
+            node_up = any([node in upnode for upnode in
+                        rosnode.get_node_names(namespace)])
+            return node_up
+        except Exception:
+            return False
     if not is_node_up(node):
         while not is_node_up(node):
             time.sleep(0.1)
