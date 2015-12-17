@@ -8,8 +8,10 @@
         <!-- Set default chatbot language [en|zh] -->
         <param name="lang" value="en" />
 
-        <!-- Launch English chatbot and Chinese chatbot -->
-        <include file="$(arg basedir)/chat.launch" />
+        <!-- Launch chatbot -->
+        <include file="$(arg basedir)/chat.launch">
+            <arg name="name" value="$(arg name)" />
+        </include>
 
         <!-- Behavior Tree -->
         <include file="$(arg basedir)/behavior.launch" />
