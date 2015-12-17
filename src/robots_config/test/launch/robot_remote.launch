@@ -1,0 +1,42 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <arg name="basedir" default="." />
+    <arg name="user" />
+    <arg name="name" />
+    <arg name="robot_address" />
+    <arg name="env_loader" />
+    <param name="robot_name" value="$(arg name)" />
+    <machine name="robot" address="$(arg robot_address)" user="$(arg user)" env-loader="$(arg env_loader)" />
+
+    <group ns="$(arg name)">
+        <!-- Set default chatbot language [en|zh] -->
+        <param name="lang" value="en" />
+
+        <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
+        <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
+
+        <!-- Launch English chatbot and Chinese chatbot -->
+        <include file="$(arg basedir)/chat.launch" />
+
+        <!-- Behavior Tree -->
+        <include file="$(arg basedir)/behavior.launch" />
+
+        <!-- Topic Mux for webui -->
+        <include file="$(arg basedir)/topic_tools.launch" />
+
+        <!-- Pololu + Dynamixel -->
+        <include file="$(arg basedir)/pau2motors.launch" />
+        <include file="$(arg basedir)/hardware_remote_$(arg name).launch" />
+    </group>
+
+    <!-- Face Tracking -->
+    <include file="$(arg basedir)/face_tracker_remote.launch" />
+
+    <!-- Launch blender -->
+    <include file="$(arg basedir)/blender.launch" />
+
+    <!-- Rosbridge for webui -->
+    <include file="$(arg basedir)/rosbridge.launch" />
+
+</launch>
