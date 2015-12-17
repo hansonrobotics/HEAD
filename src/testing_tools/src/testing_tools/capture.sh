@@ -18,7 +18,7 @@ X=100
 Y=100
 xdotool windowsize $WID $WIDTH $HEIGHT
 xdotool windowmove $WID $X $Y
-xdotool windowraise $WID
+xdotool windowactivate $WID
 
 RECORDER=ffmpeg
 FPS=25
@@ -31,3 +31,4 @@ PRESET=ultrafast
 $RECORDER -y -f x11grab -an -t $DURATION -r $FPS -s $RES -i $XDISP \
     -vcodec $VCODEC -g $GOP -crf $CRF $FILENAME
 
+xdotool windowminimize $WID
