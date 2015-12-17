@@ -13,6 +13,7 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                 change: 'setConfig'
             },
             onRender: function () {
+                var self = this;
                 this.editor = new JSONEditor(this.ui.settings.get(0), {
                     form_name_root: 'config',
                     theme: 'bootstrap3',
@@ -24,6 +25,16 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                 });
 
                 this.setConfig();
+
+                if (this.options.refresh)
+                    this.refreshInterval = setInterval(function () {
+                        console.log('refresh');
+                        self.model.fetch()
+                    }, 1000);
+
+            },
+            onClose: function () {
+                clearInterval(this.refreshInterval);
             },
             setConfig: function () {
                 if (this.editor)

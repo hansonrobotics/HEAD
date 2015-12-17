@@ -17,7 +17,7 @@ define(['backbone', 'roslib', 'lib/api', 'underscore'], function (Backbone, ROSL
                     api.setDynParam(self.node_name, name, value);
                 });
 
-                options.success && options.success();
+                options.success && options.success(model.toJSON());
             }
         }
     });

@@ -32,7 +32,7 @@ define(['application', './views/layout', './views/settings', './entities/robot_c
                 nodeConfig.fetch();
                 nodeConfigSchema.fetch({
                     success: function (model) {
-                        var settings = new SettingsView({model: nodeConfig, schema: model.toJSON()});
+                        var settings = new SettingsView({model: nodeConfig, schema: model.toJSON(), refresh: true});
                         self.layout.getRegion('content').show(settings);
                     }
                 });
