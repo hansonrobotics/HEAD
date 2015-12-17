@@ -6,7 +6,7 @@ import os
 import rostopic
 import rospy
 import roslaunch
-from testing_tools.misc import capture_screen, MessageQueue, add_text_to_video, wait_for
+from testing_tools.misc import capture_screen, MessageQueue, add_text_to_video, wait_for, check_if_ffmpeg_satisfied
 from testing_tools.blender import set_alive
 from std_msgs.msg import String
 import subprocess
@@ -49,6 +49,8 @@ class InteractTest(unittest.TestCase):
         set_alive(True)
         rospy.sleep(1)
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_emotion_cmd(self):
         duration = 6
         pub, msg_class = rostopic.create_publisher(
@@ -60,6 +62,8 @@ class InteractTest(unittest.TestCase):
                 rospy.sleep(0.5)
                 pub.publish(msg_class(cmd, 100))
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_gesture_cmd(self):
         duration = 2
         pub, msg_class = rostopic.create_publisher(
@@ -71,6 +75,8 @@ class InteractTest(unittest.TestCase):
                 rospy.sleep(0.5)
                 pub.publish(msg_class(cmd, 100))
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_turn_eye_cmd(self):
         duration = 2
         pub, msg_class = rostopic.create_publisher(
@@ -86,6 +92,8 @@ class InteractTest(unittest.TestCase):
             pub.publish(msg_class('look center', 100))
             rospy.sleep(duration)
 
+    @unittest.skipUnless(
+        check_if_ffmpeg_satisfied(), 'Skip because ffmpeg is not satisfied.')
     def test_turn_head_cmd(self):
         duration = 2
         pub, msg_class = rostopic.create_publisher(
@@ -109,8 +117,8 @@ class InteractTest(unittest.TestCase):
             pub.publish(msg_class(speech, 100))
             rospy.sleep(1)
         msgs = self.queue.tolist()
-        self.assertEqual(msgs[0].data, 'Hi there!')
-        self.assertTrue('Soepheeyeh' in msgs[1].data)
+        self.assertEqual(msgs[0].data.lower(), 'hi there!')
+        self.assertTrue('han' in msgs[1].data.lower())
 
 if __name__ == '__main__':
     unittest.main()
