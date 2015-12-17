@@ -12,21 +12,9 @@ import shutil
 from Queue import Queue
 import serial
 
-logger = logging.getLogger('testing_tools')
+logger = logging.getLogger('testing_tools.misc')
 
 CWD = os.path.abspath(os.path.dirname(__file__))
-
-__all__ = [
-    'run_shell_cmd', 'wait_for',
-    'capture_webcam_video', 'video2rosbag',
-    'play_rosbag', 'rosbag_msg_generator', 'wait_for_message',
-    'wait_for_messages',
-    'ThreadWorker', 'capture_screen', 'capture_camera',
-    'startxvfb', 'stopxvfb', 'get_rosbag_file', 'get_data_path',
-    'add_text_to_video', 'concatenate_videos', 'MessageQueue',
-    'PololuSerialReader', 'check_if_ffmpeg_satisfied',
-    'check_if_sound_card_exists', 'SerialPortRecorder'
-    ]
 
 def run_shell_cmd(cmd, first=False):
     """

@@ -1,8 +1,10 @@
-from setuptools import setup, find_packages
+# DO NOT USE
+# python setup.py install
+
+from distutils.core import setup
+
 setup(
-    name = "testing_tools",
-    version = "0.1",
-    package_dir = {'': 'src',},
-    package_data = {'': ['*.sh']},
-    packages = find_packages('src'),
+    version='0.0.1',
+    packages=['testing_tools'],
+    package_dir={'': 'src'}
 )
