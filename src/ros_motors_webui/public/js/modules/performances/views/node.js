@@ -8,6 +8,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     magnitudeSlider: '.app-magnitide-slider',
                     emotionSelect: 'select.app-emotion-select',
                     gestureSelect: 'select.app-gesture-select',
+                    expressionSelect: 'select.app-expression-select',
                     textInput: '.app-node-text',
                     startTime: '.app-node-start-time',
                     duration: '.app-node-duration',
@@ -15,21 +16,25 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     deleteButton: '.app-delete-node-button',
                     speedSlider: '.app-speed-slider',
                     speedLabel: '.app-speed-label',
-                    magnitudeLabel: '.app-magnitude-label'
+                    magnitudeLabel: '.app-magnitude-label',
+                    langSelect: 'select.app-lang-select'
                 },
                 events: {
                     'change @ui.duration': 'setDuration',
                     'change @ui.startTime': 'setStartTime',
                     'keyup @ui.textInput': 'setText',
                     'change @ui.textInput': 'setTextDuration',
+                    'change @ui.langSelect': 'setLanguage',
                     'change @ui.emotionSelect': 'setEmotion',
                     'change @ui.gestureSelect': 'setGesture',
+                    'change @ui.expressionSelect': 'setExpression',
+                    'change @ui.expressionSelect': 'setLanguage',
                     'click @ui.deleteButton': 'deleteNode'
                 },
                 onRender: function () {
                     var self = this;
 
-                    if (_.contains(['emotion', 'gesture'], this.model.get('name'))) {
+                    if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
                         // set default
                         if (!this.model.get('magnitude'))
                             this.model.set('magnitude', 1);
@@ -64,6 +69,22 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                                     $(self.ui.emotionSelect).val(self.model.get('emotion'));
 
                                 $(self.ui.emotionSelect).select2();
+                            });
+                            break;
+                        case 'expression':
+                            // load emotions
+                            api.expressionList(function (expressions) {
+                                _.each(expressions.exprnames, function (expr) {
+                                    $(self.ui.expressionSelect).append($('<option>').prop('value', expr).html(expr));
+                                });
+
+                                if (!self.model.get('expression') && expressions.length > 0)
+                                    self.model.set('expression', emotions[0]);
+
+                                if (self.model.get('expression'))
+                                    $(self.ui.expressionSelect).val(self.model.get('expression'));
+
+                                $(self.ui.expressionSelect).select2();
                             });
                             break;
                         case 'gesture':
@@ -109,6 +130,10 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             break;
                         case 'speech':
                             if (this.model.get('text')) this.ui.textInput.val(this.model.get('text'));
+                            if (!this.model.get('lang'))
+                                this.model.set('lang', 'en');
+                            this.ui.langSelect.val(this.model.get('lang'));
+                            $(self.ui.langSelect).select2();
                             break;
                     }
                 },
@@ -118,14 +143,20 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 setText: function () {
                     this.model.set('text', this.ui.textInput.val());
                 },
+                setLanguage: function () {
+                    this.model.set('lang', this.ui.langSelect.val());
+                },
                 setTextDuration: function () {
                     var self = this;
-                    api.getTtsLength(this.ui.textInput.val(), function (response) {
+                    api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function (response) {
                         self.model.set('duration', response.length);
                     });
                 },
                 setEmotion: function () {
                     this.model.set('emotion', this.ui.emotionSelect.val());
+                },
+                setExpression: function () {
+                    this.model.set('expression', this.ui.expressionSelect.val());
                 },
                 setGesture: function () {
                     this.model.set('gesture', this.ui.gestureSelect.val());
@@ -141,14 +172,15 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 setStartTime: function () {
                     this.model.set('start_time', Number($(this.ui.startTime).val()));
                 },
-                buildCrosshair: function () {
+                buildCrosshair: function (params) {
                     var self = this;
+                    params = params || {};
                     $(this.ui.crosshair).crosshairsl($.extend({}, {
-                        xmin: -1.5,
-                        xmax: 1.5,
+                        xmin: -1,
+                        xmax: 1,
                         xval: this.model.get('x') ? this.model.get('x') : 0,
-                        ymin: -1.5,
-                        ymax: 1.5,
+                        ymin: -1,
+                        ymax: 1,
                         yval: this.model.get('y') ? this.model.get('y') : 0,
                         change: function (e, ui) {
                             self.model.set('x', ui.xval);
@@ -159,7 +191,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     }, {
                         bgColor: "#485563",
                         fgColor: "#fff"
-                    }));
+                    }, params));
                 },
                 deleteNode: function () {
                     var self = this;

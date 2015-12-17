@@ -47,9 +47,14 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 }),
                 speech_topic: new ROSLIB.Topic({
                     ros: api.ros,
-                    name: '/' + api.config.robot + '/chatbot_speech',
+                    name: '/' + api.config.robot + '/speech',
                     messageType: 'chatbot/ChatMessage'
                 }),
+                //speech_start_topic: new ROSLIB.Topic({
+                //    ros: api.ros,
+                //    name: '/' + api.config.robot + '/chatbot_speech_start',
+                //    messageType: 'chatbot/ChatMessage'
+                //}),
                 chat_responses: new ROSLIB.Topic({
                     ros: api.ros,
                     name: '/' + api.config.robot + '/chatbot_responses',
@@ -123,6 +128,43 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/' + api.config.robot + '/chatbot_responses',
                     messageType: 'std_msgs/String'
+                }),
+                tts: {
+                    en: new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/chatbot_responses_en',
+                        messageType: 'std_msgs/String'
+                    }),
+                    zh: new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/chatbot_responses_zh',
+                        messageType: 'std_msgs/String'
+                    }),
+                },
+                face_locations: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/camera/face_locations',
+                    messageType: 'pi_face_tracker/Faces'
+                }),
+                set_look_at_face: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/camera/face_event',
+                    messageType: 'pi_face_tracker/FaceEvent'
+                }),
+                get_look_at_face: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/look_at_face',
+                    messageType: 'std_msgs/Int32'
+                }),
+                voice: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/voice',
+                    messageType: 'std_msgs/String'
+                }),
+                chat_events: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/chat_events',
+                    messageType: 'std_msgs/String'
                 })
             };
         },
@@ -156,7 +198,7 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 get_animation_length: new ROSLIB.Service({
                     ros: api.ros,
                     name: '/blender_api/get_animation_length',
-                    messageType: '﻿blender_api_msgs/GetAnimationLength'
+                    messageType: 'blender_api_msgs/GetAnimationLength'
                 })
             };
         },

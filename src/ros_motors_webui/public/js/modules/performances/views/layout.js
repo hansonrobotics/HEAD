@@ -1,5 +1,5 @@
-define(['application', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'vendor/select2.min', 'jquery-ui'],
-    function (App, template, FadeInRegion) {
+define(['application', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', 'vendor/select2.min', 'jquery-ui'],
+    function (App, template, FadeInRegion, api) {
         App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
             Views.Layout = Marionette.LayoutView.extend({
                 template: template,
@@ -16,6 +16,20 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'ven
                         el: '.app-performance-queue-container',
                         regionClass: FadeInRegion
                     }
+                },
+                ui: {
+                    languageButton: '.app-language-select button'
+                },
+                events: {
+                    'click @ui.languageButton': 'changeLanguage'
+                },
+                changeLanguage: function (e) {
+                    var language = $(e.target).data('lang');
+
+                    this.ui.languageButton.removeClass('active');
+                    $(e.target).addClass('active');
+
+                    api.setRobotLang(language);
                 }
             });
         });

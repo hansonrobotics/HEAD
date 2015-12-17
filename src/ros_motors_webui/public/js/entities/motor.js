@@ -5,8 +5,20 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                 // not selected by default
                 this.set('selected', false);
 
+                // not selected by default
+                this.set('selected', false);
+
                 // send motor command when updating value
                 this.on('change:value', this.checkUpdatedValue);
+            },
+            selected: function (selected) {
+                if (typeof selected == 'undefined') {
+                    // return status if arg undefined
+                    return this.get('selected');
+                } else {
+                    // set status otherwise
+                    this.set('selected', !!selected);
+                }
             },
             checkUpdatedValue: function () {
                 if (this.previous('value') != this.get('value'))
@@ -113,36 +125,6 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                         positions[motor.get('name')] = motor.getRelativeVal('value');
                 });
                 return positions;
-            },
-            loadPololuMotors: function () {
-                var self = this;
-                api.getPololuMotorTopics(function (topics) {
-                    _.each(topics, function (topic) {
-                        for (var i = 0; i < 24; i++) {
-                            var unique = true,
-                                newMotor = new Entities.Motor({
-                                    name: i,
-                                    motor_id: i,
-                                    topic: topic,
-                                    min: -Math.PI / 2,
-                                    max: Math.PI / 2,
-                                    default: 0,
-                                    editable: true,
-                                    labelleft: '',
-                                    labelright: ''
-                                });
-
-                            _.each(self.models, function (motor) {
-                                if (motor.get('motor_id') == newMotor.get('motor_id') &&
-                                    motor.get(topic) == newMotor.get('topic')) {
-                                    unique = false;
-                                }
-                            });
-
-                            if (unique) self.add(newMotor);
-                        }
-                    });
-                });
             }
         });
     });

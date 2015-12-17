@@ -96,32 +96,9 @@ Would you like to teach me a new answer to "<get name="badanswer-input"/>"?
 <condition>
 <li name="response1" value="OK, what should I have said"></li>
 <li name="star" value="no">I'll try to remember to respond, "<get name="badanswer-newresp" />" when you say, "<get name="badanswer-input" />" 
-<learn>
-	<category>
-	<pattern>
-		<eval><uppercase><get name="badanswer-input" /></uppercase></eval>
-	</pattern>
-	<template>
-		<eval><get name="badanswer-newresp" /></eval>
-	</template>
-	</category>
-</learn>
 <think><set name="topic">learning new answers</set></think>
 </li>
 <li name="star" value="yes">I'll try to remember to respond, "<get name="badanswer-newresp" />" when you say, "<get name="badanswer-input" />" if I have just said "<get name="badanswer-that-full" />" 
-<learn>
-	<category>
-	<pattern>
-		<eval><uppercase><get name="badanswer-input" /></uppercase></eval>
-	</pattern>
-	<that>
-		<eval><uppercase><get name="badanswer-that" /></uppercase></eval>
-	</that>
-	<template>
-	<eval><get name="badanswer-newresp" /></eval>
-	</template>
-	</category>
-</learn>
 <think><set name="topic">learning new answers</set></think>
 </li>
 <li>Yes or No?</li>
@@ -154,16 +131,6 @@ Would you like to teach me a new answer to "<get name="badanswer-input"/>"?
 <condition>
 <li name="response1" value="OK, what should I have said"></li>
 <li name="star" value="yes">Fine. I'll try to remember to respond, "<get name="badanswer-newresp" />" when you say, "<get name="badanswer-input" />" 
-<learn>
-	<category>
-	<pattern>
-		<eval><uppercase><get name="badanswer-input" /></uppercase></eval>
-	</pattern>
-	<template>
-		<eval><get name="badanswer-newresp" /></eval>
-	</template>
-	</category>
-</learn>
 <think><set name="topic">learning new answers</set></think>
 </li>
 <li name="star" value="no">OK, let's forget it then.

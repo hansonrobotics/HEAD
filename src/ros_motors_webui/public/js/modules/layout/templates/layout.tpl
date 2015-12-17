@@ -24,6 +24,7 @@
             <ul id="app-nav" class="nav navbar-nav navbar-right">
                 <li><a href="#/performances">Performances</a></li>
                 <li><a href="#/gestures">Gestures</a></li>
+                <li><a href="#/expressions">Expressions</a></li>
                 <li><a href="#/motors">Motors</a></li>
                 <li><a href="#/interactions">Chat</a></li>
             </ul>
@@ -31,9 +32,10 @@
                 <li><a href="#/admin/monitor">Monitoring</a></li>
                 <li><a href="#/admin/expressions">Expressions</a></li>
                 <li><a href="#/admin/motors">Motors</a></li>
+                <li><a href="#/admin/settings">Settings</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div id="app-content"></div>
+<div id="app-content" class="clearfix"></div>

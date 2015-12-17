@@ -7,7 +7,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.expression.publish(
                 new ROSLIB.Message({
                     exprname: name,
-                    intensity: intensity
+                    intensity: parseFloat(intensity)
                 })
             );
         },
@@ -81,6 +81,8 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             );
         },
         sendChatMessage: function (text) {
+            console.log('Sending message: ' + text);
+
             var message = new ROSLIB.Message({
                 utterance: text,
                 confidence: Math.round(0.9 * 100)
@@ -107,7 +109,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 cmd = new ROSLIB.Message({
                     joint_name: confEntry.name.toString(),
                     position: Math.min(Math.max(angle, confEntry.min), confEntry.max),
-                    speed: (speed || confEntry.speed || 100) / 255,
+                    speed: 0.05,
                     acceleration: (acc || confEntry.acceleration || 50) / 255
                 });
             }
@@ -257,8 +259,13 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 })
             );
         },
-        robotSpeech: function (text) {
-            api.topics.chatbot_responses.publish(
+        robotSpeech: function (text, lang) {
+            if (!lang){
+                topic = api.topics.chatbot_responses;
+            }else{
+                topic = api.topics.tts[lang];
+            }
+            topic.publish(
                 new ROSLIB.Message({
                     data: text
                 })
@@ -267,6 +274,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         blenderMode: {
             enable: function () {
                 api.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function () {
+                    console.log('face enabled');
                     return 0;
                 });
                 api.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/blender_api/get_pau"}), function () {
@@ -278,6 +286,12 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                     return 0;
                 });
                 api.services.neckPauMux.callService(new ROSLIB.ServiceRequest({topic: "/" + api.config.robot + "/cmd_neck_pau"}), function () {
+                    return 0;
+                });
+            },
+            disableFace: function () {
+                api.services.headPauMux.callService(new ROSLIB.ServiceRequest({topic: "/" + api.config.robot + "/no_pau"}), function () {
+                    console.log('face disabled');
                     return 0;
                 });
             }
@@ -321,6 +335,23 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             var param = new ROSLIB.Param({ros: api.ros, name: '/robot_name'});
             param.get(callback);
         },
+        getRobotLang: function (success) {
+            var param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/lang'});
+
+            param.get(function (lang) {
+                if (typeof success == 'function') success(lang);
+            });
+        },
+        setRobotLang: function (lang) {
+            var language = null,
+                param = new ROSLIB.Param({ros: api.ros, name: '/' + api.config.robot + '/lang'});
+            param.set(lang);
+
+            if (lang == 'en') language = 'en_us';
+            else if (lang == 'zh') language = 'zh_ch';
+
+            if (language) this.setDynParam('/' + this.config.robot + '/speech_recognizer', 'language', language);
+        },
         /**
          * Passes a "|" separated string of available scripts
          *
@@ -342,8 +373,8 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             var cmd = new ROSLIB.Message({data: script})
             api.topics.execute_scripts.publish(cmd)
         },
-        getTtsLength: function (text, success) {
-            api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text}), success, function (error) {
+        getTtsLength: function (text, lang, success) {
+            api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text, lang: lang}), success, function (error) {
                 console.log(error);
             });
         },
@@ -357,6 +388,64 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         disableInteractionMode: function () {
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+        },
+        set_look_at_face: function (f_id) {
+            api.topics.set_look_at_face.publish(new ROSLIB.Message({face_event: 'track_face', face_id: f_id}));
+        },
+        setDynParam: function (node, name, value, options) {
+            if (typeof options != 'object') options = {};
+
+            var data = {},
+                type = null,
+                service = new ROSLIB.Service({
+                    ros: this.ros,
+                    name: node + '/set_parameters',
+                    messageType: 'dynamic_reconfigure/Reconfigure'
+                });
+
+            switch (typeof value) {
+                case 'boolean':
+                    type = 'bools';
+                    break;
+                case 'number':
+                    if (value % 1 === 0)
+                        type = 'ints';
+                    else
+                        type = 'doubles';
+                    break;
+                case 'string':
+                    type = 'strs';
+                    break;
+                case 'object':
+                    type = 'groups';
+
+            }
+
+            data[type] = [{}];
+            data[type][0]['name'] = name;
+            data[type][0]['value'] = value;
+
+            service.callService(new ROSLIB.ServiceRequest({config: data}), function () {
+                if (typeof options.success == 'function') options.success();
+            }, function (error) {
+                if (typeof options.error == 'function') options.error(error);
+            });
+        },
+        setRosParam: function (name, value) {
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: name
+            });
+            param.set(value);
+
+        },
+        getRosParam: function (name, success) {
+            var param = new ROSLIB.Param({
+                ros: api.ros,
+                name: name
+            });
+
+            param.get(success);
         }
     };
 

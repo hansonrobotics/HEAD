@@ -44,6 +44,11 @@ class FacesPublisher:
         rospy.Subscriber('camera/face_locations',
                      pi_face_tracker.msg.Faces,
                      self.handle_faces)
+
+        rospy.Subscriber('rs_camera/face_locations',
+                     pi_face_tracker.msg.Faces,
+                     self.handle_rs_faces)
+
         rospy.Subscriber('eye_camera/face_locations',
                      pi_face_tracker.msg.Faces,
                      self.handle_eye_faces)
@@ -64,7 +69,10 @@ class FacesPublisher:
         self.last_faces_time = rospy.Time.now()
         #self.buffer.lookup_transform()
 
-    def handle_faces(self, msg):
+    def handle_rs_faces(self, msg):
+        self.handle_faces(msg,"realsense")
+
+    def handle_faces(self, msg, parent="camera"):
         self.last_faces = msg.faces
         self.last_faces_time = now = rospy.Time.now()
         for i, face in enumerate(msg.faces):
@@ -76,7 +84,7 @@ class FacesPublisher:
             # self.broadcaster.sendTransform(tr)    --- tf2 version
 
             self.broadcaster.sendTransform((face.point.x,face.point.y,face.point.z),(0,0,0,1),
-                                            self.last_faces_time,"face_base" + str(face.id),"camera")
+                                            self.last_faces_time,"face_base" + str(face.id),parent)
             time.sleep(0.005) # Need to investigate why we cant publish multiple messages at same time
             # Publish eye detected face
             # t = TransformStamped(header=Header(stamp=rospy.Time.now(), frame_id="face_base" + str(face.id)),

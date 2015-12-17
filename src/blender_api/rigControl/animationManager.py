@@ -35,6 +35,7 @@ class AnimationManager():
         # Start default cycles
         self.setCycle('CYC-normal', rate=1.0, magnitude=1.0, ease_in=0.0)
         self.setCycle('CYC-breathing', rate=1.0, magnitude=1.0, ease_in=0.0)
+        self.setCycle('CYC-normal-saccades', rate=1.0, magnitude=1.0, ease_in=0.0)
 
 
         # Scale for Blender coordinates 1 BU in m.
@@ -44,16 +45,18 @@ class AnimationManager():
         # Target minimum distance in m
         self.min_distance  = 0.1
         # Face target offset in BU
+        # -4 for Sophia 1.0, -2 for blender only
         self.face_target_offset = -4
         # Eye_target distance in BU from 0 point
+        # -4 for Sophia 1.0 -2 for blender rig
         self.eye_target_offset = -4
 
 
         # Head and Eye tracking parameters
         self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
-                Pipes.linear(speed=0.5),
-                Pipes.moving_average(window=0.6)],
-            Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
+                Pipes.exponential(3.5),
+                Pipes.moving_average(window=0.4)],
+                Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
         ))
         self.eyeTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap(
             Pipes.linear(speed=3),
@@ -169,7 +172,7 @@ class AnimationManager():
             try:
                 control = self.bones['EMO-'+emotionName]
             except KeyError:
-                logger.error('Cannot set emotion. No bone with name ', emotionName)
+                logger.error('Cannot set emotion. No bone with name {}'.format(emotionName))
                 continue
             else:
                 found = False
@@ -256,7 +259,42 @@ class AnimationManager():
             self.cyclesSet.discard(newCycle)
             self.cyclesSet.add(newCycle)
 
+    #========== define unique cycles that don't conform to name rate magnitude parameter ============
+    def setBlinkRandomly(self,interval_mean,interval_variation):
+        '''enable if necessary and update the blink rate of the artistic actuator'''
 
+        if bpy.data.scenes["Scene"].actuators.ACT_blink_randomly.HEAD_PARAM_enabled == False:
+           bpy.data.scenes["Scene"].actuators.ACT_blink_randomly.HEAD_PARAM_enabled = True
+           print("enabled blinking")
+        checkValue(interval_mean,0.5,10)
+        checkValue(interval_variation,0.0,interval_mean)
+        print('changing blink rate to ',interval_mean)
+        bpy.data.scenes["Scene"].actuators.ACT_blink_randomly.PARAM_interval_mean=interval_mean
+        bpy.data.scenes["Scene"].actuators.ACT_blink_randomly.PARAM_interval_variation=interval_variation
+        # if reset delete and restart actuator
+
+    def setSaccade(self,interval_mean,interval_variation,paint_scale,eye_size,eye_distance,mouth_width,mouth_height,weight_eyes,weight_mouth):
+        '''enable if necessary and update the saccade rate of the artistic actuator'''
+        if bpy.data.scenes["Scene"].actuators.ACT_saccade.HEAD_PARAM_enabled == False:
+            bpy.data.scenes["Scene"].actuators.ACT_saccade.HEAD_PARAM_enabled = True
+            print("enabled saccades")
+        checkValue(interval_mean,0.1,5)
+        checkValue(interval_variation,0.0,interval_mean)
+
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_interval_mean=interval_mean
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_interval_variation=interval_variation
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_paint_scale=paint_scale
+        # heat map parameters
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_eye_size=eye_size
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_eye_distance=eye_distance
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_mouth_width=mouth_width
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_mouth_height=mouth_height
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_weight_mouth=weight_mouth
+        bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_weight_eyes=weight_eyes
+
+
+
+        # if reset delete and restart actuator
     def _deleteViseme(self, viseme):
             ''' internal use only, stops and deletes a viseme'''
             # remove from list
@@ -416,7 +454,6 @@ class Cycle():
 
     def __hash__(self):
         return hash(self.name)
-
 
 def init():
     '''Create AnimationManager singleton and make it available for global access'''

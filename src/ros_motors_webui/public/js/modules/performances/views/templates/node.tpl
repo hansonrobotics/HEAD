@@ -10,7 +10,7 @@
             <div class="input-group-addon">s</div>
         </div>
     </div>
-    <% if (name == 'emotion' || name == 'interaction') { %>
+    <% if (name == 'emotion' || name == 'interaction' || name == 'expression') { %>
         <div class="col-sm-2">
             <label>Duration</label>
 
@@ -37,17 +37,28 @@
             <select class="app-gesture-select"></select>
         </div>
     <% } %>
-
-    <% if (name == 'emotion' || name == 'gesture') { %>
+    <% if (name == 'expression') { %>
+        <div class="col-sm-2">
+            <label title="Expression">Expression</label>
+            <select class="app-expression-select"></select>
+        </div>
+    <% } %>
+    <% if (name == 'emotion' || name == 'gesture' || name == 'expression') { %>
         <div class="col-sm-3">
             <label title="Magnitude">Magnitude <span class="app-magnitude-label pull-right label label-default"></span></label>
 
             <div class="app-magnitide-slider"></div>
         </div>
     <% } %>
-
     <% if (name == 'speech') { %>
-        <div class="col-sm-8">
+        <div class="col-sm-2">
+            <label title="Language">Language</label>
+            <select class="app-lang-select">
+                <option value="en">English</option>
+                <option value="zh">Mandarin</option>
+            </select>
+        </div>
+        <div class="col-sm-6">
             <label title="Text">Text</label>
             <textarea class="app-node-text form-control" title="Text"></textarea>
         </div>

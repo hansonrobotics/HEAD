@@ -15,7 +15,12 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                 sliderMaxVal: '.app-slider-max-value',
                 indicator: '.app-motor-status-indicator',
                 dynamixelButtonTooltip: '.app-dynamixel-button-tooltip',
-                dynamixelParams: '.app-dynamixel-params'
+                dynamixelParams: '.app-dynamixel-params',
+                selectButton: '.app-select-motor-button',
+                selectButtonIcon: '.app-select-motor-button span'
+            },
+            events: {
+                'click @ui.selectButton': 'toggleSelect'
             },
             serializeData: function () {
                 var data = _.extend(this.model.toJSON(), {
@@ -46,6 +51,8 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                 } else {
                     this.disableMonitoring();
                 }
+
+                this.selected(this.model.selected());
             },
             enableMonitoring: function () {
                 var self = this,
@@ -113,9 +120,45 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
 
                 // deselect by default
                 this.modelChanged();
+
+                // hide select buttons by default
+                this.showSelectButton(false);
             },
-            onDestroy: function () {
-                clearInterval(this.monitoringInterval);
-            }
+            showSelectButton: function (show) {
+                if (show) {
+                    this.ui.selectButton.show();
+                } else {
+                    this.ui.selectButton.hide();
+                }
+            },
+            toggleSelect: function () {
+                this.model.selected() ? this.model.selected(false) : this.model.selected(true);
+            },
+            /**
+             * Sets select model select state if boolean argument is present,
+             * returns current state (defaults to false) otherwise
+             *
+             * @param selected
+             * @returns {boolean}
+             */
+            selected: function (selected) {
+                if (typeof selected == 'undefined') {
+                    return this.model.selected();
+                } else {
+                    if (selected) {
+                        this.ui.selectButton.addClass('btn-success');
+                        this.ui.selectButton.removeClass('btn-danger');
+
+                        this.ui.selectButtonIcon.addClass('glyphicon-ok');
+                        this.ui.selectButtonIcon.removeClass('glyphicon-remove');
+                    } else {
+                        this.ui.selectButton.removeClass('btn-success');
+                        this.ui.selectButton.addClass('btn-danger');
+
+                        this.ui.selectButtonIcon.removeClass('glyphicon-ok');
+                        this.ui.selectButtonIcon.addClass('glyphicon-remove');
+                    }
+                }
+            },
         });
     });

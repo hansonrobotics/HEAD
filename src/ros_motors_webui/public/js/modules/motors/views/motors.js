@@ -1,7 +1,13 @@
-define(["marionette", "./motor", 'jquery-ui'],
-    function (Marionette, motorView) {
+define(['application', "marionette", "./motor", 'jquery-ui'],
+    function (App, Marionette, motorView) {
         return Marionette.CollectionView.extend({
             childView: motorView,
+            initialize: function () {
+                var self = this;
+                App.vent.on('motors:selection:set', function (status) {
+                    self.showSelectButtons(status);
+                })
+            },
             /**
              * Pass label of the motor group to motor views when a new group appears
              *
@@ -35,6 +41,11 @@ define(["marionette", "./motor", 'jquery-ui'],
             },
             onDestroy: function () {
                 clearInterval(this.monitoringInterval);
+            },
+            showSelectButtons: function (status) {
+                this.children.each(function (motorView) {
+                    motorView.showSelectButton(status);
+                });
             }
         });
     });

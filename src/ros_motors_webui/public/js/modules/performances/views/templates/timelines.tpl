@@ -10,8 +10,6 @@
                             class="glyphicon glyphicon-trash"></span></button>
             </div>
         </div>
-        <div class="col-md-3">
-        </div>
     </div>
 </div>
 
@@ -28,6 +26,8 @@
                 <div class="app-node label label-warning" data-name="gaze_at">GazeAt</div>
                 <div class="app-node label label-default" data-name="interaction">Interaction</div>
                 <div class="app-node label label-default" data-name="pause">Pause</div>
+                <div class="app-node label label-info" data-name="expression">Expression</div>
+                <!--<div class="app-node label label-default" data-name="speech_input">Wait for speech</div>-->
             </div>
 
             <div class="app-node-settings"></div>

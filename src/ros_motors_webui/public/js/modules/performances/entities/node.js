@@ -2,6 +2,7 @@ define(['application', 'lib/api'], function (App, api) {
     App.module('Performances.Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Node = Backbone.Model.extend({
             call: function () {
+                var self = this;
                 switch (this.get('name')) {
                     case 'gesture':
                         api.setGesture(this.get('gesture'), 1, this.get('speed'), this.get('magnitude'));
@@ -10,13 +11,14 @@ define(['application', 'lib/api'], function (App, api) {
                         api.setEmotion(this.get('emotion'), this.get('magnitude'), parseFloat(this.get('duration')));
                         break;
                     case 'look_at':
-                        api.setFaceTarget(3, this.get('x'), -this.get('y'));
+                        api.setFaceTarget(1, this.get('x'), -this.get('y'));
                         break;
                     case 'gaze_at':
-                        api.setGazeTarget(3, this.get('x'), -this.get('y'));
+                        api.setGazeTarget(1, this.get('x'), -this.get('y'));
                         break;
                     case 'speech':
-                        api.robotSpeech(this.get('text'));
+                        console.log()
+                        api.robotSpeech(this.get('text'), this.get('lang'));
                         break;
                     case 'interaction':
                         api.enableInteractionMode();
@@ -24,12 +26,24 @@ define(['application', 'lib/api'], function (App, api) {
                     case 'pause':
                         this.trigger('pause');
                         break;
+                    case 'expression':
+                        var self = this;
+                        api.blenderMode.disableFace();
+                        // Wait for blender to disable faces
+                        setTimeout(function(){
+                            api.setExpression(self.get('expression'), self.get('magnitude'));
+                        },50);
+                        break;
                 }
             },
-            finish: function(){
+            finish: function () {
                 switch (this.get('name')) {
-                     case 'interaction':
+                    case 'interaction':
                         api.disableInteractionMode();
+                        break;
+                     case 'expression':
+                        api.setExpression(this.get('expression'), 0.01);
+                        setTimeout(api.blenderMode.enable,1000);
                         break;
                 }
             },

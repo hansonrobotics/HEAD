@@ -3,13 +3,18 @@
 <% } %>
 
 <div class="clearfix">
-    <div class="pull-left">
+    <div>
         <b class="app-slider-label-left"></b>
 
         <span class="app-slider-value-container">
             <span class="app-slider-value"></span> (<span class="app-slider-min-value"></span> to
             <span class="app-slider-max-value"></span>)
         </span>
+
+        <div class="pull-right">
+            <button type="button" class="app-select-motor-button btn"><span class="glyphicon" aria-hidden="true"></span>
+            </button>
+        </div>
     </div>
     <div class="pull-right">
         <b class="app-slider-label-right"></b>

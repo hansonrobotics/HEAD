@@ -4,6 +4,7 @@ import aiml
 import rospy
 import os
 import sys
+import time
 # csv and itertools for sentiment
 import csv
 from itertools import izip
@@ -12,6 +13,7 @@ from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState
 import logging
+import random
 #from rigControl.actuators import sleep as nb_sleep
 
 logger = logging.getLogger('hr.chatbot.ai')
@@ -54,8 +56,8 @@ class Chatbot():
       'chatbot_affect_perceive',
       String, queue_size=1
     )
-    rospy.Subscriber('chatbot_affect_express', EmotionState,
-        self._affect_express_callback)
+    # rospy.Subscriber('chatbot_affect_express', EmotionState,
+    #     self._affect_express_callback)
 
 
   def initialize(self, aiml_dir):
@@ -88,11 +90,14 @@ class Chatbot():
     logger.warn("Loaded "+len(self._polarity)+"items")
 
   def _request_callback(self, chat_message):
+    if rospy.get_param('lang', None) != 'en':
+        logger.info('Ignore non-English language')
+        return
     response = ''
-    #nb_sleep(random.uniform(0.0,0.5)
+
     blink=String()
     # blink that we heard something, request, probability defined in callback
-    blink.data='chat-heard'
+    blink.data='chat_heard'
     self._blink_publisher.publish(blink)
 
     if chat_message.confidence < 50:
@@ -103,15 +108,14 @@ class Chatbot():
       # puzzled expression
     else:
 
-      # non blocking sleep for random up to .25 sec
-      #nb_sleep(random.random()< *0.5)
       # request blink, probability of blink defined in callback
-      blink.data='chat-saying'
+      blink.data='chat_saying'
       self._blink_publisher.publish(blink)
 
       response = self._kernel.respond(chat_message.utterance)
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
+      response = response.replace('.','. ')
 
       # if sentiment active save state and wait for affect_express to publish response
       # otherwise publish and let tts handle it
@@ -124,6 +128,7 @@ class Chatbot():
       message.data = response
       self._response_publisher.publish(message)
       self._state = 'wait_client'
+    logger.info("Ask: {}, answer: {}".format(chat_message.utterance, response))
 
   # Tell the world the emotion that the chatbot is perceiving.
   # Use the blender_api_msgs/EmotionState messae type to
@@ -141,11 +146,18 @@ class Chatbot():
         emo.data = 'happy'
         self._affect_publisher.publish(emo)
         logger.info('Chatbot perceived emo:'+emo.data)
+        # Currently response is independant of message received so no need to wait
+        # Leave it for Opencog to handle responses later on.
+        self._affect_express_callback()
+
       elif polarity< 0 and abs(polarity)> self._polarity_threshold:
         emo = String()
         emo.data = 'frustrated'
         self._affect_publisher.publish(emo)
         logger.info('Chatbot perceived emo:'+emo.data)
+        # Currently response is independant of message received so no need to wait
+        # Leave it for Opencog to handle responses later on.
+        self._affect_express_callback()
       else:
         # if no or below threshold affect, publish message so some response is given.
 
@@ -159,14 +171,18 @@ class Chatbot():
   # This is the emotion that the chatbot should convey.
   # affect_message is of type blender_api_msgs/EmotionState
   # Fields are name (String) magnitude (float), duration (time)
-  def _affect_express_callback(self, affect_message):
+  def _affect_express_callback(self, affect_message=None):
     #
 
-    logger.info("Chatbot wants to express: " + affect_message.name+" state='"+self._state)
+    #logger.info("Chatbot wants to express: " + affect_message.name+" state='"+self._state)
     # currently general_behavior publishes set emotion and tts listens
     # here we could call some smart markup process instead of letting tts
     # do default behavior.
     # any emotion change will now force tts
+    # TODO pass .cfg speech hesitation interval in affect message
+    # Will leave for OpenCog behavior tree to decide for now.
+    hesitation=random.uniform(0.1,0.4)
+    time.sleep(hesitation)
     if self._state == 'wait_emo':
       message = String()
       message.data = self._response_buffer

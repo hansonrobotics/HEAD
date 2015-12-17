@@ -225,7 +225,7 @@ class CommandWrappers:
         try:
             api.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
         except TypeError:
-            logger.error('unknown gesture:', msg.name);
+            logger.error('Unknown gesture: {}'.format(msg.name))
 
 
     # Visemes --------------------------------------
@@ -240,7 +240,7 @@ class CommandWrappers:
                 msg.duration.to_sec(),
                 msg.rampin, msg.rampout, msg.magnitude)
         except TypeError:
-            logger.error('unknown viseme:', msg.name);
+            logger.error('Unknown viseme: {}'.format(msg.name))
 
 
     # Look-at and turn-to-face targets ---------------------
@@ -287,6 +287,14 @@ class CommandWrappers:
     def setNeckRotation(msg):
         #sets only pitch and roll
         api.setNeckRotation(msg.y, msg.x)
+
+    @subscribe("~set_blink_randomly",msg.BlinkCycle)
+    def setBlinkRandomly(msg):
+        api.setBlinkRandomly(msg.mean,msg.variation)
+
+    @subscribe("~set_saccade",msg.SaccadeCycle)
+    def setSaccade(msg):
+        api.setSaccade(msg.mean,msg.variation,msg.paint_scale,msg.eye_size,msg.eye_distance,msg.mouth_width,msg.mouth_height,msg.weight_eyes,msg.weight_mouth)
 
     @service("~set_param", srv.SetParam)
     def setParam(msg):
