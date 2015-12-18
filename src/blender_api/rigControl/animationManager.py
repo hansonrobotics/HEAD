@@ -446,8 +446,22 @@ class Cycle():
     def __init__(self, name, rate, magnitude, ease_in):
         self.name = name
         self.rate = rate
-        self.magnitude = magnitude
+        self._magnitude = magnitude
         self.ease_in = ease_in
+        self.time_started = time.time()
+
+    # Magnitude based on ease_in time
+    @property
+    def magnitude(self):
+        if self.ease_in > 0.1:
+            ease = min(1, (time.time() - (self.time_started))/self.ease_in)
+            return self._magnitude * ease
+        else:
+            return self._magnitude
+
+    @magnitude.setter
+    def magnitude(self,value):
+        self._magnitude = value
 
     def __eq__(self, other):
         return self.name == other.name
