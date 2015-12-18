@@ -12,7 +12,7 @@ import rospkg
 from roslaunch import core
 
 from std_msgs.msg import String
-from testing_tools import wait_for, MessageQueue
+from testing_tools.misc import wait_for, MessageQueue
 from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
