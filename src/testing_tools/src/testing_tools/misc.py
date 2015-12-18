@@ -12,21 +12,9 @@ import shutil
 from Queue import Queue
 import serial
 
-logger = logging.getLogger('testing_tools')
+logger = logging.getLogger('testing_tools.misc')
 
 CWD = os.path.abspath(os.path.dirname(__file__))
-
-__all__ = [
-    'run_shell_cmd', 'wait_for',
-    'capture_webcam_video', 'video2rosbag',
-    'play_rosbag', 'rosbag_msg_generator', 'wait_for_message',
-    'wait_for_messages',
-    'ThreadWorker', 'capture_screen', 'capture_camera',
-    'startxvfb', 'stopxvfb', 'get_rosbag_file', 'get_data_path',
-    'add_text_to_video', 'concatenate_videos', 'MessageQueue',
-    'PololuSerialReader', 'check_if_ffmpeg_satisfied',
-    'check_if_sound_card_exists', 'SerialPortRecorder'
-    ]
 
 def run_shell_cmd(cmd, first=False):
     """
@@ -74,7 +62,7 @@ class capture_screen():
         capture_script = os.path.join(
             CWD, 'capture.sh')
         proc = subprocess.Popen(
-            [capture_script, filename, str(duration)])
+            [capture_script, filename, str(duration)], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
         return proc
 
     def __enter__(self):
@@ -124,8 +112,12 @@ def wait_for(node, namespace=None):
     from rospy.names import canonicalize_name
     node = canonicalize_name(node)
     def is_node_up(node):
-        return any([node in upnode for upnode in
-                    rosnode.get_node_names(namespace)])
+        try:
+            node_up = any([node in upnode for upnode in
+                        rosnode.get_node_names(namespace)])
+            return node_up
+        except Exception:
+            return False
     if not is_node_up(node):
         while not is_node_up(node):
             time.sleep(0.1)
@@ -543,7 +535,10 @@ def check_if_ffmpeg_satisfied():
     Check if ffmpeg is installed and satisfied for screencasting.
     """
 
-    configuration = run_shell_cmd('ffmpeg -version|grep configuration', True)
+    try:
+        configuration = run_shell_cmd('ffmpeg -version|grep configuration', True)
+    except Exception:
+        return False
     configuration = [i.strip() for i in configuration.split(':')[1].split('--')]
     requires = ['enable-libx264', 'enable-libfreetype']
     return all([i in configuration for i in requires])
@@ -553,7 +548,10 @@ def check_if_sound_card_exists():
     Check if sound card exists.
     """
 
-    snd_cards = run_shell_cmd('cat /proc/asound/cards')
+    try:
+        snd_cards = run_shell_cmd('cat /proc/asound/cards')
+    except Exception:
+        return False
     return not 'no soundcards' in '\n'.join(snd_cards)
 
 class SerialPortRecorder(object):

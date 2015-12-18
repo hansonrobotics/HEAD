@@ -1,6 +1,6 @@
 import os
 import time
-from testing_tools import SerialPortRecorder, MessageQueue
+from testing_tools.misc import SerialPortRecorder, MessageQueue
 from testing_tools.protocol.pololu import CompactProtocal
 import rospy
 import rostopic

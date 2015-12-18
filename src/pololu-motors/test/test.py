@@ -5,7 +5,7 @@ import time
 import os
 import subprocess
 
-from testing_tools import PololuSerialReader
+from testing_tools.misc import PololuSerialReader
 from pololu.motors import Maestro
 
 CWD = os.path.abspath(os.path.dirname(__file__))

@@ -1,0 +1,6 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <arg name="name"/>
+    <include file="$(find robots_config)/$(arg name)/hardware.launch" />
+    <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py" respawn="true"/>
+</launch>

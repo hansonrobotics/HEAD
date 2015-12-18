@@ -196,8 +196,8 @@ class BLPlayback(bpy.types.Operator):
                                 gesture.speed = cycle.rate
                                 gesture.stripRef.mute = False
             else:
-                for cycle in self.cyclesSet:
-                    for gesture in self.gesturesList:
+                for cycle in eva.cyclesSet:
+                    for gesture in eva.gesturesList:
                         if gesture.name == cycle.name:
                             gesture.stripRef.mute = True
 

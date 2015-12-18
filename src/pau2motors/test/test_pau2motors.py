@@ -17,7 +17,7 @@ from pau2motors.msg import pau
 from genpy.message import fill_message_args
 from std_msgs.msg import Float64
 
-from testing_tools import wait_for_message
+from testing_tools.misc import wait_for_message
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'pau2motors'
