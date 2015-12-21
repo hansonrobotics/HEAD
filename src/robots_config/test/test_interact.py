@@ -14,7 +14,7 @@ import subprocess
 CWD = os.path.abspath(os.path.dirname(__file__))
 
 robot_name = 'han'
-cmd = 'roslaunch {}/launch/robot.launch basedir:={}/launch name:={name}'.format(
+cmd = 'roslaunch {}/launch/robot.test basedir:={}/launch name:={name}'.format(
     CWD, CWD, name=robot_name)
 proc = subprocess.Popen(cmd, shell=True, preexec_fn=os.setsid, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 def shutdown():
