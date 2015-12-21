@@ -48,9 +48,9 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jque
                 $(this.ui.navigation).multilevelpushmenu('collapse');
             },
             updateNodeList: function () {
-                api.services.get_configurable_nodes.callService({}, function (nodes) {
+                api.services.get_configurable_nodes.callService({}, function (response) {
                     var container = $('<div>');
-                    $.each(nodes, function () {
+                    $.each(response.nodes, function () {
                         var link = $('<a>').prop({
                             href: '#/admin/settings'
                         }).html(this);
