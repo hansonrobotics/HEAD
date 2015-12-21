@@ -16,7 +16,7 @@ nodeprocess._TIMEOUT_SIGTERM = 1
 from pau2motors.msg import pau
 from std_msgs.msg import Float64
 from ros_pololu.msg import MotorCommand
-from testing_tools import MessageQueue
+from testing_tools.misc import MessageQueue
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'robots_config'

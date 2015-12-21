@@ -13,7 +13,7 @@ from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
 
-from testing_tools import PololuSerialReader
+from testing_tools.misc import PololuSerialReader
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 PKG = 'ros_pololu'

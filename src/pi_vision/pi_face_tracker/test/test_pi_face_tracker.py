@@ -8,7 +8,7 @@ import time
 
 import rospkg
 import roslaunch
-from testing_tools import (rosbag_msg_generator, play_rosbag,
+from testing_tools.misc import (rosbag_msg_generator, play_rosbag,
                         get_rosbag_file, wait_for_message, wait_for_messages)
 from pi_face_tracker.msg import FaceEvent, Faces
 

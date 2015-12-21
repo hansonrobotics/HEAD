@@ -17,7 +17,7 @@ nodeprocess._TIMEOUT_SIGTERM = 1
 
 from blender_api_msgs.msg import EmotionState
 from std_msgs.msg import String
-from testing_tools import (wait_for, play_rosbag, create_msg_listener,
+from testing_tools.misc import (wait_for, play_rosbag, create_msg_listener,
             capture_screen, capture_camera, startxvfb, stopxvfb,
             get_rosbag_file, MessageQueue, check_if_ffmpeg_satisfied,
             check_if_sound_card_exists)

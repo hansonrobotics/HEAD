@@ -1,0 +1,9 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket">
+      <param name="authenticate" value="false" />
+      <param name="port" value="9090"/>
+      <param name="address" value=""/>
+    </node>
+    <node name="rosapi" pkg="rosapi" type="rosapi_node" />
+</launch>

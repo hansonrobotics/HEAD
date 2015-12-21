@@ -1,0 +1,5 @@
+<launch>
+    <param name="lang" value="zh" />
+    <include file="include/blender.launch" />
+    <include file="include/chat.launch" />
+</launch>

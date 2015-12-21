@@ -8,7 +8,7 @@ import roslaunch
 import rostopic
 from roslaunch import core
 
-from testing_tools import wait_for, wait_for_message
+from testing_tools.misc import wait_for, wait_for_message
 from genpy.message import fill_message_args
 from sensor_msgs.msg import JointState
 from tf.msg import tfMessage
