@@ -43,6 +43,8 @@
         </group>
     </group>
 
+    <include file="$(find webui)/webui.launch" />
+
     <!-- Perception outside the namespace -->
     <group unless="$(arg mini)">
         <include file="$(find perception)/launch/geometry.launch">
