@@ -163,10 +163,11 @@ class BLPlayback(bpy.types.Operator):
             eva.eyeTargetLoc.blend(time, dt)
 
             head_loc = eva.headTargetLoc.current
-            head_loc[1] = -head_loc[1]
             head_loc[0] = -head_loc[0]
             headControl.location = head_loc
-            eyeControl.location = eva.eyeTargetLoc.current
+            eye_loc = eva.eyeTargetLoc.current
+            eye_loc[1] = -eye_loc[1]
+            eyeControl.location = eye_loc
 
             # udpate emotions
             for emotion in eva.emotionsList:
