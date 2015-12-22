@@ -56,11 +56,11 @@ class AnimationManager():
         self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
                 Pipes.exponential(3.5),
                 Pipes.moving_average(window=0.4)],
-                Wrappers.in_spherical(origin=[0, self.face_target_offset, 0])
+                Wrappers.in_spherical(origin=[0, self.face_target_offset, 0], radius=4)
         ))
         self.eyeTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap(
             Pipes.linear(speed=3),
-            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4)
         ))
 
         self.actuatorManager = ActuatorManager()
@@ -330,8 +330,8 @@ class AnimationManager():
         '''Set the target used by eye and face tracking.'''
 
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.face_target_offset)
-        self.headTargetLoc.target = locBU
 
+        self.headTargetLoc.target = locBU
 
         # Change offset for the eyes
         locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
@@ -341,7 +341,7 @@ class AnimationManager():
                 Pipes.linear(speed=0.5),
                 Pipes.stick(window=0.5),
                 Pipes.moving_average(window=0.1)],
-            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0]))
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4))
         self.eyeTargetLoc.target = locBU
 
     def setGazeTarget(self, loc):
@@ -351,7 +351,7 @@ class AnimationManager():
 
         self.eyeTargetLoc.transition = Wrappers.wrap(
             Pipes.linear(speed=3),
-            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0])
+            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4)
         )
         self.eyeTargetLoc.target = locBU
 
