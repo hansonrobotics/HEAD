@@ -47,25 +47,15 @@ class Pau2MotorsNode:
     )
 
   def _build_msg_pipe(self, robot_yaml):
-
-    # Build a dictionary that maps topic names to lists of motor yaml entries
-    topicname2motor_sublist = {
-      topicname: map(
-        lambda name: robot_yaml["motors"][name],
-        motor_names.split(";")
-      )
-      for topicname, motor_names in robot_yaml["topics"].items()
-    }
-
-    # Convert lists of motor yaml entries to Pau2Motors instances.
-    topicname2Pau2Motors = {
-      topicname: Pau2Motors(motor_sublist)
-      for topicname, motor_sublist in topicname2motor_sublist.items()
-    }
-
-    # Subscribe to topics
-    for topicname, pau2motors_instance in topicname2Pau2Motors.items():
-      self._subscribe_single(topicname, pau2motors_instance)
+    for topicname, motor_names in robot_yaml["topics"].items():
+      motor_sublist = []
+      for name in motor_names.split(';'):
+        if name in robot_yaml['motors']:
+          motor_sublist.append(robot_yaml['motors'][name])
+        else:
+          logger.error("motor {} has no configuration".format(name))
+          continue
+      self._subscribe_single(topicname, Pau2Motors(motor_sublist))
 
   def __init__(self, config):
     rospy.init_node("pau2motors_node")
