@@ -3,11 +3,7 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
         return Marionette.ItemView.extend({
             template: template,
             ui: {
-                settings: '.app-settings',
-                update: '.app-update'
-            },
-            events: {
-                'click @ui.update': 'update'
+                settings: '.app-settings'
             },
             modelEvents: {
                 change: 'setConfig'
@@ -22,6 +18,10 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                     disable_edit_json: true,
                     disable_properties: true,
                     iconlib: "bootstrap3"
+                });
+
+                this.editor.on('change',function() {
+                    self.update();
                 });
 
                 this.setConfig();
@@ -39,18 +39,11 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                 if (this.editor)
                     this.editor.setValue(this.model.toJSON());
             },
-            update: function (e) {
+            update: function () {
                 if (this.editor.validate().length === 0) {
                     this.model.save(this.editor.getValue(), {
-                        success: function (model) {
-                            if (model.get('error')) {
-                                model.unset('error');
-                                App.Utilities.showPopover(e.target, 'Unable to save configuration')
-                            } else
-                                App.Utilities.showPopover(e.target, 'Success')
-                        },
                         error: function () {
-                            App.Utilities.showPopover(e.target, 'Unable to save configuration')
+                            console.log('error updating node configuration');
                         }
                     });
                 }
