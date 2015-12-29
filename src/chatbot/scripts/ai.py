@@ -62,9 +62,14 @@ class Chatbot():
   def initialize(self, aiml_dir):
     self._kernel.learn(os.sep.join([aiml_dir, '*.aiml']))
     rospy.init_node('chatbot_en')
-    rospy.sleep(0.2) # wait a little moment for the properties param to be set.
-    properties_file = rospy.get_param(
-        '~properties', os.sep.join([aiml_dir, 'bot.properties']))
+
+    properties_file = None
+    logger.info("Getting properties file")
+    while properties_file is None:
+        properties_file = rospy.get_param('~properties', None)
+        rospy.sleep(0.01)
+    logger.info("Parsing properties file")
+
     if os.path.isfile(properties_file):
       with open(properties_file) as f:
         for line in f:
