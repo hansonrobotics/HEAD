@@ -8,7 +8,8 @@ import rospy
 import roslaunch
 from testing_tools.misc import capture_screen, MessageQueue, add_text_to_video, wait_for, check_if_ffmpeg_satisfied
 from testing_tools.blender import set_alive
-from std_msgs.msg import String
+from std_msgs.msg import String, Float64
+from pau2motors.msg import pau
 import subprocess
 
 CWD = os.path.abspath(os.path.dirname(__file__))
@@ -38,14 +39,15 @@ class InteractTest(unittest.TestCase):
         if not os.path.isdir(self.output_audio):
             os.makedirs(self.output_audio)
         self.queue = MessageQueue()
-        self.queue.subscribe(
-            '/{}/chatbot_responses'.format(robot_name), String)
+        rospy.sleep(10) # wait for everything to be ready. Wait for PUB/SUB connection to be stable
 
     def setUp(self):
+        self.queue.clear()
         set_alive(False)
         rospy.sleep(1)
 
     def tearDown(self):
+        self.queue.clear()
         set_alive(True)
         rospy.sleep(1)
 
@@ -54,7 +56,7 @@ class InteractTest(unittest.TestCase):
     def test_emotion_cmd(self):
         duration = 6
         pub, msg_class = rostopic.create_publisher(
-            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', True)
+            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', False)
         for cmd in ['sad', 'happy']:
             screen_output = '%s/bl_%s.avi' % (
                 self.output_video, cmd.replace(' ', '_'))
@@ -67,7 +69,7 @@ class InteractTest(unittest.TestCase):
     def test_gesture_cmd(self):
         duration = 2
         pub, msg_class = rostopic.create_publisher(
-            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', True)
+            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', False)
         for cmd in ['blink', 'nod', 'shake']:
             screen_output = '%s/bl_%s.avi' % (
                 self.output_video, cmd.replace(' ', '_'))
@@ -80,7 +82,7 @@ class InteractTest(unittest.TestCase):
     def test_turn_eye_cmd(self):
         duration = 2
         pub, msg_class = rostopic.create_publisher(
-            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', True)
+            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', False)
         pub.publish(msg_class('look center', 100))
         rospy.sleep(duration)
         for cmd in ['look left', 'look right']:
@@ -97,7 +99,7 @@ class InteractTest(unittest.TestCase):
     def test_turn_head_cmd(self):
         duration = 2
         pub, msg_class = rostopic.create_publisher(
-            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', True)
+            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', False)
         pub.publish(msg_class('turn center', 100))
         rospy.sleep(duration)
         for cmd in ['turn left', 'turn right']:
@@ -111,14 +113,16 @@ class InteractTest(unittest.TestCase):
 
     def test_chat(self):
         pub, msg_class = rostopic.create_publisher(
-            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', True)
-        self.queue.clear()
-        for speech in ['hi', 'what\'s your name']:
+            '/{}/speech'.format(robot_name), 'chatbot/ChatMessage', False)
+        sub = self.queue.subscribe(
+            '/{}/chatbot_responses'.format(robot_name), String)
+        rospy.sleep(2)
+        for speech in ['what\'s your name']:
             pub.publish(msg_class(speech, 100))
             rospy.sleep(1)
         msgs = self.queue.tolist()
-        self.assertEqual(msgs[0].data.lower(), 'hi there!')
-        self.assertTrue('han' in msgs[1].data.lower())
+        self.assertTrue(robot_name in msgs[0].data.lower())
+        sub.unregister()
 
 if __name__ == '__main__':
     unittest.main()
