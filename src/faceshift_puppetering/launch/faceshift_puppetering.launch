@@ -1,0 +1,7 @@
+<launch>
+<arg name="IP" default="localhost"/>
+<arg name="Port" default="33433"/>
+<param name="IP" value="$(arg IP)"/>
+<param name="Port" value="$(arg Port)"/>
+<node pkg="faceshift_puppetering" name="faceshift_puppetering" type="faceshift_puppetering_node"/>
+</launch>
