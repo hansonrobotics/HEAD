@@ -1,0 +1,6 @@
+string nodes
+float32 startTime
+---
+bool success
+float64 time
+float64 timestamp
