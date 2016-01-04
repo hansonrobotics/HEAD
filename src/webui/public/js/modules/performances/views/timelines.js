@@ -22,6 +22,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 saveButton: '.app-save-button',
                 runButton: '.app-run-button',
                 stopButton: '.app-stop-button',
+                pauseButton: '.app-pause-button',
+                resumeButton: '.app-resume-button',
                 loopButton: '.app-loop-button',
                 clearButton: '.app-clear-button',
                 runIndicator: '.app-run-indicator',
@@ -36,11 +38,13 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 'click @ui.nodes': 'nodeClicked',
                 'click @ui.saveButton': 'savePerformances',
                 'keyup @ui.performanceName': 'setPerformanceName',
-                'click @ui.runButton': 'runClicked',
+                'click @ui.runButton': 'runClick',
+                'click @ui.stopButton': 'stopClick',
+                'click @ui.pauseButton': 'pauseClick',
+                'click @ui.resumeButton': 'resumeClick',
                 'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance',
                 'click @ui.timeAxis': 'runAt',
-                'click @ui.stopButton': 'stop',
                 'click @ui.loopButton': 'loop'
             },
             onShow: function () {
@@ -249,71 +253,96 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             savePerformances: function () {
                 Views.trigger('performances:save');
             },
-            run: function (startTime, finishedCallback) {
-                var duration = this.model.getDuration();
-
-                if (!$.isNumeric(startTime)) startTime = 0;
-                if (startTime > duration) return;
-
-                // set start time if performance was paused
-                if ($.isNumeric(this.model.getResumeTime())) {
-                    startTime = this.model.getResumeTime();
-                    this.model.run();
-                } else {
-                    this.model.run(startTime);
-                }
-
+            startIndicator: function (startTime, endTime, callback) {
                 $(this.ui.runIndicator).stop().css('left', startTime * this.config.pxPerSec).show()
-                    .animate({left: duration * this.config.pxPerSec}, (duration - startTime) * 1000, 'linear',
+                    .animate({left: endTime * this.config.pxPerSec}, (endTime - startTime) * 1000, 'linear',
                         function () {
-                            $(this).hide();
-
-                            if (typeof finishedCallback == 'function')
-                                finishedCallback();
+                            if (typeof callback == 'function')
+                                callback();
                         });
             },
-            pause: function () {
-                $(this.ui.runIndicator).stop();
-                this.model.pause();
-                clearInterval(this.loopInterval);
-                clearInterval(this.loopTimeout);
+            pauseIndicator: function (time) {
+                $(this.ui.runIndicator).stop().css('left', time * this.config.pxPerSec);
             },
-            runClicked: function () {
-                this.stop();
-                this.run();
+            stopIndicator: function () {
+                $(this.ui.runIndicator).stop().hide();
+            },
+            runClick: function () {
+                this.run(0);
+            },
+            pauseClick: function () {
+                var self = this;
+                this.model.pause({
+                    success: function (response) {
+                        self.pauseIndicator(response.time);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            },
+            resumeClick: function () {
+                var self = this,
+                    duration = this.model.getDuration();
+
+                this.model.resume({
+                    success: function (response) {
+                        var startTime = response.time - (response.timestamp - (Date.now() / 1000));
+                        self.startIndicator(startTime, response.time, function () {
+                            if (response.time >= duration)
+                                self.ui.runIndicator.hide();
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            },
+            stopClick: function () {
+                var self = this;
+                this.model.stop({
+                    success: function (response) {
+                        self.stopIndicator();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            },
+            run: function (startTime) {
+                var self = this,
+                    duration = this.model.getDuration();
+
+                this.model.run(startTime, {
+                    success: function (response) {
+                        var startTime = response.time - (response.timestamp - (Date.now() / 1000));
+                        self.startIndicator(startTime, response.time, function () {
+                            if (response.time >= duration)
+                                self.ui.runIndicator.hide();
+                            else {
+
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
             },
             runAt: function (e) {
-                this.stop();
                 this.run(e.offsetX / this.config.pxPerSec);
             },
             loop: function () {
-                var self = this,
-                    resumeTime = this.model.getResumeTime(),
-                    duration = this.model.getDuration(),
-                    setLoopInterval = function () {
-                        self.loopInterval = setInterval(function () {
-                            self.run();
-                        }, duration * 1000);
-                    };
-
-                this.run();
-
-                clearInterval(this.loopInterval);
-                clearTimeout(this.loopTimeout);
-
-                if (resumeTime) {
-                    this.loopTimeout = setTimeout(function () {
-                        self.run();
-                        setLoopInterval();
-                    }, (duration - resumeTime) * 1000);
-                } else {
-                    setLoopInterval();
-                }
             },
             stop: function () {
-                this.model.stop();
-                clearInterval(this.loopInterval);
-                $(this.ui.runIndicator).hide();
+                this.model.stop({
+                    success: function () {
+                        this.stopIndicator();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
             },
             /**
              * Removes all nodes from the performance

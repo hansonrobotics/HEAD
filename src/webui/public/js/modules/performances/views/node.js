@@ -28,7 +28,6 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     'change @ui.emotionSelect': 'setEmotion',
                     'change @ui.gestureSelect': 'setGesture',
                     'change @ui.expressionSelect': 'setExpression',
-                    'change @ui.expressionSelect': 'setLanguage',
                     'click @ui.deleteButton': 'deleteNode'
                 },
                 onRender: function () {
@@ -129,7 +128,11 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             this.buildCrosshair();
                             break;
                         case 'speech':
-                            if (this.model.get('text')) this.ui.textInput.val(this.model.get('text'));
+                            if (this.model.get('text'))
+                                this.ui.textInput.val(this.model.get('text'));
+                            else
+                                this.model.set('text', '');
+
                             if (!this.model.get('lang'))
                                 this.model.set('lang', 'en');
                             this.ui.langSelect.val(this.model.get('lang'));
@@ -178,13 +181,14 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     $(this.ui.crosshair).crosshairsl($.extend({}, {
                         xmin: -1,
                         xmax: 1,
-                        xval: this.model.get('x') ? this.model.get('x') : 0,
+                        xval: this.model.get('y') ? this.model.get('y') : 0,
                         ymin: -1,
                         ymax: 1,
-                        yval: this.model.get('y') ? this.model.get('y') : 0,
+                        yval: this.model.get('z') ? -1 * this.model.get('z') : 0,
                         change: function (e, ui) {
-                            self.model.set('x', ui.xval);
-                            self.model.set('y', ui.yval);
+                            self.model.set('x', 1);
+                            self.model.set('y', ui.xval);
+                            self.model.set('z', -1 * ui.yval);
 
                             self.model.call();
                         }
@@ -192,6 +196,11 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                         bgColor: "#485563",
                         fgColor: "#fff"
                     }, params));
+
+                    self.model.set('x', 1);
+                    self.model.set('y', 0);
+                    self.model.set('z', 0);
+
                 },
                 deleteNode: function () {
                     var self = this;

@@ -71,4 +71,4 @@ class NodeConfiguration:
 
 
 if __name__ == '__main__':
-    talker = NodeConfiguration()
+    NodeConfiguration()

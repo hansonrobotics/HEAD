@@ -16,70 +16,72 @@ define(['application', 'lib/api', './node'], function (App, api) {
 
                 this.set('nodes', nodes);
             },
-            run: function (startTime) {
-                this.stop();
-                var self = this;
+            run: function (startTime, options) {
+                if (!options) options = {};
 
-                // set start time
-                if (typeof startTime == 'undefined' && $.isNumeric(this.getResumeTime())) {
-                    startTime = this.getResumeTime();
-                } else if (!$.isNumeric(startTime)) {
-                    startTime = 0;
-                }
-
-                this.lastRunTime = Date.now() - (startTime * 1000);
-                this.resumeStartTime = null;
-
-                this.get('nodes').each(function (node) {
-                    if (node.get('start_time') >= startTime){
-                        self.runQueue.push(setTimeout(function () {
-                            node.call();
-                        }, (node.get('start_time') - startTime) * 1000));
-                        self.runQueue.push(setTimeout(function () {
-                            node.finish();
-                        }, (node.get('start_time') + node.get('duration') - startTime) * 1000));
-                    }
+                api.services.performances.run.callService({
+                    nodes: JSON.stringify(this.get('nodes').toJSON()),
+                    startTime: startTime
+                }, function (response) {
+                    if (response.success) {
+                        if (typeof options.success == 'function')
+                            options.success(response);
+                    } else if (typeof options.error == 'function')
+                        options.error('Another performance is running');
+                }, function (error) {
+                    if (typeof options.error == 'function')
+                        options.error(error);
                 });
             },
-            pause: function () {
-                if ($.isNumeric(this.lastRunTime)) {
-                    this.resumeStartTime = Date.now()+1 - this.lastRunTime;
+            resume: function (options) {
+                if (!options) options = {};
 
-                    _.each(this.runQueue, function (timeout) {
-                        clearTimeout(timeout);
-                    });
-
-                    this.runQueue = [];
-                }
-            },
-            stop: function () {
-                _.each(this.runQueue, function (timeout) {
-                    clearTimeout(timeout);
+                api.services.performances.resume.callService({}, function (response) {
+                    if (response.success) {
+                        if (typeof options.success == 'function')
+                            options.success(response);
+                    } else if (typeof options.error == 'function')
+                        options.error('Unable to resume performance');
+                }, function (error) {
+                    if (typeof options.error == 'function')
+                        options.error(error);
                 });
-
-                this.runQueue = [];
-                this.lastRunTime = null;
             },
-            /**
-             * Returns resume time in seconds if paused or null otherwise
-             *
-             * @returns {*}
-             */
-            getResumeTime: function () {
-                if ($.isNumeric(this.resumeStartTime)) {
-                    return this.resumeStartTime / 1000;
-                } else {
-                    return null;
-                }
+            pause: function (options) {
+                if (!options) options = {};
+
+                api.services.performances.pause.callService({}, function (response) {
+                    if (response.success) {
+                        if (typeof options.success == 'function')
+                            options.success(response);
+                    } else if (typeof options.error == 'function')
+                        options.error('Unable to pause performance');
+                }, function (error) {
+                    if (typeof options.error == 'function')
+                        options.error(error);
+                });
+            },
+            stop: function (options) {
+                if (!options) options = {};
+
+                api.services.performances.stop.callService({}, function (response) {
+                    if (response.success) {
+                        if (typeof options.success == 'function')
+                            options.success(response);
+                    } else if (typeof options.error == 'function')
+                        options.error('Unable to stop performance');
+                }, function (error) {
+                    if (typeof options.error == 'function')
+                        options.error(error);
+                });
             },
             getDuration: function () {
                 var duration = 0;
 
-                if (this.get('nodes')) {
+                if (this.get('nodes'))
                     this.get('nodes').each(function (node) {
                         duration = Math.max(duration, node.get('start_time') + node.get('duration'));
                     });
-                }
 
                 return duration;
             }

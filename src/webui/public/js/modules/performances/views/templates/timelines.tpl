@@ -53,12 +53,21 @@
                 <button class="app-run-button btn btn-default" title="Save"><i
                             class="glyphicon glyphicon-play-circle"></i> Run
                 </button>
-                <button class="app-loop-button btn btn-default" title="Loop"><i
-                            class="glyphicon glyphicon-repeat"></i> Loop
+                <button class="app-resume-button btn btn-default" title="Stop"><i
+                            class="glyphicon glyphicon-play-circle"></i> Resume
+                </button>
+                <button class="app-pause-button btn btn-default" title="Stop"><i
+                            class="glyphicon glyphicon-pause"></i> Pause
                 </button>
                 <button class="app-stop-button btn btn-default" title="Stop"><i
                             class="glyphicon glyphicon-stop"></i> Stop
                 </button>
+                <!--<button class="app-loop-button btn btn-default" title="Loop"><i-->
+                            <!--class="glyphicon glyphicon-repeat"></i> Loop-->
+                <!--</button>-->
+            </div>
+
+            <div class="btn-group" role="group" aria-label="...">
                 <button class="app-clear-button btn btn-default" title="Clear"><i
                             class="glyphicon glyphicon-remove"></i> Clear
                 </button>
