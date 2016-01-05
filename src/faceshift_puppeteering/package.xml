@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>faceshift_puppetering</name>
+  <name>faceshift_puppeteering</name>
   <version>0.0.0</version>
   <description>The faceshift_puppetering package</description>
 
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/faceshift_puppetering</url> -->
+  <!-- <url type="website">http://wiki.ros.org/faceshift_puppeteering</url> -->
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->

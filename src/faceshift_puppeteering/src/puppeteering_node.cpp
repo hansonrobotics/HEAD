@@ -7,10 +7,15 @@
 #include <blender_api_msgs/FSShapekey.h>
 #include <blender_api_msgs/FSShapekeys.h>
 #include <blender_api_msgs/AnimationMode.h>
+#include <dynamic_reconfigure/server.h>
+#include <faceshift_puppeteering/FBConfig.h>
 
 #include "fsbinarystream.h"
 using boost::asio::ip::tcp;
 
+void callback(faceshift_puppeteering::FBConfig &config, uint32_t level) {
+
+}
 
 int main(int argc, char* argv[])
 {
@@ -18,6 +23,13 @@ int main(int argc, char* argv[])
   std::string port_num;
   ros::init(argc, argv, "faceshift_to_ros");
   ros::NodeHandle nh;
+
+  dynamic_reconfigure::Server<faceshift_puppeteering::FBConfig> server;
+  dynamic_reconfigure::Server<faceshift_puppeteering::FBConfig>::CallbackType f;
+
+  f = boost::bind(&callback, _1, _2);
+  server.setCallback(f);
+
   //TODO
   //Why doesn't unregistered topics don't resolve in the blender API this is just to resolve the problem. 
   ros::Publisher pub = nh.advertise<blender_api_msgs::AnimationMode>("/blender_api/set_animation_mode", 30, true);

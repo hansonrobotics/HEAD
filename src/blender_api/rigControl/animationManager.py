@@ -16,8 +16,6 @@ import imp
 import pdb
 from mathutils import Vector
 import logging
-import json
-import rospkg
 import re
 debug = True
 logger = logging.getLogger('hr.blender_api.rigcontrol.animationmanager')
@@ -27,13 +25,7 @@ class AnimationManager():
     b = {}
     def __init__(self):
         logger.info('Starting AnimationManager singleton')
-        # Loading Relationship between the faceshift and Sophia relation from the JSON file. 
-        global d
-        path = rospkg.RosPack().get_path('robots_config')
-        shape_key_pairing = '%s/sophia/shapekey_pairing.json' % path
-        with open(shape_key_pairing) as json_data:
-            d = json.load(json_data)
-            logger.info('Loaded Sophias configuation File.')
+        # Loading Relationship between the faceshift and Sophia relation from the JSON file.
         logger.info('Starting AnimationManager singleton')
         # Gesture params
         self.gesturesList = []
@@ -192,7 +184,7 @@ class AnimationManager():
                 value= 0
                 if (len(ik) !=0 ):
                     for key in ik:
-                        value = value + ik[key]* dict_shape[key]
+                        value = dict_shape[key]
                         if(i=='lip-JAW.DN'):
                             bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=value
                         else:

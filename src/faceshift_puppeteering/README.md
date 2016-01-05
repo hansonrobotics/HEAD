@@ -15,9 +15,9 @@ This node is entirelly independent of the the type of shapekeys being sent from 
 
 The second one are the internal changes to the blender_api to listen to this published topics 
 
-    rostopic pub /blender_api/set_animation_mode blender_api_msgs/AnimationMode "value: 1" --once  # to set the mode as normal. 
+    rostopic pub /blender_api/set_animation_mode blender_api_msgs/AnimationMode "value: 0" --once # to set the mode as normal.
     
-    rostopic pub /blender_api/set_animation_mode blender_api_msgs/AnimationMode "value: 0" --once # to set the mode as faceshift led pupeetering. 
+    rostopic pub /blender_api/set_animation_mode blender_api_msgs/AnimationMode "value: 1" --once # to set the mode as faceshift led pupeetering.
 
 When animation mode is set to '1' the AnimationManager 
 1. First saves all the drivers of the shapekeys that are going to be driven by faceshift (found by reading the JSON file) by iterating through them. 

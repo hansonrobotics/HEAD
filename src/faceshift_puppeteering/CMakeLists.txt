@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(faceshift_puppetering)
+project(faceshift_puppeteering)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -7,6 +7,8 @@ project(faceshift_puppetering)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   blender_api_msgs
+  dynamic_reconfigure
+  rospy
 )
 
 ## System dependencies are found with CMake's conventions
@@ -82,10 +84,10 @@ find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
+ generate_dynamic_reconfigure_options(
+   cfg/faceshift_blender_mapping.cfg
 #   cfg/DynReconf2.cfg
-# )
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -127,17 +129,17 @@ include_directories(
 
 ## Declare a C++ executable
 add_library(faceshift_lib ${faceshift_SRCS} ${faceshift_HDRS})
-add_executable(faceshift_puppetering_node src/puppetering_node.cpp)
+add_executable(faceshift_puppeteering_node src/puppeteering_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(faceshift_puppetering_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(faceshift_puppeteering_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
- target_link_libraries(faceshift_puppetering_node
+ target_link_libraries(faceshift_puppeteering_node
    ${catkin_LIBRARIES} faceshift_lib ${Boost_LIBRARIES}
  )
-add_dependencies(faceshift_puppetering_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(faceshift_puppeteering_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 #############
 ## Install ##
 #############
