@@ -34,8 +34,8 @@ class AnimationManager():
         self.cyclesSet = set()
         # Start from normal animation mode. 
         self.mode= 0
-
-
+        self.old_mode= 0
+        self.deleted_drivers = False
 
         # Start default cycles
         self.setCycle('CYC-normal', rate=1.0, magnitude=1.0, ease_in=0.0)
@@ -116,40 +116,11 @@ class AnimationManager():
                 string += str(attr) + ": " + str(value) + "\n"
         return string
     def setMode(self,mode):
-        old_mode = self.mode
+        self.old_mode = self.mode
 
         self.mode = mode
-        #the mode is just a methof
-
-        if(self.mode == 1 and old_mode==0):
-            for i in bpy.data.shape_keys['ShapeKeys'].animation_data.drivers:
-                key=re.search('"(.*)"',i.data_path).group(1)
-                for ik in d[key]:
-                    list_value=[]
-                    if (len(ik) !=0 ):#This checks wheter the elements
-                        drv= i
-                        list_value.append({'type':drv.driver.type})
-                        list_value.append({'exp' : drv.driver.expression})
-                        variable= []
-                        for vr in drv.driver.variables:
-                            var=[]
-                            var.append({"name":vr.name})
-                            var.append({"type":vr.type})
-                            targ=[]
-                            tr = vr.targets[0]
-                            targ.append({'id':tr.id})
-                            targ.append({'bone':tr.bone_target})
-                            targ.append({'type':tr.transform_type})
-                            targ.append({'space':tr.transform_space})
-                            var.append({'targ':targ})
-                            variable.append(var)
-                        list_value.append({'var':variable})
-                        global b
-                        self.b[key]=list_value
-                    #Now the b[key] value hold the values where there is some assignment has been done.
-                        bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_remove('value', -1)
         #Now Reset to the Old Method
-        elif(self.mode==0 and old_mode==1):
+        if(self.mode==0 and self.old_mode==1):
             bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=0
             for key in self.b:
                 #The key holds the value of the shapekey name.
@@ -167,6 +138,7 @@ class AnimationManager():
                     targ.bone_target=i[2]['targ'][1]['bone']
                     targ.transform_type=i[2]['targ'][2]['type']
                     targ.transform_space=i[2]['targ'][3]['space']
+            self.deleted_drivers= False
         return 0
 
     def getMode(self):
@@ -179,16 +151,41 @@ class AnimationManager():
         dict_shape={}
         for i in shape_keys:
             dict_shape[i.name]= i.value
-        for i in d:
-            for ik in d[i]:
-                value= 0
-                if (len(ik) !=0 ):
-                    for key in ik:
-                        value = dict_shape[key]
-                        if(i=='lip-JAW.DN'):
-                            bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=value
-                        else:
-                            bpy.data.shape_keys['ShapeKeys'].key_blocks[i].value= value
+
+        # Delete the driver related items.
+        if not self.deleted_drivers:
+            for i in bpy.data.shape_keys['ShapeKeys'].animation_data.drivers:
+                key=re.search('"(.*)"',i.data_path).group(1)
+                if key in dict_shape:
+                    list_value=[]
+                    drv= i
+                    list_value.append({'type':drv.driver.type})
+                    list_value.append({'exp' : drv.driver.expression})
+                    variable= []
+                    for vr in drv.driver.variables:
+                        var=[]
+                        var.append({"name":vr.name})
+                        var.append({"type":vr.type})
+                        targ=[]
+                        tr = vr.targets[0]
+                        targ.append({'id':tr.id})
+                        targ.append({'bone':tr.bone_target})
+                        targ.append({'type':tr.transform_type})
+                        targ.append({'space':tr.transform_space})
+                        var.append({'targ':targ})
+                        variable.append(var)
+                    list_value.append({'var':variable})
+                    global b
+                    self.b[key]=list_value
+                    #Now the b[key] value hold the values where there is some assignment has been done.
+                    bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_remove('value', -1)
+                    self.deleted_drivers= True
+
+        for key in dict_shape:
+            if(key=='lip-JAW.DN'):
+                bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=dict_shape[key]
+            else:
+                bpy.data.shape_keys['ShapeKeys'].key_blocks[key].value= dict_shape[key]
 
 
 

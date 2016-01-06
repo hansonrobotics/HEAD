@@ -4,4 +4,5 @@
 <param name="IP" value="$(arg IP)"/>
 <param name="Port" type="str" value="$(arg Port)"/>
 <node pkg="faceshift_puppeteering" name="faceshift_puppeteering" type="faceshift_puppeteering_node"/>
+<node pkg="faceshift_puppeteering" name="faceshift_mapper" type="blendshapes_mapper.py"/>
 </launch>

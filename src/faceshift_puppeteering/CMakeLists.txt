@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   blender_api_msgs
   dynamic_reconfigure
   rospy
+  roslib
 )
 
 ## System dependencies are found with CMake's conventions
