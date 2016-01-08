@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>pau2motors</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>Takes PAU messages and sends out corresponding motor commands.</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
