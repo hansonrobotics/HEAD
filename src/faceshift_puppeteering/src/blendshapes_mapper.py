@@ -20,7 +20,7 @@ class faceshift_mapper():
 
     def __init__(self):
         self.parameters = {}
-        self.bitmasks={"no":"000", "face":"001","neck":"010","eyes":"011",'all':"111"}
+        self.bitmasks={"no":"000", "face":"001","neck":"010","eyes":"100",'all':"111"}
         rospy.init_node("faceshift_puppeteering_mapper", anonymous = True)
         path = rospkg.RosPack().get_path('faceshift_puppeteering')
         shape_key_pairing = '%s/sophia/shapekey_pairing.json' % path
@@ -53,16 +53,32 @@ class faceshift_mapper():
 
         mode= rospy.get_param("/fb_mode")
 
+        eyes_move = Target()
+        head_move= Target()
         b= AnimationMode()
+
+
         if mode != 0:
             b.value= 1
         else:
-            b.value=0
+            b.value= 0
+            #Now here we set the eye and head targets to the neutral values. The shapekeys are reverted back in the blender_api.
+            eyes_move.x=1
+            eyes_move.y=0
+            eyes_move.z=0
+
+            head_move.x=1
+            head_move.y=0
+            head_move.z=0
+
+            self.pub_neck.publish(head_move)
+            self.pub_gaze.publish(eyes_move)
+
         self.pub_setter.publish(b)
         # For publishing the head pose.
 
         # For publishing the Neck Pose.
-        head_move= Target()
+
 
         #head_move.x = shapekeys.head_pose.orientation.x / math.sin(math.acos(shapekeys.head_pose.orientation.w))
         #head_move.y = shapekeys.head_pose.orientation.y / math.sin(math.acos(shapekeys.head_pose.orientation.w))
@@ -100,13 +116,13 @@ class faceshift_mapper():
         ay = math.sin(yaw)*math.cos(pitch)
         # Target one meter away
         ax = math.cos(yaw)*math.cos(pitch)
-        eyes = Target()
-        eyes.x = ax
-        eyes.y = ay
-        eyes.z = az
+
+        eyes_move.x = ax
+        eyes_move.y = ay
+        eyes_move.z = az
 
         if(mode & int(self.bitmasks["eyes"])):
-            self.pub_gaze.publish(eyes)
+            self.pub_gaze.publish(eyes_move)
 
         # For iterating over the shapekeys
         for i in shapekeys.keys.shapekey:
