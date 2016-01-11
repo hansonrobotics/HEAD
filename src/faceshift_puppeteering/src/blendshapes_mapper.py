@@ -49,22 +49,22 @@ class faceshift_mapper():
         # For publishing the head pose.
 
         # For publishing the Neck Pose.
-        #head_move= Target()
+        head_move= Target()
 
         #head_move.x = shapekeys.head_pose.orientation.x / math.sin(math.acos(shapekeys.head_pose.orientation.w))
         #head_move.y = shapekeys.head_pose.orientation.y / math.sin(math.acos(shapekeys.head_pose.orientation.w))
         #head_move.z = shapekeys.head_pose.orientation.z / math.sin(math.acos(shapekeys.head_pose.orientation.w))
 
-        #x= shapekeys.head_pose.orientation.x
-        #y= shapekeys.head_pose.orientation.y
-        #z= shapekeys.head_pose.orientation.z
-        #w= shapekeys.head_pose.orientation.w
+        x= shapekeys.head_pose.orientation.x
+        y= shapekeys.head_pose.orientation.y
+        z= shapekeys.head_pose.orientation.z
+        w= shapekeys.head_pose.orientation.w
 
-        #head_move.y = math.atan2(2*y*w - 2*x*z, 1 - 2*y*y - 2*z*z)
+        head_move.y = math.atan2(2*y*w - 2*x*z, 1 - 2*y*y - 2*z*z)
         #head_move.x = math.atan2(2*x*w - 2*y*z, 1 - 2*x*x - 2*z*z)
         #head_move.z =  math.asin(2*x*y + 2*z*w)
 
-        #self.pub_neck.publish(head_move)
+        self.pub_neck.publish(head_move)
 
         # eye_move_left= Target()
         # eye_move_left.x= shapekeys.eye_left.x
