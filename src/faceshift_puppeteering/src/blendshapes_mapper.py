@@ -50,8 +50,8 @@ class faceshift_mapper():
         :return:
         '''
         dict_shape={}
-
-        mode= rospy.get_param("/fb_mode")
+        while not rospy.is_shutdown():
+            mode= rospy.get_param("/fb_mode")
 
         eyes_move = Target()
         head_move= Target()
