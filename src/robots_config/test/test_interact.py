@@ -10,7 +10,9 @@ from testing_tools.misc import capture_screen, MessageQueue, add_text_to_video, 
 from testing_tools.blender import set_alive
 from std_msgs.msg import String, Float64
 from pau2motors.msg import pau
+from pau2motors.MapperFactory import Quaternion2EulerYZX
 import subprocess
+import math
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 
@@ -122,6 +124,59 @@ class InteractTest(unittest.TestCase):
             rospy.sleep(1)
         msgs = self.queue.tolist()
         self.assertTrue(robot_name in msgs[0].data.lower())
+        sub.unregister()
+
+    def test_head_angle(self):
+        pub, msg_class = rostopic.create_publisher(
+            '/blender_api/set_face_target', 'blender_api_msgs/Target', False)
+        sub = self.queue.subscribe('/blender_api/get_pau', pau)
+        mapper = Quaternion2EulerYZX({'axis': 'z'}, None)
+        err = 0.05
+        rospy.sleep(2)
+
+        pub.publish(msg_class(1, 1, 0))
+        rospy.sleep(2)
+        msgs = self.queue.tolist()
+        self.assertTrue(len(msgs) > 0)
+        rad = mapper.map(msgs[-1].m_headRotation)
+        self.assertLess(abs(-rad-math.atan(1)), err)
+        self.queue.clear()
+
+        pub.publish(msg_class(1, -1, 0))
+        rospy.sleep(2)
+        msgs = self.queue.tolist()
+        self.assertTrue(len(msgs) > 0)
+        rad2 = mapper.map(msgs[-1].m_headRotation)
+        self.assertLess(abs(rad2+rad), err)
+
+        self.queue.clear()
+        pub.publish(msg_class(2, 1, 0))
+        rospy.sleep(2)
+        msgs = self.queue.tolist()
+        self.assertTrue(len(msgs) > 0)
+        rad3 = mapper.map(msgs[-1].m_headRotation)
+        self.assertLess(abs(-rad3-math.atan(0.5)), err)
+        self.assertTrue(rad*rad3>0) # the same sign
+
+        pub.publish(msg_class(1, 0, 0))
+        rospy.sleep(2)
+        sub.unregister()
+
+    def test_eye_angle(self):
+        pub, msg_class = rostopic.create_publisher(
+            '/blender_api/set_gaze_target', 'blender_api_msgs/Target', False)
+        sub = self.queue.subscribe('/blender_api/get_pau', pau)
+        err = 0.05
+        rospy.sleep(2)
+        pub.publish(msg_class(1, 1, 0))
+        rospy.sleep(2)
+        msgs = self.queue.tolist()
+        self.assertTrue(len(msgs) > 0)
+        rad = (msgs[-1].m_eyeGazeLeftYaw+msgs[-1].m_eyeGazeRightYaw)/2
+        self.assertLess(abs(-rad-math.atan(1)), err)
+
+        pub.publish(msg_class(1, 0, 0))
+        rospy.sleep(2)
         sub.unregister()
 
 if __name__ == '__main__':
