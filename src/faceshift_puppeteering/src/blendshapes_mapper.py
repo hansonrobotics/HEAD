@@ -77,27 +77,22 @@ class faceshift_mapper():
         ay = math.sin(yaw)*math.cos(pitch)
         # Target one meter away
         ax = math.cos(yaw)*math.cos(pitch)
-
-
         head_move.y = ay
         head_move.x = ax
         # Inverted Z for blender
         head_move.z = -az
-
         self.pub_neck.publish(head_move)
-
-        # eye_move_left= Target()
-        # eye_move_left.x= shapekeys.eye_left.x
-        # eye_move_left.y= shapekeys.eye_left.y
-        # eye_move_left.z= shapekeys.eye_left.z
-        #
-        # #self.pub_gaze.publish(eye_move_left)
-        #
-        # eye_move_right= Target()
-        # eye_move_right.x= shapekeys.eye_right.x
-        # eye_move_right.y= shapekeys.eye_right.y
-        # eye_move_right.z= shapekeys.eye_right.z
-
+        pitch += math.radians(shapekeys.eye_left.x)
+        yaw += math.radians(shapekeys.eye_left.y)
+        az = math.sin(pitch)
+        ay = math.sin(yaw)*math.cos(pitch)
+        # Target one meter away
+        ax = math.cos(yaw)*math.cos(pitch)
+        eyes = Target()
+        eyes.x = ax
+        eyes.y = ay
+        eyes.z = az
+        self.pub_gaze.publish(eyes)
 
         # For iterating over the shapekeys
         for i in shapekeys.keys.shapekey:
