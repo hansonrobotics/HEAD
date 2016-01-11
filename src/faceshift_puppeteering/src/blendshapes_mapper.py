@@ -12,6 +12,7 @@ from blender_api_msgs.msg import FSValues
 from blender_api_msgs.msg import FSShapekeys
 from blender_api_msgs.msg import FSShapekey
 from blender_api_msgs.msg import Target
+from blender_api_msgs.msg import AnimationMode
 from pau2motors.MapperFactory import Quaternion2EulerYZX
 
 class faceshift_mapper():
@@ -19,7 +20,7 @@ class faceshift_mapper():
 
     def __init__(self):
         self.parameters = {}
-        self.bitmasks={"no":"000", "face":"001","neck":"010","eyes":"100",'all':"111"}
+        self.bitmasks={"no":"000", "face":"001","neck":"010","eyes":"011",'all':"111"}
         rospy.init_node("faceshift_puppeteering_mapper", anonymous = True)
         path = rospkg.RosPack().get_path('faceshift_puppeteering')
         shape_key_pairing = '%s/sophia/shapekey_pairing.json' % path
@@ -28,6 +29,8 @@ class faceshift_mapper():
             d = json.load(json_data)
         srv = Server(FBConfig, self.callback)
         rospy.Subscriber("/blender_api/faceshift_values", FSValues, self.publisher)
+
+        self.pub_setter= rospy.Publisher('/blender_api/set_animation_mode', AnimationMode, queue_size=10)
         self.pub=rospy.Publisher('/blender_api/set_shape_keys', FSShapekeys, queue_size=10)
         self.pub_neck= rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
         self.pub_gaze= rospy.Publisher('/blender_api/set_gaze_target', Target, queue_size=10)
@@ -48,9 +51,14 @@ class faceshift_mapper():
         '''
         dict_shape={}
 
-        mode= rospy.get_param("~fb_animation_mode")
+        mode= rospy.get_param("/fb_mode")
 
-
+        b= AnimationMode()
+        if mode != 0:
+            b.value= 1
+        else:
+            b.value=0
+        self.pub_setter.publish(b)
         # For publishing the head pose.
 
         # For publishing the Neck Pose.
@@ -82,20 +90,8 @@ class faceshift_mapper():
         # Inverted Z for blender
         head_move.z = -az
 
-        if(mode & int(self.bitmasks("neck"))):
+        if(mode & int(self.bitmasks["neck"])):
             self.pub_neck.publish(head_move)
-
-        # eye_move_left= Target()
-        # eye_move_left.x= shapekeys.eye_left.x
-        # eye_move_left.y= shapekeys.eye_left.y
-        # eye_move_left.z= shapekeys.eye_left.z
-        #
-        # #self.pub_gaze.publish(eye_move_left)
-        #
-        # eye_move_right= Target()
-        # eye_move_right.x= shapekeys.eye_right.x
-        # eye_move_right.y= shapekeys.eye_right.y
-        # eye_move_right.z= shapekeys.eye_right.z
 
         
         pitch += math.radians(shapekeys.eye_left.x)
@@ -108,7 +104,9 @@ class faceshift_mapper():
         eyes.x = ax
         eyes.y = ay
         eyes.z = az
-        self.pub_gaze.publish(eyes)
+
+        if(mode & int(self.bitmasks["eyes"])):
+            self.pub_gaze.publish(eyes)
 
         # For iterating over the shapekeys
         for i in shapekeys.keys.shapekey:
@@ -138,7 +136,7 @@ class faceshift_mapper():
                         pub_shape.value= value
 
                     publish_mesg.shapekey.append(pub_shape)
-            if(mode & int(self.bitmasks("face"))):
+            if(mode & int(self.bitmasks["face"])):
                 self.pub.publish(publish_mesg)
 
         else:
