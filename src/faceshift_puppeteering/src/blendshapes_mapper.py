@@ -12,7 +12,7 @@ from blender_api_msgs.msg import FSValues
 from blender_api_msgs.msg import FSShapekeys
 from blender_api_msgs.msg import FSShapekey
 from blender_api_msgs.msg import Target
-
+from pau2motors.MapperFactory import Quaternion2EulerYZX
 
 class faceshift_mapper():
     d = {}
@@ -31,6 +31,11 @@ class faceshift_mapper():
         self.pub=rospy.Publisher('/blender_api/set_shape_keys', FSShapekeys, queue_size=10)
         self.pub_neck= rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
         self.pub_gaze= rospy.Publisher('/blender_api/set_gaze_target', Target, queue_size=10)
+        self.quoternion2euler = {
+            'p': Quaternion2EulerYZX({'axis': 'x'}, None),
+            'y': Quaternion2EulerYZX({'axis': 'y'}, None),
+            'r': Quaternion2EulerYZX({'axis': 'z'}, None),
+        }
         rospy.spin()
     def callback(self, config, level):
         self.parameters = config
@@ -54,15 +59,30 @@ class faceshift_mapper():
         #head_move.x = shapekeys.head_pose.orientation.x / math.sin(math.acos(shapekeys.head_pose.orientation.w))
         #head_move.y = shapekeys.head_pose.orientation.y / math.sin(math.acos(shapekeys.head_pose.orientation.w))
         #head_move.z = shapekeys.head_pose.orientation.z / math.sin(math.acos(shapekeys.head_pose.orientation.w))
-
+        q = shapekeys.head_pose.orientation
         x= shapekeys.head_pose.orientation.x
         y= shapekeys.head_pose.orientation.y
         z= shapekeys.head_pose.orientation.z
         w= shapekeys.head_pose.orientation.w
+        try:
+            pitch = self.quoternion2euler['p'].map(q)
+            yaw = self.quoternion2euler['y'].map(q)
+        except:
+            pitch = 0
+            yaw = 0
 
-        head_move.y = math.atan2(2*y*w - 2*x*z, 1 - 2*y*y - 2*z*z)
-        #head_move.x = math.atan2(2*x*w - 2*y*z, 1 - 2*x*x - 2*z*z)
-        #head_move.z =  math.asin(2*x*y + 2*z*w)
+        # Roll can be used then blender_api supports it
+        # roll  = self.quoternion2euler['r'].map(q)
+        az = math.sin(pitch)
+        ay = math.sin(yaw)*math.cos(pitch)
+        # Target one meter away
+        ax = math.cos(yaw)*math.cos(pitch)
+
+
+        head_move.y = ay
+        head_move.x = ax
+        # Inverted Z for blender
+        head_move.z = -az
 
         self.pub_neck.publish(head_move)
 
