@@ -48,7 +48,7 @@ class faceshift_mapper():
         '''
         dict_shape={}
 
-        #mode= rospy.get_param("~fb_animation_mode")
+        mode= rospy.get_param("~fb_animation_mode")
 
 
         # For publishing the head pose.
@@ -84,7 +84,8 @@ class faceshift_mapper():
         # Inverted Z for blender
         head_move.z = -az
 
-        self.pub_neck.publish(head_move)
+        if(mode & int(self.bitmasks("neck"))):
+            self.pub_neck.publish(head_move)
 
         # eye_move_left= Target()
         # eye_move_left.x= shapekeys.eye_left.x
@@ -127,7 +128,9 @@ class faceshift_mapper():
                         pub_shape.value= value
 
                     publish_mesg.shapekey.append(pub_shape)
-            self.pub.publish(publish_mesg)
+            if(mode & int(self.bitmasks("face"))):
+                self.pub.publish(publish_mesg)
+
         else:
             rospy.loginfo("Problem")
 
