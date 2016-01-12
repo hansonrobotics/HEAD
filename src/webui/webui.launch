@@ -1,0 +1,5 @@
+<launch>
+    <group ns="/webui">
+        <node name="node_configuration" pkg="webui" type="node_configuration.py"/>
+    </group>
+</launch>
