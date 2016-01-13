@@ -10,7 +10,7 @@ from roslaunch import core
 import rostopic
 
 from blender_api_msgs.msg import SetGesture, EmotionState
-from testing_tools import MessageQueue
+from testing_tools.misc import MessageQueue
 from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
