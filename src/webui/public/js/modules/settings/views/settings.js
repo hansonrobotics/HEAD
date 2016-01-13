@@ -16,8 +16,9 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                     schema: this.options.schema,
                     disable_collapse: true,
                     disable_edit_json: true,
+                    disable_array_reorder: true,
                     disable_properties: true,
-                    iconlib: "bootstrap3"
+                    iconlib: "fontawesome4"
                 });
 
                 this.editor.on('change',function() {

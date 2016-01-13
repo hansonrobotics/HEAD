@@ -9,12 +9,14 @@ import time
 
 ROS_RATE = 20
 
+
 class Safety():
     def __init__(self):
         self.topics = []
         # Wait for motors to be loaded in param server
         time.sleep(3)
-        motors = rospy.get_param('motors')
+        robot = rospy.get_param('robot_name')
+        motors = rospy.get_param(robot + '/motors')
         self.rules = rospy.get_param('safety_rules', {})
         # subscribe
         self.motor_positions = {}
@@ -47,16 +49,17 @@ class Safety():
         # Subscribe motor states
         rospy.Subscriber('safe/motor_states', MotorStateList, self.update_load)
         # Init timing rules
-        for m, rules in self.rules.iteritems():
-            for i,r in enumerate(rules):
+        for motor in self.rules.iteritems():
+            name = motor['name']
+            for i, rule in enumerate(motor['rules']):
                 # Process timing rules
-                if r['type'] == 'timing':
+                if rule['type'] == 'timing':
                     # Init rule variables
-                    self.rules[m][i]['started'] = False
-                    self.rules[m][i]['limit'] = 1
-                if r['type'] == 'load':
-                    self.rules[m][i]['started'] = False
-                    self.rules[m][i]['limit'] = 1
+                    self.rules[name][i]['started'] = False
+                    self.rules[name][i]['limit'] = 1
+                if rule['type'] == 'load':
+                    self.rules[name][i]['started'] = False
+                    self.rules[name][i]['limit'] = 1
 
     def update_load(self, msg):
         for s in msg.motor_states:
