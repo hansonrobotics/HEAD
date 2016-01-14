@@ -44,8 +44,8 @@ class PiFaceTrackerTest(unittest.TestCase):
             face_location_msg, face_event_msg = wait_for_messages(
                 ['/camera/face_locations', '/camera/face_event'],
                 [Faces, FaceEvent], wait)
-            self.assertIsNone(face_location_msg)
-            self.assertIsNone(face_event_msg)
+            self.assertFalse(face_location_msg)
+            self.assertFalse(face_event_msg)
 
         job.join()
 

@@ -1,4 +1,4 @@
-title: 'Robot config'
+title: 'Robot Config'
 type: object
 properties:
   pau2motors:
@@ -47,13 +47,16 @@ properties:
           type: object
           properties:
             name:
+              propertyOrder: 1
               type: string
             direction:
+              propertyOrder: 2
               type: string
               enum:
                 - h
                 - v
             angle:
+              propertyOrder: 3
               type: number
       center:
         type: object
@@ -63,36 +66,45 @@ properties:
           h:
             type: number
   safety_rules:
+    title: 'Safety Rules'
     type: array
     propertyOrder: 7
-    format: table
     items:
       type: object
+      headerTemplate: "{{ self.name }}"
       properties:
         name:
           propertyOrder: 1
           type: string
-        type:
-          type: string
+        rules:
+          title: 'Rules'
+          type: array
+          format: table
           propertyOrder: 2
-        direction:
-          type: string
-          enum:
-            - min
-            - max
-          propertyOrder: 3
-        extreme:
-          type: number
-          propertyOrder: 4
-        t1:
-          type: integer
-          propertyOrder: 5
-        t2:
-          type: integer
-          propertyOrder: 6
-        t3:
-          type: integer
-          propertyOrder: 7
-        t4:
-          type: integer
-          propertyOrder: 8
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                propertyOrder: 2
+              direction:
+                type: string
+                enum:
+                  - min
+                  - max
+                propertyOrder: 3
+              extreme:
+                type: number
+                propertyOrder: 4
+              t1:
+                type: integer
+                propertyOrder: 5
+              t2:
+                type: integer
+                propertyOrder: 6
+              t3:
+                type: integer
+                propertyOrder: 7
+              t4:
+                type: integer
+                propertyOrder: 8

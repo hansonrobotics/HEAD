@@ -17,7 +17,6 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
             var properties = {};
 
             $.each(description, function (i, param) {
-                console.log(param);
                 var property = {title: param['description']};
 
                 try {
@@ -40,7 +39,6 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
                     case 'str':
                         property.type = 'string';
                         break;
-
                 }
 
                 if (param['edit_method'] && param['edit_method']['enum'].length > 0) {
