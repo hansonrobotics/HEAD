@@ -55,7 +55,7 @@ class Worker:
         timestamp = 0
 
         with self.lock:
-            if self.paused:
+            if self.running and self.paused:
                 current = time.time()
                 run_time = self.pause_time - self.start_time
 
@@ -71,16 +71,15 @@ class Worker:
     def stop(self, request):
         stop_time = 0
         timestamp = 0
-        success = False
 
         with self.lock:
             if self.running:
                 self.running = False
+                self.paused = False
                 timestamp = time.time()
                 stop_time = timestamp - self.start_time
-                success = True
 
-        return srv.StopResponse(success, stop_time, timestamp)
+        return srv.StopResponse(True, stop_time, timestamp)
 
     def pause(self, request):
         with self.lock:
@@ -126,8 +125,11 @@ class Worker:
 
             self.nodes = self.queue.get()
 
+            with self.lock:
+                size = len(self.nodes)
+
             i = 0
-            while i < len(self.nodes):
+            while i < size:
                 with self.lock:
                     if not self.running:
                         break
@@ -164,6 +166,7 @@ class Worker:
                         self.nodes.append({'name': 'interaction_end', 'start_time': elapsed_time + node['duration'],
                                            'duration': 0})
                         self.nodes = self.sort_nodes(self.nodes)
+                        size += 1
                 elif name == 'interaction_end':
                     self.topics['interaction'].publish(String('btree_off'))
                 elif name == 'expression':
@@ -177,6 +180,7 @@ class Worker:
                     if node == self.nodes[-1] and name != 'end':
                         end_time = node['start_time'] + node['duration'] if 'duration' in node else 1
                         self.nodes.append({'name': 'end', 'start_time': end_time, 'duration': 0})
+                        size += 1
 
                 i += 1
 
