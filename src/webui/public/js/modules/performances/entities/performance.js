@@ -4,9 +4,10 @@ define(['application', 'lib/api', './node'], function (App, api) {
             initialize: function (options) {
                 var self = this,
                     nodes = new App.Performances.Entities.NodeCollection();
+
                 if (options && options.nodes) {
-                    _.each(options.nodes, function (attrs) {
-                        nodes.add(new Entities.Node(attrs));
+                    _.each(options.nodes, function (attributes) {
+                        nodes.add(new Entities.Node(attributes));
                     });
                 }
 
@@ -17,6 +18,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 this.set('nodes', nodes);
             },
             run: function (startTime, options) {
+                var self = this;
                 if (!options) options = {};
 
                 api.services.performances.run.callService({
@@ -24,6 +26,10 @@ define(['application', 'lib/api', './node'], function (App, api) {
                     startTime: startTime
                 }, function (response) {
                     if (response.success) {
+                        self.paused = false;
+                        self.startTime = response.time - (response.timestamp - (Date.now() / 1000));
+                        self.trigger('run', startTime);
+
                         if (typeof options.success == 'function')
                             options.success(response);
                     } else if (typeof options.error == 'function')
@@ -34,10 +40,16 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 });
             },
             resume: function (options) {
+                var self = this;
                 if (!options) options = {};
 
                 api.services.performances.resume.callService({}, function (response) {
                     if (response.success) {
+                        self.trigger('resume', response.time, response.timestamp);
+                        self.paused = false;
+                        self.resumeTime = null;
+                        self.startTime = response.time - (response.timestamp - (Date.now() / 1000));
+
                         if (typeof options.success == 'function')
                             options.success(response);
                     } else if (typeof options.error == 'function')
@@ -48,10 +60,13 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 });
             },
             pause: function (options) {
+                var self = this;
                 if (!options) options = {};
 
                 api.services.performances.pause.callService({}, function (response) {
                     if (response.success) {
+                        self.trigger('pause', response.time, response.timestamp);
+                        self.resumeTime = response.time;
                         if (typeof options.success == 'function')
                             options.success(response);
                     } else if (typeof options.error == 'function')
@@ -62,10 +77,13 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 });
             },
             stop: function (options) {
+                var self = this;
                 if (!options) options = {};
 
                 api.services.performances.stop.callService({}, function (response) {
                     if (response.success) {
+                        self.trigger('stop', response.time, response.timestamp);
+
                         if (typeof options.success == 'function')
                             options.success(response);
                     } else if (typeof options.error == 'function')
@@ -76,14 +94,31 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 });
             },
             getDuration: function () {
-                var duration = 0;
+                var nodes = this.get('nodes'),
+                    duration = 0;
 
-                if (this.get('nodes'))
-                    this.get('nodes').each(function (node) {
-                        duration = Math.max(duration, node.get('start_time') + node.get('duration'));
-                    });
+                if (nodes && nodes.length > 0) {
+                    var startTime = this.get('nodes').last().get('start_time'),
+                        nodeDuration = this.get('nodes').last().get('duration');
+
+                    if (startTime) {
+                        duration += startTime;
+                        if (nodeDuration)
+                            duration += nodeDuration;
+                    }
+                }
 
                 return duration;
+            },
+            getRunTime: function () {
+                if (this.start_time)
+                    return Date.now() - this.start_time;
+            },
+            getResumeTime: function () {
+                if ($.isNumeric(this.resumeTime))
+                    return this.resumeTime;
+                else
+                    return null;
             }
         });
         Entities.PerformanceCollection = Backbone.Collection.extend({

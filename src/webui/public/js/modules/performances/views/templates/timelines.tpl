@@ -4,7 +4,8 @@
             <div class="form-inline">
                 <div class="input-group">
                     <span class="input-group-addon">Name</span>
-                    <input class="app-performance-name form-control" type="text" value="<%= name %>"/>
+                    <input class="app-performance-name form-control" placeholder="Enter name" type="text"
+                           value="<%= name %>"/>
                 </div>
                 <button class="app-delete-button btn btn-default" title="Delete"><span
                             class="glyphicon glyphicon-trash"></span></button>
@@ -63,7 +64,7 @@
                             class="glyphicon glyphicon-play-circle"></i> Resume
                 </button>
                 <!--<button class="app-loop-button btn btn-default" title="Loop"><i-->
-                            <!--class="glyphicon glyphicon-repeat"></i> Loop-->
+                <!--class="glyphicon glyphicon-repeat"></i> Loop-->
                 <!--</button>-->
             </div>
 

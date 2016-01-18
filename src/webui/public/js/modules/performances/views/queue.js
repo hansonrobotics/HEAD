@@ -7,14 +7,12 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 performances: '.app-performance-queue .app-performance',
                 performanceTemplate: '.app-performance-template',
                 runButton: '.app-run',
-                pauseButton: '.app-pause',
                 stopButton: '.app-stop',
                 clearButton: '.app-clear',
                 emptyNotice: '.app-empty-notice'
             },
             events: {
                 'click @ui.runButton': 'run',
-                'click @ui.pauseButton': 'pause',
                 'click @ui.stopButton': 'stop',
                 'click @ui.clearButton': 'clear'
             },
@@ -45,9 +43,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
 
                 $('.app-edit', el).click(function () {
                     self.stop();
-
-                    var timelineView = self._showTimeline(performance);
-                    timelineView.enableEdit();
+                    self._showTimeline(performance);
                 });
 
                 performance.on('change', function () {
@@ -64,29 +60,18 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
             },
             run: function () {
                 if (this.queue.length == 0) return;
-                if (! this.timelinesView) {
+                if (!this.timelinesView) {
                     this.performanceUnion = this._getPerformanceUnion();
                     this.timelinesView = this._showTimeline(this.performanceUnion);
                 }
 
-                this._setHighlightTimeouts();
                 this.timelinesView.run();
             },
             stop: function () {
-                this._clearHighlightIntervals();
-                this._removeHighlights();
-
                 if (this.timelinesView) {
-                    this.timelinesView.stop();
                     this.timelinesView.destroy();
                     this.timelinesView = null;
                 }
-            },
-            pause: function () {
-                this._clearHighlightIntervals();
-
-                if (this.timelinesView)
-                    this.timelinesView.pause();
             },
             clear: function () {
                 this.stop();
@@ -95,6 +80,32 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 _.each(this.queue, function (item) {
                     self.removePerformance(item.model);
                 });
+            },
+            _getPerformanceUnion: function () {
+                var self = this,
+                    union = new App.Performances.Entities.Performance(),
+                    startTime = 0;
+
+                $('ul .app-performance', this.el).each(function () {
+                    var el = this,
+                        index = _.findIndex(self.queue, function (item) {
+                            return item && el == item.el;
+                        });
+
+                    if (index != -1) {
+                        var performance = self.queue[index].model;
+
+                        performance.get('nodes').each(function (node) {
+                            var clone = node.clone();
+                            clone.set('start_time', clone.get('start_time') + startTime);
+                            union.get('nodes').add(clone);
+                        });
+
+                        startTime += performance.getDuration();
+                    }
+                });
+
+                return union;
             },
             _setHighlightTimeouts: function () {
                 // clear any previous timeouts
@@ -140,14 +151,15 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                     $('.app-status-indicator', this.el).removeClass('active');
                 });
             },
-            _highlightItem: function(item) {
+            _highlightItem: function (item) {
                 this._removeHighlights();
                 $('.app-status-indicator', item.el).addClass('active');
             },
             _showTimeline: function (performance) {
                 var timelinesView = new App.Performances.Views.Timelines({
                     collection: new Backbone.Collection(),
-                    model: performance
+                    model: performance,
+                    performances: this.options.performances
                 });
 
                 // show configuration UI
@@ -155,32 +167,6 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 this.options.layoutView.getRegion('timeline').show(timelinesView);
 
                 return timelinesView;
-            },
-            _getPerformanceUnion: function () {
-                var self = this,
-                    union = new App.Performances.Entities.Performance(),
-                    startTime = 0;
-
-                $('ul .app-performance', this.el).each(function () {
-                    var el = this,
-                        index = _.findIndex(self.queue, function (item) {
-                            return item && el == item.el;
-                        });
-
-                    if (index != -1) {
-                        var performance = self.queue[index].model;
-
-                        performance.get('nodes').each(function (node) {
-                            var clone = node.clone();
-                            clone.set('start_time', clone.get('start_time') + startTime);
-                            union.get('nodes').add(clone);
-                        });
-
-                        startTime += performance.getDuration();
-                    }
-                });
-
-                return union;
             },
             _removeItem: function (item) {
                 this.stop();
