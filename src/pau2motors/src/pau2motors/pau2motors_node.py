@@ -18,67 +18,60 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301  USA
 #
+
+import time
+import logging
 import rospy
 from pau2motors.msg import pau
 from Pau2Motors import Pau2Motors
-from optparse import OptionParser
-import time
-import logging
+from dynamic_reconfigure.server import Server
+from pau2motors.cfg import Pau2motorsConfig
 
 logger = logging.getLogger('hr.pau2motors.pau2motors_node')
 
-def get_namespaces_containing(name_piece):
-  return set([
-    "/".join(param_path[:param_path.index(name_piece)])
-    for param_path in [n.split("/") for n in rospy.get_param_names()]
-    if name_piece in param_path
-  ])
-
 class Pau2MotorsNode:
+
+  def __init__(self):
+    self.subs = []
 
   def _handle_pau_cmd(self, msg, pau2motors):
     pau2motors.consume(msg)
 
   def _subscribe_single(self, topicname, pau2motors_instance):
-    rospy.Subscriber(
-      topicname,
-      pau,
-      lambda msg: self._handle_pau_cmd(msg, pau2motors_instance)
-    )
+    sub = rospy.Subscriber(topicname, pau,
+        lambda msg: self._handle_pau_cmd(msg, pau2motors_instance))
+    logger.info("Subscribe {}".format(sub.name))
 
-  def _build_msg_pipe(self, robot_yaml):
-    for topicname, motor_names in robot_yaml["topics"].items():
+  def _build_msg_pipe(self, config):
+    if config is None:
+      return
+    for sub in self.subs:
+      sub.unregister()
+      logger.info("Unregister subscriber {}".format(sub.name))
+    for topicname, motor_names in config["topics"].items():
       motor_sublist = []
       for name in motor_names.split(';'):
-        if name in robot_yaml['motors']:
-          motor_sublist.append(robot_yaml['motors'][name])
+        if name in config['motors']:
+          motor_sublist.append(config['motors'][name])
         else:
           logger.error("motor {} has no configuration".format(name))
           continue
-      self._subscribe_single(topicname, Pau2Motors(motor_sublist))
+      sub = self._subscribe_single(topicname, Pau2Motors(motor_sublist))
+      self.subs.append(sub)
 
-  def __init__(self, config):
-    rospy.init_node("pau2motors_node")
-    self._build_msg_pipe(config)
+  def reconfig(self, config, level):
+    if config.reload:
+      pau2motors_config = rospy.get_param("pau2motors", None)
+      motors = rospy.get_param("motors", None)
+      if pau2motors_config and motors:
+        pau2motors_config["motors"] = dict([i["name"],i] for i in motors)
+        self._build_msg_pipe(pau2motors_config)
+      logger.info("Reload motor configurations")
+      config.reload = False
+    return config
 
-parser = OptionParser()
 if __name__ == '__main__':
-  time.sleep(2)
-  # node specific settings
-  config = rospy.get_param("pau2motors", None)
-  # motors from universal motors parameter.
-  motors = rospy.get_param("motors", None)
-  if config and motors:
-    config["motors"] = dict([i["name"],i] for i in motors)
-
-    Pau2MotorsNode(config)
-    logger.info(
-      "Loaded '%s' from param server.",
-      rospy.get_namespace() + "pau2motors"
-    )
-    logger.info("Started")
-    rospy.spin()
-  else:
-    logger.error("Couldn't find '%s' param in namespace '%s'." %
-        ("pau2motors", rospy.get_namespace())
-    )
+  rospy.init_node("pau2motors")
+  node = Pau2MotorsNode()
+  Server(Pau2motorsConfig, node.reconfig)
+  rospy.spin()
