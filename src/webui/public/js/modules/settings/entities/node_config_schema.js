@@ -17,7 +17,14 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
             var properties = {};
 
             $.each(description, function (i, param) {
-                var property = {title: param.description};
+                console.log(param);
+                var property = {title: param['description']};
+
+                try {
+                    param['edit_method'] = JSON.parse(param['edit_method'].split("'").join('"'));
+                } catch (e) {
+                    param['edit_method'] = null;
+                }
 
                 switch (param.type) {
                     case 'bool':
@@ -30,9 +37,17 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
                     case 'double':
                         property.type = 'number';
                         break;
-                    case 'string':
+                    case 'str':
                         property.type = 'string';
                         break;
+                }
+
+                if (param['edit_method'] && param['edit_method']['enum'].length > 0) {
+                    property.enum = [];
+
+                    $.each(param['edit_method']['enum'], function (i, attr) {
+                        property.enum.push(attr.value);
+                    });
                 }
 
                 if ($.isNumeric(param.min)) property.minimum = param.min;
