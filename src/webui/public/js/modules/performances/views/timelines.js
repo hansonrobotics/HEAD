@@ -6,8 +6,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             childView: App.Performances.Views.Timeline,
             childViewContainer: '.app-timelines',
             config: {
-                pxPerSec: 70,
-                edit: false
+                pxPerSec: 70
             },
             ui: {
                 timelines: '.app-timelines',
@@ -25,7 +24,6 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 clearButton: '.app-clear-button',
                 runIndicator: '.app-run-indicator',
                 deleteButton: '.app-delete-button',
-                editElements: '.app-edit-container',
                 timeAxis: '.app-time-axis'
             },
             events: {
@@ -44,6 +42,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             onShow: function () {
                 var self = this;
 
+                this.model.stop();
                 this.resetButtons();
                 this.ui.runIndicator.hide();
                 this.model.get('nodes').each(function (node) {
@@ -93,7 +92,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
 
                 // show node settings on click
                 $(el).on('click', function () {
-                    if (self.config.edit) self.showNodeSettings(node);
+                    self.showNodeSettings(node);
                 }).hover(function () {
                     $(this).animateAuto('width', 500);
                 }, function () {
@@ -277,6 +276,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             stopIndicator: function () {
                 this.ui.runIndicator.hide().stop();
                 this.resetButtons();
+                if (this.enableLoop)
+                    this.run();
             },
             run: function (startTime) {
                 var self = this,
@@ -302,6 +303,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             },
             stop: function () {
                 var self = this;
+                this.loop(false);
                 this.model.stop({
                     success: function () {
                         self.stopIndicator();
@@ -350,7 +352,14 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             runAt: function (e) {
                 this.run(e.offsetX / this.config.pxPerSec);
             },
-            loop: function () {
+            loop: function (enable) {
+                if (typeof enable == 'boolean' && !enable || this.enableLoop) {
+                    this.enableLoop = false;
+                    this.ui.loopButton.removeClass('active').blur();
+                } else {
+                    this.enableLoop = true;
+                    this.ui.loopButton.addClass('active');
+                }
             },
             /**
              * Removes all nodes from the performance

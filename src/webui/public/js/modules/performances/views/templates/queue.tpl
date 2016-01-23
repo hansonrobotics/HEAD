@@ -10,6 +10,10 @@
                 <span class="glyphicon glyphicon-play-circle"></span>
                 Start
             </button>
+            <button class="app-loop-button btn btn-default">
+                <span class="glyphicon glyphicon-repeat"></span>
+                Loop
+            </button>
             <button class="app-stop btn btn-default">
                 <span class="glyphicon glyphicon-stop"></span>
                 Stop

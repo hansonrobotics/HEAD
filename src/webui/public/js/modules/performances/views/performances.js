@@ -5,18 +5,19 @@ define(['application', 'tpl!./templates/performances.tpl', './performance'], fun
             childView: App.Performances.Views.Performance,
             childViewContainer: '.app-performances',
             ui: {
-                newButton: '.app-new'
+                newButton: '.app-new-performance-button'
             },
             events: {
                 'click @ui.newButton': 'addNew'
-            },
-            addChild: function(child, ChildView, index){
-                Marionette.CollectionView.prototype.addChild.apply(this, arguments);
             },
             addNew: function () {
                 var performance = new App.Performances.Entities.Performance({name: 'New performance'});
                 this.collection.add(performance);
                 Views.trigger('performance:add', performance);
+            },
+            _insertAfter: function(childView) {
+                // insert all performance buttons before new button
+                this.ui.newButton.before(childView.el);
             }
         });
     });

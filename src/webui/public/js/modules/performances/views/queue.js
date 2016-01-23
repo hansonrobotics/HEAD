@@ -7,12 +7,14 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 performances: '.app-performance-queue .app-performance',
                 performanceTemplate: '.app-performance-template',
                 runButton: '.app-run',
+                loopButton: '.app-loop-button',
                 stopButton: '.app-stop',
                 clearButton: '.app-clear',
                 emptyNotice: '.app-empty-notice'
             },
             events: {
                 'click @ui.runButton': 'run',
+                'click @ui.loopButton': 'loop',
                 'click @ui.stopButton': 'stop',
                 'click @ui.clearButton': 'clear'
             },
@@ -66,6 +68,10 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 }
 
                 this.timelinesView.run();
+            },
+            loop: function () {
+                this.run();
+                this.timelinesView.loop();
             },
             stop: function () {
                 if (this.timelinesView) {

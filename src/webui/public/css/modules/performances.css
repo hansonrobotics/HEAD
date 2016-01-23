@@ -4,7 +4,21 @@
     padding: 8px 15px;
 }
 
-.app-performances-region,
+.app-performances button {
+    margin: 0 5px 5px 0;
+}
+
+.app-new-performance-button {
+    margin-bottom: 5px;
+}
+
+.performance-name-container {
+    width: 390px;
+}
+
+.performance-name-container,
+.performance-action-buttons,
+.app-node-settings,
 .app-performance-queue-container,
 .app-performance-queue {
     margin-bottom: 10px;
@@ -39,8 +53,7 @@
 }
 
 .app-timeline-nodes,
-.app-timeline-checkbox
-{
+.app-timeline-checkbox {
     background-color: #4e5d6c;
 }
 
@@ -57,10 +70,6 @@
 
 .app-timeline-editor {
     margin-bottom: 5px;
-}
-
-.app-nodes .app-node {
-    margin-bottom: 10px;
 }
 
 .app-node {
@@ -107,8 +116,8 @@
 }
 
 .app-node-settings label {
-    display: block;
     margin-top: 9px;
+    display: block;
 }
 
 .app-node-settings hr:first-child {
@@ -129,10 +138,6 @@
 
 .app-node-settings .select2-container {
     width: 100%;
-}
-
-.app-node-settings .btn {
-    margin-top: 31px;
 }
 
 .app-node-settings .select2-choice,
@@ -182,15 +187,11 @@ li.app-performance .app-status-indicator.active {
     cursor: pointer;
 }
 
-.app-time-axis path {
-    background-color: #df691a;
-    height: 3px;
-}
-
 .app-time-axis path,
 .app-time-axis line {
-    fill: none;
     stroke: #df691a;
+    fill: none;
+    stroke-width: 2px;
     shape-rendering: crispEdges;
 }
 
@@ -210,4 +211,23 @@ li.app-performance .app-status-indicator.active {
 
 .app-node[data-name="speech_input"] {
     background-color: #37753B;
+}
+
+textarea.form-control.app-node-text {
+    height: 39px;
+}
+
+.input-group .form-control.app-performance-name {
+    width: auto;
+}
+
+.app-performance-buttons > button {
+    display: table-cell;
+    margin-right: 5px;
+}
+
+@media (min-width: 606px) {
+    .performance-action-buttons {
+        float: right;
+    }
 }

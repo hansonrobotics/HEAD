@@ -13,7 +13,7 @@ import time
 logger = logging.getLogger('hr.performances')
 
 
-class Worker:
+class Runner:
     def __init__(self):
         logger.info('Starting performances node')
 
@@ -175,7 +175,6 @@ class Worker:
                     with self.lock:
                         self.paused = True
                         self.pause_time = time.time()
-
                 with self.lock:
                     if node == self.nodes[-1] and name != 'end':
                         end_time = node['start_time'] + node['duration'] if 'duration' in node else 1
@@ -196,4 +195,4 @@ class Worker:
 
 
 if __name__ == '__main__':
-    Worker()
+    Runner()

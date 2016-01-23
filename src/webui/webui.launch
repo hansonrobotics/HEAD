@@ -1,4 +1,6 @@
 <launch>
+    <node name="performances" pkg="performances" type="runner.py" />
+
     <group ns="/webui">
         <node name="node_configuration" pkg="webui" type="node_configuration.py"/>
     </group>
