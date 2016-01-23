@@ -75,15 +75,23 @@
 .app-node {
     position: relative;
     display: inline-block;
-    line-height: 17px;
-    height: 20px;
+    line-height: 14px;
     text-align: left;
     z-index: 999;
     cursor: pointer;
 }
 
+.app-node-settings .ui-slider {
+    width: 200px;
+}
+
+.app-delete-node-button {
+    margin-top: 31px;
+}
+
 .app-node.active {
-    border: 1px solid #df691a;
+    box-shadow: 0 0 3pt 2pt #df691a;
+    z-index: 9999999;
 }
 
 .app-timeline {
@@ -120,6 +128,10 @@
     display: block;
 }
 
+
+.app-node-settings .form-group {
+    margin-right: 5px;
+}
 .app-node-settings hr:first-child {
     margin: 9px 0 0;
 }
@@ -133,7 +145,7 @@
 }
 
 .app-timelines-container {
-    overflow: auto;
+    overflow: visible;
 }
 
 .app-node-settings .select2-container {
@@ -159,7 +171,12 @@
     height: 100%;
     width: 2px;
     background-color: #df691a;
-    z-index: 9999;
+    z-index: 9999999999;
+}
+
+.app-node-start-time,
+.app-node-duration {
+    width: 70px;
 }
 
 .app-performance-template {

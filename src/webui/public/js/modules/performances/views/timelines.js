@@ -145,6 +145,9 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 var self = this,
                     oldView = null;
 
+                this.ui.timelines.find('.app-node').removeClass('active');
+                $(node.get('el')).addClass('active');
+
                 if (typeof this.nodeView != 'undefined')
                     oldView = this.nodeView;
 
@@ -155,11 +158,6 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                     self.ui.nodeSettings.html(self.nodeView.el).hide().slideDown();
                     if (oldView)
                         oldView.destroy();
-                });
-
-                $(node.get('el')).addClass('active');
-                this.nodeView.on('destroy', function () {
-                    $(node.get('el')).removeClass('active');
                 });
             },
             arrangeNodes: function () {
