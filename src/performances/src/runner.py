@@ -8,6 +8,7 @@ import json
 from std_msgs.msg import String
 from blender_api_msgs.msg import SetGesture, EmotionState, Target
 from basic_head_api.msg import MakeFaceExpr
+from topic_tools.srv import MuxSelect
 import time
 
 logger = logging.getLogger('hr.performances')
@@ -26,6 +27,9 @@ class Runner:
         self.lock = Lock()
         self.queue = Queue.Queue()
         self.worker = Thread(target=self.worker)
+        self.services = {
+            'head_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/head_pau_mux/select', MuxSelect)
+        }
         self.topics = {
             'look_at': rospy.Publisher('/blender_api/set_face_target', Target, queue_size=1),
             'gaze_at': rospy.Publisher('/blender_api/set_gaze_target', Target, queue_size=1),
@@ -170,6 +174,9 @@ class Runner:
                 elif name == 'interaction_end':
                     self.topics['interaction'].publish(String('btree_off'))
                 elif name == 'expression':
+                    self.services['head_pau_mux']({'topic': "/" + self.robot_name + "/no_pau"})
+                    # sleep for 50ms
+                    time.sleep(0.05)
                     self.topics['expression'].publish(MakeFaceExpr(node['expression'], float(node['magnitude'])))
                 elif name == 'pause':
                     with self.lock:
