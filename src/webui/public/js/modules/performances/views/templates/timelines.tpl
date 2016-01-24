@@ -64,6 +64,7 @@
             <button class="app-loop-button btn btn-default" title="Loop"><i
                     class="glyphicon glyphicon-repeat"></i> Loop
             </button>
+            <button class="app-frame-count btn btn-primary" title="Frame count" disabled="disabled">0</button>
         </div>
     </div>
 </div>

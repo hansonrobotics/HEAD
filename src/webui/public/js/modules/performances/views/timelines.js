@@ -24,6 +24,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 loopButton: '.app-loop-button',
                 clearButton: '.app-clear-button',
                 runIndicator: '.app-run-indicator',
+                frameCount: '.app-frame-count',
                 timeIndicator: '.app-current-time div',
                 deleteButton: '.app-delete-button',
                 timeAxis: '.app-time-axis'
@@ -263,9 +264,11 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                         easing: 'linear',
                         step: function (now) {
                             var time = now / self.config.pxPerSec,
-                                step = 1. / self.config.fps;
+                                step = 1. / self.config.fps,
+                                frameCount = parseInt(time / step);
 
-                            self.ui.timeIndicator.html((parseInt(time / step) * step).toFixed(2));
+                            self.ui.frameCount.html(frameCount);
+                            self.ui.timeIndicator.html((frameCount * step).toFixed(2));
                         },
                         complete: function () {
                             if (self.isDestroyed) return;
@@ -286,6 +289,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 this.ui.resumeButton.fadeIn();
             },
             stopIndicator: function () {
+                this.ui.frameCount.html(0);
                 this.ui.runIndicator.hide().stop();
                 this.resetButtons();
                 if (this.enableLoop)
@@ -300,7 +304,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
 
                 this.model.run(startTime, {
                     success: function (response) {
-                        var startTime = response.time - (response.timestamp - (Date.now() / 1000));
+                        startTime += response.time - (response.timestamp - (Date.now() / 1000));
                         self.startIndicator(startTime, response.time, function () {
                             if (response.time < duration)
                                 self.pauseIndicator(response.time);
@@ -362,6 +366,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 });
             },
             runAt: function (e) {
+                console.log(e.offsetX / this.config.pxPerSec);
                 this.run(e.offsetX / this.config.pxPerSec);
             },
             loop: function (enable) {

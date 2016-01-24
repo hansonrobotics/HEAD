@@ -137,7 +137,6 @@ define(['application', 'lib/api', './node'], function (App, api) {
                     duration = 0;
 
                 if (nodes && nodes.length > 0) {
-                    console.log(this);
                     var startTime = this.get('nodes').last().get('start_time'),
                         nodeDuration = this.get('nodes').last().get('duration');
 

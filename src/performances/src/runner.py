@@ -23,6 +23,7 @@ class Runner:
         self.paused = False
         self.pause_time = 0
         self.start_time = 0
+        self.start_timestamp = 0
         self.nodes = []
         self.lock = Lock()
         self.queue = Queue.Queue()
@@ -61,10 +62,10 @@ class Runner:
         with self.lock:
             if self.running and self.paused:
                 current = time.time()
-                run_time = self.pause_time - self.start_time
+                run_time = self.start_time + self.pause_time - self.start_timestamp
 
                 self.paused = False
-                self.start_time = current - run_time
+                self.start_timestamp = current - run_time
 
                 next_stop_time = self.get_next_stop_time(self.nodes, run_time)
                 timestamp = current + next_stop_time - run_time
@@ -81,7 +82,7 @@ class Runner:
                 self.running = False
                 self.paused = False
                 timestamp = time.time()
-                stop_time = timestamp - self.start_time
+                stop_time = timestamp - self.start_timestamp
 
         return srv.StopResponse(True, stop_time, timestamp)
 
@@ -91,32 +92,37 @@ class Runner:
                 self.pause_time = time.time()
                 self.paused = True
 
-                return srv.PauseResponse(True, self.pause_time - self.start_time, self.pause_time)
+                return srv.PauseResponse(True, self.pause_time - self.start_timestamp, self.pause_time)
             else:
                 return srv.PauseResponse(False, 0, 0)
 
     @staticmethod
     def get_next_stop_time(nodes, start_time):
         for node in nodes:
-            if node['start_time'] < start_time:
-                continue
+            node_stop_time = node['start_time'] + node['duration'] if 'duration' in node else 0
             if node == nodes[-1]:
-                return node['start_time'] + node['duration'] if 'duration' in node else 0
+                return node_stop_time
+            elif node['start_time'] < start_time:
+                continue
             elif node['name'] == 'pause':
                 return node['start_time']
 
+        return 0
+
     def run(self, request):
-        nodes = self.sort_nodes(json.loads(request.nodes))
         start_time = request.startTime
+        nodes = self.sort_nodes(json.loads(request.nodes))
+        nodes = [node for node in nodes if node['start_time'] >= start_time]
 
         with self.lock:
             if not self.running and len(nodes) > 0:
-                current = time.time()
                 self.running = True
-                self.start_time = current
+                self.start_time = start_time
+                self.start_timestamp = time.time()
                 self.queue.put(nodes)
-                next_stop_time = self.get_next_stop_time(nodes, start_time)
-                next_stop_timestamp = current + next_stop_time
+
+                next_stop_time = self.get_next_stop_time(nodes, self.start_time)
+                next_stop_timestamp = self.start_timestamp + next_stop_time - start_time
 
                 return srv.RunResponse(True, next_stop_time, next_stop_timestamp)
             else:
@@ -143,8 +149,8 @@ class Runner:
                     node = self.nodes[i]
                     name = node['name']
 
-                elapsed_time = time.time() - self.start_time
-                remaining_time = node['start_time'] - elapsed_time
+                run_time = self.start_time + time.time() - self.start_timestamp
+                remaining_time = node['start_time'] - run_time
                 if remaining_time > 0:
                     continue
 
@@ -168,7 +174,7 @@ class Runner:
 
                     # add behavior tree disable node
                     with self.lock:
-                        self.nodes.append({'name': 'interaction_end', 'start_time': elapsed_time + node['duration'],
+                        self.nodes.append({'name': 'interaction_end', 'start_time': run_time + node['duration'],
                                            'duration': 0})
                         self.nodes = self.sort_nodes(self.nodes)
                         size += 1
