@@ -37,9 +37,9 @@
             <div class="app-node label label-default" data-name="speech_input">Wait for speech</div>
         </div>
 
-        <div class="app-node-settings clearfix"></div>
+        <div class="app-node-settings"></div>
 
-        <div class="app-timelines-container">
+        <div class="app-timelines-container clearfix">
             <div class="app-scroll-container">
                 <div class="app-timelines">
                     <div class="app-run-indicator"><div class="app-current-time"><div></div></div></div>
