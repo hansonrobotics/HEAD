@@ -154,9 +154,10 @@ class Runner:
                     self.topics['gesture'].publish(
                             SetGesture(node['gesture'], 1, float(node['speed']), float(node['magnitude'])))
                 elif name == 'emotion':
-                    self.topics['emotion'].publish(
-                            EmotionState(node['emotion'], float(node['magnitude']),
-                                         rospy.Duration.from_sec(node['duration'])))
+                    if 'emotion' in node and 'magnitude' in node:
+                        self.topics['emotion'].publish(
+                                EmotionState(node['emotion'], float(node['magnitude']),
+                                             rospy.Duration.from_sec(node['duration'])))
                 elif name == 'look_at':
                     self.topics['look_at'].publish(Target(node['x'], node['y'], node['z']))
                 elif name == 'gaze_at':

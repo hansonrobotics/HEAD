@@ -11,15 +11,16 @@ from optparse import OptionParser
 from configs import *
 from subprocess import Popen
 import datetime
+from monitor import get_logs
 
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
 app.config['CHAT_AUDIO_DIR'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, 'chat_audio')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
-config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, "robots_config")
-
-from monitor import get_logs
+config_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, 'robots_config')
+performance_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, 'performances',
+                               'robots')
 
 app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
 
@@ -161,28 +162,45 @@ def update_animations(robot_name):
     return json_encode(True)
 
 
-@app.route('/performances/get/<robot_name>', methods=['GET'])
+@app.route('/performances/<robot_name>', methods=['GET'])
 def get_performances(robot_name):
+    performances = []
     try:
-        performances = read_yaml(os.path.join(config_root, robot_name, 'performances.yaml'))
+        robot_performances = os.path.join(performance_dir, robot_name)
+        filenames = os.listdir(robot_performances)
+        for filename in filenames:
+            performance = read_yaml(os.path.join(robot_performances, filename))
+            print performance
+            performances.append(performance)
     except Exception as e:
+        print e
         return json_encode([])
 
     return json_encode(performances)
 
 
-@app.route('/performances/update/<robot_name>', methods=['POST'])
-def update_performances(robot_name):
-    performances = json.loads(request.get_data())
+@app.route('/performances/<robot_name>/<slug>', methods=['POST'])
+def update_performances(robot_name, slug):
+    performance = json.loads(request.get_data())
+    robot_performances = os.path.join(performance_dir, robot_name)
+
+    if not os.path.exists(robot_performances):
+        os.makedirs(robot_performances)
 
     try:
-        file_name = os.path.join(config_root, robot_name, 'performances.yaml')
-        write_yaml(file_name, performances)
+        if 'previous_slug' in performance:
+            prev_file = os.path.join(robot_performances, performance['previous_slug'] + '.yaml')
+            if os.path.isfile(prev_file):
+                os.remove(prev_file)
+
+            del performance['previous_slug']
+
+        file_name = os.path.join(performance_dir, robot_name, slug + '.yaml')
+        write_yaml(file_name, performance)
     except Exception as e:
         return json_encode({'error': str(e)})
 
-    return json_encode({'error': False})
-
+    return json_encode(performance)
 
 def write_yaml(file_name, data):
     # delete existing config

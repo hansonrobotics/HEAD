@@ -248,7 +248,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 if (typeof this.options.performances != 'undefined' && !this.options.performances.contains(this.model))
                     this.options.performances.add(this.model);
 
-                Views.trigger('performances:save');
+                this.model.save();
             },
             startIndicator: function (startTime, endTime, callback) {
                 var self = this;

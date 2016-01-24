@@ -1,9 +1,14 @@
 define(['application', 'lib/api', './node'], function (App, api) {
     App.module('Performances.Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Performance = Backbone.Model.extend({
+            urlRoot: function () {
+                return '/performances/' + api.config.robot + '/' + this.get('slug');
+            },
             initialize: function (options) {
                 var self = this,
                     nodes = new App.Performances.Entities.NodeCollection();
+
+                this.set('nodes', nodes);
 
                 if (options && options.nodes) {
                     _.each(options.nodes, function (attributes) {
@@ -11,11 +16,45 @@ define(['application', 'lib/api', './node'], function (App, api) {
                     });
                 }
 
+                // trigger performance change on node change
                 nodes.on('change', function () {
                     self.trigger('change');
                 });
 
-                this.set('nodes', nodes);
+                // update slug
+                this.on('change:name', function () {
+                    self.handleFilename();
+                });
+
+            },
+            /**
+             * Run after data fetch from server
+             *
+             * @param response
+             * @returns {*}
+             */
+            parse: function (response) {
+                // remove previous slug
+                delete response['previous_slug'];
+                this.unset('previous_slug');
+
+                // keep instance of NodeCollection at nodes attribute
+                if (this.get('nodes') instanceof App.Performances.Entities.NodeCollection) {
+                    // do not update node collection
+                    delete response['nodes'];
+                }
+
+                return response;
+            },
+            handleFilename: function () {
+                if (this.changed['name'])
+                    this.set('slug', this.get('name').toLowerCase()
+                        .replace(/ /g, '_')
+                        .replace(/[^\w-]+/g, '')
+                    );
+
+                if (!this.get('previous_slug') && this.changed['slug'])
+                    this.set('previous_slug', this.previous('slug'))
             },
             run: function (startTime, options) {
                 var self = this;
@@ -98,6 +137,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
                     duration = 0;
 
                 if (nodes && nodes.length > 0) {
+                    console.log(this);
                     var startTime = this.get('nodes').last().get('start_time'),
                         nodeDuration = this.get('nodes').last().get('duration');
 
@@ -123,41 +163,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
         });
         Entities.PerformanceCollection = Backbone.Collection.extend({
             model: Entities.Performance,
-            fetch: function () {
-                var self = this;
-                $.ajax('/performances/get/' + api.config.robot, {
-                    success: function (data) {
-                        var json = JSON.parse(data);
-
-                        _.each(json, function (attrs) {
-                            self.add(new Entities.Performance(attrs));
-                        });
-                    }
-                });
-            },
-            save: function (successCallback, errorCallback) {
-                var data = [];
-
-                this.each(function (model) {
-                    var performance = model.toJSON();
-                    performance['nodes'] = model.get('nodes').toJSON();
-                    data.push(performance);
-                });
-
-                $.ajax('/performances/update/' + api.config.robot, {
-                    data: JSON.stringify(data),
-                    type: 'POST',
-                    dataType: "json",
-                    success: function () {
-                        if (typeof successCallback == 'function')
-                            successCallback();
-                    },
-                    error: function () {
-                        if (typeof errorCallback == 'function')
-                            errorCallback();
-                    }
-                });
-            }
+            url: '/performances/' + api.config.robot
         });
     });
 });
