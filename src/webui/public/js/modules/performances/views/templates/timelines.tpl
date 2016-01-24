@@ -42,7 +42,7 @@
         <div class="app-timelines-container">
             <div class="app-scroll-container">
                 <div class="app-timelines">
-                    <div class="app-run-indicator"></div>
+                    <div class="app-run-indicator"><div class="app-current-time"><div></div></div></div>
                 </div>
                 <svg class="app-time-axis"></svg>
             </div>

@@ -6,7 +6,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             childView: App.Performances.Views.Timeline,
             childViewContainer: '.app-timelines',
             config: {
-                pxPerSec: 70
+                pxPerSec: 70,
+                fps: 48
             },
             ui: {
                 timelines: '.app-timelines',
@@ -23,6 +24,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 loopButton: '.app-loop-button',
                 clearButton: '.app-clear-button',
                 runIndicator: '.app-run-indicator',
+                timeIndicator: '.app-current-time div',
                 deleteButton: '.app-delete-button',
                 timeAxis: '.app-time-axis'
             },
@@ -143,21 +145,24 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             },
             showNodeSettings: function (node) {
                 var self = this,
-                    oldView = null;
+                    showSettings = !this.nodeView || this.nodeView.model != node;
 
                 this.ui.timelines.find('.app-node').removeClass('active');
-                $(node.get('el')).addClass('active');
-
-                if (typeof this.nodeView != 'undefined')
-                    oldView = this.nodeView;
-
-                this.nodeView = new Views.Node({model: node});
-                this.nodeView.render();
+                if (showSettings)
+                    $(node.get('el')).addClass('active');
 
                 this.ui.nodeSettings.slideUp(function () {
-                    self.ui.nodeSettings.html(self.nodeView.el).hide().slideDown();
-                    if (oldView)
-                        oldView.destroy();
+                    if (self.nodeView) {
+                        self.nodeView.destroy();
+                        self.nodeView = null;
+                    }
+
+                    // show settings if no settings are shown or if shown settings are for a different node
+                    if (showSettings) {
+                        self.nodeView = new Views.Node({model: node});
+                        self.nodeView.render();
+                        self.ui.nodeSettings.html(self.nodeView.el).hide().slideDown();
+                    }
                 });
             },
             arrangeNodes: function () {
@@ -253,12 +258,21 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 this.ui.pauseButton.fadeIn();
 
                 $(this.ui.runIndicator).stop().css('left', startTime * this.config.pxPerSec).show()
-                    .animate({left: endTime * this.config.pxPerSec}, (endTime - startTime) * 1000, 'linear',
-                        function () {
+                    .animate({left: endTime * this.config.pxPerSec}, {
+                        duration: (endTime - startTime) * 1000,
+                        easing: 'linear',
+                        step: function (now) {
+                            var time = now / self.config.pxPerSec,
+                                step = 1. / self.config.fps;
+
+                            self.ui.timeIndicator.html((parseInt(time / step) * step).toFixed(2));
+                        },
+                        complete: function () {
                             if (self.isDestroyed) return;
                             if (typeof callback == 'function')
                                 callback();
-                        });
+                        }
+                    });
             },
             resetButtons: function () {
                 this.ui.runButton.fadeIn();

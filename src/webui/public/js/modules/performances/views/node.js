@@ -78,7 +78,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                                 });
 
                                 if (!self.model.get('expression') && expressions.length > 0)
-                                    self.model.set('expression', emotions[0]);
+                                    self.model.set('expression', expressions[0]);
 
                                 if (self.model.get('expression'))
                                     $(self.ui.expressionSelect).val(self.model.get('expression'));
