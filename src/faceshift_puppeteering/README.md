@@ -47,11 +47,15 @@ This runs on localhost on 33433 port. If there is no element is terminates. If o
 This node is entirelly independent of the the type of shapekeys being sent from the faceshift. It just prints key value pair of the name of shapekey with it's value. 
 
 
-The second one are the internal changes to the blender_api to listen to this published topics 
 
-    rostopic pub /blender_api/set_animation_mode blender_api_msgs/AnimationMode "value: 0" --once # to set the mode as normal.
-    
-    rostopic pub /blender_api/set_animation_mode blender_api_msgs/AnimationMode "value: 1" --once # to set the mode as faceshift led pupeetering.
+### Using the parameters to enable mapping 
+The parameter fb_mode can be set to control the animation mode of the system. One doesn't need set the AnimationMode anymore. 
+
+    rosparam set /fb_mode 0
+    rosparam set /fb_mode 1 ## Control shapekeys only
+    rosparam set /fb_mode 2 ## Control neck only
+    rosparam set /fb_mode 4 ## Control eyes only
+    rosparam set /fb_mode 7 ## Control all the rigs. 
 
 The third ones are ways to configure the Faceshift and Sophia Blendshapes mapping. This has to folds: 
 1. Manually Edited basic file. Found in sophia folder in faceshift_puppeteering folder. 
