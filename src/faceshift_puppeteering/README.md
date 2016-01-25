@@ -69,12 +69,22 @@ Then going to faceshift_mapper to reconfigure the values.
 
 ![Image of Dynamic Reconfigure](docs/overall.png)
 
-When animation mode is set to '1' the AnimationManager 
-1. First saves all the drivers of the shapekeys that are going to be driven by faceshift (found by reading the JSON file) by iterating through them. 
-2. Delete all the drivers of elements found in the keyshape pair json file.
-3. Sets the value of the shapekeys to the value of the faceshift value by adding them or subtracting them as they are specified. Currently we just mapped the shapekeys of blender to faceshift one to one. 
+When /fb_mode is set to anything except 0 it publishes changes: 
+ 1. If set to one 
+	1. First saves all the drivers of the shapekeys that are going to be driven by faceshift (found by reading the JSON file) by iterating through them. 
+	2. Delete all the drivers of elements found in the keyshape pair json file.
+	3. Sets the value of the shapekeys to the value of the faceshift value by adding them or subtracting them as they are specified. Currently we just mapped the shapekeys of blender to faceshift one to one.
+ 2. If set to two 
+ 	1. Doesn't touch the drivers. 
+ 	2. Sets the face gaze taget for the neck movement by publishing on the /blender_api/set_face_target
+ 	3. Gesturea and Emotions work the same way as they did before i.e it only sets face location based on the faceshift puppeteering node. 
+ 3. If set to 4 
+ 	1. Same as two but sets the /blender_api/set_gaze_target for the eyes
+ 4. If set to 7
+ 	1. Does all the above combined. 
 
-When animation mode is set to '0' the AnimationManager returns the values of the drivers to the way they were before deletion occured. 
+When /fb_mode is set to '0' the AnimationManager returns the values of the drivers to the way they were before they were modified by setting the face and gaze target to [1, 0, 0] 
+ and setting the animationmode to 0 to return the drivers to previous states. 
 
 
 # Critical
