@@ -38,13 +38,13 @@ There are three parts of code.
 
 First part is the part which listens to the Faceshift Network streaming using the faceshift network interface by using specified IP and port and publishes them to the /blender_api/set_shape_keys. This is launched via
 
-    roslaunch faceshift_puppetering faceshift_puppetering.launch
+    roslaunch faceshift_puppetering faceshift_puppeteering.launch
 
 This runs on localhost on 33433 port. If there is no element is terminates. If one desires to listen to a remote faceshift instance. 
 
-    roslaunch faceshift_puppetering faceshift_puppetering.launch IP:=ip_host Port:=port_num
+    roslaunch faceshift_puppetering faceshift_puppeteering.launch IP:=ip_host Port:=port_num
     
-This node is entirelly independent of the the type of shapekeys being sent from the faceshift. It just prints key value pair of the name of shapekey with it's value. 
+This node is entirely independent of the the type of shapekeys being sent from the faceshift. It just prints key value pair of the name of shapekey with it's value. 
 
 
 
@@ -80,7 +80,7 @@ When animation mode is set to '0' the AnimationManager returns the values of the
 # Critical
 The blender_api modification made it necessary that we specifiy mapping parameters between the two types of blendshapes(the one in sophia's rig and the blendshape of faceshift) that we used a specific model of the 
 faceshift model to create a more suitable mapping. This made the total shapekeys being sent form the faceshift interface about 57. This are described in the faceshift profile found the profiles folder. So be sure to 
-have that otherwise it would give out an error saying that a certain shapekey is missing. And a mapping file is placed in the robots_config/shapekey_pairing.json
+have that otherwise it would give out an error saying that a certain shapekey is missing. And a mapping file is placed in the faceshift_puppeteering/sophia/shapekey_pairing.json
 
 # TODOs
 * Use the Parameters to set the animation mode rather than topics. 
