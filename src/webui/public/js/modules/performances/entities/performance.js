@@ -135,18 +135,14 @@ define(['application', 'lib/api', './node'], function (App, api) {
             getDuration: function () {
                 var nodes = this.get('nodes'),
                     duration = 0;
-
                 if (nodes && nodes.length > 0) {
-                    var startTime = this.get('nodes').last().get('start_time'),
-                        nodeDuration = this.get('nodes').last().get('duration');
-
-                    if (startTime) {
-                        duration += startTime;
-                        if (nodeDuration)
-                            duration += nodeDuration;
-                    }
-                }
-
+                    nodes.forEach(function(node){
+                        var startTime = node.get('start_time'),
+                            nodeDuration = node.get('duration');
+                        if (startTime + nodeDuration > duration){
+                            duration = startTime + nodeDuration
+                        }
+                    });
                 return duration;
             },
             getRunTime: function () {
