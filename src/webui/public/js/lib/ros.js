@@ -165,7 +165,12 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/' + api.config.robot + '/chat_events',
                     messageType: 'std_msgs/String'
-                })
+                }),
+                performance_events: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/performance_events',
+                    messageType: 'performances/Event'
+                }),
             };
         },
         initServices: function () {

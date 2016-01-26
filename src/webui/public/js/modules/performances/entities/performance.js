@@ -25,7 +25,6 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 this.on('change:name', function () {
                     self.handleFilename();
                 });
-
             },
             /**
              * Run after data fetch from server
@@ -66,7 +65,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 }, function (response) {
                     if (response.success) {
                         self.paused = false;
-                        self.startTime = response.time - (response.timestamp - (Date.now() / 1000));
+                        self.startTime = response.time;
                         self.trigger('run', startTime);
 
                         if (typeof options.success == 'function')
@@ -84,11 +83,10 @@ define(['application', 'lib/api', './node'], function (App, api) {
 
                 api.services.performances.resume.callService({}, function (response) {
                     if (response.success) {
-                        self.trigger('resume', response.time, response.timestamp);
+                        self.trigger('resume', self.resumeTime);
                         self.paused = false;
+                        response.time =self.resumeTime;
                         self.resumeTime = null;
-                        self.startTime = response.time - (response.timestamp - (Date.now() / 1000));
-
                         if (typeof options.success == 'function')
                             options.success(response);
                     } else if (typeof options.error == 'function')
@@ -115,6 +113,11 @@ define(['application', 'lib/api', './node'], function (App, api) {
                         options.error(error);
                 });
             },
+            b_pause: function(options){
+                // Paused by backend script
+                this.trigger('pause', options.time, 0);
+                this.resumeTime = options.time;
+            },
             stop: function (options) {
                 var self = this;
                 if (!options) options = {};
@@ -122,7 +125,6 @@ define(['application', 'lib/api', './node'], function (App, api) {
                 api.services.performances.stop.callService({}, function (response) {
                     if (response.success) {
                         self.trigger('stop', response.time, response.timestamp);
-
                         if (typeof options.success == 'function')
                             options.success(response);
                     } else if (typeof options.error == 'function')
@@ -143,6 +145,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
                             duration = startTime + nodeDuration
                         }
                     });
+                }
                 return duration;
             },
             getRunTime: function () {
@@ -154,9 +157,24 @@ define(['application', 'lib/api', './node'], function (App, api) {
                     return this.resumeTime;
                 else
                     return null;
+            },
+            handleEvents: function(msg){
+                if (msg.event = 'paused'){
+                     self.trigger('pause', msg.time, 0);
+                }
             }
         });
         Entities.PerformanceCollection = Backbone.Collection.extend({
+            initialize: function () {
+                // Subscribing to performance events
+                var self = this;
+                api.subPerformanceEvents(function(msg){
+                    if (self.eventHandler){
+                        self.eventHandler(msg);
+                    }
+                });
+            },
+            eventHandler : false,
             model: Entities.Performance,
             url: '/performances/' + api.config.robot
         });
