@@ -11,20 +11,20 @@ from topic_tools.srv import MuxSelect
 class Node(object):
     # Create new Node from JSON
     @classmethod
-    def createNode(cls, data, runner, start_time = 0):
-
+    def createNode(cls, data, runner, start_time=0):
         for s_cls in cls.__subclasses__():
             if data['name'] == s_cls.__name__:
-                node =  s_cls(data, start_time)
+                node =  s_cls(data, runner)
                 if start_time > node.start_time:
                     # Start time should be before or on node starting
                     node.finished = True
+                return node
         print "Wrong node description"
 
-    def __init__(self, data, runner, start_time=0):
+    def __init__(self, data, runner):
         self.data = data
         self.duration = 0
-        self.start_time = 0
+        self.start_time = data['start_time']
         self.started = False
         self.finished = False
         # Node runner for accessing ROS topics and method
@@ -46,14 +46,14 @@ class Node(object):
             # Time to finish:
             if run_time >= self.end_time():
                 self.stop(run_time)
-                return True
+                self.finished = True
             else:
                 self.cont(run_time)
-                return True
         else:
-            if run_time > self.started:
+            if run_time > self.start_time:
                 self.start(run_time)
-                return True
+                self.started = True
+        return True
 
     def __str__(self):
         return pprint.pformat(self.data)
@@ -137,3 +137,7 @@ class expression(Node):
         self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/head_pau"})
 
 
+class pause(Node):
+
+    def start(self, run_time):
+        self.runner.make_pause()
