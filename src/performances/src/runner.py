@@ -9,6 +9,7 @@ from std_msgs.msg import String
 from blender_api_msgs.msg import SetGesture, EmotionState, Target
 from basic_head_api.msg import MakeFaceExpr
 from topic_tools.srv import MuxSelect
+from performances.msg import Event
 import time
 from nodes import Node
 
@@ -41,7 +42,7 @@ class Runner:
             'gesture': rospy.Publisher('/blender_api/set_gesture', SetGesture, queue_size=1),
             'expression': rospy.Publisher('/blender_api/make_face_expr', MakeFaceExpr, queue_size=1),
             'interaction': rospy.Publisher('/behavior_switch', String, queue_size=1),
-            'performance_status': rospy.Publisher('/behavior_switch', String, queue_size=1),
+            'performance_events': rospy.Publisher('/performance_events', Event, queue_size=3),
             'tts': {
                 'en': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_en', String, queue_size=1),
                 'zh': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_zh', String, queue_size=1),
@@ -114,14 +115,13 @@ class Runner:
             if self.running and not self.paused:
                 self.pause_time = time.time()
                 self.paused = True
+                self.topics['performance_events'].publish(Event('paused',self.pause_time - self.start_timestamp))
                 return True
             else:
                 return False
 
     def worker(self):
         while True:
-            with self.lock:
-                self.running = False
             self.nodes = self.queue.get()
             if len(self.nodes) == 0:
                 continue
@@ -135,7 +135,10 @@ class Runner:
                 running = False
                 for node in self.nodes:
                     running = node.run(run_time) or running
-                time.sleep(0.01)
+                # Performance finished
+                if running == False:
+                    self.topics['performance_events'].publish(Event('finished',run_time))
+
 
 if __name__ == '__main__':
     Runner()
