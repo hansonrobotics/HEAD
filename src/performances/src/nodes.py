@@ -23,7 +23,7 @@ class Node(object):
 
     def __init__(self, data, runner):
         self.data = data
-        self.duration = 0
+        self.duration = data['duration']
         self.start_time = data['start_time']
         self.started = False
         self.finished = False
@@ -47,6 +47,7 @@ class Node(object):
             if run_time >= self.end_time():
                 self.stop(run_time)
                 self.finished = True
+                return False
             else:
                 self.cont(run_time)
         else:

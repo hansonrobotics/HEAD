@@ -135,7 +135,7 @@ class Runner:
                 running = False
                 for node in self.nodes:
                     running = node.run(run_time) or running
-
+                time.sleep(0.01)
 
 if __name__ == '__main__':
     Runner()
