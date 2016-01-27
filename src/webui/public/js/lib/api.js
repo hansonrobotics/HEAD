@@ -446,7 +446,19 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             });
 
             param.get(success);
-        }
+        },
+        /**
+         * Subscribes for performance event topics
+         *
+         * @param success
+         */
+        subPerformanceEvents: function (success) {
+            api.topics.performance_events.unsubscribe();
+            api.topics.performance_events.removeAllListeners();
+            api.topics.performance_events.subscribe(function (message) {
+                success(message);
+            });
+        },
     };
 
     return api;
