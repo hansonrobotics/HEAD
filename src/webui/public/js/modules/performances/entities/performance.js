@@ -2,13 +2,14 @@ define(['application', 'lib/api', './node'], function (App, api) {
     App.module('Performances.Entities', function (Entities, App, Backbone, Marionette, $, _) {
         Entities.Performance = Backbone.Model.extend({
             urlRoot: function () {
-                return '/performances/' + api.config.robot + '/' + this.get('slug');
+                return '/performances/' + api.config.robot;
             },
             initialize: function (options) {
                 var self = this,
                     nodes = new App.Performances.Entities.NodeCollection();
 
                 this.set('nodes', nodes);
+                this.updateId();
 
                 if (options && options.nodes) {
                     _.each(options.nodes, function (attributes) {
@@ -21,11 +22,10 @@ define(['application', 'lib/api', './node'], function (App, api) {
                     self.trigger('change');
                 });
 
-                // update slug
+                // update id
                 this.on('change:name', function () {
-                    self.handleFilename();
+                    self.updateId();
                 });
-
             },
             /**
              * Run after data fetch from server
@@ -34,9 +34,9 @@ define(['application', 'lib/api', './node'], function (App, api) {
              * @returns {*}
              */
             parse: function (response) {
-                // remove previous slug
-                delete response['previous_slug'];
-                this.unset('previous_slug');
+                // remove previous id
+                delete response['previous_id'];
+                this.unset('previous_id');
 
                 // keep instance of NodeCollection at nodes attribute
                 if (this.get('nodes') instanceof App.Performances.Entities.NodeCollection) {
@@ -46,15 +46,16 @@ define(['application', 'lib/api', './node'], function (App, api) {
 
                 return response;
             },
-            handleFilename: function () {
-                if (this.changed['name'])
-                    this.set('slug', this.get('name').toLowerCase()
+            updateId: function () {
+                if (this.get('name') && (this.changed['name'] || ! this.get('id'))) {
+                    this.set('id', this.get('name').toLowerCase()
                         .replace(/ /g, '_')
                         .replace(/[^\w-]+/g, '')
                     );
 
-                if (!this.get('previous_slug') && this.changed['slug'])
-                    this.set('previous_slug', this.previous('slug'))
+                    if (!this.get('previous_id') && this.changed['id'])
+                        this.set('previous_id', this.previous('id'))
+                }
             },
             run: function (startTime, options) {
                 var self = this;

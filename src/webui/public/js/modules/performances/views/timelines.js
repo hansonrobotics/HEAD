@@ -300,6 +300,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             stopIndicator: function () {
                 var self = this;
                 this.running = false;
+
                 this.ui.frameCount.html(0);
                 this.ui.runIndicator.stop().css('left', 0).draggable({
                     axis: "x",
@@ -318,7 +319,9 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                     }
                 });
 
+                this.updateIndicatorTime();
                 this.resetButtons();
+
                 if (this.enableLoop)
                     this.run();
             },
@@ -436,11 +439,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             deletePerformance: function () {
                 var self = this;
 
-                Views.trigger('performance:delete', this.model);
-
                 this.$el.fadeOut(null, function () {
                     self.model.destroy();
-                    self.savePerformances();
                     self.destroy();
                 })
             }
