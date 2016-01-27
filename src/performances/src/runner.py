@@ -4,6 +4,7 @@ import Queue
 import rospy
 import logging
 import performances.srv as srv
+import performances.msg as msg
 import json
 from std_msgs.msg import String
 from blender_api_msgs.msg import SetGesture, EmotionState, Target
@@ -17,21 +18,22 @@ logger = logging.getLogger('hr.performances')
 class Runner:
     def __init__(self):
         logger.info('Starting performances node')
-
+        rospy.init_node('performances')
         self.robot_name = rospy.get_param('/robot_name')
         self.running = False
         self.paused = False
-        self.pause_time = 0
-        self.start_time = 0
+        self.pause_timestamp = 0
         self.start_timestamp = 0
         self.nodes = []
         self.lock = Lock()
         self.queue = Queue.Queue()
-        self.worker = Thread(target=self.worker)
+        self.runner_thread = Thread(target=self.runner)
+        self.status_thread = Thread(target=self.status)
         self.services = {
             'head_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/head_pau_mux/select', MuxSelect)
         }
         self.topics = {
+            'status': rospy.Publisher('~status', msg.Status, queue_size=1),
             'look_at': rospy.Publisher('/blender_api/set_face_target', Target, queue_size=1),
             'gaze_at': rospy.Publisher('/blender_api/set_gaze_target', Target, queue_size=1),
             'emotion': rospy.Publisher('/blender_api/set_emotion_state', EmotionState, queue_size=1),
@@ -45,14 +47,15 @@ class Runner:
             }
         }
 
-        rospy.init_node('performances')
         rospy.Service('~run', srv.Run, self.run)
         rospy.Service('~resume', srv.Resume, self.resume)
         rospy.Service('~pause', srv.Pause, self.pause)
         rospy.Service('~stop', srv.Stop, self.stop)
 
-        self.worker.start()
-        self.worker.join()
+        self.runner_thread.start()
+        self.status_thread.start()
+
+        rospy.spin()
 
     def resume(self, request):
         success = False
@@ -61,8 +64,8 @@ class Runner:
 
         with self.lock:
             if self.running and self.paused:
+                run_time = self.get_run_time()
                 current = time.time()
-                run_time = self.start_time + self.pause_time - self.start_timestamp
 
                 self.paused = False
                 self.start_timestamp = current - run_time
@@ -89,46 +92,53 @@ class Runner:
     def pause(self, request):
         with self.lock:
             if self.running and not self.paused:
-                self.pause_time = time.time()
+                self.pause_timestamp = time.time()
                 self.paused = True
 
-                return srv.PauseResponse(True, self.pause_time - self.start_timestamp, self.pause_time)
+                return srv.PauseResponse(True, self.pause_timestamp - self.start_timestamp, self.pause_timestamp)
             else:
                 return srv.PauseResponse(False, 0, 0)
 
     @staticmethod
     def get_next_stop_time(nodes, start_time):
+        stop_time = 0
+
         for node in nodes:
-            node_stop_time = node['start_time'] + node['duration'] if 'duration' in node else 0
-            if node == nodes[-1]:
-                return node_stop_time
-            elif node['start_time'] < start_time:
+            if node['start_time'] < start_time:
                 continue
-            elif node['name'] == 'pause':
+            if node['name'] == 'pause':
                 return node['start_time']
 
-        return 0
+            stop_time = max(stop_time, node['start_time'] + node['duration'] if 'duration' in node else 0)
+
+        return stop_time
 
     def run(self, request):
+        success = False
+        next_stop_time = 0
+        next_stop_timestamp = 0
         start_time = request.startTime
         nodes = self.sort_nodes(json.loads(request.nodes))
         nodes = [node for node in nodes if node['start_time'] >= start_time]
 
         with self.lock:
             if not self.running and len(nodes) > 0:
+                timestamp = time.time()
+
                 self.running = True
-                self.start_time = start_time
-                self.start_timestamp = time.time()
+                self.start_timestamp = timestamp - start_time
                 self.queue.put(nodes)
 
-                next_stop_time = self.get_next_stop_time(nodes, self.start_time)
-                next_stop_timestamp = self.start_timestamp + next_stop_time - start_time
+                success = True
+                next_stop_time = self.get_next_stop_time(nodes, start_time)
+                next_stop_timestamp = timestamp + next_stop_time - start_time
 
-                return srv.RunResponse(True, next_stop_time, next_stop_timestamp)
-            else:
-                return srv.RunResponse(False, 0, 0)
+        print next_stop_time
+        print time.time() - next_stop_timestamp
 
-    def worker(self):
+        return srv.RunResponse(success, next_stop_time, next_stop_timestamp)
+
+    def runner(self):
         while True:
             with self.lock:
                 self.running = False
@@ -148,8 +158,8 @@ class Runner:
 
                     node = self.nodes[i]
                     name = node['name']
+                    run_time = self.get_run_time()
 
-                run_time = self.start_time + time.time() - self.start_timestamp
                 remaining_time = node['start_time'] - run_time
                 if remaining_time > 0:
                     continue
@@ -188,7 +198,7 @@ class Runner:
                 elif name == 'pause':
                     with self.lock:
                         self.paused = True
-                        self.pause_time = time.time()
+                        self.pause_timestamp = time.time()
                 with self.lock:
                     if node == self.nodes[-1] and name != 'end':
                         end_time = node['start_time'] + node['duration'] if 'duration' in node else 1
@@ -196,6 +206,23 @@ class Runner:
                         size += 1
 
                 i += 1
+
+    def status(self):
+        r = rospy.Rate(10)  # 10hz
+        while not rospy.is_shutdown():
+            status = 'idle'
+
+            with self.lock:
+                run_time = self.get_run_time()
+                timestamp = time.time()
+
+                if self.paused:
+                    status = 'paused'
+                elif self.running:
+                    status = 'running'
+
+            self.topics['status'].publish(msg.Status(status, run_time, timestamp))
+            r.sleep()
 
     @staticmethod
     def sort_nodes(nodes):
@@ -206,6 +233,18 @@ class Runner:
             lang = 'default'
 
         self.topics['tts'][lang].publish(String(text))
+
+    def get_run_time(self):
+        """
+        Must acquire self.lock in order to safely use this method
+        :return:
+        """
+        if self.paused:
+            return self.pause_timestamp - self.start_timestamp
+        if self.running:
+            return time.time() - self.start_timestamp
+
+        return 0
 
 
 if __name__ == '__main__':

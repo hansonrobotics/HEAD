@@ -34,7 +34,6 @@
             <div class="app-node label label-default" data-name="interaction">Interaction</div>
             <div class="app-node label label-default" data-name="pause">Pause</div>
             <div class="app-node label label-info" data-name="expression">Expression</div>
-            <div class="app-node label label-default" data-name="speech_input">Wait for speech</div>
         </div>
 
         <div class="app-node-settings"></div>
@@ -42,7 +41,7 @@
         <div class="app-timelines-container clearfix">
             <div class="app-scroll-container">
                 <div class="app-timelines">
-                    <div class="app-run-indicator"><div class="app-current-time"><div></div></div></div>
+                    <div class="app-run-indicator"><div class="app-current-time"><div><i class="fa fa-arrows-h"></i></div></div></div>
                 </div>
                 <svg class="app-time-axis"></svg>
             </div>

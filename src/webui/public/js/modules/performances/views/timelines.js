@@ -1,13 +1,12 @@
 define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './node',
-    'lib/extensions/animate_auto'], function (App, template, d3) {
+    'lib/extensions/animate_auto', 'jquery-ui'], function (App, template, d3) {
     App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
         Views.Timelines = Marionette.CompositeView.extend({
             template: template,
             childView: App.Performances.Views.Timeline,
             childViewContainer: '.app-timelines',
             config: {
-                pxPerSec: 70,
-                fps: 48
+                pxPerSec: 70
             },
             ui: {
                 timelines: '.app-timelines',
@@ -33,25 +32,24 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 'click @ui.nodes': 'nodeClicked',
                 'click @ui.saveButton': 'savePerformances',
                 'keyup @ui.performanceName': 'setPerformanceName',
-                'click @ui.runButton': 'run',
+                'click @ui.runButton': 'runButtonClick',
                 'click @ui.stopButton': 'stop',
                 'click @ui.pauseButton': 'pause',
                 'click @ui.resumeButton': 'resume',
+                'click @ui.timeAxis': 'moveIndicator',
                 'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance',
-                'click @ui.timeAxis': 'runAt',
                 'click @ui.loopButton': 'loop'
             },
             onShow: function () {
                 var self = this;
 
-                this.model.stop();
+                this.stopIndicator();
                 this.resetButtons();
-                this.ui.runIndicator.hide();
+                this.model.stop();
                 this.model.get('nodes').each(function (node) {
                     self.createNodeEl(node);
                 });
-
                 this.arrangeNodes();
 
                 this.model.get('nodes').bind('add', this.addNode, this);
@@ -68,6 +66,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 });
             },
             onDestroy: function () {
+                this.stopIndicator();
+
                 this.model.stop();
                 this.model.get('nodes').unbind('add', this.addNode, this);
                 this.model.get('nodes').unbind('remove', this.arrangeNodes, this);
@@ -253,22 +253,21 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             },
             startIndicator: function (startTime, endTime, callback) {
                 var self = this;
+                this.running = true;
                 this.ui.runButton.hide();
                 this.ui.resumeButton.hide();
                 this.ui.stopButton.fadeIn();
                 this.ui.pauseButton.fadeIn();
 
-                $(this.ui.runIndicator).stop().css('left', startTime * this.config.pxPerSec).show()
+                if (this.ui.runIndicator.draggable('instance'))
+                    this.ui.runIndicator.draggable('destroy');
+
+                this.ui.runIndicator.stop().css('left', startTime * this.config.pxPerSec).show()
                     .animate({left: endTime * this.config.pxPerSec}, {
                         duration: (endTime - startTime) * 1000,
                         easing: 'linear',
-                        step: function (now) {
-                            var time = now / self.config.pxPerSec,
-                                step = 1. / self.config.fps,
-                                frameCount = parseInt(time / step);
-
-                            self.ui.frameCount.html(frameCount);
-                            self.ui.timeIndicator.html((frameCount * step).toFixed(2));
+                        step: function () {
+                            self.updateIndicatorTime();
                         },
                         complete: function () {
                             if (self.isDestroyed) return;
@@ -276,6 +275,16 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                                 callback();
                         }
                     });
+            },
+            updateIndicatorTime: function (time) {
+                if (!$.isNumeric(time))
+                    time = this.ui.runIndicator.offset().left / this.config.pxPerSec;
+
+                var step = 1. / App.getOption('fps'),
+                frameCount = parseInt(time / step);
+
+                this.ui.frameCount.html(frameCount);
+                this.ui.timeIndicator.html((frameCount * step).toFixed(2));
             },
             resetButtons: function () {
                 this.ui.runButton.fadeIn();
@@ -289,11 +298,33 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 this.ui.resumeButton.fadeIn();
             },
             stopIndicator: function () {
+                var self = this;
+                this.running = false;
                 this.ui.frameCount.html(0);
-                this.ui.runIndicator.hide().stop();
+                this.ui.runIndicator.stop().css('left', 0).draggable({
+                    axis: "x",
+                    drag: function () {
+                        self.updateIndicatorTime();
+                    },
+                    stop: function (event, ui) {
+                        var endPixels = self.model.getDuration() * self.config.pxPerSec;
+                        if (ui.position.left < 0) {
+                            self.ui.runIndicator.animate({left: 0});
+                            self.updateIndicatorTime(0);
+                        } else if (ui.position.left > endPixels) {
+                            self.ui.runIndicator.animate({left: endPixels});
+                            self.updateIndicatorTime(endPixels / self.config.pxPerSec);
+                        }
+                    }
+                });
+
                 this.resetButtons();
                 if (this.enableLoop)
                     this.run();
+            },
+            moveIndicator: function (e) {
+                if (!this.running)
+                    this.ui.runIndicator.css('left', Math.min(e.offsetX, this.model.getDuration() * this.config.pxPerSec));
             },
             run: function (startTime) {
                 var self = this,
@@ -304,7 +335,11 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
 
                 this.model.run(startTime, {
                     success: function (response) {
-                        startTime += response.time - (response.timestamp - (Date.now() / 1000));
+                        console.log(response);
+                        console.log(Date.now());
+                        console.log(Date.now() / 1000 - response.timestamp);
+
+                        startTime = response.time - (response.timestamp - (Date.now() / 1000));
                         self.startIndicator(startTime, response.time, function () {
                             if (response.time < duration)
                                 self.pauseIndicator(response.time);
@@ -365,9 +400,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                     }
                 });
             },
-            runAt: function (e) {
-                console.log(e.offsetX / this.config.pxPerSec);
-                this.run(e.offsetX / this.config.pxPerSec);
+            runButtonClick: function () {
+                this.run(1. * parseInt(this.ui.runIndicator.css('left')) / this.config.pxPerSec);
             },
             loop: function (enable) {
                 if (typeof enable == 'boolean' && !enable || this.enableLoop) {

@@ -47,7 +47,8 @@
             <% } %>
             <% if (name == 'emotion' || name == 'gesture' || name == 'expression') { %>
             <div class="form-group">
-                <label title="Magnitude">Magnitude <span class="app-magnitude-label pull-right label label-default"></span></label>
+                <label title="Magnitude">Magnitude <span
+                        class="app-magnitude-label pull-right label label-default"></span></label>
 
                 <div class="app-magnitide-slider"></div>
             </div>
@@ -70,9 +71,14 @@
             </div>
             <% } %>
 
-            <div class="form-group">
-                <button class="app-delete-node-button btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete
-                </button>
+            <div class="node-setting-buttons form-group">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button class="app-delete-node-button btn btn-danger"><i class="glyphicon glyphicon-trash"></i>
+                        Delete
+                    </button>
+                    <button class="app-node-duration-indicator btn btn-default" disabled="disabled">0s</button>
+                    <button class="app-node-frames-indicator btn btn-default" disabled="disabled">0</button>
+                </div>
             </div>
         </div>
     </div>

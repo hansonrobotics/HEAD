@@ -83,10 +83,10 @@
 }
 
 .app-node-settings .ui-slider {
-    width: 200px;
+    min-width: 200px;
 }
 
-.app-delete-node-button {
+.node-setting-buttons {
     margin-top: 22px;
 }
 
@@ -148,6 +148,10 @@
     overflow: visible;
 }
 
+.app-scroll-container {
+    overflow: auto;
+}
+
 .app-node-settings .select2-container {
     width: 100%;
 }
@@ -172,6 +176,7 @@
     width: 2px;
     background-color: #df691a;
     z-index: 9999999999;
+    cursor: pointer;
 }
 
 .app-current-time {

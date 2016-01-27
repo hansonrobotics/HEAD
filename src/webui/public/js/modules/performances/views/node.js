@@ -17,7 +17,9 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     speedSlider: '.app-speed-slider',
                     speedLabel: '.app-speed-label',
                     magnitudeLabel: '.app-magnitude-label',
-                    langSelect: 'select.app-lang-select'
+                    langSelect: 'select.app-lang-select',
+                    frameCount: '.app-node-frames-indicator',
+                    durationIndicator: '.app-node-duration-indicator'
                 },
                 events: {
                     'change @ui.duration': 'setDuration',
@@ -32,6 +34,12 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 },
                 onRender: function () {
                     var self = this;
+
+                    if (_.contains(['pause'], this.model.get('name'))) {
+                        this.ui.durationIndicator.hide();
+                        this.ui.frameCount.hide();
+                    } else
+                        this.updateIndicators();
 
                     if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
                         // set default
@@ -48,7 +56,6 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             slide: function (e, ui) {
                                 self.model.set('magnitude', (ui.value / 100).toFixed(2));
                                 self.ui.magnitudeLabel.html(Math.floor(self.model.get('magnitude') * 100) + '%');
-
                             }
                         });
                     }
@@ -141,7 +148,16 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     }
                 },
                 setDuration: function () {
-                    this.model.set('duration', Number($(this.ui.duration).val()));
+                    this.model.set('duration', $(this.ui.duration).val());
+                    this.updateIndicators();
+                },
+                updateIndicators: function () {
+                    var fps = App.getOption('fps'),
+                        step = 1 / fps,
+                        duration = Number(parseInt(this.model.get('duration') / step) * step).toFixed(2);
+
+                    this.ui.durationIndicator.html(duration + 's');
+                    this.ui.frameCount.html(parseInt(duration * fps));
                 },
                 setText: function () {
                     this.model.set('text', this.ui.textInput.val());
