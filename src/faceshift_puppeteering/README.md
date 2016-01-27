@@ -49,15 +49,21 @@ This node is entirely independent of the the type of shapekeys being sent from t
 
 
 ### Using the parameters to enable mapping 
-The parameter fb_mode can be set to control the animation mode of the system. One doesn't need set the AnimationMode anymore. 
+The parameter fb_mode can be set to control the animation mode of the system. Following modes available:
 
-    rosparam set /fb_mode 0
-    rosparam set /fb_mode 1 ## Control shapekeys only
-    rosparam set /fb_mode 2 ## Control neck only
-    rosparam set /fb_mode 4 ## Control eyes only
-    rosparam set /fb_mode 7 ## Control all the rigs. 
+    head (pitch, yaw): 1
+    head (roll) : 4
+    eyes (pitch, yaw): 8
+    face: 16
 
-The third ones are ways to configure the Faceshift and Sophia Blendshapes mapping. This has to folds: 
+Modes can be combined by addition. Some examples:
+
+    rosparam set /fb_mode 0 ## Disables all modes
+    rosparam set /fb_mode 5 ## Fully Controls head
+    rosparam set /fb_mode 16 ## Controls face
+    rosparam set /fb_mode 31 ## Full Control
+
+The third ones are ways to configure the Faceshift and Sophia Blendshapes mapping. This has to folds:
 1. Manually Edited basic file. Found in sophia folder in faceshift_puppeteering folder. 
 2. Dynamically reconfigure the parameters list during run time to see the effects of different elements. 
 
