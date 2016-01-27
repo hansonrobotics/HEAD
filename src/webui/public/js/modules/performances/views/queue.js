@@ -7,12 +7,10 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 performances: '.app-performance-queue .app-performance',
                 performanceTemplate: '.app-performance-template',
                 clearButton: '.app-clear',
-                emptyNotice: '.app-empty-notice',
-                reload: '.app-reload'
+                emptyNotice: '.app-empty-notice'
             },
             events: {
-                'click @ui.clearButton': 'clear',
-                'click @ui.reload': 'updateTimeline'
+                'click @ui.clearButton': 'clear'
             },
             queue: [],
             onRender: function () {
@@ -42,6 +40,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
 
                 $('.app-remove', el).click(function () {
                     self._removeItem(item);
+                    self.updateTimeline();
                 });
 
                 $('.app-edit', el).click(function () {

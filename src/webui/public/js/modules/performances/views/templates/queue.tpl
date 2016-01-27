@@ -6,10 +6,6 @@
         </ul>
 
         <div class="clearfix">
-            <button class="app-reload btn btn-default">
-                <span class="glyphicon glyphicon glyphicon-refresh"></span>
-                Reload
-            </button>
             <button class="app-clear btn btn-default">
                 <span class="glyphicon glyphicon-trash"></span>
                 Clear all
