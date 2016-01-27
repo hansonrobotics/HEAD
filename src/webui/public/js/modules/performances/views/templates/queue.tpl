@@ -6,19 +6,11 @@
         </ul>
 
         <div class="clearfix">
-            <button class="app-run btn btn-default">
-                <span class="glyphicon glyphicon-play-circle"></span>
-                Start
+            <button class="app-reload btn btn-default">
+                <span class="glyphicon glyphicon glyphicon-refresh"></span>
+                Reload
             </button>
-            <button class="app-loop-button btn btn-default">
-                <span class="glyphicon glyphicon-repeat"></span>
-                Loop
-            </button>
-            <button class="app-stop btn btn-default">
-                <span class="glyphicon glyphicon-stop"></span>
-                Stop
-            </button>
-            <button class="app-clear pull-right btn btn-default">
+            <button class="app-clear btn btn-default">
                 <span class="glyphicon glyphicon-trash"></span>
                 Clear all
             </button>

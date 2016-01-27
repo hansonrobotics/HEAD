@@ -6,24 +6,25 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 queue: '.app-performance-queue',
                 performances: '.app-performance-queue .app-performance',
                 performanceTemplate: '.app-performance-template',
-                runButton: '.app-run',
-                loopButton: '.app-loop-button',
-                stopButton: '.app-stop',
                 clearButton: '.app-clear',
-                emptyNotice: '.app-empty-notice'
+                emptyNotice: '.app-empty-notice',
+                reload: '.app-reload'
             },
             events: {
-                'click @ui.runButton': 'run',
-                'click @ui.loopButton': 'loop',
-                'click @ui.stopButton': 'stop',
-                'click @ui.clearButton': 'clear'
+                'click @ui.clearButton': 'clear',
+                'click @ui.reload': 'updateTimeline'
             },
             queue: [],
             onRender: function () {
+                var self = this;
+
                 $(this.ui.queue).sortable({
                     axis: "y",
                     handle: ".app-drag-handle",
-                    placeholder: "ui-state-highlight"
+                    placeholder: "ui-state-highlight",
+                    stop: function () {
+                        self.updateTimeline();
+                    }
                 });
             },
             addPerformance: function (performance) {
@@ -51,6 +52,12 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 performance.on('change', function () {
                     self._updateItem(item);
                 });
+
+                this.updateTimeline();
+            },
+            updateTimeline: function () {
+                this.performanceUnion = this._getPerformanceUnion();
+                this.timelinesView = this._showTimeline(this.performanceUnion);
             },
             removePerformance: function (performance) {
                 var self = this;
@@ -59,19 +66,8 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                     if (item.model == performance)
                         self._removeItem(item)
                 });
-            },
-            run: function () {
-                if (this.queue.length == 0) return;
-                if (!this.timelinesView) {
-                    this.performanceUnion = this._getPerformanceUnion();
-                    this.timelinesView = this._showTimeline(this.performanceUnion);
-                }
 
-                this.timelinesView.run();
-            },
-            loop: function () {
-                this.run();
-                this.timelinesView.loop();
+                this.updateTimeline();
             },
             stop: function () {
                 if (this.timelinesView) {
@@ -92,7 +88,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                     union = new App.Performances.Entities.Performance(),
                     startTime = 0;
 
-                $('ul .app-performance', this.el).each(function () {
+                $('ul .app-performance:visible', this.el).each(function () {
                     var el = this,
                         index = _.findIndex(self.queue, function (item) {
                             return item && el == item.el;
@@ -169,7 +165,6 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 });
 
                 // show configuration UI
-                this.options.layoutView.getRegion('timeline').destroy();
                 this.options.layoutView.getRegion('timeline').show(timelinesView);
 
                 return timelinesView;

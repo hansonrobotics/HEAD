@@ -141,7 +141,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
                     var startTime = this.get('nodes').last().get('start_time'),
                         nodeDuration = this.get('nodes').last().get('duration');
 
-                    if (startTime) {
+                    if ($.isNumeric(startTime)) {
                         duration += startTime;
                         if (nodeDuration)
                             duration += nodeDuration;
