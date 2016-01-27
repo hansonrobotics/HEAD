@@ -179,8 +179,8 @@ def get_performances(robot_name):
     return json_encode(performances)
 
 
-@app.route('/performances/<robot_name>/<slug>', methods=['POST'])
-def update_performances(robot_name, slug):
+@app.route('/performances/<robot_name>/<id>', methods=['PUT', 'POST'])
+def update_performances(robot_name, id):
     performance = json.loads(request.get_data())
     robot_performances = os.path.join(performance_dir, robot_name)
 
@@ -188,19 +188,31 @@ def update_performances(robot_name, slug):
         os.makedirs(robot_performances)
 
     try:
-        if 'previous_slug' in performance:
-            prev_file = os.path.join(robot_performances, performance['previous_slug'] + '.yaml')
+        if 'previous_id' in performance:
+            prev_file = os.path.join(robot_performances, performance['previous_id'] + '.yaml')
             if os.path.isfile(prev_file):
                 os.remove(prev_file)
 
-            del performance['previous_slug']
+            del performance['previous_id']
 
-        file_name = os.path.join(performance_dir, robot_name, slug + '.yaml')
+        file_name = os.path.join(performance_dir, robot_name, id + '.yaml')
         write_yaml(file_name, performance)
     except Exception as e:
         return json_encode({'error': str(e)})
 
     return json_encode(performance)
+
+
+@app.route('/performances/<robot_name>/<id>', methods=['DELETE'])
+def delete_performances(robot_name, id):
+    performance = os.path.join(performance_dir, robot_name, id + '.yaml')
+
+    if os.path.isfile(performance):
+        os.remove(performance)
+        return json_encode(True)
+    else:
+        return json_encode(False)
+
 
 def write_yaml(file_name, data):
     # delete existing config
