@@ -32,7 +32,17 @@ class EvaAPI(RigAPI):
 
     def isAlive(self):
         return int(bpy.context.scene['animationPlaybackActive'])
+    # Faceshift to ROS mapping functions
+    def getAnimationMode(self):
+        return bpy.evaAnimationManager.getMode()
 
+    def setAnimationMode(self, animation_mode):
+        ## Now let's delete the shape
+        bpy.evaAnimationManager.setMode(animation_mode)
+        return 0
+    def setShapeKeys(self, shape_keys):
+        bpy.evaAnimationManager.setShapeKeys(shape_keys)
+        return 0
     # Somatic states  --------------------------------
     # awake, asleep, drunk, dazed and confused ...
     def availableSomaStates(self):

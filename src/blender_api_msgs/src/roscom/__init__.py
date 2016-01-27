@@ -145,6 +145,22 @@ class CommandWrappers:
     @publish_once("~get_api_version", msg.GetAPIVersion)
     def getAPIVersion():
         return msg.GetAPIVersion(api.getAPIVersion())
+    # ROS interfaces to listen to blendshape topics
+
+    @publish_live("~get_animation_mode", msg.AnimationMode)
+    def getAnimationMode():
+        return msg.AnimationMode(api.getAnimationMode())
+
+    @subscribe("~set_animation_mode", msg.AnimationMode)
+    def setAnimationMode(mesg):
+        mode= mesg.value
+        api.setAnimationMode(mode)
+
+
+    @subscribe("~set_shape_keys", msg.FSShapekeys)
+    def setShapeKeys(mesg):
+        #Now this adds the data to String array.
+        api.setShapeKeys(mesg.shapekey)
 
     # Somatic states  --------------------------------
     # awake, asleep, breathing, drunk, dazed and confused ...

@@ -16,21 +16,26 @@ import imp
 import pdb
 from mathutils import Vector
 import logging
-
+import re
 debug = True
 logger = logging.getLogger('hr.blender_api.rigcontrol.animationmanager')
 
 class AnimationManager():
-
+    d = {}
+    b = {}
     def __init__(self):
         logger.info('Starting AnimationManager singleton')
-
+        # Loading Relationship between the faceshift and Sophia relation from the JSON file.
+        logger.info('Starting AnimationManager singleton')
         # Gesture params
         self.gesturesList = []
         self.emotionsList = []
         self.visemesList = []
         self.cyclesSet = set()
-
+        # Start from normal animation mode. 
+        self.mode= 0
+        self.old_mode= 0
+        self.deleted_drivers = False
 
         # Start default cycles
         self.setCycle('CYC-normal', rate=1.0, magnitude=1.0, ease_in=0.0)
@@ -110,6 +115,78 @@ class AnimationManager():
             if not attr.startswith('_'):
                 string += str(attr) + ": " + str(value) + "\n"
         return string
+    def setMode(self,mode):
+        self.old_mode = self.mode
+
+        self.mode = mode
+        #Now Reset to the Old Method
+        if(self.mode==0 and self.old_mode==1):
+            bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=0
+            for key in self.b:
+                #The key holds the value of the shapekey name.
+                driverdata= bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_add('value', -1)
+                drv= driverdata.driver
+                drv.type= self.b[key][0]['type']
+                drv.expression=self.b[key][1]['exp']
+                variable= self.b[key][2]
+                for i in variable['var']:
+                    var= drv.variables.new()
+                    var.name=i[0]['name']
+                    var.type=i[1]['type']
+                    targ= var.targets[0]
+                    targ.id=i[2]['targ'][0]['id']
+                    targ.bone_target=i[2]['targ'][1]['bone']
+                    targ.transform_type=i[2]['targ'][2]['type']
+                    targ.transform_space=i[2]['targ'][3]['space']
+            self.deleted_drivers= False
+        return 0
+
+    def getMode(self):
+        return self.mode
+
+    def setShapeKeys(self,shape_keys):
+        if(self.mode == 1):
+            self.setShape(shape_keys)
+    def setShape(self, shape_keys):
+        dict_shape={}
+        for i in shape_keys:
+            dict_shape[i.name]= i.value
+
+        # Delete the driver related items.
+        if not self.deleted_drivers:
+            for i in bpy.data.shape_keys['ShapeKeys'].animation_data.drivers:
+                key=re.search('"(.*)"',i.data_path).group(1)
+                if key in dict_shape:
+                    list_value=[]
+                    drv= i
+                    list_value.append({'type':drv.driver.type})
+                    list_value.append({'exp' : drv.driver.expression})
+                    variable= []
+                    for vr in drv.driver.variables:
+                        var=[]
+                        var.append({"name":vr.name})
+                        var.append({"type":vr.type})
+                        targ=[]
+                        tr = vr.targets[0]
+                        targ.append({'id':tr.id})
+                        targ.append({'bone':tr.bone_target})
+                        targ.append({'type':tr.transform_type})
+                        targ.append({'space':tr.transform_space})
+                        var.append({'targ':targ})
+                        variable.append(var)
+                    list_value.append({'var':variable})
+                    global b
+                    self.b[key]=list_value
+                    #Now the b[key] value hold the values where there is some assignment has been done.
+                    bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_remove('value', -1)
+                    self.deleted_drivers= True
+
+        for key in dict_shape:
+            if(key=='lip-JAW.DN'):
+                bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=dict_shape[key]
+            else:
+                bpy.data.shape_keys['ShapeKeys'].key_blocks[key].value= dict_shape[key]
+
 
 
     def newGesture(self, name, repeat = 1, speed=1, magnitude=0.5, priority=1):

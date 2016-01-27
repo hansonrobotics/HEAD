@@ -9,6 +9,23 @@ class RigAPI:
 
     def isAlive(self):
         return None
+    # Codes to enable faceshift to blendshape mapping
+    def getAnimationMode(self):
+        return None
+    def getAnimationMode(self):
+        return None
+
+    def setAnimationMode(self,animation_mode=0):
+        return None
+
+    def setShapekeys(self, shapekeys):
+        return None
+
+    def setAnimationMode(self,animation_mode=0):
+        return None
+
+    def setShapekeys(self, shapekeys):
+        return None
 
     # Somatic states  --------------------------------
     # awake, asleep, drunk, dazed and confused ...
