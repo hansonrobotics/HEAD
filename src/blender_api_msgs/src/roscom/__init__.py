@@ -272,6 +272,11 @@ class CommandWrappers:
         flist = [msg.x, msg.y, msg.z]
         api.setGazeTarget(flist)
 
+    @subscribe("~set_head_rotation", stdmsg.Float32)
+    def setHeadRotation(msg):
+        #sets only pitch and roll
+        api.setHeadRotation(msg.data)
+
     # Pau messages --------------------------------
     @publish_live("~get_pau", paumsg.pau)
     def getPau():

@@ -55,7 +55,8 @@ class AnimationManager():
         # Eye_target distance in BU from 0 point
         # -4 for Sophia 1.0 -2 for blender rig
         self.eye_target_offset = -4
-
+        # Face rotation
+        self.headRotation = 0
 
         # Head and Eye tracking parameters
         self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
@@ -420,6 +421,10 @@ class AnimationManager():
                 Pipes.moving_average(window=0.1)],
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4))
         self.eyeTargetLoc.target = locBU
+
+    # Rotates the face target which will make head roll
+    def setHeadRotation(self,rot):
+        self.headRotation = rot
 
     def setGazeTarget(self, loc):
         '''Set the target used for eye tracking only.'''

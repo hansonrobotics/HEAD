@@ -82,6 +82,11 @@ class RigAPI:
     def setGazeTarget(self, location):
         return None
 
+    # Head roll ----------------------------------
+    # Sets head roll by the angle given.
+    def setHeadRotation(self, location):
+        return None
+
     # ========== info dump for ROS
     # Get Head and Neck rotation quaternion in XYZ format data structure.
     # Its assumed that the robot neck assembly has two joints; the upper
