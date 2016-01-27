@@ -156,6 +156,12 @@ class EvaAPI(RigAPI):
         bpy.evaAnimationManager.setFaceTarget(mloc)
         return 0
 
+    # Rotates the face target which will make head roll
+    def setHeadRotation(self,rot):
+        bpy.evaAnimationManager.setHeadRotation(rot)
+        return 0
+
+
     def setGazeTarget(self, loc):
         mloc = [loc[1],  loc[0], loc[2]]
         bpy.evaAnimationManager.setGazeTarget(mloc)
