@@ -8,9 +8,10 @@ import rospkg
 import json
 from dynamic_reconfigure.server import Server
 from faceshift_puppeteering.cfg import FBConfig
-from blender_api_msgs.msg import FSValues
-from blender_api_msgs.msg import FSShapekeys
-from blender_api_msgs.msg import FSShapekey
+from faceshift_puppeteering.msg import FSValues
+from faceshift_puppeteering.msg import FSShapekeys
+from faceshift_puppeteering.msg import FSShapekey
+from pau2motors.msg import pau
 from blender_api_msgs.msg import Target
 from blender_api_msgs.msg import AnimationMode
 from pau2motors.MapperFactory import Quaternion2EulerYZX
