@@ -169,6 +169,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     var self = this;
                     api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function (response) {
                         self.model.set('duration', response.length);
+                        self.updateIndicators();
                     });
                 },
                 setEmotion: function () {

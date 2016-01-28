@@ -104,7 +104,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
 
                 api.services.performances.pause.callService({}, function (response) {
                     if (response.success) {
-                        self.trigger('pause', response.time, response.timestamp);
+                        self.trigger('pause', response.time);
                         self.resumeTime = response.time;
                         if (typeof options.success == 'function')
                             options.success(response);
@@ -117,7 +117,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
             },
             b_pause: function (options) {
                 // Paused by backend script
-                this.trigger('pause', options.time, 0);
+                this.trigger('pause', options.time);
                 this.resumeTime = options.time;
             },
             stop: function (options) {
@@ -126,7 +126,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
 
                 api.services.performances.stop.callService({}, function (response) {
                     if (response.success) {
-                        self.trigger('stop', response.time, response.timestamp);
+                        self.trigger('stop', response.time);
                         if (typeof options.success == 'function')
                             options.success(response);
                     } else if (typeof options.error == 'function')
@@ -164,7 +164,7 @@ define(['application', 'lib/api', './node'], function (App, api) {
             },
             handleEvents: function (msg) {
                 if (msg.event = 'paused') {
-                    self.trigger('pause', msg.time, 0);
+                    this.trigger('pause', msg.time);
                 }
             }
         });

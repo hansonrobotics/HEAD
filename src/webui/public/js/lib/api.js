@@ -437,7 +437,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 name: name
             });
             param.set(value);
-
         },
         getRosParam: function (name, success) {
             var param = new ROSLIB.Param({
@@ -458,7 +457,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.performance_events.subscribe(function (message) {
                 success(message);
             });
-        },
+        }
     };
 
     return api;

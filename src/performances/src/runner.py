@@ -26,7 +26,6 @@ class Runner:
         self.pause_time = 0
         self.start_time = 0
         self.start_timestamp = 0
-        self.nodes = []
         self.lock = Lock()
         self.queue = Queue.Queue()
         self.worker = Thread(target=self.worker)
@@ -42,7 +41,7 @@ class Runner:
             'gesture': rospy.Publisher('/blender_api/set_gesture', SetGesture, queue_size=1),
             'expression': rospy.Publisher('/blender_api/make_face_expr', MakeFaceExpr, queue_size=1),
             'interaction': rospy.Publisher('/behavior_switch', String, queue_size=1),
-            'performance_events': rospy.Publisher('/performance_events', Event, queue_size=3),
+            'events': rospy.Publisher('~events', Event, queue_size=1),
             'tts': {
                 'en': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_en', String, queue_size=1),
                 'zh': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_zh', String, queue_size=1),
@@ -58,38 +57,36 @@ class Runner:
 
     def resume(self, request):
         success = False
+        run_time = 0
 
         with self.lock:
             if self.running and self.paused:
-                current = time.time()
-                run_time = self.start_time + self.pause_time - self.start_timestamp
+                run_time = self.get_run_time()
                 self.paused = False
-                self.start_timestamp = current - run_time
+                self.start_timestamp = time.time() - run_time
+                self.start_time = 0
+                self.topics['events'].publish(Event('resume', run_time))
                 success = True
 
-        return srv.ResumeResponse(success, 0, 0)
+        return srv.ResumeResponse(success, run_time)
 
     def stop(self, request=None):
         stop_time = 0
-        timestamp = 0
 
         with self.lock:
             if self.running:
+                stop_time = self.get_run_time()
                 self.running = False
                 self.paused = False
-                timestamp = time.time()
-                stop_time = timestamp - self.start_timestamp
 
-        return srv.StopResponse(True, stop_time, timestamp)
+        return srv.StopResponse(True, stop_time)
 
     def pause(self, request):
-        with self.lock:
-            if self.running and not self.paused:
-                self.pause_time = time.time()
-                self.paused = True
-                return srv.PauseResponse(True, self.pause_time - self.start_timestamp, self.pause_time)
-            else:
-                return srv.PauseResponse(False, 0, 0)
+        if self.make_pause():
+            with self.lock:
+                return srv.PauseResponse(True, self.get_run_time())
+        else:
+            return srv.PauseResponse(False, 0)
 
     def run(self, request):
         start_time = request.startTime
@@ -97,18 +94,19 @@ class Runner:
         # Create nodes
         nodes = [Node.createNode(node, self, start_time) for node in nodes]
         # Stop running first if performance is running
-        if self.running and len(nodes) > 0:
+        size = len(nodes)
+        if size > 0:
             self.stop()
 
         with self.lock:
-            if len(nodes) > 0:
+            if size > 0:
                 self.running = True
                 self.start_time = start_time
                 self.start_timestamp = time.time()
                 self.queue.put(nodes)
-                return srv.RunResponse(True, self.start_time, self.start_timestamp)
+                return srv.RunResponse(True)
             else:
-                return srv.RunResponse(False, 0, 0)
+                return srv.RunResponse(False)
 
     # Pauses current
     def make_pause(self):
@@ -116,29 +114,52 @@ class Runner:
             if self.running and not self.paused:
                 self.pause_time = time.time()
                 self.paused = True
-                self.topics['performance_events'].publish(Event('paused', self.pause_time - self.start_timestamp))
+                self.topics['events'].publish(Event('paused', self.get_run_time()))
                 return True
             else:
                 return False
 
     def worker(self):
         while True:
-            self.nodes = self.queue.get()
-            if len(self.nodes) == 0:
+            with self.lock:
+                self.paused = False
+
+            self.topics['events'].publish(Event('idle', 0))
+            nodes = self.queue.get()
+            self.topics['events'].publish(Event('running', self.start_time))
+
+            if len(nodes) == 0:
                 continue
             running = True
             while running:
-                if not self.running:
-                    break
-                elif self.paused:
-                    continue
-                run_time = self.start_time + time.time() - self.start_timestamp
+                with self.lock:
+                    run_time = self.get_run_time()
+
+                    if not self.running:
+                        self.topics['events'].publish(Event('finished', run_time))
+                        break
+                    elif self.paused:
+                        continue
+
                 running = False
-                for node in self.nodes:
+                for node in nodes:
                     running = node.run(run_time) or running
-                # Performance finished
-                if running == False:
-                    self.topics['performance_events'].publish(Event('finished', run_time))
+
+    def get_run_time(self):
+        """
+        Must acquire self.lock in order to safely use this method
+        :return:
+        """
+        run_time = 0
+
+        if self.running:
+            run_time = self.start_time
+            if self.paused:
+                run_time += self.pause_time - self.start_timestamp
+            else:
+                run_time += time.time() - self.start_timestamp
+
+        return run_time
 
 
 if __name__ == '__main__':

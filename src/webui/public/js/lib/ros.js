@@ -168,9 +168,9 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 }),
                 performance_events: new ROSLIB.Topic({
                     ros: api.ros,
-                    name: '/performance_events',
+                    name: '/performances/events',
                     messageType: 'performances/Event'
-                }),
+                })
             };
         },
         initServices: function () {
