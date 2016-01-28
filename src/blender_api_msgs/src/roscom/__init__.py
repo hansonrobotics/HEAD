@@ -157,12 +157,6 @@ class CommandWrappers:
         mode= mesg.value
         api.setAnimationMode(mode)
 
-
-    # @subscribe("~set_shape_keys", msg.FSShapekeys)
-    # def setShapeKeys(mesg):
-    #     #Now this adds the data to String array.
-    #     api.setShapeKeys(mesg.shapekey)
-
     # Somatic states  --------------------------------
     # awake, asleep, breathing, drunk, dazed and confused ...
     @publish_once("~available_soma_states", msg.AvailableSomaStates)
