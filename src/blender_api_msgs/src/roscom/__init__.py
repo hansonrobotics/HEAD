@@ -11,7 +11,8 @@ import pau2motors.msg as paumsg
 import std_msgs.msg as stdmsg
 import geometry_msgs.msg as geomsg
 import logging
-
+import math
+from mathutils import *
 api = None
 logger = logging.getLogger('hr.blender_api_msgs.roscom')
 
@@ -157,10 +158,10 @@ class CommandWrappers:
         api.setAnimationMode(mode)
 
 
-    @subscribe("~set_shape_keys", msg.FSShapekeys)
-    def setShapeKeys(mesg):
-        #Now this adds the data to String array.
-        api.setShapeKeys(mesg.shapekey)
+    # @subscribe("~set_shape_keys", msg.FSShapekeys)
+    # def setShapeKeys(mesg):
+    #     #Now this adds the data to String array.
+    #     api.setShapeKeys(mesg.shapekey)
 
     # Somatic states  --------------------------------
     # awake, asleep, breathing, drunk, dazed and confused ...
@@ -303,6 +304,44 @@ class CommandWrappers:
 
         msg.m_coeffs = shapekeys.values()
         return msg
+
+    # Set Pau messages -----------------------------
+    @subscribe("~set_pau", paumsg.pau)
+    def setPau(msg):
+        api.setAnimationMode(1)
+        # Calculate head and eyes targets
+        q = msg.m_headRotation
+        q = Quaternion([q.w,q.x,q.y,q.z])
+        pitch = 0
+        yaw = 0
+        roll = 0
+        try:
+            e = q.to_euler('XZY')
+            pitch = e.x
+            yaw = e.y
+            roll = e.z
+        except:
+            pitch = 0
+            yaw = 0
+            roll = 0
+        az = math.sin(pitch)
+        ay = math.sin(yaw)*math.cos(pitch)
+        # Target one meter away
+        ax = math.cos(yaw)*math.cos(pitch)
+        # Sets Face target
+        api.setFaceTarget([ax, ay, -az])
+        pitch += math.radians(msg.m_eyeGazeLeftPitch)
+        yaw += math.radians(msg.m_eyeGazeLeftYaw)
+        az = math.sin(pitch)
+        ay = math.sin(yaw)*math.cos(pitch)
+        # Target one meter away
+        ax = math.cos(yaw)*math.cos(pitch)
+        # Sets Face target
+        api.setGazeTarget([ax, ay, az])
+
+        # Set Face shapekeys
+        shapekeys = dict(zip(msg.m_shapekeys, msg.m_coeffs))
+        api.setShapeKeys(shapekeys)
 
     @subscribe("~set_neck_rotation", geomsg.Vector3)
     def setNeckRotation(msg):
