@@ -11,4 +11,4 @@ float32 m_eyeGazeRightYaw
 #They describe an expression of a virtual face.
 float32[] m_coeffs
 # Then setting shapekey values, names must be passed
-string[] shapekeys
+string[] m_shapekeys
