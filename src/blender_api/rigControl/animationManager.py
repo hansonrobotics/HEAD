@@ -148,11 +148,7 @@ class AnimationManager():
     def setShapeKeys(self,shape_keys):
         if(self.mode == 1):
             self.setShape(shape_keys)
-    def setShape(self, shape_keys):
-        dict_shape={}
-        for i in shape_keys:
-            dict_shape[i.name]= i.value
-
+    def setShape(self, dict_shape):
         # Delete the driver related items.
         if not self.deleted_drivers:
             for i in bpy.data.shape_keys['ShapeKeys'].animation_data.drivers:
