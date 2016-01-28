@@ -8,13 +8,14 @@ from blender_api_msgs.msg import SetGesture, EmotionState, Target
 from basic_head_api.msg import MakeFaceExpr
 from topic_tools.srv import MuxSelect
 
+
 class Node(object):
     # Create new Node from JSON
     @classmethod
     def createNode(cls, data, runner, start_time=0):
         for s_cls in cls.__subclasses__():
             if data['name'] == s_cls.__name__:
-                node =  s_cls(data, runner)
+                node = s_cls(data, runner)
                 if start_time > node.start_time:
                     # Start time should be before or on node starting
                     node.finished = True
@@ -73,7 +74,6 @@ class Node(object):
 
 
 class speech(Node):
-
     def start(self, run_time):
         self.say(self.data['text'], self.data['lang'])
 
@@ -84,14 +84,12 @@ class speech(Node):
 
 
 class gesture(Node):
-
     def start(self, run_time):
         self.runner.topics['gesture'].publish(
                 SetGesture(self.data['gesture'], 1, float(self.data['speed']), float(self.data['magnitude'])))
 
 
 class emotion(Node):
-
     def start(self, run_time):
         self.runner.topics['emotion'].publish(
                 EmotionState(self.data['emotion'], float(self.data['magnitude']),
@@ -99,19 +97,16 @@ class emotion(Node):
 
 
 class look_at(Node):
-
     def start(self, run_time):
         self.runner.topics['look_at'].publish(Target(self.data['x'], self.data['y'], self.data['z']))
 
 
 class gaze_at(Node):
-
     def start(self, run_time):
         self.runner.topics['gaze_at'].publish(Target(self.data['x'], self.data['y'], self.data['z']))
 
 
 class interaction(Node):
-
     def start(self, run_time):
         self.runner.topics['interaction'].publish(String('btree_on'))
 
@@ -132,13 +127,39 @@ class expression(Node):
         # Publish expression message after some delay once node is started
         if (not self.shown) and (run_time > self.start_time + 0.05):
             self.shown = True
-            self.runner.topics['expression'].publish(MakeFaceExpr(self.data['expression'], float(self.data['magnitude'])))
+            self.runner.topics['expression'].publish(
+                    MakeFaceExpr(self.data['expression'], float(self.data['magnitude'])))
 
     def stop(self, run_time):
         self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/head_pau"})
 
 
 class pause(Node):
+    def __init__(self, data, runner, start_time=0):
+        Node.__init__(self, data, runner)
+        self.subscriber = False
 
     def start(self, run_time):
-        self.runner.make_pause()
+        self.runner.pause()
+        if 'topic' in self.data:
+            topic = self.data['topic'].strip()
+            if topic:
+                def resume(msg):
+                    if not self.finished:
+                        self.runner.resume()
+
+                    if self.subscriber:
+                        self.subscriber.unregister()
+
+                if topic[0] != '/':
+                    topic = '/' + rospy.get_param('/robot_name') + '/' + topic
+
+                print topic
+                self.subscriber = rospy.Subscriber(topic, String, resume)
+
+    def stop(self, run_time):
+        if self.subscriber:
+            self.subscriber.unregister()
+
+    def end_time(self):
+        return self.start_time + 0.1

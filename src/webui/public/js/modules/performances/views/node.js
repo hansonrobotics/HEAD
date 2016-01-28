@@ -19,7 +19,8 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     magnitudeLabel: '.app-magnitude-label',
                     langSelect: 'select.app-lang-select',
                     frameCount: '.app-node-frames-indicator',
-                    durationIndicator: '.app-node-duration-indicator'
+                    durationIndicator: '.app-node-duration-indicator',
+                    topicInput: '.app-node-topic'
                 },
                 events: {
                     'change @ui.duration': 'setDuration',
@@ -30,6 +31,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     'change @ui.emotionSelect': 'setEmotion',
                     'change @ui.gestureSelect': 'setGesture',
                     'change @ui.expressionSelect': 'setExpression',
+                    'change @ui.topicInput': 'setTopic',
                     'click @ui.deleteButton': 'deleteNode'
                 },
                 onRender: function () {
@@ -191,6 +193,9 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 },
                 setStartTime: function () {
                     this.model.set('start_time', Number($(this.ui.startTime).val()));
+                },
+                setTopic: function () {
+                    this.model.set('topic', this.ui.topicInput.val());
                 },
                 buildCrosshair: function (params) {
                     var self = this;

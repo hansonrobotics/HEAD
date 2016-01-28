@@ -2,7 +2,7 @@
     <div class="col-sm-12">
         <div class="form-inline">
             <div class="form-group">
-                <label title="Emotion">Start time</label>
+                <label>Start time</label>
 
                 <div class="input-group">
                     <input type="text" class="app-node-start-time form-control" title="Start time"
@@ -25,7 +25,7 @@
             <% } %>
             <% if (name == 'emotion') { %>
             <div class="form-group">
-                <label title="Emotion">Pose</label>
+                <label>Pose</label>
                 <select class="app-emotion-select"></select>
             </div>
             <% } else if (name == 'gesture') { %>
@@ -68,6 +68,13 @@
             <% } else if (name == 'look_at' || name == 'gaze_at') { %>
             <div class="form-group">
                 <div class="app-crosshair"></div>
+            </div>
+            <% } else if (name == 'pause') { %>
+            <div class="form-group">
+                <label>Wait for topic</label>
+
+                <input type="text" class="app-node-topic form-control" title="Topic name"
+                       value="<%= typeof topic == 'undefined' ? '' : topic %>"/>
             </div>
             <% } %>
 

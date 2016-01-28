@@ -49,16 +49,21 @@ class Runner:
             }
         }
         rospy.Service('~run', srv.Run, self.run)
-        rospy.Service('~resume', srv.Resume, self.resume)
-        rospy.Service('~pause', srv.Pause, self.pause)
+        rospy.Service('~resume', srv.Resume, self.resume_callback)
+        rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
         self.worker.start()
         rospy.spin()
 
-    def resume(self, request):
-        success = False
-        run_time = 0
+    def resume_callback(self, request):
+        success = self.resume()
+        with self.lock:
+            run_time = self.get_run_time()
 
+        return srv.ResumeResponse(success, run_time)
+
+    def resume(self):
+        success = False
         with self.lock:
             if self.running and self.paused:
                 run_time = self.get_run_time()
@@ -68,7 +73,7 @@ class Runner:
                 self.topics['events'].publish(Event('resume', run_time))
                 success = True
 
-        return srv.ResumeResponse(success, run_time)
+        return success
 
     def stop(self, request=None):
         stop_time = 0
@@ -81,8 +86,8 @@ class Runner:
 
         return srv.StopResponse(True, stop_time)
 
-    def pause(self, request):
-        if self.make_pause():
+    def pause_callback(self, request):
+        if self.pause():
             with self.lock:
                 return srv.PauseResponse(True, self.get_run_time())
         else:
@@ -109,7 +114,7 @@ class Runner:
                 return srv.RunResponse(False)
 
     # Pauses current
-    def make_pause(self):
+    def pause(self):
         with self.lock:
             if self.running and not self.paused:
                 self.pause_time = time.time()

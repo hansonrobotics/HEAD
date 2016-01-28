@@ -423,8 +423,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                     this.pauseIndicator(e.time);
                     this.model.b_pause(e);
                 } else if (e.event == 'idle') {
-                    if (!this.paused)
-                        this.stopIndicator();
+                    this.stopIndicator();
                 } else if (e.event == 'running') {
                     this.startIndicator(e.time, duration);
                 } else if (e.event == 'resume') {
