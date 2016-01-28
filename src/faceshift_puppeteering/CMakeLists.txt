@@ -10,6 +10,9 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
   rospy
   roslib
+  pau2motors
+  message_generation
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -46,9 +49,12 @@ find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
- #add_message_files(
- #  FILES
- #)
+add_message_files(
+  FILES
+  FSShapekey.msg
+  FSShapekeys.msg
+  FSValues.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -65,10 +71,11 @@ find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 # )
 
 ## Generate added messages and services with any dependencies listed here
- # generate_messages(
- # DEPENDENCIES
- #  std_msgs  # Or other packages containing msgs
- #)
+generate_messages(
+ DEPENDENCIES
+ std_msgs
+ geometry_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -134,7 +141,8 @@ add_executable(faceshift_puppeteering_node src/puppeteering_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(faceshift_puppeteering_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(faceshift_puppeteering_node faceshift_puppeteering_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(faceshift_puppeteering_node
