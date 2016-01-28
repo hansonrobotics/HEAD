@@ -43,7 +43,6 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             },
             onShow: function () {
                 var self = this;
-                this.model.stop();
 
                 // Performance event handler
                 if (typeof this.options.performances != 'undefined'){
@@ -52,6 +51,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                     }
                 }
 
+                this.stopIndicator();
                 this.resetButtons();
                 this.model.stop();
                 this.model.get('nodes').each(function (node) {
@@ -326,15 +326,17 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                         }
                     }
                 });
-                this.updateIndicatorTime();
+                this.updateIndicatorTime(0);
                 this.resetButtons();
 
                 if (this.enableLoop)
                     this.run();
             },
             moveIndicator: function (e) {
-                if (!this.running)
+                if (!this.running) {
                     this.ui.runIndicator.css('left', Math.min(e.offsetX, this.model.getDuration() * this.config.pxPerSec));
+                    this.updateIndicatorTime();
+                }
             },
             run: function (startTime) {
                 var self = this,
