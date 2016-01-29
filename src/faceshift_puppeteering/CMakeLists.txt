@@ -49,12 +49,9 @@ find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  FSShapekey.msg
-  FSShapekeys.msg
-  FSValues.msg
-)
+#add_message_files(
+#  FILES
+#)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -71,11 +68,11 @@ add_message_files(
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
- DEPENDENCIES
- std_msgs
- geometry_msgs
-)
+# generate_messages(
+# DEPENDENCIES
+# std_msgs
+# geometry_msgs
+#)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -141,7 +138,7 @@ add_executable(faceshift_puppeteering_node src/puppeteering_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(faceshift_puppeteering_node faceshift_puppeteering_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(faceshift_puppeteering_node ${catkin_EXPORTED_TARGETS})
 
 
 ## Specify libraries to link a library or executable target against
