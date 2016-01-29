@@ -32,8 +32,8 @@ class InteractTest(unittest.TestCase):
     def setUpClass(self):
         try:
             for node in ['chatbot_en', 'chatbot_zh', 'speech2command', 'tts']:
-                wait_for(node, robot_name, timeout=10)
-            wait_for('blender_api', timeout=10)
+                wait_for(node, robot_name, timeout=20)
+            wait_for('blender_api', timeout=20)
         except rospy.exceptions.ROSException:
             shutdown()
             sys.exit(1)
