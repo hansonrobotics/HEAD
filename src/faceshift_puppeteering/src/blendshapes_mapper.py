@@ -8,11 +8,7 @@ import rospkg
 import json
 from dynamic_reconfigure.server import Server
 from faceshift_puppeteering.cfg import FBConfig
-from faceshift_puppeteering.msg import FSValues
-from faceshift_puppeteering.msg import FSShapekeys
-from faceshift_puppeteering.msg import FSShapekey
 from pau2motors.msg import pau
-from blender_api_msgs.msg import Target
 from blender_api_msgs.msg import AnimationMode
 from pau2motors.MapperFactory import Quaternion2EulerYZX
 from std_msgs.msg import Float32
@@ -39,13 +35,8 @@ class faceshift_mapper():
         with open(shape_key_pairing) as json_data:
             d = json.load(json_data)
         srv = Server(FBConfig, self.callback)
-        rospy.Subscriber("/blender_api/faceshift_values", FSValues, self.publisher)
+        rospy.Subscriber("/blender_api/faceshift_values", pau, self.publisher)
 
-        self.pub_setter= rospy.Publisher('/blender_api/set_animation_mode', AnimationMode, queue_size=10)
-        self.pub=rospy.Publisher('/blender_api/set_shape_keys', FSShapekeys, queue_size=10)
-        self.pub_neck= rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
-        self.pub_head_rot = rospy.Publisher('/blender_api/set_head_rotation', Float32, queue_size=10)
-        self.pub_gaze= rospy.Publisher('/blender_api/set_gaze_target', Target, queue_size=10)
         self.pub_pau = rospy.Publisher('/blender_api/set_pau', pau, queue_size=10)
 
         self.quoternion2euler = {
@@ -71,20 +62,20 @@ class faceshift_mapper():
         b= AnimationMode()
 
         head_pau = pau()
-        head_pau.m_headRotation = shapekeys.head_pose.orientation
-        head_pau.m_eyeGazeLeftPitch = shapekeys.eye_left.x
-        head_pau.m_eyeGazeLeftYaw = shapekeys.eye_left.y
-        head_pau.m_eyeGazeRightPitch = shapekeys.eye_right.x
-        head_pau.m_eyeGazeRightYaw = shapekeys.eye_right.y
+        head_pau.m_headRotation = shapekeys.m_headRotation
+        head_pau.m_eyeGazeLeftPitch = shapekeys.m_eyeGazeLeftYaw
+        head_pau.m_eyeGazeLeftYaw = shapekeys.m_eyeGazeLeftYaw
+        head_pau.m_eyeGazeRightPitch = shapekeys.m_eyeGazeRightPitch
+        head_pau.m_eyeGazeRightYaw = shapekeys.m_eyeGazeRightYaw
 
         # For iterating over the shapekeys
-        for i in shapekeys.keys.shapekey:
-            dict_shape[i.name]= i.value
+        # for i in shapekeys.keys.shapekey:
+        #     dict_shape[i.name]= i.value
 
         if (bool(self.parameters)):
             for i in d:
                 fshift_name = i
-                pub_shape= FSShapekey()
+                #pub_shape= FSShapekey()
 
                 value = 0
                 name= i.replace("-","").replace(".","")
@@ -100,7 +91,8 @@ class faceshift_mapper():
                         # value = value + (values[parameter]) * dict_shape[sk]
                         # if 'JAW' in fshift_name:
                            # rospy.loginfo(values[parameter])
-                        value = value + (self.parameters[parameter]) * dict_shape[sk]
+                        index= shapekeys.m_shapekeys.index(sk)
+                        value = value + (self.parameters[parameter]) * shapekeys.m_coeffs[index]
                     head_pau.m_shapekeys.append(fshift_name)
                     head_pau.m_coeffs.append(max(0,min(1,value)))
         else:
