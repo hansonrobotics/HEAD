@@ -52,6 +52,11 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                     self._updateItem(item);
                 });
 
+                performance.on('destroy', function () {
+                    self._removeItem(item);
+                    self.updateTimeline();
+                });
+
                 this.updateTimeline();
             },
             updateTimeline: function () {
@@ -157,7 +162,8 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 $('.app-status-indicator', item.el).addClass('active');
             },
             _showTimeline: function (performance) {
-                var timelinesView = new App.Performances.Views.Timelines({
+                var self = this,
+                    timelinesView = new App.Performances.Views.Timelines({
                     collection: new Backbone.Collection(),
                     model: performance,
                     performances: this.options.performances

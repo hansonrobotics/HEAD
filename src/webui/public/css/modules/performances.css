@@ -196,7 +196,7 @@
 }
 .app-node-start-time,
 .app-node-duration {
-    width: 70px;
+    width: 70px !important;
 }
 
 .app-performance-template {
@@ -267,4 +267,14 @@ textarea.form-control.app-node-text {
     .performance-action-buttons {
         float: right;
     }
+}
+
+.app-expression-select,
+.app-emotion-select,
+.app-gesture-select {
+    width: 200px !important;
+}
+
+.app-lang-select {
+    width: 100px;
 }

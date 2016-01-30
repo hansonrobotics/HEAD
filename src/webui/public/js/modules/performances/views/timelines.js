@@ -1,5 +1,5 @@
-define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './node',
-    'lib/extensions/animate_auto', 'jquery-ui'], function (App, template, d3) {
+define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './timeline', './node',
+    'lib/extensions/animate_auto', 'jquery-ui'], function (App, template, d3, bootbox) {
     App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
         Views.Timelines = Marionette.CompositeView.extend({
             template: template,
@@ -26,7 +26,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 frameCount: '.app-frame-count',
                 timeIndicator: '.app-current-time div',
                 deleteButton: '.app-delete-button',
-                timeAxis: '.app-time-axis'
+                timeAxis: '.app-time-axis',
+                hideButton: '.app-hide-settings-button'
             },
             events: {
                 'click @ui.nodes': 'nodeClicked',
@@ -39,7 +40,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 'click @ui.timeAxis': 'moveIndicator',
                 'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance',
-                'click @ui.loopButton': 'loop'
+                'click @ui.loopButton': 'loop',
+                'click @ui.hideButton': 'hideNodeSettings'
             },
             onShow: function () {
                 var self = this;
@@ -49,6 +51,13 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                     this.options.performances.eventHandler = function (msg) {
                         self.handleEvents(msg);
                     }
+                }
+
+                this.ui.hideButton.hide();
+                // hide delete and clear buttons for new models
+                if (!this.model.get('id')) {
+                    this.ui.deleteButton.hide();
+                    this.ui.clearButton.hide();
                 }
 
                 this.stopIndicator();
@@ -129,9 +138,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                     minWidth: width
                 });
 
-                if (node.changed['duration'] || node.changed['start_time']) {
+                if (node.changed['duration'] || node.changed['start_time'])
                     this.arrangeNodes();
-                }
 
                 if (node.get('text'))
                     $(node.get('el')).html(node.get('text'));
@@ -155,18 +163,36 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                     $(node.get('el')).addClass('active');
 
                 this.ui.nodeSettings.slideUp(function () {
-                    if (self.nodeView) {
-                        self.nodeView.destroy();
-                        self.nodeView = null;
-                    }
+                    if (self.nodeView)
+                        self.hideNodeSettings();
 
                     // show settings if no settings are shown or if shown settings are for a different node
                     if (showSettings) {
                         self.nodeView = new Views.Node({model: node});
                         self.nodeView.render();
-                        self.ui.nodeSettings.html(self.nodeView.el).hide().slideDown();
+                        self.ui.nodeSettings.html(self.nodeView.el).hide().slideDown(function () {
+                            self.ui.hideButton.fadeIn();
+                        });
                     }
                 });
+            },
+            hideNodeSettings: function () {
+                var self = this,
+                    destroy = function () {
+                        self.ui.timelines.find('.app-node').removeClass('active');
+                        self.ui.hideButton.fadeOut();
+                        if (self.nodeView) {
+                            self.nodeView.destroy();
+                            self.nodeView = null;
+                        }
+                    };
+                if (this.ui.nodeSettings.is(':visible')) {
+                    self.ui.nodeSettings.slideUp(function () {
+                        destroy();
+                    });
+                } else {
+                    destroy();
+                }
             },
             arrangeNodes: function () {
                 var self = this,
@@ -248,10 +274,17 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
                 this.model.set('name', this.ui.performanceName.val());
             },
             savePerformances: function () {
+                var self = this;
+
                 if (typeof this.options.performances != 'undefined' && !this.options.performances.contains(this.model))
                     this.options.performances.add(this.model);
 
-                this.model.save();
+                this.model.save({}, {
+                    success: function () {
+                        self.ui.deleteButton.fadeIn();
+                        self.ui.clearButton.fadeIn();
+                    }
+                });
             },
             startIndicator: function (startTime, endTime, callback) {
                 var self = this;
@@ -411,9 +444,12 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', './timeline', './n
             deletePerformance: function () {
                 var self = this;
 
-                this.$el.fadeOut(null, function () {
-                    self.model.destroy();
-                    self.destroy();
+                bootbox.confirm("Are you sure?", function (result) {
+                    if (result)
+                        self.$el.fadeOut(null, function () {
+                            self.model.destroy();
+                            self.destroy();
+                        });
                 });
             },
             handleEvents: function (e) {

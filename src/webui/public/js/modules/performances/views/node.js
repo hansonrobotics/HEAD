@@ -1,6 +1,6 @@
-define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', 'jquery-ui', 'lib/crosshair-slider',
+define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery-ui', 'lib/crosshair-slider',
         'vendor/select2.min'],
-    function (App, template, api, utilities) {
+    function (App, template, api, bootbox) {
         App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
             Views.Node = Marionette.ItemView.extend({
                 template: template,
@@ -64,54 +64,24 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
 
                     switch (this.model.get('name')) {
                         case 'emotion':
+                            // init with empty list
+                            self.updateEmotions([]);
                             // load emotions
                             api.getAvailableEmotionStates(function (emotions) {
-                                _.each(emotions, function (emotion) {
-                                    $(self.ui.emotionSelect).append($('<option>').prop('value', emotion).html(emotion));
-                                });
-
-                                if (!self.model.get('emotion') && emotions.length > 0)
-                                    self.model.set('emotion', emotions[0]);
-
-                                if (self.model.get('emotion'))
-                                    $(self.ui.emotionSelect).val(self.model.get('emotion'));
-
-                                $(self.ui.emotionSelect).select2();
+                                self.updateEmotions(emotions);
                             });
                             break;
                         case 'expression':
+                            // init with empty list
+                            self.updateExpressions([]);
                             // load emotions
-                            api.expressionList(function (expressions) {
-                                _.each(expressions.exprnames, function (expr) {
-                                    $(self.ui.expressionSelect).append($('<option>').prop('value', expr).html(expr));
-                                });
-
-                                if (!self.model.get('expression') && expressions.length > 0)
-                                    self.model.set('expression', expressions[0]);
-
-                                if (self.model.get('expression'))
-                                    $(self.ui.expressionSelect).val(self.model.get('expression'));
-
-                                $(self.ui.expressionSelect).select2();
-                            });
+                            api.expressionList(function(expressions) { self.updateExpressions(expressions.exprnames) });
                             break;
                         case 'gesture':
+                            // init with empty list
+                            self.updateGestures([]);
                             // load gestures
-                            api.getAvailableGestures(function (gestures) {
-                                _.each(gestures, function (gesture) {
-                                    $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
-                                });
-
-                                if (!self.model.get('gesture') && gestures.length > 0) {
-                                    self.model.set('gesture', gestures[0]);
-                                    self.setGestureLength();
-                                }
-
-                                if (self.model.get('gesture'))
-                                    $(self.ui.emotionSelect).val(self.model.get('gesture'));
-
-                                $(self.ui.gestureSelect).select2();
-                            });
+                            api.getAvailableGestures(function (gestures) { self.updateGestures(gestures)});
 
                             if (!this.model.get('speed')) this.model.set('speed', 1);
 
@@ -125,7 +95,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                                 slide: function (e, ui) {
                                     var speed = ui.value / 100;
                                     self.model.set('speed', speed);
-                                    self.model.set('duration', self.gestureDuration / speed);
+                                    self.setGestureLength();
                                     self.ui.speedLabel.html(speed.toFixed(2));
                                 }
                             });
@@ -148,6 +118,50 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             $(self.ui.langSelect).select2();
                             break;
                     }
+                },
+                updateEmotions: function (emotions) {
+                    var self = this;
+                    _.each(emotions, function (emotion) {
+                        $(self.ui.emotionSelect).append($('<option>').prop('value', emotion).html(emotion));
+                    });
+
+                    if (!this.model.get('emotion') && emotions.length > 0)
+                        this.model.set('emotion', emotions[0]);
+
+                    if (this.model.get('emotion'))
+                        $(this.ui.emotionSelect).val(this.model.get('emotion'));
+
+                    $(this.ui.emotionSelect).select2();
+                },
+                updateExpressions: function (expressions) {
+                    var self = this;
+                    _.each(expressions, function (expr) {
+                        $(self.ui.expressionSelect).append($('<option>').prop('value', expr).html(expr));
+                    });
+
+                    if (!self.model.get('expression') && expressions.length > 0)
+                        self.model.set('expression', expressions[0]);
+
+                    if (self.model.get('expression'))
+                        $(self.ui.expressionSelect).val(self.model.get('expression'));
+
+                    $(self.ui.expressionSelect).select2();
+                },
+                updateGestures: function (gestures) {
+                    var self = this;
+                    _.each(gestures, function (gesture) {
+                        $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
+                    });
+
+                    if (!this.model.get('gesture') && gestures.length > 0) {
+                        this.model.set('gesture', gestures[0]);
+                        this.setGestureLength();
+                    }
+
+                    if (this.model.get('gesture'))
+                        $(this.ui.emotionSelect).val(this.model.get('gesture'));
+
+                    $(this.ui.gestureSelect).select2();
                 },
                 setDuration: function () {
                     this.model.set('duration', $(this.ui.duration).val());
@@ -227,9 +241,13 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 deleteNode: function () {
                     var self = this;
 
-                    this.model.destroy();
-                    this.$el.slideUp(null, function () {
-                        self.destroy();
+                    bootbox.confirm("Are you sure?", function (result) {
+                        if (result) {
+                            self.model.destroy();
+                            self.$el.slideUp(null, function () {
+                                self.destroy();
+                            });
+                        }
                     });
                 }
             });
