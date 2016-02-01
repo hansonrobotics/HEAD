@@ -48,8 +48,8 @@ This node is entirely independent of the the type of shapekeys being sent from t
 
 
 
-### Using the parameters to enable mapping 
-The parameter fb_mode can be set to control the animation mode of the system. Following modes available:
+### Using Blender API PAU animation mode to change
+Differents parts can be controlled by combining  PAU animation modes. Current Pau animation modes and their values are supported:
 
     head (pitch, yaw): 1
     head (roll) : 4
@@ -58,10 +58,10 @@ The parameter fb_mode can be set to control the animation mode of the system. Fo
 
 Modes can be combined by addition. Some examples:
 
-    rosparam set /fb_mode 0 ## Disables all modes
-    rosparam set /fb_mode 5 ## Fully Controls head
-    rosparam set /fb_mode 16 ## Controls face
-    rosparam set /fb_mode 31 ## Full Control
+    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 0 ## Disables all modes
+    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 5 ## Fully Controls head
+    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 16 ## Controls face only
+    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 31 ## Full Control
 
 The third ones are ways to configure the Faceshift and Sophia Blendshapes mapping. This has to folds:
 1. Manually Edited basic file. Found in sophia folder in faceshift_puppeteering folder. 
