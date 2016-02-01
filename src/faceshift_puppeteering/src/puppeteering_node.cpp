@@ -7,7 +7,6 @@
 #include <ros/package.h>
 
 #include <std_msgs/Bool.h>
-#include <blender_api_msgs/AnimationMode.h>
 #include <pau2motors/pau.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Vector3.h>
@@ -46,23 +45,12 @@ int main(int argc, char* argv[]) {
   ros::init(argc, argv, "faceshift_to_ros");
   ros::NodeHandle nh;
   ros::Rate r(0.1);
-  // TODO
-  // Why doesn't unregistered topics don't resolve in the blender API this is
-  // just to resolve the problem.
-  ros::Publisher pub = nh.advertise<blender_api_msgs::AnimationMode>(
-      "/blender_api/set_animation_mode", 30, true);
 
   //Publish the message recieved from the ROS interface to the system.
   ros::Publisher pub_shape = nh.advertise<pau2motors::pau>(
       "/blender_api/faceshift_values", 30);
   try {
     std::vector<std::string> blendshape_names;
-
-    // Here is the code that does register the handle to the system to avoid
-    // socket terminated without getting any data in ROS.
-    blender_api_msgs::AnimationMode mode;
-    mode.value = 0;
-    pub.publish(mode);
 
     while (ros::ok()) {
 

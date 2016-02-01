@@ -150,13 +150,13 @@ class CommandWrappers:
         return msg.GetAPIVersion(api.getAPIVersion())
     # ROS interfaces to listen to blendshape topics
 
-    @publish_live("~get_animation_mode", msg.AnimationMode)
+    @publish_live("~get_animation_mode", stdmsg.UInt8)
     def getAnimationMode():
-        return msg.AnimationMode(api.getAnimationMode())
+        return stdmsg.UInt8(api.getAnimationMode())
 
-    @subscribe("~set_animation_mode", msg.AnimationMode)
+    @subscribe("~set_animation_mode", stdmsg.UInt8)
     def setAnimationMode(mesg):
-        mode= mesg.value
+        mode= mesg.data
         api.setAnimationMode(mode)
 
     # Somatic states  --------------------------------

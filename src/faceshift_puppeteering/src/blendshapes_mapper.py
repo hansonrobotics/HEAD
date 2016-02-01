@@ -9,7 +9,6 @@ import json
 from dynamic_reconfigure.server import Server
 from faceshift_puppeteering.cfg import FBConfig
 from pau2motors.msg import pau
-from blender_api_msgs.msg import AnimationMode
 from pau2motors.MapperFactory import Quaternion2EulerYZX
 from std_msgs.msg import Float32
 from pau2motors.msg import pau
@@ -57,9 +56,6 @@ class faceshift_mapper():
         :return:
         '''
         dict_shape={}
-
-
-        b= AnimationMode()
 
         head_pau = pau()
         head_pau.m_headRotation = shapekeys.m_headRotation
