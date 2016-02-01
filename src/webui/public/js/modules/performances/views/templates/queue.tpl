@@ -6,19 +6,7 @@
         </ul>
 
         <div class="clearfix">
-            <button class="app-run btn btn-default">
-                <span class="glyphicon glyphicon-play"></span>
-                Run
-            </button>
-            <button class="app-pause btn btn-default">
-                <span class="glyphicon glyphicon-pause"></span>
-                Pause
-            </button>
-            <button class="app-stop btn btn-default">
-                <span class="glyphicon glyphicon-stop"></span>
-                Stop
-            </button>
-            <button class="app-clear pull-right btn btn-default">
+            <button class="app-clear btn btn-default">
                 <span class="glyphicon glyphicon-trash"></span>
                 Clear all
             </button>
@@ -26,7 +14,7 @@
 
         <li class="app-performance-template app-performance list-group-item">
             <span class="app-drag-handle pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>
-            <span class="app-status-indicator"></span>
+            <!--<span class="app-status-indicator"></span>-->
             <span class="app-name"></span>
             <div class="pull-right">
                 <span class="label label-primary">duration: <span class="app-duration"></span> sec</span>

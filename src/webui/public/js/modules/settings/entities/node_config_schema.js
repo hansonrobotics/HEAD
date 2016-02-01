@@ -17,7 +17,6 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
             var properties = {};
 
             $.each(description, function (i, param) {
-                console.log(param);
                 var property = {title: param['description']};
 
                 try {

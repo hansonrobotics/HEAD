@@ -26,11 +26,16 @@ requirejs.config({
         d3: 'vendor/d3.min',
         RecordRTC: 'vendor/RecordRTC.min',
         json_editor: 'vendor/jsoneditor.min',
-        push_menu: 'vendor/jquery.multilevelpushmenu.min'
+        push_menu: 'vendor/jquery.multilevelpushmenu.min',
+        bootbox: 'vendor/bootbox.min'
     },
     shim: {
         'jquery-ui': ['jquery'],
         bootstrap: ['jquery', 'jquery-ui'],
+        bootbox: {
+            deps: ['bootstrap', 'jquery'],
+            exports: 'bootbox'
+        },
         underscore: {
             exports: '_'
         },

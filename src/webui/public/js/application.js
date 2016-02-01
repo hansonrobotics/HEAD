@@ -1,6 +1,8 @@
 define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api'],
     function (Backbone, Marionette, ros, LayoutView, api) {
-        var Application = new Marionette.Application(),
+        var Application = new Marionette.Application({
+            fps: 48
+        }),
             checkConnection = function () {
                 // Allow the monitor to be open if not connected
                 if (Backbone.history.getHash().match(/admin\/monitor/)) {

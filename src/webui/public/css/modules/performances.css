@@ -4,7 +4,22 @@
     padding: 8px 15px;
 }
 
-.app-performances-region,
+.app-performances button {
+    margin: 0 5px 5px 0;
+}
+
+.app-new-performance-button {
+    margin-bottom: 5px;
+}
+
+.performance-name-container {
+    width: 390px;
+}
+
+.app-nodes,
+.performance-name-container,
+.performance-action-buttons,
+.app-node-settings,
 .app-performance-queue-container,
 .app-performance-queue {
     margin-bottom: 10px;
@@ -39,8 +54,7 @@
 }
 
 .app-timeline-nodes,
-.app-timeline-checkbox
-{
+.app-timeline-checkbox {
     background-color: #4e5d6c;
 }
 
@@ -59,22 +73,26 @@
     margin-bottom: 5px;
 }
 
-.app-nodes .app-node {
-    margin-bottom: 10px;
-}
-
 .app-node {
     position: relative;
     display: inline-block;
-    line-height: 17px;
-    height: 20px;
+    line-height: 14px;
     text-align: left;
     z-index: 999;
     cursor: pointer;
 }
 
+.app-node-settings .ui-slider {
+    min-width: 200px;
+}
+
+.node-setting-buttons {
+    margin-top: 22px;
+}
+
 .app-node.active {
-    border: 1px solid #df691a;
+    box-shadow: 0 0 3pt 2pt #df691a;
+    z-index: 9999999;
 }
 
 .app-timeline {
@@ -107,10 +125,13 @@
 }
 
 .app-node-settings label {
+    margin: 0 0 5px;
     display: block;
-    margin-top: 9px;
 }
 
+.app-node-settings .form-group {
+    margin-right: 5px;
+}
 .app-node-settings hr:first-child {
     margin: 9px 0 0;
 }
@@ -124,15 +145,15 @@
 }
 
 .app-timelines-container {
+    overflow: visible;
+}
+
+.app-scroll-container {
     overflow: auto;
 }
 
 .app-node-settings .select2-container {
     width: 100%;
-}
-
-.app-node-settings .btn {
-    margin-top: 31px;
 }
 
 .app-node-settings .select2-choice,
@@ -154,7 +175,28 @@
     height: 100%;
     width: 2px;
     background-color: #df691a;
-    z-index: 9999;
+    z-index: 9999999999;
+    cursor: pointer;
+}
+
+.app-current-time {
+    position: absolute;
+    top: 100%;
+}
+
+.app-current-time div {
+    background-color: #df691a;
+    padding: 0 3px;
+    margin-left: -50%;
+    margin-right: 50%;
+
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+}
+.app-node-start-time,
+.app-node-duration {
+    width: 70px !important;
 }
 
 .app-performance-template {
@@ -182,15 +224,11 @@ li.app-performance .app-status-indicator.active {
     cursor: pointer;
 }
 
-.app-time-axis path {
-    background-color: #df691a;
-    height: 3px;
-}
-
 .app-time-axis path,
 .app-time-axis line {
-    fill: none;
     stroke: #df691a;
+    fill: none;
+    stroke-width: 2px;
     shape-rendering: crispEdges;
 }
 
@@ -210,4 +248,33 @@ li.app-performance .app-status-indicator.active {
 
 .app-node[data-name="speech_input"] {
     background-color: #37753B;
+}
+
+textarea.form-control.app-node-text {
+    height: 39px;
+}
+
+.input-group .form-control.app-performance-name {
+    width: auto;
+}
+
+.app-performance-buttons > button {
+    display: table-cell;
+    margin-right: 5px;
+}
+
+@media (min-width: 606px) {
+    .performance-action-buttons {
+        float: right;
+    }
+}
+
+.app-expression-select,
+.app-emotion-select,
+.app-gesture-select {
+    width: 200px !important;
+}
+
+.app-lang-select {
+    width: 100px;
 }

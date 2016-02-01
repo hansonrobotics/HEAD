@@ -6,7 +6,8 @@ define(['application', 'backbone', 'lib/api', './views/layout', './views/perform
                 var performanceCollection = new App.Performances.Entities.PerformanceCollection(),
                     layoutView = new App.Performances.Views.Layout(),
                     performanceQueueView = new App.Performances.Views.Queue({
-                        layoutView: layoutView
+                        layoutView: layoutView,
+                        performances: performanceCollection
                     });
 
                 performanceCollection.fetch();
@@ -47,8 +48,6 @@ define(['application', 'backbone', 'lib/api', './views/layout', './views/perform
                     // show configuration UI
                     layoutView.getRegion('timeline').destroy();
                     layoutView.getRegion('timeline').show(timelinesView);
-
-                    timelinesView.enableEdit();
                 });
 
                 App.Performances.Views.on('performance:delete', function (performance) {

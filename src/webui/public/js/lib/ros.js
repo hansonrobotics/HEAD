@@ -139,7 +139,7 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                         ros: api.ros,
                         name: '/' + api.config.robot + '/chatbot_responses_zh',
                         messageType: 'std_msgs/String'
-                    }),
+                    })
                 },
                 face_locations: new ROSLIB.Topic({
                     ros: api.ros,
@@ -165,6 +165,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/' + api.config.robot + '/chat_events',
                     messageType: 'std_msgs/String'
+                }),
+                performance_events: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/performances/events',
+                    messageType: 'performances/Event'
                 })
             };
         },
@@ -214,7 +219,29 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/webui/get_description',
                     messageType: 'webui/NodeDescription'
-                })
+                }),
+                performances: {
+                    run: new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/performances/run',
+                        messageType: 'performances/Run'
+                    }),
+                    stop: new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/performances/stop',
+                        messageType: 'performances/Stop'
+                    }),
+                    pause: new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/performances/pause',
+                        messageType: 'performances/Pause'
+                    }),
+                    resume: new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/performances/resume',
+                        messageType: 'performances/Resume'
+                    })
+                }
             };
         },
         rosUrl: function () {

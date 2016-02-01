@@ -1,6 +1,6 @@
-define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', 'jquery-ui', 'lib/crosshair-slider',
+define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery-ui', 'lib/crosshair-slider',
         'vendor/select2.min'],
-    function (App, template, api, utilities) {
+    function (App, template, api, bootbox) {
         App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
             Views.Node = Marionette.ItemView.extend({
                 template: template,
@@ -17,7 +17,10 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     speedSlider: '.app-speed-slider',
                     speedLabel: '.app-speed-label',
                     magnitudeLabel: '.app-magnitude-label',
-                    langSelect: 'select.app-lang-select'
+                    langSelect: 'select.app-lang-select',
+                    frameCount: '.app-node-frames-indicator',
+                    durationIndicator: '.app-node-duration-indicator',
+                    topicInput: '.app-node-topic'
                 },
                 events: {
                     'change @ui.duration': 'setDuration',
@@ -28,11 +31,17 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     'change @ui.emotionSelect': 'setEmotion',
                     'change @ui.gestureSelect': 'setGesture',
                     'change @ui.expressionSelect': 'setExpression',
-                    'change @ui.expressionSelect': 'setLanguage',
+                    'change @ui.topicInput': 'setTopic',
                     'click @ui.deleteButton': 'deleteNode'
                 },
                 onRender: function () {
                     var self = this;
+
+                    if (_.contains(['pause'], this.model.get('name'))) {
+                        this.ui.durationIndicator.hide();
+                        this.ui.frameCount.hide();
+                    } else
+                        this.updateIndicators();
 
                     if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
                         // set default
@@ -49,61 +58,30 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             slide: function (e, ui) {
                                 self.model.set('magnitude', (ui.value / 100).toFixed(2));
                                 self.ui.magnitudeLabel.html(Math.floor(self.model.get('magnitude') * 100) + '%');
-
                             }
                         });
                     }
 
                     switch (this.model.get('name')) {
                         case 'emotion':
+                            // init with empty list
+                            self.updateEmotions([]);
                             // load emotions
                             api.getAvailableEmotionStates(function (emotions) {
-                                _.each(emotions, function (emotion) {
-                                    $(self.ui.emotionSelect).append($('<option>').prop('value', emotion).html(emotion));
-                                });
-
-                                if (!self.model.get('emotion') && emotions.length > 0)
-                                    self.model.set('emotion', emotions[0]);
-
-                                if (self.model.get('emotion'))
-                                    $(self.ui.emotionSelect).val(self.model.get('emotion'));
-
-                                $(self.ui.emotionSelect).select2();
+                                self.updateEmotions(emotions);
                             });
                             break;
                         case 'expression':
+                            // init with empty list
+                            self.updateExpressions([]);
                             // load emotions
-                            api.expressionList(function (expressions) {
-                                _.each(expressions.exprnames, function (expr) {
-                                    $(self.ui.expressionSelect).append($('<option>').prop('value', expr).html(expr));
-                                });
-
-                                if (!self.model.get('expression') && expressions.length > 0)
-                                    self.model.set('expression', emotions[0]);
-
-                                if (self.model.get('expression'))
-                                    $(self.ui.expressionSelect).val(self.model.get('expression'));
-
-                                $(self.ui.expressionSelect).select2();
-                            });
+                            api.expressionList(function(expressions) { self.updateExpressions(expressions.exprnames) });
                             break;
                         case 'gesture':
+                            // init with empty list
+                            self.updateGestures([]);
                             // load gestures
-                            api.getAvailableGestures(function (gestures) {
-                                _.each(gestures, function (gesture) {
-                                    $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
-                                });
-
-                                if (!self.model.get('gesture') && gestures.length > 0) {
-                                    self.model.set('gesture', gestures[0]);
-                                    self.setGestureLength();
-                                }
-
-                                if (self.model.get('gesture'))
-                                    $(self.ui.emotionSelect).val(self.model.get('gesture'));
-
-                                $(self.ui.gestureSelect).select2();
-                            });
+                            api.getAvailableGestures(function (gestures) { self.updateGestures(gestures)});
 
                             if (!this.model.get('speed')) this.model.set('speed', 1);
 
@@ -117,7 +95,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                                 slide: function (e, ui) {
                                     var speed = ui.value / 100;
                                     self.model.set('speed', speed);
-                                    self.model.set('duration', self.gestureDuration / speed);
+                                    self.setGestureLength();
                                     self.ui.speedLabel.html(speed.toFixed(2));
                                 }
                             });
@@ -129,7 +107,11 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             this.buildCrosshair();
                             break;
                         case 'speech':
-                            if (this.model.get('text')) this.ui.textInput.val(this.model.get('text'));
+                            if (this.model.get('text'))
+                                this.ui.textInput.val(this.model.get('text'));
+                            else
+                                this.model.set('text', '');
+
                             if (!this.model.get('lang'))
                                 this.model.set('lang', 'en');
                             this.ui.langSelect.val(this.model.get('lang'));
@@ -137,8 +119,61 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                             break;
                     }
                 },
+                updateEmotions: function (emotions) {
+                    var self = this;
+                    _.each(emotions, function (emotion) {
+                        $(self.ui.emotionSelect).append($('<option>').prop('value', emotion).html(emotion));
+                    });
+
+                    if (!this.model.get('emotion') && emotions.length > 0)
+                        this.model.set('emotion', emotions[0]);
+
+                    if (this.model.get('emotion'))
+                        $(this.ui.emotionSelect).val(this.model.get('emotion'));
+
+                    $(this.ui.emotionSelect).select2();
+                },
+                updateExpressions: function (expressions) {
+                    var self = this;
+                    _.each(expressions, function (expr) {
+                        $(self.ui.expressionSelect).append($('<option>').prop('value', expr).html(expr));
+                    });
+
+                    if (!self.model.get('expression') && expressions.length > 0)
+                        self.model.set('expression', expressions[0]);
+
+                    if (self.model.get('expression'))
+                        $(self.ui.expressionSelect).val(self.model.get('expression'));
+
+                    $(self.ui.expressionSelect).select2();
+                },
+                updateGestures: function (gestures) {
+                    var self = this;
+                    _.each(gestures, function (gesture) {
+                        $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
+                    });
+
+                    if (!this.model.get('gesture') && gestures.length > 0) {
+                        this.model.set('gesture', gestures[0]);
+                        this.setGestureLength();
+                    }
+
+                    if (this.model.get('gesture'))
+                        $(this.ui.emotionSelect).val(this.model.get('gesture'));
+
+                    $(this.ui.gestureSelect).select2();
+                },
                 setDuration: function () {
-                    this.model.set('duration', Number($(this.ui.duration).val()));
+                    this.model.set('duration', $(this.ui.duration).val());
+                    this.updateIndicators();
+                },
+                updateIndicators: function () {
+                    var fps = App.getOption('fps'),
+                        step = 1 / fps,
+                        duration = Number(parseInt(this.model.get('duration') / step) * step).toFixed(2);
+
+                    this.ui.durationIndicator.html(duration + 's');
+                    this.ui.frameCount.html(parseInt(duration * fps));
                 },
                 setText: function () {
                     this.model.set('text', this.ui.textInput.val());
@@ -150,6 +185,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                     var self = this;
                     api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function (response) {
                         self.model.set('duration', response.length);
+                        self.updateIndicators();
                     });
                 },
                 setEmotion: function () {
@@ -172,19 +208,23 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                 setStartTime: function () {
                     this.model.set('start_time', Number($(this.ui.startTime).val()));
                 },
+                setTopic: function () {
+                    this.model.set('topic', this.ui.topicInput.val());
+                },
                 buildCrosshair: function (params) {
                     var self = this;
                     params = params || {};
                     $(this.ui.crosshair).crosshairsl($.extend({}, {
                         xmin: -1,
                         xmax: 1,
-                        xval: this.model.get('x') ? this.model.get('x') : 0,
+                        xval: this.model.get('y') ? this.model.get('y') : 0,
                         ymin: -1,
                         ymax: 1,
-                        yval: this.model.get('y') ? this.model.get('y') : 0,
+                        yval: this.model.get('z') ? -1 * this.model.get('z') : 0,
                         change: function (e, ui) {
-                            self.model.set('x', ui.xval);
-                            self.model.set('y', ui.yval);
+                            self.model.set('x', 1);
+                            self.model.set('y', ui.xval);
+                            self.model.set('z', -1 * ui.yval);
 
                             self.model.call();
                         }
@@ -192,13 +232,22 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'lib/utilities', '
                         bgColor: "#485563",
                         fgColor: "#fff"
                     }, params));
+
+                    self.model.set('x', 1);
+                    self.model.set('y', 0);
+                    self.model.set('z', 0);
+
                 },
                 deleteNode: function () {
                     var self = this;
 
-                    this.model.destroy();
-                    this.$el.slideUp(null, function () {
-                        self.destroy();
+                    bootbox.confirm("Are you sure?", function (result) {
+                        if (result) {
+                            self.model.destroy();
+                            self.$el.slideUp(null, function () {
+                                self.destroy();
+                            });
+                        }
                     });
                 }
             });
