@@ -138,7 +138,7 @@ add_executable(faceshift_puppeteering_node src/puppeteering_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(faceshift_puppeteering_node ${catkin_EXPORTED_TARGETS})
+add_dependencies(faceshift_puppeteering_node pau2motors_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 
 ## Specify libraries to link a library or executable target against

@@ -13,6 +13,8 @@ import geometry_msgs.msg as geomsg
 import logging
 import math
 from mathutils import *
+import time
+
 api = None
 logger = logging.getLogger('hr.blender_api_msgs.roscom')
 
@@ -166,6 +168,8 @@ class CommandWrappers:
 
     @subscribe("~set_soma_state", msg.SomaState)
     def setSomaState(mesg):
+        if api.pauAnimationMode & api.PAU_ACTIVE:
+            return
         state = {
             'name': mesg.name,
             'magnitude': mesg.magnitude,
@@ -203,6 +207,8 @@ class CommandWrappers:
     # Message is a single emotion state
     @subscribe("~set_emotion_state", msg.EmotionState)
     def setEmotionState(mesg):
+        if api.pauAnimationMode & (api.PAU_ACTIVE > api.PAU_FACE) == api.PAU_ACTIVE | api.PAU_FACE:
+            return
         emotion = str({
             mesg.name: {
                 'magnitude': mesg.magnitude,
@@ -233,6 +239,8 @@ class CommandWrappers:
 
     @subscribe("~set_gesture", msg.SetGesture)
     def setGesture(msg):
+        if api.pauAnimationMode & api.PAU_ACTIVE > 0:
+            return
         try:
             api.setGesture(msg.name, msg.repeat, msg.speed, msg.magnitude)
         except TypeError:
@@ -246,6 +254,8 @@ class CommandWrappers:
 
     @subscribe("~queue_viseme", msg.Viseme)
     def queueViseme(msg):
+        if api.pauAnimationMode & (api.PAU_ACTIVE | api.PAU_FACE) == api.PAU_ACTIVE | api.PAU_FACE:
+            return
         try:
             api.queueViseme(msg.name, msg.start.to_sec(),
                 msg.duration.to_sec(),
@@ -258,17 +268,23 @@ class CommandWrappers:
     # Location that Eva will look at and face.
     @subscribe("~set_face_target", msg.Target)
     def setFaceTarget(msg):
+        if api.pauAnimationMode & (api.PAU_ACTIVE | api.PAU_HEAD_YAW) == api.PAU_ACTIVE | api.PAU_HEAD_YAW:
+            return
         flist = [msg.x, msg.y, msg.z]
         api.setFaceTarget(flist)
 
     # Location that Eva will look at (only).
     @subscribe("~set_gaze_target", msg.Target)
     def setGazeTarget(msg):
+        if api.pauAnimationMode & (api.PAU_ACTIVE | api.PAU_EYE_TARGET) == api.PAU_ACTIVE | api.PAU_EYE_TARGET:
+            return
         flist = [msg.x, msg.y, msg.z]
         api.setGazeTarget(flist)
 
     @subscribe("~set_head_rotation", stdmsg.Float32)
     def setHeadRotation(msg):
+        if api.pauAnimationMode & (api.PAU_ACTIVE | api.PAU_HEAD_ROLL) == api.PAU_ACTIVE | api.PAU_HEAD_ROLL:
+            return
         #sets only pitch and roll
         api.setHeadRotation(msg.data)
 
@@ -297,45 +313,62 @@ class CommandWrappers:
         shapekeys = api.getFaceData()
 
         msg.m_coeffs = shapekeys.values()
+        # Manage timeout for set_pau
+        if api.pauTimeout < time.time():
+            api.setAnimationMode(api.pauAnimationMode & ~api.PAU_ACTIVE)
         return msg
 
     # Set Pau messages -----------------------------
     @subscribe("~set_pau", paumsg.pau)
     def setPau(msg):
-        api.setAnimationMode(1)
+        # Ignore if no animations are enabled by PAU
+        if api.pauAnimationMode == 0:
+            return
+        # Active mode expires
+        api.pauTimeout = time.time()+api.PAU_ACTIVE_TIMEOUT
+        # PAU animation is active
+        api.setAnimationMode(api.pauAnimationMode | api.PAU_ACTIVE)
+
+
         # Calculate head and eyes targets
-        q = msg.m_headRotation
-        q = Quaternion([q.w,q.x,q.y,q.z])
         pitch = 0
         yaw = 0
         roll = 0
-        try:
-            e = q.to_euler('XZY')
-            pitch = e.x
-            yaw = e.y
-            roll = e.z
-        except:
-            pitch = 0
-            yaw = 0
-            roll = 0
-        az = math.sin(pitch)
-        ay = math.sin(yaw)*math.cos(pitch)
-        # Target one meter away
-        ax = math.cos(yaw)*math.cos(pitch)
-        # Sets Face target
-        api.setFaceTarget([ax, ay, -az])
-        pitch += math.radians(msg.m_eyeGazeLeftPitch)
-        yaw += math.radians(msg.m_eyeGazeLeftYaw)
-        az = math.sin(pitch)
-        ay = math.sin(yaw)*math.cos(pitch)
-        # Target one meter away
-        ax = math.cos(yaw)*math.cos(pitch)
-        # Sets Face target
-        api.setGazeTarget([ax, ay, az])
+        if api.pauAnimationMode & (api.PAU_HEAD_YAW | api.PAU_HEAD_ROLL):
+            q = msg.m_headRotation
+            q = Quaternion([q.w,q.x,q.y,q.z])
+            try:
+                e = q.to_euler('XZY')
+                pitch = e.x
+                yaw = e.y
+                roll = e.z
+            except:
+                pitch = 0
+                yaw = 0
+                roll = 0
+            az = math.sin(pitch)
+            ay = math.sin(yaw)*math.cos(pitch)
+            # Target one meter away
+            ax = math.cos(yaw)*math.cos(pitch)
+            # Sets Face target
+            if api.pauAnimationMode & api.PAU_HEAD_YAW:
+                api.setFaceTarget([ax, ay, -az])
+            if api.pauAnimationMode & api.PAU_HEAD_ROLL:
+                api.setHeadRotation(roll)
 
-        # Set Face shapekeys
-        shapekeys = dict(zip(msg.m_shapekeys, msg.m_coeffs))
-        api.setShapeKeys(shapekeys)
+        if api.pauAnimationMode & api.PAU_EYE_TARGET:
+            pitch += math.radians(msg.m_eyeGazeLeftPitch)
+            yaw += math.radians(msg.m_eyeGazeLeftYaw)
+            az = math.sin(pitch)
+            ay = math.sin(yaw)*math.cos(pitch)
+            # Target one meter away
+            ax = math.cos(yaw)*math.cos(pitch)
+            # Sets Face target
+            api.setGazeTarget([ax, ay, az])
+        if api.pauAnimationMode & api.PAU_FACE:
+            # Set Face shapekeys
+            shapekeys = dict(zip(msg.m_shapekeys, msg.m_coeffs))
+            api.setShapeKeys(shapekeys)
 
     @subscribe("~set_neck_rotation", geomsg.Vector3)
     def setNeckRotation(msg):
