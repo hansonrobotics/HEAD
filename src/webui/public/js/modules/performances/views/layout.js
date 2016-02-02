@@ -19,7 +19,8 @@ define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fad
                 }
             },
             ui: {
-                languageButton: '.app-language-select button'
+                languageButton: '.app-language-select button',
+                container: '.app-performances-page'
             },
             events: {
                 'click @ui.languageButton': 'changeLanguage'
@@ -27,6 +28,7 @@ define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fad
             onShow: function () {
                 var self = this;
 
+                this.setFluidContainer(!!this.options.fluid);
                 var performanceCollection = new PerformanceCollection(),
                     queueView = new QueueView({
                         layoutView: this,
@@ -60,6 +62,12 @@ define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fad
                 $(e.target).addClass('active');
 
                 api.setRobotLang(language);
+            },
+            setFluidContainer: function (enable) {
+                if (enable)
+                    this.ui.container.removeClass('container').addClass('container-fluid');
+                else
+                    this.ui.container.removeClass('container-fluid').addClass('container');
             }
         });
     });

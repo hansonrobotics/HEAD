@@ -50,6 +50,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
         };
         ros.connect(function () {
             require([
+                    'modules/puppeteering/router',
                     'modules/animations/animations_app',
                     'modules/expressions/expressions_app',
                     'modules/motors/motors_app',

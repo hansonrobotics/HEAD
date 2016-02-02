@@ -1,5 +1,5 @@
-define(['application', 'backbone', 'lib/api', './views/layout'],
-    function (App, Backbone, api, LayoutView) {
+define(['application', 'lib/api', './views/layout'],
+    function (App, api, LayoutView) {
         return {
             performances: function () {
                 var layoutView = new LayoutView();

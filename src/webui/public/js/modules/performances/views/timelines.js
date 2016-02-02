@@ -54,7 +54,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 }
 
                 this.model.get('nodes').on('add remove', function () {
-                    console.log('here');
                     if (self.model.get('nodes').isEmpty())
                         self.ui.clearButton.stop().fadeOut();
                     else
