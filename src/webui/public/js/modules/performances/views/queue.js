@@ -1,6 +1,6 @@
-define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (App, template) {
-    App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
-        Views.Queue = Marionette.ItemView.extend({
+define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', '../entities/performance'],
+    function (Marionette, Backbone, template, TimelinesView, Performance) {
+        return Marionette.ItemView.extend({
             template: template,
             ui: {
                 queue: '.app-performance-queue',
@@ -89,7 +89,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
             },
             _getPerformanceUnion: function () {
                 var self = this,
-                    union = new App.Performances.Entities.Performance(),
+                    union = new Performance(),
                     startTime = 0;
 
                 $('ul .app-performance:visible', this.el).each(function () {
@@ -162,8 +162,7 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
                 $('.app-status-indicator', item.el).addClass('active');
             },
             _showTimeline: function (performance) {
-                var self = this,
-                    timelinesView = new App.Performances.Views.Timelines({
+                var timelinesView = new TimelinesView({
                     collection: new Backbone.Collection(),
                     model: performance,
                     performances: this.options.performances
@@ -189,4 +188,3 @@ define(['application', 'tpl!./templates/queue.tpl', './timelines'], function (Ap
             }
         });
     });
-});

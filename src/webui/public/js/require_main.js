@@ -30,6 +30,7 @@ requirejs.config({
         bootbox: 'vendor/bootbox.min'
     },
     shim: {
+        select2: ['jquery', 'jquery-ui'],
         'jquery-ui': ['jquery'],
         bootstrap: ['jquery', 'jquery-ui'],
         bootbox: {
