@@ -46,10 +46,21 @@ This runs on localhost on 33433 port. If there is no element is terminates. If o
     
 This node is entirely independent of the the type of shapekeys being sent from the faceshift. It just prints key value pair of the name of shapekey with it's value. 
 
+The third ones are ways to configure the Faceshift and Sophia Blendshapes mapping. This has to folds:
+1. Manually Edited basic file. Found in sophia folder in faceshift_puppeteering folder. 
+2. Dynamically reconfigure the parameters list during run time to see the effects of different elements. 
 
+One can be able to edit this parameters by running: 
+
+<<<<<<< HEAD
+=======
+	rosrun rqt_reconfigure rqt_reconfigure
+
+Then going to faceshift_mapper to reconfigure the values. 
 
 ### Using Blender API PAU animation mode to change
-Differents parts can be controlled by combining  PAU animation modes. Current Pau animation modes and their values are supported:
+
+Different parts can be controlled by combining  PAU animation modes. Current Pau animation modes and their values are supported:
 
     head (pitch, yaw): 1
     head (roll) : 4
@@ -58,39 +69,14 @@ Differents parts can be controlled by combining  PAU animation modes. Current Pa
 
 Modes can be combined by addition. Some examples:
 
-    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 0 ## Disables all modes
-    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 5 ## Fully Controls head
-    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 16 ## Controls face only
-    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 31 ## Full Control
+    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 0 --once ## Disables all modes
+    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 5 --once ## Fully Controls head
+    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 16 --once ## Controls face only
+    rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 31 --once ## Full Control
 
-The third ones are ways to configure the Faceshift and Sophia Blendshapes mapping. This has to folds:
-1. Manually Edited basic file. Found in sophia folder in faceshift_puppeteering folder. 
-2. Dynamically reconfigure the parameters list during run time to see the effects of different elements. 
-
-One can be able to edit this parameters by running: 
-
-	rosrun rqt_reconfigure rqt_reconfigure
-
-Then going to faceshift_mapper to reconfigure the values. 
 
 ![Image of Dynamic Reconfigure](docs/overall.png)
 
-When /fb_mode is set to anything except 0 it publishes changes: 
- 1. If set to one 
-	1. First saves all the drivers of the shapekeys that are going to be driven by faceshift (found by reading the JSON file) by iterating through them. 
-	2. Delete all the drivers of elements found in the keyshape pair json file.
-	3. Sets the value of the shapekeys to the value of the faceshift value by adding them or subtracting them as they are specified. Currently we just mapped the shapekeys of blender to faceshift one to one.
- 2. If set to two 
- 	1. Doesn't touch the drivers. 
- 	2. Sets the face gaze taget for the neck movement by publishing on the /blender_api/set_face_target
- 	3. Gesturea and Emotions work the same way as they did before i.e it only sets face location based on the faceshift puppeteering node. 
- 3. If set to 4 
- 	1. Same as two but sets the /blender_api/set_gaze_target for the eyes
- 4. If set to 7
- 	1. Does all the above combined. 
-
-When /fb_mode is set to '0' the AnimationManager returns the values of the drivers to the way they were before they were modified by setting the face and gaze target to [1, 0, 0] 
- and setting the animationmode to 0 to return the drivers to previous states. 
 
 
 # Critical
@@ -99,7 +85,6 @@ faceshift model to create a more suitable mapping. This made the total shapekeys
 have that otherwise it would give out an error saying that a certain shapekey is missing. And a mapping file is placed in the faceshift_puppeteering/sophia/shapekey_pairing.json
 
 # TODOs
-* Use the Parameters to set the animation mode rather than topics. 
 * Make a method to create new relations between elements as it currently stands one has to modify the JSON file first to create new relations and then modify them with dynamic_reconfigure. 
 * Implement Logging to indicate internal state of the nodes. 
 * Embed the launcher in other nodes. 
