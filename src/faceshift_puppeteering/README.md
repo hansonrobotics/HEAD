@@ -4,11 +4,13 @@ There are two nodes and configuration file in this package. The puppeteering_nod
 
 The first is faceshift to ROS wrapper that takes the faceshift network data by using their sample code and publishes the items to /blender_api/faceshift_blendshapes_values. 
 
-The second is a node that remaps the topics from /blender_api/faceshift_blendshapes_values to /blender_api/set_shape_keys by reading the configuration files from dynamic reconfigure node. 
+The second is a node that remaps the topics from /blender_api/faceshift_blendshapes_values to /blender_api/set_pau by reading the configuration files from dynamic reconfigure node. 
 
 The configuration file generates header files and necessary parameters for topics mapped in the JSON file found in the sophia folder in faceshift_puppeteering node. This is done by following steps: 
 * Reads the JSON file and create parameters based on those pairing by making the sophia's blendshapes group headers and the sophia_blendshapes and faceshift name to be attributes. 
-* The blendshapes_mapper node then creates a server that listens to this parameters by iteratively going over the values and factors the blendshapes of faceshift before they are published on /blender_api/set_shape_keys. Thus the what this publishes are teh values that blender_api is going to assign to the rig. 
+* The blendshapes_mapper node then creates a server that listens to this parameters by iteratively going over the values and factors the blendshapes and head and eye movements of faceshift before they are published on /blender_api/set_pau. 
+
+Thus the what this publishes are values that blender_api is going to assign to the rig. 
 
 # To add new configuration
 To create new mappings one needs only add shapekey name pair as follows: 
@@ -52,8 +54,6 @@ The third ones are ways to configure the Faceshift and Sophia Blendshapes mappin
 
 One can be able to edit this parameters by running: 
 
-<<<<<<< HEAD
-=======
 	rosrun rqt_reconfigure rqt_reconfigure
 
 Then going to faceshift_mapper to reconfigure the values. 
@@ -78,11 +78,18 @@ Modes can be combined by addition. Some examples:
 ![Image of Dynamic Reconfigure](docs/overall.png)
 
 
-
 # Critical
 The blender_api modification made it necessary that we specifiy mapping parameters between the two types of blendshapes(the one in sophia's rig and the blendshape of faceshift) that we used a specific model of the 
-faceshift model to create a more suitable mapping. This made the total shapekeys being sent form the faceshift interface about 60. This are described in the faceshift profile named SophiaRig-60.fsrig found the template_rig folder. So be sure to 
-have that otherwise it would give out an error saying that a certain shapekey is missing. And a mapping file is placed in the faceshift_puppeteering/sophia/shapekey_pairing.json
+faceshift model to create a more suitable mapping. 
+
+This made the total shapekeys being sent form the faceshift interface about 60.
+ 
+These are described in the faceshift profile named **SophiaRig-60.fsrig** found in the **template_rig** folder. **So Be Sure that you have loaded this profile in faceshift and
+rebuilt you profile accordingly**. You should check after building your profile in faceshift that the number in tracking profile is **60**. 
+ 
+So be sure to have that otherwise it would give out an error saying that a certain shapekey is missing. 
+
+And a mapping file is placed in the **faceshift_puppeteering/sophia/shapekey_pairing.json**
 
 # TODOs
 * Make a method to create new relations between elements as it currently stands one has to modify the JSON file first to create new relations and then modify them with dynamic_reconfigure. 
