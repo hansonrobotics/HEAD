@@ -1,20 +1,16 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
             <h4>Behavior Switches: </h4>
             <button type="button" class="app-gesture-bt-on btn btn-default">On</button>
-            <button type="button" class="app-gesture-bt-on-stage btn btn-default">On (stage)</button>
-            <button type="button" class="app-gesture-bt-emotions-off btn btn-default">No Emotions</button>
-            <button type="button" class="app-gesture-bt-gestures-off btn btn-default">No Gestures</button>
             <button type="button" class="app-gesture-bt-off btn btn-default">Off</button>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Performances: </h4>
-            <div class="app-performance-buttons"></div>
+        <div class="col-md-6">
+            <h4>Head Puppeteering: </h4>
+            <button type="button" class="app-gesture-pp btn btn-default" data-mode="0">Off</button>
+            <button type="button" class="app-gesture-pp btn btn-default" data-mode="20">Auto Face Tracking</button>
+            <button type="button" class="app-gesture-pp btn btn-default" data-mode="127">Full</button>
         </div>
-
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -33,5 +29,12 @@
             <h4>Cycles: </h4>
             <div class="app-cycle-buttons"></div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Performances: </h4>
+            <div class="app-performance-buttons"></div>
+        </div>
+
     </div>
 </div>
