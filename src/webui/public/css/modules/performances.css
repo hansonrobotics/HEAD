@@ -1,0 +1,280 @@
+.list-group .list-group-item {
+    margin-bottom: 1px;
+    height: 43px;
+    padding: 8px 15px;
+}
+
+.app-performances button {
+    margin: 0 5px 5px 0;
+}
+
+.app-new-performance-button {
+    margin-bottom: 5px;
+}
+
+.performance-name-container {
+    width: 390px;
+}
+
+.app-nodes,
+.performance-name-container,
+.performance-action-buttons,
+.app-node-settings,
+.app-performance-queue-container,
+.app-performance-queue {
+    margin-bottom: 10px;
+}
+
+.app-performance-queue span.ui-icon {
+    margin-right: 5px;
+    cursor: move;
+}
+
+.app-performance-queue button {
+    height: 21px;
+    width: 21px;
+    padding: 2px;
+    margin: 0 0 0 5px;
+    position: relative;
+}
+
+.app-performance-queue button span {
+    position: absolute;
+    left: 1px;
+    top: 3px;
+}
+
+.app-clear-performance-queue {
+    margin: 0;
+}
+
+.app-timeline-container {
+    height: 21px;
+    width: 100%;
+}
+
+.app-timeline-nodes,
+.app-timeline-checkbox {
+    background-color: #4e5d6c;
+}
+
+.app-timeline-nodes {
+    height: 20px;
+    max-height: 20px;
+    position: relative;
+}
+
+.app-timeline-nodes .app-node {
+    position: absolute;
+    overflow: hidden;
+}
+
+.app-timeline-editor {
+    margin-bottom: 5px;
+}
+
+.app-node {
+    position: relative;
+    display: inline-block;
+    line-height: 14px;
+    text-align: left;
+    z-index: 999;
+    cursor: pointer;
+}
+
+.app-node-settings .ui-slider {
+    min-width: 200px;
+}
+
+.node-setting-buttons {
+    margin-top: 22px;
+}
+
+.app-node.active {
+    box-shadow: 0 0 3pt 2pt #df691a;
+    z-index: 9999999;
+}
+
+.app-timeline {
+    position: relative;
+}
+
+.select2-container {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.app-slider-demo {
+    height: 26px;
+}
+
+.app-node-resize-handle {
+    position: absolute;
+    right: 0;
+    line-height: 19px;
+    margin: 0 2px;
+}
+
+.app-timeline-actions button {
+    margin-right: 1px;
+}
+
+.app-timeline-container {
+    overflow: visible;
+}
+
+.app-node-settings label {
+    margin: 0 0 5px;
+    display: block;
+}
+
+.app-node-settings .form-group {
+    margin-right: 5px;
+}
+.app-node-settings hr:first-child {
+    margin: 9px 0 0;
+}
+
+.app-node-settings hr:last-child {
+    margin: 9px 0;
+}
+
+.app-timeline-editortainer {
+    position: relative;
+}
+
+.app-timelines-container {
+    overflow: visible;
+}
+
+.app-scroll-container {
+    overflow: auto;
+}
+
+.app-node-settings .select2-container {
+    width: 100%;
+}
+
+.app-node-settings .select2-choice,
+.app-node-settings .ui-slider {
+    height: 39px;
+    line-height: 39px;
+}
+
+.app-node-settings .app-crosshair {
+    margin-top: 10px;
+}
+
+.app-timelines {
+    position: relative;
+}
+
+.app-run-indicator {
+    position: absolute;
+    height: 100%;
+    width: 2px;
+    background-color: #df691a;
+    z-index: 9999999999;
+    cursor: pointer;
+}
+
+.app-current-time {
+    position: absolute;
+    top: 100%;
+}
+
+.app-current-time div {
+    background-color: #df691a;
+    padding: 0 3px;
+    margin-left: -50%;
+    margin-right: 50%;
+
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+}
+.app-node-start-time,
+.app-node-duration {
+    width: 70px !important;
+}
+
+.app-performance-template {
+    display: none;
+}
+
+li.app-performance .app-status-indicator {
+    height: 14px;
+    width: 14px;
+    background-color: #2b3e50;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+li.app-performance .app-status-indicator.active {
+    background-color: #df691a;
+}
+
+.app-performance-queue .ui-state-highlight {
+    height: 38px;
+}
+
+.app-time-axis {
+    height: 20px;
+    cursor: pointer;
+}
+
+.app-time-axis path,
+.app-time-axis line {
+    stroke: #df691a;
+    fill: none;
+    stroke-width: 2px;
+    shape-rendering: crispEdges;
+}
+
+.app-time-axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+    stroke: #ebebeb;
+}
+
+.app-node[data-name="interaction"] {
+    background-color: #375748;
+}
+
+.app-node[data-name="pause"] {
+    background-color: #335B9E;
+}
+
+.app-node[data-name="speech_input"] {
+    background-color: #37753B;
+}
+
+textarea.form-control.app-node-text {
+    height: 39px;
+}
+
+.input-group .form-control.app-performance-name {
+    width: auto;
+}
+
+.app-performance-buttons > button {
+    display: table-cell;
+    margin-right: 5px;
+}
+
+@media (min-width: 606px) {
+    .performance-action-buttons {
+        float: right;
+    }
+}
+
+.app-expression-select,
+.app-emotion-select,
+.app-gesture-select {
+    width: 200px !important;
+}
+
+.app-lang-select {
+    width: 100px;
+}

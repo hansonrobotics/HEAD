@@ -67,7 +67,12 @@ class SpecificRobotCtrl:
   def __init__(self):
       # Wait for motors to be loaded in param server
     time.sleep(3)
-    motors = rospy.get_param('motors')
+    robot_name = rospy.get_param('/robot_name')
+    if robot_name:
+      motors = rospy.get_param('/' + robot_name + '/motors')
+    else:
+      motors = rospy.get_param('motors')
+
     expressions = rospy.get_param('expressions',{})
     expressions = OrderedDict((v.keys()[0],v.values()[0]) for k,v in enumerate(expressions))
     #Expressions to motors mapping

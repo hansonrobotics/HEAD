@@ -101,7 +101,7 @@ class capture_camera():
     def __exit__(self, type, value, traceback):
         self.job.join()
 
-def wait_for(node, namespace=None):
+def wait_for(node, namespace=None, timeout=None):
     """
     Wait for ROS node up.
 
@@ -118,9 +118,17 @@ def wait_for(node, namespace=None):
             return node_up
         except Exception:
             return False
+
     if not is_node_up(node):
-        while not is_node_up(node):
-            time.sleep(0.1)
+        if timeout is not None:
+            timeout_t = time.time() + timeout
+            while not is_node_up(node):
+                time.sleep(0.1)
+                if time.time() >= timeout_t:
+                    raise rospy.exceptions.ROSException("timeout exceeded while waiting for node %s" % node)
+        else:
+            while not is_node_up(node):
+                time.sleep(0.1)
 
 def capture_webcam_video(video_filename, sec=None):
     """

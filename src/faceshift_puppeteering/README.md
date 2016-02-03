@@ -52,12 +52,15 @@ The third ones are ways to configure the Faceshift and Sophia Blendshapes mappin
 
 One can be able to edit this parameters by running: 
 
+<<<<<<< HEAD
+=======
 	rosrun rqt_reconfigure rqt_reconfigure
 
 Then going to faceshift_mapper to reconfigure the values. 
 
 ### Using Blender API PAU animation mode to change
-Differents parts can be controlled by combining  PAU animation modes. Current Pau animation modes and their values are supported:
+
+Different parts can be controlled by combining  PAU animation modes. Current Pau animation modes and their values are supported:
 
     head (pitch, yaw): 1
     head (roll) : 4
@@ -70,7 +73,6 @@ Modes can be combined by addition. Some examples:
     rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 5 --once ## Fully Controls head
     rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 16 --once ## Controls face only
     rostopic pub /blender_api/set_animation_mode std_msgs/UInt8 31 --once ## Full Control
-
 
 
 ![Image of Dynamic Reconfigure](docs/overall.png)

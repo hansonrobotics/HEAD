@@ -1,5 +1,7 @@
 Hanson Robotics Software
 ========================
+[![Build Status](http://61.92.69.43:8080/job/ci-public_ws/badge/icon)](http://61.92.69.43:8080/job/ci-public_ws/)
+
 This repository contains the integrated code for controlling and
 interacting with many Hanson Robotics robot heads.  It includes the
 full performance pipeline and infrastructure:

@@ -1,0 +1,110 @@
+title: 'Robot Config'
+type: object
+properties:
+  pau2motors:
+    propertyOrder: 1
+    type: object
+    properties:
+      topics:
+        type: object
+        properties:
+          neck_pau:
+            type: string
+          head_pau:
+            type: string
+          no_pau:
+            type: string
+          lips_pau:
+            type: string
+          eyes_pau:
+            type: string
+  voice_en:
+    propertyOrder: 2
+    type: string
+  voice_zh:
+    propertyOrder: 3
+    type: string
+  lipsync:
+    propertyOrder: 4
+    type: boolean
+  webui:
+    propertyOrder: 5
+    type: object
+    properties:
+      speech_recognition:
+        type: string
+        enum:
+          - iflytek
+          - webspeech
+  eye_tracking:
+    type: object
+    propertyOrder: 6
+    properties:
+      motors:
+        type: array
+        format: table
+        items:
+          type: object
+          properties:
+            name:
+              propertyOrder: 1
+              type: string
+            direction:
+              propertyOrder: 2
+              type: string
+              enum:
+                - h
+                - v
+            angle:
+              propertyOrder: 3
+              type: number
+      center:
+        type: object
+        properties:
+          w:
+            type: number
+          h:
+            type: number
+  safety_rules:
+    title: 'Safety Rules'
+    type: array
+    propertyOrder: 7
+    items:
+      type: object
+      headerTemplate: "{{ self.name }}"
+      properties:
+        name:
+          propertyOrder: 1
+          type: string
+        rules:
+          title: 'Rules'
+          type: array
+          format: table
+          propertyOrder: 2
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                propertyOrder: 2
+              direction:
+                type: string
+                enum:
+                  - min
+                  - max
+                propertyOrder: 3
+              extreme:
+                type: number
+                propertyOrder: 4
+              t1:
+                type: integer
+                propertyOrder: 5
+              t2:
+                type: integer
+                propertyOrder: 6
+              t3:
+                type: integer
+                propertyOrder: 7
+              t4:
+                type: integer
+                propertyOrder: 8
