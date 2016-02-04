@@ -131,6 +131,9 @@ class AnimationManager():
             # Restore original drivers
             if self.mode == 0:
                 bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=0
+                self.setHeadRotation(0)
+                self.setFaceTarget([0,1,0])
+                self.setGazeTarget([0,1,0])
                 for key in self.b:
                     #The key holds the value of the shapekey name.
                     driverdata= bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_add('value', -1)

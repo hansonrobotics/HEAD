@@ -122,7 +122,9 @@ int main(int argc, char* argv[]) {
           fs::fsMsgTrackingState* ts =
               dynamic_cast<fs::fsMsgTrackingState*>(msg.get());
           const fs::fsTrackingData& data = ts->tracking_data();
-
+          if (!data.m_trackingSuccessful){
+            continue;
+          }
           // printf ("Time: %f \n", data.m_timestamp);
           // printf ("Tracking Results: %s", data.m_trackingSuccessful ? "true"
           // : "false");
