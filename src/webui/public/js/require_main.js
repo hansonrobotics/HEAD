@@ -21,7 +21,7 @@ requirejs.config({
         backgrid_select_all: 'vendor/backgrid-select-all',
         backgrid_text_cell: 'vendor/backgrid-text-cell',
         backbone_pageable: 'vendor/backbone-pageable',
-        scrollbar: 'vendor/jquery.scrollbar',
+        scrollbar: 'vendor/perfect-scrollbar.jquery.min',
         select2: 'vendor/select2.min',
         d3: 'vendor/d3.min',
         RecordRTC: 'vendor/RecordRTC.min',
@@ -30,6 +30,7 @@ requirejs.config({
         bootbox: 'vendor/bootbox.min'
     },
     shim: {
+        scrollbar: ['jquery'],
         select2: ['jquery', 'jquery-ui'],
         'jquery-ui': ['jquery'],
         bootstrap: ['jquery', 'jquery-ui'],

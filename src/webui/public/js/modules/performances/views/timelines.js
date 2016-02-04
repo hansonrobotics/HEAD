@@ -1,5 +1,5 @@
 define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './timeline', './node',
-        '../entities/node', 'lib/extensions/animate_auto', 'jquery-ui'],
+        '../entities/node', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
     function (App, Marionette, template, d3, bootbox, TimelineView, NodeView, Node) {
         return Marionette.CompositeView.extend({
             template: template,
@@ -46,6 +46,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             onShow: function () {
                 var self = this;
 
+                this.ui.scrollContainer.perfectScrollbar();
                 // Performance event handler
                 if (typeof this.options.performances != 'undefined') {
                     this.options.performances.eventHandler = function (msg) {
@@ -74,9 +75,13 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.model.get('nodes').bind('remove', this.arrangeNodes, this);
 
                 // add resize event
-                $(window).resize(function () {
-                    self.updateTimelineWidth();
-                });
+                var updateWidth = function () {
+                    if (self.isDestroyed)
+                        $(window).off('resize', updateWidth);
+                    else
+                        self.updateTimelineWidth();
+                };
+                $(window).on('resize', updateWidth);
             },
             onDestroy: function () {
                 this.stopIndicator();
@@ -84,10 +89,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.model.stop();
                 this.model.get('nodes').unbind('add', this.addNode, this);
                 this.model.get('nodes').unbind('remove', this.arrangeNodes, this);
-
-                // remove resize event
-                $(window).off('resize');
-
                 this.model.get('nodes').each(function (node) {
                     $(node.get('el')).remove();
                 });
@@ -273,6 +274,8 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     this.children.each(function (timeline) {
                         timeline.ui.nodes.css('width', width);
                     });
+
+                    this.ui.scrollContainer.perfectScrollbar('update');
                 }
             },
             setPerformanceName: function () {

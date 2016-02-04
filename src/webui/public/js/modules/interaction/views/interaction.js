@@ -1,4 +1,4 @@
-define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'],
+define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api', 'scrollbar'],
     function (App, MessageView, template, api) {
         var self;
         App.module("Interaction.Views", function (Views, App, Backbone, Marionette, $, _) {
@@ -22,7 +22,8 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     recognitionMethodButton: '.app-recognition-select button',
                     adjustNoiseButton: '.app-adjust-noise-button',
                     noiseSlider: '.app-noise-slider',
-                    noiseValue: '.app-noise-value .value'
+                    noiseValue: '.app-noise-value .value',
+                    scrollbar: '.app-scrollbar'
                 },
                 events: {
                     'touchstart @ui.recordButton': 'toggleSpeech',
@@ -48,67 +49,6 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     api.topics.speech_topic.unsubscribe(this.voiceRecognised);
                     this.disableSpeech();
                 },
-                updateFaces: function () {
-                    var currentTime = new Date().getTime();
-
-                    // remove lost faces older than 3 seconds
-                    $('img', this.ui.faceThumbnails).each(function (i, img) {
-                        var id = parseInt($(img).attr('title'));
-
-                        if (!self.options.faceCollection.findWhere({id: id}) && (currentTime - $(img).data('time-added')) > 3000) {
-                            $(img).remove();
-
-                            if (self.options.faceCollection.getLookAtFaceId() == id)
-                                self.ui.faceCollapse.collapse('show');
-                        }
-                    });
-
-                    this.options.faceCollection.each(function (face) {
-                        var img = $('img[title="' + face.get('id') + '"]', self.ui.faceThumbnails),
-                        // update thumbnail every 3 seconds, update time added
-                            thumbnailUrl = face.getThumbnailUrl() + '?' + parseInt(currentTime / 3000);
-
-                        // if image already shown
-                        if (img.length > 0) {
-                            $(img).prop({
-                                src: thumbnailUrl
-                            }).data('time-added', currentTime);
-                        } else {
-                            // create new thumbnail
-                            var setActiveThumbnail = function (el) {
-                                    $('img', self.ui.faceThumbnails).removeClass('active');
-                                    $(el).addClass('active');
-                                },
-                                el = $('<img>').prop({
-                                    src: thumbnailUrl,
-                                    title: face.get('id'),
-                                    'class': 'face-thumbnail thumbnail',
-                                    width: 100,
-                                    height: 100
-                                }).data('time-added', currentTime).click(function () {
-                                    self.options.faceCollection.setLookAtFaceId(face.get('id'));
-                                    setActiveThumbnail(this);
-                                });
-
-                            if (self.options.faceCollection.getLookAtFaceId() == face.get('id'))
-                                setActiveThumbnail(el);
-
-                            self.ui.faceThumbnails.append(el);
-                        }
-                    });
-
-                    if ($('img', this.ui.faceThumbnails).length == 0 && this.options.faceCollection.isEmpty()) {
-                        if (!this.facesEmpty) {
-                            this.facesEmpty = true;
-                            this.ui.faceContainer.slideUp();
-                        }
-                    } else if (typeof this.facesEmpty == 'undefined' || this.facesEmpty) {
-                        this.facesEmpty = false;
-
-                        this.ui.faceCollapse.removeClass('in');
-                        this.ui.faceContainer.slideDown();
-                    }
-                },
                 serializeData: function () {
                     return {
                         faces: this.options.faceCollection
@@ -121,9 +61,17 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
 
                     // update chat margins on face collapse show/hide
                     this.ui.faceCollapse.on('shown.bs.collapse hidden.bs.collapse', function () {
-                        self.ui.messages.css('margin-bottom', self.ui.footer.height());
+                        self.updateMessagesHeight();
                         self.scrollToChatBottom();
                     });
+
+                    var updateHeight = function () {
+                        if (self.isDestroyed)
+                            $(window).off('resize', updateHeight);
+                        else
+                            self.updateMessagesHeight();
+                    };
+                    $(window).on('resize', updateHeight);
 
                     // set current language
                     api.getRobotLang(function (language) {
@@ -152,6 +100,16 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     api.getRosParam('/' + api.config.robot + '/recorder/energy_threshold', function (value) {
                         self.ui.noiseSlider.slider('value', value);
                     });
+                },
+                onAttach: function () {
+                    this.ui.scrollbar.perfectScrollbar();
+                    this.updateMessagesHeight();
+                },
+                updateMessagesHeight: function () {
+                    var height = window.innerHeight - this.ui.footer.height() - 40;
+                    self.trigger('resize', height);
+                    this.ui.scrollbar.css('height', height)
+                        .perfectScrollbar('update');
                 },
                 responseCallback: function (msg) {
                     self.collection.add({author: 'Robot', message: msg.data});
@@ -219,7 +177,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 scrollToChatBottom: function () {
                     if (!self.scrolling)
-                        $('html, body').animate({scrollTop: $(document).height()}, 'slow', 'swing', function () {
+                        this.ui.scrollbar.animate({scrollTop: this.ui.messages.height()}, 'slow', 'swing', function () {
                             self.scrolling = false;
                         });
                     self.scrolling = true;
@@ -416,6 +374,67 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         }
                     });
                 },
+                updateFaces: function () {
+                    var currentTime = new Date().getTime();
+
+                    // remove lost faces older than 3 seconds
+                    $('img', this.ui.faceThumbnails).each(function (i, img) {
+                        var id = parseInt($(img).attr('title'));
+
+                        if (!self.options.faceCollection.findWhere({id: id}) && (currentTime - $(img).data('time-added')) > 3000) {
+                            $(img).remove();
+
+                            if (self.options.faceCollection.getLookAtFaceId() == id)
+                                self.ui.faceCollapse.collapse('show');
+                        }
+                    });
+
+                    this.options.faceCollection.each(function (face) {
+                        var img = $('img[title="' + face.get('id') + '"]', self.ui.faceThumbnails),
+                        // update thumbnail every 3 seconds, update time added
+                            thumbnailUrl = face.getThumbnailUrl() + '?' + parseInt(currentTime / 3000);
+
+                        // if image already shown
+                        if (img.length > 0) {
+                            $(img).prop({
+                                src: thumbnailUrl
+                            }).data('time-added', currentTime);
+                        } else {
+                            // create new thumbnail
+                            var setActiveThumbnail = function (el) {
+                                    $('img', self.ui.faceThumbnails).removeClass('active');
+                                    $(el).addClass('active');
+                                },
+                                el = $('<img>').prop({
+                                    src: thumbnailUrl,
+                                    title: face.get('id'),
+                                    'class': 'face-thumbnail thumbnail',
+                                    width: 100,
+                                    height: 100
+                                }).data('time-added', currentTime).click(function () {
+                                    self.options.faceCollection.setLookAtFaceId(face.get('id'));
+                                    setActiveThumbnail(this);
+                                });
+
+                            if (self.options.faceCollection.getLookAtFaceId() == face.get('id'))
+                                setActiveThumbnail(el);
+
+                            self.ui.faceThumbnails.append(el);
+                        }
+                    });
+
+                    if ($('img', this.ui.faceThumbnails).length == 0 && this.options.faceCollection.isEmpty()) {
+                        if (!this.facesEmpty) {
+                            this.facesEmpty = true;
+                            this.ui.faceContainer.slideUp();
+                        }
+                    } else if (typeof this.facesEmpty == 'undefined' || this.facesEmpty) {
+                        this.facesEmpty = false;
+
+                        this.ui.faceCollapse.removeClass('in');
+                        this.ui.faceContainer.slideDown();
+                    }
+                }
             });
         });
 

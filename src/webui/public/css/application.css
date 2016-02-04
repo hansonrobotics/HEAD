@@ -94,3 +94,7 @@ nav.navbar {
     background-color: #2b3e50;
     border: 1px solid #485563;
 }
+
+.container-fluid .container-fluid {
+    padding: 0;
+}

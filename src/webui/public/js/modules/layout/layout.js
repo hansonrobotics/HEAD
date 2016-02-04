@@ -6,7 +6,9 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
                 title: '#app-title',
                 adminNav: '#app-admin-nav',
                 nav: '#app-nav',
-                navLinks: '#app-nav a, #app-admin-nav a'
+                navLinks: '#app-nav a, #app-admin-nav a',
+                content: '#app-content',
+                navbarContainer: '#navbar-container'
             },
             events: {
                 'click @ui.navLinks': 'navLinkClicked'
@@ -18,6 +20,7 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
                 }
             },
             onRender: function () {
+                this.setFluid(!!this.options.fluid);
                 this.showNav();
             },
             setTitle: function (title) {
@@ -37,6 +40,16 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
             },
             navLinkClicked: function () {
                 $('.navbar-collapse.in').collapse('hide');
+            },
+            setFluid: function (enable) {
+                if (enable) {
+                    this.ui.navbarContainer.removeClass('container').addClass('container-fluid');
+                    this.ui.content.removeClass('container').addClass('container-fluid');
+
+                } else {
+                    this.ui.navbarContainer.removeClass('container-fluid').addClass('container');
+                    this.ui.content.removeClass('container-fluid').addClass('container');
+                }
             }
         });
     });

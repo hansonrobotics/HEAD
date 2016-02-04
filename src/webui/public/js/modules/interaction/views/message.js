@@ -1,10 +1,8 @@
 define(["application", "tpl!./templates/message.tpl"], function (App, template) {
     App.module("Interaction.Views", function (Views, App, Backbone, Marionette, $, _) {
         Views.Message = Marionette.ItemView.extend({
-            tagName: 'li',
             template: template,
-            ui: {
-            },
+            className: 'app-message',
             onRender: function () {
                 this.$el.addClass(this.model.get('author') == 'Robot' ? 'right' : 'left');
             },

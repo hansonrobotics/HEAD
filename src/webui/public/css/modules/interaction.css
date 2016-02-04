@@ -18,29 +18,29 @@
     margin-top: 10px;
 }
 
-.app-messages {
-    list-style: none;
-    margin: 15px 0 92px 0;
-    padding: 0;
-    overflow: auto;
-    height: auto;
+.app-scrollbar {
+    position: relative;
 }
 
-.app-messages li {
+.app-messages {
+    margin: 10px 0;
+}
+
+.app-message {
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #B3A9A9;
 }
 
-.app-messages li.left .chat-body {
+.app-message.left .chat-body {
     margin-left: 60px;
 }
 
-.app-messages li.right .chat-body {
+.app-message.right .chat-body {
     margin-right: 60px;
 }
 
-.app-messages li .chat-body p {
+.app-message .chat-body p {
     margin: 0;
 }
 
@@ -132,6 +132,8 @@
     cursor: pointer;
 }
 
-.app-adjust-noise-button:focus {
-
+.app-interaction-footer {
+    -moz-box-shadow: -1px -1px 5px 0 #2b3e50;
+    -webkit-box-shadow: -1px -1px 5px 0 #2b3e50;
+    box-shadow: -1px -1px 5px 0 #2b3e50;
 }

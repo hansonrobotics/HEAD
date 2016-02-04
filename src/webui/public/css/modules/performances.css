@@ -149,7 +149,7 @@
 }
 
 .app-scroll-container {
-    overflow: auto;
+    position: relative;
 }
 
 .app-node-settings .select2-container {

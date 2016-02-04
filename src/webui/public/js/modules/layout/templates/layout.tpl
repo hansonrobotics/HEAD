@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
+    <div id="navbar-container" class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
@@ -39,4 +39,4 @@
     </div>
 </nav>
 
-<div id="app-content" class="clearfix"></div>
+<div id="app-content"></div>

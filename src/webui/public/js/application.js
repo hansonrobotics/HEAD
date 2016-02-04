@@ -20,7 +20,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
                 Backbone.history.start();
         });
         // store layout instance in App.Layout.Instance
-        Application.LayoutInstance = new LayoutView();
+        Application.LayoutInstance = new LayoutView({fluid: true});
 
         // add layout to page body
         $('body').prepend(Application.LayoutInstance.render().el);
