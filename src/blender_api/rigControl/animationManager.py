@@ -36,6 +36,9 @@ class AnimationManager():
         self.mode= 0
         self.old_mode= 0
         self.deleted_drivers = False
+        # Shapekeys to apply on next frame
+        self.shapeKeys = {}
+
 
         # Start default cycles
         self.setCycle('CYC-normal', rate=1.0, magnitude=1.0, ease_in=0.0)
@@ -116,43 +119,50 @@ class AnimationManager():
             if not attr.startswith('_'):
                 string += str(attr) + ": " + str(value) + "\n"
         return string
-    def setMode(self,mode):
-        self.old_mode = self.mode
 
+    def setMode(self,mode):
         self.mode = mode
-        #Now Reset to the Old Method
-        if(self.mode==0 and self.old_mode==1):
-            bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=0
-            for key in self.b:
-                #The key holds the value of the shapekey name.
-                driverdata= bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_add('value', -1)
-                drv= driverdata.driver
-                drv.type= self.b[key][0]['type']
-                drv.expression=self.b[key][1]['exp']
-                variable= self.b[key][2]
-                for i in variable['var']:
-                    var= drv.variables.new()
-                    var.name=i[0]['name']
-                    var.type=i[1]['type']
-                    targ= var.targets[0]
-                    targ.id=i[2]['targ'][0]['id']
-                    targ.bone_target=i[2]['targ'][1]['bone']
-                    targ.transform_type=i[2]['targ'][2]['type']
-                    targ.transform_space=i[2]['targ'][3]['space']
-            self.deleted_drivers= False
+        self.shapeKeys = {}
         return 0
 
+    def changeMode(self):
+        if self.mode != self.old_mode:
+            self.old_mode = self.mode
+            # Restore original drivers
+            if self.mode == 0:
+                bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=0
+                self.setHeadRotation(0)
+                self.setFaceTarget([0,1,0])
+                self.setGazeTarget([0,1,0])
+                for key in self.b:
+                    #The key holds the value of the shapekey name.
+                    driverdata= bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_add('value', -1)
+                    drv= driverdata.driver
+                    drv.type= self.b[key][0]['type']
+                    drv.expression=self.b[key][1]['exp']
+                    variable= self.b[key][2]
+                    for i in variable['var']:
+                        var= drv.variables.new()
+                        var.name=i[0]['name']
+                        var.type=i[1]['type']
+                        targ= var.targets[0]
+                        targ.id=i[2]['targ'][0]['id']
+                        targ.bone_target=i[2]['targ'][1]['bone']
+                        targ.transform_type=i[2]['targ'][2]['type']
+                        targ.transform_space=i[2]['targ'][3]['space']
+                        self.deleted_drivers = False
     def getMode(self):
         return self.mode
 
     def setShapeKeys(self,shape_keys):
-        if(self.mode == 1):
-            self.setShape(shape_keys)
-    def setShape(self, shape_keys):
-        dict_shape={}
-        for i in shape_keys:
-            dict_shape[i.name]= i.value
+        self.shapeKeys = shape_keys
 
+    def applyShapeKeys(self):
+        if self.shapeKeys and self.mode:
+            self.setShape(self.shapeKeys)
+            self.shapeKeys = {}
+
+    def setShape(self, dict_shape):
         # Delete the driver related items.
         if not self.deleted_drivers:
             for i in bpy.data.shape_keys['ShapeKeys'].animation_data.drivers:

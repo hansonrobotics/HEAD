@@ -45,10 +45,6 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   GetAPIVersion.msg
-  AnimationMode.msg
-  FSShapekey.msg
-  FSShapekeys.msg
-  FSValues.msg
   AvailableSomaStates.msg
   AvailableEmotionStates.msg
   AvailableGestures.msg

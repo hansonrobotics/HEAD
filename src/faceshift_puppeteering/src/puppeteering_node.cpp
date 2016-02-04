@@ -7,10 +7,7 @@
 #include <ros/package.h>
 
 #include <std_msgs/Bool.h>
-#include <blender_api_msgs/FSShapekey.h>
-#include <blender_api_msgs/FSShapekeys.h>
-#include <blender_api_msgs/FSValues.h>
-#include <blender_api_msgs/AnimationMode.h>
+#include <pau2motors/pau.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Vector3.h>
 
@@ -22,13 +19,15 @@ int main(int argc, char* argv[]) {
   bool firstrun = true;
 
   //Include values for the head pose.
-  geometry_msgs::Vector3 eye_left;
-  geometry_msgs::Vector3 eye_right;
-  geometry_msgs::Pose head_pose;
-  blender_api_msgs::FSShapekeys shapekey_pairs;
+//  geometry_msgs::Vector3 eye_left;
+//  geometry_msgs::Vector3 eye_right;
+//  geometry_msgs::Pose head_pose;
+//  blender_api_msgs::FSShapekeys shapekey_pairs;
 
+  //Pau Message to carry everything
+  pau2motors::pau faceshift_values;
   //Publish on this message
-  blender_api_msgs::FSValues fs_value;
+//  blender_api_msgs::FSValues fs_value;
   fs::fsBinaryStream parserIn, parserOut;
   fs::fsMsgPtr msg;
 
@@ -46,23 +45,12 @@ int main(int argc, char* argv[]) {
   ros::init(argc, argv, "faceshift_to_ros");
   ros::NodeHandle nh;
   ros::Rate r(0.1);
-  // TODO
-  // Why doesn't unregistered topics don't resolve in the blender API this is
-  // just to resolve the problem.
-  ros::Publisher pub = nh.advertise<blender_api_msgs::AnimationMode>(
-      "/blender_api/set_animation_mode", 30, true);
 
   //Publish the message recieved from the ROS interface to the system.
-  ros::Publisher pub_shape = nh.advertise<blender_api_msgs::FSValues>(
+  ros::Publisher pub_shape = nh.advertise<pau2motors::pau>(
       "/blender_api/faceshift_values", 30);
   try {
     std::vector<std::string> blendshape_names;
-
-    // Here is the code that does register the handle to the system to avoid
-    // socket terminated without getting any data in ROS.
-    blender_api_msgs::AnimationMode mode;
-    mode.value = 0;
-    pub.publish(mode);
 
     while (ros::ok()) {
 
@@ -134,20 +122,32 @@ int main(int argc, char* argv[]) {
           fs::fsMsgTrackingState* ts =
               dynamic_cast<fs::fsMsgTrackingState*>(msg.get());
           const fs::fsTrackingData& data = ts->tracking_data();
-
+          if (!data.m_trackingSuccessful){
+            continue;
+          }
           // printf ("Time: %f \n", data.m_timestamp);
           // printf ("Tracking Results: %s", data.m_trackingSuccessful ? "true"
           // : "false");
-          fs_value.tracking_status.data= data.m_trackingSuccessful;
+//          fs_value.tracking_status.data= data.m_trackingSuccessful;
+//
+//          fs_value.head_pose.position.x= data.m_headTranslation.x;
+//          fs_value.head_pose.position.y= data.m_headTranslation.y;
+//          fs_value.head_pose.position.z= data.m_headTranslation.z;
+//
+//          fs_value.head_pose.orientation.x = data.m_headRotation.x;
+//          fs_value.head_pose.orientation.y = data.m_headRotation.y;
+//          fs_value.head_pose.orientation.z = data.m_headRotation.z;
+//          fs_value.head_pose.orientation.w = data.m_headRotation.w;
 
-          fs_value.head_pose.position.x= data.m_headTranslation.x;
-          fs_value.head_pose.position.y= data.m_headTranslation.y;
-          fs_value.head_pose.position.z= data.m_headTranslation.z;
+          faceshift_values.m_headTranslation.x= data.m_headTranslation.x;
+          faceshift_values.m_headTranslation.y= data.m_headTranslation.y;
+          faceshift_values.m_headTranslation.z= data.m_headTranslation.z;
 
-          fs_value.head_pose.orientation.x = data.m_headRotation.x;
-          fs_value.head_pose.orientation.y = data.m_headRotation.y;
-          fs_value.head_pose.orientation.z = data.m_headRotation.z;
-          fs_value.head_pose.orientation.w = data.m_headRotation.w;
+          faceshift_values.m_headRotation.x = data.m_headRotation.x;
+          faceshift_values.m_headRotation.y = data.m_headRotation.y;
+          faceshift_values.m_headRotation.z = data.m_headRotation.z;
+          faceshift_values.m_headRotation.w = data.m_headRotation.w;
+
 
           // printf ("head translation: %f %f %f\n", data.m_headTranslation.x,
           // data.m_headTranslation.y, data.m_headTranslation.z);
@@ -155,38 +155,30 @@ int main(int argc, char* argv[]) {
           // data.m_headRotation.y, data.m_headRotation.z,
           // data.m_headRotation.w);
 
-          fs_value.eye_left.x= data.m_eyeGazeLeftPitch;
-          fs_value.eye_left.y= data.m_eyeGazeLeftYaw;
+          faceshift_values.m_eyeGazeLeftPitch= data.m_eyeGazeLeftPitch;
+          faceshift_values.m_eyeGazeLeftYaw= data.m_eyeGazeLeftYaw;
           // printf ("Eye Gaze Left Pitch: %f\n", data.m_eyeGazeLeftPitch);
           // printf ("Eye Gaze Left Yaw: %f\n", data.m_eyeGazeLeftYaw);
 
 
-          fs_value.eye_right.x= data.m_eyeGazeRightPitch;
-          fs_value.eye_right.y= data.m_eyeGazeRightYaw;
+          faceshift_values.m_eyeGazeRightPitch= data.m_eyeGazeRightPitch;
+          faceshift_values.m_eyeGazeRightYaw= data.m_eyeGazeRightYaw;
 
           // printf ("Eye Gaze Right Pitch: %f\n", data.m_eyeGazeRightPitch);
           // printf ("Eye Gaze Right Yaw: %f\n", data.m_eyeGazeRightYaw);
 
           std::vector<float> blend_shape = data.m_coeffs;
 
-          int counter = 0;
+
 
           if (blendshape_names.size() == blend_shape.size()) {
-            shapekey_pairs.shapekey.clear();
-            for (std::vector<float>::iterator i = blend_shape.begin();
-                 i != blend_shape.end(); ++i) {
-              blender_api_msgs::FSShapekey skey;
-              skey.name = blendshape_names[counter];
-              skey.value = *i;
-              fs_value.keys.shapekey.push_back(skey);
-              // printf("Blendshape %s : %f\n",
-              // blendshape_names[counter].c_str(),  *i);
-              counter++;
+              faceshift_values.m_shapekeys = blendshape_names; //as they are treated as vectors
+              faceshift_values.m_coeffs = data.m_coeffs;
             }
 
 
-            pub_shape.publish(fs_value);
-            fs_value.keys.shapekey.clear();
+            pub_shape.publish(faceshift_values);
+//            fs_value.keys.shapekey.clear();
             //pub_shape.publish(shapekey_pairs);
           } else {
             firstrun = true;  // Cause the number of blendshapes and the rigging
@@ -194,7 +186,7 @@ int main(int argc, char* argv[]) {
             // printf("There is a mismatch querying for blendshape names. \n");
             ROS_WARN_NAMED("faceshift_to_ros","There is change in Profile in Faceshift");
           }
-        }
+
 
         // Get Blendshapes name from the stream.
         if (dynamic_cast<fs::fsMsgBlendshapeNames*>(msg.get())) {

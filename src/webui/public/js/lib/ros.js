@@ -170,6 +170,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/performances/events',
                     messageType: 'performances/Event'
+                }),
+                set_animation_mode: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/blender_api/set_animation_mode',
+                    messageType: 'std_msgs/Uint8'
                 })
             };
         },
