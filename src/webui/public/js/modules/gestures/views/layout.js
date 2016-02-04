@@ -4,11 +4,9 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
             template: template,
             ui: {
                 btOnButton: ".app-gesture-bt-on",
-                btOnStageButton: ".app-gesture-bt-on-stage",
-                btEmotionsOffButton: ".app-gesture-bt-emotions-off",
-                btGesturesOffButton: ".app-gesture-bt-gestures-off",
                 btOffButton: ".app-gesture-bt-off",
-                sayIntroButton: ".app-gesture-say-intro"
+                ppOffButton: ".app-gesture-bt-off",
+                puppeteeringButtons: '.app-gesture-pp'
             },
             regions: {
                 performances: '.app-performance-buttons',
@@ -24,25 +22,21 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
                 'click @ui.btEmotionsOffButton': "btEmotionsOff",
                 'click @ui.btGesturesOffButton': "btGesturesOff",
                 'click @ui.btOffButton': "btOff",
-                'click @ui.sayIntroButton': "sayIntro"
+                'click @ui.sayIntroButton': "sayIntro",
+                'click @ui.puppeteeringButtons': "changePpMode"
             },
             btOn: function() {
                 api.enableInteractionMode();
-            },
-            btOnStage: function() {
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on_stage'}));
-            },
-            btEmotionsOff: function() {
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'emotion_off'}));
-            },
-            btGesturesOff: function() {
-                api.topics.cmdTree.publish(new ROSLIB.Message({data: 'gesture_off'}));
             },
             btOff: function() {
                 api.disableInteractionMode();
             },
             sayIntro: function() {
                 api.sendChatMessage('start demo');
+            },
+            changePpMode(e){
+                var mode = $(e.target).data("mode") || 0;
+                api.topics.set_animation_mode.publish(new ROSLIB.Message({data: mode}));
             }
         });
     });

@@ -16,20 +16,28 @@ import imp
 import pdb
 from mathutils import Vector
 import logging
-
+import re
 debug = True
 logger = logging.getLogger('hr.blender_api.rigcontrol.animationmanager')
 
 class AnimationManager():
-
+    d = {}
+    b = {}
     def __init__(self):
         logger.info('Starting AnimationManager singleton')
-
+        # Loading Relationship between the faceshift and Sophia relation from the JSON file.
+        logger.info('Starting AnimationManager singleton')
         # Gesture params
         self.gesturesList = []
         self.emotionsList = []
         self.visemesList = []
         self.cyclesSet = set()
+        # Start from normal animation mode. 
+        self.mode= 0
+        self.old_mode= 0
+        self.deleted_drivers = False
+        # Shapekeys to apply on next frame
+        self.shapeKeys = {}
 
 
         # Start default cycles
@@ -50,7 +58,8 @@ class AnimationManager():
         # Eye_target distance in BU from 0 point
         # -4 for Sophia 1.0 -2 for blender rig
         self.eye_target_offset = -4
-
+        # Face rotation
+        self.headRotation = 0
 
         # Head and Eye tracking parameters
         self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
@@ -110,6 +119,85 @@ class AnimationManager():
             if not attr.startswith('_'):
                 string += str(attr) + ": " + str(value) + "\n"
         return string
+
+    def setMode(self,mode):
+        self.mode = mode
+        self.shapeKeys = {}
+        return 0
+
+    def changeMode(self):
+        if self.mode != self.old_mode:
+            self.old_mode = self.mode
+            # Restore original drivers
+            if self.mode == 0:
+                bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=0
+                self.setHeadRotation(0)
+                self.setFaceTarget([0,1,0])
+                self.setGazeTarget([0,1,0])
+                for key in self.b:
+                    #The key holds the value of the shapekey name.
+                    driverdata= bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_add('value', -1)
+                    drv= driverdata.driver
+                    drv.type= self.b[key][0]['type']
+                    drv.expression=self.b[key][1]['exp']
+                    variable= self.b[key][2]
+                    for i in variable['var']:
+                        var= drv.variables.new()
+                        var.name=i[0]['name']
+                        var.type=i[1]['type']
+                        targ= var.targets[0]
+                        targ.id=i[2]['targ'][0]['id']
+                        targ.bone_target=i[2]['targ'][1]['bone']
+                        targ.transform_type=i[2]['targ'][2]['type']
+                        targ.transform_space=i[2]['targ'][3]['space']
+                        self.deleted_drivers = False
+    def getMode(self):
+        return self.mode
+
+    def setShapeKeys(self,shape_keys):
+        self.shapeKeys = shape_keys
+
+    def applyShapeKeys(self):
+        if self.shapeKeys and self.mode:
+            self.setShape(self.shapeKeys)
+            self.shapeKeys = {}
+
+    def setShape(self, dict_shape):
+        # Delete the driver related items.
+        if not self.deleted_drivers:
+            for i in bpy.data.shape_keys['ShapeKeys'].animation_data.drivers:
+                key=re.search('"(.*)"',i.data_path).group(1)
+                if key in dict_shape:
+                    list_value=[]
+                    drv= i
+                    list_value.append({'type':drv.driver.type})
+                    list_value.append({'exp' : drv.driver.expression})
+                    variable= []
+                    for vr in drv.driver.variables:
+                        var=[]
+                        var.append({"name":vr.name})
+                        var.append({"type":vr.type})
+                        targ=[]
+                        tr = vr.targets[0]
+                        targ.append({'id':tr.id})
+                        targ.append({'bone':tr.bone_target})
+                        targ.append({'type':tr.transform_type})
+                        targ.append({'space':tr.transform_space})
+                        var.append({'targ':targ})
+                        variable.append(var)
+                    list_value.append({'var':variable})
+                    global b
+                    self.b[key]=list_value
+                    #Now the b[key] value hold the values where there is some assignment has been done.
+                    bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_remove('value', -1)
+                    self.deleted_drivers= True
+
+        for key in dict_shape:
+            if(key=='lip-JAW.DN'):
+                bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=dict_shape[key]
+            else:
+                bpy.data.shape_keys['ShapeKeys'].key_blocks[key].value= dict_shape[key]
+
 
 
     def newGesture(self, name, repeat = 1, speed=1, magnitude=0.5, priority=1):
@@ -343,6 +431,10 @@ class AnimationManager():
                 Pipes.moving_average(window=0.1)],
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4))
         self.eyeTargetLoc.target = locBU
+
+    # Rotates the face target which will make head roll
+    def setHeadRotation(self,rot):
+        self.headRotation = rot
 
     def setGazeTarget(self, loc):
         '''Set the target used for eye tracking only.'''

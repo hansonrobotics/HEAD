@@ -15,8 +15,7 @@ class Safety():
         self.topics = []
         # Wait for motors to be loaded in param server
         time.sleep(3)
-        robot = rospy.get_param('robot_name')
-        motors = rospy.get_param(robot + '/motors')
+        motors = rospy.get_param('motors')
         self.rules = rospy.get_param('safety_rules', {})
         # subscribe
         self.motor_positions = {}

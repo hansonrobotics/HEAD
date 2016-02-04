@@ -13,6 +13,7 @@ from pau2motors.msg import pau
 from pau2motors.MapperFactory import Quaternion2EulerYZX
 import subprocess
 import math
+import sys
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 
@@ -29,9 +30,13 @@ class InteractTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        for node in ['chatbot_en', 'chatbot_zh', 'speech2command', 'tts']:
-            wait_for(node, robot_name)
-        wait_for('blender_api')
+        try:
+            for node in ['chatbot_en', 'chatbot_zh', 'speech2command', 'tts']:
+                wait_for(node, robot_name, timeout=20)
+            wait_for('blender_api', timeout=20)
+        except rospy.exceptions.ROSException:
+            shutdown()
+            sys.exit(1)
         rospy.wait_for_service('/blender_api/set_param')
 
         self.output_video = os.path.expanduser('~/.hr/test/screencast')

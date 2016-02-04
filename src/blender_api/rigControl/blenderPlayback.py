@@ -168,7 +168,8 @@ class BLPlayback(bpy.types.Operator):
             eye_loc = eva.eyeTargetLoc.current
             eye_loc[1] = -eye_loc[1]
             eyeControl.location = eye_loc
-
+            # Rotation
+            headControl.rotation_euler[1] = eva.headRotation
             # udpate emotions
             for emotion in eva.emotionsList:
                 emotion.magnitude.blend(time, dt)
@@ -201,7 +202,11 @@ class BLPlayback(bpy.types.Operator):
                     for gesture in eva.gesturesList:
                         if gesture.name == cycle.name:
                             gesture.stripRef.mute = True
-
+            # Apply animation mode and shapekeys
+            # Check if the animations mode was changed and updates it
+            eva.changeMode()
+            # Apply queued shapekeys
+            eva.applyShapeKeys()
             # force update
             bpy.data.scenes['Scene'].frame_set(1)
 
