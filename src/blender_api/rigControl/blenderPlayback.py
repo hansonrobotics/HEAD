@@ -202,7 +202,11 @@ class BLPlayback(bpy.types.Operator):
                     for gesture in eva.gesturesList:
                         if gesture.name == cycle.name:
                             gesture.stripRef.mute = True
-
+            # Apply animation mode and shapekeys
+            # Check if the animations mode was changed and updates it
+            eva.changeMode()
+            # Apply queued shapekeys
+            eva.applyShapeKeys()
             # force update
             bpy.data.scenes['Scene'].frame_set(1)
 
