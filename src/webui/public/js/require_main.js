@@ -27,9 +27,11 @@ requirejs.config({
         RecordRTC: 'vendor/RecordRTC.min',
         json_editor: 'vendor/jsoneditor.min',
         push_menu: 'vendor/jquery.multilevelpushmenu.min',
-        bootbox: 'vendor/bootbox.min'
+        bootbox: 'vendor/bootbox.min',
+        emoticons: 'vendor/jquery.cssemoticons.min'
     },
     shim: {
+        emoticons: ['jquery'],
         scrollbar: ['jquery'],
         select2: ['jquery', 'jquery-ui'],
         'jquery-ui': ['jquery'],
