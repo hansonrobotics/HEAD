@@ -17,13 +17,16 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     faceThumbnails: '.app-face-thumbnails',
                     faceContainer: '.app-select-person-container',
                     faceCollapse: '.app-face-container',
-                    footer: 'footer',
+                    footer: '.app-interaction-footer',
                     languageButton: '.app-language-select button',
+                    recognitionSelectContainer: '.app-recognition-select',
                     recognitionMethodButton: '.app-recognition-select button',
                     adjustNoiseButton: '.app-adjust-noise-button',
+                    noiseContainer: '.app-noise-container',
                     noiseSlider: '.app-noise-slider',
                     noiseValue: '.app-noise-value .value',
-                    scrollbar: '.app-scrollbar'
+                    scrollbar: '.app-scrollbar',
+                    expandFacesButton: '.app-expand-faces-button'
                 },
                 events: {
                     'touchstart @ui.recordButton': 'toggleSpeech',
@@ -35,12 +38,15 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     'click @ui.recognitionMethodButton': 'recognitionButtonClick',
                     'click @ui.adjustNoiseButton': 'adjustButtonClick'
                 },
-                initialize: function () {
+                initialize: function (options) {
                     self = this;
                     api.enableInteractionMode();
                     api.topics.chat_responses.subscribe(this.responseCallback);
                     api.topics.speech_active.subscribe(this.speechActiveCallback);
                     api.topics.speech_topic.subscribe(this.voiceRecognised);
+
+                    if (options.height)
+                        this.setHeight(options.height);
                 },
                 onDestroy: function () {
                     this.options.faceCollection.unsubscribe();
@@ -57,11 +63,22 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 onRender: function () {
                     this.options.faceCollection.on('change', this.updateFaces, this);
                     this.options.faceCollection.subscribe();
+                    if (this.options.faces_visible)
+                        this.setFaceVisibility(true);
                     this.updateFaces();
+
+                    if (this.options.recognition_method)
+                        this.setRecognitionMethod(this.options.recognition_method);
+
+                    if (this.options.hide_method_select)
+                        this.ui.recognitionSelectContainer.hide();
+
+                    if (this.options.hide_noise)
+                        this.ui.noiseContainer.hide();
 
                     // update chat margins on face collapse show/hide
                     this.ui.faceCollapse.on('shown.bs.collapse hidden.bs.collapse', function () {
-                        self.updateMessagesHeight();
+                        self.setHeight();
                         self.scrollToChatBottom();
                     });
 
@@ -69,9 +86,10 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         if (self.isDestroyed)
                             $(window).off('resize', updateHeight);
                         else
-                            self.updateMessagesHeight();
+                            self.setHeight();
                     };
-                    $(window).on('resize', updateHeight);
+                    if ($.isNumeric(this.options.height))
+                        $(window).on('resize', updateHeight);
 
                     // set current language
                     api.getRobotLang(function (language) {
@@ -103,13 +121,18 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                 },
                 onAttach: function () {
                     this.ui.scrollbar.perfectScrollbar();
-                    this.updateMessagesHeight();
+                    this.setHeight();
                 },
-                updateMessagesHeight: function () {
-                    var height = window.innerHeight - this.ui.footer.height() - 40;
-                    self.trigger('resize', height);
-                    this.ui.scrollbar.css('height', height)
-                        .perfectScrollbar('update');
+                setHeight: function (height) {
+                    if ($.isNumeric(height))
+                        this.options.height = height;
+                    else {
+                        if ($.isNumeric(this.options.height))
+                            height = this.options.height;
+                        else
+                            height = App.LayoutInstance.getContentHeight();
+                    }
+                    this.ui.scrollbar.css('height', height - this.ui.footer.outerHeight()).perfectScrollbar('update');
                 },
                 responseCallback: function (msg) {
                     self.collection.add({author: 'Robot', message: msg.data});
@@ -157,14 +180,12 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     }
                 },
                 messageKeyUp: function (e) {
-                    if (e.keyCode == 13)
-                        this.ui.sendButton.click();
+                    // submit on enter press
+                    if (e.keyCode == 13) this.ui.sendButton.click();
                 },
                 sendClicked: function () {
                     var message = this.ui.messageInput.val();
-
                     if (message != '') api.sendChatMessage(message);
-
                     this.ui.messageInput.val('');
                 },
                 attachHtml: function (collectionView, childView) {
@@ -373,6 +394,15 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                             });
                         }
                     });
+                },
+                setFaceVisibility: function (visible) {
+                    if (visible) {
+                        this.ui.faceCollapse.addClass('in');
+                        this.ui.expandFacesButton.hide();
+                    } else {
+                        this.ui.faceCollapse.removeClass('in');
+                        this.ui.expandFacesButton.fadeIn();
+                    }
                 },
                 updateFaces: function () {
                     var currentTime = new Date().getTime();

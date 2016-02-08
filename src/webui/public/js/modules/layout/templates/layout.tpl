@@ -20,7 +20,7 @@
             </span>
         </div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div id="app-navbar" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul id="app-nav" class="nav navbar-nav navbar-right">
                 <li><a href="#/puppeteering">Puppeteering</a></li>
                 <li><a href="#/performances">Performances</a></li>

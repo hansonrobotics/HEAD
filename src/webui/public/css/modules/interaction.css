@@ -1,7 +1,3 @@
-.record-container {
-    padding: 0;
-}
-
 .app-record-button {
     width: 39px;
     padding: 0 0 0 1px;
@@ -12,10 +8,9 @@
     border-radius: 20px !important;;
 }
 
-.expand-face-select-button {
+.app-expand-faces-button {
     display: block;
     width: 100%;
-    margin-top: 10px;
 }
 
 .app-scrollbar {
@@ -49,7 +44,7 @@
 }
 
 .message-input-container {
-    margin: 10px 0;
+    margin: 10px 0 0;
     height: 39px;
 }
 
@@ -136,4 +131,7 @@
     -moz-box-shadow: -1px -1px 5px 0 #2b3e50;
     -webkit-box-shadow: -1px -1px 5px 0 #2b3e50;
     box-shadow: -1px -1px 5px 0 #2b3e50;
+
+    background-color: #4e5d6c;
+    padding: 10px;
 }

@@ -4,8 +4,9 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
             template: template,
             ui: {
                 title: '#app-title',
-                adminNav: '#app-admin-nav',
+                navContainer: '#app-navbar',
                 nav: '#app-nav',
+                adminNav: '#app-admin-nav',
                 navLinks: '#app-nav a, #app-admin-nav a',
                 content: '#app-content',
                 navbarContainer: '#navbar-container'
@@ -50,6 +51,9 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
                     this.ui.navbarContainer.removeClass('container-fluid').addClass('container');
                     this.ui.content.removeClass('container-fluid').addClass('container');
                 }
+            },
+            getContentHeight: function () {
+                return window.innerHeight - this.ui.navContainer.outerHeight()
             }
         });
     });
