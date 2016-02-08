@@ -34,7 +34,7 @@ define(["application", "tpl!./templates/layout.tpl", "lib/api"], function (App, 
             sayIntro: function() {
                 api.sendChatMessage('start demo');
             },
-            changePpMode(e){
+            changePpMode: function (e) {
                 var mode = $(e.target).data("mode") || 0;
                 api.topics.set_animation_mode.publish(new ROSLIB.Message({data: mode}));
             }

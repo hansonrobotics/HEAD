@@ -1,8 +1,8 @@
-define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', '../../performances/views/layout',
+define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', '../../performances/views/layout',
         '../../interaction/views/interaction', '../../interaction/entities/face_collection',
-        '../../interaction/entities/message_collection', 'jquery', 'application', 'scrollbar'],
-    function (Marionette, template, FadeInRegion, TimelineEditorView, InteractionView, FaceCollection,
-              MessageCollection, $, App) {
+        '../../interaction/entities/message_collection', 'jquery', './controls', 'scrollbar'],
+    function (App, Marionette, template, FadeInRegion, TimelineEditorView, InteractionView, FaceCollection,
+              MessageCollection, $, ControlsView) {
         return Marionette.LayoutView.extend({
             template: template,
             ui: {
@@ -16,6 +16,10 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', '../.
                     el: ".app-timeline-editor-region",
                     regionClass: FadeInRegion
                 },
+                controls: {
+                    el: ".app-robot-controls",
+                    regionClass: FadeInRegion
+                },
                 interaction: {
                     el: ".app-interaction-region",
                     regionClass: FadeInRegion
@@ -25,6 +29,7 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', '../.
                 var self = this;
                 this.ui.timeline.perfectScrollbar();
                 this.timelineEditorView = new TimelineEditorView({fluid: true});
+                this.controlsView = new ControlsView();
                 this.messageCollection = new MessageCollection();
                 this.faces = new FaceCollection();
                 this.interactionView = new InteractionView({
@@ -37,6 +42,7 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', '../.
                 });
 
                 this.getRegion('timeline').show(this.timelineEditorView);
+                this.getRegion('controls').show(this.controlsView);
                 this.getRegion('interaction').show(this.interactionView);
 
                 var updateDimensions = function () {
