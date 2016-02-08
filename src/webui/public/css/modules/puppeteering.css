@@ -6,3 +6,7 @@
 .app-robot-controls {
     padding-bottom: 10px;
 }
+
+.app-robot-controls button {
+    margin-bottom: 5px;
+}

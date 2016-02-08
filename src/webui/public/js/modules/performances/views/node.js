@@ -1,4 +1,4 @@
-define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox'   , 'lib/crosshair-slider',
+define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'lib/crosshair-slider',
         'select2'],
     function (App, Marionette, template, api, bootbox) {
         return Marionette.ItemView.extend({
