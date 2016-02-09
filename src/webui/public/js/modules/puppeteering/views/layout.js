@@ -29,7 +29,6 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
                 var self = this;
                 this.ui.timeline.perfectScrollbar();
                 this.timelineEditorView = new TimelineEditorView({fluid: true});
-                this.controlsView = new ControlsView();
                 this.messageCollection = new MessageCollection();
                 this.faces = new FaceCollection();
                 this.interactionView = new InteractionView({
@@ -40,6 +39,7 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
                     hide_method_select: true,
                     hide_noise: true
                 });
+                this.controlsView = new ControlsView({interactionView: this.interactionView});
 
                 this.getRegion('timeline').show(this.timelineEditorView);
                 this.getRegion('controls').show(this.controlsView);

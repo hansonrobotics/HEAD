@@ -7,10 +7,25 @@ define(['marionette', 'tpl!./templates/controls.tpl', 'lib/api', 'roslib', 'unde
                 animationContainer: '.app-animation-buttons',
                 poseContainer: '.app-pose-buttons',
                 headControl: '.app-head-control',
-                eyeControl: '.app-eye-control'
+                eyeControl: '.app-eye-control',
+                speechInput: '.app-speech-input',
+                sayButton: '.app-say-button'
             },
             events: {
-                'click @ui.modeButtons': 'changePpMode'
+                'click @ui.modeButtons': 'changePpMode',
+                'keyup @ui.speechInput': 'speechInputKeyPress',
+                'click @ui.sayButton': 'saySpeech'
+            },
+            saySpeech: function () {
+                var speech = this.ui.speechInput.val();
+                if (speech) {
+                    var lang = this.options.interactionView ? this.options.interactionView.language : undefined;
+                    this.ui.speechInput.val('');
+                    api.robotSpeech(speech, lang);
+                }
+            },
+            speechInputKeyPress: function (e) {
+                if (e.keyCode == 13) this.saySpeech();
             },
             onRender: function () {
                 this.showAnimationButtons();

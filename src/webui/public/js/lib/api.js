@@ -260,9 +260,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             );
         },
         robotSpeech: function (text, lang) {
-            if (!lang){
+            var topic;
+            if (!lang) {
                 topic = api.topics.chatbot_responses;
-            }else{
+            } else {
                 topic = api.topics.tts[lang];
             }
             topic.publish(
@@ -374,7 +375,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.execute_scripts.publish(cmd)
         },
         getTtsLength: function (text, lang, success) {
-            api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text, lang: lang}), success, function (error) {
+            api.services.tts_length.callService(new ROSLIB.ServiceRequest({
+                txt: text,
+                lang: lang
+            }), success, function (error) {
                 console.log(error);
             });
         },

@@ -132,7 +132,11 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                         else
                             height = App.LayoutInstance.getContentHeight();
                     }
-                    this.ui.scrollbar.css('height', height - this.ui.footer.outerHeight()).perfectScrollbar('update');
+
+                    // setting min height height
+                    height = Math.max(250, height - this.ui.footer.outerHeight())
+
+                    this.ui.scrollbar.css('height', height).perfectScrollbar('update');
                 },
                 responseCallback: function (msg) {
                     self.collection.add({author: 'Robot', message: msg.data});
