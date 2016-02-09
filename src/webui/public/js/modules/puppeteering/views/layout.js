@@ -8,7 +8,8 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
             ui: {
                 container: '.app-puppeteering-container',
                 timeline: '.app-timeline-editor-region',
-                controls: '.app-robot-controls'
+                controls: '.app-robot-controls',
+                rightColumn: '.app-right-column'
             },
             events: {},
             regions: {
@@ -28,6 +29,7 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
             onAttach: function () {
                 var self = this;
                 this.ui.timeline.perfectScrollbar();
+                this.ui.rightColumn.perfectScrollbar();
                 this.timelineEditorView = new TimelineEditorView({fluid: true});
                 this.messageCollection = new MessageCollection();
                 this.faces = new FaceCollection();
@@ -60,7 +62,8 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
             },
             updateDimensions: function () {
                 var height = App.LayoutInstance.getContentHeight();
-                this.ui.container.height(height);
+                this.ui.timeline.height(height).perfectScrollbar('update');
+                this.ui.rightColumn.height(height).perfectScrollbar('update');
                 this.interactionView.setHeight(height - this.ui.controls.outerHeight());
             }
         });

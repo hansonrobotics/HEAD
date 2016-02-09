@@ -9,7 +9,8 @@ define(['marionette', 'tpl!./templates/controls.tpl', 'lib/api', 'roslib', 'unde
                 headControl: '.app-head-control',
                 eyeControl: '.app-eye-control',
                 speechInput: '.app-speech-input',
-                sayButton: '.app-say-button'
+                sayButton: '.app-say-button',
+                modeStatus: '.app-mode-status'
             },
             events: {
                 'click @ui.modeButtons': 'changePpMode',
@@ -32,6 +33,18 @@ define(['marionette', 'tpl!./templates/controls.tpl', 'lib/api', 'roslib', 'unde
                 this.showPoseButtons();
                 this.buildHeadCrosshair();
                 this.buildEyeCrosshair();
+                this.updateModeStatus();
+            },
+            updateModeStatus: function () {
+                var self = this,
+                    update = function (status) {
+                        if (self.isDestroyed) {
+                            api.topics.get_animation_mode.unsubscribe(update);
+                            api.topics.get_animation_mode.removeAllListeners();
+                        } else
+                            self.ui.modeStatus.html(status);
+                    };
+                api.topics.get_animation_mode.subscribe(update);
             },
             buildHeadCrosshair: function () {
                 this.ui.headControl.crosshairsl({

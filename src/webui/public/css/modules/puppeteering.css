@@ -1,6 +1,5 @@
-.app-timeline-editor-region {
+.app-timeline-editor-region, .app-right-column {
     position: relative;
-    height: 100%;
 }
 
 .app-robot-controls {
@@ -13,4 +12,8 @@
 
 .speech-input-container {
     margin-top: 10px;
+}
+
+.app-interaction-region {
+    position: relative;
 }
