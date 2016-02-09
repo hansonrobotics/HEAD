@@ -1,19 +1,45 @@
-define(['marionette', 'tpl!./templates/controls.tpl', 'lib/api', 'roslib', 'underscore', 'jquery'],
+define(['marionette', 'tpl!./templates/controls.tpl', 'lib/api', 'roslib', 'underscore', 'jquery', 'lib/crosshair-slider'],
     function (Marionette, template, api, ROSLIB, _, $) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
                 modeButtons: '.app-animation-mode-button',
                 animationContainer: '.app-animation-buttons',
-                poseContainer: '.app-pose-buttons'
+                poseContainer: '.app-pose-buttons',
+                headControl: '.app-head-control',
+                eyeControl: '.app-eye-control'
             },
             events: {
                 'click @ui.modeButtons': 'changePpMode'
             },
             onRender: function () {
+                this.showAnimationButtons();
+                this.showPoseButtons();
+                this.buildHeadCrosshair();
+                this.buildEyeCrosshair();
+            },
+            buildHeadCrosshair: function () {
+                this.ui.headControl.crosshairsl({
+                    change: function (e, ui) {
+                        api.setFaceTarget(1, ui.xval / 50, ui.yval / 50);
+                    }
+                });
+            },
+            buildEyeCrosshair: function () {
+                this.ui.eyeControl.crosshairsl({
+                    change: function (e, ui) {
+                        api.setGazeTarget(1, ui.xval / 50, ui.yval / 50);
+                    }
+                });
+            },
+            changePpMode: function (e) {
+                var mode = $(e.target).data("mode") || 0;
+                api.topics.set_animation_mode.publish(new ROSLIB.Message({data: mode}));
+            },
+            showAnimationButtons: function () {
                 var self = this;
-                api.getAvailableGestures(function (gestures) {
-                    _.each(gestures, function (gesture) {
+                api.getAvailableGestures(function (animation) {
+                    _.each(animation, function (gesture) {
                         self.ui.animationContainer.append($('<button>').attr({
                             type: 'button',
                             'class': 'btn btn-default',
@@ -23,7 +49,9 @@ define(['marionette', 'tpl!./templates/controls.tpl', 'lib/api', 'roslib', 'unde
                         }).html(gesture)).append(' ');
                     });
                 });
-
+            },
+            showPoseButtons: function () {
+                var self = this;
                 api.getAvailableEmotionStates(function (emotions) {
                     _.each(emotions, function (emotion) {
                         self.ui.poseContainer.append($('<button>').attr({
@@ -35,10 +63,6 @@ define(['marionette', 'tpl!./templates/controls.tpl', 'lib/api', 'roslib', 'unde
                         }).html(emotion)).append(' ');
                     });
                 });
-            },
-            changePpMode: function (e) {
-                var mode = $(e.target).data("mode") || 0;
-                api.topics.set_animation_mode.publish(new ROSLIB.Message({data: mode}));
             }
         });
     });

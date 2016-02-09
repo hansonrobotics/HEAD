@@ -10,5 +10,15 @@
     <div class="col-md-6">
         <h4>Animations</h4>
         <div class="app-animation-buttons"></div>
+        <div class="app-cross-hairs row">
+            <div class="col-md-4">
+                <h4>Head Control</h4>
+                <div class="app-head-control"></div>
+            </div>
+            <div class="col-md-4">
+                <h4>Eye Control</h4>
+                <div class="app-eye-control"></div>
+            </div>
+        </div>
     </div>
 </div>

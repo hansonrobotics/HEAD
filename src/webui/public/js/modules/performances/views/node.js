@@ -217,7 +217,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
             buildCrosshair: function (params) {
                 var self = this;
                 params = params || {};
-                $(this.ui.crosshair).crosshairsl($.extend({}, {
+                $(this.ui.crosshair).crosshairsl($.extend({
                     xmin: -1,
                     xmax: 1,
                     xval: this.model.get('y') ? this.model.get('y') : 0,
@@ -227,19 +227,14 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                     change: function (e, ui) {
                         self.model.set('x', 1);
                         self.model.set('y', ui.xval);
-                        self.model.set('z', -1 * ui.yval);
-
+                        self.model.set('z', ui.yval);
                         self.model.call();
                     }
-                }, {
-                    bgColor: "#485563",
-                    fgColor: "#fff"
                 }, params));
 
                 self.model.set('x', 1);
                 self.model.set('y', 0);
                 self.model.set('z', 0);
-
             },
             deleteNode: function () {
                 var self = this;
