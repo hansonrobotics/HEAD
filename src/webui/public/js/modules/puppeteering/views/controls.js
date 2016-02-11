@@ -49,14 +49,14 @@ define(['marionette', 'tpl!./templates/controls.tpl', 'lib/api', 'roslib', 'unde
             buildHeadCrosshair: function () {
                 this.ui.headControl.crosshairsl({
                     change: function (e, ui) {
-                        api.setFaceTarget(1, ui.xval / 50, ui.yval / 50);
+                        api.setFaceTarget(1, ui.xval / 50, ui.yval / -50);
                     }
                 });
             },
             buildEyeCrosshair: function () {
                 this.ui.eyeControl.crosshairsl({
                     change: function (e, ui) {
-                        api.setGazeTarget(1, ui.xval / 50, ui.yval / 50);
+                        api.setGazeTarget(1, ui.xval / 50, ui.yval / -50);
                     }
                 });
             },

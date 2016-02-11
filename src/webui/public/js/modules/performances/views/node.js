@@ -227,7 +227,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                     change: function (e, ui) {
                         self.model.set('x', 1);
                         self.model.set('y', ui.xval);
-                        self.model.set('z', ui.yval);
+                        self.model.set('z', -1 * ui.yval);
                         self.model.call();
                     }
                 }, params));

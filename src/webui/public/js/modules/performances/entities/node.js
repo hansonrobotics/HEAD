@@ -11,10 +11,10 @@ define(['application', 'backbone', 'lib/api'], function (App, Backbone, api) {
                     api.setEmotion(this.get('emotion'), this.get('magnitude'), parseFloat(this.get('duration')));
                     break;
                 case 'look_at':
-                    api.setFaceTarget(1, this.get('x'), this.get('y'));
+                    api.setFaceTarget(this.get('x'), this.get('y'), this.get('z'));
                     break;
                 case 'gaze_at':
-                    api.setGazeTarget(1, this.get('x'), this.get('y'));
+                    api.setGazeTarget(this.get('x'), this.get('y'), this.get('z'));
                     break;
                 case 'speech':
                     api.robotSpeech(this.get('text'), this.get('lang'));
