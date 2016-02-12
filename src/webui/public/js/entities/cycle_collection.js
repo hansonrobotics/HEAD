@@ -1,4 +1,4 @@
-define(['backbone', 'lib/api'], function (Backbone, api) {
+define(['backbone', 'lib/api', 'underscore'], function (Backbone, api, _) {
     return Backbone.Collection.extend({
         sync: function (method, collection, options) {
             if (method == 'read')

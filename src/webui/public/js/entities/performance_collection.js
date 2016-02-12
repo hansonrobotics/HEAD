@@ -1,18 +1,14 @@
-define(['backbone', 'lib/api'], function (Backbone, api) {
+define(['backbone', 'lib/api', 'underscore'], function (Backbone, api, _) {
     return Backbone.Collection.extend({
-        added: false,
         sync: function (method, collection, options) {
-            var self = this;
-            api.getAvailableScripts(function (scripts) {
-                if (!self.added) {
-                    self.added = true;
+            if (method == 'read')
+                api.getAvailableScripts(function (scripts) {
                     var data = [];
                     _.each(scripts, function (name) {
                         data.push({name: name});
                     });
                     options.success(data);
-                }
-            });
+                });
         }
     });
 });

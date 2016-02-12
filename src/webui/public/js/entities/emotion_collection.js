@@ -1,4 +1,4 @@
-define(['backbone', './emotion', 'lib/api'], function (Backbone, Emotion, api) {
+define(['backbone', './emotion', 'lib/api', 'underscore'], function (Backbone, Emotion, api, _) {
     return Backbone.Collection.extend({
         model: Emotion,
         sync: function (method, collection, options) {
