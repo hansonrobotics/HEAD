@@ -1,19 +1,19 @@
-define(["marionette", "./emotion", 'tpl!./templates/emotions.tpl', 'entities/emotion_collection'],
-    function (Marionette, EmotionView, template, EmotionCollection) {
+define(["marionette", "./animation", 'tpl!./templates/animations.tpl', 'entities/gesture_collection'],
+    function (Marionette, GestureView, template, GestureCollection) {
         return Marionette.CompositeView.extend({
-            childView: EmotionView,
-            childViewContainer: '.app-emotions-container',
+            childView: GestureView,
             template: template,
+            childItemContainer: '.app-gestures',
             ui: {
-                durationSlider: '.app-duration-slider',
-                durationValue: '.app-duration-value',
+                speedSlider: '.app-speed-slider',
+                speedValue: '.app-speed-value',
                 magnitudeSlider: '.app-magnitude-slider',
                 magnitudeValue: '.app-magnitude-value'
             },
             config: {
-                duration: {
-                    default: 3,
-                    current: 3,
+                speed: {
+                    default: 1,
+                    current: 1,
                     min: 0,
                     max: 10
                 },
@@ -26,50 +26,42 @@ define(["marionette", "./emotion", 'tpl!./templates/emotions.tpl', 'entities/emo
             },
             initialize: function (options) {
                 if (!options.collection) {
-                    this.collection = new EmotionCollection();
+                    this.collection = new GestureCollection();
                     this.collection.fetch();
                 }
             },
-            /**
-             * Pass data to child views
-             *
-             * @returns {{config: *}}
-             */
             childViewOptions: function () {
                 var self = this;
                 return {
                     config: this.config,
                     getSliderValues: function () {
                         return {
-                            duration: self.config.duration.current.toFixed(2),
+                            speed: self.config.speed.current.toFixed(2),
                             magnitude: self.config.magnitude.current.toFixed(2)
                         }
                     }
                 };
             },
-            /**
-             * Pass data to the template
-             */
             serializeData: function () {
                 return this.config;
             },
             onRender: function () {
                 var self = this;
 
-                // init duration slider
-                this.ui.durationSlider.slider({
+                // init speed slider
+                this.ui.speedSlider.slider({
                     range: "min",
-                    min: this.config.duration.min * 100,
-                    max: this.config.duration.max * 100,
-                    value: this.config.duration.default * 100,
+                    min: this.config.speed.min * 100,
+                    max: this.config.speed.max * 100,
+                    value: this.config.speed.current * 100,
                     change: function (e, ui) {
-                        var duration = ui.value / 100.0;
+                        var speed = ui.value / 100.0;
 
                         // update ui label
-                        self.ui.durationValue.html(duration);
+                        self.ui.speedValue.html(speed);
 
                         // update config
-                        self.config.duration.current = duration;
+                        self.config.speed.current = speed;
                     }
                 });
 
@@ -78,7 +70,7 @@ define(["marionette", "./emotion", 'tpl!./templates/emotions.tpl', 'entities/emo
                     range: "min",
                     min: this.config.magnitude.min * 100,
                     max: this.config.magnitude.max * 100,
-                    value: this.config.magnitude.default * 100,
+                    value: this.config.magnitude.current * 100,
                     change: function (e, ui) {
                         // update ui label
                         self.ui.magnitudeValue.html(ui.value);

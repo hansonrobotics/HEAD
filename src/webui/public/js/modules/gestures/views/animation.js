@@ -1,4 +1,4 @@
-define(["marionette", "tpl!./templates/gesture.tpl", 'lib/api', 'lib/behaviors/touch_button'],
+define(["marionette", "tpl!./templates/animation.tpl", 'lib/api', 'lib/behaviors/touch_button'],
     function (Marionette, template, api) {
         return Marionette.ItemView.extend({
             tagName: 'span',

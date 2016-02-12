@@ -7,12 +7,7 @@
         </div>
         <div class="app-animation-mode-region col-md-6"></div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Gestures: </h4>
-            <div class="app-gesture-buttons"></div>
-        </div>
-    </div>
+    <div class="app-gesture-buttons"></div>
     <div class="row">
         <div class="col-md-12">
             <h4>Emotions: </h4>

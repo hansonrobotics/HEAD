@@ -1,4 +1,4 @@
-define(["marionette", "tpl!./templates/emotion.tpl", 'lib/api', 'lib/behaviors/touch_button'],
+define(["marionette", "tpl!./templates/pose.tpl", 'lib/api', 'lib/behaviors/touch_button'],
     function (Marionette, template, api) {
         return Marionette.ItemView.extend({
             template: template,

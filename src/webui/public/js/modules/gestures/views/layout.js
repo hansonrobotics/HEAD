@@ -1,5 +1,5 @@
-define(["marionette", "tpl!./templates/layout.tpl", "lib/api", './gestures', './cycles', './performances',
-        './emotions', './animation_mode'],
+define(["marionette", "tpl!./templates/layout.tpl", "lib/api", './animations', './cycles', './performances',
+        './poses', './animation_mode'],
     function (Marionette, template, api, GesturesView, CyclesView, PerformancesView, EmotionsView,
               AnimationModeView) {
         return Marionette.LayoutView.extend({
@@ -15,7 +15,7 @@ define(["marionette", "tpl!./templates/layout.tpl", "lib/api", './gestures', './
                 stopButton: '.app-gesture-demo-stop',
                 gestures: '.app-gesture-buttons',
                 emotions: '.app-emotions-container',
-                animation_mode: '.app-animation-mode-region'
+                animationMode: '.app-animation-mode-region'
             },
             events: {
                 'click @ui.btOnButton': "btOn",
@@ -61,7 +61,7 @@ define(["marionette", "tpl!./templates/layout.tpl", "lib/api", './gestures', './
             },
             createAnimationModeButtons: function () {
                 this.animationModeView = new AnimationModeView();
-                this.getRegion('animation_mode').show(this.animationModeView);
+                this.getRegion('animationMode').show(this.animationModeView);
             }
         });
     });

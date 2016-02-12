@@ -1,14 +1,15 @@
-define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', '../../performances/views/layout',
-        '../../interaction/views/interaction', '../../interaction/entities/face_collection',
-        '../../interaction/entities/message_collection', 'jquery', './controls', 'scrollbar'],
-    function (App, Marionette, template, FadeInRegion, TimelineEditorView, InteractionView, FaceCollection,
-              MessageCollection, $, ControlsView) {
+define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'modules/performances/views/layout',
+    'modules/interaction/views/interaction', 'jquery', './speech', 'modules/gestures/views/animation_mode',
+    'modules/gestures/views/poses', 'modules/gestures/views/animations', 'scrollbar'],
+    function (App, Marionette, template, FadeInRegion, TimelineEditorView, InteractionView, $, SpeechView,
+              AnimationModeView, PosesView, AnimationsView) {
         return Marionette.LayoutView.extend({
             template: template,
             ui: {
                 container: '.app-puppeteering-container',
                 timeline: '.app-timeline-editor-region',
-                controls: '.app-robot-controls',
+                controls: '.app-controls',
+                leftColumn: '.app-left-column',
                 rightColumn: '.app-right-column'
             },
             events: {},
@@ -17,35 +18,48 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
                     el: ".app-timeline-editor-region",
                     regionClass: FadeInRegion
                 },
-                controls: {
-                    el: ".app-robot-controls",
+                animationMode: {
+                    el: ".app-animation-mode-region",
                     regionClass: FadeInRegion
                 },
-                interaction: {
-                    el: ".app-interaction-region",
+                chat: {
+                    el: ".app-chat-region",
+                    regionClass: FadeInRegion
+                },
+                poses: {
+                    el: '.app-pose-region',
+                    regionClass: FadeInRegion
+                },
+                animations: {
+                    el: '.app-animations-region',
                     regionClass: FadeInRegion
                 }
             },
             onAttach: function () {
                 var self = this;
-                this.ui.timeline.perfectScrollbar();
+
+                this.ui.leftColumn.perfectScrollbar();
                 this.ui.rightColumn.perfectScrollbar();
+
+                // left col
+                this.posesView = new PosesView();
+                this.animationModeView = new AnimationModeView();
                 this.timelineEditorView = new TimelineEditorView({fluid: true});
-                this.messageCollection = new MessageCollection();
-                this.faces = new FaceCollection();
-                this.interactionView = new InteractionView({
-                    collection: this.messageCollection,
-                    faceCollection: this.faces,
+
+                // right col
+                this.chatView = new InteractionView({
                     faces_visible: true,
                     recognition_method: 'webspeech',
                     hide_method_select: true,
                     hide_noise: true
                 });
-                this.controlsView = new ControlsView({interactionView: this.interactionView});
+                this.animationsView = new AnimationsView();
 
+                this.getRegion('poses').show(this.posesView);
                 this.getRegion('timeline').show(this.timelineEditorView);
-                this.getRegion('controls').show(this.controlsView);
-                this.getRegion('interaction').show(this.interactionView);
+                this.getRegion('animationMode').show(this.animationModeView);
+                this.getRegion('chat').show(this.chatView);
+                this.getRegion('animations').show(this.animationsView);
 
                 var updateDimensions = function () {
                     if (self.isDestroyed)
@@ -58,13 +72,13 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
             },
             onDestroy: function () {
                 this.timelineEditorView.destroy();
-                this.interactionView.destroy();
+                this.chatView.destroy();
             },
             updateDimensions: function () {
                 var height = App.LayoutInstance.getContentHeight();
-                this.ui.timeline.height(height).perfectScrollbar('update');
+                this.ui.leftColumn.height(height).perfectScrollbar('update');
                 this.ui.rightColumn.height(height).perfectScrollbar('update');
-                this.interactionView.setHeight(height - this.ui.controls.outerHeight());
+                this.chatView.setHeight(height - this.ui.controls.outerHeight());
             }
         });
     });
