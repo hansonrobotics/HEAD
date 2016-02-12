@@ -1,5 +1,5 @@
-define(["application", "./gesture", 'tpl!./templates/gestures.tpl'],
-    function (App, GestureView, template) {
+define(["application", "./gesture", 'tpl!./templates/gestures.tpl', 'entities/gesture_collection'],
+    function (App, GestureView, template, GestureCollection) {
         App.module("Gestures.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Gestures = Marionette.CompositeView.extend({
                 childView: GestureView,
@@ -25,13 +25,20 @@ define(["application", "./gesture", 'tpl!./templates/gestures.tpl'],
                         max: 1
                     }
                 },
+                initialize: function (options) {
+                    if (! options.collection) {
+                        this.collection = new GestureCollection();
+                        this.collection.fetch();
+                    }
+                },
                 childViewOptions: function () {
+                    var self = this;
                     return {
                         config: this.config,
                         getSliderValues: function () {
                             return {
-                                speed: this.config.speed.current.toFixed(2),
-                                magnitude: this.config.magnitude.current.toFixed(2)
+                                speed: self.config.speed.current.toFixed(2),
+                                magnitude: self.config.magnitude.current.toFixed(2)
                             }
                         }
                     };
