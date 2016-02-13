@@ -1,5 +1,5 @@
-define(["marionette", "./animation", 'tpl!./templates/animations.tpl', 'entities/gesture_collection'],
-    function (Marionette, GestureView, template, GestureCollection) {
+define(["marionette", "./animation", 'tpl!./templates/animations.tpl', 'entities/gesture_collection', 'lib/utilities'],
+    function (Marionette, GestureView, template, GestureCollection, Utils) {
         return Marionette.CompositeView.extend({
             childView: GestureView,
             template: template,
@@ -29,6 +29,9 @@ define(["marionette", "./animation", 'tpl!./templates/animations.tpl', 'entities
                     this.collection = new GestureCollection();
                     this.collection.fetch();
                 }
+
+                if (options.config)
+                    this.config = Utils.extendRecursive(this.config, options.config);
             },
             childViewOptions: function () {
                 var self = this;

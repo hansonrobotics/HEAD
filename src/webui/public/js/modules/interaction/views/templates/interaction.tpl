@@ -32,18 +32,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="app-interaction-footer">
-            <div class="app-select-person-container">
-                <button class="app-expand-faces-button btn btn-primary btn-sm" type="button"
-                        data-toggle="collapse"
-                        data-target=".app-face-container" aria-expanded="false" aria-controls="collapse">
-                    Select a person
-                </button>
-
-                <div class="app-face-container collapse">
-                    <div class="face-select-instruction">touch the image of your face, to talk to me</div>
-                    <div class="app-face-thumbnails clearfix"></div>
-                </div>
-            </div>
+            <div class="app-faces-container"></div>
             <div class="message-input-container input-group">
                 <input type="text" class="app-message-input form-control"
                        placeholder="Type your message here..."/>

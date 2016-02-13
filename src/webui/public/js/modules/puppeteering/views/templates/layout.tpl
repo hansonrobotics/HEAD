@@ -8,13 +8,16 @@
             </div>
         </div>
         <div class="app-right-column col-md-6">
-            <div class="app-chat-region"></div>
             <div class="app-controls">
-                <div class="row">
-                    <div class="app-cross-hairs-region col-md-4"></div>
-                </div>
                 <div class="app-animations-region"></div>
+
+                <div class="row">
+                    <div class="app-cross-hairs-region col-md-3"></div>
+                    <div class="app-faces-region col-md-9"></div>
+                </div>
+                <div class="app-speech-region"></div>
             </div>
+            <div class="app-chat-region"></div>
         </div>
     </div>
 </div>

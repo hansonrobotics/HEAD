@@ -7,10 +7,7 @@ define(['application', './views/interaction', 'lib/api', './entities/face_collec
                 App.LayoutInstance.showNav();
                 App.LayoutInstance.setFluid(false);
 
-                var messageCollection = new MessageCollection(),
-                    faces = new FaceCollection(),
-                    interactionView = new InteractionView({collection: messageCollection, faceCollection: faces});
-
+                var interactionView = new InteractionView();
                 App.LayoutInstance.getRegion('content').show(interactionView);
             }
         };

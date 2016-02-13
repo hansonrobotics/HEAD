@@ -17,3 +17,7 @@
 .app-interaction-region {
     position: relative;
 }
+
+.app-animations-region {
+    padding-bottom: 10px;
+}

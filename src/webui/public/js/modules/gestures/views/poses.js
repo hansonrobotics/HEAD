@@ -1,5 +1,5 @@
-define(["marionette", "./pose", 'tpl!./templates/poses.tpl', 'entities/emotion_collection'],
-    function (Marionette, PoseView, template, EmotionCollection) {
+define(["marionette", "./pose", 'tpl!./templates/poses.tpl', 'entities/emotion_collection', 'lib/utilities'],
+    function (Marionette, PoseView, template, EmotionCollection, Utils) {
         return Marionette.CompositeView.extend({
             childView: PoseView,
             childViewContainer: '.app-emotions-container',
@@ -29,6 +29,9 @@ define(["marionette", "./pose", 'tpl!./templates/poses.tpl', 'entities/emotion_c
                     this.collection = new EmotionCollection();
                     this.collection.fetch();
                 }
+
+                if (options.config)
+                    this.config = Utils.extendRecursive(this.config, options.config);
             },
             /**
              * Pass data to child views
