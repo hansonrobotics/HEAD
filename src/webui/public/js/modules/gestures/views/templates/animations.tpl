@@ -10,7 +10,7 @@
                     </div>
 
                     <div class="app-slider-value-container">
-                        <span class="app-speed-value"><%= speed.default %></span> seconds
+                        <span class="app-speed-value"><%= speed.default %></span> x
                     </div>
 
                     <div class="app-speed-slider"></div>
