@@ -87,7 +87,8 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
                         self.updateDimensions();
                 };
 
-                $(window).on('resize', updateDimensions).resize();
+                $(window).resize(updateDimensions).resize();
+                this.animationsView.collection.on('add', updateDimensions);
             },
             updateDimensions: function () {
                 var height = App.LayoutInstance.getContentHeight();
