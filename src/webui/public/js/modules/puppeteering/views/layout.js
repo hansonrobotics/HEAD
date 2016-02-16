@@ -1,7 +1,7 @@
 define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'modules/performances/views/layout',
-    'modules/interaction/views/interaction', 'modules/interaction/views/faces', 'jquery', './speech', 'modules/gestures/views/animation_mode',
-    'modules/gestures/views/poses', 'modules/gestures/views/animations', './crosshairs', 'scrollbar'],
-    function (App, Marionette, template, FadeInRegion, TimelineEditorView, InteractionView, FacesView, $, SpeechView,
+        'modules/interaction/views/interaction', 'modules/interaction/views/faces', 'jquery', '../../interaction/views/operator',
+        'modules/gestures/views/animation_mode', 'modules/gestures/views/poses', 'modules/gestures/views/animations', './crosshairs', 'scrollbar'],
+    function (App, Marionette, template, FadeInRegion, TimelineEditorView, InteractionView, FacesView, $, OperatorView,
               AnimationModeView, PosesView, AnimationsView, CrosshairsView) {
         return Marionette.LayoutView.extend({
             template: template,
@@ -69,7 +69,7 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
                 this.crosshairsView = new CrosshairsView();
                 this.facesView = new FacesView({always_visible: true});
                 this.animationsView = new AnimationsView({config: {speed: {min: 0.5, max: 2}}});
-                this.speechView = new SpeechView({interactionView: this.chatView});
+                this.speechView = new OperatorView({interactionView: this.chatView});
 
                 this.getRegion('poses').show(this.posesView);
                 this.getRegion('timeline').show(this.timelineEditorView);
