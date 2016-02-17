@@ -459,10 +459,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             });
         },
         setDxlTorque: function(enable){
-            api.services.set_dxl_torque.call(new ServiceRequest({torque_enable: ebnable}))
+            api.services.set_dxl_torque.callService(new ROSLIB.ServiceRequest({torque_enable: ebnable}))
         },
         getMotorStates: function(success){
-            api.services.get_motor_states.call(new ServiceRequest(), success)
+            api.services.get_motor_states.callService(new ROSLIB.ServiceRequest(), success)
         },
     };
 

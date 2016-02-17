@@ -9,6 +9,7 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap'],
                     addFrame: '.app-add-frame',
                     deleteAnimation: '.app-delete-animation',
                     addAnimation: '.app-add-animation',
+                    admin: 'app-admin',
                     enableTorque: '.app-enable-torque',
                     disableTorque: '.app-disable-torque',
                     readValues: '.app-read-values'
@@ -18,8 +19,8 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap'],
                     'click @ui.addFrame': 'addFrame',
                     'click @ui.deleteAnimation': 'deleteAnimation',
                     'click @ui.addAnimation': 'addAnimation',
-                    'click @ui.enableTorque': 'enableTorque'
-                    'click @ui.disableTorque': 'disableTorque'
+                    'click @ui.enableTorque': 'enableTorque',
+                    'click @ui.disableTorque': 'disableTorque',
                     'click @ui.readValues': 'readValues'
                 },
                 regions: {
@@ -53,8 +54,10 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap'],
                     api.setDxlTorque(false);
                 },
                 readValues: function () {
+                    api.getMotorStates(function(val){
+                        Views.trigger('read_values', val);
+                    })
                 },
-
             });
         });
 

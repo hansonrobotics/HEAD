@@ -50,6 +50,8 @@ define(['application', './views/animations', './views/layout', '../motors/views/
                     self.addAnimation();
                 }).on('copy_frame', function (frame) {
                     self.copyFrame(frame);
+                }).on('read_values', function (val) {
+                    self.readValues(val);
                 });
 
                 self.motorsCollection.on('change', function () {
@@ -88,6 +90,24 @@ define(['application', './views/animations', './views/layout', '../motors/views/
                     this.motorsView.showSelectButtons(true);
                     this.selected_frame = frame;
                 }
+            },
+            readValues: function(val){
+                this.motorsCollection.each(function (motor) {
+                     var mi = val.motors.indexOf(motor.get('name'))
+                     if (mi > -1){
+                        // prevent from going over extreme positions
+                        var mv = val.angles[mi]
+                        if (mv < motor.get('min')){
+                            mv = motor.get('min');
+                        }
+                        if (mv > motor.get('max')){
+                            mv = motor.get('max');
+                        }
+                        motor.set('value', mv);
+                     }
+
+                });
+                console.log(val);
             },
             updateFrame: function () {
                 if (typeof this.selected_frame != 'undefined' && this.selected_frame)
