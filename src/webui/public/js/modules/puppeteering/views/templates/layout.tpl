@@ -12,8 +12,8 @@
                 <div class="app-animations-region"></div>
 
                 <div class="row">
-                    <div class="app-cross-hairs-region col-md-3"></div>
-                    <div class="app-faces-region col-md-9"></div>
+                    <div class="app-cross-hairs-region col-md-4"></div>
+                    <div class="app-faces-region col-md-8"></div>
                 </div>
                 <div class="app-speech-region"></div>
             </div>
