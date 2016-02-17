@@ -457,7 +457,13 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.performance_events.subscribe(function (message) {
                 success(message);
             });
-        }
+        },
+        setDxlTorque: function(enable){
+            api.services.set_dxl_torque.call(new ServiceRequest({torque_enable: ebnable}))
+        },
+        getMotorStates: function(success){
+            api.services.get_motor_states.call(new ServiceRequest(), success)
+        },
     };
 
     return api;

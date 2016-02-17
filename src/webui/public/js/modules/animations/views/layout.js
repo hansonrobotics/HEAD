@@ -1,5 +1,5 @@
-define(['application', 'tpl!./templates/layout.tpl', 'bootstrap'],
-    function (App, template) {
+define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap'],
+    function (App, template, api) {
         App.module('Animations.Views', function (Views, App, Backbone, Marionette, $, _) {
             Views.Animations = Marionette.LayoutView.extend({
                 template: template,
@@ -9,13 +9,18 @@ define(['application', 'tpl!./templates/layout.tpl', 'bootstrap'],
                     addFrame: '.app-add-frame',
                     deleteAnimation: '.app-delete-animation',
                     addAnimation: '.app-add-animation',
-                    admin: '.app-admin'
+                    enableTorque: '.app-enable-torque',
+                    disableTorque: '.app-disable-torque',
+                    readValues: '.app-read-values'
                 },
                 events: {
                     'click @ui.saveButton': 'updateAnimations',
                     'click @ui.addFrame': 'addFrame',
                     'click @ui.deleteAnimation': 'deleteAnimation',
-                    'click @ui.addAnimation': 'addAnimation'
+                    'click @ui.addAnimation': 'addAnimation',
+                    'click @ui.enableTorque': 'enableTorque'
+                    'click @ui.disableTorque': 'disableTorque'
+                    'click @ui.readValues': 'readValues'
                 },
                 regions: {
                     animationButtons: '.app-animations',
@@ -40,7 +45,16 @@ define(['application', 'tpl!./templates/layout.tpl', 'bootstrap'],
                 },
                 addAnimation: function () {
                     Views.trigger('add_animation');
-                }
+                },
+                enableTorque: function () {
+                    api.setDxlTorque(true);
+                },
+                disableTorque: function () {
+                    api.setDxlTorque(false);
+                },
+                readValues: function () {
+                },
+
             });
         });
 

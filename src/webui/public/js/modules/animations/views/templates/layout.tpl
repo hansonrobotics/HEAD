@@ -8,9 +8,8 @@
             <div class="app-admin">
                 <hr/>
                 <button class="app-enable-torque btn btn-default">Enable Torque (dxl)</button>
-                <button class="app-enable-torque btn btn-default">Disable Torque (dxl)</button>
-                <button class="app-enable-torque btn btn-default">Read Values (dxl)</button>
-
+                <button class="app-disable-torque btn btn-default">Disable Torque (dxl)</button>
+                <button class="app-read-values btn btn-default">Read Values (dxl)</button>
                 <hr/>
                 <h3>Editing
                     <span class="pull-right">

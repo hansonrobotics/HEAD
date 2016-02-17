@@ -225,6 +225,16 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     name: '/webui/get_description',
                     messageType: 'webui/NodeDescription'
                 }),
+                set_dxl_torque: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/set_dxl_torque',
+                    messageType: 'dynamixel_controllers/TorqueEnable'
+                }),
+                get_motor_states: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/get_motor_states',
+                    messageType: 'webui/MotorStates'
+                }),
                 performances: {
                     run: new ROSLIB.Service({
                         ros: api.ros,

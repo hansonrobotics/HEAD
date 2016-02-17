@@ -159,8 +159,8 @@ def update_expressions(robot_name):
 def update_animations(robot_name):
     data = json.loads(request.get_data().decode('utf8'))
     file_name = os.path.join(config_root, robot_name, "animations.yaml")
-
     write_yaml(file_name, data)
+    kill_node("/{}/basic_head_api".format(robot_name))
     return json_encode(True)
 
 
