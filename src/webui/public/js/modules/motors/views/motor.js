@@ -40,7 +40,7 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                 this.ui.sliderMaxVal.text(this.model.getDegrees('max') + '°');
                 this.ui.labelLeft.text(this.model.get('labelleft') || this.model.get('name'));
                 this.ui.labelright.text(this.model.get('labelright'));
-
+                $(this.ui.slider).slider('value', this.model.getDegrees('value'));
                 if (this.options['monitoring']) {
                     $(this.ui.slider).slider('value', 0);
                     this.ui.value.text('0°');

@@ -51,6 +51,7 @@ class DxlController:
                 name, angle = self.get_motor_name_angle(state)
                 states.motors.append(name)
                 states.angles.append(angle)
+
         return states
 
     #
