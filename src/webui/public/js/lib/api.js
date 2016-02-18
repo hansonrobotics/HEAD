@@ -262,7 +262,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         robotSpeech: function (text, lang) {
             var topic;
             if (!lang) {
-                topic = api.topics.chatbot_responses;
+                topic = api.topics.tts['default'];
             } else {
                 topic = api.topics.tts[lang];
             }
@@ -461,6 +461,17 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.performance_events.subscribe(function (message) {
                 success(message);
             });
+        },
+        enableTtsForwarding: function () {
+            this.setTtsMux('web_responses');
+        },
+        disableTtsForwarding: function () {
+            this.setTtsMux('chatbot_responses');
+        },
+        setTtsMux: function (topic) {
+            api.services.tts_select.default.callService(new ROSLIB.ServiceRequest({topic: topic}));
+            api.services.tts_select.en.callService(new ROSLIB.ServiceRequest({topic: topic + '_en'}));
+            api.services.tts_select.zh.callService(new ROSLIB.ServiceRequest({topic: topic + '_zh'}));
         }
     };
 

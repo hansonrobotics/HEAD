@@ -45,8 +45,6 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 var self = this;
                 api.enableInteractionMode();
                 this.addListeners();
-                if (this.options.height)
-                    this.setHeight(this.options.height);
 
                 if (this.options.recognition_method)
                     this.setRecognitionMethod(this.options.recognition_method);
@@ -66,7 +64,10 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                     else
                         self.setHeight();
                 };
+
                 if ($.isNumeric(this.options.height))
+                    this.setHeight(this.options.height);
+                else
                     $(window).on('resize', updateHeight);
 
                 // set current language
@@ -118,15 +119,15 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 var self = this,
                     responseCallback = function (msg) {
                         if (self.isDestroyed)
-                            api.topics.chat_responses.unsubscribe(responseCallback);
+                            api.topics.tts['default'].unsubscribe(responseCallback);
                         else
                             self.responseCallback(msg);
                     },
-                    speechActiveCallback = function () {
+                    speechActiveCallback = function (msg) {
                         if (self.isDestroyed)
                             api.topics.speech_active.unsubscribe(speechActiveCallback);
                         else
-                            self.speechActiveCallback();
+                            self.speechActiveCallback(msg);
                     },
                     voiceRecognised = function (msg) {
                         if (self.isDestroyed)
@@ -135,7 +136,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                             self.voiceRecognised(msg);
                     };
 
-                api.topics.chat_responses.subscribe(responseCallback);
+                api.topics.tts['default'].subscribe(responseCallback);
                 api.topics.speech_active.subscribe(speechActiveCallback);
                 api.topics.speech_topic.subscribe(voiceRecognised);
             },
@@ -288,6 +289,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
 
                 this.changeMessageLanguage(language);
                 this.language = language;
+                app.language = language;
 
                 this.ui.languageButton.removeClass('active');
                 $('[data-lang="' + language + '"]', this.el).addClass('active');

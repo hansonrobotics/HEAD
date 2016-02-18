@@ -135,3 +135,7 @@
     background-color: #4e5d6c;
     padding: 10px;
 }
+
+.app-suggestions .label {
+    margin-bottom: 5px;
+}
