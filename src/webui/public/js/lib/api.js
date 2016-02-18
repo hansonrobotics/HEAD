@@ -312,7 +312,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             for (var i = 0; motors && i < motors.length; i++) {
                 // Create topics for specific motors
                 if (!(motors[i]['topic'] in api.topics)) {
-                    if ('motor_id' in motors[i]) {
+                    if (motors[i]['hardware'] == 'pololu') {
                         // Pololu
                         api.topics[motors[i]['topic']] = new ROSLIB.Topic({
                             ros: api.ros,
