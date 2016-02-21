@@ -50,8 +50,8 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
             onAttach: function () {
                 var self = this;
 
-                this.ui.leftColumn.perfectScrollbar();
-                this.ui.rightColumn.perfectScrollbar();
+                this.ui.leftColumn.perfectScrollbar({suppressScrollX: true});
+                this.ui.rightColumn.perfectScrollbar({suppressScrollX: true});
 
                 // left col
                 this.posesView = new PosesView({config: {duration: {min: 1, max: 8}}});

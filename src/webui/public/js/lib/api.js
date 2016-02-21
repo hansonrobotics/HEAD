@@ -259,6 +259,19 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 })
             );
         },
+        webSpeech: function (text, lang) {
+            var topic;
+            if (!lang) {
+                topic = api.topics.web_responses['default'];
+            } else {
+                topic = api.topics.web_responses[lang];
+            }
+            topic.publish(
+                new ROSLIB.Message({
+                    data: text
+                })
+            );
+        },
         robotSpeech: function (text, lang) {
             var topic;
             if (!lang) {

@@ -39,10 +39,6 @@
             <node name="recorder" pkg="recorder" type="continuous_recorder.py" />
             <node name="speech_recognizer" pkg="isr" type="speech_recognizer.py" />
             <node name="speech2command" pkg="speech2command" type="speech2command.py" />
-
-            <node pkg="topic_tools" type="mux" name="tts" args="tts chatbot_responses web_responses mux:=tts_mux"/>
-            <node pkg="topic_tools" type="mux" name="tts_en" args="tts_en chatbot_responses_en web_responses_en mux:=tts_en_mux"/>
-            <node pkg="topic_tools" type="mux" name="tts_zh" args="tts_zh chatbot_responses_zh web_responses_zh mux:=tts_zh_mux"/>
         </group>
     </group>
 

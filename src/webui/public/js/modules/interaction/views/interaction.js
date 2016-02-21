@@ -118,9 +118,11 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             addListeners: function () {
                 var self = this,
                     responseCallback = function (msg) {
-                        if (self.isDestroyed)
+                        if (self.isDestroyed) {
                             api.topics.tts['default'].unsubscribe(responseCallback);
-                        else
+                            api.topics.tts['en'].unsubscribe(responseCallback);
+                            api.topics.tts['zh'].unsubscribe(responseCallback);
+                        } else
                             self.responseCallback(msg);
                     },
                     speechActiveCallback = function (msg) {
@@ -137,6 +139,8 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                     };
 
                 api.topics.tts['default'].subscribe(responseCallback);
+                api.topics.tts['en'].subscribe(responseCallback);
+                api.topics.tts['zh'].subscribe(responseCallback);
                 api.topics.speech_active.subscribe(speechActiveCallback);
                 api.topics.speech_topic.subscribe(voiceRecognised);
             },

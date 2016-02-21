@@ -131,6 +131,23 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                         messageType: 'std_msgs/String'
                     })
                 },
+                web_responses: {
+                    'default': new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/web_responses',
+                        messageType: 'std_msgs/String'
+                    }),
+                    en: new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/web_responses_en',
+                        messageType: 'std_msgs/String'
+                    }),
+                    zh: new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/web_responses_zh',
+                        messageType: 'std_msgs/String'
+                    })
+                },
                 tts: {
                     'default': new ROSLIB.Topic({
                         ros: api.ros,
