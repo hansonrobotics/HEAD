@@ -88,7 +88,7 @@ class SpecificRobotCtrl:
     for m in motors:
       if not m['topic'] in self.publishers.keys():
         # Pololu motor if motor_id is specified
-        if 'motor_id' in m:
+        if m['hardware'] == 'pololu':
           self.publishers[m['topic']] = rospy.Publisher(m['topic']+"/command",MotorCommand, queue_size=30)
         else:
           self.publishers[m['topic']] = rospy.Publisher(m['topic']+"_controller/command",Float64, queue_size=30)
