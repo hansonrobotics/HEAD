@@ -271,7 +271,8 @@ textarea.form-control.app-node-text {
 
 .app-expression-select,
 .app-emotion-select,
-.app-gesture-select {
+.app-gesture-select,
+.app-kfanimation-select {
     width: 200px !important;
 }
 

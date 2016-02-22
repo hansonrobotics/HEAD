@@ -20,7 +20,10 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery
                     langSelect: 'select.app-lang-select',
                     frameCount: '.app-node-frames-indicator',
                     durationIndicator: '.app-node-duration-indicator',
-                    topicInput: '.app-node-topic'
+                    topicInput: '.app-node-topic',
+                    fpsSlider: '.app-fps-slider',
+                    fpsLabel: '.app-fps-label',
+                    kfAnimationSelect: 'select.app-kfanimation-select'
                 },
                 events: {
                     'change @ui.duration': 'setDuration',
@@ -32,6 +35,7 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery
                     'change @ui.gestureSelect': 'setGesture',
                     'change @ui.expressionSelect': 'setExpression',
                     'change @ui.topicInput': 'setTopic',
+                    'change @ui.kfAnimationSelect': 'setKFAnimation',
                     'click @ui.deleteButton': 'deleteNode'
                 },
                 onRender: function () {
@@ -76,6 +80,27 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery
                             self.updateExpressions([]);
                             // load emotions
                             api.expressionList(function(expressions) { self.updateExpressions(expressions.exprnames) });
+                            break;
+                        case 'kfanimation':
+                            // init with empty list
+                            self.updateKFAnimations([]);
+                            // load emotions
+                            api.getAnimations(function(animations) { self.updateKFAnimations(animations) });
+                            // init slider
+                            if (!this.model.get('fps')) this.model.set('fps', 24);
+                            self.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');
+                            this.ui.fpsSlider.slider({
+                                animate: true,
+                                range: 'min',
+                                min: 12,
+                                max: 48,
+                                value: this.model.get('fps'),
+                                slide: function (e, ui) {
+                                    self.model.set('fps', ui.value);
+                                    self.setKFAnimationDuration();
+                                    self.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');
+                                }
+                            });
                             break;
                         case 'gesture':
                             // init with empty list
@@ -132,6 +157,24 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery
                         $(this.ui.emotionSelect).val(this.model.get('emotion'));
 
                     $(this.ui.emotionSelect).select2();
+                },
+                updateKFAnimations: function (animations) {
+                    console.log(animations)
+                    var self = this;
+                    _.each(animations, function (animation) {
+                        $(self.ui.kfAnimationSelect).append($('<option>').prop('value', animation).html(animation));
+                    });
+
+                    if (!this.model.get('animation') && animations.length > 0){
+                        this.model.set('animation', animations[0]);
+                        this.setKFAnimationDuration();
+                    }
+
+
+                    if (this.model.get('animation'))
+                        $(this.ui.kfAnimationSelect).val(this.model.get('animation'));
+
+                    $(this.ui.kfAnimationSelect).select2();
                 },
                 updateExpressions: function (expressions) {
                     var self = this;
@@ -210,6 +253,17 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery
                 },
                 setTopic: function () {
                     this.model.set('topic', this.ui.topicInput.val());
+                },
+                setKFAnimation: function(){
+                    this.model.set('animation', this.ui.kfAnimationSelect.val())
+                    this.setKFAnimationDuration();
+                },
+                setKFAnimationDuration: function(){
+                    var self = this;
+                    api.getKFAnimationLength(this.model.get('animation'), function (response) {
+                        self.animationFrames = response.frames;
+                        self.model.set('duration', 0.1 + self.animationFrames / self.model.get('fps'));
+                    });
                 },
                 buildCrosshair: function (params) {
                     var self = this;

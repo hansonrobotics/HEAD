@@ -1,6 +1,7 @@
 define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
     var api = {
         config: {},
+        animations: [],
         setExpression: function (name, intensity) {
             console.log('setting expression to: ' + name + ", intensity: " + intensity);
 
@@ -42,10 +43,18 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 ros: api.ros,
                 name: '/' + api.config.robot + '/animations'
             });
-
-            param.get(function (animations) {
-                callback(animations);
-            });
+            self = this;
+            if (this.animations.length > 0){
+                callback(this.animations)
+            }else{
+                param.get(function (animations) {
+                    console.log(animations);
+                    $.each(animations, function(k, v){
+                        self.animations.push(Object.keys(v)[0]);
+                    });
+                    callback(self.animations);
+                });
+            }
         },
         setAnimations: function (animations) {
             var param = new ROSLIB.Param({
@@ -53,6 +62,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 name: '/' + api.config.robot + '/animations'
             });
             param.set(animations);
+            this.animations = [];
         },
         updateAnimations: function (animations, successCallback, errorCallback) {
             var self = this;
@@ -79,6 +89,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                     fps: fps
                 })
             );
+        },
+        getKFAnimationLength(animation, success){
+            api.services.get_kf_animation_length.callService(new ROSLIB.ServiceRequest({name: animation}), success, function (error) {
+                console.log(error);
+            });
         },
         sendChatMessage: function (text) {
             console.log('Sending message: ' + text);
