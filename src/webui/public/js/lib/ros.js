@@ -114,6 +114,10 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/blender_api/set_gaze_target'
                 }),
+                selected_tts_mux: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/tts_mux/selected'
+                }),
                 chatbot_responses: {
                     'default': new ROSLIB.Topic({
                         ros: api.ros,

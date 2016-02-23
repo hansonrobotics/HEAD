@@ -34,6 +34,11 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 'click @ui.recognitionMethodButton': 'recognitionButtonClick',
                 'click @ui.adjustNoiseButton': 'adjustButtonClick'
             },
+            childViewOptions: function () {
+                return {
+                    collection: this.collection
+                };
+            },
             initialize: function (options) {
                 if (!options.collection)
                     this.collection = new MessageCollection();
@@ -100,7 +105,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             },
             showFaces: function () {
                 var self = this;
-                if (! this.facesView) {
+                if (!this.facesView) {
                     this.facesView = new FacesView();
                     this.facesView.on('toggle', function () {
                         self.setHeight();
@@ -132,17 +137,44 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                             self.speechActiveCallback(msg);
                     },
                     voiceRecognised = function (msg) {
-                        if (self.isDestroyed)
+                        if (self.isDestroyed) {
                             api.topics.speech_topic.unsubscribe(voiceRecognised);
-                        else
+                            api.topics.speech_topic.removeAllListeners();
+                        } else
                             self.voiceRecognised(msg);
+                    },
+                    suggestionCallback = function (msg) {
+                        if (self.isDestroyed) {
+                            api.topics.chatbot_responses['default'].unsubscribe(suggestionCallback)
+                            api.topics.chatbot_responses['en'].unsubscribe(suggestionCallback)
+                            api.topics.chatbot_responses['zh'].unsubscribe(suggestionCallback)
+                        } else
+                            self.suggestionCallback(msg);
+                    },
+                    operatorModeCallback = function (response) {
+                        if (self.isDestroyed)
+                            api.topics.selected_tts_mux.unsubscribe(operatorModeCallback);
+                        else {
+                            self.operator_mode_enabled = response.data == 'web_responses';
+                            self.operatorModeSwitched();
+                        }
                     };
-
+                // tts callbacks
                 api.topics.tts['default'].subscribe(responseCallback);
                 api.topics.tts['en'].subscribe(responseCallback);
                 api.topics.tts['zh'].subscribe(responseCallback);
+                // speech events
                 api.topics.speech_active.subscribe(speechActiveCallback);
+                // user message callback
                 api.topics.speech_topic.subscribe(voiceRecognised);
+
+                // callbacks for response suggestions
+                api.topics.chatbot_responses['default'].subscribe(suggestionCallback);
+                api.topics.chatbot_responses['en'].subscribe(suggestionCallback);
+                api.topics.chatbot_responses['zh'].subscribe(suggestionCallback);
+
+                // fallow tts input topic to distinguish between operator and regular modes
+                api.topics.selected_tts_mux.subscribe(operatorModeCallback);
             },
             setHeight: function (height) {
                 if ($.isNumeric(height))
@@ -158,6 +190,17 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 height = Math.max(250, height - this.ui.footer.outerHeight())
 
                 this.ui.scrollbar.css('height', height).perfectScrollbar('update');
+            },
+            operatorModeSwitched: function () {
+                var self = this;
+                if (!this.operator_mode_enabled)
+                    _.each(this.collection.where({type: 'suggestion'}), function (msg) {
+                        self.collection.remove(msg);
+                    });
+            },
+            suggestionCallback: function (msg) {
+                if (this.operator_mode_enabled)
+                    this.collection.add({author: 'Robot', message: msg.data, type: 'suggestion'});
             },
             responseCallback: function (msg) {
                 this.collection.add({author: 'Robot', message: msg.data});

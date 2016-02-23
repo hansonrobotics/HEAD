@@ -68,7 +68,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 },
                 error: function (xhr, status, error) {
                     if (typeof errorCallback == 'function')
-                        errorCallback(xhr, status, error)
+                        errorCallback(xhr, status, error);
                 }
             });
         },
@@ -475,10 +475,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 success(message);
             });
         },
-        enableTtsForwarding: function () {
+        enableTtsOperatorMode: function () {
             this.setTtsMux('web_responses');
         },
-        disableTtsForwarding: function () {
+        disableTtsOperatorMode: function () {
             this.setTtsMux('chatbot_responses');
         },
         setTtsMux: function (topic) {

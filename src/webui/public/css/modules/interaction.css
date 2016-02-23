@@ -140,3 +140,16 @@
     margin: 0 5px 5px 0;
     display: inline-block;
 }
+
+.app-suggestion-actions i {
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.app-suggestion-actions .app-accept {
+    color: #5cb85c;
+}
+
+.app-suggestion-actions .app-discard {
+    color: #d9534f;
+}

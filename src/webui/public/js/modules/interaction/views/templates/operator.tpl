@@ -12,6 +12,5 @@
                 <button class="app-say-button btn btn-primary">Say</button>
             </span>
         </div>
-        <div class="app-suggestions"></div>
     </div>
 </div>

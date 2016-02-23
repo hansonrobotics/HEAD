@@ -5,38 +5,18 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
             ui: {
                 sayButton: '.app-say-button',
                 speechInput: '.app-speech-input',
-                modeButtons: '.app-speech-mode-buttons .btn',
-                suggestionContainer: '.app-suggestions',
-                suggestions: '.app-suggestions .label'
+                modeButtons: '.app-speech-mode-buttons .btn'
             },
             events: {
                 'keyup @ui.speechInput': 'speechInputKeyPress',
                 'click @ui.sayButton': 'sayClick',
-                'click @ui.modeButtons': 'changeMode',
-                'click @ui.suggestions': 'suggestionSelected'
+                'click @ui.modeButtons': 'changeMode'
             },
             suggestions: {
-                predefined: [],
-                responses: []
+                predefined: []
             },
             onShow: function () {
-                var self = this;
                 this.mode = 'auto';
-
-                api.disableTtsForwarding();
-                api.topics.chatbot_responses['default'].subscribe(function (response) {
-                    self.clearSuggestions();
-                    self.addSuggestion(response.data);
-                });
-                api.topics.chatbot_responses.en.subscribe(function (response) {
-                    self.clearSuggestions();
-                    self.addSuggestion(response.data);
-                });
-                api.topics.chatbot_responses.zh.subscribe(function (response) {
-                    self.clearSuggestions();
-                    self.addSuggestion(response.data);
-                });
-
                 this.initSuggestions();
             },
             initSuggestions: function () {
@@ -44,7 +24,7 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
                 this.ui.speechInput.typeahead({
                     items: 10,
                     source: function (query, process) {
-                        process(self.suggestions.predefined.concat(self.suggestions.responses));
+                        process(self.suggestions.predefined);
                     },
                     updater: function (msg) {
                         self.saySpeech(msg);
@@ -73,18 +53,6 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
 
                 $(window).keydown(selectResponse);
             },
-            clearSuggestions: function () {
-                this.suggestions.responses = [];
-                this.ui.suggestions.remove();
-            },
-            addSuggestion: function (msg) {
-                if (this.mode == 'semi') {
-                    this.suggestions.responses.push(msg);
-                    this.ui.suggestionContainer.append($('<span>').addClass('label label-primary')
-                        .html(this.suggestions.responses.length + '. ' + msg).data('msg', msg));
-                    this.bindUIElements();
-                }
-            },
             speechInputKeyPress: function (e) {
                 if (e.keyCode == 13) this.sayClick();
             },
@@ -95,7 +63,6 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
             saySpeech: function (speech) {
                 if (speech) {
                     this.ui.speechInput.val('');
-                    this.clearSuggestions();
                     if (this.mode == 'auto')
                         api.robotSpeech(speech, app.language);
                     else
@@ -103,14 +70,13 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
                 }
             },
             changeMode: function (e) {
-                this.clearSuggestions();
                 this.ui.modeButtons.removeClass('active');
                 this.mode = $(e.target).addClass('active').data('mode');
 
                 if (this.mode == 'auto') {
-                    api.disableTtsForwarding();
+                    api.disableTtsOperatorMode();
                 } else {
-                    api.enableTtsForwarding();
+                    api.enableTtsOperatorMode();
                 }
 
                 if (this.mode != 'semi')
@@ -119,9 +85,6 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
             suggestionSelected: function (e) {
                 var text = $(e.target).data('msg');
                 this.saySpeech(text);
-            },
-            keyDown: function (e) {
-                console.log(e);
             }
         });
     });
