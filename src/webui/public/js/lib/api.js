@@ -48,11 +48,12 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 callback(this.animations)
             }else{
                 param.get(function (animations) {
-                    console.log(animations);
-                    $.each(animations, function(k, v){
-                        self.animations.push(Object.keys(v)[0]);
-                    });
-                    callback(self.animations);
+//                    console.log(animations);
+//                    $.each(animations, function(k, v){
+//                        self.animations.push(Object.keys(v)[0]);
+//                    });
+//                    callback(self.animations);
+                      callback(animations);
                 });
             }
         },
