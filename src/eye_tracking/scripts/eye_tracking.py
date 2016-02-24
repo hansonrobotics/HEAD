@@ -50,8 +50,20 @@ class EyeTracking:
         self.pau_ser = rospy.ServiceProxy("eyes_pau_mux/select", MuxSelect)
         # Angles to added already
         self.added = {'w': 0, 'h': 0}
+        self.tpw = float(self.tracking_params['center']['w'])
+        self.tpr = float(self.tracking_params['center']['h'])
+        print(self.tpw,"-",self.tpr)
+        cv2.namedWindow("Eye View")
+        cv2.setMouseCallback("Eye View",self.mouse)
         if self.publishing:
             self.pau_ser.call("eyes_tracking_pau")
+
+    def mouse(self,event,x,y,flags,param):
+        if event == cv2.EVENT_LBUTTONDBLCLK:
+            rows,cols = (self.image.shape)[:2]
+            self.tpw = (float(x)/float(cols))
+            self.tpr = float(y)/float(rows)
+            print(self.tpw," ",self.tpr)
 
     def camera_callback(self,img):
         try:
@@ -77,8 +89,12 @@ class EyeTracking:
             face = [int(x/self.scale) for x in f]
             cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (255,0,0), 3)
         rows,cols = (self.image.shape)[:2]
-        center = (int(cols*self.tracking_params['center']['w']),int(rows*self.tracking_params['center']['h']))
+        center = (int(cols*self.tpw),int(rows*self.tpr))
         cv2.circle(self.image,center, 3,(0,255,0))
+
+        #cv2.circle(self.image,(self.ms), 3,(0,255,0))
+        #cv2.circle(self.image,center, 3,(0,255,0))
+
         cv2.imshow("Eye View", self.image)
         cv2.waitKey(1)
 
@@ -112,8 +128,8 @@ class EyeTracking:
         return faces
     # Finds face distance from camera to target of where to look at
     def distance(self, f):
-        return [(f[0] + (f[2])*self.target[0])/self.im_w - self.tracking_params['center']['w'],
-                (f[1] + (f[3])*self.target[1])/self.im_h - self.tracking_params['center']['h']]
+        return [(f[0] + (f[2])*self.target[0])/self.im_w - self.tpw,
+                (f[1] + (f[3])*self.target[1])/self.im_h - self.tpr]
 
     def closest_face(self, faces):
         min_distance = self.tracking_params['distance-max']
@@ -129,8 +145,8 @@ class EyeTracking:
 
     def pau_callback(self, msg):
         if self.face_distance != [0,0]:
-            dw = self.face_distance[0]*self.tracking_params['angles']['w']
-            dh = self.face_distance[1]*self.tracking_params['angles']['h']
+            dw = self.face_distance[0]*self.tpw
+            dh = self.face_distance[1]*self.tpr
         else:
             # Gradually remove correction
             dw = -self.added['w']*0.03
@@ -140,11 +156,17 @@ class EyeTracking:
         self.added['h'] += dh
         # reset distance
         self.face_distance = [0,0]
-        # foward to pau_topic adjusted angles
+        # forward to pau_topic adjusted angles
         msg.m_eyeGazeLeftPitch -= self.added['h']
         msg.m_eyeGazeRightPitch -= self.added['h']
         msg.m_eyeGazeLeftYaw += self.added['w']
         msg.m_eyeGazeRightYaw += self.added['w']
+
+        self.msgLP = msg.m_eyeGazeLeftPitch
+        self.msgRP = msg.m_eyeGazeRightPitch
+        self.msgLY = msg.m_eyeGazeLeftYaw
+        self.msgRY = msg.m_eyeGazeRightYaw
+
         self.pau_pub.publish(msg)
 
 if __name__ == '__main__':
