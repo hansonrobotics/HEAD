@@ -1,7 +1,6 @@
 define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
     var api = {
         config: {},
-        animations: [],
         setExpression: function (name, intensity) {
             console.log('setting expression to: ' + name + ", intensity: " + intensity);
 
@@ -39,29 +38,20 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             param.set(expressions);
         },
         getAnimations: function (callback) {
-            var param = new ROSLIB.Param({
-                ros: api.ros,
-                name: '/' + api.config.robot + '/animations'
-            });
-            self = this;
-            if (this.animations.length > 0){
-                callback(this.animations)
-            }else{
-                param.get(function (animations) {
-                    console.log(animations);
-                    $.each(animations, function(k, v){
-                        self.animations.push(Object.keys(v)[0]);
+            var self = this;
+            this.getRosParam('/' + api.config.robot + '/animations', function (data) {
+                var animations = [];
+                if (Array.isArray(data))
+                    $.each(data, function (i, animation) {
+                        $.each(animation, function (name, frames) {
+                            animations.push({name: name, frames: frames});
+                        });
                     });
-                    callback(self.animations);
-                });
-            }
+                callback(animations);
+            })
         },
         setAnimations: function (animations) {
-            var param = new ROSLIB.Param({
-                ros: api.ros,
-                name: '/' + api.config.robot + '/animations'
-            });
-            param.set(animations);
+            this.setRosParam('/' + api.config.robot + '/animations', animations);
             this.animations = [];
         },
         updateAnimations: function (animations, successCallback, errorCallback) {
@@ -90,7 +80,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 })
             );
         },
-        getKFAnimationLength(animation, success){
+        getKFAnimationLength: function (animation, success) {
             api.services.get_kf_animation_length.callService(new ROSLIB.ServiceRequest({name: animation}), success, function (error) {
                 console.log(error);
             });
@@ -275,9 +265,9 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             );
         },
         robotSpeech: function (text, lang) {
-            if (!lang){
+            if (!lang) {
                 topic = api.topics.chatbot_responses;
-            }else{
+            } else {
                 topic = api.topics.tts[lang];
             }
             topic.publish(
@@ -389,7 +379,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.execute_scripts.publish(cmd)
         },
         getTtsLength: function (text, lang, success) {
-            api.services.tts_length.callService(new ROSLIB.ServiceRequest({txt: text, lang: lang}), success, function (error) {
+            api.services.tts_length.callService(new ROSLIB.ServiceRequest({
+                txt: text,
+                lang: lang
+            }), success, function (error) {
                 console.log(error);
             });
         },
@@ -473,10 +466,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 success(message);
             });
         },
-        setDxlTorque: function(enable){
+        setDxlTorque: function (enable) {
             api.services.set_dxl_torque.callService(new ROSLIB.ServiceRequest({torque_enable: enable}))
         },
-        getMotorStates: function(success){
+        getMotorStates: function (success) {
             api.services.get_motor_states.callService(new ROSLIB.ServiceRequest(), success)
         },
     };
