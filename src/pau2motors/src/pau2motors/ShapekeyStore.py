@@ -3,6 +3,10 @@ The lists of shapekeys defined here correspond to the coefficient array
 "m_coeffs" in pau.msg. These keys are used in the config files to specify
 which coefficients to extract from the incoming PAU messages.
 """
+try:
+    xrange
+except NameError:
+    xrange = range
 
 _shkey_list = ['Basis', 'shrinkwrap','adjustments', 'brow_center_UP','brow_center_DN', 'brow_inner_UP.L','brow_inner_DN.L',
                    'brow_inner_UP.R',  'brow_inner_DN.R', 'brow_outer_UP.L', 'brow_outer_DN.L', 'brow_outer_UP.R',
