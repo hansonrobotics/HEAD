@@ -1,7 +1,0 @@
-<launch>
-    <param name="/run_id" value="test_robot" />
-    <test name="test_robot" pkg="robots_config" type="test_robot.py" test-name="test_robot" time-limit="150.0" />
-    <test name="test_sophia" pkg="robots_config" type="test_sophia.py" test-name="test_sophia" time-limit="150.0" />
-    <test name="test_sophia2" pkg="robots_config" type="test_sophia2.py" test-name="test_sophia2" time-limit="150.0" />
-</launch>
-
