@@ -18,6 +18,5 @@
             <h4>Performances: </h4>
             <div class="app-performance-buttons"></div>
         </div>
-
     </div>
 </div>

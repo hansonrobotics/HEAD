@@ -3,6 +3,7 @@ define(['backbone', 'lib/api', 'underscore'], function (Backbone, api, _) {
         sync: function (method, collection, options) {
             if (method == 'read')
                 api.getAvailableScripts(function (scripts) {
+                    console.log('here');
                     var data = [];
                     _.each(scripts, function (name) {
                         data.push({name: name});
