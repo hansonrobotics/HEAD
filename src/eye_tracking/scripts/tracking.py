@@ -3,14 +3,11 @@
 import rospy
 import cv2
 import os
+import logging
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
-from std_msgs.msg import Bool
-from ros_pololu.msg import MotorCommand
 from pau2motors.msg import pau
 from topic_tools.srv import MuxSelect
-import time
-import logging
 from dynamic_reconfigure.server import Server
 from eye_tracking.cfg import EyeTrackingConfig
 
@@ -23,8 +20,6 @@ class EyeTracking:
             os.path.dirname(os.path.realpath(__file__)), "haarcascade.xml"))
         # Bridge to convert images to OpenCV
         self.bridge = CvBridge()
-        # Publishing motor messages disabled by default
-        self.publishing = rospy.get_param("~autostart", True)
         # Pau messages
         self.pau_pub = rospy.Publisher("eyes_tracking_pau", pau, queue_size=10)
         rospy.wait_for_service("eyes_pau_mux/select")
@@ -33,8 +28,6 @@ class EyeTracking:
         self.added = {'w': 0, 'h': 0}
         cv2.namedWindow("Eye View")
         cv2.setMouseCallback("Eye View",self.mouse)
-        if self.publishing:
-            self.pau_ser.call("eyes_tracking_pau")
         self.load_tracking_params()
         # Subscribe PAU from eyes
         self.pau_sub = rospy.Subscriber("/blender_api/get_pau", pau, self.pau_callback)
@@ -66,6 +59,8 @@ class EyeTracking:
             self.tph = 0.5
             self.distance_max = 0.3
         self.tracking = rospy.get_param("tracking", False)
+        if self.tracking:
+            self.pau_ser.call("eyes_tracking_pau")
 
     def mouse(self,event,x,y,flags,param):
         if event == cv2.EVENT_LBUTTONDBLCLK:
@@ -171,26 +166,24 @@ class EyeTracking:
             dw = -self.added['w']*0.03
             dh = -self.added['h']*0.03
 
-        self.added['w'] += dw
-        self.added['h'] += dh
+        self.added['w'] = dw
+        self.added['h'] = dh
+
         # reset distance
         self.face_distance = [0,0]
-        # forward to pau_topic adjusted angles
-        msg.m_eyeGazeLeftPitch -= self.added['h']
-        msg.m_eyeGazeRightPitch -= self.added['h']
-        msg.m_eyeGazeLeftYaw += self.added['w']
-        msg.m_eyeGazeRightYaw += self.added['w']
-
-        self.msgLP = msg.m_eyeGazeLeftPitch
-        self.msgRP = msg.m_eyeGazeRightPitch
-        self.msgLY = msg.m_eyeGazeLeftYaw
-        self.msgRY = msg.m_eyeGazeRightYaw
 
         if self.tracking:
-            self.pau_pub.publish(msg)
+            msg.m_eyeGazeLeftPitch -= self.added['h']
+            msg.m_eyeGazeRightPitch -= self.added['h']
+            msg.m_eyeGazeLeftYaw += self.added['w']
+            msg.m_eyeGazeRightYaw += self.added['w']
+
+        self.pau_pub.publish(msg)
 
     def reconfig(self, config, level):
         self.tracking = config.tracking
+        if self.tracking:
+            self.pau_ser.call("eyes_tracking_pau")
         return config
 
 if __name__ == '__main__':
