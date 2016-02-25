@@ -31,8 +31,6 @@ class EyeTracking:
             os.path.dirname(os.path.realpath(__file__)), "haarcascade.xml"))
         # Bridge to convert images to OpenCV
         self.bridge = CvBridge()
-        # subscribe camera topic
-        rospy.Subscriber(self.topic, Image, self.camera_callback)
         # Where eyes should be looking at (relative w and h of the bounding box). Center by default.
         # This should be updated from behavior tree or procedural animations
         self.target = [0.3, 0.3]
@@ -44,8 +42,6 @@ class EyeTracking:
         self.publishing = rospy.get_param("~autostart", True)
         # Pau messages
         self.pau_pub = rospy.Publisher("eyes_tracking_pau", pau, queue_size=10)
-        # Subscribe PAU from eyes
-        self.pau_sub = rospy.Subscriber("/blender_api/get_pau", pau, self.pau_callback)
         rospy.wait_for_service("eyes_pau_mux/select")
         self.pau_ser = rospy.ServiceProxy("eyes_pau_mux/select", MuxSelect)
         # Angles to added already
@@ -57,6 +53,10 @@ class EyeTracking:
         cv2.setMouseCallback("Eye View",self.mouse)
         if self.publishing:
             self.pau_ser.call("eyes_tracking_pau")
+        # Subscribe PAU from eyes
+        self.pau_sub = rospy.Subscriber("/blender_api/get_pau", pau, self.pau_callback)
+        # subscribe camera topic
+        rospy.Subscriber(self.topic, Image, self.camera_callback)
 
     def mouse(self,event,x,y,flags,param):
         if event == cv2.EVENT_LBUTTONDBLCLK:
@@ -78,19 +78,28 @@ class EyeTracking:
         self.resize()
         # detect faces
         faces = self.faces()
+        # Draw faces on image
+        for f in faces:
+            face = [int(x/self.scale) for x in f]
+            cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (255,0,0), 3)
+
+        rows,cols = (self.image.shape)[:2]
+        center = (int(cols*self.tpw),int(rows*self.tpr))
+        cv2.circle(self.image,center, 3,(0,255,0))
+
         # find face in middle
         face = self.closest_face(faces)
         if face is None:
             self.face_distance = [0,0]
         else:
             self.face_distance = self.distance(face)
-        # Draw faces on image
-        for f in faces:
-            face = [int(x/self.scale) for x in f]
-            cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (255,0,0), 3)
-        rows,cols = (self.image.shape)[:2]
-        center = (int(cols*self.tpw),int(rows*self.tpr))
-        cv2.circle(self.image,center, 3,(0,255,0))
+            face = [int(x/self.scale) for x in face]
+            cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (0,0,255), 3)
+            dw = int(self.face_distance[0]*cols)
+            dh = int(self.face_distance[1]*rows)
+            cv2.line(self.image, (center[0], center[1]),(center[0]+dw,center[1]+dh), (0,0,255), 3)
+            text = 'dw {} dh {}'.format(dw, dh)
+            cv2.putText(self.image, text, (0, 10), cv2.FONT_HERSHEY_PLAIN, 1, (0,0,255))
 
         #cv2.circle(self.image,(self.ms), 3,(0,255,0))
         #cv2.circle(self.image,center, 3,(0,255,0))
@@ -128,6 +137,7 @@ class EyeTracking:
         return faces
     # Finds face distance from camera to target of where to look at
     def distance(self, f):
+        """Relative vector pointing from center to target(eye or mouth)"""
         return [(f[0] + (f[2])*self.target[0])/self.im_w - self.tpw,
                 (f[1] + (f[3])*self.target[1])/self.im_h - self.tpr]
 
