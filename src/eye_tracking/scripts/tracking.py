@@ -59,21 +59,19 @@ class EyeTracking:
 
         if self.tracking_params:
             self.tpw = float(self.tracking_params['center']['w'])
-            self.tpr = float(self.tracking_params['center']['h'])
+            self.tph = float(self.tracking_params['center']['h'])
             self.distance_max = float(self.tracking_params['distance-max'])
         else:
             self.tpw = 0.5
-            self.tpr = 0.5
+            self.tph = 0.5
             self.distance_max = 0.3
-        print(self.tpw,"-",self.tpr)
         self.tracking = rospy.get_param("tracking", False)
 
     def mouse(self,event,x,y,flags,param):
         if event == cv2.EVENT_LBUTTONDBLCLK:
             rows,cols = (self.image.shape)[:2]
             self.tpw = (float(x)/float(cols))
-            self.tpr = float(y)/float(rows)
-            print(self.tpw," ",self.tpr)
+            self.tph = float(y)/float(rows)
 
     def camera_callback(self,img):
         try:
@@ -94,9 +92,10 @@ class EyeTracking:
             cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (255,0,0), 3)
 
         rows,cols = (self.image.shape)[:2]
-        center = (int(cols*self.tpw),int(rows*self.tpr))
+        center = (int(cols*self.tpw),int(rows*self.tph))
         cv2.circle(self.image,center, 3,(0,255,0))
 
+        text = 'center w {} h {}'.format(self.tpw, self.tph)
         # find face in middle
         face = self.closest_face(faces)
         if face is None:
@@ -108,8 +107,8 @@ class EyeTracking:
             dw = int(self.face_distance[0]*cols)
             dh = int(self.face_distance[1]*rows)
             cv2.line(self.image, (center[0], center[1]),(center[0]+dw,center[1]+dh), (0,0,255), 3)
-            text = 'dw {} dh {}'.format(dw, dh)
-            cv2.putText(self.image, text, (0, 10), cv2.FONT_HERSHEY_PLAIN, 1, (0,0,255))
+            text += ' delta w {} h {}'.format(dw, dh)
+        cv2.putText(self.image, text, (0, 10), cv2.FONT_HERSHEY_PLAIN, 1, (0,0,255))
 
         #cv2.circle(self.image,(self.ms), 3,(0,255,0))
         #cv2.circle(self.image,center, 3,(0,255,0))
@@ -149,7 +148,7 @@ class EyeTracking:
     def distance(self, f):
         """Relative vector pointing from center to target(eye or mouth)"""
         return [(f[0] + (f[2])*self.target[0])/self.im_w - self.tpw,
-                (f[1] + (f[3])*self.target[1])/self.im_h - self.tpr]
+                (f[1] + (f[3])*self.target[1])/self.im_h - self.tph]
 
     def closest_face(self, faces):
         min_distance = self.tracking_params['distance-max']
@@ -166,7 +165,7 @@ class EyeTracking:
     def pau_callback(self, msg):
         if self.face_distance != [0,0]:
             dw = self.face_distance[0]*self.tpw
-            dh = self.face_distance[1]*self.tpr
+            dh = self.face_distance[1]*self.tph
         else:
             # Gradually remove correction
             dw = -self.added['w']*0.03
