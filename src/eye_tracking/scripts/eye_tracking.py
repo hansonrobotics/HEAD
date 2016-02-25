@@ -31,8 +31,6 @@ class EyeTracking:
             os.path.dirname(os.path.realpath(__file__)), "haarcascade.xml"))
         # Bridge to convert images to OpenCV
         self.bridge = CvBridge()
-        # subscribe camera topic
-        rospy.Subscriber(self.topic, Image, self.camera_callback)
         # Where eyes should be looking at (relative w and h of the bounding box). Center by default.
         # This should be updated from behavior tree or procedural animations
         self.target = [0.3, 0.3]
@@ -44,8 +42,6 @@ class EyeTracking:
         self.publishing = rospy.get_param("~autostart", True)
         # Pau messages
         self.pau_pub = rospy.Publisher("eyes_tracking_pau", pau, queue_size=10)
-        # Subscribe PAU from eyes
-        self.pau_sub = rospy.Subscriber("/blender_api/get_pau", pau, self.pau_callback)
         rospy.wait_for_service("eyes_pau_mux/select")
         self.pau_ser = rospy.ServiceProxy("eyes_pau_mux/select", MuxSelect)
         # Angles to added already
@@ -57,6 +53,10 @@ class EyeTracking:
         cv2.setMouseCallback("Eye View",self.mouse)
         if self.publishing:
             self.pau_ser.call("eyes_tracking_pau")
+        # Subscribe PAU from eyes
+        self.pau_sub = rospy.Subscriber("/blender_api/get_pau", pau, self.pau_callback)
+        # subscribe camera topic
+        rospy.Subscriber(self.topic, Image, self.camera_callback)
 
     def mouse(self,event,x,y,flags,param):
         if event == cv2.EVENT_LBUTTONDBLCLK:
