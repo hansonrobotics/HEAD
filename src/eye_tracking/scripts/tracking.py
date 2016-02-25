@@ -11,33 +11,18 @@ from pau2motors.msg import pau
 from topic_tools.srv import MuxSelect
 import time
 import logging
+from dynamic_reconfigure.server import Server
+from eye_tracking.cfg import EyeTrackingConfig
 
 logger = logging.getLogger('hr.eye_tracking')
 
 class EyeTracking:
     def __init__(self):
-        # Eye Tracking enabled for the node
-        self.tracking_params = rospy.get_param("eye_tracking", False)
-        if not self.tracking_params:
-            rospy.signal_shutdown("No Params set")
-        # Node parameters for processing image
-        self.topic = rospy.get_param("~topic", "camera/image_raw")
-        self.angle = rospy.get_param("~angle", 0)
-        self.scale = rospy.get_param("~scale", 0.1)
-        self.crop = rospy.get_param("~crop", 0.1)
-
         # cascade for face detection
         self.cascade = cv2.CascadeClassifier(os.path.join(
             os.path.dirname(os.path.realpath(__file__)), "haarcascade.xml"))
         # Bridge to convert images to OpenCV
         self.bridge = CvBridge()
-        # Where eyes should be looking at (relative w and h of the bounding box). Center by default.
-        # This should be updated from behavior tree or procedural animations
-        self.target = [0.3, 0.3]
-        # Eye tracking parameters
-        self.tracking_params = rospy.get_param("eye_tracking")
-        # Distance which will need to be adjusted to closest face. Relative to picture size.
-        self.face_distance = [0, 0]
         # Publishing motor messages disabled by default
         self.publishing = rospy.get_param("~autostart", True)
         # Pau messages
@@ -46,17 +31,42 @@ class EyeTracking:
         self.pau_ser = rospy.ServiceProxy("eyes_pau_mux/select", MuxSelect)
         # Angles to added already
         self.added = {'w': 0, 'h': 0}
-        self.tpw = float(self.tracking_params['center']['w'])
-        self.tpr = float(self.tracking_params['center']['h'])
-        print(self.tpw,"-",self.tpr)
         cv2.namedWindow("Eye View")
         cv2.setMouseCallback("Eye View",self.mouse)
         if self.publishing:
             self.pau_ser.call("eyes_tracking_pau")
+        self.load_tracking_params()
         # Subscribe PAU from eyes
         self.pau_sub = rospy.Subscriber("/blender_api/get_pau", pau, self.pau_callback)
         # subscribe camera topic
         rospy.Subscriber(self.topic, Image, self.camera_callback)
+
+    def load_tracking_params(self):
+        # Eye Tracking enabled for the node
+        self.tracking_params = rospy.get_param("eye_tracking", False)
+
+        # Node parameters for processing image
+        self.topic = rospy.get_param("~topic", "camera/image_raw")
+        self.angle = rospy.get_param("~angle", 0)
+        self.scale = rospy.get_param("~scale", 0.1)
+        self.crop = rospy.get_param("~crop", 0.1)
+
+        # Where eyes should be looking at (relative w and h of the bounding box). Center by default.
+        # This should be updated from behavior tree or procedural animations
+        self.target = [0.3, 0.3]
+        # Distance which will need to be adjusted to closest face. Relative to picture size.
+        self.face_distance = [0, 0]
+
+        if self.tracking_params:
+            self.tpw = float(self.tracking_params['center']['w'])
+            self.tpr = float(self.tracking_params['center']['h'])
+            self.distance_max = float(self.tracking_params['distance-max'])
+        else:
+            self.tpw = 0.5
+            self.tpr = 0.5
+            self.distance_max = 0.3
+        print(self.tpw,"-",self.tpr)
+        self.tracking = rospy.get_param("tracking", False)
 
     def mouse(self,event,x,y,flags,param):
         if event == cv2.EVENT_LBUTTONDBLCLK:
@@ -177,11 +187,17 @@ class EyeTracking:
         self.msgLY = msg.m_eyeGazeLeftYaw
         self.msgRY = msg.m_eyeGazeRightYaw
 
-        self.pau_pub.publish(msg)
+        if self.tracking:
+            self.pau_pub.publish(msg)
+
+    def reconfig(self, config, level):
+        self.tracking = config.tracking
+        return config
 
 if __name__ == '__main__':
     rospy.init_node('eye_tracking')
     ET = EyeTracking()
+    Server(EyeTrackingConfig, ET.reconfig)
     r = rospy.Rate(10)
     while not rospy.is_shutdown():
         r.sleep()
