@@ -78,19 +78,28 @@ class EyeTracking:
         self.resize()
         # detect faces
         faces = self.faces()
+        # Draw faces on image
+        for f in faces:
+            face = [int(x/self.scale) for x in f]
+            cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (255,0,0), 3)
+
+        rows,cols = (self.image.shape)[:2]
+        center = (int(cols*self.tpw),int(rows*self.tpr))
+        cv2.circle(self.image,center, 3,(0,255,0))
+
         # find face in middle
         face = self.closest_face(faces)
         if face is None:
             self.face_distance = [0,0]
         else:
             self.face_distance = self.distance(face)
-        # Draw faces on image
-        for f in faces:
-            face = [int(x/self.scale) for x in f]
-            cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (255,0,0), 3)
-        rows,cols = (self.image.shape)[:2]
-        center = (int(cols*self.tpw),int(rows*self.tpr))
-        cv2.circle(self.image,center, 3,(0,255,0))
+            face = [int(x/self.scale) for x in face]
+            cv2.rectangle(self.image, (face[0],face[1]),(face[0]+face[2],face[1]+face[3]), (0,0,255), 3)
+            dw = int(self.face_distance[0]*cols)
+            dh = int(self.face_distance[1]*rows)
+            cv2.line(self.image, (center[0], center[1]),(center[0]+dw,center[1]+dh), (0,0,255), 3)
+            text = 'dw {} dh {}'.format(dw, dh)
+            cv2.putText(self.image, text, (0, 10), cv2.FONT_HERSHEY_PLAIN, 1, (0,0,255))
 
         #cv2.circle(self.image,(self.ms), 3,(0,255,0))
         #cv2.circle(self.image,center, 3,(0,255,0))
@@ -128,6 +137,7 @@ class EyeTracking:
         return faces
     # Finds face distance from camera to target of where to look at
     def distance(self, f):
+        """Relative vector pointing from center to target(eye or mouth)"""
         return [(f[0] + (f[2])*self.target[0])/self.im_w - self.tpw,
                 (f[1] + (f[3])*self.target[1])/self.im_h - self.tpr]
 
