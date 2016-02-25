@@ -34,7 +34,7 @@ std::string face_window_name = "Capture - Face";
 cv::RNG rng(12345);
 cv::Mat debugImage;
 cv::Mat skinCrCbHist = cv::Mat::zeros(cv::Size(256, 256), CV_8UC1);
-
+ros::Publisher pub;
 /**
  * @function main
  */
@@ -96,6 +96,7 @@ int main( int argc, char** argv ) {
     }
   }
 */
+pub = nh.advertise<eyeLike::EyesPos>("/eyes_positions", 2);
 cout<<"subscribing.."<<endl;
   ros::Subscriber sub = nh.subscribe("/eye_camera/image_raw", 1, imageCB);
   ros::spin();
@@ -197,6 +198,13 @@ void findEyes(cv::Mat frame_gray, cv::Rect face) {
 //  cv::Rect roi( cv::Point( 0, 0 ), faceROI.size());
 //  cv::Mat destinationROI = debugImage( roi );
 //  faceROI.copyTo( destinationROI );
+  eyeLike::EyesPos msg;
+  msg.leftEyeX=float(leftPupil.x+face.x)/float(frame_gray.cols);
+  msg.rightEyeX=float(rightPupil.x+face.x)/float(frame_gray.cols);
+  msg.leftEyeY=float(leftPupil.y+face.y)/float(frame_gray.rows);
+  msg.rightEyeY=float(rightPupil.y+face.y)/float(frame_gray.rows);
+  pub.publish(msg);
+  cout<<"x: "<<msg.leftEyeX<<" ,y: "<<msg.leftEyeY<<endl;
 }
 
 
