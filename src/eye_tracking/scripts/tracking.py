@@ -43,6 +43,7 @@ class EyeTracking:
         self.angle = rospy.get_param("~angle", 0)
         self.scale = rospy.get_param("~scale", 0.1)
         self.crop = rospy.get_param("~crop", 0.1)
+        self.flip = rospy.get_param("~flip", True)
 
         # Where eyes should be looking at (relative w and h of the bounding box). Center by default.
         # This should be updated from behavior tree or procedural animations
@@ -77,6 +78,8 @@ class EyeTracking:
 
         # pre-processing
         self.rotate()
+        if self.flip:
+            self.do_flip()
         self.image = self.cv_image.copy()
         self.resize()
         # detect faces
@@ -115,6 +118,9 @@ class EyeTracking:
         rows,cols = (self.cv_image.shape)[:2]
         M = cv2.getRotationMatrix2D((cols/2,rows/2),self.angle,1)
         self.cv_image = cv2.warpAffine(self.cv_image, M, (cols,rows))
+
+    def do_flip(self):
+        self.cv_image = cv2.flip(self.cv_image, 1)
 
     def resize(self):
         # crop image after rotation
@@ -159,18 +165,23 @@ class EyeTracking:
 
     def pau_callback(self, msg):
         if self.face_distance != [0,0]:
-            dw = self.face_distance[0]*self.tpw
-            dh = self.face_distance[1]*self.tph
+            # 0.1 is the step factor. If step too big, might go over the target
+            dw = self.face_distance[0]*self.tpw*0.1
+            dh = self.face_distance[1]*self.tph*0.1
         else:
             # Gradually remove correction
-            dw = -self.added['w']*0.03
-            dh = -self.added['h']*0.03
+            #dw = -self.added['w']*0.005
+            #dh = -self.added['h']*0.005
+            dw = 0
+            dh = 0
 
-        self.added['w'] = dw
-        self.added['h'] = dh
+        self.added['w'] += dw
+        self.added['h'] += dh
 
         # reset distance
         self.face_distance = [0,0]
+
+        logger.debug("added {}".format(self.added))
 
         if self.tracking:
             msg.m_eyeGazeLeftPitch -= self.added['h']
