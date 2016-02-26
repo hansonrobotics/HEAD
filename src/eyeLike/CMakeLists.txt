@@ -44,7 +44,7 @@ find_package(OpenCV REQUIRED)
  add_message_files(
    FILES
    EyesPos.msg
-#   Message2.msg
+   EyesPosArray.msg
  )
 
 ## Generate services in the 'srv' folder

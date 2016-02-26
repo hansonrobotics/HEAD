@@ -17,6 +17,7 @@
 #include "findEyeCorner.h"
 
 #include <eyeLike/EyesPos.h>
+#include <eyeLike/EyesPosArray.h>
 
 using namespace std;
 /** Constants **/
@@ -35,6 +36,7 @@ cv::RNG rng(12345);
 cv::Mat debugImage;
 cv::Mat skinCrCbHist = cv::Mat::zeros(cv::Size(256, 256), CV_8UC1);
 ros::Publisher pub;
+eyeLike::EyesPosArray msg_faces;
 /**
  * @function main
  */
@@ -50,12 +52,12 @@ int main( int argc, char** argv ) {
 
   cv::namedWindow(main_window_name,CV_WINDOW_NORMAL);
   cv::moveWindow(main_window_name, 400, 100);
-  cv::namedWindow(face_window_name,CV_WINDOW_NORMAL);
-  cv::moveWindow(face_window_name, 10, 100);
-  cv::namedWindow("Right Eye",CV_WINDOW_NORMAL);
-  cv::moveWindow("Right Eye", 10, 600);
-  cv::namedWindow("Left Eye",CV_WINDOW_NORMAL);
-  cv::moveWindow("Left Eye", 10, 800);
+  // cv::namedWindow(face_window_name,CV_WINDOW_NORMAL);
+  // cv::moveWindow(face_window_name, 10, 100);
+  // cv::namedWindow("Right Eye",CV_WINDOW_NORMAL);
+  // cv::moveWindow("Right Eye", 10, 600);
+  // cv::namedWindow("Left Eye",CV_WINDOW_NORMAL);
+  // cv::moveWindow("Left Eye", 10, 800);
 /*
   cv::namedWindow("aa",CV_WINDOW_NORMAL);
   cv::moveWindow("aa", 10, 800);
@@ -96,7 +98,7 @@ int main( int argc, char** argv ) {
     }
   }
 */
-pub = nh.advertise<eyeLike::EyesPos>("/eyes_positions", 2);
+pub = nh.advertise<eyeLike::EyesPosArray>("/faces_eyes_positions", 2);
 cout<<"subscribing.."<<endl;
   ros::Subscriber sub = nh.subscribe("/eye_camera/image_raw", 1, imageCB);
   ros::spin();
@@ -119,9 +121,10 @@ void imageCB(const sensor_msgs::ImageConstPtr& msg) {
     if( !frame.empty() ) {
       detectAndDisplay( frame );
     }else{cout<<"no image"<<endl;}
-imshow(main_window_name,debugImage);
+  imshow(main_window_name,debugImage);
 cv::waitKey(3);
 }
+
 void findEyes(cv::Mat frame_gray, cv::Rect face) {
   cv::Mat faceROI = frame_gray(face);
   cv::Mat debugFace = faceROI;
@@ -194,7 +197,7 @@ void findEyes(cv::Mat frame_gray, cv::Rect face) {
     circle(faceROI, rightRightCorner, 3, 200);
   }
 
-  imshow(face_window_name, faceROI);
+  // imshow(face_window_name, faceROI);
 //  cv::Rect roi( cv::Point( 0, 0 ), faceROI.size());
 //  cv::Mat destinationROI = debugImage( roi );
 //  faceROI.copyTo( destinationROI );
@@ -203,8 +206,8 @@ void findEyes(cv::Mat frame_gray, cv::Rect face) {
   msg.rightEyeX=float(rightPupil.x+face.x)/float(frame_gray.cols);
   msg.leftEyeY=float(leftPupil.y+face.y)/float(frame_gray.rows);
   msg.rightEyeY=float(rightPupil.y+face.y)/float(frame_gray.rows);
-  pub.publish(msg);
-  cout<<"x: "<<msg.leftEyeX<<" ,y: "<<msg.leftEyeY<<endl;
+  msg_faces.eyeposarray.push_back(msg);
+  // cout<<"x: "<<msg.leftEyeX<<" ,y: "<<msg.leftEyeY<<endl;
 }
 
 
@@ -244,15 +247,28 @@ void detectAndDisplay( cv::Mat frame ) {
   //equalizeHist( frame_gray, frame_gray );
   //cv::pow(frame_gray, CV_64F, frame_gray);
   //-- Detect faces
-  face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE|CV_HAAR_FIND_BIGGEST_OBJECT, cv::Size(150, 150) );
+  // face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE|CV_HAAR_FIND_BIGGEST_OBJECT, cv::Size(150, 150) );
+  face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(150, 150) );
 //  findSkin(debugImage);
 
+  msg_faces.eyeposarray.clear();
+  cout << "faces size: " << faces.size() << endl;
   for( int i = 0; i < faces.size(); i++ )
   {
     rectangle(debugImage, faces[i], 1234);
+    findEyes(frame_gray, faces[i]);
+    //cout << "loop msg size: " << msg_faces.eyeposarray.size() << endl;
   }
-  //-- Show what you got
-  if (faces.size() > 0) {
-    findEyes(frame_gray, faces[0]);
+  //cout << "msg size: " << msg_faces.eyeposarray.size() << endl;
+  
+  for( int i = 0; i < msg_faces.eyeposarray.size(); i++ )
+  {
+    float x = msg_faces.eyeposarray[i].leftEyeX*frame.cols;
+    float y = msg_faces.eyeposarray[i].leftEyeY*frame.rows;
+    cv::circle(debugImage, cv::Point(x, y), 5, cv::Scalar(0, 0, 255));
+    x = msg_faces.eyeposarray[i].rightEyeX*frame.cols;
+    y = msg_faces.eyeposarray[i].rightEyeY*frame.rows;
+    cv::circle(debugImage, cv::Point(x, y), 5, cv::Scalar(0, 0, 255));
   }
+  pub.publish(msg_faces);
 }
