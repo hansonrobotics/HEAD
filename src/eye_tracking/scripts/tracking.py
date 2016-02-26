@@ -13,6 +13,14 @@ from eye_tracking.cfg import EyeTrackingConfig
 
 logger = logging.getLogger('hr.eye_tracking')
 
+TARGET = {
+    "LeftEye": [0.3, 0.3],
+    "RightEye": [0.7, 0.3],
+    "UpperNose": [0.5, 0.3],
+    "Nose": [0.5, 0.7],
+    "Mouth": [0.5, 0.8],
+}
+
 class EyeTracking:
     def __init__(self):
         # cascade for face detection
@@ -47,7 +55,7 @@ class EyeTracking:
 
         # Where eyes should be looking at (relative w and h of the bounding box). Center by default.
         # This should be updated from behavior tree or procedural animations
-        self.target = [0.3, 0.3]
+        self.target = TARGET[rospy.get_param("~target", "LeftEye")]
         # Distance which will need to be adjusted to closest face. Relative to picture size.
         self.face_distance = [0, 0]
 
@@ -193,6 +201,7 @@ class EyeTracking:
 
     def reconfig(self, config, level):
         self.tracking = config.tracking
+        self.target = TARGET[config.target]
         if self.tracking:
             self.pau_ser.call("eyes_tracking_pau")
         return config
