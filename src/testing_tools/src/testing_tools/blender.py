@@ -12,6 +12,12 @@ def set_alive(alive):
     """
     set_param("bpy.context.scene['keepAlive']", str(alive))
 
+def set_blink_randomly(b):
+    set_param("bpy.data.scenes['Scene'].actuators.ACT_blink_randomly.HEAD_PARAM_enabled", str(b))
+
+def set_saccade(b):
+    set_param("bpy.data.scenes['Scene'].actuators.ACT_saccade.HEAD_PARAM_enabled", str(b))
+
 def set_command_listener_active(active):
     """
     active:
@@ -25,3 +31,7 @@ def get_shape_keys():
     shape_keys = eval(get_param("self.getFaceData()").value).keys()
     return shape_keys
 
+if __name__ == '__main__':
+    set_alive(False)
+    set_blink_randomly(False)
+    set_saccade(False)
