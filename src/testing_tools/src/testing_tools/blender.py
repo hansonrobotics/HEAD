@@ -31,7 +31,3 @@ def get_shape_keys():
     shape_keys = eval(get_param("self.getFaceData()").value).keys()
     return shape_keys
 
-if __name__ == '__main__':
-    set_alive(False)
-    set_blink_randomly(False)
-    set_saccade(False)
