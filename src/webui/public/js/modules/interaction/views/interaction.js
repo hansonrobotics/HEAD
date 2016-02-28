@@ -227,6 +227,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                     });
             },
             suggestionCallback: function (msg) {
+                this.collection.clearSuggestions();
                 if (this.operator_mode_enabled)
                     this.collection.add({author: 'Robot', message: msg.data, type: 'suggestion'});
             },
