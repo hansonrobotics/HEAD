@@ -41,13 +41,19 @@ class Pau2MotorsNode:
     sub = rospy.Subscriber(topicname, pau,
         lambda msg: self._handle_pau_cmd(msg, pau2motors_instance))
     logger.info("Subscribe {}".format(sub.name))
+    return sub
 
   def _build_msg_pipe(self, config):
     if config is None:
       return
+
     for sub in self.subs:
-      sub.unregister()
-      logger.info("Unregister subscriber {}".format(sub.name))
+      try:
+        sub.unregister()
+        logger.info("Unregister subscriber {}".format(sub.name))
+        self.subs.remove(sub)
+      except Exception as ex:
+        logger.error(ex)
     for topicname, motor_names in config["topics"].items():
       motor_sublist = []
       for name in motor_names.split(';'):
