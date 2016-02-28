@@ -31,10 +31,12 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
                         property.format = 'checkbox';
                         break;
                     case 'int':
-                        property.type = 'integer';
+                        property.type = 'slider';
+                        property.step = 1;
                         break;
                     case 'double':
-                        property.type = 'number';
+                        property.type = 'slider';
+                        property.step = 0.01;
                         break;
                     case 'str':
                         property.type = 'string';

@@ -15,15 +15,15 @@
             </div>
 
             <div class="performance-action-buttons btn-group">
-                <button class="app-hide-settings-button btn btn-default" title="Hide node settings">
-                    ×
-                </button>
                 <button class="app-clear-button btn btn-warning" title="Clear">
                     <i class="fa fa-eraser"></i>
                     Clear
                 </button>
                 <button class="app-delete-button btn btn-danger" title="Delete">
                     <i class="glyphicon glyphicon-trash"></i> Delete
+                </button>
+                <button class="app-hide-settings-button btn btn-default" title="Hide node settings">
+                    ×
                 </button>
             </div>
         </div>

@@ -55,16 +55,6 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     name: '/' + api.config.robot + '/speech',
                     messageType: 'chatbot/ChatMessage'
                 }),
-                //speech_start_topic: new ROSLIB.Topic({
-                //    ros: api.ros,
-                //    name: '/' + api.config.robot + '/chatbot_speech_start',
-                //    messageType: 'chatbot/ChatMessage'
-                //}),
-                chat_responses: new ROSLIB.Topic({
-                    ros: api.ros,
-                    name: '/' + api.config.robot + '/chatbot_responses',
-                    messageType: 'std_msgs/String'
-                }),
                 expression: new ROSLIB.Topic({
                     ros: api.ros,
                     name: '/' + api.config.robot + '/make_face_expr',
@@ -129,12 +119,16 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/blender_api/set_gaze_target'
                 }),
-                chatbot_responses: new ROSLIB.Topic({
+                selected_tts_mux: new ROSLIB.Topic({
                     ros: api.ros,
-                    name: '/' + api.config.robot + '/chatbot_responses',
-                    messageType: 'std_msgs/String'
+                    name: '/' + api.config.robot + '/tts_mux/selected'
                 }),
-                tts: {
+                chatbot_responses: {
+                    'default': new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/chatbot_responses',
+                        messageType: 'std_msgs/String'
+                    }),
                     en: new ROSLIB.Topic({
                         ros: api.ros,
                         name: '/' + api.config.robot + '/chatbot_responses_en',
@@ -143,6 +137,40 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     zh: new ROSLIB.Topic({
                         ros: api.ros,
                         name: '/' + api.config.robot + '/chatbot_responses_zh',
+                        messageType: 'std_msgs/String'
+                    })
+                },
+                web_responses: {
+                    'default': new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/web_responses',
+                        messageType: 'std_msgs/String'
+                    }),
+                    en: new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/web_responses_en',
+                        messageType: 'std_msgs/String'
+                    }),
+                    zh: new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/web_responses_zh',
+                        messageType: 'std_msgs/String'
+                    })
+                },
+                tts: {
+                    'default': new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/tts',
+                        messageType: 'std_msgs/String'
+                    }),
+                    en: new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/tts_en',
+                        messageType: 'std_msgs/String'
+                    }),
+                    zh: new ROSLIB.Topic({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/tts_zh',
                         messageType: 'std_msgs/String'
                     })
                 },
@@ -179,6 +207,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 set_animation_mode: new ROSLIB.Topic({
                     ros: api.ros,
                     name: '/blender_api/set_animation_mode',
+                    messageType: 'std_msgs/Uint8'
+                }),
+                get_animation_mode: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/blender_api/get_animation_mode',
                     messageType: 'std_msgs/Uint8'
                 })
             };
@@ -250,6 +283,23 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                         ros: api.ros,
                         name: '/performances/resume',
                         messageType: 'performances/Resume'
+                    })
+                },
+                tts_select: {
+                    'default': new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/tts_select',
+                        messageType: 'topic_tools/MuxSelect'
+                    }),
+                    'en': new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/tts_en_select',
+                        messageType: 'topic_tools/MuxSelect'
+                    }),
+                    'zh': new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/' + api.config.robot + '/tts_zh_select',
+                        messageType: 'topic_tools/MuxSelect'
                     })
                 }
             };

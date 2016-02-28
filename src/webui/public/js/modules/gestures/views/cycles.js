@@ -1,9 +1,12 @@
-define(["application", "./cycle"], function (App, CycleView) {
-    App.module("Gestures.Views", function (Views, App, Backbone, Marionette, $, _) {
-        Views.Cycles = Marionette.CollectionView.extend({
-            childView: CycleView
+define(["marionette", "./cycle", 'entities/cycle_collection'],
+    function (Marionette, CycleView, CycleCollection) {
+        return Marionette.CollectionView.extend({
+            childView: CycleView,
+            initialize: function (options) {
+                if (!options.collection) {
+                    this.collection = new CycleCollection();
+                    this.collection.fetch();
+                }
+            }
         });
     });
-
-    return App.module('Gestures.Views').Cycles;
-});

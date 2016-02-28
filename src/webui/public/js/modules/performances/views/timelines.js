@@ -1,9 +1,9 @@
-define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './timeline', './node',
-    'lib/extensions/animate_auto', 'jquery-ui'], function (App, template, d3, bootbox) {
-    App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
-        Views.Timelines = Marionette.CompositeView.extend({
+define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './timeline', './node',
+        '../entities/node', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
+    function (App, Marionette, template, d3, bootbox, TimelineView, NodeView, Node) {
+        return Marionette.CompositeView.extend({
             template: template,
-            childView: App.Performances.Views.Timeline,
+            childView: TimelineView,
             childViewContainer: '.app-timelines',
             config: {
                 pxPerSec: 70
@@ -46,6 +46,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
             onShow: function () {
                 var self = this;
 
+                this.ui.scrollContainer.perfectScrollbar();
                 // Performance event handler
                 if (typeof this.options.performances != 'undefined') {
                     this.options.performances.eventHandler = function (msg) {
@@ -53,12 +54,17 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
                     }
                 }
 
+                this.model.get('nodes').on('add remove', function () {
+                    if (self.model.get('nodes').isEmpty())
+                        self.ui.clearButton.stop().fadeOut();
+                    else
+                        self.ui.clearButton.stop().fadeIn();
+                });
+
                 this.ui.hideButton.hide();
                 // hide delete and clear buttons for new models
-                if (!this.model.get('id')) {
+                if (!this.model.get('id'))
                     this.ui.deleteButton.hide();
-                    this.ui.clearButton.hide();
-                }
 
                 this.stopIndicator();
                 this.model.get('nodes').each(function (node) {
@@ -69,9 +75,13 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
                 this.model.get('nodes').bind('remove', this.arrangeNodes, this);
 
                 // add resize event
-                $(window).resize(function () {
-                    self.updateTimelineWidth();
-                });
+                var updateWidth = function () {
+                    if (self.isDestroyed)
+                        $(window).off('resize', updateWidth);
+                    else
+                        self.updateTimelineWidth();
+                };
+                $(window).on('resize', updateWidth);
             },
             onDestroy: function () {
                 this.stopIndicator();
@@ -79,10 +89,6 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
                 this.model.stop();
                 this.model.get('nodes').unbind('add', this.addNode, this);
                 this.model.get('nodes').unbind('remove', this.arrangeNodes, this);
-
-                // remove resize event
-                $(window).off('resize');
-
                 this.model.get('nodes').each(function (node) {
                     $(node.get('el')).remove();
                 });
@@ -91,7 +97,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
                 }
             },
             nodeClicked: function (e) {
-                var node = new App.Performances.Entities.Node({
+                var node = new Node({
                     name: $(e.target).data('name'),
                     start_time: 0,
                     duration: 1
@@ -128,7 +134,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
             /**
              * Updates node element
              *
-             * @param node App.Performances.Entities.Node
+             * @param node Node
              */
             updateNode: function (node) {
                 var width = node.get('duration') * this.config.pxPerSec;
@@ -168,7 +174,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
 
                     // show settings if no settings are shown or if shown settings are for a different node
                     if (showSettings) {
-                        self.nodeView = new Views.Node({model: node});
+                        self.nodeView = new NodeView({model: node});
                         self.nodeView.render();
                         self.ui.nodeSettings.html(self.nodeView.el).hide().slideDown(function () {
                             self.ui.hideButton.fadeIn();
@@ -268,6 +274,8 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
                     this.children.each(function (timeline) {
                         timeline.ui.nodes.css('width', width);
                     });
+
+                    this.ui.scrollContainer.perfectScrollbar('update');
                 }
             },
             setPerformanceName: function () {
@@ -433,6 +441,7 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
 
                     // remove timeline model
                     self.collection.remove(view.model);
+                    view.model.destroy();
                 });
 
                 // delete nodes
@@ -468,4 +477,3 @@ define(['application', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './time
             }
         });
     });
-});
