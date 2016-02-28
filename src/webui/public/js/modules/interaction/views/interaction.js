@@ -1,6 +1,6 @@
 define(['application', "marionette", './message', "tpl!./templates/interaction.tpl", 'lib/api', '../entities/message_collection',
-        'jquery', './faces', 'scrollbar'],
-    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView) {
+        'jquery', './faces', 'underscore', 'scrollbar'],
+    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView, _) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: MessageView,
@@ -102,6 +102,34 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 api.getRosParam('/' + api.config.robot + '/recorder/energy_threshold', function (value) {
                     self.ui.noiseSlider.slider('value', value);
                 });
+
+                this.setUpKeyShortcuts();
+            },
+            /**
+             * Accept or decline the last operator suggestion
+             */
+            setUpKeyShortcuts: function () {
+                var self = this,
+                    keyPress = function (e) {
+                        var suggestions = self.collection.getSuggestions(),
+                            length = suggestions.length;
+
+                        if (self.isDestroyed) // remove event when view is destroyed
+                            $(window).off('keypress', keyPress);
+
+                        if (length > 0 && _.contains([91, 93], e.keyCode)) {
+                            e.preventDefault();
+
+                            if (e.keyCode == 91) {
+                                self.collection.clearSuggestions();
+                            } else if (e.keyCode == 93) {
+                                api.webSpeech(suggestions[length - 1].get('message'), app.language);
+                                self.collection.clearSuggestions();
+                            }
+                        }
+                    };
+
+                $(window).keypress(keyPress);
             },
             showFaces: function () {
                 var self = this;
@@ -203,6 +231,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                     this.collection.add({author: 'Robot', message: msg.data, type: 'suggestion'});
             },
             responseCallback: function (msg) {
+                this.collection.clearSuggestions();
                 this.collection.add({author: 'Robot', message: msg.data});
             },
             speechActiveCallback: function (msg) {

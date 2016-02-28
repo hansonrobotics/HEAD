@@ -372,11 +372,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableScripts: function (success) {
-            api.topics.scripts_available.unsubscribe();
-            api.topics.scripts_available.removeAllListeners();
-            api.topics.scripts_available.subscribe(function (message) {
+            var callback = function (message) {
+                api.topics.scripts_available.unsubscribe(callback);
                 success(message.data.split("|"));
-            });
+            };
+            api.topics.scripts_available.subscribe(callback);
         },
         /**
          * Executes given script

@@ -35,23 +35,6 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
                     if (Array.isArray(suggestions))
                         self.suggestions.predefined = suggestions;
                 });
-
-                this.setUpKeydownEvent();
-            },
-            setUpKeydownEvent: function () {
-                var self = this,
-                    selectResponse = function (e) {
-                        var no = e.keyCode - 48;
-                        if (self.isDestroyed)
-                            $(window).off('keydown', selectResponse);
-                        else if (no >= 0 && no <= 9 && !_.contains(['INPUT', 'TEXTAREA'], $(e.target).prop('tagName'))) {
-                            if (self.suggestions.responses.length >= no) {
-                                self.saySpeech(self.suggestions.responses[no - 1]);
-                            }
-                        }
-                    };
-
-                $(window).keydown(selectResponse);
             },
             speechInputKeyPress: function (e) {
                 if (e.keyCode == 13) this.sayClick();
