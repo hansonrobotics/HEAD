@@ -28,7 +28,7 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     'touchstart @ui.recordButton': 'toggleSpeech',
                     'touchend @ui.recordButton': 'toggleSpeech',
                     'click @ui.recordButton': 'toggleSpeech',
-                    'keyup @ui.messageInput': 'messageKeyUp',
+                    'keypress @ui.messageInput': 'messageKeyUp',
                     'click @ui.sendButton': 'sendClicked',
                     'click @ui.languageButton': 'languageButtonClick',
                     'click @ui.recognitionMethodButton': 'recognitionButtonClick',
@@ -199,8 +199,10 @@ define(["application", './message', "tpl!./templates/interaction.tpl", 'lib/api'
                     }
                 },
                 messageKeyUp: function (e) {
-                    if (e.keyCode == 13)
+                    if (e.keyCode == 13) // submit message on enter
                         this.ui.sendButton.click();
+                    else // update message cache for dragon recognition mode
+                        api.appendMessageCache(String.fromCharCode(e.keyCode));
                 },
                 sendClicked: function () {
                     var message = this.ui.messageInput.val();

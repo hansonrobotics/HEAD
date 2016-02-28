@@ -80,6 +80,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 })
             );
         },
+        appendMessageCache: function (text) {
+            api.topics.chatbot_text.publish(new ROSLIB.Message({
+                data: text
+            }));
+        },
         sendChatMessage: function (text) {
             console.log('Sending message: ' + text);
 

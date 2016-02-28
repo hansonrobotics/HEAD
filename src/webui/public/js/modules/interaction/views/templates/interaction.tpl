@@ -11,6 +11,7 @@
                     <button type="button" data-method="webspeech" class="btn btn-default btn-sm active">webspeech
                     </button>
                     <button type="button" data-method="iflytek" class="btn btn-default btn-sm">iflytek</button>
+                    <button type="button" data-method="dragon" class="btn btn-default btn-sm">dragon</button>
                 </div>
 
                 <div class="app-noise-container">
