@@ -55,7 +55,7 @@ class EyeTracking:
 
         # Where eyes should be looking at (relative w and h of the bounding box). Center by default.
         # This should be updated from behavior tree or procedural animations
-        self.target = TARGET[rospy.get_param("~target", "LeftEye")]
+        self.target = TARGET[rospy.get_param("~target", "UpperNose")]
         # Distance which will need to be adjusted to closest face. Relative to picture size.
         self.face_distance = [0, 0]
 
@@ -174,14 +174,13 @@ class EyeTracking:
     def pau_callback(self, msg):
         if self.face_distance != [0,0]:
             # 0.1 is the step factor. If step too big, might go over the target
-            dw = self.face_distance[0]*self.tpw*0.1
-            dh = self.face_distance[1]*self.tph*0.1
+            dw = self.face_distance[0]*self.tpw*0.5
+            dh = self.face_distance[1]*self.tph*0.5
         else:
             # Gradually remove correction
-            #dw = -self.added['w']*0.005
-            #dh = -self.added['h']*0.005
-            dw = 0
-            dh = 0
+            # This happens when eyes move to the corner and face is lost.
+            dw = -self.added['w']*0.03
+            dh = -self.added['h']*0.03
 
         self.added['w'] += dw
         self.added['h'] += dh
