@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   message_generation
+  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions
@@ -69,6 +70,13 @@ generate_messages(
   DEPENDENCIES
   std_msgs
   geometry_msgs
+)
+
+################################################
+## Declare ROS dynamic reconfigure parameters ##
+################################################
+generate_dynamic_reconfigure_options(
+    cfg/Pau2motors.cfg
 )
 
 ###################################
