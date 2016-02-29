@@ -11,3 +11,7 @@
 .app-animation-edit {
     margin-top: 15px;
 }
+
+button.app-animation {
+    margin-bottom: 5px;
+}

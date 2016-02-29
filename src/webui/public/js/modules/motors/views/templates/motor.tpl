@@ -1,5 +1,9 @@
 <% if (typeof groupLabel != 'undefined') { %>
-<h3 class="motor-group-title"><%= groupLabel %></h3>
+<h3 class="app-motor-group-title"><%= groupLabel %>
+    <button type="button" class="app-select-group-button btn-warning pull-right btn"><span
+            class="glyphicon glyphicon-asterisk"
+            aria-hidden="true"></span></button>
+</h3>
 <% } %>
 
 <div class="clearfix">
@@ -12,8 +16,8 @@
         </span>
 
         <div class="pull-right">
-            <button type="button" class="app-select-motor-button btn"><span class="glyphicon" aria-hidden="true"></span>
-            </button>
+            <button type="button" class="app-select-motor-button btn"><span class="glyphicon"
+                                                                            aria-hidden="true"></span></button>
         </div>
     </div>
     <div class="pull-right">
