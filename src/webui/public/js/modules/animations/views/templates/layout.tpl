@@ -12,6 +12,7 @@
                         <button class="app-add-animation btn btn-default"><span
                                 class="glyphicon glyphicon-plus" area-hidden="true"></span> Add
                         </button>
+                        <button class="app-copy-animation btn btn-warning">Copy</button>
                         <button class="app-delete-animation btn btn-danger">Delete</button>
                     </span>
                 </h3>
@@ -29,6 +30,8 @@
                             class="glyphicon glyphicon-plus" area-hidden="true"></span></button>
                     <button class="app-save-frames btn btn-primary" type="button">Save</button>
                 </div>
+                <h4>Add expression as frame</h4>
+                <div class="app-expressions"></div>
             </div>
         </div>
 
