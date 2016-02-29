@@ -98,3 +98,27 @@ nav.navbar {
 .container-fluid .container-fluid {
     padding: 0;
 }
+
+
+/*
+Styling for JsonEditor slider extension
+*/
+[data-schematype="slider"] .form-group {
+    position: relative;
+}
+
+[data-schematype="slider"] label {
+    display: block;
+}
+
+[data-schematype="slider"] input {
+    position: absolute;
+    left: 0;
+    width: 100px;
+}
+
+[data-schematype="slider"] .ui-slider {
+    height: 39px;
+    margin-left: 110px;
+}
+

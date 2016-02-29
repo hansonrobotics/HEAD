@@ -1,6 +1,6 @@
 define(['application', "marionette", './message', "tpl!./templates/interaction.tpl", 'lib/api', '../entities/message_collection',
-        'jquery', './faces', 'scrollbar'],
-    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView) {
+        'jquery', './faces', 'underscore', 'scrollbar'],
+    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView, _) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: MessageView,
@@ -34,6 +34,11 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 'click @ui.recognitionMethodButton': 'recognitionButtonClick',
                 'click @ui.adjustNoiseButton': 'adjustButtonClick'
             },
+            childViewOptions: function () {
+                return {
+                    collection: this.collection
+                };
+            },
             initialize: function (options) {
                 if (!options.collection)
                     this.collection = new MessageCollection();
@@ -45,8 +50,6 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 var self = this;
                 api.enableInteractionMode();
                 this.addListeners();
-                if (this.options.height)
-                    this.setHeight(this.options.height);
 
                 if (this.options.recognition_method)
                     this.setRecognitionMethod(this.options.recognition_method);
@@ -66,7 +69,10 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                     else
                         self.setHeight();
                 };
+
                 if ($.isNumeric(this.options.height))
+                    this.setHeight(this.options.height);
+                else
                     $(window).on('resize', updateHeight);
 
                 // set current language
@@ -96,10 +102,38 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 api.getRosParam('/' + api.config.robot + '/recorder/energy_threshold', function (value) {
                     self.ui.noiseSlider.slider('value', value);
                 });
+
+                this.setUpKeyShortcuts();
+            },
+            /**
+             * Accept or decline the last operator suggestion
+             */
+            setUpKeyShortcuts: function () {
+                var self = this,
+                    keyPress = function (e) {
+                        var suggestions = self.collection.getSuggestions(),
+                            length = suggestions.length;
+
+                        if (self.isDestroyed) // remove event when view is destroyed
+                            $(window).off('keypress', keyPress);
+
+                        if (length > 0 && _.contains([91, 93], e.keyCode)) {
+                            e.preventDefault();
+
+                            if (e.keyCode == 91) {
+                                self.collection.clearSuggestions();
+                            } else if (e.keyCode == 93) {
+                                api.webSpeech(suggestions[length - 1].get('message'), app.language);
+                                self.collection.clearSuggestions();
+                            }
+                        }
+                    };
+
+                $(window).keypress(keyPress);
             },
             showFaces: function () {
                 var self = this;
-                if (! this.facesView) {
+                if (!this.facesView) {
                     this.facesView = new FacesView();
                     this.facesView.on('toggle', function () {
                         self.setHeight();
@@ -117,27 +151,58 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             addListeners: function () {
                 var self = this,
                     responseCallback = function (msg) {
-                        if (self.isDestroyed)
-                            api.topics.chat_responses.unsubscribe(responseCallback);
-                        else
+                        if (self.isDestroyed) {
+                            api.topics.tts['default'].unsubscribe(responseCallback);
+                            api.topics.tts['en'].unsubscribe(responseCallback);
+                            api.topics.tts['zh'].unsubscribe(responseCallback);
+                        } else
                             self.responseCallback(msg);
                     },
-                    speechActiveCallback = function () {
+                    speechActiveCallback = function (msg) {
                         if (self.isDestroyed)
                             api.topics.speech_active.unsubscribe(speechActiveCallback);
                         else
-                            self.speechActiveCallback();
+                            self.speechActiveCallback(msg);
                     },
                     voiceRecognised = function (msg) {
-                        if (self.isDestroyed)
+                        if (self.isDestroyed) {
                             api.topics.speech_topic.unsubscribe(voiceRecognised);
-                        else
+                            api.topics.speech_topic.removeAllListeners();
+                        } else
                             self.voiceRecognised(msg);
+                    },
+                    suggestionCallback = function (msg) {
+                        if (self.isDestroyed) {
+                            api.topics.chatbot_responses['default'].unsubscribe(suggestionCallback)
+                            api.topics.chatbot_responses['en'].unsubscribe(suggestionCallback)
+                            api.topics.chatbot_responses['zh'].unsubscribe(suggestionCallback)
+                        } else
+                            self.suggestionCallback(msg);
+                    },
+                    operatorModeCallback = function (response) {
+                        if (self.isDestroyed)
+                            api.topics.selected_tts_mux.unsubscribe(operatorModeCallback);
+                        else {
+                            self.operator_mode_enabled = response.data == 'web_responses';
+                            self.operatorModeSwitched();
+                        }
                     };
-
-                api.topics.chat_responses.subscribe(responseCallback);
+                // tts callbacks
+                api.topics.tts['default'].subscribe(responseCallback);
+                api.topics.tts['en'].subscribe(responseCallback);
+                api.topics.tts['zh'].subscribe(responseCallback);
+                // speech events
                 api.topics.speech_active.subscribe(speechActiveCallback);
+                // user message callback
                 api.topics.speech_topic.subscribe(voiceRecognised);
+
+                // callbacks for response suggestions
+                api.topics.chatbot_responses['default'].subscribe(suggestionCallback);
+                api.topics.chatbot_responses['en'].subscribe(suggestionCallback);
+                api.topics.chatbot_responses['zh'].subscribe(suggestionCallback);
+
+                // fallow tts input topic to distinguish between operator and regular modes
+                api.topics.selected_tts_mux.subscribe(operatorModeCallback);
             },
             setHeight: function (height) {
                 if ($.isNumeric(height))
@@ -154,7 +219,20 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
 
                 this.ui.scrollbar.css('height', height).perfectScrollbar('update');
             },
+            operatorModeSwitched: function () {
+                var self = this;
+                if (!this.operator_mode_enabled)
+                    _.each(this.collection.where({type: 'suggestion'}), function (msg) {
+                        self.collection.remove(msg);
+                    });
+            },
+            suggestionCallback: function (msg) {
+                this.collection.clearSuggestions();
+                if (this.operator_mode_enabled)
+                    this.collection.add({author: 'Robot', message: msg.data, type: 'suggestion'});
+            },
             responseCallback: function (msg) {
+                this.collection.clearSuggestions();
                 this.collection.add({author: 'Robot', message: msg.data});
             },
             speechActiveCallback: function (msg) {
@@ -288,6 +366,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
 
                 this.changeMessageLanguage(language);
                 this.language = language;
+                app.language = language;
 
                 this.ui.languageButton.removeClass('active');
                 $('[data-lang="' + language + '"]', this.el).addClass('active');

@@ -28,9 +28,11 @@ requirejs.config({
         json_editor: 'vendor/jsoneditor.min',
         push_menu: 'vendor/jquery.multilevelpushmenu.min',
         bootbox: 'vendor/bootbox.min',
-        emoticons: 'vendor/jquery.cssemoticons.min'
+        emoticons: 'vendor/jquery.cssemoticons.min',
+        typeahead: 'vendor/bootstrap3-typeahead'
     },
     shim: {
+        typeahead: ['jquery'],
         emoticons: ['jquery'],
         scrollbar: ['jquery'],
         select2: ['jquery', 'jquery-ui'],

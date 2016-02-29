@@ -40,7 +40,6 @@
             <node name="recorder" pkg="recorder" type="continuous_recorder.py" />
             <node name="speech_recognizer" pkg="isr" type="speech_recognizer.py" />
             <node name="speech2command" pkg="speech2command" type="speech2command.py" />
-
         </group>
     </group>
 

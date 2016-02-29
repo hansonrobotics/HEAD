@@ -4,10 +4,6 @@ define(["marionette", "tpl!./templates/layout.tpl", "lib/api", './animations', '
               AnimationModeView) {
         return Marionette.LayoutView.extend({
             template: template,
-            ui: {
-                btOnButton: ".app-gesture-bt-on",
-                btOffButton: ".app-gesture-bt-off"
-            },
             regions: {
                 performances: '.app-performance-buttons',
                 cycles: '.app-cycle-buttons',
@@ -17,14 +13,6 @@ define(["marionette", "tpl!./templates/layout.tpl", "lib/api", './animations', '
                 emotions: '.app-emotions-container',
                 animationMode: '.app-animation-mode-region'
             },
-            events: {
-                'click @ui.btOnButton': "btOn",
-                'click @ui.btOnStageButton': "btOnStage",
-                'click @ui.btEmotionsOffButton': "btEmotionsOff",
-                'click @ui.btGesturesOffButton': "btGesturesOff",
-                'click @ui.btOffButton': "btOff",
-                'click @ui.sayIntroButton': "sayIntro"
-            },
             onRender: function () {
                 api.blenderMode.enable();
 
@@ -33,15 +21,6 @@ define(["marionette", "tpl!./templates/layout.tpl", "lib/api", './animations', '
                 this.createEmotionSliders();
                 this.createPerformanceButtons();
                 this.createAnimationModeButtons();
-            },
-            btOn: function () {
-                api.enableInteractionMode();
-            },
-            btOff: function () {
-                api.disableInteractionMode();
-            },
-            sayIntro: function () {
-                api.sendChatMessage('start demo');
             },
             createGestureButtons: function () {
                 this.gesturesView = new GesturesView();

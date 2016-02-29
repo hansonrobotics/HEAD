@@ -68,7 +68,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 },
                 error: function (xhr, status, error) {
                     if (typeof errorCallback == 'function')
-                        errorCallback(xhr, status, error)
+                        errorCallback(xhr, status, error);
                 }
             });
         },
@@ -259,10 +259,23 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 })
             );
         },
+        webSpeech: function (text, lang) {
+            var topic;
+            if (!lang) {
+                topic = api.topics.web_responses['default'];
+            } else {
+                topic = api.topics.web_responses[lang];
+            }
+            topic.publish(
+                new ROSLIB.Message({
+                    data: text
+                })
+            );
+        },
         robotSpeech: function (text, lang) {
             var topic;
             if (!lang) {
-                topic = api.topics.chatbot_responses;
+                topic = api.topics.tts['default'];
             } else {
                 topic = api.topics.tts[lang];
             }
@@ -359,11 +372,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableScripts: function (success) {
-            api.topics.scripts_available.unsubscribe();
-            api.topics.scripts_available.removeAllListeners();
-            api.topics.scripts_available.subscribe(function (message) {
+            var callback = function (message) {
+                api.topics.scripts_available.unsubscribe(callback);
                 success(message.data.split("|"));
-            });
+            };
+            api.topics.scripts_available.subscribe(callback);
         },
         /**
          * Executes given script
@@ -461,6 +474,17 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.performance_events.subscribe(function (message) {
                 success(message);
             });
+        },
+        enableTtsOperatorMode: function () {
+            this.setTtsMux('web_responses');
+        },
+        disableTtsOperatorMode: function () {
+            this.setTtsMux('chatbot_responses');
+        },
+        setTtsMux: function (topic) {
+            api.services.tts_select.default.callService(new ROSLIB.ServiceRequest({topic: topic}));
+            api.services.tts_select.en.callService(new ROSLIB.ServiceRequest({topic: topic + '_en'}));
+            api.services.tts_select.zh.callService(new ROSLIB.ServiceRequest({topic: topic + '_zh'}));
         }
     };
 

@@ -1,5 +1,5 @@
-define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_editor'],
-    function (App, Marionette, template, JSONEditor) {
+define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_editor', 'lib/json_editor/slider', 'jquery'],
+    function (App, Marionette, template, JSONEditor, $) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
@@ -10,6 +10,7 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
             },
             onRender: function () {
                 var self = this;
+
                 this.editor = new JSONEditor(this.ui.settings.get(0), {
                     form_name_root: 'config',
                     theme: 'bootstrap3',
@@ -21,7 +22,7 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                     iconlib: "fontawesome4"
                 });
 
-                this.editor.on('change',function() {
+                this.editor.on('change', function () {
                     self.update();
                 });
 
