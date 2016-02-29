@@ -1,12 +1,14 @@
-define(["application", "tpl!./templates/message.tpl"], function (App, template) {
+define(["application", "tpl!./templates/message.tpl", 'emoticons'], function (App, template) {
     App.module("Interaction.Views", function (Views, App, Backbone, Marionette, $, _) {
         Views.Message = Marionette.ItemView.extend({
-            tagName: 'li',
             template: template,
+            className: 'app-message',
             ui: {
+                msg: '.msg'
             },
             onRender: function () {
                 this.$el.addClass(this.model.get('author') == 'Robot' ? 'right' : 'left');
+                this.ui.msg.emoticonize();
             },
             serializeData: function () {
                 return _.extend(this.model.toJSON(), {

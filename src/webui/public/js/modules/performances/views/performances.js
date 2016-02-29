@@ -1,8 +1,8 @@
-define(['application', 'tpl!./templates/performances.tpl', './performance'], function (App, template) {
-    App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
-        Views.Performances = Marionette.CompositeView.extend({
+define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../entities/performance'],
+    function (Marionette, template, PerformanceView, Performance) {
+        return Marionette.CompositeView.extend({
             template: template,
-            childView: App.Performances.Views.Performance,
+            childView: PerformanceView,
             childViewContainer: '.app-performances',
             ui: {
                 newButton: '.app-new-performance-button'
@@ -11,14 +11,20 @@ define(['application', 'tpl!./templates/performances.tpl', './performance'], fun
                 'click @ui.newButton': 'addNew'
             },
             addNew: function () {
-                var performance = new App.Performances.Entities.Performance({name: 'New performance'});
+                var performance = new Performance({name: 'New performance'});
                 this.collection.add(performance);
-                Views.trigger('performance:add', performance);
+                this.trigger('new', performance);
             },
-            _insertAfter: function(childView) {
+            _insertAfter: function (childView) {
+                var self = this;
+
+                // add performance to the queue on click
+                childView.on('click', function (data) {
+                    self.options.queueView.addPerformance(data.model);
+                });
+
                 // insert all performance buttons before new button
                 this.ui.newButton.before(childView.el);
             }
         });
     });
-});
