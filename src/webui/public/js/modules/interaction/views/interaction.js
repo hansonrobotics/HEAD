@@ -476,6 +476,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                     lastTime = null;
 
                 this.dragonInterval = setInterval(function () {
+                    if (self.isDestroyed) clearInterval(self.dragonInterval);
                     var current = self.ui.messageInput.val();
 
                     if (current) {
