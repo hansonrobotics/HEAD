@@ -9,7 +9,7 @@ import yaml
 import os.path
 from optparse import OptionParser
 from configs import *
-from subprocess import Popen
+from subprocess import Popen, PIPE
 import datetime
 from monitor import get_logs
 from rospkg import RosPack

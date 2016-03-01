@@ -1,0 +1,39 @@
+pau2motors:
+    topics:
+        listen_topic: motor1;motor2
+
+motors:
+  - name: motor1
+    topic: pub_topic
+    labelleft: test_label
+    default: 0
+    min: 0
+    max: 1
+    sort_no: 0
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_headRotation
+      function:
+        - name: quaternion2euler
+          axis: z
+
+  - name: motor2
+    topic: pub_topic2
+    labelleft: test_label2
+    default: 0
+    min: 0
+    max: 0.5
+    sort_no: 1
+    group: Neck
+    hardware: dynamixel
+    pau:
+      parser:
+        name: getproperty
+        property: m_neckRotation
+      function:
+        - name: quaternion2euler
+          axis: z
+
