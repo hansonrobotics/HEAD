@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import chatbot
+import aiml
 import rospy
 import os
 import logging
