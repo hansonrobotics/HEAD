@@ -1,5 +1,5 @@
 define(['application','marionette',  'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery-ui', 'lib/crosshair-slider',
-        'vendor/select2.min'],
+        'select2'],
     function (App, Marionette, template, api, bootbox) {
         return Marionette.ItemView.extend({
                 template: template,
