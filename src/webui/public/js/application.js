@@ -1,8 +1,8 @@
 define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api'],
     function (Backbone, Marionette, ros, LayoutView, api) {
         var Application = new Marionette.Application({
-            fps: 48
-        }),
+                fps: 48
+            }),
             checkConnection = function () {
                 // Allow the monitor to be open if not connected
                 if (Backbone.history.getHash().match(/admin\/monitor/)) {
@@ -20,7 +20,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
                 Backbone.history.start();
         });
         // store layout instance in App.Layout.Instance
-        Application.LayoutInstance = new LayoutView();
+        Application.LayoutInstance = new LayoutView({fluid: true});
 
         // add layout to page body
         $('body').prepend(Application.LayoutInstance.render().el);
@@ -48,8 +48,12 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
                 return;
             if (callback) callback.apply(this, args);
         };
+
+        Application.language = 'en';
+
         ros.connect(function () {
             require([
+                    'modules/puppeteering/router',
                     'modules/animations/animations_app',
                     'modules/expressions/expressions_app',
                     'modules/motors/motors_app',

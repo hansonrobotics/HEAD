@@ -11,6 +11,7 @@
         <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
         <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/safety.yaml" command="load"/>
         <group if="$(arg mini)">
             <include file="$(find robots_config)/$(arg name)/hardware.launch" />
             <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py"
@@ -39,7 +40,6 @@
             <node name="recorder" pkg="recorder" type="continuous_recorder.py" />
             <node name="speech_recognizer" pkg="isr" type="speech_recognizer.py" />
             <node name="speech2command" pkg="speech2command" type="speech2command.py" />
-
         </group>
     </group>
 

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
+    <div id="navbar-container" class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
@@ -20,8 +20,9 @@
             </span>
         </div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div id="app-navbar" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul id="app-nav" class="nav navbar-nav navbar-right">
+                <li><a href="#/puppeteering">Puppeteering</a></li>
                 <li><a href="#/performances">Performances</a></li>
                 <li><a href="#/gestures">Gestures</a></li>
                 <li><a href="#/expressions">Expressions</a></li>
@@ -38,4 +39,4 @@
     </div>
 </nav>
 
-<div id="app-content" class="clearfix"></div>
+<div id="app-content"></div>

@@ -12,8 +12,6 @@ define(['application', './views/expressions', 'lib/api', 'lib/utilities', 'lib/c
                 this.initExpressions();
                 this.createButtons();
 
-                var treeMessage;
-
                 api.blenderMode.disable();
                 api.disableInteractionMode();
 

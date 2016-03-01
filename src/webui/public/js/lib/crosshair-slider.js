@@ -1,8 +1,8 @@
 define(['jquery', 'jquery-ui'], function ($) {
     $.widget("custom.crosshairsl", {
         options: {
-            fgColor: "#FFAA00",
-            bgColor: "#888",
+            fgColor: "#fff",
+            bgColor: "#485563",
             xmin: -50, xmax: 50, xval: 0,
             ymin: -50, ymax: 50, yval: 0,
             change: null
