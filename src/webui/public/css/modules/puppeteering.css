@@ -1,0 +1,23 @@
+.app-timeline-editor-region, .app-right-column {
+    position: relative;
+}
+
+.app-robot-controls {
+    padding-bottom: 10px;
+}
+
+.app-robot-controls button {
+    margin-bottom: 5px;
+}
+
+.speech-input-container {
+    margin-top: 10px;
+}
+
+.app-interaction-region {
+    position: relative;
+}
+
+.app-animations-region {
+    padding-bottom: 10px;
+}

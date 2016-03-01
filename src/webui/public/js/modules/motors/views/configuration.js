@@ -1,5 +1,5 @@
 define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './config/motor_grid', 'lib/api',
-        'entities/motor', 'backbone_pageable', 'backgrid_select_all', 'backgrid_filter', 'backgrid_paginator'],
+        'entities/motor', 'backbone_pageable', 'backgrid_select_all', 'backgrid_filter', 'backgrid_paginator', 'scrollbar'],
     function (App, template, Backgrid, columns, api) {
         App.module("Motors.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Configuration = Marionette.LayoutView.extend({
@@ -29,7 +29,6 @@ define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './confi
 
                     this.motorsCollection = new App.Entities.MotorCollection();
                     this.pageableMotors = new PageableCollection();
-
                     this.motorsCollection.fetchFromFile(function () {
                         self.pageableMotors.add(self.motorsCollection.models);
                     });
@@ -66,11 +65,11 @@ define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './confi
                 },
                 save: function () {
                     var el = this.ui.saveButton;
-
+                    this.motorsCollection.reset(this.pageableMotors.toJSON());
                     this.motorsCollection.sync(function () {
-                        App.Utilities.showPopover(el, 'Motors saved')
-                    }, function () {
-                        App.Utilities.showPopover(el, 'Error saving motors')
+                        App.Utilities.showPopover(el, 'Motors saved');
+                    }, function (error) {
+                        App.Utilities.showPopover(el, 'Error saving motors: ' + error);
                     });
                 },
                 delete: function () {

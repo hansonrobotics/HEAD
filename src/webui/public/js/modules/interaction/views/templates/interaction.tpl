@@ -1,65 +1,47 @@
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="app-chat-settings-container pull-right">
-                <div class="app-language-select btn-group" role="group" aria-label="...">
-                    <button type="button" data-lang="en" class="btn btn-default btn-sm active">EN</button>
-                    <button type="button" data-lang="zh" class="btn btn-default btn-sm">CN</button>
-                </div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="app-chat-settings-container pull-right">
+            <div class="app-language-select btn-group" role="group" aria-label="...">
+                <button type="button" data-lang="en" class="btn btn-default btn-sm active">EN</button>
+                <button type="button" data-lang="zh" class="btn btn-default btn-sm">CN</button>
+            </div>
 
-                <div class="app-recognition-select btn-group" role="group" aria-label="...">
-                    <button type="button" data-method="webspeech" class="btn btn-default btn-sm active">webspeech
-                    </button>
-                    <button type="button" data-method="iflytek" class="btn btn-default btn-sm">iflytek</button>
-                </div>
+            <div class="app-recognition-select btn-group" role="group" aria-label="...">
+                <button type="button" data-method="webspeech" class="btn btn-default btn-sm active">webspeech
+                </button>
+                <button type="button" data-method="iflytek" class="btn btn-default btn-sm">iflytek</button>
+            </div>
 
-                <div class="app-noise-container">
-                    <button class="app-adjust-noise-button btn btn-default btn-sm" type="button" title="Adjust noise">
-                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-                    </button>
+            <div class="app-noise-container">
+                <button class="app-adjust-noise-button btn btn-default btn-sm" type="button" title="Adjust noise">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </button>
 
-                    <div class="app-noise-slider">
-                        <span class="app-noise-value"><span class="caption"></span>noise: <span class="value">500</span></span>
-                    </div>
+                <div class="app-noise-slider">
+                    <span class="app-noise-value"><span class="caption"></span>noise: <span
+                            class="value">500</span></span>
                 </div>
             </div>
-            <ul class="app-messages"></ul>
+        </div>
+        <div class="app-scrollbar">
+            <div class="app-messages"></div>
         </div>
     </div>
 </div>
 
-<footer class="navbar-default navbar-fixed-bottom">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="record-container col-sm-12">
-                    <div class="app-select-person-container">
-                        <button class="expand-face-select-button btn btn-primary btn-sm" type="button"
-                                data-toggle="collapse"
-                                data-target=".app-face-container" aria-expanded="false" aria-controls="collapse">
-                            Select a person
-                        </button>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="app-interaction-footer">
+            <div class="app-faces-container"></div>
+            <div class="message-input-container input-group">
+                <input type="text" class="app-message-input form-control"
+                       placeholder="Type your message here..."/>
 
-                        <div class="app-face-container collapse">
-                            <div class="face-select-instruction">touch the image of your face, to talk to me</div>
-                            <div class="app-face-thumbnails clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="message-input-container input-group">
-                    <input type="text" class="app-message-input form-control"
-                           placeholder="Type your message here..."/>
-
-                    <span class="input-group-btn">
-                        <button class="app-send-button btn btn-primary">Send</button>
-                        <button class="app-record-button btn btn-info"><i class="fa fa-microphone"></i></button>
-                    </span>
-                </div>
+                <span class="input-group-btn">
+                    <button class="app-send-button btn btn-primary">Send</button>
+                    <button class="app-record-button btn btn-info"><i class="fa fa-microphone"></i></button>
+                </span>
             </div>
         </div>
     </div>
-</footer>
+</div>

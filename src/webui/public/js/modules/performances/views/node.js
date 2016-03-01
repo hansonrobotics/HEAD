@@ -1,8 +1,7 @@
-define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery-ui', 'lib/crosshair-slider',
-        'vendor/select2.min'],
-    function (App, template, api, bootbox) {
-        App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
-            Views.Node = Marionette.ItemView.extend({
+define(['application','marionette',  'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery-ui', 'lib/crosshair-slider',
+        'select2'],
+    function (App, Marionette, template, api, bootbox) {
+        return Marionette.ItemView.extend({
                 template: template,
                 ui: {
                     magnitudeSlider: '.app-magnitide-slider',
@@ -41,30 +40,30 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery
                 onRender: function () {
                     var self = this;
 
-                    if (_.contains(['pause'], this.model.get('name'))) {
-                        this.ui.durationIndicator.hide();
-                        this.ui.frameCount.hide();
-                    } else
-                        this.updateIndicators();
+                if (_.contains(['pause'], this.model.get('name'))) {
+                    this.ui.durationIndicator.hide();
+                    this.ui.frameCount.hide();
+                } else
+                    this.updateIndicators();
 
-                    if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
-                        // set default
-                        if (!this.model.get('magnitude'))
-                            this.model.set('magnitude', 1);
+                if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
+                    // set default
+                    if (!this.model.get('magnitude'))
+                        this.model.set('magnitude', 1);
 
-                        this.ui.magnitudeLabel.html(this.model.get('magnitude') * 100 + '%');
+                    this.ui.magnitudeLabel.html(this.model.get('magnitude') * 100 + '%');
 
-                        // init slider
-                        this.ui.magnitudeSlider.slider({
-                            animate: true,
-                            range: 'min',
-                            value: this.model.get('magnitude') * 100,
-                            slide: function (e, ui) {
-                                self.model.set('magnitude', (ui.value / 100).toFixed(2));
-                                self.ui.magnitudeLabel.html(Math.floor(self.model.get('magnitude') * 100) + '%');
-                            }
-                        });
-                    }
+                    // init slider
+                    this.ui.magnitudeSlider.slider({
+                        animate: true,
+                        range: 'min',
+                        value: this.model.get('magnitude') * 100,
+                        slide: function (e, ui) {
+                            self.model.set('magnitude', (ui.value / 100).toFixed(2));
+                            self.ui.magnitudeLabel.html(Math.floor(self.model.get('magnitude') * 100) + '%');
+                        }
+                    });
+                }
 
                     switch (this.model.get('name')) {
                         case 'emotion':
@@ -106,60 +105,61 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery
                             // init with empty list
                             self.updateGestures([]);
                             // load gestures
-                            api.getAvailableGestures(function (gestures) { self.updateGestures(gestures)});
-
-                            if (!this.model.get('speed')) this.model.set('speed', 1);
-
-                            this.ui.speedLabel.html(this.model.get('speed'));
-                            this.ui.speedSlider.slider({
-                                range: 'min',
-                                animate: true,
-                                min: 50,
-                                max: 200,
-                                value: this.model.get('speed') * 100,
-                                slide: function (e, ui) {
-                                    var speed = ui.value / 100;
-                                    self.model.set('speed', speed);
-                                    self.setGestureLength();
-                                    self.ui.speedLabel.html(speed.toFixed(2));
-                                }
+                            api.getAvailableGestures(function (gestures) {
+                                self.updateGestures(gestures)
                             });
-                            break;
-                        case 'look_at':
-                            this.buildCrosshair();
-                            break;
-                        case 'gaze_at':
-                            this.buildCrosshair();
-                            break;
-                        case 'speech':
-                            if (this.model.get('text'))
-                                this.ui.textInput.val(this.model.get('text'));
-                            else
-                                this.model.set('text', '');
 
-                            if (!this.model.get('lang'))
-                                this.model.set('lang', 'en');
-                            this.ui.langSelect.val(this.model.get('lang'));
-                            $(self.ui.langSelect).select2();
-                            break;
-                    }
-                },
-                updateEmotions: function (emotions) {
-                    var self = this;
-                    _.each(emotions, function (emotion) {
-                        $(self.ui.emotionSelect).append($('<option>').prop('value', emotion).html(emotion));
-                    });
+                        if (!this.model.get('speed')) this.model.set('speed', 1);
 
-                    if (!this.model.get('emotion') && emotions.length > 0)
-                        this.model.set('emotion', emotions[0]);
+                        this.ui.speedLabel.html(this.model.get('speed'));
+                        this.ui.speedSlider.slider({
+                            range: 'min',
+                            animate: true,
+                            min: 50,
+                            max: 200,
+                            value: this.model.get('speed') * 100,
+                            slide: function (e, ui) {
+                                var speed = ui.value / 100;
+                                self.model.set('speed', speed);
+                                self.setGestureLength();
+                                self.ui.speedLabel.html(speed.toFixed(2));
+                            }
+                        });
+                        break;
+                    case 'look_at':
+                        this.buildCrosshair();
+                        break;
+                    case 'gaze_at':
+                        this.buildCrosshair();
+                        break;
+                    case 'speech':
+                        if (this.model.get('text'))
+                            this.ui.textInput.val(this.model.get('text'));
+                        else
+                            this.model.set('text', '');
 
-                    if (this.model.get('emotion'))
-                        $(this.ui.emotionSelect).val(this.model.get('emotion'));
+                        if (!this.model.get('lang'))
+                            this.model.set('lang', 'en');
+                        this.ui.langSelect.val(this.model.get('lang'));
+                        $(self.ui.langSelect).select2();
+                        break;
+                }
+            },
+            updateEmotions: function (emotions) {
+                var self = this;
+                _.each(emotions, function (emotion) {
+                    $(self.ui.emotionSelect).append($('<option>').prop('value', emotion).html(emotion));
+                });
+
+                if (!this.model.get('emotion') && emotions.length > 0)
+                    this.model.set('emotion', emotions[0]);
+
+                if (this.model.get('emotion'))
+                    $(this.ui.emotionSelect).val(this.model.get('emotion'));
 
                     $(this.ui.emotionSelect).select2();
                 },
                 updateKFAnimations: function (animations) {
-                    console.log(animations)
                     var self = this;
                     _.each(animations, function (animation) {
                         $(self.ui.kfAnimationSelect).append($('<option>').prop('value', animation).html(animation));
@@ -182,38 +182,38 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery
                         $(self.ui.expressionSelect).append($('<option>').prop('value', expr).html(expr));
                     });
 
-                    if (!self.model.get('expression') && expressions.length > 0)
-                        self.model.set('expression', expressions[0]);
+                if (!self.model.get('expression') && expressions.length > 0)
+                    self.model.set('expression', expressions[0]);
 
-                    if (self.model.get('expression'))
-                        $(self.ui.expressionSelect).val(self.model.get('expression'));
+                if (self.model.get('expression'))
+                    $(self.ui.expressionSelect).val(self.model.get('expression'));
 
-                    $(self.ui.expressionSelect).select2();
-                },
-                updateGestures: function (gestures) {
-                    var self = this;
-                    _.each(gestures, function (gesture) {
-                        $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
-                    });
+                $(self.ui.expressionSelect).select2();
+            },
+            updateGestures: function (gestures) {
+                var self = this;
+                _.each(gestures, function (gesture) {
+                    $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
+                });
 
-                    if (!this.model.get('gesture') && gestures.length > 0) {
-                        this.model.set('gesture', gestures[0]);
-                        this.setGestureLength();
-                    }
+                if (!this.model.get('gesture') && gestures.length > 0) {
+                    this.model.set('gesture', gestures[0]);
+                    this.setGestureLength();
+                }
 
-                    if (this.model.get('gesture'))
-                        $(this.ui.emotionSelect).val(this.model.get('gesture'));
+                if (this.model.get('gesture'))
+                    $(this.ui.emotionSelect).val(this.model.get('gesture'));
 
-                    $(this.ui.gestureSelect).select2();
-                },
-                setDuration: function () {
-                    this.model.set('duration', $(this.ui.duration).val());
-                    this.updateIndicators();
-                },
-                updateIndicators: function () {
-                    var fps = App.getOption('fps'),
-                        step = 1 / fps,
-                        duration = Number(parseInt(this.model.get('duration') / step) * step).toFixed(2);
+                $(this.ui.gestureSelect).select2();
+            },
+            setDuration: function () {
+                this.model.set('duration', $(this.ui.duration).val());
+                this.updateIndicators();
+            },
+            updateIndicators: function () {
+                var fps = App.getOption('fps'),
+                    step = 1 / fps,
+                    duration = Number(parseInt(this.model.get('duration') / step) * step).toFixed(2);
 
                     this.ui.durationIndicator.html(duration + 's');
                     this.ui.frameCount.html(parseInt(duration * fps));
@@ -282,28 +282,23 @@ define(['application', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery
 
                             self.model.call();
                         }
-                    }, {
-                        bgColor: "#485563",
-                        fgColor: "#fff"
                     }, params));
 
-                    self.model.set('x', 1);
-                    self.model.set('y', 0);
-                    self.model.set('z', 0);
+                self.model.set('x', 1);
+                self.model.set('y', 0);
+                self.model.set('z', 0);
+            },
+            deleteNode: function () {
+                var self = this;
 
-                },
-                deleteNode: function () {
-                    var self = this;
-
-                    bootbox.confirm("Are you sure?", function (result) {
-                        if (result) {
-                            self.model.destroy();
-                            self.$el.slideUp(null, function () {
-                                self.destroy();
-                            });
-                        }
-                    });
-                }
-            });
+                bootbox.confirm("Are you sure?", function (result) {
+                    if (result) {
+                        self.model.destroy();
+                        self.$el.slideUp(null, function () {
+                            self.destroy();
+                        });
+                    }
+                });
+            }
         });
     });

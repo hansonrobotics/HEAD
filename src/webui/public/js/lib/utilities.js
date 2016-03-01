@@ -1,5 +1,5 @@
 define(function () {
-    return  {
+    return {
         degToRad: function (val) {
             return val * Math.PI / 180;
         },
@@ -26,6 +26,14 @@ define(function () {
                     fire();
                 }
             };
+        },
+        extendRecursive: function (target, source) {
+            for (var prop in source)
+                if (prop in target && typeof source[prop] == 'object')
+                    this.extendRecursive(target[prop], source[prop]);
+                else
+                    target[prop] = source[prop];
+            return target;
         }
     };
 });

@@ -1,24 +1,19 @@
-define(['application'], function (App) {
-    App.module('Performances.Views', function (Views, App, Backbone, Marionette, $, _) {
-        Views.Performance = Marionette.ItemView.extend({
-            tagName: 'button',
-            template: false,
-            attributes: {
-                'class': 'app-performance-button btn btn-default',
-                type: 'button'
-            },
-            events: {
-                'click': 'click'
-            },
-            modelEvents: {
-                'change': 'render'
-            },
-            onRender: function () {
-                this.$el.html(this.model.get('name'));
-            },
-            click: function (e) {
-                Views.trigger('performance:click', this.model);
-            }
-        });
+define(['marionette'], function (Marionette) {
+    return Marionette.ItemView.extend({
+        tagName: 'button',
+        template: false,
+        attributes: {
+            'class': 'app-performance-button btn btn-default',
+            type: 'button'
+        },
+        triggers: {
+            click: "click" // fires a 'click' event on view instance
+        },
+        modelEvents: {
+            change: 'render'
+        },
+        onRender: function () {
+            this.$el.html(this.model.get('name'));
+        }
     });
 });
