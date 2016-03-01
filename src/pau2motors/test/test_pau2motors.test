@@ -1,5 +1,5 @@
 <launch>
-    <param name="/run_id" value="test_pau2motors" />
-    <test name="test_pau2motors" pkg="pau2motors" type="test_pau2motors.py" test-name="pau2motors" />
+    <rosparam file="$(find pau2motors)/test/test.yaml" command="load" />
+    <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py" />
 </launch>
 

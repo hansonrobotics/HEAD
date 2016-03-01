@@ -1,12 +1,9 @@
 #!/usr/bin/python
-import mimetypes
 import os
-import os.path
 from flask import Flask, send_from_directory, request, Response
 from werkzeug.utils import secure_filename
 import reporter
 import yaml
-import os.path
 from optparse import OptionParser
 from configs import *
 from subprocess import Popen
