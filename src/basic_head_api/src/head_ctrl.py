@@ -12,7 +12,7 @@ from basic_head_api.msg import *
 from pau2motors.msg import pau
 from geometry_msgs.msg import Quaternion
 from pi_face_tracker.msg import Faces
-import Utils
+import Quat
 from std_msgs.msg import String
 from std_msgs.msg import Float64
 import time
@@ -29,7 +29,7 @@ class PauCtrl:
     def point_head(self, req):
         msg = pau()
         msg.m_headRotation = Quaternion(
-            *Utils.Quat.fromInYZX(req.roll, -req.yaw, -req.pitch).params
+            *Quat.Quat.fromInYZX(req.roll, -req.yaw, -req.pitch).params
         )
         self.pub_neck.publish(msg)
 
