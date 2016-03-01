@@ -1,8 +1,8 @@
-.app-slider-container {
+.app-motor-container {
     padding: 5px 0;
 }
 
-.app-slider-container p {
+.app-motor-container p {
     margin-bottom: 5px;
 }
 
@@ -49,7 +49,7 @@
     display: none;
 }
 
-.ui-slider  {
+.ui-slider {
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;;
     border-radius: 0 !important;;
@@ -82,7 +82,7 @@
     height: 21px;
 }
 
-.app-slider-container hr {
+.app-motor-container hr {
     margin: 0 0 5px;
 }
 
@@ -145,7 +145,8 @@
     padding: 5px;
 }
 
-.app-select-motor-button {
+.app-select-motor-button,
+.app-select-group-button {
     height: 21px;
     width: 21px;
     padding: 0;

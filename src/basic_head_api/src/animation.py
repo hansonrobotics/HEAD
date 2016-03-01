@@ -37,7 +37,7 @@ class Animation:
                     self._timeline[m] = [act]
 
             current_frame += k['frames']
-        self._total = current_frame
+        self.total = current_frame
 
     # currently linear
     @staticmethod
@@ -47,7 +47,7 @@ class Animation:
 
     def frames(self):
         timeline = deepcopy(self._timeline)
-        for x in xrange(self._total):
+        for x in xrange(self.total):
             current = {}
             for m, actions in timeline.items():
                 if len(actions) > 0:

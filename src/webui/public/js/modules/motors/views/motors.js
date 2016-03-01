@@ -1,5 +1,5 @@
-define(['application', "marionette", "./motor", 'jquery-ui'],
-    function (App, Marionette, motorView) {
+define(['application', "marionette", "./motor", 'jquery', 'jquery-ui'],
+    function (App, Marionette, motorView, $) {
         return Marionette.CollectionView.extend({
             childView: motorView,
             initialize: function () {
@@ -38,6 +38,17 @@ define(['application', "marionette", "./motor", 'jquery-ui'],
                         self.collection.updateStatus();
                     }, 1000)
                 }
+
+                $(document).on('click', '.app-select-group-button', function () {
+                    var groupMotors = $(this).closest('.app-motor-container')
+                        .nextUntil(".app-first-in-motor-group").andSelf();
+
+                    var selected = $('.glyphicon-ok', groupMotors).closest('.app-select-motor-button');
+                    if (selected.length > 0)
+                        selected.click();
+                    else
+                        $('.app-select-motor-button', groupMotors).click();
+                });
             },
             onDestroy: function () {
                 clearInterval(this.monitoringInterval);

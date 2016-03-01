@@ -38,21 +38,21 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             param.set(expressions);
         },
         getAnimations: function (callback) {
-            var param = new ROSLIB.Param({
-                ros: api.ros,
-                name: '/' + api.config.robot + '/animations'
-            });
-
-            param.get(function (animations) {
+            var self = this;
+            this.getRosParam('/' + api.config.robot + '/animations', function (data) {
+                var animations = [];
+                if (Array.isArray(data))
+                    $.each(data, function (i, animation) {
+                        $.each(animation, function (name, frames) {
+                            animations.push({name: name, frames: frames});
+                        });
+                    });
                 callback(animations);
-            });
+            })
         },
         setAnimations: function (animations) {
-            var param = new ROSLIB.Param({
-                ros: api.ros,
-                name: '/' + api.config.robot + '/animations'
-            });
-            param.set(animations);
+            this.setRosParam('/' + api.config.robot + '/animations', animations);
+            this.animations = [];
         },
         updateAnimations: function (animations, successCallback, errorCallback) {
             var self = this;
@@ -79,6 +79,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                     fps: fps
                 })
             );
+        },
+        getKFAnimationLength: function (animation, success) {
+            api.services.get_kf_animation_length.callService(new ROSLIB.ServiceRequest({name: animation}), success, function (error) {
+                console.log(error);
+            });
         },
         sendChatMessage: function (text) {
             console.log('Sending message: ' + text);
@@ -326,7 +331,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             for (var i = 0; motors && i < motors.length; i++) {
                 // Create topics for specific motors
                 if (!(motors[i]['topic'] in api.topics)) {
-                    if ('motor_id' in motors[i]) {
+                    if (motors[i]['hardware'] == 'pololu') {
                         // Pololu
                         api.topics[motors[i]['topic']] = new ROSLIB.Topic({
                             ros: api.ros,
@@ -474,6 +479,12 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.topics.performance_events.subscribe(function (message) {
                 success(message);
             });
+        },
+        setDxlTorque: function (enable) {
+            api.services.set_dxl_torque.callService(new ROSLIB.ServiceRequest({torque_enable: enable}))
+        },
+        getMotorStates: function (success) {
+            api.services.get_motor_states.callService(new ROSLIB.ServiceRequest(), success)
         },
         enableTtsOperatorMode: function () {
             this.setTtsMux('web_responses');

@@ -1,0 +1,5 @@
+---
+string[] motors
+float32[] angles
+
+

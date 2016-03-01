@@ -1,5 +1,5 @@
-define(['application', 'tpl!./templates/layout.tpl', 'bootstrap'],
-    function (App, template) {
+define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap', 'entities/expression'],
+    function (App, template, api) {
         App.module('Animations.Views', function (Views, App, Backbone, Marionette, $, _) {
             Views.Animations = Marionette.LayoutView.extend({
                 template: template,
@@ -8,20 +8,40 @@ define(['application', 'tpl!./templates/layout.tpl', 'bootstrap'],
                     saveButton: '.app-save-frames',
                     addFrame: '.app-add-frame',
                     deleteAnimation: '.app-delete-animation',
+                    copyAnimation: '.app-copy-animation',
                     addAnimation: '.app-add-animation',
-                    admin: '.app-admin'
+                    admin: 'app-admin',
+                    enableTorque: '.app-enable-torque',
+                    disableTorque: '.app-disable-torque',
+                    readValues: '.app-read-values',
+                    expressions: '.app-expressions'
                 },
                 events: {
                     'click @ui.saveButton': 'updateAnimations',
                     'click @ui.addFrame': 'addFrame',
-                    'click @ui.deleteAnimation': 'deleteAnimation',
-                    'click @ui.addAnimation': 'addAnimation'
+                    'click @ui.copyAnimation': 'copyAnimation',
+                    'click @ui.deleteAnimation': 'copyAnimation',
+                    'click @ui.addAnimation': 'addAnimation',
+                    'click @ui.enableTorque': 'enableTorque',
+                    'click @ui.disableTorque': 'disableTorque',
+                    'click @ui.readValues': 'readValues'
                 },
                 regions: {
                     animationButtons: '.app-animations',
                     animationEdit: '.app-animation-edit',
                     frames: '.app-frames',
                     motors: '.app-motors'
+                },
+                onRender: function () {
+                    var self = this,
+                        expressions = new App.Entities.ExpressionCollection();
+                    expressions.on('add', function (model) {
+                        self.ui.expressions.append($('<button>').addClass('expression-button btn btn-default').html(
+                            model.get('name')).click(function () {
+                            Views.trigger('add_expression_frame', model);
+                        }));
+                    });
+                    expressions.fetch();
                 },
                 updateAnimations: function () {
                     var self = this;
@@ -38,8 +58,22 @@ define(['application', 'tpl!./templates/layout.tpl', 'bootstrap'],
                 deleteAnimation: function () {
                     Views.trigger('delete_animation');
                 },
+                copyAnimation: function () {
+                    Views.trigger('copy_animation');
+                },
                 addAnimation: function () {
                     Views.trigger('add_animation');
+                },
+                enableTorque: function () {
+                    api.setDxlTorque(true);
+                },
+                disableTorque: function () {
+                    api.setDxlTorque(false);
+                },
+                readValues: function () {
+                    api.getMotorStates(function (val) {
+                        Views.trigger('read_values', val);
+                    })
                 }
             });
         });

@@ -23,7 +23,9 @@ class Configs:
         'max': None,
         'sort_no': 0,
         'group': 'Ungrouped',
-        'hardware': None
+        'hardware': None,
+        'motor_id': -1,
+        'init': -1
     }
 
     _PAU_TPL = {
@@ -108,6 +110,10 @@ class Configs:
         c['sort_no'] = m['sort_no']
         c['group'] = m['group']
         c['hardware'] = m['hardware']
+        c['motor_id'] = m['motor_id']
+        c['init'] = m['init']
+
+
         pau = self._get_pau(m)
         if pau:
             c['pau'] = pau

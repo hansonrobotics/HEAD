@@ -9,20 +9,18 @@ import yaml
 import os.path
 from optparse import OptionParser
 from configs import *
-from subprocess import Popen, PIPE
+from subprocess import Popen
 import datetime
 from monitor import get_logs
+from rospkg import RosPack
+rp = RosPack()
 
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
 app.config['CHAT_AUDIO_DIR'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, 'chat_audio')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
-stdout, stderr = Popen(['rospack', 'find', 'robots_config'], stdout=PIPE, stderr=PIPE).communicate()
-if stdout:
-    config_root = stdout.strip()
-else:
-    raise Exception("ROS package robots_config is not found")
+config_root = rp.get_path('robots_config')
 performance_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, 'performances',
                                'robots')
 
