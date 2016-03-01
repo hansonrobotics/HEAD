@@ -80,11 +80,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 })
             );
         },
-        appendMessageCache: function (text) {
-            api.topics.chatbot_text.publish(new ROSLIB.Message({
-                data: text
-            }));
-        },
         getKFAnimationLength: function (animation, success) {
             api.services.get_kf_animation_length.callService(new ROSLIB.ServiceRequest({name: animation}), success, function (error) {
                 console.log(error);
