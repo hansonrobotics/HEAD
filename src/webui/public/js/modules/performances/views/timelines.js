@@ -155,6 +155,8 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     $(node.get('el')).html(node.get('gesture'));
                 else if (node.get('expression'))
                     $(node.get('el')).html(node.get('expression'));
+                else if (node.get('animation'))
+                    $(node.get('el')).html(node.get('animation'));
             },
             addNode: function (node) {
                 this.createNodeEl(node);

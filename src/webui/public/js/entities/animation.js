@@ -10,12 +10,10 @@ define(['application', 'lib/api'], function (App, api) {
                 var self = this;
                 api.getAnimations(function (animations) {
                     _.each(animations, function (animation) {
-                        _.each(animation, function (frames, name) {
-                            self.add(new Backbone.Model({
-                                name: name,
-                                frames_collection: new Entities.FramesCollection(frames)
-                            }));
-                        });
+                        self.add(new Backbone.Model({
+                            name: animation.name,
+                            frames_collection: new Entities.FramesCollection(animation.frames)
+                        }));
                     });
                 });
             },

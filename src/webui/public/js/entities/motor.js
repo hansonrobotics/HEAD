@@ -60,8 +60,11 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     data: JSON.stringify(data),
                     type: 'POST',
                     dataType: "json",
-                    success: function () {
-                        if (typeof successCallback == 'function')
+                    success: function (response) {
+                        if (response.error) {
+                            if (typeof errorCallback == 'function')
+                                errorCallback(response.error);
+                        } else if (typeof successCallback == 'function')
                             successCallback();
                     },
                     error: function () {

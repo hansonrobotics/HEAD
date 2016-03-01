@@ -2,7 +2,7 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
     function (Marionette, template, $) {
         return Marionette.ItemView.extend({
             template: template,
-            className: 'app-slider-container',
+            className: 'app-motor-container',
             modelEvents: {
                 "change": "modelChanged"
             },
@@ -17,6 +17,7 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                 dynamixelButtonTooltip: '.app-dynamixel-button-tooltip',
                 dynamixelParams: '.app-dynamixel-params',
                 selectButton: '.app-select-motor-button',
+                selectGroupButton: '.app-select-group-button',
                 selectButtonIcon: '.app-select-motor-button span'
             },
             events: {
@@ -28,6 +29,7 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                 });
 
                 if (typeof this.options.motorGroupLabel != 'undefined' && this.options.motorGroupLabel) {
+                    this.$el.addClass('app-first-in-motor-group');
                     return _.extend(data, {
                         groupLabel: this.options.motorGroupLabel
                     });
@@ -40,7 +42,7 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                 this.ui.sliderMaxVal.text(this.model.getDegrees('max') + '°');
                 this.ui.labelLeft.text(this.model.get('labelleft') || this.model.get('name'));
                 this.ui.labelright.text(this.model.get('labelright'));
-
+                $(this.ui.slider).slider('value', this.model.getDegrees('value'));
                 if (this.options['monitoring']) {
                     $(this.ui.slider).slider('value', 0);
                     this.ui.value.text('0°');
@@ -127,8 +129,10 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
             showSelectButton: function (show) {
                 if (show) {
                     this.ui.selectButton.show();
+                    this.ui.selectGroupButton.show();
                 } else {
                     this.ui.selectButton.hide();
+                    this.ui.selectGroupButton.hide();
                 }
             },
             toggleSelect: function () {

@@ -32,7 +32,7 @@ class Safety():
             self.motors[m['name']] = m
             if not m['topic'] in self.publishers.keys():
                 # Pololu motor if motor_id is specified
-                if 'motor_id' in m:
+                if m['hardware'] == 'pololu' :
                     self.publishers[m['topic']] = rospy.Publisher("safe/" + m['topic'] + "/command", MotorCommand, queue_size=30)
                     self.subscribers[m['topic']] = rospy.Subscriber(m['topic'] + "/command", MotorCommand,
                                                                     lambda msg, m=m: self.callback(m, False, msg))

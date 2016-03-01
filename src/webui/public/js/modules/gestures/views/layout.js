@@ -22,6 +22,19 @@ define(["marionette", "tpl!./templates/layout.tpl", "lib/api", './animations', '
                 this.createPerformanceButtons();
                 this.createAnimationModeButtons();
             },
+            btOn: function() {
+                api.enableInteractionMode();
+            },
+            btOff: function() {
+                api.disableInteractionMode();
+            },
+            sayIntro: function() {
+                api.sendChatMessage('start demo');
+            },
+            changePpMode(e){
+                var mode = $(e.target).data("mode") || 0;
+                api.topics.set_animation_mode.publish(new ROSLIB.Message({data: mode}));
+            },
             createGestureButtons: function () {
                 this.gesturesView = new GesturesView();
                 this.getRegion('gestures').show(this.gesturesView);

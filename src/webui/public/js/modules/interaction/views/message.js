@@ -40,7 +40,7 @@ define(["application", "tpl!./templates/message.tpl", 'lib/api', 'emoticons'], f
                 return hour + ":" + min + " " + amPm;
             },
             acceptSuggestion: function () {
-                api.robotSpeech(this.model.get('message'), app.language);
+                api.webSpeech(this.model.get('message'), app.language);
                 this.discardSuggestion();
             },
             discardSuggestion: function () {

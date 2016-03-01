@@ -5,6 +5,9 @@ project(eye_tracking)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+    dynamic_reconfigure
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -65,6 +68,11 @@ find_package(catkin REQUIRED)
 #   DEPENDENCIES
 #   std_msgs  # Or other packages containing msgs
 # )
+
+## Generate dynamic reconfigure parameters in the 'cfg' folder
+generate_dynamic_reconfigure_options(
+  cfg/EyeTracking.cfg
+)
 
 ###################################
 ## catkin specific configuration ##

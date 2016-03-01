@@ -43,13 +43,19 @@ define(['application', './views/animations', './views/layout', '../motors/views/
                 }).on('animation_selected', function (name) {
                     self.animationSelected(name);
                 }).on('add_frame', function () {
-                    self.addFrame();
+                    self.addFrame('', {});
                 }).on('delete_animation', function () {
                     self.deleteAnimation();
                 }).on('add_animation', function () {
                     self.addAnimation();
                 }).on('copy_frame', function (frame) {
                     self.copyFrame(frame);
+                }).on('read_values', function (val) {
+                    self.readValues(val);
+                }).on('copy_animation', function () {
+                    self.copyAnimation();
+                }).on('add_expression_frame', function (expression) {
+                    self.addFrame(expression.get('name'), expression.get('motor_positions'));
                 });
 
                 self.motorsCollection.on('change', function () {
@@ -89,18 +95,35 @@ define(['application', './views/animations', './views/layout', '../motors/views/
                     this.selected_frame = frame;
                 }
             },
+            readValues: function(val){
+                this.motorsCollection.each(function (motor) {
+                     var mi = val.motors.indexOf(motor.get('name'))
+                     if (mi > -1){
+                        // prevent from going over extreme positions
+                        var mv = val.angles[mi]
+                        if (mv < motor.get('min')){
+                            mv = motor.get('min');
+                        }
+                        if (mv > motor.get('max')){
+                            mv = motor.get('max');
+                        }
+                        motor.set('value', mv);
+                     }
+
+                });
+            },
             updateFrame: function () {
                 if (typeof this.selected_frame != 'undefined' && this.selected_frame)
                     this.selected_frame.set('motors', this.motorsCollection.getRelativePositions());
             },
-            addFrame: function () {
+            addFrame: function (name, positions) {
                 if (typeof this.last_animation != 'undefined') {
                     var frames = this.last_animation.get('frames_collection');
                     frames.add(new Backbone.Model({
                         acceleration: 0,
                         frames: 1,
-                        motors: {},
-                        name: '',
+                        motors: positions,
+                        name: name,
                         speed: 0
                     }));
                 }
@@ -113,6 +136,13 @@ define(['application', './views/animations', './views/layout', '../motors/views/
                     this.layoutView.getRegion('animationEdit').reset();
                     this.last_animation.destroy();
                 }
+            },
+            copyAnimation: function () {
+                if (typeof this.last_animation != 'undefined')
+                    this.animationsCollection.add(new App.Entities.Animation({
+                        name: this.last_animation.get('name') + '_copy',
+                        frames_collection: this.last_animation.get('frames_collection').clone()
+                    }));
             },
             addAnimation: function () {
                 this.animationsCollection.add(new App.Entities.Animation({

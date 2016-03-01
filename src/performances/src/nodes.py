@@ -5,7 +5,7 @@ import pprint
 import rospy
 from std_msgs.msg import String
 from blender_api_msgs.msg import SetGesture, EmotionState, Target
-from basic_head_api.msg import MakeFaceExpr
+from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 
 
@@ -115,8 +115,8 @@ class interaction(Node):
 
 
 class expression(Node):
-    def __init__(self, data, runner, start_time=0):
-        Node.__init__(self, data, runner, start_time)
+    def __init__(self, data, runner):
+        Node.__init__(self, data, runner)
         self.shown = False
 
     def start(self, run_time):
@@ -133,9 +133,28 @@ class expression(Node):
     def stop(self, run_time):
         self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/head_pau"})
 
+class kfanimation(Node):
+    def __init__(self, data, runner):
+        Node.__init__(self, data, runner)
+        self.shown = False
+
+    def start(self, run_time):
+        self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
+        self.shown = False
+
+    def cont(self, run_time):
+        # Publish expression message after some delay once node is started
+        if (not self.shown) and (run_time > self.start_time + 0.05):
+            self.shown = True
+            self.runner.topics['kfanimation'].publish(
+                    PlayAnimation(self.data['animation'], int(self.data['fps'])))
+
+    def stop(self, run_time):
+        self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
+
 
 class pause(Node):
-    def __init__(self, data, runner, start_time=0):
+    def __init__(self, data, runner):
         Node.__init__(self, data, runner)
         self.subscriber = False
 

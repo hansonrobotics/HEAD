@@ -39,6 +39,17 @@
                 <select class="app-gesture-select"></select>
             </div>
             <% } %>
+            <% if (name == 'kfanimation') { %>
+                <div class="form-group">
+                    <label title="Animation">Animation</label>
+                    <select class="app-kfanimation-select"></select>
+                </div>
+                <div class="form-group">
+                    <label title="FPS">FPS <span
+                            class="app-fps-label pull-right label label-default"></span></label>
+                    <div class="app-fps-slider"></div>
+                </div>
+            <% } %>
             <% if (name == 'expression') { %>
             <div class="form-group">
                 <label title="Expression">Expression</label>

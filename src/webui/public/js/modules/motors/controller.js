@@ -21,6 +21,7 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
             },
             admin_index: function () {
                 App.LayoutInstance.showAdminNav();
+                App.LayoutInstance.setTitle('Motor configuration');
                 var configurationView = new ConfigurationView();
                 App.LayoutInstance.getRegion('content').show(configurationView);
             }

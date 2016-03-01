@@ -56,6 +56,7 @@ add_service_files(
     NodeConfiguration.srv
     NodeDescription.srv
     ConfigurableNodes.srv
+    MotorStates.srv
 )
 
 ## Generate actions in the 'action' folder

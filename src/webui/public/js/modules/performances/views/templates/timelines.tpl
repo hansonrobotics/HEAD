@@ -37,6 +37,7 @@
             <div class="app-node label label-default" data-name="interaction">Interaction</div>
             <div class="app-node label label-default" data-name="pause">Pause</div>
             <div class="app-node label label-info" data-name="expression">Expression</div>
+            <div class="app-node label label-success" data-name="kfanimation">KF Animation</div>
         </div>
 
         <div class="app-node-settings"></div>

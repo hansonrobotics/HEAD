@@ -245,8 +245,13 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 }),
                 get_animation_length: new ROSLIB.Service({
                     ros: api.ros,
-                    name: '/blender_api/get_animation_length',
+                    name: '/' + api.config.robot + '/get_animation_length',
                     messageType: 'blender_api_msgs/GetAnimationLength'
+                }),
+                get_kf_animation_length: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/animation_length',
+                    messageType: 'basic_head_api/AnimationLength'
                 }),
                 get_configurable_nodes: new ROSLIB.Service({
                     ros: api.ros,
@@ -262,6 +267,16 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/webui/get_description',
                     messageType: 'webui/NodeDescription'
+                }),
+                set_dxl_torque: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/set_dxl_torque',
+                    messageType: 'dynamixel_controllers/TorqueEnable'
+                }),
+                get_motor_states: new ROSLIB.Service({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/get_motor_states',
+                    messageType: 'webui/MotorStates'
                 }),
                 performances: {
                     run: new ROSLIB.Service({
