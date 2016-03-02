@@ -5,13 +5,12 @@
                 <button type="button" data-lang="en" class="btn btn-default btn-sm active">EN</button>
                 <button type="button" data-lang="zh" class="btn btn-default btn-sm">CN</button>
             </div>
-
             <div class="app-recognition-select btn-group" role="group" aria-label="...">
                 <button type="button" data-method="webspeech" class="btn btn-default btn-sm active">webspeech
                 </button>
                 <button type="button" data-method="iflytek" class="btn btn-default btn-sm">iflytek</button>
+                <button type="button" data-method="dragon" class="btn btn-default btn-sm">dragon</button>
             </div>
-
             <div class="app-noise-container">
                 <button class="app-adjust-noise-button btn btn-default btn-sm" type="button" title="Adjust noise">
                     <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>

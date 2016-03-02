@@ -28,7 +28,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 'touchstart @ui.recordButton': 'toggleSpeech',
                 'touchend @ui.recordButton': 'toggleSpeech',
                 'click @ui.recordButton': 'toggleSpeech',
-                'keyup @ui.messageInput': 'messageKeyUp',
+                'keypress @ui.messageInput': 'messageKeyUp',
                 'click @ui.sendButton': 'sendClicked',
                 'click @ui.languageButton': 'languageButtonClick',
                 'click @ui.recognitionMethodButton': 'recognitionButtonClick',
@@ -216,7 +216,6 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
 
                 // setting min height height
                 height = Math.max(250, height - this.ui.footer.outerHeight())
-
                 this.ui.scrollbar.css('height', height).perfectScrollbar('update');
             },
             operatorModeSwitched: function () {
@@ -279,8 +278,8 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 }
             },
             messageKeyUp: function (e) {
-                // submit on enter press
-                if (e.keyCode == 13) this.ui.sendButton.click();
+                if (e.keyCode == 13) // submit message on enter
+                    this.sendClicked();
             },
             sendClicked: function () {
                 var message = this.ui.messageInput.val();
@@ -313,13 +312,9 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 var self = this;
 
                 api.getRosParam('/' + api.config.robot + '/webui/speech_recognition', function (method) {
-                    if (method == 'iflytek') {
-                        self.speech_recognition = method;
-                        self.enableIFlyTek();
-                    } else {
-                        self.speech_recognition = 'webspeech';
-                        self.enableWebspeech();
-                    }
+                    self.speech_recognition = method;
+                    if (method == 'iflytek') self.enableIFlyTek();
+                    else if (method == 'webspeech') self.enableWebspeech();
                 });
             },
             disableSpeech: function () {
@@ -471,6 +466,31 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
 
                 // update param
                 api.setRosParam('/' + api.config.robot + '/webui/speech_recognition', method);
+
+                if (method == 'dragon') this.setDragonInterval();
+                else clearInterval(this.dragonInterval);
+            },
+            setDragonInterval: function () {
+                var self = this,
+                    value = null,
+                    lastTime = null;
+
+                this.dragonInterval = setInterval(function () {
+                    if (self.isDestroyed) clearInterval(self.dragonInterval);
+                    var current = self.ui.messageInput.val();
+
+                    if (current) {
+                        if (value == current) {
+                            if (Date.now() - lastTime >= 1000) {
+                                value = null;
+                                self.sendClicked();
+                            }
+                        } else {
+                            lastTime = Date.now();
+                            value = current;
+                        }
+                    }
+                }, 100);
             },
             adjustButtonClick: function (e) {
                 var self = this;
