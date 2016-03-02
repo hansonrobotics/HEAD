@@ -96,7 +96,11 @@ def getShapekeyName(id):
     return bpy.data.shape_keys['ShapeKeys'].key_blocks[id].name
 
 def getShapekeyBone(id):
-    sk = getShapekeyName(id)
+    try:
+        sk = getShapekeyName(id)
+    except Exception as e:
+        if ShapekeyStore._shkey_list[id] == 'jaw':
+            return (3.5, 'chin')
     d = getDriverFromShapekeyName(sk)
     var = None
     if 'var' in d.driver.variables.keys():
@@ -104,12 +108,25 @@ def getShapekeyBone(id):
     elif 'fine' in d.driver.variables.keys():
         var = d.driver.variables['fine']
     exp = d.driver.expression
-    p = '+'
+    p = 1
     if exp.find('-25') > -1:
-        p = '-'
+        p = -1
     if not var:
-        raise Exception("Driver {} Variable not found".format(sk))
-    bone = var.targets[0].bone_target
+        eyelids = {
+            'eye-flare.UP.L': [1, 'eyelid_UP_L'],
+            'eye-blink.UP.L': [-1, 'eyelid_UP_L'],
+            'eye-flare.UP.R': [1, 'eyelid_UP_R'],
+            'eye-blink.UP.R': [-1, 'eyelid_UP_R'],
+            'eye-flare.LO.L': [1, 'eyelid_LO_L'],
+            'eye-blink.LO.L': [-1, 'eyelid_LO_L'],
+            'eye-flare.LO.R': [1, 'eyelid_LO_R'],
+            'eye-blink.LO.R': [-1, 'eyelid_LO_R'],
+        }
+        if sk in eyelids.keys():
+            return eyelids[sk]
+        raise Exception("Sk {} Variable not found".format(sk))
+    else:
+        bone = var.targets[0].bone_target
     return (p,bone)
 
 def newAction(name):
@@ -128,44 +145,61 @@ def blenderVal(v):
 def insertBlenderFrame(anim, sk_id, frame, val):
     p, bone = getShapekeyBone(sk_id)
     val = blenderVal(val)
-    if p == '-':
-        val = val * -1.0
+    val = val * p
     insertkeyframe(anim,bone,frame,val)
+
+def getKeyFrameFromPAU(pau):
+    bone_values = {}
+    # All shapekey values summed for face motors
+    for x in range(2, len(pau.m_shapekeys)):
+        if msg.m_shapekeys[x] > -0.9:
+            try:
+                p, bone = getShapekeyBone(x)
+            except Exception as e:
+                print(e)
+            val = blenderVal(msg.m_shapekeys[x])
+            val = val * p
+            if bone in bone_values.keys():
+                bone_values[bone] += val
+            else:
+                bone_values[bone] = val
+    return bone_values
+
+def getPauFromMotors(motors):
+    global msg
+    msg = pau()
+    msg.m_shapekeys = [-1.0]*len(ShapekeyStore._shkey_list)
+    for m,v in motors.items():
+        #Get the shapekey and the value
+        cfg = get_cfg(m)
+        if not cfg:
+            print("No motor config {}".format(m))
+            continue
+        if cfg['function'] == 'weightedsum':
+            weightedsum(cfg, v)
+        if cfg['function'] == 'linear':
+            linear(cfg, v)
+    return msg
 
 def importAnimations(animations):
     global msg
     for a in animations:
         current_frame = 1
         aname = list(a.keys())[0]
-        if aname != 'happy':
-            continue
         frames = list(a.values())[0]
         anim = False
         for f in frames:
             current_frame += f['frames']
             # Reset PAU
-            msg = pau()
-            msg.m_shapekeys = [-1.0]*len(ShapekeyStore._shkey_list)
-            for m,v in f['motors'].items():
-                #Get the shapekey and the value
-                cfg = get_cfg(m)
-                if not cfg:
-                    print("No motor config {}".format(m))
-                    continue
-                if cfg['function'] == 'weightedsum':
-                    weightedsum(cfg, v)
-                if cfg['function'] == 'linear':
-                    linear(cfg, v)
-            # Shapekeys calcyulated. Add this to blender.
-            print(msg.m_shapekeys)
-            for x in range(2, len(msg.m_shapekeys)):
-                if msg.m_shapekeys[x] > -0.9:
-                    if not anim:
-                        anim = newAction("GST-"+aname)
-                    try:
-                        insertBlenderFrame(anim,x,current_frame,msg.m_shapekeys[x])
-                    except Exception as e:
-                        print(e)
+            m = getPauFromMotors(f['motors'])
+            kf = getKeyFrameFromPAU(m)
+            for bone, val in kf.items():
+                if not anim:
+                    anim = newAction("GST-"+aname)
+                try:
+                    insertkeyframe(anim,bone,current_frame, val)
+                except Exception as e:
+                    print(e)
 
 if __name__ == '__main__':
     importAnimations(animations)
