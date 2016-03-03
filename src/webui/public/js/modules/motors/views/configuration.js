@@ -23,7 +23,7 @@ define(['application', 'tpl!./templates/configuration.tpl', 'backgrid', './confi
                         PageableCollection = Backbone.PageableCollection.extend({
                             mode: 'client',
                             state: {
-                                pageSize: 45
+                                pageSize: 65
                             }
                         });
 
