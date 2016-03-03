@@ -16,11 +16,8 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
                 predefined: []
             },
             onShow: function () {
-                this.mode = 'auto';
-                this.initSuggestions();
-            },
-            initSuggestions: function () {
                 var self = this;
+                this.mode = 'auto';
                 this.ui.speechInput.typeahead({
                     items: 10,
                     source: function (query, process) {
@@ -61,13 +58,6 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
                 } else {
                     api.enableTtsOperatorMode();
                 }
-
-                if (this.mode != 'semi')
-                    this.ui.suggestions.html('');
-            },
-            suggestionSelected: function (e) {
-                var text = $(e.target).data('msg');
-                this.saySpeech(text);
             }
         });
     });
