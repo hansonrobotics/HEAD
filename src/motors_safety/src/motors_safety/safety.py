@@ -135,8 +135,8 @@ class Safety():
             dirv = v - rule['prev_pos']
             if dirv < 0:
                 rule['dir'] = -1
-                rule['prev_pos'] = v - rule['compensation']
-                return rule['prev_pos']
+                rule['prev_pos'] = v
+                return v - rule['compensation']
         rule['dir'] = 1
         rule['prev_pos'] = v
         return v
