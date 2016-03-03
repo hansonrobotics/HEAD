@@ -8,6 +8,8 @@ from dynamixel_controllers.srv import TorqueEnable, TorqueEnableResponse
 from dynamixel_msgs.msg import MotorStateList
 from webui.srv import *
 logger = logging.getLogger('hr.webui.node_configuration')
+dynlog = logging.getLogger('hr.dynamixel_data')
+dynlog.setLevel(logging.ERR)
 
 class DxlController:
 
@@ -40,6 +42,12 @@ class DxlController:
     def update_motor_states(self, req):
         self.last_state = req.motor_states
         self.last_state_time = time.time()
+        self.logStates(req.motor_states)
+
+    def logStates(self, states):
+        for state in states:
+            dynlog.info(",".join([str(state.id), str(state.goal), str(state.error), \
+                                  str(state.load), str(state.voltage), str(state.temperature)]))
 
     def get_motor_states(self, req):
         states = MotorStatesResponse()

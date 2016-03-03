@@ -16,7 +16,6 @@ config_root = rp.get_path('robots_config')
 with open(config_root+"/"+ROBOT+"/motors_settings.yaml", 'r') as stream:
     motors = yaml.load(stream)
 
-
 msg = pau()
 msg.m_shapekeys = [-1.0]*len(ShapekeyStore._shkey_list)
 
@@ -25,7 +24,6 @@ def get_motor_value(motor, relative):
         if m['name'] == motor:
             v = m['min']+relative*(m['max'] - m['min'])
             return int(v)
-
     return -1
 
 def get_cfg(motor):
@@ -96,7 +94,11 @@ def getShapekeyName(id):
     return bpy.data.shape_keys['ShapeKeys'].key_blocks[id].name
 
 def getShapekeyBone(id):
-    sk = getShapekeyName(id)
+    try:
+        sk = getShapekeyName(id)
+    except Exception as e:
+        if ShapekeyStore._shkey_list[id] == 'jaw':
+            return (3.5, 'chin')
     d = getDriverFromShapekeyName(sk)
     var = None
     if 'var' in d.driver.variables.keys():
@@ -104,12 +106,25 @@ def getShapekeyBone(id):
     elif 'fine' in d.driver.variables.keys():
         var = d.driver.variables['fine']
     exp = d.driver.expression
-    p = '+'
+    p = 1
     if exp.find('-25') > -1:
-        p = '-'
+        p = -1
     if not var:
-        raise Exception("Driver {} Variable not found".format(sk))
-    bone = var.targets[0].bone_target
+        eyelids = {
+            'eye-flare.UP.L': [1, 'eyelid_UP_L'],
+            'eye-blink.UP.L': [-1, 'eyelid_UP_L'],
+            'eye-flare.UP.R': [1, 'eyelid_UP_R'],
+            'eye-blink.UP.R': [-1, 'eyelid_UP_R'],
+            'eye-flare.LO.L': [1, 'eyelid_LO_L'],
+            'eye-blink.LO.L': [-1, 'eyelid_LO_L'],
+            'eye-flare.LO.R': [1, 'eyelid_LO_R'],
+            'eye-blink.LO.R': [-1, 'eyelid_LO_R'],
+        }
+        if sk in eyelids.keys():
+            return eyelids[sk]
+        raise Exception("Sk {} Variable not found".format(sk))
+    else:
+        bone = var.targets[0].bone_target
     return (p,bone)
 
 def newAction(name):
@@ -128,44 +143,114 @@ def blenderVal(v):
 def insertBlenderFrame(anim, sk_id, frame, val):
     p, bone = getShapekeyBone(sk_id)
     val = blenderVal(val)
-    if p == '-':
-        val = val * -1.0
+    val = val * p
     insertkeyframe(anim,bone,frame,val)
+
+def getKeyFrameFromPAU(pau):
+    bone_values = {}
+    # All shapekey values summed for face motors
+    for x in range(2, len(pau.m_shapekeys)):
+        if msg.m_shapekeys[x] > -0.9:
+            try:
+                p, bone = getShapekeyBone(x)
+            except Exception as e:
+                print(e)
+            val = blenderVal(msg.m_shapekeys[x])
+            val = val * p
+            if bone in bone_values.keys():
+                bone_values[bone] += val
+            else:
+                bone_values[bone] = val
+    return bone_values
+
+def getPauFromMotors(motors):
+    global msg
+    msg = pau()
+    msg.m_shapekeys = [-1.0]*len(ShapekeyStore._shkey_list)
+    for m,v in motors.items():
+        #Get the shapekey and the value
+        cfg = get_cfg(m)
+        if not cfg:
+            print("No motor config {}".format(m))
+            continue
+        if cfg['function'] == 'weightedsum':
+            weightedsum(cfg, v)
+        if cfg['function'] == 'linear':
+            linear(cfg, v)
+    return msg
+
+def findAction(act):
+    if act not in bpy.data.actions.keys():
+        return False
+    else:
+        return bpy.data.actions[act]
 
 def importAnimations(animations):
     global msg
     for a in animations:
         current_frame = 1
         aname = list(a.keys())[0]
-        if aname != 'happy':
-            continue
         frames = list(a.values())[0]
         anim = False
         for f in frames:
             current_frame += f['frames']
             # Reset PAU
-            msg = pau()
-            msg.m_shapekeys = [-1.0]*len(ShapekeyStore._shkey_list)
-            for m,v in f['motors'].items():
-                #Get the shapekey and the value
-                cfg = get_cfg(m)
-                if not cfg:
-                    print("No motor config {}".format(m))
-                    continue
-                if cfg['function'] == 'weightedsum':
-                    weightedsum(cfg, v)
-                if cfg['function'] == 'linear':
-                    linear(cfg, v)
-            # Shapekeys calcyulated. Add this to blender.
-            print(msg.m_shapekeys)
-            for x in range(2, len(msg.m_shapekeys)):
-                if msg.m_shapekeys[x] > -0.9:
-                    if not anim:
-                        anim = newAction("GST-"+aname)
-                    try:
-                        insertBlenderFrame(anim,x,current_frame,msg.m_shapekeys[x])
-                    except Exception as e:
-                        print(e)
+            m = getPauFromMotors(f['motors'])
+            kf = getKeyFrameFromPAU(m)
+            for bone, val in kf.items():
+                if not anim:
+                    anim = newAction("GST-"+aname)
+                try:
+                    insertkeyframe(anim,bone,current_frame, val)
+                except Exception as e:
+                    print(e)
+
+
+def removeKeyFrames(action, bone, start, finish, channel=0):
+        remove = []
+        points = action.groups[bone].channels[0].keyframe_points.values()
+        for kf in points:
+            if start <= kf.co[0] <= finish:
+                remove.append(kf)
+        for kf in remove:
+            action.groups[bone].channels[0].keyframe_points.remove(kf)
+
+def findExpression(exp):
+    return findAction('EMO-'+exp.lower())
+
+def findVisime(exp):
+    return findAction('VIS-'+exp.lower())
+
+def updateExpressions(expressions):
+    for e in expressions:
+        exp = list(e.keys())[0]
+        motors = list(e.values())[0]
+        visime = False
+        if exp.find('vis_') > -1:
+            action = findVisime(exp[4:])
+            if not action:
+                print("Skipping Visime")
+            visime = True
+        else:
+            action = findExpression(exp)
+            if not action:
+                action = newAction('EMO-'+exp.lower())
+        m = getPauFromMotors(motors)
+        kf = getKeyFrameFromPAU(m)
+        for bone, val in kf.items():
+            # Need to clear previous KF frames first
+            try:
+                if not visime:
+                    # All expressions has 101 frame as max
+                    removeKeyFrames(action, bone, 2,102)
+                    insertkeyframe(action, bone, 101, val)
+                else:
+                    removeKeyFrames(action, bone, 1,2)
+                    insertkeyframe(action, bone, 1, val)
+            except Exception as ex:
+                print(ex)
 
 if __name__ == '__main__':
     importAnimations(animations)
+    updateExpressions(expressions)
+
