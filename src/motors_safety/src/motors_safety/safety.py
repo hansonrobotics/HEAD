@@ -58,6 +58,10 @@ class Safety():
                 if rule['type'] == 'load':
                     self.rules[name][i]['started'] = False
                     self.rules[name][i]['limit'] = 1
+                if rule['type'] == 'slack':
+                    self.rules[name][i]['prev_pos'] = 0
+                    self.rules[name][i]['dir'] = 0
+                    # dir =-1 or 1, 0=uninitialised
 
     def update_load(self, msg):
         for s in msg.motor_states:
@@ -98,6 +102,9 @@ class Safety():
                 v = self.rule_prevent(motor, v, r)
             if (r['type'] == 'timing') or (r['type'] == 'load'):
                 v = self.rule_time(motor, v, r)
+            if r['type'] == 'slack':
+                v = self.rule_slack(v, r)
+
         if dynamixel:
             msg.data = v
         else:
@@ -121,6 +128,17 @@ class Safety():
 
         if relative > rule['limit']:
             return self.get_abs_pos(motor, rule['direction'], rule['limit'])
+        return v
+
+    def rule_slack(self, v, rule):
+        if rule['dir'] != 0:
+            dirv = v - rule['prev_pos']
+            if dirv < 0:
+                rule['dir'] = -1
+                rule['prev_pos'] = v - rule['compensation']
+                return rule['prev_pos']
+        rule['dir'] = 1
+        rule['prev_pos'] = v
         return v
 
     # Gets absolute position from relative between the neutral and extreme in given direction
