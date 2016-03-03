@@ -16,7 +16,6 @@ config_root = rp.get_path('robots_config')
 with open(config_root+"/"+ROBOT+"/motors_settings.yaml", 'r') as stream:
     motors = yaml.load(stream)
 
-
 msg = pau()
 msg.m_shapekeys = [-1.0]*len(ShapekeyStore._shkey_list)
 
@@ -25,7 +24,6 @@ def get_motor_value(motor, relative):
         if m['name'] == motor:
             v = m['min']+relative*(m['max'] - m['min'])
             return int(v)
-
     return -1
 
 def get_cfg(motor):
@@ -181,6 +179,12 @@ def getPauFromMotors(motors):
             linear(cfg, v)
     return msg
 
+def findAction(act):
+    if act not in bpy.data.actions.keys():
+        return False
+    else:
+        return bpy.data.actions[act]
+
 def importAnimations(animations):
     global msg
     for a in animations:
@@ -201,5 +205,52 @@ def importAnimations(animations):
                 except Exception as e:
                     print(e)
 
+
+def removeKeyFrames(action, bone, start, finish, channel=0):
+        remove = []
+        points = action.groups[bone].channels[0].keyframe_points.values()
+        for kf in points:
+            if start <= kf.co[0] <= finish:
+                remove.append(kf)
+        for kf in remove:
+            action.groups[bone].channels[0].keyframe_points.remove(kf)
+
+def findExpression(exp):
+    return findAction('EMO-'+exp.lower())
+
+def findVisime(exp):
+    return findAction('VIS-'+exp.lower())
+
+def updateExpressions(expressions):
+    for e in expressions:
+        exp = list(e.keys())[0]
+        motors = list(e.values())[0]
+        visime = False
+        if exp.find('vis_') > -1:
+            action = findVisime(exp[4:])
+            if not action:
+                print("Skipping Visime")
+            visime = True
+        else:
+            action = findExpression(exp)
+            if not action:
+                action = newAction('EMO-'+exp.lower())
+        m = getPauFromMotors(motors)
+        kf = getKeyFrameFromPAU(m)
+        for bone, val in kf.items():
+            # Need to clear previous KF frames first
+            try:
+                if not visime:
+                    # All expressions has 101 frame as max
+                    removeKeyFrames(action, bone, 2,102)
+                    insertkeyframe(action, bone, 101, val)
+                else:
+                    removeKeyFrames(action, bone, 1,2)
+                    insertkeyframe(action, bone, 1, val)
+            except Exception as ex:
+                print(ex)
+
 if __name__ == '__main__':
     importAnimations(animations)
+    updateExpressions(expressions)
+
