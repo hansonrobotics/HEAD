@@ -9,7 +9,7 @@ from dynamixel_msgs.msg import MotorStateList
 from webui.srv import *
 logger = logging.getLogger('hr.webui.node_configuration')
 dynlog = logging.getLogger('hr.dynamixel_data')
-dynlog.setLevel(logging.ERR)
+dynlog.setLevel(logging.INFO)
 
 class DxlController:
 
