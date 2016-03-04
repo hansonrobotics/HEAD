@@ -1,11 +1,16 @@
-.app-frames ul {
+.app-frames {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.app-frames ul li {
-    margin-bottom: 5px;
+.app-frames li {
+    padding: 10px 5px;
+    border-bottom: 1px solid #4E5D6C;
+}
+
+.app-frames li.active {
+    background-color: #3C546B;
 }
 
 .app-animation-edit {
@@ -14,4 +19,21 @@
 
 button.app-animation {
     margin-bottom: 5px;
+}
+
+.animation-action-buttons {
+    margin-top: 10px;
+}
+
+.app-frame-drag-handle {
+    cursor: pointer;
+}
+
+.app-controls {
+    margin-top: 10px;
+}
+
+.app-animations-column,
+.app-motors-column {
+    position: relative;
 }

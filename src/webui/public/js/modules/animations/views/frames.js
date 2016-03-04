@@ -3,7 +3,6 @@ define(["application", "./frame", 'tpl!./templates/frames.tpl', 'jquery-ui'],
         App.module("Animations.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Frames = Marionette.CompositeView.extend({
                 template: framesTemplate,
-                tagName: 'ul',
                 childViewContainer: '.app-frames',
                 childView: frameView,
                 ui: {

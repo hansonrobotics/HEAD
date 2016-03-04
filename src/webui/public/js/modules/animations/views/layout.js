@@ -1,4 +1,4 @@
-define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap', 'entities/expression'],
+define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap', 'entities/expression', 'scrollbar'],
     function (App, template, api) {
         App.module('Animations.Views', function (Views, App, Backbone, Marionette, $, _) {
             Views.Animations = Marionette.LayoutView.extend({
@@ -14,7 +14,9 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap', 'en
                     enableTorque: '.app-enable-torque',
                     disableTorque: '.app-disable-torque',
                     readValues: '.app-read-values',
-                    expressions: '.app-expressions'
+                    expressions: '.app-expressions',
+                    animationsColumn: '.app-animations-column',
+                    motorsColumn: '.app-motors-column'
                 },
                 events: {
                     'click @ui.saveButton': 'updateAnimations',
@@ -29,7 +31,7 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap', 'en
                 regions: {
                     animationButtons: '.app-animations',
                     animationEdit: '.app-animation-edit',
-                    frames: '.app-frames',
+                    frames: '.app-frames-container',
                     motors: '.app-motors'
                 },
                 onRender: function () {
@@ -42,6 +44,23 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'bootstrap', 'en
                         }));
                     });
                     expressions.fetch();
+
+                    var resizeColumns = function () {
+                        if (self.isDestroyed)
+                            $(window).off('resize', resizeColumns);
+                        else {
+                            var height = App.LayoutInstance.getContentHeight();
+                            $(self.ui.animationsColumn).height(height);
+                            $(self.ui.motorsColumn).height(height);
+                            self.ui.animationsColumn.perfectScrollbar('update');
+                            self.ui.motorsColumn.perfectScrollbar('update');
+                        }
+                    };
+
+                    this.ui.animationsColumn.perfectScrollbar();
+                    this.ui.motorsColumn.perfectScrollbar();
+
+                    $(window).resize(resizeColumns).resize();
                 },
                 updateAnimations: function () {
                     var self = this;

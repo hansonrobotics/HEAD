@@ -31,6 +31,7 @@
             </ul>
             <ul id="app-admin-nav" class="nav navbar-nav navbar-right">
                 <li><a href="#/admin/monitor">Monitoring</a></li>
+                <li><a href="#/admin/animations">Monitoring</a></li>
                 <li><a href="#/admin/expressions">Expressions</a></li>
                 <li><a href="#/admin/motors">Motors</a></li>
                 <li><a href="#/admin/settings">Settings</a></li>
