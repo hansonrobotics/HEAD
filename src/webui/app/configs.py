@@ -166,7 +166,7 @@ class Configs:
 
         c = copy.deepcopy(self._DYNAMIXELS_TPL)
         c['joint_name'] = m['name'] + '_joint'
-        c['speed'] = m['speed']
+        c['joint_speed'] = m['speed']
         c['motor']['id'] = m['motor_id']
         c['motor']['init'] = m['init']
         c['motor']['min'] = m['min']

@@ -218,8 +218,8 @@ def removeKeyFrames(action, bone, start, finish, channel=0):
 def findExpression(exp):
     return findAction('EMO-'+exp.lower())
 
-def findVisime(exp):
-    return findAction('VIS-'+exp.lower())
+def findVisime(vis):
+    return findAction('VIS-'+vis)
 
 def updateExpressions(expressions):
     for e in expressions:
@@ -229,7 +229,8 @@ def updateExpressions(expressions):
         if exp.find('vis_') > -1:
             action = findVisime(exp[4:])
             if not action:
-                print("Skipping Visime")
+                print("Skipping Visime "+exp[4:])
+                continue
             visime = True
         else:
             action = findExpression(exp)

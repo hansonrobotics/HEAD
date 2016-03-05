@@ -207,7 +207,7 @@ define(['application','marionette',  'tpl!./templates/node.tpl', 'lib/api', 'boo
                 $(this.ui.gestureSelect).select2();
             },
             setDuration: function () {
-                this.model.set('duration', $(this.ui.duration).val());
+                this.model.set('duration', Number($(this.ui.duration).val()));
                 this.updateIndicators();
             },
             updateIndicators: function () {
