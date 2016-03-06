@@ -34,6 +34,7 @@ class PiFaceTrackerTest(unittest.TestCase):
     def tearDown(self):
         self.runner.stop()
 
+    @unittest.skip("")
     def test_noface(self):
         bag_file = get_rosbag_file('empty')
         job = play_rosbag([bag_file, '-q'])

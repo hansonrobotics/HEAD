@@ -443,6 +443,11 @@ class FacesRegistry():
 
 class PatchTracker(ROS2OpenCV):
     def __init__(self, node_name):
+        """ Directory to save faces images """
+        self.image_dir = rospy.get_param(
+            "~image_dir", os.path.join(os.path.dirname(
+                    os.path.realpath(__file__)), os.path.pardir, 'tmp'))
+
         ROS2OpenCV.__init__(self, node_name)
 
         self.node_name = node_name
@@ -524,10 +529,6 @@ class PatchTracker(ROS2OpenCV):
         if self.use_depth_for_detection or self.use_depth_for_tracking:
             rospy.wait_for_message(self.input_depth_image, Image)
 
-        """ Directory to save faces images """
-        self.image_dir = rospy.get_param("~image_dir", os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                                                   os.path.pardir,
-                                                                   'tmp'))
 
     def process_image(self, cv_image):
 
