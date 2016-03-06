@@ -4,6 +4,7 @@ from flask import Flask, send_from_directory, request, Response
 from werkzeug.utils import secure_filename
 import reporter
 import yaml
+import logging
 from optparse import OptionParser
 from configs import *
 from subprocess import Popen
@@ -22,6 +23,7 @@ performance_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pa
                                'robots')
 
 app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
+logger = logging.getLogger('hr.webui')
 
 
 @app.route('/')
@@ -167,10 +169,16 @@ def get_performances(robot_name):
     try:
         robot_performances = os.path.join(performance_dir, robot_name)
         filenames = os.listdir(robot_performances)
+        filenames = sorted(filenames)
         for filename in filenames:
-            performance = read_yaml(os.path.join(robot_performances, filename))
-            print performance
-            performances.append(performance)
+            yaml_file = os.path.join(robot_performances, filename)
+            if os.path.isfile(yaml_file) and yaml_file.endswith('.yaml'):
+                logger.info('Load {}'.format(yaml_file))
+                performance = read_yaml(yaml_file)
+                print performance
+                performances.append(performance)
+            else:
+                logger.warn('Ignore {}'.format(yaml_file))
     except Exception as e:
         print e
         return json_encode([])
@@ -261,7 +269,7 @@ if __name__ == '__main__':
     from rosgraph.roslogging import configure_logging
 
     configure_logging(None, filename='ros_motors_webui.log')
-
+    logger = logging.getLogger('hr.webui')
 
     @app.route('/public/<path:path>')
     def send_js(path):
