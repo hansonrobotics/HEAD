@@ -5,7 +5,7 @@ define(["application", "tpl!./templates/frame.tpl"], function (App, template) {
             tagName: 'li',
             ui: {
                 name: '.app-name',
-                frames: '.app-frames',
+                frames: '.app-frames-input',
                 speed: '.app-speed',
                 acceleration: '.app-acceleration',
                 selectButton: '.app-select-frame',
@@ -34,8 +34,9 @@ define(["application", "tpl!./templates/frame.tpl"], function (App, template) {
                 this.ui.acceleration.val(this.model.get('acceleration'));
             },
             selectFrame: function () {
-                $('.app-select-frame').removeClass('active');
+                $('.app-select-frame, .app-frames li').removeClass('active');
                 this.ui.selectButton.addClass('active');
+                this.$el.addClass('active');
                 View.trigger('frame_selected', this.model);
             },
             updateFrame: function () {

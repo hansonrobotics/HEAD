@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-xs-4">
         <label>Number of frames</label>
-        <input type="text" class="app-frames form-control"/>
+        <input type="text" class="app-frames-input form-control"/>
     </div>
     <div class="col-xs-4">
         <label>Speed</label>
@@ -26,4 +26,3 @@
         <input type="text" class="app-acceleration form-control"/>
     </div>
 </div>
-<hr/>

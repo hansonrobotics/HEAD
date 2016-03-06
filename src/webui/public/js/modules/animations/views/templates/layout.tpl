@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="app-class-animations col-md-6">
+        <div class="app-animations-column col-md-6">
             <br/>
 
             <div class="app-animations"></div>
@@ -24,8 +24,8 @@
 
                 <h3>Frames</h3>
                 <hr/>
-                <div class="app-frames"></div>
-                <div class="button-group">
+                <div class="app-frames-container"></div>
+                <div class="animation-action-buttons button-group">
                     <button class="app-add-frame btn btn-default" title="Add Frame" type="button"><span
                             class="glyphicon glyphicon-plus" area-hidden="true"></span></button>
                     <button class="app-save-frames btn btn-primary" type="button">Save</button>
@@ -35,13 +35,14 @@
             </div>
         </div>
 
-        <div class="app-controls app-editing col-md-6">
-        <hr/>
-            <button class="app-enable-torque btn btn-default">Enable Torque (dxl)</button>
-            <button class="app-disable-torque btn btn-default">Disable Torque (dxl)</button>
-            <button class="app-read-values btn btn-default">Read Values (dxl)</button>
-            <hr/>
+        <div class="app-motors-column col-md-6">
+            <div class="app-controls app-editing">
+                <button class="app-enable-torque btn btn-default">Enable Torque (dxl)</button>
+                <button class="app-disable-torque btn btn-default">Disable Torque (dxl)</button>
+                <button class="app-read-values btn btn-default">Read Values (dxl)</button>
+                <hr/>
+            </div>
+            <div class="app-motors app-editing"></div>
         </div>
-        <div class="app-motors app-editing col-md-6"></div>
     </div>
 </div>
