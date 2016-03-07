@@ -6,7 +6,7 @@ define(['application', "marionette", "./motor", 'jquery', 'jquery-ui'],
                 var self = this;
                 App.vent.on('motors:selection:set', function (status) {
                     self.showSelectButtons(status);
-                })
+                });
             },
             /**
              * Pass label of the motor group to motor views when a new group appears
@@ -16,13 +16,10 @@ define(['application', "marionette", "./motor", 'jquery', 'jquery-ui'],
              */
             childViewOptions: function (model) {
                 var motorGroup = model.get('group');
-                if (motorGroup && (typeof this.lastMotorGroup == 'undefined'
-                    || this.lastMotorGroup != motorGroup)
-                ) {
+                if (motorGroup && (typeof this.lastMotorGroup == 'undefined' || this.lastMotorGroup != motorGroup))
                     this.lastMotorGroup = motorGroup;
-                } else {
+                else
                     motorGroup = null;
-                }
 
                 return {
                     monitoring: this.options['monitoring'],
@@ -35,8 +32,8 @@ define(['application', "marionette", "./motor", 'jquery', 'jquery-ui'],
                 clearInterval(this.monitoringInterval);
                 if (this.options['monitoring']) {
                     this.monitoringInterval = setInterval(function () {
-                        self.collection.updateStatus();
-                    }, 1000)
+                        self.collection.fetchStates();
+                    }, 1000);
                 }
 
                 $(document).on('click', '.app-select-group-button', function () {

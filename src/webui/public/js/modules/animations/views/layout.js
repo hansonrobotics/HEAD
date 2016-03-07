@@ -87,8 +87,10 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'modules/motors/
                     var self = this;
 
                     this.motorsCollection = new App.Entities.MotorCollection();
-                    this.motorsCollection.fetchFromParam();
-                    this.motorsView = new MotorsView({collection: this.motorsCollection});
+                    this.motorsCollection.fetchFromParam(function () {
+                        self.motorsCollection.setDefaultValues();
+                    });
+                    this.motorsView = new MotorsView({collection: this.motorsCollection, monitoring: true});
                     this.getRegion('motors').show(this.motorsView);
 
                     self.motorsCollection.on('change', function () {
