@@ -110,7 +110,7 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                                 model.set('status', motor);
                         });
 
-                        if (typeof callback == 'funtion')
+                        if (typeof callback == 'function')
                             callback(motors);
                     }
                 });
@@ -128,7 +128,29 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                         positions[motor.get('name')] = motor.getRelativeVal('value');
                 });
                 return positions;
+            },
+            fetchStates: function (success) {
+                api.getMotorStates(function (states) {
+                    this.each(function (motor) {
+                        var mi = states.motors.indexOf(motor.get('name'));
+                        if (mi > -1) {
+                            // prevent from going over extreme positions
+                            var mv = states.angles[mi];
+                            if (mv < motor.get('min')) mv = motor.get('min');
+                            if (mv > motor.get('max')) mv = motor.get('max');
+                            motor.set('value', mv);
+                            motor.set('state', {
+                                error: states.errors[mi],
+                                load: states.loads[mi],
+                                temperature: states.temperatures[mi]
+                            });
+                        }
+                    });
+
+                    // fire success callback
+                    if (typeof success == 'function') success();
+                });
             }
         });
-    });
-});
+    })
+})
