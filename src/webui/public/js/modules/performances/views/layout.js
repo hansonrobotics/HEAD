@@ -49,7 +49,8 @@ define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fad
                 performancesView.on('new', function (performance) {
                     var timelinesView = new TimelinesView({
                         collection: new Backbone.Collection(),
-                        model: performance
+                        model: performance,
+                        performances: performanceCollection
                     });
 
                     self.getRegion('timeline').show(timelinesView);
