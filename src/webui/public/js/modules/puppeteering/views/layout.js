@@ -67,7 +67,7 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
                 });
 
                 this.crosshairsView = new CrosshairsView();
-                this.facesView = new FacesView({always_visible: true});
+                this.facesView = new FacesView({always_visible: true, enableBTMode: true});
                 this.animationsView = new AnimationsView({config: {speed: {min: 0.5, max: 2}}});
                 this.speechView = new OperatorView({interactionView: this.chatView});
 

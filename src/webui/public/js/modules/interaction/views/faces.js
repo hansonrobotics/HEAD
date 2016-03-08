@@ -2,6 +2,7 @@ define(['marionette', 'tpl!./templates/faces.tpl', '../entities/face_collection'
     function (Marionette, template, FaceCollection, $) {
         return Marionette.ItemView.extend({
             template: template,
+            enableBTMode: false,
             ui: {
                 expandFacesButton: '.app-expand-faces-button',
                 faceThumbnails: '.app-face-thumbnails',
@@ -23,6 +24,8 @@ define(['marionette', 'tpl!./templates/faces.tpl', '../entities/face_collection'
                 this.collection.subscribe();
                 if (this.options.always_visible)
                     this.setFaceVisibility(true);
+                if (this.options.enableBTMode)
+                    this.enableBTMode = true;
                 this.updateFaces();
 
                 // update chat margins on face collapse show/hide
@@ -81,6 +84,8 @@ define(['marionette', 'tpl!./templates/faces.tpl', '../entities/face_collection'
                                 width: 100,
                                 height: 100
                             }).data('time-added', currentTime).click(function () {
+                                if (self.enableBTMode)
+                                    self.collection.enableBTMode();
                                 self.collection.setLookAtFaceId(face.get('id'));
                                 setActiveThumbnail(this);
                             });

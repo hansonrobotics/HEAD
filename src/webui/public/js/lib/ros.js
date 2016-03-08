@@ -45,6 +45,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     name: '/behavior_switch',
                     messageType: 'std_msgs/String'
                 }),
+                btMode: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/behavior_control',
+                    messageType: 'std_msgs/Int32'
+                }),
                 speech_topic: new ROSLIB.Topic({
                     ros: api.ros,
                     name: '/' + api.config.robot + '/speech',
