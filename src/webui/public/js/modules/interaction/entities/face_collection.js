@@ -36,6 +36,10 @@ define(['backbone', 'lib/api', 'underscore', 'lib/utilities'], function (Backbon
         },
         getLookAtFaceId: function () {
             return this.look_at_face_id;
+        },
+        enableBTMode: function() {
+            api.setBTMode(api.btModes.C_FACE | api.btModes.C_EYES);
+            api.enableInteractionMode();
         }
     });
 });
