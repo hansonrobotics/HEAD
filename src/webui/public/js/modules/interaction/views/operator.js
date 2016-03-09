@@ -5,7 +5,8 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
             ui: {
                 sayButton: '.app-say-button',
                 speechInput: '.app-speech-input',
-                modeButtons: '.app-speech-mode-buttons .btn'
+                modeButtons: '.app-speech-mode-buttons .btn',
+                shortcutInfo: '.app-shortcut-info'
             },
             events: {
                 'keyup @ui.speechInput': 'speechInputKeyPress',
@@ -17,6 +18,7 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
             },
             onShow: function () {
                 var self = this;
+                this.ui.shortcutInfo.hide();
                 this.mode = 'auto';
                 this.ui.speechInput.typeahead({
                     items: 10,
@@ -28,7 +30,7 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
                     }
                 });
 
-                api.getRosParam('/' + api.config.robot + '/webui/operator_suggestions', function (suggestions) {
+                api.getRosParam('/' + api.config.robot + '/webui/tts_suggestions', function (suggestions) {
                     if (Array.isArray(suggestions))
                         self.suggestions.predefined = suggestions;
                 });
@@ -58,6 +60,11 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
                 } else {
                     api.enableTtsOperatorMode();
                 }
+
+                if (this.mode == 'semi')
+                    this.ui.shortcutInfo.fadeIn();
+                else
+                    this.ui.shortcutInfo.fadeOut();
             }
         });
     });
