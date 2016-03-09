@@ -7,6 +7,9 @@ from std_msgs.msg import String
 from blender_api_msgs.msg import SetGesture, EmotionState, Target
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
+import logging
+
+logger = logging.getLogger('hr.performances.nodes')
 
 
 class Node(object):
@@ -120,7 +123,10 @@ class expression(Node):
         self.shown = False
 
     def start(self, run_time):
-        self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/no_pau"})
+        try:
+            self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/no_pau"})
+        except Exception as ex:
+            logger.info(ex)
         self.shown = False
 
     def cont(self, run_time):
@@ -131,7 +137,11 @@ class expression(Node):
                     MakeFaceExpr(self.data['expression'], float(self.data['magnitude'])))
 
     def stop(self, run_time):
-        self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/head_pau"})
+        try:
+            self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/head_pau"})
+        except Exception as ex:
+            logger.info(ex)
+
 
 class kfanimation(Node):
     def __init__(self, data, runner):
@@ -139,7 +149,10 @@ class kfanimation(Node):
         self.shown = False
 
     def start(self, run_time):
-        self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
+        try:
+            self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
+        except Exception as ex:
+            logger.info(ex)
         self.shown = False
 
     def cont(self, run_time):
@@ -150,7 +163,10 @@ class kfanimation(Node):
                     PlayAnimation(self.data['animation'], int(self.data['fps'])))
 
     def stop(self, run_time):
-        self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
+        try:
+            self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
+        except Exception as ex:
+            logger.info(ex)
 
 
 class pause(Node):
