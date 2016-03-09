@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <% if (name == 'emotion' || name == 'interaction' || name == 'expression') { %>
+            <% if (name == 'emotion' || name == 'interaction' || name == 'expression' || name == 'chat_pause') { %>
             <div class="form-group">
                 <label>Duration</label>
 
@@ -23,6 +23,17 @@
                 </div>
             </div>
             <% } %>
+
+            <% if (name == 'chat_pause') { %>
+            <div class="form-group">
+                <label>Message</label>
+
+                <div class="input-group">
+                    <input type="text" class="app-node-message-input form-control" title="Message" value="<%= message %>"/>
+                </div>
+            </div>
+            <% } %>
+
             <% if (name == 'emotion') { %>
             <div class="form-group">
                 <label>Pose</label>

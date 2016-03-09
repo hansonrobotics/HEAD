@@ -113,7 +113,7 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
             },
             fetchStates: function (success) {
                 var self = this;
-                
+
                 api.getMotorStates(function (states) {
                     self.each(function (motor) {
                         var mi = states.motors.indexOf(motor.get('name'));
