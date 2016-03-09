@@ -20,6 +20,11 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
                 layoutView.getRegion('motors').show(motorsView);
             },
             admin_index: function () {
+                api.disableInteractionMode();
+                api.blenderMode.disable();
+                api.setExpression("Neutral", 0);
+                api.pointHead();
+
                 App.LayoutInstance.showAdminNav();
                 App.LayoutInstance.setTitle('Motor configuration');
                 var configurationView = new ConfigurationView();

@@ -7,6 +7,8 @@ define(["application", "lib/api", "./views/layout", "../../motors/views/motors",
 
                 // reset robot
                 api.disableInteractionMode();
+                api.blenderMode.disable();
+                api.setExpression("Neutral", 0);
                 api.pointHead();
 
                 this.motorsCollection = new App.Entities.MotorCollection();

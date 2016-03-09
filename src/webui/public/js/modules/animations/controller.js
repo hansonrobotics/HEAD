@@ -4,7 +4,10 @@ define(['application', './views/animations', './views/layout', '../motors/views/
         return {
             index: function () {
                 api.disableInteractionMode();
+                api.blenderMode.disable();
+                api.setExpression("Neutral", 0);
                 api.pointHead();
+
 
                 this.animationsCollection = new App.Entities.AnimationsCollection();
                 this.layoutView = new LayoutView({animationsCollection: this.animationsCollection});
