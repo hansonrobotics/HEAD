@@ -56,7 +56,10 @@ class Node(object):
                 self.cont(run_time)
         else:
             if run_time > self.start_time:
-                self.start(run_time)
+                try:
+                    self.start(run_time)
+                except Exception as ex:
+                    logger.info(ex)
                 self.started = True
         return True
 
