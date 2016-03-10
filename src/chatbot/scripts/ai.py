@@ -59,6 +59,10 @@ class Chatbot():
     # rospy.Subscriber('chatbot_affect_express', EmotionState,
     #     self._affect_express_callback)
 
+    # Echo chat messages as plain strings.
+    self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
+    rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
+
   def initialize(self, aiml_dir):
     self._kernel.learn(os.sep.join([aiml_dir, '*.aiml']))
     rospy.init_node('chatbot_en')
@@ -138,6 +142,12 @@ class Chatbot():
       self._response_publisher.publish(message)
       self._state = 'wait_client'
     logger.info("Ask: {}, answer: {}".format(chat_message.utterance, response))
+
+  # Just repeat the chat message, as a plain string.
+  def _echo_callback(self, chat_message):
+    message = String()
+    message.data = chat_message.utterance
+    self._echo_publisher.publish(message)
 
   # Tell the world the emotion that the chatbot is perceiving.
   # Use the blender_api_msgs/EmotionState messae type to
