@@ -416,7 +416,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         setDynParam: function (node, name, value, options) {
             if (typeof options != 'object') options = {};
-
+            console.log(node, name, value, options)
             var data = {},
                 type = null,
                 service = new ROSLIB.Service({
