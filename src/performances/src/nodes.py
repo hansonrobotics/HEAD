@@ -152,10 +152,14 @@ class kfanimation(Node):
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
         self.shown = False
+        self.blender_mode = 'head'
+        if 'blender_mode' in self.data.keys():
+            self.blender_mode = self.data['blender_mode']
 
     def start(self, run_time):
         try:
-            self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
+            if self.blender_mode == 'head':
+                self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
         except Exception as ex:
             logger.info(ex)
         self.shown = False
@@ -169,7 +173,8 @@ class kfanimation(Node):
 
     def stop(self, run_time):
         try:
-            self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
+            if self.blender_mode == 'head':
+                self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
         except Exception as ex:
             logger.info(ex)
 

@@ -60,6 +60,13 @@
                             class="app-fps-label pull-right label label-default"></span></label>
                     <div class="app-fps-slider"></div>
                 </div>
+                <div class="form-group">
+                    <label title="Arms">Blender Enabled</label>
+                    <select class="app-kfmode-select">
+                        <option value="on">Yes</option>
+                        <option value="head">No</option>
+                    </select>
+                </div>
             <% } %>
             <% if (name == 'expression') { %>
             <div class="form-group">
