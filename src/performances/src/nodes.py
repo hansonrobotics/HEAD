@@ -4,9 +4,11 @@
 import pprint
 import rospy
 from std_msgs.msg import String
+from chatbot.msg import ChatMessage
 from blender_api_msgs.msg import SetGesture, EmotionState, Target
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
+import time
 import logging
 
 logger = logging.getLogger('hr.performances.nodes')
@@ -192,7 +194,6 @@ class pause(Node):
                 if topic[0] != '/':
                     topic = '/' + rospy.get_param('/robot_name') + '/' + topic
 
-                print topic
                 self.subscriber = rospy.Subscriber(topic, String, resume)
 
     def stop(self, run_time):
@@ -201,3 +202,35 @@ class pause(Node):
 
     def end_time(self):
         return self.start_time + 0.1
+
+
+class chat_pause(Node):
+    def __init__(self, data, runner):
+        Node.__init__(self, data, runner)
+        self.subscriber = False
+
+    def start(self, run_time):
+        if 'message' in self.data and self.data['message']:
+            self.runner.pause()
+            self.runner.topics['chatbot'].publish(ChatMessage(self.data['message'], 100))
+
+            def speech_event_callback(event):
+                if event.data == 'stop':
+                    self.resume()
+
+            self.subscriber = rospy.Subscriber('/' + self.runner.robot_name + '/speech_events', String,
+                                               speech_event_callback)
+
+            while not self.finished and self.runner.start_timestamp + self.start_time + self.duration > time.time():
+                time.sleep(0.05)
+
+        self.resume()
+
+    def resume(self):
+        self.runner.resume()
+        self.duration = 0
+
+    def stop(self, run_time):
+        if self.subscriber:
+            self.subscriber.unregister()
+            self.subscriber = False

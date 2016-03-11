@@ -6,14 +6,19 @@ import logging
 import performances.srv as srv
 import json
 from std_msgs.msg import String
+from chatbot.msg import ChatMessage
 from blender_api_msgs.msg import SetGesture, EmotionState, Target
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 from performances.msg import Event
 import time
 from nodes import Node
+import rospkg
+import yaml
+import os
 
 logger = logging.getLogger('hr.performances')
+rospack = rospkg.RosPack()
 
 
 class Runner:
@@ -40,16 +45,18 @@ class Runner:
             'emotion': rospy.Publisher('/blender_api/set_emotion_state', EmotionState, queue_size=3),
             'gesture': rospy.Publisher('/blender_api/set_gesture', SetGesture, queue_size=3),
             'expression': rospy.Publisher('/' + self.robot_name + '/make_face_expr', MakeFaceExpr, queue_size=3),
-            'kfanimation': rospy.Publisher('/' + self.robot_name + '/play_animation',  PlayAnimation, queue_size=3),
+            'kfanimation': rospy.Publisher('/' + self.robot_name + '/play_animation', PlayAnimation, queue_size=3),
             'interaction': rospy.Publisher('/behavior_switch', String, queue_size=1),
             'events': rospy.Publisher('~events', Event, queue_size=1),
+            'chatbot': rospy.Publisher('/' + self.robot_name + '/speech', ChatMessage, queue_size=1),
             'tts': {
                 'en': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_en', String, queue_size=1),
                 'zh': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_zh', String, queue_size=1),
                 'default': rospy.Publisher('/' + self.robot_name + '/chatbot_responses', String, queue_size=1),
             }
         }
-        rospy.Service('~run', srv.Run, self.run)
+        rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
+        rospy.Service('~run', srv.Run, self.run_callback)
         rospy.Service('~resume', srv.Resume, self.resume_callback)
         rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
@@ -94,9 +101,27 @@ class Runner:
         else:
             return srv.PauseResponse(False, 0)
 
-    def run(self, request):
+    def run_by_name_callback(self, request):
+        name = request.name
+        robot_name = rospy.get_param('/robot_name')
+        path = os.path.join(rospack.get_path('performances'), 'robots', robot_name, name + '.yaml')
+
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                data = yaml.load(f.read())
+
+            if 'nodes' in data and isinstance(data['nodes'], list):
+                return srv.RunByNameResponse(self.run(0, data['nodes']))
+
+        return srv.RunByNameResponse(False)
+
+    def run_callback(self, request):
         start_time = request.startTime
         nodes = json.loads(request.nodes)
+
+        return srv.RunResponse(self.run(start_time, nodes))
+
+    def run(self, start_time, nodes):
         # Create nodes
         nodes = [Node.createNode(node, self, start_time) for node in nodes]
         # Stop running first if performance is running
@@ -111,9 +136,9 @@ class Runner:
                 self.start_timestamp = time.time()
                 logger.info("Put nodes {} to queue".format(nodes))
                 self.queue.put(nodes)
-                return srv.RunResponse(True)
+                return True
             else:
-                return srv.RunResponse(False)
+                return False
 
     # Pauses current
     def pause(self):

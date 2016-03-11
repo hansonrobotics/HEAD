@@ -25,7 +25,7 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     api._sendMotorCommand(this.toJSON(), this.get('value'));
             },
             getDegrees: function (attribute) {
-                return Math.round(utilities.radToDeg(this.get(attribute)));
+                return Math.round(utilities.radToDeg(this.get(attribute))) || 0;
             },
             setDegrees: function (attribute, value) {
                 return this.set(attribute, utilities.degToRad(value));
@@ -50,6 +50,7 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
             sync: function (successCallback, errorCallback) {
                 var data = _.filter(this.toJSON(), function (motor) {
                     delete motor['selected'];
+                    delete motor['state'];
                     delete motor['editable'];
                     delete motor['value'];
 
@@ -96,25 +97,6 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                     }
                 });
             },
-            updateStatus: function (callback) {
-                var self = this;
-
-                $.ajax('/motors/status/' + api.config.robot, {
-                    dataType: 'json',
-                    success: function (response) {
-                        var motors = response.motors;
-
-                        _.each(motors, function (motor) {
-                            var model = self.findWhere({name: motor['name']});
-                            if (model)
-                                model.set('status', motor);
-                        });
-
-                        if (typeof callback == 'funtion')
-                            callback(motors);
-                    }
-                });
-            },
             setDefaultValues: function (silent) {
                 this.each(function (motor) {
                     motor.set({value: motor.get('default')}, {silent: !!silent});
@@ -128,7 +110,31 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
                         positions[motor.get('name')] = motor.getRelativeVal('value');
                 });
                 return positions;
+            },
+            fetchStates: function (success) {
+                var self = this;
+
+                api.getMotorStates(function (states) {
+                    self.each(function (motor) {
+                        var mi = states.motors.indexOf(motor.get('name'));
+                        if (mi > -1) {
+                            // prevent from going over extreme positions
+                            var mv = states.angles[mi];
+                            if (mv < motor.get('min')) mv = motor.get('min');
+                            if (mv > motor.get('max')) mv = motor.get('max');
+                            motor.set('value', mv);
+                            motor.set('state', {
+                                error: states.errors[mi],
+                                load: states.loads[mi],
+                                temperature: states.temperatures[mi]
+                            });
+                        }
+                    });
+
+                    // fire success callback
+                    if (typeof success == 'function') success();
+                });
             }
         });
-    });
-});
+    })
+})

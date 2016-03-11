@@ -44,5 +44,9 @@
 
 <div class="motor-slider-container clearfix">
     <div class="app-slider"></div>
-    <div class="app-motor-status-indicator" data-placement="left" data-trigger="hover"></div>
+    <div class="app-motor-indicators">
+        <div class="app-motor-load app-ok"></div>
+        <div class="app-motor-temperature app-ok"></div>
+        <div class="app-motor-status-indicator" data-placement="left" data-trigger="hover"></div>
+    </div>
 </div>

@@ -10,14 +10,25 @@
     position: relative;
 }
 
-.app-motor-status-indicator {
-    height: 20px;
-    width: 20px;
-    margin: 5px 0 5px 5px;
-    border: 1px solid white;
+.app-motor-indicators {
     position: absolute;
     top: 0;
     right: 0;
+    height: 25px;
+    margin-top: 5px;
+}
+
+.app-motor-indicators > div {
+    float: left;
+    display: inline-block;
+    height: 20px;
+    border: 1px solid white;
+    margin: 0 0 5px 5px;
+    line-height: 20px;
+}
+
+.app-motor-indicators .app-motor-status-indicator {
+    width: 20px;
 }
 
 .app-ok {
@@ -37,7 +48,7 @@
 }
 
 .app-slider.app-monitoring {
-    margin-right: 30px;
+    margin-right: 105px;
 }
 
 .hidden {

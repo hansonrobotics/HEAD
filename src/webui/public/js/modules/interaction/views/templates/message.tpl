@@ -1,8 +1,8 @@
 <span class="chat-img <%= author == 'Robot' ? 'pull-right' : 'pull-left' %>">
     <% if (typeof type != 'undefined' && type == 'suggestion') { %>
     <span class="app-suggestion-actions">
-        <i class="app-accept fa fa-check-circle"></i>
         <i class="app-discard fa fa-times-circle"></i>
+        <i class="app-accept fa fa-check-circle"></i>
     </span>
     <% } else if (author == 'Robot') { %>
     <img src="/public/img/u.gif" alt="User Avatar" class="img-circle"/>

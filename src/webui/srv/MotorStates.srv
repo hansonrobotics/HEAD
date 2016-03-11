@@ -1,5 +1,6 @@
 ---
 string[] motors
 float32[] angles
-
-
+float64[] loads
+int32[] temperatures
+int32[] errors

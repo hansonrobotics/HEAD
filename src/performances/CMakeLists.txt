@@ -55,6 +55,7 @@ add_service_files(
   Pause.srv
   Resume.srv
   Run.srv
+  RunByName.srv
   Stop.srv
 )
 

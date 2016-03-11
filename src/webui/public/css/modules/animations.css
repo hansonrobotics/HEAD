@@ -37,3 +37,7 @@ button.app-animation {
 .app-motors-column {
     position: relative;
 }
+
+.app-animations-column .app-animations {
+    margin-top: 10px
+}
