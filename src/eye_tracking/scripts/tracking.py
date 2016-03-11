@@ -173,9 +173,9 @@ class EyeTracking:
 
     def pau_callback(self, msg):
         if self.face_distance != [0,0]:
-            # 0.1 is the step factor. If step too big, might go over the target
-            dw = self.face_distance[0]*self.tpw*0.5
-            dh = self.face_distance[1]*self.tph*0.5
+            # 0.2 is the step factor. If step too big, might go over the target
+            dw = self.face_distance[0]*self.tpw*0.2
+            dh = self.face_distance[1]*self.tph*0.2
         else:
             # Gradually remove correction
             # This happens when eyes move to the corner and face is lost.

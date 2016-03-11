@@ -496,6 +496,22 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             api.services.tts_select.default.callService(new ROSLIB.ServiceRequest({topic: topic}));
             api.services.tts_select.en.callService(new ROSLIB.ServiceRequest({topic: topic + '_en'}));
             api.services.tts_select.zh.callService(new ROSLIB.ServiceRequest({topic: topic + '_zh'}));
+        },
+        setBTMode: function(mode){
+            api.topics.btMode.publish(
+                new ROSLIB.Message({
+                    data: mode
+                })
+            )
+        },
+        btModes: {
+                    C_EXPRESSION: 1,
+                    C_GESTURE: 2,
+                    C_SOMA: 4,
+                    C_SACCADE: 8,
+                    C_EYES: 16,
+                    C_FACE: 32,
+                    C_ALL: 255
         }
     };
 

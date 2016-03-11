@@ -134,6 +134,7 @@ class Runner:
                 self.running = True
                 self.start_time = start_time
                 self.start_timestamp = time.time()
+                logger.info("Put nodes {} to queue".format(nodes))
                 self.queue.put(nodes)
                 return True
             else:

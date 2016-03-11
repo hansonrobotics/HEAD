@@ -9,6 +9,9 @@ from blender_api_msgs.msg import SetGesture, EmotionState, Target
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 import time
+import logging
+
+logger = logging.getLogger('hr.performances.nodes')
 
 
 class Node(object):
@@ -55,7 +58,10 @@ class Node(object):
                 self.cont(run_time)
         else:
             if run_time > self.start_time:
-                self.start(run_time)
+                try:
+                    self.start(run_time)
+                except Exception as ex:
+                    logger.info(ex)
                 self.started = True
         return True
 
@@ -122,7 +128,10 @@ class expression(Node):
         self.shown = False
 
     def start(self, run_time):
-        self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/no_pau"})
+        try:
+            self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/no_pau"})
+        except Exception as ex:
+            logger.info(ex)
         self.shown = False
 
     def cont(self, run_time):
@@ -133,7 +142,10 @@ class expression(Node):
                     MakeFaceExpr(self.data['expression'], float(self.data['magnitude'])))
 
     def stop(self, run_time):
-        self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/head_pau"})
+        try:
+            self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/head_pau"})
+        except Exception as ex:
+            logger.info(ex)
 
 
 class kfanimation(Node):
@@ -142,7 +154,10 @@ class kfanimation(Node):
         self.shown = False
 
     def start(self, run_time):
-        self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
+        try:
+            self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
+        except Exception as ex:
+            logger.info(ex)
         self.shown = False
 
     def cont(self, run_time):
@@ -153,7 +168,10 @@ class kfanimation(Node):
                     PlayAnimation(self.data['animation'], int(self.data['fps'])))
 
     def stop(self, run_time):
-        self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
+        try:
+            self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
+        except Exception as ex:
+            logger.info(ex)
 
 
 class pause(Node):

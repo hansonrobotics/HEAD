@@ -11,12 +11,14 @@ import random
 #<node pkg="topic_tools" type="mux" name="eyes_pau" args="eyes_pau head_pau eyes_tracking_pau mux:=eyes_pau_mux"/>
 eye_pau_select = rospy.ServiceProxy("/sophia_body/eyes_pau_mux/select", MuxSelect)
 head_pau_select = rospy.ServiceProxy("/sophia_body/head_pau_mux/select", MuxSelect)
+neck_pau_select = rospy.ServiceProxy("/sophia_body/neck_pau_mux/select", MuxSelect)
 head_pau_select.call("/blender_api/get_pau")
+neck_pau_select.call("/blender_api/get_pau")
 eye_pau_select.call("eyes_tracking_pau")
 
 pub = rospy.Publisher('/blender_api/get_pau', pau, queue_size=1)
 
-def send(pitch, yaw, delta):
+def eyes_calib_send(pitch, yaw, delta):
     if delta > 0.2 or delta < -0.2:
         return
     msg = pau()
@@ -32,7 +34,7 @@ def send(pitch, yaw, delta):
     pub.publish(msg)
     print "pub {}".format(msg)
 
-if __name__ == '__main__':
+def eyes_calib():
     set_alive(False)
     set_blink_randomly(False)
     set_saccade(False)
@@ -44,7 +46,17 @@ if __name__ == '__main__':
     delta = 0
     while not rospy.is_shutdown():
         r.sleep()
-        send(pitch=0.2, yaw=0, delta=delta)
+        eyes_calib_send(pitch=0.2, yaw=0, delta=delta)
         delta = -1*delta
 
     #os.system('rosrun dynamic_reconfigure dynparam set /sophia_body/eye_tracking tracking False')
+def brows_calib(msg):
+    keys = get_shape_keys()
+    values =msg.m_coeffs
+    data = {k:v for k, v in zip(keys, values)}
+    print 'brow_center_DN', data['brow_center_DN'], 'brow_center_UP', data['brow_center_UP']
+
+if __name__ == '__main__':
+    rospy.init_node("calibration")
+    rospy.Subscriber('/blender_api/get_pau', pau, brows_calib)
+    rospy.spin()
