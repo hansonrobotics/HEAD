@@ -47,6 +47,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                             animations.push({name: name, frames: frames});
                         });
                     });
+                console.log(animations)
                 callback(animations);
             })
         },

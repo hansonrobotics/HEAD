@@ -23,7 +23,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 fpsSlider: '.app-fps-slider',
                 fpsLabel: '.app-fps-label',
                 kfAnimationSelect: 'select.app-kfanimation-select',
-                messageInput: '.app-node-message-input'
+                messageInput: '.app-node-message-input',
+                kfModeSelect: 'select.app-kfmode-select'
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -37,7 +38,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 'change @ui.topicInput': 'setTopic',
                 'change @ui.kfAnimationSelect': 'setKFAnimation',
                 'click @ui.deleteButton': 'deleteNode',
-                'change @ui.messageInput': 'setMessage'
+                'change @ui.messageInput': 'setMessage',
+                'change @ui.kfModeSelect': 'setKFMode'
             },
             onRender: function () {
                 var self = this;
@@ -93,6 +95,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                         });
                         // init slider
                         if (!this.model.get('fps')) this.model.set('fps', 24);
+                        // Disable blender head output by default
+                        if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'head');
                         self.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');
                         this.ui.fpsSlider.slider({
                             animate: true,
@@ -171,11 +175,11 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
             updateKFAnimations: function (animations) {
                 var self = this;
                 _.each(animations, function (animation) {
-                    $(self.ui.kfAnimationSelect).append($('<option>').prop('value', animation).html(animation));
+                    $(self.ui.kfAnimationSelect).append($('<option>').prop('value', animation.name).html(animation.name));
                 });
 
                 if (!this.model.get('animation') && animations.length > 0) {
-                    this.model.set('animation', animations[0]);
+                    this.model.set('animation', animations[0].name);
                     this.setKFAnimationDuration();
                 }
 
@@ -184,6 +188,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                     $(this.ui.kfAnimationSelect).val(this.model.get('animation'));
 
                 $(this.ui.kfAnimationSelect).select2();
+                $(this.ui.kfModeSelect).select2();
             },
             updateExpressions: function (expressions) {
                 var self = this;
@@ -262,6 +267,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
             },
             setStartTime: function () {
                 this.model.set('start_time', Number($(this.ui.startTime).val()));
+            },
+            setKFMode: function () {
+                this.model.set('blender_mode', $(this.ui.kfModeSelect).val());
             },
             setTopic: function () {
                 this.model.set('topic', this.ui.topicInput.val());
