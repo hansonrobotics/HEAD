@@ -511,8 +511,7 @@ class Quaternion2Dual(MapperBase):
     # XXX TODO remove hard-coded physical dimensions
     # Han neck mechanism has the upper joint being 8.93 centimeters
     # in front of the lower joint, and 112.16 centimeters above it.
-    self.kappa = math.atan2(8.93, 112.16) # for Han
-    self.kappa = math.atan2(-5, 130) # for Sophia roughly
+    self.kappa = math.atan2(8.93, 112.16)
 
     # Returns the upper-neck left motor position, in radians
     def get_upper_left(q) :
