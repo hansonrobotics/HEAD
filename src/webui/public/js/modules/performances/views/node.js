@@ -179,7 +179,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 });
 
                 if (!this.model.get('animation') && animations.length > 0) {
-                    this.model.set('animation', animations[0]);
+                    this.model.set('animation', animations[0].name);
                     this.setKFAnimationDuration();
                 }
 
