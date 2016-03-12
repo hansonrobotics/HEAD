@@ -90,7 +90,7 @@ define(['application', 'tpl!./templates/layout.tpl', 'lib/api', 'modules/motors/
                     this.motorsCollection.fetchFromParam(function () {
                         self.motorsCollection.setDefaultValues();
                     });
-                    this.motorsView = new MotorsView({collection: this.motorsCollection, monitoring: true});
+                    this.motorsView = new MotorsView({collection: this.motorsCollection, monitoring: false});
                     this.getRegion('motors').show(this.motorsView);
 
                     self.motorsCollection.on('change', function () {
