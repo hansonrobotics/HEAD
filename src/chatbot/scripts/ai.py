@@ -82,7 +82,7 @@ class Chatbot():
     self._generic.learn(genstra)
     #
     character_dir=current+"/../character_aiml/"+ botname+"*.xml"
-    print 'loading character from', character_dir
+    logger.warn('loading character from ' + character_dir)
     self._character.learn(character_dir)
 
     propname=current+'/../character_aiml/' + botname + '.properties'
