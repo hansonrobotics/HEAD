@@ -65,28 +65,28 @@ class Chatbot():
     self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
 
-  def initialize(self, botname):
+._character.learn(character_dir)
+
+    propname=current+'/../character_aiml/' + botname + '.properties'
+    try:  def initialize(self, botname):
     rospy.init_node('chatbot_en')
       # read properties
     current=os.path.dirname(os.path.realpath(__file__))
     print current
     currstr=current+"/aiml/standard/*.aiml"
-    self._generic.learn(cur)
+    self._generic.learn(currstr)
 
     # this is from current hanson chat set but not character specific
     genstrx=current+"/../generic_aiml/*.xml"
-    genstra=
+    genstra=current+"/../generic_aiml/*.aiml"
     print 'loading generic from',genstrx
     self._generic.learn(genstrx)
     self._generic.learn(genstra)
     #
     character_dir="../character_aiml/"+ botname+"*.xml"
     print 'loading character from', character_dir
-    print self._character
-    self._character.learn(character_dir)
 
-    propname=current+'/../character_aiml/' + botname + '.properties'
-    try:
+    self
         f=open(propname)
         lines= f.readlines()
         for line in lines:
