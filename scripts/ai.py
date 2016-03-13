@@ -83,8 +83,10 @@ class Chatbot():
     propname=current+'/../character_aiml/' + botname + '.properties'
     try:
         f=open(propname)
-        for line in f:
+        lines= f.readlines()
+        for line in lines:
           parts = line.split('=')
+
           key = parts[0].strip()
           value = parts[1].strip()
           self._character.setBotPredicate(key, value)
@@ -294,13 +296,13 @@ def main():
     chatbot.sentiment_active()
     current=os.path.dirname(os.path.realpath(__file__))
     #sent3_file=os.path.join(option.botname, 'senticnet3.props.csv')
-    #sent3_file=current+../character_aiml
+    sent3_file=current+"../character_aiml"
     try:
       sent_f=open(sent3_file,'r')
       chatbot.load_sentiment_csv(sent_f)
     except Exception as ex:
       logger.warn("Load sentiment file error {}".format(ex))
-      chatbot_sentiment_active(False)
+      chatbot._sentiment_active=False
   rospy.spin()
 if __name__ == '__main__':
   main()
