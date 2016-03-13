@@ -4,7 +4,6 @@ import sys
 import xml.sax
 import xml.sax.handler
 import logging
-import text
 import string
 logger = logging.getLogger('hr.chatbot.aiml.aimlparser')
 
@@ -268,7 +267,7 @@ class AimlHandler(ContentHandler):
 		text = unicode(ch)
 		if self._state == self._STATE_InsidePattern:
 			# TODO: text inside patterns must be upper-case!
-			self._currentPattern += upper(text)
+			self._currentPattern += string.upper(text)
 		elif self._state == self._STATE_InsideThat:
 			self._currentThat += text
 		elif self._state == self._STATE_InsideTemplate:
