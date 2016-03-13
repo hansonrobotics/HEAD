@@ -65,12 +65,10 @@ class Chatbot():
     self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
 
-._character.learn(character_dir)
 
-    propname=current+'/../character_aiml/' + botname + '.properties'
-    try:  def initialize(self, botname):
+  def initialize(self, botname):
     rospy.init_node('chatbot_en')
-      # read properties
+    # read properties
     current=os.path.dirname(os.path.realpath(__file__))
     print current
     currstr=current+"/aiml/standard/*.aiml"
@@ -83,10 +81,12 @@ class Chatbot():
     self._generic.learn(genstrx)
     self._generic.learn(genstra)
     #
-    character_dir="../character_aiml/"+ botname+"*.xml"
+    character_dir=current+"/../character_aiml/"+ botname+"*.xml"
     print 'loading character from', character_dir
+    self._character.learn(character_dir)
 
-    self
+    propname=current+'/../character_aiml/' + botname + '.properties'
+    try:
         f=open(propname)
         lines= f.readlines()
         for line in lines:
@@ -143,12 +143,12 @@ class Chatbot():
       blink.data='chat_saying'
       self._blink_publisher.publish(blink)
 
-      character_match=self._character.respond(chat_message.utterance)
+      character_match = self._character.respond(chat_message.utterance)
       #logger.warn('UTTERANCE', chat_message.utterance)
       if len(character_match)>0:
-        response =character_match
+        response = character_match
       else:
-        respons= self._generic.respond(chat_message.utterance)
+        response = self._generic.respond(chat_message.utterance)
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
       response = response.replace('.','. ')
@@ -298,7 +298,7 @@ def main():
     chatbot.sentiment_active()
     current=os.path.dirname(os.path.realpath(__file__))
     #sent3_file=os.path.join(option.botname, 'senticnet3.props.csv')
-    sent3_file=current+"../character_aiml"
+    sent3_file=current+"/../character_aiml/senticnet3.props.csv"
     try:
       sent_f=open(sent3_file,'r')
       chatbot.load_sentiment_csv(sent_f)
