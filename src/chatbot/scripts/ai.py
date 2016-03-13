@@ -20,9 +20,10 @@ import argparse
 logger = logging.getLogger('hr.chatbot.ai')
 
 class Chatbot():
-  def __init__(self, aiml_dir):
-    self._kernel = aiml.Kernel()
-    self.initialize(aiml_dir)
+  def __init__(self, botname):
+    self._generic = aiml.Kernel()
+    self._character = aiml.Kernel()
+    self.initialize(botname)
     # chatbot now saves a bit of simple state to handle sentiment analysis
     # after formulating a response it saves it in a buffer if S.A. active
     # It has a simple state transition - initialized in wait_client
@@ -63,27 +64,36 @@ class Chatbot():
     self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
 
-  def initialize(self, aiml_dir):
-    self._kernel.learn(os.sep.join([aiml_dir, '*.aiml']))
-    rospy.init_node('chatbot_en')
+  def initialize(self, botname):
+    # read properties
 
-    properties_file = None
-    logger.info("Getting properties file")
-    while properties_file is None:
-        properties_file = rospy.get_param('~properties', None)
-        rospy.sleep(0.01)
-    logger.info("Parsing properties file")
+    self._generic.learn("aiml/standard/*.aiml")
+    #generic.learn("aiml/standard/*.aiml")
+    # this is from current hanson chat set but not character specific
 
-    if os.path.isfile(properties_file):
-      with open(properties_file) as f:
-        for line in f:
-          parts = line.split('=')
-          key = parts[0].strip()
-          value = parts[1].strip()
-          self._kernel.setBotPredicate(key, value)
-    else:
-      logger.warn("Property file {} doesn't exist".format(properties_file))
-    logger.info('Done initializing chatbot.')
+    self._generic.learn("../generic_aiml/*.xml")
+    # 
+    character_dir="../character_aiml/"+ botname+"*.xml"
+    self._character.learn(character_dir)
+
+    propname='../character_aiml/' + botname + '.properties'
+    try:
+      f=open(propname)
+      for line in f:
+        parts = line.split('=')
+        key = parts[0].strip()
+        value = parts[1].strip()
+        character.setBotPredicate(key, value)
+        generic.setBotPredicate(key, value)
+      f.close()
+    except:
+      logger.warn("couldn't open property file", propname)
+      #self._kernel.learn(os.sep.join([aimldir, '*.aiml']))
+      rospy.init_node('chatbot_en')
+
+      properties_file = None
+      logger.info("Parsing properties file")
+      logger.info('Done initializing chatbot.')
 
   def sentiment_active(self):
     self._sentiment_active=True
@@ -120,12 +130,16 @@ class Chatbot():
       self._response_publisher.publish(message)
       # puzzled expression
     else:
-
       # request blink, probability of blink defined in callback
       blink.data='chat_saying'
       self._blink_publisher.publish(blink)
 
-      response = self._kernel.respond(chat_message.utterance)
+      character_match=self._character.respond(chat_message.utterance)
+      logger.warn('UTTERANCE', chat_message.utterance)
+      if len(character_match)>0:
+	response =character_match
+      else:
+        self._generic.respond(chat_message.utterance)
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
       response = response.replace('.','. ')
@@ -263,7 +277,7 @@ def main():
     'botname', help ='robot name')
   option, unknown = parser.parse_known_args()
 
-  chatbot = Chatbot(option.aiml_dir)
+  chatbot = Chatbot(option.botname)
 
   if unknown:
     logger.warn("Unknown options {}".format(unknown))
@@ -272,7 +286,7 @@ def main():
     logger.info("Enable sentiment")
     # by default no sentiment so make active if got arg
     chatbot.sentiment_active()
-    sent3_file=os.path.join(option.aiml_dir, 'senticnet3.props.csv')
+    sent3_file=os.path.join(option.botname, 'senticnet3.props.csv')
     try:
       sent_f=open(sent3_file,'r')
       chatbot.load_sentiment_csv(sent_f)
