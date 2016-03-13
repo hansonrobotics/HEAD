@@ -66,18 +66,23 @@ class Chatbot():
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
 
   def initialize(self, botname):
+    rospy.init_node('chatbot_en')
       # read properties
     current=os.path.dirname(os.path.realpath(__file__))
     print current
-    logger.warn("current dir ",current)
-    self._generic.learn(current+"/aiml/standard/*.aiml")
+    currstr=current+"/aiml/standard/*.aiml"
+    self._generic.learn(cur)
 
     # this is from current hanson chat set but not character specific
-
-    self._generic.learn(current+"/../generic_aiml/*.xml")
-    self._generic.learn(current+"/../generic_aiml/*.aiml")
-    # 
+    genstrx=current+"/../generic_aiml/*.xml"
+    genstra=
+    print 'loading generic from',genstrx
+    self._generic.learn(genstrx)
+    self._generic.learn(genstra)
+    #
     character_dir="../character_aiml/"+ botname+"*.xml"
+    print 'loading character from', character_dir
+    print self._character
     self._character.learn(character_dir)
 
     propname=current+'/../character_aiml/' + botname + '.properties'
@@ -96,11 +101,8 @@ class Chatbot():
     except:
       logger.warn("couldn't open property file", propname)
       #self._kernel.learn(os.sep.join([aimldir, '*.aiml']))
-      rospy.init_node('chatbot_en')
 
-      properties_file = None
-      logger.info("Parsing properties file")
-      logger.info('Done initializing chatbot.')
+    logger.info('Done initializing chatbot.')
 
   def sentiment_active(self):
     self._sentiment_active=True
