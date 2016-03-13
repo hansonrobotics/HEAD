@@ -147,8 +147,10 @@ class Chatbot():
       #logger.warn('UTTERANCE', chat_message.utterance)
       if len(character_match)>0:
         response = character_match
+        logger.info('CHARACTER: ', response)
       else:
         response = self._generic.respond(chat_message.utterance)
+        logger.info('GENERIC: ', response)
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
       response = response.replace('.','. ')
