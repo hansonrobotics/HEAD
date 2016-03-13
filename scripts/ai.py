@@ -258,9 +258,9 @@ class Chatbot():
 def main():
   parser = argparse.ArgumentParser()
   parser.add_argument(
-    'aiml_dir', help='Directory of AIML knowledge files')
-  parser.add_argument(
     '-sent', action='store_true', default=False, help='Enable sentiment')
+  parser.add_argument(
+    'botname', help ='robot name')
   option, unknown = parser.parse_known_args()
 
   chatbot = Chatbot(option.aiml_dir)
