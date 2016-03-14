@@ -80,10 +80,11 @@ class Chatbot():
     print 'loading generic from',genstrx
     self._generic.learn(genstrx)
     self._generic.learn(genstra)
-    #
-    character_dir=current+"/../character_aiml/"+ botname+"*.xml"
-    print 'loading character from', character_dir
-    self._character.learn(character_dir)
+    # custom content is xml but we have some aiml from BG, under sophia. other bots can use it
+    charstra=current+"/../character_aiml/sophia.*.aiml"
+    self._character.learn(charstra)	
+    charstrx=current+"/../character_aiml/"+ botname+"*.xml"
+    self._character.learn(charstrx)
 
     propname=current+'/../character_aiml/' + botname + '.properties'
     try:
@@ -96,7 +97,6 @@ class Chatbot():
           value = parts[1].strip()
           self._character.setBotPredicate(key, value)
           self._generic.setBotPredicate(key, value)
-          print 'loading props', key, value
           f.close()
     except:
       logger.warn("couldn't open property file", propname)
