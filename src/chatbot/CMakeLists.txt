@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   rospy
   std_msgs
+  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions
@@ -67,6 +68,13 @@ add_message_files(
 generate_messages(
   DEPENDENCIES
   std_msgs  # Or other packages containing msgs
+)
+
+################################################
+## Declare ROS dynamic reconfigure parameters ##
+################################################
+generate_dynamic_reconfigure_options(
+    cfg/Chatbot.cfg
 )
 
 ###################################

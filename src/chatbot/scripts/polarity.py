@@ -27,7 +27,7 @@ class Polarity(object):
             if abs(float(phrase[6])) > 0.1:
                 self._polarity[phrase[1]]=float(phrase[6])
             else:
-                logger.info("{} is ignored".format(phrase[1]))
+                logger.debug("{} is ignored".format(phrase[1]))
         logger.info("Loaded {} items".format(len(self._polarity)))
 
     def get_polarity(self, text):
