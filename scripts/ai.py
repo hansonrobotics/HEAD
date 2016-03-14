@@ -156,27 +156,28 @@ class Chatbot():
         # No match, try improving with SOLR
         conn = HTTPConnection('localhost', 8983)
         headers = {'Content-type': 'application/json'}
-        url = '/solr/aiml/select?indent=true&wt=json&fl=*,score&rows=20&qf=title&q=-title:CNVD%20-title:C_*%20' + chat_message.utterance.replace(' ', '%20')
+        url = '/solr/aiml/select?indent=true&wt=json&fl=*,score&rows=20&qf=title&q=' + chat_message.utterance.replace(' ', '%20')
         conn.request('GET', url)
         lucResponse = conn.getresponse()
         # logger.warn('STATUS: %i', lucResponse.status)
         lucText = lucResponse.read()
-        logger.warn('RESPONSE: ' + lucText)
-        jResp = json.loads(lucText)
-
-        doc = jResp['response']['docs'][0]
-        lucResult = doc['title'][0]
 
         pp = pprint.PrettyPrinter(indent=4)
         #logger.warn('LUCENE: ' + pp.pformat(doc))
-        logger.warn('LUCENE REPLACEMENT: ' + lucResult)
-        if len(lucResult)>0:
-          response = lucResult
-        else:
-          logger.warn('GENERIC: ' + response)
-          response = chat_message.utterance
+        if len(lucText)>0:
+          #logger.warn('RESPONSE: ' + lucText)
+          jResp = json.loads(lucText)
+          if jResp['response']['numFound'] > 0:
+            doc = jResp['response']['docs'][0]
+            lucResult = doc['title'][0]
+            response = self._character.respond(lucResult)
+            logger.warn('LUCENE: %s -> %s' % (lucResult, response))
 
-        response = self._generic.respond(response)
+        # Nothing returned from character lookups, do generic
+        if not len(response)>0:
+          logger.warn('GENERIC: ' + response)
+          response = self._generic.respond(response)
+
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
       response = response.replace('.','. ')
