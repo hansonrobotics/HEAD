@@ -85,9 +85,11 @@ class Chatbot():
     self._generic.learn(genstrx)
     self._generic.learn(genstra)
 
-    character_dir=current+"/../character_aiml/"+ botname+"*.xml"
-    logger.warn('loading character from ' + character_dir)
-    self._character.learn(character_dir)
+    # custom content is xml but we have some aiml from BG, under sophia. other bots can use it
+    charstra=current+"/../character_aiml/sophia.*.aiml"
+    self._character.learn(charstra)
+    charstrx=current+"/../character_aiml/"+ botname+"*.xml"
+    self._character.learn(charstrx)
 
     propname=current+'/../character_aiml/' + botname + '.properties'
     try:
@@ -159,13 +161,14 @@ class Chatbot():
         url = '/solr/aiml/select?indent=true&wt=json&fl=*,score&rows=20&qf=title&q=' + chat_message.utterance.replace(' ', '%20')
         conn.request('GET', url)
         lucResponse = conn.getresponse()
+        conn.close()
         # logger.warn('STATUS: %i', lucResponse.status)
         lucText = lucResponse.read()
 
         pp = pprint.PrettyPrinter(indent=4)
         #logger.warn('LUCENE: ' + pp.pformat(doc))
         if len(lucText)>0:
-          #logger.warn('RESPONSE: ' + lucText)
+          logger.warn('RESPONSE: ' + lucText)
           jResp = json.loads(lucText)
           if jResp['response']['numFound'] > 0:
             doc = jResp['response']['docs'][0]
