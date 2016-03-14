@@ -84,7 +84,7 @@ class Chatbot():
     print 'loading generic from',genstrx
     self._generic.learn(genstrx)
     self._generic.learn(genstra)
-    #
+
     character_dir=current+"/../character_aiml/"+ botname+"*.xml"
     logger.warn('loading character from ' + character_dir)
     self._character.learn(character_dir)
@@ -100,10 +100,9 @@ class Chatbot():
           value = parts[1].strip()
           self._character.setBotPredicate(key, value)
           self._generic.setBotPredicate(key, value)
-          print 'loading props', key, value
           f.close()
     except:
-      logger.warn("couldn't open property file", propname)
+      logger.warn("couldn't open property file"+ propname)
       #self._kernel.learn(os.sep.join([aimldir, '*.aiml']))
 
     logger.info('Done initializing chatbot.')
