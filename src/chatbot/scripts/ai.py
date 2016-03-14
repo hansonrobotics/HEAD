@@ -174,10 +174,10 @@ class Chatbot():
         if len(lucResult)>0:
           response = lucResult
         else:
+          logger.warn('GENERIC: ' + response)
           response = chat_message.utterance
 
         response = self._generic.respond(response)
-        logger.warn('GENERIC: ' + response)
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
       response = response.replace('.','. ')
