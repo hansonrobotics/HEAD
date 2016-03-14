@@ -99,7 +99,7 @@ class Chatbot():
           self._generic.setBotPredicate(key, value)
           f.close()
     except:
-      logger.warn("couldn't open property file", propname)
+      logger.warn("couldn't open property file"+ propname)
       #self._kernel.learn(os.sep.join([aimldir, '*.aiml']))
 
     logger.info('Done initializing chatbot.')
