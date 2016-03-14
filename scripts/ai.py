@@ -3,19 +3,19 @@
 import rospy
 import os
 import logging
-import argparse
 import requests
 import json
 
+from polarity import Polarity
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
-from polarity import Polarity
+from dynamic_reconfigure.server import Server
+from chatbot.cfg import ChatbotConfig
 
 logger = logging.getLogger('hr.chatbot.ai')
 
 class Chatbot():
-  def __init__(self, botname):
-    self.botname = botname
+  def __init__(self):
     self.chatbot_url = 'http://localhost:8001'
 
     # chatbot now saves a bit of simple state to handle sentiment analysis
@@ -26,7 +26,8 @@ class Chatbot():
     self._response_buffer = ''
     self._state = 'wait_client'
     # argumment must be  to activate sentiment analysis
-    self._sentiment_active=False
+    self.botname = ''
+    self._sentiment_active = False
     # sentiment dictionary
     self.polarity = Polarity()
     self._polarity_threshold=0.2
@@ -50,6 +51,9 @@ class Chatbot():
     # Echo chat messages as plain strings.
     self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
+
+  def set_botname(self, botname):
+    self.botname = botname
 
   def sentiment_active(self, active):
     self._sentiment_active = active
@@ -136,28 +140,16 @@ class Chatbot():
     message.data = chat_message.utterance
     self._echo_publisher.publish(message)
 
+  def reconfig(self, config, level):
+    self.set_botname(config.botname)
+    self.sentiment_active(config.sentiment)
+    return config
+
 if __name__ == '__main__':
-  parser = argparse.ArgumentParser()
-  parser.add_argument('botname', help ='robot name')
-  parser.add_argument('-sent', action='store_true', default=False, help='Enable sentiment')
-  option, unknown = parser.parse_known_args()
-
-  print 'before chatbot class {}'.format(option.botname)
-  logger.info('before chatbot constructor')
   rospy.init_node('chatbot_en')
-  chatbot = Chatbot(option.botname)
-  print 'after chatbot'
-  logger.info("after chatbot")
-
-  if option.sent:
-    logger.info("Enable sentiment")
-    # by default no sentiment so make active if got arg
-    chatbot.sentiment_active(True)
-    current=os.path.dirname(os.path.realpath(__file__))
-    sent3_file=current+"/../character_aiml/senticnet3.props.csv"
-    try:
-      chatbot.polarity.load_sentiment_csv(sent3_file)
-    except Exception as ex:
-      logger.warn("Load sentiment file error {}".format(ex))
-      chatbot.sentiment_active(False)
+  bot = Chatbot()
+  current = os.path.dirname(os.path.realpath(__file__))
+  sent3_file = os.path.join(current, "../character_aiml/senticnet3.props.csv")
+  bot.polarity.load_sentiment_csv(sent3_file)
+  Server(ChatbotConfig, bot.reconfig)
   rospy.spin()
