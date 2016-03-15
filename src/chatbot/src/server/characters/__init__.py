@@ -16,3 +16,4 @@ for path in CHARACTER_PATH.split(':'):
         for character in characters:
             if isinstance(character, Character):
                 CHARACTERS.append(character)
+                print "Add character {}".format(character)
