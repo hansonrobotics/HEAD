@@ -76,14 +76,13 @@ class Chatbot():
         logger.error("QA error: error code {}, botname {}, question {}".format(
             ret, self.botname, question))
 
-      response = r.json().get('answer')
-      botname = r.json().get('botname')
+      response = r.json().get('response', {})
 
       if r.status_code != 200 or ret != 0 or not response:
-        response = question
-        botname = 'mimic_bot'
+        response['response'] = question
+        response['botname'] = 'mimic_bot'
 
-      return response, botname
+      return response
 
   def _request_callback(self, chat_message):
     if rospy.get_param('lang', None) != 'en':
@@ -107,7 +106,10 @@ class Chatbot():
       blink.data='chat_saying'
       self._blink_publisher.publish(blink)
 
-      response, botname = self.get_response(chat_message.utterance)
+      answer = self.get_response(chat_message.utterance)
+      response = answer.get('response')
+      emotion = answer.get('emotion')
+      botname = answer.get('botname')
 
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
@@ -117,24 +119,28 @@ class Chatbot():
       # if sentiment active save state and wait for affect_express to publish response
       # otherwise publish and let tts handle it
       if self._sentiment_active:
-        p = self.polarity.get_polarity(response)
-        logger.info('Polarity for "{}" is {}'.format(response, p))
         emo = String()
-        # change emotion if polarity magnitude exceeds threshold defined in constructor
-        # otherwise let top level behaviors control
-        if p > self._polarity_threshold:
-          emo.data = 'happy'
+        if emotion:
+          emo.data = emotion
           self._affect_publisher.publish(emo)
           logger.info('Chatbot perceived emo: {}'.format(emo.data))
-          # Currently response is independant of message received so no need to wait
-          # Leave it for Opencog to handle responses later on.
-        elif p < 0 and abs(p)> self._polarity_threshold:
-          emo = String()
-          emo.data = 'frustrated'
-          self._affect_publisher.publish(emo)
-          logger.info('Chatbot perceived emo: {}'.format(emo.data))
-          # Currently response is independant of message received so no need to wait
-          # Leave it for Opencog to handle responses later on.
+        else:
+          p = self.polarity.get_polarity(response)
+          logger.info('Polarity for "{}" is {}'.format(response, p))
+          # change emotion if polarity magnitude exceeds threshold defined in constructor
+          # otherwise let top level behaviors control
+          if p > self._polarity_threshold:
+            emo.data = 'happy'
+            self._affect_publisher.publish(emo)
+            logger.info('Chatbot perceived emo: {}'.format(emo.data))
+            # Currently response is independant of message received so no need to wait
+            # Leave it for Opencog to handle responses later on.
+          elif p < 0 and abs(p)> self._polarity_threshold:
+            emo.data = 'frustrated'
+            self._affect_publisher.publish(emo)
+            logger.info('Chatbot perceived emo: {}'.format(emo.data))
+            # Currently response is independant of message received so no need to wait
+            # Leave it for Opencog to handle responses later on.
 
       self._response_publisher.publish(String(response))
       logger.info("Ask: {}, answer: {}, answered by: {}".format(
