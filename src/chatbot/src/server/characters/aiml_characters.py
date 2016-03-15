@@ -16,12 +16,12 @@ pkd.load_aiml_files([
 ])
 pkd.set_property_file(os.path.join(CWD, "../../../character_aiml/pkd.properties"))
 
-new_sophia = Character('new_sophia')
-new_sophia.load_aiml_files([
+futurist_sophia = Character('futurist_sophia')
+futurist_sophia.load_aiml_files([
     os.path.join(CWD, "../../../character_aiml/sophia.*.xml"),
     os.path.join(CWD, "../../../character_aiml/sophia.*.aiml")
 ])
-new_sophia.set_property_file(os.path.join(CWD, "../../../character_aiml/sophia.properties"))
+futurist_sophia.set_property_file(os.path.join(CWD, "../../../character_aiml/sophia.properties"))
 
-characters = [han, sophia, pkd, new_sophia]
+characters = [han, sophia, pkd, futurist_sophia]
 
