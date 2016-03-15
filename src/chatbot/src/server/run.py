@@ -16,9 +16,8 @@ def chat():
     botname = data['botname']
     question = data['question']
     session = data['session']
-    answer, ret, botname = ask(botname, question, session)
-    return Response(json_encode(
-        {'ret': ret, 'answer': answer, 'botname': botname}),
+    response, ret = ask(botname, question, session)
+    return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
 if __name__ == '__main__':
