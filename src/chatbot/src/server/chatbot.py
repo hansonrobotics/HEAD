@@ -11,15 +11,15 @@ def get_character(name):
 def ask(name, question, session=None):
     character = get_character(name)
     if not character:
-        return None, WRONG_CHARACTER_NAME
+        return None, WRONG_CHARACTER_NAME, None
     answer = character.respond(question, session)
     if answer:
-        return answer, SUCCESS
+        return answer, SUCCESS, character.name
     else:
         generic = get_character('generic')
         generic.set_properties(character.get_properties())
         answer = generic.respond(question, session)
-        return answer, SUCCESS
+        return answer, SUCCESS, generic.name
 
 if __name__ == '__main__':
     for character in CHARACTERS:

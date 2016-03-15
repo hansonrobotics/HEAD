@@ -73,14 +73,17 @@ class Chatbot():
         logger.error("Request error: {}".format(r.status_code))
 
       if ret != 0:
-        logger.error("QA error: {}".format(ret))
+        logger.error("QA error: error code {}, botname {}, question {}".format(
+            ret, self.botname, question))
 
       response = r.json().get('answer')
+      botname = r.json().get('botname')
 
       if r.status_code != 200 or ret != 0 or not response:
         response = question
+        botname = 'mimic_bot'
 
-      return response
+      return response, botname
 
   def _request_callback(self, chat_message):
     if rospy.get_param('lang', None) != 'en':
@@ -104,7 +107,7 @@ class Chatbot():
       blink.data='chat_saying'
       self._blink_publisher.publish(blink)
 
-      response = self.get_response(chat_message.utterance)
+      response, botname = self.get_response(chat_message.utterance)
 
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
@@ -134,7 +137,8 @@ class Chatbot():
           # Leave it for Opencog to handle responses later on.
 
       self._response_publisher.publish(String(response))
-      logger.info("Ask: {}, answer: {}".format(chat_message.utterance, response))
+      logger.info("Ask: {}, answer: {}, answered by: {}".format(
+          chat_message.utterance, response, botname))
 
   # Just repeat the chat message, as a plain string.
   def _echo_callback(self, chat_message):
