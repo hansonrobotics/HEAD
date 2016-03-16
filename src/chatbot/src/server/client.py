@@ -20,10 +20,10 @@ class Client(cmd.Cmd, object):
         )
         ret = r.json().get('ret')
         if r.status_code != 200:
-            self.stdout.write("Request error: {}".format(r.status_code))
+            self.stdout.write("Request error: {}\n".format(r.status_code))
 
         if ret != 0:
-            self.stdout.write("QA error: error code {}, botname {}, question {}".format(
+            self.stdout.write("QA error: error code {}, botname {}, question {}\n".format(
                 ret, self.botname, question))
 
         response = r.json().get('response', {})
@@ -59,32 +59,34 @@ Chatbot
         self.stdout.write(s)
 
     def help_list(self):
-        self.stdout.write("List chatbot names")
+        self.stdout.write("List chatbot names\n")
 
     def do_chatbot(self, line):
         self.botname = line
-        self.stdout.write("Set chatbot to {}".format(self.botname))
+        self.stdout.write("Set chatbot to {}\n".format(self.botname))
 
     def help_chatbot(self):
-        self.stdout.write("Set chatbot name")
+        self.stdout.write("Set chatbot name\n")
 
     def do_conn(self, line):
         self.chatbot_url = line
 
     def help_conn(self):
         s = """
+
 Connect to chatbot server
 Syntax: conn url:port
 For example, conn 127.0.0.1:8001
+
 """
         self.stdout.write(s)
 
     def do_q(self, line):
-        self.stdout.write("Bye")
+        self.stdout.write("Bye\n")
         sys.exit()
 
     def help_q(self):
-        self.stdout.write("Quit")
+        self.stdout.write("Quit\n")
 
 if __name__ == '__main__':
     client = Client()
