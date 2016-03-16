@@ -27,7 +27,7 @@ class Chatbot():
   def __init__(self, botname):
     self._generic = aiml.Kernel()
     self._character = aiml.Kernel()
-    print 'calling init botname', botname
+    logger.warn('Calling init botname', botname)
     self.initialize(botname)
     # chatbot now saves a bit of simple state to handle sentiment analysis
     # after formulating a response it saves it in a buffer if S.A. active
@@ -74,21 +74,26 @@ class Chatbot():
     rospy.init_node('chatbot_en')
     # read properties
     current=os.path.dirname(os.path.realpath(__file__))
-    print current
     currstr=current+"/aiml/standard/*.aiml"
+    logger.warn('CHAT: loading generic from ' + currstr)
     self._generic.learn(currstr)
 
     # this is from current hanson chat set but not character specific
     genstrx=current+"/../generic_aiml/*.xml"
-    genstra=current+"/../generic_aiml/*.aiml"
-    print 'loading generic from',genstrx
+    logger.warn('CHAT: loading generic from ' + genstrx)
     self._generic.learn(genstrx)
+
+    genstra=current+"/../generic_aiml/*.aiml"
+    logger.warn('CHAT: loading generic from ' + genstra)
     self._generic.learn(genstra)
 
     # custom content is xml but we have some aiml from BG, under sophia. other bots can use it
     charstra=current+"/../character_aiml/sophia.*.aiml"
+    logger.warn('CHAT: loading character from ' + charstra)
     self._character.learn(charstra)
+
     charstrx=current+"/../character_aiml/"+ botname+"*.xml"
+    logger.warn('CHAT: loading character from ' + charstrx)
     self._character.learn(charstrx)
 
     propname=current+'/../character_aiml/' + botname + '.properties'
@@ -153,7 +158,7 @@ class Chatbot():
       logger.warn('CHARACTER MATCH: [' + character_match + ']')
       if len(character_match)>0:
         response = character_match
-      else:
+      elif len(chat_message.utterance) > 40:
         # No match, try improving with SOLR
         logger.warn('SOLR: START')
         conn = HTTPConnection('localhost', 8983)
@@ -176,10 +181,10 @@ class Chatbot():
             response = self._character.respond(lucResult)
             logger.warn('SOLR: %s -> %s' % (lucResult, response))
 
-        # Nothing returned from character lookups, do generic
-        if not len(response)>0:
-          response = self._generic.respond(response)
-          logger.warn('GENERIC: ' + response)
+      # Nothing returned from character or SOLR, do generic
+      if not len(response)>0:
+        response = self._generic.respond(response)
+        logger.warn('GENERIC: ' + response)
 
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
@@ -317,7 +322,7 @@ def main():
   parser.add_argument('-sent', action='store_true', default=False, help='Enable sentiment')
 
   option, unknown = parser.parse_known_args()
-  print 'before chatbot class {}'.format(option.botname)
+  logger.warn('before chatbot class {}'.format(option.botname))
   logger.info('before chatbot constructor')
   chatbot = Chatbot(option.botname)
   print 'after chatbot'
