@@ -183,7 +183,7 @@ class Chatbot():
 
       # Nothing returned from character or SOLR, do generic
       if not len(response)>0:
-        response = self._generic.respond(response)
+        response = self._generic.respond(chat_message.utterance)
         logger.warn('GENERIC: ' + response)
 
       # Add space after punctuation for multi-sentence responses
