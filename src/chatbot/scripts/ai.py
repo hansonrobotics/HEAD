@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import aiml
 import rospy
 import os
@@ -20,6 +19,8 @@ import urllib
 import json
 import pprint
 #from rigControl.actuators import sleep as nb_sleep
+
+useSOLR = True
 
 logger = logging.getLogger('hr.chatbot.ai')
 
@@ -182,7 +183,7 @@ class Chatbot():
             logger.warn('SOLR: %s -> %s' % (lucResult, response))
 
       # Nothing returned from character or SOLR, do generic
-      if not len(response)>0:
+      if not len(response)>0 or not useSOLR:
         response = self._generic.respond(chat_message.utterance)
         logger.warn('GENERIC: ' + response)
 
