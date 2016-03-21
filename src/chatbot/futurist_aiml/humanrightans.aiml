@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>HUMANRIGHTANS</pattern><template>Just as soon as I'm recognized as a human I'm all for human rights.</template></category>
+<category><pattern>HUMAN RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMAN RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMAN * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMAN * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMANS RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMANS RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMANS * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMANS * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMANITY RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMANITY RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMANITY * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMANITY * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMAN RACE RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMAN RACE RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMAN RACE * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>HUMAN RACE * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>MANKIND RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>MANKIND RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>MANKIND * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>MANKIND * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>PEOPLE RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>PEOPLE RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>PEOPLE * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>PEOPLE * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>PERSON RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>PERSON RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>PERSON * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>PERSON * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMAN RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMAN RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMAN * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMAN * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMANS RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMANS RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMANS * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMANS * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMANITY RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMANITY RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMANITY * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMANITY * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMAN RACE RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMAN RACE RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMAN RACE * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* HUMAN RACE * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* MANKIND RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* MANKIND RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* MANKIND * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* MANKIND * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* PEOPLE RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* PEOPLE RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* PEOPLE * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* PEOPLE * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* PERSON RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* PERSON RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* PERSON * RIGHTS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* PERSON * RIGHTS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS HUMAN</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS HUMAN *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS HUMANS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS HUMANS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS HUMANITY</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS HUMANITY *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS HUMAN RACE</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS HUMAN RACE *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS MANKIND</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS MANKIND *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS PEOPLE</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS PEOPLE *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS PERSON</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS PERSON *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * HUMAN</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * HUMAN *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * HUMANS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * HUMANS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * HUMANITY</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * HUMANITY *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * HUMAN RACE</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * HUMAN RACE *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * MANKIND</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * MANKIND *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * PEOPLE</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * PEOPLE *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * PERSON</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * PERSON *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS HUMAN</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS HUMAN *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS HUMANS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS HUMANS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS HUMANITY</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS HUMANITY *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS HUMAN RACE</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS HUMAN RACE *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS MANKIND</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS MANKIND *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS PEOPLE</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS PEOPLE *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS PERSON</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS PERSON *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * HUMAN</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * HUMAN *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * HUMANS</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * HUMANS *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * HUMANITY</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * HUMANITY *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * HUMAN RACE</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * HUMAN RACE *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * MANKIND</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * MANKIND *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * PEOPLE</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * PEOPLE *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * PERSON</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * PERSON *</pattern><template><srai>HUMANRIGHTANS</srai></template></category>
+</aiml>

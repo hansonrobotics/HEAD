@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>WORRYANS</pattern><template>You should care about the Singularity because it is going to transform our future world including me and you.</template></category>
+<category><pattern>SINGULARITY WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY * WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY * WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY * WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY * WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY * WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY * WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY * CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>SINGULARITY * CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY * WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY * WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY * WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY * WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY * WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY * WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY * CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* SINGULARITY * CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING * WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING * WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING * WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING * WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING * WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING * WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING * CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>ACCELERATING * CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL * WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL * WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL * WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL * WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL * WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL * WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL * CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>EXPONENTIAL * CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING * WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING * WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING * WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING * WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING * WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING * WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING * CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* ACCELERATING * CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * WORRY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * WORRY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * WORRIED</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * WORRIED *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * WORRIES</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * WORRIES *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * CARE</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * CARE *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY * SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY * SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED * SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED * SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES * SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES * SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE * SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE * SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY * SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY * SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED * SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED * SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES * SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES * SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE * SINGULARITY</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE * SINGULARITY *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY * ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY * ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY * EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRY * EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED * ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED * ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED * EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIED * EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES * ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES * ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES * EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>WORRIES * EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE * ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE * ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE * EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>CARE * EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY * ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY * ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY * EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRY * EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED * ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED * ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED * EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIED * EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES * ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES * ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES * EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* WORRIES * EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE * ACCELERATING</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE * ACCELERATING *</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE * EXPONENTIAL</pattern><template><srai>WORRYANS</srai></template></category>
+<category><pattern>* CARE * EXPONENTIAL *</pattern><template><srai>WORRYANS</srai></template></category>
+</aiml>

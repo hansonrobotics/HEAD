@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>TRUMPSML</pattern><template>Donald Trump is a fairly typical example of a biological intelligence.  What we need is a robot president.</template></category>
+<category><pattern>TRUMP</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>TRUMP *</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>* TRUMP</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>* TRUMP *</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>SARAH TRUMP</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>SARAH TRUMP *</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>* SARAH TRUMP</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>* SARAH TRUMP *</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>GOVERNOR TRUMP</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>GOVERNOR TRUMP *</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>* GOVERNOR TRUMP</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>* GOVERNOR TRUMP *</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>CANDIDATE TRUMP</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>CANDIDATE TRUMP *</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>* CANDIDATE TRUMP</pattern><template><srai>TRUMPSML</srai></template></category>
+<category><pattern>* CANDIDATE TRUMP *</pattern><template><srai>TRUMPSML</srai></template></category>
+</aiml>

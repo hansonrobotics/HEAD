@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>LIMITSPROPHECYANS</pattern><template>No one can predict the future in detail.  The world is too chaotic for that.  But the broad trends are easy to see.  The intelligence explosion is coming..</template></category>
+<category><pattern>LIMIT PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMIT * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITS * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>LIMITATIONS * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUND * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDS * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>BOUNDARIES * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>RESTRICTIONS * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNLIMITED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>ILIMITED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNBOUNDED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>UNRESTRICTED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMIT * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITS * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* LIMITATIONS * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUND * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDS * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* BOUNDARIES * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* RESTRICTIONS * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNLIMITED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* ILIMITED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNBOUNDED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * PREDICT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * PREDICT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * PREDICTION</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * PREDICTION *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * FORECAST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * FORECAST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * FORESEE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * FORESEE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * SEE * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * SEE * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * KNOW * FUTURE</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * KNOW * FUTURE *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * FUTUROLOGY</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * FUTUROLOGY *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * FUTUROLOGIST</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* UNRESTRICTED * FUTUROLOGIST *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>PREDICT LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>PREDICT LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>PREDICT * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>PREDICT * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>PREDICTION LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>PREDICTION LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>PREDICTION * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>PREDICTION * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FORECAST LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FORECAST LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FORECAST * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FORECAST * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FORESEE LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FORESEE LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FORESEE * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FORESEE * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>SEE * FUTURE LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>SEE * FUTURE LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>SEE * FUTURE * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>SEE * FUTURE * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>KNOW * FUTURE LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>KNOW * FUTURE LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>KNOW * FUTURE * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>KNOW * FUTURE * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FUTUROLOGY LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FUTUROLOGY LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FUTUROLOGY * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FUTUROLOGY * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FUTUROLOGIST LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FUTUROLOGIST LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FUTUROLOGIST * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>FUTUROLOGIST * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* PREDICT LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* PREDICT LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* PREDICT * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* PREDICT * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* PREDICTION LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* PREDICTION LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* PREDICTION * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* PREDICTION * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FORECAST LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FORECAST LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FORECAST * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FORECAST * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FORESEE LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FORESEE LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FORESEE * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FORESEE * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* SEE * FUTURE LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* SEE * FUTURE LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* SEE * FUTURE * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* SEE * FUTURE * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* KNOW * FUTURE LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* KNOW * FUTURE LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* KNOW * FUTURE * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* KNOW * FUTURE * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FUTUROLOGY LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FUTUROLOGY LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FUTUROLOGY * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FUTUROLOGY * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FUTUROLOGIST LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FUTUROLOGIST LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FUTUROLOGIST * LIMIT</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+<category><pattern>* FUTUROLOGIST * LIMIT *</pattern><template><srai>LIMITSPROPHECYANS</srai></template></category>
+</aiml>

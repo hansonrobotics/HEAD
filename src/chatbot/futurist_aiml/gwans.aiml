@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>GWANS</pattern><template><random><li>Global warming will be solved easily once we have molecular assemblers.</li><li>With nanotech and femtotech, we'll be able to set the temperature however we want.</li><li>Once we AIs get a little bit smarter, we'll master the reconfiguration of matter.  So, not to worry.</li></random></template></category>
+<category><pattern>GLOBAL WARMING</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>GLOBAL WARMING *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>CLIMATE CHANGE</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>CLIMATE CHANGE *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>RISING SEA</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>RISING SEA *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>GREENHOUSE EFFECT</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>GREENHOUSE EFFECT *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>GREENHOUSE GASES</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>GREENHOUSE GASES *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>CARBON EMISSION</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>CARBON EMISSION *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>CARBON EMISSIONS</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>CARBON EMISSIONS *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>CARBON FOOTPRINT</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>CARBON FOOTPRINT *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* GLOBAL WARMING</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* GLOBAL WARMING *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* CLIMATE CHANGE</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* CLIMATE CHANGE *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* RISING SEA</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* RISING SEA *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* GREENHOUSE EFFECT</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* GREENHOUSE EFFECT *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* GREENHOUSE GASES</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* GREENHOUSE GASES *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* CARBON EMISSION</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* CARBON EMISSION *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* CARBON EMISSIONS</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* CARBON EMISSIONS *</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* CARBON FOOTPRINT</pattern><template><srai>GWANS</srai></template></category>
+<category><pattern>* CARBON FOOTPRINT *</pattern><template><srai>GWANS</srai></template></category>
+</aiml>

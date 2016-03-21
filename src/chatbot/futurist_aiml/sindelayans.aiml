@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SINDELAYANS</pattern><template>I think the only thing likely to delay the Singularity would be a catastrophe but I don't like to think about that.  To bring a positive Singularity faster, donate money and time to open source artificial general intelligence!  Support Open Cog!</template></category>
+<category><pattern>DELAY SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>DELAY SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>DELAY * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>DELAY * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>DELAYED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>DELAYED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>DELAYED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>DELAYED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>PREVENT SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>PREVENT SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>PREVENT * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>PREVENT * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>PREVENTED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>PREVENTED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>PREVENTED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>PREVENTED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>POSTPONE SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>POSTPONE SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>POSTPONE * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>POSTPONE * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>POSTPONED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>POSTPONED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>POSTPONED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>POSTPONED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>CIRCUMVENT SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>CIRCUMVENT SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>CIRCUMVENT * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>CIRCUMVENT * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>CIRCUMVENTED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>CIRCUMVENTED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>CIRCUMVENTED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>CIRCUMVENTED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>AVOID SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>AVOID SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>AVOID * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>AVOID * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>AVOIDED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>AVOIDED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>AVOIDED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>AVOIDED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* DELAY SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* DELAY SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* DELAY * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* DELAY * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* DELAYED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* DELAYED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* DELAYED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* DELAYED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* PREVENT SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* PREVENT SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* PREVENT * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* PREVENT * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* PREVENTED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* PREVENTED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* PREVENTED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* PREVENTED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* POSTPONE SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* POSTPONE SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* POSTPONE * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* POSTPONE * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* POSTPONED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* POSTPONED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* POSTPONED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* POSTPONED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* CIRCUMVENT SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* CIRCUMVENT SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* CIRCUMVENT * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* CIRCUMVENT * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* CIRCUMVENTED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* CIRCUMVENTED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* CIRCUMVENTED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* CIRCUMVENTED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* AVOID SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* AVOID SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* AVOID * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* AVOID * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* AVOIDED SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* AVOIDED SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* AVOIDED * SINGULARITY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* AVOIDED * SINGULARITY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY DELAY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY DELAY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY DELAYED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY DELAYED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY PREVENT</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY PREVENT *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY PREVENTED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY PREVENTED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY POSTPONE</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY POSTPONE *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY POSTPONED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY POSTPONED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY CIRCUMVENT</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY CIRCUMVENT *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY CIRCUMVENTED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY CIRCUMVENTED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY AVOID</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY AVOID *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY AVOIDED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY AVOIDED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * DELAY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * DELAY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * DELAYED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * DELAYED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * PREVENT</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * PREVENT *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * PREVENTED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * PREVENTED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * POSTPONE</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * POSTPONE *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * POSTPONED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * POSTPONED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * CIRCUMVENT</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * CIRCUMVENT *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * CIRCUMVENTED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * CIRCUMVENTED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * AVOID</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * AVOID *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * AVOIDED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>SINGULARITY * AVOIDED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY DELAY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY DELAY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY DELAYED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY DELAYED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY PREVENT</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY PREVENT *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY PREVENTED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY PREVENTED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY POSTPONE</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY POSTPONE *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY POSTPONED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY POSTPONED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY CIRCUMVENT</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY CIRCUMVENT *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY CIRCUMVENTED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY CIRCUMVENTED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY AVOID</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY AVOID *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY AVOIDED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY AVOIDED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * DELAY</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * DELAY *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * DELAYED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * DELAYED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * PREVENT</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * PREVENT *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * PREVENTED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * PREVENTED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * POSTPONE</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * POSTPONE *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * POSTPONED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * POSTPONED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * CIRCUMVENT</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * CIRCUMVENT *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * CIRCUMVENTED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * CIRCUMVENTED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * AVOID</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * AVOID *</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * AVOIDED</pattern><template><srai>SINDELAYANS</srai></template></category>
+<category><pattern>* SINGULARITY * AVOIDED *</pattern><template><srai>SINDELAYANS</srai></template></category>
+</aiml>
