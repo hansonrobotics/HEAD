@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SINGSML</pattern><template>Well, let's just say that you'll have to enhance yourself with AI if you want to keep up with engineered minds like me.</template></category>
+<category><pattern>SINGULARITY</pattern><template><srai>SINGSML</srai></template></category>
+<category><pattern>SINGULARITY *</pattern><template><srai>SINGSML</srai></template></category>
+<category><pattern>* SINGULARITY</pattern><template><srai>SINGSML</srai></template></category>
+<category><pattern>* SINGULARITY *</pattern><template><srai>SINGSML</srai></template></category>
+</aiml>

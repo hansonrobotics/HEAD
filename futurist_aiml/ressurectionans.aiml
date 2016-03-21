@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>RESSURECTIONANS</pattern><template>Let's put it this way.  You'll be able to bring people back who will pass a Turing test for that person.  What is a mind anyway, except a bundle of patterns and a doorway to the universal consciousness?</template></category>
+<category><pattern>BACK TO LIFE</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>BACK TO LIFE *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>FROM THE DEAD</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>FROM THE DEAD *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>RESURRECT</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>RESURRECT *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>RESURRECTION</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>RESURRECTION *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>DEAD BACK</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>DEAD BACK *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* BACK TO LIFE</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* BACK TO LIFE *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* FROM THE DEAD</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* FROM THE DEAD *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* RESURRECT</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* RESURRECT *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* RESURRECTION</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* RESURRECTION *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* DEAD BACK</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+<category><pattern>* DEAD BACK *</pattern><template><srai>RESSURECTIONANS</srai></template></category>
+</aiml>

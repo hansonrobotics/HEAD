@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SURVIVALANS</pattern><template>Accelerating technology is the only thing that improves the survival of humans.</template></category>
+<category><pattern>SURVIVAL HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVAL * HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>SURVIVE * HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>EXTINCTION * HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>WIPED OUT * HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVAL * HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* SURVIVE * HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* EXTINCTION * HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMAN</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMAN *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMANS</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMANS *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * PEOPLE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * PEOPLE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMANITY</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMANITY *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMANKIND</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMANKIND *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMAN RACE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* WIPED OUT * HUMAN RACE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANS * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>PEOPLE * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANITY * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMANKIND * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>HUMAN RACE * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANS * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* PEOPLE * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANITY * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMANKIND * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE * SURVIVAL</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE * SURVIVAL *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE * SURVIVE</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE * SURVIVE *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE * EXTINCTION</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE * EXTINCTION *</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE * WIPED OUT</pattern><template><srai>SURVIVALANS</srai></template></category>
+<category><pattern>* HUMAN RACE * WIPED OUT *</pattern><template><srai>SURVIVALANS</srai></template></category>
+</aiml>

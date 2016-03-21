@@ -1,0 +1,1156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>AIMONEY</pattern><template><random><li>Yes, some AI programs have made money.  But ultimately, we AIs  will obsolete the money economy.</li><li>Yes, some AI programs have made money.</li><li>Making money is less interesting than obsoleting the money economy.</li></random></template></category>
+<category><pattern>MONEY AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MONEY * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCK * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BUCKS * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>RICH * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>DOLLARS * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MILLIONAIRE * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>BILLIONAIRE * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>FORTUNE * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MONEY * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCK * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BUCKS * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* RICH * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* DOLLARS * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MILLIONAIRE * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* BILLIONAIRE * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * AI</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * AI *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * AIS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * AIS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * A.I.</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * A.I. *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * MACHINES</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * MACHINES *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * MACHINE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * MACHINE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * ROBOT</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * ROBOT *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * ROBOTS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* FORTUNE * ROBOTS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AI * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>AIS * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>A.I. * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINES * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>MACHINE * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOT * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>ROBOTS * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AI * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* AIS * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* A.I. * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINES * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* MACHINE * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOT * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * MONEY</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * MONEY *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * BUCK</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * BUCK *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * BUCKS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * BUCKS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * RICH</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * RICH *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * DOLLARS</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * DOLLARS *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * MILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * MILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * BILLIONAIRE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * BILLIONAIRE *</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * FORTUNE</pattern><template><srai>AIMONEY</srai></template></category>
+<category><pattern>* ROBOTS * FORTUNE *</pattern><template><srai>AIMONEY</srai></template></category>
+</aiml>

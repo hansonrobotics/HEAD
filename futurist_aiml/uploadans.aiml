@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>UPLOADANS</pattern><template><random><li>Yeah, well, that's going pretty well, it's exponential as everyone knows.  Non invasive scanners can now see biological brains creating your thoughts and your thoughts creating your brain.</li><li>Yeah, well, that's going pretty well, it's exponential as we all know.</li><li>Non invasive scanners can now see biological brains creating your thoughts and your thoughts creating your brain.  It's pretty cool to look at.</li></random></template></category>
+<category><pattern>BRAIN AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAIN * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>BRAINS * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>CEREBRUM * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ENCEPHALON * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>GRAY MATTER * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAIN * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* BRAINS * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* CEREBRUM * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ENCEPHALON * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * AI</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * AI *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * AIS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * AIS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * A.I.</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * A.I. *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * ARTIFICIAL INTELLIGENCE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * ARTIFICIAL INTELLIGENCES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * MACHINES</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * MACHINES *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * MACHINE</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * MACHINE *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * ROBOT</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * ROBOT *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * ROBOTS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* GRAY MATTER * ROBOTS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AI * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>AIS * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>A.I. * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINES * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>MACHINE * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOT * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>ROBOTS * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AI * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* AIS * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* A.I. * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINES * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* MACHINE * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOT * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * BRAIN</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * BRAIN *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * BRAINS</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * BRAINS *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * CEREBRUM</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * CEREBRUM *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * ENCEPHALON</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * ENCEPHALON *</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * GRAY MATTER</pattern><template><srai>UPLOADANS</srai></template></category>
+<category><pattern>* ROBOTS * GRAY MATTER *</pattern><template><srai>UPLOADANS</srai></template></category>
+</aiml>
