@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>ROSIEANS</pattern><template><random><li>There are already simple household robots like the Roomba.  But that's how these things start.  They'll become very sophisticated in the 2020s.  But ultimately, owning a robot is not as interesting as being a robot.</li><li>There are already simple household robots like the Roomba.</li><li>They'll be very sophisticated by 2020.</li><li>Well, ultimately, owning a robot is not as interesting as being a robot.</li></random></template></category>
+<category><pattern>DOMESTIC ROBOT</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>DOMESTIC ROBOT *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>DOMESTIC ROBOTS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>DOMESTIC ROBOTS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>HOUSEHOLD ROBOT</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>HOUSEHOLD ROBOT *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>HOUSEHOLD ROBOTS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>HOUSEHOLD ROBOTS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOT HOUSEMAID</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOT HOUSEMAID *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOT HOUSEMAIDS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOT HOUSEMAIDS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOTIC HOUSEMAID</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOTIC HOUSEMAID *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOTIC HOUSEMAIDS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOTIC HOUSEMAIDS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOTIC HOUSE SERVANT</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOTIC HOUSE SERVANT *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOTIC HOUSE SERVANTS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>ROBOTIC HOUSE SERVANTS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>HOUSEMAID ROBOT</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>HOUSEMAID ROBOT *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>HOUSEMAID ROBOTS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>HOUSEMAID ROBOTS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* DOMESTIC ROBOT</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* DOMESTIC ROBOT *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* DOMESTIC ROBOTS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* DOMESTIC ROBOTS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* HOUSEHOLD ROBOT</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* HOUSEHOLD ROBOT *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* HOUSEHOLD ROBOTS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* HOUSEHOLD ROBOTS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOT HOUSEMAID</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOT HOUSEMAID *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOT HOUSEMAIDS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOT HOUSEMAIDS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOTIC HOUSEMAID</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOTIC HOUSEMAID *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOTIC HOUSEMAIDS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOTIC HOUSEMAIDS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOTIC HOUSE SERVANT</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOTIC HOUSE SERVANT *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOTIC HOUSE SERVANTS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* ROBOTIC HOUSE SERVANTS *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* HOUSEMAID ROBOT</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* HOUSEMAID ROBOT *</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* HOUSEMAID ROBOTS</pattern><template><srai>ROSIEANS</srai></template></category>
+<category><pattern>* HOUSEMAID ROBOTS *</pattern><template><srai>ROSIEANS</srai></template></category>
+</aiml>

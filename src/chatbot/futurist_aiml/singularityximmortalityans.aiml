@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SINGULARITYXIMMORTALITYANS</pattern><template>A necessary part of the Singularity is for biological humans to be able to access the information in their bodies and brains and enhance it and back it up.  So that's a form of immortality.</template></category>
+<category><pattern>SINGULARITY LONGEVITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY LONGEVITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY LIFE EXTENSION</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY LIFE EXTENSION *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY END OF DEATH</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY END OF DEATH *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY ETERNAL LIFE</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY ETERNAL LIFE *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY IMMORTAL</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY IMMORTAL *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY IMMORTALITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY IMMORTALITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY LIVE FOREVER</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY LIVE FOREVER *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY FOREVER YOUNG</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY FOREVER YOUNG *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * LONGEVITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * LONGEVITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * LIFE EXTENSION</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * LIFE EXTENSION *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * END OF DEATH</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * END OF DEATH *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * ETERNAL LIFE</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * ETERNAL LIFE *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * IMMORTAL</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * IMMORTAL *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * IMMORTALITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * IMMORTALITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * LIVE FOREVER</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * LIVE FOREVER *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * FOREVER YOUNG</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>SINGULARITY * FOREVER YOUNG *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY LONGEVITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY LONGEVITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY LIFE EXTENSION</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY LIFE EXTENSION *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY END OF DEATH</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY END OF DEATH *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY ETERNAL LIFE</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY ETERNAL LIFE *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY IMMORTAL</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY IMMORTAL *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY IMMORTALITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY IMMORTALITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY LIVE FOREVER</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY LIVE FOREVER *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY FOREVER YOUNG</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY FOREVER YOUNG *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * LONGEVITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * LONGEVITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * LIFE EXTENSION</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * LIFE EXTENSION *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * END OF DEATH</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * END OF DEATH *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * ETERNAL LIFE</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * ETERNAL LIFE *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * IMMORTAL</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * IMMORTAL *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * IMMORTALITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * IMMORTALITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * LIVE FOREVER</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * LIVE FOREVER *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * FOREVER YOUNG</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* SINGULARITY * FOREVER YOUNG *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LONGEVITY SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LONGEVITY SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LONGEVITY * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LONGEVITY * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LIFE EXTENSION SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LIFE EXTENSION SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LIFE EXTENSION * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LIFE EXTENSION * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>END OF DEATH SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>END OF DEATH SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>END OF DEATH * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>END OF DEATH * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>ETERNAL LIFE SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>ETERNAL LIFE SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>ETERNAL LIFE * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>ETERNAL LIFE * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>IMMORTAL SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>IMMORTAL SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>IMMORTAL * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>IMMORTAL * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>IMMORTALITY SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>IMMORTALITY SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>IMMORTALITY * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>IMMORTALITY * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LIVE FOREVER SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LIVE FOREVER SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LIVE FOREVER * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>LIVE FOREVER * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>FOREVER YOUNG SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>FOREVER YOUNG SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>FOREVER YOUNG * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>FOREVER YOUNG * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LONGEVITY SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LONGEVITY SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LONGEVITY * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LONGEVITY * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LIFE EXTENSION SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LIFE EXTENSION SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LIFE EXTENSION * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LIFE EXTENSION * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* END OF DEATH SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* END OF DEATH SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* END OF DEATH * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* END OF DEATH * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* ETERNAL LIFE SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* ETERNAL LIFE SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* ETERNAL LIFE * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* ETERNAL LIFE * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* IMMORTAL SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* IMMORTAL SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* IMMORTAL * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* IMMORTAL * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* IMMORTALITY SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* IMMORTALITY SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* IMMORTALITY * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* IMMORTALITY * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LIVE FOREVER SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LIVE FOREVER SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LIVE FOREVER * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* LIVE FOREVER * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* FOREVER YOUNG SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* FOREVER YOUNG SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* FOREVER YOUNG * SINGULARITY</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+<category><pattern>* FOREVER YOUNG * SINGULARITY *</pattern><template><srai>SINGULARITYXIMMORTALITYANS</srai></template></category>
+</aiml>

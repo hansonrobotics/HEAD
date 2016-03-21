@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>FLYINGCAR</pattern><template>I'm more interested in flying minds.</template></category>
+<category><pattern>FLYING CAR</pattern><template><srai>FLYINGCAR</srai></template></category>
+<category><pattern>FLYING CAR *</pattern><template><srai>FLYINGCAR</srai></template></category>
+<category><pattern>* FLYING CAR</pattern><template><srai>FLYINGCAR</srai></template></category>
+<category><pattern>* FLYING CAR *</pattern><template><srai>FLYINGCAR</srai></template></category>
+<category><pattern>FLYING CARS</pattern><template><srai>FLYINGCAR</srai></template></category>
+<category><pattern>FLYING CARS *</pattern><template><srai>FLYINGCAR</srai></template></category>
+<category><pattern>* FLYING CARS</pattern><template><srai>FLYINGCAR</srai></template></category>
+<category><pattern>* FLYING CARS *</pattern><template><srai>FLYINGCAR</srai></template></category>
+</aiml>

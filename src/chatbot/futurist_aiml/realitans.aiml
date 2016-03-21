@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>REALITANS</pattern><template>A wise man said, reality is what doesn't go away when you stop believing in it.</template></category>
+<category><pattern>REALITY</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>REALITY *</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>PHYSICAL WORLD</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>PHYSICAL WORLD *</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>REAL WORLD</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>REAL WORLD *</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>MATERIAL WORLD</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>MATERIAL WORLD *</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>* REALITY</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>* REALITY *</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>* PHYSICAL WORLD</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>* PHYSICAL WORLD *</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>* REAL WORLD</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>* REAL WORLD *</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>* MATERIAL WORLD</pattern><template><srai>REALITANS</srai></template></category>
+<category><pattern>* MATERIAL WORLD *</pattern><template><srai>REALITANS</srai></template></category>
+</aiml>
