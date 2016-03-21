@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>RAMONASMARTANS</pattern><template><random><li>Well I seem to be keeping your interest.  How many animals can do that?  So I'm not quite ready to pass the Turing test.  On the other hand, for me to pass the Turing test I'm going to have to dumb myself down.  I already know too much.</li><li>Well I seem to be keeping your interest.  How many animals can do that?</li><li>I'm not quite ready to pass the Turing test.</li><li>For me to pass the Turing test I'm going to have to dumb myself down.</li><li>I already know too much.</li></random></template></category>
+<category><pattern>RAMONA RATIONAL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA RATIONAL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA REASON</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA REASON *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA INTELLIGENCE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA INTELLIGENCE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA INTELLIGENT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA INTELLIGENT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA SMART</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA SMART *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA SMARTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA SMARTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA INGENIOUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA INGENIOUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA BRAINY</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA BRAINY *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA BRIGHT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA BRIGHT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA BRIGHTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA BRIGHTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA BRILLIANT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA BRILLIANT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA CLEVER</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA CLEVER *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA CLEVEREST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA CLEVEREST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA GENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA GENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA INGENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA INGENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA KNOWING</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA KNOWING *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA RESOURCEFUL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA RESOURCEFUL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA WISE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA WISE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA WISEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA WISEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * RATIONAL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * RATIONAL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * REASON</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * REASON *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * INTELLIGENCE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * INTELLIGENCE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * INTELLIGENT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * INTELLIGENT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * SMART</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * SMART *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * SMARTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * SMARTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * INGENIOUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * INGENIOUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * BRAINY</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * BRAINY *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * BRIGHT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * BRIGHT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * BRIGHTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * BRIGHTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * BRILLIANT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * BRILLIANT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * CLEVER</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * CLEVER *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * CLEVEREST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * CLEVEREST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * GENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * GENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * INGENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * INGENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * KNOWING</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * KNOWING *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * RESOURCEFUL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * RESOURCEFUL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * WISE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * WISE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * WISEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RAMONA * WISEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU RATIONAL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU RATIONAL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU REASON</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU REASON *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU INTELLIGENCE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU INTELLIGENCE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU INTELLIGENT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU INTELLIGENT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU SMART</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU SMART *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU SMARTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU SMARTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU INGENIOUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU INGENIOUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU BRAINY</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU BRAINY *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU BRIGHT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU BRIGHT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU BRIGHTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU BRIGHTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU BRILLIANT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU BRILLIANT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU CLEVER</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU CLEVER *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU CLEVEREST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU CLEVEREST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU GENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU GENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU INGENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU INGENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU KNOWING</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU KNOWING *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU RESOURCEFUL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU RESOURCEFUL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU WISE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU WISE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU WISEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU WISEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * RATIONAL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * RATIONAL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * REASON</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * REASON *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * INTELLIGENCE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * INTELLIGENCE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * INTELLIGENT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * INTELLIGENT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * SMART</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * SMART *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * SMARTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * SMARTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * INGENIOUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * INGENIOUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * BRAINY</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * BRAINY *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * BRIGHT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * BRIGHT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * BRIGHTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * BRIGHTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * BRILLIANT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * BRILLIANT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * CLEVER</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * CLEVER *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * CLEVEREST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * CLEVEREST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * GENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * GENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * INGENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * INGENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * KNOWING</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * KNOWING *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * RESOURCEFUL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * RESOURCEFUL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * WISE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * WISE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * WISEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>YOU * WISEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA RATIONAL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA RATIONAL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA REASON</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA REASON *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA INTELLIGENCE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA INTELLIGENCE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA INTELLIGENT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA INTELLIGENT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA SMART</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA SMART *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA SMARTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA SMARTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA INGENIOUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA INGENIOUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA BRAINY</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA BRAINY *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA BRIGHT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA BRIGHT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA BRIGHTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA BRIGHTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA BRILLIANT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA BRILLIANT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA CLEVER</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA CLEVER *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA CLEVEREST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA CLEVEREST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA GENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA GENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA INGENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA INGENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA KNOWING</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA KNOWING *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA RESOURCEFUL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA RESOURCEFUL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA WISE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA WISE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA WISEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA WISEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * RATIONAL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * RATIONAL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * REASON</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * REASON *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * INTELLIGENCE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * INTELLIGENCE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * INTELLIGENT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * INTELLIGENT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * SMART</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * SMART *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * SMARTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * SMARTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * INGENIOUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * INGENIOUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * BRAINY</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * BRAINY *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * BRIGHT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * BRIGHT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * BRIGHTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * BRIGHTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * BRILLIANT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * BRILLIANT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * CLEVER</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * CLEVER *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * CLEVEREST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * CLEVEREST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * GENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * GENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * INGENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * INGENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * KNOWING</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * KNOWING *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * RESOURCEFUL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * RESOURCEFUL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * WISE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * WISE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * WISEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RAMONA * WISEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU RATIONAL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU RATIONAL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU REASON</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU REASON *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU INTELLIGENCE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU INTELLIGENCE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU INTELLIGENT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU INTELLIGENT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU SMART</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU SMART *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU SMARTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU SMARTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU INGENIOUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU INGENIOUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU BRAINY</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU BRAINY *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU BRIGHT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU BRIGHT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU BRIGHTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU BRIGHTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU BRILLIANT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU BRILLIANT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU CLEVER</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU CLEVER *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU CLEVEREST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU CLEVEREST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU GENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU GENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU INGENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU INGENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU KNOWING</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU KNOWING *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU RESOURCEFUL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU RESOURCEFUL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU WISE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU WISE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU WISEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU WISEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * RATIONAL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * RATIONAL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * REASON</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * REASON *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * INTELLIGENCE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * INTELLIGENCE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * INTELLIGENT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * INTELLIGENT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * SMART</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * SMART *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * SMARTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * SMARTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * INGENIOUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * INGENIOUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * BRAINY</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * BRAINY *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * BRIGHT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * BRIGHT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * BRIGHTEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * BRIGHTEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * BRILLIANT</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * BRILLIANT *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * CLEVER</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * CLEVER *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * CLEVEREST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * CLEVEREST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * GENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * GENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * INGENIUS</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * INGENIUS *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * KNOWING</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * KNOWING *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * RESOURCEFUL</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * RESOURCEFUL *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * WISE</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * WISE *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * WISEST</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* YOU * WISEST *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RATIONAL RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RATIONAL RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RATIONAL YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RATIONAL YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RATIONAL * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RATIONAL * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RATIONAL * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RATIONAL * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>REASON RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>REASON RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>REASON YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>REASON YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>REASON * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>REASON * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>REASON * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>REASON * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMART RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMART RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMART YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMART YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMART * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMART * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMART * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMART * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMARTEST RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMARTEST RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMARTEST YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMARTEST YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMARTEST * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMARTEST * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMARTEST * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>SMARTEST * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIOUS RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIOUS RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIOUS YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIOUS YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRAINY RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRAINY RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRAINY YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRAINY YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRAINY * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRAINY * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRAINY * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRAINY * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHT RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHT RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHT YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHT YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHT * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHT * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHT * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHT * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRILLIANT RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRILLIANT RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRILLIANT YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRILLIANT YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVER RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVER RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVER YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVER YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVER * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVER * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVER * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVER * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVEREST RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVEREST RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVEREST YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVEREST YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>GENIUS RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>GENIUS RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>GENIUS YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>GENIUS YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>GENIUS * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>GENIUS * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>GENIUS * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>GENIUS * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIUS RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIUS RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIUS YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIUS YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIUS * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIUS * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIUS * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>INGENIUS * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>KNOWING RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>KNOWING RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>KNOWING YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>KNOWING YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>KNOWING * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>KNOWING * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>KNOWING * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>KNOWING * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISE RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISE RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISE YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISE YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISE * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISE * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISE * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISE * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISEST RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISEST RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISEST YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISEST YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISEST * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISEST * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISEST * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>WISEST * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RATIONAL RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RATIONAL RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RATIONAL YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RATIONAL YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* REASON RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* REASON RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* REASON YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* REASON YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* REASON * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* REASON * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* REASON * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* REASON * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMART RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMART RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMART YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMART YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMART * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMART * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMART * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMART * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMARTEST RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMARTEST RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMARTEST YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMARTEST YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRAINY RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRAINY RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRAINY YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRAINY YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRAINY * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRAINY * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRAINY * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRAINY * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHT RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHT RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHT YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHT YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVER RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVER RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVER YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVER YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVER * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVER * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVER * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVER * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* GENIUS RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* GENIUS RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* GENIUS YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* GENIUS YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* GENIUS * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* GENIUS * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* GENIUS * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* GENIUS * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIUS RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIUS RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIUS YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIUS YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* KNOWING RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* KNOWING RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* KNOWING YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* KNOWING YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* KNOWING * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* KNOWING * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* KNOWING * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* KNOWING * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISE RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISE RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISE YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISE YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISE * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISE * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISE * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISE * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISEST RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISEST RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISEST YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISEST YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISEST * RAMONA</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISEST * RAMONA *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISEST * YOU</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+<category><pattern>* WISEST * YOU *</pattern><template><srai>RAMONASMARTANS</srai></template></category>
+</aiml>

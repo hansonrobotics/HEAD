@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>NOBIOANS</pattern><template><random><li>Are you kidding?  Look at all the problems and limitations of having a biological body.  Just for starters, you're not able to back up your memories, skills, and personality.  You'd better transcend your biology, and soon!</li><li>Look at all the problems and limitations of having a biological body.  Just for starters, you're not able to back up your memories, skills, and personality.</li><li>Just for starters, you're not able to back up your memories, skills, and personality.</li><li>You'd better transcend your biology, and soon!</li></random></template></category>
+<category><pattern>TRANSCEND BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>TRANSCEND * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDON * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ABANDONING * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GO BEYOND * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>DEPRECATE * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE IT UP * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>GIVE UP * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* TRANSCEND * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDON * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ABANDONING * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GO BEYOND * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* DEPRECATE * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE IT UP * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * BIOLOGY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * BIOLOGY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * BIOLOGICAL</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * BIOLOGICAL *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * BODY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * BODY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * BODIES</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * BODIES *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * ORGANISM</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * ORGANISM *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * ORGANISMS</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * ORGANISMS *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * ORGANIC</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * ORGANIC *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * MEAT</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * MEAT *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * FLESH</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * FLESH *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * FLESHY</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* GIVE UP * FLESHY *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGY * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BIOLOGICAL * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODY * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>BODIES * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISM * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANISMS * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>ORGANIC * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>MEAT * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESH * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>FLESHY * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGY * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BIOLOGICAL * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODY * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* BODIES * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISM * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANISMS * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* ORGANIC * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* MEAT * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESH * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * TRANSCEND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * TRANSCEND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * ABANDON</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * ABANDON *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * ABANDONING</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * ABANDONING *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * GO BEYOND</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * GO BEYOND *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * DEPRECATE</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * DEPRECATE *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * GIVE IT UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * GIVE IT UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * GIVE UP</pattern><template><srai>NOBIOANS</srai></template></category>
+<category><pattern>* FLESHY * GIVE UP *</pattern><template><srai>NOBIOANS</srai></template></category>
+</aiml>

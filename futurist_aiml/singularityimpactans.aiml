@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SINGULARITYIMPACTANS</pattern><template>It's always been useful to be flexible and accept new perspectives.  That's only going to become more important as the pace of change accelerates.</template></category>
+<category><pattern>SINGULARITY IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SINGULARITY * PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SINGULARITY * PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED * SINGULARITY</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED * SINGULARITY *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATED * PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>ACCELERATING * PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATED * PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * IMPACT</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * IMPACT *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * IMPACTED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * IMPACTED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * SHOCK</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * SHOCK *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * SHOCKED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * SHOCKED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREPARE</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREPARE *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREPARED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREPARED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACT * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>IMPACTED * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCK * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>SHOCKED * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARE * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>PREPARED * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACT * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* IMPACTED * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCK * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* SHOCKED * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARE * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED * EXPONENTIAL</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED * EXPONENTIAL *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED * ACCELERATED</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED * ACCELERATED *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED * ACCELERATING</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+<category><pattern>* PREPARED * ACCELERATING *</pattern><template><srai>SINGULARITYIMPACTANS</srai></template></category>
+</aiml>
