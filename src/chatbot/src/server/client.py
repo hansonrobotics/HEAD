@@ -2,12 +2,13 @@ import cmd
 import requests
 import json
 import sys
+import os
 
 class Client(cmd.Cmd, object):
     def __init__(self):
         super(Client, self).__init__()
         self.prompt = '[me]: '
-        self.botname = 'futurist_sophia'
+        self.botname = 'han'
         self.chatbot_url = 'http://localhost:8001'
 
     def ask(self, question):
@@ -34,6 +35,10 @@ class Client(cmd.Cmd, object):
 
         return response
 
+    def list_chatbot(self):
+        r = requests.get(os.path.join(self.chatbot_url, 'chatbots'))
+        chatbots = r.json().get('response')
+        return chatbots
 
     def default(self, line):
         try:
@@ -45,18 +50,10 @@ class Client(cmd.Cmd, object):
             print ex
 
     def do_list(self, line):
-        s = """
-Current
-    {}
-
-Chatbot
-    sophia
-    han
-    pkd
-    futurist_sophia
-
-""".format(self.botname)
-        self.stdout.write(s)
+        chatbots = self.list_chatbot()
+        chatbots = [c if c!=self.botname else '[{}]'.format(c) for c in chatbots]
+        self.stdout.write('\n'.join(chatbots))
+        self.stdout.write('\n')
 
     def help_list(self):
         self.stdout.write("List chatbot names\n")
@@ -87,6 +84,7 @@ For example, conn 127.0.0.1:8001
 
     def help_q(self):
         self.stdout.write("Quit\n")
+
 
 if __name__ == '__main__':
     client = Client()
