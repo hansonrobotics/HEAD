@@ -94,11 +94,8 @@ def getShapekeyName(id):
     return bpy.data.shape_keys['ShapeKeys'].key_blocks[id].name
 
 def getShapekeyBone(id):
-    try:
-        sk = getShapekeyName(id)
-    except Exception as e:
-        if ShapekeyStore._shkey_list[id] == 'jaw':
-            return (3.5, 'chin')
+
+    sk = getShapekeyName(id)
     d = getDriverFromShapekeyName(sk)
     var = None
     if 'var' in d.driver.variables.keys():
@@ -192,19 +189,21 @@ def importAnimations(animations):
         aname = list(a.keys())[0]
         frames = list(a.values())[0]
         anim = False
-        for f in frames:
-            current_frame += f['frames']
-            # Reset PAU
-            m = getPauFromMotors(f['motors'])
-            kf = getKeyFrameFromPAU(m)
-            for bone, val in kf.items():
-                if not anim:
-                    anim = newAction("GST-"+aname)
-                try:
-                    insertkeyframe(anim,bone,current_frame, val)
-                except Exception as e:
-                    print(e)
-
+        try:
+            for f in frames:
+                current_frame += f['frames']
+                # Reset PAU
+                m = getPauFromMotors(f['motors'])
+                kf = getKeyFrameFromPAU(m)
+                for bone, val in kf.items():
+                    if not anim:
+                        anim = newAction("GST-"+aname)
+                    try:
+                        insertkeyframe(anim,bone,current_frame, val)
+                    except Exception as e:
+                        print(e)
+        except Exception as e:
+            print("Cannot import {} with error {}".format(aname, str(e)))
 
 def removeKeyFrames(action, bone, start, finish, channel=0):
         remove = []
@@ -253,5 +252,5 @@ def updateExpressions(expressions):
 
 if __name__ == '__main__':
     importAnimations(animations)
-    updateExpressions(expressions)
+#    updateExpressions(expressions)
 
