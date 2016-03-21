@@ -6,6 +6,8 @@ from flask import Flask, request, Response
 from werkzeug.utils import secure_filename
 import json
 import logging
+logging.basicConfig()
+logging.getLogger().setLevel(logging.INFO)
 from chatbot import ask, list_character
 
 json_encode = json.JSONEncoder().encode
@@ -27,8 +29,6 @@ def list_chatbot():
         mimetype="application/json")
 
 if __name__ == '__main__':
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.INFO)
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
     else:
