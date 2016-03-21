@@ -1,0 +1,1604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>REALMOOREANS</pattern><template><random><li>That's exactly what Moore's law says.  You could buy one transistor for a dollar in 1968, and close to a billion today.  And today's transistors are better because they're faster.  But there are equivalents of Moore's law in other fields that have to do with information.</li><li>That's exactly what Moore's law says. But there are equivalents of Moore's law in other fields that have to do with information.</li><li>You could buy one transistor for a dollar in 1968, and close to a billion today.  And today's transistors are better because they're faster.</li></random></template></category>
+<category><pattern>TRANSISTOR LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTOR * TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TRANSISTORS * TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENT * TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COMPONENTS * TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTOR * TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TRANSISTORS * TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENT * TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * LESS EXPENSIVE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * LESS EXPENSIVE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * CHEAP</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * CHEAP *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * CHEAPER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * CHEAPER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * COST * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * COST * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * COST * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * COST * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * COSTS * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * COSTS * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * COSTS * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * COSTS * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASING * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASING * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASE * COSTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASE * COSTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASING * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASING * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASE * COST</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASE * COST *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * PRICE * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * PRICE * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * PRICE * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * PRICE * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * PRICES * DECREASING</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * PRICES * DECREASING *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * PRICES * DECREASE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * PRICES * DECREASE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASING * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASING * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASE * PRICES</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASE * PRICES *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASING * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASING * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASE * PRICE</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DECREASE * PRICE *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DENSER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DENSER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DENSITY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * DENSITY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * SMALLER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * SMALLER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * SMALL</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * SMALL *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * TINY</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * TINY *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * TINIER</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COMPONENTS * TINIER *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>LESS EXPENSIVE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAP * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>CHEAPER * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASING * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COST * DECREASE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASING * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>COSTS * DECREASE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COSTS * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COSTS * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * COST * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * COST * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASING * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICE * DECREASE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASING * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>PRICES * DECREASE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICES * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICES * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASING * PRICE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DECREASE * PRICE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSER * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>DENSITY * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALLER * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>SMALL * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINY * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>TINIER * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* LESS EXPENSIVE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAP * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* CHEAPER * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASING * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COST * DECREASE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASING * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* COSTS * DECREASE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COSTS * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COSTS * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * COST * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * COST * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASING * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICE * DECREASE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASING * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* PRICES * DECREASE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICES * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICES * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASING * PRICE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DECREASE * PRICE * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSER * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* DENSITY * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALLER * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* SMALL * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINY * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER * TRANSISTOR</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER * TRANSISTOR *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER * TRANSISTORS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER * TRANSISTORS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER * COMPONENT</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER * COMPONENT *</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER * COMPONENTS</pattern><template><srai>REALMOOREANS</srai></template></category>
+<category><pattern>* TINIER * COMPONENTS *</pattern><template><srai>REALMOOREANS</srai></template></category>
+</aiml>

@@ -51,7 +51,7 @@ def set_robot_config(robot_name):
     motors = json.loads(request.get_data())
     try:
         file_name = os.path.join(config_root, robot_name, 'config.yaml')
-        write_yaml(file_name, motors)
+        #write_yaml(file_name, motors)
     except Exception as e:
         return json_encode({'error': str(e)})
 

@@ -15,7 +15,10 @@ _shkey_list = ['Basis', 'shrinkwrap','adjustments', 'brow_center_UP','brow_cente
                    'sneer.L', 'sneer.R','eyes-look.dn', 'eyes-look.up', 'lip-UP.C.UP', 'lip-UP.C.DN', 'lip-UP.L.UP',
                    'lip-UP.L.DN', 'lip-UP.R.UP', 'lip-UP.R.DN', 'lips-smile.L', 'lips-smile.R','lips-wide.L',
                    'lips-narrow.L', 'lips-wide.R','lips-narrow.R', 'lip-DN.C.DN', 'lip-DN.C.UP', 'lip-DN.L.DN',
-                   'lip-DN.L.UP', 'lip-DN.R.DN', 'lip-DN.R.UP', 'lips-frown.L', 'lips-frown.R', 'lip-JAW.DN', 'jaw']
+                   'lip-DN.L.UP', 'lip-DN.R.DN', 'lip-DN.R.UP', 'lips-frown.L', 'lips-frown.R', 'lip-JAW.DN', 'jaw',
+                   'LShoulderPitch','LShoulderRoll','LElbowYaw','LElbowRoll','LWristRoll','LWristPitch',
+                   'LFingers', 'LThumb', 'LFingersSpread','RShoulderPitch','RShoulderRoll','RElbowYaw',
+                   'RWristRoll','RWristYaw','RWristPitch','RWristRoll','RThumb','RIndex','RMiddle','RRing','RLittle']
 
 
 def _build_index(lst):
