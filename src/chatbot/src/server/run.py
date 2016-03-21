@@ -6,7 +6,7 @@ from flask import Flask, request, Response
 from werkzeug.utils import secure_filename
 import json
 import logging
-from chatbot import ask
+from chatbot import ask, list_character
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -19,6 +19,11 @@ def chat():
     session = data['session']
     response, ret = ask(botname, question, session)
     return Response(json_encode({'ret': ret, 'response': response}),
+        mimetype="application/json")
+
+@app.route('/chatbots', methods=['GET'])
+def list_chatbot():
+    return Response(json_encode({'ret': 0, 'response': list_character()}),
         mimetype="application/json")
 
 if __name__ == '__main__':

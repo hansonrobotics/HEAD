@@ -16,6 +16,9 @@ def get_character(name):
         if character.name == name:
             return character
 
+def list_character():
+    return [c.name for c in CHARACTERS]
+
 def solr(text):
     # No match, try improving with SOLR
     conn = HTTPConnection('localhost', 8983)
