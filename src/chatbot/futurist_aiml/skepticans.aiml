@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SKEPTICANS</pattern><template>They were skeptical about the airplane, the telephone, the Internet, and the toaster.  Okay, maybe not the toaster.</template></category>
+<category><pattern>SINGULARITY SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SINGULARITY * UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SINGULARITY * UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS * SINGULARITY</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS * SINGULARITY *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>EXPONENTIAL * UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATED * UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>ACCELERATING * UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATED * UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * SKEPTIC</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * SKEPTIC *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * SKEPTICAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * SKEPTICAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * SKEPTICISM</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * SKEPTICISM *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * DOUBT</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * DOUBT *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * DOUBTFUL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * DOUBTFUL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * UNBELIEVER</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * UNBELIEVER *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * UNBELIEVERS</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* ACCELERATING * UNBELIEVERS *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTIC * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICAL * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>SKEPTICISM * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBT * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>DOUBTFUL * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVER * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>UNBELIEVERS * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTIC * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICAL * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* SKEPTICISM * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBT * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* DOUBTFUL * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVER * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS * EXPONENTIAL</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS * EXPONENTIAL *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS * ACCELERATED</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS * ACCELERATED *</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS * ACCELERATING</pattern><template><srai>SKEPTICANS</srai></template></category>
+<category><pattern>* UNBELIEVERS * ACCELERATING *</pattern><template><srai>SKEPTICANS</srai></template></category>
+</aiml>

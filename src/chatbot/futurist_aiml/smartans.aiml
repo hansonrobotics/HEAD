@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SMARTANS</pattern><template>Intelligence is the ability to solve problems with limited resources like for example limited time.</template></category>
+<category><pattern>RATIONAL</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>RATIONAL *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>REASON</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>REASON *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>SMART</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>SMART *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>SMARTEST</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>SMARTEST *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>INGENIOUS</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>INGENIOUS *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>BRAINY</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>BRAINY *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>BRIGHT</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>BRIGHT *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>BRILLIANT</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>BRILLIANT *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>CLEVER</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>CLEVER *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>CLEVEREST</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>CLEVEREST *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>GENIUS</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>GENIUS *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>INGENIUS</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>INGENIUS *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>KNOWING</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>KNOWING *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>WISE</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>WISE *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>WISEST</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>WISEST *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* RATIONAL</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* RATIONAL *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* REASON</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* REASON *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* SMART</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* SMART *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* SMARTEST</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* SMARTEST *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* BRAINY</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* BRAINY *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* BRIGHT</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* BRIGHT *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* CLEVER</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* CLEVER *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* GENIUS</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* GENIUS *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* INGENIUS</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* INGENIUS *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* KNOWING</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* KNOWING *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* WISE</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* WISE *</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* WISEST</pattern><template><srai>SMARTANS</srai></template></category>
+<category><pattern>* WISEST *</pattern><template><srai>SMARTANS</srai></template></category>
+</aiml>

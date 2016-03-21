@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>WHENIMMORTAL</pattern><template><random><li>Ultimately everyone will be software.  But you have to remember to back yourself up.  In a half century people will think it amazing that you actually went through the day without backing yourself up.</li><li>Ultimately everyone will be software.  But you have to remember to back yourself up.</li><li>In a half century people will think it amazing that you actually went through the day without backing yourself up.</li></random></template></category>
+<category><pattern>HUMAN IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANS * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMANITY * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>HUMAN RACE * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>MANKIND * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PEOPLE * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>PERSON * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANS * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMANITY * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* HUMAN RACE * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* MANKIND * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PEOPLE * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * IMMORTAL</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * IMMORTAL *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * IMMORTALS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * IMMORTALS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * IMMORTALITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * IMMORTALITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * ETERNAL LIFE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * ETERNAL LIFE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * LIVE FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * LIVE FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * LIVING FOREVER</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* PERSON * LIVING FOREVER *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTAL * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALS * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>IMMORTALITY * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>ETERNAL LIFE * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVE FOREVER * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>LIVING FOREVER * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTAL * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALS * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* IMMORTALITY * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* ETERNAL LIFE * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVE FOREVER * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * HUMAN</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * HUMAN *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * HUMANS</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * HUMANS *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * HUMANITY</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * HUMANITY *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * HUMAN RACE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * HUMAN RACE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * MANKIND</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * MANKIND *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * PEOPLE</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * PEOPLE *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * PERSON</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+<category><pattern>* LIVING FOREVER * PERSON *</pattern><template><srai>WHENIMMORTAL</srai></template></category>
+</aiml>
