@@ -66,6 +66,7 @@ def ask(name, question, session=None):
     generic = get_character('generic')
     generic.set_properties(character.get_properties())
     answer = generic.respond(question, session)
+    logger.info("Ask {}, answer {}".format(question, answer))
     return answer, SUCCESS
 
 if __name__ == '__main__':
