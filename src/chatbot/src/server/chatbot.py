@@ -7,6 +7,8 @@ import logging
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
 
+useSOLR = True
+
 logger = logging.getLogger('hr.chatbot.server.chatbot')
 
 def get_character(name):
@@ -45,17 +47,18 @@ def ask(name, question, session=None):
     if answer.get('response', None):
         return answer, SUCCESS
 
-    lucResult = None
-    try:
-        lucResult = solr(question)
-    except Exception as ex:
-        logger.warn(ex)
+    if useSOLR and len(question) > 40:
+        lucResult = None
+        try:
+            lucResult = solr(question)
+        except Exception as ex:
+            logger.warn(ex)
 
-    if lucResult:
-        answer = character.respond(lucResult)
-        logger.warn('LUCENE: %s -> %s' % (lucResult, answer))
-        if answer.get('response', None):
-            return answer, SUCCESS
+        if lucResult:
+            answer = character.respond(lucResult)
+            logger.warn('LUCENE: %s -> %s' % (lucResult, answer))
+            if answer.get('response', None):
+                return answer, SUCCESS
 
     generic = get_character('generic')
     generic.set_properties(character.get_properties())
