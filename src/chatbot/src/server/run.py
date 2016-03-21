@@ -3,7 +3,6 @@
 import os
 import sys
 from flask import Flask, request, Response
-from werkzeug.utils import secure_filename
 import json
 import logging
 from chatbot import ask
