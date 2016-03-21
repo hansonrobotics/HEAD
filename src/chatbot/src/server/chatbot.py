@@ -16,6 +16,9 @@ def get_character(name):
         if character.name == name:
             return character
 
+def list_character():
+    return [c.name for c in CHARACTERS]
+
 def solr(text):
     # No match, try improving with SOLR
     conn = HTTPConnection('localhost', 8983)
@@ -63,6 +66,7 @@ def ask(name, question, session=None):
     generic = get_character('generic')
     generic.set_properties(character.get_properties())
     answer = generic.respond(question, session)
+    logger.info("Ask {}, answer {}".format(question, answer))
     return answer, SUCCESS
 
 if __name__ == '__main__':
