@@ -1,35 +1,25 @@
 #!/usr/bin/env python
+
+import chatbot
 import aiml
 import rospy
 import os
-import sys
-import time
-# csv and itertools for #sentiment
-import csv
-from itertools import izip
+import logging
+import requests
+import json
+
+from polarity import Polarity
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
-""
-#from blender_api_msgs.msg import EmotionState
-import logging
-import random
-import argparse
-from httplib import HTTPConnection
-import urllib
-import json
-import pprint
-#from rigControl.actuators import sleep as nb_sleep
-
-useSOLR = True
+from dynamic_reconfigure.server import Server
+from chatbot.cfg import ChatbotConfig
 
 logger = logging.getLogger('hr.chatbot.ai')
 
 class Chatbot():
-  def __init__(self, botname):
-    self._generic = aiml.Kernel()
-    self._character = aiml.Kernel()
-    logger.warn('Calling init botname', botname)
-    self.initialize(botname)
+  def __init__(self):
+    self.chatbot_url = 'http://localhost:8001'
+
     # chatbot now saves a bit of simple state to handle sentiment analysis
     # after formulating a response it saves it in a buffer if S.A. active
     # It has a simple state transition - initialized in wait_client
@@ -38,99 +28,59 @@ class Chatbot():
     self._response_buffer = ''
     self._state = 'wait_client'
     # argumment must be  to activate sentiment analysis
-    self._sentiment_active=False
+    self.botname = ''
+    self._sentiment_active = False
     # sentiment dictionary
-    self._polarity={}
+    self.polarity = Polarity()
     self._polarity_threshold=0.2
-    # a small dictionary of terms which negate polarity
-    self._negates={'not':1,'don\'t':1,'can\'t':1,'won\'t':1,'isn\'t':1,'never':1}
-    #
+
     rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
-    # add callback to let sentiment analysis possibly set emotion
 
-    rospy.Subscriber('chatbot_speech', ChatMessage, self._affect_perceive_callback)
-
-    self._response_publisher = rospy.Publisher('chatbot_responses', String, queue_size=1)
+    self._response_publisher = rospy.Publisher(
+        'chatbot_responses', String, queue_size=1)
 
     # send communication non-verbal blink message to behavior
-    self._blink_publisher = rospy.Publisher('chatbot_blink',String,queue_size=1)
+    self._blink_publisher = rospy.Publisher(
+        'chatbot_blink',String,queue_size=1)
 
     # Perceived emotional content; and emotion to express
     # Perceived: based on what chatbot heard, this is how robot should
     # feel.  Expressed: the emotional content that the chatbot should
     # put into what it says.
     self._affect_publisher = rospy.Publisher(
-      'chatbot_affect_perceive',
-      String, queue_size=1
-    )
-    # rospy.Subscriber('chatbot_affect_express', EmotionState,
-    #     self._affect_express_callback)
+        'chatbot_affect_perceive', String, queue_size=1)
 
     # Echo chat messages as plain strings.
     self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
 
+  def set_botname(self, botname):
+    self.botname = botname
 
-  def initialize(self, botname):
-    rospy.init_node('chatbot_en')
-    # read properties
-    current=os.path.dirname(os.path.realpath(__file__))
-    currstr=current+"/aiml/standard/*.aiml"
-    logger.warn('CHAT: loading generic from ' + currstr)
-    self._generic.learn(currstr)
+  def sentiment_active(self, active):
+    self._sentiment_active = active
 
-    # this is from current hanson chat set but not character specific
-    genstrx=current+"/../generic_aiml/*.xml"
-    logger.warn('CHAT: loading generic from ' + genstrx)
-    self._generic.learn(genstrx)
+  def get_response(self, question):
+      r = requests.post(self.chatbot_url,
+            data = json.dumps(
+                {"botname":"{}".format(self.botname),
+                "question":"{}".format(question),
+                "session":"0"}),
+            headers = {"Content-Type": "application/json"}
+      )
+      ret = r.json().get('ret')
+      if r.status_code != 200:
+        logger.error("Request error: {}".format(r.status_code))
 
-    genstra=current+"/../generic_aiml/*.aiml"
-    logger.warn('CHAT: loading generic from ' + genstra)
-    self._generic.learn(genstra)
+      if ret != 0:
+        logger.error("QA error: {}".format(ret))
 
-    # custom content is xml but we have some aiml from BG, under sophia. other bots can use it
-    charstra=current+"/../character_aiml/sophia.*.aiml"
-    logger.warn('CHAT: loading character from ' + charstra)
-    self._character.learn(charstra)
+      response = r.json().get('answer')
 
-    charstrx=current+"/../character_aiml/"+ botname+"*.xml"
-    logger.warn('CHAT: loading character from ' + charstrx)
-    self._character.learn(charstrx)
+      if r.status_code != 200 or ret != 0 or not response:
+        response = question
 
-    propname=current+'/../character_aiml/' + botname + '.properties'
-    try:
-        f=open(propname)
-        lines= f.readlines()
-        for line in lines:
-          parts = line.split('=')
-
-          key = parts[0].strip()
-          value = parts[1].strip()
-          self._character.setBotPredicate(key, value)
-          self._generic.setBotPredicate(key, value)
-          f.close()
-    except:
-      logger.warn("couldn't open property file"+ propname)
-      #self._kernel.learn(os.sep.join([aimldir, '*.aiml']))
-
-    logger.info('Done initializing chatbot.')
-
-  def sentiment_active(self):
-    self._sentiment_active=True
-
-  def load_sentiment_csv(self,sent3_file):
-    logger.warn('loading sentiment')
-    # for some reason doesn't work to open file here, only in main?
-    reader=csv.reader(sent3_file)
-    sent3=list(reader)
-    # delete header keep phrases over threshold
-    del sent3[0]
-    # keep phrases over threshold
-    for phrase in sent3:
-      # 1 is phrase string with spaces, 6 is polarity
-      if abs(float(phrase[6])) > 0.1:
-        self._polarity[phrase[1]]=float(phrase[6])
-    logger.warn("Loaded {} items".format(len(self._polarity)))
+      return response
 
   def _request_callback(self, chat_message):
     if rospy.get_param('lang', None) != 'en':
@@ -154,38 +104,7 @@ class Chatbot():
       blink.data='chat_saying'
       self._blink_publisher.publish(blink)
 
-      character_match = self._character.respond(chat_message.utterance)
-      #logger.warn('UTTERANCE', chat_message.utterance)
-      logger.warn('CHARACTER MATCH: [' + character_match + ']')
-      if len(character_match)>0:
-        response = character_match
-      elif len(chat_message.utterance) > 40:
-        # No match, try improving with SOLR
-        logger.warn('SOLR: START')
-        conn = HTTPConnection('localhost', 8983)
-        headers = {'Content-type': 'application/json'}
-        url = '/solr/aiml/select?indent=true&wt=json&fl=*,score&rows=20&q=' + chat_message.utterance.replace(' ', '%20')
-        logger.warn('SOLR: URL [' + url + ']')
-        conn.request('GET', url)
-        lucResponse = conn.getresponse()
-        lucText = lucResponse.read()
-        conn.close()
-        logger.warn('SOLR: [%s]:%i' % (lucText, lucResponse.status))
-        pp = pprint.PrettyPrinter(indent=4)
-        logger.warn('SOLR: %s' % (pp.pformat(lucResponse)))
-
-        if len(lucText)>0:
-          jResp = json.loads(lucText)
-          if jResp['response']['numFound'] > 0:
-            doc = jResp['response']['docs'][0]
-            lucResult = doc['title'][0]
-            response = self._character.respond(lucResult)
-            logger.warn('SOLR: %s -> %s' % (lucResult, response))
-
-      # Nothing returned from character or SOLR, do generic
-      if not len(response)>0 or not useSOLR:
-        response = self._generic.respond(chat_message.utterance)
-        logger.warn('GENERIC: ' + response)
+      response = self.get_response(chat_message.utterance)
 
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
@@ -194,16 +113,28 @@ class Chatbot():
 
       # if sentiment active save state and wait for affect_express to publish response
       # otherwise publish and let tts handle it
-    self._response_buffer=response
-    if self._sentiment_active:
-      self._state = 'wait_emo'
-    else:
-      logger.warn('Sentiment off, immediate publish to tts')
-      message = String()
-      message.data = response
-      self._response_publisher.publish(message)
-      self._state = 'wait_client'
-    logger.info("Ask: {}, answer: {}".format(chat_message.utterance, response))
+      if self._sentiment_active:
+        p = self.polarity.get_polarity(response)
+        logger.info('Polarity for "{}" is {}'.format(response, p))
+        emo = String()
+        # change emotion if polarity magnitude exceeds threshold defined in constructor
+        # otherwise let top level behaviors control
+        if p > self._polarity_threshold:
+          emo.data = 'happy'
+          self._affect_publisher.publish(emo)
+          logger.info('Chatbot perceived emo: {}'.format(emo.data))
+          # Currently response is independant of message received so no need to wait
+          # Leave it for Opencog to handle responses later on.
+        elif p < 0 and abs(p)> self._polarity_threshold:
+          emo = String()
+          emo.data = 'frustrated'
+          self._affect_publisher.publish(emo)
+          logger.info('Chatbot perceived emo: {}'.format(emo.data))
+          # Currently response is independant of message received so no need to wait
+          # Leave it for Opencog to handle responses later on.
+
+      self._response_publisher.publish(String(response))
+      logger.info("Ask: {}, answer: {}".format(chat_message.utterance, response))
 
   # Just repeat the chat message, as a plain string.
   def _echo_callback(self, chat_message):
@@ -211,139 +142,16 @@ class Chatbot():
     message.data = chat_message.utterance
     self._echo_publisher.publish(message)
 
-  # Tell the world the emotion that the chatbot is perceiving.
-  # Use the blender_api_msgs/EmotionState messae type to
-  # describe the perceived emotion.  Argument is just a string.
-  def _affect_perceive_callback(self, chat_message):
+  def reconfig(self, config, level):
+    self.set_botname(config.botname)
+    self.sentiment_active(config.sentiment)
+    return config
 
-    if chat_message.confidence >= 50 and self._sentiment_active:
-      polarity=self._get_polarity(chat_message.utterance)
-      polmsg='got polarity '+ str(polarity) + ' for ' + chat_message.utterance
-      logger.info(polmsg)
-      emo = String()
-      # change emotion if polarity magnitude exceeds threshold defined in constructor
-      # otherwise let top level behaviors control
-      if polarity>self._polarity_threshold:
-        emo.data = 'happy'
-        self._affect_publisher.publish(emo)
-        logger.info('Chatbot perceived emo:'+emo.data)
-        # Currently response is independant of message received so no need to wait
-        # Leave it for Opencog to handle responses later on.
-        self._affect_express_callback()
-
-      elif polarity< 0 and abs(polarity)> self._polarity_threshold:
-        emo = String()
-        emo.data = 'frustrated'
-        self._affect_publisher.publish(emo)
-        logger.info('Chatbot perceived emo:'+emo.data)
-        # Currently response is independant of message received so no need to wait
-        # Leave it for Opencog to handle responses later on.
-        self._affect_express_callback()
-      else:
-        # if no or below threshold affect, publish message so some response is given.
-
-        if self._state == 'wait_emo':
-          message = String()
-          message.data = self._response_buffer
-          # response to tts
-          self._response_publisher.publish(message)
-          self._state='wait_client'
-
-  # This is the emotion that the chatbot should convey.
-  # affect_message is of type blender_api_msgs/EmotionState
-  # Fields are name (String) magnitude (float), duration (time)
-  def _affect_express_callback(self, affect_message=None):
-    #
-
-    #logger.info("Chatbot wants to express: " + affect_message.name+" state='"+self._state)
-    # currently general_behavior publishes set emotion and tts listens
-    # here we could call some smart markup process instead of letting tts
-    # do default behavior.
-    # any emotion change will now force tts
-    # TODO pass .cfg speech hesitation interval in affect message
-    # Will leave for OpenCog behavior tree to decide for now.
-    hesitation=random.uniform(0.1,0.4)
-    time.sleep(hesitation)
-    if self._state == 'wait_emo':
-      message = String()
-      message.data = self._response_buffer
-      self._response_publisher.publish(message)
-      self._state='wait_client'
-
-  # Get the polarity (valence) of a response using sentic.net database
-  # This should only be called if sentiment_active is true
-  def _get_polarity(self, response):
-    # break into words
-    not_found=0
-    average=0.0
-    extreme=0.0
-    polarity_list=[]
-    negate=1
-
-    # strip punctuation prior to word search
-    response=response.rstrip('.?!')
-    words=response.split()
-    for word in words:
-      # check if word in negates
-      if self._negates.has_key(word):
-        negate=-1
-      # check if words in sentic
-      if word in self._polarity:
-        polarity_list.append(self._polarity[word])
-        logger.warn(word+' '+str(self._polarity[word]))
-      else:
-        not_found+=1
-  
-    # check adjacent pairs as well
-
-    pairs=[' '.join(pair) for pair in izip(words[:-1], words[1:])]
-    for pair in pairs:
-      if pair in self._polarity:
-        polarity_list.append(self._polarity[pair])
-        logger.warn(pair+' '+str(self._polarity[pair]))
-      else:
-        not_found+=1
-
-    # return average and extrema of words in response
-    # This is a very simple function that should be improved
-    # probably weighting first half of responses better
-    if len(polarity_list)>0:
-      average=sum(polarity_list)/float(len(polarity_list))
-      if abs(max(polarity_list))>abs(min(polarity_list)):
-         extreme=max(polarity_list)
-      else:
-        extreme=min(polarity_list)
-      return negate*(average+extreme)/2.0
-    else:
-      return 0.0
-
-def main():
-  parser = argparse.ArgumentParser()
-  parser.add_argument('botname', help ='robot name')
-  parser.add_argument('-sent', action='store_true', default=False, help='Enable sentiment')
-
-  option, unknown = parser.parse_known_args()
-  logger.warn('before chatbot class {}'.format(option.botname))
-  logger.info('before chatbot constructor')
-  chatbot = Chatbot(option.botname)
-  print 'after chatbot'
-  logger.info("after chatbot")
-  if unknown:
-    logger.warn("Unknown options {}".format(unknown))
-
-  if option.sent:
-    logger.info("Enable sentiment")
-    # by default no sentiment so make active if got arg
-    chatbot.sentiment_active()
-    current=os.path.dirname(os.path.realpath(__file__))
-    #sent3_file=os.path.join(option.botname, 'senticnet3.props.csv')
-    sent3_file=current+"/../character_aiml/senticnet3.props.csv"
-    try:
-      sent_f=open(sent3_file,'r')
-      chatbot.load_sentiment_csv(sent_f)
-    except Exception as ex:
-      logger.warn("Load sentiment file error {}".format(ex))
-      chatbot._sentiment_active=False
-  rospy.spin()
 if __name__ == '__main__':
-  main()
+  rospy.init_node('chatbot_en')
+  bot = Chatbot()
+  current = os.path.dirname(os.path.realpath(__file__))
+  sent3_file = os.path.join(current, "../character_aiml/senticnet3.props.csv")
+  bot.polarity.load_sentiment_csv(sent3_file)
+  Server(ChatbotConfig, bot.reconfig)
+  rospy.spin()
