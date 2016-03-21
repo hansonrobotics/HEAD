@@ -1,13 +1,26 @@
 #!/usr/bin/env python2.7
 
 import os
+import logging
+
+LOG_CONFIG_FILE = os.environ.get('ROS_PYTHON_LOG_CONFIG_FILE', None)
+if LOG_CONFIG_FILE is not None:
+    import logging.config
+    import rosgraph
+    if 'ROS_LOG_DIR' not in os.environ:
+        os.environ['ROS_LOG_DIR'] = os.path.expanduser('~/.hr')
+    if 'ROS_LOG_FILENAME' not in os.environ:
+        os.environ['ROS_LOG_FILENAME'] = os.path.join(
+            os.environ['ROS_LOG_DIR'], 'chatbot_server.log')
+    logging.config.fileConfig(LOG_CONFIG_FILE)
+else:
+    logging.basicConfig()
+    logging.getLogger().setLevel(logging.INFO)
+
 import sys
 from flask import Flask, request, Response
 from werkzeug.utils import secure_filename
 import json
-import logging
-logging.basicConfig()
-logging.getLogger().setLevel(logging.INFO)
 from chatbot import ask, list_character
 
 json_encode = json.JSONEncoder().encode
