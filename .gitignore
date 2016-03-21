@@ -11,3 +11,4 @@ build
 .idea
 *.pyc
 .catkin_tools
+*.swp
