@@ -5,6 +5,7 @@ import sys
 from flask import Flask, request, Response
 from werkzeug.utils import secure_filename
 import json
+import logging
 from chatbot import ask
 
 json_encode = json.JSONEncoder().encode
@@ -16,12 +17,13 @@ def chat():
     botname = data['botname']
     question = data['question']
     session = data['session']
-    answer, ret = ask(botname, question, session)
-    return Response(json_encode(
-        {'ret': ret, 'answer': answer}),
+    response, ret = ask(botname, question, session)
+    return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
 if __name__ == '__main__':
+    logging.basicConfig()
+    logging.getLogger().setLevel(logging.INFO)
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
     else:
