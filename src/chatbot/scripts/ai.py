@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import aiml
 import rospy
 import os
@@ -15,7 +14,13 @@ from std_msgs.msg import String
 import logging
 import random
 import argparse
+from httplib import HTTPConnection
+import urllib
+import json
+import pprint
 #from rigControl.actuators import sleep as nb_sleep
+
+useSOLR = True
 
 logger = logging.getLogger('hr.chatbot.ai')
 
@@ -23,7 +28,7 @@ class Chatbot():
   def __init__(self, botname):
     self._generic = aiml.Kernel()
     self._character = aiml.Kernel()
-    print 'calling init botname', botname
+    logger.warn('Calling init botname', botname)
     self.initialize(botname)
     # chatbot now saves a bit of simple state to handle sentiment analysis
     # after formulating a response it saves it in a buffer if S.A. active
@@ -70,20 +75,26 @@ class Chatbot():
     rospy.init_node('chatbot_en')
     # read properties
     current=os.path.dirname(os.path.realpath(__file__))
-    print current
     currstr=current+"/aiml/standard/*.aiml"
+    logger.warn('CHAT: loading generic from ' + currstr)
     self._generic.learn(currstr)
 
     # this is from current hanson chat set but not character specific
     genstrx=current+"/../generic_aiml/*.xml"
-    genstra=current+"/../generic_aiml/*.aiml"
-    print 'loading generic from',genstrx
+    logger.warn('CHAT: loading generic from ' + genstrx)
     self._generic.learn(genstrx)
+
+    genstra=current+"/../generic_aiml/*.aiml"
+    logger.warn('CHAT: loading generic from ' + genstra)
     self._generic.learn(genstra)
+
     # custom content is xml but we have some aiml from BG, under sophia. other bots can use it
     charstra=current+"/../character_aiml/sophia.*.aiml"
-    self._character.learn(charstra)	
+    logger.warn('CHAT: loading character from ' + charstra)
+    self._character.learn(charstra)
+
     charstrx=current+"/../character_aiml/"+ botname+"*.xml"
+    logger.warn('CHAT: loading character from ' + charstrx)
     self._character.learn(charstrx)
 
     propname=current+'/../character_aiml/' + botname + '.properties'
@@ -145,16 +156,41 @@ class Chatbot():
 
       character_match = self._character.respond(chat_message.utterance)
       #logger.warn('UTTERANCE', chat_message.utterance)
-      logger.warn('CHARACTER MATCH: ' + character_match)
+      logger.warn('CHARACTER MATCH: [' + character_match + ']')
       if len(character_match)>0:
         response = character_match
-        logger.warn('CHARACTER: ' + response)
-      else:
+      elif len(chat_message.utterance) > 40:
+        # No match, try improving with SOLR
+        logger.warn('SOLR: START')
+        conn = HTTPConnection('localhost', 8983)
+        headers = {'Content-type': 'application/json'}
+        url = '/solr/aiml/select?indent=true&wt=json&fl=*,score&rows=20&q=' + chat_message.utterance.replace(' ', '%20')
+        logger.warn('SOLR: URL [' + url + ']')
+        conn.request('GET', url)
+        lucResponse = conn.getresponse()
+        lucText = lucResponse.read()
+        conn.close()
+        logger.warn('SOLR: [%s]:%i' % (lucText, lucResponse.status))
+        pp = pprint.PrettyPrinter(indent=4)
+        logger.warn('SOLR: %s' % (pp.pformat(lucResponse)))
+
+        if len(lucText)>0:
+          jResp = json.loads(lucText)
+          if jResp['response']['numFound'] > 0:
+            doc = jResp['response']['docs'][0]
+            lucResult = doc['title'][0]
+            response = self._character.respond(lucResult)
+            logger.warn('SOLR: %s -> %s' % (lucResult, response))
+
+      # Nothing returned from character or SOLR, do generic
+      if not len(response)>0 or not useSOLR:
         response = self._generic.respond(chat_message.utterance)
         logger.warn('GENERIC: ' + response)
+
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
       response = response.replace('.','. ')
+      response = response.replace('_',' ')
 
       # if sentiment active save state and wait for affect_express to publish response
       # otherwise publish and let tts handle it
@@ -287,7 +323,7 @@ def main():
   parser.add_argument('-sent', action='store_true', default=False, help='Enable sentiment')
 
   option, unknown = parser.parse_known_args()
-  print 'before chatbot class {}'.format(option.botname)
+  logger.warn('before chatbot class {}'.format(option.botname))
   logger.info('before chatbot constructor')
   chatbot = Chatbot(option.botname)
   print 'after chatbot'
