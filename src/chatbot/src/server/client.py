@@ -59,8 +59,11 @@ class Client(cmd.Cmd, object):
         self.stdout.write("List chatbot names\n")
 
     def do_chatbot(self, line):
-        self.botname = line
-        self.stdout.write("Set chatbot to {}\n".format(self.botname))
+        if line in self.list_chatbot():
+            self.botname = line
+            self.stdout.write("Set chatbot to {}\n".format(self.botname))
+        else:
+            self.stdout.write("No such chatbot {}\n".format(line))
 
     def help_chatbot(self):
         self.stdout.write("Set chatbot name\n")
