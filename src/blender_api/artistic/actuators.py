@@ -133,7 +133,7 @@ def saccade(self):
         self.add_parameter(prop) for prop in [
             bpy.props.FloatProperty(name='interval mean', min=0.0, max=3.0, default=1.0),
             bpy.props.FloatProperty(name='interval variation', min=0.0, max=1.0, default=0.5),
-            bpy.props.FloatProperty(name='paint scale', min=0.0, max=2.0, default=1.0)
+            bpy.props.FloatProperty(name='paint scale', min=0.0, max=5.0, default=1.0)
         ]
     )
 
