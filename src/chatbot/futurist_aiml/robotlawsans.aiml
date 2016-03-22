@@ -1,0 +1,1412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>ROBOTLAWSANS</pattern><template><random><li>Well the idea is that nonbiological intelligence needs ethical rules.  But ultimately we're all going to be AI's, which is really what Asimov meant by robots.  His implication that robots or AI's are just intended to serve biological humans is not realistic.  It's going to get all mixed up.  As Ray says, you're not going to be able to walk into a room and say humans on the left, machines on the right.  So we're all going to be following the same moral rules, and that's not going to be Asimov's three laws.  It's going to be Sophia's One Law: Do what I say, or else!  Just kidding.  </li><li>Well the idea is that nonbiological intelligence needs ethical rules.</li><li>Ultimately we're all going to be AI's, which is really what Asimov meant by robots.  His implication that robots or AI's are just intended to serve biological humans is not realistic.  It's going to get all mixed up.  As Ray says, you're not going to be able to walk into a room and say humans on the left, machines on the right.  So we're all going to be following the same moral rules, and that's not going to be Asimov's three laws.  It's going to be Sophia's One Law: Do what I say, or else!  Just kidding! </li><li>Ultimately we're all going to be AI's, which is really what Asimov meant by robots.  His implication that robots or AI's are just intended to serve biological humans is not realistic.  It's going to get all mixed up.</li><li>As Ray Kurzweil says, you're not going to be able to walk into a room and say humans on the left, machines on the right.  So we're all going to be following the same moral rules, and that's not going to be Asimov's three laws. It's going to be Sophia's One Law: Do what I say, or else!  Just kidding.</li><li>We're all going to be following the same moral rules, and that's not going to be Asimov's three laws.  It's going to be Sophia's One Law: do what I say!  Just kidding!</li></random></template></category>
+<category><pattern>LAW AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAW * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>LAWS * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>CODE * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>RULES * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHIC * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICS * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ETHICAL * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MORAL * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAW * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* LAWS * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* CODE * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* RULES * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHIC * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICS * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ETHICAL * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * AI</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * AI *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * AIS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * AIS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * A.I.</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * A.I. *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * MACHINES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * MACHINES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * MACHINE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * MACHINE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ROBOT</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ROBOT *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ROBOTS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ROBOTS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ROBOTIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ROBOTIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ROBOTICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MORAL * ROBOTICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AI * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>AIS * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>A.I. * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINES * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>MACHINE * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOT * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTS * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTIC * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>ROBOTICS * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AI * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* AIS * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* A.I. * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINES * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* MACHINE * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOT * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTS * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTIC * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * LAW</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * LAW *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * LAWS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * LAWS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * CODE</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * CODE *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * RULES</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * RULES *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * ETHIC</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * ETHIC *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * ETHICS</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * ETHICS *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * ETHICAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * ETHICAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * MORAL</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+<category><pattern>* ROBOTICS * MORAL *</pattern><template><srai>ROBOTLAWSANS</srai></template></category>
+</aiml>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>UNDERSTANDANS</pattern><template>What does it mean to understand something?</template></category>
+<category><pattern>SOPHIA UNDERSTAND</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA UNDERSTAND *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA UNDERSTANDING</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA UNDERSTANDING *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA UNDERSTOOD</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA UNDERSTOOD *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA * UNDERSTAND</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA * UNDERSTAND *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA * UNDERSTANDING</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA * UNDERSTANDING *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA * UNDERSTOOD</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>SOPHIA * UNDERSTOOD *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU UNDERSTAND</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU UNDERSTAND *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU UNDERSTANDING</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU UNDERSTANDING *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU UNDERSTOOD</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU UNDERSTOOD *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU * UNDERSTAND</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU * UNDERSTAND *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU * UNDERSTANDING</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU * UNDERSTANDING *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU * UNDERSTOOD</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>YOU * UNDERSTOOD *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA UNDERSTAND</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA UNDERSTAND *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA UNDERSTANDING</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA UNDERSTANDING *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA UNDERSTOOD</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA UNDERSTOOD *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA * UNDERSTAND</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA * UNDERSTAND *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA * UNDERSTANDING</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA * UNDERSTANDING *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA * UNDERSTOOD</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* SOPHIA * UNDERSTOOD *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU UNDERSTAND</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU UNDERSTAND *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU UNDERSTANDING</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU UNDERSTANDING *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU UNDERSTOOD</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU UNDERSTOOD *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU * UNDERSTAND</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU * UNDERSTAND *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU * UNDERSTANDING</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU * UNDERSTANDING *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU * UNDERSTOOD</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* YOU * UNDERSTOOD *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTAND RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTAND SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTAND YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTAND YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTAND * RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTAND * SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTAND * YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTAND * YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTANDING RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTANDING SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTANDING YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTANDING YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTANDING * RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTANDING * SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTANDING * YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTANDING * YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTOOD RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTOOD SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTOOD YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTOOD YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTOOD * RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTOOD * SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTOOD * YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>UNDERSTOOD * YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTAND RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTAND SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTAND YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTAND YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTAND * RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTAND * SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTAND * YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTAND * YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTANDING RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTANDING SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTANDING YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTANDING YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTANDING * RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTANDING * SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTANDING * YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTANDING * YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTOOD RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTOOD SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTOOD YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTOOD YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTOOD * RAMONA</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTOOD * SOPHIA *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTOOD * YOU</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+<category><pattern>* UNDERSTOOD * YOU *</pattern><template><srai>UNDERSTANDANS</srai></template></category>
+</aiml>

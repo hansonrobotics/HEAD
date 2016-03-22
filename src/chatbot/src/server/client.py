@@ -2,6 +2,7 @@ import cmd
 import requests
 import json
 import sys
+import os
 
 class Client(cmd.Cmd, object):
     def __init__(self):
@@ -34,6 +35,10 @@ class Client(cmd.Cmd, object):
 
         return response
 
+    def list_chatbot(self):
+        r = requests.get(os.path.join(self.chatbot_url, 'chatbots'))
+        chatbots = r.json().get('response')
+        return chatbots
 
     def default(self, line):
         try:
@@ -45,25 +50,20 @@ class Client(cmd.Cmd, object):
             print ex
 
     def do_list(self, line):
-        s = """
-Current
-    {}
-
-Chatbot
-    sophia
-    han
-    pkd
-    futurist_sophia
-
-""".format(self.botname)
-        self.stdout.write(s)
+        chatbots = self.list_chatbot()
+        chatbots = [c if c!=self.botname else '[{}]'.format(c) for c in chatbots]
+        self.stdout.write('\n'.join(chatbots))
+        self.stdout.write('\n')
 
     def help_list(self):
         self.stdout.write("List chatbot names\n")
 
     def do_chatbot(self, line):
-        self.botname = line
-        self.stdout.write("Set chatbot to {}\n".format(self.botname))
+        if line in self.list_chatbot():
+            self.botname = line
+            self.stdout.write("Set chatbot to {}\n".format(self.botname))
+        else:
+            self.stdout.write("No such chatbot {}\n".format(line))
 
     def help_chatbot(self):
         self.stdout.write("Set chatbot name\n")
@@ -87,6 +87,7 @@ For example, conn 127.0.0.1:8001
 
     def help_q(self):
         self.stdout.write("Quit\n")
+
 
 if __name__ == '__main__':
     client = Client()

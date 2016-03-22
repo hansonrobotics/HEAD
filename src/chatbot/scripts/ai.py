@@ -161,7 +161,7 @@ if __name__ == '__main__':
   rospy.init_node('chatbot_en')
   bot = Chatbot()
   current = os.path.dirname(os.path.realpath(__file__))
-  sent3_file = os.path.join(current, "../character_aiml/senticnet3.props.csv")
+  sent3_file = os.path.join(current, "../aiml/senticnet3.props.csv")
   bot.polarity.load_sentiment_csv(sent3_file)
   Server(ChatbotConfig, bot.reconfig)
   rospy.spin()
