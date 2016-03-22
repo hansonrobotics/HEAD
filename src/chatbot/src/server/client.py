@@ -8,7 +8,7 @@ class Client(cmd.Cmd, object):
     def __init__(self):
         super(Client, self).__init__()
         self.prompt = '[me]: '
-        self.botname = 'han'
+        self.botname = 'futurist_sophia'
         self.chatbot_url = 'http://localhost:8001'
 
     def ask(self, question):
