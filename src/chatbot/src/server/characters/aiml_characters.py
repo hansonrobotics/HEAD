@@ -18,8 +18,8 @@ pkd.set_property_file(os.path.join(CWD, "../../../character_aiml/pkd.properties"
 
 futurist_sophia = AIMLCharacter('futurist_sophia')
 futurist_sophia.load_aiml_files([
-    os.path.join(CWD, "../../../character_aiml/sophia.*.xml"),
-    os.path.join(CWD, "../../../character_aiml/sophia.*.aiml")
+    os.path.join(CWD, "../../../futurist_aiml/*.aiml"),
+    os.path.join(CWD, "../../../character_aiml/sophia.*.aiml"),
 ])
 futurist_sophia.set_property_file(os.path.join(CWD, "../../../character_aiml/sophia.properties"))
 
