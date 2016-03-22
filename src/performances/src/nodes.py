@@ -121,6 +121,13 @@ class interaction(Node):
     def stop(self, run_time):
         self.runner.topics['interaction'].publish(String('btree_off'))
 
+class listening(Node):
+    def start(self, run_time):
+        self.runner.topics['speech_events'].publish(String('listen_start'))
+
+    def stop(self, run_time):
+        self.runner.topics['speech_events'].publish(String('listen_stop'))
+
 
 class expression(Node):
     def __init__(self, data, runner):

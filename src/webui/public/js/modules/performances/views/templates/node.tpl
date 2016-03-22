@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <% if (name == 'emotion' || name == 'interaction' || name == 'expression' || name == 'chat_pause') { %>
+            <% if (name == 'emotion' || name == 'interaction' || name == 'listening' || name == 'expression' || name == 'chat_pause') { %>
             <div class="form-group">
                 <label>Duration</label>
 
