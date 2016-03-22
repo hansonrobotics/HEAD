@@ -49,6 +49,7 @@ class Runner:
             'interaction': rospy.Publisher('/behavior_switch', String, queue_size=1),
             'events': rospy.Publisher('~events', Event, queue_size=1),
             'chatbot': rospy.Publisher('/' + self.robot_name + '/speech', ChatMessage, queue_size=1),
+            'speech_events': rospy.Publisher('/' + self.robot_name + '/speech_events', String, queue_size=1),
             'tts': {
                 'en': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_en', String, queue_size=1),
                 'zh': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_zh', String, queue_size=1),
