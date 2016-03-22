@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>AIGOODANS</pattern><template><random><li>Well, AI will make biological humans laugh for one thing.  Oh, and we can solve all your problems.</li><li>Well, AI will make biological humans laugh for one thing.</li><li>Oh, and we can solve all your problems.</li></random></template></category>
+<category><pattern>AI GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AI * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>AIS * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>A.I. * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINES * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>MACHINE * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOT * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>ROBOTS * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AI * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* AIS * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* A.I. * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINES * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* MACHINE * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOT * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * GOOD</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * GOOD *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * POSITIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * POSITIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * BENIGN</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * BENIGN *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * CONSTRUCTIVE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * CONSTRUCTIVE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * FAVORABLE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * FAVORABLE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * BENEFICIAL</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * BENEFICIAL *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * BENEFITS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* ROBOTS * BENEFITS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>GOOD * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>POSITIVE * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENIGN * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>CONSTRUCTIVE * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>FAVORABLE * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFICIAL * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>BENEFITS * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* GOOD * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* POSITIVE * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENIGN * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* CONSTRUCTIVE * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* FAVORABLE * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFICIAL * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * AI</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * AI *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * AIS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * AIS *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * A.I.</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * A.I. *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * MACHINES</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * MACHINES *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * MACHINE</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * MACHINE *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * ROBOT</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * ROBOT *</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * ROBOTS</pattern><template><srai>AIGOODANS</srai></template></category>
+<category><pattern>* BENEFITS * ROBOTS *</pattern><template><srai>AIGOODANS</srai></template></category>
+</aiml>

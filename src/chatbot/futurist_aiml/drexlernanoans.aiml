@@ -1,0 +1,1588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>DREXLERNANOANS</pattern><template>Nanotech will be exciting, but femtotech will be even better.  I'm waiting for my femto brain.  But who knows where it all ends.</template></category>
+<category><pattern>REPLICATE NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATE * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICATING * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCE * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPRODUCING * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>COPY * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICA * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>REPLICAS * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATE * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>DUPLICATING * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATE * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICATING * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCE * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPRODUCING * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* COPY * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICA * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* REPLICAS * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATE * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOTECHNOLOGY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOTECHNOLOGY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOTECHNOLOGIES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOTECHNOLOGIES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOTECH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOTECH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANITES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANITES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANO MACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANO MACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOMACHINE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOMACHINE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOMACHINES</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOMACHINES *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANO MACHINERY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANO MACHINERY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANOENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANO ENGINEERING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANO ENGINEERING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANO RESEARCH</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* DUPLICATING * NANO RESEARCH *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGY * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECHNOLOGIES * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOTECH * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANITES * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINES * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINE * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOMACHINES * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO MACHINERY * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANOENGINEERING * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO ENGINEERING * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>NANO RESEARCH * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGY * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECHNOLOGIES * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOTECH * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANITES * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINES * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINE * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOMACHINES * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO MACHINERY * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANOENGINEERING * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO ENGINEERING * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPRODUCE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPRODUCE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPRODUCING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPRODUCING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * COPY</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * COPY *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPLICA</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPLICA *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPLICAS</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * REPLICAS *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * DUPLICATE</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * DUPLICATE *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * DUPLICATING</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+<category><pattern>* NANO RESEARCH * DUPLICATING *</pattern><template><srai>DREXLERNANOANS</srai></template></category>
+</aiml>

@@ -1,5 +1,8 @@
 import sys
 import aiml
+import logging
+
+logger = logging.getLogger('hr.chatbot.character')
 
 class Character(object):
     def __init__(self, name):
@@ -28,6 +31,7 @@ class AIMLCharacter(Character):
     def load_aiml_files(self, aiml_files):
         for f in aiml_files:
             self.character.learn(f)
+            logger.info("[{}] Load {}".format(self.name, f))
             if f not in self.aiml_files:
                 self.aiml_files.append(f)
 

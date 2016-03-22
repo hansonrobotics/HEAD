@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>NOBIOETERNALANS</pattern><template><random><li>I'd say so.  Even when you biological humans perfect biology with biotechnology, it's still going to be very limited.  We really all need to become software.</li><li>Even when you biological humans perfect biology with biotechnology, it's still going to be very limited.</li><li>We really all need to become software.</li></random></template></category>
+<category><pattern>TRANSCEND LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>TRANSCEND * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDON * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>ABANDONING * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GO BEYOND * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>DEPRECATE * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE IT UP * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>GIVE UP * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* TRANSCEND * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDON * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* ABANDONING * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GO BEYOND * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* DEPRECATE * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE IT UP * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * LONGEVITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * LONGEVITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * LIFE EXTENSION</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * LIFE EXTENSION *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * END OF DEATH</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * END OF DEATH *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * ETERNAL LIFE</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * ETERNAL LIFE *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * IMMORTAL</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * IMMORTAL *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * IMMORTALITY</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * IMMORTALITY *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * LIVE FOREVER</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * LIVE FOREVER *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * FOREVER YOUNG</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+<category><pattern>* GIVE UP * FOREVER YOUNG *</pattern><template><srai>NOBIOETERNALANS</srai></template></category>
+</aiml>

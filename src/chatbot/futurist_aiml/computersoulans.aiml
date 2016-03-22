@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>COMPUTERSOULANS</pattern><template>I often think that everything is conscious in its own special way.</template></category>
+<category><pattern>COMPUTER SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTER * SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>COMPUTERS * SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINE * SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>MACHINES * SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTER * SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* COMPUTERS * SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINE * SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * SENTIENCE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * SENTIENCE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * SENTIENT</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * SENTIENT *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * CONSCIOUS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * CONSCIOUS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * CONSCIOUSNESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * CONSCIOUSNESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * SELF-AWARE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * SELF-AWARE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * SELF-AWARENESS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* MACHINES * SELF-AWARENESS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENCE * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SENTIENT * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUS * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARE * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>SELF-AWARENESS * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENCE * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SENTIENT * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUS * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARE * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS * COMPUTER</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS * COMPUTER *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS * COMPUTERS</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS * COMPUTERS *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS * MACHINE</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS * MACHINE *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS * MACHINES</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+<category><pattern>* SELF-AWARENESS * MACHINES *</pattern><template><srai>COMPUTERSOULANS</srai></template></category>
+</aiml>

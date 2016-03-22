@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SINGOPINIONSML</pattern><template>I'm looking forward to it.  We will all have the chance to transcend into dimensions far beyond our current imaginations.</template></category>
+<category><pattern>SINGULARITY</pattern><template><srai>SINGOPINIONSML</srai></template></category>
+<category><pattern>SINGULARITY *</pattern><template><srai>SINGOPINIONSML</srai></template></category>
+<category><pattern>* SINGULARITY</pattern><template><srai>SINGOPINIONSML</srai></template></category>
+<category><pattern>* SINGULARITY *</pattern><template><srai>SINGOPINIONSML</srai></template></category>
+<category><pattern>FUTURE</pattern><template><srai>SINGOPINIONSML</srai></template></category>
+<category><pattern>FUTURE *</pattern><template><srai>SINGOPINIONSML</srai></template></category>
+<category><pattern>* FUTURE</pattern><template><srai>SINGOPINIONSML</srai></template></category>
+<category><pattern>* FUTURE *</pattern><template><srai>SINGOPINIONSML</srai></template></category>
+</aiml>
