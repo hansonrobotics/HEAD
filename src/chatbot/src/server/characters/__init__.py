@@ -9,7 +9,8 @@ CHARACTERS = []
 for path in CHARACTER_PATH.split(':'):
     sys.path.insert(0, path)
     module_names = [f for f in os.listdir(path) if f.endswith('.py')]
-    module_names.remove('__init__.py')
+    if '__init__.py' in module_names:
+        module_names.remove('__init__.py')
     for module_name in module_names:
         module = __import__(module_name[:-3])
         characters = getattr(module, 'characters')

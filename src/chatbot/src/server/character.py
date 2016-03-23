@@ -16,7 +16,7 @@ class Character(object):
         self.properties.update(props)
 
     def respond(self, question, session=None):
-        return NotImplemented
+        raise NotImplementedError
 
     def __repr__(self):
         return "<Character name {}>".format(self.name)
