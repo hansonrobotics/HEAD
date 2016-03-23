@@ -5,7 +5,7 @@ import pprint
 import rospy
 from std_msgs.msg import String
 from chatbot.msg import ChatMessage
-from blender_api_msgs.msg import SetGesture, EmotionState, Target
+from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 import time
@@ -127,6 +127,24 @@ class listening(Node):
 
     def stop(self, run_time):
         self.runner.topics['speech_events'].publish(String('listen_stop'))
+
+class soma(Node):
+    def start(self, run_time):
+        s = SomaState()
+        s.magnitude = 1
+        s.ease_in.secs = 0
+        s.ease_in.nsecs = 1000000*300
+        s.name = self.data['soma']
+        self.runner.topics['soma_state'].publish(s)
+
+    def stop(self, run_time):
+        s = SomaState()
+        s.magnitude = 0
+        s.ease_in.secs = 0
+        s.ease_in.nsecs = 0
+        s.name = self.data['soma']
+        self.runner.topics['soma_state'].publish(s)
+
 
 
 class expression(Node):
