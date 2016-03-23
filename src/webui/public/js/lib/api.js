@@ -402,7 +402,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             });
         },
         getAnimationLength: function (animation, success) {
-            api.services.get_animation_length.callService(new ROSLIB.ServiceRequest({animation: animation}), success, function (error) {
+            api.services.get_animation_lengthget_animation_length.callService(new ROSLIB.ServiceRequest({animation: animation}), success, function (error) {
                 console.log(error);
             });
         },
