@@ -11,13 +11,13 @@ useSOLR = True
 
 logger = logging.getLogger('hr.chatbot.server.chatbot')
 
-def get_character(name):
+def get_character(id):
     for character in CHARACTERS:
-        if character.name == name:
+        if character.id == id:
             return character
 
 def list_character():
-    return [c.name for c in CHARACTERS]
+    return [c.id for c in CHARACTERS]
 
 def solr(text):
     # No match, try improving with SOLR
@@ -38,11 +38,11 @@ def solr(text):
             lucResult = doc['title'][0]
             return lucResult
 
-def ask(name, question, session=None):
+def ask(id, question, session=None):
     """
     return (response dict, return code)
     """
-    character = get_character(name)
+    character = get_character(id)
     if not character:
         return None, WRONG_CHARACTER_NAME
 
@@ -71,5 +71,5 @@ def ask(name, question, session=None):
 
 if __name__ == '__main__':
     for character in CHARACTERS:
-        print ask(character.name, 'what is your name')
+        print ask(character.id, 'what is your name')
 
