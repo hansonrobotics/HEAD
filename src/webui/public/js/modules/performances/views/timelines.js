@@ -45,7 +45,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             },
             onShow: function () {
                 var self = this;
-
                 this.ui.scrollContainer.perfectScrollbar();
                 // Performance event handler
                 if (typeof this.options.performances != 'undefined') {
@@ -81,6 +80,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     else
                         self.updateTimelineWidth();
                 };
+                $(".app-timelines", this.el).droppable({
+                    accept: ".app-node"
+                });
                 $(window).on('resize', updateWidth);
             },
             onDestroy: function () {
@@ -117,7 +119,15 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     $(this).animateAuto('width', 500);
                 }, function () {
                     self.updateNode(node);
-                });
+                }).draggable({
+                    snap: '.app-.app-timeline-nodes',
+                    revert: 'invalid',
+                    stop: function(e, ui){
+                        node.set('start_time', parseInt($(this).css('left'))/self.config.pxPerSec);
+                        $(this).css({top:0});
+                        self.arrangeNodes();
+                    }
+                }).css({position:'absolute'});
 
                 node.set('el', el);
                 node.on('change', this.updateNode, this);
