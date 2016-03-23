@@ -163,6 +163,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                         this.ui.langSelect.val(this.model.get('lang'));
                         $(self.ui.langSelect).select2();
                         break;
+                    case 'pause':
+                        this.model.set('duration', 0.2);
+                        break;
                     case 'chat_pause':
                         if (!this.model.get())
                             this.model.set('message', '');
