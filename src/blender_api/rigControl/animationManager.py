@@ -274,10 +274,20 @@ class AnimationManager():
                         found = True
 
                 if not found:
+                    # min 0.5s max 1.5s
+                    fade = min(2.0,max(2.0/3.0, 3.0/float(data['duration'])))
+                    # Fixme for whatever reason the timed keyframe needs time from beginning,
+                    # meaning that need to substract only the fadeout time.
+                    keep = max(0.0, data['duration'] - 1.0/fade)
+                    # Fade Slower for less magnitude
+                    fade = fade / data['magnitude']
                     num = blendedNum.Trajectory(0)
                     num.add_keyframe(target=data['magnitude'], transition=[
-                        (0, Pipes.linear(2)), (1, Pipes.moving_average(0.2))])
-                    num.add_keyframe(target=0.0, transition=(0, Pipes.exponential(0.8/data['duration'])))
+                        (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
+                    if keep > 0:
+                        num.add_keyframe(target=data['magnitude'], time=keep)
+                    num.add_keyframe(target=0.0, transition=[
+                        (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
                     emotion = Emotion(emotionName, magnitude=num)
                     self.emotionsList.append(emotion)
 

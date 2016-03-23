@@ -234,7 +234,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             if ($.isNumeric(duration))
                 duration = {
                     secs: Math.floor(duration),
-                    nsecs: Math.floor((duration - Math.floor(duration)) * 1000)
+                    nsecs: Math.floor((duration - Math.floor(duration)) * 1000000000)
                 };
             else if (typeof duration != 'object')
                 duration = {secs: 1, nsecs: 0};
