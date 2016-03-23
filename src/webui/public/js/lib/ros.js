@@ -245,7 +245,7 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 }),
                 get_animation_length: new ROSLIB.Service({
                     ros: api.ros,
-                    name: '/' + api.config.robot + '/get_animation_length',
+                    name: '/blender_api/get_animation_length',
                     messageType: 'blender_api_msgs/GetAnimationLength'
                 }),
                 get_kf_animation_length: new ROSLIB.Service({

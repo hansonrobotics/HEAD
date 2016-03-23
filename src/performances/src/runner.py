@@ -7,7 +7,7 @@ import performances.srv as srv
 import json
 from std_msgs.msg import String
 from chatbot.msg import ChatMessage
-from blender_api_msgs.msg import SetGesture, EmotionState, Target
+from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 from performances.msg import Event
@@ -50,6 +50,7 @@ class Runner:
             'events': rospy.Publisher('~events', Event, queue_size=1),
             'chatbot': rospy.Publisher('/' + self.robot_name + '/speech', ChatMessage, queue_size=1),
             'speech_events': rospy.Publisher('/' + self.robot_name + '/speech_events', String, queue_size=1),
+            'soma_state': rospy.Publisher("/blender_api/set_soma_state", SomaState, queue_size=2),
             'tts': {
                 'en': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_en', String, queue_size=1),
                 'zh': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_zh', String, queue_size=1),

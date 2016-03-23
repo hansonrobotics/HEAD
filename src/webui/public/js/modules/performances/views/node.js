@@ -7,6 +7,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 magnitudeSlider: '.app-magnitide-slider',
                 emotionSelect: 'select.app-emotion-select',
                 gestureSelect: 'select.app-gesture-select',
+                somaSelect: 'select.app-soma-select',
                 expressionSelect: 'select.app-expression-select',
                 textInput: '.app-node-text',
                 startTime: '.app-node-start-time',
@@ -34,6 +35,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 'change @ui.langSelect': 'setLanguage',
                 'change @ui.emotionSelect': 'setEmotion',
                 'change @ui.gestureSelect': 'setGesture',
+                'change @ui.somaSelect': 'setSoma',
                 'change @ui.expressionSelect': 'setExpression',
                 'change @ui.topicInput': 'setTopic',
                 'change @ui.kfAnimationSelect': 'setKFAnimation',
@@ -136,6 +138,14 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                             }
                         });
                         break;
+                    case 'soma':
+                        // init with empty list
+                        self.updateSomaStates([]);
+                        // load gestures
+                        api.getAvailableSomaStates(function (somas) {
+                            self.updateSomaStates(somas)
+                        });
+                        break;
                     case 'look_at':
                         this.buildCrosshair();
                         break;
@@ -152,6 +162,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                             this.model.set('lang', 'en');
                         this.ui.langSelect.val(this.model.get('lang'));
                         $(self.ui.langSelect).select2();
+                        break;
+                    case 'pause':
+                        this.model.set('duration', 0.2);
                         break;
                     case 'chat_pause':
                         if (!this.model.get())
@@ -216,9 +229,24 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 }
 
                 if (this.model.get('gesture'))
-                    $(this.ui.emotionSelect).val(this.model.get('gesture'));
+                    $(this.ui.gestureSelect).val(this.model.get('gesture'));
 
                 $(this.ui.gestureSelect).select2();
+            },
+            updateSomaStates: function (somas) {
+                var self = this;
+                _.each(somas, function (soma) {
+                    $(self.ui.somaSelect).append($('<option>').prop('value', soma).html(soma));
+                });
+
+                if (!this.model.get('soma') && somas.length > 0) {
+                    this.model.set('soma', somas[0]);
+                }
+
+                if (this.model.get('soma'))
+                    $(this.ui.somaSelect).val(this.model.get('soma'));
+
+                $(this.ui.somaSelect).select2();
             },
             setDuration: function () {
                 this.model.set('duration', Number($(this.ui.duration).val()));
@@ -257,6 +285,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
             setGesture: function () {
                 this.model.set('gesture', this.ui.gestureSelect.val());
                 this.setGestureLength();
+            },
+            setSoma: function () {
+                this.model.set('soma', this.ui.somaSelect.val());
             },
             setGestureLength: function () {
                 var self = this;

@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <% if (name == 'emotion' || name == 'interaction' || name == 'listening' || name == 'expression' || name == 'chat_pause') { %>
+            <% if (name == 'emotion' || name == 'interaction' || name == 'listening' || name == 'expression' || name == 'chat_pause' || name == 'soma') { %>
             <div class="form-group">
                 <label>Duration</label>
 
@@ -72,6 +72,12 @@
             <div class="form-group">
                 <label title="Expression">Expression</label>
                 <select class="app-expression-select"></select>
+            </div>
+            <% } %>
+            <% if (name == 'soma') { %>
+            <div class="form-group">
+                <label title="Soma">Soma State</label>
+                <select class="app-soma-select"></select>
             </div>
             <% } %>
             <% if (name == 'emotion' || name == 'gesture' || name == 'expression') { %>
