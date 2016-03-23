@@ -350,6 +350,13 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                         });
                     }
                 });
-            }
+            },
+            initialize: function(){
+                this.model.on('change', function(){
+                    if (Math.abs(this.model.get('start_time') - Number($(this.ui.startTime).val())) > 0.01){
+                        $(this.ui.startTime).val(this.model.get('start_time'))
+                    }
+                }, this);
+            },
         });
     });
