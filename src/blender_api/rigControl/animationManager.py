@@ -68,7 +68,7 @@ class AnimationManager():
                 Wrappers.in_spherical(origin=[0, self.face_target_offset, 0], radius=4)
         ))
         self.eyeTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap(
-            Pipes.linear(speed=3),
+            Pipes.linear(speed=30),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4)
         ))
 
