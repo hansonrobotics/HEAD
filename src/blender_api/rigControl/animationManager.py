@@ -264,33 +264,35 @@ class AnimationManager():
                 continue
             else:
                 found = False
+                emo = None
+                start = 0
                 for emotion in self.emotionsList:
                     if emotionName == emotion.name:
-                        # update magnitude
-                        num = emotion.magnitude
-                        num.keyframes = []
-                        num.add_keyframe(target=data['magnitude'], transition=(0, Pipes.linear(2)))
-                        num.add_keyframe(target=0.0, transition=(0, Pipes.exponential(0.8/data['duration'])))
+                        emo = emotion
+                        start = emo.magnitude.current
                         found = True
 
-                if not found:
+
+                num = blendedNum.Trajectory(start)
                     # min 0.5s max 1.5s
-                    fade = min(2.0,max(2.0/3.0, 3.0/float(data['duration'])))
-                    # Fixme for whatever reason the timed keyframe needs time from beginning,
-                    # meaning that need to substract only the fadeout time.
-                    keep = max(0.0, data['duration'] - 1.0/fade)
-                    # Fade Slower for less magnitude
-                    fade = fade / data['magnitude']
-                    num = blendedNum.Trajectory(0)
-                    num.add_keyframe(target=data['magnitude'], transition=[
-                        (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
-                    if keep > 0:
-                        num.add_keyframe(target=data['magnitude'], time=keep)
-                    num.add_keyframe(target=0.0, transition=[
-                        (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
+                fade = min(2.0,max(2.0/3.0, 3.0/float(data['duration'])))
+                # Fixme for whatever reason the timed keyframe needs time from beginning,
+                # meaning that need to substract only the fadeout time.
+                keep = max(0.0, data['duration'] - 1.0/fade)
+                # Fade Slower for less magnitude
+                fade = fade / data['magnitude']
+
+                num.add_keyframe(target=data['magnitude'], transition=[
+                    (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
+                if keep > 0:
+                    num.add_keyframe(target=data['magnitude'], time=keep)
+                num.add_keyframe(target=0.0, transition=[
+                    (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
+                if not found:
                     emotion = Emotion(emotionName, magnitude=num)
                     self.emotionsList.append(emotion)
-
+                else:
+                    emo.magnitude = num
 
     def newViseme(self, vis, duration=0.5, rampInRatio=0.1, rampOutRatio=0.8, startTime=0):
         '''Perform a new viseme'''
