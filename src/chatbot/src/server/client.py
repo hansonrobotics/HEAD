@@ -51,13 +51,17 @@ class Client(cmd.Cmd, object):
                     self.botname, response.get('botname'),
                     response.get('response')))
         except Exception as ex:
-            print ex
+            self.stdout.write('{}\n'.format(ex))
 
     def do_list(self, line):
-        chatbots = self.list_chatbot()
-        chatbots = [c if c!=self.botname else '[{}]'.format(c) for c in chatbots]
-        self.stdout.write('\n'.join(chatbots))
-        self.stdout.write('\n')
+        chatbots = []
+        try:
+            chatbots = self.list_chatbot()
+            chatbots = [c if c!=self.botname else '[{}]'.format(c) for c in chatbots]
+            self.stdout.write('\n'.join(chatbots))
+            self.stdout.write('\n')
+        except requests.exceptions.ConnectionError as ex:
+            self.stdout.write('{}\n'.format(ex))
 
     def help_list(self):
         self.stdout.write("List chatbot names\n")
