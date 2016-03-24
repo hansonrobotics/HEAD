@@ -68,7 +68,7 @@ class AnimationManager():
                 Wrappers.in_spherical(origin=[0, self.face_target_offset, 0], radius=4)
         ))
         self.eyeTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap(
-            Pipes.linear(speed=30),
+            Pipes.linear(speed=300),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4)
         ))
 
@@ -438,9 +438,7 @@ class AnimationManager():
 
         # Move eyes too, slowly
         self.eyeTargetLoc.transition = Wrappers.wrap([
-                Pipes.linear(speed=0.5),
-                Pipes.stick(window=0.5),
-                Pipes.moving_average(window=0.1)],
+                Pipes.linear(speed=300)],
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4))
         self.eyeTargetLoc.target = locBU
 
@@ -454,7 +452,7 @@ class AnimationManager():
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.eye_target_offset)
 
         self.eyeTargetLoc.transition = Wrappers.wrap(
-            Pipes.linear(speed=3),
+            Pipes.linear(speed=300),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4)
         )
         self.eyeTargetLoc.target = locBU
