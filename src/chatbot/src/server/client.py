@@ -11,30 +11,28 @@ class Client(cmd.Cmd, object):
     def __init__(self):
         super(Client, self).__init__()
         self.prompt = '[me]: '
-        self.botname = 'han'
+        self.botid = 'han'
         self.chatbot_url = 'http://localhost:8001'
 
     def ask(self, question):
         r = requests.post(self.chatbot_url,
                 data = json.dumps(
-                    {"botname":"{}".format(self.botname),
+                    {"botid":"{}".format(self.botid),
                     "question":"{}".format(question),
                     "session":"0"}),
-                headers = {"Content-Type": "application/json"}
+                headers = {"Content-Type": "application/json",
+                           "Auth": 'AAAAB3NzaC'}
         )
         ret = r.json().get('ret')
         if r.status_code != 200:
             self.stdout.write("Request error: {}\n".format(r.status_code))
 
         if ret != 0:
-            self.stdout.write("QA error: error code {}, botname {}, question {}\n".format(
-                ret, self.botname, question))
+            self.stdout.write("QA error: error code {}, botid {}, question {}\n".format(
+                ret, self.botid, question))
 
-        response = r.json().get('response', {})
-
-        if r.status_code != 200 or ret != 0 or not response:
-            response['response'] = question
-            response['botname'] = 'mimic_bot'
+        response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+        response.update(r.json().get('response'))
 
         return response
 
@@ -48,24 +46,33 @@ class Client(cmd.Cmd, object):
             if line:
                 response = self.ask(line)
                 self.stdout.write('{}[by {}]: {}\n'.format(
-                    self.botname, response.get('botname'),
-                    response.get('response')))
+                    self.botid, response.get('botid'),
+                    response.get('text')))
         except Exception as ex:
-            print ex
+            self.stdout.write('{}\n'.format(ex))
 
     def do_list(self, line):
-        chatbots = self.list_chatbot()
-        chatbots = [c if c!=self.botname else '[{}]'.format(c) for c in chatbots]
-        self.stdout.write('\n'.join(chatbots))
-        self.stdout.write('\n')
+        chatbots = []
+        try:
+            chatbots = self.list_chatbot()
+            chatbots = [c if c!=self.botid else '[{}]'.format(c) for c in chatbots]
+            self.stdout.write('\n'.join(chatbots))
+            self.stdout.write('\n')
+        except requests.exceptions.ConnectionError as ex:
+            self.stdout.write('{}\n'.format(ex))
 
     def help_list(self):
         self.stdout.write("List chatbot names\n")
 
     def do_chatbot(self, line):
+        try:
+            chatbots = self.list_chatbot()
+        except requests.exceptions.ConnectionError as ex:
+            self.stdout.write('{}\n'.format(ex))
+            return
         if line in self.list_chatbot():
-            self.botname = line
-            self.stdout.write("Set chatbot to {}\n".format(self.botname))
+            self.botid = line
+            self.stdout.write("Set chatbot to {}\n".format(self.botid))
         else:
             self.stdout.write("No such chatbot {}\n".format(line))
 

@@ -58,7 +58,7 @@ class AIMLCharacter(Character):
 
     def respond(self, question, session=None):
         ret = {}
-        ret['response'] = self.character.respond(question, session)
+        ret['text'] = self.character.respond(question, session)
         ret['emotion'] = self.character.getPredicate('emotion', session)
         ret['botid'] = self.id
         ret['botname'] = self.name

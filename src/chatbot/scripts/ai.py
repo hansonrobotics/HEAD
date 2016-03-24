@@ -66,7 +66,8 @@ class Chatbot():
                 {"botid":"{}".format(self.botid),
                 "question":"{}".format(question),
                 "session":"0"}),
-            headers = {"Content-Type": "application/json"}
+            headers = {"Content-Type": "application/json",
+                       "Auth": 'AAAAB3NzaC'}
       )
       ret = r.json().get('ret')
       if r.status_code != 200:
@@ -79,7 +80,7 @@ class Chatbot():
       response = r.json().get('response', {})
 
       if r.status_code != 200 or ret != 0 or not response:
-        response['response'] = question
+        response['text'] = question
         response['botid'] = 'mimic_bot'
 
       return response
@@ -107,7 +108,7 @@ class Chatbot():
       self._blink_publisher.publish(blink)
 
       answer = self.get_response(chat_message.utterance)
-      response = answer.get('response')
+      response = answer.get('text')
       emotion = answer.get('emotion')
       botid = answer.get('botid')
 

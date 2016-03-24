@@ -3,6 +3,9 @@ from httplib import HTTPConnection
 import urllib
 import json
 import logging
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
@@ -42,13 +45,16 @@ def ask(id, question, session=None):
     """
     return (response dict, return code)
     """
+    response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
     character = get_character(id)
     if not character:
-        return None, WRONG_CHARACTER_NAME
+        return response, WRONG_CHARACTER_NAME
 
-    answer = character.respond(question, session)
-    if answer.get('response', None):
-        return answer, SUCCESS
+    first_tier = character.respond(question, session)
+    if first_tier.get('text', None):
+        assert isinstance(first_tier, dict), "Response must be a dict"
+        response.update(first_tier)
+        return response, SUCCESS
 
     if useSOLR and len(question) > 40:
         lucResult = None
@@ -58,16 +64,21 @@ def ask(id, question, session=None):
             logger.warn(ex)
 
         if lucResult:
-            answer = character.respond(lucResult)
-            logger.warn('LUCENE: %s -> %s' % (lucResult, answer))
-            if answer.get('response', None):
-                return answer, SUCCESS
+            solr_response = character.respond(lucResult)
+            logger.warn('LUCENE: %s -> %s' % (lucResult, solr_response))
+            if solr_response.get('text', None):
+                assert isinstance(solr_response, dict), "Response must be a dict"
+                response.update(solr_response)
+                return response, SUCCESS
 
     generic = get_character('generic')
-    generic.set_properties(character.get_properties())
-    answer = generic.respond(question, session)
-    logger.info("Ask {}, answer {}".format(question, answer))
-    return answer, SUCCESS
+    if generic is not None:
+        generic.set_properties(character.get_properties())
+        second_tier = generic.respond(question, session)
+        assert isinstance(second_tier, dict), "Response must be a dict"
+        response.update(second_tier)
+    logger.info("Ask {}, response {}".format(question, response))
+    return response, SUCCESS
 
 if __name__ == '__main__':
     for character in CHARACTERS:
