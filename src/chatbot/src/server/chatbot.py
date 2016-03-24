@@ -42,12 +42,15 @@ def ask(id, question, session=None):
     """
     return (response dict, return code)
     """
+    answer = {'response': '', 'emotion': '', 'botid': '', 'botname': ''}
     character = get_character(id)
     if not character:
-        return None, WRONG_CHARACTER_NAME
+        return answer, WRONG_CHARACTER_NAME
 
-    answer = character.respond(question, session)
-    if answer.get('response', None):
+    first_tier = character.respond(question, session)
+    if first_tier.get('response', None):
+        assert isinstance(first_tier, dict), "Response must be a dict"
+        answer.update(first_tier)
         return answer, SUCCESS
 
     if useSOLR and len(question) > 40:
@@ -58,14 +61,18 @@ def ask(id, question, session=None):
             logger.warn(ex)
 
         if lucResult:
-            answer = character.respond(lucResult)
-            logger.warn('LUCENE: %s -> %s' % (lucResult, answer))
-            if answer.get('response', None):
+            solr_answer = character.respond(lucResult)
+            logger.warn('LUCENE: %s -> %s' % (lucResult, solr_answer))
+            if solr_answer.get('response', None):
+                assert isinstance(solr_answer, dict), "Response must be a dict"
+                answer.update(solr_answer)
                 return answer, SUCCESS
 
     generic = get_character('generic')
     generic.set_properties(character.get_properties())
-    answer = generic.respond(question, session)
+    second_tier = generic.respond(question, session)
+    assert isinstance(second_tier, dict), "Response must be a dict"
+    answer.update(second_tier)
     logger.info("Ask {}, answer {}".format(question, answer))
     return answer, SUCCESS
 
