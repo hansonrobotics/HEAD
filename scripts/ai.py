@@ -66,7 +66,8 @@ class Chatbot():
                 {"botid":"{}".format(self.botid),
                 "question":"{}".format(question),
                 "session":"0"}),
-            headers = {"Content-Type": "application/json"}
+            headers = {"Content-Type": "application/json",
+                       "Auth": 'AAAAB3NzaC'}
       )
       ret = r.json().get('ret')
       if r.status_code != 200:
