@@ -5,7 +5,8 @@ import logging
 logger = logging.getLogger('hr.chatbot.character')
 
 class Character(object):
-    def __init__(self, name):
+    def __init__(self, id, name):
+        self.id = id
         self.name = name
         self.properties = {}
 
@@ -16,14 +17,14 @@ class Character(object):
         self.properties.update(props)
 
     def respond(self, question, session=None):
-        return NotImplemented
+        raise NotImplementedError
 
     def __repr__(self):
-        return "<Character name {}>".format(self.name)
+        return "<Character id: {}, name: {}>".format(self.id, self.name)
 
 class AIMLCharacter(Character):
-    def __init__(self, name):
-        super(AIMLCharacter, self).__init__(name)
+    def __init__(self, id, name):
+        super(AIMLCharacter, self).__init__(id, name)
         self.character = aiml.Kernel()
         self.aiml_files = []
         self.character.verbose(False)
@@ -31,7 +32,7 @@ class AIMLCharacter(Character):
     def load_aiml_files(self, aiml_files):
         for f in aiml_files:
             self.character.learn(f)
-            logger.info("[{}] Load {}".format(self.name, f))
+            logger.info("[{}] Load {}".format(self.id, f))
             if f not in self.aiml_files:
                 self.aiml_files.append(f)
 
@@ -59,6 +60,7 @@ class AIMLCharacter(Character):
         ret = {}
         ret['response'] = self.character.respond(question, session)
         ret['emotion'] = self.character.getPredicate('emotion', session)
+        ret['botid'] = self.id
         ret['botname'] = self.name
         return ret
 

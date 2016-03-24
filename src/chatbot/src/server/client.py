@@ -1,8 +1,11 @@
 import cmd
 import requests
 import json
-import sys
 import os
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class Client(cmd.Cmd, object):
     def __init__(self):
@@ -44,8 +47,9 @@ class Client(cmd.Cmd, object):
         try:
             if line:
                 response = self.ask(line)
-            self.stdout.write('{}[by {}]: {}\n'.format(
-                self.botname, response.get('botname'), response.get('response')))
+                self.stdout.write('{}[by {}]: {}\n'.format(
+                    self.botname, response.get('botname'),
+                    response.get('response')))
         except Exception as ex:
             print ex
 
