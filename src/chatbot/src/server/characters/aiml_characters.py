@@ -41,4 +41,6 @@ pkd.set_property_file(os.path.join(CWD, "../../../character_aiml/pkd.properties"
 
 characters = [han, sophia, pkd]
 
-characters.append(load_aiml_character(os.path.join(CWD, 'quant_han.yaml')))
+for yaml_file in os.listdir(CWD):
+    if yaml_file.endswith('.yaml'):
+        characters.append(load_aiml_character(os.path.join(CWD, yaml_file)))
