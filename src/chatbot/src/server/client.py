@@ -31,11 +31,8 @@ class Client(cmd.Cmd, object):
             self.stdout.write("QA error: error code {}, botname {}, question {}\n".format(
                 ret, self.botname, question))
 
-        response = r.json().get('response', {})
-
-        if r.status_code != 200 or ret != 0 or not response:
-            response['response'] = question
-            response['botname'] = 'mimic_bot'
+        response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+        response.update(r.json().get('response'))
 
         return response
 
@@ -50,7 +47,7 @@ class Client(cmd.Cmd, object):
                 response = self.ask(line)
                 self.stdout.write('{}[by {}]: {}\n'.format(
                     self.botname, response.get('botname'),
-                    response.get('response')))
+                    response.get('text')))
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
 
@@ -68,6 +65,11 @@ class Client(cmd.Cmd, object):
         self.stdout.write("List chatbot names\n")
 
     def do_chatbot(self, line):
+        try:
+            chatbots = self.list_chatbot()
+        except requests.exceptions.ConnectionError as ex:
+            self.stdout.write('{}\n'.format(ex))
+            return
         if line in self.list_chatbot():
             self.botname = line
             self.stdout.write("Set chatbot to {}\n".format(self.botname))

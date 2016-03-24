@@ -7,7 +7,7 @@ def check_auth(auth):
     return auth == 'AAAAB3NzaC'
 
 def authenticate():
-    return Response(json_encode({'ret': 401, 'response': {'response': 'Could not verify your access'}}),
+    return Response(json_encode({'ret': 401, 'response': {'text': 'Could not verify your access'}}),
         mimetype="application/json")
 
 def requires_auth(f):
