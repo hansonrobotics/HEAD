@@ -20,7 +20,8 @@ class Client(cmd.Cmd, object):
                     {"botname":"{}".format(self.botname),
                     "question":"{}".format(question),
                     "session":"0"}),
-                headers = {"Content-Type": "application/json"}
+                headers = {"Content-Type": "application/json",
+                           "Auth": 'AAAAB3NzaC'}
         )
         ret = r.json().get('ret')
         if r.status_code != 200:

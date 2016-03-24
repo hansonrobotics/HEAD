@@ -2,6 +2,7 @@
 
 import os
 import logging
+from auth import requires_auth
 
 LOG_CONFIG_FILE = os.environ.get('ROS_PYTHON_LOG_CONFIG_FILE', None)
 if LOG_CONFIG_FILE is not None:
@@ -26,6 +27,7 @@ json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
+@requires_auth
 def chat():
     data = request.get_json()
     botname = data['botname']
