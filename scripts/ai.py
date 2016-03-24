@@ -28,7 +28,7 @@ class Chatbot():
     self._response_buffer = ''
     self._state = 'wait_client'
     # argumment must be  to activate sentiment analysis
-    self.botname = ''
+    self.botid = ''
     self._sentiment_active = False
     # sentiment dictionary
     self.polarity = Polarity()
@@ -54,8 +54,8 @@ class Chatbot():
     self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
 
-  def set_botname(self, botname):
-    self.botname = botname
+  def set_botid(self, botid):
+    self.botid = botid
 
   def sentiment_active(self, active):
     self._sentiment_active = active
@@ -63,7 +63,7 @@ class Chatbot():
   def get_response(self, question):
       r = requests.post(self.chatbot_url,
             data = json.dumps(
-                {"botname":"{}".format(self.botname),
+                {"botid":"{}".format(self.botid),
                 "question":"{}".format(question),
                 "session":"0"}),
             headers = {"Content-Type": "application/json"}
@@ -73,14 +73,14 @@ class Chatbot():
         logger.error("Request error: {}".format(r.status_code))
 
       if ret != 0:
-        logger.error("QA error: error code {}, botname {}, question {}".format(
-            ret, self.botname, question))
+        logger.error("QA error: error code {}, botid {}, question {}".format(
+            ret, self.botid, question))
 
       response = r.json().get('response', {})
 
       if r.status_code != 200 or ret != 0 or not response:
         response['response'] = question
-        response['botname'] = 'mimic_bot'
+        response['botid'] = 'mimic_bot'
 
       return response
 
@@ -109,7 +109,7 @@ class Chatbot():
       answer = self.get_response(chat_message.utterance)
       response = answer.get('response')
       emotion = answer.get('emotion')
-      botname = answer.get('botname')
+      botid = answer.get('botid')
 
       # Add space after punctuation for multi-sentence responses
       response = response.replace('?','? ')
@@ -144,7 +144,7 @@ class Chatbot():
 
       self._response_publisher.publish(String(response))
       logger.info("Ask: {}, answer: {}, answered by: {}".format(
-          chat_message.utterance, response, botname))
+          chat_message.utterance, response, botid))
 
   # Just repeat the chat message, as a plain string.
   def _echo_callback(self, chat_message):
@@ -153,7 +153,7 @@ class Chatbot():
     self._echo_publisher.publish(message)
 
   def reconfig(self, config, level):
-    self.set_botname(config.botname)
+    self.set_botid(config.botid)
     self.sentiment_active(config.sentiment)
     return config
 
