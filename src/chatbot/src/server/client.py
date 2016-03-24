@@ -11,13 +11,13 @@ class Client(cmd.Cmd, object):
     def __init__(self):
         super(Client, self).__init__()
         self.prompt = '[me]: '
-        self.botname = 'han'
+        self.botid = 'han'
         self.chatbot_url = 'http://localhost:8001'
 
     def ask(self, question):
         r = requests.post(self.chatbot_url,
                 data = json.dumps(
-                    {"botname":"{}".format(self.botname),
+                    {"botid":"{}".format(self.botid),
                     "question":"{}".format(question),
                     "session":"0"}),
                 headers = {"Content-Type": "application/json",
@@ -28,8 +28,8 @@ class Client(cmd.Cmd, object):
             self.stdout.write("Request error: {}\n".format(r.status_code))
 
         if ret != 0:
-            self.stdout.write("QA error: error code {}, botname {}, question {}\n".format(
-                ret, self.botname, question))
+            self.stdout.write("QA error: error code {}, botid {}, question {}\n".format(
+                ret, self.botid, question))
 
         response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
         response.update(r.json().get('response'))
@@ -46,7 +46,7 @@ class Client(cmd.Cmd, object):
             if line:
                 response = self.ask(line)
                 self.stdout.write('{}[by {}]: {}\n'.format(
-                    self.botname, response.get('botname'),
+                    self.botid, response.get('botid'),
                     response.get('text')))
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
@@ -55,7 +55,7 @@ class Client(cmd.Cmd, object):
         chatbots = []
         try:
             chatbots = self.list_chatbot()
-            chatbots = [c if c!=self.botname else '[{}]'.format(c) for c in chatbots]
+            chatbots = [c if c!=self.botid else '[{}]'.format(c) for c in chatbots]
             self.stdout.write('\n'.join(chatbots))
             self.stdout.write('\n')
         except requests.exceptions.ConnectionError as ex:
@@ -71,8 +71,8 @@ class Client(cmd.Cmd, object):
             self.stdout.write('{}\n'.format(ex))
             return
         if line in self.list_chatbot():
-            self.botname = line
-            self.stdout.write("Set chatbot to {}\n".format(self.botname))
+            self.botid = line
+            self.stdout.write("Set chatbot to {}\n".format(self.botid))
         else:
             self.stdout.write("No such chatbot {}\n".format(line))
 

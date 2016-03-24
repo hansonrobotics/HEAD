@@ -30,10 +30,10 @@ app = Flask(__name__)
 @requires_auth
 def chat():
     data = request.get_json()
-    botname = data['botname']
+    id = data['botid']
     question = data['question']
     session = data['session']
-    response, ret = ask(botname, question, session)
+    response, ret = ask(id, question, session)
     return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
