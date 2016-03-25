@@ -71,6 +71,7 @@ class AnimationManager():
             Pipes.linear(speed=300),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4)
         ))
+        self.headRotation = blendedNum.LiveTarget(0, transition=Pipes.moving_average(0.4))
 
         self.actuatorManager = ActuatorManager()
 
@@ -444,7 +445,7 @@ class AnimationManager():
 
     # Rotates the face target which will make head roll
     def setHeadRotation(self,rot):
-        self.headRotation = rot
+        self.headRotation.target = rot
 
     def setGazeTarget(self, loc):
         '''Set the target used for eye tracking only.'''
