@@ -25,7 +25,11 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 fpsLabel: '.app-fps-label',
                 kfAnimationSelect: 'select.app-kfanimation-select',
                 messageInput: '.app-node-message-input',
-                kfModeSelect: 'select.app-kfmode-select'
+                kfModeSelect: 'select.app-kfmode-select',
+                btreeModeSelect: 'select.app-btree-mode-select',
+                speechEventSelect: 'select.app-speech-event-select',
+                hrAngleSlider: '.app-hr-angle-slider',
+                hrAngleLabel: '.app-hr-angle-label',
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -41,7 +45,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 'change @ui.kfAnimationSelect': 'setKFAnimation',
                 'click @ui.deleteButton': 'deleteNode',
                 'change @ui.messageInput': 'setMessage',
-                'change @ui.kfModeSelect': 'setKFMode'
+                'change @ui.btreeModeSelect': 'setBtreeMode',
+                'change @ui.speechEventSelect': 'setSpeechEvent',
             },
             onRender: function () {
                 var self = this;
@@ -113,6 +118,21 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                             }
                         });
                         break;
+                    case 'head_rotation':
+                        if (!this.model.get('angle')) this.model.set('angle', 0);
+                        this.ui.hrAngleSlider.slider({
+                            animate: true,
+                            range: 'min',
+                            min: -50,
+                            max: 50,
+                            value: this.model.get('angle')*100,
+                            slide: function (e, ui) {
+                                self.model.set('angle', 0-parseFloat(ui.value)/100.0);
+                                self.model.call();
+                                self.ui.hrAngleLabel.html(parseFloat(self.model.get('angle')).toFixed(2) + ' rad');
+                            }
+                        });
+                        break;
                     case 'gesture':
                         // init with empty list
                         self.updateGestures([]);
@@ -162,6 +182,16 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                             this.model.set('lang', 'en');
                         this.ui.langSelect.val(this.model.get('lang'));
                         $(self.ui.langSelect).select2();
+                        break;
+                    case 'interaction':
+                        if (!this.model.get('mode'))
+                            this.model.set('mode', 255);
+                        this.ui.btreeModeSelect.val(this.model.get('mode'));
+                        $(self.ui.btreeModeSelect).select2();
+                        if (!this.model.get('chat'))
+                            this.model.set('chat', '');
+                        this.ui.langSelect.val(this.model.get('lang'));
+                        $(self.ui.speechEventSelect).select2();
                         break;
                     case 'pause':
                         this.model.set('duration', 0.2);
@@ -315,6 +345,12 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                     self.animationFrames = response.frames;
                     self.model.set('duration', 0.1 + self.animationFrames / self.model.get('fps'));
                 });
+            },
+            setBtreeMode: function () {
+                this.model.set('mode', parseInt(this.ui.btreeModeSelect.val()));
+            },
+            setSpeechEvent: function () {
+                this.model.set('chat', this.ui.speechEventSelect.val());
             },
             buildCrosshair: function (params) {
                 var self = this;

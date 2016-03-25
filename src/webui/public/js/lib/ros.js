@@ -92,6 +92,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     name: '/blender_api/set_soma_state',
                     messageType: 'blender_api_msgs/SomaState'
                 }),
+                set_head_rotation: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/blender_api/set_head_rotation',
+                    messageType: 'std_msgs/Float32'
+                }),
                 play_animation: new ROSLIB.Topic({
                     ros: api.ros,
                     name: '/' + api.config.robot + '/play_animation'

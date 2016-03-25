@@ -41,6 +41,7 @@
             <div class="app-node label label-success" data-name="kfanimation">KF Animation</div>
             <div class="app-node label label-warning" data-name="listening">Listening</div>
             <div class="app-node label label-primary" data-name="soma">Soma State</div>
+            <div class="app-node label label-warning" data-name="head_rotation">Head Tilt</div>
         </div>
 
         <div class="app-node-settings"></div>

@@ -116,16 +116,6 @@ class gaze_at(Node):
 # Behavior tree
 class interaction(Node):
 
-    def __init__(self, data, runner):
-        # By default full behavior and no listening/talking added.
-        defaults = {
-            'mode': 255,
-            'chat': None
-        }
-        data = defaults.update(data)
-        Node.__init__(self, data, runner)
-
-
     def start(self, run_time):
         self.runner.topics['bt_control'].publish(Int32(self.data['mode']))
         if self.data['chat'] == 'listening':

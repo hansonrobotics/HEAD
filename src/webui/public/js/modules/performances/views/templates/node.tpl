@@ -50,6 +50,30 @@
                 <select class="app-gesture-select"></select>
             </div>
             <% } %>
+            <% if (name == 'head_rotation') { %>
+                <div class="form-group">
+                    <label>Angle <span class="app-hr-angle-label pull-right label label-default"></span></label>
+                    <div class="app-hr-angle-slider"></div>
+                </div>
+            <% } %>
+            <% if (name == 'interaction') { %>
+                <div class="form-group">
+                    <label title="Mode">Mode</label>
+                    <select class="app-btree-mode-select">
+                        <option value="255">Full</option>
+                        <option value="207">FT Off</option>
+                        <option value="48">FT On</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label title="Language">Speech event</label>
+                    <select class="app-speech-event-select">
+                        <option value="">None</option>
+                        <option value="listening">Listening</option>
+                        <option value="talking">Talking</option>
+                    </select>
+                </div>
+            <% } %>
             <% if (name == 'kfanimation') { %>
                 <div class="form-group">
                     <label title="Animation">Animation</label>
