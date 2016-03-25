@@ -116,20 +116,26 @@ class gaze_at(Node):
 # Behavior tree
 class interaction(Node):
 
+
     def start(self, run_time):
         self.runner.topics['bt_control'].publish(Int32(self.data['mode']))
         if self.data['chat'] == 'listening':
             self.runner.topics['speech_events'].publish(String('listen_start'))
         if self.data['chat'] == 'talking':
             self.runner.topics['speech_events'].publish(String('start'))
+        time.sleep(0.02)
         self.runner.topics['interaction'].publish(String('btree_on'))
 
 
     def stop(self, run_time):
+        # Disable all outputs
+        self.runner.topics['bt_control'].publish(Int32(0))
+
         if self.data['chat'] == 'listening':
             self.runner.topics['speech_events'].publish(String('listen_stop'))
         if self.data['chat'] == 'talking':
             self.runner.topics['speech_events'].publish(String('stop'))
+        time.sleep(0.02)
         self.runner.topics['interaction'].publish(String('btree_off'))
 
 # Rotates head by given angle

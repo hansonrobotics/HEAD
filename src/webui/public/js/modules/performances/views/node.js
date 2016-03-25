@@ -190,7 +190,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                         $(self.ui.btreeModeSelect).select2();
                         if (!this.model.get('chat'))
                             this.model.set('chat', '');
-                        this.ui.langSelect.val(this.model.get('lang'));
+                        this.ui.speechEventSelect.val(this.model.get('chat'));
                         $(self.ui.speechEventSelect).select2();
                         break;
                     case 'pause':
