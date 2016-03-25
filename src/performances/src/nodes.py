@@ -3,7 +3,7 @@
 # Nodes factory
 import pprint
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import String, Int32, Float32
 from chatbot.msg import ChatMessage
 from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
@@ -113,20 +113,41 @@ class gaze_at(Node):
     def start(self, run_time):
         self.runner.topics['gaze_at'].publish(Target(self.data['x'], self.data['y'], self.data['z']))
 
-
+# Behavior tree
 class interaction(Node):
+
+    def __init__(self, data, runner):
+        # By default full behavior and no listening/talking added.
+        defaults = {
+            'mode': 255,
+            'chat': None
+        }
+        data = defaults.update(data)
+        Node.__init__(self, data, runner)
+
+
     def start(self, run_time):
+        self.runner.topics['bt_control'].publish(Int32(self.data['mode']))
+        if self.data['chat'] == 'listening':
+            self.runner.topics['speech_events'].publish(String('listen_start'))
+        if self.data['chat'] == 'talking':
+            self.runner.topics['speech_events'].publish(String('start'))
         self.runner.topics['interaction'].publish(String('btree_on'))
 
+
     def stop(self, run_time):
+        if self.data['chat'] == 'listening':
+            self.runner.topics['speech_events'].publish(String('listen_stop'))
+        if self.data['chat'] == 'talking':
+            self.runner.topics['speech_events'].publish(String('stop'))
         self.runner.topics['interaction'].publish(String('btree_off'))
 
-class listening(Node):
-    def start(self, run_time):
-        self.runner.topics['speech_events'].publish(String('listen_start'))
+# Rotates head by given angle
+class head_rotation(Node):
 
-    def stop(self, run_time):
-        self.runner.topics['speech_events'].publish(String('listen_stop'))
+    def start(self, run_time):
+        self.runner.topics['head_rotation'].publish(Float32(self.data['angle']))
+
 
 class soma(Node):
     def start(self, run_time):
@@ -253,7 +274,6 @@ class chat_pause(Node):
 
             while not self.finished and self.runner.start_timestamp + self.start_time + self.duration > time.time():
                 time.sleep(0.05)
-
         self.resume()
 
     def resume(self):

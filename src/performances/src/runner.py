@@ -5,7 +5,7 @@ import rospy
 import logging
 import performances.srv as srv
 import json
-from std_msgs.msg import String
+from std_msgs.msg import String, Int32, Float32
 from chatbot.msg import ChatMessage
 from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
@@ -42,11 +42,13 @@ class Runner:
         self.topics = {
             'look_at': rospy.Publisher('/blender_api/set_face_target', Target, queue_size=1),
             'gaze_at': rospy.Publisher('/blender_api/set_gaze_target', Target, queue_size=1),
+            'head_rotation': rospy.Publisher('/blender_api/set_head_rotation', Float32, queue_size=1),
             'emotion': rospy.Publisher('/blender_api/set_emotion_state', EmotionState, queue_size=3),
             'gesture': rospy.Publisher('/blender_api/set_gesture', SetGesture, queue_size=3),
             'expression': rospy.Publisher('/' + self.robot_name + '/make_face_expr', MakeFaceExpr, queue_size=3),
             'kfanimation': rospy.Publisher('/' + self.robot_name + '/play_animation', PlayAnimation, queue_size=3),
             'interaction': rospy.Publisher('/behavior_switch', String, queue_size=1),
+            'bt_control': rospy.Publisher('/behavior_control', Int32, queue_size=1),
             'events': rospy.Publisher('~events', Event, queue_size=1),
             'chatbot': rospy.Publisher('/' + self.robot_name + '/speech', ChatMessage, queue_size=1),
             'speech_events': rospy.Publisher('/' + self.robot_name + '/speech_events', String, queue_size=1),
