@@ -377,15 +377,11 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
             },
             deleteNode: function () {
                 var self = this;
-
-                bootbox.confirm("Are you sure?", function (result) {
-                    if (result) {
-                        self.model.destroy();
-                        self.$el.slideUp(null, function () {
-                            self.destroy();
-                        });
-                    }
+                this.model.destroy();
+                this.$el.slideUp(null, function () {
+                    self.destroy();
                 });
+
             },
             initialize: function(){
                 this.model.on('change', function(){
