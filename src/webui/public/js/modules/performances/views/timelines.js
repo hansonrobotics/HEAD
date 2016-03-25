@@ -52,7 +52,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         self.handleEvents(msg);
                     }
                 }
-
+                if (this.options.readonly){
+                    this.ui.nodesContainer.hide();
+                }
                 this.model.get('nodes').on('add remove', function () {
                     if (self.model.get('nodes').isEmpty())
                         self.ui.clearButton.stop().fadeOut();
@@ -64,6 +66,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 // hide delete and clear buttons for new models
                 if (!this.model.get('id'))
                     this.ui.deleteButton.hide();
+                    this.ui.clearButton.hide();
 
                 this.stopIndicator();
                 this.model.get('nodes').each(function (node) {
@@ -122,6 +125,8 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 }).draggable({
                     snap: '.app-.app-timeline-nodes',
                     revert: 'invalid',
+                    delay: 300,
+                    disabled: self.options.readonly,
                     stop: function(e, ui){
                         node.set('start_time', parseInt($(this).css('left'))/self.config.pxPerSec);
                         $(this).css({top:0});
@@ -173,6 +178,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.arrangeNodes();
             },
             showNodeSettings: function (node) {
+                if (this.options.readonly){
+                    return
+                }
                 var self = this,
                     showSettings = !this.nodeView || this.nodeView.model != node;
 

@@ -381,7 +381,6 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 this.$el.slideUp(null, function () {
                     self.destroy();
                 });
-
             },
             initialize: function(){
                 this.model.on('change', function(){

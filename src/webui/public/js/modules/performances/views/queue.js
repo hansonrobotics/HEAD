@@ -45,7 +45,7 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', '.
 
                 $('.app-edit', el).click(function () {
                     self.stop();
-                    self._showTimeline(performance);
+                    self._showTimeline(performance, false);
                 });
 
                 performance.on('change', function () {
@@ -61,7 +61,7 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', '.
             },
             updateTimeline: function () {
                 this.performanceUnion = this._getPerformanceUnion();
-                this.timelinesView = this._showTimeline(this.performanceUnion);
+                this.timelinesView = this._showTimeline(this.performanceUnion, true);
             },
             removePerformance: function (performance) {
                 var self = this;
@@ -161,11 +161,12 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', '.
                 this._removeHighlights();
                 $('.app-status-indicator', item.el).addClass('active');
             },
-            _showTimeline: function (performance) {
+            _showTimeline: function (performance, readonly) {
                 var timelinesView = new TimelinesView({
                     collection: new Backbone.Collection(),
                     model: performance,
-                    performances: this.options.performances
+                    performances: this.options.performances,
+                    readonly: readonly
                 });
 
                 // show configuration UI
