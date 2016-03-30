@@ -18,6 +18,7 @@ class Safety():
         time.sleep(3)
         motors = rospy.get_param('motors')
         self.rules = rospy.get_param('safety_rules', {})
+        self.rules = {}
         # subscribe
         self.motor_positions = {}
         self.subscribers = {}
@@ -135,7 +136,6 @@ class Safety():
         # Ensure the minimum commands are sent by ROS rate.
         if self.rules[m][rule]['target'].dt > (1.0/float(ROS_RATE)-0.01):
             self.set_motor_abs_pos(m, self.rules[m][rule]['target'].current)
-            print(self.rules[m][rule]['target'].current)
 
     def rule_slack(self, v, rule):
         if rule['dir'] != 0:
