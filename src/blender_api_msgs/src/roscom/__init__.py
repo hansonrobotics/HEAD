@@ -364,7 +364,7 @@ class CommandWrappers:
             # Target one meter away
             ax = math.cos(yaw)*math.cos(pitch)
             # Sets Face target
-            api.setGazeTarget([ax, ay, az])
+            api.setGazeTarget([ax, ay, -az])
         if api.pauAnimationMode & api.PAU_FACE:
             # Set Face shapekeys
             shapekeys = dict(zip(msg.m_shapekeys, msg.m_coeffs))
