@@ -622,6 +622,9 @@ class PatchTracker(ROS2OpenCV):
                 bounding box of each face and convert it to two CvPoints """
             pt1 = (int(x * self.image_scale), int(y * self.image_scale))
             pt2 = (int((x + w) * self.image_scale), int((y + h) * self.image_scale))
+            if (pt2[0]-pt1[0])*(pt2[1]-pt1[1]) == 0:
+                logger.warn("Area of detected face is 0")
+                continue
             fs.append((pt1,pt2))
         added = self.detect_box.addFaces(fs)
         self.save_faces(added)
