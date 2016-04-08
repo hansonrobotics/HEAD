@@ -54,9 +54,9 @@ class Runner:
             'speech_events': rospy.Publisher('/' + self.robot_name + '/speech_events', String, queue_size=1),
             'soma_state': rospy.Publisher("/blender_api/set_soma_state", SomaState, queue_size=2),
             'tts': {
-                'en': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_en', String, queue_size=1),
-                'zh': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_zh', String, queue_size=1),
-                'default': rospy.Publisher('/' + self.robot_name + '/chatbot_responses', String, queue_size=1),
+                'en': rospy.Publisher('/' + self.robot_name + '/tts_en', String, queue_size=1),
+                'zh': rospy.Publisher('/' + self.robot_name + '/tts_zh', String, queue_size=1),
+                'default': rospy.Publisher('/' + self.robot_name + '/tts', String, queue_size=1),
             }
         }
         rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
@@ -122,7 +122,6 @@ class Runner:
     def run_callback(self, request):
         start_time = request.startTime
         nodes = json.loads(request.nodes)
-
         return srv.RunResponse(self.run(start_time, nodes))
 
     def run(self, start_time, nodes):
