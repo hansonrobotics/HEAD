@@ -103,7 +103,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                         // init slider
                         if (!this.model.get('fps')) this.model.set('fps', 24);
                         // Disable blender head output by default
-                        if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'head');
+                        if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'on');
                         self.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');
                         this.ui.fpsSlider.slider({
                             animate: true,

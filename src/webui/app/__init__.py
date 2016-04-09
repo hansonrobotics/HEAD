@@ -223,6 +223,7 @@ def delete_performances(robot_name, id):
 @app.route('/run_performance', methods=['POST'])
 def start_performance():
     performance = request.get_data()
+    print(performance)
     js = json.loads(performance)
     run_performance(js["key"])
     return json_encode({'result': True})
@@ -231,13 +232,12 @@ def start_performance():
 @app.route('/lookat', methods=['POST'])
 def look_at():
     performance = request.get_data()
-    print(performance)
     js = json.loads(performance)
     #js = {'x':1,'y':0.3,'z':-0.5}
     f = Face()
     f.id = 1
     f.point.x = js["x"]
-    f.point.y = js["y"]
+    f.point.y = -js["y"]
     f.point.z = js["z"]
     f.attention = 0.99
     facePub.publish(Faces([f]))
@@ -292,9 +292,9 @@ def run_performance(performance):
 
 
 if __name__ == '__main__':
-    from rosgraph.roslogging import configure_logging
+    #from rosgraph.roslogging import configure_logging
 
-    configure_logging(None, filename='ros_motors_webui.log')
+    #configure_logging(None, filename='ros_motors_webui.log')
     #logger = logging.getLogger('hr.webui')
 
     @app.route('/public/<path:path>')
@@ -331,4 +331,4 @@ if __name__ == '__main__':
     else:
         rospy.init_node("webui_test")
         facePub = rospy.Publisher("/camera/face_locations", Faces)
-        app.run(host='0.0.0.0', debug=True, use_reloader=True, port=options.port)
+        app.run(host='0.0.0.0', debug=True, use_reloader=False, port=options.port)
