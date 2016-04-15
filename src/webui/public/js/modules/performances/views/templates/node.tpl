@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <% if (name == 'emotion' || name == 'interaction' || name == 'expression' || name == 'chat_pause') { %>
+            <% if (name == 'emotion' || name == 'interaction' || name == 'listening' || name == 'expression' || name == 'chat_pause' || name == 'soma') { %>
             <div class="form-group">
                 <label>Duration</label>
 
@@ -50,6 +50,30 @@
                 <select class="app-gesture-select"></select>
             </div>
             <% } %>
+            <% if (name == 'head_rotation') { %>
+                <div class="form-group">
+                    <label>Angle <span class="app-hr-angle-label pull-right label label-default"></span></label>
+                    <div class="app-hr-angle-slider"></div>
+                </div>
+            <% } %>
+            <% if (name == 'interaction') { %>
+                <div class="form-group">
+                    <label title="Mode">Mode</label>
+                    <select class="app-btree-mode-select">
+                        <option value="255">Full</option>
+                        <option value="207">FT Off</option>
+                        <option value="48">FT On</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label title="Language">Speech event</label>
+                    <select class="app-speech-event-select">
+                        <option value="">None</option>
+                        <option value="listening">Listening</option>
+                        <option value="talking">Talking</option>
+                    </select>
+                </div>
+            <% } %>
             <% if (name == 'kfanimation') { %>
                 <div class="form-group">
                     <label title="Animation">Animation</label>
@@ -72,6 +96,12 @@
             <div class="form-group">
                 <label title="Expression">Expression</label>
                 <select class="app-expression-select"></select>
+            </div>
+            <% } %>
+            <% if (name == 'soma') { %>
+            <div class="form-group">
+                <label title="Soma">Soma State</label>
+                <select class="app-soma-select"></select>
             </div>
             <% } %>
             <% if (name == 'emotion' || name == 'gesture' || name == 'expression') { %>

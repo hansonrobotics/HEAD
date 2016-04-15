@@ -2,7 +2,8 @@
     <div class="col-md-4">
         <h4>Behavior Switches: </h4>
         <button type="button" class="app-gesture-bt-on btn btn-default">On</button>
-        <button type="button" class="app-gesture-bt-ft btn btn-default">Face Tracking only</button>
+        <button type="button" class="app-gesture-bt-ft-off btn btn-default">FT Off</button>
+        <button type="button" class="app-gesture-bt-ft btn btn-default">FT only</button>
         <button type="button" class="app-gesture-bt-off btn btn-default">Off</button>
     </div>
     <div class="col-md-4">

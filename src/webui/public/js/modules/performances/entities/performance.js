@@ -59,7 +59,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', './node'], fu
         run: function (startTime, options) {
             var self = this;
             if (!options) options = {};
-
+            console.log(this.get('nodes').toJSON());
             api.services.performances.run.callService({
                 nodes: JSON.stringify(this.get('nodes').toJSON()),
                 startTime: startTime
