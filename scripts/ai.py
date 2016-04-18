@@ -15,6 +15,8 @@ from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
 
 logger = logging.getLogger('hr.chatbot.ai')
+VERSION = 'v1'
+key='AAAAB3NzaC'
 
 class Chatbot():
   def __init__(self):
@@ -61,14 +63,14 @@ class Chatbot():
     self._sentiment_active = active
 
   def get_response(self, question):
-      r = requests.post(self.chatbot_url,
-            data = json.dumps(
-                {"botid":"{}".format(self.botid),
-                "question":"{}".format(question),
-                "session":"0"}),
-            headers = {"Content-Type": "application/json",
-                       "Auth": 'AAAAB3NzaC'}
-      )
+      params = {
+          "botid": "{}".format(self.botid),
+          "question": "{}".format(question),
+          "session": "0",
+          "Auth": key
+      }
+      r = requests.get('{}/{}/chat'.format(self.chatbot_url, VERSION),
+                        params=params)
       ret = r.json().get('ret')
       if r.status_code != 200:
         logger.error("Request error: {}".format(r.status_code))
@@ -156,6 +158,7 @@ class Chatbot():
   def reconfig(self, config, level):
     self.set_botid(config.botid)
     self.sentiment_active(config.sentiment)
+    self.chatbot_url = config.chatbot_url
     return config
 
 if __name__ == '__main__':
