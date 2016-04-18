@@ -13,7 +13,7 @@ def authenticate():
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        auth = request.headers.get('Auth')
+        auth = request.args.get('Auth')
         if not auth or not check_auth(auth):
             return authenticate()
         return f(*args, **kwargs)
