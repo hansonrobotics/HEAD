@@ -61,7 +61,7 @@ class Node(object):
                 try:
                     self.start(run_time)
                 except Exception as ex:
-                    logger.info(ex)
+                    logger.error(ex)
                 self.started = True
         return True
 
@@ -171,9 +171,10 @@ class expression(Node):
 
     def start(self, run_time):
         try:
-            self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/no_pau"})
+            self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
+            logger.info("Call head_pau_mux topic {}".format("/" + self.runner.robot_name + "/no_pau"))
         except Exception as ex:
-            logger.info(ex)
+            logger.error(ex)
         self.shown = False
 
     def cont(self, run_time):
@@ -182,12 +183,14 @@ class expression(Node):
             self.shown = True
             self.runner.topics['expression'].publish(
                     MakeFaceExpr(self.data['expression'], float(self.data['magnitude'])))
+            logger.info("Publish expression {}".format(self.data))
 
     def stop(self, run_time):
         try:
-            self.runner.services['head_pau_mux']({'topic': "/" + self.runner.robot_name + "/head_pau"})
+            self.runner.services['head_pau_mux']("/blender_api/get_pau")
+            logger.info("Call head_pau_mux topic {}".format("/blender_api/get_pau"))
         except Exception as ex:
-            logger.info(ex)
+            logger.error(ex)
 
 
 class kfanimation(Node):
@@ -203,7 +206,7 @@ class kfanimation(Node):
             if self.blender_mode == 'head':
                 self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
         except Exception as ex:
-            logger.info(ex)
+            logger.error(ex)
         self.shown = False
 
     def cont(self, run_time):
@@ -218,7 +221,7 @@ class kfanimation(Node):
             if self.blender_mode == 'head':
                 self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
         except Exception as ex:
-            logger.info(ex)
+            logger.error(ex)
 
 
 class pause(Node):
