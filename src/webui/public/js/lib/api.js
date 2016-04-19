@@ -234,7 +234,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             if ($.isNumeric(duration))
                 duration = {
                     secs: Math.floor(duration),
-                    nsecs: Math.floor((duration - Math.floor(duration)) * 1000)
+                    nsecs: Math.floor((duration - Math.floor(duration)) * 1000000000)
                 };
             else if (typeof duration != 'object')
                 duration = {secs: 1, nsecs: 0};
@@ -414,6 +414,9 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         },
         set_look_at_face: function (f_id) {
             api.topics.set_look_at_face.publish(new ROSLIB.Message({face_event: 'track_face', face_id: f_id}));
+        },
+        set_head_rotation: function(angle){
+            api.topics.set_head_rotation.publish(new ROSLIB.Message({data: angle}));
         },
         setDynParam: function (node, name, value, options) {
             if (typeof options != 'object') options = {};

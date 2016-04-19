@@ -39,6 +39,9 @@
             <div class="app-node label label-default" data-name="chat_pause">Chat pause</div>
             <div class="app-node label label-info" data-name="expression">Expression</div>
             <div class="app-node label label-success" data-name="kfanimation">KF Animation</div>
+            <div class="app-node label label-warning" data-name="listening">Listening</div>
+            <div class="app-node label label-primary" data-name="soma">Soma State</div>
+            <div class="app-node label label-warning" data-name="head_rotation">Head Tilt</div>
         </div>
 
         <div class="app-node-settings"></div>
@@ -56,9 +59,6 @@
             <button class="app-run-button btn btn-default" title="Save"><i
                     class="glyphicon glyphicon-play-circle"></i> Run
             </button>
-            <button class="app-stop-button btn btn-default" title="Stop"><i
-                    class="glyphicon glyphicon-stop"></i> Stop
-            </button>
             <button class="app-pause-button btn btn-default" title="Stop"><i
                     class="glyphicon glyphicon-pause"></i> Pause
             </button>
@@ -67,6 +67,9 @@
             </button>
             <button class="app-loop-button btn btn-default" title="Loop"><i
                     class="glyphicon glyphicon-repeat"></i> Loop
+            </button>
+            <button class="app-stop-button btn btn-default" title="Stop"><i
+                    class="glyphicon glyphicon-stop"></i> Stop
             </button>
             <button class="app-frame-count btn btn-primary" title="Frame count" disabled="disabled">0</button>
         </div>

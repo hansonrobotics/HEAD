@@ -3,9 +3,9 @@
 # Nodes factory
 import pprint
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import String, Int32, Float32
 from chatbot.msg import ChatMessage
-from blender_api_msgs.msg import SetGesture, EmotionState, Target
+from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 import time
@@ -113,13 +113,55 @@ class gaze_at(Node):
     def start(self, run_time):
         self.runner.topics['gaze_at'].publish(Target(self.data['x'], self.data['y'], self.data['z']))
 
-
+# Behavior tree
 class interaction(Node):
+
+
     def start(self, run_time):
+        self.runner.topics['bt_control'].publish(Int32(self.data['mode']))
+        if self.data['chat'] == 'listening':
+            self.runner.topics['speech_events'].publish(String('listen_start'))
+        if self.data['chat'] == 'talking':
+            self.runner.topics['speech_events'].publish(String('start'))
+        time.sleep(0.02)
         self.runner.topics['interaction'].publish(String('btree_on'))
 
+
     def stop(self, run_time):
+        # Disable all outputs
+        self.runner.topics['bt_control'].publish(Int32(0))
+
+        if self.data['chat'] == 'listening':
+            self.runner.topics['speech_events'].publish(String('listen_stop'))
+        if self.data['chat'] == 'talking':
+            self.runner.topics['speech_events'].publish(String('stop'))
+        time.sleep(0.02)
         self.runner.topics['interaction'].publish(String('btree_off'))
+
+# Rotates head by given angle
+class head_rotation(Node):
+
+    def start(self, run_time):
+        self.runner.topics['head_rotation'].publish(Float32(self.data['angle']))
+
+
+class soma(Node):
+    def start(self, run_time):
+        s = SomaState()
+        s.magnitude = 1
+        s.ease_in.secs = 0
+        s.ease_in.nsecs = 1000000*300
+        s.name = self.data['soma']
+        self.runner.topics['soma_state'].publish(s)
+
+    def stop(self, run_time):
+        s = SomaState()
+        s.magnitude = 0
+        s.ease_in.secs = 0
+        s.ease_in.nsecs = 0
+        s.name = self.data['soma']
+        self.runner.topics['soma_state'].publish(s)
+
 
 
 class expression(Node):
@@ -231,7 +273,6 @@ class chat_pause(Node):
 
             while not self.finished and self.runner.start_timestamp + self.start_time + self.duration > time.time():
                 time.sleep(0.05)
-
         self.resume()
 
     def resume(self):

@@ -11,8 +11,9 @@ from subprocess import Popen
 import datetime
 from monitor import get_logs
 from rospkg import RosPack
+from pi_face_tracker.msg import Faces,Face
 rp = RosPack()
-
+import rospy
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
@@ -23,8 +24,7 @@ performance_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pa
                                'robots')
 
 app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
-logger = logging.getLogger('hr.webui')
-
+#logger = logging.getLogger('hr.webui')
 
 @app.route('/')
 def send_index():
@@ -173,12 +173,12 @@ def get_performances(robot_name):
         for filename in filenames:
             yaml_file = os.path.join(robot_performances, filename)
             if os.path.isfile(yaml_file) and yaml_file.endswith('.yaml'):
-                logger.info('Load {}'.format(yaml_file))
+                #logger.info('Load {}'.format(yaml_file))
                 performance = read_yaml(yaml_file)
                 print performance
                 performances.append(performance)
-            else:
-                logger.warn('Ignore {}'.format(yaml_file))
+            #else:
+                #logger.warn('Ignore {}'.format(yaml_file))
     except Exception as e:
         print e
         return json_encode([])
@@ -220,6 +220,28 @@ def delete_performances(robot_name, id):
     else:
         return json_encode(False)
 
+@app.route('/run_performance', methods=['POST'])
+def start_performance():
+    performance = request.get_data()
+    print(performance)
+    js = json.loads(performance)
+    run_performance(js["key"])
+    return json_encode({'result': True})
+
+
+@app.route('/lookat', methods=['POST'])
+def look_at():
+    performance = request.get_data()
+    js = json.loads(performance)
+    #js = {'x':1,'y':0.3,'z':-0.5}
+    f = Face()
+    f.id = 1
+    f.point.x = js["x"]
+    f.point.y = -js["y"]
+    f.point.z = js["z"]
+    f.attention = 0.99
+    facePub.publish(Faces([f]))
+    return json_encode({'result': True})
 
 def write_yaml(file_name, data):
     # delete existing config
@@ -264,12 +286,16 @@ def kill_node(node):
 def load_params(param_file, namespace):
     Popen("rosparam load " + param_file + " " + namespace, shell=True)
 
+def run_performance(performance):
+        Popen("rosservice call /performances/run_by_name \"{}\"".format(performance), shell=True)
+
+
 
 if __name__ == '__main__':
-    from rosgraph.roslogging import configure_logging
+    #from rosgraph.roslogging import configure_logging
 
-    configure_logging(None, filename='ros_motors_webui.log')
-    logger = logging.getLogger('hr.webui')
+    #configure_logging(None, filename='ros_motors_webui.log')
+    #logger = logging.getLogger('hr.webui')
 
     @app.route('/public/<path:path>')
     def send_js(path):
@@ -303,4 +329,6 @@ if __name__ == '__main__':
         context = (options.cert, options.key)
         app.run(host='0.0.0.0', debug=True, use_reloader=True, ssl_context=context, port=options.port)
     else:
-        app.run(host='0.0.0.0', debug=True, use_reloader=True, port=options.port)
+        rospy.init_node("webui_test")
+        facePub = rospy.Publisher("/camera/face_locations", Faces)
+        app.run(host='0.0.0.0', debug=True, use_reloader=False, port=options.port)

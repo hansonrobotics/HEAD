@@ -5,9 +5,9 @@ import rospy
 import logging
 import performances.srv as srv
 import json
-from std_msgs.msg import String
+from std_msgs.msg import String, Int32, Float32
 from chatbot.msg import ChatMessage
-from blender_api_msgs.msg import SetGesture, EmotionState, Target
+from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 from performances.msg import Event
@@ -42,17 +42,21 @@ class Runner:
         self.topics = {
             'look_at': rospy.Publisher('/blender_api/set_face_target', Target, queue_size=1),
             'gaze_at': rospy.Publisher('/blender_api/set_gaze_target', Target, queue_size=1),
+            'head_rotation': rospy.Publisher('/blender_api/set_head_rotation', Float32, queue_size=1),
             'emotion': rospy.Publisher('/blender_api/set_emotion_state', EmotionState, queue_size=3),
             'gesture': rospy.Publisher('/blender_api/set_gesture', SetGesture, queue_size=3),
             'expression': rospy.Publisher('/' + self.robot_name + '/make_face_expr', MakeFaceExpr, queue_size=3),
             'kfanimation': rospy.Publisher('/' + self.robot_name + '/play_animation', PlayAnimation, queue_size=3),
             'interaction': rospy.Publisher('/behavior_switch', String, queue_size=1),
+            'bt_control': rospy.Publisher('/behavior_control', Int32, queue_size=1),
             'events': rospy.Publisher('~events', Event, queue_size=1),
             'chatbot': rospy.Publisher('/' + self.robot_name + '/speech', ChatMessage, queue_size=1),
+            'speech_events': rospy.Publisher('/' + self.robot_name + '/speech_events', String, queue_size=1),
+            'soma_state': rospy.Publisher("/blender_api/set_soma_state", SomaState, queue_size=2),
             'tts': {
-                'en': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_en', String, queue_size=1),
-                'zh': rospy.Publisher('/' + self.robot_name + '/chatbot_responses_zh', String, queue_size=1),
-                'default': rospy.Publisher('/' + self.robot_name + '/chatbot_responses', String, queue_size=1),
+                'en': rospy.Publisher('/' + self.robot_name + '/tts_en', String, queue_size=1),
+                'zh': rospy.Publisher('/' + self.robot_name + '/tts_zh', String, queue_size=1),
+                'default': rospy.Publisher('/' + self.robot_name + '/tts', String, queue_size=1),
             }
         }
         rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
@@ -118,7 +122,6 @@ class Runner:
     def run_callback(self, request):
         start_time = request.startTime
         nodes = json.loads(request.nodes)
-
         return srv.RunResponse(self.run(start_time, nodes))
 
     def run(self, start_time, nodes):

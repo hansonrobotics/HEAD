@@ -45,7 +45,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             },
             onShow: function () {
                 var self = this;
-
                 this.ui.scrollContainer.perfectScrollbar();
                 // Performance event handler
                 if (typeof this.options.performances != 'undefined') {
@@ -53,7 +52,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         self.handleEvents(msg);
                     }
                 }
-
+                if (this.options.readonly){
+                    this.ui.nodesContainer.hide();
+                }
                 this.model.get('nodes').on('add remove', function () {
                     if (self.model.get('nodes').isEmpty())
                         self.ui.clearButton.stop().fadeOut();
@@ -65,6 +66,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 // hide delete and clear buttons for new models
                 if (!this.model.get('id'))
                     this.ui.deleteButton.hide();
+                    this.ui.clearButton.hide();
 
                 this.stopIndicator();
                 this.model.get('nodes').each(function (node) {
@@ -81,6 +83,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     else
                         self.updateTimelineWidth();
                 };
+                $(".app-timelines", this.el).droppable({
+                    accept: ".app-node"
+                });
                 $(window).on('resize', updateWidth);
             },
             onDestroy: function () {
@@ -117,7 +122,17 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     $(this).animateAuto('width', 500);
                 }, function () {
                     self.updateNode(node);
-                });
+                }).draggable({
+                    snap: '.app-.app-timeline-nodes',
+                    revert: 'invalid',
+                    delay: 300,
+                    disabled: self.options.readonly,
+                    stop: function(e, ui){
+                        node.set('start_time', parseInt($(this).css('left'))/self.config.pxPerSec);
+                        $(this).css({top:0});
+                        self.arrangeNodes();
+                    }
+                }).css({position:'absolute'});
 
                 node.set('el', el);
                 node.on('change', this.updateNode, this);
@@ -163,6 +178,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.arrangeNodes();
             },
             showNodeSettings: function (node) {
+                if (this.options.readonly){
+                    return
+                }
                 var self = this,
                     showSettings = !this.nodeView || this.nodeView.model != node;
 

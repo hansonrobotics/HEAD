@@ -7,6 +7,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 magnitudeSlider: '.app-magnitide-slider',
                 emotionSelect: 'select.app-emotion-select',
                 gestureSelect: 'select.app-gesture-select',
+                somaSelect: 'select.app-soma-select',
                 expressionSelect: 'select.app-expression-select',
                 textInput: '.app-node-text',
                 startTime: '.app-node-start-time',
@@ -24,7 +25,11 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 fpsLabel: '.app-fps-label',
                 kfAnimationSelect: 'select.app-kfanimation-select',
                 messageInput: '.app-node-message-input',
-                kfModeSelect: 'select.app-kfmode-select'
+                kfModeSelect: 'select.app-kfmode-select',
+                btreeModeSelect: 'select.app-btree-mode-select',
+                speechEventSelect: 'select.app-speech-event-select',
+                hrAngleSlider: '.app-hr-angle-slider',
+                hrAngleLabel: '.app-hr-angle-label',
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -34,12 +39,14 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 'change @ui.langSelect': 'setLanguage',
                 'change @ui.emotionSelect': 'setEmotion',
                 'change @ui.gestureSelect': 'setGesture',
+                'change @ui.somaSelect': 'setSoma',
                 'change @ui.expressionSelect': 'setExpression',
                 'change @ui.topicInput': 'setTopic',
                 'change @ui.kfAnimationSelect': 'setKFAnimation',
                 'click @ui.deleteButton': 'deleteNode',
                 'change @ui.messageInput': 'setMessage',
-                'change @ui.kfModeSelect': 'setKFMode'
+                'change @ui.btreeModeSelect': 'setBtreeMode',
+                'change @ui.speechEventSelect': 'setSpeechEvent',
             },
             onRender: function () {
                 var self = this;
@@ -96,7 +103,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                         // init slider
                         if (!this.model.get('fps')) this.model.set('fps', 24);
                         // Disable blender head output by default
-                        if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'head');
+                        if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'on');
                         self.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');
                         this.ui.fpsSlider.slider({
                             animate: true,
@@ -108,6 +115,21 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                                 self.model.set('fps', ui.value);
                                 self.setKFAnimationDuration();
                                 self.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');
+                            }
+                        });
+                        break;
+                    case 'head_rotation':
+                        if (!this.model.get('angle')) this.model.set('angle', 0);
+                        this.ui.hrAngleSlider.slider({
+                            animate: true,
+                            range: 'min',
+                            min: -50,
+                            max: 50,
+                            value: this.model.get('angle')*100,
+                            slide: function (e, ui) {
+                                self.model.set('angle', 0-parseFloat(ui.value)/100.0);
+                                self.model.call();
+                                self.ui.hrAngleLabel.html(parseFloat(self.model.get('angle')).toFixed(2) + ' rad');
                             }
                         });
                         break;
@@ -136,6 +158,14 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                             }
                         });
                         break;
+                    case 'soma':
+                        // init with empty list
+                        self.updateSomaStates([]);
+                        // load gestures
+                        api.getAvailableSomaStates(function (somas) {
+                            self.updateSomaStates(somas)
+                        });
+                        break;
                     case 'look_at':
                         this.buildCrosshair();
                         break;
@@ -152,6 +182,19 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                             this.model.set('lang', 'en');
                         this.ui.langSelect.val(this.model.get('lang'));
                         $(self.ui.langSelect).select2();
+                        break;
+                    case 'interaction':
+                        if (!this.model.get('mode'))
+                            this.model.set('mode', 255);
+                        this.ui.btreeModeSelect.val(this.model.get('mode'));
+                        $(self.ui.btreeModeSelect).select2();
+                        if (!this.model.get('chat'))
+                            this.model.set('chat', '');
+                        this.ui.speechEventSelect.val(this.model.get('chat'));
+                        $(self.ui.speechEventSelect).select2();
+                        break;
+                    case 'pause':
+                        this.model.set('duration', 0.2);
                         break;
                     case 'chat_pause':
                         if (!this.model.get())
@@ -216,9 +259,24 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 }
 
                 if (this.model.get('gesture'))
-                    $(this.ui.emotionSelect).val(this.model.get('gesture'));
+                    $(this.ui.gestureSelect).val(this.model.get('gesture'));
 
                 $(this.ui.gestureSelect).select2();
+            },
+            updateSomaStates: function (somas) {
+                var self = this;
+                _.each(somas, function (soma) {
+                    $(self.ui.somaSelect).append($('<option>').prop('value', soma).html(soma));
+                });
+
+                if (!this.model.get('soma') && somas.length > 0) {
+                    this.model.set('soma', somas[0]);
+                }
+
+                if (this.model.get('soma'))
+                    $(this.ui.somaSelect).val(this.model.get('soma'));
+
+                $(this.ui.somaSelect).select2();
             },
             setDuration: function () {
                 this.model.set('duration', Number($(this.ui.duration).val()));
@@ -258,6 +316,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 this.model.set('gesture', this.ui.gestureSelect.val());
                 this.setGestureLength();
             },
+            setSoma: function () {
+                this.model.set('soma', this.ui.somaSelect.val());
+            },
             setGestureLength: function () {
                 var self = this;
                 api.getAnimationLength(this.model.get('gesture'), function (response) {
@@ -285,6 +346,12 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                     self.model.set('duration', 0.1 + self.animationFrames / self.model.get('fps'));
                 });
             },
+            setBtreeMode: function () {
+                this.model.set('mode', parseInt(this.ui.btreeModeSelect.val()));
+            },
+            setSpeechEvent: function () {
+                this.model.set('chat', this.ui.speechEventSelect.val());
+            },
             buildCrosshair: function (params) {
                 var self = this;
                 params = params || {};
@@ -310,15 +377,17 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
             },
             deleteNode: function () {
                 var self = this;
-
-                bootbox.confirm("Are you sure?", function (result) {
-                    if (result) {
-                        self.model.destroy();
-                        self.$el.slideUp(null, function () {
-                            self.destroy();
-                        });
-                    }
+                this.model.destroy();
+                this.$el.slideUp(null, function () {
+                    self.destroy();
                 });
-            }
+            },
+            initialize: function(){
+                this.model.on('change', function(){
+                    if (Math.abs(this.model.get('start_time') - Number($(this.ui.startTime).val())) > 0.01){
+                        $(this.ui.startTime).val(this.model.get('start_time'))
+                    }
+                }, this);
+            },
         });
     });

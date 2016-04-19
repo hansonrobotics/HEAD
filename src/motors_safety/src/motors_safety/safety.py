@@ -4,10 +4,12 @@ import rospy
 from ros_pololu.msg import MotorCommand
 from std_msgs.msg import Float64
 from dynamixel_msgs.msg import MotorStateList
+import blendedNum
+from blendedNum.plumbing import Pipes
 
 import time
 
-ROS_RATE = 20
+ROS_RATE = 25
 
 class Safety():
     def __init__(self):
@@ -16,6 +18,7 @@ class Safety():
         time.sleep(3)
         motors = rospy.get_param('motors')
         self.rules = rospy.get_param('safety_rules', {})
+        #self.rules = {}
         # subscribe
         self.motor_positions = {}
         self.subscribers = {}
@@ -47,7 +50,7 @@ class Safety():
         # Subscribe motor states
         rospy.Subscriber('safe/motor_states', MotorStateList, self.update_load)
         # Init timing rules
-        for m, rules in self.rules.iteritems():
+        for m, rules in self.rules.items():
             for i,r in enumerate(rules):
                 # Process timing rules
                 if r['type'] == 'timing':
@@ -60,6 +63,9 @@ class Safety():
                 if r['type'] == 'slack':
                     self.rules[m][i]['prev_pos'] = 0.0
                     self.rules[m][i]['dir'] = 0
+                if r['type'] == 'smooth':
+                    self.rules[m][i]['target'] = blendedNum.LiveTarget(
+                            self.motor_positions[m], Pipes.moving_average(r['time']), self.motor_positions[m])
 
     def update_load(self, msg):
         for s in msg.motor_states:
@@ -67,7 +73,7 @@ class Safety():
 
     # check if motor is dynamixel
     def is_dynamixel(self, m):
-        if 'motor_id' in self.motors[m]:
+        if self.motors[m]['hardware'] != 'dynamixel':
             return False
         else:
             return True
@@ -104,11 +110,32 @@ class Safety():
                 v = self.rule_time(motor, v, r)
             if r['type'] == 'slack':
                 v = self.rule_slack(v, r)
+            if r['type'] == 'smooth':
+                v = self.rule_smooth(v, r)
 
         if dynamixel:
             msg.data = v
         else:
             msg.position = v
+
+    def rule_smooth(self, v, rule):
+        rule['target'].target = v
+        # Need to make sure it doesnt get executed on same time with timing rule.
+        try:
+            rule['target'].blend()
+        except ValueError:
+            pass
+        v = rule['target'].current
+        return v
+
+    def rule_smooth_time(self, m,rule):
+        try:
+            self.rules[m][rule]['target'].blend()
+        except ValueError:
+            pass
+        # Ensure the minimum commands are sent by ROS rate.
+        if self.rules[m][rule]['target'].dt > (1.0/float(ROS_RATE)-0.01):
+            self.set_motor_abs_pos(m, self.rules[m][rule]['target'].current)
 
     def rule_slack(self, v, rule):
         if rule['dir'] != 0:
@@ -156,13 +183,15 @@ class Safety():
 
     # Scheduled tasks
     def timing(self):
-        for m, rules in self.rules.iteritems():
+        for m, rules in self.rules.items():
             for i,r in enumerate(rules):
                 # Process timing rules
                 if r['type'] == 'timing':
                     self.rule_timing(m,i)
                 if r['type'] == 'load':
                     self.rule_loading(m,i)
+                if r['type'] == 'smooth':
+                    self.rule_smooth_time(m,i)
 
     def rule_timing(self, m, r):
         # Rule is active
