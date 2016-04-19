@@ -1,8 +1,10 @@
 from characters import CHARACTERS
 from httplib import HTTPConnection
+from character import SheetAIMLCharacter
 import urllib
 import json
 import logging
+import server
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -14,13 +16,57 @@ useSOLR = True
 
 logger = logging.getLogger('hr.chatbot.server.chatbot')
 
-def get_character(id):
+def get_character(id, create=False):
     for character in CHARACTERS:
         if character.id == id:
             return character
+    if create:
+        character = SheetAIMLCharacter(id)
+        CHARACTERS.append(character)
+        logger.info("Create SheetAIMLCharacter {}".format(character))
+        return character
 
 def list_character():
     return [c.id for c in CHARACTERS]
+
+def update_character(id, csv_version):
+    character = get_character(id)
+    if not character:
+        return False, "Character {} is not found".format(id)
+    if isinstance(character, server.character.SheetAIMLCharacter) or \
+            isinstance(character, SheetAIMLCharacter):
+        try:
+            character.load_csv_files(csv_version)
+        except Exception as ex:
+            logger.error(ex)
+            return False, "Update {} failed {}".format(id, ex)
+        return True, "{} is updated".format(id)
+    else:
+        return False, "Character {} doesn't support update".format(id)
+    return False
+
+def load_sheet_keys(id, sheet_keys):
+    character = get_character(id, True)
+    if not character:
+        return False, "Character {} is not found".format(id)
+    if not sheet_keys:
+        return False, "No sheet key is set"
+    if isinstance(character, server.character.SheetAIMLCharacter) or \
+            isinstance(character, SheetAIMLCharacter):
+        return character.load_sheet_keys(sheet_keys)
+    else:
+        return False, "Character doesn't support sheet keys"
+    return False, "Unknown error"
+
+def commit_character(id):
+    character = get_character(id)
+    if not character:
+        return False, "Character {} is not found".format(id)
+    if isinstance(character, server.character.SheetAIMLCharacter) or \
+            isinstance(character, SheetAIMLCharacter):
+        return character.commit()
+    else:
+        return False, "Character {} doesn't support committing".format(character)
 
 def solr(text):
     # No match, try improving with SOLR

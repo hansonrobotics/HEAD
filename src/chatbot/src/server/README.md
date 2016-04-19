@@ -92,9 +92,62 @@ Set chatbot to quant_han
 quant_han[by han]: Making billions is all good fun. But obsoleting the money economy is what it's all about.
 ```
 
+## Chatbot Server API
+
+### List characters
+
+```
+GET /v1/chatbots
+params: Auth
+```
+
+```
+For example
+http://61.92.69.43:8001/v1/chatbots?Auth=AAAAB3NzaC
+
+{"response": ["sophia", "pkd", "han", "generic"], "ret": 0}
+```
+
+### Chat
+
+```
+GET /v1/chat
+params: botid, question, session, Auth
+```
+
+```
+For example
+http://61.92.69.43:8001/v1/chat?question=hello&botid=sophia&session=0&Auth=AAAAB3NzaC
+
+{"response": {"emotion": "", "text": "Hi. What seems to be your problem ?",
+"botid": "sophia", "botname": "sophia"}, "ret": 0}
+```
 
 
+### Set sheet keys
 
+```
+GET /v1/set_keys
+params: botid, sheet_keys, Auth
+```
 
+```
+For example
+http://61.92.69.43:8001/v1/set_keys?botid=pkd&sheet_keys=1Tbro_Kjbby162Rms0GpQswoqhavXOoRe85HVRyEB1NU&Auth=AAAAB3NzaC
 
+{"response": "<Character id: pkd, name: pkd> is updated", "ret": true}
+```
 
+### Update character
+
+```
+GET  /v1/update
+params: botid, Auth
+```
+
+```
+For example
+http://61.92.69.43:8001/v1/update?botid=pkd&Auth=AAAAB3NzaC
+
+{"response": "updated character pkd", "ret": true}
+```
