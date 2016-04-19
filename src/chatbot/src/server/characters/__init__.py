@@ -7,6 +7,8 @@ DEFAULT_CHARACTER_PATH=CWD
 CHARACTER_PATH=os.environ.get('HR_CHARACTER_PATH', DEFAULT_CHARACTER_PATH)
 CHARACTERS = []
 for path in CHARACTER_PATH.split(','):
+    path = path.strip()
+    if not path: continue
     sys.path.insert(0, path)
     module_names = [f for f in os.listdir(path) if f.endswith('.py')]
     if '__init__.py' in module_names:
