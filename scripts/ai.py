@@ -35,6 +35,7 @@ class Chatbot():
     # sentiment dictionary
     self.polarity = Polarity()
     self._polarity_threshold=0.2
+    self.character = rospy.get_param('character', None)
 
     rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
 
@@ -56,8 +57,23 @@ class Chatbot():
     self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
 
+  def list_chatbot(self):
+    try:
+        r = requests.get(
+            '{}/{}/chatbots'.format(self.chatbot_url, VERSION), params={'Auth':key})
+        chatbots = r.json().get('response')
+    except Exception as ex:
+        logger.error(ex)
+        chatbots = []
+    return chatbots
+
   def set_botid(self, botid):
-    self.botid = botid
+    chatbots = self.list_chatbot()
+    if botid in chatbots:
+        self.botid = botid
+        logger.info("Set botid to {}".format(botid))
+    else:
+        logger.error("Botid {} is not on the list {}".format(botid, chatbots))
 
   def sentiment_active(self, active):
     self._sentiment_active = active
@@ -88,9 +104,25 @@ class Chatbot():
       return response
 
   def _request_callback(self, chat_message):
-    if rospy.get_param('lang', None) != 'en':
-        logger.info('Ignore non-English language')
+    lang = rospy.get_param('lang', None)
+    use_xiaoi = rospy.get_param('chatbot_zh', None) == 'xiaoi'
+    if lang == 'zh':
+        if self.character == 'sophia':
+            if use_xiaoi:
+                self.set_botid('xiaoi_sophia')
+            else:
+                self.set_botid('tuling_sophia')
+        elif self.character == 'han':
+            if use_xiaoi:
+                self.set_botid('xiaoi_han')
+            else:
+                self.set_botid('tuling_han')
+    elif lang == 'en':
+        self.set_botid(self.character)
+    else:
+        logger.warn('Language {} is not supported'.format(lang))
         return
+
     response = ''
 
     blink=String()
@@ -129,7 +161,7 @@ class Chatbot():
           logger.info('Chatbot perceived emo: {}'.format(emo.data))
         else:
           p = self.polarity.get_polarity(response)
-          logger.info('Polarity for "{}" is {}'.format(response, p))
+          logger.info('Polarity for "{}" is {}'.format(response.encode('utf-8'), p))
           # change emotion if polarity magnitude exceeds threshold defined in constructor
           # otherwise let top level behaviors control
           if p > self._polarity_threshold:
@@ -147,7 +179,7 @@ class Chatbot():
 
       self._response_publisher.publish(String(response))
       logger.info("Ask: {}, answer: {}, answered by: {}".format(
-          chat_message.utterance, response, botid))
+          chat_message.utterance, response.encode('utf-8'), botid))
 
   # Just repeat the chat message, as a plain string.
   def _echo_callback(self, chat_message):
