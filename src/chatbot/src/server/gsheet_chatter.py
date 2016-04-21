@@ -8,7 +8,7 @@ import urllib, json
 import csv
 import logging
 import glob
-from csvUtils import generateAimlFromLongCSV
+from csvUtils import generateAimlFromLongCSV, generateAimlFromSimpleCSV
 
 import xml.etree.ElementTree as ET
 
@@ -132,11 +132,25 @@ def readAndLoadSheets(sheetList,engine):
 # The Kernel object is the public interface to
 # the AIML interpreter.
 
-def batch_csv2aiml(csv_dir, aiml_dir, csv_version):
+def get_csv_version(csv_file):
+    # Guessing
+    with open(csv_file) as f:
+        header = f.readline().strip()
+        if sorted(header.split(',')) == sorted(
+                ['Human_says', 'Meaning', 'Robot_says']):
+            return "3"
+        elif sorted(header.split(',')) == sorted(
+                ['Type','Pattern','That','Template','Source','Think', 'Topic']):
+            return "2"
+        else:
+            return "1"
+
+def batch_csv2aiml(csv_dir, aiml_dir, csv_version=None):
     """Convert all the csv files in the csv_dir to aiml files.
     csv_version:
         1:  PATTERN,THAT,TOPIC,TEMPLATE,REDUCE_TO
         2:  Type,Pattern,That,Template,Source,Think
+        3:  Human_says,Meaning,Robot_says
     """
     if not os.path.isdir(aiml_dir):
         os.makedirs(aiml_dir)
@@ -148,12 +162,23 @@ def batch_csv2aiml(csv_dir, aiml_dir, csv_version):
         filename = os.path.join(aiml_dir, filename)
         aimlFileData = None
         with open(csv_file) as f:
+            if csv_version is None:
+                csv_version = get_csv_version(csv_file)
             if csv_version == '1':
                 csvData = f.read()
                 aimlFileData = generateAimlFromCSV(csvData, ',')
-            if csv_version == '2':
+            elif csv_version == '2':
                 csvData=csv.DictReader(f)
-                aimlFileData = generateAimlFromLongCSV(csvData)
+                try:
+                    aimlFileData = generateAimlFromLongCSV(csvData)
+                except Exception as ex:
+                    raise Exception('Generate aiml from csv {} error {}'.format(os.path.basename(csv_file), ex))
+            elif csv_version == '3':
+                csvData=csv.DictReader(f)
+                try:
+                    aimlFileData = generateAimlFromSimpleCSV(csvData)
+                except Exception as ex:
+                    raise Exception('Generate aiml from csv {} error {}'.format(os.path.basename(csv_file), ex))
         if aimlFileData is not None:
             with open(filename, 'w') as f:
                 f.write(aimlFileData)
