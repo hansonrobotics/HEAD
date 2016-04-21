@@ -1,0 +1,9 @@
+id:
+    sophia
+name:
+    sophia
+property_file:
+    ../../../../../../character_dev/character_aiml/sophia.properties
+aiml:
+    - ../../../../../../character_dev/character_aiml/sophia.*.aiml
+    - ../../../../../../character_dev/character_aiml/sophia.*.xml

@@ -18,28 +18,17 @@ def load_aiml_character(character_yaml):
         try:
             root_dir = os.path.dirname(os.path.realpath(character_yaml))
             character = AIMLCharacter(spec['id'], spec['name'])
-            character.set_property_file(abs_path(spec['property_file']))
-            aiml_files = [abs_path(f) for f in spec['aiml']]
-            character.load_aiml_files(aiml_files)
+            if 'property_file' in spec:
+                character.set_property_file(abs_path(spec['property_file']))
+            if 'aiml' in spec:
+                aiml_files = [abs_path(f) for f in spec['aiml']]
+                character.load_aiml_files(character.kernel, aiml_files)
         except KeyError as ex:
             logger.error(ex)
 
     return character
 
-sophia = AIMLCharacter('sophia', 'sophia')
-sophia.set_property_file(os.path.join(CWD, "../../../character_aiml/sophia.properties"))
-
-han = AIMLCharacter('han', 'han')
-han.set_property_file(os.path.join(CWD, "../../../character_aiml/han.properties"))
-
-pkd = AIMLCharacter('pkd', 'pkd')
-pkd.load_aiml_files([
-    os.path.join(CWD, "../../../character_aiml/pkd.*.xml"),
-    os.path.join(CWD, "../../../character_aiml/pkd.*.aiml")
-])
-pkd.set_property_file(os.path.join(CWD, "../../../character_aiml/pkd.properties"))
-
-characters = [han, sophia, pkd]
+characters = []
 
 for yaml_file in os.listdir(CWD):
     if yaml_file.endswith('.yaml'):

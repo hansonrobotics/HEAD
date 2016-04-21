@@ -16,9 +16,10 @@ os.system('cd {} && git checkout {}'.format(GIT_DIR, WORKING_BRANCH))
 COMMENT = 'Update character'
 
 class Character(object):
-    def __init__(self, id, name):
+    def __init__(self, id, name, level=99):
         self.id = id
         self.name = name
+        self.level = level
         self.properties = {}
 
     def get_properties(self):
@@ -31,18 +32,22 @@ class Character(object):
         raise NotImplementedError
 
     def __repr__(self):
-        return "<Character id: {}, name: {}>".format(self.id, self.name)
+        return "<Character id: {}, name: {}, level: {}>".format(
+            self.id, self.name, self.level)
 
 class AIMLCharacter(Character):
-    def __init__(self, id, name):
-        super(AIMLCharacter, self).__init__(id, name)
-        self.character = aiml.Kernel()
+    def __init__(self, id, name, level=99):
+        super(AIMLCharacter, self).__init__(id, name, level)
+        self.kernel = aiml.Kernel()
         self.aiml_files = []
-        self.character.verbose(False)
+        self.kernel.verbose(False)
 
-    def load_aiml_files(self, aiml_files):
+    def load_aiml_files(self, kernel, aiml_files):
         for f in aiml_files:
-            self.character.learn(f)
+            errors = kernel.learn(f)
+            if errors:
+                raise Exception("Load {} error\n{}".format(
+                    os.path.basename(f), errors[0][1]))
             logger.info("[{}] Load {}".format(self.id, f))
             if f not in self.aiml_files:
                 self.aiml_files.append(f)
@@ -54,7 +59,7 @@ class AIMLCharacter(Character):
                     parts = line.split('=')
                     key = parts[0].strip()
                     value = parts[1].strip()
-                    self.character.setBotPredicate(key, value)
+                    self.kernel.setBotPredicate(key, value)
                     self.properties[key] = value
         except Exception:
             print >>sys.stderr, "Couldn't open {}".format(propname)
@@ -62,23 +67,24 @@ class AIMLCharacter(Character):
     def set_properties(self, props):
         super(AIMLCharacter, self).set_properties(props)
         for key, value in self.properties.iteritems():
-            self.character.setBotPredicate(key, value)
+            self.kernel.setBotPredicate(key, value)
 
     def respond(self, question, session=None):
         ret = {}
-        ret['text'] = self.character.respond(question, session)
-        ret['emotion'] = self.character.getPredicate('emotion', session)
+        ret['text'] = self.kernel.respond(question, session)
+        ret['emotion'] = self.kernel.getPredicate('emotion', session)
         ret['botid'] = self.id
         ret['botname'] = self.name
         return ret
 
 class SheetAIMLCharacter(AIMLCharacter):
-    def __init__(self, id, name='sophia'):
-        super(SheetAIMLCharacter, self).__init__(id, name)
+    def __init__(self, id, name, level):
+        super(SheetAIMLCharacter, self).__init__(id, name, level)
         self.sheet_keys = []
         self.set_property_file(os.path.join(
                         CWD, "../character_aiml/{}.properties".format(name)))
         self.aiml_files = []
+        self.incoming_aiml_files = []
         self.csv_files = []
         self.commited_aiml_files = []
         self.incoming_dir = os.path.expanduser(
@@ -116,31 +122,30 @@ class SheetAIMLCharacter(AIMLCharacter):
     def set_csv_dir(self, csv_dir):
         self.csv_dir = csv_dir
 
-    def load_csv_files(self, csv_version):
-        self.aiml_files, self.csv_files = batch_csv2aiml(
+    def load_csv_files(self, csv_version=None):
+        self.incoming_aiml_files, self.csv_files = batch_csv2aiml(
             self.csv_dir, self.csv_dir, csv_version)
         self.reload_character()
 
     def reload_character(self):
-        del(self.character)
-        self.character = aiml.Kernel()
+        kernel = aiml.Kernel()
         committed_aimls = []
         for root, _, files in os.walk(self.commit_dir):
             committed_aimls.extend(
                 [os.path.join(root, f) for f in files if f.endswith('.aiml')])
 
-        skip_aimls = [os.path.basename(f) for f in self.aiml_files]
         logger.info("Reloading character {}".format(self.id))
-        for f in committed_aimls:
-            if os.path.basename(f) not in skip_aimls:
-                self.character.learn(f)
-                logger.info("[{}] Load {}".format(self.id, f))
-        for f in self.aiml_files:
-            self.character.learn(f)
-            logger.info("[{}] Load {}".format(self.id, f))
+        skip_aimls = [os.path.basename(f) for f in self.incoming_aiml_files]
+        self.load_aiml_files(kernel, [f for f in committed_aimls
+                            if os.path.basename(f) not in skip_aimls])
+        self.load_aiml_files(kernel, self.incoming_aiml_files)
+        del(self.kernel)
+        self.kernel = kernel
         logger.info("Reloaded character {}".format(self.id))
 
     def commit(self):
+        if not os.path.isdir(self.csv_dir):
+            return False, "Nothing to commit."
         dest = os.path.join(self.commit_dir)
         dir_to_commit = os.path.join(dest, os.path.basename(self.csv_dir))
         shutil.rmtree(dir_to_commit, True)
@@ -162,7 +167,9 @@ class SheetAIMLCharacter(AIMLCharacter):
 
         cmd = '''cd {} && git add -A {} && git -c user.name="{}" -c user.email={} commit -m "{}" && git push origin {}'''.format(
             self.commit_dir, dir_to_commit, user, email, COMMENT, WORKING_BRANCH)
-        stdout, stderr = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        stdout, stderr = subprocess.Popen(
+            cmd, shell=True, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE).communicate()
         output = stdout + stderr
         logger.info("Commit character {}".format(self.id))
         logger.info("Commit cmd {}".format(cmd))
@@ -171,6 +178,6 @@ class SheetAIMLCharacter(AIMLCharacter):
         else:
             ret = True
         logger.info(output)
-        self.aiml_files, self.csv_files = [], []
+        self.incoming_aiml_files, self.csv_files = [], []
         self.reload_character()
         return ret, output

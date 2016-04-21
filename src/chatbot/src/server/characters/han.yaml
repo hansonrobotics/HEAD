@@ -1,0 +1,8 @@
+id:
+    han
+name:
+    han
+property_file:
+    ../../../../../../character_dev/character_aiml/han.properties
+aiml:
+    - ../../../character_aiml/Han_financial_AIML/*.aiml
