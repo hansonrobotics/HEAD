@@ -62,7 +62,7 @@ class AIMLCharacter(Character):
                     self.kernel.setBotPredicate(key, value)
                     self.properties[key] = value
         except Exception:
-            print >>sys.stderr, "Couldn't open {}".format(propname)
+            logger.error("Couldn't open {}".format(propname))
 
     def set_properties(self, props):
         super(AIMLCharacter, self).set_properties(props)

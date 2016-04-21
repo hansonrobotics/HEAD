@@ -26,7 +26,7 @@ def get_character(id, create=False):
     if create:
         character = SheetAIMLCharacter(id, 'sophia', 1)
         character.set_property_file(os.path.join(
-            CWD, '..', 'character_aiml', 'sophia.properties'))
+            CWD, '..', '..', 'character_aiml', 'sophia.properties'))
         CHARACTERS.append(character)
         logger.info("Create SheetAIMLCharacter {}".format(character))
         return character
