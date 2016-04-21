@@ -4,6 +4,7 @@ import json
 import logging
 import server
 import requests
+from collections import defaultdict
 import os
 import sys
 reload(sys)
@@ -96,12 +97,25 @@ def solr(text):
             lucResult = doc['title'][0]
             return lucResult
 
+responses = defaultdict(list)
+max_chat_tries = 5
 def _ask_characters(characters, question, session):
-    for c in characters:
-        _response = c.respond(question, session)
-        assert isinstance(_response, dict), "Response must be a dict"
-        if _response.get('text', None):
-            return _response
+    chat_tries = 0
+    last_response = None
+    while True:
+        chat_tries += 1
+        for c in characters:
+            _response = c.respond(question, session)
+            assert isinstance(_response, dict), "Response must be a dict"
+            answer = _response.get('text', None)
+            if answer:
+                last_response = _response
+                if answer not in responses[question]:
+                    responses[question].append(answer)
+                    return _response
+        if chat_tries > max_chat_tries:
+            logger.warn('Maximum tries.')
+            return last_response
 
 def ask(id, question, session=None):
     """
@@ -130,7 +144,7 @@ def ask(id, question, session=None):
             except Exception as ex:
                 logger.warn(ex)
         if lucResult:
-            _response = _ask_characters(responding_characters+[generic], lucResult, session)
+            _response = _ask_characters(responding_characters, lucResult, session)
             if _response is not None:
                 _response['solr'] = lucResult
         else:
