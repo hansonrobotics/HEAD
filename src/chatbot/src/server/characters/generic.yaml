@@ -3,5 +3,5 @@ id:
 name:
     generic
 aiml:
-    - ../../../aiml/*.aiml
-    - ../../../futurist_aiml/*.aiml
+    - ../../../../../character_dev/generic_aiml/*.aiml
+    - ../../../../../character_dev/generic_aiml/*.xml

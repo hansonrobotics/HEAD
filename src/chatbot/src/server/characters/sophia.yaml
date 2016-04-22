@@ -7,3 +7,5 @@ property_file:
 aiml:
     - ../../../../../../character_dev/character_aiml/sophia.*.aiml
     - ../../../../../../character_dev/character_aiml/sophia.*.xml
+    - ../../../futurist_aiml/*.aiml
+
