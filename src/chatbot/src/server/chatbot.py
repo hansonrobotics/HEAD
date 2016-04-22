@@ -99,13 +99,13 @@ def solr(text):
 
 responses = defaultdict(list)
 max_chat_tries = 5
-def _ask_characters(characters, question, session):
+def _ask_characters(characters, question, lang, session):
     chat_tries = 0
     last_response = None
     while True:
         chat_tries += 1
         for c in characters:
-            _response = c.respond(question, session)
+            _response = c.respond(question, lang, session)
             assert isinstance(_response, dict), "Response must be a dict"
             answer = _response.get('text', None)
             if answer:
@@ -117,7 +117,7 @@ def _ask_characters(characters, question, session):
             logger.warn('Maximum tries.')
             return last_response
 
-def ask(id, question, session=None):
+def ask(id, question, lang, session=None):
     """
     return (response dict, return code)
     """
@@ -135,7 +135,7 @@ def ask(id, question, session=None):
     generic.set_properties(character.get_properties())
     logger.info("Responding characters {}".format(responding_characters))
 
-    _response = _ask_characters(responding_characters, question, session)
+    _response = _ask_characters(responding_characters, question, lang, session)
     if _response is None:
         lucResult = None
         if useSOLR and len(question) > 40:
@@ -144,11 +144,11 @@ def ask(id, question, session=None):
             except Exception as ex:
                 logger.warn(ex)
         if lucResult:
-            _response = _ask_characters(responding_characters, lucResult, session)
+            _response = _ask_characters(responding_characters, lucResult, lang, session)
             if _response is not None:
                 _response['solr'] = lucResult
         else:
-            _response = _ask_characters([generic], question, session)
+            _response = _ask_characters([generic], question, lang, session)
 
     if _response is not None:
         response.update(_response)
