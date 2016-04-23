@@ -61,6 +61,7 @@ class AIMLCharacter(Character):
                     value = parts[1].strip()
                     self.kernel.setBotPredicate(key, value)
                     self.properties[key] = value
+                logger.info("[{}] Set properties file {}".format(self.id, propname))
         except Exception:
             logger.error("Couldn't open {}".format(propname))
 

@@ -21,8 +21,13 @@ else:
     log_dir = os.path.expanduser('~/.hr/log')
     if not os.path.isdir(log_dir):
         os.makedirs(log_dir)
-    fh = logging.FileHandler('{}/chatbot_server_{}.log'.format(log_dir,
-            dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S')))
+    log_fname = '{}/chatbot_server_{}.log'.format(log_dir,
+            dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
+    link_log_fname = os.path.join(log_dir, 'chatbot_server_latest.log')
+    if os.path.islink(link_log_fname):
+        os.unlink(link_log_fname)
+    os.symlink(log_fname, link_log_fname)
+    fh = logging.FileHandler(log_fname)
     sh = logging.StreamHandler()
     formatter = logging.Formatter('[%(name)s][%(levelname)s] %(asctime)s: %(message)s')
     fh.setFormatter(formatter)
