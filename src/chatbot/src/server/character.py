@@ -95,7 +95,7 @@ class SheetAIMLCharacter(AIMLCharacter):
             os.makedirs(self.incoming_dir)
         if not os.path.isdir(self.commit_dir):
             os.makedirs(self.commit_dir)
-        self.csv_dir = self.incoming_dir
+        self.csv_dir = None
 
     def load_sheet_keys(self, keys_str):
         self.sheet_keys = keys_str.strip().split(',')
@@ -124,6 +124,9 @@ class SheetAIMLCharacter(AIMLCharacter):
         self.csv_dir = csv_dir
 
     def load_csv_files(self, csv_version=None):
+        if self.csv_dir is None:
+            logger.info("No csv files to load")
+            return
         self.incoming_aiml_files, self.csv_files = batch_csv2aiml(
             self.csv_dir, self.csv_dir, csv_version)
         if self.incoming_aiml_files:
@@ -146,7 +149,7 @@ class SheetAIMLCharacter(AIMLCharacter):
         logger.info("Reloaded character {}".format(self.id))
 
     def commit(self):
-        if not os.path.isdir(self.csv_dir):
+        if self.csv_dir is None or not os.path.isdir(self.csv_dir):
             return False, "Nothing to commit."
         dest = os.path.join(self.commit_dir)
         dir_to_commit = os.path.join(dest, os.path.basename(self.csv_dir))
