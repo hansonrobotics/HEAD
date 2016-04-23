@@ -90,6 +90,9 @@ def update():
     data = request.args
     id = data.get('botid')
     csv_version = data.get('csv_version', None)
+    create= data.get('create', None)
+    if create:
+        character = get_character(id, True)
     ret, response = update_character(id, csv_version)
     return Response(json_encode({
             'ret': int(ret),

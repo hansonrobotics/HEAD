@@ -82,7 +82,7 @@ class SheetAIMLCharacter(AIMLCharacter):
         super(SheetAIMLCharacter, self).__init__(id, name, level)
         self.sheet_keys = []
         self.set_property_file(os.path.join(
-                        CWD, "../character_aiml/{}.properties".format(name)))
+                        CWD, "../../character_aiml/{}.properties".format(name)))
         self.aiml_files = []
         self.incoming_aiml_files = []
         self.csv_files = []
@@ -125,7 +125,8 @@ class SheetAIMLCharacter(AIMLCharacter):
     def load_csv_files(self, csv_version=None):
         self.incoming_aiml_files, self.csv_files = batch_csv2aiml(
             self.csv_dir, self.csv_dir, csv_version)
-        self.reload_character()
+        if self.incoming_aiml_files:
+            self.reload_character()
 
     def reload_character(self):
         kernel = aiml.Kernel()
