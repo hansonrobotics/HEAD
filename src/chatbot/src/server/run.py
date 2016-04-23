@@ -21,13 +21,13 @@ else:
     log_dir = os.path.expanduser('~/.hr/log')
     if not os.path.isdir(log_dir):
         os.makedirs(log_dir)
-    log_fname = '{}/chatbot_server_{}.log'.format(log_dir,
+    LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(log_dir,
             dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
     link_log_fname = os.path.join(log_dir, 'chatbot_server_latest.log')
     if os.path.islink(link_log_fname):
         os.unlink(link_log_fname)
-    os.symlink(log_fname, link_log_fname)
-    fh = logging.FileHandler(log_fname)
+    os.symlink(LOG_CONFIG_FILE, link_log_fname)
+    fh = logging.FileHandler(LOG_CONFIG_FILE)
     sh = logging.StreamHandler()
     formatter = logging.Formatter('[%(name)s][%(levelname)s] %(asctime)s: %(message)s')
     fh.setFormatter(formatter)
@@ -167,6 +167,14 @@ def send_csvdata():
                 'response': str(ex)
             }),
             mimetype="application/json")
+
+@app.route('/log')
+def stream_log():
+    def generate():
+        with open(LOG_CONFIG_FILE) as f:
+            for row in f:
+                yield row
+    return Response(generate(), mimetype='text/plain')
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
