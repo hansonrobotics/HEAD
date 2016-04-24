@@ -86,15 +86,15 @@ def commit_character(id):
     else:
         return False, "Character {} doesn't support committing".format(character)
 
-responses = dict() # botname -> response cache dict
+response_caches = dict() # botname -> response cache dict
 MAX_CHAT_TRIES = 3
 def _ask_characters(characters, botname, question, session):
-    global responses
+    global response_caches
     chat_tries = 0
     last_response = None
-    if botname not in responses:
-        responses[botname] = defaultdict(list)
-    cache = responses.get(botname)
+    if botname not in response_caches:
+        response_caches[botname] = defaultdict(list)
+    cache = response_caches.get(botname)
 
     while True:
         chat_tries += 1
@@ -113,6 +113,7 @@ def _ask_characters(characters, botname, question, session):
                 last_response['text'] = random.sample(cache[question], 1)[0]
                 if 'solr' in last_response:
                     del last_response['solr']
+                last_response['state'] = 'MAXIMUM_TRIES'
             return last_response
 
 def ask(id, question, session=None):

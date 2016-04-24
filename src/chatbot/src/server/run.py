@@ -45,7 +45,7 @@ from flask import Flask, request, Response, send_from_directory
 import json
 import shutil
 from chatbot import (ask, list_character, update_character, get_character,
-                    load_sheet_keys, commit_character)
+                    load_sheet_keys, commit_character, response_caches)
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -175,6 +175,26 @@ def stream_log():
             for row in f:
                 yield row
     return Response(generate(), mimetype='text/plain')
+
+@app.route(ROOT+'/clean_cache', methods=['GET'])
+@requires_auth
+def clean_cache():
+    data = request.args
+    id = data.get('botid')
+    character = get_character(id)
+    if character is not None:
+        if character.name in response_caches:
+            del response_caches[character.name]
+            ret, response = True, "Cache cleaned"
+        else:
+            ret, response = False, "Character has no cache"
+    else:
+        ret, response = False, "No such character"
+    return Response(json_encode({
+            'ret': ret,
+            'response': response
+        }),
+        mimetype="application/json")
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
