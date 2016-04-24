@@ -94,8 +94,7 @@ def _ask_characters(characters, botname, question, session):
     last_response = None
     if botname not in responses:
         responses[botname] = defaultdict(list)
-    else:
-        cache = responses.get(botname)
+    cache = responses.get(botname)
 
     while True:
         chat_tries += 1
