@@ -1,9 +1,0 @@
-id:
-    sophia_earlypickup
-name:
-    sophia
-property_file:
-    ../../../../../../character_dev/character_aiml/sophia.properties
-level: 97
-aiml:
-    - ../../../../../../character_dev/character_aiml/sophia.earlypickup.aiml

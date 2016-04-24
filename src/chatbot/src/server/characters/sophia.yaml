@@ -5,11 +5,16 @@ name:
 property_file:
     ../../../../../../character_dev/character_aiml/sophia.properties
 aiml:
+    - ../../../../../../character_dev/character_aiml/sophia.convoid.invert.aiml
+    - ../../../../../../character_dev/character_aiml/sophia.earlypickup.aiml
     - ../../../../../../character_dev/character_aiml/sophia.fashion.aiml
-    - ../../../../../../character_dev/character_aiml/sophia.longsheet.aiml
+    - ../../../../../../character_dev/character_aiml/sophia.midpickup.aiml
     - ../../../../../../character_dev/character_aiml/sophia.personality.aiml
+    - ../../../../../../character_dev/character_aiml/sophia.properties
+    - ../../../../../../character_dev/character_aiml/sophia.state.aiml
     - ../../../../../../character_dev/character_aiml/sophia.stephan.sxsw.xml
     - ../../../../../../character_dev/character_aiml/sophia.stories.aiml
+    - ../../../../../../character_dev/character_aiml/sophia.z.longsheet.aiml
     - ../../../futurist_aiml/agians.aiml
     - ../../../futurist_aiml/aiexistsans.aiml
     - ../../../futurist_aiml/aigoodans.aiml

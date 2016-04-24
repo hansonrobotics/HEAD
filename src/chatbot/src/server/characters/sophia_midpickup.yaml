@@ -1,9 +1,0 @@
-id:
-    sophia_midpickup
-name:
-    sophia
-property_file:
-    ../../../../../../character_dev/character_aiml/sophia.properties
-level: 98
-aiml:
-    - ../../../../../../character_dev/character_aiml/sophia.midpickup.aiml
