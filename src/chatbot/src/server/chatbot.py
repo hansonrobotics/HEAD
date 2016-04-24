@@ -5,6 +5,7 @@ import logging
 import server
 import requests
 from collections import defaultdict
+import random
 import os
 import sys
 reload(sys)
@@ -85,11 +86,17 @@ def commit_character(id):
     else:
         return False, "Character {} doesn't support committing".format(character)
 
-responses = defaultdict(list)
-max_chat_tries = 5
-def _ask_characters(characters, question, session):
+responses = dict() # botname -> response cache dict
+MAX_CHAT_TRIES = 3
+def _ask_characters(characters, botname, question, session):
+    global responses
     chat_tries = 0
     last_response = None
+    if botname not in responses:
+        responses[botname] = defaultdict(list)
+    else:
+        cache = responses.get(botname)
+
     while True:
         chat_tries += 1
         for c in characters:
@@ -98,11 +105,15 @@ def _ask_characters(characters, question, session):
             answer = _response.get('text', None)
             if answer:
                 last_response = _response
-                if answer not in responses[question]:
-                    responses[question].append(answer)
+                if answer not in cache[question]:
+                    cache[question].append(answer)
                     return _response
-        if chat_tries > max_chat_tries:
+        if chat_tries > MAX_CHAT_TRIES:
             logger.warn('Maximum tries.')
+            if cache[question] and last_response is not None:
+                last_response['text'] = random.sample(cache[question], 1)[0]
+                if 'solr' in last_response:
+                    del last_response['solr']
             return last_response
 
 def ask(id, question, session=None):
@@ -113,9 +124,10 @@ def ask(id, question, session=None):
     character = get_character(id)
     if not character:
         return response, WRONG_CHARACTER_NAME
+    botname = character.name
 
     # current character > local character with the same name > solr > generic character
-    responding_characters = get_characters_by_name(character.name, local=True)
+    responding_characters = get_characters_by_name(botname, local=True)
     if character in responding_characters:
         responding_characters.remove(character)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
@@ -129,13 +141,13 @@ def ask(id, question, session=None):
             logger.warn("Solr character is not found")
     logger.info("Responding characters {}".format(responding_characters))
 
-    _response = _ask_characters(responding_characters, question, session)
+    _response = _ask_characters(responding_characters, botname, question, session)
 
     if _response is None:
         generic = get_character('generic')
         if generic:
             generic.set_properties(character.get_properties())
-            _response = _ask_characters([generic], question, session)
+            _response = _ask_characters([generic], botname, question, session)
         else:
             logger.warn("Generic character is not found")
 
