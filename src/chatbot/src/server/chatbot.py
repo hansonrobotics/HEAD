@@ -85,27 +85,6 @@ def commit_character(id):
     else:
         return False, "Character {} doesn't support committing".format(character)
 
-def solr(text):
-    # No match, try improving with SOLR
-    params = {
-      "fl":"*,score",
-      "indent":"true",
-      "q":text,
-      "qf":"title",
-      "wt":"json",
-      "rows":"20"
-    }
-    r = requests.get('http://localhost:8983/solr/aiml/select', params=params)
-    lucText = r.text
-
-    if len(lucText)>0:
-        logger.info('RESPONSE: ' + lucText)
-        jResp = json.loads(lucText)
-        if jResp['response']['numFound'] > 0:
-            doc = jResp['response']['docs'][0]
-            lucResult = doc['title'][0]
-            return lucResult
-
 responses = defaultdict(list)
 max_chat_tries = 5
 def _ask_characters(characters, question, session):
@@ -135,31 +114,30 @@ def ask(id, question, session=None):
     if not character:
         return response, WRONG_CHARACTER_NAME
 
-    # current character > local character with the same name > generic character
+    # current character > local character with the same name > solr > generic character
     responding_characters = get_characters_by_name(character.name, local=True)
     if character in responding_characters:
         responding_characters.remove(character)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
     responding_characters.insert(0, character)
+
+    if useSOLR:
+        solr_character = get_character('solr_bot')
+        if solr_character:
+            responding_characters.append(solr_character)
+        else:
+            logger.warn("Solr character is not found")
     logger.info("Responding characters {}".format(responding_characters))
 
     _response = _ask_characters(responding_characters, question, session)
+
     if _response is None:
-        lucResult = None
-        if useSOLR and len(question) > 40:
-            try:
-                lucResult = solr(question)
-            except Exception as ex:
-                logger.warn(ex)
-        if lucResult:
-            _response = _ask_characters(responding_characters, lucResult, session)
-            if _response is not None:
-                _response['solr'] = lucResult
+        generic = get_character('generic')
+        if generic:
+            generic.set_properties(character.get_properties())
+            _response = _ask_characters([generic], question, session)
         else:
-            generic = get_character('generic')
-            if generic:
-                generic.set_properties(character.get_properties())
-                _response = _ask_characters([generic], question, session)
+            logger.warn("Generic character is not found")
 
     if _response is not None:
         response.update(_response)
