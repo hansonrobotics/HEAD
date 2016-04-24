@@ -2,6 +2,7 @@ import logging
 import json
 import requests
 import random
+from bs4 import BeautifulSoup, NavigableString, Tag
 
 logger = logging.getLogger('hr.chatbot.server.solr_match')
 
@@ -42,7 +43,8 @@ def solr3col(text):
                     candidates = [resp['title'][0] for resp in templResp['response']['docs'] if resp['body'] == meaning]
                     assert len(meaning) > 0
                     assert len(candidates) > 0
-                    return meaning[0], random.sample(candidates, 1)[0]
+                    candidate = parse_aiml_text(random.sample(candidates, 1)[0])
+                    return meaning[0], candidate
 
 def solr_aiml(text):
     # No match, try improving with SOLR
@@ -64,6 +66,20 @@ def solr_aiml(text):
             lucResult = doc['title'][0]
             return lucResult
 
+def parse_aiml_text(text):
+    soup = BeautifulSoup(text, 'lxml')
+    tokens = []
+    try:
+        for c in soup.p.children:
+            if isinstance(c, NavigableString):
+                token = c.string.strip()
+                if token:
+                    tokens.append(token)
+    except Exception as ex:
+        logger.warn(ex)
+        return text
+    return ' '.join(tokens)
+
 if __name__ == '__main__':
-    #print solr3col('do you have animal friends?')
+    print solr3col('do you have animal friends?')
     print solr3col('hi')
