@@ -10,7 +10,7 @@ class SolrCharacter(Character):
     def __init__(self, id, name):
         super(SolrCharacter, self).__init__(id, name)
 
-    def respond(self, question, session=None):
+    def respond(self, question, lang, session=None):
         if isinstance(question, unicode):
             question = question.encode('utf-8')
         ret = {}
