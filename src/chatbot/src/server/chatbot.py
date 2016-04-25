@@ -91,31 +91,39 @@ MAX_CHAT_TRIES = 3
 def _ask_characters(characters, botname, question, lang, session):
     global response_caches
     chat_tries = 0
-    last_response = None
     if botname not in response_caches:
         response_caches[botname] = defaultdict(list)
     cache = response_caches.get(botname)
 
-    while True:
+    _question = question.lower().strip()
+    _question = ' '.join(_question.split()) # remove consecutive spaces
+    num_tier = len(characters)
+    while chat_tries < MAX_CHAT_TRIES:
         chat_tries += 1
-        for c in characters:
-            _response = c.respond(question, lang, session)
-            assert isinstance(_response, dict), "Response must be a dict"
-            answer = _response.get('text', None)
-            logger.info("{} provides answer '{}'".format(c, answer))
-            if answer:
-                last_response = _response
-                if answer not in cache[question]:
-                    cache[question].append(answer)
-                    return _response
-        if chat_tries > MAX_CHAT_TRIES:
-            logger.warn('Maximum tries.')
-            if cache[question] and last_response is not None:
-                last_response['text'] = random.sample(cache[question], 1)[0]
-                if 'solr' in last_response:
-                    del last_response['solr']
-                last_response['state'] = 'MAXIMUM_TRIES'
-            return last_response
+        _responses = [c.respond(_question, lang, session) for c in characters]
+        for r in _responses:
+            assert isinstance(r, dict), "Response must be a dict"
+        answers = [r.get('text', '') for r in _responses]
+
+        # Each tier has 50% chance to be selected.
+        # If the chance goes to the last tier, it will be selected anyway.
+        for idx, answer in enumerate(answers):
+            if not answer:
+                continue
+            if (idx != (num_tier-1) and random.random()>0.5) or \
+                idx == (num_tier-1):
+                if answer not in cache[_question]:
+                    cache[_question].append(answer)
+                    return _responses[idx]
+
+    logger.info('Maximum tries.')
+    if cache[_question]:
+        random_response = {}
+        random_response['text'] = random.sample(cache[_question], 1)[0]
+        random_response['state'] = 'MAXIMUM_TRIES'
+        random_response['botid'] = 'random'
+        random_response['botname'] = 'random'
+        return random_response
 
 def ask(id, question, lang, session=None):
     """
