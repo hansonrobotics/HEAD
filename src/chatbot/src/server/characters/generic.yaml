@@ -4,4 +4,3 @@ name:
     generic
 aiml:
     - ../../../aiml/*.aiml
-    - ../../../futurist_aiml/*.aiml

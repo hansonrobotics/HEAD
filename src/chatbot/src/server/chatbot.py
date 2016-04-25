@@ -5,6 +5,7 @@ import logging
 import server
 import requests
 from collections import defaultdict
+import random
 import os
 import sys
 reload(sys)
@@ -31,8 +32,17 @@ def get_character(id, create=False):
         logger.info("Create SheetAIMLCharacter {}".format(character))
         return character
 
-def get_characters_by_name(name):
-    return [c for c in CHARACTERS if c.name == name]
+def is_local_character(character):
+    if isinstance(character, server.character.SheetAIMLCharacter) or \
+            isinstance(character, SheetAIMLCharacter):
+        return False
+    return True
+
+def get_characters_by_name(name, local=True):
+    characters = [c for c in CHARACTERS if c.name == name]
+    if local:
+        characters = [c for c in characters if is_local_character(c)]
+    return characters
 
 def list_character():
     return [c.id for c in CHARACTERS]
@@ -76,32 +86,16 @@ def commit_character(id):
     else:
         return False, "Character {} doesn't support committing".format(character)
 
-def solr(text):
-    # No match, try improving with SOLR
-    params = {
-      "fl":"*,score",
-      "indent":"true",
-      "q":text,
-      "qf":"title",
-      "wt":"json",
-      "rows":"20"
-    }
-    r = requests.get('http://localhost:8983/solr/aiml/select', params=params)
-    lucText = r.text
-
-    if len(lucText)>0:
-        logger.info('RESPONSE: ' + lucText)
-        jResp = json.loads(lucText)
-        if jResp['response']['numFound'] > 0:
-            doc = jResp['response']['docs'][0]
-            lucResult = doc['title'][0]
-            return lucResult
-
-responses = defaultdict(list)
-max_chat_tries = 5
-def _ask_characters(characters, question, session):
+response_caches = dict() # botname -> response cache dict
+MAX_CHAT_TRIES = 3
+def _ask_characters(characters, botname, question, session):
+    global response_caches
     chat_tries = 0
     last_response = None
+    if botname not in response_caches:
+        response_caches[botname] = defaultdict(list)
+    cache = response_caches.get(botname)
+
     while True:
         chat_tries += 1
         for c in characters:
@@ -110,11 +104,16 @@ def _ask_characters(characters, question, session):
             answer = _response.get('text', None)
             if answer:
                 last_response = _response
-                if answer not in responses[question]:
-                    responses[question].append(answer)
+                if answer not in cache[question]:
+                    cache[question].append(answer)
                     return _response
-        if chat_tries > max_chat_tries:
+        if chat_tries > MAX_CHAT_TRIES:
             logger.warn('Maximum tries.')
+            if cache[question] and last_response is not None:
+                last_response['text'] = random.sample(cache[question], 1)[0]
+                if 'solr' in last_response:
+                    del last_response['solr']
+                last_response['state'] = 'MAXIMUM_TRIES'
             return last_response
 
 def ask(id, question, session=None):
@@ -125,30 +124,32 @@ def ask(id, question, session=None):
     character = get_character(id)
     if not character:
         return response, WRONG_CHARACTER_NAME
+    botname = character.name
 
-    # current character > character with the same name > generic character
-    responding_characters = get_characters_by_name(character.name)
-    responding_characters.remove(character)
+    # current character > local character with the same name > solr > generic character
+    responding_characters = get_characters_by_name(botname, local=True)
+    if character in responding_characters:
+        responding_characters.remove(character)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
     responding_characters.insert(0, character)
-    generic = get_character('generic')
-    generic.set_properties(character.get_properties())
+
+    if useSOLR:
+        solr_character = get_character('solr_bot')
+        if solr_character:
+            responding_characters.append(solr_character)
+        else:
+            logger.warn("Solr character is not found")
     logger.info("Responding characters {}".format(responding_characters))
 
-    _response = _ask_characters(responding_characters, question, session)
+    _response = _ask_characters(responding_characters, botname, question, session)
+
     if _response is None:
-        lucResult = None
-        if useSOLR and len(question) > 40:
-            try:
-                lucResult = solr(question)
-            except Exception as ex:
-                logger.warn(ex)
-        if lucResult:
-            _response = _ask_characters(responding_characters, lucResult, session)
-            if _response is not None:
-                _response['solr'] = lucResult
+        generic = get_character('generic')
+        if generic:
+            generic.set_properties(character.get_properties())
+            _response = _ask_characters([generic], botname, question, session)
         else:
-            _response = _ask_characters([generic], question, session)
+            logger.warn("Generic character is not found")
 
     if _response is not None:
         response.update(_response)

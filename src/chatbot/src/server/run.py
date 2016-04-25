@@ -21,8 +21,13 @@ else:
     log_dir = os.path.expanduser('~/.hr/log')
     if not os.path.isdir(log_dir):
         os.makedirs(log_dir)
-    fh = logging.FileHandler('{}/chatbot_server_{}.log'.format(log_dir,
-            dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S')))
+    LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(log_dir,
+            dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
+    link_log_fname = os.path.join(log_dir, 'chatbot_server_latest.log')
+    if os.path.islink(link_log_fname):
+        os.unlink(link_log_fname)
+    os.symlink(LOG_CONFIG_FILE, link_log_fname)
+    fh = logging.FileHandler(LOG_CONFIG_FILE)
     sh = logging.StreamHandler()
     formatter = logging.Formatter('[%(name)s][%(levelname)s] %(asctime)s: %(message)s')
     fh.setFormatter(formatter)
@@ -40,7 +45,7 @@ from flask import Flask, request, Response, send_from_directory
 import json
 import shutil
 from chatbot import (ask, list_character, update_character, get_character,
-                    load_sheet_keys, commit_character)
+                    load_sheet_keys, commit_character, response_caches)
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -90,6 +95,9 @@ def update():
     data = request.args
     id = data.get('botid')
     csv_version = data.get('csv_version', None)
+    create= data.get('create', None)
+    if create:
+        character = get_character(id, True)
     ret, response = update_character(id, csv_version)
     return Response(json_encode({
             'ret': int(ret),
@@ -159,6 +167,34 @@ def send_csvdata():
                 'response': str(ex)
             }),
             mimetype="application/json")
+
+@app.route('/log')
+def stream_log():
+    def generate():
+        with open(LOG_CONFIG_FILE) as f:
+            for row in f:
+                yield row
+    return Response(generate(), mimetype='text/plain')
+
+@app.route(ROOT+'/clean_cache', methods=['GET'])
+@requires_auth
+def clean_cache():
+    data = request.args
+    id = data.get('botid')
+    character = get_character(id)
+    if character is not None:
+        if character.name in response_caches:
+            del response_caches[character.name]
+            ret, response = True, "Cache cleaned"
+        else:
+            ret, response = False, "Character has no cache"
+    else:
+        ret, response = False, "No such character"
+    return Response(json_encode({
+            'ret': ret,
+            'response': response
+        }),
+        mimetype="application/json")
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

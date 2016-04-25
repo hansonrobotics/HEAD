@@ -20,6 +20,8 @@ def load_aiml_character(character_yaml):
             character = AIMLCharacter(spec['id'], spec['name'])
             if 'property_file' in spec:
                 character.set_property_file(abs_path(spec['property_file']))
+            if 'level' in spec:
+                character.level = int(spec['level'])
             if 'aiml' in spec:
                 aiml_files = [abs_path(f) for f in spec['aiml']]
                 character.load_aiml_files(character.kernel, aiml_files)
