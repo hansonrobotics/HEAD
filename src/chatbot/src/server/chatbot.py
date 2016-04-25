@@ -7,6 +7,7 @@ import requests
 from collections import defaultdict
 import random
 import os
+import shorten
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -148,7 +149,6 @@ def ask(id, question, lang, session=None):
             responding_characters.append(solr_character)
         else:
             logger.warn("Solr character is not found")
-    logger.info("Responding characters {}".format(responding_characters))
 
     generic = get_character('generic')
     if generic:
@@ -157,11 +157,15 @@ def ask(id, question, lang, session=None):
     else:
         logger.warn("Generic character is not found")
 
+    logger.info("Responding characters {}".format(responding_characters))
     _response = _ask_characters(responding_characters, botname, question, lang, session)
 
     if _response is not None:
         response.update(_response)
-        logger.info("Ask {}, response {}".format(question, response))
+        if lang == 'zh':
+            response['text'] = shorten.shorten(_response['text'], 20)
+            logger.info("Response is shortened")
+        logger.info("Ask: {}, answer: {}".format(question, response['text']))
         return response, SUCCESS
     else:
         return response, NO_PATTERN_MATCH
