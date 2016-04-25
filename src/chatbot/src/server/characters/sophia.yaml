@@ -10,7 +10,6 @@ aiml:
     - ../../../../../../character_dev/character_aiml/sophia.fashion.aiml
     - ../../../../../../character_dev/character_aiml/sophia.midpickup.aiml
     - ../../../../../../character_dev/character_aiml/sophia.personality.aiml
-    - ../../../../../../character_dev/character_aiml/sophia.properties
     - ../../../../../../character_dev/character_aiml/sophia.state.aiml
     - ../../../../../../character_dev/character_aiml/sophia.stephan.sxsw.xml
     - ../../../../../../character_dev/character_aiml/sophia.stories.aiml
