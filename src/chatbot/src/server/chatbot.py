@@ -102,6 +102,7 @@ def _ask_characters(characters, botname, question, lang, session):
             _response = c.respond(question, lang, session)
             assert isinstance(_response, dict), "Response must be a dict"
             answer = _response.get('text', None)
+            logger.info("{} provides answer '{}'".format(c, answer))
             if answer:
                 last_response = _response
                 if answer not in cache[question]:
@@ -141,15 +142,14 @@ def ask(id, question, lang, session=None):
             logger.warn("Solr character is not found")
     logger.info("Responding characters {}".format(responding_characters))
 
-    _response = _ask_characters(responding_characters, botname, question, lang, session)
+    generic = get_character('generic')
+    if generic:
+        generic.set_properties(character.get_properties())
+        responding_characters.append(generic)
+    else:
+        logger.warn("Generic character is not found")
 
-    if _response is None:
-        generic = get_character('generic')
-        if generic:
-            generic.set_properties(character.get_properties())
-            _response = _ask_characters([generic], botname, question, lang, session)
-        else:
-            logger.warn("Generic character is not found")
+    _response = _ask_characters(responding_characters, botname, question, lang, session)
 
     if _response is not None:
         response.update(_response)
