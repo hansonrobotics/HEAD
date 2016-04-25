@@ -28,7 +28,7 @@ class Character(object):
     def set_properties(self, props):
         self.properties.update(props)
 
-    def respond(self, question, session=None):
+    def respond(self, question, lang, session=None):
         raise NotImplementedError
 
     def __repr__(self):
@@ -70,9 +70,12 @@ class AIMLCharacter(Character):
         for key, value in self.properties.iteritems():
             self.kernel.setBotPredicate(key, value)
 
-    def respond(self, question, session=None):
+    def respond(self, question, lang, session=None):
         ret = {}
-        ret['text'] = self.kernel.respond(question, session)
+        if lang != 'en':
+            ret['text'] = ''
+        else:
+            ret['text'] = self.kernel.respond(question, session)
         ret['emotion'] = self.kernel.getPredicate('emotion', session)
         ret['botid'] = self.id
         ret['botname'] = self.name

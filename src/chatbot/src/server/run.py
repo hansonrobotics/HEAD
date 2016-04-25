@@ -62,7 +62,8 @@ def chat():
     id = data.get('botid')
     question = data.get('question')
     session = data.get('session')
-    response, ret = ask(id, question, session)
+    lang = data.get('lang', 'en')
+    response, ret = ask(id, question, lang, session)
     return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
@@ -76,9 +77,10 @@ def chat2():
     questions = request.form.get('questions')
     questions = json.loads(questions)
     session = request.form.get('session')
+    lang = request.form.get('lang', 'en')
     responses = []
     for idx, question in questions:
-        response, ret = ask(id, str(question), session)
+        response, ret = ask(id, str(question), lang, session)
         responses.append((idx, response, ret))
     return Response(json_encode({'ret': 0, 'response': responses}),
         mimetype="application/json")

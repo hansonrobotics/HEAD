@@ -88,7 +88,7 @@ def commit_character(id):
 
 response_caches = dict() # botname -> response cache dict
 MAX_CHAT_TRIES = 3
-def _ask_characters(characters, botname, question, session):
+def _ask_characters(characters, botname, question, lang, session):
     global response_caches
     chat_tries = 0
     last_response = None
@@ -99,7 +99,7 @@ def _ask_characters(characters, botname, question, session):
     while True:
         chat_tries += 1
         for c in characters:
-            _response = c.respond(question, session)
+            _response = c.respond(question, lang, session)
             assert isinstance(_response, dict), "Response must be a dict"
             answer = _response.get('text', None)
             if answer:
@@ -116,7 +116,7 @@ def _ask_characters(characters, botname, question, session):
                 last_response['state'] = 'MAXIMUM_TRIES'
             return last_response
 
-def ask(id, question, session=None):
+def ask(id, question, lang, session=None):
     """
     return (response dict, return code)
     """
@@ -141,13 +141,13 @@ def ask(id, question, session=None):
             logger.warn("Solr character is not found")
     logger.info("Responding characters {}".format(responding_characters))
 
-    _response = _ask_characters(responding_characters, botname, question, session)
+    _response = _ask_characters(responding_characters, botname, question, lang, session)
 
     if _response is None:
         generic = get_character('generic')
         if generic:
             generic.set_properties(character.get_properties())
-            _response = _ask_characters([generic], botname, question, session)
+            _response = _ask_characters([generic], botname, question, lang, session)
         else:
             logger.warn("Generic character is not found")
 

@@ -1,7 +1,9 @@
 import os
 import sys
 from server.character import Character
+import logging
 
+logger = logging.getLogger('hr.chatbot.server.characters')
 CWD = os.path.dirname(os.path.realpath(__file__))
 DEFAULT_CHARACTER_PATH=CWD
 CHARACTER_PATH=os.environ.get('HR_CHARACTER_PATH', DEFAULT_CHARACTER_PATH)
@@ -14,9 +16,13 @@ for path in CHARACTER_PATH.split(','):
     if '__init__.py' in module_names:
         module_names.remove('__init__.py')
     for module_name in module_names:
-        module = __import__(module_name[:-3])
+        try:
+	    module = __import__(module_name[:-3])
+        except Exception as ex:
+            logger.error(ex)
+            continue
         characters = getattr(module, 'characters')
         for character in characters:
             if isinstance(character, Character):
                 CHARACTERS.append(character)
-                print "Add character {}".format(character)
+                logger.info("Add character {}".format(character))

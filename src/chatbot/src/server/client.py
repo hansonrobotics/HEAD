@@ -19,12 +19,15 @@ class Client(cmd.Cmd, object):
         self.chatbot_port = '8001'
         self.chatbot_url = 'http://{}:{}/{}'.format(
             self.chatbot_ip, self.chatbot_port, VERSION)
+        self.lang = 'en'
+
 
     def ask(self, question):
         params = {
             "botid": "{}".format(self.botid),
             "question": "{}".format(question),
             "session": "0",
+            "lang": self.lang,
             "Auth": key
         }
         r = requests.get('{}/chat'.format(self.chatbot_url), params=params)
@@ -207,6 +210,12 @@ For example, port 8001
 
     def help_commit(self):
         self.stdout.write("Commit the current sheet to GitHub\n")
+
+    def do_lang(self, line):
+        self.lang = line.strip()
+
+    def help_lang(self, line):
+        self.stdout.write("Set language. [en|zh]")
 
 if __name__ == '__main__':
     client = Client()
