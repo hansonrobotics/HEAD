@@ -30,12 +30,10 @@ class Chatbot():
     self._response_buffer = ''
     self._state = 'wait_client'
     # argumment must be  to activate sentiment analysis
-    self.botid = ''
     self._sentiment_active = False
     # sentiment dictionary
     self.polarity = Polarity()
     self._polarity_threshold=0.2
-    self.character = rospy.get_param('character', None)
 
     rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
 
@@ -78,11 +76,12 @@ class Chatbot():
   def sentiment_active(self, active):
     self._sentiment_active = active
 
-  def get_response(self, question):
+  def get_response(self, question, lang):
       params = {
           "botid": "{}".format(self.botid),
           "question": "{}".format(question),
           "session": "0",
+          "lang": lang,
           "Auth": key
       }
       r = requests.get('{}/{}/chat'.format(self.chatbot_url, VERSION),
@@ -105,20 +104,10 @@ class Chatbot():
 
   def _request_callback(self, chat_message):
     lang = rospy.get_param('lang', None)
-    use_xiaoi = rospy.get_param('chatbot_zh', None) == 'xiaoi'
     if lang == 'zh':
-        if self.character == 'sophia':
-            if use_xiaoi:
-                self.set_botid('xiaoi_sophia')
-            else:
-                self.set_botid('tuling_sophia')
-        elif self.character == 'han':
-            if use_xiaoi:
-                self.set_botid('xiaoi_han')
-            else:
-                self.set_botid('tuling_han')
+        self.set_botid(rospy.get_param('botid_zh', None))
     elif lang == 'en':
-        self.set_botid(self.character)
+        self.set_botid(rospy.get_param('botid_en', None))
     else:
         logger.warn('Language {} is not supported'.format(lang))
         return
@@ -141,7 +130,7 @@ class Chatbot():
       blink.data='chat_saying'
       self._blink_publisher.publish(blink)
 
-      answer = self.get_response(chat_message.utterance)
+      answer = self.get_response(chat_message.utterance, lang)
       response = answer.get('text')
       emotion = answer.get('emotion')
       botid = answer.get('botid')
@@ -188,7 +177,6 @@ class Chatbot():
     self._echo_publisher.publish(message)
 
   def reconfig(self, config, level):
-    self.set_botid(config.botid)
     self.sentiment_active(config.sentiment)
     self.chatbot_url = config.chatbot_url
     return config
