@@ -36,8 +36,8 @@ class Client(cmd.Cmd, object):
             self.stdout.write("Request error: {}\n".format(r.status_code))
 
         if ret != 0:
-            self.stdout.write("QA error: error code {}, botid {}, question {}\n".format(
-                ret, self.botid, question))
+            self.stdout.write("QA error: error code {}, botid {}, question {}, lang {}\n".format(
+                ret, self.botid, question, self.lang))
 
         response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
         response.update(r.json().get('response'))
@@ -212,10 +212,15 @@ For example, port 8001
         self.stdout.write("Commit the current sheet to GitHub\n")
 
     def do_lang(self, line):
-        self.lang = line.strip()
+        lang = line.strip()
+        if lang in ['en', 'zh']:
+            self.lang = lang
+            self.stdout.write("Set lang to {}\n".format(self.lang))
+        else:
+            self.stdout.write("Invalid argument. lang [en|zh]\n")
 
-    def help_lang(self, line):
-        self.stdout.write("Set language. [en|zh]")
+    def help_lang(self):
+        self.stdout.write("Set language. [en|zh]\n")
 
 if __name__ == '__main__':
     client = Client()
