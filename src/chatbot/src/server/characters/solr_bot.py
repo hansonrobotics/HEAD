@@ -6,17 +6,27 @@ from server.solr_match import solr3col
 
 logger = logging.getLogger('hr.chatbot.server.characters.solr_bot')
 
+SCT = 30 # solr character threshold
+SMT = 1 # solr match threshold
+
 class SolrCharacter(Character):
     def __init__(self, id, name):
         super(SolrCharacter, self).__init__(id, name)
 
     def respond(self, question, lang, session=None):
+        if len(question) <= SCT:
+            logger.info("Skip short question")
+            return {}
         if isinstance(question, unicode):
             question = question.encode('utf-8')
         ret = {}
         try:
             solr_respone = solr3col(question)
             if solr_respone is not None:
+                score = solr_respone[2]
+                if score < SMT:
+                    logger.info("Discard low score response {}".format(solr_respone))
+                    return {}
                 ret['solr'] = solr_respone[0]
                 ret['text'] = solr_respone[1]
                 ret['botid'] = self.id

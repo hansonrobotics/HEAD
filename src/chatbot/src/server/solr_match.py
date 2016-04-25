@@ -40,11 +40,11 @@ def solr3col(text):
                 if templResp['response']['numFound'] > 0:
                     templ = templResp['response']['docs'][0]
                     meaning = templ['body']
-                    candidates = [resp['title'][0] for resp in templResp['response']['docs'] if resp['body'] == meaning]
+                    candidates = [resp for resp in templResp['response']['docs'] if resp['body'] == meaning]
                     assert len(meaning) > 0
                     assert len(candidates) > 0
-                    candidate = parse_aiml_text(random.sample(candidates, 1)[0])
-                    return meaning[0], candidate
+                    candidate = random.sample(candidates, 1)[0]
+                    return meaning[0], parse_aiml_text(candidate['title'][0]), candidate['score']
 
 def solr_aiml(text):
     # No match, try improving with SOLR
