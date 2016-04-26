@@ -88,9 +88,11 @@ def commit_character(id):
         return False, "Character {} doesn't support committing".format(character)
 
 response_caches = dict() # botname -> response cache dict
-MAX_CHAT_TRIES = 3
+MAX_CHAT_TRIES = 5
+last_answer = None
 def _ask_characters(characters, botname, question, lang, session):
     global response_caches
+    global last_answer
     chat_tries = 0
     if botname not in response_caches:
         response_caches[botname] = defaultdict(list)
@@ -113,23 +115,42 @@ def _ask_characters(characters, botname, question, lang, session):
                 continue
             if (idx != (num_tier-1) and random.random()>0.2) or \
                 idx == (num_tier-1):
-                if answer not in cache[_question]:
+                if answer not in cache[_question] and answer != last_answer:
                     cache[_question].append(answer)
                     return _responses[idx]
 
     logger.info('Maximum tries.')
     if cache[_question]:
         random_response = {}
-        random_response['text'] = random.sample(cache[_question], 1)[0]
-        random_response['state'] = 'MAXIMUM_TRIES'
-        random_response['botid'] = 'random'
-        random_response['botname'] = 'random'
-        return random_response
+        answer =random.sample(cache[_question], 1)[0]
+        if answer != last_answer:
+            random_response['text'] = answer
+            random_response['state'] = 'MAXIMUM_TRIES'
+            random_response['botid'] = 'random'
+            random_response['botname'] = 'random'
+            return random_response
+
+    c = get_character('sophia_pickup')
+    if c is not None:
+        if random.random() > 0.5:
+            _response = c.respond('early random pickup', lang, session)
+            _response['state'] = 'early random pickup'
+        else:
+            _response = c.respond('mid random pickup', lang, session)
+            _response['state'] = 'mid random pickup'
+        return _response
+    else:
+        _response = {}
+        _response['text'] = "I can't answer that"
+        _response['botid'] = "dummy"
+        _response['botname'] = "dummy"
+        return _response
 
 def ask(id, question, lang, session=None):
     """
     return (response dict, return code)
     """
+    global last_answer
     response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
     character = get_character(id)
     if not character:
@@ -166,6 +187,7 @@ def ask(id, question, lang, session=None):
             response['text'] = shorten.shorten(_response['text'], 20)
             logger.info("Response is shortened")
         logger.info("Ask: {}, answer: {}".format(question, response['text']))
+        last_answer = response['text']
         return response, SUCCESS
     else:
         return response, NO_PATTERN_MATCH

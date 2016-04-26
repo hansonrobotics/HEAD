@@ -1,0 +1,10 @@
+id:
+    sophia_pickup
+name:
+    sophia_pickup
+property_file:
+    ../../../../../../character_dev/character_aiml/sophia.properties
+aiml:
+    - ../../../../../../character_dev/character_aiml/sophia.midpickup.aiml
+    - ../../../../../../character_dev/character_aiml/sophia.earlypickup.aiml
+
