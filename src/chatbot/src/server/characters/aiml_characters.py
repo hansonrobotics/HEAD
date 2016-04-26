@@ -11,6 +11,8 @@ def load_aiml_character(character_yaml):
     def abs_path(p):
         if p.startswith('/'):
             return p
+        if p.startswith('~'):
+            return os.path.expanduser(p)
         return os.path.join(root_dir, p)
 
     with open(character_yaml) as f:
