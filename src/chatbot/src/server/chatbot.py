@@ -106,12 +106,12 @@ def _ask_characters(characters, botname, question, lang, session):
             assert isinstance(r, dict), "Response must be a dict"
         answers = [r.get('text', '') for r in _responses]
 
-        # Each tier has 50% chance to be selected.
+        # Each tier has 80% chance to be selected.
         # If the chance goes to the last tier, it will be selected anyway.
         for idx, answer in enumerate(answers):
             if not answer:
                 continue
-            if (idx != (num_tier-1) and random.random()>0.5) or \
+            if (idx != (num_tier-1) and random.random()>0.2) or \
                 idx == (num_tier-1):
                 if answer not in cache[_question]:
                     cache[_question].append(answer)
