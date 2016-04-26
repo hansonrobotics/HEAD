@@ -21,6 +21,7 @@ key='AAAAB3NzaC'
 class Chatbot():
   def __init__(self):
     self.chatbot_url = 'http://localhost:8001'
+    self.botid = ''
 
     # chatbot now saves a bit of simple state to handle sentiment analysis
     # after formulating a response it saves it in a buffer if S.A. active
@@ -176,9 +177,20 @@ class Chatbot():
     message.data = chat_message.utterance
     self._echo_publisher.publish(message)
 
+  def clean_cache(self):
+      params = {
+          "botid": "{}".format(self.botid),
+          "Auth": key
+      }
+      r = requests.get('{}/{}/clean_cache'.format(self.chatbot_url, VERSION),
+                        params=params)
+      logger.info("Server cache is cleaned. {}".format(r.json()))
+
   def reconfig(self, config, level):
     self.sentiment_active(config.sentiment)
-    self.chatbot_url = config.chatbot_url
+    if self.chatbot_url != config.chatbot_url:
+        self.chatbot_url = config.chatbot_url
+        self.clean_cache()
     return config
 
 if __name__ == '__main__':
