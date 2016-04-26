@@ -44,6 +44,8 @@ class AIMLCharacter(Character):
 
     def load_aiml_files(self, kernel, aiml_files):
         for f in aiml_files:
+            if '*' not in f and not os.path.isfile(f):
+                logger.warn("[{}] {} is not found".format(self.id, f))
             errors = kernel.learn(f)
             if errors:
                 raise Exception("Load {} error\n{}".format(
