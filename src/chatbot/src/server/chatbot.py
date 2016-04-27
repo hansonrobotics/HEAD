@@ -11,6 +11,7 @@ import sys
 import datetime as dt
 reload(sys)
 sys.setdefaultencoding('utf-8')
+import atexit
 
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
@@ -195,6 +196,17 @@ def ask(id, question, lang, session=None):
         return response, SUCCESS
     else:
         return response, NO_PATTERN_MATCH
+
+def dump_history():
+    global response_caches
+    for session, cache in response_caches.iteritems():
+        dirname = os.path.expanduser('~/.hr/chatbot/history')
+        if not os.path.isdir(dirname):
+            os.makedirs(dirname)
+        fname = os.path.join(dirname, '{}.csv'.format(session))
+        cache.dump(fname)
+        logger.info("Dumpped chat history to {}".format(fname))
+atexit.register(dump_history)
 
 if __name__ == '__main__':
     for character in CHARACTERS:
