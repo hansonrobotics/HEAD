@@ -113,7 +113,7 @@ def _ask_characters(characters, botname, question, lang, session):
                 continue
             if (idx != (num_tier-1) and random.random()>0.2) or \
                 idx == (num_tier-1):
-                if not cache.contain(_question, answer):
+                if not cache.contain(_question, answer) and answer != cache.last_answer:
                     cache.add(_question, answer)
                     return _responses[idx]
 

@@ -5,12 +5,16 @@ class ResponseCache(object):
     def __init__(self):
         self.record = []
         self.index = defaultdict(list)
+        self.last_question = None
+        self.last_answer = None
 
     def clean(self):
         del self.record[:]
         del self.index
         self.record = []
         self.index = defaultdict(list)
+        self.last_question = None
+        self.last_answer = None
 
     def _norm(self, s):
         return s.lower().strip()
@@ -24,6 +28,8 @@ class ResponseCache(object):
             'Answer': answer
         })
         self.index[question].append(len(self.record)-1)
+        self.last_question = question
+        self.last_answer = answer
 
     def contain(self, question, answer):
         question=self._norm(question)
