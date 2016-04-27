@@ -7,6 +7,7 @@ class ResponseCache(object):
         self.index = defaultdict(list)
         self.last_question = None
         self.last_answer = None
+        self.last_time = None
 
     def clean(self):
         del self.record[:]
@@ -15,6 +16,7 @@ class ResponseCache(object):
         self.index = defaultdict(list)
         self.last_question = None
         self.last_answer = None
+        self.last_time = None
 
     def _norm(self, s):
         s = s.lower().strip()
@@ -33,14 +35,16 @@ class ResponseCache(object):
     def add(self, question, answer, datetime=None):
         question = self._norm(question)
         answer = self._norm(answer)
+        time = datetime or dt.datetime.now()
         self.record.append({
-            'Datetime': datetime or dt.datetime.now(),
+            'Datetime': time,
             'Question': question,
             'Answer': answer
         })
         self.index[question].append(len(self.record)-1)
         self.last_question = question
         self.last_answer = answer
+        self.last_time = time
 
     def contain(self, question, answer):
         question=self._norm(question)

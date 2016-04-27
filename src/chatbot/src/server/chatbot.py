@@ -8,6 +8,7 @@ from collections import defaultdict
 import random
 import os
 import sys
+import datetime as dt
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -16,6 +17,7 @@ WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
 
 useSOLR = True
+SESSION_TIMEOUT=300
 CWD = os.path.dirname(os.path.realpath(__file__))
 
 logger = logging.getLogger('hr.chatbot.server.chatbot')
@@ -117,14 +119,12 @@ def _ask_characters(characters, botname, question, lang, session):
                     cache.add(_question, answer)
                     return _responses[idx]
 
-    logger.info('Maximum tries.')
-
     c = get_character('sophia_pickup')
     if c is not None:
         chat_tries = 0
         while chat_tries < MAX_CHAT_TRIES:
             chat_tries += 1
-            if random.random() > 0.5:
+            if random.random() > 0.7:
                 _response = c.respond('early random pickup', lang, session)
                 _response['state'] = 'early random pickup'
             else:
@@ -148,11 +148,17 @@ def ask(id, question, lang, session=None):
     return (response dict, return code)
     """
     global response_caches
+
+    # Reset cache
     cache = response_caches.get(session)
     if cache is not None:
         if question and question.lower().strip() in ['hi', 'hello']:
             logger.info("Cache is cleaned by hi")
             cache.clean()
+        if cache.last_time and (dt.datetime.now()-cache.last_time)>dt.timedelta(seconds=SESSION_TIMEOUT):
+            logger.info("Cache is cleaned by timer")
+            cache.clean()
+
     response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
     character = get_character(id)
     if not character:
