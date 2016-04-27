@@ -7,7 +7,6 @@ import requests
 from collections import defaultdict
 import random
 import os
-import shorten
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -183,11 +182,8 @@ def ask(id, question, lang, session=None):
 
     if _response is not None:
         response.update(_response)
-        if lang == 'zh':
-            response['text'] = shorten.shorten(_response['text'], 20)
-            logger.info("Response is shortened")
-        logger.info("Ask: {}, answer: {}".format(question, response['text']))
         last_answer = response['text']
+        logger.info("Ask {}, response {}".format(question, response))
         return response, SUCCESS
     else:
         return response, NO_PATTERN_MATCH
