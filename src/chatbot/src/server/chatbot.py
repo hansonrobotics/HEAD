@@ -113,7 +113,7 @@ def _ask_characters(characters, botname, question, lang, session):
                 continue
             if (idx != (num_tier-1) and random.random()>0.2) or \
                 idx == (num_tier-1):
-                if not cache.contain(_question, answer) and answer != cache.last_answer:
+                if cache.check(_question, answer):
                     cache.add(_question, answer)
                     return _responses[idx]
 
@@ -131,7 +131,7 @@ def _ask_characters(characters, botname, question, lang, session):
                 _response = c.respond('mid random pickup', lang, session)
                 _response['state'] = 'mid random pickup'
             answer = _response.get('text', '')
-            if not cache.contain(_question, answer):
+            if cache.check(_question, answer):
                 cache.add(_question, answer)
                 return _response
     else:

@@ -5,7 +5,6 @@ name:
 property_file:
     ../../../../../../character_dev/character_aiml/sophia.properties
 aiml:
-    - ../../../../../../character_dev/character_aiml/sophia.convoid.invert.aiml
     - ../../../../../../character_dev/character_aiml/sophia.earlypickup.aiml
     - ../../../../../../character_dev/character_aiml/sophia.fashion.aiml
     - ../../../../../../character_dev/character_aiml/sophia.midpickup.aiml

@@ -17,11 +17,22 @@ class ResponseCache(object):
         self.last_answer = None
 
     def _norm(self, s):
-        return s.lower().strip()
+        s = s.lower().strip()
+        s = s.replace(',', ' ')
+        s = s.replace('.', ' ')
+        s = ' '.join(s.split()) # remove consecutive spaces
+        return s
+
+    def check(self, question, answer):
+        if self._norm(answer) == self.last_answer:
+            return False
+        if self.contain(question, answer):
+            return False
+        return True
 
     def add(self, question, answer, datetime=None):
-        question=self._norm(question)
-        answer=self._norm(answer)
+        question = self._norm(question)
+        answer = self._norm(answer)
         self.record.append({
             'Datetime': datetime or dt.datetime.now(),
             'Question': question,
