@@ -13,6 +13,7 @@ from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
+import uuid
 
 logger = logging.getLogger('hr.chatbot.ai')
 VERSION = 'v1'
@@ -22,6 +23,7 @@ class Chatbot():
   def __init__(self):
     self.chatbot_url = 'http://localhost:8001'
     self.botid = ''
+    self.session = uuid.uuid1()
     self.clean_cache()
 
     # chatbot now saves a bit of simple state to handle sentiment analysis
@@ -82,7 +84,7 @@ class Chatbot():
       params = {
           "botid": "{}".format(self.botid),
           "question": "{}".format(question),
-          "session": "0",
+          "session": self.session,
           "lang": lang,
           "Auth": key
       }
@@ -179,21 +181,13 @@ class Chatbot():
     self._echo_publisher.publish(message)
 
   def clean_cache(self):
-    lang = rospy.get_param('lang', None)
-    if lang == 'zh':
-      self.set_botid(rospy.get_param('botid_zh', None))
-    elif lang == 'en':
-      self.set_botid(rospy.get_param('botid_en', None))
-    else:
-      logger.warn('Language {} is not supported'.format(lang))
-      return
     params = {
-        "botid": "{}".format(self.botid),
+        "session": "{}".format(self.session),
         "Auth": key
     }
     r = requests.get('{}/{}/clean_cache'.format(self.chatbot_url, VERSION),
                       params=params)
-    logger.info("Clean server cache {}".format(r.json()))
+    logger.info("Clean session cache {}".format(r.json()))
 
   def reconfig(self, config, level):
     self.sentiment_active(config.sentiment)
