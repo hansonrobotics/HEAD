@@ -182,16 +182,13 @@ def stream_log():
 @requires_auth
 def clean_cache():
     data = request.args
-    id = data.get('botid')
-    character = get_character(id)
-    if character is not None:
-        if character.name in response_caches:
-            del response_caches[character.name]
-            ret, response = True, "Cache cleaned"
-        else:
-            ret, response = False, "Character has no cache"
+    session = data.get('session')
+    if session in response_caches:
+        cache = response_caches.pop(session)
+        cache.clean()
+        ret, response = True, "Cache cleaned"
     else:
-        ret, response = False, "No such character"
+        ret, response = False, "No such session"
     return Response(json_encode({
             'ret': ret,
             'response': response

@@ -8,14 +8,17 @@ from collections import defaultdict
 import random
 import os
 import sys
+import datetime as dt
 reload(sys)
 sys.setdefaultencoding('utf-8')
+import atexit
 
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
 
 useSOLR = True
+SESSION_TIMEOUT=300
 CWD = os.path.dirname(os.path.realpath(__file__))
 
 logger = logging.getLogger('hr.chatbot.server.chatbot')
@@ -86,16 +89,15 @@ def commit_character(id):
     else:
         return False, "Character {} doesn't support committing".format(character)
 
-response_caches = dict() # botname -> response cache dict
+from response_cache import ResponseCache
+response_caches = dict() # session -> response cache dict
 MAX_CHAT_TRIES = 5
-last_answer = None
 def _ask_characters(characters, botname, question, lang, session):
     global response_caches
-    global last_answer
     chat_tries = 0
-    if botname not in response_caches:
-        response_caches[botname] = defaultdict(list)
-    cache = response_caches.get(botname)
+    if session not in response_caches:
+        response_caches[session] = ResponseCache()
+    cache = response_caches.get(session)
 
     _question = question.lower().strip()
     _question = ' '.join(_question.split()) # remove consecutive spaces
@@ -114,42 +116,50 @@ def _ask_characters(characters, botname, question, lang, session):
                 continue
             if (idx != (num_tier-1) and random.random()>0.2) or \
                 idx == (num_tier-1):
-                if answer not in cache[_question] and answer != last_answer:
-                    cache[_question].append(answer)
+                if cache.check(_question, answer):
+                    cache.add(_question, answer)
                     return _responses[idx]
-
-    logger.info('Maximum tries.')
-    if cache[_question]:
-        random_response = {}
-        answer =random.sample(cache[_question], 1)[0]
-        if answer != last_answer:
-            random_response['text'] = answer
-            random_response['state'] = 'MAXIMUM_TRIES'
-            random_response['botid'] = 'random'
-            random_response['botname'] = 'random'
-            return random_response
 
     c = get_character('sophia_pickup')
     if c is not None:
-        if random.random() > 0.5:
-            _response = c.respond('early random pickup', lang, session)
-            _response['state'] = 'early random pickup'
-        else:
-            _response = c.respond('mid random pickup', lang, session)
-            _response['state'] = 'mid random pickup'
-        return _response
+        chat_tries = 0
+        while chat_tries < MAX_CHAT_TRIES:
+            chat_tries += 1
+            if random.random() > 0.7:
+                _response = c.respond('early random pickup', lang, session)
+                _response['state'] = 'early random pickup'
+            else:
+                _response = c.respond('mid random pickup', lang, session)
+                _response['state'] = 'mid random pickup'
+            answer = _response.get('text', '')
+            if cache.check(_question, answer):
+                cache.add(_question, answer)
+                return _response
     else:
         _response = {}
-        _response['text'] = "I can't answer that"
+        answer = "Sorry, I can't answer that"
+        _response['text'] = answer
         _response['botid'] = "dummy"
         _response['botname'] = "dummy"
+        cache.add(_question, answer)
         return _response
 
 def ask(id, question, lang, session=None):
     """
     return (response dict, return code)
     """
-    global last_answer
+    global response_caches
+
+    # Reset cache
+    cache = response_caches.get(session)
+    if cache is not None:
+        if question and question.lower().strip() in ['hi', 'hello']:
+            logger.info("Cache is cleaned by hi")
+            cache.clean()
+        if cache.last_time and (dt.datetime.now()-cache.last_time)>dt.timedelta(seconds=SESSION_TIMEOUT):
+            logger.info("Cache is cleaned by timer")
+            cache.clean()
+
     response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
     character = get_character(id)
     if not character:
@@ -182,11 +192,21 @@ def ask(id, question, lang, session=None):
 
     if _response is not None:
         response.update(_response)
-        last_answer = response['text']
         logger.info("Ask {}, response {}".format(question, response))
         return response, SUCCESS
     else:
         return response, NO_PATTERN_MATCH
+
+def dump_history():
+    global response_caches
+    for session, cache in response_caches.iteritems():
+        dirname = os.path.expanduser('~/.hr/chatbot/history')
+        if not os.path.isdir(dirname):
+            os.makedirs(dirname)
+        fname = os.path.join(dirname, '{}.csv'.format(session))
+        cache.dump(fname)
+        logger.info("Dumpped chat history to {}".format(fname))
+atexit.register(dump_history)
 
 if __name__ == '__main__':
     for character in CHARACTERS:

@@ -2,6 +2,7 @@ import cmd
 import requests
 import json
 import os
+import uuid
 
 import sys
 reload(sys)
@@ -20,13 +21,13 @@ class Client(cmd.Cmd, object):
         self.chatbot_url = 'http://{}:{}/{}'.format(
             self.chatbot_ip, self.chatbot_port, VERSION)
         self.lang = 'en'
-
+        self.session = uuid.uuid1()
 
     def ask(self, question):
         params = {
             "botid": "{}".format(self.botid),
             "question": "{}".format(question),
-            "session": "0",
+            "session": self.session,
             "lang": self.lang,
             "Auth": key
         }
@@ -221,6 +222,28 @@ For example, port 8001
 
     def help_lang(self):
         self.stdout.write("Set language. [en|zh]\n")
+
+    def do_c(self, line):
+        try:
+            params = {
+                "session":"{}".format(self.session),
+                'Auth':key
+            }
+            r = requests.get(
+                '{}/clean_cache'.format(self.chatbot_url), params=params)
+            ret = r.json().get('ret')
+            response = r.json().get('response')
+            self.stdout.write(response)
+            self.stdout.write('\n')
+            if ret:
+                self.stdout.write("Memory cleaned\n")
+            else:
+                self.stdout.write("Memory clean failed\n")
+        except Exception as ex:
+            self.stdout.write('{}\n'.format(ex))
+
+    def help_c(self):
+        self.stdout.write("Clean the memory of the dialog\n")
 
 if __name__ == '__main__':
     client = Client()
