@@ -70,12 +70,12 @@ class Chatbot():
     return chatbots
 
   def set_botid(self, botid):
-    chatbots = self.list_chatbot()
-    if botid in chatbots:
+    characters = [c[0] for c in self.list_chatbot()]
+    if botid in characters:
         self.botid = botid
         logger.info("Set botid to {}".format(botid))
     else:
-        logger.error("Botid {} is not on the list {}".format(botid, chatbots))
+        logger.error("Botid {} is not on the list {}".format(botid, characters))
 
   def sentiment_active(self, active):
     self._sentiment_active = active
