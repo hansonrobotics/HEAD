@@ -206,7 +206,6 @@ def dump_history():
             os.makedirs(dirname)
         fname = os.path.join(dirname, '{}.csv'.format(session))
         cache.dump(fname)
-        logger.info("Dumpped chat history to {}".format(fname))
 atexit.register(dump_history)
 
 if __name__ == '__main__':
