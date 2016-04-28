@@ -131,8 +131,7 @@ def _ask_characters(characters, question, lang, session):
         for idx, answer in enumerate(answers):
             if not answer:
                 continue
-            if (idx != (num_tier-1) and random.random()<weights[idx]) or \
-                idx == (num_tier-1):
+            if random.random()<weights[idx]:
                 if cache.check(_question, answer):
                     cache.add(_question, answer)
                     return _responses[idx]
@@ -152,14 +151,14 @@ def _ask_characters(characters, question, lang, session):
             if cache.check(_question, answer):
                 cache.add(_question, answer)
                 return _response
-    else:
-        _response = {}
-        answer = "Sorry, I can't answer that"
-        _response['text'] = answer
-        _response['botid'] = "dummy"
-        _response['botname'] = "dummy"
-        cache.add(_question, answer)
-        return _response
+
+    _response = {}
+    answer = "Sorry, I can't answer that"
+    _response['text'] = answer
+    _response['botid'] = "dummy"
+    _response['botname'] = "dummy"
+    cache.add(_question, answer)
+    return _response
 
 def get_responding_characters(id):
     character = get_character(id)
