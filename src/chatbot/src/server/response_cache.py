@@ -11,8 +11,10 @@ class ResponseCache(object):
         self.last_question = None
         self.last_answer = None
         self.last_time = None
+        self.all_record = []
 
     def clean(self):
+        self.all_record.extend(self.record)
         del self.record[:]
         del self.index
         self.record = []
@@ -76,13 +78,14 @@ class ResponseCache(object):
 
     def dump(self, fname):
         import csv
-        if not self.record:
+        self.all_record.extend(self.record)
+        if not self.all_record:
             return
-        with open(fname, 'w') as f:
+        with open(fname, 'a') as f:
             writer = csv.DictWriter(
                 f, ['Datetime', 'Question', 'Answer'], extrasaction='ignore')
             writer.writeheader()
-            writer.writerows(self.record)
+            writer.writerows(self.all_record)
             logger.info("Dumpped chat history to {}".format(fname))
 
 if __name__ == '__main__':
