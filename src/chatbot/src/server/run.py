@@ -45,7 +45,7 @@ from flask import Flask, request, Response, send_from_directory
 import json
 import shutil
 from chatbot import (ask, list_character, update_character, get_character,
-                    load_sheet_keys, commit_character, response_caches)
+            load_sheet_keys, commit_character, response_caches)
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -88,7 +88,10 @@ def chat2():
 @app.route(ROOT+'/chatbots', methods=['GET'])
 @requires_auth
 def list_chatbot():
-    return Response(json_encode({'ret': 0, 'response': list_character()}),
+    data = request.args
+    id = data.get('botid', None)
+    characters = list_character(id)
+    return Response(json_encode({'ret': 0, 'response': characters}),
         mimetype="application/json")
 
 @app.route(ROOT+'/update', methods=['GET'])
