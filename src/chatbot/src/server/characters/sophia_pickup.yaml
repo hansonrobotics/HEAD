@@ -2,6 +2,8 @@ id:
     sophia_pickup
 name:
     sophia_pickup
+weight:
+    0.5
 property_file:
     ../../../../../../character_dev/character_aiml/sophia.properties
 aiml:

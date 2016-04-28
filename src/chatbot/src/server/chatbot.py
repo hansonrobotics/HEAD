@@ -47,8 +47,24 @@ def get_characters_by_name(name, local=True):
         characters = [c for c in characters if is_local_character(c)]
     return characters
 
-def list_character():
-    return [c.id for c in CHARACTERS]
+def list_character(id=None):
+    if id is not None:
+        responding_characters = get_responding_characters(id)
+        return [(c.id, c.weight) for c in responding_characters]
+    else:
+        return [(c.id, c.weight) for c in CHARACTERS]
+
+def set_weights(id, weights):
+    try:
+        weights = [float(w.strip()) for w in weights.split(',')]
+    except Exception:
+        return False, "Wrong weight format"
+    responding_characters = get_responding_characters(id)
+    if len(weights) != len(responding_characters):
+        return False, "Number of weights doesn't match number of tiers {}".format(weights)
+    for c, weight in zip(responding_characters, weights):
+        c.weight = weight
+    return True, "Weights are updated"
 
 def update_character(id, csv_version=None):
     character = get_character(id)
@@ -92,13 +108,14 @@ def commit_character(id):
 from response_cache import ResponseCache
 response_caches = dict() # session -> response cache dict
 MAX_CHAT_TRIES = 5
-def _ask_characters(characters, botname, question, lang, session):
+def _ask_characters(characters, question, lang, session):
     global response_caches
     chat_tries = 0
     if session not in response_caches:
         response_caches[session] = ResponseCache()
     cache = response_caches.get(session)
 
+    weights = [c.weight for c in characters]
     _question = question.lower().strip()
     _question = ' '.join(_question.split()) # remove consecutive spaces
     num_tier = len(characters)
@@ -109,13 +126,12 @@ def _ask_characters(characters, botname, question, lang, session):
             assert isinstance(r, dict), "Response must be a dict"
         answers = [r.get('text', '') for r in _responses]
 
-        # Each tier has 80% chance to be selected.
+        # Each tier has weight*100% chance to be selected.
         # If the chance goes to the last tier, it will be selected anyway.
         for idx, answer in enumerate(answers):
             if not answer:
                 continue
-            if (idx != (num_tier-1) and random.random()>0.2) or \
-                idx == (num_tier-1):
+            if random.random()<weights[idx]:
                 if cache.check(_question, answer):
                     cache.add(_question, answer)
                     return _responses[idx]
@@ -135,38 +151,22 @@ def _ask_characters(characters, botname, question, lang, session):
             if cache.check(_question, answer):
                 cache.add(_question, answer)
                 return _response
-    else:
-        _response = {}
-        answer = "Sorry, I can't answer that"
-        _response['text'] = answer
-        _response['botid'] = "dummy"
-        _response['botname'] = "dummy"
-        cache.add(_question, answer)
-        return _response
 
-def ask(id, question, lang, session=None):
-    """
-    return (response dict, return code)
-    """
-    global response_caches
+    _response = {}
+    answer = "Sorry, I can't answer that"
+    _response['text'] = answer
+    _response['botid'] = "dummy"
+    _response['botname'] = "dummy"
+    cache.add(_question, answer)
+    return _response
 
-    # Reset cache
-    cache = response_caches.get(session)
-    if cache is not None:
-        if question and question.lower().strip() in ['hi', 'hello']:
-            logger.info("Cache is cleaned by hi")
-            cache.clean()
-        if cache.last_time and (dt.datetime.now()-cache.last_time)>dt.timedelta(seconds=SESSION_TIMEOUT):
-            logger.info("Cache is cleaned by timer")
-            cache.clean()
-
-    response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+def get_responding_characters(id):
     character = get_character(id)
     if not character:
-        return response, WRONG_CHARACTER_NAME
+        return []
     botname = character.name
 
-    # current character > local character with the same name > solr > generic character
+    # current character > local character with the same name > solr > generic
     responding_characters = get_characters_by_name(botname, local=True)
     if character in responding_characters:
         responding_characters.remove(character)
@@ -187,8 +187,32 @@ def ask(id, question, lang, session=None):
     else:
         logger.warn("Generic character is not found")
 
+    return responding_characters
+
+def ask(id, question, lang, session=None):
+    """
+    return (response dict, return code)
+    """
+    global response_caches
+
+    # Reset cache
+    cache = response_caches.get(session)
+    if cache is not None:
+        if question and question.lower().strip() in ['hi', 'hello']:
+            logger.info("Cache is cleaned by hi")
+            cache.clean()
+        if cache.last_time and (dt.datetime.now()-cache.last_time)>dt.timedelta(seconds=SESSION_TIMEOUT):
+            logger.info("Cache is cleaned by timer")
+            cache.clean()
+
+    response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+
+    responding_characters = get_responding_characters(id)
+    if not responding_characters:
+        return response, WRONG_CHARACTER_NAME
+
     logger.info("Responding characters {}".format(responding_characters))
-    _response = _ask_characters(responding_characters, botname, question, lang, session)
+    _response = _ask_characters(responding_characters, question, lang, session)
 
     if _response is not None:
         response.update(_response)
@@ -205,7 +229,6 @@ def dump_history():
             os.makedirs(dirname)
         fname = os.path.join(dirname, '{}.csv'.format(session))
         cache.dump(fname)
-        logger.info("Dumpped chat history to {}".format(fname))
 atexit.register(dump_history)
 
 if __name__ == '__main__':

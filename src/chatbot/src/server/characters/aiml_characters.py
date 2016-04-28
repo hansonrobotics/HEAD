@@ -27,6 +27,8 @@ def load_aiml_character(character_yaml):
             if 'aiml' in spec:
                 aiml_files = [abs_path(f) for f in spec['aiml']]
                 character.load_aiml_files(character.kernel, aiml_files)
+            if 'weight' in spec:
+                character.weight = float(spec['weight'])
         except KeyError as ex:
             logger.error(ex)
 

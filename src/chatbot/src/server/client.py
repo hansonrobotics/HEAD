@@ -45,9 +45,10 @@ class Client(cmd.Cmd, object):
 
         return response
 
-    def list_chatbot(self):
+    def list_chatbot(self, botid=None):
         r = requests.get(
-            '{}/chatbots'.format(self.chatbot_url), params={'Auth':key})
+            '{}/chatbots'.format(self.chatbot_url),
+            params={'Auth':key, 'botid':botid})
         chatbots = r.json().get('response')
         return chatbots
 
@@ -64,8 +65,12 @@ class Client(cmd.Cmd, object):
     def do_list(self, line):
         chatbots = []
         try:
-            chatbots = self.list_chatbot()
-            chatbots = [c if c!=self.botid else '[{}]'.format(c) for c in chatbots]
+            if line == 'all':
+                chatbots = self.list_chatbot()
+            else:
+                chatbots = self.list_chatbot(self.botid)
+            chatbots = ['{}: {}'.format(c,w) if c!=self.botid else \
+                '[{}]: {}'.format(c, w) for c, w in chatbots]
             self.stdout.write('\n'.join(chatbots))
             self.stdout.write('\n')
         except Exception as ex:
@@ -83,7 +88,8 @@ class Client(cmd.Cmd, object):
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
             return
-        if line in self.list_chatbot():
+        characters = [c[0] for c in self.list_chatbot()]
+        if line in characters:
             self.botid = line
             self.stdout.write("Select chatbot {}\n".format(self.botid))
         else:
@@ -244,6 +250,31 @@ For example, port 8001
 
     def help_c(self):
         self.stdout.write("Clean the memory of the dialog\n")
+
+    def do_rw(self, line):
+        try:
+            params = {
+                "botid": "{}".format(self.botid),
+                "weights": line,
+                "Auth": key
+            }
+            r = requests.get(
+                '{}/set_weights'.format(self.chatbot_url), params=params)
+            ret = r.json().get('ret')
+            response = r.json().get('response')
+            self.stdout.write(response)
+            self.stdout.write('\n')
+        except Exception as ex:
+            self.stdout.write('{}\n'.format(ex))
+
+    def help_rw(self):
+        s = """
+Update the weights of the current chain.
+Syntax: rw w1,w2,w3,...
+For example, rw .2, .4, .5
+
+"""
+        self.stdout.write(s)
 
 if __name__ == '__main__':
     client = Client()

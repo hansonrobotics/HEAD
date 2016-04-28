@@ -21,6 +21,7 @@ class Character(object):
         self.name = name
         self.level = level
         self.properties = {}
+        self.weight = 1 # How likely its response is used. [0-1]
 
     def get_properties(self):
         return self.properties
