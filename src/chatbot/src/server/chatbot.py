@@ -54,6 +54,18 @@ def list_character(id=None):
     else:
         return [(c.id, c.weight) for c in CHARACTERS]
 
+def set_weights(id, weights):
+    try:
+        weights = [float(w.strip()) for w in weights.split(',')]
+    except Exception:
+        return False, "Wrong weight format"
+    responding_characters = get_responding_characters(id)
+    if len(weights) != len(responding_characters):
+        return False, "Number of weights doesn't match number of tiers {}".format(weights)
+    for c, weight in zip(responding_characters, weights):
+        c.weight = weight
+    return True, "Weights are updated"
+
 def update_character(id, csv_version=None):
     character = get_character(id)
     if not character:
