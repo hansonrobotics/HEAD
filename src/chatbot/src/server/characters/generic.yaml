@@ -59,3 +59,4 @@ aiml:
     - ../../../../../../character_dev/generic_aiml/update_mccormick.xml
     - ../../../../../../character_dev/generic_aiml/wallace.xml
     - ../../../../../../character_dev/generic_aiml/xfind.xml
+    - ../../../../../../character_dev/generic_aiml/generic.personality.aiml
