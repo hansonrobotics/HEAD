@@ -66,7 +66,7 @@ class Client(cmd.Cmd, object):
         chatbots = []
         try:
             if line == 'all':
-                chatbots = self.list_chatbot(line)
+                chatbots = self.list_chatbot()
             else:
                 chatbots = self.list_chatbot(self.botid)
             chatbots = ['{}: {}'.format(c,w) if c!=self.botid else \
