@@ -36,6 +36,7 @@ class SolrCharacter(Character):
         return ret
 
 solr_bot = SolrCharacter('solr_bot', 'solr_bot')
+solr_bot.weight = 0.5
 
 characters = [solr_bot]
 

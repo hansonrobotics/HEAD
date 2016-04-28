@@ -2,6 +2,8 @@ id:
     generic
 name:
     generic
+weight:
+    1
 aiml:
     - ../../../../../../character_dev/generic_aiml/ai.xml
     - ../../../../../../character_dev/generic_aiml/atomic.xml

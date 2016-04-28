@@ -4,6 +4,8 @@ name:
     sophia
 property_file:
     ../../../../../../character_dev/character_aiml/sophia.properties
+weight:
+    0.9
 aiml:
     - ../../../../../../character_dev/character_aiml/sophia.earlypickup.aiml
     - ../../../../../../character_dev/character_aiml/sophia.fashion.aiml
