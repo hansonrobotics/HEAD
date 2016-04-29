@@ -33,6 +33,8 @@ class ResponseCache(object):
     def check(self, question, answer):
         if self._norm(answer) == self.last_answer:
             return False
+        if not self.is_unique(answer):
+            return False
         if self.contain(question, answer):
             return False
         return True
@@ -57,6 +59,11 @@ class ResponseCache(object):
         records = self._get_records(question)
         answers = [r['Answer'] for r in records]
         return answer in answers
+
+    def is_unique(self, answer):
+        answer = self._norm(answer)
+        answers = [r['Answer'] for r in self.record]
+        return not answer in answers
 
     def _get_records(self, question):
         question=self._norm(question)
@@ -96,6 +103,8 @@ if __name__ == '__main__':
     cache.add('a', 'hi there', dt.datetime(2016, 4, 22, 12, 30, 0))
     cache.add('a', 'how are you', dt.datetime(2016, 4, 22, 12, 32, 0))
     cache.add('a', 'how are you', dt.datetime(2016, 4, 22, 12, 32, 0))
+    print cache.is_unique('Hi')
+    print cache.is_unique('hello')
     print cache.get_best_response('a')
     cache.dump('tmp')
     print cache.get_best_response('a')
