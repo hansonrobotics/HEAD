@@ -53,3 +53,4 @@ aiml:
     - ../../../../../../character_dev/generic_aiml/xfind.xml
     - ../../../../../../character_dev/generic_aiml/generic.personality.aiml
     - ../../../../../../character_dev/generic_aiml/generic.z.avoidtopics.aiml
+    - ../../../../../../character_dev/generic_aiml/z.destroyhumans.xml
