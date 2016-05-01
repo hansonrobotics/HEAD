@@ -41,7 +41,6 @@ aiml:
     - ../../../../../../character_dev/generic_aiml/reduction1.safe.xml
     - ../../../../../../character_dev/generic_aiml/reduction2.safe.xml
     - ../../../../../../character_dev/generic_aiml/reduction3.safe.xml
-    - ../../../../../../character_dev/generic_aiml/reduction4.safe.xml
     - ../../../../../../character_dev/generic_aiml/reduction.names.xml
     - ../../../../../../character_dev/generic_aiml/reductions-update.xml
     - ../../../../../../character_dev/generic_aiml/salutations.xml
@@ -53,3 +52,4 @@ aiml:
     - ../../../../../../character_dev/generic_aiml/update_mccormick.xml
     - ../../../../../../character_dev/generic_aiml/xfind.xml
     - ../../../../../../character_dev/generic_aiml/generic.personality.aiml
+    - ../../../../../../character_dev/generic_aiml/generic.z.avoidtopics.aiml
