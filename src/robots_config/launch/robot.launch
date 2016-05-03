@@ -13,8 +13,6 @@
         <rosparam file="$(find robots_config)/$(arg name)/safety.yaml" command="load"/>
         <!-- Hardware specific nodes -->
         <include file="$(arg basedir)/hardware.launch" />
-
-        <!-- Launch chatbot -->
         <include file="$(arg basedir)/basic_head_api.launch" />
 
         <!-- Set default chatbot language [en|zh] -->
@@ -36,6 +34,5 @@
     <!-- Web UI and rosbridge for webui -->
     <include file="$(find webui)/webui.launch" />
     <include file="$(arg basedir)/rosbridge.launch" />
-    <include file="$(arg basedir)/rosbridge_ssl.launch" />
 
 </launch>

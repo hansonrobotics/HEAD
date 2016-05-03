@@ -1,8 +1,7 @@
 <!-- -*- mode: XML -*- -->
 <launch>
-    <node name="tts" pkg="tts" type="tts_talker.py">
-        <param name="topic_name" value="chatbot_responses" />
-    </node>
+    <param name="tts_topic" value="tts" />
+    <node name="tts_talker" pkg="tts" type="tts_talker.py" respawn="true" />
     <node name="chatbot" pkg="chatbot" type="ai.py" respawn="true">
         <param name="sentiment" value="True" />
         <param name="botid" value="sophia" />
