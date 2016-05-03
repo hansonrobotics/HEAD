@@ -1,4 +1,4 @@
-This is a premature question-answering server. The goal is to provide a ROS independent, scalable, platform-independent QA. 
+This is a premature question-answering server. The goal is to provide a ROS independent, scalable, platform-independent QA.
 
 ## Run Server
 `$ python run.py [port]`
@@ -6,13 +6,13 @@ This is a premature question-answering server. The goal is to provide a ROS inde
 The default port is 8001.
 
 ## Load Characters
-The default path of the characters is the current [characters](https://github.com/hansonrobotics/public_ws/tree/master/src/chatbot/src/server/characters) directory. 
+The default path of the characters is the current [characters](https://github.com/hansonrobotics/public_ws/tree/master/src/chatbot/src/server/characters) directory.
 But you can overwrite it by setting the environment variable `HR_CHARACTER_PATH`. For example
 
 `$ HR_CHARACTER_PATH=/path/to/characters1:/path/to/characters2 python run.py`
 
 ### How is the Character Loaded
-It loads every python module except `__init__.py` in every character path in `HR_CHARACTER_PATH`, and finds the global `characters` in this module. 
+It loads every python module except `__init__.py` in every character path in `HR_CHARACTER_PATH`, and finds the global `characters` in this module.
 Then it appends the characters to its character list `CHARACTERS`. See [`characters/__init__.py`](https://github.com/hansonrobotics/public_ws/blob/master/src/chatbot/src/server/characters/__init__.py)
 
 ## Define a Character
@@ -21,24 +21,24 @@ Then it appends the characters to its character list `CHARACTERS`. See [`charact
 ```python
 from server.character import AIMLCharacter
 # id is an unique global string that refers to this character. name is the character name.
-character = AIMLCharacter(id, name) 
-character.load_aiml_files([file1, file2])  
+character = AIMLCharacter(id, name)
+character.load_aiml_files([file1, file2])
 character.set_property_file(abc.properties) # Set the key,value properties.
 ```
 
-Once it's done, you need to put this object to global variable `characters` so the server can find and load it. 
+Once it's done, you need to put this object to global variable `characters` so the server can find and load it.
 
 See the example in [characters/aiml_characters.py#Line42](https://github.com/hansonrobotics/public_ws/blob/master/src/chatbot/src/server/characters/aiml_characters.py#L42)
 
-There is a convienent way to load the definition from yaml file. 
+There is a convienent way to load the definition from yaml file.
 
 See [characters/aiml_characters.py#Line44](https://github.com/hansonrobotics/public_ws/blob/master/src/chatbot/src/server/characters/aiml_characters.py#L44)
 
-The yaml file format is like this. The path is relative to the yaml file itself. 
+The yaml file format is like this. The path is relative to the yaml file itself.
 ```yaml
-id:                                                                             
+id:
     quant_han
-name:                                                                           
+name:
     han
 property_file:
     ../../../character_aiml/han.properties
@@ -48,10 +48,10 @@ aiml:
     - ...
 ```
 ### Define a third party character
-For example, if you want to integrate IBM Waston chatbot. What you can do is 
+For example, if you want to integrate IBM Waston chatbot. What you can do is
 
 1. Create a sub-class that inherits [Character](https://github.com/hansonrobotics/public_ws/blob/master/src/chatbot/src/server/character.py#L7) class.
-2. Implement `respond` method. The return value is a dict that has these keys `response`, `botid`, `botname`. 
+2. Implement `respond` method. The return value is a dict that has these keys `response`, `botid`, `botname`.
 
 Here is a dummy example.
 ```python
@@ -65,12 +65,12 @@ class DummyCharacter(Character):
 
 characters = [DummyCharacter('34g634', 'dummy')]
 ```
-Then you can put this module to the character path so when the server is started, the character can be found and loaded. 
+Then you can put this module to the character path so when the server is started, the character can be found and loaded.
 
 ## Client for testing
-There is a client for testing purpose. It's [client.py](https://github.com/hansonrobotics/public_ws/blob/master/src/chatbot/src/server/client.py). 
+There is a client for testing purpose. It's [client.py](https://github.com/hansonrobotics/public_ws/blob/master/src/chatbot/src/server/client.py).
 
-Run `$ python client.py`, then you can ask questions and get the answers. 
+Run `$ python client.py`, then you can ask questions and get the answers.
 
 ```
 $ python client.py
@@ -90,64 +90,4 @@ generic
 Set chatbot to quant_han
 [me]: can ai make money
 quant_han[by han]: Making billions is all good fun. But obsoleting the money economy is what it's all about.
-```
-
-## Chatbot Server API
-
-### List characters
-
-```
-GET /v1/chatbots
-params: Auth
-```
-
-```
-For example
-http://61.92.69.43:8001/v1/chatbots?Auth=AAAAB3NzaC
-
-{"response": ["sophia", "pkd", "han", "generic"], "ret": 0}
-```
-
-### Chat
-
-```
-GET /v1/chat
-params: botid, question, session, Auth
-```
-
-```
-For example
-http://61.92.69.43:8001/v1/chat?question=hello&botid=sophia&session=0&Auth=AAAAB3NzaC
-
-{"response": {"emotion": "", "text": "Hi. What seems to be your problem ?",
-"botid": "sophia", "botname": "sophia"}, "ret": 0}
-```
-
-
-### Set sheet keys
-
-```
-GET /v1/set_keys
-params: botid, sheet_keys, Auth
-```
-
-```
-For example
-http://61.92.69.43:8001/v1/set_keys?botid=pkd&sheet_keys=1Tbro_Kjbby162Rms0GpQswoqhavXOoRe85HVRyEB1NU&Auth=AAAAB3NzaC
-
-{"response": "<Character id: pkd, name: pkd> is updated", "ret": true}
-```
-
-### Update character
-
-```
-GET  /v1/update
-params: botid, Auth
-```
-
-```
-For example
-http://61.92.69.43:8001/v1/update?botid=pkd&Auth=AAAAB3NzaC
-
-{"response": "updated character pkd", "ret": true}
 ```

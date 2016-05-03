@@ -5,6 +5,6 @@ from distutils.core import setup
 
 setup(
     version='0.0.1',
-    packages=['aiml', 'qa_proxy', 'server'],
+    packages=['aiml', 'server'],
     package_dir={'': 'src'}
 )

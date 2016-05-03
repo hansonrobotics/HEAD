@@ -1,9 +1,0 @@
-id:
-    pkd
-name:
-    pkd
-property_file:
-    ../../../../../../character_dev/character_aiml/pkd.properties
-aiml:
-    - ../../../../../../character_dev/character_aiml/pkd.*.aiml
-    - ../../../../../../character_dev/character_aiml/pkd.*.xml

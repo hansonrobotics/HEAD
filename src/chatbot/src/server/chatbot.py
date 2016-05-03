@@ -17,7 +17,7 @@ SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
 
-useSOLR = True
+useSOLR = False
 SESSION_TIMEOUT=300
 CWD = os.path.dirname(os.path.realpath(__file__))
 
