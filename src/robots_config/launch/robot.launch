@@ -1,0 +1,41 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <arg name="basedir" default="." />
+    <arg name="name" default="robot"/>
+    <param name="robot_name" value="$(arg name)" />
+
+    <group ns="$(arg name)">
+        <!-- load robot specific config files. Icl. hw settings and customized expressions/animations -->
+        <rosparam file="$(find robots_config)/$(arg name)/config.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/motors.yaml" command="load" />
+        <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/safety.yaml" command="load"/>
+        <!-- Hardware specific nodes -->
+        <include file="$(arg basedir)/hardware.launch" />
+
+        <!-- Launch chatbot -->
+        <include file="$(arg basedir)/basic_head_api.launch" />
+
+        <!-- Set default chatbot language [en|zh] -->
+        <param name="lang" value="en" />
+
+        <!-- Launch chatbot -->
+        <include file="$(arg basedir)/chat.launch" />
+
+        <!-- Topic Mux for webui -->
+        <include file="$(arg basedir)/topic_tools.launch" />
+    </group>
+
+    <!-- Face Tracking -->
+    <include file="$(arg basedir)/face_tracker.launch" />
+
+    <!-- Perception -->
+    <include file="$(arg basedir)/perception.launch" />
+
+    <!-- Web UI and rosbridge for webui -->
+    <include file="$(find webui)/webui.launch" />
+    <include file="$(arg basedir)/rosbridge.launch" />
+    <include file="$(arg basedir)/rosbridge_ssl.launch" />
+
+</launch>

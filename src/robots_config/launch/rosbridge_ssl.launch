@@ -1,11 +1,9 @@
 <launch>
-  <arg name="port" default="9090" />
+  <arg name="port" default="9094" />
   <arg name="address" default="" />
-  <arg name="ssl" default="false" />
-  <arg name="certfile" />
-  <arg name="keyfile" />
+  <arg name="certfile" default="$(find webui)/app/ssl/cert.crt"/>
+  <arg name="keyfile" default="$(find webui)app/ssl/key.pem" />
   <arg name="authenticate" default="false" />
-  <group if="$(arg ssl)">
     <node name="rosbridge_websocket_ssl" pkg="rosbridge_server" type="rosbridge_websocket" output="screen">
       <param name="certfile" value="$(arg certfile)" />
       <param name="keyfile" value="$(arg keyfile)" />
@@ -13,5 +11,4 @@
       <param name="port" value="$(arg port)"/>
       <param name="address" value="$(arg address)"/>
     </node>
-  </group>
 </launch>

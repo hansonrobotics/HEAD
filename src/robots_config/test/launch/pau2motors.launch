@@ -1,4 +1,0 @@
-<!-- -*- mode: XML -*- -->
-<launch>
-    <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py" respawn="True" />
-</launch>

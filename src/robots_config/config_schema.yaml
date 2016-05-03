@@ -34,7 +34,6 @@ properties:
       speech_recognition:
         type: string
         enum:
-          - iflytek
           - webspeech
   eye_tracking:
     type: object

@@ -42,7 +42,5 @@
 
         <param name="cascade_frontal_alt"
                value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
-        <param name="cascade_frontal_alt2"
-               value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt2.xml" />
   </node>
 </launch>

@@ -1,0 +1,56 @@
+Jaw_Up_Down_controller:
+  controller: {module: joint_position_controller, package: dynamixel_controllers,
+    type: JointPositionController}
+  joint_name: Jaw_Up_Down_joint
+  joint_speed: 1
+  motor: {acceleration: 50, id: 5, init: 1100, max: 3000, min: 1000}
+  speed: 15
+Lower_Gimbal_L_controller:
+  controller: {module: joint_position_controller, package: dynamixel_controllers,
+    type: JointPositionController}
+  joint_name: Lower_Gimbal_L_joint
+  joint_speed: 1
+  motor: {acceleration: 10, id: 2, init: 2300, max: 2700, min: 1700}
+  speed: 0.35
+Lower_Gimbal_R_controller:
+  controller: {module: joint_position_controller, package: dynamixel_controllers,
+    type: JointPositionController}
+  joint_name: Lower_Gimbal_R_joint
+  joint_speed: 1
+  motor: {acceleration: 10, id: 1, init: 1900, max: 2300, min: 1200}
+  speed: 0.35
+Neck_Rotation_controller:
+  controller: {module: joint_position_controller, package: dynamixel_controllers,
+    type: JointPositionController}
+  joint_name: Neck_Rotation_joint
+  joint_speed: 1
+  motor: {acceleration: 1, id: 0, init: 2000, max: 3000, min: 1200}
+  speed: 0.8
+Smile_L_controller:
+  controller: {module: joint_position_controller, package: dynamixel_controllers,
+    type: JointPositionController}
+  joint_name: Smile_L_joint
+  joint_speed: 1
+  motor: {acceleration: 20, id: 7, init: 2000, max: 2600, min: 500}
+  speed: 2
+Smile_R_controller:
+  controller: {module: joint_position_controller, package: dynamixel_controllers,
+    type: JointPositionController}
+  joint_name: Smile_R_joint
+  joint_speed: 1
+  motor: {acceleration: 20, id: 6, init: 2000, max: 2600, min: 500}
+  speed: 2
+Upper_Gimbal_L_controller:
+  controller: {module: joint_position_controller, package: dynamixel_controllers,
+    type: JointPositionController}
+  joint_name: Upper_Gimbal_L_joint
+  joint_speed: 1
+  motor: {acceleration: 10, id: 4, init: 2100, max: 2600, min: 1200}
+  speed: 0.4
+Upper_Gimbal_R_controller:
+  controller: {module: joint_position_controller, package: dynamixel_controllers,
+    type: JointPositionController}
+  joint_name: Upper_Gimbal_R_joint
+  joint_speed: 1
+  motor: {acceleration: 10, id: 3, init: 2250, max: 3100, min: 1700}
+  speed: 0.4

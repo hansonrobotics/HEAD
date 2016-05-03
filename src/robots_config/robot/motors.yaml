@@ -1,0 +1,118 @@
+motors:
+- default: 0
+  group: Lips
+  hardware: dynamixel
+  labelleft: Smile_L
+  max: 0.9203884727313847
+  min: -2.3009711818284617
+  name: Smile_L
+  pau:
+    function:
+    - imin: 0.7142857142857143
+      name: weightedsum
+      terms:
+      - {imax: 0, max: 1, min: 0}
+      - {imax: 1, max: 0.3, min: 0}
+    parser: {name: fsshapekey, shapekey: lips-smile.L;lips-frown.L}
+  sort_no: 21
+  topic: Smile_L
+- default: 0
+  group: Lips
+  hardware: dynamixel
+  labelleft: Smile_R
+  max: 0.9203884727313847
+  min: -2.3009711818284617
+  name: Smile_R
+  pau:
+    function:
+    - imin: 0.7142857142857143
+      name: weightedsum
+      terms:
+      - {imax: 0, max: 0.6, min: 0}
+      - {imax: 1, max: 0.3, min: 0}
+    parser: {name: fsshapekey, shapekey: lips-smile.R;lips-frown.R}
+  sort_no: 22
+  topic: Smile_R
+- default: 0
+  group: Lips
+  hardware: dynamixel
+  labelleft: Jaw_Up_Down
+  max: 2.9145634969827183
+  min: -0.15339807878856412
+  name: Jaw_Up_Down
+  pau:
+    function:
+    - {max: 1, min: 0.15, name: linear}
+    parser: {name: fsshapekey, shapekey: jaw}
+  sort_no: 23
+  topic: Jaw_Up_Down
+- default: 0
+  group: Neck
+  hardware: dynamixel
+  labelleft: Upper_Gimbal_L
+  max: 0.7669903939428205
+  min: -1.380582709097077
+  name: Upper_Gimbal_L
+  pau:
+    function:
+    - {axis: upright, name: quaternion2dual}
+    - {name: linear, scale: 1, translate: 0}
+    parser: {name: getproperty, property: m_headRotation}
+  sort_no: 31
+  topic: Upper_Gimbal_L
+- default: 0
+  group: Neck
+  hardware: dynamixel
+  labelleft: Upper_Gimbal_R
+  max: 1.303883669702795
+  min: -0.8436894333371027
+  name: Upper_Gimbal_R
+  pau:
+    function:
+    - {axis: upleft, name: quaternion2dual}
+    - {name: linear, scale: 1, translate: 0}
+    parser: {name: getproperty, property: m_headRotation}
+  sort_no: 32
+  topic: Upper_Gimbal_R
+- default: 0
+  group: Neck
+  hardware: dynamixel
+  labelleft: Lower_Gimbal_L
+  max: 0.6135923151542565
+  min: -0.9203884727313847
+  name: Lower_Gimbal_L
+  pau:
+    function:
+    - {axis: loleft, name: quaternion2dual}
+    - {name: linear, scale: -1, translate: 0}
+    parser: {name: getproperty, property: m_neckRotation}
+  sort_no: 33
+  topic: Lower_Gimbal_L
+- default: 0
+  group: Neck
+  hardware: dynamixel
+  labelleft: Lower_Gimbal_R
+  max: 0.6135923151542565
+  min: -1.0737865515199487
+  name: Lower_Gimbal_R
+  pau:
+    function:
+    - {axis: loright, name: quaternion2dual}
+    - {name: linear, scale: -1, translate: 0}
+    parser: {name: getproperty, property: m_neckRotation}
+  sort_no: 34
+  topic: Lower_Gimbal_R
+- default: 0
+  group: Neck
+  hardware: dynamixel
+  labelleft: Neck_Rotation
+  max: 1.533980787885641
+  min: -1.227184630308513
+  name: Neck_Rotation
+  pau:
+    function:
+    - {axis: z, name: quaternion2euler}
+    - {name: linear, scale: -2, translate: 0}
+    parser: {name: getproperty, property: m_headRotation}
+  sort_no: 35
+  topic: Neck_Rotation

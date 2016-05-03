@@ -1,6 +1,0 @@
-<!-- -*- mode: XML -*- -->
-<launch>
-    <node name="behavior" pkg="eva_behavior" type="main.py" />
-</launch>
-
-

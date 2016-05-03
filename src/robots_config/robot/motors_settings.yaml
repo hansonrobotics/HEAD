@@ -1,0 +1,44 @@
+- {acceleration: 0, function: weightedsum, group: Eyes, hardware: pololu, imax1: 0,
+  imax2: 1, init: 1500, lin_max: null, lin_min: null, max: 2000, max1: -0.66, max2: 0.75,
+  min: 1000, motor_id: 1, name: EyeTurn-L, other_func: null, parser: getproperty,
+  parser_param: m_eyeGazeLeftYaw;m_eyeGazeLeftYaw, sort_no: 11, speed: 0, topic: default}
+- {acceleration: 0, function: weightedsum, group: Eyes, hardware: pololu, imax1: 0,
+  imax2: 1, init: 1500, lin_max: null, lin_min: null, max: 2000, max1: -0.66, max2: 0.75,
+  min: 1000, motor_id: 2, name: EyeTurn-R, other_func: null, parser: getproperty,
+  parser_param: m_eyeGazeRightYaw;m_eyeGazeRightYaw, sort_no: 12, speed: 0, topic: default}
+- {acceleration: 0, function: linear, group: Eyes, hardware: pololu, imax1: null,
+  imax2: null, init: 1500, lin_max: -0.3, lin_min: 0.2, max: 2000, max1: null, max2: null,
+  min: 1000, motor_id: 3, name: Eyes-Up-Down, other_func: null, parser: getproperty,
+  parser_param: m_eyeGazeLeftPitch, sort_no: 13, speed: 0, topic: default}
+- {acceleration: 20, function: weightedsum, group: Lips, hardware: dynamixel, imax1: 0,
+  imax2: 1, init: 2000, lin_max: null, lin_min: null, max: 2600, max1: 1, max2: 0.3,
+  min: 500, motor_id: 7, name: Smile_L, other_func: null, parser: fsshapekey, parser_param: lips-smile.L;lips-frown.L,
+  sort_no: 21, speed: 2, topic: null}
+- {acceleration: 20, function: weightedsum, group: Lips, hardware: dynamixel, imax1: 0,
+  imax2: 1, init: 2000, lin_max: null, lin_min: null, max: 2600, max1: 0.6, max2: 0.3,
+  min: 500, motor_id: 6, name: Smile_R, other_func: null, parser: fsshapekey, parser_param: lips-smile.R;lips-frown.R,
+  sort_no: 22, speed: 2, topic: null}
+- {acceleration: 50, function: linear, group: Lips, hardware: dynamixel, imax1: null,
+  imax2: null, init: 1100, lin_max: 1, lin_min: 0.15, max: 3000, max1: null, max2: null,
+  min: 1000, motor_id: 5, name: Jaw_Up_Down, other_func: null, parser: fsshapekey,
+  parser_param: jaw, sort_no: 23, speed: 15, topic: null}
+- {acceleration: 10, function: null, group: Neck, hardware: dynamixel, imax1: null,
+  imax2: null, init: 2100, lin_max: null, lin_min: null, max: 2600, max1: null, max2: null,
+  min: 1200, motor_id: 4, name: Upper_Gimbal_L, other_func: '[{"name":"quaternion2dual","axis":"upright"},{"name":"linear","scale":1,"translate":0}]',
+  parser: getproperty, parser_param: m_headRotation, sort_no: 31, speed: 0.4, topic: null}
+- {acceleration: 10, function: null, group: Neck, hardware: dynamixel, imax1: null,
+  imax2: null, init: 2250, lin_max: null, lin_min: null, max: 3100, max1: null, max2: null,
+  min: 1700, motor_id: 3, name: Upper_Gimbal_R, other_func: '[{"name":"quaternion2dual","axis":"upleft"},{"name":"linear","scale":1,"translate":0}]',
+  parser: getproperty, parser_param: m_headRotation, sort_no: 32, speed: 0.4, topic: null}
+- {acceleration: 10, function: null, group: Neck, hardware: dynamixel, imax1: null,
+  imax2: null, init: 2300, lin_max: null, lin_min: null, max: 2700, max1: null, max2: null,
+  min: 1700, motor_id: 2, name: Lower_Gimbal_L, other_func: '[{"name":"quaternion2dual","axis":"loleft"},{"name":"linear","scale":-1,"translate":0}]',
+  parser: getproperty, parser_param: m_neckRotation, sort_no: 33, speed: 0.35, topic: null}
+- {acceleration: 10, function: null, group: Neck, hardware: dynamixel, imax1: null,
+  imax2: null, init: 1900, lin_max: null, lin_min: null, max: 2300, max1: null, max2: null,
+  min: 1200, motor_id: 1, name: Lower_Gimbal_R, other_func: '[{"name":"quaternion2dual","axis":"loright"},{"name":"linear","scale":-1,"translate":0}]',
+  parser: getproperty, parser_param: m_neckRotation, sort_no: 34, speed: 0.35, topic: null}
+- {acceleration: 1, function: null, group: Neck, hardware: dynamixel, imax1: null,
+  imax2: null, init: 2000, lin_max: null, lin_min: null, max: 3000, max1: null, max2: null,
+  min: 1200, motor_id: 0, name: Neck_Rotation, other_func: '[{"name":"quaternion2euler","axis":"z"},{"name":"linear","scale":-2,"translate":0}]',
+  parser: getproperty, parser_param: m_headRotation, sort_no: 35, speed: 0.8, topic: null}

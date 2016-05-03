@@ -1,0 +1,11 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <node name="tts" pkg="tts" type="tts_talker.py">
+        <param name="topic_name" value="chatbot_responses" />
+    </node>
+    <node name="chatbot" pkg="chatbot" type="ai.py" respawn="true">
+        <param name="sentiment" value="True" />
+        <param name="botid" value="sophia" />
+    </node>
+    <node name="speech2command" pkg="speech2command" type="speech2command.py" />
+</launch>

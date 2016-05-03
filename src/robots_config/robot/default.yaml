@@ -1,0 +1,50 @@
+EyeTurn-L:
+  acceleration: 0
+  group: Eyes
+  init: 1500
+  labelleft: EyeTurn-L
+  max: 2000
+  min: 1000
+  motor_id: 1
+  pau:
+    function:
+    - imin: 0.5
+      name: weightedsum
+      terms:
+      - {imax: 0, max: -0.66, min: 0}
+      - {imax: 1, max: 0.75, min: 0}
+    parser: {name: getproperty, property: m_eyeGazeLeftYaw;m_eyeGazeLeftYaw}
+  sort_no: 11
+  speed: 0
+EyeTurn-R:
+  acceleration: 0
+  group: Eyes
+  init: 1500
+  labelleft: EyeTurn-R
+  max: 2000
+  min: 1000
+  motor_id: 2
+  pau:
+    function:
+    - imin: 0.5
+      name: weightedsum
+      terms:
+      - {imax: 0, max: -0.66, min: 0}
+      - {imax: 1, max: 0.75, min: 0}
+    parser: {name: getproperty, property: m_eyeGazeRightYaw;m_eyeGazeRightYaw}
+  sort_no: 12
+  speed: 0
+Eyes-Up-Down:
+  acceleration: 0
+  group: Eyes
+  init: 1500
+  labelleft: Eyes-Up-Down
+  max: 2000
+  min: 1000
+  motor_id: 3
+  pau:
+    function:
+    - {max: -0.3, min: 0.2, name: linear}
+    parser: {name: getproperty, property: m_eyeGazeLeftPitch}
+  sort_no: 13
+  speed: 0

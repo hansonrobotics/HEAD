@@ -1,0 +1,7 @@
+eye_tracking:
+  center: {h: 0.5, w: 0.5}
+pau2motors:
+  topics: {eyes_pau: EyeTurn-R;EyeTurn-L;Eyes-Up-Down, head_pau: Smile_R;Smile_L,
+    lips_pau: Jaw_Up_Down, neck_pau: Upper_Gimbal_L;Upper_Gimbal_R;Lower_Gimbal_L;Lower_Gimbal_R;Neck_Rotation,
+    no_pau: EyeTurn-R;EyeTurn-L;Eyes-Up-Down}
+webui: {speech_recognition: webspeech}
