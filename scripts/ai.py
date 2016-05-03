@@ -185,9 +185,12 @@ class Chatbot():
         "session": "{}".format(self.session),
         "Auth": key
     }
-    r = requests.get('{}/{}/clean_cache'.format(self.chatbot_url, VERSION),
-                      params=params)
-    logger.info("Clean session cache {}".format(r.json()))
+    try:
+        r = requests.get('{}/{}/clean_cache'.format(self.chatbot_url, VERSION),
+                        params=params)
+        logger.info("Clean session cache {}".format(r.json()))
+    except requests.exceptions.ConnectionError as ex:
+        logger.info("Clean session cache error {}".format(ex))
 
   def reconfig(self, config, level):
     self.sentiment_active(config.sentiment)
