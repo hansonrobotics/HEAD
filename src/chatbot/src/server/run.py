@@ -45,7 +45,8 @@ from flask import Flask, request, Response, send_from_directory
 import json
 import shutil
 from chatbot import (ask, list_character, update_character, get_character,
-            load_sheet_keys, commit_character, response_caches, set_weights)
+            load_sheet_keys, commit_character, response_caches, set_weights,
+            dump_history)
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -202,6 +203,19 @@ def clean_cache():
         ret, response = True, "Cache cleaned"
     else:
         ret, response = False, "No such session"
+    return Response(json_encode({
+            'ret': ret,
+            'response': response
+        }),
+        mimetype="application/json")
+
+@app.route(ROOT+'/dump_history', methods=['GET'])
+def _dump_history():
+    try:
+        dump_history()
+        ret, response = True, "Success"
+    except Exception:
+        ret, response = False, "Failure"
     return Response(json_encode({
             'ret': ret,
             'response': response
