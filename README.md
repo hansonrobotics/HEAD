@@ -1,9 +1,9 @@
-Hanson Robotics Software
-========================
-[![Build Status](http://61.92.69.43:8080/job/ci-public_ws/badge/icon)](http://61.92.69.43:8080/job/ci-public_ws/)
+# HEAD
+
+Hanson Environment for Application Development
 
 This repository contains the integrated code for controlling and
-interacting with many Hanson Robotics robot heads.  It includes the
+interacting with many Hanson Robotics robot heads. It includes the
 full performance pipeline and infrastructure:
 
 * Perception, via ROS webcam nodes.
@@ -12,7 +12,39 @@ full performance pipeline and infrastructure:
 * Behavior tree, for scripting performaces.
 * Motor control ROS nodes, for controlling the physical robot.
 
+## Prerequisites
 
-Install and setup
------------------
-Many many steps are needed.  Install ROS Indigo. Install blender...
+ * **Only Ubuntu 14.04 supported**
+
+## Install and Setup
+
+Go to scripts directory
+
+`cd scripts`
+
+### Install Dependencies
+
+`./hrtool -i`
+
+### Build
+
+- rebuilds HR workspace
+
+   `./hrtool -b`
+
+- rebuilds HR workspace and OpenCog
+
+    `./hrtool -B`
+
+### Run
+
+- `./dev.sh` to launch ros nodes and webui
+
+### Run Tests
+
+- `./test.sh`
+
+### Web Browser
+
+- HTTP: http://127.0.0.1:8000/
+- HTTPS: https://127.0.0.1:4000/
