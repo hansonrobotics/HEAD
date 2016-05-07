@@ -219,8 +219,8 @@ Usage: $0 OPTION
 -i      Install dependencies.
 -g      Get HR source code.
 -G      Get all source code including OpenCog and HR.
--u      Update and build HR source code.
--U      Update and build all source code including OpenCog and HR.
+-u      Update HR source code.
+-U      Update all source code including OpenCog and HR.
 -b      Build HR source code.
 -B      Build HR and OpenCog source code.
 -t      Run tests.
