@@ -91,7 +91,10 @@ install_other_deps() {
     rm octool
 
     # For tts playing audio
-    sudo pip2 install pyglet
+    sudo apt-get -y install python-pyglet
+
+    # For chatbot
+    sudo apt-get -y install python-yaml
 }
 
 check_or_create_ws() {
@@ -281,6 +284,7 @@ set_ws() {
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
+    cp $HR_ENVFILE_PATH $BASEDIR # For compatibility
 }
 
 execute() {
@@ -297,6 +301,7 @@ execute() {
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
 }
 
+BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 eval DEFAULT_HR_WORKSPACE=~/hansonrobotics
 eval HR_ENVFILE_PATH=~/.hr/env.sh
 PROJECT=HEAD
