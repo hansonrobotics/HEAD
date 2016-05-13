@@ -213,6 +213,14 @@ do_update() {
     do_update_hr
 }
 
+do_run() {
+    while [[ $# > 0 ]]; do
+        echo "Running $1"
+        $1
+        shift
+    done
+}
+
 #######
 
 show_help() {
@@ -229,13 +237,14 @@ Usage: $0 OPTION
 -t      Run tests.
 -w      Set Hanson Robotics workspace.
 -p      Print Hanson Robotics workspace.
+-r      Run custom functions.
 -h      Print this help.
 
 EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUtp" opt; do
+    while getopts "hw:igGbBuUtpr:" opt; do
         case $opt in
         h)
             show_help
@@ -251,6 +260,7 @@ parse_opts() {
         U) UPDATE_SOURCE_CODE=1 ;;
         t) RUN_TESTS=1 ;;
         p) PRINT_HR_WORKSPACE=1 ;;
+        r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
             show_help
@@ -299,6 +309,7 @@ execute() {
     if [[ $BUILD_SOURCE_CODE ]]; then do_build; fi
     if [[ $RUN_TESTS ]]; then do_test; fi
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
+    if [[ $RUN_CUSTOM_FUNCTIONS ]]; then do_run $CUSTOM_FUNCTIONS ; fi
 }
 
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
