@@ -12,8 +12,9 @@ logger = logging.getLogger('hr.chatbot.character')
 CWD = os.path.dirname(os.path.realpath(__file__))
 GIT_DIR = os.path.expanduser('~/.hr/aiml/character_dev')
 WORKING_BRANCH = 'auto_commit_only'
-os.system('cd {} && git checkout {}'.format(GIT_DIR, WORKING_BRANCH))
 COMMENT = 'Update character'
+if os.path.isdir(GIT_DIR):
+    os.system('cd {} && git checkout {}'.format(GIT_DIR, WORKING_BRANCH))
 
 class Character(object):
     def __init__(self, id, name, level=99):
