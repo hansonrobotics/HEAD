@@ -38,6 +38,9 @@ install_ros() {
     sudo apt-get -y install ros-indigo-joint-state-publisher
     sudo apt-get -y install ros-indigo-rosbridge-server
     sudo apt-get -y install python-catkin-tools
+
+    # Ready made messages to be utilized form opencv-apps repo.
+    sudo apt-get -y install ros-indigo-opencv-apps
     # for camera calibration
     sudo apt-get -y install ros-indigo-image-proc
     # for blender to find ros packages
@@ -95,6 +98,89 @@ install_other_deps() {
 
     # For chatbot
     sudo apt-get -y install python-yaml
+}
+
+install_vision_deps() {
+    # For Dlib
+    cd $HR_WORKSPACE
+
+    wget http://dlib.net/files/dlib-18.18.tar.bz2
+
+    tar -xf dlib-18.18.tar.bz2
+
+    rm dlib-18.18.tar.bz2
+
+    #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
+    # Install dlib-models large file This is skiped as model in the openface are used to download the elements
+    # git clone https://github.com/davisking/dlib-models.git
+
+    # Install Torch
+    git clone https://github.com/torch/distro.git $HR_WORKSPACE/torch --recursive
+
+    cd torch
+
+    bash install-deps
+    echo no | ./install.sh
+
+    #Source. May be not needed.
+    # source ~/.bashrc
+
+    # Install lua packages in the torch file in scripts directory.
+
+    #for NAME in dpnn nn optim csvigo; do luarocks install $NAME; done
+    cd install/bin
+    ./luarocks install nn
+    ./luarocks install dpnn
+    ./luarocks install image
+    ./luarocks install optim
+    ./luarocks install csvigo
+    ./luarocks install sys
+
+    cd $HR_WORKSPACE
+
+    # Install openface
+
+    # Dependencies for openface
+
+    # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
+    sudo apt-get -y install python-skimage
+    for NAME in numpy pandas scipy scikit-learn; do sudo pip2 install $NAME; done
+
+    #TODO a checkout verison that works with the latest.
+    git clone https://github.com/cmusatyalab/openface.git --recursive
+
+    cd openface
+    cd models
+
+    # 150 Megabyes of data.
+    ./get-models.sh
+
+    # CMT and Emotime Libraries.
+
+
+    # CppMT i
+    cd $HR_WORKSPACE
+
+    #TODO this needs to be moved to a new HR repository.
+    git clone https://github.com/tesYolan/CppMT.git
+    cd CppMT
+    git checkout wrapper
+    cmake .
+    make
+
+    # Emotime Steps
+    cd $HR_WORKSPACE
+
+    #TODO this needs to be moved to a new HR repository
+    git clone https://github.com/tesYolan/emotime.git
+    cd emotime
+    cd build
+    cmake ..
+    make
+
+    cd $HR_WORKSPACE
+
+
 }
 
 check_or_create_ws() {
@@ -160,10 +246,29 @@ do_update_hr() {
     done
 }
 
+do_update_vision_tools() {
+
+    #Update CMT
+
+    local DEFAULT_BRANCH="wrapper"
+
+    cd $HR_WORKSPACE/CppMT
+
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    if [[ $branch != $DEFAULT_BRANCH ]]; then
+        continue
+    fi
+    git pull origin $DEFAULT_BRANCH
+
+    cmake .
+    make -j$(nproc)
+
+}
 do_install_deps() {
     install_basic
     install_ros
     install_other_deps
+    install_vision_deps
 }
 
 do_get_hr_src() {
@@ -182,6 +287,14 @@ do_build_hr() {
     if [[ ! -d .catkin_tools ]]; then
         catkin init
     fi
+
+    #TODO remove items unnecessary here to take it all out.
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/build/src
+    #Needed for compiling emotime as it's dependent upon it for it being built.
+    export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/build/src
+    export DLIB_PATH=$HR_WORKSPACE/dlib-18.18
+    include_dirs=($HR_WORKSPACE/emotime/src/{facedetector,utils,gaborbank,detector,training})
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/include:$include_dirs
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
@@ -211,6 +324,7 @@ do_test() {
 do_update() {
     update_opencog
     do_update_hr
+    do_update_vision_tools
 }
 
 do_run() {
