@@ -102,7 +102,7 @@ install_other_deps() {
 
 install_vision_deps() {
     # For Dlib
-    cd $HR_WORKSPACE
+    cd $HR_WORKSPACE/HEAD/src/vision
 
     wget http://dlib.net/files/dlib-18.18.tar.bz2
 
@@ -136,7 +136,7 @@ install_vision_deps() {
     ./luarocks install csvigo
     ./luarocks install sys
 
-    cd $HR_WORKSPACE
+    cd $HR_WORKSPACE/HEAD/src/vision
 
     # Install openface
 
@@ -159,7 +159,7 @@ install_vision_deps() {
 
 
     # CppMT i
-    cd $HR_WORKSPACE
+    cd $HR_WORKSPACE/HEAD/src/vision
 
     #TODO this needs to be moved to a new HR repository.
     git clone https://github.com/tesYolan/CppMT.git
@@ -169,7 +169,7 @@ install_vision_deps() {
     make
 
     # Emotime Steps
-    cd $HR_WORKSPACE
+    cd $HR_WORKSPACE/HEAD/src/vision
 
     #TODO this needs to be moved to a new HR repository
     git clone https://github.com/tesYolan/emotime.git
@@ -252,7 +252,7 @@ do_update_vision_tools() {
 
     local DEFAULT_BRANCH="wrapper"
 
-    cd $HR_WORKSPACE/CppMT
+    cd $HR_WORKSPACE/HEAD/src/CppMT
 
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [[ $branch != $DEFAULT_BRANCH ]]; then
@@ -287,7 +287,6 @@ do_build_hr() {
     if [[ ! -d .catkin_tools ]]; then
         catkin init
     fi
-
     #TODO remove items unnecessary here to take it all out.
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/build/src
     #Needed for compiling emotime as it's dependent upon it for it being built.

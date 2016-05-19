@@ -1,0 +1,582 @@
+#include "tracker_plugin.h"
+
+
+
+#define SSTR( x ) dynamic_cast< std::ostringstream & >(( std::ostringstream() << std::dec << x ) ).str()
+
+namespace rqt_tracker_view {
+
+tracker_plugin::tracker_plugin()
+  : rqt_gui_cpp::Plugin(),
+    widget_(0), it(nh)
+{
+
+  setObjectName("TrackerView");
+  //ui.setupUi(this);
+}
+
+void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
+{
+
+  widget_ = new QWidget();
+  ui.setupUi(widget_);
+
+  if (context.serialNumber() > 1)
+  {
+    // widget_->setWindowTitle(widget_->windowTitle() + " (" + QString::number(context.serialNumber()) + ")");
+    // widget_->setWindowTitle("Tray's ")
+  }
+  context.addWidget(widget_);
+
+  /**
+
+  Now here the methods and rules to run the scirpts are entirely run.
+
+  So it's assuming that there are rules that are placed in the notion of the scirpts to maintain the desired elements in the overall system.
+
+  also if the person has given in the parameters that are run with the script that is running then we would be able to run the system.
+  */
+
+  img.create(100, 100, CV_8UC3);
+  img.setTo(cv::Scalar(0,0,0));
+
+
+  firstrun = true;
+  ui.face_choice_method->addItem("Hand Selection Trackings");
+  ui.face_choice_method->addItem("Remove on LOST");
+  ui.face_choice_method->addItem("Face Recognition Method");
+
+  const QStandardItemModel* model = qobject_cast<const QStandardItemModel*>(ui.face_choice_method->model());
+  QStandardItem* item = model->item(2);
+
+  item->setFlags(disable ? item->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled) : Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+  // visually disable by greying out - works only if combobox has been painted already and palette returns the wanted color
+  item->setData(disable ? ui.face_choice_method->palette().color(QPalette::Disabled, QPalette::Text)
+                      : QVariant(), // clear item data in order to use default color
+              Qt::TextColorRole);
+
+  //Now Let's Add the User Interface for the debugging.
+  ui.paramsetters->addItem("Dlib-CMT Method");
+  ui.paramsetters->addItem("OpenCV-CMT Method");
+  ui.paramsetters->addItem("Show Pose(dlib)");
+  ui.paramsetters->addItem("Pi-Vision");
+  ui.paramsetters->addItem("Emotime-Enable");
+  ui.paramsetters->addItem("Dlib Tracker");
+  //Also Include the Click To Track;
+
+  nh.getParam("camera_topic", subscribe_topic);
+  nh.getParam("filtered_face_locations",subscribe_face);
+
+  face_subscriber = (nh).subscribe(subscribe_face, 1, &rqt_tracker_view::tracker_plugin::list_of_faces_update, this);
+  image_subscriber = it.subscribe(subscribe_topic, 1, &rqt_tracker_view::tracker_plugin::imageCb, this);
+  tracked_locations = nh.subscribe("tracker_results", 10 , &rqt_tracker_view::tracker_plugin::tracker_resultsCb, this);
+
+  // // image_publisher = it.advertise("/transformed/images", 1);
+
+  //This is a publisher to check initally by setting trackers in the rqt plugin.
+  tracker_locations_pub = (nh).advertise<cmt_tracker_msgs::Tracker>("tracking_location", 10);
+
+  client = nh.serviceClient<cmt_tracker_msgs::Clear>("clear");
+  image_client = nh.serviceClient<cmt_tracker_msgs::TrackedImages>("get_cmt_rects");
+  check_update = nh.serviceClient<cmt_tracker_msgs::Update>("update");
+
+  //This is subscribed here because of other nodes outside this rqt plugin  set tracker location and thus this extension
+  //must show the ability to show different elements in the process.
+  tracker_locations_sub = (nh).subscribe("tracking_location", 10 , &rqt_tracker_view::tracker_plugin::trackerCb, this);
+  nh.getParam("tracking_method", tracking_method);
+
+
+  connect(ui.face_choice_method, SIGNAL(currentIndexChanged(int)), this, SLOT(on_MethodChanged(int)));
+  connect(ui.face_output_list, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(on_addToTrack_clicked(QListWidgetItem *)));
+  connect(ui.removeAllTracked, SIGNAL(pressed()), this, SLOT(on_removeAllTracked_clicked()));
+  connect(ui.removeTracked, SIGNAL(pressed()), this, SLOT(on_removeTracked_clicked()));
+  connect(this, SIGNAL(updatefacelist()), this, SLOT(updateVisibleFaces()));
+  connect(ui.paramsetters,SIGNAL(currentIndexChanged(int)), this, SLOT(on_ParamChanged(int)));
+
+  if (tracking_method.compare("handtracking") == 0) ui.face_choice_method->setCurrentIndex(0);
+  else if (tracking_method.compare("mustbeface") == 0) ui.face_choice_method->setCurrentIndex(1);
+  else  ui.face_choice_method->setCurrentIndex(2);
+
+  std::string metho;
+  nh.getParam("face_detection_method",metho);
+  if (metho.compare("dlib") == 0) ui.paramsetters->setCurrentIndex(0);
+  else if (metho.compare("opencv") == 0) ui.paramsetters->setCurrentIndex(1);
+
+}
+
+void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
+{
+  try
+  {
+    // First let cv_bridge do its magic
+    cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(msg, sensor_msgs::image_encodings::RGB8);
+    conversion_mat_ = cv_ptr->image;
+  }
+  catch (cv_bridge::Exception& e)
+  {
+    try
+    {
+      // If we're here, there is no conversion that makes sense, but let's try to imagine a few first
+      cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(msg);
+      if (msg->encoding == "CV_8UC3")
+      {
+        // assuming it is rgb
+        conversion_mat_ = cv_ptr->image;
+      } else if (msg->encoding == "8UC1") {
+        // convert gray to rgb
+        cv::cvtColor(cv_ptr->image, conversion_mat_, CV_GRAY2RGB);
+      }  else {
+        qWarning("callback could not convert image from '%s' to 'rgb8' (%s)", msg->encoding.c_str(), e.what());
+        // ui_.image_frame->setImage(QImage());
+        return;
+      }
+    }
+    catch (cv_bridge::Exception& e)
+    {
+      qWarning("callback while trying to convert image from '%s' to 'rgb8' an exception was thrown (%s)", msg->encoding.c_str(), e.what());
+      // ui_.image_frame->setImage(QImage());
+      return;
+    }
+  }
+  //now update the results of the elements in the GUI thread. It's done here because the GUI thread and the call back thread
+  //are two different entities and since ros::spin() handles (unless specified otherwise) callbacks serially it's best to
+  //get the data's here sequentially.
+  mat_images.clear();
+  face_images.clear();
+  //emotion.clear();
+  cv::Mat image= conversion_mat_.clone();
+  for (std::vector<cmt_tracker_msgs::Object>::iterator v = face_locs.objects.begin(); v != face_locs.objects.end() ; ++v)
+  {
+    // From the render_face_detection.h to avoid creating another image publisher.
+   int pose;
+   nh.getParam("pose",pose);
+   if(pose && (*v).feature_point.points.size() == 68)
+   {
+
+    for (size_t j = 1 ; j<=16; ++j)
+    {
+      cv::Point x0;
+      x0.x = (*v).feature_point.points[j-1].x;
+      x0.y = (*v).feature_point.points[j-1].y;
+      cv::Point x1;
+      x1.x = (*v).feature_point.points[j].x;
+      x1.y = (*v).feature_point.points[j].y;
+
+    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+    for (size_t j = 28 ; j<=30; ++j)
+    {
+      cv::Point x0;
+      x0.x = (*v).feature_point.points[j-1].x;
+      x0.y = (*v).feature_point.points[j-1].y;
+      cv::Point x1;
+      x1.x = (*v).feature_point.points[j].x;
+      x1.y = (*v).feature_point.points[j].y;
+
+    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+    for (size_t j = 18 ; j<=21; ++j)
+    {
+      cv::Point x0;
+      x0.x = (*v).feature_point.points[j-1].x;
+      x0.y = (*v).feature_point.points[j-1].y;
+      cv::Point x1;
+      x1.x = (*v).feature_point.points[j].x;
+      x1.y = (*v).feature_point.points[j].y;
+//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
+    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+
+    for (size_t j = 23 ; j<=26; ++j)
+    {
+      cv::Point x0;
+      x0.x = (*v).feature_point.points[j-1].x;
+      x0.y = (*v).feature_point.points[j-1].y;
+      cv::Point x1;
+      x1.x = (*v).feature_point.points[j].x;
+      x1.y = (*v).feature_point.points[j].y;
+//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
+    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+
+    for (size_t j = 31 ; j<=35; ++j)
+    {
+      cv::Point x0;
+      x0.x = (*v).feature_point.points[j-1].x;
+      x0.y = (*v).feature_point.points[j-1].y;
+      cv::Point x1;
+      x1.x = (*v).feature_point.points[j].x;
+      x1.y = (*v).feature_point.points[j].y;
+//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
+    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+     cv::Point x0;
+      x0.x = (*v).feature_point.points[35].x;
+      x0.y = (*v).feature_point.points[35].y;
+     cv::Point x1;
+      x1.x = (*v).feature_point.points[30].x;
+      x1.y = (*v).feature_point.points[30].y;
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+
+    for (size_t j = 37 ; j<=41; ++j)
+    {
+      cv::Point x0;
+      x0.x = (*v).feature_point.points[j-1].x;
+      x0.y = (*v).feature_point.points[j-1].y;
+      cv::Point x1;
+      x1.x = (*v).feature_point.points[j].x;
+      x1.y = (*v).feature_point.points[j].y;
+//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
+    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+
+      x0.x = (*v).feature_point.points[41].x;
+      x0.y = (*v).feature_point.points[41].y;
+
+      x1.x = (*v).feature_point.points[36].x;
+      x1.y = (*v).feature_point.points[36].y;
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+
+    for (size_t j = 43 ; j<=47; ++j)
+    {
+      cv::Point x0;
+      x0.x = (*v).feature_point.points[j-1].x;
+      x0.y = (*v).feature_point.points[j-1].y;
+      cv::Point x1;
+      x1.x = (*v).feature_point.points[j].x;
+      x1.y = (*v).feature_point.points[j].y;
+//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
+    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+
+      x0.x = (*v).feature_point.points[47].x;
+      x0.y = (*v).feature_point.points[47].y;
+
+      x1.x = (*v).feature_point.points[42].x;
+      x1.y = (*v).feature_point.points[42].y;
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+
+    for (size_t j = 49 ; j<=59; ++j)
+    {
+      cv::Point x0;
+      x0.x = (*v).feature_point.points[j-1].x;
+      x0.y = (*v).feature_point.points[j-1].y;
+      cv::Point x1;
+      x1.x = (*v).feature_point.points[j].x;
+      x1.y = (*v).feature_point.points[j].y;
+
+    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+
+      x0.x = (*v).feature_point.points[48].x;
+      x0.y = (*v).feature_point.points[48].y;
+
+      x1.x = (*v).feature_point.points[59].x;
+      x1.y = (*v).feature_point.points[59].y;
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+
+    for (size_t j = 61 ; j<=67; ++j)
+    {
+      cv::Point x0;
+      x0.x = (*v).feature_point.points[j-1].x;
+      x0.y = (*v).feature_point.points[j-1].y;
+      cv::Point x1;
+      x1.x = (*v).feature_point.points[j].x;
+      x1.y = (*v).feature_point.points[j].y;
+//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
+    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+
+      x0.x = (*v).feature_point.points[60].x;
+      x0.y = (*v).feature_point.points[60].y;
+
+      x1.x = (*v).feature_point.points[67].x;
+      x1.y = (*v).feature_point.points[67].y;
+    cv::line(image,x1,x0,cv::Scalar(255,0,0));
+    }
+    cv::Mat mat = image(cv::Rect((*v).object.x_offset, (*v).object.y_offset,
+       (*v).object.width, (*v).object.height));
+    mat_images.push_back(mat);
+    face_images.push_back(QImage((uchar*) mat_images.back().data, mat_images.back().cols, mat_images.back().rows,
+                                 mat_images.back().step[0], QImage::Format_RGB888));
+    //emotion.push_back((*v).emotion_states.data);
+  }
+
+  tracked_image_mats.clear();
+  tracked_image_results.clear();
+  tracked_image_information.clear();
+
+  for (std::vector<cmt_tracker_msgs::Tracker>::iterator v = tracking_results.tracker_results.begin(); v != tracking_results.tracker_results.end() ; ++v)
+  {
+    std::string quality;
+    std::string previously_known;
+    if ((*v).quality_results.data)
+    {
+      quality =  "true";
+    }
+    else
+    {
+      quality = "false";
+    }
+
+    if ((*v).recognized.data)
+    {
+      previously_known = "true";
+    }
+    else {
+      previously_known = "false";
+    }
+    std::string value = "ID: " + (*v).tracker_name.data + "\n Known: " + previously_known +  "\n" + "IAP: " + SSTR((*v).initial_points.data) + "\n" + + "CAP: " + SSTR((*v).active_points.data)  + "\n" +  quality
+                        + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
+    tracked_image_information.push_back( value );
+
+    //Now here if the tracker results is positive then output this as a result of the image other wise update the results.
+    if ((*v).quality_results.data)
+    {
+      tracked_image_mats.push_back(image(cv::Rect((*v).object.object.x_offset, (*v).object.object.y_offset,
+       (*v).object.object.width, (*v).object.object.height)).clone());
+      tracked_image_results.push_back(QImage((uchar*) tracked_image_mats.back().data, tracked_image_mats.back().cols, tracked_image_mats.back().rows,
+                                             tracked_image_mats.back().step[0], QImage::Format_RGB888));
+    }
+    else {
+      tracked_image_mats.push_back(img);
+      tracked_image_results.push_back(QImage((uchar*) tracked_image_mats.back().data, tracked_image_mats.back().cols, tracked_image_mats.back().rows,
+                                             tracked_image_mats.back().step[0], QImage::Format_RGB888));
+
+    }
+  }
+  //Now before emiting let's check the cmt_tracker_node internal state and see if there is a need to do anything related to that.
+  nh.getParam("tracker_updated", tracker_updated_num);
+  if (tracker_updated_num == 2 || firstrun)
+  {
+    firstrun = false;
+    cmt_tracker_msgs::TrackedImages results;
+    if (image_client.call(results))
+    {
+      tracked_images.clear();
+      tracked_faces.clear();
+      tracked_images_names.clear();
+      for (std::vector<std::string>::iterator v = results.response.names.begin(); v != results.response.names.end(); ++v)
+      {
+        tracked_images_names.push_back(*v);
+      }
+      for (std::vector<sensor_msgs::Image>::const_iterator v = results.response.image.begin(); v != results.response.image.end(); ++v)
+      {
+        sensor_msgs::Image im = *v;
+        sensor_msgs::ImagePtr r = boost::shared_ptr<sensor_msgs::Image>(boost::make_shared<sensor_msgs::Image>(im));
+        //r = boost::shared_ptr<sensor_msgs::Image>(im);
+        cv_bridge::CvImageConstPtr cv_ptrs;
+        cv::Mat image;
+        try {
+          cv_ptrs = cv_bridge::toCvShare(r);
+          image = cv_ptrs->image;
+          cv::cvtColor(image, image, cv::COLOR_GRAY2RGB);
+        }
+        catch (cv_bridge::Exception& e)
+        {
+          std::cout << "Error" << std::endl;
+          return;
+        }
+        tracked_images.push_back(image);
+        tracked_faces.push_back(QImage((uchar*) tracked_images.back().data, tracked_images.back().cols,
+                                       tracked_images.back().rows, tracked_images.back().step[0], QImage::Format_RGB888));
+      }
+    }
+    nh.setParam("tracker_updated", 0);
+  }
+  emit updatefacelist();
+}
+
+/**
+This function is the one that update hte UI of all things related to the system.
+*/
+void tracker_plugin::updateVisibleFaces()
+{
+
+  ui.face_output_list->clear();
+  ui.tracker_output_list->clear();
+  ui.tracker_initial_list->clear();
+
+  int count_info = 0 ;//Zip Iterator Maybe
+  for (std::vector<QImage>::iterator v = face_images.begin(); v != face_images.end(); ++v)
+  {
+    ui.face_output_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), "faces"));
+    count_info++;
+  }
+
+  count_info = 0;
+  for (std::vector<QImage>::iterator v = tracked_faces.begin(); v != tracked_faces.end(); ++v)
+  {
+    ui.tracker_initial_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(tracked_images_names[count_info])));
+    count_info++;
+  }
+
+
+
+  count_info = 0;
+  for (std::vector<QImage>::iterator v = tracked_image_results.begin(); v != tracked_image_results.end(); ++v)
+  {
+    ui.tracker_output_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(tracked_image_information[count_info])));
+    count_info++;
+  }
+
+
+}
+/**
+The one is the one that update the value of the funciton .
+*/
+void tracker_plugin::list_of_faces_update(const cmt_tracker_msgs::Objects& faces_info)
+{
+  face_locs.objects.clear();
+  //May be better to use an iterator to handle the function.
+  for (std::vector<cmt_tracker_msgs::Object>::const_iterator v = faces_info.objects.begin(); v != faces_info.objects.end(); ++v)
+  {
+    face_locs.objects.push_back((*v));
+  }
+}
+
+void tracker_plugin::trackerCb(const cmt_tracker_msgs::Tracker& tracker_locs)
+{
+  track_published = tracker_locs;
+}
+void tracker_plugin::tracker_resultsCb(const cmt_tracker_msgs::Trackers& tracker_results)
+{
+  //Check whether this is invalided when the loop exits.
+  // = tracker_results;
+  tracking_results.tracker_results.clear();
+  for (std::vector<cmt_tracker_msgs::Tracker>::const_iterator v = tracker_results.tracker_results.begin(); v != tracker_results.tracker_results.end(); ++v)
+  {
+    tracking_results.tracker_results.push_back(*v);
+  }
+  
+}
+
+void tracker_plugin::shutdownPlugin()
+{
+  //Do shutdown objects here.
+  face_subscriber.shutdown();
+  image_subscriber.shutdown();
+}
+
+void tracker_plugin::on_MethodChanged(int index)
+{
+  // QString topic = ui.face_choice_method->itemData(ui.face_choice_method->currentIndex());
+  // tracking_method = index;
+  // std::cout << "The Index is:" << index <<std::endl;
+  //let's clear elements;
+  conf.doubles.clear();
+  //TODO remove these choice in the future iterations.
+  nh.setParam("tracking_method", "mustbeface");
+  double_param.name = "factor";
+  double_param.value = 30 ;
+  conf.doubles.push_back(double_param);
+
+  srv_req.config = conf;
+  ros::service::call("cmt_tracker_node/set_parameters", srv_req, srv_resp);
+  std::cout << "tracking method change 2" << std::endl;
+}
+/**
+* A functional change the values to listen parameters. Now
+*/
+void tracker_plugin::on_ParamChanged(int index)
+{
+  //Now this listens to parameters to handle all the conversion.
+  if(index == 0) {
+    nh.setParam("face_detection_method","dlib");
+
+    nh.setParam("pose",0);
+  }
+  else if(index == 1) {
+    nh.setParam("face_detection_method","opencv");
+
+    nh.setParam("pose",0);
+  }
+  else if(index == 2){
+    nh.setParam("pose",1);
+    nh.setParam("face_detection_method","dlib");
+
+  }
+  else if(index == 3) {
+    nh.setParam("pivision","set_pi");
+
+    nh.setParam("pose",0);
+  }
+  else if(index == 4) {
+    nh.setParam("emotime","True");
+
+    nh.setParam("pose",0);
+  }
+  else if(index == 5) {
+    
+  }
+
+  //Next also replace the image with another one.
+}
+/**
+ * @brief tracker_plugin::on_addToTrack_clicked
+ * Is a function that set's the parameters for the CMT tracker and also displays it in the viewframe trackedView
+ */
+void tracker_plugin::on_addToTrack_clicked(QListWidgetItem *item)
+{
+  int last_selected_item = ui.face_output_list->currentRow();
+  //Now here one publishes the last selected item in the list.
+
+  track_location.object = face_locs.objects[last_selected_item];
+
+  //Let's create here a name by which it's random.
+
+  tracker_locations_pub.publish(track_location);
+
+}
+/**
+ * @brief tracker_plugin::on_removeAllTracked_clicked
+ *
+ * is a fucntion that removes all the CMT tracking objects and clears the tracking objects in the scene.
+ *
+ */
+void tracker_plugin::on_removeAllTracked_clicked()
+{
+  //Here All Items need only be removed
+  // ui.tracker_initial_list->clear();
+  // ui.tracker_output_list->clear();
+  
+  cmt_tracker_msgs::Clear srv;
+  client.call(srv);
+  // {
+  //   std::cout << "Cleared" << std::endl;
+  // }
+  // else {
+  //   std::cout << "Not Cleared" << std::endl;
+  // }
+  // ui.tracker_initial_list->clear();
+}
+/**
+ * @brief tracker_plugin::on_removeTracked_clicked
+ *
+ * Removes selected tracking elements in the trackerView ELements.
+ */
+void tracker_plugin::on_removeTracked_clicked()
+{
+
+}
+/**
+ * @brief tracker_plugin::on_removeAllElements_clicked
+ *
+ * This is the fucntion that is placed as inital rough draft of the funciton in the user interface.
+ */
+void tracker_plugin::on_removeAllElements_clicked()
+{
+
+}
+
+}
+PLUGINLIB_EXPORT_CLASS(rqt_tracker_view::tracker_plugin, rqt_gui_cpp::Plugin)

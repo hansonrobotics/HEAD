@@ -1,0 +1,6 @@
+<launch>
+   <node name="emotime_node" pkg="emotime" type="emotime_node" output="screen"> 
+   <param name="config" value="$(find emotime)/params/haarcascade_frontalface_cbcl1.xml" />
+   <param name="config_e" value="$(find emotime)/params/haarcascade_eye.xml" />
+   </node>
+</launch>
