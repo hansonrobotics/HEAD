@@ -294,7 +294,8 @@ do_build_hr() {
     export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/build/src
     export DLIB_PATH=$HR_WORKSPACE/dlib-18.18
     include_dirs=($HR_WORKSPACE/emotime/src/{facedetector,utils,gaborbank,detector,training})
-    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/include:$include_dirs
+    include_path=$(printf "%s:" "${include_dirs[@]}")
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/include:$include_path
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
