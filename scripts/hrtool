@@ -294,6 +294,7 @@ do_build_hr() {
     export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/build/src
     export DLIB_PATH=$HR_WORKSPACE/dlib-18.18
     cd $DLIB_PATH && python setup.py build
+    cd $HR_WORKSPACE/$PROJECT
     include_dirs=($HR_WORKSPACE/emotime/src/{facedetector,utils,gaborbank,detector,training})
     export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/include:$include_dirs
     catkin clean -y || catkin clean -a
