@@ -13,6 +13,7 @@ import message_filters
 from cmt_tracker_msgs.msg import Trackers,Tracker,Objects
 from cmt_tracker_msgs.srv import TrackerNames
 from cmt_tracker_msgs.cfg import TrackerConfig
+from std_srvs.srv import Empty
 from dynamic_reconfigure.server import Server
 
 import numpy as np
@@ -83,7 +84,6 @@ class face_recognizer:
     self.filtered_face_locations = rospy.get_param('filtered_face_locations')
     self.shape_predictor_file = rospy.get_param("shape_predictor")
 
-
     self.image_dir = rospy.get_param("image_locations")
     self.image_dir_face_imgs = self.image_dir + "/faces"
 
@@ -95,6 +95,8 @@ class face_recognizer:
         file_path = os.path.join(self.image_dir_face_temp, the_file)
         shutil.rmtree(file_path)
 
+    # Declare ROS service.
+    self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
     self.feature_dir = self.image_dir + "/feature"
 
     if (not os.path.exists(self.image_dir_face_imgs)):
@@ -119,6 +121,11 @@ class face_recognizer:
     self.faces_recognized_lap = {}
 
     self.logger = logging.getLogger('hr.cmt_tracker.face_recognizer_node')
+    self.update = True
+  def can_update(self,req):
+      self.update = True
+      return []
+
   def callback(self,data, cmt, face):
     self.logger.debug('Overlap on face and tracker')
     try:
@@ -130,10 +137,11 @@ class face_recognizer:
     not_covered_faces,covered_faces = self.returnOverlapping(face,cmt)
     
     # Not Covered Faces
-    if len(not_covered_faces) > 0:
+    if len(not_covered_faces) > 0 and self.update:
         self.tracker_locations_pub.publish(self.convert(not_covered_faces))
         rospy.set_param('tracker_updated', 2)
         rospy.set_param("being_initialized_stop",1)
+        self.update = False
         print("New Faces to be added to tracker: " + str(len(not_covered_faces)))
     # Covered Faces Check:
     for face,cmt in covered_faces:

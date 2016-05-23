@@ -20,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
   pi_face_tracker
   tf
   image_geometry
-
+  std_srvs
 )
 find_package(OpenCV REQUIRED)
 find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)

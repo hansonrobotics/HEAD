@@ -29,7 +29,7 @@
 #include <pi_face_tracker/FaceEvent.h>
 #include <cmt_tracker_msgs/TrackerConfig.h>
 #include <dynamic_reconfigure/server.h>
-
+#include <std_srvs/Empty.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -133,6 +133,8 @@ private:
 	ros::ServiceServer update_service;
 	ros::ServiceServer recognition_service;
 
+    ros::ServiceClient add_to_tracker;
+    std_srvs::Empty empty_info;
 	image_transport::ImageTransport it_;
 
 	image_transport::CameraSubscriber image_sub_;

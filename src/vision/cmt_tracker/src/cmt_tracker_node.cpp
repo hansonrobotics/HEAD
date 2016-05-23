@@ -30,6 +30,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   update_service = nh_.advertiseService("update", &cmt_wrap::TrackerCMT::updated, this);
   recognition_service  = nh_.advertiseService("recognition", &cmt_wrap::TrackerCMT::updateTrackerNames,this);
 
+  add_to_tracker = nh_.serviceClient<std_srvs::Empty>("can_add_tracker");
   //subscribers
   face_subscriber = (nh_).subscribe(filtered_face_locations, 1, &cmt_wrap::TrackerCMT::list_of_faces_update, this);
   emo_results = (nh_).subscribe("emo_pub_registered",1,&cmt_wrap::TrackerCMT::list_of_faces_emo_update,this);
@@ -309,6 +310,8 @@ void TrackerCMT::set_trackers(const cmt_tracker_msgs::Trackers& tracker_location
   }
 
   nh_.setParam("tracker_updated", 2);
+
+  ros::service::call("can_add_tracker",empty_info);
 
 }
 
