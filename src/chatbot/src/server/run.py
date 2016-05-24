@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/env python2.7
 
 import os
@@ -44,13 +45,12 @@ sys.path.insert(0, os.path.join(CWD, '../scripts'))
 from flask import Flask, request, Response, send_from_directory
 import json
 import shutil
-from chatbot import (ask, list_character, update_character, get_character,
-            load_sheet_keys, commit_character, response_caches, set_weights,
-            dump_history)
+from chatbot import (ask, list_character, session_manager, set_weights,
+            dump_history, get_character, add_character, list_character_names)
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
-VERSION = 'v1'
+VERSION = 'v1.1'
 ROOT='/{}'.format(VERSION)
 
 logger = logging.getLogger('hr.chatbot.server')
@@ -58,122 +58,113 @@ app.config['UPLOAD_FOLDER'] = os.path.expanduser('~/.hr/aiml')
 
 @app.route(ROOT+'/chat', methods=['GET'])
 @requires_auth
-def chat():
+def _chat():
     data = request.args
-    id = data.get('botid')
     question = data.get('question')
     session = data.get('session')
     lang = data.get('lang', 'en')
-    response, ret = ask(id, question, lang, session)
+    response, ret = ask(question, lang, session)
     return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
-@app.route(ROOT+'/chat2', methods=['POST'])
-def chat2():
+@app.route(ROOT+'/batch_chat', methods=['POST'])
+def _batch_chat():
     auth = request.form.get('Auth')
     if not auth or not check_auth(auth):
         return authenticate()
 
-    id = request.form.get('botid')
     questions = request.form.get('questions')
     questions = json.loads(questions)
     session = request.form.get('session')
     lang = request.form.get('lang', 'en')
     responses = []
     for idx, question in questions:
-        response, ret = ask(id, str(question), lang, session)
+        response, ret = ask(str(question), lang, session)
         responses.append((idx, response, ret))
     return Response(json_encode({'ret': 0, 'response': responses}),
         mimetype="application/json")
 
 @app.route(ROOT+'/chatbots', methods=['GET'])
 @requires_auth
-def list_chatbot():
+def _chatbots():
     data = request.args
-    id = data.get('botid', None)
-    characters = list_character(id)
+    lang = data.get('lang', None)
+    session = data.get('session')
+    characters = list_character(lang, session)
     return Response(json_encode({'ret': 0, 'response': characters}),
+        mimetype="application/json")
+
+
+@app.route(ROOT+'/bot_names', methods=['GET'])
+@requires_auth
+def _bot_names():
+    names = list_character_names()
+    return Response(json_encode({'ret': 0, 'response': names}),
+        mimetype="application/json")
+
+@app.route(ROOT+'/start_session', methods=['GET'])
+@requires_auth
+def _start_session():
+    sid = session_manager.start_session()
+    sess = session_manager.get_session(sid)
+    sess.sdata.botname = request.args.get('botname')
+    sess.sdata.user = request.args.get('user')
+    return Response(json_encode({'ret': 0, 'sid': str(sid)}),
         mimetype="application/json")
 
 @app.route(ROOT+'/set_weights', methods=['GET'])
 @requires_auth
 def _set_weights():
     data = request.args
-    id = data.get('botid')
+    lang = data.get('lang', None)
     weights = data.get('weights')
-    ret, response = set_weights(id, weights)
+    session = data.get('session')
+    ret, response = set_weights(weights, lang, session)
     return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
-@app.route(ROOT+'/update', methods=['GET'])
-@requires_auth
-def update():
-    data = request.args
-    id = data.get('botid')
-    csv_version = data.get('csv_version', None)
-    create= data.get('create', None)
-    if create:
-        character = get_character(id, True)
-    ret, response = update_character(id, csv_version)
-    return Response(json_encode({
-            'ret': int(ret),
-            'response': response
-        }),
-        mimetype="application/json")
-
-@app.route(ROOT+'/set_keys', methods=['GET'])
-@requires_auth
-def set_keys():
-    data = request.args
-    id = data.get('botid')
-    sheet_keys = data.get('sheet_keys')
-    ret, response = load_sheet_keys(id, sheet_keys)
-    return Response(json_encode({
-            'ret': int(ret),
-            'response': response
-        }),
-        mimetype="application/json")
-
-@app.route(ROOT+'/commit', methods=['GET'])
-@requires_auth
-def commit():
-    data = request.args
-    id = data.get('botid')
-    ret, response = commit_character(id)
-    return Response(json_encode({
-            'ret': ret,
-            'response': response
-        }),
-        mimetype="application/json")
-
-@app.route(ROOT+'/send_csvdata', methods=['POST'])
-def send_csvdata():
+INCOMING_DIR = os.path.expanduser('~/.hr/aiml/incoming')
+@app.route(ROOT+'/upload_character', methods=['POST'])
+def _upload_character():
     auth = request.form.get('Auth')
     if not auth or not check_auth(auth):
         return authenticate()
-
     try:
-        id = request.form.get('botid')
-        ssid = request.form.get('ssid')
-        character = get_character(id, True) # make sure the character exists
-        zipfile = request.files.get('csvzipfile')
+        user = request.form.get('user')
+        zipfile = request.files.get('zipfile')
+        lang = request.files.get('lang')
+
+        saved_dir = os.path.join(INCOMING_DIR, user)
+        if not os.path.isdir(saved_dir):
+            os.makedirs(saved_dir)
 
         # Clean the incoming directory
-        for f in os.listdir(character.incoming_dir):
-            f = os.path.join(character.incoming_dir, f)
+        for f in os.listdir(saved_dir):
+            f = os.path.join(saved_dir, f)
             if os.path.isfile(f):
                 os.unlink(f)
             else:
                 shutil.rmtree(f, True)
-        saved_zipfile = os.path.join(character.incoming_dir, zipfile.filename)
+
+        saved_zipfile = os.path.join(saved_dir, zipfile.filename)
         zipfile.save(saved_zipfile)
-        with ZipFile(saved_zipfile) as f:
-            f.extractall(character.incoming_dir)
-        character.set_csv_dir(os.path.join(character.incoming_dir, ssid))
         logger.info("Get zip file {}".format(zipfile.filename))
+
+        from loader import AIMLCharacterZipLoader
+        characters = AIMLCharacterZipLoader.load(saved_zipfile, saved_dir, 'upload')
+        ret, response = True, "Done"
+        for character in characters:
+            character.local = False
+            character.id = '{}/{}'.format(user, character.id)
+            _ret, _response = add_character(character)
+            if not _ret:
+                ret = _ret
+                response = _response
+        os.remove(saved_zipfile)
+
         return Response(json_encode({
-                'ret': True,
-                'response': "Get zip file {}".format(zipfile.filename)
+                'ret': ret,
+                'response': response
             }),
             mimetype="application/json")
 
@@ -184,23 +175,23 @@ def send_csvdata():
             }),
             mimetype="application/json")
 
+
 @app.route('/log')
-def stream_log():
+def _log():
     def generate():
         with open(LOG_CONFIG_FILE) as f:
             for row in f:
                 yield row
     return Response(generate(), mimetype='text/plain')
 
-@app.route(ROOT+'/clean_cache', methods=['GET'])
+@app.route(ROOT+'/reset_session', methods=['GET'])
 @requires_auth
-def clean_cache():
+def _reset_session():
     data = request.args
-    session = data.get('session')
-    if session in response_caches:
-        cache = response_caches.pop(session)
-        cache.clean()
-        ret, response = True, "Cache cleaned"
+    sid = data.get('session')
+    if session_manager.has_session(sid):
+        session_manager.reset_session(sid)
+        ret, response = True, "Session reset"
     else:
         ret, response = False, "No such session"
     return Response(json_encode({
