@@ -151,6 +151,10 @@ def get_responding_characters(lang, sid):
     botname = sess.sdata.botname
     user = sess.sdata.user
     character = get_character(botname, lang)
+    if character is None:
+        logger.warn("Character {} with lang {} is not found".format(
+                    botname, lang))
+        return []
 
     # current character > local character with the same name > solr > generic
     responding_characters = get_characters_by_name(botname, local=False, lang=lang, user=user)
@@ -200,6 +204,7 @@ def ask(question, lang, sid):
 
     responding_characters = get_responding_characters(lang, sid)
     if not responding_characters:
+        logger.error("Wrong characer name")
         return response, WRONG_CHARACTER_NAME
 
     sess.characters = responding_characters
@@ -232,6 +237,7 @@ def ask(question, lang, sid):
         logger.info("Ask {}, response {}".format(question, response))
         return response, SUCCESS
     else:
+        logger.error("No pattern match")
         return response, NO_PATTERN_MATCH
 
 def dump_history():
