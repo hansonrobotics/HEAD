@@ -17,4 +17,8 @@ Launching it from sophia directory to launch it.
 * Refactoring the emotime related code in cmt_tracker_node.cpp
 * Include training in __init__ in face_recognizer.py to remove deleted classifiers.
 * Include sophia and pkd photos to start the classifier test.
-
+* Remove unnecessary arguments and parameters in the launcher and code.
+* Write a documentation.
+* Setting a Working location for places to save images.
+* Database based image saving or make the trainined classifier have the option to add new people into it.
+* Pose based image saving. 
