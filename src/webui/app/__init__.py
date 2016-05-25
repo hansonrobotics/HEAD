@@ -20,8 +20,9 @@ app = Flask(__name__, static_folder='../public/')
 app.config['CHAT_AUDIO_DIR'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, 'chat_audio')
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 config_root = rp.get_path('robots_config')
-performance_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, 'performances',
-                               'robots')
+performance_dir = os.path.join(rp.get_path('performances'), 'robots')
+#performance_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, 'performances',
+#                               'robots')
 
 app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
 #logger = logging.getLogger('hr.webui')
