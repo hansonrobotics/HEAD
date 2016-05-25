@@ -82,7 +82,6 @@ install_other_deps() {
     sudo cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
     rm -rf /tmp/festival
 
-
     # For OpenCog
     sudo apt-get -y install ccache
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
@@ -97,13 +96,10 @@ install_other_deps() {
     sudo apt-get -y install python-yaml
 
     # For open ear
-    sudo apt-get -y install portaudio19*
-    sudo apt-get -y install speex*
-
-
+    sudo apt-get -y install portaudio19-dev
+    sudo apt-get -y install speex
     clone hansonrobotics open_ear_lib_ros $HR_WORKSPACE
     cd $HR_WORKSPACE/open_ear_lib_ros  && ./build.sh
-
 }
 
 check_or_create_ws() {
@@ -183,7 +179,6 @@ do_get_hr_src() {
 do_get_src() {
     do_get_hr_src
     get_opencog_src
-    get_other_src
 }
 
 do_build_hr() {
