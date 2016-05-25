@@ -1,6 +1,6 @@
 <launch>
 
-<arg name="head_tracking_frame" default="chest_camera"/>
+<arg name="head_tracking_frame" default="camera"/>
 
 <arg name="choose_web_cam" default="False"/>
 
