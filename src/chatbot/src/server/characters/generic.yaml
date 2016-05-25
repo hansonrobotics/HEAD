@@ -4,5 +4,7 @@ name:
     generic
 weight:
     1
+level:
+    93
 aiml:
     - ../../../aiml/generic/*.aiml

@@ -16,15 +16,15 @@ from chatbot.cfg import ChatbotConfig
 import uuid
 
 logger = logging.getLogger('hr.chatbot.ai')
-VERSION = 'v1'
+VERSION = 'v1.1'
 key='AAAAB3NzaC'
 
 class Chatbot():
   def __init__(self):
     self.chatbot_url = 'http://localhost:8001'
-    self.botid = ''
-    self.session = uuid.uuid1()
-    self.clean_cache()
+    self.botname = rospy.get_param('botname', 'sophia')
+    self.user = 'hr'
+    self.session = self.start_session()
 
     # chatbot now saves a bit of simple state to handle sentiment analysis
     # after formulating a response it saves it in a buffer if S.A. active
@@ -59,30 +59,24 @@ class Chatbot():
     self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
 
-  def list_chatbot(self):
-    try:
-        r = requests.get(
-            '{}/{}/chatbots'.format(self.chatbot_url, VERSION), params={'Auth':key})
-        chatbots = r.json().get('response')
-    except Exception as ex:
-        logger.error(ex)
-        chatbots = []
-    return chatbots
-
-  def set_botid(self, botid):
-    characters = [c[0] for c in self.list_chatbot()]
-    if botid in characters:
-        self.botid = botid
-        logger.info("Set botid to {}".format(botid))
-    else:
-        logger.error("Botid {} is not on the list {}".format(botid, characters))
+  def start_session(self):
+      params = {
+        "Auth": key,
+        "botname": self.botname,
+        "user": self.user
+      }
+      r = requests.get('{}/{}/start_session'.format(
+        self.chatbot_url, VERSION), params=params)
+      ret = r.json().get('ret')
+      if r.status_code != 200:
+        raise Exception("Request error: {}\n".format(r.status_code))
+      return r.json().get('sid')
 
   def sentiment_active(self, active):
     self._sentiment_active = active
 
   def get_response(self, question, lang):
       params = {
-          "botid": "{}".format(self.botid),
           "question": "{}".format(question),
           "session": self.session,
           "lang": lang,
@@ -95,8 +89,8 @@ class Chatbot():
         logger.error("Request error: {}".format(r.status_code))
 
       if ret != 0:
-        logger.error("QA error: error code {}, botid {}, question {}".format(
-            ret, self.botid, question))
+        logger.error("QA error: error code {}, botname {}, question {}".format(
+            ret, self.botname, question))
 
       response = r.json().get('response', {})
 
@@ -108,13 +102,6 @@ class Chatbot():
 
   def _request_callback(self, chat_message):
     lang = rospy.get_param('lang', None)
-    if lang == 'zh':
-        self.set_botid(rospy.get_param('botid_zh', None))
-    elif lang == 'en':
-        self.set_botid(rospy.get_param('botid_en', None))
-    else:
-        logger.warn('Language {} is not supported'.format(lang))
-        return
 
     response = ''
 
@@ -180,23 +167,11 @@ class Chatbot():
     message.data = chat_message.utterance
     self._echo_publisher.publish(message)
 
-  def clean_cache(self):
-    params = {
-        "session": "{}".format(self.session),
-        "Auth": key
-    }
-    try:
-        r = requests.get('{}/{}/clean_cache'.format(self.chatbot_url, VERSION),
-                        params=params)
-        logger.info("Clean session cache {}".format(r.json()))
-    except requests.exceptions.ConnectionError as ex:
-        logger.info("Clean session cache error {}".format(ex))
-
   def reconfig(self, config, level):
     self.sentiment_active(config.sentiment)
     if self.chatbot_url != config.chatbot_url:
       self.chatbot_url = config.chatbot_url
-      self.clean_cache()
+      self.session = self.start_session()
     return config
 
 if __name__ == '__main__':

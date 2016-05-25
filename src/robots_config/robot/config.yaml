@@ -6,5 +6,4 @@ pau2motors:
     no_pau: EyeTurn-R;EyeTurn-L;Eyes-Up-Down}
 webui: {speech_recognition: webspeech}
 
-botid_en:
-    sophia
+botname: sophia

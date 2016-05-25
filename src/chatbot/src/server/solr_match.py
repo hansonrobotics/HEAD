@@ -62,8 +62,7 @@ def solr_aiml(text):
         logger.debug('RESPONSE: ' + lucText)
         jResp = json.loads(lucText)
         if jResp['response']['numFound'] > 0:
-            doc = jResp['response']['docs'][0]
-            lucResult = doc['title'][0]
+            lucResult = jResp['response']['docs'][0]
             return lucResult
 
 def parse_aiml_text(text):
@@ -89,3 +88,4 @@ if __name__ == '__main__':
     print solr3col('would you like to star in movies')
     print parse_aiml_text('hi')
     print parse_aiml_text('<think>hi</think>how are you')
+    print solr_aiml('what are your name') # correct grammar
