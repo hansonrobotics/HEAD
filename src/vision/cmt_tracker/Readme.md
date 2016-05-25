@@ -21,4 +21,4 @@ Launching it from sophia directory to launch it.
 * Write a documentation.
 * Setting a Working location for places to save images.
 * Database based image saving or make the trainined classifier have the option to add new people into it.
-* Pose based image saving. 
+* Pose based image saving.

@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
-
-#TODO launch the different variant of vision_tools in this repository along with RVIZ mapper in the system.
-
-#TODO CMT and EMotime with openface
-
-#TODO Pi Tracker in the system.
+#Pi_VISION
+export tool="$1"
+if [[ -z $tool ]]; then
+    echo "Using Pi Vision"
+    tool=pi_vision
+fi
+case $tool in
+    pi_vision)
+    echo "Using Pi"
+    roslaunch robots_config face_tracker.launch pi_vision:=1
+    ;;
+    cmt)
+    echo "Using CMT"
+    roslaunch robots_config face_tracker.launch pi_vision:=0
+    ;;
+esac
