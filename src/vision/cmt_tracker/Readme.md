@@ -33,4 +33,5 @@ Launching it from sophia directory to launch it.
     while in the system.
 * Incoprate a threshold of two to three frames for the tracker to readjust as the turnover
 rate is pretty much high.
-* Where are the saved images in HEAD repository? 
+* Where are the saved images in HEAD repository?
+* Pi_VISION division by zero erros in the system.
