@@ -162,10 +162,16 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-include_directories(include ${catkin_INCLUDE_DIRS})
-include_directories(include /usr/local/include/ros_open_ear/)
+include_directories(
+    include ${catkin_INCLUDE_DIRS}
+    /opt/HEAD/include/
+    /opt/HEAD/include/ros_open_ear
+)
 
-link_directories( /usr/local/lib )
+link_directories(
+    /usr/local/lib
+    /opt/HEAD/lib
+)
 
 add_executable(talker src/talker.cpp)
 target_link_libraries(talker ${catkin_LIBRARIES})

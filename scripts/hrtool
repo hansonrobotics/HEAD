@@ -99,7 +99,7 @@ install_other_deps() {
     sudo apt-get -y install portaudio19-dev
     sudo apt-get -y install speex
     clone hansonrobotics open_ear_lib_ros $HR_WORKSPACE
-    cd $HR_WORKSPACE/open_ear_lib_ros  && ./build.sh
+    cd $HR_WORKSPACE/open_ear_lib_ros  && ./build.sh --prefix=$HR_INSTALL_PATH
 }
 
 check_or_create_ws() {
@@ -322,6 +322,7 @@ eval DEFAULT_HR_WORKSPACE=~/hansonrobotics
 eval HR_ENVFILE_PATH=~/.hr/env.sh
 PROJECT=HEAD
 export PATH=/usr/lib/ccache:$PATH
+export HR_INSTALL_PATH=/opt/HEAD
 
 ############
 
