@@ -94,10 +94,6 @@ class Chatbot():
 
       response = r.json().get('response', {})
 
-      if r.status_code != 200 or ret != 0 or not response:
-        response['text'] = question
-        response['botid'] = 'mimic_bot'
-
       return response
 
   def _request_callback(self, chat_message):
