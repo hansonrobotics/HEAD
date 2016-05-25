@@ -122,7 +122,7 @@ add_executable(ros_nmpt_saliency_node src/ros_nmpt_saliency_node.cpp
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(ros_nmpt_saliency_node ros_nmpt_saliency_generate_messages_cpp)
+add_dependencies(ros_nmpt_saliency_node ros_nmpt_saliency_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(ros_nmpt_saliency_node
