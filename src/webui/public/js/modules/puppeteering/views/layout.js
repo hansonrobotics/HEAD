@@ -50,8 +50,8 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
             onAttach: function () {
                 var self = this;
 
-                this.ui.leftColumn.perfectScrollbar({suppressScrollX: true});
-                this.ui.rightColumn.perfectScrollbar({suppressScrollX: true});
+                this.ui.leftColumn.perfectScrollbar({suppressScrollX: true, wheelPropagation: true});
+                this.ui.rightColumn.perfectScrollbar({suppressScrollX: true, wheelPropagation: true});
 
                 // left col
                 this.posesView = new PosesView({config: {duration: {min: 1, max: 8}}});
@@ -91,7 +91,12 @@ define(['application', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/
                 this.animationsView.collection.on('add', updateDimensions);
             },
             updateDimensions: function () {
-                var height = App.LayoutInstance.getContentHeight();
+                var contentHeight = App.LayoutInstance.getContentHeight(),
+                    height = contentHeight;
+
+                if (this.ui.leftColumn.offset().left == this.ui.rightColumn.offset().left)
+                    height = 'auto';
+
                 this.ui.leftColumn.height(height).perfectScrollbar('update');
                 this.ui.rightColumn.height(height).perfectScrollbar('update');
                 this.chatView.setHeight(height - this.ui.controls.outerHeight());

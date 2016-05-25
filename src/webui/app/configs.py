@@ -98,8 +98,6 @@ class Configs:
     # Makes the entry for motors config
     def _add_motor(self,m):
         # Only dynamixels currently
-        if m['hardware'] != 'dynamixel':
-            return
         c = copy.deepcopy(self._MOTORS_TPL)
         # Copy values to template
         c['name'] = m['name']
@@ -112,12 +110,39 @@ class Configs:
         c['hardware'] = m['hardware']
         c['motor_id'] = m['motor_id']
         c['init'] = m['init']
-
-
         pau = self._get_pau(m)
+
         if pau:
             c['pau'] = pau
+
+        if m['hardware'] == 'dynamixel':
+            c['min'] = self.dynamixel_angle(m, m['min'])
+            c['max'] = self.dynamixel_angle(m, m['max'])
+        else:
+            calibration = self._pololu_calibration(m)
+            c['topic'] = m['topic']
+            c['max'] = calibration['max_angle']
+            c['min'] = calibration['min_angle']
+            c['speed'] = m['speed']
+            c['acceleration'] = m['acceleration']
+            c['default'] = 0
         self.motors.append(c)
+
+    @staticmethod
+    def _pololu_calibration(motor):
+        """
+        Initializes motor calibration values. Sets the min and max angles in radians
+        """
+        c = {
+            'min_angle': 0.0,
+            'max_angle': 0.0,
+        }
+        # set init position to 0 with range of 90 degrees
+        pa = 90 / float((motor['max'] - motor['min']))
+        c['min_angle'] = math.radians((motor['min'] - motor['init']) * pa)
+        c['max_angle'] = math.radians((motor['max'] - motor['init']) * pa)
+        return c
+
 
     def _get_pau(self,m):
         p = copy.deepcopy(self._PAU_TPL)

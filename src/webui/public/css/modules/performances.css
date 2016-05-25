@@ -12,6 +12,10 @@
     margin-bottom: 5px;
 }
 
+.app-performance-group-container {
+    width: 215px;
+}
+
 .performance-name-container {
     width: 390px;
 }
@@ -77,9 +81,21 @@
     position: relative;
     display: inline-block;
     line-height: 14px;
+    height: 20px;
     text-align: left;
     z-index: 999;
     cursor: pointer;
+    border: 1px solid #2B3E50;
+}
+
+.app-node[data-name="expression"] {
+    background-color: #517688;
+}
+
+.app-node .ui-resizable-handle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 .app-node-settings .ui-slider {
@@ -278,4 +294,12 @@ textarea.form-control.app-node-text {
 
 .app-lang-select {
     width: 100px;
+}
+
+.app-performance-group-tabs {
+    margin-bottom: 10px;
+}
+
+.app-current-path {
+    float: right !important;
 }

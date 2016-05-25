@@ -1,3 +1,7 @@
+.app-expressions-admin .app-motors,
+.app-expressions-admin .app-expressions {
+    position: relative;
+}
 .control-stack {
     width: 100%;
     max-width: 590px;
@@ -22,12 +26,6 @@
     float: right;
     border: none !important;
 }
-
-/*.btn {*/
-    /*color: #111;*/
-    /*background-color: #dc0;*/
-    /*border-color: #ffec03;*/
-/*}*/
 
 .header .btn-group {
     margin-left: 10px;

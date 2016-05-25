@@ -4,6 +4,7 @@ define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fad
               TimelinesView, $) {
         return Marionette.LayoutView.extend({
             template: template,
+            cssClass: 'app-performances-page',
             regions: {
                 performances: {
                     el: '.app-performances-region',
