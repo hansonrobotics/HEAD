@@ -8,7 +8,9 @@
  -
 -->
 <launch>
-    <!--<arg name="pi_vision" default="1"/>-->
+    <arg name="pi_vision" default="1"/>
+    <arg name="testing" default="False"/>
+    <group unless="$(arg testing)">
     <node pkg="usb_cam" type="usb_cam_node" name="camera">
       <param name="video_device" value="/dev/video0"/>
       <param name="pixel_format" value="yuyv"/>
@@ -20,6 +22,7 @@
       <param name="frame_id" value="camera"/>
     </node>
     <node ns="camera" name="cam_calib" pkg="image_proc" type="image_proc" />
+    </group>
     <group if="$(arg pi_vision)">
     <arg name="auto_face_tracking" default="True" />
     <node pkg="pi_face_tracker" name="body_face_tracker"
@@ -52,7 +55,7 @@
     </group>
 
  <group unless="$(arg pi_vision)">
-    <include file="$(find cmt_tracker)/launch/cmt_launcher.launch" ns="camera"/>
+    <include file="$(find cmt_tracker)/launch/cmt_launcher.launch" ns="camera" testing="$(arg testing)"/>
  </group>
 
 </launch>
