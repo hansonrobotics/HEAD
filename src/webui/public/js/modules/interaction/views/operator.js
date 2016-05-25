@@ -16,6 +16,9 @@ define(['application', 'marionette', 'tpl!./templates/operator.tpl', 'lib/api', 
             suggestions: {
                 predefined: []
             },
+            initialize: function (options) {
+                this.mergeOptions(options, ['interactionView']);
+            },
             onShow: function () {
                 var self = this;
                 this.ui.shortcutInfo.hide();

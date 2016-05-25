@@ -218,6 +218,16 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/blender_api/get_animation_mode',
                     messageType: 'std_msgs/Uint8'
+                }),
+                bug_log: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/webui/log/bugs',
+                    messageType: 'std_msgs/String'
+                }),
+                chat_log: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/webui/log/chat',
+                    messageType: 'std_msgs/String'
                 })
             };
         },
