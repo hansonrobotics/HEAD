@@ -150,14 +150,11 @@ def get_responding_characters(lang, sid):
 
     botname = sess.sdata.botname
     user = sess.sdata.user
-    character = get_character(botname, lang)
-    if character is None:
-        logger.warn("Character {} with lang {} is not found".format(
-                    botname, lang))
-        return []
 
     # current character > local character with the same name > solr > generic
     responding_characters = get_characters_by_name(botname, local=False, lang=lang, user=user)
+    responding_characters = sorted(responding_characters, key=lambda x: x.level)
+    character = responding_characters[0]
 
     if useSOLR:
         solr_character = get_character('solr_bot', lang)
@@ -182,13 +179,7 @@ def get_responding_characters(lang, sid):
     else:
         logger.warn("Generic character is not found")
 
-    #if character in responding_characters:
-    #    responding_characters.remove(character)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
-    # responding_characters.insert(0, character)
-    # if character in responding_characters:
-    #     idx = responding_characters.index(character)
-    #     responding_characters = responding_characters[idx:]
 
     return responding_characters
 
