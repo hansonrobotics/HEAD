@@ -10,6 +10,7 @@
 <launch>
     <arg name="pi_vision" default="1"/>
     <arg name="testing" default="False"/>
+    <arg name="viz" default="False"/>
     <group unless="$(arg testing)">
     <node pkg="usb_cam" type="usb_cam_node" name="camera">
       <param name="video_device" value="/dev/video0"/>
@@ -57,5 +58,7 @@
  <group unless="$(arg pi_vision)">
     <include file="$(find cmt_tracker)/launch/cmt_launcher.launch" ns="camera" testing="$(arg testing)"/>
  </group>
-
+<group if="$(arg viz)">
+    <include file="$(find robots_config)/launch/perception.launch" />
+</group>
 </launch>

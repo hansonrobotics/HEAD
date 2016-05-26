@@ -21,6 +21,10 @@ case $tool in
     echo "Using Pi"
     roslaunch robots_config face_tracker.launch pi_vision:=1
     ;;
+    pi_viz)
+    echo "Launching with RViZ"
+    roslaunch robots_config face_tracker.launch pi_vision:=1 viz:=1
+    ;;
     cmt)
     echo "Using CMT"
     roslaunch robots_config face_tracker.launch pi_vision:=0
@@ -30,4 +34,5 @@ case $tool in
     rosparam set use_sim_time true
     roslaunch robots_config face_tracker.launch pi_vision:=0 testing:=1
 esac
-
+# Enable visualzation tools
+roslaunch robots_config perception.launch
