@@ -29,7 +29,7 @@
                 <label>Message</label>
 
                 <div class="input-group">
-                    <input type="text" class="app-node-message-input form-control" title="Message" value="<%= message %>"/>
+                    <input type="text" class="app-node-message-input form-control" title="Message"/>
                 </div>
             </div>
             <% } %>
@@ -85,10 +85,11 @@
                     <div class="app-fps-slider"></div>
                 </div>
                 <div class="form-group">
-                    <label title="Arms">Blender Enabled</label>
+                    <label title="Arms">Blender Disabled</label>
                     <select class="app-kfmode-select">
-                        <option value="on">Yes</option>
-                        <option value="head">No</option>
+                        <option value="no">No</option>
+                        <option value="face">Face</option>
+                        <option value="all">All</option>
                     </select>
                 </div>
             <% } %>

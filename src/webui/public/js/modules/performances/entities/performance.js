@@ -4,62 +4,53 @@ define(['application', 'backbone', 'lib/api', './node_collection', './node'], fu
             return '/performances/' + api.config.robot;
         },
         initialize: function (options) {
-            var self = this,
-                nodes = new NodeCollection();
+            var self = this;
+            this.nodes = new NodeCollection();
 
-            this.set('nodes', nodes);
+            this.set('nodes', this.nodes);
             this.updateId();
 
             if (options && options.nodes) {
                 _.each(options.nodes, function (attributes) {
-                    nodes.add(new nodes.model(attributes));
+                    self.nodes.add(new self.nodes.model(attributes));
                 });
             }
 
             // trigger performance change on node change
-            nodes.on('change', function () {
-                self.trigger('change');
+            this.nodes.on('change', function () {
+                self.trigger('change:nodes');
+            });
+
+            // making sure nodes attribute holds NodeCollection instance
+            this.on('change', function () {
+                if (!(this.get('nodes') instanceof NodeCollection)) {
+                    // updating collection
+                    this.nodes.set(this.get('nodes'), {silent: true});
+                    this.set({'nodes': this.nodes}, {silent: true});
+                }
             });
 
             // update id
-            this.on('change:name', function () {
-                self.updateId();
-            });
-        },
-        /**
-         * Run after data fetch from server
-         *
-         * @param response
-         * @returns {*}
-         */
-        parse: function (response) {
-            // remove previous id
-            delete response['previous_id'];
-            this.unset('previous_id');
-
-            // keep instance of NodeCollection at nodes attribute
-            if (this.get('nodes') instanceof NodeCollection) {
-                // do not update node collection
-                delete response['nodes'];
-            }
-
-            return response;
+            this.on('change:name change:path', this.updateId);
         },
         updateId: function () {
-            if (this.get('name') && (this.changed['name'] || !this.get('id'))) {
-                this.set('id', this.get('name').toLowerCase()
-                    .replace(/ /g, '_')
-                    .replace(/[^\w-]+/g, '')
-                );
+            if (this.get('name')) {
+                var id = this.get('name').toLowerCase().replace(/ /g, '_').replace(/[^\w-]+/g, ''),
+                    path = this.get('path') ? this.get('path').split('/').slice(0, -1) : [];
 
-                if (!this.get('previous_id') && this.changed['id'])
-                    this.set('previous_id', this.previous('id'))
+                path.push(id);
+
+                this.set('id', id);
+                this.set('path', path.join('/'));
+
+                if (!this.get('previous_path') && this.previous('path'))
+                    this.set('previous_path', this.previous('path'));
             }
         },
         run: function (startTime, options) {
             var self = this;
             if (!options) options = {};
-            console.log(this.get('nodes').toJSON());
+
             api.services.performances.run.callService({
                 nodes: JSON.stringify(this.get('nodes').toJSON()),
                 startTime: startTime
@@ -143,17 +134,13 @@ define(['application', 'backbone', 'lib/api', './node_collection', './node'], fu
                 nodes.forEach(function (node) {
                     var startTime = node.get('start_time'),
                         nodeDuration = node.get('duration');
-                    if (startTime + nodeDuration > duration) {
-                        duration = startTime + nodeDuration
-                    }
+
+                    if (startTime && nodeDuration && startTime + nodeDuration > duration)
+                        duration = startTime + nodeDuration;
                 });
             }
 
             return duration;
-        },
-        getRunTime: function () {
-            if (this.start_time)
-                return Date.now() - this.start_time;
         },
         getResumeTime: function () {
             if ($.isNumeric(this.resumeTime))

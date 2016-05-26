@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
-from flask import Flask, send_from_directory, request, Response
+import fnmatch
+from flask import Flask, send_from_directory, request, Response, g
 from werkzeug.utils import secure_filename
 import reporter
 import yaml
@@ -11,9 +12,11 @@ from subprocess import Popen
 import datetime
 from monitor import get_logs
 from rospkg import RosPack
-from pi_face_tracker.msg import Faces,Face
+from pi_face_tracker.msg import Faces, Face
+
 rp = RosPack()
 import rospy
+
 json_encode = json.JSONEncoder().encode
 
 app = Flask(__name__, static_folder='../public/')
@@ -21,11 +24,17 @@ app.config['CHAT_AUDIO_DIR'] = os.path.join(os.path.dirname(os.path.abspath(__fi
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 config_root = rp.get_path('robots_config')
 performance_dir = os.path.join(rp.get_path('performances'), 'robots')
-#performance_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir, 'performances',
-#                               'robots')
 
 app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
-#logger = logging.getLogger('hr.webui')
+
+
+# logger = logging.getLogger('hr.webui')
+
+def get_pub():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = connect_to_database()
+    return db
 
 @app.route('/')
 def send_index():
@@ -52,7 +61,7 @@ def set_robot_config(robot_name):
     motors = json.loads(request.get_data())
     try:
         file_name = os.path.join(config_root, robot_name, 'config.yaml')
-        #write_yaml(file_name, motors)
+        # write_yaml(file_name, motors)
     except Exception as e:
         return json_encode({'error': str(e)})
 
@@ -168,18 +177,14 @@ def update_animations(robot_name):
 def get_performances(robot_name):
     performances = []
     try:
-        robot_performances = os.path.join(performance_dir, robot_name)
-        filenames = os.listdir(robot_performances)
-        filenames = sorted(filenames)
-        for filename in filenames:
-            yaml_file = os.path.join(robot_performances, filename)
-            if os.path.isfile(yaml_file) and yaml_file.endswith('.yaml'):
-                #logger.info('Load {}'.format(yaml_file))
-                performance = read_yaml(yaml_file)
-                print performance
+        root = os.path.join(performance_dir, robot_name)
+        for path, dirnames, filenames in os.walk(root):
+            for name in fnmatch.filter(filenames, '*.yaml'):
+                filename = os.path.join(path, name)
+                performance = read_yaml(filename)
+                relative = filename.split('/')[len(root.split('/')):]
+                performance['path'] = os.path.join(*relative).split('.')[0]
                 performances.append(performance)
-            #else:
-                #logger.warn('Ignore {}'.format(yaml_file))
     except Exception as e:
         print e
         return json_encode([])
@@ -190,21 +195,21 @@ def get_performances(robot_name):
 @app.route('/performances/<robot_name>/<id>', methods=['PUT', 'POST'])
 def update_performances(robot_name, id):
     performance = json.loads(request.get_data())
-    robot_performances = os.path.join(performance_dir, robot_name)
+    root = os.path.join(performance_dir, robot_name)
 
-    if not os.path.exists(robot_performances):
-        os.makedirs(robot_performances)
+    if not os.path.exists(root):
+        os.makedirs(root)
 
     try:
-        if 'previous_id' in performance:
-            prev_file = os.path.join(robot_performances, performance['previous_id'] + '.yaml')
-            if os.path.isfile(prev_file):
-                os.remove(prev_file)
+        if 'previous_path' in performance:
+            filename = os.path.join(root, performance['previous_path'] + '.yaml')
+            if os.path.isfile(filename):
+                os.remove(filename)
 
-            del performance['previous_id']
+            del performance['previous_path']
 
-        file_name = os.path.join(performance_dir, robot_name, id + '.yaml')
-        write_yaml(file_name, performance)
+        filename = os.path.join(root, (performance['path'] if 'path' in performance else id) + '.yaml')
+        write_yaml(filename, performance)
     except Exception as e:
         return json_encode({'error': str(e)})
 
@@ -221,6 +226,7 @@ def delete_performances(robot_name, id):
     else:
         return json_encode(False)
 
+
 @app.route('/run_performance', methods=['POST'])
 def start_performance():
     performance = request.get_data()
@@ -229,12 +235,17 @@ def start_performance():
     run_performance(js["key"])
     return json_encode({'result': True})
 
+@app.route('/slide_performance/<performance>', methods=['GET'])
+def slide_performance(performance):
+    print(performance)
+    run_performance(performance)
+    return json_encode({'result': True})
 
 @app.route('/lookat', methods=['POST'])
 def look_at():
     performance = request.get_data()
     js = json.loads(performance)
-    #js = {'x':1,'y':0.3,'z':-0.5}
+    # js = {'x':1,'y':0.3,'z':-0.5}
     f = Face()
     f.id = 1
     f.point.x = js["x"]
@@ -243,6 +254,44 @@ def look_at():
     f.attention = 0.99
     facePub.publish(Faces([f]))
     return json_encode({'result': True})
+
+@app.route('/realsense', methods=['POST'])
+def realsense():
+    stream = request.get_json()
+    #iterate over each element in json
+    f = Faces()
+    faces = []
+    if stream != None:
+        for i in stream:
+            if i is not None:
+                if 'people' in i and stream[i] is not None:
+                    for j in range(0,len(stream[i])):
+                        p = Face()
+                        p.id = stream[i][j]['ID']
+                        p.point.x = (stream[i][j]['z'])/1000.0
+                        p.point.y = -(stream[i][j]['x'])/1000.0  # Center of the face
+                        p.point.z = (stream[i][j]['y'])/1000.0
+
+                        # p.pose.x = stream[i][j]['rx']
+                        # p.pose.y = stream[i][j]['ry']
+                        # p.pose.z = stream[i][j]['rz']
+                        # p.pose.w = stream[i][j]['rw']
+
+                        p.attention = stream[i][j]['confidence'] # This is an indication that the depth image is near or far a way. Low values indicate that it's not a good value.
+
+                        #Now let's get the emotion related data out of the elements.
+
+                        # if stream[i][j]['expression'] is not None:
+                        #     for expressions in j['expression']: # Now this equivalent makes sure that there is alway the expression being processed in the realsense demo application
+                        #             p.emotions.append(str(expressions))
+                        #             p.emotion_values.append(stream[i][j]['expression'][expressions])
+                        faces.append(p)
+
+    if len(faces) > 0:
+        f.faces = faces # Check if it's not empty before publishing it.
+        facePub.publish(f)
+    return Response(json_encode({'success': True}), mimetype="application/json")
+
 
 def write_yaml(file_name, data):
     # delete existing config
@@ -287,16 +336,16 @@ def kill_node(node):
 def load_params(param_file, namespace):
     Popen("rosparam load " + param_file + " " + namespace, shell=True)
 
-def run_performance(performance):
-        Popen("rosservice call /performances/run_by_name \"{}\"".format(performance), shell=True)
 
+def run_performance(performance):
+    Popen("rosservice call /performances/run_by_name \"{}\"".format(performance), shell=True)
 
 
 if __name__ == '__main__':
-    #from rosgraph.roslogging import configure_logging
+    # from rosgraph.roslogging import configure_logging
 
-    #configure_logging(None, filename='ros_motors_webui.log')
-    #logger = logging.getLogger('hr.webui')
+    # configure_logging(None, filename='ros_motors_webui.log')
+    # logger = logging.getLogger('hr.webui')
 
     @app.route('/public/<path:path>')
     def send_js(path):
@@ -330,6 +379,6 @@ if __name__ == '__main__':
         context = (options.cert, options.key)
         app.run(host='0.0.0.0', debug=True, use_reloader=True, ssl_context=context, port=options.port)
     else:
-        rospy.init_node("webui_test")
-        facePub = rospy.Publisher("/camera/face_locations", Faces)
+        rospy.init_node("webui_test", anonymous=True)
+        facePub = rospy.Publisher("/camera/face_locations", Faces, queue_size=30)
         app.run(host='0.0.0.0', debug=True, use_reloader=False, port=options.port)

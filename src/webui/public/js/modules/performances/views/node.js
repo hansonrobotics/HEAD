@@ -47,6 +47,16 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 'change @ui.messageInput': 'setMessage',
                 'change @ui.btreeModeSelect': 'setBtreeMode',
                 'change @ui.speechEventSelect': 'setSpeechEvent',
+                'change @ui.kfModeSelect': 'setKFMode',
+            },
+            modelEvents: {
+                change: 'modelChanged'
+            },
+            modelChanged: function () {
+                if (this.model.hasChanged('start_time'))
+                    this.ui.startTime.val(this.model.get('start_time'));
+                if (this.model.hasChanged('duration'))
+                    this.ui.duration.val(this.model.get('duration'));
             },
             onRender: function () {
                 var self = this;
@@ -102,9 +112,12 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                         });
                         // init slider
                         if (!this.model.get('fps')) this.model.set('fps', 24);
-                        // Disable blender head output by default
-                        if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'on');
                         self.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');
+                        // Disable blender head output by default
+                        if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'no');
+                        self.ui.kfModeSelect.val(this.model.get('blender_mode'));
+                        console.log(this.model.get('blender_mode'));
+
                         this.ui.fpsSlider.slider({
                             animate: true,
                             range: 'min',
@@ -125,9 +138,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                             range: 'min',
                             min: -50,
                             max: 50,
-                            value: this.model.get('angle')*100,
+                            value: this.model.get('angle') * 100,
                             slide: function (e, ui) {
-                                self.model.set('angle', 0-parseFloat(ui.value)/100.0);
+                                self.model.set('angle', 0 - parseFloat(ui.value) / 100.0);
                                 self.model.call();
                                 self.ui.hrAngleLabel.html(parseFloat(self.model.get('angle')).toFixed(2) + ' rad');
                             }
@@ -197,8 +210,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                         this.model.set('duration', 0.2);
                         break;
                     case 'chat_pause':
-                        if (!this.model.get())
+                        if (!this.model.get('message'))
                             this.model.set('message', '');
+                        this.ui.messageInput.val(this.model.get('message'));
                 }
             },
             updateEmotions: function (emotions) {
@@ -381,13 +395,6 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 this.$el.slideUp(null, function () {
                     self.destroy();
                 });
-            },
-            initialize: function(){
-                this.model.on('change', function(){
-                    if (Math.abs(this.model.get('start_time') - Number($(this.ui.startTime).val())) > 0.01){
-                        $(this.ui.startTime).val(this.model.get('start_time'))
-                    }
-                }, this);
-            },
+            }
         });
     });

@@ -47,7 +47,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                             animations.push({name: name, frames: frames});
                         });
                     });
-                console.log(animations)
                 callback(animations);
             })
         },
@@ -496,26 +495,32 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         disableTtsOperatorMode: function () {
             this.setTtsMux('chatbot_responses');
         },
+        logChatMessage: function(message) {
+            api.topics.chat_log.publish({data: JSON.stringify(message)});
+        },
         setTtsMux: function (topic) {
             api.services.tts_select.default.callService(new ROSLIB.ServiceRequest({topic: topic}));
             api.services.tts_select.en.callService(new ROSLIB.ServiceRequest({topic: topic + '_en'}));
             api.services.tts_select.zh.callService(new ROSLIB.ServiceRequest({topic: topic + '_zh'}));
         },
-        setBTMode: function(mode){
+        setBTMode: function (mode) {
             api.topics.btMode.publish(
                 new ROSLIB.Message({
                     data: mode
                 })
             )
         },
+        bugReport: function (message) {
+            this.topics.bug_log.publish({data: message});
+        },
         btModes: {
-                    C_EXPRESSION: 1,
-                    C_GESTURE: 2,
-                    C_SOMA: 4,
-                    C_SACCADE: 8,
-                    C_EYES: 16,
-                    C_FACE: 32,
-                    C_ALL: 255
+            C_EXPRESSION: 1,
+            C_GESTURE: 2,
+            C_SOMA: 4,
+            C_SACCADE: 8,
+            C_EYES: 16,
+            C_FACE: 32,
+            C_ALL: 255
         }
     };
 

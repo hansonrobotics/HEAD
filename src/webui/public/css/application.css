@@ -122,3 +122,11 @@ Styling for JsonEditor slider extension
     margin-left: 110px;
 }
 
+.nav-tabs {
+    border-bottom: 1px solid #4E5D6C;
+}
+
+.navbar-brand {
+    max-width: 500px;
+    width: auto;
+}

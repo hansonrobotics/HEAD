@@ -19,8 +19,12 @@
                 <span id="app-connection-error" class="label label-danger" style="display: none">Connection error. Click to refresh</span>
             </span>
         </div>
-
-        <div id="app-navbar" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div id="app-navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><button title="Report a bug" class="app-report-button btn btn-default pull-right"><i
+                        class="fa fa-exclamation-circle"></i></button>
+                </li>
+            </ul>
             <ul id="app-nav" class="nav navbar-nav navbar-right">
                 <li><a href="#/puppeteering">Puppeteering</a></li>
                 <li><a href="#/performances">Performances</a></li>
