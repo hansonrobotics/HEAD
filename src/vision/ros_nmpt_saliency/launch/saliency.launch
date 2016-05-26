@@ -1,0 +1,6 @@
+<launch>
+
+<param name="debug" value="True"/>
+<node pkg="ros_nmpt_saliency" name="ros_nmpt_saliency_node" type="ros_nmpt_saliency_node" output="screen" />
+
+</launch>

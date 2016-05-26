@@ -14,37 +14,43 @@ full performance pipeline and infrastructure:
 
 ## Prerequisites
 
- * **Only Ubuntu 14.04 supported**
+ * **Only Ubuntu 14.04 is supported**
 
-## Install and Setup
+## Install, build and run
 
-Go to scripts directory
+* Get hrtool
 
-`cd scripts`
+`wget https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hrtool`
 
-### Install Dependencies
+* Make it executable
+
+`chmod +x hrtool`
+
+* Set the workspace, default workspace is ~/hansonrobotics (optional)
+
+`./hrtool -w <workspace>`
+
+* Get HEAD and OpenCog source code
+
+`./hrtool -G`
+
+* Install Dependencies
 
 `./hrtool -i`
 
-### Build
+* Build HR workspace and OpenCog
 
-- rebuilds HR workspace
+`./hrtool -B`
 
-   `./hrtool -b`
+* Run
 
-- rebuilds HR workspace and OpenCog
+`cd ~/hansonrobotics && ./dev.sh`
 
-    `./hrtool -B`
+* Open web browser
 
-### Run
+HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
-- `./dev.sh` to launch ros nodes and webui
+* Remove hrtool. After the source code is built we don't need this script anymore. 
 
-### Run Tests
+`rm ./hrtool`
 
-- `./test.sh`
-
-### Web Browser
-
-- HTTP: http://127.0.0.1:8000/
-- HTTPS: https://127.0.0.1:4000/
