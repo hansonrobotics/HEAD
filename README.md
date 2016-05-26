@@ -1,5 +1,7 @@
 # HEAD
 
+[![Build Status](http://61.92.69.39:8080/buildStatus/icon?job=ci-HEAD)](http://61.92.69.39:8080/view/hansonrobotics/job/ci-HEAD/)
+
 Hanson Environment for Application Development
 
 This repository contains the integrated code for controlling and
