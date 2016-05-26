@@ -87,6 +87,7 @@ class face_recognizer:
     self.image_dir = rospy.get_param("image_locations")
     self.image_dir_face_imgs = self.image_dir + "/faces"
     self.image_dir_face_temp = self.image_dir + "/tmp"
+    self.feature_dir = self.image_dir + "/feature"
 
     if (not os.path.exists(self.image_dir)):
         os.makedirs(self.image_dir)
@@ -104,7 +105,6 @@ class face_recognizer:
 
     # Declare ROS service.
     self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
-    self.feature_dir = self.image_dir + "/feature"
 
     self.tracker_locations_pub = rospy.Publisher("tracking_locations",Trackers,queue_size=5)
 

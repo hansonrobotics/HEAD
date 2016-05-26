@@ -56,7 +56,9 @@
     </group>
 
  <group unless="$(arg pi_vision)">
-    <include file="$(find cmt_tracker)/launch/cmt_launcher.launch" ns="camera" testing="$(arg testing)"/>
+    <include file="$(find cmt_tracker)/launch/cmt_launcher.launch" ns="camera" >
+        <arg name="testing" value="$(arg testing)" />
+    </include>
  </group>
 <group if="$(arg viz)">
     <include file="$(find robots_config)/launch/perception.launch" />
