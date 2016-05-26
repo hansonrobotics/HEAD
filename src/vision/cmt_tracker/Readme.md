@@ -6,9 +6,9 @@ First make sure the CMT library is installed
         ./hrtool -b
 
 
-Launching it from sophia directory to launch it. 
+Launching it from scripts directory to launch it.
 
-    roslaunch tracker-single-cam.launch    #This cause it's not been integrated to the full stack yet. 
+        ./vision.sh cmt
     
 
 #TODO
@@ -26,7 +26,7 @@ Launching it from sophia directory to launch it.
 # Urgent TODO's
 * Threading the cmt instances in process_mode in the main CppMT handlers. As this affects the speed in which the people are percieved.
 * Triple the size of the image to get smaller images as in the case of exhibition videos.
-* Improve face classifiers as it seems there are no faces in the screen.
+* Improve face classifiers as it seems there are no faces in the view most of the time.
 * Confidence based reinfocemnt for simple overlap. That is for every non
     overlap there needs to be a confidence decrease otherwise
     there would be garabage results for a

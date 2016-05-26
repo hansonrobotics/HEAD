@@ -86,9 +86,16 @@ class face_recognizer:
 
     self.image_dir = rospy.get_param("image_locations")
     self.image_dir_face_imgs = self.image_dir + "/faces"
-
-    #TODO remove all the temp images here to start up things.
     self.image_dir_face_temp = self.image_dir + "/tmp"
+
+    if (not os.path.exists(self.image_dir)):
+        os.makedirs(self.image_dir)
+    if (not os.path.exists(self.image_dir_face_imgs)):
+        os.makedirs(self.image_dir_face_imgs)
+    if (not os.path.exists(self.feature_dir)):
+        os.makedirs(self.feature_dir)
+
+
 
     # Delete all the items in temp folder so as not to consume space. May be when it's brought down we can delete them. or in destructor without sigterm.
     for the_file in os.listdir(self.image_dir_face_temp):
@@ -99,10 +106,6 @@ class face_recognizer:
     self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
     self.feature_dir = self.image_dir + "/feature"
 
-    if (not os.path.exists(self.image_dir_face_imgs)):
-        os.makedirs(self.image_dir_face_imgs)
-    if (not os.path.exists(self.feature_dir)):
-        os.makedirs(self.feature_dir)
     self.tracker_locations_pub = rospy.Publisher("tracking_locations",Trackers,queue_size=5)
 
     #Get Environmental variable for the file during start up.
