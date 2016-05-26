@@ -5,7 +5,6 @@ import os
 import logging
 import datetime as dt
 from auth import requires_auth
-from zipfile import ZipFile
 from auth import check_auth, authenticate
 
 log_dir = os.environ.get('ROS_LOG_DIR', os.path.expanduser('~/.hr/log'))
@@ -30,19 +29,19 @@ root_logger.addHandler(sh)
 import sys
 CWD = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(CWD, '..'))
-from flask import Flask, request, Response, send_from_directory
+from flask import Flask, request, Response
 import json
 import shutil
 from chatbot import (ask, list_character, session_manager, set_weights,
-            dump_history, get_character, add_character, list_character_names)
+            dump_history, add_character, list_character_names)
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
 VERSION = 'v1.1'
 ROOT='/{}'.format(VERSION)
+INCOMING_DIR = os.path.expanduser('~/.hr/aiml/incoming')
 
 logger = logging.getLogger('hr.chatbot.server')
-app.config['UPLOAD_FOLDER'] = os.path.expanduser('~/.hr/aiml')
 
 @app.route(ROOT+'/chat', methods=['GET'])
 @requires_auth
@@ -111,7 +110,6 @@ def _set_weights():
     return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
-INCOMING_DIR = os.path.expanduser('~/.hr/aiml/incoming')
 @app.route(ROOT+'/upload_character', methods=['POST'])
 def _upload_character():
     auth = request.form.get('Auth')

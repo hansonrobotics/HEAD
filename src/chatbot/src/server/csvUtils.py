@@ -3,10 +3,7 @@ import os
 import sys
 CWD = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(CWD, '..'))
-sys.path.insert(0, os.path.join(CWD, '../scripts'))
 import csv
-#from bs4 import BeautifulSoup
-#import logging
 
 escapes = ''.join([chr(char) for char in range(16, 17)])
 

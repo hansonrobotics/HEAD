@@ -2,9 +2,8 @@ import os
 import sys
 CWD = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(CWD, '..'))
-sys.path.insert(0, os.path.join(CWD, '../scripts'))
 import aiml
-import urllib, json
+import urllib
 import csv
 import logging
 import glob
