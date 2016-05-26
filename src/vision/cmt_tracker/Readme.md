@@ -22,3 +22,16 @@ Launching it from sophia directory to launch it.
 * Setting a Working location for places to save images.
 * Database based image saving or make the trainined classifier have the option to add new people into it.
 * Pose based image saving.
+
+# Urgent TODO's
+* Threading the cmt instances in process_mode in the main CppMT handlers. As this affects the speed in which the people are percieved.
+* Triple the size of the image to get smaller images as in the case of exhibition videos.
+* Improve face classifiers as it seems there are no faces in the screen.
+* Confidence based reinfocemnt for simple overlap. That is for every non
+    overlap there needs to be a confidence decrease otherwise
+    there would be garabage results for a
+    while in the system.
+* Incoprate a threshold of two to three frames for the tracker to readjust as the turnover
+rate is pretty much high.
+* Where are the saved images in HEAD repository?
+* Pi_VISION division by zero erros in the system.
