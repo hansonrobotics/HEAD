@@ -8,40 +8,28 @@ from auth import requires_auth
 from zipfile import ZipFile
 from auth import check_auth, authenticate
 
-LOG_CONFIG_FILE = os.environ.get('ROS_PYTHON_LOG_CONFIG_FILE', None)
-if LOG_CONFIG_FILE is not None:
-    import logging.config
-    import rosgraph
-    if 'ROS_LOG_DIR' not in os.environ:
-        os.environ['ROS_LOG_DIR'] = os.path.expanduser('~/.hr')
-    if 'ROS_LOG_FILENAME' not in os.environ:
-        os.environ['ROS_LOG_FILENAME'] = os.path.join(
-            os.environ['ROS_LOG_DIR'], 'chatbot_server.log')
-    logging.config.fileConfig(LOG_CONFIG_FILE)
-else:
-    log_dir = os.path.expanduser('~/.hr/log')
-    if not os.path.isdir(log_dir):
-        os.makedirs(log_dir)
-    LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(log_dir,
-            dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
-    link_log_fname = os.path.join(log_dir, 'chatbot_server_latest.log')
-    if os.path.islink(link_log_fname):
-        os.unlink(link_log_fname)
-    os.symlink(LOG_CONFIG_FILE, link_log_fname)
-    fh = logging.FileHandler(LOG_CONFIG_FILE)
-    sh = logging.StreamHandler()
-    formatter = logging.Formatter('[%(name)s][%(levelname)s] %(asctime)s: %(message)s')
-    fh.setFormatter(formatter)
-    sh.setFormatter(formatter)
-    root_logger = logging.getLogger()
-    root_logger.setLevel(logging.INFO)
-    root_logger.addHandler(fh)
-    root_logger.addHandler(sh)
+log_dir = os.environ.get('ROS_LOG_DIR', os.path.expanduser('~/.hr/log'))
+if not os.path.isdir(log_dir):
+    os.makedirs(log_dir)
+LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(log_dir,
+        dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
+link_log_fname = os.path.join(log_dir, 'chatbot_server_latest.log')
+if os.path.islink(link_log_fname):
+    os.unlink(link_log_fname)
+os.symlink(LOG_CONFIG_FILE, link_log_fname)
+fh = logging.FileHandler(LOG_CONFIG_FILE)
+sh = logging.StreamHandler()
+formatter = logging.Formatter('[%(name)s][%(levelname)s] %(asctime)s: %(message)s')
+fh.setFormatter(formatter)
+sh.setFormatter(formatter)
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.INFO)
+root_logger.addHandler(fh)
+root_logger.addHandler(sh)
 
 import sys
 CWD = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(CWD, '..'))
-sys.path.insert(0, os.path.join(CWD, '../scripts'))
 from flask import Flask, request, Response, send_from_directory
 import json
 import shutil
