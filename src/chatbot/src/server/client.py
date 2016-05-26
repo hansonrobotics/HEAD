@@ -2,7 +2,6 @@ import cmd
 import requests
 import json
 import os
-import uuid
 
 import sys
 reload(sys)

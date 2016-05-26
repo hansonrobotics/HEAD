@@ -1,24 +1,17 @@
 # -*- coding: utf-8 -*-
-import json
 import logging
-import server
-import requests
-from collections import defaultdict
 import random
 import os
 import sys
-import datetime as dt
 reload(sys)
 sys.setdefaultencoding('utf-8')
 import atexit
-import uuid
 
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
 
 useSOLR = True
-SESSION_TIMEOUT=60
 CWD = os.path.dirname(os.path.realpath(__file__))
 
 logger = logging.getLogger('hr.chatbot.server.chatbot')
