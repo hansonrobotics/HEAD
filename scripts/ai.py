@@ -117,7 +117,12 @@ class Chatbot():
       blink.data='chat_saying'
       self._blink_publisher.publish(blink)
 
-      answer = self.get_response(chat_message.utterance, lang)
+      try:
+        answer = self.get_response(chat_message.utterance, lang)
+      except Exception:
+        self.session = self.start_session()
+        answer = self.get_response(chat_message.utterance, lang)
+
       response = answer.get('text')
       emotion = answer.get('emotion')
       botid = answer.get('botid')
