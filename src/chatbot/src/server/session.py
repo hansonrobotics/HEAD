@@ -51,7 +51,10 @@ class Session(object):
         if self.cache.last_time is not None:
             return (dt.datetime.now() - self.cache.last_time).seconds
         else:
-            return (dt.datetime.now() - self.init).seconds
+            return (dt.datetime.now() - self.created).seconds
+
+    def since_reset(self):
+        return (dt.datetime.now() - self.init).seconds
 
     def __repr__(self):
         return "<Session {} init {} active {}>".format(
@@ -120,7 +123,7 @@ class SessionManager(object):
         while True:
             reset_sessions, remove_sessions = [], []
             for sid, s in self._sessions.iteritems():
-                if s.since_idle() > SESSION_RESET_TIMEOUT:
+                if s.since_reset() > SESSION_RESET_TIMEOUT:
                     reset_sessions.append(sid)
                 if s.since_idle() > SESSION_REMOVE_TIMEOUT:
                     remove_sessions.append(sid)

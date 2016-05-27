@@ -91,7 +91,7 @@ class ResponseCache(object):
         all_records = self.staged_record + self.record
         records_to_dump = all_records[self.cursor:]
         if not records_to_dump:
-            logger.info("Nothing to dump")
+            logger.debug("Nothing to dump")
             return
         with open(fname, 'a') as f:
             writer = csv.DictWriter(
