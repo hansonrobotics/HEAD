@@ -2,6 +2,7 @@ import cmd
 import requests
 import json
 import os
+import time
 
 import sys
 reload(sys)
@@ -22,7 +23,7 @@ class Client(cmd.Cmd, object):
         self.lang = 'en'
         self.user = 'client'
         self.session = None
-        self.set_sid()
+        self.do_conn()
 
     def set_sid(self):
         params = {
@@ -30,7 +31,19 @@ class Client(cmd.Cmd, object):
             "botname": self.botname,
             "user": self.user
         }
-        r = requests.get('{}/start_session'.format(self.chatbot_url), params=params)
+        r = None
+        retry = 3
+        while r is None and retry > 0:
+            try:
+                r = requests.get('{}/start_session'.format(self.chatbot_url), params=params)
+            except Exception:
+                retry -= 1
+                self.stdout.write('.')
+                self.stdout.flush()
+                time.sleep(1)
+        if r is None:
+            self.stdout.write("Can't get session\n")
+            return
         ret = r.json().get('ret')
         if r.status_code != 200:
             self.stdout.write("Request error: {}\n".format(r.status_code))
@@ -77,7 +90,7 @@ class Client(cmd.Cmd, object):
             if line:
                 ret, response = self.ask(line)
                 if ret != 0:
-                    self.set_sid()
+                    self.do_conn()
                     ret, response = self.ask(line)
                 self.stdout.write('{}[by {}]: {}\n'.format(
                     self.botname, response.get('botid'),
@@ -117,14 +130,25 @@ class Client(cmd.Cmd, object):
     def help_select(self):
         self.stdout.write("Select chatbot\n")
 
-    def do_conn(self, line):
-        self.chatbot_url = line
+    def do_conn(self, line=None):
+        if line:
+            try:
+                self.chatbot_ip, self.chatbot_port = line.split(':')
+                self.chatbot_url = 'http://{}:{}/{}'.format(
+                    self.chatbot_ip, self.chatbot_port, VERSION)
+            except Exception:
+                self.stdout.write("Wrong conn argument\n")
+                self.help_conn()
+                return
+        self.stdout.write("Connecting.")
+        self.set_sid()
 
     def help_conn(self):
         s = """
 Connect to chatbot server
-Syntax: conn url:port
-For example, conn 127.0.0.1:8001
+Syntax: conn [url:port]
+For example, conn
+             conn 127.0.0.1:8001
 
 """
         self.stdout.write(s)
