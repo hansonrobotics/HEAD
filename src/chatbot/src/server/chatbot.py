@@ -10,6 +10,7 @@ import atexit
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
+INVALID_SESSION=3
 
 useSOLR = True
 CWD = os.path.dirname(os.path.realpath(__file__))
@@ -180,11 +181,11 @@ def ask(question, lang, sid):
     """
     return (response dict, return code)
     """
+    response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+
     sess = session_manager.get_session(sid)
     if sess is None:
-        return []
-
-    response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+        return response, INVALID_SESSION
 
     responding_characters = get_responding_characters(lang, sid)
     if not responding_characters:
