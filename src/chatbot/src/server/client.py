@@ -35,6 +35,7 @@ class Client(cmd.Cmd, object):
         if r.status_code != 200:
             self.stdout.write("Request error: {}\n".format(r.status_code))
         self.session = r.json().get('sid')
+        self.stdout.write("New session {}\n".format(self.session))
 
     def ask(self, question):
         params = {
@@ -55,7 +56,7 @@ class Client(cmd.Cmd, object):
         response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
         response.update(r.json().get('response'))
 
-        return response
+        return ret, response
 
     def list_chatbot(self):
         params={'Auth':key, 'lang':self.lang, 'session': self.session}
@@ -74,7 +75,10 @@ class Client(cmd.Cmd, object):
     def default(self, line):
         try:
             if line:
-                response = self.ask(line)
+                ret, response = self.ask(line)
+                if ret != 0:
+                    self.set_sid()
+                    ret, response = self.ask(line)
                 self.stdout.write('{}[by {}]: {}\n'.format(
                     self.botname, response.get('botid'),
                     response.get('text')))
