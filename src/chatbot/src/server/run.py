@@ -199,6 +199,11 @@ def _dump_history():
         }),
         mimetype="application/json")
 
+@app.route(ROOT+'/ping', methods=['GET'])
+def _ping():
+    return Response(json_encode({'ret': 0, 'response': 'pong'}),
+        mimetype="application/json")
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         port = int(sys.argv[1])

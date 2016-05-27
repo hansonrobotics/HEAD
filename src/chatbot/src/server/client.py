@@ -12,8 +12,8 @@ VERSION = 'v1.1'
 key='AAAAB3NzaC'
 
 class Client(cmd.Cmd, object):
-    def __init__(self):
-        super(Client, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super(Client, self).__init__(*args, **kwargs)
         self.prompt = '[me]: '
         self.botname = 'sophia'
         self.chatbot_ip = 'localhost'
@@ -273,6 +273,19 @@ Syntax: upload package
 """
         self.stdout.write(s)
 
+    def ping(self):
+        try:
+            r = requests.get('{}/ping'.format(self.chatbot_url))
+            response = r.json().get('response')
+            if response == 'pong':
+                return True
+        except Exception:
+            return False
+
+    def do_ping(self, line):
+        if self.ping():
+            self.stdout.write('pong')
+        self.stdout.write('\n')
 
 if __name__ == '__main__':
     client = Client()
