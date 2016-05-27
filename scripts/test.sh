@@ -21,4 +21,5 @@ export ROS_LOG_DIR="$HOME/.hr/log"
 cd $HR_WORKSPACE/$PROJECT
 rostest pi_face_tracker test_pi_face_tracker.test
 python src/hardware/pau2motors/test/test_pau2motors.py
+python src/chatbot/test/test_chatbot.py
 cd $HR_WORKSPACE
