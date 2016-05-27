@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import chatbot
 import aiml
 import rospy
 import os
@@ -14,6 +13,7 @@ from std_msgs.msg import String
 from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
 import uuid
+import time
 
 logger = logging.getLogger('hr.chatbot.ai')
 VERSION = 'v1.1'
@@ -24,6 +24,9 @@ class Chatbot():
     self.chatbot_url = 'http://localhost:8001'
     self.botname = rospy.get_param('botname', 'sophia')
     self.user = 'hr'
+    while not self.ping():
+        logger.info("Ping server")
+        time.sleep(1)
     self.session = self.start_session()
 
     # chatbot now saves a bit of simple state to handle sentiment analysis
@@ -58,6 +61,15 @@ class Chatbot():
     # Echo chat messages as plain strings.
     self._echo_publisher = rospy.Publisher('perceived_text', String, queue_size=1)
     rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
+
+  def ping(self):
+    try:
+      r = requests.get('{}/{}/ping'.format(self.chatbot_url, VERSION))
+      response = r.json().get('response')
+      if response == 'pong':
+        return True
+    except Exception:
+      return False
 
   def start_session(self):
       params = {
