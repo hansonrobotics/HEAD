@@ -130,7 +130,10 @@ def _ask_characters(characters, question, lang, sid):
 
     dummy_character = get_character('dummy', lang)
     if dummy_character:
-        _response = dummy_character.respond(_question, lang, sid)
+        if not sess.check(_question, answer, lang):
+            _response = dummy_character.respond("REPEAT_ANSWER", lang, sid)
+        else:
+            _response = dummy_character.respond("NO_ANSWER", lang, sid)
         answer = _response.get('text', '')
         sess.add(_question, answer)
         return _response
