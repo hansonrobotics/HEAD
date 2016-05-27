@@ -31,7 +31,9 @@ class ResponseCache(object):
         s = ' '.join(s.split()) # remove consecutive spaces
         return s
 
-    def check(self, question, answer):
+    def check(self, question, answer, lang):
+        if lang == 'zh':
+            return True
         if self._norm(answer) == self.last_answer:
             return False
         if not self.is_unique(answer):

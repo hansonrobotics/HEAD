@@ -255,7 +255,7 @@ class Kernel:
     def _deleteSession(self, sessionID):
         """Delete the specified session."""
         if self._sessions.has_key(sessionID):
-            _sessions.pop(sessionID)
+            self._sessions.pop(sessionID)
 
     def getSessionData(self, sessionID = None):
         """Return a copy of the session data dictionary for the

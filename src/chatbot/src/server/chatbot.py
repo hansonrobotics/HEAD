@@ -1,5 +1,4 @@
-from characters import CHARACTERS
-from character import SheetAIMLCharacter
+# -*- coding: utf-8 -*-
 import json
 import logging
 import server
@@ -12,226 +11,233 @@ import datetime as dt
 reload(sys)
 sys.setdefaultencoding('utf-8')
 import atexit
+import uuid
 
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
 
-useSOLR = False
-SESSION_TIMEOUT=300
+useSOLR = True
+SESSION_TIMEOUT=60
 CWD = os.path.dirname(os.path.realpath(__file__))
 
 logger = logging.getLogger('hr.chatbot.server.chatbot')
 
-def get_character(id, create=False):
+from loader import load_characters
+DEFAULT_CHARACTER_PATH = os.path.join(CWD, 'characters')
+CHARACTER_PATH = os.environ.get('HR_CHARACTER_PATH', DEFAULT_CHARACTER_PATH)
+CHARACTERS = load_characters(CHARACTER_PATH)
+
+def get_character(id, lang=None):
     for character in CHARACTERS:
-        if character.id == id:
+        if character.id != id:
+            continue
+        if lang is None:
             return character
-    if create:
-        character = SheetAIMLCharacter(id, 'sophia', 1)
-        character.set_property_file(os.path.join(
-            CWD, '..', '..', 'character_aiml', 'sophia.properties'))
+        elif lang in character.languages:
+            return character
+
+def add_character(character):
+    if character.id not in [c.id for c in CHARACTERS]:
         CHARACTERS.append(character)
-        logger.info("Create SheetAIMLCharacter {}".format(character))
-        return character
+        return True, "Character added"
+    #TODO: Update character
+    else:
+        return False, "Character exists"
 
 def is_local_character(character):
-    if isinstance(character, server.character.SheetAIMLCharacter) or \
-            isinstance(character, SheetAIMLCharacter):
-        return False
-    return True
+    return character.local
 
-def get_characters_by_name(name, local=True):
-    characters = [c for c in CHARACTERS if c.name == name]
+def get_characters_by_name(name, local=True, lang=None, user=None):
+    characters = []
+    _characters = [c for c in CHARACTERS if c.name == name]
     if local:
-        characters = [c for c in characters if is_local_character(c)]
+        _characters = [c for c in _characters if is_local_character(c)]
+    if lang is not None:
+        _characters = [c for c in _characters if lang in c.languages]
+
+    if user is not None:
+        for c in _characters:
+            toks = c.id.split('/')
+            if len(toks) == 2:
+                if toks[0] == user:
+                    characters.append(c)
+            else:
+                characters.append(c)
+    else:
+        characters = _characters
     return characters
 
-def list_character(id=None):
-    if id is not None:
-        responding_characters = get_responding_characters(id)
-        return [(c.id, c.weight) for c in responding_characters]
+def list_character(lang, sid):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return []
+    responding_characters = get_responding_characters(lang, sid)
+    if hasattr(sess.sdata, 'weights'):
+        return [(c.id, w, c.level) for c, w in zip(
+                responding_characters, sess.sdata.weights)]
     else:
-        return [(c.id, c.weight) for c in CHARACTERS]
+        return [(c.id, c.weight, c.level) for c in responding_characters]
 
-def set_weights(id, weights):
+def list_character_names():
+    names = list(set([c.name for c in CHARACTERS if c.name != 'dummy']))
+    return names
+
+def set_weights(weights, lang, sid):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return False, "No session"
     try:
         weights = [float(w.strip()) for w in weights.split(',')]
     except Exception:
         return False, "Wrong weight format"
-    responding_characters = get_responding_characters(id)
+    responding_characters = get_responding_characters(lang, sid)
     if len(weights) != len(responding_characters):
         return False, "Number of weights doesn't match number of tiers {}".format(weights)
-    for c, weight in zip(responding_characters, weights):
-        c.weight = weight
+    sess.sdata.weights = weights
     return True, "Weights are updated"
 
-def update_character(id, csv_version=None):
-    character = get_character(id)
-    if not character:
-        return False, "Character {} is not found".format(id)
-    if isinstance(character, server.character.SheetAIMLCharacter) or \
-            isinstance(character, SheetAIMLCharacter):
-        try:
-            character.load_csv_files(csv_version)
-        except Exception as ex:
-            logger.error(ex)
-            return False, "Update {} failed\n{}".format(id, ex)
-        return True, "{} is updated".format(id)
-    else:
-        return False, "Character {} doesn't support update".format(id)
-    return False
-
-def load_sheet_keys(id, sheet_keys):
-    character = get_character(id, True)
-    if not character:
-        return False, "Character {} is not found".format(id)
-    if not sheet_keys:
-        return False, "No sheet key is set"
-    if isinstance(character, server.character.SheetAIMLCharacter) or \
-            isinstance(character, SheetAIMLCharacter):
-        return character.load_sheet_keys(sheet_keys)
-    else:
-        return False, "Character doesn't support sheet keys"
-    return False, "Unknown error"
-
-def commit_character(id):
-    character = get_character(id)
-    if not character:
-        return False, "Character {} is not found".format(id)
-    if isinstance(character, server.character.SheetAIMLCharacter) or \
-            isinstance(character, SheetAIMLCharacter):
-        return character.commit()
-    else:
-        return False, "Character {} doesn't support committing".format(character)
-
-from response_cache import ResponseCache
-response_caches = dict() # session -> response cache dict
+from session import SessionManager
+session_manager = SessionManager()
 MAX_CHAT_TRIES = 5
-def _ask_characters(characters, question, lang, session):
-    global response_caches
+NON_REPEAT = True
+def _ask_characters(characters, question, lang, sid):
     chat_tries = 0
-    if session not in response_caches:
-        response_caches[session] = ResponseCache()
-    cache = response_caches.get(session)
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return
 
-    weights = [c.weight for c in characters]
+    data = sess.get_session_data()
+    if hasattr(data, 'weights'):
+        weights = data.weights
+    else:
+        weights = [c.weight for c in characters]
+
     _question = question.lower().strip()
     _question = ' '.join(_question.split()) # remove consecutive spaces
-    num_tier = len(characters)
     while chat_tries < MAX_CHAT_TRIES:
         chat_tries += 1
-        _responses = [c.respond(_question, lang, session) for c in characters]
-        for r in _responses:
-            assert isinstance(r, dict), "Response must be a dict"
-        answers = [r.get('text', '') for r in _responses]
-
-        # Each tier has weight*100% chance to be selected.
-        # If the chance goes to the last tier, it will be selected anyway.
-        for idx, answer in enumerate(answers):
+        for c, weight in zip(characters, weights):
+            _response = c.respond(_question, lang, sid)
+            assert isinstance(_response, dict), "Response must be a dict"
+            answer = _response.get('text', '')
             if not answer:
                 continue
-            if random.random()<weights[idx]:
-                if cache.check(_question, answer):
-                    cache.add(_question, answer)
-                    return _responses[idx]
 
-    c = get_character('sophia_pickup')
-    if c is not None:
-        chat_tries = 0
-        while chat_tries < MAX_CHAT_TRIES:
-            chat_tries += 1
-            if random.random() > 0.7:
-                _response = c.respond('early random pickup', lang, session)
-                _response['state'] = 'early random pickup'
-            else:
-                _response = c.respond('mid random pickup', lang, session)
-                _response['state'] = 'mid random pickup'
-            answer = _response.get('text', '')
-            if cache.check(_question, answer):
-                cache.add(_question, answer)
-                return _response
+            # Each tier has weight*100% chance to be selected.
+            # If the chance goes to the last tier, it will be selected anyway.
+            if random.random()<weight:
+                if not NON_REPEAT or sess.check(_question, answer, lang):
+                    sess.add(_question, answer)
+                    return _response
 
-    _response = {}
-    answer = "Sorry, I can't answer that"
-    _response['text'] = answer
-    _response['botid'] = "dummy"
-    _response['botname'] = "dummy"
-    cache.add(_question, answer)
-    return _response
+    # Ask the same question to every tier to sync internal state
+    [c.respond(_question, lang, sid) for c in characters]
 
-def get_responding_characters(id):
-    character = get_character(id)
-    if not character:
+    dummy_character = get_character('dummy', lang)
+    if dummy_character:
+        _response = dummy_character.respond(_question, lang, sid)
+        answer = _response.get('text', '')
+        sess.add(_question, answer)
+        return _response
+
+def get_responding_characters(lang, sid):
+    sess = session_manager.get_session(sid)
+    if sess is None:
         return []
-    botname = character.name
+    if not hasattr(sess.sdata, 'botname'):
+        return []
+
+    botname = sess.sdata.botname
+    user = sess.sdata.user
 
     # current character > local character with the same name > solr > generic
-    responding_characters = get_characters_by_name(botname, local=True)
-    if character in responding_characters:
-        responding_characters.remove(character)
+    responding_characters = get_characters_by_name(botname, local=False, lang=lang, user=user)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
-    responding_characters.insert(0, character)
+    character = responding_characters[0]
 
     if useSOLR:
-        solr_character = get_character('solr_bot')
+        solr_character = get_character('solr_bot', lang)
         if solr_character:
-            responding_characters.append(solr_character)
+            if solr_character not in responding_characters:
+                responding_characters.append(solr_character)
         else:
             logger.warn("Solr character is not found")
+        solr_matcher = get_character('solr_matcher', lang)
+        if solr_matcher:
+            if solr_matcher not in responding_characters:
+                solr_matcher.set_character(character)
+                responding_characters.append(solr_matcher)
+        else:
+            logger.warn("Solr matcher is not found")
 
-    generic = get_character('generic')
+    generic = get_character('generic', lang)
     if generic:
-        generic.set_properties(character.get_properties())
-        responding_characters.append(generic)
+        if generic not in responding_characters:
+            generic.set_properties(character.get_properties())
+            responding_characters.append(generic)
     else:
         logger.warn("Generic character is not found")
 
+    responding_characters = sorted(responding_characters, key=lambda x: x.level)
+
     return responding_characters
 
-def ask(id, question, lang, session=None):
+def ask(question, lang, sid):
     """
     return (response dict, return code)
     """
-    global response_caches
-
-    # Reset cache
-    cache = response_caches.get(session)
-    if cache is not None:
-        if question and question.lower().strip() in ['hi', 'hello']:
-            logger.info("Cache is cleaned by hi")
-            cache.clean()
-        if cache.last_time and (dt.datetime.now()-cache.last_time)>dt.timedelta(seconds=SESSION_TIMEOUT):
-            logger.info("Cache is cleaned by timer")
-            cache.clean()
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return []
 
     response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
 
-    responding_characters = get_responding_characters(id)
+    responding_characters = get_responding_characters(lang, sid)
     if not responding_characters:
+        logger.error("Wrong characer name")
         return response, WRONG_CHARACTER_NAME
 
+    sess.characters = responding_characters
+    if question and question.lower().strip() in ['hi', 'hello']:
+        session_manager.reset_session(sid)
+        logger.info("Session is cleaned by hi")
+
+    # TODO: Sync session data
+
     logger.info("Responding characters {}".format(responding_characters))
-    _response = _ask_characters(responding_characters, question, lang, session)
+    _response = _ask_characters(responding_characters, question, lang, sid)
+
+    context = {}
+    for c in responding_characters:
+        context.update(c.get_context(sid))
+    for c in responding_characters:
+        try:
+            c.set_context(sid, context)
+        except NotImplementedError:
+            pass
+
+    for c in responding_characters:
+        try:
+            c.check_reset_topic(sid)
+        except Exception:
+            continue
 
     if _response is not None:
         response.update(_response)
         logger.info("Ask {}, response {}".format(question, response))
         return response, SUCCESS
     else:
+        logger.error("No pattern match")
         return response, NO_PATTERN_MATCH
 
 def dump_history():
-    global response_caches
-    for session, cache in response_caches.iteritems():
-        dirname = os.path.expanduser('~/.hr/chatbot/history')
-        if not os.path.isdir(dirname):
-            os.makedirs(dirname)
-        fname = os.path.join(dirname, '{}.csv'.format(session))
-        cache.dump(fname)
+    session_manager.dump()
+
 atexit.register(dump_history)
 
 if __name__ == '__main__':
+    sid = session_manager.start_session()
     for character in CHARACTERS:
-        print ask(character.id, 'what is your name')
+        print ask('what is your name', 'en', sid)
 
