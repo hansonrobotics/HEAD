@@ -39,7 +39,7 @@ automatically.
 
 Bleder can be started with the **autostart script**:
 ```
-blender -y Eva.blend -P autostart.py
+blender -y Sophia.blend -P autostart.py
 ```
 or it can be started manually, by pressing the **Start Command
 Listener** button.
