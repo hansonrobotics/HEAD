@@ -22,8 +22,9 @@
       <param name="camera_frame_id" value="camera"/>
       <param name="frame_id" value="camera"/>
     </node>
-    <node ns="camera" name="cam_calib" pkg="image_proc" type="image_proc" />
+    <node ns="camera" name="cam_calib" pkg="image_proc" type="image_proc"/>
     </group>
+
     <group if="$(arg pi_vision)">
     <arg name="auto_face_tracking" default="True" />
     <node pkg="pi_face_tracker" name="body_face_tracker"
@@ -56,7 +57,9 @@
     </group>
 
  <group unless="$(arg pi_vision)">
-    <include file="$(find cmt_tracker)/launch/cmt_launcher.launch" ns="camera" testing="$(arg testing)"/>
+    <include file="$(find cmt_tracker)/launch/cmt_launcher.launch" ns="camera">
+    <arg name="testing" value="$(arg testing)"/>
+    </include>
  </group>
 <group if="$(arg viz)">
     <include file="$(find robots_config)/launch/perception.launch" />
