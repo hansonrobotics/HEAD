@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 __author__ = 'tesfa'
 import os
 import sys
@@ -20,46 +21,80 @@ Thus validates tracker to filter out values in the output of the tracker.
 
     Later: (Customization of the optical flow points into area that is being tracker bad. )
     - This also uses to set the area of the tracker to reset the tracker if it diverges a lot.
+    - If an cmt_tracker location has stayed in one location for quite a while and thus indication that it's may not be a face it's tracking.
 
 Another is to destroy after a while if the tracker is going to garabage levels.
 
 '''
 class face_reinforcer:
     def __init__(self):
-
-        self.camera_topic = rospy.get_param('camera_topic')
+        rospy.init_node('face_reinforcer', anonymous=True)
         self.filtered_face_locations = rospy.get_param('filtered_face_locations')
-
-        self.image_sub = message_filters.Subscriber(self.camera_topic, Image)
-        self.cmt_sub = message_filters.Subscriber('tracker_results',Trackers)
+        self.cmt_sub = message_filters.Subscriber('temporary_trackers',Trackers)
         self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
+        self.faces_cmt_overlap = {}
 
-        ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub], 10,0.1)
-
+        ts = message_filters.ApproximateTimeSynchronizer([self.cmt_sub,self.face_sub], 10,0.1)
         ts.registerCallback(self.callback)
 
-    def callback(self, data, cmt, face):
-        try:
-          cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
-        except CvBridgeError as e:
-          print(e) # This need to handle the possibility of errors.
+    def callback(self, cmt, face):
+        '''
+        This function aims to check the overlapping nature of the tracker and face. And if there is overlap increases the confidence of the tracker.
 
-        # Now the overlap has to be measured
-        # Now another things to do is to do a relative overlap the area.
+        This idea is that the trackers are always decaying and need to be reinforced to maintain tracking.
+        @param cmt:
+        @param face:
+        @return:
+        '''
+        not_overlapped, overlaped_faces = self.returnOverlapping(face,cmt)
+
+        for face, cmt in overlaped_faces:
+            # Covered Faces this should be reinforcement. in another function.
+            self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 1
+
+            if (self.faces_cmt_overlap[cmt.tracker_name.data] > 3):
+                self.upt = rospy.ServiceProxy('validation',TrackerNames)
+                indication = self.upt(names=cmt.tracker_name.data, index=int("0"))
+                print("Updated to the main Tracker.")
+                if not indication:
+                    pass
+
+    def returnOverlapping(self, face, cmt):
+        '''
+        This takes two messages the face message and the cmt_tracker Tracker message and checks the area between the two sets of areas and returns if there is an overlap.
+        @param face:
+        @param cmt:
+        @return:
+        '''
+        print('starts overlapping')
+        not_covered_faces = []
+        overlaped_faces = []
         for j in face.objects:
-            SA = j.object.height * j.object.width
             overlap = False
-            tupl = []
+            SA = j.object.height * j.object.width
             for i in cmt.tracker_results:
                 SB = i.object.object.height * i.object.object.width
-                #SI = max(0, max(XA2, XB2) - min(XA1, XB1)) * max(0, max(YA2, YB2) - min(YA1, YB1))
-                SI = max(0, ( max(j.object.x_offset + j.object.width,i.object.object.x_offset + i.object.object.width)- min(j.object.x_offset,i.object.object.x_offset) )
-                         * max(0,max(j.object.y_offset,i.object.object.y_offset) - min(j.object.y_offset - j.object.height,i.object.object.y_offset - i.object.object.height)))
-                # print("Face is: %s", x)
-
+                SI = max(0, (
+                max(j.object.x_offset + j.object.width, i.object.object.x_offset + i.object.object.width) - min(
+                    j.object.x_offset, i.object.object.x_offset))
+                         * max(0, max(j.object.y_offset, i.object.object.y_offset) - min(
+                    j.object.y_offset - j.object.height, i.object.object.y_offset - i.object.object.height)))
                 SU = SA + SB - SI
-
                 overlap_area = SI / SU
-                # print(SU)
-
                 overlap = overlap_area > 0
+                if (overlap):
+                    ## TODO DO we need to remove the tracker that was indeed needed in the element.
+                    list = [j, i]
+                    overlaped_faces.append(list)
+                    break
+            if not overlap:
+                not_covered_faces.append(j)
+        print('finishes overlapping')
+        return not_covered_faces, overlaped_faces
+
+if __name__ == '__main__':
+    ic = face_reinforcer()
+    try:
+        rospy.spin()
+    except KeyboardInterrupt:
+        pass

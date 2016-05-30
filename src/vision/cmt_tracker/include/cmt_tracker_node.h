@@ -99,6 +99,8 @@ public:
 //	void remove_tracker(int index);
 	void remove_tracker(std::string name);
 
+    bool validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
+
 	void callback(cmt_tracker_msgs::TrackerConfig &config, uint32_t level); 
 
 	//Rules
@@ -121,7 +123,10 @@ private:
 
 
 	cmt_tracker_msgs::Tracker track_location;
+
 	cmt_tracker_msgs::Trackers trackers_results;
+	cmt_tracker_msgs::Trackers temp_results;
+
 	cmt_tracker_msgs::Tracker tracker_set;
 	cmt_tracker_msgs::Objects face_locs;
 
@@ -132,8 +137,11 @@ private:
 	ros::ServiceServer image_service;
 	ros::ServiceServer update_service;
 	ros::ServiceServer recognition_service;
+    ros::ServiceServer validation_service;
 
     ros::ServiceClient add_to_tracker;
+
+
     std_srvs::Empty empty_info;
 	image_transport::ImageTransport it_;
 
@@ -146,7 +154,10 @@ private:
 
 	//tracker results locations. 
 	ros::Publisher tracker_locations_pub;
+
 	ros::Publisher tracker_results_pub;
+	ros::Publisher tracker_results_temp;
+
 	ros::Publisher pi_vision_results; 
 	ros::Publisher pi_events; 
 

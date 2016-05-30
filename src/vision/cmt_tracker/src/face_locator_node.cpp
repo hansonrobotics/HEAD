@@ -84,7 +84,10 @@ cameramodel.fromCameraInfo(camerainfo);
      dlib::array2d<dlib::rgb_pixel> img;
      dlib::assign_image(img, cimg);
      //Now this is the way to detect small images as 40  x 40 goes by;
+
      dlib::pyramid_up(img);
+     dlib::pyramid_up(img);
+
      std::vector<dlib::rectangle> facesd = detector(img);
      std::vector<dlib::full_object_detection> pose_shapes;
      //Now the rectangles are giving value based on the upscaled value of the rectangle. Now let's down sample it.
@@ -92,6 +95,7 @@ cameramodel.fromCameraInfo(camerainfo);
      {
         dlib::full_object_detection shape= sp(img,facesd[i]);
         dlib::rectangle face_rect = pyd.rect_down(shape.get_rect());
+        face_rect = pyd.rect_down(face_rect);
         std::vector<dlib::point> point_down;
 
         cmt_tracker_msgs::Object face_description;
@@ -99,6 +103,7 @@ cameramodel.fromCameraInfo(camerainfo);
         for (size_t j = 0; j < shape.num_parts(); j++)
         {
             dlib::point p = pyd.point_down(shape.part(j));
+            p = pyd.point_down(p);
             point_down.push_back(p);
 
             //Now let's add this to the feature_point in Object.
@@ -139,6 +144,7 @@ cameramodel.fromCameraInfo(camerainfo);
         dlib::full_object_detection shape_down(face_rect,point_down);
         pose_shapes.push_back(shape_down); //The Bigger Image Pose Location.
         dlib::rectangle face_loc_ = pyd.rect_down(facesd[i]);
+        face_loc_ = pyd.rect_down(face_loc_);
         //To Assert only area in face is included to be tracked.
         cv::Rect rect = cv::Rect(face_loc_.left(), face_loc_.top(),face_loc_.width(), face_loc_.height());
 

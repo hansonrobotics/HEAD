@@ -29,6 +29,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   image_service = nh_.advertiseService("get_cmt_rects", &cmt_wrap::TrackerCMT::getTrackedImages, this);
   update_service = nh_.advertiseService("update", &cmt_wrap::TrackerCMT::updated, this);
   recognition_service  = nh_.advertiseService("recognition", &cmt_wrap::TrackerCMT::updateTrackerNames,this);
+  validation_service = nh_.advertiseService("validation", &cmt_wrap::TrackerCMT::validate, this);
 
   add_to_tracker = nh_.serviceClient<std_srvs::Empty>("can_add_tracker");
   //subscribers
@@ -43,6 +44,8 @@ TrackerCMT::TrackerCMT() : it_(nh_)
 
   //This is the one that's publishing the message.
   tracker_results_pub = nh_.advertise<cmt_tracker_msgs::Trackers>("tracker_results", 10);
+  tracker_results_temp = nh_.advertise<cmt_tracker_msgs::Trackers>("temporary_trackers", 10);
+
 
   pi_vision_results = nh_.advertise<pi_face_tracker::Faces>(face_location_topics, 10);
   pi_events = (nh_).advertise<pi_face_tracker::FaceEvent>(face_event_topics, 10);
@@ -76,6 +79,13 @@ bool TrackerCMT::updated(cmt_tracker_msgs::Update::Request &req, cmt_tracker_msg
     update_ui = false;
   }
   return true;
+}
+bool TrackerCMT::validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
+{
+    if(cmt_.validate(req.names))
+    return true;
+    else
+    return false;
 }
 /*
 Request the images in the system.
@@ -214,7 +224,10 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     tracker.recognized.data = (*v).recognized;
     tracker.header.stamp = ros::Time::now();
 
+    if ((*v).validated)
     trackers_results.tracker_results.push_back(tracker);
+    else
+    temp_results.tracker_results.push_back(tracker);
   }
     poorly_tracked = cmt_.removeLost();
 
@@ -237,7 +250,9 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 
   //-//std::cout<<"Going to Publish"<<std::endl;
   trackers_results.header.stamp = ros::Time::now();
+  temp_results.header.stamp = ros::Time::now();
   tracker_results_pub.publish(trackers_results);
+  tracker_results_temp.publish(temp_results);
 //  //std::cout<<"Finished Publish"<<std::endl;
   deleteOnLost();
   trackers_results.tracker_results.clear();

@@ -87,6 +87,7 @@ class face_recognizer:
     self.image_dir = rospy.get_param("image_locations")
     self.image_dir_face_imgs = self.image_dir + "/faces"
     self.image_dir_face_temp = self.image_dir + "/tmp"
+    self.feature_dir = self.image_dir + "/feature"
 
     if (not os.path.exists(self.image_dir)):
         os.makedirs(self.image_dir)
@@ -104,7 +105,7 @@ class face_recognizer:
 
     # Declare ROS service.
     self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
-    self.feature_dir = self.image_dir + "/feature"
+
 
     self.tracker_locations_pub = rospy.Publisher("tracking_locations",Trackers,queue_size=5)
 
@@ -116,7 +117,9 @@ class face_recognizer:
     self.image_sub = message_filters.Subscriber(self.camera_topic, Image)
     self.cmt_sub = message_filters.Subscriber('tracker_results',Trackers)
     self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
-    ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub], 10,0.5)
+    self.temp_sub = message_filters.Subscriber('temporary_trackers',Trackers)
+
+    ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub,self.temp_sub], 10,0.1)
 
     ts.registerCallback(self.callback)
     Server(TrackerConfig, self.sample_callback)
@@ -129,7 +132,7 @@ class face_recognizer:
       self.update = True
       return []
 
-  def callback(self,data, cmt, face):
+  def callback(self,data, cmt, face,temp):
     self.logger.debug('Overlap on face and tracker')
     try:
       cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
@@ -137,7 +140,10 @@ class face_recognizer:
       self.logger.error(e) # This need to handle the possibility of errors.
 
     # Now let's calculate the area of the elements.
-    not_covered_faces,covered_faces = self.returnOverlapping(face,cmt)
+    ttp = cmt
+    for val in temp.tracker_results:
+        ttp.tracker_results.append(val)
+    not_covered_faces,covered_faces = self.returnOverlapping(face,ttp)
     
     # Not Covered Faces
     if len(not_covered_faces) > 0 and self.update:
@@ -148,6 +154,7 @@ class face_recognizer:
         print("New Faces to be added to tracker: " + str(len(not_covered_faces)))
     # Covered Faces Check:
     for face,cmt in covered_faces:
+        #Covered Faces this should be reinforcement. in another function.
         tupl = []
         for pts in face.feature_point.points:
             x,y = pts.x, pts.y
@@ -321,7 +328,6 @@ class face_recognizer:
     
 if __name__ == '__main__':
     ic = face_recognizer()
-
     try:
         rospy.spin()
     except KeyboardInterrupt:
