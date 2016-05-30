@@ -70,7 +70,9 @@ class Chatbot():
       ret = r.json().get('ret')
       if r.status_code != 200:
         raise Exception("Request error: {}\n".format(r.status_code))
-      return r.json().get('sid')
+      sid = r.json().get('sid')
+      logger.info("Start new session {}".format(sid))
+      return sid
 
   def sentiment_active(self, active):
     self._sentiment_active = active
@@ -91,6 +93,7 @@ class Chatbot():
       if ret != 0:
         logger.error("QA error: error code {}, botname {}, question {}".format(
             ret, self.botname, question))
+        raise Exception("QA Error: {}".format(ret))
 
       response = r.json().get('response', {})
 
