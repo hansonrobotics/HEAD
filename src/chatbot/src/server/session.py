@@ -74,6 +74,7 @@ class SessionManager(object):
 
     def __init__(self):
         self._sessions = dict()
+        self._users = dict()
         self._session_cleaner = threading.Thread(
             target=self._clean_sessions, name="SessionCleaner")
         self._locker = Locker()
@@ -111,9 +112,15 @@ class SessionManager(object):
             return self._sessions.get(sid, None)
 
     @_threadsafe
-    def start_session(self):
+    def start_session(self, user):
+        if user in self._users:
+            sid = self._users.get(user)
+            session = self._sessions.get(sid)
+            if session:
+                return sid
         sid = str(uuid.uuid1())
         self._add_session(sid)
+        self._users[user] = sid
         return sid
 
     def has_session(self, sid):
@@ -141,7 +148,10 @@ class SessionManager(object):
 
 if __name__ == '__main__':
     session_manager = SessionManager()
-    sid = session_manager.start_session()
+    sid = session_manager.start_session('test')
+    session = session_manager.get_session(sid)
+    print session
+    sid = session_manager.start_session('test')
     session = session_manager.get_session(sid)
     session.add("hello", "hello, how are you")
     print session
