@@ -177,7 +177,7 @@ def update_animations(robot_name):
 def get_performances(robot_name):
     performances = []
     try:
-        root = os.path.join(performance_dir, robot_name)
+        root = os.path.join(config_root, robot_name, 'performances')
         for path, dirnames, filenames in os.walk(root):
             for name in fnmatch.filter(filenames, '*.yaml'):
                 filename = os.path.join(path, name)
@@ -195,30 +195,27 @@ def get_performances(robot_name):
 @app.route('/performances/<robot_name>/<id>', methods=['PUT', 'POST'])
 def update_performances(robot_name, id):
     performance = json.loads(request.get_data())
-    root = os.path.join(performance_dir, robot_name)
-
+    root = os.path.join(config_root, robot_name, 'performances')
     if not os.path.exists(root):
         os.makedirs(root)
 
     try:
         if 'previous_path' in performance:
-            filename = os.path.join(root, performance['previous_path'] + '.yaml')
+            filename = os.path.join(root, performance['previous_path'].strip('/')  + '.yaml')
             if os.path.isfile(filename):
                 os.remove(filename)
-
             del performance['previous_path']
-
-        filename = os.path.join(root, (performance['path'] if 'path' in performance else id) + '.yaml')
+        filename = os.path.join(root, (performance['path'] if 'path' in performance else id).strip('/') + '.yaml')
         write_yaml(filename, performance)
     except Exception as e:
-        return json_encode({'error': str(e)})
+        return json_encode({'error': str(filename)})
 
     return json_encode(performance)
 
 
 @app.route('/performances/<robot_name>/<id>', methods=['DELETE'])
 def delete_performances(robot_name, id):
-    performance = os.path.join(performance_dir, robot_name, id + '.yaml')
+    performance = os.path.join(config_root, robot_name, 'performances', id + '.yaml')
 
     if os.path.isfile(performance):
         os.remove(performance)
@@ -230,7 +227,6 @@ def delete_performances(robot_name, id):
 @app.route('/run_performance', methods=['POST'])
 def start_performance():
     performance = request.get_data()
-    print(performance)
     js = json.loads(performance)
     run_performance(js["key"])
     return json_encode({'result': True})
