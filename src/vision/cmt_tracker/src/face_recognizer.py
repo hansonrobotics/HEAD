@@ -106,7 +106,6 @@ class face_recognizer:
     # Declare ROS service.
     self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
 
-
     self.tracker_locations_pub = rospy.Publisher("tracking_locations",Trackers,queue_size=5)
 
     #Get Environmental variable for the file during start up.

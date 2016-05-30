@@ -35,4 +35,4 @@ case $tool in
     roslaunch robots_config face_tracker.launch pi_vision:=0 testing:=1
 esac
 # Enable visualzation tools
-roslaunch robots_config perception.launch
+#roslaunch robots_config perception.launch
