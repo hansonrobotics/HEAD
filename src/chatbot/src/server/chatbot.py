@@ -102,6 +102,8 @@ def _ask_characters(characters, question, lang, sid):
         return
 
     data = sess.get_session_data()
+    user = getattr(data, 'user')
+    botname = getattr(data, 'botname')
     if hasattr(data, 'weights'):
         weights = data.weights
     else:
@@ -122,7 +124,8 @@ def _ask_characters(characters, question, lang, sid):
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random()<weight:
                 if not NON_REPEAT or sess.check(_question, answer, lang):
-                    sess.add(_question, answer)
+                    sess.add(_question, answer, AnsweredBy=c.name,
+                            User=user, BotName=botname)
                     return _response
 
     # Ask the same question to every tier to sync internal state
@@ -135,7 +138,8 @@ def _ask_characters(characters, question, lang, sid):
         else:
             _response = dummy_character.respond("NO_ANSWER", lang, sid)
         answer = _response.get('text', '')
-        sess.add(_question, answer)
+        sess.add(_question, answer, AnsweredBy=dummy_character.name,
+                User=user, BotName=botname)
         return _response
 
 def get_responding_characters(lang, sid):

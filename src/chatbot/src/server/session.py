@@ -22,8 +22,8 @@ class Session(object):
         self.init = self.created
         self.characters = []
 
-    def add(self, question, answer):
-        self.cache.add(question, answer)
+    def add(self, question, answer, **kwargs):
+        self.cache.add(question, answer, **kwargs)
 
     def reset(self):
         self.dump()
