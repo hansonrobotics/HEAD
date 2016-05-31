@@ -111,6 +111,10 @@ class AIMLCharacter(Character):
         ret['emotion'] = self.kernel.getPredicate('emotion', session)
         ret['botid'] = self.id
         ret['botname'] = self.name
+        trace = self.kernel.getTraceDocs()
+        if trace:
+            logger.info("Trace: {}".format(trace))
+            ret['trace'] = trace
         return ret
 
     def refresh(self, sid):
