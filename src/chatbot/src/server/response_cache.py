@@ -42,15 +42,18 @@ class ResponseCache(object):
             return False
         return True
 
-    def add(self, question, answer, datetime=None):
+    def add(self, question, answer, datetime=None, **kwargs):
         question = self._norm(question)
         answer = self._norm(answer)
         time = datetime or dt.datetime.now()
-        self.record.append({
+        record = {
             'Datetime': time,
             'Question': question,
             'Answer': answer
-        })
+        }
+        if kwargs:
+            record.update(kwargs)
+        self.record.append(record)
         self.index[question].append(len(self.record)-1)
         self.last_question = question
         self.last_answer = answer
@@ -93,9 +96,12 @@ class ResponseCache(object):
         if not records_to_dump:
             logger.debug("Nothing to dump")
             return
+        header = ['Datetime', 'Question', 'Answer']
+        for k in records_to_dump[0].keys():
+            if k not in header:
+                header.append(k)
         with open(fname, 'a') as f:
-            writer = csv.DictWriter(
-                f, ['Datetime', 'Question', 'Answer'], extrasaction='ignore')
+            writer = csv.DictWriter(f, header, extrasaction='ignore')
             writer.writeheader()
             writer.writerows(records_to_dump)
             logger.info("Dumpped chat history to {}".format(fname))
@@ -103,7 +109,7 @@ class ResponseCache(object):
 
 if __name__ == '__main__':
     cache = ResponseCache()
-    cache.add('a', 'hi', dt.datetime(2016, 4, 22, 12, 0, 0))
+    cache.add('a', 'hi', dt.datetime(2016, 4, 22, 12, 0, 0), Answeredby='bot', User='user')
     cache.add('a', 'hi there', dt.datetime(2016, 4, 22, 12, 30, 0))
     cache.add('a', 'how are you', dt.datetime(2016, 4, 22, 12, 30, 0))
     cache.add('a', 'hi there', dt.datetime(2016, 4, 22, 12, 30, 0))

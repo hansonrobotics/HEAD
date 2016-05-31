@@ -92,10 +92,12 @@ def _bot_names():
 @app.route(ROOT+'/start_session', methods=['GET'])
 @requires_auth
 def _start_session():
-    sid = session_manager.start_session()
+    botname = request.args.get('botname')
+    user = request.args.get('user')
+    sid = session_manager.start_session(user)
     sess = session_manager.get_session(sid)
-    sess.sdata.botname = request.args.get('botname')
-    sess.sdata.user = request.args.get('user')
+    sess.sdata.botname = botname
+    sess.sdata.user = user
     return Response(json_encode({'ret': 0, 'sid': str(sid)}),
         mimetype="application/json")
 
