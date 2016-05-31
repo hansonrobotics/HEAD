@@ -16,7 +16,8 @@ source $HR_WORKSPACE/$PROJECT/devel/setup.bash
 export ROS_MASTER_URI=http://localhost:22422
 export ROS_PYTHON_LOG_CONFIG_FILE="$BASEDIR/python_logging.conf"
 export ROSCONSOLE_FORMAT='[${logger}][${severity}] [${time}]: ${message}'
-export ROS_LOG_DIR="$HOME/.hr/log"
+export ROS_LOG_DIR="$HOME/.hr/log/tests"
+export ROS_TEST_RESULTS_DIR="$ROS_LOG_DIR"
 
 cd $HR_WORKSPACE/$PROJECT
 rostest pi_face_tracker test_pi_face_tracker.test
