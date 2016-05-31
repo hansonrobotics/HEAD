@@ -50,14 +50,21 @@ class face_reinforcer:
 
         for face, cmt in overlaped_faces:
             # Covered Faces this should be reinforcement. in another function.
-            self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 1
+            self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 2
 
             if (self.faces_cmt_overlap[cmt.tracker_name.data] > 3):
                 self.upt = rospy.ServiceProxy('validation',TrackerNames)
                 indication = self.upt(names=cmt.tracker_name.data, index=int("0"))
-                print("Updated to the main Tracker.")
+                #print("Updated to the main Tracker.")
                 if not indication:
                     pass
+
+        ## Now let's subtract from all -1 and if there is an overlap they increase to higher values.
+        for keys in self.faces_cmt_overlap:
+            self.faces_cmt_overlap[keys] = self.faces_cmt_overlap.get(keys, 0) - 1
+
+        ## Now the deletion part if the faces haven't been reinforced for quite a while.
+        
 
     def returnOverlapping(self, face, cmt):
         '''

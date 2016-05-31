@@ -256,6 +256,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 //  //std::cout<<"Finished Publish"<<std::endl;
   deleteOnLost();
   trackers_results.tracker_results.clear();
+  temp_results.tracker_results.clear();
   //std::cout<<"images Callback"<<std::endl;
 }
 //Now this function deltes all the poor tracked values and adds trackers if there are overlaps in the system.

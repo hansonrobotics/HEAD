@@ -61,17 +61,20 @@ public:
     cmt_tracker_msgs::Objects face_locs;
     cmt_tracker_msgs::Tracker track_location;
     cmt_tracker_msgs::Tracker track_published;
-    cmt_tracker_msgs::Trackers tracking_results; 
+    cmt_tracker_msgs::Trackers tracking_results;
+    cmt_tracker_msgs::Trackers temp_tracking_results;
     // cmt_tracker_msgs::Objects tracker_locations;
     // //Subscribers for location of faces and the image_subscriber
     ros::Publisher tracker_locations_pub;
     ros::Subscriber tracker_locations_sub;
     ros::Subscriber face_subscriber;
-    ros::Subscriber tracked_locations; 
+    ros::Subscriber tracked_locations;
+    ros::Subscriber temp_tracked_locations;
     ros::ServiceClient client;
     ros::ServiceClient image_client;
     ros::ServiceClient check_update;
     image_transport::Subscriber image_subscriber;
+
     dynamic_reconfigure::Server<cmt_tracker_msgs::TrackerConfig> server;
     dynamic_reconfigure::Server<cmt_tracker_msgs::TrackerConfig>::CallbackType f;
 
@@ -124,15 +127,24 @@ protected slots:
 
     void tracker_resultsCb(const cmt_tracker_msgs::Trackers& tracker_results); 
 
+    void temp_tracker_resultsCb(const cmt_tracker_msgs::Trackers& tracker_results);
 
 
 protected:
     std::vector<QImage> face_images;
     std::vector<QImage> tracked_faces;
+
     std::vector<QImage> tracked_image_results;
-    std::vector<std::string> tracked_image_information; 
-    std::vector<std::string> emotion; 
+    std::vector<QImage> temp_tracked_image_results;
+
+    std::vector<std::string> tracked_image_information;
+    std::vector<std::string> temp_tracked_image_information;
+
+    std::vector<std::string> emotion;
+
     std::vector<cv::Mat> tracked_image_mats;
+    std::vector<cv::Mat> temp_tracked_image_mats;
+
     std::vector<cv::Mat> mat_images;
     std::vector<cv::Mat> tracked_images;
 

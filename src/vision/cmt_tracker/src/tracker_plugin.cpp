@@ -70,6 +70,7 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
   face_subscriber = (nh).subscribe(subscribe_face, 1, &rqt_tracker_view::tracker_plugin::list_of_faces_update, this);
   image_subscriber = it.subscribe(subscribe_topic, 1, &rqt_tracker_view::tracker_plugin::imageCb, this);
   tracked_locations = nh.subscribe("tracker_results", 10 , &rqt_tracker_view::tracker_plugin::tracker_resultsCb, this);
+  temp_tracked_locations = nh.subscribe("temporary_trackers", 10 , &rqt_tracker_view::tracker_plugin::temp_tracker_resultsCb, this);
 
   // // image_publisher = it.advertise("/transformed/images", 1);
 
@@ -312,8 +313,13 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
   }
 
   tracked_image_mats.clear();
+  temp_tracked_image_mats.clear();
+
   tracked_image_results.clear();
+  temp_tracked_image_results.clear();
+
   tracked_image_information.clear();
+  temp_tracked_image_information.clear();
 
   for (std::vector<cmt_tracker_msgs::Tracker>::iterator v = tracking_results.tracker_results.begin(); v != tracking_results.tracker_results.end() ; ++v)
   {
@@ -344,15 +350,51 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     {
       tracked_image_mats.push_back(image(cv::Rect((*v).object.object.x_offset, (*v).object.object.y_offset,
        (*v).object.object.width, (*v).object.object.height)).clone());
-      tracked_image_results.push_back(QImage((uchar*) tracked_image_mats.back().data, tracked_image_mats.back().cols, tracked_image_mats.back().rows,
-                                             tracked_image_mats.back().step[0], QImage::Format_RGB888));
     }
     else {
       tracked_image_mats.push_back(img);
-      tracked_image_results.push_back(QImage((uchar*) tracked_image_mats.back().data, tracked_image_mats.back().cols, tracked_image_mats.back().rows,
-                                             tracked_image_mats.back().step[0], QImage::Format_RGB888));
 
     }
+    tracked_image_results.push_back(QImage((uchar*) tracked_image_mats.back().data, tracked_image_mats.back().cols, tracked_image_mats.back().rows,
+                                             tracked_image_mats.back().step[0], QImage::Format_RGB888));
+
+  }
+
+  for (std::vector<cmt_tracker_msgs::Tracker>::iterator v = temp_tracking_results.tracker_results.begin(); v != temp_tracking_results.tracker_results.end() ; ++v)
+  {
+    std::string quality;
+    std::string previously_known;
+    if ((*v).quality_results.data)
+    {
+      quality =  "true";
+    }
+    else
+    {
+      quality = "false";
+    }
+
+    if ((*v).recognized.data)
+    {
+      previously_known = "true";
+    }
+    else {
+      previously_known = "false";
+    }
+    std::string value = "ID: " + (*v).tracker_name.data + "\n Known: " + previously_known +  "\n" + "IAP: " + SSTR((*v).initial_points.data) + "\n" + + "CAP: " + SSTR((*v).active_points.data)  + "\n" +  quality
+                        + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
+    temp_tracked_image_information.push_back( value );
+
+    //Now here if the tracker results is positive then output this as a result of the image other wise update the results.
+    if ((*v).quality_results.data)
+    {
+      temp_tracked_image_mats.push_back(image(cv::Rect((*v).object.object.x_offset, (*v).object.object.y_offset,
+       (*v).object.object.width, (*v).object.object.height)).clone());
+    }
+    else {
+      temp_tracked_image_mats.push_back(img);
+    }
+          temp_tracked_image_results.push_back(QImage((uchar*) temp_tracked_image_mats.back().data, temp_tracked_image_mats.back().cols, temp_tracked_image_mats.back().rows,
+                                             temp_tracked_image_mats.back().step[0], QImage::Format_RGB888));
   }
   //Now before emiting let's check the cmt_tracker_node internal state and see if there is a need to do anything related to that.
   nh.getParam("tracker_updated", tracker_updated_num);
@@ -405,7 +447,8 @@ void tracker_plugin::updateVisibleFaces()
   ui.face_output_list->clear();
   ui.tracker_output_list->clear();
   ui.tracker_initial_list->clear();
-
+  ui.tracker_output_list_2->clear();
+  
   int count_info = 0 ;//Zip Iterator Maybe
   for (std::vector<QImage>::iterator v = face_images.begin(); v != face_images.end(); ++v)
   {
@@ -429,6 +472,12 @@ void tracker_plugin::updateVisibleFaces()
     count_info++;
   }
 
+  count_info = 0;
+  for (std::vector<QImage>::iterator v = temp_tracked_image_results.begin(); v != temp_tracked_image_results.end(); ++v)
+  {
+    ui.tracker_output_list_2->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(temp_tracked_image_information[count_info])));
+    count_info++;
+  }
 
 }
 /**
@@ -458,6 +507,18 @@ void tracker_plugin::tracker_resultsCb(const cmt_tracker_msgs::Trackers& tracker
     tracking_results.tracker_results.push_back(*v);
   }
   
+}
+
+void tracker_plugin::temp_tracker_resultsCb(const cmt_tracker_msgs::Trackers& tracker_results)
+{
+  //Check whether this is invalided when the loop exits.
+  // = tracker_results;
+  temp_tracking_results.tracker_results.clear();
+  for (std::vector<cmt_tracker_msgs::Tracker>::const_iterator v = tracker_results.tracker_results.begin(); v != tracker_results.tracker_results.end(); ++v)
+  {
+    temp_tracking_results.tracker_results.push_back(*v);
+  }
+
 }
 
 void tracker_plugin::shutdownPlugin()

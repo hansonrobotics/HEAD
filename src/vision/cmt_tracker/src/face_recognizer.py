@@ -118,7 +118,7 @@ class face_recognizer:
     self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
     self.temp_sub = message_filters.Subscriber('temporary_trackers',Trackers)
 
-    ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub,self.temp_sub], 10,0.1)
+    ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub,self.temp_sub], 10,0.25)
 
     ts.registerCallback(self.callback)
     Server(TrackerConfig, self.sample_callback)
@@ -181,6 +181,7 @@ class face_recognizer:
             try:
                 self.upt = rospy.ServiceProxy('recognition',TrackerNames)
                 indication = self.upt(names=cmt.tracker_name.data, index=int(max_index[5:]))
+                print("Detected Face and Updating database.")
                 if not indication:
                     self.logger.warn("there was the same id in the id chamber. Training again....")
             except rospy.ServiceException, e:
