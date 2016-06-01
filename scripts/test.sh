@@ -19,9 +19,11 @@ export ROSCONSOLE_FORMAT='[${logger}][${severity}] [${time}]: ${message}'
 export ROS_LOG_DIR="$HOME/.hr/log/tests"
 export ROS_TEST_RESULTS_DIR="$ROS_LOG_DIR"
 
+exit_status=true
 cd $HR_WORKSPACE/$PROJECT
-rostest pi_face_tracker test_pi_face_tracker.test
-rostest blender_api_msgs test_blender_api.test
-python src/hardware/pau2motors/test/test_pau2motors.py
-python src/chatbot/test/test_chatbot.py
+rostest pi_face_tracker test_pi_face_tracker.test || exit_status=false
+rostest blender_api_msgs test_blender_api.test || exit_status=false
+python src/hardware/pau2motors/test/test_pau2motors.py || exit_status=false
+python src/chatbot/test/test_chatbot.py || exit_status=false
 cd $HR_WORKSPACE
+$exit_status
