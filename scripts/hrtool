@@ -252,7 +252,7 @@ do_update_vision_tools() {
 
     local DEFAULT_BRANCH="wrapper"
 
-    cd $HR_WORKSPACE/HEAD/src/CppMT
+    cd $HR_WORKSPACE/CppMT
 
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [[ $branch != $DEFAULT_BRANCH ]]; then
@@ -347,6 +347,7 @@ Usage: $0 OPTION
 -g      Get HR source code.
 -G      Get all source code including OpenCog and HR.
 -u      Update HR source code.
+-v      Update Vision Related dependecies.
 -U      Update all source code including OpenCog and HR.
 -b      Build HR source code.
 -B      Build HR and OpenCog source code.
@@ -360,7 +361,7 @@ EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUtpr:" opt; do
+    while getopts "hw:igGbBuUvtpr:" opt; do
         case $opt in
         h)
             show_help
@@ -374,6 +375,7 @@ parse_opts() {
         B) BUILD_SOURCE_CODE=1 ;;
         u) UPDATE_HR_SOURCE_CODE=1 ;;
         U) UPDATE_SOURCE_CODE=1 ;;
+        v) UPDATE_VISION_CODE=1 ;;
         t) RUN_TESTS=1 ;;
         p) PRINT_HR_WORKSPACE=1 ;;
         r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
@@ -422,6 +424,7 @@ execute() {
     if [[ $UPDATE_HR_SOURCE_CODE ]]; then do_update_hr ; fi
     if [[ $UPDATE_SOURCE_CODE ]]; then do_update ; fi
     if [[ $BUILD_HR_SOURCE_CODE ]]; then do_build_hr; fi
+    if [[ $UPDATE_VISION_CODE ]]; then do_update_vision_tools; fi
     if [[ $BUILD_SOURCE_CODE ]]; then do_build; fi
     if [[ $RUN_TESTS ]]; then do_test; fi
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
