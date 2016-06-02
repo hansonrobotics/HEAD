@@ -304,6 +304,34 @@ do_build_hr() {
     pip3 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
 }
 
+do_single_package() {
+
+    # With build a package.
+
+    # If package cmt_package.
+
+    cd $HR_WORKSPACE/$PROJECT
+    source /opt/ros/indigo/setup.bash
+    if [[ ! -d .catkin_tools ]]; then
+        catkin init
+    fi
+
+    include_dirs=($HR_WORKSPACE/emotime/src/{facedetector,utils,gaborbank,detector,training})
+    include_path=$(printf "%s:" "${include_dirs[@]}")
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/CppMT:$HR_WORKSPACE/emotime/include:$include_path
+
+    if [ "$1" == "cmt_tracker" ]; then
+
+    catkin build cmt_tracker_msgs cmt_tracker
+
+    else
+
+    catkin build $1
+
+    fi
+
+}
+
 build_opencog() {
     for repo in cogutils atomspace opencog ros-behavior-scripting
     do
@@ -356,12 +384,13 @@ Usage: $0 OPTION
 -p      Print Hanson Robotics workspace.
 -r      Run custom functions.
 -h      Print this help.
+-s      Build a single package specified.
 
 EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUvtpr:" opt; do
+    while getopts "hw:igGbBuUvtprs:" opt; do
         case $opt in
         h)
             show_help
@@ -378,6 +407,7 @@ parse_opts() {
         v) UPDATE_VISION_CODE=1 ;;
         t) RUN_TESTS=1 ;;
         p) PRINT_HR_WORKSPACE=1 ;;
+        s) BUILD_SINGLE_PKG=1  && CUSTOM_FUNCTIONS=$OPTARG ;;
         r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
@@ -428,6 +458,7 @@ execute() {
     if [[ $BUILD_SOURCE_CODE ]]; then do_build; fi
     if [[ $RUN_TESTS ]]; then do_test; fi
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
+    if [[ $BUILD_SINGLE_PKG ]]; then do_single_package $CUSTOM_FUNCTIONS ; fi
     if [[ $RUN_CUSTOM_FUNCTIONS ]]; then do_run $CUSTOM_FUNCTIONS ; fi
 }
 
