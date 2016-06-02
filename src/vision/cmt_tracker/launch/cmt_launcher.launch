@@ -75,6 +75,6 @@
     <include file="$(find emotime)/launch/emotime.launch"/>
 </group>
 -->
-<node pkg="cmt_tracker" name="face_recognizer" type="face_recognizer.py" output="screen"/>
+<node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py" output="screen"/>
 <node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" output="screen"/>
 </launch>
