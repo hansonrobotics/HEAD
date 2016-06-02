@@ -58,6 +58,7 @@ define(["marionette", "tpl!./templates/animation.tpl", 'lib/api', 'lib/behaviors
                 if (!this.touch) {
                     var config = this.options.getSliderValues();
                     this.setGesture(config.speed, config.magnitude);
+                    api.loginfo('[CLICK ACTION][GESTURE] '+this.model.get('name'));
                 }
 
                 this.touch = false;
