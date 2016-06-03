@@ -31,4 +31,4 @@ PRESET=ultrafast
 $RECORDER -y -f x11grab -an -t $DURATION -r $FPS -s $RES -i $XDISP \
     -vcodec $VCODEC -g $GOP -crf $CRF $FILENAME
 
-xdotool windowminimize $WID
+#xdotool windowminimize $WID
