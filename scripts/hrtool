@@ -102,6 +102,11 @@ install_other_deps() {
     sudo apt-get install -y ffmpeg
 }
 
+install_test_deps() {
+    sudo apt-get -y install socat
+    sudo apt-get -y install xdotool
+}
+
 check_or_create_ws() {
     if [[ -d $1 ]]; then
         export HR_WORKSPACE=$1
