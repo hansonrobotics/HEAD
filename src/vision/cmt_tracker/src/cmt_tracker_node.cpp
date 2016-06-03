@@ -29,7 +29,8 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   image_service = nh_.advertiseService("get_cmt_rects", &cmt_wrap::TrackerCMT::getTrackedImages, this);
   update_service = nh_.advertiseService("update", &cmt_wrap::TrackerCMT::updated, this);
   recognition_service  = nh_.advertiseService("recognition", &cmt_wrap::TrackerCMT::updateTrackerNames,this);
-  validation_service = nh_.advertiseService("validation", &cmt_wrap::TrackerCMT::validate, this);
+  //validation_service = nh_.advertiseService("validation", &cmt_wrap::TrackerCMT::validate, this);
+  reinforce_service = nh_.advertiseService("reinforce", &cmt_wrap::TrackerCMT::reinforce, this);
 
   add_to_tracker = nh_.serviceClient<std_srvs::Empty>("can_add_tracker");
   //subscribers
@@ -80,13 +81,23 @@ bool TrackerCMT::updated(cmt_tracker_msgs::Update::Request &req, cmt_tracker_msg
   }
   return true;
 }
-bool TrackerCMT::validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
+//bool TrackerCMT::validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
+//{
+//    if(cmt_.validate(req.names))
+//    return true;
+//    else
+//    return false;
+//}
+
+bool TrackerCMT::reinforce(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
 {
-    if(cmt_.validate(req.names))
+    if(cmt_.reinforce(req.names,req.index))
     return true;
     else
     return false;
 }
+
+
 /*
 Request the images in the system.
 */
@@ -222,6 +233,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 //
     tracker.quality_results.data = !((*v).tracker_lost);
     tracker.recognized.data = (*v).recognized;
+    tracker.before_demotion.data = (*v).before_being_demoted;
     tracker.header.stamp = ros::Time::now();
 
     if ((*v).validated)
@@ -279,6 +291,7 @@ void TrackerCMT::callback(cmt_tracker_msgs::TrackerConfig &config, uint32_t leve
 {
   //std::cout<<"Factor to be Updated"<<std::endl;
   factor = config.factor;
+  downgrade = config.downgrade;
   //std::cout<<"Factor Updated to: "<<factor<<std::endl;
 }
 void TrackerCMT::list_of_faces_update(const cmt_tracker_msgs::Objects& faces_info)

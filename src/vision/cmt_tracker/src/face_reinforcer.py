@@ -34,46 +34,24 @@ class face_reinforcer:
         self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
         self.faces_cmt_overlap = {}
 
-        ts = message_filters.ApproximateTimeSynchronizer([self.cmt_sub,self.face_sub], 10,0.1)
+        ts = message_filters.ApproximateTimeSynchronizer([self.cmt_sub,self.face_sub], 10,0.2)
         ts.registerCallback(self.callback)
 
     def callback(self, cmt, face):
-        '''
-        This function aims to check the overlapping nature of the tracker and face. And if there is overlap increases the confidence of the tracker.
-
-        This idea is that the trackers are always decaying and need to be reinforced to maintain tracking.
-        @param cmt:
-        @param face:
-        @return:
-        '''
         not_overlapped, overlaped_faces = self.returnOverlapping(face,cmt)
 
         for face, cmt in overlaped_faces:
-            # Covered Faces this should be reinforcement. in another function.
             self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 2
-
             if (self.faces_cmt_overlap[cmt.tracker_name.data] > 3):
-                self.upt = rospy.ServiceProxy('validation',TrackerNames)
-                indication = self.upt(names=cmt.tracker_name.data, index=int("0"))
-                #print("Updated to the main Tracker.")
+                self.upt = rospy.ServiceProxy('reinforce',TrackerNames)
+                indication = self.upt(names=cmt.tracker_name.data, index=500)
                 if not indication:
                     pass
 
-        ## Now let's subtract from all -1 and if there is an overlap they increase to higher values.
         for keys in self.faces_cmt_overlap:
             self.faces_cmt_overlap[keys] = self.faces_cmt_overlap.get(keys, 0) - 1
 
-        ## Now the deletion part if the faces haven't been reinforced for quite a while.
-        
-
     def returnOverlapping(self, face, cmt):
-        '''
-        This takes two messages the face message and the cmt_tracker Tracker message and checks the area between the two sets of areas and returns if there is an overlap.
-        @param face:
-        @param cmt:
-        @return:
-        '''
-        print('starts overlapping')
         not_covered_faces = []
         overlaped_faces = []
         for j in face.objects:
@@ -90,13 +68,11 @@ class face_reinforcer:
                 overlap_area = SI / SU
                 overlap = overlap_area > 0
                 if (overlap):
-                    ## TODO DO we need to remove the tracker that was indeed needed in the element.
                     list = [j, i]
                     overlaped_faces.append(list)
                     break
             if not overlap:
                 not_covered_faces.append(j)
-        print('finishes overlapping')
         return not_covered_faces, overlaped_faces
 
 if __name__ == '__main__':

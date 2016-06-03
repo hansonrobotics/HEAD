@@ -12,7 +12,6 @@ tracker_plugin::tracker_plugin()
 {
 
   setObjectName("TrackerView");
-  //ui.setupUi(this);
 }
 
 void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
@@ -21,21 +20,8 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
   widget_ = new QWidget();
   ui.setupUi(widget_);
 
-  if (context.serialNumber() > 1)
-  {
-    // widget_->setWindowTitle(widget_->windowTitle() + " (" + QString::number(context.serialNumber()) + ")");
-    // widget_->setWindowTitle("Tray's ")
-  }
+
   context.addWidget(widget_);
-
-  /**
-
-  Now here the methods and rules to run the scirpts are entirely run.
-
-  So it's assuming that there are rules that are placed in the notion of the scirpts to maintain the desired elements in the overall system.
-
-  also if the person has given in the parameters that are run with the script that is running then we would be able to run the system.
-  */
 
   img.create(100, 100, CV_8UC3);
   img.setTo(cv::Scalar(0,0,0));
@@ -50,19 +36,16 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
   QStandardItem* item = model->item(2);
 
   item->setFlags(disable ? item->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled) : Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-  // visually disable by greying out - works only if combobox has been painted already and palette returns the wanted color
   item->setData(disable ? ui.face_choice_method->palette().color(QPalette::Disabled, QPalette::Text)
                       : QVariant(), // clear item data in order to use default color
               Qt::TextColorRole);
 
-  //Now Let's Add the User Interface for the debugging.
   ui.paramsetters->addItem("Dlib-CMT Method");
   ui.paramsetters->addItem("OpenCV-CMT Method");
   ui.paramsetters->addItem("Show Pose(dlib)");
   ui.paramsetters->addItem("Pi-Vision");
   ui.paramsetters->addItem("Emotime-Enable");
   ui.paramsetters->addItem("Dlib Tracker");
-  //Also Include the Click To Track;
 
   nh.getParam("camera_topic", subscribe_topic);
   nh.getParam("filtered_face_locations",subscribe_face);
@@ -72,17 +55,12 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
   tracked_locations = nh.subscribe("tracker_results", 10 , &rqt_tracker_view::tracker_plugin::tracker_resultsCb, this);
   temp_tracked_locations = nh.subscribe("temporary_trackers", 10 , &rqt_tracker_view::tracker_plugin::temp_tracker_resultsCb, this);
 
-  // // image_publisher = it.advertise("/transformed/images", 1);
-
-  //This is a publisher to check initally by setting trackers in the rqt plugin.
   tracker_locations_pub = (nh).advertise<cmt_tracker_msgs::Tracker>("tracking_location", 10);
 
   client = nh.serviceClient<cmt_tracker_msgs::Clear>("clear");
   image_client = nh.serviceClient<cmt_tracker_msgs::TrackedImages>("get_cmt_rects");
   check_update = nh.serviceClient<cmt_tracker_msgs::Update>("update");
 
-  //This is subscribed here because of other nodes outside this rqt plugin  set tracker location and thus this extension
-  //must show the ability to show different elements in the process.
   tracker_locations_sub = (nh).subscribe("tracking_location", 10 , &rqt_tracker_view::tracker_plugin::trackerCb, this);
   nh.getParam("tracking_method", tracking_method);
 
@@ -109,7 +87,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
 {
   try
   {
-    // First let cv_bridge do its magic
     cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(msg, sensor_msgs::image_encodings::RGB8);
     conversion_mat_ = cv_ptr->image;
   }
@@ -117,38 +94,28 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
   {
     try
     {
-      // If we're here, there is no conversion that makes sense, but let's try to imagine a few first
       cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(msg);
       if (msg->encoding == "CV_8UC3")
       {
-        // assuming it is rgb
         conversion_mat_ = cv_ptr->image;
       } else if (msg->encoding == "8UC1") {
-        // convert gray to rgb
         cv::cvtColor(cv_ptr->image, conversion_mat_, CV_GRAY2RGB);
       }  else {
         qWarning("callback could not convert image from '%s' to 'rgb8' (%s)", msg->encoding.c_str(), e.what());
-        // ui_.image_frame->setImage(QImage());
         return;
       }
     }
     catch (cv_bridge::Exception& e)
     {
       qWarning("callback while trying to convert image from '%s' to 'rgb8' an exception was thrown (%s)", msg->encoding.c_str(), e.what());
-      // ui_.image_frame->setImage(QImage());
       return;
     }
   }
-  //now update the results of the elements in the GUI thread. It's done here because the GUI thread and the call back thread
-  //are two different entities and since ros::spin() handles (unless specified otherwise) callbacks serially it's best to
-  //get the data's here sequentially.
   mat_images.clear();
   face_images.clear();
-  //emotion.clear();
   cv::Mat image= conversion_mat_.clone();
   for (std::vector<cmt_tracker_msgs::Object>::iterator v = face_locs.objects.begin(); v != face_locs.objects.end() ; ++v)
   {
-    // From the render_face_detection.h to avoid creating another image publisher.
    int pose;
    nh.getParam("pose",pose);
    if(pose && (*v).feature_point.points.size() == 68)
@@ -163,7 +130,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       x1.x = (*v).feature_point.points[j].x;
       x1.y = (*v).feature_point.points[j].y;
 
-    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
     for (size_t j = 28 ; j<=30; ++j)
@@ -175,7 +141,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       x1.x = (*v).feature_point.points[j].x;
       x1.y = (*v).feature_point.points[j].y;
 
-    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
     for (size_t j = 18 ; j<=21; ++j)
@@ -186,8 +151,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       cv::Point x1;
       x1.x = (*v).feature_point.points[j].x;
       x1.y = (*v).feature_point.points[j].y;
-//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
-    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
 
@@ -199,8 +162,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       cv::Point x1;
       x1.x = (*v).feature_point.points[j].x;
       x1.y = (*v).feature_point.points[j].y;
-//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
-    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
 
@@ -212,8 +173,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       cv::Point x1;
       x1.x = (*v).feature_point.points[j].x;
       x1.y = (*v).feature_point.points[j].y;
-//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
-    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
      cv::Point x0;
@@ -232,8 +191,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       cv::Point x1;
       x1.x = (*v).feature_point.points[j].x;
       x1.y = (*v).feature_point.points[j].y;
-//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
-    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
 
@@ -252,8 +209,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       cv::Point x1;
       x1.x = (*v).feature_point.points[j].x;
       x1.y = (*v).feature_point.points[j].y;
-//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
-    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
 
@@ -273,7 +228,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       x1.x = (*v).feature_point.points[j].x;
       x1.y = (*v).feature_point.points[j].y;
 
-    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
 
@@ -292,8 +246,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       cv::Point x1;
       x1.x = (*v).feature_point.points[j].x;
       x1.y = (*v).feature_point.points[j].y;
-//      cv::circle(image, x, 2, cv::Scalar(255,0,0));
-    //line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
 
@@ -341,11 +293,10 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     else {
       previously_known = "false";
     }
-    std::string value = "ID: " + (*v).tracker_name.data + "\n Known: " + previously_known +  "\n" + "IAP: " + SSTR((*v).initial_points.data) + "\n" + + "CAP: " + SSTR((*v).active_points.data)  + "\n" +  quality
+    std::string value = "ID-" + (*v).tracker_name.data+ "BFDemo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known + +   "\n" + SSTR((*v).initial_points.data) + "/" + SSTR((*v).active_points.data)  + "\n" +  quality
                         + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
     tracked_image_information.push_back( value );
 
-    //Now here if the tracker results is positive then output this as a result of the image other wise update the results.
     if ((*v).quality_results.data)
     {
       tracked_image_mats.push_back(image(cv::Rect((*v).object.object.x_offset, (*v).object.object.y_offset,
@@ -380,11 +331,10 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     else {
       previously_known = "false";
     }
-    std::string value = "ID: " + (*v).tracker_name.data + "\n Known: " + previously_known +  "\n" + "IAP: " + SSTR((*v).initial_points.data) + "\n" + + "CAP: " + SSTR((*v).active_points.data)  + "\n" +  quality
+    std::string value = "ID-" + (*v).tracker_name.data+ "BFDemo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known + +   "\n" + SSTR((*v).initial_points.data) + "/" + SSTR((*v).active_points.data)  + "\n" +  quality
                         + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
     temp_tracked_image_information.push_back( value );
 
-    //Now here if the tracker results is positive then output this as a result of the image other wise update the results.
     if ((*v).quality_results.data)
     {
       temp_tracked_image_mats.push_back(image(cv::Rect((*v).object.object.x_offset, (*v).object.object.y_offset,
@@ -396,7 +346,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
           temp_tracked_image_results.push_back(QImage((uchar*) temp_tracked_image_mats.back().data, temp_tracked_image_mats.back().cols, temp_tracked_image_mats.back().rows,
                                              temp_tracked_image_mats.back().step[0], QImage::Format_RGB888));
   }
-  //Now before emiting let's check the cmt_tracker_node internal state and see if there is a need to do anything related to that.
   nh.getParam("tracker_updated", tracker_updated_num);
   if (tracker_updated_num == 2 || firstrun)
   {
@@ -415,7 +364,6 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       {
         sensor_msgs::Image im = *v;
         sensor_msgs::ImagePtr r = boost::shared_ptr<sensor_msgs::Image>(boost::make_shared<sensor_msgs::Image>(im));
-        //r = boost::shared_ptr<sensor_msgs::Image>(im);
         cv_bridge::CvImageConstPtr cv_ptrs;
         cv::Mat image;
         try {
@@ -464,7 +412,6 @@ void tracker_plugin::updateVisibleFaces()
   }
 
 
-
   count_info = 0;
   for (std::vector<QImage>::iterator v = tracked_image_results.begin(); v != tracked_image_results.end(); ++v)
   {
@@ -480,13 +427,9 @@ void tracker_plugin::updateVisibleFaces()
   }
 
 }
-/**
-The one is the one that update the value of the funciton .
-*/
 void tracker_plugin::list_of_faces_update(const cmt_tracker_msgs::Objects& faces_info)
 {
   face_locs.objects.clear();
-  //May be better to use an iterator to handle the function.
   for (std::vector<cmt_tracker_msgs::Object>::const_iterator v = faces_info.objects.begin(); v != faces_info.objects.end(); ++v)
   {
     face_locs.objects.push_back((*v));
@@ -499,8 +442,6 @@ void tracker_plugin::trackerCb(const cmt_tracker_msgs::Tracker& tracker_locs)
 }
 void tracker_plugin::tracker_resultsCb(const cmt_tracker_msgs::Trackers& tracker_results)
 {
-  //Check whether this is invalided when the loop exits.
-  // = tracker_results;
   tracking_results.tracker_results.clear();
   for (std::vector<cmt_tracker_msgs::Tracker>::const_iterator v = tracker_results.tracker_results.begin(); v != tracker_results.tracker_results.end(); ++v)
   {
@@ -511,8 +452,6 @@ void tracker_plugin::tracker_resultsCb(const cmt_tracker_msgs::Trackers& tracker
 
 void tracker_plugin::temp_tracker_resultsCb(const cmt_tracker_msgs::Trackers& tracker_results)
 {
-  //Check whether this is invalided when the loop exits.
-  // = tracker_results;
   temp_tracking_results.tracker_results.clear();
   for (std::vector<cmt_tracker_msgs::Tracker>::const_iterator v = tracker_results.tracker_results.begin(); v != tracker_results.tracker_results.end(); ++v)
   {
@@ -523,34 +462,17 @@ void tracker_plugin::temp_tracker_resultsCb(const cmt_tracker_msgs::Trackers& tr
 
 void tracker_plugin::shutdownPlugin()
 {
-  //Do shutdown objects here.
   face_subscriber.shutdown();
   image_subscriber.shutdown();
 }
 
 void tracker_plugin::on_MethodChanged(int index)
 {
-  // QString topic = ui.face_choice_method->itemData(ui.face_choice_method->currentIndex());
-  // tracking_method = index;
-  // std::cout << "The Index is:" << index <<std::endl;
-  //let's clear elements;
-  conf.doubles.clear();
-  //TODO remove these choice in the future iterations.
   nh.setParam("tracking_method", "mustbeface");
-  double_param.name = "factor";
-  double_param.value = 30 ;
-  conf.doubles.push_back(double_param);
-
-  srv_req.config = conf;
-  ros::service::call("cmt_tracker_node/set_parameters", srv_req, srv_resp);
   std::cout << "tracking method change 2" << std::endl;
 }
-/**
-* A functional change the values to listen parameters. Now
-*/
 void tracker_plugin::on_ParamChanged(int index)
 {
-  //Now this listens to parameters to handle all the conversion.
   if(index == 0) {
     nh.setParam("face_detection_method","dlib");
 
@@ -580,7 +502,6 @@ void tracker_plugin::on_ParamChanged(int index)
     
   }
 
-  //Next also replace the image with another one.
 }
 /**
  * @brief tracker_plugin::on_addToTrack_clicked
@@ -589,14 +510,10 @@ void tracker_plugin::on_ParamChanged(int index)
 void tracker_plugin::on_addToTrack_clicked(QListWidgetItem *item)
 {
   int last_selected_item = ui.face_output_list->currentRow();
-  //Now here one publishes the last selected item in the list.
 
   track_location.object = face_locs.objects[last_selected_item];
 
-  //Let's create here a name by which it's random.
-
   tracker_locations_pub.publish(track_location);
-
 }
 /**
  * @brief tracker_plugin::on_removeAllTracked_clicked
@@ -606,10 +523,7 @@ void tracker_plugin::on_addToTrack_clicked(QListWidgetItem *item)
  */
 void tracker_plugin::on_removeAllTracked_clicked()
 {
-  //Here All Items need only be removed
-  // ui.tracker_initial_list->clear();
-  // ui.tracker_output_list->clear();
-  
+
   cmt_tracker_msgs::Clear srv;
   client.call(srv);
   // {

@@ -99,7 +99,9 @@ public:
 //	void remove_tracker(int index);
 	void remove_tracker(std::string name);
 
-    bool validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
+//    bool validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
+
+    bool reinforce(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
 
 	void callback(cmt_tracker_msgs::TrackerConfig &config, uint32_t level); 
 
@@ -138,6 +140,8 @@ private:
 	ros::ServiceServer update_service;
 	ros::ServiceServer recognition_service;
     ros::ServiceServer validation_service;
+    ros::ServiceServer reinforce_service;
+
 
     ros::ServiceClient add_to_tracker;
 
@@ -189,6 +193,7 @@ private:
 
 	//the threshold value that is passed to the cmt instance. 
 	double factor;
+	int downgrade;
 
 	//for setting the tracking to higher levels.
 	std::vector<cv::Rect> locations_of_trackers; 

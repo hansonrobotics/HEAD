@@ -75,17 +75,7 @@ public:
     ros::ServiceClient check_update;
     image_transport::Subscriber image_subscriber;
 
-    dynamic_reconfigure::Server<cmt_tracker_msgs::TrackerConfig> server;
-    dynamic_reconfigure::Server<cmt_tracker_msgs::TrackerConfig>::CallbackType f;
 
-    dynamic_reconfigure::ReconfigureRequest srv_req;
-    dynamic_reconfigure::ReconfigureResponse srv_resp;
-    dynamic_reconfigure::DoubleParameter double_param;
-    dynamic_reconfigure::Config conf;
-    // image_transport::Publisher image_publisher;
-    // sensor_msgs::ImagePtr image_published;
-    // std::string subscribe_topic;
-    // //Nodehandle from the rqt plugin.
     ros::NodeHandle nh;
     image_transport::ImageTransport it;
 
