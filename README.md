@@ -58,7 +58,7 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
 ## Checkout latest OpenCog (developer mode)
 
-`./hrtool -b`
+`./hrtool -d`
 
 This option is used when you want to get the latest OpenCog stack. It will set the remote of git repositories of OpenCog to [OpenCog](https://github.com/opencog) domain.
 
