@@ -10,6 +10,8 @@ for i in $(env|grep ROS|cut -d= -f1); do
     unset $i
 done
 
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+
 install_basic() {
     sudo apt-get -y update
     sudo apt-get -y install git
@@ -48,6 +50,35 @@ install_ros() {
     set -e
 }
 
+install_opencog_deps() {
+    sudo apt-get -y install ccache
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
+    chmod +rx octool
+    ./octool -rdpv
+    rm octool
+
+    install_relex_deps
+}
+
+install_relex_deps() {
+    sudo apt-get -y update
+    sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
+    sudo apt-get -y install wordnet-dev wordnet-sense-index
+    sudo apt-get -y install ant libcommons-logging-java libgetopt-java
+
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
+    chmod +rx octool
+    ./octool -l
+    rm octool
+
+    # Java WordNet Library
+    wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
+    unzip -o jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
+    sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
+    rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
+    sudo chmod -v 0644 /usr/local/share/java/jwnl.jar
+}
+
 install_other_deps() {
     sudo add-apt-repository -y ppa:irie/blender
     sudo apt-get -y update
@@ -81,14 +112,6 @@ install_other_deps() {
     tar zxf ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz -C /tmp
     sudo cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
     rm -rf /tmp/festival
-
-
-    # For OpenCog
-    sudo apt-get -y install ccache
-    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
-    chmod +rx octool
-    ./octool -rdpv
-    rm octool
 
     # For tts playing audio
     sudo apt-get -y install python-pyglet
@@ -137,7 +160,7 @@ clone() {
 }
 
 get_opencog_src(){
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE
         clone hansonrobotics $repo opencog
@@ -145,7 +168,7 @@ get_opencog_src(){
 }
 
 check_local_changes() {
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
             cd $HR_WORKSPACE/opencog/$repo
@@ -170,7 +193,7 @@ check_local_changes() {
 
 update_opencog() {
     local DEFAULT_BRANCH="master"
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE/opencog/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
@@ -195,8 +218,13 @@ do_update_hr() {
 }
 
 do_install_deps() {
+    _do_install_deps
+}
+
+_do_install_deps() {
     install_basic
     install_ros
+    install_opencog_deps
     install_other_deps
 }
 
@@ -214,7 +242,7 @@ do_dev_mode() {
     DOMAIN=${1-"opencog"}
     check_local_changes || exit 1
     echo "Switching to $DOMAIN repositories"
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE
         if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
@@ -249,12 +277,16 @@ do_build_hr() {
 }
 
 build_opencog() {
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
-        if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
-            mkdir $HR_WORKSPACE/opencog/$repo/build
+        if [[ $repo != 'relex' ]]; then
+            if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
+                mkdir $HR_WORKSPACE/opencog/$repo/build
+            fi
+            cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && sudo make install
+        else
+            cd $HR_WORKSPACE/opencog/$repo && ant build && sudo ant install
         fi
-        cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && sudo make install
     done
 }
 
