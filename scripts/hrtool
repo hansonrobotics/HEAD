@@ -154,7 +154,7 @@ check_local_changes() {
                 echo "HEAD branch is not master $(pwd)" 1>&2
                 return 1
             fi
-            if [[ $(git status --porcelain|wc -c) != 0 ]]; then
+            if [[ $(git status -uno --porcelain|wc -c) != 0 ]]; then
                 echo "Plese commit the change(s) $(pwd)" 1>&2
                 echo $(git status --porcelain) 1>&2
                 return 1
