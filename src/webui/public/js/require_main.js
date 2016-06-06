@@ -29,9 +29,12 @@ requirejs.config({
         push_menu: 'vendor/jquery.multilevelpushmenu.min',
         bootbox: 'vendor/bootbox.min',
         emoticons: 'vendor/jquery.cssemoticons.min',
-        typeahead: 'vendor/bootstrap3-typeahead'
+        typeahead: 'vendor/bootstrap3-typeahead',
+        selectareas: 'vendor/jquery.selectareas',
+        robot_config: '/robot_config'
     },
     shim: {
+        selectareas: ['jquery'],
         typeahead: ['jquery'],
         emoticons: ['jquery'],
         scrollbar: ['jquery'],

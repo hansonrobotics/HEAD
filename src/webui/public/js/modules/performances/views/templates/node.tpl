@@ -51,47 +51,47 @@
             </div>
             <% } %>
             <% if (name == 'head_rotation') { %>
-                <div class="form-group">
-                    <label>Angle <span class="app-hr-angle-label pull-right label label-default"></span></label>
-                    <div class="app-hr-angle-slider"></div>
-                </div>
+            <div class="form-group">
+                <label>Angle <span class="app-hr-angle-label pull-right label label-default"></span></label>
+                <div class="app-hr-angle-slider"></div>
+            </div>
             <% } %>
             <% if (name == 'interaction') { %>
-                <div class="form-group">
-                    <label title="Mode">Mode</label>
-                    <select class="app-btree-mode-select">
-                        <option value="255">Full</option>
-                        <option value="207">FT Off</option>
-                        <option value="48">FT On</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label title="Language">Speech event</label>
-                    <select class="app-speech-event-select">
-                        <option value="">None</option>
-                        <option value="listening">Listening</option>
-                        <option value="talking">Talking</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label title="Mode">Mode</label>
+                <select class="app-btree-mode-select">
+                    <option value="255">Full</option>
+                    <option value="207">FT Off</option>
+                    <option value="48">FT On</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label title="Language">Speech event</label>
+                <select class="app-speech-event-select">
+                    <option value="">None</option>
+                    <option value="listening">Listening</option>
+                    <option value="talking">Talking</option>
+                </select>
+            </div>
             <% } %>
             <% if (name == 'kfanimation') { %>
-                <div class="form-group">
-                    <label title="Animation">Animation</label>
-                    <select class="app-kfanimation-select"></select>
-                </div>
-                <div class="form-group">
-                    <label title="FPS">FPS <span
+            <div class="form-group">
+                <label title="Animation">Animation</label>
+                <select class="app-kfanimation-select"></select>
+            </div>
+            <div class="form-group">
+                <label title="FPS">FPS <span
                             class="app-fps-label pull-right label label-default"></span></label>
-                    <div class="app-fps-slider"></div>
-                </div>
-                <div class="form-group">
-                    <label title="Arms">Blender Disabled</label>
-                    <select class="app-kfmode-select">
-                        <option value="no">No</option>
-                        <option value="face">Face</option>
-                        <option value="all">All</option>
-                    </select>
-                </div>
+                <div class="app-fps-slider"></div>
+            </div>
+            <div class="form-group">
+                <label title="Arms">Blender Disabled</label>
+                <select class="app-kfmode-select">
+                    <option value="no">No</option>
+                    <option value="face">Face</option>
+                    <option value="all">All</option>
+                </select>
+            </div>
             <% } %>
             <% if (name == 'expression') { %>
             <div class="form-group">
@@ -108,7 +108,7 @@
             <% if (name == 'emotion' || name == 'gesture' || name == 'expression') { %>
             <div class="form-group">
                 <label title="Magnitude">Magnitude <span
-                        class="app-magnitude-label pull-right label label-default"></span></label>
+                            class="app-magnitude-label pull-right label label-default"></span></label>
 
                 <div class="app-magnitide-slider"></div>
             </div>
@@ -145,6 +145,9 @@
                     </button>
                     <button class="app-node-duration-indicator btn btn-default" disabled="disabled">0s</button>
                     <button class="app-node-frames-indicator btn btn-default" disabled="disabled">0</button>
+                    <button class="app-hide-settings-button btn btn-default" title="Hide node settings">
+                        ×
+                    </button>
                 </div>
             </div>
         </div>

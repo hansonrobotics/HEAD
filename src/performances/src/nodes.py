@@ -10,6 +10,7 @@ from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 import time
 import logging
+import random
 
 logger = logging.getLogger('hr.performances.nodes')
 
@@ -79,7 +80,17 @@ class Node(object):
     # Method to call while node is running
     def cont(self, run_time):
         pass
-
+    # Method to get magnitude from either one number or range
+    @staticmethod
+    def _magnitude(magnitude):
+        try:
+            return float(magnitude)
+        except TypeError:
+            try:
+                # Randomize magnitude
+                return random.uniform(float(magnitude[0]), float(magnitude[1]))
+            except:
+                return 0.0
 
 class speech(Node):
     def start(self, run_time):
@@ -94,13 +105,13 @@ class speech(Node):
 class gesture(Node):
     def start(self, run_time):
         self.runner.topics['gesture'].publish(
-                SetGesture(self.data['gesture'], 1, float(self.data['speed']), float(self.data['magnitude'])))
+                SetGesture(self.data['gesture'], 1, float(self.data['speed']), self._magnitude(self.data['magnitude'])))
 
 
 class emotion(Node):
     def start(self, run_time):
         self.runner.topics['emotion'].publish(
-                EmotionState(self.data['emotion'], float(self.data['magnitude']),
+                EmotionState(self.data['emotion'], self._magnitude(self.data['magnitude']),
                              rospy.Duration.from_sec(self.data['duration'])))
 
 
@@ -182,7 +193,7 @@ class expression(Node):
         if (not self.shown) and (run_time > self.start_time + 0.05):
             self.shown = True
             self.runner.topics['expression'].publish(
-                    MakeFaceExpr(self.data['expression'], float(self.data['magnitude'])))
+                    MakeFaceExpr(self.data['expression'], self._magnitude(self.data['magnitude'])))
             logger.info("Publish expression {}".format(self.data))
 
     def stop(self, run_time):
@@ -197,17 +208,22 @@ class kfanimation(Node):
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
         self.shown = False
-        self.blender_mode = 'head'
+        self.blender_disable = 'off'
         if 'blender_mode' in self.data.keys():
-            self.blender_mode = self.data['blender_mode']
+            self.blender_disable = self.data['blender_mode']
 
     def start(self, run_time):
-        try:
-            if self.blender_mode == 'head':
-                self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
-        except Exception as ex:
-            logger.error(ex)
         self.shown = False
+        try:
+            if self.blender_disable in ['face', 'all']:
+                self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
+            if self.blender_disable == 'all':
+                self.runner.services['neck_pau_mux']("/" + self.runner.robot_name + "/cmd_neck_pau")
+        except Exception as ex:
+            # Dont start animation to prevent the conflicts
+            self.shown = True
+            logger.error(ex)
+
 
     def cont(self, run_time):
         # Publish expression message after some delay once node is started
@@ -218,8 +234,10 @@ class kfanimation(Node):
 
     def stop(self, run_time):
         try:
-            if self.blender_mode == 'head':
-                self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
+            if self.blender_disable in ['face', 'all']:
+                self.runner.services['head_pau_mux']("/blender_api/get_pau")
+            if self.blender_disable == 'all':
+                self.runner.services['neck_pau_mux']("/blender_api/get_pau")
         except Exception as ex:
             logger.error(ex)
 

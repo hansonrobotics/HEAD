@@ -4,6 +4,17 @@
     padding: 8px 15px;
 }
 
+.app-performances {
+    padding: 10px 5px 5px 10px;
+    width: 100%;
+    border: 1px solid #4E5D6C;
+    margin-top: -1px;
+}
+
+.app-performances.active {
+    border-color: #df691a;
+}
+
 .app-performances button {
     margin: 0 5px 5px 0;
 }
@@ -52,11 +63,6 @@
     margin: 0;
 }
 
-.app-timeline-container {
-    height: 21px;
-    width: 100%;
-}
-
 .app-timeline-nodes,
 .app-timeline-checkbox {
     background-color: #4e5d6c;
@@ -64,8 +70,10 @@
 
 .app-timeline-nodes {
     height: 20px;
+    margin-bottom: 1px;
     max-height: 20px;
     position: relative;
+    width: 100%;
 }
 
 .app-timeline-nodes .app-node {
@@ -115,12 +123,6 @@
     position: relative;
 }
 
-.select2-container {
-    background-color: transparent;
-    margin: 0;
-    padding: 0;
-}
-
 .app-slider-demo {
     height: 26px;
 }
@@ -168,11 +170,6 @@
     position: relative;
 }
 
-.app-node-settings .select2-container {
-    width: 100%;
-}
-
-.app-node-settings .select2-choice,
 .app-node-settings .ui-slider {
     height: 39px;
     line-height: 39px;
@@ -296,10 +293,30 @@ textarea.form-control.app-node-text {
     width: 100px;
 }
 
-.app-performance-group-tabs {
-    margin-bottom: 10px;
-}
-
 .app-current-path {
     float: right !important;
+    z-index: 999;
+}
+
+.app-current-path a {
+    margin: 0 !important;
+}
+
+.app-selectareas-container {
+    margin: 10px 0;
+    border: 1px solid #4e5d6c;
+}
+
+.select-areas-footbar {
+    margin-bottom: 15px;
+}
+
+.app-performance-group-tabs li.highlight a {
+    border-color: #df691a !important;
+}
+
+.app-new-dir {
+    padding: 5px;
+    border: 1px solid #4e5d6c;
+    border-bottom-color: transparent;
 }

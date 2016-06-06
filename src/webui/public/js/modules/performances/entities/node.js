@@ -14,6 +14,14 @@ define(['application', 'backbone', 'lib/api'], function (App, Backbone, api) {
                     break;
             }
         },
+        onDestroy: function () {
+            this.removeEl();
+        },
+        removeEl: function () {
+            console.log('test');
+            if (this.get('el'))
+                $(this.get('el')).remove();
+        },
         toJSON: function () {
             var json = Backbone.Model.prototype.toJSON.call(this);
             if (this.get('el')) delete json['el'];
