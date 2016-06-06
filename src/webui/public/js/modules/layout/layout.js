@@ -10,7 +10,8 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
             navLinks: '#app-nav a, #app-admin-nav a',
             content: '#app-content',
             navbarContainer: '#navbar-container',
-            reportButton: '.app-report-button'
+            reportButton: '.app-report-button',
+            notifications: '#notifications'
         },
         events: {
             'click @ui.navLinks': 'navLinkClicked',
@@ -49,6 +50,12 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
                 this.ui.nav.show();
                 this.ui.adminNav.hide();
             }
+        },
+        hideNav: function(){
+            this.ui.nav.hide();
+            this.ui.adminNav.hide();
+            this.ui.notifications.hide();
+            this.ui.reportButton.hide();
         },
         navLinkClicked: function () {
             $('.navbar-collapse.in').collapse('hide');

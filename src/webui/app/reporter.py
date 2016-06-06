@@ -1,5 +1,5 @@
 import yaml
-from subprocess import call, check_output
+from subprocess import call, check_output, Popen
 from easyprocess import EasyProcess
 import threading
 import time
@@ -28,6 +28,9 @@ class Reporter:
         self.robot_name = ''
         # Pololu status
         self.pololu_boards = {}
+        self.mx_tool = False
+        self.exe = None
+        self.exe_stop = None
 
     def load_config(self):
         with open(self.filename, 'r') as f:
@@ -184,6 +187,95 @@ class Reporter:
 
         return status
 
+    def start_status(self, config_dir, robot_name, started = -1):
+        # Check if software started only if its status wasnt changed on same call,
+        # in which case current status would be passed as argument
+        if started < 0:
+            started = self.robot_started(robot_name)
+
+        status = {
+            'software': started,
+            'system': {
+                'cpu': int(psutil.cpu_percent()),
+                'mem': int(psutil.virtual_memory().percent),
+                'total_mem': round(psutil.virtual_memory().total/float(1024*1024*1024)),
+            },
+            'status': {
+               'internet': self.get_internet_status(),
+               'camera': self.check("test -e /dev/video0") * -1 +1,
+            },
+            # Hardware Checks
+            'checks': []
+        }
+        # Check Hardware only if software not running to avoid accessing same hardware
+        if robot_name and status['software'] == 0:
+            # Check if software already running:
+
+            # Hardware checks
+            checks = os.path.join(config_dir,robot_name,'hw_monitor.yaml')
+            with open(checks, 'r') as stream:
+                hw = yaml.load(stream)
+            # Check dynamixels
+            if 'dynamixel' in hw:
+                for c in hw['dynamixel']:
+                    # Check device
+                    dev =  self.check("test -e "+c['device']) * -1 +1
+                    status['checks'].append({
+                        'label': c['label'] + " USB",
+                        'status': dev,
+                    })
+                    # Check for motors if device found
+                    if dev == 0:
+                        found = self.get_dynamixel_motor_number(c['device'])
+                    else:
+                        found = 0
+                    if 'motor_count' in c:
+                        total = c['motor_count']
+                    else:
+                        total = 0
+                    # All motors found
+                    st = 1
+                    if found >= total > 0:
+                        st = 0
+                    elif found > 0:
+                        st = 2
+                    val = str(found)
+                    if total > 0:
+                        val += "/{}".format(total)
+
+                    status['checks'].append({
+                        'label': c['label'] + " Motors found",
+                        'status': st,
+                        'value': val,
+                    })
+            if 'pololu' in hw:
+                for c in hw['pololu']:
+                    dev =  self.check("test -e "+c['device']) * -1 +1
+                    status['checks'].append({
+                        'label': c['label'] + " USB",
+                        'status': dev,
+                    })
+                    status['checks'].append({
+                        'label': c['label'] + " Power",
+                        'status': 2,
+                    })
+        status['checks'].append({
+            'label': "Internet Connection",
+            'status': self.get_internet_status(),
+        })
+        return status
+    def get_dynamixel_motor_number(self, device):
+        if not self.mx_tool:
+            return 0
+        cmd = "{} --device {}".format(self.mx_tool, device)
+        out = EasyProcess(cmd).call()
+        if out.return_code > 0:
+            return 0
+        return len(out.stdout.splitlines())-1
+
+    def get_pololu_power(self):
+        return 0
+
     def get_robot_name(self):
         return self.get_ros_param("/robot_name")
 
@@ -226,6 +318,40 @@ class Reporter:
             return 0
         return int(float(v))
 
+    # Starts robot script in new terminal (gnome by default)
+    def start_robot(self, robot_name):
+        if not self.exe:
+            return False
+        cmd = 'gnome-terminal -e "{} {}"'.format(self.exe, robot_name)
+        Popen(cmd, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+        return True
+
+    def stop_robot(self, robot_name):
+        if not self.exe_stop:
+            return False
+        cmd = 'gnome-terminal -e "{}"'.format(self.exe_stop)
+        out = EasyProcess(cmd).call()
+        if out.return_code > 0:
+            return False
+        return True
+
+    # Returns 0 robot has not been started, 1 - if its is started, 2 - if it is still starting up.
+    # Based on TMUX session list
+    def robot_started(self, robot_name):
+        if not robot_name:
+            return 0
+        cmd ='tmux list-sessions'
+        out = EasyProcess(cmd).call()
+        if out.return_code > 0:
+            return 0
+        sessions = str(EasyProcess(cmd).call().stdout).splitlines()
+        for s in sessions:
+            if s.find(robot_name) > -1:
+                if s.find('attached') > -1:
+                    return 1
+                else:
+                    return 2
+        return 0
 
 def deepupdate(original, new):
     """Updates missing or None values in all 'directly' nested dicts."""

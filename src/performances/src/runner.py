@@ -37,7 +37,8 @@ class Runner:
         self.worker.setDaemon(True)
         rospy.init_node('performances')
         self.services = {
-            'head_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/head_pau_mux/select', MuxSelect)
+            'head_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/head_pau_mux/select', MuxSelect),
+            'neck_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/neck_pau_mux/select', MuxSelect)
         }
         self.topics = {
             'look_at': rospy.Publisher('/blender_api/set_face_target', Target, queue_size=1),
@@ -108,7 +109,7 @@ class Runner:
     def run_by_name_callback(self, request):
         name = request.name
         robot_name = rospy.get_param('/robot_name')
-        path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', name + '.yaml')
+        path = os.path.join(rospack.get_path('performances'), 'robots', robot_name, name + '.yaml')
 
         if os.path.exists(path):
             with open(path, 'r') as f:

@@ -173,6 +173,23 @@ def update_animations(robot_name):
     return json_encode(True)
 
 
+@app.route('/attention_regions/<robot_name>', methods=['GET'])
+def get_attention_regions(robot_name):
+    areas = []
+    path = os.path.join(config_root, robot_name, 'attention_regions.yaml')
+    if os.path.exists(path):
+        areas = read_yaml(path)
+    return json_encode(areas)
+
+
+@app.route('/attention_regions/<robot_name>', methods=['POST'])
+def update_attention_regions(robot_name):
+    path = os.path.join(config_root, robot_name, 'attention_regions.yaml')
+    regions = json.loads(request.get_data())
+    write_yaml(path, regions)
+    return json_encode(regions)
+
+
 @app.route('/performances/<robot_name>', methods=['GET'])
 def get_performances(robot_name):
     performances = []
@@ -288,15 +305,24 @@ def realsense():
         facePub.publish(f)
     return Response(json_encode({'success': True}), mimetype="application/json")
 
+@app.route('/robot_config.js')
+def send_robot_js():
+    # Returns mode as normal
+    return "define(function (){return {mode:'normal'}});"
 
-def write_yaml(file_name, data):
+
+def write_yaml(filename, data):
     # delete existing config
     try:
-        os.remove(file_name)
+        os.remove(filename)
     except OSError:
         pass
 
-    f = open(file_name, 'w')
+    dir = os.path.dirname(filename)
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
+    f = open(filename, 'w')
     f.write(yaml.safe_dump(data, encoding='utf-8', allow_unicode=True))
     f.close()
 
@@ -377,4 +403,4 @@ if __name__ == '__main__':
     else:
         rospy.init_node("webui_test", anonymous=True)
         facePub = rospy.Publisher("/camera/face_locations", Faces, queue_size=30)
-        app.run(host='0.0.0.0', debug=True, use_reloader=False, port=options.port)
+        app.run(host='0.0.0.0', debug=False, use_reloader=False, port=options.port)

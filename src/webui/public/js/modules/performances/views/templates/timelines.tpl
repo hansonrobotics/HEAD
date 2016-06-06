@@ -5,7 +5,7 @@
         <div class="input-group">
             <div class="input-group-addon">Name</div>
             <input class="app-performance-name form-control" placeholder="Enter name" type="text"/>
-            <button class="app-save-button btn btn-primary" title="Save"><i
+            <button class="app-save-button btn btn-primary"><i
                         class="glyphicon glyphicon-floppy-save"></i> Save
             </button>
         </div>
@@ -18,9 +18,6 @@
         </button>
         <button class="app-delete-button btn btn-danger" title="Delete">
             <i class="glyphicon glyphicon-trash"></i> Delete
-        </button>
-        <button class="app-hide-settings-button btn btn-default" title="Hide node settings">
-            ×
         </button>
     </div>
 </div>
@@ -57,7 +54,7 @@
 </div>
 
 <div class="btn-group" role="group" aria-label="...">
-    <button class="app-run-button btn btn-default" title="Save"><i
+    <button class="app-run-button btn btn-default" title="Run"><i
                 class="glyphicon glyphicon-play-circle"></i> Run
     </button>
     <button class="app-pause-button btn btn-default" title="Stop"><i

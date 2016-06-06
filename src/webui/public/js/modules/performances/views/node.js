@@ -70,18 +70,26 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
                     // set default
                     if (!this.model.get('magnitude'))
-                        this.model.set('magnitude', 1);
+                        this.model.set('magnitude', [0.9,1]);
+                    magnitude = this.model.get('magnitude');
+                    if (magnitude.constructor === Array && magnitude.length == 2)
+                        magnitude = [magnitude[0] * 100, magnitude[1] * 100];
+                    else
+                        // Compatable with previous version of single value magnitude
+                        magnitude = [magnitude*100, magnitude*100];
 
-                    this.ui.magnitudeLabel.html(this.model.get('magnitude') * 100 + '%');
+
+
+                    this.ui.magnitudeLabel.html(magnitude[0] + '-' + magnitude[1] + '%');
 
                     // init slider
                     this.ui.magnitudeSlider.slider({
                         animate: true,
-                        range: 'min',
-                        value: this.model.get('magnitude') * 100,
-                        slide: function (e, ui) {
-                            self.model.set('magnitude', (ui.value / 100).toFixed(2));
-                            self.ui.magnitudeLabel.html(Math.floor(self.model.get('magnitude') * 100) + '%');
+                        range: true,
+                        values: magnitude,
+                        slide: function( event, ui ) {
+                            self.model.set('magnitude', [ui.values[0] / 100, ui.values[1] / 100]);
+                            self.ui.magnitudeLabel.html(ui.values[0] + '-' + ui.values[1] + '%');
                         }
                     });
                 }
