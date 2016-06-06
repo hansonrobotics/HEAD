@@ -234,6 +234,8 @@ do_get_hr_src() {
 }
 
 do_get_src() {
+    # Check/add the github host key to ~/.ssh/known_hosts
+    ssh -o StrictHostKeyChecking=no github.com || true
     do_get_hr_src
     get_opencog_src
 }
