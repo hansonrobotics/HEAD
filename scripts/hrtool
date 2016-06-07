@@ -64,6 +64,7 @@ install_relex_deps() {
     sudo apt-get -y update
     sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
     sudo apt-get -y install wordnet-dev wordnet-sense-index
+    sudo apt-get -y install openjdk-7-jdk
     sudo apt-get -y install ant libcommons-logging-java libgetopt-java
 
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
