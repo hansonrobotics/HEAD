@@ -1,4 +1,4 @@
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 """This file contains the public interface to the aiml module."""
 import AimlParser
 import DefaultSubs
@@ -1119,10 +1119,11 @@ def _testTag(kern, tag, input, outputList):
 
 if __name__ == "__main__":
     logging.basicConfig()
-    logging.getLogger().setLevel(logging.DEBUG)
+    logging.getLogger().setLevel(logging.INFO)
     # Run some self-tests
     k = Kernel()
-    k.bootstrap(learnFiles="self-test.aiml")
+    cwd = os.path.dirname(os.path.realpath(__file__))
+    k.bootstrap(learnFiles=os.path.join(cwd, "self-test.aiml"))
 
     global _numTests, _numPassed
     _numTests = 0
@@ -1161,8 +1162,8 @@ if __name__ == "__main__":
     _testTag(k, 'input', 'test input', ['You just said: test input'])
     _testTag(k, 'javascript', 'test javascript', ["Javascript is not yet implemented"])
     _testTag(k, 'lowercase', 'test lowercase', ["The Last Word Should Be lowercase"])
-    _testTag(k, 'person', 'test person', ['HE think i knows that my actions threaten him and his.'])
-    _testTag(k, 'person2', 'test person2', ['YOU think me know that my actions threaten you and yours.'])
+    _testTag(k, 'person', 'test person', ['HE is a cool guy.'])
+    _testTag(k, 'person2', 'test person2', ['YOU are a cool guy.'])
     _testTag(k, 'person2 (no contents)', 'test person2 I Love Lucy', ['YOU Love Lucy'])
     _testTag(k, 'random', 'test random', ["response #1", "response #2", "response #3"])
     _testTag(k, 'random empty', 'test random empty', ["Nothing here!"])
@@ -1191,7 +1192,7 @@ if __name__ == "__main__":
     _testTag(k, 'topicstar test #1', 'test topicstar', ["Solyent Green is made of people!"])
     k.setPredicate("topic", "Soylent Ham and Cheese")
     _testTag(k, 'topicstar test #2', 'test topicstar multiple', ["Both Soylents Ham and Cheese are made of people!"])
-    _testTag(k, 'unicode support', u"郧上好", [u"Hey, you speak Chinese! 郧上好"])
+    _testTag(k, 'unicode support', u"浣犲ソ", [u"Hey, you speak Chinese! 浣犲ソ"])
     _testTag(k, 'uppercase', 'test uppercase', ["The Last Word Should Be UPPERCASE"])
     _testTag(k, 'version', 'test version', ["PyAIML is version %s" % k.version()])
     _testTag(k, 'whitespace preservation', 'test whitespace', ["Extra   Spaces\n   Rule!   (but not in here!)    But   Here   They   Do!"])
@@ -1200,8 +1201,10 @@ if __name__ == "__main__":
     logger.info("--------------------")
     if _numTests == _numPassed:
         logger.info("%d of %d tests passed!" % (_numPassed, _numTests))
+        sys.exit(0)
     else:
         logger.info("%d of %d tests passed (see above for detailed errors)" % (_numPassed, _numTests))
+        sys.exit(1)
 
     # Run an interactive interpreter
     #print "\nEntering interactive mode (ctrl-c to exit)"
