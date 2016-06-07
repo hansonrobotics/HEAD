@@ -21,6 +21,13 @@ sys.path.insert(0, os.path.join(CWD, '../src'))
 
 class ChatbotTest(unittest.TestCase):
 
+    def test_pyaiml(self):
+        script = os.path.join(CWD, os.path.sep.join(
+            ['..', 'src', 'aiml', 'Kernel.py']))
+        cmd = 'python '+script
+        ret = os.system(cmd)
+        self.assertTrue(ret==0)
+
     def test_prologue(self):
         from server.client import Client
         cli = Client()

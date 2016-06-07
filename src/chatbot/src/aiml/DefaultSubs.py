@@ -56,12 +56,14 @@ defaultPerson = {
     "my": "his",
     "mine": "his",
     "myself": "himself",
+    "am": "is",
 
     # 3rd->1st (masculine)
     "he":"I",
     "him":"me",
     "his":"my",
     "himself":"myself",
+    "is": "am",
     
     # 3rd->1st (feminine)
     "she":"I",
@@ -77,12 +79,14 @@ defaultPerson2 = {
     "my": "your",
     "mine": "yours",
     "myself": "yourself",
+    "am": "are",
 
     # 2nd -> 1st
     "you": "me",
     "your": "my",
     "yours": "mine",
     "yourself": "myself",
+    "are": "am",
 }
 
 
