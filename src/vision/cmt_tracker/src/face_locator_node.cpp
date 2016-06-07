@@ -26,7 +26,18 @@ Face_Detection::Face_Detection()
 //  nh_.getParam("camerainfo", camerainfo);
   dlib::deserialize(shape_predictor_dat) >> sp;
 
+  f = boost::bind(&face_detect::Face_Detection::callback, this, _1, _2);
+  //TODO initialization doesn't trigger unless the rqt_reconfigure is triggered.
 
+  server.setCallback(f);
+
+}
+
+void Face_Detection::callback(cmt_tracker_msgs::FaceConfig &config, uint32_t level)
+{
+  //std::cout<<"Factor to be Updated"<<std::endl;
+   scale_factor = config.face_scale;
+  //std::cout<<"Factor Updated to: "<<factor<<std::endl;
 }
 
 void Face_Detection::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs::CameraInfoConstPtr& camerainfo )
@@ -85,26 +96,42 @@ cameramodel.fromCameraInfo(camerainfo);
      dlib::assign_image(img, cimg);
      //Now this is the way to detect small images as 40  x 40 goes by;
 
+    for (int i = 0; i < scale_factor; i++)
+    {
      dlib::pyramid_up(img);
-     dlib::pyramid_up(img);
+    }
 
      std::vector<dlib::rectangle> facesd = detector(img);
      std::vector<dlib::full_object_detection> pose_shapes;
+     win.clear_overlay();
+     win.set_image(cimg);
+     //win.add_overlay(facesd, dlib::rgb_pixel(255,0,0));
      //Now the rectangles are giving value based on the upscaled value of the rectangle. Now let's down sample it.
      for(size_t i = 0; i < facesd.size(); i++)
      {
         dlib::full_object_detection shape= sp(img,facesd[i]);
-        dlib::rectangle face_rect = pyd.rect_down(shape.get_rect());
-        face_rect = pyd.rect_down(face_rect);
+        dlib::rectangle face_rect;
+
+        for (int k = 0; k < scale_factor; k++)
+        {
+        face_rect =  pyd.rect_down(facesd[i]);
+        }
+        win.add_overlay(face_rect, dlib::rgb_pixel(255,0,0));
+
         std::vector<dlib::point> point_down;
 
         cmt_tracker_msgs::Object face_description;
 
         for (size_t j = 0; j < shape.num_parts(); j++)
         {
-            dlib::point p = pyd.point_down(shape.part(j));
-            p = pyd.point_down(p);
-            point_down.push_back(p);
+            dlib::point p;
+
+             for (int k = 0; k < scale_factor; k++)
+             {
+             p = pyd.point_down(shape.part(j));
+             }
+
+             point_down.push_back(p);
 
             //Now let's add this to the feature_point in Object.
             opencv_apps::Point2D pt;
@@ -143,8 +170,13 @@ cameramodel.fromCameraInfo(camerainfo);
         face_description.header.stamp = ros::Time::now();
         dlib::full_object_detection shape_down(face_rect,point_down);
         pose_shapes.push_back(shape_down); //The Bigger Image Pose Location.
-        dlib::rectangle face_loc_ = pyd.rect_down(facesd[i]);
-        face_loc_ = pyd.rect_down(face_loc_);
+
+        dlib::rectangle face_loc_;
+         for (int k = 0; k < scale_factor; k++)
+         {
+          face_loc_ = pyd.rect_down(facesd[i]);
+         }
+
         //To Assert only area in face is included to be tracked.
         cv::Rect rect = cv::Rect(face_loc_.left(), face_loc_.top(),face_loc_.width(), face_loc_.height());
 

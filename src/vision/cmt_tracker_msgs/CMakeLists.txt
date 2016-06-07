@@ -96,7 +96,9 @@ find_package(catkin REQUIRED COMPONENTS
 
  generate_dynamic_reconfigure_options(
    cfg/tracker.cfg
-#   cfg/DynReconf2.cfg
+   cfg/locator.cfg
+   cfg/reinforcer.cfg
+   cfg/recognizer.cfg
  )
 
 ###################################

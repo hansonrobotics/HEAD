@@ -63,8 +63,7 @@ public:
     cmt_tracker_msgs::Tracker track_published;
     cmt_tracker_msgs::Trackers tracking_results;
     cmt_tracker_msgs::Trackers temp_tracking_results;
-    // cmt_tracker_msgs::Objects tracker_locations;
-    // //Subscribers for location of faces and the image_subscriber
+
     ros::Publisher tracker_locations_pub;
     ros::Subscriber tracker_locations_sub;
     ros::Subscriber face_subscriber;
@@ -79,11 +78,9 @@ public:
     ros::NodeHandle nh;
     image_transport::ImageTransport it;
 
-    //Constructor.
     tracker_plugin();
 
 
-    //Plugin Implementation.
     virtual void initPlugin(qt_gui_cpp::PluginContext& context);
 
     virtual void shutdownPlugin();
@@ -142,7 +139,7 @@ protected:
     std::string subscribe_topic;
     cv::Mat conversion_mat_;
     cv::Mat img;
-    // cv::Mat conversion_mat_previous;
+
     Ui::tracker_plugin ui;
     QWidget* widget_;
     
@@ -152,7 +149,6 @@ protected:
     std::string subscribe_face;
     bool firstrun; 
 
-    //Doubling CMT on the running model.
 
 };
 }

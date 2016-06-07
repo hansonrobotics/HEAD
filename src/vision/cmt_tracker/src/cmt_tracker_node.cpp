@@ -291,7 +291,6 @@ void TrackerCMT::callback(cmt_tracker_msgs::TrackerConfig &config, uint32_t leve
 {
   //std::cout<<"Factor to be Updated"<<std::endl;
   factor = config.factor;
-  downgrade = config.downgrade;
   //std::cout<<"Factor Updated to: "<<factor<<std::endl;
 }
 void TrackerCMT::list_of_faces_update(const cmt_tracker_msgs::Objects& faces_info)

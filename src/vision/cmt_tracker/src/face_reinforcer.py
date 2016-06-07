@@ -42,7 +42,7 @@ class face_reinforcer:
 
         for face, cmt in overlaped_faces:
             self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 2
-            if (self.faces_cmt_overlap[cmt.tracker_name.data] > 3):
+            if (self.faces_cmt_overlap[cmt.tracker_name.data] > 2):
                 self.upt = rospy.ServiceProxy('reinforce',TrackerNames)
                 indication = self.upt(names=cmt.tracker_name.data, index=500)
                 if not indication:

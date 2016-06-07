@@ -9,7 +9,7 @@ import message_filters
 
 from cmt_tracker_msgs.msg import Trackers,Tracker,Objects
 from cmt_tracker_msgs.srv import TrackerNames
-from cmt_tracker_msgs.cfg import TrackerConfig
+from cmt_tracker_msgs.cfg import RecogntionConfig
 from std_srvs.srv import Empty
 from dynamic_reconfigure.server import Server
 
@@ -34,7 +34,7 @@ class face_predictor:
     self.temp_sub = message_filters.Subscriber('temporary_trackers',Trackers)
     ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub,self.temp_sub], 10,0.25)
     ts.registerCallback(self.callback)
-    Server(TrackerConfig, self.sample_callback)
+    Server(RecogntionConfig, self.sample_callback)
     self.faces_cmt_overlap = {}
     self.logger = logging.getLogger('hr.cmt_tracker.face_recognizer_node')
     self.update = True

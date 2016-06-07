@@ -17,6 +17,9 @@
 #include <cmt_tracker_msgs/Object.h>
 #include <cmt_tracker_msgs/Objects.h>
 #include <cmt_tracker_msgs/Trackers.h>
+#include <cmt_tracker_msgs/FaceConfig.h>
+
+#include <dynamic_reconfigure/server.h>
 
 #include <geometry_msgs/Point.h>
 #include <std_msgs/Bool.h>
@@ -78,17 +81,17 @@ public:
   //~Face_Detection();
 
   void imageCb(const sensor_msgs::ImageConstPtr& msg, const sensor_msgs::CameraInfoConstPtr& camerainfo);
-
+  void callback(cmt_tracker_msgs::FaceConfig &config, uint32_t level);
 private:
+
+  dynamic_reconfigure::Server<cmt_tracker_msgs::FaceConfig> server;
+  dynamic_reconfigure::Server<cmt_tracker_msgs::FaceConfig>::CallbackType f;
 
 
   image_geometry::PinholeCameraModel cameramodel;
   cv::Mat cameraMatrix, distCoeffs;
 
-//  std::string camerainfo;
-
-//  tf::TransformBroadcaster br;
-//  tf::Transform transform;
+  int scale_factor;
 
   cv::Mat conversion_mat_;
   int counter;
@@ -100,8 +103,9 @@ private:
   std::string cascade_file_eyes;
   dlib::pyramid_down<2> pyd;
   dlib::frontal_face_detector detector;
-//  dlib::image_window win;
-//  dlib::image_window win_faces;
+
+  dlib::image_window win;
+
   dlib::shape_predictor sp;
   std::string shape_predictor_dat;
   ros::NodeHandle nh_;
@@ -109,6 +113,7 @@ private:
 //  image_transport::Subscriber image_sub_;
   image_transport::CameraSubscriber image_sub_;
   image_transport::Publisher image_pub_;
+
   //List of face values in space.
   ros::Publisher faces_locations;
   std::vector<cv::Rect> faces;

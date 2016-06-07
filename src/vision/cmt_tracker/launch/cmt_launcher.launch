@@ -45,7 +45,7 @@
   <node name="base_footprint_transform" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /map /base_footprint 100"/>
   <node name="robot_transform" pkg="tf" type="static_transform_publisher" args="0 0 0.5 0 0 0 /base_footprint /robot_head 100"/>
 
-<arg name="debug" default="True"/>
+<arg name="debug" default="False"/>
 
 <group if="$(arg choose_web_cam)">
     <param name= "usb_cam/pixel_format" value="yuyv"/>
