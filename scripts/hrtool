@@ -288,7 +288,7 @@ build_opencog() {
             fi
             cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && sudo make install
         else
-            cd $HR_WORKSPACE/opencog/$repo && ant build && sudo ant install
+            cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && sudo ant install
         fi
     done
 }
