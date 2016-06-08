@@ -66,7 +66,7 @@ class face_predictor:
             tupl.append((x,y))
         self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data,0) + 1
         if self.faces_cmt_overlap[cmt.tracker_name.data] < self.sample_size and not cmt.recognized.data: # The first 10 images
-            self.face_recognizer.results(cv_image,tupl,cmt)
+            self.face_recognizer.results(cv_image,tupl,cmt.tracker_name.data)
 
         elif self.faces_cmt_overlap[cmt.tracker_name.data] == self.sample_size and not cmt.recognized.data:
             print(self.face_recognizer.face_results_aggregator)

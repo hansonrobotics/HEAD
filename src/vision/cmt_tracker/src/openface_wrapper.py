@@ -158,28 +158,33 @@ class face_recognizer:
             self.train()
         print('finsihes training')
 
-    def results(self, cv_image, tupl, i, threshold=0.85):
+    def results(self, cv_image, tupl, name, threshold=0.85):
         print('reaches results')
         # TODO Even take out this existence
         img_aligned = self.align(cv_image, tupl, True)
         result = self.infer(img_aligned)
-        self.face_results_aggregator[i.tracker_name.data] = self.face_results_aggregator.get(i.tracker_name.data, {})
-        self.face_results_aggregator[i.tracker_name.data]['results'] = self.face_results_aggregator[i.tracker_name.data].get(
+        self.face_results_aggregator[name] = self.face_results_aggregator.get(name, {})
+        self.face_results_aggregator[name]['results'] = self.face_results_aggregator[name].get(
             'results', {})
-        self.face_results_aggregator[i.tracker_name.data]['results'][result[0]] = \
-            self.face_results_aggregator[i.tracker_name.data]['results'].get(result[0], 0)
+        self.face_results_aggregator[name]['results'][result[0]] = \
+            self.face_results_aggregator[name]['results'].get(result[0], 0)
 
-        self.face_results_aggregator[i.tracker_name.data] = self.face_results_aggregator.get(i.tracker_name.data, {})
-        self.face_results_aggregator[i.tracker_name.data]['results'] = self.face_results_aggregator[i.tracker_name.data].get(
+        self.face_results_aggregator[name] = self.face_results_aggregator.get(name, {})
+        self.face_results_aggregator[name]['results'] = self.face_results_aggregator[name].get(
             'results', {})
-        self.face_results_aggregator[i.tracker_name.data]['results'][result[0]] = \
-            self.face_results_aggregator[i.tracker_name.data]['results'].get(result[0], 0)
+        self.face_results_aggregator[name]['results'][result[0]] = \
+            self.face_results_aggregator[name]['results'].get(result[0], 0)
 
         if result[1] > threshold:  ##TODO Dynamic reconfigurable name; if's below this threshold then stop.
-            self.face_results_aggregator[i.tracker_name.data]['results'][result[0]] = \
-                self.face_results_aggregator[i.tracker_name.data]['results'][result[0]] + 1
+            self.face_results_aggregator[name]['results'][result[0]] = \
+                self.face_results_aggregator[name]['results'][result[0]] + 1
         else:
-            self.face_results_aggregator[i.tracker_name.data]['results'][result[0]] = \
-                self.face_results_aggregator[i.tracker_name.data]['results'][result[0]] + 0
+            self.face_results_aggregator[name]['results'][result[0]] = \
+                self.face_results_aggregator[name]['results'][result[0]] + 0
 
         print('finishes result')
+
+    def immediate_results(self, cv_image, tupl):
+        img_aligned = self.align(cv_image, tupl, True)
+        result = self.infer(img_aligned)
+        return result

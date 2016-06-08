@@ -64,11 +64,23 @@ class OfflineViewer:
 
             #Let's paint on the picture here.
 
+
             for i in face.objects:
+                tupl = []
+
+                for pts in i.feature_point.points:
+                    x, y = pts.x, pts.y
+                    tupl.append((x, y))
                 cv2.rectangle(cv_image,(i.object.x_offset,i.object.y_offset),
                               (i.object.x_offset + i.object.width,i.object.y_offset + i.object.width),(255,0,0))
-            frame = cv2.flip(cv_image, 1)
-            cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+                #Now let's query every single time to which results group it belongs to and box output the result
+                result = self.face_recognizer.immediate_results(cv_image, tupl)
+                font = cv2.FONT_HERSHEY_COMPLEX_SMALL
+                cv2.putText(cv_image,str(result),(i.object.x_offset,i.object.y_offset),font,0.8,(255,0,0),2)
+                #print(self.face_recognizer.immediate_results(cv_image, tupl))
+
+
+            cv2image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGBA)
 
             img = Image.fromarray(cv2image)
             imgtk = ImageTk.PhotoImage(image=img)
