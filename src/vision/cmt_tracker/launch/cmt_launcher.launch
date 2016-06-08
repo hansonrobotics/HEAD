@@ -5,7 +5,8 @@
 <arg name="choose_web_cam" default="False"/>
 <arg name="emotime" default="True"/>
 <arg name="dlib" default="True"/>
-<arg name="cmt" default="True"/>
+<arg name="cmt" default="False"/>
+<arg name="offline" default="True"/>
 
 <arg name="testing" default="False"/>
 
@@ -65,9 +66,13 @@
 <group unless="$(arg debug)">
 <node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" output="screen" />
 </group>
-
+<node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py"/>
+<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" output="screen"/>
 </group>
 
+<group if="$(arg offline)">
+<node pkg="cmt_tracker" name="offline_node" type="offline_trainer.py" output="screen"/>
+</group>
 <node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  respawn="true"/>
 <!--
 <group if="$(arg emotime)">
@@ -75,6 +80,5 @@
     <include file="$(find emotime)/launch/emotime.launch"/>
 </group>
 -->
-<node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py"/>
-<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" output="screen"/>
+
 </launch>

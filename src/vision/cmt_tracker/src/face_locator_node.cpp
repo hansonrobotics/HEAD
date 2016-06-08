@@ -96,15 +96,14 @@ cameramodel.fromCameraInfo(camerainfo);
      dlib::assign_image(img, cimg);
      //Now this is the way to detect small images as 40  x 40 goes by;
 
-    for (int i = 0; i < scale_factor; i++)
-    {
+
      dlib::pyramid_up(img);
-    }
+
 
      std::vector<dlib::rectangle> facesd = detector(img);
      std::vector<dlib::full_object_detection> pose_shapes;
-     win.clear_overlay();
-     win.set_image(cimg);
+//     win.clear_overlay();
+//     win.set_image(cimg);
      //win.add_overlay(facesd, dlib::rgb_pixel(255,0,0));
      //Now the rectangles are giving value based on the upscaled value of the rectangle. Now let's down sample it.
      for(size_t i = 0; i < facesd.size(); i++)
@@ -112,11 +111,7 @@ cameramodel.fromCameraInfo(camerainfo);
         dlib::full_object_detection shape= sp(img,facesd[i]);
         dlib::rectangle face_rect;
 
-        for (int k = 0; k < scale_factor; k++)
-        {
-        face_rect =  pyd.rect_down(facesd[i]);
-        }
-        win.add_overlay(face_rect, dlib::rgb_pixel(255,0,0));
+        face_rect =  pyd.rect_down(shape.get_rect());
 
         std::vector<dlib::point> point_down;
 
@@ -124,12 +119,9 @@ cameramodel.fromCameraInfo(camerainfo);
 
         for (size_t j = 0; j < shape.num_parts(); j++)
         {
-            dlib::point p;
+             dlib::point p;
 
-             for (int k = 0; k < scale_factor; k++)
-             {
              p = pyd.point_down(shape.part(j));
-             }
 
              point_down.push_back(p);
 
@@ -172,10 +164,9 @@ cameramodel.fromCameraInfo(camerainfo);
         pose_shapes.push_back(shape_down); //The Bigger Image Pose Location.
 
         dlib::rectangle face_loc_;
-         for (int k = 0; k < scale_factor; k++)
-         {
+
           face_loc_ = pyd.rect_down(facesd[i]);
-         }
+
 
         //To Assert only area in face is included to be tracked.
         cv::Rect rect = cv::Rect(face_loc_.left(), face_loc_.top(),face_loc_.width(), face_loc_.height());
@@ -328,10 +319,6 @@ head_pose Face_Detection::facepose(cmt_tracker_msgs::Object face_description)
 
 
 }
-
-
-
-
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "face_locator");

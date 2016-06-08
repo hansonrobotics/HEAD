@@ -104,7 +104,7 @@ private:
   dlib::pyramid_down<2> pyd;
   dlib::frontal_face_detector detector;
 
-  dlib::image_window win;
+//  dlib::image_window win;
 
   dlib::shape_predictor sp;
   std::string shape_predictor_dat;

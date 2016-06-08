@@ -33,11 +33,8 @@ Then to train the dataset run
 
 
 # Urgent TODO's
-* Improve face classifiers as it seems there are no faces in the view most of the time. Triple the size of the image to get smaller images as in the case of exhibition videos. Was done but the
-results didn't really translate to better performance as it didn't find faces in most of the case.
-
-* Confiugre tthe codes to the camera as for the quality of the camera it is Full HD 1080P isn't outputing
-quality results.
+* Improving face detection size has really bad impact on the overall process as it takes quite a while for node to get one face
+possibily leading to errounous results.
 
 
 * Configurable dataset where we can trim the sets and remove unnecessary faces and train again without being in
