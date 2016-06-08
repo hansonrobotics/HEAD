@@ -6,6 +6,11 @@
 
 set -e
 
+if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
+    echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
+    exit 1
+fi
+
 for i in $(env|grep ROS|cut -d= -f1); do
     unset $i
 done

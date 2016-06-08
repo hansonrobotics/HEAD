@@ -15,6 +15,12 @@ import math
 from mathutils import *
 import time
 
+import os
+run_id = rospy.get_param('/run_id', None)
+if run_id and 'ROS_LOG_DIR' in os.environ:
+    os.environ['ROS_LOG_DIR'] = os.path.join(
+        os.path.expanduser(os.environ['ROS_LOG_DIR']), run_id)
+
 api = None
 logger = logging.getLogger('hr.blender_api_msgs.roscom')
 
