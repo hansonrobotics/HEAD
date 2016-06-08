@@ -3,7 +3,7 @@ import os
 import json
 from flask import request
 
-logger = logging.getLogger('hr.ros_motors_webui.monitor')
+logger = logging.getLogger('hr.webui.monitor')
 json_encode = json.JSONEncoder().encode
 LOG_TO_SHOW = 100
 
@@ -18,7 +18,7 @@ def get_logs(loglevel):
     import glob
     import re
 
-    logger.info('get logs: log level {}'.format(loglevel))
+    logger.debug('get logs: log level {}'.format(loglevel))
     log_cursors = request.form.copy()
     logger.debug('cursors: {}'.format(log_cursors))
 
