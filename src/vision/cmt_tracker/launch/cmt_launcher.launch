@@ -5,18 +5,18 @@
 <arg name="choose_web_cam" default="False"/>
 <arg name="emotime" default="True"/>
 <arg name="dlib" default="True"/>
-<arg name="cmt" default="False"/>
-<arg name="offline" default="True"/>
+<arg name="cmt" default="True"/>
+<arg name="offline" default="False"/>
 
 <arg name="testing" default="False"/>
 
 <param name="tracking_method" value="mustbeface"/>
 <param name="tracker_updated" value="0"/>
 <param name="pose" value="0"/>
-<param name= "publish_topic_event" value="face_events"/>
-<param name= "publish_topic_location" value="face_locations"/>
-<param name= "being_initialized_stop" value ="0"/>
-<param name= "filtered_face_locations" value="filterd_face_locations"/>
+<param name="publish_topic_event" value="face_events"/>
+<param name="publish_topic_location" value="face_locations"/>
+<param name="being_initialized_stop" value ="0"/>
+<param name="filtered_face_locations" value="filterd_face_locations"/>
 <param name="face_cascade" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
 <param name="profile_cascade" value="$(find pi_face_tracker)/params/haarcascade_profileface.xml" />
 <param name="shape_predictor" value="$(env HR_WORKSPACE)/openface/models/dlib/shape_predictor_68_face_landmarks.dat"/>
@@ -38,13 +38,8 @@
 <group unless="$(arg dlib)">
 <param name="face_detection_method" value="opencv"/>
 </group>
-  <node name="tablet_transform" pkg="tf" type="static_transform_publisher" args="0.3 0 0 0 0 0 /base_footprint /tablet 100"/>
-  <node name="selection_tablet_transform" pkg="tf" type="static_transform_publisher" args="0.3 -0.3 0 0 0 0 /base_footprint /selection_tablet 100"/>
-  <node name="experimenter_transform" pkg="tf" type="static_transform_publisher" args="0.2 -0.6 0.6 0 0 0 /base_footprint /experimenter 100"/>
-  <node name="observers_transform" pkg="tf" type="static_transform_publisher" args="-2.7 1 0.7 0 0 0 /base_footprint /observer 100"/>
-  <node name="camera_transform" pkg="tf" type="static_transform_publisher" args="0.1 0 0 1.57 0 1. /base_footprint $(arg head_tracking_frame) 100"/>
-  <node name="base_footprint_transform" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /map /base_footprint 100"/>
-  <node name="robot_transform" pkg="tf" type="static_transform_publisher" args="0 0 0.5 0 0 0 /base_footprint /robot_head 100"/>
+
+<node name="camera_transform" pkg="tf" type="static_transform_publisher" args="0.1 0 0 1.57 0 1. /base_footprint $(arg head_tracking_frame) 100"/>
 
 <arg name="debug" default="False"/>
 
@@ -59,16 +54,20 @@
 
 <node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node" output="screen" />
 <group if="$(arg cmt)">
+
 <group if="$(arg debug)">
 <node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" respawn="true" output="screen" launch-prefix="xterm -e gdb -ex run"/>
 <!--launch-prefix="xterm -e gdb -ex run respawn="true"launch-prefix="xterm -e valgrind -leak-check=full" "-->
 </group>
+
 <group unless="$(arg debug)">
 <node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" output="screen" />
 </group>
+
 <node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py"/>
 <node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" output="screen"/>
 <node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  respawn="true"/>
+
 </group>
 
 <group if="$(arg offline)">

@@ -379,29 +379,6 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
 
 
   msg.id = std::atoi(locs.tracker_name.data.c_str());
-  //Now let's convert the point to a 3d representation from a  pi definition
-  /*
-        p = Point()
-        # same FOV for both, so calculate the relative distance of one pixel
-        dp = 0.22 / float(self.bounding_size) # It should be same in both axis
-        # logger.warn("bbox size=" + str(self.bounding_size))
-        w = self.camera_width/2
-        h = self.camera_height/2
-        # Y is to the left in camera image, Z is to top
-        p.x = dp *  (h / tan(self.camera_fov_x/2.0))
-        p.y = dp * (w-(self.pt2[0]+self.pt1[0])/2)
-        p.z = dp * (h-(self.pt2[1]+self.pt1[1])/2)
-
-            self.pt1 = (x,y)
-            self.pt2 = (x+w, y+h)
-  */
-
-
-  //Here definition relating to  bounding_size
-
-  //self.bounding_size = self.pt2[1] - self.pt1[1]
-  //While in initilzation it's considered as x location
-  // self.bounding_size = pt2[0] - pt1[0]
 
   double dp;
   double width;

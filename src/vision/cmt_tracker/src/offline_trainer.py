@@ -23,7 +23,7 @@ import os
 class OfflineViewer:
 
     def __init__(self):
-        self.save = False
+        self.save_faces = False
         rospy.init_node('offline_viewer', anonymous=True)
         self.openface_loc = rospy.get_param('openface')
         self.camera_topic = rospy.get_param('camera_topic')
@@ -71,7 +71,7 @@ class OfflineViewer:
         self.window.mainloop()  # Starts GUI
 
     def switchToLive(self):
-        self.save= False
+        self.save_faces= False
 
     def switchToTrain(self):
         #Create a dialog for waiting and then when finished say comething.
@@ -83,7 +83,7 @@ class OfflineViewer:
         pass
 
     def switchToSave(self):
-        self.save = True
+        self.save_faces = True
 
         list_previous = next(os.walk(self.image_dir + '/faces'))[1]
 
@@ -111,7 +111,7 @@ class OfflineViewer:
                 cv2.rectangle(cv_image,(i.object.x_offset,i.object.y_offset),
                               (i.object.x_offset + i.object.width,i.object.y_offset + i.object.width),(255,0,0))
                 #Now let's query every single time to which results group it belongs to and box output the result
-                if not self.save:
+                if not self.save_faces:
                     result = self.face_recognizer.immediate_results(cv_image, tupl)
                     font = cv2.FONT_HERSHEY_COMPLEX_SMALL
                     cv2.putText(cv_image,str(result),(i.object.x_offset,i.object.y_offset),font,0.7,(255,0,0),2)
@@ -123,7 +123,7 @@ class OfflineViewer:
                     else:
                         self.face_recognizer.train_process(self.generate_unique)
                         self.image_sample_size = self.back_up
-                        self.save = False
+                        self.save_faces = False
 
             cv2image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGBA)
 
