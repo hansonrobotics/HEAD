@@ -81,9 +81,9 @@ class face_predictor:
             except rospy.ServiceException, e:
                 self.logger.error("Service call failed: %s" %e)
         elif self.faces_cmt_overlap[cmt.tracker_name.data] < (self.image_sample_size + self.sample_size) and not cmt.recognized.data:
-            self.face_recognizer.save_faces(cv_image,tupl,cmt.tracker_name.data + "/" + str(self.faces_cmt_overlap[cmt.tracker_name.data]))
+            self.face_recognizer.save_faces(cv_image,tupl,cmt.tracker_name.data,str(self.faces_cmt_overlap[cmt.tracker_name.data]))
         elif self.faces_cmt_overlap[cmt.tracker_name.data] == self.image_sample_size + self.sample_size:
-            self.face_recognizer.train_process(cmt)
+            self.face_recognizer.train_process(cmt.tracker_name.data)
         else:
             pass
 

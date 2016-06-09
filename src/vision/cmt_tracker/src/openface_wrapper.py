@@ -135,28 +135,33 @@ class face_recognizer:
         return thumbnail
 
 
-    def save_faces(self, cv_image, tupl, loc_save):
-        # TODO include varing alignment parameters.
+    def save_faces(self, cv_image, tupl, loc_save,postfix):
+
+        print("saving faces in %s", self.image_dir_face_temp + "/" + loc_save)
         if (not os.path.exists(self.image_dir_face_temp + "/" + loc_save)):
             os.makedirs(self.image_dir_face_temp + "/" + loc_save)
         img_aligned = self.align(cv_image, tupl)
-        cv2.imwrite(loc_save + ".jpg", img_aligned)
+        # Here let's create a method that it generated a name for itself.
+        cv2.imwrite(self.image_dir_face_temp + "/" + loc_save + "_" + postfix + ".jpg", img_aligned)
+        print("saved faces %s",loc_save + "_" + postfix + ".jpg")
 
-
-    def train_process(self, cmt):
+    def train_process(self, name):
         print('starts training')
-        subprocess.call(['mv', self.image_dir_face_temp + "/" + cmt.tracker_name.data,
-                         self.image_dir_face_imgs + "/" + cmt.tracker_name.data])
+        subprocess.call(['mv', self.image_dir_face_temp + "/" + name,
+                         self.image_dir_face_imgs + "/" + name])
         # TO avoid calling training if the faces directory doesn't have faces at least two faces.
         if len(list(os.walk(self.image_dir_face_imgs).next()[1])) > 1:
             # As at this point the dataset has changed thusly we have to delete the cache.
             if (os.path.exists(self.image_dir_face_imgs + "/" + 'cache.t7')):
                 subprocess.call(['rm', self.image_dir_face_imgs + "/" + 'cache.t7'])
                 # Here call the batch represent file which is a lua function in a process of it's own.
-            subprocess.call([self.batch_represent, '-outDir', self.feature_dir, '-data', self.image_dir_face_imgs])
-            # here the number of images in the classifier must be greater than 1
-            self.train()
+                self.train_dataset()
         print('finsihes training')
+
+    def train_dataset(self):
+        subprocess.call([self.batch_represent, '-outDir', self.feature_dir, '-data', self.image_dir_face_imgs])
+        # here the number of images in the classifier must be greater than 1
+        self.train()
 
     def results(self, cv_image, tupl, name, threshold=0.85):
         print('reaches results')
