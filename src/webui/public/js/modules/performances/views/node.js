@@ -29,7 +29,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 btreeModeSelect: 'select.app-btree-mode-select',
                 speechEventSelect: 'select.app-speech-event-select',
                 hrAngleSlider: '.app-hr-angle-slider',
-                hrAngleLabel: '.app-hr-angle-label',
+                hrAngleLabel: '.app-hr-angle-label'
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -47,7 +47,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 'change @ui.messageInput': 'setMessage',
                 'change @ui.btreeModeSelect': 'setBtreeMode',
                 'change @ui.speechEventSelect': 'setSpeechEvent',
-                'change @ui.kfModeSelect': 'setKFMode',
+                'change @ui.kfModeSelect': 'setKFMode'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -68,17 +68,17 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                     this.updateIndicators();
 
                 if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
+                    var magnitude = this.model.get('magnitude');
+
                     // set default
                     if (!this.model.get('magnitude'))
                         this.model.set('magnitude', [0.9,1]);
-                    magnitude = this.model.get('magnitude');
-                    if (magnitude.constructor === Array && magnitude.length == 2)
+
+                    if (magnitude instanceof Array && magnitude.length == 2)
                         magnitude = [magnitude[0] * 100, magnitude[1] * 100];
                     else
-                        // Compatable with previous version of single value magnitude
+                        // computable with previous version of single value magnitude
                         magnitude = [magnitude*100, magnitude*100];
-
-
 
                     this.ui.magnitudeLabel.html(magnitude[0] + '-' + magnitude[1] + '%');
 

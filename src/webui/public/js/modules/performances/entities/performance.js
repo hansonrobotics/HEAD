@@ -24,24 +24,25 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'jquery', './
 
                 // making sure nodes attribute holds NodeCollection instance
                 this.on('change', function () {
-                    if (!(this.get('nodes') instanceof NodeCollection)) {
+                    if (this.get('nodes') != this.nodes) {
                         // updating collection
-                        this.nodes.set(this.get('nodes'), {silent: true});
-                        this.set({'nodes': this.nodes}, {silent: true});
+                        this.nodes.set(this.get('nodes'));
+                        this.set({nodes: this.nodes}, {silent: true});
                     }
                 });
 
-            // update id
-            this.on('change:name change:path', this.updateId);
-        },
-        parse: function (response) {
-            response['previous_path'] = null;
-            return response;
-        },
-        updateId: function () {
-            if (this.get('name')) {
-                var id = this.get('name').toLowerCase().replace(/ /g, '_').replace(/[^\w-]+/g, ''),
-                    path = this.get('path') ? this.get('path').split('/').slice(0, -1) : [];
+                // update id
+                this.on('change:name change:path', this.updateId);
+            },
+            parse: function (response) {
+                delete response['previous_path'];
+                this.unset('previous_path');
+                return response;
+            },
+            updateId: function () {
+                if (this.get('name')) {
+                    var id = this.get('name').toLowerCase().replace(/ /g, '_').replace(/[^\w-]+/g, ''),
+                        path = this.get('path') ? this.get('path').split('/').slice(0, -1) : [];
 
                     path.push(id);
 
@@ -140,10 +141,10 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'jquery', './
                         var startTime = node.get('start_time'),
                             nodeDuration = node.get('duration');
 
-                    if (startTime != null && nodeDuration != null && startTime + nodeDuration > duration)
-                        duration = startTime + nodeDuration;
-                });
-            }
+                        if (startTime != null && nodeDuration != null && startTime + nodeDuration > duration)
+                            duration = startTime + nodeDuration;
+                    });
+                }
 
                 return duration;
             },

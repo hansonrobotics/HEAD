@@ -156,10 +156,10 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
                 $('.app-performance-button:not(.ui-draggable-dragging)', this.$el).hide().filter('[data-path="' + dir + '"]').fadeIn();
             },
             joinPaths: function (path1, path2) {
-                return _.compact(_.union(path1.split('/'), path2.split('/'))).join('/');
+                return _.compact(_.union((path1 || '').split('/'), (path2 || '').split('/'))).join('/');
             },
             getParentPath: function (path) {
-                return _.compact(path.split('/').slice(0, -1)).join('/');
+                return _.compact((path || '').split('/').slice(0, -1)).join('/');
             }
         });
     });

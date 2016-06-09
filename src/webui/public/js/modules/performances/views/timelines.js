@@ -64,12 +64,15 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 if (this.options.readonly)
                     this.ui.nodesContainer.hide();
 
-                this.model.get('nodes').on('add remove reset', function () {
-                    if (self.model.get('nodes').isEmpty())
+                var nodeListener = function () {
+                    if (self.isDestroyed)
+                        this.off('add remove reset', nodeListener);
+                    else if (self.model.get('nodes').isEmpty())
                         self.ui.clearButton.fadeOut();
                     else
                         self.ui.clearButton.fadeIn();
-                });
+                };
+                this.model.get('nodes').on('add remove reset', nodeListener);
 
                 // hide delete and clear buttons for new models
                 if (!this.model.get('id')) {
@@ -326,25 +329,23 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 return this.model.getDuration() * this.config.pxPerSec;
             },
             updateTimelineWidth: function () {
-                if (this.ui.timelines.length > 0) {
-                    var width = this.getTimelineWidth(),
-                        containerWidth = this.ui.timelineContainer.width(),
-                        scaleWidth = Math.max(width, containerWidth),
-                        scale = d3.scale.linear().domain([0, scaleWidth / this.config.pxPerSec]).range([0, scaleWidth]);
+                var width = this.getTimelineWidth(),
+                    containerWidth = this.ui.timelineContainer.width(),
+                    scaleWidth = Math.max(width, containerWidth),
+                    scale = d3.scale.linear().domain([0, scaleWidth / this.config.pxPerSec]).range([0, scaleWidth]);
 
-                    // update axis
-                    this.ui.timeAxis.html('').width(scaleWidth);
-                    d3.select(this.ui.timeAxis.get(0)).call(d3.svg.axis().scale(scale).orient("bottom"));
+                // update axis
+                this.ui.timeAxis.html('').width(scaleWidth);
+                d3.select(this.ui.timeAxis.get(0)).call(d3.svg.axis().scale(scale).orient("bottom"));
 
-                    if (width < containerWidth)
-                        width = '100%';
+                if (width < containerWidth)
+                    width = '100%';
 
-                    this.ui.timelines.each(function () {
-                        this.css('width', width);
-                    });
+                this.ui.timelines.each(function () {
+                    this.css('width', width);
+                });
 
-                    this.ui.scrollContainer.perfectScrollbar('update');
-                }
+                this.ui.scrollContainer.perfectScrollbar('update');
             },
             setPerformanceName: function () {
                 this.model.set('name', this.ui.performanceName.val());
@@ -362,9 +363,10 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         self.ui.clearButton.fadeIn();
                         self.ui.nodesContainer.fadeIn();
 
-                        if (model.get('error'))
+                        if (model.get('error')) {
                             App.Utilities.showPopover(self.ui.saveButton, model.get('error'));
-                        else
+                            model.unset('error');
+                        } else
                             App.Utilities.showPopover(self.ui.saveButton, 'Saved');
                     }
                 });

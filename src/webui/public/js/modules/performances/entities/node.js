@@ -1,7 +1,9 @@
 define(['application', 'backbone', 'lib/api'], function (App, Backbone, api) {
     return Backbone.Model.extend({
+        initialize: function () {
+            this.set('id', this.cid);
+        },
         call: function () {
-            var self = this;
             switch (this.get('name')) {
                 case 'look_at':
                     api.setFaceTarget(this.get('x'), this.get('y'), this.get('z'));
@@ -10,7 +12,7 @@ define(['application', 'backbone', 'lib/api'], function (App, Backbone, api) {
                     api.setGazeTarget(this.get('x'), this.get('y'), this.get('z'));
                     break;
                 case 'head_rotation':
-                    api.set_head_rotation(this.get('angle'))
+                    api.set_head_rotation(this.get('angle'));
                     break;
             }
         },
@@ -18,9 +20,7 @@ define(['application', 'backbone', 'lib/api'], function (App, Backbone, api) {
             this.removeEl();
         },
         removeEl: function () {
-            console.log('test');
-            if (this.get('el'))
-                $(this.get('el')).remove();
+            if (this.get('el')) $(this.get('el')).remove();
         },
         toJSON: function () {
             var json = Backbone.Model.prototype.toJSON.call(this);
