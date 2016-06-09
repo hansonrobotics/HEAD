@@ -217,7 +217,7 @@ def update_performances(robot_name, id):
         os.makedirs(root)
 
     try:
-        if 'previous_path' in performance:
+        if 'previous_path' in performance and performance['previous_path']:
             filename = os.path.join(root, performance['previous_path'].strip('/')  + '.yaml')
             if os.path.isfile(filename):
                 os.remove(filename)
@@ -225,7 +225,7 @@ def update_performances(robot_name, id):
         filename = os.path.join(root, (performance['path'] if 'path' in performance else id).strip('/') + '.yaml')
         write_yaml(filename, performance)
     except Exception as e:
-        return json_encode({'error': str(filename)})
+        return json_encode({'error': str(e)})
 
     return json_encode(performance)
 
@@ -399,8 +399,8 @@ if __name__ == '__main__':
         if not os.path.isfile(options.key):
             parser.error("Key file does not exists")
         context = (options.cert, options.key)
-        app.run(host='0.0.0.0', debug=True, use_reloader=True, ssl_context=context, port=options.port)
+        app.run(host='0.0.0.0', debug=True, ssl_context=context, port=options.port)
     else:
         rospy.init_node("webui_test", anonymous=True)
         facePub = rospy.Publisher("/camera/face_locations", Faces, queue_size=30)
-        app.run(host='0.0.0.0', debug=False, use_reloader=False, port=options.port)
+        app.run(host='0.0.0.0', debug=True, port=options.port)
