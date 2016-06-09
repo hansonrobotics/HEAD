@@ -52,12 +52,6 @@ class OfflineViewer:
         self.lmain = tk.Label(imageFrame)
         self.lmain.grid(row=0, column=0)
 
-        #Add buttons window.
-
-        # rospy.spin()
-
-        # Two buttons one to switch mode to just infer results and check things and the oter to
-
         buttonsFrame = tk.Frame(self.window,width=600, height=20)
         buttonsFrame.grid(row = 600, column=0, padx=10, pady=2)
 
@@ -83,10 +77,9 @@ class OfflineViewer:
         #Create a dialog for waiting and then when finished say comething.
         self.face_recognizer.train_dataset()
         #Promot to finish the training.
-        pass
 
     def trimTrainingSet(self):
-        #This one does traininf for the set of images in the system. 
+        #This one does traininf for the set of images in the system.
         pass
 
     def switchToSave(self):
@@ -101,6 +94,7 @@ class OfflineViewer:
                 break
 
     def sample_callback(self, config, level):
+        self.back_up = config.image_number
         self.image_sample_size = config.image_number
         self.sample_size = config.sample_size
         return config
@@ -120,16 +114,17 @@ class OfflineViewer:
                 if not self.save:
                     result = self.face_recognizer.immediate_results(cv_image, tupl)
                     font = cv2.FONT_HERSHEY_COMPLEX_SMALL
-                    cv2.putText(cv_image,str(result),(i.object.x_offset,i.object.y_offset),font,0.8,(255,0,0),2)
-                #print(self.face_recognizer.immediate_results(cv_image, tupl))
+                    cv2.putText(cv_image,str(result),(i.object.x_offset,i.object.y_offset),font,0.7,(255,0,0),2)
                 else:
                     if (self.image_sample_size > 0):
                         self.face_recognizer.save_faces(cv_image,tupl,self.generate_unique,str(self.image_sample_size))
                         self.image_sample_size -= 1
                         break
                     else:
-                        #move the files and call trainer.
                         self.face_recognizer.train_process(self.generate_unique)
+                        self.image_sample_size = self.back_up
+                        self.save = False
+
             cv2image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGBA)
 
             img = Image.fromarray(cv2image)
@@ -137,18 +132,8 @@ class OfflineViewer:
             self.lmain.imgtk = imgtk
             self.lmain.configure(image=imgtk)
 
-            #Paint and then classify the results as tags.
-
-            #self.lmain.after(10, self.show_frame)
-            # Slider window (slider controls stage position)
-
         except CvBridgeError as e:
             self.logger.error(e)
-
-
-
-
-
 
 if __name__ == '__main__':
     ic = OfflineViewer()

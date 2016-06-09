@@ -142,7 +142,7 @@ class face_recognizer:
             os.makedirs(self.image_dir_face_temp + "/" + loc_save)
         img_aligned = self.align(cv_image, tupl)
         # Here let's create a method that it generated a name for itself.
-        cv2.imwrite(self.image_dir_face_temp + "/" + loc_save + "_" + postfix + ".jpg", img_aligned)
+        cv2.imwrite(self.image_dir_face_temp + "/" +loc_save + "/" + postfix + ".jpg", img_aligned)
         print("saved faces %s",loc_save + "_" + postfix + ".jpg")
 
     def train_process(self, name):
