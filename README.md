@@ -62,3 +62,8 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
 This option is used when you want to get the latest OpenCog stack. It will set the remote of git repositories of OpenCog to [OpenCog](https://github.com/opencog) domain.
 
+## Troubleshooting
+
+### pip3 is not found
+Reinstall pip3 `apt-get install -y --reinstall python3-pip`
+
