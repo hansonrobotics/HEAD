@@ -278,31 +278,7 @@ function TestClient(){
 
         last_write = [];
     }
-    this.test__update = function(){
-        let client = make_client();
-
-        let old_get = client.get;
-        let url_in, params_in;
-        client.get = function(url,params){
-            url_in = url;
-            params_in = params;
-            return {
-                responseText:"{ret:\'foo\'}"
-            }
-        }
-
-        assertEquals(client._update(), 'foo');
-        assertEquals(url_in, client.get_chatbot_url() + '/update');
-        assertEquals(params_in['botid'], client.get_bot_id());
-        assertEquals(params_in['Auth'], KEY);
-
-        client.get = old_get;
-    }
-    this.test_do_update = function(){
-        
-    }
-    this.test_do_load_sheet_keys = function(){}
-    this.test_do_commit = function(){}
+    
     this.test_do_lang = function(){}
     this.test_do_c = function(){}
     this.test_do_rw = function(){}

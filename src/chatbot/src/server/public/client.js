@@ -61,7 +61,8 @@ function post(url, params, file){
     return HTTP_REQ;
 }
 
-if(typeof(String.prototype.trim) === "undefined"){//In case of pre-IE9
+/* For pre-IE9 compatibility*/
+if(typeof(String.prototype.trim) === "undefined"){
     String.prototype.trim = function() {
         return String(this).replace(/^\s+|\s+$/g, '');
     };
@@ -361,115 +362,11 @@ function Client(){
     }
 
 //    Not used, handled in interface.js
-//    this.do_q = function(line){
-//    }
+//    this.do_q = function(line){}
 
     this.help_q = function(){
         self.write("Quits the chat\n");
     }
-
-//    this._update = function(){
-//        const params = {
-//            'botname':bot_name,
-//            'Auth':KEY
-//        };
-//        const url = chatbot_url + '/update';
-//        const response = get(url,params).responseText;
-//        const json = JSON.parse(response);
-//
-//        return json['ret'];
-//    }
-//
-//    this.do_update = function(line){
-//        try{
-//            const params = {
-//                'botname':bot_name,
-//                'Auth':KEY
-//            };
-//
-//            const url = chatbot_url + '/update';
-//            const response = get(url, params).responseText;
-//            const json = JSON.parse(response);
-//            const ret = json['ret'];
-//            const res = json['response'];
-//
-//            self.write(res);
-//
-//            if(ret)
-//                self.write("Update successfully");
-//            else
-//                self.write("Update unsuccessfully");
-//        }catch(e){
-//            self.error(e);
-//        }
-//    }
-//
-//    this.help_update = function(){
-//        self.write("Update current chatbot");
-//    }
-//
-//    this.do_load_sheet_keys = function(line){
-//        if(!line)
-//            line = "";
-//
-//        try{
-//            const params = {
-//                'botname':bot_name,
-//                'sheet_keys':line.trim(),
-//                'Auth':KEY
-//            };
-//
-//            const url = chatbot_url + '/set_keys';
-//            const response = get(url,params).responseText;
-//            const json = JSON.parse(response);
-//            const ret = json['ret'];
-//            const res = json['res'];
-//
-//            self.write(res);
-//
-//            if(ret)
-//                write("Load sheet keys successfully");
-//            else
-//                write("Load sheet keys failed");
-//        }catch(e){
-//            self.error(e);
-//        }
-//    }
-//
-//    this.help_load_sheet_keys = function(){
-//        self.write("Load sheet keys to the current chatbot");
-//    }
-//
-//    this.do_commit = function(line){
-//        if(!line)
-//            line = "";
-//
-//        try{
-//            const params = {
-//                'botname':bot_name,
-//                'Auth':key
-//            };
-//
-//            const url = chatbot_url+'/commit';
-//            const response = get(url,params).responseText;
-//            const json = JSON.parse(response);
-//            const ret = json['ret'];
-//            const res = json['response'];
-//
-//            self.write(res);
-//
-//            if(ret)
-//                self.write("Commit sheet successfully");
-//            else
-//                self.write("Commit sheet failed");
-//        }catch(e){
-//            self.error(e);
-//        }
-//    }
-//
-//    this.help_commit = function(){
-//        self.write("Commit the current sheet to GitHub");
-//    }
 
     this.do_lang = function(line){
         const new_lang = line.trim();
