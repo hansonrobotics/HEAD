@@ -806,6 +806,15 @@
         });
     };
 
+    $.imageSelectAreas.prototype.focus = function (id) {
+        this._eachArea(function (area) {
+            if (area.getData().id == id) {
+                area.focus();
+                return false;
+            }
+        });
+    };
+
     $.imageSelectAreas.prototype.contains  = function (point) {
         var res = false;
         this._eachArea(function (area) {
