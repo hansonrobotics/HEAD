@@ -8,5 +8,5 @@
         <!--<button class="app-clear-areas btn btn-default"><i class="fa fa-eraser"></i> Clear</button>-->
     </div>
 
-    <select class="app-region-type" disabled="disabled"></select>
+    <select class="app-region-type"></select>
 </div>

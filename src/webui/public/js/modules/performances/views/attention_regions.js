@@ -13,7 +13,7 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
             events: {
                 'click @ui.clear': 'clear',
                 'click @ui.save': 'save',
-                'change @ui.typeSelect': 'updateType'
+                'change @ui.typeSelect': 'selectType'
             },
             config: {
                 width: 200,
@@ -133,6 +133,12 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
                     this.lastId = null;
                     $('.select2-container.app-region-type', this.el).fadeOut();
                 }
+            },
+            selectType: function () {
+                var type = this.ui.typeSelect.val(),
+                    model = this.collection.findWhere({type: type});
+
+                if (model) this.ui.areaselect.selectAreas('focus', model.id);
             },
             updateType: function () {
                 if (this.lastId != null) {
