@@ -53,7 +53,8 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
                 this.ui.areaselect.selectAreas({
                     allowSelect: false,
                     allowDelete: false,
-                    width: this.width
+                    width: this.width,
+                    allowDisplayId: false
                 }).on('changed', function (event, id) {
                     var model = self.collection.get(id),
                         area = self.areaToJSON(_.findWhere(self.ui.areaselect.selectAreas('relativeAreas'), {id: id}));
