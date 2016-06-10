@@ -3,7 +3,7 @@ from subprocess import call, check_output, Popen
 from easyprocess import EasyProcess
 import threading
 import time
-from ros_pololu import PololuMotor
+from pololu.motors import Maestro
 from configs import Configs
 import math
 import psutil
@@ -255,9 +255,12 @@ class Reporter:
                         'label': c['label'] + " USB",
                         'status': dev,
                     })
+                    val = 2
+                    if 'channel' in c:
+                        val = self.get_pololu_power(c['device'], c['channel'])
                     status['checks'].append({
                         'label': c['label'] + " Power",
-                        'status': 2,
+                        'status': val,
                     })
         status['checks'].append({
             'label': "Internet Connection",
@@ -352,6 +355,18 @@ class Reporter:
                 else:
                     return 2
         return 0
+
+    def get_pololu_power(self, port, channel):
+        try:
+            m = Maestro(port);
+            pos = m.getPosition(channel)
+            m.close()
+            if pos > 100:
+                return 0
+            return 1
+        except:
+            return 1
+
 
 def deepupdate(original, new):
     """Updates missing or None values in all 'directly' nested dicts."""
