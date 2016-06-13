@@ -127,6 +127,11 @@
             </div>
             <% } else if (name == 'look_at' || name == 'gaze_at') { %>
             <div class="form-group">
+                <label>Attention region</label>
+                <select class="app-attention-region-select"></select>
+            </div>
+
+            <div class="form-group">
                 <div class="app-crosshair"></div>
             </div>
             <% } else if (name == 'pause') { %>
