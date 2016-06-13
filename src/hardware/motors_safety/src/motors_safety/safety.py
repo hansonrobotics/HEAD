@@ -64,6 +64,7 @@ class Safety():
                     self.rules[m][i]['prev_pos'] = 0.0
                     self.rules[m][i]['dir'] = 0
                 if r['type'] == 'smooth':
+                    self.rules[m][i]['started'] = False
                     self.rules[m][i]['target'] = blendedNum.LiveTarget(
                             self.motor_positions[m], Pipes.moving_average(r['time']), self.motor_positions[m])
 
@@ -120,6 +121,7 @@ class Safety():
 
     def rule_smooth(self, v, rule):
         rule['target'].target = v
+        rule['started'] = True
         # Need to make sure it doesnt get executed on same time with timing rule.
         try:
             rule['target'].blend()
@@ -128,7 +130,10 @@ class Safety():
         v = rule['target'].current
         return v
 
-    def rule_smooth_time(self, m,rule):
+    def rule_smooth_time(self, m, rule):
+        # Wait for rule to start
+        if not self.rules[m][rule]['started']:
+            return
         try:
             self.rules[m][rule]['target'].blend()
         except ValueError:
