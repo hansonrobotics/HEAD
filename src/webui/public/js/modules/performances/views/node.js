@@ -30,7 +30,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 speechEventSelect: 'select.app-speech-event-select',
                 hrAngleSlider: '.app-hr-angle-slider',
                 hrAngleLabel: '.app-hr-angle-label',
-                attentionRegionSelect: '.app-attention-region-select'
+                attentionRegionSelect: '.app-attention-region-select',
+                timeout: '.app-node-timeout'
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -49,7 +50,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 'change @ui.btreeModeSelect': 'setBtreeMode',
                 'change @ui.speechEventSelect': 'setSpeechEvent',
                 'change @ui.kfModeSelect': 'setKFMode',
-                'change @ui.attentionRegionSelect': 'selectAttentionRegion'
+                'change @ui.attentionRegionSelect': 'selectAttentionRegion',
+                'change @ui.timeout': 'updateTimeout'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -66,6 +68,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 if (_.contains(['pause'], this.model.get('name'))) {
                     this.ui.durationIndicator.hide();
                     this.ui.frameCount.hide();
+                    this.ui.timeout.val(this.model.get('timeout') || '');
                 } else
                     this.updateIndicators();
 
@@ -432,6 +435,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 } else {
                     this.ui.crosshair.fadeOut();
                 }
+            },
+            updateTimeout: function () {
+                this.model.set('timeout', this.ui.timeout.val());
             }
         });
     });
