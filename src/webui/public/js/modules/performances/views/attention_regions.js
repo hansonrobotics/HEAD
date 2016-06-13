@@ -1,6 +1,6 @@
 define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '../entities/attention_regions',
-        'underscore', 'jquery', 'selectareas', 'select2'],
-    function (App, Marionette, template, AttentionRegions, _, $) {
+        'underscore', 'jquery', 'lib/api', 'selectareas', 'select2'],
+    function (App, Marionette, template, AttentionRegions, _, $, api) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
@@ -18,12 +18,7 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
             config: {
                 width: 200,
                 height: 100,
-                convertRatio: 0.01,
-                regions: {
-                    main: 'Main Person',
-                    audience: 'Audience',
-                    specific: 'Specific'
-                }
+                convertRatio: 0.01
             },
             onAttach: function () {
                 var self = this;
@@ -41,8 +36,10 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
             },
             enableTypeSelect: function () {
                 var self = this;
-                _.each(this.config.regions, function (name, key) {
-                    self.ui.typeSelect.append($('<option>').attr('value', key).html(name));
+                api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
+                    _.each(regions, function (name, key) {
+                        self.ui.typeSelect.append($('<option>').attr('value', key).html(name));
+                    });
                 });
                 this.ui.typeSelect.select2();
             },
@@ -84,26 +81,29 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
                 var self = this,
                     models = [];
 
-                _.each(this.config.regions, function (name, key) {
-                    var model = self.collection.findWhere({type: key});
-                    if (!model)
-                        model = {
-                            id: models.length,
-                            width: 0.5,
-                            height: 0.5,
-                            x: -1 + 0.6 * models.length,
-                            y: 0.5,
-                            type: key
-                        };
-                    else
-                        model.set('id', models.length);
-                    models.push(model);
-                });
+                api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
+                    _.each(regions, function (name, key) {
+                        var model = self.collection.findWhere({type: key});
+                        if (!model)
+                            model = {
+                                id: models.length,
+                                width: 0.5,
+                                height: 0.5,
+                                x: -1 + 0.6 * models.length,
+                                y: 0.5,
+                                type: key
+                            };
+                        else
+                            model.set('id', models.length);
 
-                this.ui.areaselect.selectAreas('reset');
-                this.collection.reset(models);
-                this.collection.each(function (area) {
-                    self.ui.areaselect.selectAreas('add', self.jsonToArea(area.toJSON()));
+                        models.push(model);
+                    });
+
+                    self.ui.areaselect.selectAreas('reset');
+                    self.collection.reset(models);
+                    self.collection.each(function (area) {
+                        self.ui.areaselect.selectAreas('add', self.jsonToArea(area.toJSON()));
+                    });
                 });
             },
             save: function () {
