@@ -1,6 +1,8 @@
 const messageBox = document.getElementsByClassName("message")[0];
 const messageHistory = document.getElementsByClassName("content")[0];
+
 let client = new Client();
+client.do_conn();
 
 const MESSAGE_OUTPUT_TAG = 'message';
 const ERROR_OUTPUT_TAG = 'error';

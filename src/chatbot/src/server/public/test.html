@@ -23,6 +23,8 @@
                                             message+'\n'+
                                             '</div>\n';
             }
+            client.write = function(msg){console.log(msg);};
+            client.error = function(msg){console.log(msg);};
         </script>
         <script src="./client_test.js"></script>
     </body>

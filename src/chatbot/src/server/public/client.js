@@ -6,7 +6,7 @@ const KEY = 'AAAAB3NzaC';
  * http://www.rfc-archive.org/getrfc.php?rfc=4122
  */
 function guid() {
-    let s4 = function(){
+    let elem = function(){
         const max = 0x10000;
         const val = (1 + Math.random()) * max;
         const asInt = Math.floor(val);
@@ -14,8 +14,8 @@ function guid() {
         return result;
     }
 
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
+    return elem() + elem() + '-' + elem() + '-' + elem() + '-' +
+        elem() + '-' + elem() + elem() + elem();
 }
 
 function URLEncodeJSON(params){
@@ -54,7 +54,6 @@ function post(url, params, file){
         formData.append(key,params[key]);
     }
 
-    const ENCODED = URLEncodeJSON(params);
     const HTTP_REQ = new XMLHttpRequest();
     HTTP_REQ.open('POST', url, false);
     HTTP_REQ.send(formData);
@@ -68,7 +67,7 @@ if(typeof(String.prototype.trim) === "undefined"){
     };
 }
 
-function Client(){
+function Client(auto_connect){
     const PROMPT = '[me]: ';
 
     let session = undefined;
@@ -78,7 +77,7 @@ function Client(){
     let chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + VERSION;
     let bot_name = 'sophia';
     let user = 'client';
-    let self = this;
+    const self = this;
 
     this.write = function(msg){
         console.log(msg);
@@ -92,24 +91,32 @@ function Client(){
     };
     //Callback to be set outside of the function.
 
-    let finish_set_sid = function(response, callback){
+    let finish_set_sid = function(response, callback, error_callback){
         const text = response.responseText;
         const status_code = response.status;
         const json = JSON.parse(text);
         const ret = json['ret'];
 
         if(status_code != 200){
-            write("Request error: " + status_code);
+            self.error("Request error: " + status_code);
+
+            if(error_callback){
+                //If there is a parameter to error_callback, it was a request
+                //error
+                error_callback(status_code);
+            }
+
+            return;
         }
         
         session = json['sid'];
 
         self.write("New session " + session);
         if(callback)
-            callback();
+            callback(session);
     }
 
-    this.set_sid = function(callback){
+    this.set_sid = function(callback, error_callback){
         const params = {
             'Auth': KEY,
             'botname': '' + bot_name,
@@ -119,26 +126,33 @@ function Client(){
         const url = chatbot_url + '/start_session';
 
         self.write("Attempting to start new session.");
-
+        
         let tries = 3;
         let loop = setInterval(function(){
             if(tries < 1){
-                write("Failed to start new session.");
-
-                if(callback)
-                    callback();
-
                 clearInterval(loop);
+
+                self.error("Failed to start new session.");
+
+                if(error_callback){
+                    //If there is not a parameter to error_callback, it was
+                    //a connection error.
+                    error_callback();
+                }
+
                 return;
             }
 
+            let attempt = {};
             try{
-                const attempt = get(url, params);
-                finish_set_sid(attempt, callback);
-                clearInterval(loop);
+                attempt = get(url, params);
             }catch(e){
                 tries--;
+                self.error('Connection error. ' + tries + (tries===1?' try':' tries') + ' left.');
+                return;
             }
+            clearInterval(loop);
+            finish_set_sid(attempt, callback, error_callback);
         },1000);
     }
 
@@ -149,7 +163,6 @@ function Client(){
             'lang': lang,
             'Auth': KEY
         };
-        console.log(params);
 
         const url = chatbot_url + '/chat';
         const response = get(url,params);
@@ -157,8 +170,6 @@ function Client(){
         const status_code = response.status;
         const json = JSON.parse(text);
         const ret = json['ret'];
-
-        console.log(json);
 
         if(status_code != 200){
             const err = "Request error: " + status_code + "\n";
@@ -219,7 +230,7 @@ function Client(){
             let ret = ask[0];
             let response = ask[1];
             if(ret != 0){
-                this.set_sid(function(){
+                self.set_sid(function(){
                     ask = self.ask(line);
                     ret = ask[0];
                     response = ask[1];
@@ -268,21 +279,29 @@ function Client(){
     this.do_l = this.do_list;
     this.help_l = this.help_list;
 
-    this.do_select = function(line){
+    this.do_select = function(line, callback){
         try{
             const names = self.list_chatbot_names();
-            
+
             for(let idx = 0; idx < names.length; idx++){
                 const name = names[idx];
                 if(line === name){
                     bot_name = line;
-                    self.set_sid();
-                    self.write("Select chatbot " + bot_name);
+                    self.set_sid(function(){
+                        self.write("Select chatbot " + bot_name);
+
+                        if(callback){
+                            callback();
+                        }
+                    });
                     return;
                 }
             }
 
             self.write("No such chatbot " + line);
+            if(callback){
+                callback();
+            }
         }catch(e){
             self.error(e);
             return;
@@ -293,7 +312,7 @@ function Client(){
         self.write("Select chatbot");
     }
 
-    this.do_conn = function(line){
+    this.do_conn = function(line, callback){
         if(line){
             try{
                 const url = line.split(':');
@@ -310,7 +329,7 @@ function Client(){
             }
         }
         self.write('Connecting.');
-        self.set_sid();
+        self.set_sid(callback);
     }
 
     this.help_conn = function(){
@@ -491,8 +510,6 @@ function Client(){
         }
     }
 
-    this.do_conn();
-
     this.get_PROMPT = function(){return PROMPT;}
     this.get_session = function(){return session;}
     this.get_lang = function(){return lang;}
@@ -500,4 +517,5 @@ function Client(){
     this.get_chatbot_ip = function(){return chatbot_ip;}
     this.get_chatbot_url = function(){return chatbot_url;}
     this.get_bot_name = function(){return bot_name;}
+    this.get_user = function(){return user;}
 }
