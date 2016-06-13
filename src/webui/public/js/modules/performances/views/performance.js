@@ -24,7 +24,7 @@ define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function (Marionette
         },
         update: function () {
             this.$el.html(this.model.get('name'));
-            this.$el.attr('data-path', _.compact((this.model.get('path') || '').split('/')).slice(0, -1).join('/'));
+            this.$el.attr('data-path', this.model.get('path') || '');
         }
     });
 });

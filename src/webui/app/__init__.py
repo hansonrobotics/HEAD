@@ -199,8 +199,8 @@ def get_performances(robot_name):
             for name in fnmatch.filter(filenames, '*.yaml'):
                 filename = os.path.join(path, name)
                 performance = read_yaml(filename)
-                relative = filename.split('/')[len(root.split('/')):]
-                performance['path'] = os.path.join(*relative).split('.')[0]
+                relative = filename.split('/')[len(root.split('/')):-1]
+                performance['path'] = os.path.join(*relative) if relative else ''
                 performances.append(performance)
     except Exception as e:
         print e
@@ -209,7 +209,7 @@ def get_performances(robot_name):
     return json_encode(performances)
 
 
-@app.route('/performances/<robot_name>/<id>', methods=['PUT', 'POST'])
+@app.route('/performances/<robot_name>/<path:id>', methods=['PUT', 'POST'])
 def update_performances(robot_name, id):
     performance = json.loads(request.get_data())
     root = os.path.join(config_root, robot_name, 'performances')
@@ -217,12 +217,16 @@ def update_performances(robot_name, id):
         os.makedirs(root)
 
     try:
-        if 'previous_path' in performance and performance['previous_path']:
-            filename = os.path.join(root, performance['previous_path'].strip('/')  + '.yaml')
+        if 'previous_id' in performance:
+            filename = os.path.join(root, performance['previous_id'] + '.yaml')
             if os.path.isfile(filename):
                 os.remove(filename)
-            del performance['previous_path']
-        filename = os.path.join(root, (performance['path'] if 'path' in performance else id).strip('/') + '.yaml')
+            del performance['previous_id']
+        filename = os.path.join(root, id + '.yaml')
+
+        if 'path' in performance:
+            del performance['path']
+
         write_yaml(filename, performance)
     except Exception as e:
         return json_encode({'error': str(e)})
@@ -230,7 +234,7 @@ def update_performances(robot_name, id):
     return json_encode(performance)
 
 
-@app.route('/performances/<robot_name>/<id>', methods=['DELETE'])
+@app.route('/performances/<robot_name>/<path:id>', methods=['DELETE'])
 def delete_performances(robot_name, id):
     performance = os.path.join(config_root, robot_name, 'performances', id + '.yaml')
 
