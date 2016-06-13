@@ -141,6 +141,14 @@
                 <input type="text" class="app-node-topic form-control" title="Topic name"
                        value="<%= typeof topic == 'undefined' ? '' : topic %>"/>
             </div>
+
+            <div class="form-group">
+                <label>Timeout</label>
+                <div class="input-group">
+                    <input type="number" class="app-node-timeout form-control" title="Timeout"/>
+                    <div class="input-group-addon">s</div>
+                </div>
+            </div>
             <% } %>
 
             <div class="node-setting-buttons form-group">

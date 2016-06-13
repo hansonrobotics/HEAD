@@ -208,7 +208,8 @@
     -webkit-border-radius: 4px 4px 4px 4px;
 }
 .app-node-start-time,
-.app-node-duration {
+.app-node-duration,
+.app-node-timeout {
     width: 70px !important;
 }
 
