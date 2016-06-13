@@ -35,22 +35,21 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'jquery', './
                 this.on('change:name change:path', this.updateId);
             },
             parse: function (response) {
-                delete response['previous_path'];
-                this.unset('previous_path');
+                delete response['previous_id'];
+                this.unset('previous_id');
                 return response;
             },
             updateId: function () {
                 if (this.get('name')) {
-                    var id = this.get('name').toLowerCase().replace(/ /g, '_').replace(/[^\w-]+/g, ''),
-                        path = this.get('path') ? this.get('path').split('/').slice(0, -1) : [];
+                    var name = this.get('name').toLowerCase().replace(/ /g, '_').replace(/[^\w-]+/g, ''),
+                        path = this.get('path') ? this.get('path').split('/') : [];
 
-                    path.push(id);
+                    path.push(name);
 
-                    this.set('id', id);
-                    this.set('path', path.join('/'));
+                    this.set('id', path.join('/'));
 
-                    if (!this.get('previous_path') && this.previous('path'))
-                        this.set('previous_path', this.previous('path'));
+                    if (!this.get('previous_id') && this.previous('id'))
+                        this.set('previous_id', this.previous('id'));
                 }
             },
             run: function (startTime, options) {
