@@ -275,16 +275,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
 
   for (std::vector<cmt_tracker_msgs::Tracker>::iterator v = tracking_results.tracker_results.begin(); v != tracking_results.tracker_results.end() ; ++v)
   {
-    std::string quality;
     std::string previously_known;
-    if ((*v).quality_results.data)
-    {
-      quality =  "true";
-    }
-    else
-    {
-      quality = "false";
-    }
 
     if ((*v).recognized.data)
     {
@@ -293,19 +284,17 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     else {
       previously_known = "false";
     }
-    std::string value = "ID-" + (*v).tracker_name.data+ "BFDemo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known + +   "\n" + SSTR((*v).initial_points.data) + "/" + SSTR((*v).active_points.data)  + "\n" +  quality
-                        + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
+
+    double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
+    std::string value = "ID-" + (*v).tracker_name.data+ "BF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
+       "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
     tracked_image_information.push_back( value );
 
-    if ((*v).quality_results.data)
-    {
-      tracked_image_mats.push_back(image(cv::Rect((*v).object.object.x_offset, (*v).object.object.y_offset,
-       (*v).object.object.width, (*v).object.object.height)).clone());
-    }
-    else {
-      tracked_image_mats.push_back(img);
 
-    }
+    tracked_image_mats.push_back(image(cv::Rect((*v).object.object.x_offset, (*v).object.object.y_offset,
+       (*v).object.object.width, (*v).object.object.height)).clone());
+
+
     tracked_image_results.push_back(QImage((uchar*) tracked_image_mats.back().data, tracked_image_mats.back().cols, tracked_image_mats.back().rows,
                                              tracked_image_mats.back().step[0], QImage::Format_RGB888));
 
@@ -313,16 +302,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
 
   for (std::vector<cmt_tracker_msgs::Tracker>::iterator v = temp_tracking_results.tracker_results.begin(); v != temp_tracking_results.tracker_results.end() ; ++v)
   {
-    std::string quality;
     std::string previously_known;
-    if ((*v).quality_results.data)
-    {
-      quality =  "true";
-    }
-    else
-    {
-      quality = "false";
-    }
 
     if ((*v).recognized.data)
     {
@@ -331,58 +311,56 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     else {
       previously_known = "false";
     }
-    std::string value = "ID-" + (*v).tracker_name.data+ "BFDemo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known + +   "\n" + SSTR((*v).initial_points.data) + "/" + SSTR((*v).active_points.data)  + "\n" +  quality
-                        + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
+
+    double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
+    std::string value = "ID-" + (*v).tracker_name.data+ "BF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
+       "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
+
     temp_tracked_image_information.push_back( value );
 
-    if ((*v).quality_results.data)
-    {
-      temp_tracked_image_mats.push_back(image(cv::Rect((*v).object.object.x_offset, (*v).object.object.y_offset,
+    temp_tracked_image_mats.push_back(image(cv::Rect((*v).object.object.x_offset, (*v).object.object.y_offset,
        (*v).object.object.width, (*v).object.object.height)).clone());
-    }
-    else {
-      temp_tracked_image_mats.push_back(img);
-    }
-          temp_tracked_image_results.push_back(QImage((uchar*) temp_tracked_image_mats.back().data, temp_tracked_image_mats.back().cols, temp_tracked_image_mats.back().rows,
+
+    temp_tracked_image_results.push_back(QImage((uchar*) temp_tracked_image_mats.back().data, temp_tracked_image_mats.back().cols, temp_tracked_image_mats.back().rows,
                                              temp_tracked_image_mats.back().step[0], QImage::Format_RGB888));
   }
   nh.getParam("tracker_updated", tracker_updated_num);
-  if (tracker_updated_num == 2 || firstrun)
-  {
-    firstrun = false;
-    cmt_tracker_msgs::TrackedImages results;
-    if (image_client.call(results))
-    {
-      tracked_images.clear();
-      tracked_faces.clear();
-      tracked_images_names.clear();
-      for (std::vector<std::string>::iterator v = results.response.names.begin(); v != results.response.names.end(); ++v)
-      {
-        tracked_images_names.push_back(*v);
-      }
-      for (std::vector<sensor_msgs::Image>::const_iterator v = results.response.image.begin(); v != results.response.image.end(); ++v)
-      {
-        sensor_msgs::Image im = *v;
-        sensor_msgs::ImagePtr r = boost::shared_ptr<sensor_msgs::Image>(boost::make_shared<sensor_msgs::Image>(im));
-        cv_bridge::CvImageConstPtr cv_ptrs;
-        cv::Mat image;
-        try {
-          cv_ptrs = cv_bridge::toCvShare(r);
-          image = cv_ptrs->image;
-          cv::cvtColor(image, image, cv::COLOR_GRAY2RGB);
-        }
-        catch (cv_bridge::Exception& e)
-        {
-          std::cout << "Error" << std::endl;
-          return;
-        }
-        tracked_images.push_back(image);
-        tracked_faces.push_back(QImage((uchar*) tracked_images.back().data, tracked_images.back().cols,
-                                       tracked_images.back().rows, tracked_images.back().step[0], QImage::Format_RGB888));
-      }
-    }
-    nh.setParam("tracker_updated", 0);
-  }
+//  if (tracker_updated_num == 2 || firstrun)
+//  {
+////    firstrun = false;
+////    cmt_tracker_msgs::TrackedImages results;
+////    if (image_client.call(results))
+////    {
+////      tracked_images.clear();
+////      tracked_faces.clear();
+////      tracked_images_names.clear();
+////      for (std::vector<std::string>::iterator v = results.response.names.begin(); v != results.response.names.end(); ++v)
+////      {
+////        tracked_images_names.push_back(*v);
+////      }
+////      for (std::vector<sensor_msgs::Image>::const_iterator v = results.response.image.begin(); v != results.response.image.end(); ++v)
+////      {
+////        sensor_msgs::Image im = *v;
+////        sensor_msgs::ImagePtr r = boost::shared_ptr<sensor_msgs::Image>(boost::make_shared<sensor_msgs::Image>(im));
+////        cv_bridge::CvImageConstPtr cv_ptrs;
+////        cv::Mat image;
+////        try {
+////          cv_ptrs = cv_bridge::toCvShare(r);
+////          image = cv_ptrs->image;
+////          cv::cvtColor(image, image, cv::COLOR_GRAY2RGB);
+////        }
+////        catch (cv_bridge::Exception& e)
+////        {
+////          std::cout << "Error" << std::endl;
+////          return;
+////        }
+////        tracked_images.push_back(image);
+////        tracked_faces.push_back(QImage((uchar*) tracked_images.back().data, tracked_images.back().cols,
+////                                       tracked_images.back().rows, tracked_images.back().step[0], QImage::Format_RGB888));
+////      }
+////    }
+//    nh.setParam("tracker_updated", 0);
+//  }
   emit updatefacelist();
 }
 

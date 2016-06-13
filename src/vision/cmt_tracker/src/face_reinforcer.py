@@ -9,6 +9,7 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import message_filters
+from std_srvs.srv import Empty
 from cmt_tracker_msgs.msg import Trackers,Tracker, Objects
 from cmt_tracker_msgs.srv import TrackerNames
 
@@ -31,14 +32,34 @@ class face_reinforcer:
         rospy.init_node('face_reinforcer', anonymous=True)
         self.filtered_face_locations = rospy.get_param('filtered_face_locations')
         self.cmt_sub = message_filters.Subscriber('temporary_trackers',Trackers)
+        self.tracker_locations_pub = rospy.Publisher("tracking_locations", Trackers, queue_size=5)
+        self.cmt_sub_ = message_filters.Subscriber('tracker_results', Trackers)
         self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
         self.faces_cmt_overlap = {}
+        self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
 
-        ts = message_filters.ApproximateTimeSynchronizer([self.cmt_sub,self.face_sub], 10,0.2)
+
+        ts = message_filters.ApproximateTimeSynchronizer([self.cmt_sub,self.face_sub,self.cmt_sub_], 10,0.2)
         ts.registerCallback(self.callback)
 
-    def callback(self, cmt, face):
-        not_overlapped, overlaped_faces = self.returnOverlapping(face,cmt)
+        self.update = True
+    def can_update(self, req):
+        self.update = True
+        return []
+
+    def callback(self, cmt, face,temp):
+
+        ttp = cmt
+        for val in temp.tracker_results:
+            ttp.tracker_results.append(val)
+
+        not_overlapped, overlaped_faces = self.returnOverlapping(face,ttp)
+
+        if len(not_overlapped) > 0 and self.update:
+            self.tracker_locations_pub.publish(self.convert(not_overlapped))
+            rospy.set_param('tracker_updated', 2)
+            rospy.set_param("being_initialized_stop", 1)
+            self.update = False
 
         for face, cmt in overlaped_faces:
             self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 2
@@ -46,10 +67,12 @@ class face_reinforcer:
                 self.upt = rospy.ServiceProxy('reinforce',TrackerNames)
                 indication = self.upt(names=cmt.tracker_name.data, index=500)
                 if not indication:
+                    #TODO handle the error if the service is not available.
                     pass
 
-        for keys in self.faces_cmt_overlap:
-            self.faces_cmt_overlap[keys] = self.faces_cmt_overlap.get(keys, 0) - 1
+        # TODO is this needed.
+        # for keys in self.faces_cmt_overlap:
+        #     self.faces_cmt_overlap[keys] = self.faces_cmt_overlap.get(keys, 0) - 1
 
     def returnOverlapping(self, face, cmt):
         not_covered_faces = []
@@ -74,6 +97,15 @@ class face_reinforcer:
             if not overlap:
                 not_covered_faces.append(j)
         return not_covered_faces, overlaped_faces
+
+    def convert(self, face_locs):
+        message = Trackers()
+        for i in face_locs:
+            messg = Tracker()
+            messg.object = i
+            message.tracker_results.append(messg)
+        message.header.stamp = rospy.Time.now()
+        return message
 
 if __name__ == '__main__':
     ic = face_reinforcer()

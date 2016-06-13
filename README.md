@@ -42,9 +42,18 @@ full performance pipeline and infrastructure:
 
 `./hrtool -B`
 
+* Build a single ROS package and it's related dependecies
+
+`./hrtool -s package_name`
+
+
 * Run
 
 `cd ~/hansonrobotics && ./dev.sh`
+
+* Run vision tools
+
+`./vision.sh cmt` #For running with cmt
 
 * Open web browser
 

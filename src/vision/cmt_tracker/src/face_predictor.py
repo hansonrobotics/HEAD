@@ -10,7 +10,7 @@ import message_filters
 from cmt_tracker_msgs.msg import Trackers,Tracker,Objects
 from cmt_tracker_msgs.srv import TrackerNames
 from cmt_tracker_msgs.cfg import RecogntionConfig
-from std_srvs.srv import Empty
+
 from dynamic_reconfigure.server import Server
 
 from openface_wrapper import face_recognizer
@@ -25,8 +25,6 @@ class face_predictor:
     self.shape_predictor_file = rospy.get_param("shape_predictor")
     self.image_dir = rospy.get_param("image_locations")
     self.face_recognizer = face_recognizer(self.openface_loc, self.image_dir)
-    self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
-    self.tracker_locations_pub = rospy.Publisher("tracking_locations",Trackers,queue_size=5)
     self.bridge = CvBridge()
     self.image_sub = message_filters.Subscriber(self.camera_topic, Image)
     self.cmt_sub = message_filters.Subscriber('tracker_results',Trackers)
@@ -37,10 +35,7 @@ class face_predictor:
     Server(RecogntionConfig, self.sample_callback)
     self.faces_cmt_overlap = {}
     self.logger = logging.getLogger('hr.cmt_tracker.face_recognizer_node')
-    self.update = True
-  def can_update(self,req):
-      self.update = True
-      return []
+
 
   def callback(self,data, cmt, face,temp):
     self.logger.debug('Overlap on face and tracker')
@@ -54,11 +49,6 @@ class face_predictor:
         ttp.tracker_results.append(val)
     not_covered_faces,covered_faces = self.returnOverlapping(face,ttp)
     
-    if len(not_covered_faces) > 0 and self.update:
-        self.tracker_locations_pub.publish(self.convert(not_covered_faces))
-        rospy.set_param('tracker_updated', 2)
-        rospy.set_param("being_initialized_stop",1)
-        self.update = False
     for face,cmt in covered_faces:
         tupl = []
         for pts in face.feature_point.points:
@@ -114,14 +104,7 @@ class face_predictor:
             not_covered_faces.append(j)
     return not_covered_faces, overlaped_faces
 
-  def convert(self, face_locs):
-    message = Trackers()
-    for i in face_locs:
-        messg = Tracker()
-        messg.object = i
-        message.tracker_results.append(messg)
-    message.header.stamp = rospy.Time.now()
-    return message
+
 
 if __name__ == '__main__':
     ic = face_predictor()
