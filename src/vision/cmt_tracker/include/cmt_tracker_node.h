@@ -144,6 +144,7 @@ private:
 	ros::ServiceServer recognition_service;
     ros::ServiceServer validation_service;
     ros::ServiceServer reinforce_service;
+    ros::ServiceServer merge_service;
 
 
     ros::ServiceClient add_to_tracker;

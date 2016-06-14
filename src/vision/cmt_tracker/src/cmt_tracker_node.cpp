@@ -31,6 +31,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   recognition_service  = nh_.advertiseService("recognition", &cmt_wrap::TrackerCMT::updateTrackerNames,this);
   //validation_service = nh_.advertiseService("validation", &cmt_wrap::TrackerCMT::validate, this);
   reinforce_service = nh_.advertiseService("reinforce", &cmt_wrap::TrackerCMT::reinforce, this);
+  merge_service = nh_.advertiseService("merge", &cmt_wrap::TrackerCMT::merge_elements, this);
 
   add_to_tracker = nh_.serviceClient<std_srvs::Empty>("can_add_tracker");
   //subscribers

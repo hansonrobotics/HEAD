@@ -11,7 +11,7 @@ from cv_bridge import CvBridge, CvBridgeError
 import message_filters
 from std_srvs.srv import Empty
 from cmt_tracker_msgs.msg import Trackers,Tracker, Objects
-from cmt_tracker_msgs.srv import TrackerNames
+from cmt_tracker_msgs.srv import TrackerNames,MergeNames
 import itertools
 '''
 Description: This is checks for the if cmt_tracker is overlapping with cmt instances and focuses the libraries to the locations.
@@ -38,7 +38,6 @@ class face_reinforcer:
         self.faces_cmt_overlap = {}
         self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
 
-        self.cmt_merge = {}
         ts = message_filters.ApproximateTimeSynchronizer([self.cmt_sub,self.face_sub,self.cmt_sub_], 10,0.2)
         ts.registerCallback(self.callback)
 
@@ -72,6 +71,9 @@ class face_reinforcer:
                     pass
 
         # TODO if the cmt name has disappeared then remove it from the self.faces_cmt_overlap.get Via Subscriber to Face_events
+        self.cmt_merge = {}
+        merge_to=[]
+        merge_from=[]
         for a, b in itertools.combinations(ttp.tracker_results, 2):
             SA = a.object.object.height * a.object.object.width
             SB = b.object.object.height * b.object.object.width
@@ -86,10 +88,15 @@ class face_reinforcer:
             overlap_ = overlap_area_ > 0
             if (overlap_):
                 #TODO Choose which to merge too later information to which it's closer too.
-                list = [a.tracker_name.data, b.tracker_name.data]
-                self.cmt_merge.append(list)
+                self.cmt_merge[a.tracker_name.data] = self.cmt_merge.get(a.tracker_name.data,b.tracker_name.data)
+                merge_to.append(a.tracker_name.data)
+                merge_from.append(b.tracker_name.data)
 
         #TODO for now just delete the elements then latter put a mark on the merged elements and update if there is overlappings with the track.
+        self.mrg = rospy.ServiceProxy('merge',MergeNames)
+        indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
+        if not indic:
+            pass
 
         # Now pass to the merger.
 
