@@ -390,10 +390,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                         self.ui.attentionRegionSelect.append($('<option>').attr('value', key).html(name));
                     });
                     self.ui.attentionRegionSelect.append($('<option>').attr('value', 'custom').html('Custom'));
-
-                    if (self.model.get('attention_region'))
-                        self.ui.attentionRegionSelect.val(self.model.get('attention_region'));
-
+                    self.ui.attentionRegionSelect.val(self.model.get('attention_region') || 'custom');
                     self.ui.attentionRegionSelect.select2();
                     self.selectAttentionRegion();
                 });
