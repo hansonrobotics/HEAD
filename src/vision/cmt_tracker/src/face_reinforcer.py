@@ -12,7 +12,7 @@ import message_filters
 from std_srvs.srv import Empty
 from cmt_tracker_msgs.msg import Trackers,Tracker, Objects
 from cmt_tracker_msgs.srv import TrackerNames
-
+import itertools
 '''
 Description: This is checks for the if cmt_tracker is overlapping with cmt instances and focuses the libraries to the locations.
 
@@ -62,6 +62,7 @@ class face_reinforcer:
             self.update = False
 
         for face, cmt in overlaped_faces:
+
             self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 2
             if (self.faces_cmt_overlap[cmt.tracker_name.data] > 2):
                 self.upt = rospy.ServiceProxy('reinforce',TrackerNames)
@@ -70,7 +71,13 @@ class face_reinforcer:
                     #TODO handle the error if the service is not available.
                     pass
 
-        # TODO is this needed.
+        # TODO if the cmt name has disappeared then remove it from the self.faces_cmt_overlap.get
+
+        # TODO Merging Overlapping Elements;
+        for a, b in itertools.combinations(cmt, 2):
+            pass
+
+
         # for keys in self.faces_cmt_overlap:
         #     self.faces_cmt_overlap[keys] = self.faces_cmt_overlap.get(keys, 0) - 1
 

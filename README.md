@@ -53,7 +53,11 @@ full performance pipeline and infrastructure:
 
 * Run vision tools
 
-`./vision.sh cmt` #For running with cmt
+`./vision.sh cmt` #For running with cmt/pi_vision
+
+* Get the latest vision codes relating to cmt.
+
+`./hrtool -v`
 
 * Open web browser
 
