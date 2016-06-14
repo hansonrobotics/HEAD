@@ -73,7 +73,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                     this.updateIndicators();
 
                 if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
-                    var magnitude = this.model.get('magnitude');
+                    var magnitude = this.model.get('magnitude') || 0;
 
                     // set default
                     if (!this.model.get('magnitude'))

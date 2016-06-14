@@ -33,6 +33,7 @@ define(['application', 'backbone', 'lib/api'], function (App, Backbone, api) {
             if (this.get('el'))
                 $(this.get('el')).remove();
 
+            this.unset('id');
             Backbone.Model.prototype.destroy.call(this);
         }
     });
