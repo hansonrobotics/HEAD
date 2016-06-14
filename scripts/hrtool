@@ -395,7 +395,7 @@ set_ws() {
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
-    cp $HR_ENVFILE_PATH $BASEDIR # For compatibility
+    cp $HR_ENVFILE_PATH $BASEDIR >/dev/null 2>&1 # For compatibility
 }
 
 execute() {
