@@ -115,7 +115,21 @@ bool TrackerCMT::getTrackedImages(cmt_tracker_msgs::TrackedImages::Request &req,
   }
   return true;
 }
-
+bool TrackerCMT::merge_elements(cmt_tracker_msgs::MergeNames::Request &req, cmt_tracker_msgs::MergeNames::Response &res)
+{
+    //Callback are handled sequentially; http://answers.ros.org/question/28373/race-conditions-in-callbacks/
+    merge.clear();
+    if(req.merge_to.size() == req.merge_from.size())
+    {
+    for(int i = 0; i< req.merge_to.size(); i++)
+    {
+        merge[req.merge_to[i]] = req.merge_from[i];
+    }
+    return true;
+    }
+    else
+    return false;
+}
 bool TrackerCMT::updateTrackerNames(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
 {
     if( cmt_.updatemapname(req.names, req.index))
@@ -204,7 +218,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 //  }
 
 
-  std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor);
+  std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor,merge);
 
   for(std::vector<cmt::cmt_message>::iterator v = messages.begin(); v!= messages.end(); v++)
   {
@@ -330,6 +344,8 @@ void TrackerCMT::set_tracker(const cmt_tracker_msgs::Tracker& tracker_location)
 
 
 }
+
+
 void TrackerCMT::set_trackers(const cmt_tracker_msgs::Trackers& tracker_location)
 {
   for (int i = 0; i < tracker_location.tracker_results.size(); i++)

@@ -7,6 +7,7 @@
 #include <cmt_tracker_msgs/Objects.h>
 #include <cmt_tracker_msgs/TrackedImages.h>
 #include <cmt_tracker_msgs/TrackerNames.h>
+#include <cmt_tracker_msgs/MergeNames.h>
 //OpenCV libraries
 #include <opencv2/core/core.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
@@ -93,11 +94,13 @@ public:
 	void set_tracker(const cmt_tracker_msgs::Tracker& tracker_location); 
 
 	//Subscriber to set the cmt to locations specified by the tracker locations
-	void set_trackers(const cmt_tracker_msgs::Trackers& tracker_location); 
+	void set_trackers(const cmt_tracker_msgs::Trackers& tracker_location);
 
 	//A function that removes the ith element from the vector of trackers. 
 //	void remove_tracker(int index);
 	void remove_tracker(std::string name);
+
+	bool merge_elements(cmt_tracker_msgs::MergeNames::Request &req, cmt_tracker_msgs::MergeNames::Response &res);
 
 //    bool validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
 
@@ -196,7 +199,10 @@ private:
 	int downgrade;
 
 	//for setting the tracking to higher levels.
-	std::vector<cv::Rect> locations_of_trackers; 
+	std::vector<cv::Rect> locations_of_trackers;
+
+    std::map<std::string, std::string> merge;
+
 	std::string subscribe_topic;
 	std::string tool;
 

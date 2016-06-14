@@ -38,7 +38,7 @@ class face_reinforcer:
         self.faces_cmt_overlap = {}
         self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
 
-
+        self.cmt_merge = {}
         ts = message_filters.ApproximateTimeSynchronizer([self.cmt_sub,self.face_sub,self.cmt_sub_], 10,0.2)
         ts.registerCallback(self.callback)
 
@@ -71,15 +71,29 @@ class face_reinforcer:
                     #TODO handle the error if the service is not available.
                     pass
 
-        # TODO if the cmt name has disappeared then remove it from the self.faces_cmt_overlap.get
+        # TODO if the cmt name has disappeared then remove it from the self.faces_cmt_overlap.get Via Subscriber to Face_events
+        for a, b in itertools.combinations(ttp.tracker_results, 2):
+            SA = a.object.object.height * a.object.object.width
+            SB = b.object.object.height * b.object.object.width
+            SI = max(0, (
+                max(a.object.object.x_offset + a.object.object.width, b.object.object.x_offset + b.object.object.width) - min(
+                    a.object.object.x_offset, b.object.object.x_offset))
+                         * max(0, max(a.object.object.y_offset, b.object.object.y_offset) - min(
+                    a.object.object.y_offset - a.object.object.height, b.object.object.y_offset - b.object.object.height)))
+            SU = SA + SB - SI
+            overlap_area_ = SI / SU
 
-        # TODO Merging Overlapping Elements;
-        for a, b in itertools.combinations(cmt, 2):
-            pass
+            overlap_ = overlap_area_ > 0
+            if (overlap_):
+                #TODO Choose which to merge too later information to which it's closer too.
+                list = [a.tracker_name.data, b.tracker_name.data]
+                self.cmt_merge.append(list)
+
+        #TODO for now just delete the elements then latter put a mark on the merged elements and update if there is overlappings with the track.
+
+        # Now pass to the merger.
 
 
-        # for keys in self.faces_cmt_overlap:
-        #     self.faces_cmt_overlap[keys] = self.faces_cmt_overlap.get(keys, 0) - 1
 
     def returnOverlapping(self, face, cmt):
         not_covered_faces = []
