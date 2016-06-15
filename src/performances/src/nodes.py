@@ -126,8 +126,6 @@ class gaze_at(Node):
 
 # Behavior tree
 class interaction(Node):
-
-
     def start(self, run_time):
         self.runner.topics['bt_control'].publish(Int32(self.data['mode']))
         if self.data['chat'] == 'listening':
