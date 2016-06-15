@@ -70,6 +70,8 @@ class face_predictor:
                     self.logger.warn("there was the same id in the id chamber. Training again....")
             except rospy.ServiceException, e:
                 self.logger.error("Service call failed: %s" %e)
+
+        ##TODO this needs to be moved to an independent area.
         elif self.faces_cmt_overlap[cmt.tracker_name.data] < (self.image_sample_size + self.sample_size) and not cmt.recognized.data:
             self.face_recognizer.save_faces(cv_image,tupl,cmt.tracker_name.data,str(self.faces_cmt_overlap[cmt.tracker_name.data]))
         elif self.faces_cmt_overlap[cmt.tracker_name.data] == self.image_sample_size + self.sample_size:

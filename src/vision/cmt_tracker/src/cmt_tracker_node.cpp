@@ -246,6 +246,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 //        tracker.object.pose.position.y = position.y * z;
 //        tracker.object.pose.position.z = position.z * z;
 //
+
     tracker.quality_results.data = !((*v).tracker_lost);
     tracker.recognized.data = (*v).recognized;
     tracker.before_demotion.data = (*v).before_being_demoted;
@@ -258,7 +259,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
   }
     poorly_tracked = cmt_.removeLost();
 
-//  pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
+  pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
 
 //  bool emo_enabled,pose_enabled;
 //  nh_.getParam("pose",pose_enabled);
@@ -280,6 +281,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
   temp_results.header.stamp = ros::Time::now();
   tracker_results_pub.publish(trackers_results);
   tracker_results_temp.publish(temp_results);
+  pi_vision_results.publish(pi_results);
 //  //std::cout<<"Finished Publish"<<std::endl;
   deleteOnLost();
   trackers_results.tracker_results.clear();
@@ -401,17 +403,17 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
   double width;
   double height;
 
-  dp = 0.22 / locs.object.object.height; //This is how it's defined as above
+  dp = 0.22 / (float)(locs.object.object.width); //This is how it's defined as above
+
   width = camera_config.width / 2;
   height = camera_config.height / 2;
+  double k_const = (double)camera_config.width / (double) (tan(camera_config.fov/2.0));
 
-
-
-  msg.point.x = dp * (height / tan(camera_config.fov / 2));
-  msg.point.y = dp * (width - ((locs.object.object.x_offset + locs.object.object.width) +
-                locs.object.object.x_offset) / 2 );
+  msg.point.x = dp * k_const;
+  msg.point.y = dp * (width - ( (double)(locs.object.object.x_offset + locs.object.object.width) +
+                locs.object.object.x_offset) / 2.0 );
   msg.point.z = dp * (height - ((locs.object.object.y_offset + locs.object.object.height) +
-                locs.object.object.y_offset) / 2 );
+                locs.object.object.y_offset) / 2.0 );
   msg.emotion_value = locs.object.obj_accuracy.data;
   msg.emotion_id = locs.object.obj_states.data;
   return msg;
