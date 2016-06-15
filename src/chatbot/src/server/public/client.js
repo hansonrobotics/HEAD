@@ -88,9 +88,35 @@ function Client(auto_connect){
     };//If we want to change the write function
 
     this.exit = function(){
-        console.log("Exit");
+        this.write("Bye");
     };
     //Callback to be set outside of the function.
+
+    let exec = function(cmd,param){
+        const f_name= 'do_' + cmd;
+        let fn = self[f_name];
+        fn(param);
+    }
+
+    this.execute = function(message){
+        message = message.trim();
+
+        let cmd, param;
+
+        if(message.indexOf(' ') === -1){
+            cmd = message;
+            param = '';
+        }else{
+            cmd = message.substr(0,message.indexOf(' '));
+            param = message.substr(message.indexOf(' ')+1);
+        }
+
+        if(COMMANDS.indexOf(cmd) !== -1){
+            exec(cmd, param);
+        }else{
+            this.default(message);
+        }
+    }
 
     let finish_set_sid = function(response, callback, error_callback){
         const text = response.responseText;
@@ -382,11 +408,49 @@ function Client(auto_connect){
         self.write(s);
     }
 
-//    Not used, handled in interface.js
-//    this.do_q = function(line){}
+    this.do_q = function(){
+        self.exit();
+    }
 
     this.help_q = function(){
         self.write("Quits the chat\n");
+    }
+
+    let help = function(cmd){
+        const f_name = 'help_' + cmd;
+        let fn = self[f_name];
+
+        if(fn === undefined){
+            write_error('*** No help on ' + cmd);
+            return;
+        }
+
+        fn();
+    }
+
+    let help_all = function(){
+        let line_length = 45;
+        let buffer = "Documented commands (type \"help [topic]\")\n"+
+            "=============================================\n";
+        let line = "";
+        COMMANDS_WITH_HELP.forEach(function(val, idx){
+            if(line.length + val.length > line_length){
+                buffer += line + '\n';
+                line = "";
+            }
+            line += val;
+            line += " ";
+        });
+        buffer += line;
+        self.write(buffer);
+    }
+
+    this.do_help = function(line){
+        if(line.trim().length > 0){
+            help(line);
+        }else{
+            help_all();
+        }
     }
 
     this.do_lang = function(line){
@@ -453,41 +517,43 @@ function Client(auto_connect){
         self.write(s);
     }
 
-    const input = document.createElement("INPUT");
-    input.setAttribute("type", "file");
+    if(typeof document !== 'undefined'){
+        const input = document.createElement("INPUT");
+        input.setAttribute("type", "file");
 
-    let prompt_for_upload = function(callback){
-        input.onchange = function(e){
-            callback(input.files[0]);
-        };
-        input.click();
-    }
+        let prompt_for_upload = function(callback){
+            input.onchange = function(e){
+                callback(input.files[0]);
+            };
+            input.click();
+        }
 
-    this.do_upload = function(){
-        prompt_for_upload(function(file){
-            try{
-                const params = {
-                    'user': user,
-                    'Auth': KEY,
-                    'lang': 'en'
-                };
+        this.do_upload = function(){
+            prompt_for_upload(function(file){
+                try{
+                    const params = {
+                        'user': user,
+                        'Auth': KEY,
+                        'lang': 'en'
+                    };
 
-                const url = chatbot_url + '/upload_character';
-                const response = post(url,params,file).responseText;
-                const json = JSON.parse(response);
-                const ret = json['ret']
-                const res = json['response'];
-                write(res);
-            }catch(e){
-                self.error(e);
-            }
-        });
-    }
+                    const url = chatbot_url + '/upload_character';
+                    const response = post(url,params,file).responseText;
+                    const json = JSON.parse(response);
+                    const ret = json['ret']
+                    const res = json['response'];
+                    write(res);
+                }catch(e){
+                    self.error(e);
+                }
+            });
+        }
 
-    this.help_upload = function(){
-        const msg = "Upload character package.\n" +
-            "Syntax: upload package\n";
-        self.write(msg);
+        this.help_upload = function(){
+            const msg = "Upload character package.\n" +
+                "Syntax: upload package\n";
+            self.write(msg);
+        }
     }
 
     this.ping = function(){
@@ -520,4 +586,25 @@ function Client(auto_connect){
     this.get_chatbot_url = function(){return chatbot_url;}
     this.get_bot_name = function(){return bot_name;}
     this.get_user = function(){return user;}
+
+    const COMMANDS = [];
+    for(const fn in self)
+        if(fn.indexOf("do_") == 0)
+            COMMANDS.push(fn.substr("do_".length));
+    
+    const COMMANDS_WITH_HELP = [];
+    for(const fn in self)
+        if(fn.indexOf("help_") == 0)
+            COMMANDS_WITH_HELP.push(fn.substr("help_".length));
+}
+
+function useNodejs(){
+    exports.Client = Client;
+    XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+    console.log("Using Node.js");
+}
+
+if(typeof exports !== 'undefined'){
+    var XMLHttpRequest;//Scoping in case of Node.js
+    useNodejs();
 }
