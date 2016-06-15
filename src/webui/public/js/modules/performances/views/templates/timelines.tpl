@@ -30,6 +30,7 @@
     <div class="app-node label label-warning" data-name="gaze_at">GazeAt</div>
     <div class="app-node label label-default" data-name="interaction">Interaction</div>
     <div class="app-node label label-default" data-name="pause">Pause</div>
+    <div class="app-node label label-default" data-name="random">Random</div>
     <!--<div class="app-node label label-default" data-name="chat_pause">Chat pause</div>-->
     <!--<div class="app-node label label-info" data-name="expression">Expression</div>-->
     <div class="app-node label label-success" data-name="kfanimation">KF Animation</div>

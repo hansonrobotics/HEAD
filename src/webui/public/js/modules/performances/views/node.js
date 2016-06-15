@@ -31,7 +31,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 hrAngleSlider: '.app-hr-angle-slider',
                 hrAngleLabel: '.app-hr-angle-label',
                 attentionRegionSelect: '.app-attention-region-select',
-                timeout: '.app-node-timeout'
+                timeout: '.app-node-timeout',
+                randomNodePerformance: '.app-random-node-performance-select'
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -51,7 +52,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 'change @ui.speechEventSelect': 'setSpeechEvent',
                 'change @ui.kfModeSelect': 'setKFMode',
                 'change @ui.attentionRegionSelect': 'selectAttentionRegion',
-                'change @ui.timeout': 'updateTimeout'
+                'change @ui.timeout': 'updateTimeout',
+                'change @ui.randomNodePerformance': 'changeRandomNodePerformance'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -435,6 +437,10 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
             },
             updateTimeout: function () {
                 this.model.set('timeout', this.ui.timeout.val());
+            },
+            enableRandomNodePerformanceSelect: function () {
+            },
+            changeRandomNodePerformance: function () {
             }
         });
     });
