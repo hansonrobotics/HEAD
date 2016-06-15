@@ -1,3 +1,4 @@
+'use strict'
 const VERSION = 'v1.1';
 const KEY = 'AAAAB3NzaC';
 
@@ -20,7 +21,7 @@ function guid() {
 
 function URLEncodeJSON(params){
     let result = '';
-    for(strkey in params){
+    for(const strkey in params){
         const key = encodeURI(strkey);
         const val = encodeURI(params[strkey]);
         if(val === undefined || val === 'undefined')
@@ -50,7 +51,7 @@ function post(url, params, file){
     const formData = new FormData();
 
     formData.append('zipfile',file);
-    for(key in params){
+    for(const key in params){
         formData.append(key,params[key]);
     }
 
@@ -148,6 +149,7 @@ function Client(auto_connect){
                 attempt = get(url, params);
             }catch(e){
                 tries--;
+                self.error(e);
                 self.error('Connection error. ' + tries + (tries===1?' try':' tries') + ' left.');
                 return;
             }
@@ -189,7 +191,7 @@ function Client(auto_connect){
             'botname': ''
         };
 
-        for(key in json['response']){
+        for(const key in json['response']){
             result[key] = json['response'][key];
         }
 
@@ -279,7 +281,7 @@ function Client(auto_connect){
     this.do_l = this.do_list;
     this.help_l = this.help_list;
 
-    this.do_select = function(line, callback){
+    this.do_select = function(line, callback, error_callback){
         try{
             const names = self.list_chatbot_names();
 
@@ -293,7 +295,7 @@ function Client(auto_connect){
                         if(callback){
                             callback();
                         }
-                    });
+                    }, error_callback);
                     return;
                 }
             }
@@ -312,7 +314,7 @@ function Client(auto_connect){
         self.write("Select chatbot");
     }
 
-    this.do_conn = function(line, callback){
+    this.do_conn = function(line, callback, error_callback){
         if(line){
             try{
                 const url = line.split(':');
@@ -329,7 +331,7 @@ function Client(auto_connect){
             }
         }
         self.write('Connecting.');
-        self.set_sid(callback);
+        self.set_sid(callback, error_callback);
     }
 
     this.help_conn = function(){

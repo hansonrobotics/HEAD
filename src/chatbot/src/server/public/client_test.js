@@ -342,7 +342,7 @@ function TestClient(){
 
             const msg = "Foo bar";
             client.default(msg);
-            assertEquals(last_error.length,0);
+            assertEquals(last_error.length,0,last_error);
 
             last_write = [];
 
@@ -394,6 +394,10 @@ function TestClient(){
         }
 
         last_write = [];
+
+        let fail = function(){
+            assert(false);
+        }
         client.do_select("bath",function(){
             client.do_select("bazz",function(){
                 client.do_select("bar",function(){
@@ -403,9 +407,9 @@ function TestClient(){
                     assertEquals(last_write[4], "Select chatbot bar");
                     assertEquals(last_write.length, 5);
                     callback();
-                });
-            });
-        });
+                }, fail);
+            }, fail);
+        }, fail);
     }
 
     this.test_do_conn = function(){
