@@ -57,6 +57,7 @@ add_service_files(
   Run.srv
   RunByName.srv
   Stop.srv
+  Current.srv
 )
 
 ## Generate actions in the 'action' folder

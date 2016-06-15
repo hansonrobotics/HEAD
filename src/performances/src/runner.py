@@ -33,6 +33,7 @@ class Runner:
         self.start_timestamp = 0
         self.lock = Lock()
         self.queue = Queue.Queue()
+        self.running_nodes = []
         self.worker = Thread(target=self.worker)
         self.worker.setDaemon(True)
         rospy.init_node('performances')
@@ -65,6 +66,7 @@ class Runner:
         rospy.Service('~resume', srv.Resume, self.resume_callback)
         rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
+        rospy.Service('~current', srv.Current, self.current_callback)
         self.worker.start()
         rospy.spin()
 
@@ -155,16 +157,26 @@ class Runner:
             else:
                 return False
 
+    # Returns current performance
+    def current_callback(self, request):
+        with self.lock:
+            nodes = self.running_nodes
+            current_time = self.get_run_time()
+        running = self.running and not self.paused
+        nodes = json.dumps([node.data for node in nodes])
+        return srv.CurrentResponse(nodes=nodes, current_time=current_time, running=running)
+
+
     def worker(self):
         while True:
             with self.lock:
                 self.paused = False
 
             self.topics['events'].publish(Event('idle', 0))
-            nodes = self.queue.get()
+            self.running_nodes = self.queue.get()
             self.topics['events'].publish(Event('running', self.start_time))
 
-            if len(nodes) == 0:
+            if len(self.running_nodes) == 0:
                 continue
             running = True
             while running:
@@ -178,8 +190,10 @@ class Runner:
                         continue
 
                 running = False
-                for node in nodes:
+                #checks if any nodes still running
+                for node in self.running_nodes:
                     running = node.run(run_time) or running
+
 
     def get_run_time(self):
         """
