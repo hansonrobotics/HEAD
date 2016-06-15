@@ -149,6 +149,11 @@
                     <div class="input-group-addon">s</div>
                 </div>
             </div>
+            <% } else if (name == 'random') { %>
+            <div class="form-group">
+                <label>Performance</label>
+                <select class="app-random-node-performance-select"></select>
+            </div>
             <% } %>
 
             <div class="node-setting-buttons form-group">
