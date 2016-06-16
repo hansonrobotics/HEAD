@@ -64,11 +64,14 @@ class face_reinforcer:
 
             self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 2
             if (self.faces_cmt_overlap[cmt.tracker_name.data] > 2):
-                self.upt = rospy.ServiceProxy('reinforce',TrackerNames)
-                indication = self.upt(names=cmt.tracker_name.data, index=500)
-                if not indication:
-                    #TODO handle the error if the service is not available.
-                    pass
+                try:
+                    self.upt = rospy.ServiceProxy('reinforce',TrackerNames)
+                    indication = self.upt(names=cmt.tracker_name.data, index=500)
+                    if not indication:
+                        #TODO handle the error if the service is not available.
+                        pass
+                except rospy.ServiceException, e:
+                    self.logger.error("Service call failed: %s" % e)
 
         # TODO if the cmt name has disappeared then remove it from the self.faces_cmt_overlap.get Via Subscriber to Face_events
         self.cmt_merge = {}
@@ -93,10 +96,13 @@ class face_reinforcer:
                 merge_from.append(b.tracker_name.data)
 
         #TODO for now just delete the elements then latter put a mark on the merged elements and update if there is overlappings with the track.
-        self.mrg = rospy.ServiceProxy('merge',MergeNames)
-        indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
-        if not indic:
-            pass
+        try:
+            self.mrg = rospy.ServiceProxy('merge',MergeNames)
+            indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
+            if not indic:
+                pass
+        except rospy.ServiceException, e:
+            self.logger.error("Service call failed: %s" % e)
 
         # Now pass to the merger.
 

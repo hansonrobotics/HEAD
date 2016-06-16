@@ -30,54 +30,80 @@ class face_predictor:
     self.cmt_sub = message_filters.Subscriber('tracker_results',Trackers)
     self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
     self.temp_sub = message_filters.Subscriber('temporary_trackers',Trackers)
-    ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub,self.temp_sub], 10,0.25)
+    ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub,self.temp_sub], 1,0.25)
     ts.registerCallback(self.callback)
     Server(RecogntionConfig, self.sample_callback)
     self.faces_cmt_overlap = {}
     self.logger = logging.getLogger('hr.cmt_tracker.face_recognizer_node')
+    #This would hold the trackers that the system would hold.
+    self.save_tracker_images = []
+    #This query x results of this particular tracking instances.
+    self.get_tracker_results = []
 
+    self.cmt_state = {}
+
+    self.states = ['results','save']
+    self.overall_state = ''
+    #So the logic goes; if the trainer is called when save_tracker_images has saved enough images.
+    #And for get_tracker_results -> returns the
 
   def callback(self,data, cmt, face,temp):
-    self.logger.debug('Overlap on face and tracker')
+    print('Overlap on face and tracker')
     try:
       cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
     except CvBridgeError as e:
-      self.logger.error(e)
+      print(e)
 
     ttp = cmt
     for val in temp.tracker_results:
         ttp.tracker_results.append(val)
     not_covered_faces,covered_faces = self.returnOverlapping(face,ttp)
-    
+    print('gets here')
     for face,cmt in covered_faces:
         tupl = []
         for pts in face.feature_point.points:
             x,y = pts.x, pts.y
             tupl.append((x,y))
+
+        # First let's get the state of the face_recognzier.
+        if not self.face_recognizer.get_state():
+            self.overall_state ='save'
+            print('overall state is save')
         self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data,0) + 1
-        if self.faces_cmt_overlap[cmt.tracker_name.data] < self.sample_size and not cmt.recognized.data: # The first 10 images
+        print(self.faces_cmt_overlap[cmt.tracker_name.data])
+        #State ONE-> Check for the results of a tracker.
+        if self.faces_cmt_overlap[cmt.tracker_name.data] < self.sample_size and not cmt.recognized.data and (self.overall_state is not 'save'): # The first 10 images
+            print('getting results')
             self.face_recognizer.results(cv_image,tupl,cmt.tracker_name.data)
-
-        elif self.faces_cmt_overlap[cmt.tracker_name.data] == self.sample_size and not cmt.recognized.data:
-            print(self.face_recognizer.face_results_aggregator)
-            max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].iterkeys(),
-                            key=(lambda key: self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results']))
-            print(max_index)
-            try:
-                self.upt = rospy.ServiceProxy('recognition',TrackerNames)
-                indication = self.upt(names=cmt.tracker_name.data, index=int(max_index[5:]))
-                if not indication:
-                    self.logger.warn("there was the same id in the id chamber. Training again....")
-            except rospy.ServiceException, e:
-                self.logger.error("Service call failed: %s" %e)
-
-        ##TODO this needs to be moved to an independent area.
+        #State two Save faces
         elif self.faces_cmt_overlap[cmt.tracker_name.data] < (self.image_sample_size + self.sample_size) and not cmt.recognized.data:
+            print('saving faces')
             self.face_recognizer.save_faces(cv_image,tupl,cmt.tracker_name.data,str(self.faces_cmt_overlap[cmt.tracker_name.data]))
+        #TODO this shouldn't exist here at all.
+        #State Three Train classifers.
         elif self.faces_cmt_overlap[cmt.tracker_name.data] == self.image_sample_size + self.sample_size:
+            print('training process')
             self.face_recognizer.train_process(cmt.tracker_name.data)
         else:
+            print('reaches new heights')
             pass
+
+        #TODO how can we recall this.
+        if self.faces_cmt_overlap[cmt.tracker_name.data] == self.sample_size and not cmt.recognized.data and (self.overall_state is not 'save'):
+            print(self.face_recognizer.face_results_aggregator)
+            max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].iterkeys(),
+                            key=(
+                            lambda key: self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results']))
+            print(max_index)
+            try:
+                self.upt = rospy.ServiceProxy('recognition', TrackerNames)
+                indication = self.upt(names=cmt.tracker_name.data, index=int(max_index[5:]))
+                if not indication:
+                    print("there was the same id in the id chamber.....")
+            except rospy.ServiceException, e:
+                print("Service call failed: %s" % e)
+    print("exits this loop at least")
+        #TODO occussional reinforcement by querying again and check results. That would be best if there is a feedback mechanism
 
   def sample_callback(self,config, level):
       self.image_sample_size = config.image_number

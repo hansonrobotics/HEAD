@@ -139,7 +139,6 @@ class face_recognizer:
 
 
     def save_faces(self, cv_image, tupl, loc_save,postfix):
-
         print("saving faces in %s", self.image_dir_face_temp + "/" + loc_save)
         if (not os.path.exists(self.image_dir_face_temp + "/" + loc_save)):
             os.makedirs(self.image_dir_face_temp + "/" + loc_save)
@@ -196,3 +195,19 @@ class face_recognizer:
         img_aligned = self.align(cv_image, tupl, True)
         result = self.infer(img_aligned)
         return result
+
+    def get_state(self):
+        '''
+        @return: The existance of the classifier.pkl
+        '''
+        if os.path.exists("{}/classifier.pkl".format(self.feature_dir)):
+            return True
+        else:
+            return False
+    def clear_results(self):
+        '''
+        Clears the face_results_aggregator from all the results.
+        @return:
+        '''
+        self.face_results_aggregator = {}
+
