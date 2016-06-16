@@ -75,16 +75,14 @@ class Runner:
         rospy.spin()
 
     def load_callback(self, request):
-        self.load_sequence([request.id])
-        return srv.RunByNameResponse(True)
+        return srv.LoadResponse(success = True, nodes = json.dumps(self.load_sequence([request.id])))
 
     def load_nodes_callback(self, request):
         self.load_nodes(json.loads(request.nodes))
-        return srv.RunByNameResponse(True)
+        return srv.LoadNodesResponse(True)
 
     def load_sequence_callback(self, request):
-        self.load_sequence(request.ids)
-        return srv.RunSequenceResponse(True)
+        return srv.LoadSequenceResponse(success = True, nodes = json.dumps(self.load_sequence(request.ids)))
 
     def load_sequence(self, ids):
         nodes = []
@@ -92,7 +90,7 @@ class Runner:
         offset = 0
         for id in ids:
             robot_name = rospy.get_param('/robot_name')
-            path = os.path.join(rospack.get_path('performances'), 'robots', robot_name, id + '.yaml')
+            path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances',  id + '.yaml')
             duration = 0
 
             if os.path.exists(path):
@@ -101,12 +99,16 @@ class Runner:
 
                 if 'nodes' in data and isinstance(data['nodes'], list):
                     for node in data['nodes']:
-                        duration = max(duration, data['duration'] if 'duration' in data else 0 + data['start_time'])
+                        print node
+                        if not 'start_time' in node:
+                            node['start_time'] = 0
+                        duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
                         node['start_time'] += offset
                     offset += duration
                     nodes += data['nodes']
 
         self.load_nodes(nodes, ids)
+        return nodes
 
     def load_nodes(self, nodes, ids=None):
         self.stop()

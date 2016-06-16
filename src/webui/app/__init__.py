@@ -201,6 +201,7 @@ def get_performances(robot_name):
                 performance = read_yaml(filename)
                 relative = filename.split('/')[len(root.split('/')):-1]
                 performance['path'] = os.path.join(*relative) if relative else ''
+                del performance['nodes']
                 performances.append(performance)
     except Exception as e:
         print e
@@ -217,15 +218,22 @@ def update_performances(robot_name, id):
         os.makedirs(root)
 
     try:
-        if 'previous_id' in performance:
-            filename = os.path.join(root, performance['previous_id'] + '.yaml')
-            if os.path.isfile(filename):
-                os.remove(filename)
-            del performance['previous_id']
         filename = os.path.join(root, id + '.yaml')
+        current = {}
 
-        if 'path' in performance:
-            del performance['path']
+        if 'previous_id' in performance:
+            previous = os.path.join(root, performance['previous_id'] + '.yaml')
+            if os.path.isfile(previous):
+                current = read_yaml(previous)
+                os.remove(previous)
+            del performance['previous_id']
+        elif os.path.isfile(filename):
+            current = read_yaml(filename)
+
+        if 'path' in performance: del performance['path']
+        if 'ignore_nodes' in performance and performance['ignore_nodes'] and 'nodes' in current:
+            performance['nodes'] = current['nodes']
+            del performance['ignore_nodes']
 
         write_yaml(filename, performance)
     except Exception as e:
