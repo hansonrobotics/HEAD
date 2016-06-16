@@ -279,14 +279,15 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
 
     if ((*v).recognized.data)
     {
-      previously_known = "true";
+      previously_known = "as: " + (*v).recognized_name.data;
     }
     else {
       previously_known = "false";
     }
 
+
     double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
-    std::string value = "ID-" + (*v).tracker_name.data+ "BF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
+    std::string value = "ID-" + (*v).tracker_name.data+ "\nBF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
        "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
     tracked_image_information.push_back( value );
 
@@ -306,14 +307,14 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
 
     if ((*v).recognized.data)
     {
-      previously_known = "true";
+      previously_known = "as: " + (*v).recognized_name.data;
     }
     else {
-      previously_known = "false";
+      previously_known = "";
     }
 
     double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
-    std::string value = "ID-" + (*v).tracker_name.data+ "BF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
+    std::string value = "ID-" + (*v).tracker_name.data+ "\nDemotion: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
        "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
 
     temp_tracked_image_information.push_back( value );

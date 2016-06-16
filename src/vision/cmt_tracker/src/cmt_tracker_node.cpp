@@ -249,6 +249,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 
     tracker.quality_results.data = !((*v).tracker_lost);
     tracker.recognized.data = (*v).recognized;
+    tracker.recognized_name.data = (*v).recognized_as;
     tracker.before_demotion.data = (*v).before_being_demoted;
     tracker.header.stamp = ros::Time::now();
 

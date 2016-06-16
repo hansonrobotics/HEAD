@@ -41,7 +41,7 @@
 
 <node name="camera_transform" pkg="tf" type="static_transform_publisher" args="0.1 0 0 1.57 0 1. /base_footprint $(arg head_tracking_frame) 100"/>
 
-<arg name="debug" default="False"/>
+<arg name="debug" default="True"/>
 
 <group if="$(arg choose_web_cam)">
     <param name= "usb_cam/pixel_format" value="yuyv"/>

@@ -102,7 +102,7 @@ class face_reinforcer:
             if not indic:
                 pass
         except rospy.ServiceException, e:
-            self.logger.error("Service call failed: %s" % e)
+            print("Service call failed: %s" % e)
 
         # Now pass to the merger.
 
