@@ -8,8 +8,8 @@ export HR_WORKSPACE=$HR_WORKSPACE
 . $HR_WORKSPACE/torch/install/bin/torch-activate
 
 source $HR_WORKSPACE/HEAD/devel/setup.bash
-export PYTHONPATH=$PYTHONPATH:$HR_WORKSPACE/openface/:$HR_WORKSPACE/src/vision/dlib-18.18/dist/
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/src/vision/CppMT/:$HR_WORKSPACE/src/vision/emotime/build/src
+export PYTHONPATH=$PYTHONPATH:$HR_WORKSPACE/HEAD/src/vision/openface/:$HR_WORKSPACE/HEAD/src/vision/dlib-18.18/dist/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT/:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
 
 export tool="$1"
 if [[ -z $tool ]]; then

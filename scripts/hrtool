@@ -288,15 +288,15 @@ do_build_hr() {
         catkin init
     fi
     #TODO remove items unnecessary here to take it all out.
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/src/vision/CppMT:$HR_WORKSPACE/src/vision/emotime/build/src
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
     #Needed for compiling emotime as it's dependent upon it for it being built.
-    export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/src/vision/CppMT:$HR_WORKSPACE/src/vision/emotime/build/src
-    export DLIB_PATH=$HR_WORKSPACE/src/vision/dlib-18.18
+    export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
+    export DLIB_PATH=$HR_WORKSPACE/HEAD/src/vision/dlib-18.18
     cd $DLIB_PATH && python setup.py build
     cd $HR_WORKSPACE/$PROJECT
-    include_dirs=($HR_WORKSPACE/src/vision/emotime/src/{facedetector,utils,gaborbank,detector,training})
+    include_dirs=($HR_WORKSPACE/HEAD/src/vision/emotime/src/{facedetector,utils,gaborbank,detector,training})
     include_path=$(printf "%s:" "${include_dirs[@]}")
-    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/src/vision/CppMT:$HR_WORKSPACE/src/vision/emotime/include:$include_path
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/include:$include_path
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
@@ -316,9 +316,9 @@ do_single_package() {
         catkin init
     fi
 
-    include_dirs=($HR_WORKSPACE/src/vision/emotime/src/{facedetector,utils,gaborbank,detector,training})
+    include_dirs=($HR_WORKSPACE/HEAD/src/vision/emotime/src/{facedetector,utils,gaborbank,detector,training})
     include_path=$(printf "%s:" "${include_dirs[@]}")
-    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/src/vision/CppMT:$HR_WORKSPACE/src/vision/emotime/include:$include_path
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/include:$include_path
 
     if [ "$1" == "cmt_tracker" ]; then
 
