@@ -312,6 +312,33 @@ do_update() {
     do_update_hr
 }
 
+do_clean_up() {
+    set +e
+    echo "Cleaning up"
+    _do_clean_up >/dev/null 2>&1
+    echo "Done"
+    set -e
+}
+
+_do_clean_up() {
+    rm -r ~/.cache/guile/ccache
+    if [[ ! -z $HR_WORKSPACE ]]; then
+        for repo in ${OPENCOG_REPOS[*]}
+        do
+            if [[ $repo != 'relex' ]]; then
+                sudo rm -r $HR_WORKSPACE/opencog/$repo/build
+            fi
+        done
+    fi
+    sudo rm -r /usr/local/include/opencog
+    sudo rm -r /usr/local/lib/opencog
+    sudo rm -r /usr/local/share/opencog
+    sudo rm /usr/local/bin/cogserver
+    sudo rm /usr/local/etc/cogserver.conf
+    sudo rm /usr/local/etc/opencog.conf
+    sudo rm /usr/local/lib/libcogutil.so
+}
+
 do_run() {
     while [[ $# > 0 ]]; do
         echo "Running $1"
@@ -338,13 +365,14 @@ Usage: $0 OPTION
 -p      Print Hanson Robotics workspace.
 -r      Run custom functions.
 -d      Developer mode. Using latest OpenCog stack.
+-c      Clean up files.
 -h      Print this help.
 
 EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUtpr:d" opt; do
+    while getopts "hw:igGbBuUtpr:dc" opt; do
         case $opt in
         h)
             show_help
@@ -362,6 +390,7 @@ parse_opts() {
         p) PRINT_HR_WORKSPACE=1 ;;
         r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
         d) DEVELOPER_MODE=1 ;;
+        c) CLEANUP=1 ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
             show_help
@@ -407,6 +436,7 @@ execute() {
     if [[ $DEVELOPER_MODE ]]; then do_dev_mode ; fi
     if [[ $UPDATE_HR_SOURCE_CODE ]]; then do_update_hr ; fi
     if [[ $UPDATE_SOURCE_CODE ]]; then do_update ; fi
+    if [[ $CLEANUP ]]; then do_clean_up ; fi
     if [[ $BUILD_HR_SOURCE_CODE ]]; then do_build_hr; fi
     if [[ $BUILD_SOURCE_CODE ]]; then do_build; fi
     if [[ $RUN_TESTS ]]; then do_test; fi
