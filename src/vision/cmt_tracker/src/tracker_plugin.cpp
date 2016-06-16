@@ -52,16 +52,16 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
 
   face_subscriber = (nh).subscribe(subscribe_face, 1, &rqt_tracker_view::tracker_plugin::list_of_faces_update, this);
   image_subscriber = it.subscribe(subscribe_topic, 1, &rqt_tracker_view::tracker_plugin::imageCb, this);
-  tracked_locations = nh.subscribe("tracker_results", 10 , &rqt_tracker_view::tracker_plugin::tracker_resultsCb, this);
-  temp_tracked_locations = nh.subscribe("temporary_trackers", 10 , &rqt_tracker_view::tracker_plugin::temp_tracker_resultsCb, this);
+  tracked_locations = nh.subscribe("tracker_results", 1 , &rqt_tracker_view::tracker_plugin::tracker_resultsCb, this);
+  temp_tracked_locations = nh.subscribe("temporary_trackers", 1 , &rqt_tracker_view::tracker_plugin::temp_tracker_resultsCb, this);
 
-  tracker_locations_pub = (nh).advertise<cmt_tracker_msgs::Tracker>("tracking_location", 10);
+  tracker_locations_pub = (nh).advertise<cmt_tracker_msgs::Tracker>("tracking_location", 1);
 
   client = nh.serviceClient<cmt_tracker_msgs::Clear>("clear");
   image_client = nh.serviceClient<cmt_tracker_msgs::TrackedImages>("get_cmt_rects");
   check_update = nh.serviceClient<cmt_tracker_msgs::Update>("update");
 
-  tracker_locations_sub = (nh).subscribe("tracking_location", 10 , &rqt_tracker_view::tracker_plugin::trackerCb, this);
+  tracker_locations_sub = (nh).subscribe("tracking_location", 1 , &rqt_tracker_view::tracker_plugin::trackerCb, this);
   nh.getParam("tracking_method", tracking_method);
 
 
