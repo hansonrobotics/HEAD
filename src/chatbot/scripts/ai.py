@@ -154,6 +154,7 @@ class Chatbot():
         if emotion:
           emo.data = emotion
           self._affect_publisher.publish(emo)
+          rospy.loginfo('[#][PERCEIVE ACTION][EMOTION] {}'.format(emo.data))
           logger.info('Chatbot perceived emo: {}'.format(emo.data))
         else:
           p = self.polarity.get_polarity(response)
@@ -163,12 +164,14 @@ class Chatbot():
           if p > self._polarity_threshold:
             emo.data = 'happy'
             self._affect_publisher.publish(emo)
+            rospy.loginfo('[#][PERCEIVE ACTION][EMOTION] {}'.format(emo.data))
             logger.info('Chatbot perceived emo: {}'.format(emo.data))
             # Currently response is independant of message received so no need to wait
             # Leave it for Opencog to handle responses later on.
           elif p < 0 and abs(p)> self._polarity_threshold:
             emo.data = 'frustrated'
             self._affect_publisher.publish(emo)
+            rospy.loginfo('[#][PERCEIVE ACTION][EMOTION] {}'.format(emo.data))
             logger.info('Chatbot perceived emo: {}'.format(emo.data))
             # Currently response is independant of message received so no need to wait
             # Leave it for Opencog to handle responses later on.

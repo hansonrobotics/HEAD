@@ -311,7 +311,10 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             },
             sendClicked: function () {
                 var message = this.ui.messageInput.val();
-                if (message != '') api.sendChatMessage(message);
+                if (message != '') {
+                    api.sendChatMessage(message);
+                    api.loginfo('[CLICK ACTION][CHAT] '+message);
+                }
                 this.ui.messageInput.val('');
             },
             attachHtml: function (collectionView, childView) {
@@ -441,6 +444,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
 
                         if (mostConfidentResult)
                             api.sendChatMessage(mostConfidentResult.transcript);
+                            api.loginfo('[ASR ACTION][CHAT] '+mostConfidentResult.transcript);
                     };
 
                     this.speechRecognition.onerror = function (event) {

@@ -16,7 +16,7 @@ logger = logging.getLogger('testing_tools.misc')
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 
-def run_shell_cmd(cmd, first=False):
+def run_shell_cmd(cmd, first=False, ignore=False):
     """
     Execute command in shell and get the outputs.
 
@@ -25,12 +25,15 @@ def run_shell_cmd(cmd, first=False):
 
     @param first: If it's True, return only the first line of outputs.
     @type  first: bool
+
+    @param ignore: If ignore exception.
+    @type  ignore: bool
     """
 
     stdout, stderr = subprocess.Popen(
         cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         cwd=CWD).communicate()
-    if stderr:
+    if stderr and not ignore:
         raise Exception(stderr)
     elif stdout:
         if first:
@@ -414,7 +417,7 @@ def add_text_to_video(filename, text=None):
         "fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf: "\
         "fontcolor=white: fontsize=28\" %s" % (filename, text, tmp_file)
     try:
-        os.system(cmd)
+        run_shell_cmd(cmd, ignore=True)
         shutil.move(tmp_file, filename)
     finally:
         if os.path.isfile(tmp_file):
@@ -430,7 +433,7 @@ def avi2mpg(filename):
     """
     assert filename.endswith('.avi')
     ofile = '%s.mpg' % os.path.splitext(filename)[0]
-    os.system('ffmpeg -y -i %s -qscale:v 1 %s' % (filename, ofile))
+    run_shell_cmd('ffmpeg -y -i %s -qscale:v 1 %s' % (filename, ofile), ignore=True)
     return ofile
 
 def mpg2avi(filename):
@@ -442,7 +445,7 @@ def mpg2avi(filename):
     """
     assert filename.endswith('.mpg')
     ofile = '%s.avi' % os.path.splitext(filename)[0]
-    os.system('ffmpeg -y -i %s -qscale:v 2 %s' % (filename, ofile))
+    run_shell_cmd('ffmpeg -y -i %s -qscale:v 2 %s' % (filename, ofile), ignore=True)
     return ofile
 
 def concatenate_videos(filenames, ofile, delete):
@@ -461,7 +464,7 @@ def concatenate_videos(filenames, ofile, delete):
     tmp_file = '/tmp/all.mpg'
     ofiles = [avi2mpg(f) for f in filenames if os.path.isfile(f)]
     ofiles = [f for f in ofiles if f is not None]
-    os.system('cat %s > %s' % (' '.join(ofiles), tmp_file))
+    run_shell_cmd('cat %s > %s' % (' '.join(ofiles), tmp_file), ignore=True)
     mpg2avi(tmp_file)
     shutil.move('/tmp/all.avi', ofile)
     [os.remove(f) for f in ofiles]

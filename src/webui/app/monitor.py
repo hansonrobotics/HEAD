@@ -3,7 +3,7 @@ import os
 import json
 from flask import request
 
-logger = logging.getLogger('hr.ros_motors_webui.monitor')
+logger = logging.getLogger('hr.webui.monitor')
 json_encode = json.JSONEncoder().encode
 LOG_TO_SHOW = 100
 
@@ -18,7 +18,7 @@ def get_logs(loglevel):
     import glob
     import re
 
-    logger.info('get logs: log level {}'.format(loglevel))
+    logger.debug('get logs: log level {}'.format(loglevel))
     log_cursors = request.form.copy()
     logger.debug('cursors: {}'.format(log_cursors))
 
@@ -35,9 +35,7 @@ def get_logs(loglevel):
             run_id = ''
 
     # some extra log files that not created by roslaunch
-    extra_log_files = [os.path.join(log_root, name) for name in [
-        'ros_motors_webui.log', 'sophia_Eva_Behavior.log', 'blender_api.log']]
-    extra_log_files = [f for f in extra_log_files if os.path.isfile(f)]
+    extra_log_files = []
 
     log_dir = os.path.join(log_root, run_id)
     log_files = glob.glob(os.path.join(log_dir, '*.log'))

@@ -116,12 +116,16 @@ class MotionCommand(BaseCommand):
                 setattr(msg, name, value)
             if motion_type == 'gesture':
                 self.gesture_pub.publish(msg)
+                rospy.loginfo('[#][COMMAND ACTION][GESTURE] {}'.format(msg))
             elif motion_type == 'emotion':
                 self.emotion_pub.publish(msg)
+                rospy.loginfo('[#][COMMAND ACTION][EMOTION] {}'.format(msg))
             elif motion_type == 'turn':
                 self.turn_pub.publish(msg)
+                rospy.loginfo('[#][COMMAND ACTION][LOOKAT] {}'.format(msg))
             elif motion_type == 'look':
                 self.look_pub.publish(msg)
+                rospy.loginfo('[#][COMMAND ACTION][GAZEAT] {}'.format(msg))
             self.okay()
             logger.info("Execute {} {}".format(motion_type,msg))
             return True

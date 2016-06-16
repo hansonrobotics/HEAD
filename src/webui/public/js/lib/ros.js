@@ -39,6 +39,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                 });
         },
         initTopics: function () {
+            api.logger = new ROSLIB.Topic({
+                ros: api.ros,
+                name: '/rosout',
+                messageType: 'rosgraph_msgs/Log',
+            });
             api.topics = {
                 cmdTree: new ROSLIB.Topic({
                     ros: api.ros,
@@ -228,7 +233,7 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     ros: api.ros,
                     name: '/webui/log/chat',
                     messageType: 'std_msgs/String'
-                })
+                }),
             };
         },
         initServices: function () {

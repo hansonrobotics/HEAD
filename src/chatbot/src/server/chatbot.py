@@ -60,6 +60,8 @@ def get_characters_by_name(name, local=True, lang=None, user=None):
                 characters.append(c)
     else:
         characters = _characters
+    if not characters:
+        logger.warn('No character is satisfied')
     return characters
 
 def list_character(lang, sid):
@@ -156,7 +158,12 @@ def get_responding_characters(lang, sid):
     # current character > local character with the same name > solr > generic
     responding_characters = get_characters_by_name(botname, local=False, lang=lang, user=user)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
-    character = responding_characters[0]
+
+    character = None
+    if responding_characters:
+        character = responding_characters[0]
+    else:
+        return []
 
     if useSOLR:
         solr_character = get_character('solr_bot', lang)

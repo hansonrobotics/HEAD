@@ -521,7 +521,15 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             C_EYES: 16,
             C_FACE: 32,
             C_ALL: 255
-        }
+        },
+        loginfo: function (message) {
+            this.logger.publish({
+                header: new ROSLIB.Message({}),
+                level: 2,
+                name: 'WebUI',
+                msg: '[#]'+message,
+            });
+        },
     };
 
     return api;

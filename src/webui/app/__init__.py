@@ -27,9 +27,6 @@ performance_dir = os.path.join(rp.get_path('performances'), 'robots')
 
 app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
 
-
-# logger = logging.getLogger('hr.webui')
-
 def get_pub():
     db = getattr(g, '_database', None)
     if db is None:
@@ -338,10 +335,8 @@ def run_performance(performance):
 
 
 if __name__ == '__main__':
-    # from rosgraph.roslogging import configure_logging
-
-    # configure_logging(None, filename='ros_motors_webui.log')
-    # logger = logging.getLogger('hr.webui')
+    logging.getLogger().setLevel(logging.INFO)
+    logging.basicConfig()
 
     @app.route('/public/<path:path>')
     def send_js(path):

@@ -57,6 +57,7 @@ class ROS2OpenCV:
         self.output_image = "output_image"
         self.show_text = rospy.get_param("~show_text", True)
         self.show_features = rospy.get_param("~show_features", True)
+        self.headless = rospy.get_param("~headless", False)
 
         """ Initialize the Region of Interest and its publisher """
         #self.ROI = RegionOfInterest()
@@ -86,17 +87,19 @@ class ROS2OpenCV:
         self.cps_values = list()
         self.cps_n_values = 20
         self.flip_image = False
-
-        """ Create the display window """
         self.cv_window_name = self.node_name
-        cv.NamedWindow(self.cv_window_name, cv.CV_NORMAL)
-        cv.ResizeWindow(self.cv_window_name, 640, 480)
+
+        logger.info("headless mode {}".format(self.headless))
+        """ Create the display window """
+        if not self.headless:
+            cv.NamedWindow(self.cv_window_name, cv.CV_NORMAL)
+            cv.ResizeWindow(self.cv_window_name, 640, 480)
         
         """ Create the cv_bridge object """
         self.bridge = CvBridge()
         
         """ Set a call back on mouse clicks on the image window """
-        cv.SetMouseCallback (self.node_name, self.on_mouse_click, None)
+        #cv.SetMouseCallback (self.node_name, self.on_mouse_click, None)
         
         """ A publisher to output the display image back to a ROS topic """
         self.output_image_pub = rospy.Publisher(self.output_image, Image)
@@ -233,8 +236,10 @@ class ROS2OpenCV:
                 voffset = int(20 + self.image_size[1] / 120.)
             cv.PutText(self.display_image, "CPS: " + str(self.cps), (10, vstart), text_font, cv.RGB(255, 255, 0))
             cv.PutText(self.display_image, "RES: " + str(self.image_size[0]) + "X" + str(self.image_size[1]), (10, voffset), text_font, cv.RGB(255, 255, 0))
-        # Now display the image.
-        cv.ShowImage(self.node_name, self.display_image)
+
+        if not self.headless:
+            # Now display the image.
+            cv.ShowImage(self.cv_window_name, self.display_image)
         
         """ Publish the display image back to ROS """
         try:

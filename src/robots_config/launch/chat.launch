@@ -6,5 +6,5 @@
         <param name="sentiment" value="True" />
         <param name="botid" value="sophia" />
     </node>
-    <node name="speech2command" pkg="speech2command" type="speech2command.py" />
+    <node name="speech2command" pkg="speech2command" type="speech2command.py" respawn="true"/>
 </launch>
