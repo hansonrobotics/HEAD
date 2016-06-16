@@ -47,7 +47,7 @@ class Polarity(object):
             # check if words in sentic
             if word in self._polarity:
                 polarity_list.append(self._polarity[word])
-                logger.warn(word+' '+str(self._polarity[word]))
+                logger.info(word+' '+str(self._polarity[word]))
             else:
                 not_found += 1
 
@@ -56,7 +56,7 @@ class Polarity(object):
         for pair in pairs:
             if pair in self._polarity:
                 polarity_list.append(self._polarity[pair])
-                logger.warn(pair+' '+str(self._polarity[pair]))
+                logger.info(pair+' '+str(self._polarity[pair]))
             else:
                 not_found += 1
 
