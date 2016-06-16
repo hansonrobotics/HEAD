@@ -4,7 +4,8 @@ function TestClient(){
     let has_exited = false;
 
     let mock_write = function(msg){
-        last_write.push(msg);
+        if(msg !== '\n')
+            last_write.push(msg);
     }
     let mock_error = function(msg){
         last_error.push(msg);
@@ -42,7 +43,7 @@ function TestClient(){
 
     let make_client = function(){
         let client = new Client();
-        client.write = mock_write;
+        client.print = mock_write;
         client.error = mock_error;
         client.exit = mock_exit;
         return client;
@@ -478,7 +479,7 @@ function TestClient(){
         get = function(a,b){
             url = a;
             params = b;
-            return {responseText:'{"ret":"foo","response":"bar"}'};
+            return {responseText:'{"ret":"foo","response":"bar"}', status:200};
         };
         
         last_write = [];
@@ -504,7 +505,7 @@ function TestClient(){
         get = function(a,b){
             url = a;
             params = b;
-            return {responseText:'{"ret":"foo","response":"bar"}'};
+            return {responseText:'{"ret":"foo","response":"bar"}', status:200};
         };
         
         last_write = [];

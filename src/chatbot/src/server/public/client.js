@@ -80,15 +80,19 @@ function Client(auto_connect){
     let user = 'client';
     const self = this;
 
-    this.write = function(msg){
+    this.print = function(msg){
         console.log(msg);
     };
+    this.println = function(msg){
+        self.print(msg);
+        self.print('\n');
+    }
     this.error = function(msg){
         console.error(msg);
     };//If we want to change the write function
 
     this.exit = function(){
-        this.write("Bye");
+        self.println("Bye");
     };
     //Callback to be set outside of the function.
 
@@ -114,15 +118,13 @@ function Client(auto_connect){
         if(COMMANDS.indexOf(cmd) !== -1){
             exec(cmd, param);
         }else{
-            this.default(message);
+            self.default(message + '\n');
         }
     }
 
     let finish_set_sid = function(response, callback, error_callback){
         const text = response.responseText;
         const status_code = response.status;
-        const json = JSON.parse(text);
-        const ret = json['ret'];
 
         if(status_code != 200){
             self.error("Request error: " + status_code);
@@ -136,9 +138,13 @@ function Client(auto_connect){
             return;
         }
         
+        const json = JSON.parse(text);
+        const ret = json['ret'];
+
         session = json['sid'];
 
-        self.write("New session " + session);
+        self.println("New session " + session);
+
         if(callback)
             callback(session);
     }
@@ -152,7 +158,7 @@ function Client(auto_connect){
 
         const url = chatbot_url + '/start_session';
 
-        self.write("Attempting to start new session.");
+        self.println("Attempting to start new session.");
         
         let tries = 3;
         let loop = setInterval(function(){
@@ -196,13 +202,15 @@ function Client(auto_connect){
         const response = get(url,params);
         const text = response.responseText;
         const status_code = response.status;
-        const json = JSON.parse(text);
-        const ret = json['ret'];
 
         if(status_code != 200){
             const err = "Request error: " + status_code + "\n";
             self.error(err);
+            return;
         }
+
+        const json = JSON.parse(text);
+        const ret = json['ret'];
 
         if(ret != 0){
             const err = "QA error: error code " + ret + ", botname " + bot_name +
@@ -263,12 +271,12 @@ function Client(auto_connect){
                     ret = ask[0];
                     response = ask[1];
                     const message = bot_name + '[by ' + response['botname'] + ']: ' + response['text'];
-                    self.write(message);
+                    self.println(message);
                 });
                 return;
             }
             const message = bot_name + '[by ' + response['botname'] + ']: ' + response['text'];
-            self.write(message);
+            self.println(message);
         }catch(e){
             self.error(e);
         }
@@ -294,14 +302,14 @@ function Client(auto_connect){
                 chatbots_str += '\n';
             }
 
-            self.write(chatbots_str);
+            self.println(chatbots_str);
         }catch(e){
             self.error(e);
         }
     }
 
     this.help_list = function(){
-        self.write("List chatbot names");
+        self.println("List chatbot names");
     }
 
     this.do_l = this.do_list;
@@ -316,7 +324,7 @@ function Client(auto_connect){
                 if(line === name){
                     bot_name = line;
                     self.set_sid(function(){
-                        self.write("Select chatbot " + bot_name);
+                        self.println("Select chatbot " + bot_name);
 
                         if(callback){
                             callback();
@@ -326,7 +334,7 @@ function Client(auto_connect){
                 }
             }
 
-            self.write("No such chatbot " + line);
+            self.println("No such chatbot " + line);
             if(callback){
                 callback();
             }
@@ -337,7 +345,7 @@ function Client(auto_connect){
     }
 
     this.help_select = function(){
-        self.write("Select chatbot");
+        self.println("Select chatbot");
     }
 
     this.do_conn = function(line, callback, error_callback){
@@ -356,7 +364,7 @@ function Client(auto_connect){
                 return;
             }
         }
-        self.write('Connecting.');
+        self.println('Connecting.');
         self.set_sid(callback, error_callback);
     }
 
@@ -365,19 +373,19 @@ function Client(auto_connect){
             "Connect to chatbot server\n"+
             "Syntax: conn [url:port]\n"+
             "For example, conn 127.0.0.1:8001\n";
-        self.write(s);
+        self.println(s);
     }
 
     this.do_ip = function(line){
         if(!line){
-            self.write("ip is currently " + chatbot_ip);
+            self.println("ip is currently " + chatbot_ip);
             return;
         }
 
         chatbot_ip = line;
         chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + VERSION;
-        self.write("ip is now " + chatbot_ip);
-        self.write("url is now " + chatbot_url);
+        self.println("ip is now " + chatbot_ip);
+        self.println("url is now " + chatbot_url);
     }
 
     this.help_ip = function(){
@@ -385,19 +393,19 @@ function Client(auto_connect){
             "Set the IP address of chatbot server\n"+
             "Syntax: ip xxx.xxx.xxx.xxx\n"+
             "For example, ip 127.0.0.1\n";
-        self.write(s);
+        self.println(s);
     }
 
     this.do_port = function(line){
         if(!line){
-            self.write("port is currently " + chatbot_port);
+            self.println("port is currently " + chatbot_port);
             return;
         }
 
         chatbot_port = line;
         chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + VERSION;
-        self.write("port is now " + chatbot_port);
-        self.write("url is now " + chatbot_url);
+        self.println("port is now " + chatbot_port);
+        self.println("url is now " + chatbot_url);
     }
 
     this.help_port = function(){
@@ -405,7 +413,7 @@ function Client(auto_connect){
             "Set the port of chatbot server\n"+
             "Syntax: port xxx\n"+
             "For example, port 8001\n";
-        self.write(s);
+        self.println(s);
     }
 
     this.do_q = function(){
@@ -413,7 +421,7 @@ function Client(auto_connect){
     }
 
     this.help_q = function(){
-        self.write("Quits the chat\n");
+        self.println("Quits the chat\n");
     }
 
     let help = function(cmd){
@@ -442,7 +450,7 @@ function Client(auto_connect){
             line += " ";
         });
         buffer += line;
-        self.write(buffer);
+        self.println(buffer);
     }
 
     this.do_help = function(line){
@@ -457,14 +465,14 @@ function Client(auto_connect){
         const new_lang = line.trim();
         if(new_lang === 'en' || new_lang === 'zh'){
             lang = new_lang;
-            self.write("Set lang to " + lang);
+            self.println("Set lang to " + lang);
         }else{
-            self.write("Current lang " + lang + ". Set lang by \'lang [en|zh]\'");
+            self.println("Current lang " + lang + ". Set lang by \'lang [en|zh]\'");
         }
     }
 
     this.help_lang = function(){
-        self.write("Set language. [en|zh]");
+        self.println("Set language. [en|zh]");
     }
 
     this.do_c = function(line){
@@ -474,19 +482,28 @@ function Client(auto_connect){
                 'Auth':KEY
             };
             const url = chatbot_url + '/reset_session';
-            const response = get(url,params).responseText;
-            const json = JSON.parse(response);
+            const response = get(url,params);
+            const text = response.responseText;
+            const status_code = response.status;
+
+            if(status_code != 200){
+                const err = "Request error: " + status_code + "\n";
+                self.error(err);
+                return;
+            }
+
+            const json = JSON.parse(text);
             const ret = json['ret'];
             const res = json['response'];
 
-            self.write(res);
+            self.println(res);
         }catch(e){
             self.error(e);
         }
     }
 
     this.help_c = function(){
-        self.write("Clean the memory of the dialog");
+        self.println("Clean the memory of the dialog");
     }
 
     this.do_rw = function(line){
@@ -498,12 +515,21 @@ function Client(auto_connect){
                 'session':session
             };
             const url = chatbot_url + '/set_weights';
-            const response = get(url,params).responseText;
-            const json = JSON.parse(response);
+            const response = get(url,params);
+            const text = response.responseText;
+            const status_code = response.status;
+
+            if(status_code != 200){
+                const err = "Request error: " + status_code + "\n";
+                self.error(err);
+                return;
+            }
+
+            const json = JSON.parse(text);
             const ret = json['ret'];
             const res = json['response'];
             
-            self.write(res);
+            self.println(res);
         }catch(e){
             self.error(e);
         }
@@ -514,7 +540,7 @@ function Client(auto_connect){
             "Update the weights of the current chain.\n"+
             "Syntax: rw w1,w2,w3,...\n"+
             "For example, rw .2, .4, .5\n";
-        self.write(s);
+        self.println(s);
     }
 
     if(typeof document !== 'undefined'){
@@ -538,11 +564,19 @@ function Client(auto_connect){
                     };
 
                     const url = chatbot_url + '/upload_character';
-                    const response = post(url,params,file).responseText;
-                    const json = JSON.parse(response);
-                    const ret = json['ret']
+                    const response = post(url, params, file);
+                    const text = response.responseText;
+                    const status_code = response.status;
+
+                    if(status_code != 200){
+                        const err = "Request error: " + status_code + "\n";
+                        self.error(err);
+                        return;
+                    }
+
+                    const json = JSON.parse(text);
+                    const ret = json['ret'];
                     const res = json['response'];
-                    write(res);
                 }catch(e){
                     self.error(e);
                 }
@@ -552,15 +586,24 @@ function Client(auto_connect){
         this.help_upload = function(){
             const msg = "Upload character package.\n" +
                 "Syntax: upload package\n";
-            self.write(msg);
+            self.println(msg);
         }
     }
 
     this.ping = function(){
         try{
             const url = chatbot_url + '/ping';
-            const response = get(url).responseText;
-            const json = JSON.parse(response);
+            const response = get(url);
+            const text = response.responseText;
+            const status_code = response.status;
+
+            if(status_code != 200){
+                const err = "Request error: " + status_code + "\n";
+                self.error(err);
+                return;
+            }
+
+            const json = JSON.parse(text);
             const res = json['response'];
             if(res === 'pong'){
                 return true;
@@ -572,9 +615,9 @@ function Client(auto_connect){
 
     this.do_ping = function(line){
         if(self.ping){
-            self.write('pong');
+            self.println('pong');
         }else{
-            self.write('');
+            self.println('');
         }
     }
 

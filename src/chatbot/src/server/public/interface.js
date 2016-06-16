@@ -18,9 +18,9 @@ function write(message, tag){
         tag='\'text\'';
     message = "" + message;
     message = message.split("\n").join("<br>");
-    messageHistory.innerHTML += '<div class=' + tag + '>\n'+
+    messageHistory.innerHTML += '<span class=' + tag + '>\n'+
                                 message+'\n'+
-                                '</div>\n';
+                                '</span>'+'\n';
 }
 
 function write_error(message){
@@ -32,7 +32,7 @@ function write_user_input(message){
 }
 
 function exit(){
-    client.write("Bye");
+    client.println("Bye");
     client = null;
     write("Window is dead.", ERROR_OUTPUT_TAG);
 }
@@ -44,7 +44,7 @@ function exec(cmd, param){
 }
 
 function execute(message){
-    write_user_input(client.get_PROMPT() + message);
+    write_user_input(client.get_PROMPT() + message + '\n');
     client.execute(message);
 }
 
@@ -61,7 +61,7 @@ function keypress(e){
 }
 
 
-client.write = write;
+client.print = write;
 client.error = write_error;
 client.exit = exit;
 
