@@ -1,4 +1,10 @@
 /src/CMakeLists.txt
+/src/vision/CppMT
+/src/vision/dlib-18.18
+/src/vision/openface/
+/src/vision/emotime/
+/logs
+/scripts/env.sh
 !.gitignore
 !/src
 *.sublime-project

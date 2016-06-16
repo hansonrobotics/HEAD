@@ -117,7 +117,7 @@ install_vision_deps() {
     # Install Torch
     git clone https://github.com/torch/distro.git $HR_WORKSPACE/torch --recursive
 
-    cd torch
+    cd $HR_WORKSPACE/torch
 
     bash install-deps
     echo no | ./install.sh
