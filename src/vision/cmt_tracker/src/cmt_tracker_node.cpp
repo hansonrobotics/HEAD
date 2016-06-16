@@ -407,7 +407,7 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
 
   width = (double)camera_config.width / 2.0;
   height = (double)camera_config.height / 2.0;
-  double k_const = (double)camera_config.width / (double) (tan(camera_config.fov/2.0));
+  double k_const = (double)width / (double) (tan(camera_config.fov/2.0));
 
   msg.point.x = dp * k_const;
 
