@@ -163,8 +163,10 @@ class face_recognizer:
         print('finsihes training')
 
     def train_dataset(self):
+        print('Creating Representation')
         subprocess.call([self.batch_represent, '-outDir', self.feature_dir, '-data', self.image_dir_face_imgs])
         # here the number of images in the classifier must be greater than 1
+        print('Training on Representation')
         self.train()
 
     def results(self, cv_image, tupl, name, threshold=0.85):
