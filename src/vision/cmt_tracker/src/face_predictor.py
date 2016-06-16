@@ -69,6 +69,8 @@ class face_predictor:
         if not self.face_recognizer.get_state():
             self.overall_state ='save'
             print('overall state is save')
+        else:
+            self.overall_state = 'results'
         self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data,0) + 1
         print(self.faces_cmt_overlap[cmt.tracker_name.data])
         #State ONE-> Check for the results of a tracker.
@@ -77,15 +79,21 @@ class face_predictor:
             self.face_recognizer.results(cv_image,tupl,cmt.tracker_name.data)
         #State two Save faces
         elif self.faces_cmt_overlap[cmt.tracker_name.data] < (self.image_sample_size + self.sample_size) and not cmt.recognized.data:
+            #TODO if the name is saved in this session then whenever we reset it shouldn't be saved.
             print('saving faces')
-            self.face_recognizer.save_faces(cv_image,tupl,cmt.tracker_name.data,str(self.faces_cmt_overlap[cmt.tracker_name.data]))
+            if cmt.tracker_name.data not in self.save_tracker_images:
+                self.face_recognizer.save_faces(cv_image,tupl,cmt.tracker_name.data,str(self.faces_cmt_overlap[cmt.tracker_name.data]))
         #TODO this shouldn't exist here at all.
         #State Three Train classifers.
         elif self.faces_cmt_overlap[cmt.tracker_name.data] == self.image_sample_size + self.sample_size:
             print('training process')
-            self.face_recognizer.train_process(cmt.tracker_name.data)
+            #The following is due to not including the saved faces in the next iteration.
+            if cmt.tracker_name.data not in self.save_tracker_images:
+                self.save_tracker_images.append(cmt.tracker_name.data)
+                self.face_recognizer.train_process(cmt.tracker_name.data)
         else:
             print('reaches new heights')
+            self.faces_cmt_overlap[cmt.tracker_name.data] = 0
             #TODO one can use a reset here in the count to query results again. That depending on how to start saving
             pass
 
