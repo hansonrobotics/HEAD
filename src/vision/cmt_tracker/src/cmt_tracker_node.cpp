@@ -405,15 +405,23 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
 
   dp = 0.22 / (float)(locs.object.object.width); //This is how it's defined as above
 
-  width = camera_config.width / 2;
-  height = camera_config.height / 2;
+  width = (double)camera_config.width / 2.0;
+  height = (double)camera_config.height / 2.0;
   double k_const = (double)camera_config.width / (double) (tan(camera_config.fov/2.0));
+  std::cout<<"String Print konst : "<<k_const<<std::endl;
+
+  std::cout<<"String Print width : "<<width<<std::endl;
+
 
   msg.point.x = dp * k_const;
+  std::cout<<"String Print X : "<<msg.point.x<<std::endl;
+
   msg.point.y = dp * (width - ( (double)(locs.object.object.x_offset + locs.object.object.width) +
                 locs.object.object.x_offset) / 2.0 );
+  std::cout<<"String Print Y : "<<msg.point.y<<std::endl;
   msg.point.z = dp * (height - ((locs.object.object.y_offset + locs.object.object.height) +
                 locs.object.object.y_offset) / 2.0 );
+  std::cout<<"String Print z : "<<msg.point.z<<std::endl;
   msg.emotion_value = locs.object.obj_accuracy.data;
   msg.emotion_id = locs.object.obj_states.data;
   return msg;

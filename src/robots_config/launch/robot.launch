@@ -2,6 +2,7 @@
 <launch>
     <arg name="basedir" default="." />
     <arg name="name" default="robot"/>
+    <arg name="pi_vision" default="0"/>
     <param name="robot_name" value="$(arg name)" />
 
     <group ns="$(arg name)">
@@ -26,7 +27,9 @@
     </group>
 
     <!-- Face Tracking -->
-    <include file="$(arg basedir)/face_tracker.launch" />
+    <include file="$(arg basedir)/face_tracker.launch">
+    <arg name="pi_vision" value="$(arg pi_vision)"/>
+    </include>
 
     <!-- Perception -->
     <include file="$(arg basedir)/perception.launch" />
@@ -36,3 +39,10 @@
     <include file="$(arg basedir)/rosbridge.launch" />
 
 </launch>
+<!--
+372.297065764 K-Const
+70 Self.bounding_size
+1.1700764924 x
+0.600285714286 y
+-0.317428571429 z
+-->
