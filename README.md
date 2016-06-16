@@ -59,6 +59,10 @@ full performance pipeline and infrastructure:
 
 `./hrtool -v`
 
+* Run with cmt as default camera tracker
+
+`./dev.sh cmt`
+
 * Open web browser
 
 HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/

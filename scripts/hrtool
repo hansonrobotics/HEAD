@@ -103,7 +103,8 @@ install_other_deps() {
 install_vision_deps() {
     # For Dlib
     cd $HR_WORKSPACE/HEAD/src/vision
-
+    #Tkinter error other wise.
+    sudo pip2.7 install -I --no-cache-dir Pillow
     wget http://dlib.net/files/dlib-18.18.tar.bz2
 
     tar -xf dlib-18.18.tar.bz2
@@ -321,7 +322,9 @@ do_single_package() {
     export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/include:$include_path
 
     if [ "$1" == "cmt_tracker" ]; then
-
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
+    #Needed for compiling emotime as it's dependent upon it for it being built.
+    export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
     catkin build cmt_tracker_msgs cmt_tracker
 
     else

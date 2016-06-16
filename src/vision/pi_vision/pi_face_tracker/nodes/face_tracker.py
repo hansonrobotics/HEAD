@@ -277,21 +277,14 @@ class FaceBox():
         # Approx horizontal FOV of camera used (taken from config)
         p = Point()
         #FOV-X and FOV-Y are different, now using FOV-X
-        print('Starts Here')
-        print(self.K_const)
-        print(self.bounding_size)
-
         dp = 0.22 / float(self.bounding_size) # It should be same in both axis
         # logger.warn("bbox size=" + str(self.bounding_size))
         #w = self.camera_width/2
         #h = self.camera_height/2
         # Y is to the left in camera image, Z is to top
         p.x = dp * self.K_const
-        print(p.x)
         p.y = dp * (self.cam_w-(self.pt2[0]+self.pt1[0])/2)
-        print(p.y)
         p.z = dp * (self.cam_h-(self.pt2[1]+self.pt1[1])/2)
-        print(p.z)
         return p
 
     # Smooth out the 3D location of the face, by using an

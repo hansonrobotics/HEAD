@@ -83,6 +83,7 @@ class face_recognizer:
             os.makedirs(self.feature_dir)
         if (not os.path.exists(self.image_dir_face_temp)):
             os.makedirs(self.image_dir_face_temp)
+
         # Delete all the items in temp folder so as not to consume space. May be when it's brought down we can delete them. or in destructor without sigterm.
         for the_file in os.listdir(self.image_dir_face_temp):
             file_path = os.path.join(self.image_dir_face_temp, the_file)

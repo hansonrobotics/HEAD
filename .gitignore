@@ -5,6 +5,7 @@
 /src/vision/emotime/
 /logs
 /scripts/env.sh
+/src/vision/images/
 !.gitignore
 !/src
 *.sublime-project

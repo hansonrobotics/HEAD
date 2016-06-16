@@ -61,7 +61,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   //Now let's read the camera pictures form the system.
   camera_config.width = 640;
   camera_config.height = 480;
-  camera_config.fov = 0.625;
+  camera_config.fov = 1.42;
 }
 
 bool TrackerCMT::clear(cmt_tracker_msgs::Clear::Request &req, cmt_tracker_msgs::Clear::Response &res)
@@ -408,20 +408,13 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
   width = (double)camera_config.width / 2.0;
   height = (double)camera_config.height / 2.0;
   double k_const = (double)camera_config.width / (double) (tan(camera_config.fov/2.0));
-  std::cout<<"String Print konst : "<<k_const<<std::endl;
-
-  std::cout<<"String Print width : "<<width<<std::endl;
-
 
   msg.point.x = dp * k_const;
-  std::cout<<"String Print X : "<<msg.point.x<<std::endl;
 
   msg.point.y = dp * (width - ( (double)(locs.object.object.x_offset + locs.object.object.width) +
                 locs.object.object.x_offset) / 2.0 );
-  std::cout<<"String Print Y : "<<msg.point.y<<std::endl;
   msg.point.z = dp * (height - ((locs.object.object.y_offset + locs.object.object.height) +
                 locs.object.object.y_offset) / 2.0 );
-  std::cout<<"String Print z : "<<msg.point.z<<std::endl;
   msg.emotion_value = locs.object.obj_accuracy.data;
   msg.emotion_id = locs.object.obj_states.data;
   return msg;
