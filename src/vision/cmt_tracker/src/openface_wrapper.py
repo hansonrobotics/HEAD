@@ -149,7 +149,9 @@ class face_recognizer:
 
     def train_process(self, name):
         print('starts training')
-        subprocess.call(['mv', self.image_dir_face_temp + "/" + name,
+        file_loc = self.image_dir_face_temp + "/" + name
+        if (os.path.exists(file_loc)):
+            subprocess.call(['mv', self.image_dir_face_temp + "/" + name,
                          self.image_dir_face_imgs + "/" + name])
         # TO avoid calling training if the faces directory doesn't have faces at least two faces.
         if len(list(os.walk(self.image_dir_face_imgs).next()[1])) > 1:
@@ -157,7 +159,7 @@ class face_recognizer:
             if (os.path.exists(self.image_dir_face_imgs + "/" + 'cache.t7')):
                 subprocess.call(['rm', self.image_dir_face_imgs + "/" + 'cache.t7'])
                 # Here call the batch represent file which is a lua function in a process of it's own.
-                self.train_dataset()
+            self.train_dataset()
         print('finsihes training')
 
     def train_dataset(self):

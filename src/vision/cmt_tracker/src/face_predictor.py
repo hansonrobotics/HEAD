@@ -86,6 +86,7 @@ class face_predictor:
             self.face_recognizer.train_process(cmt.tracker_name.data)
         else:
             print('reaches new heights')
+            #TODO one can use a reset here in the count to query results again. That depending on how to start saving
             pass
 
         #TODO how can we recall this.
@@ -102,7 +103,6 @@ class face_predictor:
                     print("there was the same id in the id chamber.....")
             except rospy.ServiceException, e:
                 print("Service call failed: %s" % e)
-    print("exits this loop at least")
         #TODO occussional reinforcement by querying again and check results. That would be best if there is a feedback mechanism
 
   def sample_callback(self,config, level):

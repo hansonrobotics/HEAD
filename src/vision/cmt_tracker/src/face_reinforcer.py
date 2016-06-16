@@ -38,7 +38,7 @@ class face_reinforcer:
         self.faces_cmt_overlap = {}
         self.srvs = rospy.Service('can_add_tracker', Empty, self.can_update)
 
-        ts = message_filters.ApproximateTimeSynchronizer([self.cmt_sub,self.face_sub,self.cmt_sub_], 10,0.2)
+        ts = message_filters.ApproximateTimeSynchronizer([self.cmt_sub,self.face_sub,self.cmt_sub_], 1,0.2)
         ts.registerCallback(self.callback)
 
         self.update = True
