@@ -33,7 +33,7 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
                     drop: function (event, ui) {
                         var view = self.children.findByCid(ui.draggable.data('cid'));
                         if (view) {
-                            view.model.set('path', self.currentPath);
+                            view.model.set({'path': self.currentPath, ignore_nodes: true});
                             view.model.save();
                         }
                         self.updateVisiblePerformances(self.currentPath);
@@ -43,8 +43,7 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
                 this.updateTabs();
             },
             addNew: function () {
-                var performance = new Performance({name: 'New performance'});
-                performance.set({path: this.currentPath});
+                var performance = new Performance({name: 'New performance', path: this.currentPath});
                 this.collection.add(performance);
                 this.trigger('new', performance);
             },
@@ -59,7 +58,9 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
                 this.ui.newButton.before(childView.el);
 
                 // hiding if not from current directory
-                if (childView.model.get('path') != this.currentPath)
+                if ((childView.model.get('path') || '') == this.currentPath)
+                    childView.$el.show();
+                else
                     childView.$el.hide();
             },
             currentPath: '',
@@ -149,6 +150,7 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
             switchDir: function (dir) {
                 this.updateVisiblePerformances(dir);
                 this.currentPath = dir;
+                this.collection.currentPath = dir;
                 this.updateTabs();
             },
             updateVisiblePerformances: function (dir) {

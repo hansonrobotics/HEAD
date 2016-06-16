@@ -1,6 +1,7 @@
 define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './node',
-        '../entities/node', 'underscore', 'jquery', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
-    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $) {
+        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/extensions/animate_auto',
+        'jquery-ui', 'scrollbar'],
+    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance) {
         return Marionette.LayoutView.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
@@ -9,7 +10,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             },
             ui: {
                 timelineContainer: '.app-timelines',
-                timelines: '.app-timeline-nodes',
                 timelineNodes: '.app-timeline-nodes .app-node',
                 nodes: '.app-nodes .app-node',
                 nodesContainer: '.app-nodes',
@@ -47,6 +47,15 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             modelEvents: {
                 'change': 'modelChanged'
             },
+            initialize: function (options) {
+                this.mergeOptions(options, ['performances']);
+                if (options.sequence) {
+                    this.model = new Performance();
+                    this.model.loadSequence(options.sequence);
+                } else if (this.model && this.model.id && this.model.nodes.isEmpty()) {
+                    this.model.load();
+                }
+            },
             childViewOptions: function () {
                 return {performance: this.model, config: this.config};
             },
@@ -69,7 +78,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         this.off('add remove reset', nodeListener);
                     else if (self.model.get('nodes').isEmpty())
                         self.ui.clearButton.fadeOut();
-                    else
+                    else if (!self.options.readonly)
                         self.ui.clearButton.fadeIn();
                 };
                 this.model.get('nodes').on('add remove reset', nodeListener);
@@ -81,9 +90,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 }
 
                 this.stopIndicator();
-                this.model.get('nodes').each(function (node) {
-                    self.createNodeEl(node);
-                });
                 this.arrangeNodes();
                 this.model.get('nodes').bind('add', this.addNode, this);
                 this.model.get('nodes').bind('remove reset', this.arrangeNodes, this);
@@ -168,8 +174,10 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 });
             },
             createNodeEl: function (node) {
+                if (node.get('el')) return;
                 var self = this,
-                    el = $('.app-node[data-name="' + node.get('name') + '"]', this.ui.nodesContainer).clone().get(0);
+                    el = $('.app-node[data-name="' + node.get('name') + '"]', this.ui.nodesContainer).clone()
+                        .removeClass('hidden').get(0);
 
                 this.initDraggable(el, {
                     start: function () {
@@ -230,7 +238,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     node.get('el').childNodes[0].nodeValue = node.get('animation');
             },
             addNode: function (node) {
-                this.createNodeEl(node);
                 this.arrangeNodes();
                 this.toggleNodeSettings(node);
             },
@@ -279,6 +286,8 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     nodes = this.model.get('nodes');
 
                 nodes.each(function (node) {
+                    self.createNodeEl(node);
+
                     var begin = node.get('start_time'),
                         end = begin + node.get('duration');
 
@@ -341,8 +350,8 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 if (width < containerWidth)
                     width = '100%';
 
-                this.ui.timelines.each(function () {
-                    this.css('width', width);
+                this.ui.timelineContainer.find('.app-timeline-nodes').each(function () {
+                    $(this).css('width', width);
                 });
 
                 this.ui.scrollContainer.perfectScrollbar('update');
@@ -351,13 +360,15 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.model.set('name', this.ui.performanceName.val());
             },
             savePerformances: function () {
-                var self = this;
+                var self = this,
+                    path = '';
 
-                if (typeof this.options.performances != 'undefined' && !this.options.performances.contains(this.model))
-                    this.options.performances.add(this.model);
+                if (this.performances && this.performances.currentPath)
+                        path = this.performances.currentPath;
 
-                this.model.save({}, {
+                this.model.save({path: this.model.get('path') || path}, {
                     success: function (model) {
+                        if (self.performances) self.performances.add(model);
                         self.options.readonly = false;
                         self.ui.deleteButton.fadeIn();
                         self.ui.clearButton.fadeIn();
