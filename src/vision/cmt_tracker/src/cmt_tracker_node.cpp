@@ -418,6 +418,8 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
                 locs.object.object.y_offset) / 2.0 );
   msg.emotion_value = locs.object.obj_accuracy.data;
   msg.emotion_id = locs.object.obj_states.data;
+  msg.recognized = locs.recognized.data;
+  msg.recognized_as = locs.recognized_name.data;
   return msg;
 }
 

@@ -7,3 +7,5 @@ int32 emotion_value
 string emotion_id
 #Temporary
 bool temp_id
+bool recognized
+string recognized_as

@@ -48,7 +48,6 @@ class face_predictor:
     #And for get_tracker_results -> returns the
 
   def callback(self,data, cmt, face,temp):
-    print('Overlap on face and tracker')
     try:
       cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
     except CvBridgeError as e:
@@ -58,7 +57,6 @@ class face_predictor:
     for val in temp.tracker_results:
         ttp.tracker_results.append(val)
     not_covered_faces,covered_faces = self.returnOverlapping(face,ttp)
-    print('gets here')
     for face,cmt in covered_faces:
         tupl = []
         for pts in face.feature_point.points:
