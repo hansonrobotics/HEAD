@@ -92,7 +92,7 @@ class TTSTalker:
         else:
             # Send silence viseme: Using M instead
             msg = Viseme()
-            msg.duration.nsecs = 1000000000
+            msg.duration.nsecs = 100000000
             msg.name = 'M'
             self.vis_topic.publish(msg)
 
