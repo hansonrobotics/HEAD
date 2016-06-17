@@ -71,7 +71,7 @@ class face_reinforcer:
                         #TODO handle the error if the service is not available.
                         pass
                 except rospy.ServiceException, e:
-                    print("Service call failed: %s" % e)
+                    print("Reinforcing Service call failed: %s" % e)
 
         # TODO if the cmt name has disappeared then remove it from the self.faces_cmt_overlap.get Via Subscriber to Face_events
         self.cmt_merge = {}
@@ -102,7 +102,7 @@ class face_reinforcer:
             if not indic:
                 pass
         except rospy.ServiceException, e:
-            print("Service call failed: %s" % e)
+            print("Merging Service call failed: %s" % e)
 
         # Now pass to the merger.
 
