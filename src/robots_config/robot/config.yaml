@@ -7,3 +7,7 @@ pau2motors:
 webui: {speech_recognition: webspeech}
 
 botname: sophia
+
+tts_api_config:
+  en: festival # mary
+

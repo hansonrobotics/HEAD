@@ -11,9 +11,6 @@
         <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/safety.yaml" command="load"/>
-        <!-- Hardware specific nodes -->
-        <include file="$(arg basedir)/hardware.launch" />
-        <include file="$(arg basedir)/basic_head_api.launch" />
 
         <!-- Set default chatbot language [en|zh] -->
         <param name="lang" value="en" />
