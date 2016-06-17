@@ -11,6 +11,7 @@
         <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/safety.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/attention_regions.yaml" command="load"/>
         <!-- Hardware specific nodes -->
         <include file="$(arg basedir)/hardware.launch" />
         <include file="$(arg basedir)/basic_head_api.launch" />

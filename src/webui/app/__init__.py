@@ -179,6 +179,7 @@ def get_attention_regions(robot_name):
     path = os.path.join(config_root, robot_name, 'attention_regions.yaml')
     if os.path.exists(path):
         areas = read_yaml(path)
+        areas = areas['attention_regions']
     return json_encode(areas)
 
 
@@ -186,6 +187,7 @@ def get_attention_regions(robot_name):
 def update_attention_regions(robot_name):
     path = os.path.join(config_root, robot_name, 'attention_regions.yaml')
     regions = json.loads(request.get_data())
+    regions = {'attention_regions':regions}
     write_yaml(path, regions)
     return json_encode(regions)
 
