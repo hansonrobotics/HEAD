@@ -19,6 +19,7 @@ class BaseVisemes:
        'M':                 {'duration': 1.2, 'rampin': 0.35, 'rampout': 0.25, 'magnitude': 0.99},
        'O':                 {'duration': 2.3, 'rampin': 0.40, 'rampout': 0.25, 'magnitude': 0.99},
        'U':                 {'duration': 2.0, 'rampin': 0.35, 'rampout': 0.25, 'magnitude': 0.99},
+       'Sil':               {'duration': 2.0, 'rampin': 0.35, 'rampout': 0.25, 'magnitude': 0.99},
     }
 
     def __init__(self):
@@ -45,21 +46,6 @@ class BaseVisemes:
             visemes.append(v)
         logger.debug("Get visemes {}".format(visemes))
         return visemes
-
-
-class English_Visemes(BaseVisemes):
-    default_visemes_map = {
-        'A-I': ['aa','ae','ah','ao','ax','axr','ih','iy'],
-        'E': ['ay','eh','ey'],
-        'O': ['aw','ow','oy'],
-        'U': ['uh','uw'],
-        'C-D-G-K-N-S-TH': ['ch','dh','dx','g','h','jh','k','s','sh','th','y','z','zh','hh'],
-        'F-V': ['f','hv', 'v'],
-        'L': ['d','el','er','l','r','t'],
-        'M': ['b','em','en','m','n','nx','ng','p'],
-        'Q-W': ['w'],
-        'Sil': ['pau', 'brth']
-    }
 
 class Pinyin_Viseme(BaseVisemes):
 
