@@ -42,6 +42,12 @@ class face_reinforcer:
         ts.registerCallback(self.callback)
 
         self.update = True
+
+        #Last x amount of results of the centroid of the rect that opencv has published.
+        #If there is indeed a face then we need to create a tracker for it. It wouldn't work for face_recogniztion but
+        #Would work nonethless.
+        #So is's centroid area, decreasing conter; then remove that entity.
+        self.persistance_cv = []
     def can_update(self, req):
         self.update = True
         return []
@@ -58,6 +64,7 @@ class face_reinforcer:
             self.tracker_locations_pub.publish(self.convert(not_overlapped))
             rospy.set_param('tracker_updated', 2)
             rospy.set_param("being_initialized_stop", 1)
+            #This is the critical area.
             self.update = False
 
         for face, cmt in overlaped_faces:
@@ -125,26 +132,47 @@ class face_reinforcer:
                          * max(0, max(j.object.y_offset, i.object.object.y_offset) - min(
                     j.object.y_offset - j.object.height, i.object.object.y_offset - i.object.object.height)))
                 SU = SA + SB - SI
-                overlap_area = SI / SU
+                if SU == 0:
+                    overlap_area = SI / SU
+                else:
+                    overlap_area = 1
                 overlap = overlap_area > 0
                 if (overlap):
                     list = [j, i]
                     overlaped_faces.append(list)
                     break
             if not overlap:
-                not_covered_faces.append(j)
-        return not_covered_faces, overlaped_faces
+                if (j.tool_used_for_detection.data == "dlib"):
+                    not_covered_faces.append(j)
+                else:
+                    #Let's focus on centroids and episolon.
+                    x_off= ((j.object.x_offset + j.object.width) + j.object.x_offset )/ 2.0
+                    y_off= ((j.object.y_offset + j.object.height) + j.object.y_offset )/ 2.0
 
+                    self.overlap_cv = False
+                    self.persistance_cv[:] = [get_element for get_element in self.persistance_cv if not(self.determine(get_element,x_off,y_off))]
+
+                    if not self.overlap_cv:
+                        self.persistance_cv.append((x_off,y_off))
+                    else:
+                        not_covered_faces.append(j)
+        return not_covered_faces, overlaped_faces
+    def determine(self, get_element,x_off, y_off):
+        epsilon_x = 10
+        epsilon_y = 10
+        x_res = abs(x_off - get_element[0])
+        y_res = abs(y_off - get_element[1])
+
+        if x_res < epsilon_x and y_res < epsilon_y:
+            self.overlap_cv = True
+            return True
+        return False
     def convert(self, face_locs, opencv=False):
         message = Trackers()
-        print('gets here')
         for i in face_locs:
-            print(i.tool_used_for_detection.data)
-            if (i.tool_used_for_detection.data == "dlib"):
-                print("gets here")
-                messg = Tracker()
-                messg.object = i
-                message.tracker_results.append(messg)
+            messg = Tracker()
+            messg.object = i
+            message.tracker_results.append(messg)
         message.header.stamp = rospy.Time.now()
         return message
 
