@@ -189,6 +189,11 @@ def update_attention_regions(robot_name):
     regions = json.loads(request.get_data())
     regions = {'attention_regions':regions}
     write_yaml(path, regions)
+    # Reload regions so can be edited live.
+    try:
+        load_params(path, robot_name)
+    except:
+        pass
     return json_encode(regions)
 
 
