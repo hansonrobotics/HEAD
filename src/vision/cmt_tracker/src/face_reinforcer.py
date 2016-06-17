@@ -59,10 +59,10 @@ class face_reinforcer:
             ttp.tracker_results.append(val)
 
         not_overlapped, overlaped_faces = self.returnOverlapping(face,ttp)
-
+        print("Length: " + str(len(not_overlapped)))
         if len(not_overlapped) > 0 and self.update:
             self.tracker_locations_pub.publish(self.convert(not_overlapped))
-            rospy.set_param('tracker_updated', 2)
+            rospy.set_param('tracker_updated', 0)
             rospy.set_param("being_initialized_stop", 1)
             #This is the critical area.
             self.update = False
@@ -93,7 +93,7 @@ class face_reinforcer:
                          * max(0, max(a.object.object.y_offset, b.object.object.y_offset) - min(
                     a.object.object.y_offset - a.object.object.height, b.object.object.y_offset - b.object.object.height)))
             SU = SA + SB - SI
-            if (SU == 0):
+            if (SU != 0):
                 overlap_area_ = SI / SU
             else:
                 overlap_area_ = 1
@@ -132,7 +132,7 @@ class face_reinforcer:
                          * max(0, max(j.object.y_offset, i.object.object.y_offset) - min(
                     j.object.y_offset - j.object.height, i.object.object.y_offset - i.object.object.height)))
                 SU = SA + SB - SI
-                if SU == 0:
+                if SU != 0:
                     overlap_area = SI / SU
                 else:
                     overlap_area = 1
@@ -156,6 +156,7 @@ class face_reinforcer:
                         self.persistance_cv.append((x_off,y_off))
                     else:
                         not_covered_faces.append(j)
+                        #To make it simple; let's reset the tracker.
         return not_covered_faces, overlaped_faces
     def determine(self, get_element,x_off, y_off):
         epsilon_x = 10

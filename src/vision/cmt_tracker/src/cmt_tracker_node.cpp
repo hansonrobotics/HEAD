@@ -357,7 +357,7 @@ void TrackerCMT::set_trackers(const cmt_tracker_msgs::Trackers& tracker_location
     set_tracker(tracker_location.tracker_results[i]);
   }
 
-  nh_.setParam("tracker_updated", 2);
+  nh_.setParam("tracker_updated", 1);
 
   ros::service::call("can_add_tracker",empty_info);
 

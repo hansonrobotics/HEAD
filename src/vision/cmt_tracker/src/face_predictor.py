@@ -132,7 +132,7 @@ class face_predictor:
                      * max(0,max(j.object.y_offset,i.object.object.y_offset) - min(j.object.y_offset - j.object.height,i.object.object.y_offset - i.object.object.height)))
 
             SU = SA + SB - SI
-            if SU == 0:
+            if SU != 0:
                 overlap_area = SI / SU
             else:
                 overlap_area = 1
