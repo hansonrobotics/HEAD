@@ -124,6 +124,7 @@ protected:
     std::vector<QImage> tracked_image_results;
     std::vector<QImage> temp_tracked_image_results;
 
+    std::vector<std::string> faces_image_information;
     std::vector<std::string> tracked_image_information;
     std::vector<std::string> temp_tracked_image_information;
 

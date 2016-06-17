@@ -123,12 +123,20 @@ class face_predictor:
     for j in face.objects:
         overlap = False
         SA = j.object.height * j.object.width
+        if (j.tool_used_for_detection.data != "dlib"):
+            #Skip faces which don't have dlib configuraiton. Need to integrate ci2cv and compare results
+            continue
         for i in cmt.tracker_results:
             SB = i.object.object.height * i.object.object.width
             SI = max(0, ( max(j.object.x_offset + j.object.width,i.object.object.x_offset + i.object.object.width)- min(j.object.x_offset,i.object.object.x_offset) )
                      * max(0,max(j.object.y_offset,i.object.object.y_offset) - min(j.object.y_offset - j.object.height,i.object.object.y_offset - i.object.object.height)))
+
             SU = SA + SB - SI
-            overlap_area = SI / SU
+            if SU == 0:
+                overlap_area = SI / SU
+            else:
+                overlap_area = 1
+
             overlap = overlap_area > 0
             if (overlap):
                 list = [j,i]

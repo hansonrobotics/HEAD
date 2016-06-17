@@ -5,3 +5,4 @@ std_msgs/String obj_states
 std_msgs/Float64 obj_accuracy
 opencv_apps/Point2DArray feature_point
 geometry_msgs/Pose pose
+std_msgs/String tool_used_for_detection

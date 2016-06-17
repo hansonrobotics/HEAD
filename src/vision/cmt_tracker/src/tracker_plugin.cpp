@@ -114,6 +114,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
   mat_images.clear();
   face_images.clear();
   cv::Mat image= conversion_mat_.clone();
+  faces_image_information.clear();
   for (std::vector<cmt_tracker_msgs::Object>::iterator v = face_locs.objects.begin(); v != face_locs.objects.end() ; ++v)
   {
    int pose;
@@ -259,6 +260,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     cv::Mat mat = image(cv::Rect((*v).object.x_offset, (*v).object.y_offset,
        (*v).object.width, (*v).object.height));
     mat_images.push_back(mat);
+    faces_image_information.push_back((*v).tool_used_for_detection.data);
     face_images.push_back(QImage((uchar*) mat_images.back().data, mat_images.back().cols, mat_images.back().rows,
                                  mat_images.back().step[0], QImage::Format_RGB888));
     //emotion.push_back((*v).emotion_states.data);
@@ -310,7 +312,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       previously_known = "as: " + (*v).recognized_name.data;
     }
     else {
-      previously_known = "";
+      previously_known = "not recognzied";
     }
 
     double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
@@ -379,7 +381,7 @@ void tracker_plugin::updateVisibleFaces()
   int count_info = 0 ;//Zip Iterator Maybe
   for (std::vector<QImage>::iterator v = face_images.begin(); v != face_images.end(); ++v)
   {
-    ui.face_output_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), "faces"));
+    ui.face_output_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(faces_image_information[count_info])));
     count_info++;
   }
 

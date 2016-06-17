@@ -34,7 +34,7 @@
 #include <dlib/gui_widgets.h>
 #include <dlib/image_io.h>
 #include <dlib/opencv.h>
-
+#include <boost/thread.hpp>
 #include <iostream>
 #include <sstream>
 #define SSTR( x ) dynamic_cast< std::ostringstream & >(( std::ostringstream() << std::dec << x ) ).str()
@@ -82,11 +82,16 @@ public:
 
   void imageCb(const sensor_msgs::ImageConstPtr& msg, const sensor_msgs::CameraInfoConstPtr& camerainfo);
   void callback(cmt_tracker_msgs::FaceConfig &config, uint32_t level);
+  //The dlib is the one that has the authority to create a face while for the reinforcement process one can use both the elements to create the better rules.
+  void dlib_detector(cv::Mat dlib_image);
+  void opencv_detector(cv::Mat ocv_image);
 private:
 
   dynamic_reconfigure::Server<cmt_tracker_msgs::FaceConfig> server;
   dynamic_reconfigure::Server<cmt_tracker_msgs::FaceConfig>::CallbackType f;
 
+  std::vector<cv::Rect> dlib_faces;
+  std::vector<cv::Rect> opencv_faces;
 
   image_geometry::PinholeCameraModel cameramodel;
   cv::Mat cameraMatrix, distCoeffs;
@@ -119,6 +124,7 @@ private:
   std::vector<cv::Rect> faces;
   std::vector<cv::Rect> eyes;
   cmt_tracker_msgs::Objects cmt_face_locations;
+  cmt_tracker_msgs::Objects cv_face_locations;
   std::string subscribe_topic;
   std::string publish_topic;
   int time_sec;
@@ -138,8 +144,8 @@ private:
 //static class that may be called by implementing class. 
 namespace {
   std::vector<cv::Rect> facedetect(cv::Mat frame_gray);
-  cmt_tracker_msgs::Trackers convert(std::vector<cv::Rect> faces); 
-  cmt_tracker_msgs::Trackers returnOverlapping(std::vector<cv::Rect> cmt_locations, cmt_tracker_msgs::Objects facelocs); 
+  cmt_tracker_msgs::Objects convert(std::vector<cv::Rect> faces);
+  cmt_tracker_msgs::Objects returnOverlapping(std::vector<cv::Rect> dlib_locations, std::vector<cv::Rect> opencv_locs);
 }
 }
 #endif // FACE_LOCATOR_H

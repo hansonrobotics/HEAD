@@ -86,7 +86,10 @@ class face_reinforcer:
                          * max(0, max(a.object.object.y_offset, b.object.object.y_offset) - min(
                     a.object.object.y_offset - a.object.object.height, b.object.object.y_offset - b.object.object.height)))
             SU = SA + SB - SI
-            overlap_area_ = SI / SU
+            if (SU == 0):
+                overlap_area_ = SI / SU
+            else:
+                overlap_area_ = 1
 
             overlap_ = overlap_area_ > 0
             if (overlap_):
@@ -132,12 +135,16 @@ class face_reinforcer:
                 not_covered_faces.append(j)
         return not_covered_faces, overlaped_faces
 
-    def convert(self, face_locs):
+    def convert(self, face_locs, opencv=False):
         message = Trackers()
+        print('gets here')
         for i in face_locs:
-            messg = Tracker()
-            messg.object = i
-            message.tracker_results.append(messg)
+            print(i.tool_used_for_detection.data)
+            if (i.tool_used_for_detection.data == "dlib"):
+                print("gets here")
+                messg = Tracker()
+                messg.object = i
+                message.tracker_results.append(messg)
         message.header.stamp = rospy.Time.now()
         return message
 

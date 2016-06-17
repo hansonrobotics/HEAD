@@ -89,17 +89,39 @@ cameramodel.fromCameraInfo(camerainfo);
     }
     std::string vale;
     nh_.getParam("face_detection_method",vale);
-    if(vale.compare("dlib") == 0)
+
+    cv::Mat dlib_image;
+    cv::Mat ocv_image;
+
+    conversion_mat_.copyTo(dlib_image);
+    conversion_mat_.copyTo(ocv_image);
+
+    boost::thread thread_1 = boost::thread(&Face_Detection::dlib_detector, this, dlib_image);
+    boost::thread thread_2 = boost::thread(&Face_Detection::opencv_detector, this, ocv_image);
+
+    thread_2.join();
+    thread_1.join();
+
+    //Now let's filter
+    cmt_tracker_msgs::Objects cv_message = returnOverlapping(dlib_faces,opencv_faces);
+    for(int i= 0; i < cv_message.objects.size(); i++)
     {
-     dlib::cv_image<dlib::rgb_pixel> cimg(conversion_mat_);
+        cmt_face_locations.objects.push_back(cv_message.objects[i]);
+    }
+    cmt_face_locations.header.stamp = ros::Time::now();
+    faces_locations.publish(cmt_face_locations);
+    cmt_face_locations.objects.clear();
+    dlib_faces.clear();
+    opencv_faces.clear();
+
+
+  }
+  void Face_Detection::dlib_detector(cv::Mat dlib_image)
+  {
+     dlib::cv_image<dlib::rgb_pixel> cimg(dlib_image);
      dlib::array2d<dlib::rgb_pixel> img;
      dlib::assign_image(img, cimg);
-     //Now this is the way to detect small images as 40  x 40 goes by;
-
-
      dlib::pyramid_up(img);
-
-
      std::vector<dlib::rectangle> facesd = detector(img);
      std::vector<dlib::full_object_detection> pose_shapes;
 //     win.clear_overlay();
@@ -144,6 +166,7 @@ cameramodel.fromCameraInfo(camerainfo);
         face_description.pose.position.x = pose(0,3);
         face_description.pose.position.y = pose(1,3);
         face_description.pose.position.z = z;
+        face_description.tool_used_for_detection.data = "dlib";
         tf::Quaternion qrot;
 
         tf::Matrix3x3 mrot(
@@ -165,39 +188,32 @@ cameramodel.fromCameraInfo(camerainfo);
 
         dlib::rectangle face_loc_;
 
-          face_loc_ = pyd.rect_down(facesd[i]);
+        face_loc_ = pyd.rect_down(facesd[i]);
 
 
         //To Assert only area in face is included to be tracked.
         cv::Rect rect = cv::Rect(face_loc_.left(), face_loc_.top(),face_loc_.width(), face_loc_.height());
 
         //now let's resize the element.
-        rect = rect & cv::Rect(0, 0, conversion_mat_.size().width, conversion_mat_.size().height);
-
+        rect = rect & cv::Rect(0, 0, dlib_image.size().width, dlib_image.size().height);
+        dlib_faces.push_back(rect);
         face_description.object.x_offset = rect.x;
         face_description.object.y_offset = rect.y;
 
         face_description.object.height = rect.height;
         face_description.object.width = rect.width;
 
-
-//        face_description.object.id.data = counter;
         counter++;
 
         face_description.obj_states.data = "Neutral";
 
         cmt_face_locations.objects.push_back(face_description);
      }
-        cmt_face_locations.header.stamp = ros::Time::now();
-        faces_locations.publish(cmt_face_locations);
-        cmt_face_locations.objects.clear();
-
-    }
-    else
-    {
-
+  }
+  void Face_Detection::opencv_detector(cv::Mat opencv_img)
+  {
     cv::Mat frame_gray;
-    cv::cvtColor(conversion_mat_, frame_gray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(opencv_img, frame_gray, cv::COLOR_BGR2GRAY);
     cv::equalizeHist( frame_gray, frame_gray );
 
     face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0 | cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30) );
@@ -205,23 +221,19 @@ cameramodel.fromCameraInfo(camerainfo);
 
     for (size_t i = 0; i < faces.size(); i++)
     {
-        cmt_tracker_msgs::Object face_description;
-        face_description.object.x_offset = faces[i].x;
-        face_description.object.y_offset = faces[i].y;
-
-        face_description.object.height = faces[i].height;
-        face_description.object.width = faces[i].width;
+//        cmt_tracker_msgs::Object face_description;
+//        face_description.object.x_offset = faces[i].x;
+//        face_description.object.y_offset = faces[i].y;
+//
+//        face_description.object.height = faces[i].height;
+//        face_description.object.width = faces[i].width;
+        opencv_faces.push_back(cv::Rect(faces[i].x,faces[i].y,faces[i].width,faces[i].height));
 //        face_description.object.id.data = counter;
-        counter++;
+//        counter++;
 
-        face_description.obj_states.data = "Neutral";
+//        face_description.obj_states.data = "Neutral";
 
-        cmt_face_locations.objects.push_back(face_description);
-    }
-      cmt_face_locations.header.stamp = ros::Time::now();
-      faces_locations.publish(cmt_face_locations);
-      cmt_face_locations.objects.clear();
-
+        //cv_face_locations.objects.push_back(face_description);
     }
   }
 
@@ -315,6 +327,47 @@ head_pose Face_Detection::facepose(cmt_tracker_msgs::Object face_description)
 //#endif
 
     return pose;
+}
+namespace {
+cmt_tracker_msgs::Objects convert(std::vector<cv::Rect> faces)
+{
+  cmt_tracker_msgs::Objects tracker_description;
+  for (size_t i = 0; i < faces.size(); i++)
+  {
+
+    cmt_tracker_msgs::Object face_description;
+    face_description.object.x_offset = faces[i].x;
+    face_description.object.y_offset = faces[i].y;
+    face_description.object.height = faces[i].height;
+    face_description.object.width = faces[i].width;
+    face_description.tool_used_for_detection.data = "opencv";
+
+    tracker_description.objects.push_back(face_description);
+  }
+
+  return tracker_description;
+}
+
+cmt_tracker_msgs::Objects returnOverlapping(std::vector<cv::Rect> dlib_locations, std::vector<cv::Rect> opencv_locs)
+{
+//This function returns non overlapped Rects for the opencv to be published
+std::vector<cv::Rect> non_overlaped_rects;
+  for (int i = 0; i < opencv_locs.size(); i++)
+    {
+    bool overlap = false;
+    for (int j = 0; j < dlib_locations.size(); j++)
+    {
+        overlap = (opencv_locs[i] & dlib_locations[j]).area() > 0;
+    }
+    if(!overlap)
+    {
+        non_overlaped_rects.push_back(opencv_locs[i]);
+    }
+    }
+
+    return convert(non_overlaped_rects);
+}
+
 }
 
 
