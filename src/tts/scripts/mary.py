@@ -4,7 +4,7 @@ import requests
 import logging
 
 from common.ttsbase import TTSBase, TTSData
-from visemes import BaseVisemes
+from common.visemes import BaseVisemes
 
 logger = logging.getLogger('hr.tts.marytts')
 
@@ -24,7 +24,7 @@ class MaryTTSVisemes(BaseVisemes):
 
 class MaryTTSClient(TTSBase):
     def __init__(self, output_dir):
-        super(MaryttsClient, self).__init__(output_dir)
+        super(MaryTTSClient, self).__init__(output_dir)
         self.host = "http://127.0.0.1"
         self.port = 59125
         self.params = {

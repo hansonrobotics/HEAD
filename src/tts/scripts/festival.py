@@ -4,7 +4,7 @@ import logging
 import subprocess
 
 from common.ttsbase import TTSBase, TTSData
-from visemes import BaseVisemes
+from common.visemes import BaseVisemes
 
 logger = logging.getLogger('hr.tts.festival')
 
