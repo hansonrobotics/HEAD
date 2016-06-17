@@ -32,7 +32,7 @@ class MaryTTSClient(TTSBase):
             "OUTPUT_TYPE": "AUDIO",
             "LOCALE": "en_GB",
             "AUDIO": "WAVE_FILE",
-            "VOICE": "dfki-prudence-hsmm",
+            "VOICE": "cmu-slt-hsmm",
         }
         self.url = '{}:{}'.format(self.host, self.port)
         self.visemes_config = MaryTTSVisemes()
