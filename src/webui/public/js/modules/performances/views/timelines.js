@@ -48,12 +48,31 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 'change': 'modelChanged'
             },
             initialize: function (options) {
+                var self = this,
+                    addReloadHandler = {success: function () {
+                        var handler = function () {
+                            if (self.isDestroyed)
+                                self.model.nodes.off('change add remove', handler);
+                            else
+                                self.model.loadNodes();
+                        };
+
+                        self.model.nodes.on('change add remove', handler);
+                    }};
+
                 this.mergeOptions(options, ['performances']);
+
                 if (options.sequence) {
                     this.model = new Performance();
-                    this.model.loadSequence(options.sequence);
-                } else if (this.model && this.model.id && this.model.nodes.isEmpty()) {
-                    this.model.load();
+                    this.model.loadSequence(options.sequence, addReloadHandler);
+                } else if (this.model) {
+                    if (this.model.id && this.model.nodes.isEmpty()) {
+                        this.model.load(addReloadHandler);
+                    } else
+                        this.model.loadNodes(addReloadHandler);
+                } else {
+                    this.model = new Performance();
+                    this.model.loadNodes(addReloadHandler);
                 }
             },
             childViewOptions: function () {
@@ -90,6 +109,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 }
 
                 this.stopIndicator();
+                this.removeNodeElements();
                 this.arrangeNodes();
                 this.model.get('nodes').bind('add', this.addNode, this);
                 this.model.get('nodes').bind('remove reset', this.arrangeNodes, this);
@@ -136,6 +156,11 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 if (typeof this.options.performances != 'undefined') {
                     this.options.performances.eventHandler = false;
                 }
+            },
+            removeNodeElements: function () {
+                this.model.nodes.each(function (node) {
+                    node.unset('el');
+                });
             },
             nodeClicked: function (e) {
                 var node = new Node({
@@ -201,14 +226,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 node.set('el', el);
                 node.on('change', this.updateNode, this);
 
-                // Listen for Pause nodes
-                this.listenTo(node, 'pause', function () {
-                    this.pause();
-                });
-
-                this.listenTo(node, 'resume', function () {
-                    this.run();
-                });
                 this.updateNode(node);
             },
             /**
@@ -217,7 +234,13 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
              * @param node Node
              */
             updateNode: function (node) {
+                if (this.isDestroyed || ! node.get('el')) {
+                    node.off('change', this.updateNode, this);
+                    return;
+                }
+
                 var width = node.get('duration') * this.config.pxPerSec;
+
                 $(node.get('el')).stop().css({
                     left: node.get('start_time') * this.config.pxPerSec,
                     width: width
@@ -243,7 +266,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             },
             toggleNodeSettings: function (node) {
                 if (this.options.readonly) {
-                    return
+                    return;
                 }
                 var self = this,
                     showSettings = !this.nodeView || this.nodeView.model != node;
@@ -364,7 +387,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     path = '';
 
                 if (this.performances && this.performances.currentPath)
-                        path = this.performances.currentPath;
+                    path = this.performances.currentPath;
 
                 this.model.save({path: this.model.get('path') || path}, {
                     success: function (model) {
