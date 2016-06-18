@@ -104,7 +104,7 @@ install_vision_deps() {
     # For Dlib
     cd $HR_WORKSPACE/HEAD/src/vision
     #Tkinter error other wise.
-    sudo pip2 install -I --no-cache-dir Pillow
+    sudo pip install -I --no-cache-dir Pillow
     wget http://dlib.net/files/dlib-18.18.tar.bz2
 
     tar -xf dlib-18.18.tar.bz2
