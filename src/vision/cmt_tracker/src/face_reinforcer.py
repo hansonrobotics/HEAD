@@ -13,6 +13,7 @@ from std_srvs.srv import Empty
 from cmt_tracker_msgs.msg import Trackers,Tracker, Objects
 from cmt_tracker_msgs.srv import TrackerNames,MergeNames
 import itertools
+import logging
 '''
 Description: This is checks for the if cmt_tracker is overlapping with cmt instances and focuses the libraries to the locations.
 
@@ -47,6 +48,7 @@ class face_reinforcer:
         #If there is indeed a face then we need to create a tracker for it. It wouldn't work for face_recogniztion but
         #Would work nonethless.
         #So is's centroid area, decreasing conter; then remove that entity.
+        self.logger = logging.getLogger('hr.cmt_tracker.face_reinforcer')
         self.persistance_cv = []
     def can_update(self, req):
         self.update = True
@@ -59,7 +61,6 @@ class face_reinforcer:
             ttp.tracker_results.append(val)
 
         not_overlapped, overlaped_faces = self.returnOverlapping(face,ttp)
-        print("Length: " + str(len(not_overlapped)))
         if len(not_overlapped) > 0 and self.update:
             self.tracker_locations_pub.publish(self.convert(not_overlapped))
             rospy.set_param('tracker_updated', 0)
@@ -78,7 +79,7 @@ class face_reinforcer:
                         #TODO handle the error if the service is not available.
                         pass
                 except rospy.ServiceException, e:
-                    print("Reinforcing Service call failed: %s" % e)
+                    self.logger.error("Reinforcing Service call failed: %s" % e)
 
         # TODO if the cmt name has disappeared then remove it from the self.faces_cmt_overlap.get Via Subscriber to Face_events
         self.cmt_merge = {}
@@ -112,7 +113,7 @@ class face_reinforcer:
             if not indic:
                 pass
         except rospy.ServiceException, e:
-            print("Merging Service call failed: %s" % e)
+            self.logger.error("Merging Service call failed: %s" % e)
 
         # Now pass to the merger.
 

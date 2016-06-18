@@ -51,7 +51,7 @@ class face_predictor:
     try:
       cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
     except CvBridgeError as e:
-      print(e)
+      self.logger.info(e)
 
     ttp = cmt
     for val in temp.tracker_results:
@@ -66,38 +66,36 @@ class face_predictor:
         # First let's get the state of the face_recognzier.
         if not self.face_recognizer.get_state():
             self.overall_state ='save'
-            print('overall state is save')
+            self.logger.info('overall state is save')
         else:
             self.overall_state = 'results'
         self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data,0) + 1
-        print(self.faces_cmt_overlap[cmt.tracker_name.data])
+        self.logger.info(self.faces_cmt_overlap[cmt.tracker_name.data])
         #State ONE-> Check for the results of a tracker.
         if self.faces_cmt_overlap[cmt.tracker_name.data] < self.sample_size and not cmt.recognized.data and (self.overall_state is not 'save'): # The first 10 images
-            print('getting results')
+            self.logger.info('getting results')
             self.face_recognizer.results(cv_image,tupl,cmt.tracker_name.data)
         #State two Save faces
         elif self.faces_cmt_overlap[cmt.tracker_name.data] < (self.image_sample_size + self.sample_size) and not cmt.recognized.data:
             #TODO if the name is saved in this session then whenever we reset it shouldn't be saved.
-            print('saving faces')
+            self.logger.info('saving faces')
             if cmt.tracker_name.data not in self.save_tracker_images:
                 self.face_recognizer.save_faces(cv_image,tupl,cmt.tracker_name.data,str(self.faces_cmt_overlap[cmt.tracker_name.data]))
         #TODO this shouldn't exist here at all.
         #State Three Train classifers.
         elif self.faces_cmt_overlap[cmt.tracker_name.data] == self.image_sample_size + self.sample_size:
-            print('training process')
+            self.logger.info('training process')
             #The following is due to not including the saved faces in the next iteration.
             if cmt.tracker_name.data not in self.save_tracker_images:
                 self.save_tracker_images.append(cmt.tracker_name.data)
                 self.face_recognizer.train_process(cmt.tracker_name.data)
         else:
-            print('Evaluated')
+            self.logger.info('Evaluated')
+            # TODO one can use a reset here in the count to query results again. That depending on how to start saving
             self.faces_cmt_overlap[cmt.tracker_name.data] = 0
-            #TODO one can use a reset here in the count to query results again. That depending on how to start saving
-            pass
-
         #TODO how can we recall this.
         if self.faces_cmt_overlap[cmt.tracker_name.data] == self.sample_size and not cmt.recognized.data and (self.overall_state is not 'save'):
-            print(self.face_recognizer.face_results_aggregator)
+            self.logger.info(self.face_recognizer.face_results_aggregator)
             max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].iterkeys(),
                             key=(
                             lambda key: self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results']))
@@ -106,9 +104,9 @@ class face_predictor:
                 self.upt = rospy.ServiceProxy('recognition', TrackerNames)
                 indication = self.upt(names=cmt.tracker_name.data, index=int(max_index[5:]))
                 if not indication:
-                    print("there was the same id in the id chamber.....")
+                    self.logger.info("there was the same id in the id chamber.....")
             except rospy.ServiceException, e:
-                print("Service call failed: %s" % e)
+                self.logger.error("Service call failed: %s" % e)
         #TODO occussional reinforcement by querying again and check results. That would be best if there is a feedback mechanism
 
   def sample_callback(self,config, level):
