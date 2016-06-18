@@ -159,7 +159,7 @@ class face_reinforcer:
 
                         # To make it simple; let's reset the tracker.
                         self.persistance_cv= []
-                        
+
         return not_covered_faces, overlaped_faces
     def determine(self, get_element,x_off, y_off):
         epsilon_x = 10

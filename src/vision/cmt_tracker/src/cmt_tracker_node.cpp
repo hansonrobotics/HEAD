@@ -1,5 +1,6 @@
 #include "cmt_tracker_node.h"
 #include "face_locator_node.h"
+#include "ros/console.h"
 namespace cmt_wrap {
 
 TrackerCMT::TrackerCMT() : it_(nh_)
@@ -49,8 +50,8 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   tracker_results_temp = nh_.advertise<cmt_tracker_msgs::Trackers>("temporary_trackers", 10);
 
 
-  pi_vision_results = nh_.advertise<pi_face_tracker::Faces>(face_location_topics, 10);
-  pi_events = (nh_).advertise<pi_face_tracker::FaceEvent>(face_event_topics, 10);
+  pi_vision_results = nh_.advertise<pi_face_tracker::Faces>(face_location_topics, 1);
+  pi_events = (nh_).advertise<pi_face_tracker::FaceEvent>(face_event_topics, 1);
 
   //Bind to call the dynamic reconfigure values by which we delete the cmt instances.
   f = boost::bind(&cmt_wrap::TrackerCMT::callback, this, _1, _2);
@@ -260,7 +261,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
   }
     poorly_tracked = cmt_.removeLost();
 
-  pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
+    pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
 
 //  bool emo_enabled,pose_enabled;
 //  nh_.getParam("pose",pose_enabled);
@@ -294,6 +295,10 @@ void TrackerCMT::deleteOnLost()
 {
   //std::cout<<"Enters DeleteOnLost"<<std::endl;
   int size  = poorly_tracked.size();
+  for (int i = 0; i < size; i++)
+  {
+  ROS_INFO("Element %d - %s",i,poorly_tracked[i].c_str());
+  }
   if (size > 0)
   {
     for (int i = 0; i < poorly_tracked.size(); i++)

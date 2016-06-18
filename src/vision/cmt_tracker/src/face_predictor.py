@@ -90,7 +90,7 @@ class face_predictor:
                 self.save_tracker_images.append(cmt.tracker_name.data)
                 self.face_recognizer.train_process(cmt.tracker_name.data)
         else:
-            print('reaches new heights')
+            print('Evaluated')
             self.faces_cmt_overlap[cmt.tracker_name.data] = 0
             #TODO one can use a reset here in the count to query results again. That depending on how to start saving
             pass
