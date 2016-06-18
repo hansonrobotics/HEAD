@@ -102,7 +102,7 @@ class face_predictor:
             print(max_index)
             try:
                 self.upt = rospy.ServiceProxy('recognition', TrackerNames)
-                indication = self.upt(names=cmt.tracker_name.data, index=int(max_index[5:]))
+                indication = self.upt(names=cmt.tracker_name.data, index=int(max_index))
                 if not indication:
                     self.logger.info("there was the same id in the id chamber.....")
             except rospy.ServiceException, e:

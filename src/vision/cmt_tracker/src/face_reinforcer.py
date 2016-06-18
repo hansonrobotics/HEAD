@@ -48,6 +48,7 @@ class face_reinforcer:
         #If there is indeed a face then we need to create a tracker for it. It wouldn't work for face_recogniztion but
         #Would work nonethless.
         #So is's centroid area, decreasing conter; then remove that entity.
+        logging.getLogger().addHandler(logging.StreamHandler())
         self.logger = logging.getLogger('hr.cmt_tracker.face_reinforcer')
         self.persistance_cv = []
     def can_update(self, req):
