@@ -36,6 +36,21 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
             load: function (options) {
                 this.loadSequence([this.id], options);
             },
+            loadNodes: function (options) {
+                options = options || {};
+                api.services.performances.load_nodes.callService({
+                    nodes: JSON.stringify(this.nodes.toJSON())
+                }, function (response) {
+                    if (response.success) {
+                        if (typeof options.success == 'function')
+                            options.success(response);
+                    } else if (typeof options.error == 'function')
+                        options.error('Another performance is running');
+                }, function (error) {
+                    if (typeof options.error == 'function')
+                        options.error(error);
+                });
+            },
             loadSequence: function (ids, options) {
                 var self = this;
                 options = options || {};
