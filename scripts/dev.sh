@@ -35,20 +35,19 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT/:$HR
 
 export tool="$1"
 if [[ -z $tool ]]; then
-    echo "Using Pi Vision"
+    echo "Setting tool to pi_vision"
     tool=pi_vision
 fi
 case $tool in
     pi_vision)
-    echo "Setting to use Pi_VISION"
-    vision_tool=0
+    vision="true"
     ;;
     cmt)
     echo "Setting to use CMT"
-    vision_tool=1
+    vision="false"
     ;;
 esac
-
+export vision
 #End
 #Kill existing session
 if [[ $(tmux ls) == ${NAME}* ]]; then
@@ -57,7 +56,7 @@ if [[ $(tmux ls) == ${NAME}* ]]; then
 fi
 cd $BASEDIR
 
-tmux new-session -n 'roscore' -d -s $NAME 'roslaunch $LAUNCH_DIR/robot.launch basedir:=$LAUNCH_DIR name:=$NAME pi_vision:=$vision_tool;  $$SHELL'
+tmux new-session -n 'roscore' -d -s $NAME 'roslaunch $LAUNCH_DIR/robot.launch basedir:=$LAUNCH_DIR name:=$NAME pi_vision:=$vision;  $$SHELL'
 sleep 3
 tmux new-window -n 'WebServers' 'python $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/__init__.py -p 4000 -s \
     -c $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/ssl/cert.crt  \

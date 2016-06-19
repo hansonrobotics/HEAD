@@ -2,7 +2,7 @@
 <launch>
     <arg name="basedir" default="." />
     <arg name="name" default="robot"/>
-    <arg name="pi_vision" default="0"/>
+    <arg name="pi_vision" default="true"/>
     <param name="robot_name" value="$(arg name)" />
 
     <group ns="$(arg name)">
