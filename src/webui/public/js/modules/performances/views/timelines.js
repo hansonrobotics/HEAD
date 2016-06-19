@@ -62,7 +62,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
 
                 this.mergeOptions(options, ['performances']);
 
-                if (options.sequence) {
+                if (options.sequence instanceof Array && options.sequence.length > 0) {
                     this.model = new Performance();
                     this.model.loadSequence(options.sequence, addReloadHandler);
                 } else if (this.model) {
