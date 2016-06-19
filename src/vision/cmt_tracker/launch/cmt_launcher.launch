@@ -13,7 +13,7 @@
 <param name="tracking_method" value="mustbeface"/>
 <param name="tracker_updated" value="0"/>
 <param name="pose" value="0"/>
-<param name="publish_topic_event" value="face_events"/>
+<param name="publish_topic_event" value="face_event"/>
 <param name="publish_topic_location" value="face_locations"/>
 <param name="being_initialized_stop" value ="0"/>
 <param name="filtered_face_locations" value="filterd_face_locations"/>

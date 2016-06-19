@@ -203,22 +203,8 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 
   im_gray = frame_gray.clone();
   //Now let's copy an additional mat to do additional removal.
-  im_masked = frame_gray.clone();
 
   poorly_tracked.clear();
-//  if (clear_cmt)
-//  {
-//    cmt_.clear();
-//    nh_.setParam("tracker_updated", 2);
-//
-//    //TODO why does clearing breaks adding values after wards;
-//
-//    //-> because i use variable for conditions to execute.
-//
-//    clear_cmt = false;
-//
-//  }
-
 
   std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor,merge);
 
@@ -235,18 +221,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 
     tracker.object.object.width = (*v).rect.width;
     tracker.object.object.height = (*v).rect.height;
-//TODO fix this
-//        double center_x, center_y;
-//        center_x = bb_rect.x + (bb_rect.width / 2);
-//        center_y = bb_rect.y + (bb_rect.height / 2);
-//// Fix this following area.
-//        cv::Point3d position = cameramodel.projectPixelTo3dRay(cv::Point2d(center_x,center_y));
-//        float dp = 0.22 / bb_rect.height;
-//        float z = dp * (bb_rect.height-(bb_rect.height/2));
-//        tracker.object.pose.position.x = position.x * z;
-//        tracker.object.pose.position.y = position.y * z;
-//        tracker.object.pose.position.z = position.z * z;
-//
+
 
     tracker.quality_results.data = !((*v).tracker_lost);
     tracker.recognized.data = (*v).recognized;
