@@ -111,6 +111,7 @@ public:
 	//Rules
 	void deleteOnLost();
 
+    pi_face_tracker::Face filter_point(pi_face_tracker::Face f);
 
 
 private: 
@@ -168,7 +169,7 @@ private:
 
 	ros::Publisher pi_vision_results; 
 	ros::Publisher pi_events; 
-
+    std::map<std::string,pi_face_tracker::Face> face_filtered;
 	//Now this is face results; Moving to another function. 
 	ros::Subscriber face_results;
 	ros::Subscriber emo_results;

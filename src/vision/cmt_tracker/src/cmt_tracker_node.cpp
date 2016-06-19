@@ -263,6 +263,10 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 
     pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
 
+    for (int pi_res = 0; pi_res < pi_results.faces.size(); pi_res++)
+    {
+        pi_results.faces[pi_res] = filter_point(pi_results.faces[pi_res]);
+    }
 //  bool emo_enabled,pose_enabled;
 //  nh_.getParam("pose",pose_enabled);
 //  nh_.getParam("emotime",emo_enabled);
@@ -304,9 +308,11 @@ void TrackerCMT::deleteOnLost()
     for (int i = 0; i < poorly_tracked.size(); i++)
     {
       remove_tracker(poorly_tracked[i]);
+      face_filtered.erase(poorly_tracked[i]);
     }
     nh_.setParam("tracker_updated", 2);
   }
+  poorly_tracked.clear();
   //std::cout<<"Exits DeleteOnLost"<<std::endl;
 }
 
@@ -377,6 +383,28 @@ void TrackerCMT::remove_tracker(std::string name)
   //std::cout<<"Exits remove_trackers"<<std::endl;
 }
 
+pi_face_tracker::Face TrackerCMT::filter_point(pi_face_tracker::Face f)
+{
+double yz_sf = 0.64;
+double x_sf = 0.95;
+
+if(face_filtered.find(std::to_string(f.id))==face_filtered.end())
+{
+    face_filtered[std::to_string(f.id)] = f;
+}
+pi_face_tracker::Face fac= f;
+
+double pha = yz_sf;
+double bet = 1 - pha;
+
+ fac.point.y = pha * face_filtered[std::to_string(f.id)].point.y + bet * f.point.y;
+ fac.point.z = pha * face_filtered[std::to_string(f.id)].point.z + bet * f.point.z;
+ pha = x_sf;
+ bet = 1.0 - pha;
+ fac.point.x = pha * face_filtered[std::to_string(f.id)].point.x + bet * f.point.x;
+
+return fac;
+}
 
 namespace {
 cmt_tracker_msgs::Trackers convert(std::vector<cv::Rect> faces)
