@@ -93,7 +93,7 @@ class Runner:
             path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + '.yaml')
             duration = 0
 
-            if os.path.exists(path):
+            if os.path.isfile(path):
                 with open(path, 'r') as f:
                     data = yaml.load(f.read())
 
