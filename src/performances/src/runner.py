@@ -75,14 +75,14 @@ class Runner:
         rospy.spin()
 
     def load_callback(self, request):
-        return srv.LoadResponse(success = True, nodes = json.dumps(self.load_sequence([request.id])))
+        return srv.LoadResponse(success=True, nodes=json.dumps(self.load_sequence([request.id])))
 
     def load_nodes_callback(self, request):
         self.load_nodes(json.loads(request.nodes))
         return srv.LoadNodesResponse(True)
 
     def load_sequence_callback(self, request):
-        return srv.LoadSequenceResponse(success = True, nodes = json.dumps(self.load_sequence(request.ids)))
+        return srv.LoadSequenceResponse(success=True, nodes=json.dumps(self.load_sequence(request.ids)))
 
     def load_sequence(self, ids):
         nodes = []
@@ -90,7 +90,7 @@ class Runner:
         offset = 0
         for id in ids:
             robot_name = rospy.get_param('/robot_name')
-            path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances',  id + '.yaml')
+            path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + '.yaml')
             duration = 0
 
             if os.path.exists(path):
@@ -200,11 +200,10 @@ class Runner:
     # Returns current performance
     def current_callback(self, request):
         with self.lock:
-            nodes = self.running_nodes
             current_time = self.get_run_time()
-        running = self.running and not self.paused
-        nodes = json.dumps([node.data for node in nodes])
-        return srv.CurrentResponse(ids=self.ids, nodes=nodes, current_time=current_time, running=running)
+            running = self.running and not self.paused
+            return srv.CurrentResponse(ids=self.ids, nodes=json.dumps(self.running_nodes), current_time=current_time,
+                                       running=running)
 
     def worker(self):
         self.run_condition.acquire()
