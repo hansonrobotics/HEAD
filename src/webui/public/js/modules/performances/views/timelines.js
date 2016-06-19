@@ -72,7 +72,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         this.model.loadNodes(addReloadHandler);
                 } else {
                     this.model = new Performance();
-                    this.model.loadNodes(addReloadHandler);
+                    this.model.fetchCurrent(addReloadHandler);
                 }
             },
             childViewOptions: function () {

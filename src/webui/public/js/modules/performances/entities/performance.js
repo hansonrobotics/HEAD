@@ -33,6 +33,19 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 this.on('change:name change:path', this.updateId);
                 this.updateId();
             },
+            fetchCurrent: function (options) {
+                var self = this;
+                options = options || {};
+                api.services.performances.current.callService({}, function (response) {
+                    self.nodes.reset(JSON.parse(response.nodes));
+
+                    if (typeof options.success == 'function')
+                        options.success(response);
+                }, function (error) {
+                    if (typeof options.error == 'function')
+                        options.error(error);
+                });
+            },
             load: function (options) {
                 this.loadSequence([this.id], options);
             },

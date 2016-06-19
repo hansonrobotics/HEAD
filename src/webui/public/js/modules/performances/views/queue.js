@@ -13,7 +13,10 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', 'u
                 'click @ui.clearButton': 'clear'
             },
             queue: [],
-            onRender: function () {
+            initialize: function (options) {
+                this.mergeOptions(options, ['sequence', 'performances', 'layoutView']);
+            },
+            onAttach: function () {
                 var self = this;
 
                 $(this.ui.queue).sortable({
@@ -24,6 +27,13 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', 'u
                         self.updateTimeline();
                     }
                 });
+
+                if (this.sequence instanceof Array && this.performances) {
+                    _.each(this.sequence, function (id) {
+                        var model = self.performances.get(id);
+                        if (model) self.addPerformance(model);
+                    });
+                }
             },
             addPerformance: function (performance) {
                 var self = this,
