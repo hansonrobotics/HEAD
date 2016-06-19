@@ -105,17 +105,21 @@ install_vision_deps() {
     cd $HR_WORKSPACE/HEAD/src/vision
     #Tkinter error other wise.
     sudo pip2 install -I Pillow
+
+    if [[ ! -d $HR_WORKSPACE/HEAD/src/vision/dlib/dlib-18.18 ]]; then
     wget http://dlib.net/files/dlib-18.18.tar.bz2
 
     tar -xf dlib-18.18.tar.bz2
 
     rm dlib-18.18.tar.bz2
-
+    fi
     #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
     # Install dlib-models large file This is skiped as model in the openface are used to download the elements
     # git clone https://github.com/davisking/dlib-models.git
 
     # Install Torch
+    if [ ! -d $HR_WORKSPACE/torch/.git ]
+    then
     git clone https://github.com/torch/distro.git $HR_WORKSPACE/torch --recursive
 
     cd $HR_WORKSPACE/torch
@@ -136,7 +140,9 @@ install_vision_deps() {
     ./luarocks install optim
     ./luarocks install csvigo
     ./luarocks install sys
-
+    else
+    echo "Skipping Torch installation Because it's found in HEAD."
+    fi
     cd $HR_WORKSPACE/HEAD/src/vision
 
     # Install openface
@@ -147,14 +153,24 @@ install_vision_deps() {
     sudo apt-get -y install python-skimage
     for NAME in numpy pandas scipy scikit-learn; do sudo pip2 install $NAME; done
 
+    if [ ! -d $HR_WORKSPACE/HEAD/src/vision/openface/.git ];
+    then
     #TODO a checkout verison that works with the latest.
     git clone https://github.com/cmusatyalab/openface.git --recursive
-
+    else
+    echo "Skipping OpenFace Installation. Exists in vision"
+    fi
     cd openface
     cd models
 
     # 150 Megabyes of data.
+    if [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/dlib/shape_predictor_68_face_landmarks.dat ] ||
+     [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/dlib/mean.csv ] || [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/dlib/std.csv ] ||
+     [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/openface/nn4.small2.v1.t7 ]; then
     ./get-models.sh
+    else
+    echo "Models Exists. Skipped gettinf models for openface and dlib"
+    fi
 
     # CMT and Emotime Libraries.
 
@@ -163,22 +179,35 @@ install_vision_deps() {
     cd $HR_WORKSPACE/HEAD/src/vision
 
     #TODO this needs to be moved to a new HR repository.
+    if [ ! -d $HR_WORKSPACE/HEAD/src/vision/CppMT/.git ]
+    then
     git clone https://github.com/tesYolan/CppMT.git
     cd CppMT
     git checkout wrapper
     cmake .
-    make
-
+    make -j$(nproc)
+    else
+    echo "Pulling the latest form CppMT"
+    cd $HR_WORKSPACE/HEAD/src/vision/CppMT/
+    git checkout wrapper
+    git pull origin wrapper
+    cmake .
+    make -j$(nproc)
+    fi
     # Emotime Steps
     cd $HR_WORKSPACE/HEAD/src/vision
 
     #TODO this needs to be moved to a new HR repository
+    if [ ! -d $HR_WORKSPACE/HEAD/src/vision/emotime/.git ]
+    then
     git clone https://github.com/tesYolan/emotime.git
     cd emotime
     cd build
     cmake ..
-    make
-
+    make -j$(nproc)
+    else
+    echo "Skipped Emotime Installation"
+    fi
     cd $HR_WORKSPACE
 
 

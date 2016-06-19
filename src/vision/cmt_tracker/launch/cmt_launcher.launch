@@ -25,7 +25,7 @@
 <param name="camera_topic" value="image_rect"/>
 
 <group if="$(arg testing)">
-    <node pkg="rosbag" name="player" type="play" output="screen" args="/media/hub/9AFE7873FE784991/BagFiles/out.bag --clock">
+    <node pkg="rosbag" name="player" type="play" output="screen" args="/home/icog-labs/Videos/out.bag --clock">
     <remap from="/camera/clock" to="/clock"/>
     </node>
     <node pkg="image_transport" type="republish" name="republish" args="compressed in:=/camera/image_raw raw out:=/camera/image"/>

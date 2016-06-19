@@ -192,7 +192,8 @@ cameramodel.fromCameraInfo(camerainfo);
 
 
         //To Assert only area in face is included to be tracked.
-        cv::Rect rect = cv::Rect(face_loc_.left(), face_loc_.top(),face_loc_.width(), face_loc_.height());
+
+        cv::Rect rect = cv::Rect(cv::Point(face_loc_.left(), face_loc_.top()),cv::Size(face_loc_.width(), face_loc_.height()));
 
         //now let's resize the element.
         rect = rect & cv::Rect(0, 0, dlib_image.size().width, dlib_image.size().height);

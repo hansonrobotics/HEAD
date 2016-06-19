@@ -50,7 +50,12 @@ class face_reinforcer:
         #So is's centroid area, decreasing conter; then remove that entity.
         logging.getLogger().addHandler(logging.StreamHandler())
         self.logger = logging.getLogger('hr.cmt_tracker.face_reinforcer')
-        self.persistance_cv = []
+
+
+        self.persistance_face = []
+        self.face = False
+        self.persistance_cv = False
+        self.persistance_dlib = False
     def can_update(self, req):
         self.update = True
         return []
@@ -108,13 +113,16 @@ class face_reinforcer:
                 merge_from.append(b.tracker_name.data)
 
         #TODO for now just delete the elements then latter put a mark on the merged elements and update if there is overlappings with the track.
-        try:
-            self.mrg = rospy.ServiceProxy('merge',MergeNames)
-            indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
-            if not indic:
-                pass
-        except rospy.ServiceException, e:
-            self.logger.error("Merging Service call failed: %s" % e)
+        if merge_to and merge_from:
+            try:
+                print("Merged Element: %s and \n Merged ELement %s", merge_from, merge_to)
+                self.mrg = rospy.ServiceProxy('merge',MergeNames)
+                indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
+
+                if not indic:
+                    pass
+            except rospy.ServiceException, e:
+                self.logger.error("Merging Service call failed: %s" % e)
 
         # Now pass to the merger.
 
@@ -123,6 +131,11 @@ class face_reinforcer:
     def returnOverlapping(self, face, cmt):
         not_covered_faces = []
         overlaped_faces = []
+
+        for get_element in self.persistance_face:
+            get_element[4] += 1
+        print(self.persistance_face)
+
         for j in face.objects:
             overlap = False
             SA = j.object.height * j.object.width
@@ -142,37 +155,65 @@ class face_reinforcer:
                 if (overlap):
                     list = [j, i]
                     overlaped_faces.append(list)
-                    break
+
+
+            #This section is for creating tracker locations by updating not_covered_faces
             if not overlap:
-                if (j.tool_used_for_detection.data == "dlib"):
-                    not_covered_faces.append(j)
-                else:
-                    #Let's focus on centroids and episolon.
-                    x_off= ((j.object.x_offset + j.object.width) + j.object.x_offset )/ 2.0
-                    y_off= ((j.object.y_offset + j.object.height) + j.object.y_offset )/ 2.0
+                if (j.object.width * j.object.height > 0.6*(640*480)):
+                    print('Face To Big to added')
+                    break
+                overlp = False
+                for get_element in self.persistance_face:
+                    overlp = self.determine(get_element, j)
+                    if overlp:
+                        if j.tool_used_for_detection.data == "dlib":
+                            get_element[5] += 1
+                        else:
+                            get_element[6] += 1
+                        if get_element[5] > 3:
+                            not_covered_faces.append(j)
+                            self.persistance_face=[]
+                        elif get_element[6] > 6:
+                            not_covered_faces.append(j)
+                            self.persistance_face=[]
+                if not overlp:
+                    self.persistance_face.append(
+                            [j.object.x_offset, j.object.width, j.object.y_offset, j.object.height, 0,
+                             1 if j.tool_used_for_detection == "dlib" else 0,
+                             1 if j.tool_used_for_detection != "dlib" else 0])
 
-                    self.overlap_cv = False
-                    self.persistance_cv[:] = [get_element for get_element in self.persistance_cv if not(self.determine(get_element,x_off,y_off))]
+        self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element))]
 
-                    if not self.overlap_cv:
-                        self.persistance_cv.append((x_off,y_off))
-                    else:
-                        not_covered_faces.append(j)
 
-                        # To make it simple; let's reset the tracker.
-                        self.persistance_cv= []
+                #Now let's add the new tracking locations.
+
 
         return not_covered_faces, overlaped_faces
-    def determine(self, get_element,x_off, y_off):
-        epsilon_x = 10
-        epsilon_y = 10
-        x_res = abs(x_off - get_element[0])
-        y_res = abs(y_off - get_element[1])
+    def determine(self, get_element,j):
+        epsilon_x = 15
+        epsilon_y = 15
 
-        if x_res < epsilon_x and y_res < epsilon_y:
-            self.overlap_cv = True
+        x_off = (j.object.x_offset)
+        y_off = j.object.y_offset
+
+        gx_off =get_element[0]
+        gy_off =get_element[2]
+
+        x_res = abs(x_off - gx_off)
+        y_res = abs(y_off - gy_off)
+
+        w_res = abs(j.object.width - get_element[1])
+        h_res = abs(j.object.height - get_element[3])
+
+        if x_res < epsilon_x and y_res < epsilon_y and w_res < epsilon_y and h_res < epsilon_y:
             return True
         return False
+
+    def trim(self,get_element):
+        if (get_element[4] < 10):
+            return False
+        return True
+
     def convert(self, face_locs, opencv=False):
         message = Trackers()
         for i in face_locs:
