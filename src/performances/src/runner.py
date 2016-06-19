@@ -99,7 +99,6 @@ class Runner:
 
                 if 'nodes' in data and isinstance(data['nodes'], list):
                     for node in data['nodes']:
-                        print node
                         if not 'start_time' in node:
                             node['start_time'] = 0
                         duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
