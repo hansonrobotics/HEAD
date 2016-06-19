@@ -36,6 +36,7 @@ def get_pub():
         db = g._database = connect_to_database()
     return db
 
+
 @app.route('/')
 def send_index():
     return send_from_directory(app.static_folder, 'index.html')
@@ -187,7 +188,7 @@ def get_attention_regions(robot_name):
 def update_attention_regions(robot_name):
     path = os.path.join(config_root, robot_name, 'attention_regions.yaml')
     regions = json.loads(request.get_data())
-    regions = {'attention_regions':regions}
+    regions = {'attention_regions': regions}
     write_yaml(path, regions)
     # Reload regions so can be edited live.
     try:
@@ -197,22 +198,31 @@ def update_attention_regions(robot_name):
     return json_encode(regions)
 
 
+def get_performance(id, robot_name):
+    root = os.path.join(config_root, robot_name, 'performances')
+    print id
+    filename = os.path.join(root, id + '.yaml')
+    if os.path.isfile(filename):
+        performance = read_yaml(filename)
+        relative = filename.split('/')[len(root.split('/')):]
+        performance['name'] = relative[-1] = relative[-1].split('.')[0]
+        performance['id'] = os.path.join(*relative)
+        relative_path = relative[:-1]
+        performance['path'] = os.path.join(*relative_path) if relative_path else ''
+        return performance
+    else:
+        return {}
+
+
 @app.route('/performances/<robot_name>', methods=['GET'])
 def get_performances(robot_name):
     performances = []
-    try:
-        root = os.path.join(config_root, robot_name, 'performances')
-        for path, dirnames, filenames in os.walk(root):
-            for name in fnmatch.filter(filenames, '*.yaml'):
-                filename = os.path.join(path, name)
-                performance = read_yaml(filename)
-                relative = filename.split('/')[len(root.split('/')):-1]
-                performance['path'] = os.path.join(*relative) if relative else ''
-                del performance['nodes']
-                performances.append(performance)
-    except Exception as e:
-        print e
-        return json_encode([])
+    root = os.path.join(config_root, robot_name, 'performances')
+    for path, dirnames, filenames in os.walk(root):
+        for name in fnmatch.filter(filenames, '*.yaml'):
+            filename = os.path.join(path, name)
+            id = os.path.join(*filename.split('.')[0].split('/')[len(root.split('/')):])
+            performances.append(get_performance(id, robot_name))
 
     return json_encode(performances)
 
@@ -237,16 +247,21 @@ def update_performances(robot_name, id):
         elif os.path.isfile(filename):
             current = read_yaml(filename)
 
-        if 'path' in performance: del performance['path']
+        for key in ['id', 'path']:
+            if key in performance: del performance[key]
+
         if 'ignore_nodes' in performance and performance['ignore_nodes'] and 'nodes' in current:
             performance['nodes'] = current['nodes']
             del performance['ignore_nodes']
+
+        for key in ['id', 'path']:
+            if key in performance: del performance[key]
 
         write_yaml(filename, performance)
     except Exception as e:
         return json_encode({'error': str(e)})
 
-    return json_encode(performance)
+    return json_encode(get_performance(id, robot_name))
 
 
 @app.route('/performances/<robot_name>/<path:id>', methods=['DELETE'])
@@ -267,11 +282,13 @@ def start_performance():
     run_performance(js["key"])
     return json_encode({'result': True})
 
+
 @app.route('/slide_performance/<performance>', methods=['GET'])
 def slide_performance(performance):
     print(performance)
     run_performance(performance)
     return json_encode({'result': True})
+
 
 @app.route('/lookat', methods=['POST'])
 def look_at():
@@ -287,31 +304,33 @@ def look_at():
     facePub.publish(Faces([f]))
     return json_encode({'result': True})
 
+
 @app.route('/realsense', methods=['POST'])
 def realsense():
     stream = request.get_json()
-    #iterate over each element in json
+    # iterate over each element in json
     f = Faces()
     faces = []
     if stream != None:
         for i in stream:
             if i is not None:
                 if 'people' in i and stream[i] is not None:
-                    for j in range(0,len(stream[i])):
+                    for j in range(0, len(stream[i])):
                         p = Face()
                         p.id = stream[i][j]['ID']
-                        p.point.x = (stream[i][j]['z'])/1000.0
-                        p.point.y = -(stream[i][j]['x'])/1000.0  # Center of the face
-                        p.point.z = (stream[i][j]['y'])/1000.0
+                        p.point.x = (stream[i][j]['z']) / 1000.0
+                        p.point.y = -(stream[i][j]['x']) / 1000.0  # Center of the face
+                        p.point.z = (stream[i][j]['y']) / 1000.0
 
                         # p.pose.x = stream[i][j]['rx']
                         # p.pose.y = stream[i][j]['ry']
                         # p.pose.z = stream[i][j]['rz']
                         # p.pose.w = stream[i][j]['rw']
 
-                        p.attention = stream[i][j]['confidence'] # This is an indication that the depth image is near or far a way. Low values indicate that it's not a good value.
+                        p.attention = stream[i][j][
+                            'confidence']  # This is an indication that the depth image is near or far a way. Low values indicate that it's not a good value.
 
-                        #Now let's get the emotion related data out of the elements.
+                        # Now let's get the emotion related data out of the elements.
 
                         # if stream[i][j]['expression'] is not None:
                         #     for expressions in j['expression']: # Now this equivalent makes sure that there is alway the expression being processed in the realsense demo application
@@ -320,9 +339,10 @@ def realsense():
                         faces.append(p)
 
     if len(faces) > 0:
-        f.faces = faces # Check if it's not empty before publishing it.
+        f.faces = faces  # Check if it's not empty before publishing it.
         facePub.publish(f)
     return Response(json_encode({'success': True}), mimetype="application/json")
+
 
 @app.route('/robot_config.js')
 def send_robot_js():
