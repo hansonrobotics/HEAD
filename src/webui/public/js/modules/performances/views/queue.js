@@ -95,6 +95,7 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', 'u
                 });
 
                 this.updateTimeline();
+                this.ui.clearButton.blur();
             },
             _getPerformanceIds: function () {
                 var self = this,

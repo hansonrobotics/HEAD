@@ -62,7 +62,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
 
                 this.mergeOptions(options, ['performances']);
 
-                if (options.sequence instanceof Array && options.sequence.length > 0) {
+                if (options.sequence instanceof Array) {
                     this.model = new Performance();
                     this.model.loadSequence(options.sequence, addReloadHandler);
                 } else if (this.model) {
@@ -78,7 +78,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             childViewOptions: function () {
                 return {performance: this.model, config: this.config};
             },
-            onShow: function () {
+            onAttach: function () {
                 var self = this;
                 this.modelChanged();
                 this.initDraggable(this.ui.nodes);
@@ -370,7 +370,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.ui.timeAxis.html('').width(scaleWidth);
                 d3.select(this.ui.timeAxis.get(0)).call(d3.svg.axis().scale(scale).orient("bottom"));
 
-                if (width < containerWidth)
+                if (width < containerWidth || !containerWidth)
                     width = '100%';
 
                 this.ui.timelineContainer.find('.app-timeline-nodes').each(function () {
