@@ -1,5 +1,5 @@
-define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', '../entities/performance_collection'],
-    function (Marionette, Backbone, template, TimelinesView, PerformanceCollection) {
+define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', 'underscore'],
+    function (Marionette, Backbone, template, TimelinesView, _) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
@@ -69,8 +69,6 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', '.
                     if (item.model == performance)
                         self._removeItem(item)
                 });
-
-                this.updateTimeline();
             },
             stop: function () {
                 if (this.timelinesView) {
@@ -85,6 +83,8 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', '.
                 _.each(this.queue, function (item) {
                     self.removePerformance(item.model);
                 });
+
+                this.updateTimeline();
             },
             _getPerformanceIds: function () {
                 var self = this,
