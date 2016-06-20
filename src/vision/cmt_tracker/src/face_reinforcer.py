@@ -12,8 +12,11 @@ import message_filters
 from std_srvs.srv import Empty
 from cmt_tracker_msgs.msg import Trackers,Tracker, Objects
 from cmt_tracker_msgs.srv import TrackerNames,MergeNames
+
 import itertools
 import logging
+from dynamic_reconfigure.server import Server
+from cmt_tracker_msgs.cfg import ReinforceConfig
 '''
 Description: This is checks for the if cmt_tracker is overlapping with cmt instances and focuses the libraries to the locations.
 
@@ -50,12 +53,25 @@ class face_reinforcer:
         #So is's centroid area, decreasing conter; then remove that entity.
         # logging.getLogger().addHandler(logging.StreamHandler())
         self.logger = logging.getLogger('hr.cmt_tracker.face_reinforcer')
-
+        Server(ReinforceConfig, self.sample_callback)
 
         self.persistance_face = []
         self.face = False
         self.persistance_cv = False
         self.persistance_dlib = False
+
+        self.dlib_count = 1
+        self.cv_count = 1
+        self.cv_dlib_count = 1
+        self.downgrade = 500
+
+    def sample_callback(self,config, level):
+        self.dlib_count = config.dlib_count
+        self.cv_count = config.open_count
+        self.cv_dlib_count = config.open_dlib_count
+        self.downgrade = config.downgrade
+        return config
+
     def can_update(self, req):
         self.update = True
         return []
@@ -80,7 +96,7 @@ class face_reinforcer:
             if (self.faces_cmt_overlap[cmt.tracker_name.data] > 2):
                 try:
                     self.upt = rospy.ServiceProxy('reinforce',TrackerNames)
-                    indication = self.upt(names=cmt.tracker_name.data, index=500)
+                    indication = self.upt(names=cmt.tracker_name.data, index=self.downgrade)
                     if not indication:
                         #TODO handle the error if the service is not available.
                         pass
@@ -174,10 +190,13 @@ class face_reinforcer:
                         get_element[5] += 1
                     else:
                         get_element[6] += 1
-                    if get_element[5] > 3:
+                    if get_element[5] > self.dlib_count:
                         not_covered_faces.append(j)
                         self.persistance_face=[]
-                    elif get_element[6] > 6:
+                    elif get_element[6] > self.cv_count:
+                        not_covered_faces.append(j)
+                        self.persistance_face=[]
+                    elif get_element[6] + get_element [5] > self.cv_dlib_count:
                         not_covered_faces.append(j)
                         self.persistance_face=[]
             if not overlp:
