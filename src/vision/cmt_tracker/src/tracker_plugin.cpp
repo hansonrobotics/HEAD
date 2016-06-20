@@ -60,7 +60,7 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
   client = nh.serviceClient<cmt_tracker_msgs::Clear>("clear");
   image_client = nh.serviceClient<cmt_tracker_msgs::TrackedImages>("get_cmt_rects");
   check_update = nh.serviceClient<cmt_tracker_msgs::Update>("update");
-
+  viewupdate_service  = nh.advertiseService("view_update", &rqt_tracker_view::tracker_plugin::updateTrackerNames,this);
   tracker_locations_sub = (nh).subscribe("tracking_location", 1 , &rqt_tracker_view::tracker_plugin::trackerCb, this);
   nh.getParam("tracking_method", tracking_method);
 
@@ -82,9 +82,17 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
   else if (metho.compare("opencv") == 0) ui.paramsetters->setCurrentIndex(1);
 
 }
+bool tracker_plugin::updateTrackerNames(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
+{
+  std::cout<<"Names Updated"<<std::endl;
+  nh.setParam("tracker_updated", 2);
+  firstrun = true;
+  return true;
 
+}
 void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
 {
+  nh.getParam("tracker_updated", tracker_updated_num);
   try
   {
     cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(msg, sensor_msgs::image_encodings::RGB8);
@@ -327,43 +335,49 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     temp_tracked_image_results.push_back(QImage((uchar*) temp_tracked_image_mats.back().data, temp_tracked_image_mats.back().cols, temp_tracked_image_mats.back().rows,
                                              temp_tracked_image_mats.back().step[0], QImage::Format_RGB888));
   }
-  nh.getParam("tracker_updated", tracker_updated_num);
-//  if (tracker_updated_num == 2 || firstrun)
-//  {
-////    firstrun = false;
-////    cmt_tracker_msgs::TrackedImages results;
-////    if (image_client.call(results))
-////    {
-////      tracked_images.clear();
-////      tracked_faces.clear();
-////      tracked_images_names.clear();
-////      for (std::vector<std::string>::iterator v = results.response.names.begin(); v != results.response.names.end(); ++v)
-////      {
-////        tracked_images_names.push_back(*v);
-////      }
-////      for (std::vector<sensor_msgs::Image>::const_iterator v = results.response.image.begin(); v != results.response.image.end(); ++v)
-////      {
-////        sensor_msgs::Image im = *v;
-////        sensor_msgs::ImagePtr r = boost::shared_ptr<sensor_msgs::Image>(boost::make_shared<sensor_msgs::Image>(im));
-////        cv_bridge::CvImageConstPtr cv_ptrs;
-////        cv::Mat image;
-////        try {
-////          cv_ptrs = cv_bridge::toCvShare(r);
-////          image = cv_ptrs->image;
-////          cv::cvtColor(image, image, cv::COLOR_GRAY2RGB);
-////        }
-////        catch (cv_bridge::Exception& e)
-////        {
-////          std::cout << "Error" << std::endl;
-////          return;
-////        }
-////        tracked_images.push_back(image);
-////        tracked_faces.push_back(QImage((uchar*) tracked_images.back().data, tracked_images.back().cols,
-////                                       tracked_images.back().rows, tracked_images.back().step[0], QImage::Format_RGB888));
-////      }
-////    }
-//    nh.setParam("tracker_updated", 0);
-//  }
+
+  if (tracker_updated_num == 2 || firstrun)
+  {
+    firstrun = false;
+    cmt_tracker_msgs::TrackedImages results;
+    int size_value;
+    nh.getParam("tracker_size",size_value);
+    if (image_client.call(results))
+    {
+//      std::cout<<"News Changed"<<std::endl;
+      tracked_images.clear();
+      tracked_faces.clear();
+      tracked_images_names.clear();
+
+      for (std::vector<std::string>::iterator v = results.response.names.begin(); v != results.response.names.end(); ++v)
+      {
+        tracked_images_names.push_back(*v);
+      }
+      for (std::vector<sensor_msgs::Image>::const_iterator v = results.response.image.begin(); v != results.response.image.end(); ++v)
+      {
+        sensor_msgs::Image im = *v;
+        sensor_msgs::ImagePtr r = boost::shared_ptr<sensor_msgs::Image>(boost::make_shared<sensor_msgs::Image>(im));
+        cv_bridge::CvImageConstPtr cv_ptrs;
+        cv::Mat image;
+        try {
+          cv_ptrs = cv_bridge::toCvShare(r);
+          image = cv_ptrs->image;
+          cv::cvtColor(image, image, cv::COLOR_GRAY2RGB);
+        }
+        catch (cv_bridge::Exception& e)
+        {
+          std::cout << "Error" << std::endl;
+          return;
+        }
+        tracked_images.push_back(image);
+        tracked_faces.push_back(QImage((uchar*) tracked_images.back().data, tracked_images.back().cols,
+                                       tracked_images.back().rows, tracked_images.back().step[0], QImage::Format_RGB888));
+      }
+      if(results.response.names.size() == size_value)
+        nh.setParam("tracker_updated", 0);
+    }
+
+  }
   emit updatefacelist();
 }
 

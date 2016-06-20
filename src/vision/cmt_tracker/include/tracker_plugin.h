@@ -35,7 +35,7 @@
 #include <cmt_tracker_msgs/Update.h>
 
 #include <cmt_tracker_msgs/TrackedImages.h>
-
+#include <cmt_tracker_msgs/TrackerNames.h>
 
 #include <cmt_tracker_msgs/TrackerConfig.h>
 #include <dynamic_reconfigure/server.h>
@@ -116,8 +116,9 @@ protected slots:
 
     void temp_tracker_resultsCb(const cmt_tracker_msgs::Trackers& tracker_results);
 
-
+    bool updateTrackerNames(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
 protected:
+    ros::ServiceServer viewupdate_service;
     std::vector<QImage> face_images;
     std::vector<QImage> tracked_faces;
 

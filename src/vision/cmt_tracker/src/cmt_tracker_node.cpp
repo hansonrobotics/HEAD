@@ -50,8 +50,8 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   tracker_results_temp = nh_.advertise<cmt_tracker_msgs::Trackers>("temporary_trackers", 10);
 
 
-  pi_vision_results = nh_.advertise<pi_face_tracker::Faces>(face_location_topics, 1);
-  pi_events = (nh_).advertise<pi_face_tracker::FaceEvent>(face_event_topics, 1);
+  pi_vision_results = nh_.advertise<pi_face_tracker::Faces>(face_location_topics, 10);
+  pi_events = (nh_).advertise<pi_face_tracker::FaceEvent>(face_event_topics, 10);
 
   //Bind to call the dynamic reconfigure values by which we delete the cmt instances.
   f = boost::bind(&cmt_wrap::TrackerCMT::callback, this, _1, _2);
@@ -332,7 +332,6 @@ void TrackerCMT::set_tracker(const cmt_tracker_msgs::Tracker& tracker_location)
     pi_events.publish(m);
   }
 
-
 }
 
 
@@ -343,8 +342,9 @@ void TrackerCMT::set_trackers(const cmt_tracker_msgs::Trackers& tracker_location
     set_tracker(tracker_location.tracker_results[i]);
   }
 
-  nh_.setParam("tracker_updated", 1);
-
+  nh_.setParam("tracker_updated", 2);
+  int sizeof_t = cmt_.size_map();
+  nh_.setParam("tracker_size",sizeof_t);
   ros::service::call("can_add_tracker",empty_info);
 
 }

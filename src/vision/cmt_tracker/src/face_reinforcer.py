@@ -48,7 +48,7 @@ class face_reinforcer:
         #If there is indeed a face then we need to create a tracker for it. It wouldn't work for face_recogniztion but
         #Would work nonethless.
         #So is's centroid area, decreasing conter; then remove that entity.
-        logging.getLogger().addHandler(logging.StreamHandler())
+        # logging.getLogger().addHandler(logging.StreamHandler())
         self.logger = logging.getLogger('hr.cmt_tracker.face_reinforcer')
 
 
@@ -69,9 +69,9 @@ class face_reinforcer:
         not_overlapped, overlaped_faces = self.returnOverlapping(face,ttp)
         if len(not_overlapped) > 0 and self.update:
             self.tracker_locations_pub.publish(self.convert(not_overlapped))
-            rospy.set_param('tracker_updated', 0)
-            rospy.set_param("being_initialized_stop", 1)
-            #This is the critical area.
+            #Executing the following doesn't really do anythin as it just published it.
+            #self.view_update = rospy.ServiceProxy('view_update', TrackerNames)
+            #updt = self.view_update(names="", index=1)
             self.update = False
 
         for face, cmt in overlaped_faces:
@@ -113,16 +113,16 @@ class face_reinforcer:
                 merge_from.append(b.tracker_name.data)
 
         #TODO for now just delete the elements then latter put a mark on the merged elements and update if there is overlappings with the track.
-        if merge_to and merge_from:
-            try:
-                print("Merged Element: %s and \n Merged ELement %s", merge_from, merge_to)
-                self.mrg = rospy.ServiceProxy('merge',MergeNames)
-                indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
-
-                if not indic:
-                    pass
-            except rospy.ServiceException, e:
-                self.logger.error("Merging Service call failed: %s" % e)
+        # if merge_to and merge_from:
+        #     try:
+        #         print("Merged Element: %s and \n Merged ELement %s", merge_from, merge_to)
+        #         self.mrg = rospy.ServiceProxy('merge',MergeNames)
+        #         indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
+        #
+        #         if not indic:
+        #             pass
+        #     except rospy.ServiceException, e:
+        #         self.logger.error("Merging Service call failed: %s" % e)
 
         # Now pass to the merger.
 
