@@ -230,7 +230,16 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     tracker.header.stamp = ros::Time::now();
 
     if ((*v).validated)
+    {
     trackers_results.tracker_results.push_back(tracker);
+    if(pi_registry.find(tracker.tracker_name.data)==pi_registry.end())
+    {
+    pi_face_tracker::FaceEvent m = returnPiEvents("new_face", tracker.tracker_name.data);
+    pi_events.publish(m);
+    pi_registry[tracker.tracker_name.data] = tracker.tracker_name.data;
+    }
+
+    }
     else
     temp_results.tracker_results.push_back(tracker);
   }
@@ -320,7 +329,7 @@ void TrackerCMT::list_of_faces_emo_update(const cmt_tracker_msgs::Objects& faces
 }
 void TrackerCMT::set_tracker(const cmt_tracker_msgs::Tracker& tracker_location)
 {
-  //-//std::cout<<"Enters set_tracker"<<std::endl;
+  std::cout<<"Enter New Face Started"<<std::endl;
   cv::Mat im_gray = frame_gray.clone(); //To avoid change when being run.
   cv::Rect rect(tracker_location.object.object.x_offset, tracker_location.object.object.y_offset,
                       tracker_location.object.object.width, tracker_location.object.object.height);
@@ -328,10 +337,9 @@ void TrackerCMT::set_tracker(const cmt_tracker_msgs::Tracker& tracker_location)
   if (!im_gray.empty() && rect.area() > 50)
   {
     std::string tracker_name = cmt_.addtomap(im_gray, rect);
-    pi_face_tracker::FaceEvent m = returnPiEvents("new_face", tracker_name);
-    pi_events.publish(m);
-  }
 
+  }
+  std::cout<<"Enter New Face Finished"<<std::endl;
 }
 
 
@@ -351,11 +359,20 @@ void TrackerCMT::set_trackers(const cmt_tracker_msgs::Trackers& tracker_location
 
 void TrackerCMT::remove_tracker(std::string name)
 {
-  //std::cout<<"Enters remove_tracker"<<std::endl;
+  std::cout<<"Enters remove_tracker"<<std::endl;
+
+  if(pi_registry.find(name)==pi_registry.end())
+  {
+
+  }
+  else
+  {
   pi_face_tracker::FaceEvent m = returnPiEvents("lost_face", name);
   pi_events.publish(m);
+  pi_registry.erase(name);
+  }
 
-  //std::cout<<"Exits remove_trackers"<<std::endl;
+  std::cout<<"Exits remove_trackers"<<std::endl;
 }
 
 pi_face_tracker::Face TrackerCMT::filter_point(pi_face_tracker::Face f)

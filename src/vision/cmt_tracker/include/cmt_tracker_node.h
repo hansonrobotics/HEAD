@@ -170,6 +170,7 @@ private:
 	ros::Publisher pi_vision_results; 
 	ros::Publisher pi_events; 
     std::map<std::string,pi_face_tracker::Face> face_filtered;
+    std::map<std::string,std::string> pi_registry;
 	//Now this is face results; Moving to another function. 
 	ros::Subscriber face_results;
 	ros::Subscriber emo_results;
