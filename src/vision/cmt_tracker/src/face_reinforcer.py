@@ -129,6 +129,7 @@ class face_reinforcer:
 
 
     def returnOverlapping(self, face, cmt):
+        not_covered_faces_list = []
         not_covered_faces = []
         overlaped_faces = []
 
@@ -155,32 +156,35 @@ class face_reinforcer:
                 if (overlap):
                     list = [j, i]
                     overlaped_faces.append(list)
+                    break
 
+            if not overlap:
+                not_covered_faces_list.append(j)
 
             #This section is for creating tracker locations by updating not_covered_faces
-            if not overlap:
-                if (j.object.width * j.object.height > 0.6*(640*480)):
-                    print('Face To Big to added')
-                    break
-                overlp = False
-                for get_element in self.persistance_face:
-                    overlp = self.determine(get_element, j)
-                    if overlp:
-                        if j.tool_used_for_detection.data == "dlib":
-                            get_element[5] += 1
-                        else:
-                            get_element[6] += 1
-                        if get_element[5] > 3:
-                            not_covered_faces.append(j)
-                            self.persistance_face=[]
-                        elif get_element[6] > 6:
-                            not_covered_faces.append(j)
-                            self.persistance_face=[]
-                if not overlp:
-                    self.persistance_face.append(
-                            [j.object.x_offset, j.object.width, j.object.y_offset, j.object.height, 0,
-                             1 if j.tool_used_for_detection == "dlib" else 0,
-                             1 if j.tool_used_for_detection != "dlib" else 0])
+        for j in not_covered_faces_list:
+            if (j.object.width * j.object.height > 0.6*(640*480)):
+                print('Face To Big to added')
+                break
+            overlp = False
+            for get_element in self.persistance_face:
+                overlp = self.determine(get_element, j)
+                if overlp:
+                    if j.tool_used_for_detection.data == "dlib":
+                        get_element[5] += 1
+                    else:
+                        get_element[6] += 1
+                    if get_element[5] > 3:
+                        not_covered_faces.append(j)
+                        self.persistance_face=[]
+                    elif get_element[6] > 6:
+                        not_covered_faces.append(j)
+                        self.persistance_face=[]
+            if not overlp:
+                self.persistance_face.append(
+                        [j.object.x_offset, j.object.width, j.object.y_offset, j.object.height, 0,
+                         1 if j.tool_used_for_detection == "dlib" else 0,
+                         1 if j.tool_used_for_detection != "dlib" else 0])
 
         self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element))]
 
