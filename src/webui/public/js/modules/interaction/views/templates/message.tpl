@@ -21,5 +21,10 @@
             </small>
         </div>
     <% } %>
-    <p class="msg"><%= message %></p>
+    <p>
+        <span class="app-shortcut-label span label label-success"></span>
+        <span class="msg">
+            <%= message %>
+        </span>
+    </p>
 </div>

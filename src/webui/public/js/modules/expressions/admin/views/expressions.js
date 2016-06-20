@@ -16,9 +16,9 @@ define(["application", "./expression", 'tpl!./templates/expressions.tpl'],
                     'click @ui.saveButton': 'updateExpressions'
                 },
                 initialize: function (options) {
-                    this.motors = options.motors;
+                    this.mergeOptions(options, ['motors']);
                     this.childViewOptions = {
-                        collection: options.motors,
+                        collection: this.motors,
                         expressionsView: this
                     };
                 },

@@ -1,5 +1,7 @@
 # HEAD
 
+[![Build Status](http://61.92.69.39:8080/buildStatus/icon?job=ci-HEAD)](http://61.92.69.39:8080/view/hansonrobotics/job/ci-HEAD/)
+
 Hanson Environment for Application Development
 
 This repository contains the integrated code for controlling and
@@ -70,4 +72,15 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 * Remove hrtool. After the source code is built we don't need this script anymore. 
 
 `rm ./hrtool`
+
+## Checkout latest OpenCog (developer mode)
+
+`./hrtool -d`
+
+This option is used when you want to get the latest OpenCog stack. It will set the remote of git repositories of OpenCog to [OpenCog](https://github.com/opencog) domain.
+
+## Troubleshooting
+
+### pip3 is not found
+Reinstall pip3 `apt-get install -y --reinstall python3-pip`
 

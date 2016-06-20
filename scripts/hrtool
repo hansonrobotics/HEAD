@@ -6,9 +6,16 @@
 
 set -e
 
+if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
+    echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
+    exit 1
+fi
+
 for i in $(env|grep ROS|cut -d= -f1); do
     unset $i
 done
+
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 
 install_basic() {
     sudo apt-get -y update
@@ -51,6 +58,36 @@ install_ros() {
     set -e
 }
 
+install_opencog_deps() {
+    sudo apt-get -y install ccache
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
+    chmod +rx octool
+    ./octool -rdpv
+    rm octool
+
+    install_relex_deps
+}
+
+install_relex_deps() {
+    sudo apt-get -y update
+    sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
+    sudo apt-get -y install wordnet-dev wordnet-sense-index
+    sudo apt-get -y install openjdk-7-jdk
+    sudo apt-get -y install ant libcommons-logging-java libgetopt-java
+
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
+    chmod +rx octool
+    ./octool -l
+    rm octool
+
+    # Java WordNet Library
+    wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
+    unzip -o jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
+    sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
+    rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
+    sudo chmod -v 0644 /usr/local/share/java/jwnl.jar
+}
+
 install_other_deps() {
     sudo add-apt-repository -y ppa:irie/blender
     sudo apt-get -y update
@@ -85,19 +122,21 @@ install_other_deps() {
     sudo cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
     rm -rf /tmp/festival
 
-
-    # For OpenCog
-    sudo apt-get -y install ccache
-    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
-    chmod +rx octool
-    ./octool -rdpv
-    rm octool
-
     # For tts playing audio
     sudo apt-get -y install python-pyglet
 
     # For chatbot
     sudo apt-get -y install python-yaml
+
+    # For blender_api_test
+    sudo add-apt-repository -y ppa:mc3man/trusty-media
+    sudo apt-get update
+    sudo apt-get install -y ffmpeg
+}
+
+install_test_deps() {
+    sudo apt-get -y install socat
+    sudo apt-get -y install xdotool
 }
 
 install_vision_deps() {
@@ -243,16 +282,40 @@ clone() {
 }
 
 get_opencog_src(){
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE
         clone hansonrobotics $repo opencog
     done
 }
 
+check_local_changes() {
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
+            cd $HR_WORKSPACE/opencog/$repo
+            branch=$(git rev-parse --abbrev-ref HEAD)
+            if [[ $branch != 'master' ]]; then
+                echo "HEAD branch is not master $(pwd)" 1>&2
+                return 1
+            fi
+            if [[ $(git status -uno --porcelain|wc -c) != 0 ]]; then
+                echo "Plese commit the change(s) $(pwd)" 1>&2
+                echo $(git status --porcelain) 1>&2
+                return 1
+            fi
+            if [[ $(git diff --name-only master origin/master|wc -c) != 0 ]]; then
+                echo "Master branch is not synchronized with origin $(pwd)" 1>&2
+                return 1
+            fi
+        fi
+    done
+    cd $HR_WORKSPACE
+}
+
 update_opencog() {
     local DEFAULT_BRANCH="master"
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE/opencog/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
@@ -295,8 +358,13 @@ do_update_vision_tools() {
 
 }
 do_install_deps() {
+    _do_install_deps
+}
+
+_do_install_deps() {
     install_basic
     install_ros
+    install_opencog_deps
     install_other_deps
     install_vision_deps
 }
@@ -307,8 +375,35 @@ do_get_hr_src() {
 }
 
 do_get_src() {
+    # Check/add the github host key to ~/.ssh/known_hosts
+    ssh -o StrictHostKeyChecking=no github.com || true
     do_get_hr_src
     get_opencog_src
+}
+
+do_dev_mode() {
+    DOMAIN=${1-"opencog"}
+    check_local_changes || exit 1
+    echo "Switching to $DOMAIN repositories"
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
+            cd opencog/$repo
+            git remote remove old || true
+            git remote rename origin old
+            git remote add -f origin https://github.com/$DOMAIN/$repo
+            git branch master -u origin/master
+            git reset --hard origin/master
+        else
+            clone $DOMAIN $repo opencog
+        fi
+    done
+    update_opencog
+}
+
+undo_dev_mode() {
+    do_dev_mode hansonrobotics
 }
 
 do_build_hr() {
@@ -365,12 +460,16 @@ do_single_package() {
 }
 
 build_opencog() {
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
-        if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
-            mkdir $HR_WORKSPACE/opencog/$repo/build
+        if [[ $repo != 'relex' ]]; then
+            if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
+                mkdir $HR_WORKSPACE/opencog/$repo/build
+            fi
+            cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && sudo make install
+        else
+            cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && sudo ant install
         fi
-        cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && sudo make install
     done
 }
 
@@ -407,7 +506,7 @@ Usage: $0 OPTION
 -g      Get HR source code.
 -G      Get all source code including OpenCog and HR.
 -u      Update HR source code.
--v      Update Vision Related dependecies.
+-v      Update Vision Related dependencies.
 -U      Update all source code including OpenCog and HR.
 -b      Build HR source code.
 -B      Build HR and OpenCog source code.
@@ -415,6 +514,7 @@ Usage: $0 OPTION
 -w      Set Hanson Robotics workspace.
 -p      Print Hanson Robotics workspace.
 -r      Run custom functions.
+-d      Developer mode. Using latest OpenCog stack.
 -h      Print this help.
 -s      Build a single package specified.
 
@@ -422,7 +522,9 @@ EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUvtprs:" opt; do
+
+    while getopts "hw:igGbBuUvtprs:d" opt; do
+
         case $opt in
         h)
             show_help
@@ -441,6 +543,7 @@ parse_opts() {
         p) PRINT_HR_WORKSPACE=1 ;;
         s) BUILD_SINGLE_PKG=1  && CUSTOM_FUNCTIONS=$OPTARG ;;
         r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
+        d) DEVELOPER_MODE=1 ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
             show_help
@@ -474,7 +577,7 @@ set_ws() {
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
-    cp $HR_ENVFILE_PATH $BASEDIR # For compatibility
+    cp $HR_ENVFILE_PATH $BASEDIR >/dev/null 2>&1 # For compatibility
 }
 
 execute() {
@@ -483,6 +586,7 @@ execute() {
     if [[ $INSTALL_DEPENDENCIES ]]; then do_install_deps; fi
     if [[ $GET_HR_SOURCE_CODE ]]; then do_get_hr_src; fi
     if [[ $GET_SOURCE_CODE ]]; then do_get_src; fi
+    if [[ $DEVELOPER_MODE ]]; then do_dev_mode ; fi
     if [[ $UPDATE_HR_SOURCE_CODE ]]; then do_update_hr ; fi
     if [[ $UPDATE_SOURCE_CODE ]]; then do_update ; fi
     if [[ $BUILD_HR_SOURCE_CODE ]]; then do_build_hr; fi

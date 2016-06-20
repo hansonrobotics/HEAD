@@ -22,8 +22,8 @@ class Session(object):
         self.init = self.created
         self.characters = []
 
-    def add(self, question, answer):
-        self.cache.add(question, answer)
+    def add(self, question, answer, **kwargs):
+        self.cache.add(question, answer, **kwargs)
 
     def reset(self):
         self.dump()
@@ -51,7 +51,10 @@ class Session(object):
         if self.cache.last_time is not None:
             return (dt.datetime.now() - self.cache.last_time).seconds
         else:
-            return (dt.datetime.now() - self.init).seconds
+            return (dt.datetime.now() - self.created).seconds
+
+    def since_reset(self):
+        return (dt.datetime.now() - self.init).seconds
 
     def __repr__(self):
         return "<Session {} init {} active {}>".format(
@@ -71,6 +74,7 @@ class SessionManager(object):
 
     def __init__(self):
         self._sessions = dict()
+        self._users = dict()
         self._session_cleaner = threading.Thread(
             target=self._clean_sessions, name="SessionCleaner")
         self._locker = Locker()
@@ -108,9 +112,15 @@ class SessionManager(object):
             return self._sessions.get(sid, None)
 
     @_threadsafe
-    def start_session(self):
+    def start_session(self, user):
+        if user in self._users:
+            sid = self._users.get(user)
+            session = self._sessions.get(sid)
+            if session:
+                return sid
         sid = str(uuid.uuid1())
         self._add_session(sid)
+        self._users[user] = sid
         return sid
 
     def has_session(self, sid):
@@ -120,7 +130,7 @@ class SessionManager(object):
         while True:
             reset_sessions, remove_sessions = [], []
             for sid, s in self._sessions.iteritems():
-                if s.since_idle() > SESSION_RESET_TIMEOUT:
+                if s.since_reset() > SESSION_RESET_TIMEOUT:
                     reset_sessions.append(sid)
                 if s.since_idle() > SESSION_REMOVE_TIMEOUT:
                     remove_sessions.append(sid)
@@ -138,7 +148,10 @@ class SessionManager(object):
 
 if __name__ == '__main__':
     session_manager = SessionManager()
-    sid = session_manager.start_session()
+    sid = session_manager.start_session('test')
+    session = session_manager.get_session(sid)
+    print session
+    sid = session_manager.start_session('test')
     session = session_manager.get_session(sid)
     session.add("hello", "hello, how are you")
     print session

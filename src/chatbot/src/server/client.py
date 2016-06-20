@@ -2,7 +2,7 @@ import cmd
 import requests
 import json
 import os
-import uuid
+import time
 
 import sys
 reload(sys)
@@ -12,8 +12,8 @@ VERSION = 'v1.1'
 key='AAAAB3NzaC'
 
 class Client(cmd.Cmd, object):
-    def __init__(self):
-        super(Client, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super(Client, self).__init__(*args, **kwargs)
         self.prompt = '[me]: '
         self.botname = 'sophia'
         self.chatbot_ip = 'localhost'
@@ -23,7 +23,8 @@ class Client(cmd.Cmd, object):
         self.lang = 'en'
         self.user = 'client'
         self.session = None
-        self.set_sid()
+        self.last_response = None
+        self.do_conn()
 
     def set_sid(self):
         params = {
@@ -31,11 +32,24 @@ class Client(cmd.Cmd, object):
             "botname": self.botname,
             "user": self.user
         }
-        r = requests.get('{}/start_session'.format(self.chatbot_url), params=params)
+        r = None
+        retry = 3
+        while r is None and retry > 0:
+            try:
+                r = requests.get('{}/start_session'.format(self.chatbot_url), params=params)
+            except Exception:
+                retry -= 1
+                self.stdout.write('.')
+                self.stdout.flush()
+                time.sleep(1)
+        if r is None:
+            self.stdout.write("Can't get session\n")
+            return
         ret = r.json().get('ret')
         if r.status_code != 200:
             self.stdout.write("Request error: {}\n".format(r.status_code))
         self.session = r.json().get('sid')
+        self.stdout.write("New session {}\n".format(self.session))
 
     def ask(self, question):
         params = {
@@ -56,7 +70,7 @@ class Client(cmd.Cmd, object):
         response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
         response.update(r.json().get('response'))
 
-        return response
+        return ret, response
 
     def list_chatbot(self):
         params={'Auth':key, 'lang':self.lang, 'session': self.session}
@@ -75,10 +89,15 @@ class Client(cmd.Cmd, object):
     def default(self, line):
         try:
             if line:
-                response = self.ask(line)
-                self.stdout.write('{}[by {}]: {}\n'.format(
-                    self.botname, response.get('botid'),
-                    response.get('text')))
+                ret, response = self.ask(line)
+                if ret != 0:
+                    self.do_conn()
+                    ret, response = self.ask(line)
+                else:
+                    self.last_response = response
+                    self.stdout.write('{}[by {}]: {}\n'.format(
+                        self.botname, response.get('botid'),
+                        response.get('text')))
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
 
@@ -114,14 +133,25 @@ class Client(cmd.Cmd, object):
     def help_select(self):
         self.stdout.write("Select chatbot\n")
 
-    def do_conn(self, line):
-        self.chatbot_url = line
+    def do_conn(self, line=None):
+        if line:
+            try:
+                self.chatbot_ip, self.chatbot_port = line.split(':')
+                self.chatbot_url = 'http://{}:{}/{}'.format(
+                    self.chatbot_ip, self.chatbot_port, VERSION)
+            except Exception:
+                self.stdout.write("Wrong conn argument\n")
+                self.help_conn()
+                return
+        self.stdout.write("Connecting.")
+        self.set_sid()
 
     def help_conn(self):
         s = """
 Connect to chatbot server
-Syntax: conn url:port
-For example, conn 127.0.0.1:8001
+Syntax: conn [url:port]
+For example, conn
+             conn 127.0.0.1:8001
 
 """
         self.stdout.write(s)
@@ -246,6 +276,30 @@ Syntax: upload package
 """
         self.stdout.write(s)
 
+    def ping(self):
+        try:
+            r = requests.get('{}/ping'.format(self.chatbot_url))
+            response = r.json().get('response')
+            if response == 'pong':
+                return True
+        except Exception:
+            return False
+
+    def do_ping(self, line):
+        if self.ping():
+            self.stdout.write('pong')
+        self.stdout.write('\n')
+
+    def do_trace(self, line):
+        if self.last_response:
+            trace = self.last_response.get('trace', None)
+            self.stdout.write('\n'.join(trace))
+        self.stdout.write('\n')
+
+    do_t = do_trace
+
+    def help_trace(self):
+        self.stdout.write('Print the trace of last reponse\n')
 
 if __name__ == '__main__':
     client = Client()

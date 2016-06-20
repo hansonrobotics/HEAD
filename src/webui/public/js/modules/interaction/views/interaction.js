@@ -36,7 +36,8 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             },
             childViewOptions: function () {
                 return {
-                    collection: this.collection
+                    collection: this.collection,
+                    interactionView: this
                 };
             },
             initialize: function (options) {
@@ -110,26 +111,49 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
              */
             setUpKeyShortcuts: function () {
                 var self = this,
-                    keyPress = function (e) {
-                        var suggestions = self.collection.getSuggestions(),
-                            length = suggestions.length;
+                    keyDown = function (e) {
+                        if (self.isDestroyed) {
+                            // remove event when view is destroyed
+                            $(window).off('keydown', keyDown);
+                            return;
+                        }
 
-                        if (self.isDestroyed) // remove event when view is destroyed
-                            $(window).off('keypress', keyPress);
+                        var keyCode = e.keyCode;
+                        // either DEL [ ] or F1-F12
+                        if (self.operator_mode_enabled) {
+                            if (_.contains([46, 219, 221], keyCode)) {
+                                var last = self.collection.popLastSuggestion();
+                                if (last) {
+                                    e.preventDefault();
+                                    switch (keyCode) {
+                                        case 46:
+                                            var data = last.toJSON();
+                                            data['type'] = 'gibberish';
+                                            api.logChatMessage(data);
+                                            break;
+                                        case 219:
+                                            break;
+                                        case 221:
+                                            api.webSpeech(last.get('message'), app.language);
+                                            break;
+                                    }
+                                }
+                            } else if ((keyCode >= 112 && keyCode <= 123)) {
+                                e.preventDefault();
+                                var i = keyCode - 111,
+                                    suggestions = self.collection.getSuggestions(),
+                                    length = suggestions.length;
 
-                        if (length > 0 && _.contains([91, 93], e.keyCode)) {
-                            e.preventDefault();
-
-                            if (e.keyCode == 91) {
-                                self.collection.clearSuggestions();
-                            } else if (e.keyCode == 93) {
-                                api.webSpeech(suggestions[length - 1].get('message'), app.language);
-                                self.collection.clearSuggestions();
+                                if (length >= i) {
+                                    var model = suggestions[length - i];
+                                    api.webSpeech(model.get('message'), app.language);
+                                    self.collection.remove(model);
+                                }
                             }
                         }
                     };
 
-                $(window).keypress(keyPress);
+                $(window).keydown(keyDown);
             },
             showFaces: function () {
                 var self = this;
@@ -145,7 +169,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 }
             },
             onAttach: function () {
-                this.ui.scrollbar.perfectScrollbar();
+                this.ui.scrollbar.perfectScrollbar({wheelPropagation: true});
                 this.setHeight();
             },
             addListeners: function () {
@@ -220,19 +244,23 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             },
             operatorModeSwitched: function () {
                 var self = this;
-                if (!this.operator_mode_enabled)
-                    _.each(this.collection.where({type: 'suggestion'}), function (msg) {
-                        self.collection.remove(msg);
+                (function (hide) {
+                    _.each(self.collection.getSuggestions(), function (message) {
+                        message.set('hidden', hide, {silent: false});
                     });
+                })(!this.operator_mode_enabled);
             },
             suggestionCallback: function (msg) {
-                this.collection.clearSuggestions();
-                if (this.operator_mode_enabled)
-                    this.collection.add({author: 'Robot', message: msg.data, type: 'suggestion'});
+                if (this.operator_mode_enabled) {
+                    var attrs = {author: 'Robot', message: msg.data, type: 'suggestion'};
+                    this.collection.add(attrs);
+                    api.logChatMessage(attrs);
+                }
             },
             responseCallback: function (msg) {
-                this.collection.clearSuggestions();
-                this.collection.add({author: 'Robot', message: msg.data});
+                var attrs = {author: 'Robot', message: msg.data};
+                this.collection.add(attrs);
+                api.logChatMessage(attrs);
             },
             speechActiveCallback: function (msg) {
                 if (this.speechEnabled) {
@@ -283,7 +311,10 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             },
             sendClicked: function () {
                 var message = this.ui.messageInput.val();
-                if (message != '') api.sendChatMessage(message);
+                if (message != '') {
+                    api.sendChatMessage(message);
+                    api.loginfo('[CLICK ACTION][CHAT] '+message);
+                }
                 this.ui.messageInput.val('');
             },
             attachHtml: function (collectionView, childView) {
@@ -299,14 +330,13 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             scrollToChatBottom: function () {
                 var self = this;
 
-                if (!this.scrolling)
-                    this.ui.scrollbar.animate({scrollTop: this.ui.messages.height()}, 'slow', 'swing', function () {
-                        self.scrolling = false;
-                    });
-                this.scrolling = true;
+                this.ui.scrollbar.stop().animate({scrollTop: this.ui.messages.height()}, 'slow', 'swing');
+                this.ui.scrollbar.perfectScrollbar('update');
             },
-            voiceRecognised: function (message) {
-                this.collection.add({author: 'Me', message: message.utterance});
+            voiceRecognised: function (msg) {
+                var attrs = {author: 'Me', message: msg.utterance};
+                this.collection.add(attrs);
+                api.logChatMessage(attrs);
             },
             enableSpeech: function () {
                 var self = this;
@@ -414,6 +444,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
 
                         if (mostConfidentResult)
                             api.sendChatMessage(mostConfidentResult.transcript);
+                            api.loginfo('[ASR ACTION][CHAT] '+mostConfidentResult.transcript);
                     };
 
                     this.speechRecognition.onerror = function (event) {

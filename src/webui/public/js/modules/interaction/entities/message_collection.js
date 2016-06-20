@@ -8,6 +8,11 @@ define(['backbone', './message'], function (Backbone, Message) {
         getSuggestions: function () {
             return this.where({type: 'suggestion'});
         },
+        popLastSuggestion: function () {
+            var last = this.getSuggestions().pop();
+            this.remove(last);
+            return last;
+        },
         clearSuggestions: function () {
             this.remove(this.getSuggestions());
         }

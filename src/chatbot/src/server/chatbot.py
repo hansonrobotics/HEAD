@@ -1,24 +1,18 @@
 # -*- coding: utf-8 -*-
-import json
 import logging
-import server
-import requests
-from collections import defaultdict
 import random
 import os
 import sys
-import datetime as dt
 reload(sys)
 sys.setdefaultencoding('utf-8')
 import atexit
-import uuid
 
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
+INVALID_SESSION=3
 
 useSOLR = True
-SESSION_TIMEOUT=60
 CWD = os.path.dirname(os.path.realpath(__file__))
 
 logger = logging.getLogger('hr.chatbot.server.chatbot')
@@ -66,6 +60,8 @@ def get_characters_by_name(name, local=True, lang=None, user=None):
                 characters.append(c)
     else:
         characters = _characters
+    if not characters:
+        logger.warn('No character is satisfied')
     return characters
 
 def list_character(lang, sid):
@@ -108,6 +104,8 @@ def _ask_characters(characters, question, lang, sid):
         return
 
     data = sess.get_session_data()
+    user = getattr(data, 'user')
+    botname = getattr(data, 'botname')
     if hasattr(data, 'weights'):
         weights = data.weights
     else:
@@ -128,7 +126,9 @@ def _ask_characters(characters, question, lang, sid):
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random()<weight:
                 if not NON_REPEAT or sess.check(_question, answer, lang):
-                    sess.add(_question, answer)
+                    trace = _response.get('trace')
+                    sess.add(_question, answer, AnsweredBy=c.name,
+                            User=user, BotName=botname, Trace=trace)
                     return _response
 
     # Ask the same question to every tier to sync internal state
@@ -136,9 +136,13 @@ def _ask_characters(characters, question, lang, sid):
 
     dummy_character = get_character('dummy', lang)
     if dummy_character:
-        _response = dummy_character.respond(_question, lang, sid)
+        if not sess.check(_question, answer, lang):
+            _response = dummy_character.respond("REPEAT_ANSWER", lang, sid)
+        else:
+            _response = dummy_character.respond("NO_ANSWER", lang, sid)
         answer = _response.get('text', '')
-        sess.add(_question, answer)
+        sess.add(_question, answer, AnsweredBy=dummy_character.name,
+                User=user, BotName=botname, Trace=None)
         return _response
 
 def get_responding_characters(lang, sid):
@@ -154,7 +158,12 @@ def get_responding_characters(lang, sid):
     # current character > local character with the same name > solr > generic
     responding_characters = get_characters_by_name(botname, local=False, lang=lang, user=user)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
-    character = responding_characters[0]
+
+    character = None
+    if responding_characters:
+        character = responding_characters[0]
+    else:
+        return []
 
     if useSOLR:
         solr_character = get_character('solr_bot', lang)
@@ -187,11 +196,11 @@ def ask(question, lang, sid):
     """
     return (response dict, return code)
     """
+    response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+
     sess = session_manager.get_session(sid)
     if sess is None:
-        return []
-
-    response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+        return response, INVALID_SESSION
 
     responding_characters = get_responding_characters(lang, sid)
     if not responding_characters:

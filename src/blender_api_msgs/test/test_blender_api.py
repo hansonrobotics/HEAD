@@ -22,7 +22,7 @@ from roslaunch import nodeprocess
 nodeprocess._TIMEOUT_SIGINT = 2
 nodeprocess._TIMEOUT_SIGTERM = 1
 
-CWD = os.path.abspath(os.path.dirname(__file__))
+TEST_DIR = rospkg.get_test_results_dir()
 PKG = 'blender_api_msgs'
 
 def parse_msg(msg):
@@ -56,7 +56,7 @@ class BlenderAPITest(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.run_id = 'test_blender_api'
-        self.output_dir = '%s/output_video' % CWD
+        self.output_dir = '%s/%s/output_video' % (TEST_DIR, self.run_id)
         if not os.path.isdir(self.output_dir):
             os.makedirs(self.output_dir)
         self.display = os.environ.get('DISPLAY', ':0')
@@ -210,4 +210,3 @@ if __name__ == '__main__':
     import rostest
     rostest.rosrun(PKG, 'blender_api', BlenderAPITest)
     #unittest.main()
-

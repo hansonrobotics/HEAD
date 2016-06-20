@@ -40,6 +40,7 @@ define(["marionette", "tpl!./templates/pose.tpl", 'lib/api', 'lib/behaviors/touc
                 if (!this.touch) {
                     var config = this.options.getSliderValues();
                     this.setEmotion(config.duration, config.magnitude);
+                    api.loginfo('[CLICK ACTION][EMOTION] '+this.model.get('name'));
                 }
 
                 this.touch = false;

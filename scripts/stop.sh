@@ -12,6 +12,8 @@ else
     NAME=$1
 fi
 if [[ $(tmux ls) == ${NAME}* ]]; then
+    curl -G localhost:8001/v1.1/dump_history
     tmux kill-session -t $NAME
-    echo "Killed session $NAME"
 fi
+
+echo "Stopped"

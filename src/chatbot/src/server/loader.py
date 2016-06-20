@@ -4,7 +4,6 @@ import yaml
 import logging
 from server.character import AIMLCharacter, Character
 from zipfile import ZipFile
-import tempfile
 
 logger = logging.getLogger('hr.chatbot.loader')
 
