@@ -429,7 +429,10 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
   double width;
   double height;
 
+  if( locs.object.object.width != 0)
   dp = 0.22 / (float)(locs.object.object.width); //This is how it's defined as above
+  else
+  dp = 0;
 
   width = (double)camera_config.width / 2.0;
   height = (double)camera_config.height / 2.0;
