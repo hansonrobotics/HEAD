@@ -180,11 +180,10 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             getDuration: function () {
-                var nodes = this.get('nodes'),
-                    duration = 0;
+                var duration = 0;
 
-                if (nodes && nodes.length > 0) {
-                    nodes.forEach(function (node) {
+                if (this.nodes.length > 0) {
+                    this.nodes.forEach(function (node) {
                         var startTime = node.get('start_time'),
                             nodeDuration = node.get('duration');
 

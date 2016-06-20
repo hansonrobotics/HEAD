@@ -30,9 +30,8 @@ define(['application', 'backbone', 'lib/api'], function (App, Backbone, api) {
         },
         destroy: function () {
             // remove an associated element
-            if (this.get('el'))
-                $(this.get('el')).remove();
-
+            if (this.collection) this.collection.remove(this);
+            if (this.get('el')) $(this.get('el')).remove();
             this.unset('id');
             Backbone.Model.prototype.destroy.call(this);
         }
