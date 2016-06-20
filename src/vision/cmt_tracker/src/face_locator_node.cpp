@@ -106,7 +106,7 @@ cameramodel.fromCameraInfo(camerainfo);
     cmt_tracker_msgs::Objects cv_message = returnOverlapping(dlib_faces,opencv_faces);
     for(int i= 0; i < cv_message.objects.size(); i++)
     {
-        //cmt_face_locations.objects.push_back(cv_message.objects[i]);
+        cmt_face_locations.objects.push_back(cv_message.objects[i]);
     }
     cmt_face_locations.header.stamp = ros::Time::now();
     faces_locations.publish(cmt_face_locations);
@@ -358,12 +358,14 @@ std::vector<cv::Rect> non_overlaped_rects;
     bool overlap = false;
     for (int j = 0; j < dlib_locations.size(); j++)
     {
-        overlap = (opencv_locs[i] & dlib_locations[j]).area() > 0;
+     overlap = (opencv_locs[i] & dlib_locations[j]).area() > 0;
+     if (overlap)
+     break;
     }
+
     if(!overlap)
-    {
-        non_overlaped_rects.push_back(opencv_locs[i]);
-    }
+    non_overlaped_rects.push_back(opencv_locs[i]);
+
     }
 
     return convert(non_overlaped_rects);
