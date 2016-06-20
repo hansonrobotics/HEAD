@@ -113,18 +113,18 @@ class face_reinforcer:
                 merge_from.append(b.tracker_name.data)
 
         #TODO for now just delete the elements then latter put a mark on the merged elements and update if there is overlappings with the track.
-        # if merge_to and merge_from:
-        #     try:
-        #         print("Merged Element: %s and \n Merged ELement %s", merge_from, merge_to)
-        #         self.mrg = rospy.ServiceProxy('merge',MergeNames)
-        #         indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
-        #
-        #         if not indic:
-        #             pass
-        #     except rospy.ServiceException, e:
-        #         self.logger.error("Merging Service call failed: %s" % e)
+        if merge_to and merge_from:
+            try:
+                print("Merged Element: %s and \n Merged ELement %s", merge_from, merge_to)
+                self.mrg = rospy.ServiceProxy('merge',MergeNames)
+                indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
 
-        # Now pass to the merger.
+                if not indic:
+                    pass
+            except rospy.ServiceException, e:
+                self.logger.error("Merging Service call failed: %s" % e)
+
+        #Now pass to the merger.
 
 
 
