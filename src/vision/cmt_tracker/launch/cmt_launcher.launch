@@ -39,7 +39,7 @@
 <param name="face_detection_method" value="opencv"/>
 </group>
 
-<node name="camera_transform" pkg="tf" type="static_transform_publisher" args="0.1 0 0 1.57 0 1. /base_footprint $(arg head_tracking_frame) 100"/>
+<!--<node name="camera_transform" pkg="tf" type="static_transform_publisher" args="0.1 0 0 1.57 0 1. /base_footprint $(arg head_tracking_frame) 100"/>-->
 
 <arg name="debug" default="False"/>
 
