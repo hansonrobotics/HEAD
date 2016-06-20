@@ -106,7 +106,7 @@ cameramodel.fromCameraInfo(camerainfo);
     cmt_tracker_msgs::Objects cv_message = returnOverlapping(dlib_faces,opencv_faces);
     for(int i= 0; i < cv_message.objects.size(); i++)
     {
-        cmt_face_locations.objects.push_back(cv_message.objects[i]);
+        //cmt_face_locations.objects.push_back(cv_message.objects[i]);
     }
     cmt_face_locations.header.stamp = ros::Time::now();
     faces_locations.publish(cmt_face_locations);
