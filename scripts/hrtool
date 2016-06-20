@@ -6,9 +6,16 @@
 
 set -e
 
+if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
+    echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
+    exit 1
+fi
+
 for i in $(env|grep ROS|cut -d= -f1); do
     unset $i
 done
+
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 
 install_basic() {
     sudo apt-get -y update
@@ -48,6 +55,36 @@ install_ros() {
     set -e
 }
 
+install_opencog_deps() {
+    sudo apt-get -y install ccache
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
+    chmod +rx octool
+    ./octool -rdpv
+    rm octool
+
+    install_relex_deps
+}
+
+install_relex_deps() {
+    sudo apt-get -y update
+    sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
+    sudo apt-get -y install wordnet-dev wordnet-sense-index
+    sudo apt-get -y install openjdk-7-jdk
+    sudo apt-get -y install ant libcommons-logging-java libgetopt-java
+
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
+    chmod +rx octool
+    ./octool -l
+    rm octool
+
+    # Java WordNet Library
+    wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
+    unzip -o jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
+    sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
+    rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
+    sudo chmod -v 0644 /usr/local/share/java/jwnl.jar
+}
+
 install_other_deps() {
     sudo add-apt-repository -y ppa:irie/blender
     sudo apt-get -y update
@@ -82,14 +119,6 @@ install_other_deps() {
     sudo cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
     rm -rf /tmp/festival
 
-
-    # For OpenCog
-    sudo apt-get -y install ccache
-    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
-    chmod +rx octool
-    ./octool -rdpv
-    rm octool
-
     # For tts playing audio
     sudo apt-get -y install python-pyglet
 
@@ -100,6 +129,12 @@ install_other_deps() {
     sudo add-apt-repository -y ppa:mc3man/trusty-media
     sudo apt-get update
     sudo apt-get install -y ffmpeg
+
+    # MaryTTS
+    mkdir -p ~/.hr/tts/marytts
+    wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip -O /tmp/marytts-5.1.2.zip
+    unzip /tmp/marytts-5.1.2.zip -d ~/.hr/tts/marytts
+    rm /tmp/marytts-5.1.2.zip
 }
 
 install_test_deps() {
@@ -137,7 +172,7 @@ clone() {
 }
 
 get_opencog_src(){
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE
         clone hansonrobotics $repo opencog
@@ -145,7 +180,7 @@ get_opencog_src(){
 }
 
 check_local_changes() {
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
             cd $HR_WORKSPACE/opencog/$repo
@@ -154,7 +189,7 @@ check_local_changes() {
                 echo "HEAD branch is not master $(pwd)" 1>&2
                 return 1
             fi
-            if [[ $(git status --porcelain|wc -c) != 0 ]]; then
+            if [[ $(git status -uno --porcelain|wc -c) != 0 ]]; then
                 echo "Plese commit the change(s) $(pwd)" 1>&2
                 echo $(git status --porcelain) 1>&2
                 return 1
@@ -170,7 +205,7 @@ check_local_changes() {
 
 update_opencog() {
     local DEFAULT_BRANCH="master"
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE/opencog/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
@@ -195,8 +230,13 @@ do_update_hr() {
 }
 
 do_install_deps() {
+    _do_install_deps
+}
+
+_do_install_deps() {
     install_basic
     install_ros
+    install_opencog_deps
     install_other_deps
 }
 
@@ -206,6 +246,8 @@ do_get_hr_src() {
 }
 
 do_get_src() {
+    # Check/add the github host key to ~/.ssh/known_hosts
+    ssh -o StrictHostKeyChecking=no github.com || true
     do_get_hr_src
     get_opencog_src
 }
@@ -214,7 +256,7 @@ do_dev_mode() {
     DOMAIN=${1-"opencog"}
     check_local_changes || exit 1
     echo "Switching to $DOMAIN repositories"
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE
         if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
@@ -249,12 +291,16 @@ do_build_hr() {
 }
 
 build_opencog() {
-    for repo in cogutils atomspace opencog ros-behavior-scripting
+    for repo in ${OPENCOG_REPOS[*]}
     do
-        if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
-            mkdir $HR_WORKSPACE/opencog/$repo/build
+        if [[ $repo != 'relex' ]]; then
+            if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
+                mkdir $HR_WORKSPACE/opencog/$repo/build
+            fi
+            cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && sudo make install
+        else
+            cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && sudo ant install
         fi
-        cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && sudo make install
     done
 }
 
@@ -270,6 +316,33 @@ do_test() {
 do_update() {
     update_opencog
     do_update_hr
+}
+
+do_clean_up() {
+    set +e
+    echo "Cleaning up"
+    _do_clean_up >/dev/null 2>&1
+    echo "Done"
+    set -e
+}
+
+_do_clean_up() {
+    rm -r ~/.cache/guile/ccache
+    if [[ ! -z $HR_WORKSPACE ]]; then
+        for repo in ${OPENCOG_REPOS[*]}
+        do
+            if [[ $repo != 'relex' ]]; then
+                sudo rm -r $HR_WORKSPACE/opencog/$repo/build
+            fi
+        done
+    fi
+    sudo rm -r /usr/local/include/opencog
+    sudo rm -r /usr/local/lib/opencog
+    sudo rm -r /usr/local/share/opencog
+    sudo rm /usr/local/bin/cogserver
+    sudo rm /usr/local/etc/cogserver.conf
+    sudo rm /usr/local/etc/opencog.conf
+    sudo rm /usr/local/lib/libcogutil.so
 }
 
 do_run() {
@@ -298,13 +371,14 @@ Usage: $0 OPTION
 -p      Print Hanson Robotics workspace.
 -r      Run custom functions.
 -d      Developer mode. Using latest OpenCog stack.
+-c      Clean up files.
 -h      Print this help.
 
 EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUtpr:d" opt; do
+    while getopts "hw:igGbBuUtpr:dc" opt; do
         case $opt in
         h)
             show_help
@@ -322,6 +396,7 @@ parse_opts() {
         p) PRINT_HR_WORKSPACE=1 ;;
         r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
         d) DEVELOPER_MODE=1 ;;
+        c) CLEANUP=1 ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
             show_help
@@ -355,7 +430,7 @@ set_ws() {
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
-    cp $HR_ENVFILE_PATH $BASEDIR # For compatibility
+    cp $HR_ENVFILE_PATH $BASEDIR >/dev/null 2>&1 # For compatibility
 }
 
 execute() {
@@ -367,6 +442,7 @@ execute() {
     if [[ $DEVELOPER_MODE ]]; then do_dev_mode ; fi
     if [[ $UPDATE_HR_SOURCE_CODE ]]; then do_update_hr ; fi
     if [[ $UPDATE_SOURCE_CODE ]]; then do_update ; fi
+    if [[ $CLEANUP ]]; then do_clean_up ; fi
     if [[ $BUILD_HR_SOURCE_CODE ]]; then do_build_hr; fi
     if [[ $BUILD_SOURCE_CODE ]]; then do_build; fi
     if [[ $RUN_TESTS ]]; then do_test; fi

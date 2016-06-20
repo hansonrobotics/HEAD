@@ -19,6 +19,7 @@
         <!--<param name="file" value="/home/hr/test.avi" />-->
     <!--</node>-->
     <arg name="auto_face_tracking" default="True" />
+    <arg name="headless" default="False" />
     <node pkg="pi_face_tracker"
           name="body_face_tracker"
           type="face_tracker.py" output="screen">
@@ -30,6 +31,7 @@
         <param name="auto_face_tracking" value="$(arg auto_face_tracking)" />
 
         <param name="camera_name" value="camera" />
+        <param name="headless" value="$(arg headless)" />
 
         <rosparam>
           use_haar_only: False

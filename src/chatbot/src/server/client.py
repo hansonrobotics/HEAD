@@ -23,6 +23,7 @@ class Client(cmd.Cmd, object):
         self.lang = 'en'
         self.user = 'client'
         self.session = None
+        self.last_response = None
         self.do_conn()
 
     def set_sid(self):
@@ -92,9 +93,11 @@ class Client(cmd.Cmd, object):
                 if ret != 0:
                     self.do_conn()
                     ret, response = self.ask(line)
-                self.stdout.write('{}[by {}]: {}\n'.format(
-                    self.botname, response.get('botid'),
-                    response.get('text')))
+                else:
+                    self.last_response = response
+                    self.stdout.write('{}[by {}]: {}\n'.format(
+                        self.botname, response.get('botid'),
+                        response.get('text')))
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
 
@@ -286,6 +289,17 @@ Syntax: upload package
         if self.ping():
             self.stdout.write('pong')
         self.stdout.write('\n')
+
+    def do_trace(self, line):
+        if self.last_response:
+            trace = self.last_response.get('trace', None)
+            self.stdout.write('\n'.join(trace))
+        self.stdout.write('\n')
+
+    do_t = do_trace
+
+    def help_trace(self):
+        self.stdout.write('Print the trace of last reponse\n')
 
 if __name__ == '__main__':
     client = Client()

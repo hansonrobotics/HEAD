@@ -5,6 +5,6 @@ from distutils.core import setup
 
 setup(
     version='0.0.1',
-    packages=['testing_tools'],
+    packages=['testing_tools', 'common'],
     package_dir={'': 'src'}
 )
