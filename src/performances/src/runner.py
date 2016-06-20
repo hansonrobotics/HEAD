@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from threading import Thread, Lock
+from threading import Thread, Lock, Condition
 import Queue
 import rospy
 import logging
@@ -32,7 +32,10 @@ class Runner:
         self.start_time = 0
         self.start_timestamp = 0
         self.lock = Lock()
+        self.run_condition = Condition()
         self.queue = Queue.Queue()
+        self.ids = []
+        self.running_nodes = []
         self.worker = Thread(target=self.worker)
         self.worker.setDaemon(True)
         rospy.init_node('performances')
@@ -60,13 +63,90 @@ class Runner:
                 'default': rospy.Publisher('/' + self.robot_name + '/tts', String, queue_size=1),
             }
         }
-        rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
+        rospy.Service('~load', srv.Load, self.load_callback)
+        rospy.Service('~load_nodes', srv.LoadNodes, self.load_nodes_callback)
+        rospy.Service('~load_sequence', srv.LoadSequence, self.load_sequence_callback)
         rospy.Service('~run', srv.Run, self.run_callback)
         rospy.Service('~resume', srv.Resume, self.resume_callback)
         rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
+        rospy.Service('~current', srv.Current, self.current_callback)
         self.worker.start()
         rospy.spin()
+
+    def load_callback(self, request):
+        return srv.LoadResponse(success=True, nodes=json.dumps(self.load_sequence([request.id])))
+
+    def load_nodes_callback(self, request):
+        self.load_nodes(json.loads(request.nodes))
+        return srv.LoadNodesResponse(True)
+
+    def load_sequence_callback(self, request):
+        return srv.LoadSequenceResponse(success=True, nodes=json.dumps(self.load_sequence(request.ids)))
+
+    def load_sequence(self, ids):
+        nodes = []
+
+        offset = 0
+        for id in ids:
+            robot_name = rospy.get_param('/robot_name')
+            path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + '.yaml')
+            duration = 0
+
+            if os.path.isfile(path):
+                with open(path, 'r') as f:
+                    data = yaml.load(f.read())
+
+                if 'nodes' in data and isinstance(data['nodes'], list):
+                    for node in data['nodes']:
+                        if not 'start_time' in node:
+                            node['start_time'] = 0
+                        duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
+                        node['start_time'] += offset
+                    offset += duration
+                    nodes += data['nodes']
+
+        self.load_nodes(nodes, ids)
+        return nodes
+
+    def load_nodes(self, nodes, ids=None):
+        self.stop()
+
+        if ids is None:
+            ids = []
+
+        with self.lock:
+            self.ids = ids
+            self.running_nodes = nodes
+
+    def load(self, nodes, ids=None):
+        if ids is None:
+            ids = []
+
+        with self.lock:
+            logger.info("Put nodes {} to queue".format(nodes))
+            self.running = False
+            self.running_nodes = nodes
+            self.ids = ids
+
+    def run_callback(self, request):
+        return srv.RunResponse(self.run(request.startTime))
+
+    def run(self, start_time):
+        self.stop()
+
+        with self.lock:
+            if len(self.running_nodes) > 0:
+                self.running = True
+                self.start_time = start_time
+                self.start_timestamp = time.time()
+                # notify worker thread
+                self.run_condition.acquire()
+                self.run_condition.notify()
+                self.run_condition.release()
+                return True
+            else:
+                return False
 
     def resume_callback(self, request):
         success = self.resume()
@@ -106,44 +186,6 @@ class Runner:
         else:
             return srv.PauseResponse(False, 0)
 
-    def run_by_name_callback(self, request):
-        name = request.name
-        robot_name = rospy.get_param('/robot_name')
-        path = os.path.join(rospack.get_path('performances'), 'robots', robot_name, name + '.yaml')
-
-        if os.path.exists(path):
-            with open(path, 'r') as f:
-                data = yaml.load(f.read())
-
-            if 'nodes' in data and isinstance(data['nodes'], list):
-                return srv.RunByNameResponse(self.run(0, data['nodes']))
-
-        return srv.RunByNameResponse(False)
-
-    def run_callback(self, request):
-        start_time = request.startTime
-        nodes = json.loads(request.nodes)
-        return srv.RunResponse(self.run(start_time, nodes))
-
-    def run(self, start_time, nodes):
-        # Create nodes
-        nodes = [Node.createNode(node, self, start_time) for node in nodes]
-        # Stop running first if performance is running
-        size = len(nodes)
-        if size > 0:
-            self.stop()
-
-        with self.lock:
-            if size > 0:
-                self.running = True
-                self.start_time = start_time
-                self.start_timestamp = time.time()
-                logger.info("Put nodes {} to queue".format(nodes))
-                self.queue.put(nodes)
-                return True
-            else:
-                return False
-
     # Pauses current
     def pause(self):
         with self.lock:
@@ -155,13 +197,24 @@ class Runner:
             else:
                 return False
 
+    # Returns current performance
+    def current_callback(self, request):
+        with self.lock:
+            current_time = self.get_run_time()
+            running = self.running and not self.paused
+            return srv.CurrentResponse(ids=self.ids, nodes=json.dumps(self.running_nodes), current_time=current_time,
+                                       running=running)
+
     def worker(self):
+        self.run_condition.acquire()
         while True:
             with self.lock:
                 self.paused = False
 
             self.topics['events'].publish(Event('idle', 0))
-            nodes = self.queue.get()
+            self.run_condition.wait()
+            with self.lock:
+                nodes = [Node.createNode(node, self, self.start_time) for node in self.running_nodes]
             self.topics['events'].publish(Event('running', self.start_time))
 
             if len(nodes) == 0:
@@ -178,8 +231,11 @@ class Runner:
                         continue
 
                 running = False
+                # checks if any nodes still running
                 for node in nodes:
                     running = node.run(run_time) or running
+
+        self.run_condition.release()
 
     def get_run_time(self):
         """

@@ -17,9 +17,14 @@ logger = logging.getLogger('hr.performances.nodes')
 
 class Node(object):
     # Create new Node from JSON
+    @staticmethod
+    def subClasses(cls):
+        return cls.__subclasses__() + [g for s in cls.__subclasses__()
+                                   for g in cls.subClasses(s)]
+
     @classmethod
     def createNode(cls, data, runner, start_time=0):
-        for s_cls in cls.__subclasses__():
+        for s_cls in cls.subClasses(cls):
             if data['name'] == s_cls.__name__:
                 node = s_cls(data, runner)
                 if start_time > node.start_time:
@@ -115,19 +120,8 @@ class emotion(Node):
                              rospy.Duration.from_sec(self.data['duration'])))
 
 
-class look_at(Node):
-    def start(self, run_time):
-        self.runner.topics['look_at'].publish(Target(self.data['x'], self.data['y'], self.data['z']))
-
-
-class gaze_at(Node):
-    def start(self, run_time):
-        self.runner.topics['gaze_at'].publish(Target(self.data['x'], self.data['y'], self.data['z']))
-
 # Behavior tree
 class interaction(Node):
-
-
     def start(self, run_time):
         self.runner.topics['bt_control'].publish(Int32(self.data['mode']))
         if self.data['chat'] == 'listening':
@@ -260,7 +254,7 @@ class pause(Node):
                         self.subscriber.unregister()
 
                 if topic[0] != '/':
-                    topic = '/' + rospy.get_param('/robot_name') + '/' + topic
+                    topic = '/' + self.runner.robot_name + '/' + topic
 
                 self.subscriber = rospy.Subscriber(topic, String, resume)
 
@@ -301,3 +295,46 @@ class chat_pause(Node):
         if self.subscriber:
             self.subscriber.unregister()
             self.subscriber = False
+
+class attention(Node):
+    # Find current region at runtime
+    def __init__(self, data, runner):
+        Node.__init__(self, data, runner)
+        self.topic = 'look_at'
+
+    def get_region(self, region):
+        regions = rospy.get_param('/' + self.runner.robot_name + "/attention_regions")
+        return next((r for r in regions if r['type'] == region), False)
+
+    # returns random coordinate from the region
+    def get_point(self, region):
+        region = self.get_region(region)
+        if not region:
+            # Look forward
+            return {'x':1, 'y':0, 'z':0}
+        return {
+            'x': 1,
+            'y': region['x'] + region['width']*random.random(),
+            'z': region['y'] - region['height']*random.random(),
+        }
+
+    def start(self, run_time):
+        if 'attention_region' in self.data and self.data['attention_region'] != 'custom':
+            point = self.get_point(self.data['attention_region'])
+        else:
+            point = self.data
+        self.runner.topics[self.topic].publish(Target(point['x'], point['y'], point['z']))
+
+
+class look_at(attention):
+    # Find current region at runtime
+    def __init__(self, data, runner):
+        attention.__init__(self, data, runner)
+        self.topic = 'look_at'
+
+
+class gaze_at(attention):
+    # Find current region at runtime
+    def __init__(self, data, runner):
+        attention.__init__(self, data, runner)
+        self.topic = 'gaze_at'

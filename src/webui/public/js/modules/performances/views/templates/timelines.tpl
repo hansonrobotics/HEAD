@@ -31,11 +31,11 @@
     <div class="app-node label label-default" data-name="interaction">Interaction</div>
     <div class="app-node label label-default" data-name="pause">Pause</div>
     <div class="app-node label label-default" data-name="random">Random</div>
-    <!--<div class="app-node label label-default" data-name="chat_pause">Chat pause</div>-->
-    <!--<div class="app-node label label-info" data-name="expression">Expression</div>-->
+    <!--<div class="app-node label label-default hidden" data-name="chat_pause">Chat pause</div>-->
+    <!--<div class="app-node label label-info hidden" data-name="expression">Expression</div>-->
     <div class="app-node label label-success" data-name="kfanimation">KF Animation</div>
-    <!--<div class="app-node label label-warning" data-name="listening">Listening</div>-->
-    <!--<div class="app-node label label-primary" data-name="soma">Soma State</div>-->
+    <!--<div class="app-node label label-warning hidden" data-name="listening">Listening</div>-->
+    <!--<div class="app-node label label-primary hidden" data-name="soma">Soma State</div>-->
     <div class="app-node label label-warning" data-name="head_rotation">Head Tilt</div>
 </div>
 
