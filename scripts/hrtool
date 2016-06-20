@@ -282,7 +282,7 @@ do_update_vision_tools() {
 
     local DEFAULT_BRANCH="wrapper"
 
-    cd $HR_WORKSPACE/src/vision/CppMT
+    cd $HR_WORKSPACE/HEAD/src/vision/CppMT
 
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [[ $branch != $DEFAULT_BRANCH ]]; then
