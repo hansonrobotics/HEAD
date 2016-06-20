@@ -17,9 +17,14 @@ logger = logging.getLogger('hr.performances.nodes')
 
 class Node(object):
     # Create new Node from JSON
+    @staticmethod
+    def subClasses(cls):
+        return cls.__subclasses__() + [g for s in cls.__subclasses__()
+                                   for g in cls.subClasses(s)]
+
     @classmethod
     def createNode(cls, data, runner, start_time=0):
-        for s_cls in cls.__subclasses__():
+        for s_cls in cls.subClasses(cls):
             if data['name'] == s_cls.__name__:
                 node = s_cls(data, runner)
                 if start_time > node.start_time:
@@ -249,7 +254,7 @@ class pause(Node):
                         self.subscriber.unregister()
 
                 if topic[0] != '/':
-                    topic = '/' + rospy.get_param('/robot_name') + '/' + topic
+                    topic = '/' + self.runner.robot_name + '/' + topic
 
                 self.subscriber = rospy.Subscriber(topic, String, resume)
 
@@ -298,7 +303,7 @@ class attention(Node):
         self.topic = 'look_at'
 
     def get_region(self, region):
-        regions = rospy.get_param("attention_regions")
+        regions = rospy.get_param('/' + self.runner.robot_name + "/attention_regions")
         return next((r for r in regions if r['type'] == region), False)
 
     # returns random coordinate from the region
@@ -310,7 +315,7 @@ class attention(Node):
         return {
             'x': 1,
             'y': region['x'] + region['width']*random.random(),
-            'y': region['y'] + region['height']*random.random(),
+            'z': region['y'] - region['height']*random.random(),
         }
 
     def start(self, run_time):
@@ -324,12 +329,12 @@ class attention(Node):
 class look_at(attention):
     # Find current region at runtime
     def __init__(self, data, runner):
-        Node.__init__(self, data, runner)
+        attention.__init__(self, data, runner)
         self.topic = 'look_at'
 
 
 class gaze_at(attention):
     # Find current region at runtime
     def __init__(self, data, runner):
-        Node.__init__(self, data, runner)
+        attention.__init__(self, data, runner)
         self.topic = 'gaze_at'
