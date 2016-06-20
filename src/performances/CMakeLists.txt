@@ -52,11 +52,14 @@ add_message_files(
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
+  Run.srv
+  Stop.srv
   Pause.srv
   Resume.srv
-  Run.srv
-  RunByName.srv
-  Stop.srv
+  Current.srv
+  Load.srv
+  LoadNodes.srv
+  LoadSequence.srv
 )
 
 ## Generate actions in the 'action' folder

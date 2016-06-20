@@ -1,7 +1,7 @@
 define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
-        '../entities/performance_collection', './queue', './timelines', 'jquery', 'select2'],
-    function (Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, QueueView,
-              TimelinesView, $) {
+        '../entities/performance_collection', '../entities/performance', './queue', './timelines', 'jquery', 'select2'],
+    function (Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
+              QueueView, TimelinesView, $) {
         return Marionette.LayoutView.extend({
             template: template,
             cssClass: 'app-performances-page',
@@ -27,35 +27,54 @@ define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fad
                 'click @ui.languageButton': 'changeLanguage'
             },
             onShow: function () {
-                var self = this;
-
                 this.setFluidContainer(!!this.options.fluid);
-                var performanceCollection = new PerformanceCollection(),
-                    queueView = new QueueView({
-                        layoutView: this,
-                        performances: performanceCollection
-                    });
-                performanceCollection.fetch();
-                // show performance buttons
-                var performancesView = new PerformancesView({
-                    collection: performanceCollection,
-                    queueView: queueView
+                this.performanceCollection = new PerformanceCollection();
+
+                var self = this,
+                    current = new Performance(),
+                    showViews = function (ids) {
+                        var queueView = new QueueView({
+                                layoutView: self,
+                                performances: self.performanceCollection,
+                                sequence: ids
+                            }),
+                            performancesView = new PerformancesView({
+                                collection: self.performanceCollection,
+                                queueView: queueView
+                            });
+
+                        self.showTimeline(current);
+                        self.getRegion('queue').show(queueView);
+                        self.getRegion('performances').show(performancesView);
+
+                        performancesView.on('new', self.showTimeline, self);
+                    };
+
+                this.performanceCollection.fetch({
+                    success: function () {
+                        current.fetchCurrent({
+                            success: function (response) {
+                                showViews(response.ids);
+
+                            },
+                            error: function () {
+                                showViews([]);
+                            }
+                        });
+                    },
+                    error: function () {
+                        showViews([]);
+                    }
                 });
-
-                this.getRegion('performances').show(performancesView);
-
-                // show queue
-                this.getRegion('queue').show(queueView);
-
-                performancesView.on('new', function (performance) {
-                    var timelinesView = new TimelinesView({
-                        collection: new Backbone.Collection(),
-                        model: performance,
-                        performances: performanceCollection,
-                        readonly: false
-                    });
-                    self.getRegion('timeline').show(timelinesView);
+            },
+            showTimeline: function (performance) {
+                var timelinesView = new TimelinesView({
+                    collection: new Backbone.Collection(),
+                    model: performance,
+                    performances: this.performanceCollection,
+                    readonly: false
                 });
+                this.getRegion('timeline').show(timelinesView);
             },
             changeLanguage: function (e) {
                 var language = $(e.target).data('lang');

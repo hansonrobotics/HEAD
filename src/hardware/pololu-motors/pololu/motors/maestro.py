@@ -179,6 +179,7 @@ class Maestro(object):
         self._log and self._log.debug("Wrote byte sequence: %s",
                                       [hex(num) for num in sequence])
 
+
     def getError(self, message=True, device=DEFAULT_DEVICE_ID):
         """
         Get the error message or value stored in the Maestro hardware.
@@ -219,6 +220,37 @@ class Maestro(object):
                     result.append(bit)
 
         return result
+
+    def getPosition(self, channel, device=DEFAULT_DEVICE_ID):
+        """
+        Get the current calculated position or the input values
+
+        :Parameters:
+          channel : `int`
+            Channel id on the pololu board
+          device : `int`
+            The device is the integer number of the hardware devices ID and
+            is only used with the Pololu Protocol.
+
+        :Returns:
+          A list of text messages, integers, or and empty list. See the
+          `message` parameter above.
+        """
+        cmd = self._COMMAND.get('get-position')
+        self._writeData(cmd,
+                        device,
+                        (channel,))
+        try:
+            num = self._serial.read(size=2)
+            num = ord(num[1])*256+ord(num[0])
+        except serial.SerialException as e:
+            self._log and self._log.error("Error: %s", e, exc_info=True)
+            raise e
+        except TypeError as e:
+            num = 0
+
+        return num
+
 
     def _intToLowHigh(self, val):
         """

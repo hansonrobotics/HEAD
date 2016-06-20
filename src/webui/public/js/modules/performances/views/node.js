@@ -1,6 +1,6 @@
-define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'bootbox', 'jquery-ui', 'lib/crosshair-slider',
+define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'underscore', 'jquery-ui', 'lib/crosshair-slider',
         'select2'],
-    function (App, Marionette, template, api, bootbox) {
+    function (App, Marionette, template, api, _) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
@@ -30,6 +30,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 speechEventSelect: 'select.app-speech-event-select',
                 hrAngleSlider: '.app-hr-angle-slider',
                 hrAngleLabel: '.app-hr-angle-label',
+                attentionRegionSelect: '.app-attention-region-select',
+                timeout: '.app-node-timeout',
+                randomNodePerformance: '.app-random-node-performance-select'
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -48,6 +51,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 'change @ui.btreeModeSelect': 'setBtreeMode',
                 'change @ui.speechEventSelect': 'setSpeechEvent',
                 'change @ui.kfModeSelect': 'setKFMode',
+                'change @ui.attentionRegionSelect': 'selectAttentionRegion',
+                'change @ui.timeout': 'updateTimeout',
+                'change @ui.randomNodePerformance': 'changeRandomNodePerformance'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -64,24 +70,33 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 if (_.contains(['pause'], this.model.get('name'))) {
                     this.ui.durationIndicator.hide();
                     this.ui.frameCount.hide();
+                    this.ui.timeout.val(this.model.get('timeout') || '');
                 } else
                     this.updateIndicators();
 
                 if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
+                    var magnitude = this.model.get('magnitude') || 0;
+
                     // set default
                     if (!this.model.get('magnitude'))
-                        this.model.set('magnitude', 1);
+                        this.model.set('magnitude', [0.9,1]);
 
-                    this.ui.magnitudeLabel.html(this.model.get('magnitude') * 100 + '%');
+                    if (magnitude instanceof Array && magnitude.length == 2)
+                        magnitude = [magnitude[0] * 100, magnitude[1] * 100];
+                    else
+                        // computable with previous version of single value magnitude
+                        magnitude = [magnitude*100, magnitude*100];
+
+                    this.ui.magnitudeLabel.html(magnitude[0] + '-' + magnitude[1] + '%');
 
                     // init slider
                     this.ui.magnitudeSlider.slider({
                         animate: true,
-                        range: 'min',
-                        value: this.model.get('magnitude') * 100,
-                        slide: function (e, ui) {
-                            self.model.set('magnitude', (ui.value / 100).toFixed(2));
-                            self.ui.magnitudeLabel.html(Math.floor(self.model.get('magnitude') * 100) + '%');
+                        range: true,
+                        values: magnitude,
+                        slide: function( event, ui ) {
+                            self.model.set('magnitude', [ui.values[0] / 100, ui.values[1] / 100]);
+                            self.ui.magnitudeLabel.html(ui.values[0] + '-' + ui.values[1] + '%');
                         }
                     });
                 }
@@ -180,10 +195,10 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                         });
                         break;
                     case 'look_at':
-                        this.buildCrosshair();
+                        this.enableAttentionRegionSelect();
                         break;
                     case 'gaze_at':
-                        this.buildCrosshair();
+                        this.enableAttentionRegionSelect();
                         break;
                     case 'speech':
                         if (this.model.get('text'))
@@ -239,7 +254,6 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                     this.model.set('animation', animations[0].name);
                     this.setKFAnimationDuration();
                 }
-
 
                 if (this.model.get('animation'))
                     $(this.ui.kfAnimationSelect).val(this.model.get('animation'));
@@ -366,10 +380,26 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
             setSpeechEvent: function () {
                 this.model.set('chat', this.ui.speechEventSelect.val());
             },
-            buildCrosshair: function (params) {
+            enableAttentionRegionSelect: function () {
                 var self = this;
-                params = params || {};
-                $(this.ui.crosshair).crosshairsl($.extend({}, {
+
+                this.buildCrosshair();
+                this.ui.crosshair.hide();
+
+                api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
+                    self.ui.attentionRegionSelect.html('');
+                    _.each(regions, function (name, key) {
+                        self.ui.attentionRegionSelect.append($('<option>').attr('value', key).html(name));
+                    });
+                    self.ui.attentionRegionSelect.append($('<option>').attr('value', 'custom').html('Custom'));
+                    self.ui.attentionRegionSelect.val(self.model.get('attention_region') || 'custom');
+                    self.ui.attentionRegionSelect.select2();
+                    self.selectAttentionRegion();
+                });
+            },
+            buildCrosshair: function () {
+                var self = this;
+                $(this.ui.crosshair).crosshairsl({
                     xmin: -1,
                     xmax: 1,
                     xval: this.model.get('y') ? this.model.get('y') : 0,
@@ -383,7 +413,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
 
                         self.model.call();
                     }
-                }, params));
+                });
 
                 self.model.set('x', 1);
                 self.model.set('y', 0);
@@ -395,6 +425,22 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'boo
                 this.$el.slideUp(null, function () {
                     self.destroy();
                 });
+            },
+            selectAttentionRegion: function () {
+                this.model.set('attention_region', this.ui.attentionRegionSelect.val());
+
+                if (this.ui.attentionRegionSelect.val() == 'custom') {
+                    this.ui.crosshair.fadeIn();
+                } else {
+                    this.ui.crosshair.fadeOut();
+                }
+            },
+            updateTimeout: function () {
+                this.model.set('timeout', this.ui.timeout.val());
+            },
+            enableRandomNodePerformanceSelect: function () {
+            },
+            changeRandomNodePerformance: function () {
             }
         });
     });

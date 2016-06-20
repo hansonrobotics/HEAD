@@ -2,6 +2,9 @@ define(['backbone', './performance', 'lib/api'], function (Backbone, Performance
     return Backbone.Collection.extend({
         eventHandler: false,
         model: Performance,
+        comparator: function (model) {
+            return model.get('name').toLowerCase();
+        },
         url: '/performances/' + api.config.robot,
         initialize: function () {
             // Subscribing to performance events

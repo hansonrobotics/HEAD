@@ -1,4 +1,4 @@
-define(['marionette'], function (Marionette) {
+define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function (Marionette, _, $) {
     return Marionette.ItemView.extend({
         tagName: 'button',
         template: false,
@@ -10,11 +10,21 @@ define(['marionette'], function (Marionette) {
             click: "click" // fires a 'click' event on view instance
         },
         modelEvents: {
-            change: 'render'
+            'change:name change:path': 'update'
         },
         onRender: function () {
+            this.$el.attr('data-cid', this.cid).draggable({
+                appendTo: 'body',
+                cancel: false,
+                revert: true,
+                helper: 'clone',
+                refreshPositions: true
+            });
+            this.update();
+        },
+        update: function () {
             this.$el.html(this.model.get('name'));
-            this.$el.attr('data-path', this.model.get('path').split('/').slice(0, -1).join('/'));
+            this.$el.attr('data-path', this.model.get('path') || '');
         }
     });
 });
