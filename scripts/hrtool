@@ -527,7 +527,7 @@ EOF
 
 parse_opts() {
 
-    while getopts "hw:igGbBuUvtprs:d" opt; do
+    while getopts "hw:igGbBuUvtpr:s:d" opt; do
 
         case $opt in
         h)
