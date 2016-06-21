@@ -179,7 +179,7 @@ class face_reinforcer:
 
             #This section is for creating tracker locations by updating not_covered_faces
         for j in not_covered_faces_list:
-            if (j.object.width * j.object.height > 0.6*(640*480)):
+            if (j.object.width * j.object.height > 0.4*(640*480)):
                 print('Face To Big to added')
                 break
             overlp = False

@@ -336,7 +336,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
                                              temp_tracked_image_mats.back().step[0], QImage::Format_RGB888));
   }
 
-  if (tracker_updated_num == 2 || firstrun)
+  if (firstrun)
   {
     firstrun = false;
     cmt_tracker_msgs::TrackedImages results;

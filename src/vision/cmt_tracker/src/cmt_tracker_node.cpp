@@ -70,7 +70,7 @@ bool TrackerCMT::clear(cmt_tracker_msgs::Clear::Request &req, cmt_tracker_msgs::
   cmt_.clear();
   poorly_tracked = cmt_.removeLost();
   deleteOnLost();
-  nh_.setParam("tracker_updated", 2);
+  //nh_.setParam("tracker_updated", 2);
 
   return true;
 }
@@ -139,7 +139,7 @@ bool TrackerCMT::updateTrackerNames(cmt_tracker_msgs::TrackerNames::Request &req
     if( cmt_.updatemapname(req.names, req.index))
     {
     //TODO trigger an event here.
-    nh_.setParam("tracker_updated", 2);
+    //nh_.setParam("tracker_updated", 2);
     return true;
     }
     else
@@ -300,7 +300,7 @@ void TrackerCMT::deleteOnLost()
   face_filtered.erase(poorly_tracked[i]);
   }
 
-  nh_.setParam("tracker_updated", 2);
+  //nh_.setParam("tracker_updated", 2);
 
   poorly_tracked.clear();
   //std::cout<<"Exits DeleteOnLost"<<std::endl;
@@ -356,7 +356,7 @@ void TrackerCMT::set_trackers(const cmt_tracker_msgs::Trackers& tracker_location
     set_tracker(tracker_location.tracker_results[i]);
   }
 
-  nh_.setParam("tracker_updated", 2);
+  //nh_.setParam("tracker_updated", 2);
   int sizeof_t = cmt_.size_map();
   nh_.setParam("tracker_size",sizeof_t);
   ros::service::call("can_add_tracker",empty_info);
