@@ -407,6 +407,10 @@ undo_dev_mode() {
 }
 
 do_build_hr() {
+    _do_build_hr
+}
+
+_do_build_hr() {
     cd $HR_WORKSPACE/$PROJECT
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
@@ -523,7 +527,7 @@ EOF
 
 parse_opts() {
 
-    while getopts "hw:igGbBuUvtprs:d" opt; do
+    while getopts "hw:igGbBuUvtpr:s:d" opt; do
 
         case $opt in
         h)
