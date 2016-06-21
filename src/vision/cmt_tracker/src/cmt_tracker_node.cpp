@@ -207,7 +207,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
   poorly_tracked.clear();
 
   std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor,merge);
-
+  merge.clear(); 
   for(std::vector<cmt::cmt_message>::iterator v = messages.begin(); v!= messages.end(); v++)
   {
     cmt_tracker_msgs::Tracker tracker;
