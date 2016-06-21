@@ -35,7 +35,7 @@
     <!-- Web UI and rosbridge for webui -->
     <include file="$(find webui)/webui.launch" />
     <include file="$(arg basedir)/rosbridge.launch" />
-
+    <include file="$(arg basedir)/rosbridge_ssl.launch" />
 </launch>
 <!--
 372.297065764 K-Const
