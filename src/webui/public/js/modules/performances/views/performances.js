@@ -7,11 +7,13 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
             childViewContainer: '.app-performances',
             ui: {
                 newButton: '.app-new-performance-button',
+                addAllButton: '.app-add-all-button',
                 tabs: '.app-performance-group-tabs',
                 container: '.app-performances'
             },
             events: {
-                'click @ui.newButton': 'addNew'
+                'click @ui.newButton': 'addNew',
+                'click @ui.addAllButton': 'addAll'
             },
             collectionEvents: {
                 'change:path add remove reset': 'updateTabs'
@@ -46,6 +48,19 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
                 var performance = new Performance({name: 'New performance', path: this.currentPath});
                 this.collection.add(performance);
                 this.trigger('new', performance);
+            },
+            addAll: function (){
+                var self = this;
+                var added = false;
+                this.collection.each(function(performance){
+                    if ((performance.get('path') || '') == self.currentPath){
+                        self.options.queueView.addPerformance(performance, true);
+                        added = true;
+                    }
+                });
+                self.options.queueView.updateTimeline()
+
+
             },
             attachHtml: function (collectionView, childView) {
                 var self = this;
