@@ -95,12 +95,12 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 var nodeListener = function () {
                     if (self.isDestroyed)
                         this.off('add remove reset', nodeListener);
-                    else if (self.model.get('nodes').isEmpty())
+                    else if (self.model.nodes.isEmpty())
                         self.ui.clearButton.fadeOut();
                     else if (!self.options.readonly)
                         self.ui.clearButton.fadeIn();
                 };
-                this.model.get('nodes').on('add remove reset', nodeListener);
+                this.model.nodes.on('add remove reset', nodeListener);
 
                 // hide delete and clear buttons for new models
                 if (!this.model.get('id')) {
@@ -111,8 +111,8 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.stopIndicator();
                 this.removeNodeElements();
                 this.arrangeNodes();
-                this.model.get('nodes').bind('add', this.addNode, this);
-                this.model.get('nodes').bind('remove reset', this.arrangeNodes, this);
+                this.model.nodes.bind('add', this.addNode, this);
+                this.model.nodes.bind('remove reset', this.arrangeNodes, this);
 
                 // add resize event
                 var updateWidth = function () {
@@ -129,14 +129,14 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     tolerance: 'touch',
                     drop: function (e, ui) {
                         var nodeEl = $(ui.helper),
-                            node = self.model.get('nodes').get({cid: nodeEl.data('cid')}),
+                            node = self.model.nodes.get({cid: nodeEl.data('cid')}),
                             startTime = Math.round(
                                     (ui.offset.left - $(this).offset().left) / self.config.pxPerSec * 100) / 100;
 
                         if (node)
                             node.set('start_time', startTime);
                         else
-                            self.model.get('nodes').add({
+                            self.model.nodes.add({
                                 name: nodeEl.data('name'),
                                 start_time: startTime,
                                 duration: 1
@@ -148,9 +148,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.stopIndicator();
 
                 this.model.stop();
-                this.model.get('nodes').unbind('add', this.addNode, this);
-                this.model.get('nodes').unbind('remove reset', this.arrangeNodes, this);
-                this.model.get('nodes').each(function (node) {
+                this.model.nodes.unbind('add', this.addNode, this);
+                this.model.nodes.unbind('remove reset', this.arrangeNodes, this);
+                this.model.nodes.each(function (node) {
                     $(node.get('el')).remove();
                 });
                 if (typeof this.options.performances != 'undefined') {
@@ -169,7 +169,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     duration: 1
                 });
 
-                this.model.get('nodes').add(node);
+                this.model.nodes.add(node);
             },
             modelChanged: function () {
                 this.ui.performanceName.val(this.model.get('name'));
@@ -193,7 +193,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 $(el).append(handle).resizable({
                     handles: 'w, e',
                     resize: function () {
-                        var node = self.model.get('nodes').get({cid: $(this).data('cid')});
+                        var node = self.model.nodes.get({cid: $(this).data('cid')});
                         node.set('duration', Math.round($(this).outerWidth() / self.config.pxPerSec * 100) / 100);
                     }
                 });
@@ -306,7 +306,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             arrangeNodes: function () {
                 var self = this,
                     available = false,
-                    nodes = this.model.get('nodes');
+                    nodes = this.model.nodes;
 
                 nodes.each(function (node) {
                     self.createNodeEl(node);
@@ -545,7 +545,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
              * Removes all nodes from the performance
              */
             clearPerformance: function () {
-                this.model.get('nodes').reset();
+                this.model.nodes.reset();
                 this.hideNodeSettings();
             },
             deletePerformance: function () {
