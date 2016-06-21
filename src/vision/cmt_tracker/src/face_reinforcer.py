@@ -193,7 +193,7 @@ class face_reinforcer:
                     if get_element[5] > self.dlib_count:
                         not_covered_faces.append(j)
                         self.persistance_face=[]
-                    elif get_element[6] > self.cv_count:
+                    elif get_element[6] > 8:
                         not_covered_faces.append(j)
                         self.persistance_face=[]
                     elif get_element[6] + get_element [5] > self.cv_dlib_count:

@@ -458,6 +458,7 @@ pi_face_tracker::Faces returnPiMessages(cmt_tracker_msgs::Trackers locs, camera_
   pi_face_tracker::Faces msgs;
   for (int i = 0; i < locs.tracker_results.size(); i++)
   {
+    if(std::atoi(locs.tracker_results[i].tracker_name.data.c_str()) != 0)
     msgs.faces.push_back(returnPiMessage(locs.tracker_results[i], camera_config));
   }
   return msgs;
