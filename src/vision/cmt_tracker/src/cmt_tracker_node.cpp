@@ -68,6 +68,8 @@ TrackerCMT::TrackerCMT() : it_(nh_)
 bool TrackerCMT::clear(cmt_tracker_msgs::Clear::Request &req, cmt_tracker_msgs::Clear::Response &res)
 {
   cmt_.clear();
+  poorly_tracked = cmt_.removeLost();
+  deleteOnLost();
   nh_.setParam("tracker_updated", 2);
 
   return true;
@@ -207,7 +209,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
   poorly_tracked.clear();
 
   std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor,merge);
-  merge.clear(); 
+  merge.clear();
   for(std::vector<cmt::cmt_message>::iterator v = messages.begin(); v!= messages.end(); v++)
   {
     cmt_tracker_msgs::Tracker tracker;
@@ -232,18 +234,27 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     if ((*v).validated)
     {
     trackers_results.tracker_results.push_back(tracker);
-    if(pi_registry.find(tracker.tracker_name.data)==pi_registry.end())
-    {
-    pi_face_tracker::FaceEvent m = returnPiEvents("new_face", tracker.tracker_name.data);
-    pi_events.publish(m);
-    pi_registry[tracker.tracker_name.data] = tracker.tracker_name.data;
-    }
+//    if(pi_registry.find(tracker.tracker_name.data)==pi_registry.end())
+//    {
+//    pi_face_tracker::FaceEvent m = returnPiEvents("new_face", tracker.tracker_name.data);
+//    pi_events.publish(m);
+//    pi_registry[tracker.tracker_name.data] = tracker.tracker_name.data;
+//    }
 
     }
     else
     temp_results.tracker_results.push_back(tracker);
   }
+    newly_tracked.clear();
     poorly_tracked = cmt_.removeLost();
+    newly_tracked = cmt_.newFace();
+    cmt_.clearFace();
+    for ( int i = 0; i < newly_tracked.size(); i++)
+    {
+    pi_face_tracker::FaceEvent m = returnPiEvents("new_face", newly_tracked[i]);
+    pi_events.publish(m);
+    pi_registry[newly_tracked[i]] = newly_tracked[i];
+    }
 
     pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
 
@@ -282,20 +293,15 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 void TrackerCMT::deleteOnLost()
 {
   //std::cout<<"Enters DeleteOnLost"<<std::endl;
-  int size  = poorly_tracked.size();
-  for (int i = 0; i < size; i++)
+
+  for (int i = 0; i < poorly_tracked.size(); i++)
   {
-  ROS_INFO("Element %d - %s",i,poorly_tracked[i].c_str());
+  remove_tracker(poorly_tracked[i]);
+  face_filtered.erase(poorly_tracked[i]);
   }
-  if (size > 0)
-  {
-    for (int i = 0; i < poorly_tracked.size(); i++)
-    {
-      remove_tracker(poorly_tracked[i]);
-      face_filtered.erase(poorly_tracked[i]);
-    }
-    nh_.setParam("tracker_updated", 2);
-  }
+
+  nh_.setParam("tracker_updated", 2);
+
   poorly_tracked.clear();
   //std::cout<<"Exits DeleteOnLost"<<std::endl;
 }
@@ -361,11 +367,7 @@ void TrackerCMT::remove_tracker(std::string name)
 {
   std::cout<<"Enters remove_tracker"<<std::endl;
 
-  if(pi_registry.find(name)==pi_registry.end())
-  {
-
-  }
-  else
+  if(pi_registry.find(name)!=pi_registry.end())
   {
   pi_face_tracker::FaceEvent m = returnPiEvents("lost_face", name);
   pi_events.publish(m);

@@ -186,6 +186,7 @@ private:
 	cmt::CMTMAP cmt_;
 
 	std::vector<std::string> poorly_tracked;
+	std::vector<std::string> newly_tracked;
 	cv::Rect bb_rect;
 	//premove
 	std::string tracking_method;
