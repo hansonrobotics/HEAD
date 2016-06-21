@@ -353,6 +353,31 @@ do_run() {
     done
 }
 
+_get_rel_ws() {
+    readlink -f ${BASEDIR}/../../
+}
+
+_get_confirm() {
+    local message="${1:-Are you sure?}"
+    local answer
+    printf '%s ' "$message"
+    read -r answer
+    ! printf '%s\n' "$answer" | grep -Eq "$(locale yesexpr)"
+    confirm=$?
+}
+
+check_ws() {
+    # Check workspace
+    local rel_ws=$(_get_rel_ws)
+    local ws=$(readlink -f ${HR_WORKSPACE})
+    if [[ $rel_ws != $ws ]]; then
+        local confirm
+        printf "WARN: the workspace configured ${ws} doesn't match the your working path ${rel_ws}\n"
+        _get_confirm "Continue using ${ws}?"
+        [[ ${confirm} -eq 1 ]] || exit 0
+    fi
+}
+
 #######
 
 show_help() {
@@ -436,6 +461,17 @@ set_ws() {
 execute() {
     parse_opts $@
     set_ws
+
+    if [[ $GET_HR_SOURCE_CODE == 1 ||
+        $GET_SOURCE_CODE == 1 ||
+        $DEVELOPER_MODE == 1 ||
+        $UPDATE_HR_SOURCE_CODE == 1 ||
+        $UPDATE_SOURCE_CODE == 1 ||
+        $BUILD_HR_SOURCE_CODE == 1 ||
+        $RUN_CUSTOM_FUNCTIONS == 1
+        ]]; then
+        check_ws
+    fi
     if [[ $INSTALL_DEPENDENCIES ]]; then do_install_deps; fi
     if [[ $GET_HR_SOURCE_CODE ]]; then do_get_hr_src; fi
     if [[ $GET_SOURCE_CODE ]]; then do_get_src; fi
