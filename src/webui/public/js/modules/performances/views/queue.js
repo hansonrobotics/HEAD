@@ -35,7 +35,7 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', 'u
                     });
                 }
             },
-            addPerformance: function (performance) {
+            addPerformance: function (performance, skipTimelineUpdate) {
                 var self = this,
                     el = $(this.ui.performanceTemplate).clone().removeClass('app-performance-template').get(0),
                     item = {
@@ -66,8 +66,10 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', 'u
                     self._removeItem(item);
                     self.updateTimeline();
                 });
-
-                this.updateTimeline();
+                // Adding multiple performances at time makes it faster if timeline updated only once
+                skipTimelineUpdate = skipTimelineUpdate || false;
+                if (!skipTimelineUpdate)
+                    this.updateTimeline();
             },
             updateTimeline: function () {
                 this.timelinesView = this._showTimeline({sequence: this._getPerformanceIds(), readonly: true});

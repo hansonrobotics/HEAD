@@ -33,5 +33,5 @@
     <!-- Web UI and rosbridge for webui -->
     <include file="$(find webui)/webui.launch" />
     <include file="$(arg basedir)/rosbridge.launch" />
-
+    <include file="$(arg basedir)/rosbridge_ssl.launch" />
 </launch>
