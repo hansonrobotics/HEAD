@@ -1,3 +1,5 @@
+var node = false;
+
 function TestClient(){
     let last_write = [];
     let last_error = [];
@@ -49,6 +51,34 @@ function TestClient(){
         return client;
     }
 
+    //Not used because bot sometimes responds with 'I've already answered this question' or similar
+
+    //this.sync_test_general = function(callback){
+    //    let client = make_client();
+    //    client.do_conn();
+    //    let loop = setInterval(function(){
+    //        if(!client.ping()){
+    //            return;
+    //        }
+    //        clearInterval(loop);
+    //        client.do_select('sophia');
+    //        const asked = client.ask('what is your name');
+    //        const ret = asked[0];
+    //        const response = asked[1];
+    //        const ans = response['text'];
+    //        const names = ['Soepheeyeh', 'Sophia'];
+    //        for(const idx in names){
+    //            if(ans.indexOf(names[idx]) > -1){
+    //                assert(true);
+    //                callback();
+    //                return;
+    //            }
+    //        }
+    //        assert(false, "Name not in '" + ans + "'");
+    //        callback();
+    //    },1000);
+    //}
+
     this.test_URLEncodeJSON = function(){
         let allChars = '';
         for(let code = 0; code < 255; code++){
@@ -59,13 +89,30 @@ function TestClient(){
             'bar':'bar',
             'chars':allChars
         };
-        const result = URLEncodeJSON(params);
+        const result = Client.URLEncodeJSON(params);
         assertEquals(result,'?foo=bar&bar=bar&chars=%00%01%02%03%04%05%06%07%08%09%0A%0B%0C%0D%0E%0F%10%11%12%13%14%15%16%17%18%19%1A%1B%1C%1D%1E%1F%20!%22#$%25&\'()*+,-./0123456789:;%3C=%3E?@ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D~%7F%C2%80%C2%81%C2%82%C2%83%C2%84%C2%85%C2%86%C2%87%C2%88%C2%89%C2%8A%C2%8B%C2%8C%C2%8D%C2%8E%C2%8F%C2%90%C2%91%C2%92%C2%93%C2%94%C2%95%C2%96%C2%97%C2%98%C2%99%C2%9A%C2%9B%C2%9C%C2%9D%C2%9E%C2%9F%C2%A0%C2%A1%C2%A2%C2%A3%C2%A4%C2%A5%C2%A6%C2%A7%C2%A8%C2%A9%C2%AA%C2%AB%C2%AC%C2%AD%C2%AE%C2%AF%C2%B0%C2%B1%C2%B2%C2%B3%C2%B4%C2%B5%C2%B6%C2%B7%C2%B8%C2%B9%C2%BA%C2%BB%C2%BC%C2%BD%C2%BE%C2%BF%C3%80%C3%81%C3%82%C3%83%C3%84%C3%85%C3%86%C3%87%C3%88%C3%89%C3%8A%C3%8B%C3%8C%C3%8D%C3%8E%C3%8F%C3%90%C3%91%C3%92%C3%93%C3%94%C3%95%C3%96%C3%97%C3%98%C3%99%C3%9A%C3%9B%C3%9C%C3%9D%C3%9E%C3%9F%C3%A0%C3%A1%C3%A2%C3%A3%C3%A4%C3%A5%C3%A6%C3%A7%C3%A8%C3%A9%C3%AA%C3%AB%C3%AC%C3%AD%C3%AE%C3%AF%C3%B0%C3%B1%C3%B2%C3%B3%C3%B4%C3%B5%C3%B6%C3%B7%C3%B8%C3%B9%C3%BA%C3%BB%C3%BC%C3%BD%C3%BE');
     }
 
     this.test_get = function(){
-        const old_XMLHttpRequest = XMLHttpRequest;
-        XMLHttpRequest = function(){//create mock REQ
+        let old_global;
+        let mock_req = function(func){
+            if(node){
+                old_global = global.XMLHttpRequest;
+                global.XMLHttpRequest = func;
+            }else{
+                old_global = XMLHttpRequest;
+                XMLHttpRequest = func;
+            }
+        }
+        let reset = function(){
+            if(node){
+                global.XMLHttpRequest = old_global;
+            }else{
+                XMLHttpRequest = old_global;
+            }
+        }
+
+        mock_req(function(){
             this.open_method = '';
             this.open_url = '';
             this.open_async = true;
@@ -78,29 +125,31 @@ function TestClient(){
             this.send = function(data){
                 this.send_data = data;
             }
-        };
+        });
 
         let params = {
             'str': 'foo bar baz\n\t\\\"',
             'num': 0123456789,
             'und': undefined,
         };
-        let result = get('example.com',params);
+        let result = Client.get('example.com',params);
         assertEquals(result.open_method, 'GET');
         assertEquals(result.open_url, 'example.com?str=foo%20bar%20baz%0A%09%5C%22&num=123456789');
         assertEquals(result.send_data, null);
         assertEquals(result.open_async, false);
 
-        result = get('example.com?foo=bar',params);
+        result = Client.get('example.com?foo=bar',params);
         assertEquals(result.open_method, 'GET');
         assertEquals(result.open_url, 'example.com?foo=bar?str=foo%20bar%20baz%0A%09%5C%22&num=123456789');
         assertEquals(result.send_data, null);
         assertEquals(result.open_async, false);
 
-        XMLHttpRequest = old_XMLHttpRequest;
+        reset();
     }
 
     this.test_post = function(){
+        if(node)return;
+
         const old_FormData = FormData;
         FormData = function(){//mock FormData
             this.appended = {};
@@ -109,7 +158,7 @@ function TestClient(){
             }
         }
 
-        const old_XMLHttpRequest = XMLHttpRequest;
+        const old_global = XMLHttpRequest;
         XMLHttpRequest = function(){//creat mock REQ
             this.open_method = '';
             this.open_url = '';
@@ -129,26 +178,26 @@ function TestClient(){
             'foo':'bar',
             'biz':'baz',
         };
-        const result = post('http://example.com',params,foo);
+        const result = Client.post('http://example.com',params,foo);
         assertEquals(result.open_method, 'POST');
         assertEquals(result.open_url, 'http://example.com');
         assertEquals(result.send_data.appended['zipfile'], foo);
         assertEquals(result.send_data.appended['foo'], 'bar');
         assertEquals(result.send_data.appended['biz'], 'baz');
 
-        XMLHttpRequest = old_XMLHttpRequest;
+        XMLHttpRequest = old_global;
         FormData = old_FormData;
     }
 
     this.sync_test_set_sid = function(callback){
         const test_client = make_client();
-        const old_get = get;
+        const moldyhole = Client.get;
 
         let part_1 = function(){
             let last_url = '';
             let last_params = {};
             last_write = [];
-            get = function(url, params){
+            Client.get = function(url, params){
                 last_url = url;
                 last_params = params;
                 return {
@@ -159,7 +208,7 @@ function TestClient(){
             test_client.set_sid(function(session){
                 assertEquals(session,'foo-bar');
                 assertEquals(last_url,test_client.get_chatbot_url() + '/start_session');
-                assertEquals(last_params['Auth'], KEY);
+                assertEquals(last_params['Auth'], Client.KEY);
                 assertEquals(last_params['botname'], test_client.get_bot_name());
                 assertEquals(last_params['user'], test_client.get_user());
                 part_2();
@@ -173,7 +222,7 @@ function TestClient(){
             let last_params = {};
             last_write = [];
             last_error = [];
-            get = function(url, params){
+            Client.get = function(url, params){
                 last_url = url;
                 last_params = params;
                 return {
@@ -187,7 +236,7 @@ function TestClient(){
             },function(status_code){
                 assert(last_error[0].indexOf('255') !== -1);
                 assertEquals(last_url,test_client.get_chatbot_url() + '/start_session');
-                assertEquals(last_params['Auth'], KEY);
+                assertEquals(last_params['Auth'], Client.KEY);
                 assertEquals(last_params['botname'], test_client.get_bot_name());
                 assertEquals(last_params['user'], test_client.get_user());
                 part_3();
@@ -200,7 +249,7 @@ function TestClient(){
             last_write = [];
             last_error = [];
             let call_count = 0;
-            get = function(url, params){
+            Client.get = function(url, params){
                 call_count++;
                 if(call_count < 3){
                     throw new Error("No connection");
@@ -216,7 +265,7 @@ function TestClient(){
             test_client.set_sid(function(session){
                 assertEquals(session,'foo-bar');
                 assertEquals(last_url,test_client.get_chatbot_url() + '/start_session');
-                assertEquals(last_params['Auth'], KEY);
+                assertEquals(last_params['Auth'], Client.KEY);
                 assertEquals(last_params['botname'], test_client.get_bot_name());
                 assertEquals(last_params['user'], test_client.get_user());
                 part_4();
@@ -228,7 +277,7 @@ function TestClient(){
         let part_4 = function(){
             last_write = [];
             last_error = [];
-            get = function(url, params){
+            Client.get = function(url, params){
                 throw new Error("No connection");
             }
 
@@ -236,7 +285,7 @@ function TestClient(){
                 assert(false, "Failed connections should not call success callback");
             },function(status_code){
                 assertEquals(status_code,undefined);
-                get = old_get;
+                Client.get = moldyhole;
                 callback();
             });
         }
@@ -251,10 +300,10 @@ function TestClient(){
     //        'question': 'How are you?',
     //        'session': vanilla_client.get_SESSION(),
     //        'lang': vanilla_client.get_lang(),
-    //        'Auth': KEY
+    //        'Auth': Client.KEY
     //    };
     //    let url = vanilla_client.get_chatbot_url() + '/chat';
-    //    let response = get(url,params);
+    //    let response = Client.get(url,params);
     //    let text = response.responseText;
     //    let status_code = response.status;
     //    let json;
@@ -268,7 +317,7 @@ function TestClient(){
     //    assertEquals(json['ret'],0, "Response: " + JSON.stringify(json['response']));
 
     //    url = 'brokenurl.com';
-    //    response = get(url,params);//Should print GET 404
+    //    response = Client.get(url,params);//Should print GET 404
     //    assertEquals(response.status, 404);
 
     //    params = {
@@ -279,7 +328,7 @@ function TestClient(){
     //        'Auth': 'not a key'
     //    };
     //    url = vanilla_client.get_chatbot_url() + '/chat';
-    //    response = get(url,params);
+    //    response = Client.get(url,params);
     //    text = response.responseText;
     //    json = JSON.parse(text);
     //    assertEquals(response.status, 200);
@@ -288,51 +337,51 @@ function TestClient(){
     this.test_ask = function(){
         let client = make_client();
 
-        let old_get = get;//Mock the get function
+        let moldyhole = Client.get;//Mock the Client.get function
         let url_in, params_in;
-        get = function(url, params){
+        Client.get = function(url, params){
             url_in = url;
             params_in = params;
-            return old_get(url, params);
+            return moldyhole(url, params);
         }
 
         const question = "Hi";
         const result = client.ask(question);
-        assertEquals(url_in, 'http://localhost:8001/' + VERSION + '/chat');
+        assertEquals(url_in, 'http://localhost:8001/' + Client.VERSION + '/chat');
         assertEquals(params_in.question, question);
 
-        get = old_get;
+        Client.get = moldyhole;
     }
 
     this.test_list_chatbot = function(){
-        const old_get = get;
+        const moldyhole = Client.get;
         let url = '';
         let params = {};
-        get = function(a,b){
+        Client.get = function(a,b){
             url = a;
             params = b;
-            return old_get(a,b);
+            return moldyhole(a,b);
         }
         make_client().list_chatbot();
         assert(url.indexOf("chatbots") !== -1, url + " does not contain \'chatbots\'");
 
-        get = old_get;
+        Client.get = moldyhole;
     }
 
 
     this.test_list_chatbot_names = function(){
-        const old_get = get;
+        const moldyhole = Client.get;
         let url = '';
         let params = {};
-        get = function(a,b){
+        Client.get = function(a,b){
             url = a;
             params = b;
-            return old_get(a,b);
+            return moldyhole(a,b);
         }
         make_client().list_chatbot_names();
         assert(url.indexOf("bot_names") !== -1, url + " does not contain \'bot_names\'");
 
-        get = old_get;
+        Client.get = moldyhole;
     }
 
     this.sync_test_default = function(callback){
@@ -416,14 +465,14 @@ function TestClient(){
     this.test_do_conn = function(){
         let client0 = make_client();
         client0.do_conn("foo:23940",function(){
-            assertEquals(client0.get_chatbot_url(),"http://foo:23940/" + VERSION);
+            assertEquals(client0.get_chatbot_url(),"http://foo:23940/" + Client.VERSION);
             assertEquals(client0.get_chatbot_ip(),"foo");
             assertEquals(client0.get_chatbot_port(),"23940");
         });
         let client1 = make_client();
         client1.do_conn("foo.com",function(){
             client1.do_conn(false,function(){
-                assertEquals(client1.get_chatbot_url(),"http://foo.com:/" + VERSION);
+                assertEquals(client1.get_chatbot_url(),"http://foo.com:/" + Client.VERSION);
                 assertEquals(client1.get_chatbot_ip(),"foo.com");
                 assertEquals(client1.get_chatbot_port(),"");
             });
@@ -435,7 +484,7 @@ function TestClient(){
 
         client.do_ip("foo.com");
         client.do_ip();
-        assertEquals(client.get_chatbot_url(),"http://foo.com:" + client.get_chatbot_port() + "/" + VERSION);
+        assertEquals(client.get_chatbot_url(),"http://foo.com:" + client.get_chatbot_port() + "/" + Client.VERSION);
         assertEquals(client.get_chatbot_ip(),"foo.com");
 
         last_write = [];
@@ -452,9 +501,9 @@ function TestClient(){
         client.do_port();
         assert(last_write[1].indexOf("23840") !== -1);
         assertEquals(last_write[1],"port is now 23840");
-        assertEquals(last_write[2],"url is now http://" + client.get_chatbot_ip() + ":23840/" + VERSION);
+        assertEquals(last_write[2],"url is now http://" + client.get_chatbot_ip() + ":23840/" + Client.VERSION);
         assert(last_write[3].indexOf("23840") !== -1);
-        assertEquals(client.get_chatbot_url(), 'http://' + client.get_chatbot_ip() + ':23840' + '/' + VERSION);
+        assertEquals(client.get_chatbot_url(), 'http://' + client.get_chatbot_ip() + ':23840' + '/' + Client.VERSION);
 
         client.do_conn("foo.com");
 
@@ -475,8 +524,8 @@ function TestClient(){
     this.test_do_c = function(){
         let url = '';
         let params = {};
-        const old_get = get;
-        get = function(a,b){
+        const moldyhole = Client.get;
+        Client.get = function(a,b){
             url = a;
             params = b;
             return {responseText:'{"ret":"foo","response":"bar"}', status:200};
@@ -487,10 +536,10 @@ function TestClient(){
         client.do_c();
         assertEquals(url, client.get_chatbot_url() + '/reset_session');
         assertEquals(params['session'], client.get_session());
-        assertEquals(params['Auth'], KEY);
+        assertEquals(params['Auth'], Client.KEY);
         assertEquals(last_write[0], 'bar');
 
-        get = old_get;
+        Client.get = moldyhole;
 
         last_error = [];
         client.do_conn(function(){
@@ -501,8 +550,8 @@ function TestClient(){
     this.test_do_rw = function(){
         let url = '';
         let params = {};
-        const old_get = get;
-        get = function(a,b){
+        const moldyhole = Client.get;
+        Client.get = function(a,b){
             url = a;
             params = b;
             return {responseText:'{"ret":"foo","response":"bar"}', status:200};
@@ -514,7 +563,7 @@ function TestClient(){
         assertEquals(url, client.get_chatbot_url() + '/set_weights');
         assertEquals(last_write[0], 'bar');
 
-        get = old_get;
+        Client.get = moldyhole;
 
         last_error = [];
         client.do_conn(function(){
@@ -532,7 +581,6 @@ function TestClient(){
             write = old_write;
             assert(false, 'All writing should be done with self.write.');
         }
-
         if(prop.indexOf('test_') == -1){
             callback();
             return false;
@@ -557,6 +605,7 @@ function TestClient(){
                 });
             }
         }catch(e){
+            write(e);
             write('fail');
             write('tests halted');
         }
@@ -566,7 +615,8 @@ function TestClient(){
 
     this.run_tests = function(){
         let callbacks = [];
-        for(prop in self){
+
+        for(const prop in self){
             if(callbacks.length === 0){
                 callbacks.push(function(){
                     run_test(prop,function(){
@@ -585,5 +635,18 @@ function TestClient(){
     }
 }
 
-let test_client = new TestClient();
-test_client.run_tests();
+function useNodejs(){
+    require('./client.js');
+    write_error = function(msg){
+        console.error(msg);
+    }
+    exports.TestClient = TestClient;
+    write = function(msg){
+    };
+    node = true;
+}
+
+if(typeof exports !== 'undefined'){
+    var write_error;
+    useNodejs();
+}

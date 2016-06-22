@@ -1,4 +1,4 @@
-const Client = require('./public/client.js').Client;
+require('./public/client.js');
 const client = new Client();
 client.exit = process.exit;
 client.print = function(msg){
@@ -11,8 +11,5 @@ client.do_conn(false, function(){
     stdin.addListener("data", function(msg) {
         client.execute(String(msg));
         process.stdout.write("[me]: ");
-        // note:  d is an object, and when converted to a string it will
-        //     // end with a linefeed.  so we (rather crudely) account for that  
-        //         // with toString() and then trim() 
     });
 });

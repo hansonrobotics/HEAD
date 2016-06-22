@@ -1,25 +1,15 @@
 'use strict'
-const VERSION = 'v1.1';
-const KEY = 'AAAAB3NzaC';
-
-/* Generates pseudo-random UUID. Read this link, section 4.4 for more info
- * on pseudo-random UUIDs:
- * http://www.rfc-archive.org/getrfc.php?rfc=4122
- */
-function guid() {
-    let elem = function(){
-        const max = 0x10000;
-        const val = (1 + Math.random()) * max;
-        const asInt = Math.floor(val);
-        const result = val.toString(16).substring(1);
-        return result;
-    }
-
-    return elem() + elem() + '-' + elem() + '-' + elem() + '-' +
-        elem() + '-' + elem() + elem() + elem();
+var node = false;
+/* For pre-IE9 compatibility*/
+if(typeof(String.prototype.trim) === "undefined"){
+    String.prototype.trim = function() {
+        return String(this).replace(/^\s+|\s+$/g, '');
+    };
 }
 
-function URLEncodeJSON(params){
+Client.VERSION = 'v1.1';
+Client.KEY = 'AAAAB3NzaC';
+Client.URLEncodeJSON = function(params){
     let result = '';
     for(const strkey in params){
         const key = encodeURI(strkey);
@@ -38,8 +28,10 @@ function URLEncodeJSON(params){
 /* Gross get requests for JSON retrieval. In the future might want to use
    JQuery.
    */
-function get(url, params){
-    url += URLEncodeJSON(params);
+Client.get = function(url, params){
+    if(node)XMLHttpRequest = global.XMLHttpRequest;//For testing
+
+    url += Client.URLEncodeJSON(params);
 
     const HTTP_REQ = new XMLHttpRequest();
     HTTP_REQ.open('GET',url,false);//TODO make this asynchronous
@@ -47,7 +39,9 @@ function get(url, params){
     return HTTP_REQ;
 }
 
-function post(url, params, file){
+Client.post = function(url, params, file){
+    if(node)XMLHttpRequest = global.XMLHttpRequest;//For testing
+
     const formData = new FormData();
 
     formData.append('zipfile',file);
@@ -61,13 +55,6 @@ function post(url, params, file){
     return HTTP_REQ;
 }
 
-/* For pre-IE9 compatibility*/
-if(typeof(String.prototype.trim) === "undefined"){
-    String.prototype.trim = function() {
-        return String(this).replace(/^\s+|\s+$/g, '');
-    };
-}
-
 function Client(auto_connect){
     const PROMPT = '[me]: ';
 
@@ -75,7 +62,7 @@ function Client(auto_connect){
     let lang = 'en';
     let chatbot_port = '8001';
     let chatbot_ip = 'localhost';
-    let chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + VERSION;
+    let chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + Client.VERSION;
     let bot_name = 'sophia';
     let user = 'client';
     const self = this;
@@ -151,7 +138,7 @@ function Client(auto_connect){
 
     this.set_sid = function(callback, error_callback){
         const params = {
-            'Auth': KEY,
+            'Auth': Client.KEY,
             'botname': '' + bot_name,
             'user': user
         };
@@ -178,7 +165,7 @@ function Client(auto_connect){
 
             let attempt = {};
             try{
-                attempt = get(url, params);
+                attempt = Client.get(url, params);
             }catch(e){
                 tries--;
                 self.error(e);
@@ -195,11 +182,11 @@ function Client(auto_connect){
             'question': '' + question,
             'session': session,
             'lang': lang,
-            'Auth': KEY
+            'Auth': Client.KEY
         };
 
         const url = chatbot_url + '/chat';
-        const response = get(url,params);
+        const response = Client.get(url,params);
         const text = response.responseText;
         const status_code = response.status;
 
@@ -234,12 +221,12 @@ function Client(auto_connect){
 
     this.list_chatbot = function(){
         const params = {
-            'Auth':KEY,
+            'Auth':Client.KEY,
             'lang':lang,
             'session': session
         };
 
-        const response = get(chatbot_url + '/chatbots',params).responseText;
+        const response = Client.get(chatbot_url + '/chatbots',params).responseText;
         const chatbots = JSON.parse(response)['response'];
 
         return chatbots;
@@ -247,11 +234,11 @@ function Client(auto_connect){
     
     this.list_chatbot_names = function(){
         const params = {
-            'Auth':KEY,
+            'Auth':Client.KEY,
             'lang':lang,
             'session':session
         };
-        const response = get(chatbot_url + '/bot_names', params).responseText;
+        const response = Client.get(chatbot_url + '/bot_names', params).responseText;
         const names = JSON.parse(response)['response'];
         
         return names;
@@ -357,7 +344,7 @@ function Client(auto_connect){
                 chatbot_url = 'http://' +
                     chatbot_ip + ':' +
                     chatbot_port + '/' +
-                    VERSION;
+                    Client.VERSION;
             }catch(e){
                 self.error("Wrong conn arguments\n");
                 self.help_conn();
@@ -383,7 +370,7 @@ function Client(auto_connect){
         }
 
         chatbot_ip = line;
-        chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + VERSION;
+        chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + Client.VERSION;
         self.println("ip is now " + chatbot_ip);
         self.println("url is now " + chatbot_url);
     }
@@ -403,7 +390,7 @@ function Client(auto_connect){
         }
 
         chatbot_port = line;
-        chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + VERSION;
+        chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + Client.VERSION;
         self.println("port is now " + chatbot_port);
         self.println("url is now " + chatbot_url);
     }
@@ -479,10 +466,10 @@ function Client(auto_connect){
         try{
             const params = {
                 'session':session,
-                'Auth':KEY
+                'Auth':Client.KEY
             };
             const url = chatbot_url + '/reset_session';
-            const response = get(url,params);
+            const response = Client.get(url,params);
             const text = response.responseText;
             const status_code = response.status;
 
@@ -510,12 +497,12 @@ function Client(auto_connect){
         try{
             const params = {
                 'weights':line,
-                'Auth':KEY,
+                'Auth':Client.KEY,
                 'lang':lang,
                 'session':session
             };
             const url = chatbot_url + '/set_weights';
-            const response = get(url,params);
+            const response = Client.get(url,params);
             const text = response.responseText;
             const status_code = response.status;
 
@@ -559,12 +546,12 @@ function Client(auto_connect){
                 try{
                     const params = {
                         'user': user,
-                        'Auth': KEY,
+                        'Auth': Client.KEY,
                         'lang': 'en'
                     };
 
                     const url = chatbot_url + '/upload_character';
-                    const response = post(url, params, file);
+                    const response = Client.post(url, params, file);
                     const text = response.responseText;
                     const status_code = response.status;
 
@@ -593,7 +580,7 @@ function Client(auto_connect){
     this.ping = function(){
         try{
             const url = chatbot_url + '/ping';
-            const response = get(url);
+            const response = Client.get(url);
             const text = response.responseText;
             const status_code = response.status;
 
@@ -642,9 +629,10 @@ function Client(auto_connect){
 }
 
 function useNodejs(){
-    exports.Client = Client;
-    XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-    console.log("Using Node.js");
+    global.Client = Client;
+    global.XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+    XMLHttpRequest = global.XMLHttpRequest;
+    node = true;
 }
 
 if(typeof exports !== 'undefined'){

@@ -23,9 +23,13 @@
                                             message+'\n'+
                                             '</div>\n';
             }
-            client.write = function(msg){console.log(msg);};
+            client.print = function(msg){console.log(msg);};
             client.error = function(msg){console.log(msg);};
         </script>
         <script src="./client_test.js"></script>
+        <script>
+            let test_client = new TestClient();
+            test_client.run_tests();
+        </script>
     </body>
 </html>
