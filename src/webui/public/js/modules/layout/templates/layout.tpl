@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div id="navbar-container" class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -21,8 +21,8 @@
         </div>
         <div id="app-navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><button title="Report a bug" class="app-report-button btn btn-default pull-right"><i
-                        class="fa fa-exclamation-circle"></i></button>
+                <li><a href="#" title="Report a bug" class="app-report-button pull-right"><i
+                        class="fa fa-exclamation-circle"></i></a>
                 </li>
             </ul>
             <ul id="app-nav" class="nav navbar-nav navbar-right">

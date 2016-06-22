@@ -7,7 +7,7 @@
 .app-performances {
     padding: 10px 5px 5px 10px;
     width: 100%;
-    border: 1px solid #4E5D6C;
+    border: 1px solid #323F48;
     margin-top: -1px;
 }
 
@@ -65,7 +65,7 @@
 
 .app-timeline-nodes,
 .app-timeline-checkbox {
-    background-color: #4e5d6c;
+    background-color: #323F48;
 }
 
 .app-timeline-nodes {
@@ -93,7 +93,7 @@
     text-align: left;
     z-index: 999;
     cursor: pointer;
-    border: 1px solid #2B3E50;
+    border: 1px solid #182934;
 }
 
 .app-node[data-name="expression"] {
@@ -164,15 +164,11 @@
 
 .app-timelines-container {
     overflow: visible;
+    margin-top: 10px;
 }
 
 .app-scroll-container {
     position: relative;
-}
-
-.app-node-settings .ui-slider {
-    height: 39px;
-    line-height: 39px;
 }
 
 .app-node-settings .app-crosshair {
@@ -220,7 +216,7 @@
 li.app-performance .app-status-indicator {
     height: 14px;
     width: 14px;
-    background-color: #2b3e50;
+    background-color: #182934;
     display: inline-block;
     margin-right: 5px;
 }
@@ -305,7 +301,7 @@ textarea.form-control.app-node-text {
 
 .app-selectareas-container {
     margin: 10px 0;
-    border: 1px solid #4e5d6c;
+    border: 1px solid #323F48;
 }
 
 .select-areas-footbar {
@@ -318,6 +314,6 @@ textarea.form-control.app-node-text {
 
 .app-new-dir {
     padding: 5px;
-    border: 1px solid #4e5d6c;
+    border: 1px solid #323F48;
     border-bottom-color: transparent;
 }

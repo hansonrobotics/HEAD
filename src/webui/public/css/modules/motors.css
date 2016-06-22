@@ -32,11 +32,11 @@
 }
 
 .app-ok {
-    background-color: #5cb85c;
+    background-color: #5BB85D;
 }
 
 .app-error {
-    background-color: #d9534f;
+    background-color: #D9544F;
 }
 
 .app-inactive {
@@ -64,7 +64,6 @@
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;;
     border-radius: 0 !important;;
-
     border: none;
 }
 
@@ -72,13 +71,8 @@
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;;
     border-radius: 0 !important;;
-
-    background-color: #df691a;
 }
 
-.ui-slider {
-    height: 20px;
-}
 
 #app-edit-motors {
     margin-bottom: 20px;
@@ -102,7 +96,7 @@
 }
 
 .backgrid thead th {
-    background-color: #4e5d6c;
+    background-color: #323F48;
 }
 
 .backgrid td.editor input[type=text] {
