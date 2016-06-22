@@ -193,12 +193,12 @@ class face_reinforcer:
                     if get_element[5] > self.dlib_count:
                         not_covered_faces.append(j)
                         self.persistance_face=[]
-                    elif get_element[6] > 8:
+                    elif get_element[6] > self.cv_count:
                         not_covered_faces.append(j)
                         self.persistance_face=[]
-                    elif get_element[6] + get_element [5] > self.cv_dlib_count:
-                        not_covered_faces.append(j)
-                        self.persistance_face=[]
+                    # elif get_element[6] + get_element [5] > self.cv_dlib_count:
+                    #     not_covered_faces.append(j)
+                    #     self.persistance_face=[]
             if not overlp:
                 self.persistance_face.append(
                         [j.object.x_offset, j.object.width, j.object.y_offset, j.object.height, 0,
