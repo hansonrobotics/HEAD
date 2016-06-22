@@ -4,48 +4,42 @@ import sys
 import rospy
 import cv2
 from std_msgs.msg import String
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
-
-
+import yaml
+import rospkg
 
 class image_converter:
 
   def __init__(self):
     rospy.init_node('image_converter', anonymous=True)
-    self.image_pub = rospy.Publisher("image_topic_2",Image)
-
+    self.filtered_face_locations = rospy.get_param('camera_topic')
+    self.image_pub = rospy.Publisher(self.filtered_face_locations,Image)
+    self.image_info = rospy.Publisher('camera_info',CameraInfo)
     self.bridge = CvBridge()
     cap = cv2.VideoCapture('/home/icog-labs/Videos/video.mp4')
+    path = rospkg.RosPack().get_path("robots_config")
+    path = path + "/robot/camera.yaml"
+    stream = file(path, 'r')
+    calib_data = yaml.load(stream)
+    cam_info = CameraInfo()
+    cam_info.width = calib_data['image_width']
+    cam_info.height = calib_data['image_height']
+    cam_info.K = calib_data['camera_matrix']['data']
+    cam_info.D = calib_data['distortion_coefficients']['data']
+    cam_info.R = calib_data['rectification_matrix']['data']
+    cam_info.P = calib_data['projection_matrix']['data']
+    cam_info.distortion_model = calib_data['distortion_model']
     while (not rospy.is_shutdown()) and (cap.isOpened()):
-        self.keystroke = cv2.waitKey(1000 / 60)
+        self.keystroke = cv2.waitKey(1000 / 20)
         ret, frame = cap.read()
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # cv2.imshow('frame', gray)
         self.image_pub.publish(self.bridge.cv2_to_imgmsg(gray, "mono8"))
+        self.image_info.publish(cam_info)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-
-
-
-  def callback(self,data):
-    try:
-      cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
-    except CvBridgeError as e:
-      print(e)
-
-    (rows,cols,channels) = cv_image.shape
-    if cols > 60 and rows > 60 :
-      cv2.circle(cv_image, (50,50), 10, 255)
-
-    cv2.imshow("Image window", cv_image)
-    cv2.waitKey(3)
-
-    try:
-      self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
-    except CvBridgeError as e:
-      print(e)
 
 def main(args):
   ic = image_converter()

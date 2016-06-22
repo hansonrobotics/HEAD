@@ -31,7 +31,6 @@ case $tool in
     ;;
     cmt_test)
     echo "Using CMT in rosbag play mode"
-    rosparam set use_sim_time true
     roslaunch robots_config face_tracker.launch pi_vision:=0 testing:=1
     ;;
     cmt_offline)
