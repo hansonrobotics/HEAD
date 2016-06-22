@@ -210,6 +210,7 @@ update_opencog() {
         cd $HR_WORKSPACE/opencog/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
         if [[ $branch != $DEFAULT_BRANCH ]]; then
+            echo "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
         git pull origin $DEFAULT_BRANCH
@@ -223,6 +224,7 @@ do_update_hr() {
         cd $HR_WORKSPACE/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
         if [[ $branch != $DEFAULT_BRANCH ]]; then
+            echo "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
         git pull origin $DEFAULT_BRANCH
