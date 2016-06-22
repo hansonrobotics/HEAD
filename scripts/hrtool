@@ -489,6 +489,7 @@ execute() {
 }
 
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+source $BASEDIR/clear_env.sh
 eval DEFAULT_HR_WORKSPACE=~/hansonrobotics
 eval HR_ENVFILE_PATH=~/.hr/env.sh
 PROJECT=HEAD
