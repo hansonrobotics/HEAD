@@ -464,9 +464,7 @@ execute() {
     parse_opts $@
     set_ws
 
-    if [[ $GET_HR_SOURCE_CODE == 1 ||
-        $GET_SOURCE_CODE == 1 ||
-        $DEVELOPER_MODE == 1 ||
+    if [[ $DEVELOPER_MODE == 1 ||
         $UPDATE_HR_SOURCE_CODE == 1 ||
         $UPDATE_SOURCE_CODE == 1 ||
         $BUILD_HR_SOURCE_CODE == 1 ||
@@ -489,6 +487,7 @@ execute() {
 }
 
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+source $BASEDIR/clear_env.sh
 eval DEFAULT_HR_WORKSPACE=~/hansonrobotics
 eval HR_ENVFILE_PATH=~/.hr/env.sh
 PROJECT=HEAD
