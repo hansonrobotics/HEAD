@@ -11,6 +11,8 @@
         <rosparam file="$(find robots_config)/$(arg name)/expressions.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/safety.yaml" command="load"/>
+        <rosparam file="$(find robots_config)/$(arg name)/attention_regions.yaml" command="load"/>
+        <!-- Hardware specific nodes -->
 
         <!-- Set default chatbot language [en|zh] -->
         <param name="lang" value="en" />
@@ -31,5 +33,5 @@
     <!-- Web UI and rosbridge for webui -->
     <include file="$(find webui)/webui.launch" />
     <include file="$(arg basedir)/rosbridge.launch" />
-
+    <include file="$(arg basedir)/rosbridge_ssl.launch" />
 </launch>

@@ -28,6 +28,7 @@
             <ul id="app-nav" class="nav navbar-nav navbar-right">
                 <li><a href="#/puppeteering">Puppeteering</a></li>
                 <li><a href="#/performances">Performances</a></li>
+                <!-- <li><a href="#/attention">Attention Regions</a></li> -->
                 <li><a href="#/gestures">Gestures</a></li>
                 <li><a href="#/expressions">Expressions</a></li>
                 <li><a href="#/motors">Motors</a></li>

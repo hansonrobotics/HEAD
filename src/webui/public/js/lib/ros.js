@@ -299,6 +299,21 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     messageType: 'webui/MotorStates'
                 }),
                 performances: {
+                    load_sequence: new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/performances/load_sequence',
+                        messageType: 'performances/LoadSequence'
+                    }),
+                    load_nodes: new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/performances/load_nodes',
+                        messageType: 'performances/LoadNodes'
+                    }),
+                    current: new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/performances/current',
+                        messageType: 'performances/Current'
+                    }),
                     run: new ROSLIB.Service({
                         ros: api.ros,
                         name: '/performances/run',

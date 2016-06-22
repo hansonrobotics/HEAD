@@ -1,4 +1,3 @@
-string nodes
-float32 startTime
+float64 startTime
 ---
 bool success

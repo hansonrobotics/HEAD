@@ -1,5 +1,5 @@
-define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api'],
-    function (Backbone, Marionette, ros, LayoutView, api) {
+define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api', 'robot_config'],
+    function (Backbone, Marionette, ros, LayoutView, api, RobotConfig) {
         var Application = new Marionette.Application({
                 fps: 48
             }),
@@ -15,9 +15,9 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
                 return false;
             };
         Application.on("start", function () {
-            // Enable for the whole app - blenderMode is the only mode for APAC demo
             if (Backbone.history)
                 Backbone.history.start();
+            console.log('started');
         });
         // store layout instance in App.Layout.Instance
         Application.LayoutInstance = new LayoutView({fluid: true});
@@ -26,11 +26,13 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
         $('body').prepend(Application.LayoutInstance.render().el);
 
         Application.Utilities = {
-            showPopover: function (el, label) {
+            showPopover: function (el, label, placement) {
+                placement = placement || 'right';
                 $(el).popover({
                     content: label,
                     trigger: 'manual focus',
-                    container: 'body'
+                    container: 'body',
+                    placement: placement
                 }).on('remove', function () {
                     // destroy popover if element is destroyed
                     $(el).popover('destroy');
@@ -42,31 +44,40 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api']
                 }, 2000)
             }
         };
-        // Make sure only monitor is loaded before connection is made
-        Backbone.Router.prototype.execute = function (callback, args) {
-            if (checkConnection())
-                return;
-            if (callback) callback.apply(this, args);
-        };
-
         Application.language = 'en';
 
-        ros.connect(function () {
+        if (RobotConfig.mode == 'start'){
+            // Lightweight application for startup
             require([
-                    'modules/puppeteering/router',
-                    'modules/animations/animations_app',
-                    'modules/expressions/expressions_app',
-                    'modules/motors/motors_app',
-                    'modules/gestures/gestures_app',
-                    'modules/performances/performances_app',
-                    'modules/interaction/interaction_app',
-                    'modules/monitor/router',
-                    'modules/settings/router',
-                    'modules/status/status_app'],
+                    'modules/start/router'
+                ],
                 function () {
                     Application.start();
                 });
-        });
-
+        }else{
+            // Make sure only monitor is loaded before connection is made
+            Backbone.Router.prototype.execute = function (callback, args) {
+                if (checkConnection())
+                    return;
+                if (callback) callback.apply(this, args);
+            };
+            ros.connect(function () {
+                require([
+                        'modules/puppeteering/router',
+                        'modules/animations/animations_app',
+                        'modules/expressions/expressions_app',
+                        'modules/motors/motors_app',
+                        'modules/gestures/gestures_app',
+                        'modules/performances/performances_app',
+                        'modules/interaction/interaction_app',
+                        'modules/monitor/router',
+                        'modules/start/router',
+                        'modules/settings/router',
+                        'modules/status/status_app'],
+                    function () {
+                        Application.start();
+                    });
+            });
+        }
         return Application;
     });

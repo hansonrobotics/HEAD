@@ -10,15 +10,21 @@ from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 import time
 import logging
+import random
 
 logger = logging.getLogger('hr.performances.nodes')
 
 
 class Node(object):
     # Create new Node from JSON
+    @staticmethod
+    def subClasses(cls):
+        return cls.__subclasses__() + [g for s in cls.__subclasses__()
+                                   for g in cls.subClasses(s)]
+
     @classmethod
     def createNode(cls, data, runner, start_time=0):
-        for s_cls in cls.__subclasses__():
+        for s_cls in cls.subClasses(cls):
             if data['name'] == s_cls.__name__:
                 node = s_cls(data, runner)
                 if start_time > node.start_time:
@@ -79,7 +85,17 @@ class Node(object):
     # Method to call while node is running
     def cont(self, run_time):
         pass
-
+    # Method to get magnitude from either one number or range
+    @staticmethod
+    def _magnitude(magnitude):
+        try:
+            return float(magnitude)
+        except TypeError:
+            try:
+                # Randomize magnitude
+                return random.uniform(float(magnitude[0]), float(magnitude[1]))
+            except:
+                return 0.0
 
 class speech(Node):
     def start(self, run_time):
@@ -94,29 +110,18 @@ class speech(Node):
 class gesture(Node):
     def start(self, run_time):
         self.runner.topics['gesture'].publish(
-                SetGesture(self.data['gesture'], 1, float(self.data['speed']), float(self.data['magnitude'])))
+                SetGesture(self.data['gesture'], 1, float(self.data['speed']), self._magnitude(self.data['magnitude'])))
 
 
 class emotion(Node):
     def start(self, run_time):
         self.runner.topics['emotion'].publish(
-                EmotionState(self.data['emotion'], float(self.data['magnitude']),
+                EmotionState(self.data['emotion'], self._magnitude(self.data['magnitude']),
                              rospy.Duration.from_sec(self.data['duration'])))
 
 
-class look_at(Node):
-    def start(self, run_time):
-        self.runner.topics['look_at'].publish(Target(self.data['x'], self.data['y'], self.data['z']))
-
-
-class gaze_at(Node):
-    def start(self, run_time):
-        self.runner.topics['gaze_at'].publish(Target(self.data['x'], self.data['y'], self.data['z']))
-
 # Behavior tree
 class interaction(Node):
-
-
     def start(self, run_time):
         self.runner.topics['bt_control'].publish(Int32(self.data['mode']))
         if self.data['chat'] == 'listening':
@@ -182,7 +187,7 @@ class expression(Node):
         if (not self.shown) and (run_time > self.start_time + 0.05):
             self.shown = True
             self.runner.topics['expression'].publish(
-                    MakeFaceExpr(self.data['expression'], float(self.data['magnitude'])))
+                    MakeFaceExpr(self.data['expression'], self._magnitude(self.data['magnitude'])))
             logger.info("Publish expression {}".format(self.data))
 
     def stop(self, run_time):
@@ -197,17 +202,22 @@ class kfanimation(Node):
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
         self.shown = False
-        self.blender_mode = 'head'
+        self.blender_disable = 'off'
         if 'blender_mode' in self.data.keys():
-            self.blender_mode = self.data['blender_mode']
+            self.blender_disable = self.data['blender_mode']
 
     def start(self, run_time):
-        try:
-            if self.blender_mode == 'head':
-                self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
-        except Exception as ex:
-            logger.error(ex)
         self.shown = False
+        try:
+            if self.blender_disable in ['face', 'all']:
+                self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/no_pau")
+            if self.blender_disable == 'all':
+                self.runner.services['neck_pau_mux']("/" + self.runner.robot_name + "/cmd_neck_pau")
+        except Exception as ex:
+            # Dont start animation to prevent the conflicts
+            self.shown = True
+            logger.error(ex)
+
 
     def cont(self, run_time):
         # Publish expression message after some delay once node is started
@@ -218,8 +228,10 @@ class kfanimation(Node):
 
     def stop(self, run_time):
         try:
-            if self.blender_mode == 'head':
-                self.runner.services['head_pau_mux']("/" + self.runner.robot_name + "/head_pau")
+            if self.blender_disable in ['face', 'all']:
+                self.runner.services['head_pau_mux']("/blender_api/get_pau")
+            if self.blender_disable == 'all':
+                self.runner.services['neck_pau_mux']("/blender_api/get_pau")
         except Exception as ex:
             logger.error(ex)
 
@@ -242,7 +254,7 @@ class pause(Node):
                         self.subscriber.unregister()
 
                 if topic[0] != '/':
-                    topic = '/' + rospy.get_param('/robot_name') + '/' + topic
+                    topic = '/' + self.runner.robot_name + '/' + topic
 
                 self.subscriber = rospy.Subscriber(topic, String, resume)
 
@@ -283,3 +295,46 @@ class chat_pause(Node):
         if self.subscriber:
             self.subscriber.unregister()
             self.subscriber = False
+
+class attention(Node):
+    # Find current region at runtime
+    def __init__(self, data, runner):
+        Node.__init__(self, data, runner)
+        self.topic = 'look_at'
+
+    def get_region(self, region):
+        regions = rospy.get_param('/' + self.runner.robot_name + "/attention_regions")
+        return next((r for r in regions if r['type'] == region), False)
+
+    # returns random coordinate from the region
+    def get_point(self, region):
+        region = self.get_region(region)
+        if not region:
+            # Look forward
+            return {'x':1, 'y':0, 'z':0}
+        return {
+            'x': 1,
+            'y': region['x'] + region['width']*random.random(),
+            'z': region['y'] - region['height']*random.random(),
+        }
+
+    def start(self, run_time):
+        if 'attention_region' in self.data and self.data['attention_region'] != 'custom':
+            point = self.get_point(self.data['attention_region'])
+        else:
+            point = self.data
+        self.runner.topics[self.topic].publish(Target(point['x'], point['y'], point['z']))
+
+
+class look_at(attention):
+    # Find current region at runtime
+    def __init__(self, data, runner):
+        attention.__init__(self, data, runner)
+        self.topic = 'look_at'
+
+
+class gaze_at(attention):
+    # Find current region at runtime
+    def __init__(self, data, runner):
+        attention.__init__(self, data, runner)
+        self.topic = 'gaze_at'

@@ -12,3 +12,4 @@ build
 *.pyc
 .catkin_tools
 *.swp
+logs
