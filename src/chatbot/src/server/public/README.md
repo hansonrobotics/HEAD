@@ -1,7 +1,9 @@
 # In browser Javascript chat client
 
-To use this repo:
+This is a javascript implementation of the python client for the chat server.
 
-* unzip it into `chatbot/src/server`.
-* run `python run.py`
-* go to `http://localhost:8001/v1/client` in browser
+## Usage
+You can run the client in your browser by going to http://localhost:8001/v1.1/client . You can also run it in terminal via node.js by running `node term_client.js`.
+
+## Testing
+You can run tests by going to http://localhost:8001/v1.1/test.html , or in terminal with `node term_client_test.js`. If you run the tests in terminal, there will be no output if all tests are passed.
