@@ -124,6 +124,11 @@ install_other_deps() {
 
     # For chatbot
     sudo apt-get -y install python-yaml
+    sudo apt-get -y install npm
+
+    sudo npm install -g n
+    sudo n stable
+    sudo npm install xmlhttprequest --prefix $PROJECT/src/chatbot/src/server/
 
     # For blender_api_test
     sudo add-apt-repository -y ppa:mc3man/trusty-media
