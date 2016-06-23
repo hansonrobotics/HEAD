@@ -125,7 +125,6 @@ class Runner:
 
         with self.lock:
             logger.info("Put nodes {} to queue".format(nodes))
-            self.running = False
             self.running_nodes = nodes
             self.ids = ids
 
