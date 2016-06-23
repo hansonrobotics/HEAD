@@ -60,8 +60,8 @@ class face_reinforcer:
         self.persistance_cv = False
         self.persistance_dlib = False
 
-        self.dlib_count = 1
-        self.cv_count = 1
+        self.dlib_count = 4
+        self.cv_count = 6
         self.cv_dlib_count = 1
         self.downgrade = 500
 
@@ -151,7 +151,7 @@ class face_reinforcer:
 
         for get_element in self.persistance_face:
             get_element[4] += 1
-        print(self.persistance_face)
+
 
         for j in face.objects:
             overlap = False
@@ -207,9 +207,10 @@ class face_reinforcer:
 
         self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element))]
 
-
-                #Now let's add the new tracking locations.
-
+        print("++++++++++++++++")
+        print(self.dlib_count)
+        print(self.cv_count)
+        print("++++++++++++++++")
 
         return not_covered_faces, overlaped_faces
     def determine(self, get_element,j):
