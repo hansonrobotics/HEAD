@@ -37,6 +37,7 @@ export tool="$1"
 if [[ -z $tool ]]; then
     echo "Setting tool to pi_vision"
     tool=pi_vision
+    cmt=false
 fi
 case $tool in
     pi_vision)
@@ -46,6 +47,10 @@ case $tool in
     echo "Setting to use CMT"
     vision="false"
     ;;
+    cmt_pi)
+    echo "Running Both CMT and PI for comparsion"
+    vision="true"
+    cmt=true
 esac
 export vision
 #End
@@ -58,7 +63,12 @@ cd $BASEDIR
 
 
 tmux new-session -n 'roscore' -d -s $NAME 'roslaunch $LAUNCH_DIR/robot.launch basedir:=$LAUNCH_DIR name:=$NAME pi_vision:=$vision & rqt_console; $SHELL'
-
+sleep 3
+case $cmt in
+    true)
+    tmux new-window -n 'cmt' 'roslaunch robots_config face_tracker.launch pi_vision:=false; $SHELL'
+    ;;
+esac
 sleep 3
 tmux new-window -n 'WebServers' 'python $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/__init__.py -p 4000 -s \
     -c $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/ssl/cert.crt  \
