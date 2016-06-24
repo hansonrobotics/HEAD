@@ -140,6 +140,8 @@ install_other_deps() {
     wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip -O /tmp/marytts-5.1.2.zip
     unzip /tmp/marytts-5.1.2.zip -d ~/.hr/tts/marytts
     rm /tmp/marytts-5.1.2.zip
+
+    sudo pip2 install pinyin==0.2.5
 }
 
 install_test_deps() {
