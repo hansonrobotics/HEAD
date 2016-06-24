@@ -491,7 +491,10 @@ cmt_tracker_msgs::Trackers returnOverlappingEmotion(cmt_tracker_msgs::Trackers l
       //if it overlaps with the one then break.
       cv::Rect cmt_overlap(facelocs.objects[i].object.x_offset, facelocs.objects[i].object.y_offset,
                               facelocs.objects[i].object.width, facelocs.objects[i].object.height);
-      overlap = (emotion_overlap & cmt_overlap).area() > 0;
+       double intersection_area = (emotion_overlap & cmt_overlap).area();
+       double union_area = (emotion_overlap | cmt_overlap).area();
+
+       overlap = (intersection_area/union_area) > 0.5;
       if (overlap)
         {
         //Now we add the to the cmt the overlapped emotion; if there are no emotion overlap then we add unknown emotion state to the system. 

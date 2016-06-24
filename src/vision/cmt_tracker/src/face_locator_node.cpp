@@ -358,7 +358,11 @@ std::vector<cv::Rect> non_overlaped_rects;
     bool overlap = false;
     for (int j = 0; j < dlib_locations.size(); j++)
     {
-     overlap = (opencv_locs[i] & dlib_locations[j]).area() > 0;
+
+     double intersection_area = (opencv_locs[i] & dlib_locations[j]).area();
+     double union_area = (opencv_locs[i] | dlib_locations[j]).area();
+
+     overlap = (intersection_area/union_area) > 0.5;
      if (overlap)
      break;
     }

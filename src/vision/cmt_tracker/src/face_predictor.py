@@ -135,7 +135,7 @@ class face_predictor:
             else:
                 overlap_area = 1
 
-            overlap = overlap_area > 0
+            overlap = overlap_area > 0.5
             if (overlap):
                 list = [j,i]
                 overlaped_faces.append(list)

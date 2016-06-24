@@ -121,7 +121,7 @@ class face_reinforcer:
             else:
                 overlap_area_ = 1
 
-            overlap_ = overlap_area_ > 0
+            overlap_ = overlap_area_ > 0.5
             if (overlap_):
                 #TODO Choose which to merge too later information to which it's closer too.
                 self.cmt_merge[a.tracker_name.data] = self.cmt_merge.get(a.tracker_name.data,b.tracker_name.data)
@@ -174,7 +174,7 @@ class face_reinforcer:
                     overlap_area = SI / SU
                 else:
                     overlap_area = 1
-                overlap = overlap_area > 0
+                overlap = overlap_area > 0.5
                 if (overlap):
                     list = [j, i]
                     overlaped_faces.append(list)
