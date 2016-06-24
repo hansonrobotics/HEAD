@@ -381,13 +381,19 @@ pi_face_tracker::Face TrackerCMT::filter_point(pi_face_tracker::Face f)
 {
 double yz_sf = 0.64;
 double x_sf = 0.95;
-
+//std::cout<<"Filtered Locations: "<<face_filtered<<std::endl;
+for(std::map<std::string, pi_face_tracker::Face >::const_iterator it = face_filtered.begin();
+    it != face_filtered.end(); ++it)
+{
+    std::cout << it->first << " " << it->second << "\n";
+}
 if(face_filtered.find(std::to_string(f.id))==face_filtered.end())
 {
     face_filtered[std::to_string(f.id)] = f;
 }
-pi_face_tracker::Face fac= f;
+pi_face_tracker::Face fac = f;
 
+//Now there is a vlaue that would be assinged that is self.loc_3d = p
 double pha = yz_sf;
 double bet = 1 - pha;
 
@@ -397,6 +403,7 @@ double bet = 1 - pha;
  bet = 1.0 - pha;
  fac.point.x = pha * face_filtered[std::to_string(f.id)].point.x + bet * f.point.x;
 
+ face_filtered[std::to_string(f.id)] = fac;
 return fac;
 }
 
