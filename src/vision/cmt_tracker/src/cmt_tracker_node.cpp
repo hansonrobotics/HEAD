@@ -382,11 +382,7 @@ pi_face_tracker::Face TrackerCMT::filter_point(pi_face_tracker::Face f)
 double yz_sf = 0.64;
 double x_sf = 0.95;
 //std::cout<<"Filtered Locations: "<<face_filtered<<std::endl;
-for(std::map<std::string, pi_face_tracker::Face >::const_iterator it = face_filtered.begin();
-    it != face_filtered.end(); ++it)
-{
-    std::cout << it->first << " " << it->second << "\n";
-}
+
 if(face_filtered.find(std::to_string(f.id))==face_filtered.end())
 {
     face_filtered[std::to_string(f.id)] = f;
