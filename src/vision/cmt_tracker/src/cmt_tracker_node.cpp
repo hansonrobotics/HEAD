@@ -444,7 +444,7 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
 
   msg.point.y = dp * (width - ( (double)(locs.object.object.x_offset + locs.object.object.width) +
                 locs.object.object.x_offset) / 2.0 );
-  msg.point.z = dp * (height - ((locs.object.object.y_offset + locs.object.object.height) +
+  msg.point.z = dp * (height - ((double)(locs.object.object.y_offset + locs.object.object.height) +
                 locs.object.object.y_offset) / 2.0 );
   msg.emotion_value = locs.object.obj_accuracy.data;
   msg.emotion_id = locs.object.obj_states.data;

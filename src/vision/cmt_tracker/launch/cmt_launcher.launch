@@ -25,7 +25,7 @@
 <param name="camera_topic" value="image_rect"/>
 
 <group if="$(arg testing)">
-    <node pkg="cmt_tracker" name="cmt_test" type="cmt_test.py"/>
+    <node pkg="cmt_tracker" name="cmt_test" type="cmt_test.py" output="screen"/>
     <node pkg="image_transport" type="republish" name="republish" args="compressed in:=/camera/image_raw raw out:=/camera/image"/>
     <param name="camera_topic" value="image"/>
 </group>
@@ -59,11 +59,11 @@
 </group>
 
 <group unless="$(arg debug)">
-<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node"  />
+<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node"  output="screen"/>
 </group>
 
 <node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py" />
-<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" output="screen" />
+<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py"  />
 <node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  respawn="true"/>
 
 </group>

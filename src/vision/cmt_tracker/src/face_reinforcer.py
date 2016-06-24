@@ -60,7 +60,7 @@ class face_reinforcer:
         self.persistance_cv = False
         self.persistance_dlib = False
 
-        self.dlib_count = 4
+        self.dlib_count = 3
         self.cv_count = 6
         self.cv_dlib_count = 1
         self.downgrade = 500
@@ -164,6 +164,12 @@ class face_reinforcer:
                          * max(0, max(j.object.y_offset, i.object.object.y_offset) - min(
                     j.object.y_offset - j.object.height, i.object.object.y_offset - i.object.object.height)))
                 SU = SA + SB - SI
+                '''
+                common definition of overlap
+                rectangles r1 and r2 do
+                not overlap if the ratio of their intersection area to total area
+                covered is less than 0.5. That is,
+                '''
                 if SU != 0:
                     overlap_area = SI / SU
                 else:
@@ -199,18 +205,14 @@ class face_reinforcer:
                     # elif get_element[6] + get_element [5] > self.cv_dlib_count:
                     #     not_covered_faces.append(j)
                     #     self.persistance_face=[]
-            if not overlp:
-                self.persistance_face.append(
+
+            self.persistance_face.append(
                         [j.object.x_offset, j.object.width, j.object.y_offset, j.object.height, 0,
                          1 if j.tool_used_for_detection == "dlib" else 0,
                          1 if j.tool_used_for_detection != "dlib" else 0])
 
         self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element))]
 
-        print("++++++++++++++++")
-        print(self.dlib_count)
-        print(self.cv_count)
-        print("++++++++++++++++")
 
         return not_covered_faces, overlaped_faces
     def determine(self, get_element,j):

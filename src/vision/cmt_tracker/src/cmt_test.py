@@ -18,6 +18,7 @@ class image_converter:
     self.image_info = rospy.Publisher('camera_info',CameraInfo)
     self.bridge = CvBridge()
     cap = cv2.VideoCapture('/home/icog-labs/Videos/video.mp4')
+    print cap.get(5)
     path = rospkg.RosPack().get_path("robots_config")
     path = path + "/robot/camera.yaml"
     stream = file(path, 'r')
@@ -31,7 +32,7 @@ class image_converter:
     cam_info.P = calib_data['projection_matrix']['data']
     cam_info.distortion_model = calib_data['distortion_model']
     while (not rospy.is_shutdown()) and (cap.isOpened()):
-        self.keystroke = cv2.waitKey(1000 / 20)
+        self.keystroke = cv2.waitKey(1000 / 30)
         ret, frame = cap.read()
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
