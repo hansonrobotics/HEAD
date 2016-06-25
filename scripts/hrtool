@@ -475,6 +475,7 @@ execute() {
         $UPDATE_HR_SOURCE_CODE == 1 ||
         $UPDATE_SOURCE_CODE == 1 ||
         $BUILD_HR_SOURCE_CODE == 1 ||
+        $BUILD_SOURCE_CODE == 1 ||
         $RUN_CUSTOM_FUNCTIONS == 1
         ]]; then
         check_ws
@@ -494,7 +495,12 @@ execute() {
 }
 
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
-source $BASEDIR/clear_env.sh
+
+for i in $(env|grep ROS|cut -d= -f1); do
+    unset $i
+done
+unset HR_WORKSPACE
+
 eval DEFAULT_HR_WORKSPACE=~/hansonrobotics
 eval HR_ENVFILE_PATH=~/.hr/env.sh
 PROJECT=HEAD
