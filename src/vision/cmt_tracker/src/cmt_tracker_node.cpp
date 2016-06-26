@@ -33,6 +33,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   //validation_service = nh_.advertiseService("validation", &cmt_wrap::TrackerCMT::validate, this);
   reinforce_service = nh_.advertiseService("reinforce", &cmt_wrap::TrackerCMT::reinforce, this);
   merge_service = nh_.advertiseService("merge", &cmt_wrap::TrackerCMT::merge_elements, this);
+  delete_service = nh_.advertiseService("delete", &cmt_wrap::TrackerCMT::delete_elements, this);
 
   add_to_tracker = nh_.serviceClient<std_srvs::Empty>("can_add_tracker");
   //subscribers
@@ -133,6 +134,19 @@ bool TrackerCMT::merge_elements(cmt_tracker_msgs::MergeNames::Request &req, cmt_
     }
     else
     return false;
+}
+bool TrackerCMT::delete_elements(cmt_tracker_msgs::Delete::Request &req, cmt_tracker_msgs::Delete::Response &res)
+{
+    //Callback are handled sequentially; http://answers.ros.org/question/28373/race-conditions-in-callbacks/
+    delete_trackers.clear();
+    for(int i = 0; i< req.delete_trackers.size(); i++)
+    {
+        delete_trackers.push_back(req.delete_trackers[i]);
+    }
+    poorly_tracked = delete_trackers;
+    deleteOnLost();
+    return true;
+
 }
 bool TrackerCMT::updateTrackerNames(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
 {

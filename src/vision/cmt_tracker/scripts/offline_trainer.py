@@ -89,8 +89,8 @@ class OfflineViewer:
 
         while(True):
             result = random.randrange(0, 100000, 1)
-            if ('temp_' + str(result)) not in list_previous:
-                self.generate_unique = 'temp_' + str(result)
+            if (str(result)) not in list_previous:
+                self.generate_unique = str(result)
                 break
 
     def sample_callback(self, config, level):

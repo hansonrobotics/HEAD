@@ -11,7 +11,7 @@ from cv_bridge import CvBridge, CvBridgeError
 import message_filters
 from std_srvs.srv import Empty
 from cmt_tracker_msgs.msg import Trackers,Tracker, Objects
-from cmt_tracker_msgs.srv import TrackerNames,MergeNames
+from cmt_tracker_msgs.srv import TrackerNames,MergeNames, Delete
 
 import itertools
 import logging
@@ -53,23 +53,28 @@ class face_reinforcer:
         #So is's centroid area, decreasing conter; then remove that entity.
         # logging.getLogger().addHandler(logging.StreamHandler())
         self.logger = logging.getLogger('hr.cmt_tracker.face_reinforcer')
-        Server(ReinforceConfig, self.sample_callback)
+
 
         self.persistance_face = []
         self.face = False
         self.persistance_cv = False
         self.persistance_dlib = False
 
-        self.dlib_count = 3
-        self.cv_count = 6
-        self.cv_dlib_count = 1
-        self.downgrade = 500
+        self.camera_width =rospy.get_param('width')
+        self.camera_height =rospy.get_param('height')
+        # self.dlib_count = 3
+        # self.cv_count = 6
+        # self.cv_dlib_count = 1
+        # self.downgrade = 500
+        # self.area_scale = 0.6
 
+        self.srv = Server(ReinforceConfig, self.sample_callback)
     def sample_callback(self,config, level):
         self.dlib_count = config.dlib_count
         self.cv_count = config.open_count
         self.cv_dlib_count = config.open_dlib_count
         self.downgrade = config.downgrade
+        self.area_scale = 0.6
         return config
 
     def can_update(self, req):
@@ -82,7 +87,7 @@ class face_reinforcer:
         for val in temp.tracker_results:
             ttp.tracker_results.append(val)
 
-        not_overlapped, overlaped_faces = self.returnOverlapping(face,ttp)
+        not_overlapped, overlaped_faces, not_good = self.returnOverlapping(face,ttp)
         if len(not_overlapped) > 0 and self.update:
             self.tracker_locations_pub.publish(self.convert(not_overlapped))
             #Executing the following doesn't really do anythin as it just published it.
@@ -90,9 +95,19 @@ class face_reinforcer:
             #updt = self.view_update(names="", index=1)
             self.update = False
 
+        if not_good:
+            self.delete = rospy.ServiceProxy('delete',Delete)
+            try:
+                indication = self.delete(delete_trackers=not_good)
+                if not indication:
+                    pass
+            except rospy.ServiceException, e:
+                self.logger.error("Removing elements not Working")
+
         for face, cmt in overlaped_faces:
 
-            self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 2
+            self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 1
+
             if (self.faces_cmt_overlap[cmt.tracker_name.data] > 2):
                 try:
                     self.upt = rospy.ServiceProxy('reinforce',TrackerNames)
@@ -107,6 +122,7 @@ class face_reinforcer:
         self.cmt_merge = {}
         merge_to=[]
         merge_from=[]
+        ttp.tracker_results.sort(key=lambda tup: tup.object.object.height * tup.object.object.width)
         for a, b in itertools.combinations(ttp.tracker_results, 2):
             SA = a.object.object.height * a.object.object.width
             SB = b.object.object.height * b.object.object.width
@@ -148,11 +164,13 @@ class face_reinforcer:
         not_covered_faces_list = []
         not_covered_faces = []
         overlaped_faces = []
-
+        cmt_overlap_num = {}
+        not_good = []
+        added_ = []
         for get_element in self.persistance_face:
             get_element[4] += 1
 
-
+        cmt.tracker_results.sort(key=lambda tup: tup.object.object.height * tup.object.object.width)
         for j in face.objects:
             overlap = False
             SA = j.object.height * j.object.width
@@ -164,30 +182,35 @@ class face_reinforcer:
                          * max(0, max(j.object.y_offset, i.object.object.y_offset) - min(
                     j.object.y_offset - j.object.height, i.object.object.y_offset - i.object.object.height)))
                 SU = SA + SB - SI
-                '''
-                common definition of overlap
-                rectangles r1 and r2 do
-                not overlap if the ratio of their intersection area to total area
-                covered is less than 0.5. That is,
-                '''
                 if SU != 0:
                     overlap_area = SI / SU
                 else:
                     overlap_area = 1
                 overlap = overlap_area > 0.5
                 if (overlap):
+                    added_.append(j)
                     list = [j, i]
                     overlaped_faces.append(list)
-                    break
-
-            if not overlap:
+                    cmt_overlap_num[i.tracker_name.data] = cmt_overlap_num.get(i.tracker_name.data, 0) + 1
+            if j not in added_:
                 not_covered_faces_list.append(j)
+
+        #Area; Now let's add to those systems the name is added the system.
+        for i in cmt.tracker_results:
+            area = i.object.object.height * i.object.object.width
+            if (area > self.area_scale*(self.camera_width * self.camera_height)):
+                not_good.append(i.tracker_name.data)
+
+        #To remove cmt instance which have two faces in the screen.
+        for key in cmt_overlap_num:
+            if cmt_overlap_num[key] > 1:
+                not_good.append(key)
 
             #This section is for creating tracker locations by updating not_covered_faces
         for j in not_covered_faces_list:
-            if (j.object.width * j.object.height > 0.4*(640*480)):
+            if (j.object.width * j.object.height > self.area_scale*(self.camera_width * self.camera_height)):
                 print('Face To Big to added')
-                break
+                continue
             overlp = False
             for get_element in self.persistance_face:
                 overlp = self.determine(get_element, j)
@@ -214,7 +237,7 @@ class face_reinforcer:
         self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element))]
 
 
-        return not_covered_faces, overlaped_faces
+        return not_covered_faces, overlaped_faces, not_good
     def determine(self, get_element,j):
         epsilon_x = 15
         epsilon_y = 15
@@ -254,4 +277,4 @@ if __name__ == '__main__':
     try:
         rospy.spin()
     except KeyboardInterrupt:
-        pass
+        print("Exiting")

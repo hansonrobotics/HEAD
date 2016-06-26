@@ -118,6 +118,7 @@ class face_predictor:
   def returnOverlapping(self, face, cmt):
     not_covered_faces = []
     overlaped_faces = []
+    cmt.tracker_results.sort(key=lambda tup: tup.object.object.height * tup.object.object.width)
     for j in face.objects:
         overlap = False
         SA = j.object.height * j.object.width

@@ -40,6 +40,26 @@ void Face_Detection::callback(cmt_tracker_msgs::FaceConfig &config, uint32_t lev
   //std::cout<<"Factor Updated to: "<<factor<<std::endl;
 }
 
+inline cv::Point3d toPoint3d(const cv::Vec4d coords)
+{
+    return cv::Point3d(coords[0], coords[1], coords[2]);
+}
+
+inline cv::Vec3d toVec3d(const cv::Vec4d coords)
+{
+    return cv::Vec3d(coords[0], coords[1], coords[2]);
+}
+
+template<typename T> inline cv::Point3d toPoint3d(const T coords)
+{
+    return Point3d(coords(0,0), coords(1,0), coords(2,0));
+}
+
+template<typename T> inline cv::Vec3d toVec3d(const T coords)
+{
+    return cv::Vec3d(coords(0,0), coords(1,0), coords(2,0));
+}
+
 void Face_Detection::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs::CameraInfoConstPtr& camerainfo )
 {
 cameramodel.fromCameraInfo(camerainfo);
@@ -52,6 +72,7 @@ cameramodel.fromCameraInfo(camerainfo);
   focalLength = cameramodel.fx();
   opticalCenterX = cameramodel.cx();
   opticalCenterY = cameramodel.cy();
+
 
     try
     {
@@ -95,7 +116,7 @@ cameramodel.fromCameraInfo(camerainfo);
 
     conversion_mat_.copyTo(dlib_image);
     conversion_mat_.copyTo(ocv_image);
-
+    _debug = conversion_mat_.clone();
     boost::thread thread_1 = boost::thread(&Face_Detection::dlib_detector, this, dlib_image);
     boost::thread thread_2 = boost::thread(&Face_Detection::opencv_detector, this, ocv_image);
 
@@ -154,7 +175,8 @@ cameramodel.fromCameraInfo(camerainfo);
             face_description.feature_point.points.push_back(pt);
         }
         auto pose = facepose(face_description);
-
+//        cv::imshow("ello",_debug);
+//        cv::waitKey(30);
         tf::Transform face_pose;
 
         auto z = -pose(2,3);
@@ -297,6 +319,42 @@ head_pose Face_Detection::facepose(cmt_tracker_msgs::Object face_description)
         rotation(2,0),    rotation(2,1),    rotation(2,2),    tvec.at<double>(2)/1000,
                     0,                0,                0,                     1
     };
+
+//    std::vector<cv::Point3d> axes;
+//    std::vector<cv::Point2d> projected_axes;
+//
+//    axes.clear();
+//    axes.push_back(toPoint3d(pose * cv::Vec4d(0,0,0,1)));
+//    axes.push_back(toPoint3d(pose * cv::Vec4d(0.05,0,0,1))); // axis are 5cm long
+//    axes.push_back(toPoint3d(pose * cv::Vec4d(0,0.05,0,1)));
+//    axes.push_back(toPoint3d(pose * cv::Vec4d(0,0,0.05,1)));
+//
+//    projectPoints(axes, cv::Vec3f(0.,0.,0.), cv::Vec3f(0.,0.,0.), projection, cv::noArray(), projected_axes);
+//
+//    line(_debug, projected_axes[0], projected_axes[1], cv::Scalar(255,0,0),2,CV_AA);
+//    line(_debug, projected_axes[0], projected_axes[2], cv::Scalar(0,255,0),2,CV_AA);
+//    line(_debug, projected_axes[0], projected_axes[3], cv::Scalar(0,0,255),2,CV_AA);
+//
+//    auto P0 = toVec3d(pose.col(3)); // translation component of the pose
+//    auto V = toVec3d(pose * cv::Vec4d(1,0,0,1)) - P0;
+//    cv::normalize(V,V);
+//    auto N = cv::Vec3d(0,0,1);
+//
+//    auto t = - (P0.dot(N)) / (V.dot(N));
+//
+//    auto P = P0 + t * V;
+
+//    std::cout << std::endl << "Origin of the gaze: " << P0 << std::endl;
+//    std::cout << "Gaze vector: " << V << std::endl;
+//    std::cout << "Position of the gaze on the screen: " << P << std::endl;
+
+//    axes.clear();
+//    axes.push_back(cv::Point3d(V * 0.1 + P0));
+//    axes.push_back(cv::Point3d(cv::Vec3d(P0)));
+//
+//    projectPoints(axes, cv::Vec3f(0.,0.,0.), cv::Vec3f(0.,0.,0.), projection, cv::noArray(), projected_axes);
+//
+//    line(_debug, projected_axes[0], projected_axes[1], cv::Scalar(255,255,255),2,CV_AA);
 
 //
 //#ifdef HEAD_POSE_ESTIMATION_DEBUG
