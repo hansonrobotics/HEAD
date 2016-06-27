@@ -45,10 +45,12 @@ class face_predictor:
         self.confidence = 0.85
         self.states = ['results','save']
 
-        self.save_state=[]
-        self.query_state=[]
-        self.ignore_state=[]
-        self.definitely_update=[]
+
+        self.state ={'query_save': '00', 'save_only': '01','query_only': '10', 'ignore': '11'}
+        #format
+        #tracker_name : {state: state in self.state or 'query_save', count: int}
+        self.cmt_tracker_instances = {}
+
         self.overall_state = ''
         self.initial_run = True
         #So the logic goes; if the trainer is called when save_tracker_images has saved enough images.
@@ -57,6 +59,7 @@ class face_predictor:
     def add_to_query(self,req):
         if req.names not in self.query_state:
             self.query_state.append(req.names)
+            #TODO important
             self.faces_cmt_overlap[req.names] = 0
 
         if req.names in self.ignore_state:
@@ -65,8 +68,6 @@ class face_predictor:
     def add_to_db(self,req):
         pass
     def callback(self,data, cmt, face,temp):
-
-
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
         except CvBridgeError as e:
@@ -75,106 +76,62 @@ class face_predictor:
         ttp = cmt
         for val in temp.tracker_results:
             ttp.tracker_results.append(val)
+
         not_covered_faces,covered_faces = self.returnOverlapping(face,ttp)
+
         for face,cmt in covered_faces:
             tupl = []
             for pts in face.feature_point.points:
                 x,y = pts.x, pts.y
                 tupl.append((x,y))
+            key = cmt.tracker_name.data
 
-            # First let's get the state of the face_recognzier.
-            if not self.face_recognizer.get_state():
-                self.overall_state = 'save'
-                self.logger.info('Predictor is save state')
-            else:
-                self.overall_state = 'results'
+            self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key,{'count': 0, 'state':self.state['query_save']})
+            print(self.cmt_tracker_instances)
+            if self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
+                self.queryAddResults(cv_image, tupl, key, self.confidence)
 
-            '''
-            What the following tries to accomplish;
+            elif self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
+                self.face_recognizer.save_faces(cv_image, tupl, key, str(self.cmt_tracker_instances[key]['count']))
 
-            There are three states:
+            elif self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
+                self.queryAddResults(cv_image, tupl, key, self.confidence)
 
-            Query State -> If the classifier has been detected then every element starts from that stage.
-            Save State -> If the classifier has not been detected then every element starts from this stage. We have to add an element to the system and then finially we go by to query state.
-            Ignore State -> After querying the system if the result is generates result above a certain threshold then we add to the ignored list.
-            '''
+            elif self.cmt_tracker_instances[key]['state'] == self.state['ignore']:
+                pass
 
-            if cmt.tracker_name.data not in self.query_state and cmt.tracker_name.data not in self.ignore_state:
-                self.query_state.append(cmt.tracker_name.data)
-            if cmt.tracker_name.data not in self.save_state and cmt.tracker_name.data not in self.ignore_state:
-                self.save_state.append(cmt.tracker_name.data)
+            #Change state now;
 
-            self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 1
-            print(self.faces_cmt_overlap[cmt.tracker_name.data])
-            print("Querying: %s" % self.query_state)
-            print("Saving: %s" % self.save_state)
-            print("Ignoring: %s" % self.ignore_state)
+            if self.cmt_tracker_instances[key]['count'] == self.sample_size:
+                if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] \
+                        or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
+                    max_index = max(
+                        self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].iterkeys(),
+                        key=(
+                        lambda key: self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results']))
+                    if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][
+                        max_index] > self.num_positive:
+                        try:
+                            self.upt = rospy.ServiceProxy('recognition', TrackerNames)
+                            indication = self.upt(names=cmt.tracker_name.data, index=int(max_index))
+                            if not indication:
+                                self.logger.info("there was the same id in the id chamber.....")
+                            self.cmt_tracker_instances[key]['state'] = self.state['ignore']
+                        except rospy.ServiceException, e:
+                            self.logger.error("Service call failed: %s" % e)
 
-            #Now it has both query and save state.
-            if ((self.faces_cmt_overlap[cmt.tracker_name.data] < self.sample_size and (cmt.tracker_name.data in self.query_state)) and (self.overall_state is not 'save')): # The first 10 images
-                self.queryAddResults(cv_image, tupl, cmt.tracker_name.data,self.confidence)
-            # Stop Querying and move on to save state
-            if self.faces_cmt_overlap[cmt.tracker_name.data] == self.sample_size and cmt.tracker_name.data not in self.ignore_state:
-                if cmt.tracker_name.data in self.query_state:
-                    self.query_state.remove(cmt.tracker_name.data)
-                    if cmt.tracker_name.data not in self.save_state:
-                        self.ignore_state.append(cmt.tracker_name.data)
-                max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].iterkeys(),
-                                key=(lambda key: self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results']))
-                print("Results: %s" % self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][
-                    max_index])
-                if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index] > self.num_positive:
-                    try:
-                        self.upt = rospy.ServiceProxy('recognition', TrackerNames)
-                        indication = self.upt(names=cmt.tracker_name.data, index=int(max_index))
-                        if not indication:
-                            self.logger.info("there was the same id in the id chamber.....")
-                    except rospy.ServiceException, e:
-                        self.logger.error("Service call failed: %s" % e)
-                    if cmt.tracker_name.data in self.save_state:
-                        self.save_state.remove(cmt.tracker_name.data)
-                        self.ignore_state.append(cmt.tracker_name.data)
-                    if cmt.tracker_name.data in self.query_state and cmt.tracker_name.data in self.ignore_state:
-                        self.query_state.remove(cmt.tracker_name.data)
-                else:
-                    if cmt.tracker_name.data not in self.save_state:
-                        self.save_state.append(cmt.tracker_name.data)
-                    if cmt.tracker_name.data in self.query_state and cmt.tracker_name.data in self.ignore_state:
-                        self.ignore_state.remove(cmt.tracker_name.data)
-
-
-
-            #Here i don't bind it in the lower side to increase the proability of saving enough faces to add faces to the db.
-            # Now here is the dilemna; We have sent our query; So the save state needs to only happen if there is a feedback to save the face in to the system.
-            if self.faces_cmt_overlap[cmt.tracker_name.data] < (self.image_sample_size + self.sample_size) and (cmt.tracker_name.data in self.save_state) and (cmt.tracker_name.data not in self.ignore_state):
-                self.logger.info('starting saving faces')
-                if cmt.tracker_name.data not in self.save_tracker_images:
-                    self.face_recognizer.save_faces(cv_image,tupl,cmt.tracker_name.data,str(self.faces_cmt_overlap[cmt.tracker_name.data]))
-                self.logger.info('finished saving faces')
-
-            if self.faces_cmt_overlap[cmt.tracker_name.data] == self.image_sample_size + self.sample_size:
-                self.logger.info('training process')
-                if cmt.tracker_name in self.save_state:
-                    self.save_state.remove(cmt.tracker_name.data)
-
-                if cmt.tracker_name.data not in self.save_tracker_images:
-                    if cmt.tracker_name.data not in self.query_state:
-                        self.query_state.append(cmt.tracker_name.data)
-                else:
-                    self.query_state.remove(cmt.tracker_name.data)
-
-                if cmt.tracker_name.data not in self.save_tracker_images and cmt.tracker_name.data not in self.ignore_state:
-                    self.save_tracker_images.append(cmt.tracker_name.data)
+                    else:
+                        self.cmt_tracker_instances[key]['state'] = self.state['save_only']
+                        self.cmt_tracker_instances[key]['count'] = 0
+            elif self.cmt_tracker_instances[key]['count'] == self.sample_size + self.image_sample_size:
+                if self.cmt_tracker_instances[key]['state'] == self.state['save_only']:
                     self.face_recognizer.train_process(cmt.tracker_name.data)
+                    #Now let's change to query state;
+                    self.cmt_tracker_instances[key]['state'] = self.state['query']
 
-                self.faces_cmt_overlap[cmt.tracker_name.data] = 0
-                self.logger.info('finished process')
-            # if self.faces_cmt_overlap[cmt.tracker_name.data] > self.image_sample_size + self.sample_size:
-            #     self.query_state.remove(cmt.tracker_name.data)
-            #     self.ignore_state.append(cmt.tracker_name.data)
-            #     self.logger.info('Evaluated')
-            #     self.faces_cmt_overlap[cmt.tracker_name.data] = 0
-            #     self.logger.info('Finished Result? Use Service to Ask for system')
+
+            self.cmt_tracker_instances[key]['count'] += 1
+
 
     def sample_callback(self,config, level):
         self.image_sample_size = config.image_number
