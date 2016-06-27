@@ -124,14 +124,14 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 $(window).on('resize', updateWidth);
 
                 // init node droppable
-                this.ui.timelineContainer.droppable({
+                this.ui.scrollContainer.droppable({
                     accept: '.app-node[data-name]',
                     tolerance: 'touch',
                     drop: function (e, ui) {
                         var nodeEl = $(ui.helper),
                             node = self.model.nodes.get({cid: nodeEl.data('cid')}),
                             startTime = Math.round(
-                                    (ui.offset.left - $(this).offset().left) / self.config.pxPerSec * 100) / 100;
+                                    ($(this).scrollLeft() + ui.offset.left - $(this).offset().left) / self.config.pxPerSec * 100) / 100;
 
                         if (node)
                             node.set('start_time', startTime);
