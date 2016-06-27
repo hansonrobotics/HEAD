@@ -29,7 +29,8 @@ root_logger.addHandler(sh)
 import sys
 CWD = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(CWD, '..'))
-from flask import Flask, request, Response
+from flask import Flask, request, Response, send_from_directory
+
 import json
 import shutil
 from chatbot import (ask, list_character, session_manager, set_weights,
@@ -42,6 +43,15 @@ ROOT='/{}'.format(VERSION)
 INCOMING_DIR = os.path.expanduser('~/.hr/aiml/incoming')
 
 logger = logging.getLogger('hr.chatbot.server')
+app.config['UPLOAD_FOLDER'] = os.path.expanduser('~/.hr/aiml')
+
+@app.route(ROOT+'/<path:path>')
+def send_client(path):
+    return send_from_directory('public', path)
+
+@app.route(ROOT+'/client', methods=['GET'])
+def client():
+    return send_from_directory('public','client.html')
 
 @app.route(ROOT+'/chat', methods=['GET'])
 @requires_auth
