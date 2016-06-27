@@ -6,6 +6,11 @@
 
 set -e
 
+SUDO=""
+if [[ $(id -u) != 0 ]]; then
+    SUDO="sudo"
+fi
+
 if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
     echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
     exit 1
@@ -32,45 +37,45 @@ error() {
 }
 
 install_basic() {
-    sudo apt-get -y update
-    sudo apt-get -y install git
-    sudo apt-get -y install wget
-    sudo apt-get -y install python3-pip
-    sudo apt-get -y install python-pip
-    sudo apt-get -y install build-essential
-    sudo apt-get -y install software-properties-common
+    $SUDO apt-get -y update
+    $SUDO apt-get -y install git
+    $SUDO apt-get -y install wget
+    $SUDO apt-get -y install python3-pip
+    $SUDO apt-get -y install python-pip
+    $SUDO apt-get -y install build-essential
+    $SUDO apt-get -y install software-properties-common
 }
 
 install_ros() {
-    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-#    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
-    sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
-    sudo apt-get -y update
-    sudo apt-get -y install ros-indigo-desktop
-    sudo apt-get -y install ros-indigo-tf
-    sudo apt-get -y install ros-indigo-driver-common
-    sudo apt-get -y install ros-indigo-cv-bridge
-    sudo apt-get -y install ros-indigo-image-transport
-    sudo apt-get -y install ros-indigo-openni-camera
-    sudo apt-get -y install ros-indigo-mjpeg-server
-    sudo apt-get -y install ros-indigo-usb-cam
-    sudo apt-get -y install ros-indigo-dynamixel-motor
-    sudo apt-get -y install ros-indigo-robot-state-publisher
-    sudo apt-get -y install ros-indigo-joint-state-publisher
-    sudo apt-get -y install ros-indigo-rosbridge-server
-    sudo apt-get -y install python-catkin-tools
+    $SUDO sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+#    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | $SUDO apt-key add -
+    $SUDO apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
+    $SUDO apt-get -y update
+    $SUDO apt-get -y install ros-indigo-desktop
+    $SUDO apt-get -y install ros-indigo-tf
+    $SUDO apt-get -y install ros-indigo-driver-common
+    $SUDO apt-get -y install ros-indigo-cv-bridge
+    $SUDO apt-get -y install ros-indigo-image-transport
+    $SUDO apt-get -y install ros-indigo-openni-camera
+    $SUDO apt-get -y install ros-indigo-mjpeg-server
+    $SUDO apt-get -y install ros-indigo-usb-cam
+    $SUDO apt-get -y install ros-indigo-dynamixel-motor
+    $SUDO apt-get -y install ros-indigo-robot-state-publisher
+    $SUDO apt-get -y install ros-indigo-joint-state-publisher
+    $SUDO apt-get -y install ros-indigo-rosbridge-server
+    $SUDO apt-get -y install python-catkin-tools
     # for camera calibration
-    sudo apt-get -y install ros-indigo-image-proc
+    $SUDO apt-get -y install ros-indigo-image-proc
     # for blender to find ros packages
-    sudo pip3 install rospkg catkin_pkg
+    $SUDO pip3 install rospkg catkin_pkg
     set +e
-    sudo rosdep init
+    $SUDO rosdep init
     rosdep update
     set -e
 }
 
 install_opencog_deps() {
-    sudo apt-get -y install ccache
+    $SUDO apt-get -y install ccache
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
     chmod +rx octool
     ./octool -rdpv
@@ -80,11 +85,11 @@ install_opencog_deps() {
 }
 
 install_relex_deps() {
-    sudo apt-get -y update
-    sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
-    sudo apt-get -y install wordnet-dev wordnet-sense-index
-    sudo apt-get -y install openjdk-7-jdk
-    sudo apt-get -y install ant libcommons-logging-java libgetopt-java
+    $SUDO apt-get -y update
+    $SUDO apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
+    $SUDO apt-get -y install wordnet-dev wordnet-sense-index
+    $SUDO apt-get -y install openjdk-7-jdk
+    $SUDO apt-get -y install ant libcommons-logging-java libgetopt-java
 
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
     chmod +rx octool
@@ -94,35 +99,35 @@ install_relex_deps() {
     # Java WordNet Library
     wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
     unzip -o jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
-    sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
+    $SUDO mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
     rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
-    sudo chmod -v 0644 /usr/local/share/java/jwnl.jar
+    $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
 }
 
 install_other_deps() {
-    sudo add-apt-repository -y ppa:irie/blender
-    sudo apt-get -y update
+    $SUDO add-apt-repository -y ppa:irie/blender
+    $SUDO apt-get -y update
 
-    sudo apt-get -y install blender
+    $SUDO apt-get -y install blender
 
     # For webui
-    sudo pip2 install flask EasyProcess
+    $SUDO pip2 install flask EasyProcess
 
     # For rosbridge_server
-    sudo apt-get -y install python-bson
+    $SUDO apt-get -y install python-bson
 
     # For pololu-motors
     # DO NOT UPGRADE WITH PIP
-    sudo apt-get -y install python-serial
+    $SUDO apt-get -y install python-serial
 
     # For Blender
-    sudo apt-get -y install python3-numpy
+    $SUDO apt-get -y install python3-numpy
 
     # For running scripts
-    sudo apt-get -y install tmux
+    $SUDO apt-get -y install tmux
 
     # For Festival
-    sudo apt-get -y install festival festival-dev
+    $SUDO apt-get -y install festival festival-dev
     # Install female voice
     mkdir -p ~/.hr/tts/festival/voices
     # Install female voice
@@ -130,24 +135,24 @@ install_other_deps() {
         wget http://festvox.org/packed/festival/2.1/festvox_cmu_us_slt_arctic_hts.tar.gz -P ~/.hr/tts/festival/voices
     fi
     tar zxf ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz -C /tmp
-    sudo cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
+    $SUDO cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
     rm -rf /tmp/festival
 
     # For tts playing audio
-    sudo apt-get -y install python-pyglet
+    $SUDO apt-get -y install python-pyglet
 
     # For chatbot
-    sudo apt-get -y install python-yaml
-    sudo apt-get -y install npm
+    $SUDO apt-get -y install python-yaml
+    $SUDO apt-get -y install npm
 
-    sudo npm install -g n
-    sudo n stable
-    sudo npm install xmlhttprequest --prefix $PROJECT/src/chatbot/src/server/
+    $SUDO npm install -g n
+    $SUDO n stable
+    $SUDO npm install xmlhttprequest --prefix $PROJECT/src/chatbot/src/server/
 
     # For blender_api_test
-    sudo add-apt-repository -y ppa:mc3man/trusty-media
-    sudo apt-get update
-    sudo apt-get install -y ffmpeg
+    $SUDO add-apt-repository -y ppa:mc3man/trusty-media
+    $SUDO apt-get update
+    $SUDO apt-get install -y ffmpeg
 
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
@@ -155,15 +160,15 @@ install_other_deps() {
     unzip /tmp/marytts-5.1.2.zip -d ~/.hr/tts/marytts
     rm /tmp/marytts-5.1.2.zip
 
-    sudo pip2 install pinyin==0.2.5
+    $SUDO pip2 install pinyin==0.2.5
 
     # For rospy to run with python3
-    sudo apt-get -y install python3-yaml
+    $SUDO apt-get -y install python3-yaml
 }
 
 install_test_deps() {
-    sudo apt-get -y install socat
-    sudo apt-get -y install xdotool
+    $SUDO apt-get -y install socat
+    $SUDO apt-get -y install xdotool
 }
 
 check_or_create_ws() {
@@ -323,9 +328,9 @@ build_opencog() {
             if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
                 mkdir $HR_WORKSPACE/opencog/$repo/build
             fi
-            cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && sudo make install
+            cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && $SUDO make install
         else
-            cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && sudo ant install
+            cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && $SUDO ant install
         fi
     done
 }
@@ -358,17 +363,17 @@ _do_clean_up() {
         for repo in ${OPENCOG_REPOS[*]}
         do
             if [[ $repo != 'relex' ]]; then
-                sudo rm -r $HR_WORKSPACE/opencog/$repo/build
+                $SUDO rm -r $HR_WORKSPACE/opencog/$repo/build
             fi
         done
     fi
-    sudo rm -r /usr/local/include/opencog
-    sudo rm -r /usr/local/lib/opencog
-    sudo rm -r /usr/local/share/opencog
-    sudo rm /usr/local/bin/cogserver
-    sudo rm /usr/local/etc/cogserver.conf
-    sudo rm /usr/local/etc/opencog.conf
-    sudo rm /usr/local/lib/libcogutil.so
+    $SUDO rm -r /usr/local/include/opencog
+    $SUDO rm -r /usr/local/lib/opencog
+    $SUDO rm -r /usr/local/share/opencog
+    $SUDO rm /usr/local/bin/cogserver
+    $SUDO rm /usr/local/etc/cogserver.conf
+    $SUDO rm /usr/local/etc/opencog.conf
+    $SUDO rm /usr/local/lib/libcogutil.so
 }
 
 do_run() {
