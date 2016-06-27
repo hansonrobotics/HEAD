@@ -57,13 +57,7 @@ class face_predictor:
         #And for get_tracker_results -> returns the
 
     def add_to_query(self,req):
-        if req.names not in self.query_state:
-            self.query_state.append(req.names)
-            #TODO important
-            self.faces_cmt_overlap[req.names] = 0
-
-        if req.names in self.ignore_state:
-            self.ignore_state.remove(req.names)
+        pass
 
     def add_to_db(self,req):
         pass
@@ -109,6 +103,7 @@ class face_predictor:
                         self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].iterkeys(),
                         key=(
                         lambda key: self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results']))
+                    print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index])
                     if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][
                         max_index] > self.num_positive:
                         try:
@@ -127,7 +122,7 @@ class face_predictor:
                 if self.cmt_tracker_instances[key]['state'] == self.state['save_only']:
                     self.face_recognizer.train_process(cmt.tracker_name.data)
                     #Now let's change to query state;
-                    self.cmt_tracker_instances[key]['state'] = self.state['query']
+                    self.cmt_tracker_instances[key]['state'] = self.state['query_only']
 
 
             self.cmt_tracker_instances[key]['count'] += 1

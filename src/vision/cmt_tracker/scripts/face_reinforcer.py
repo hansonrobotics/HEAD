@@ -60,8 +60,8 @@ class face_reinforcer:
         self.persistance_cv = False
         self.persistance_dlib = False
 
-        self.camera_width =rospy.get_param('width')
-        self.camera_height =rospy.get_param('height')
+        self.camera_width =rospy.get_param('width',640)
+        self.camera_height =rospy.get_param('height',480)
         # self.dlib_count = 3
         # self.cv_count = 6
         # self.cv_dlib_count = 1
