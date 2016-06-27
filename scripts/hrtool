@@ -16,10 +16,6 @@ if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
     exit 1
 fi
 
-for i in $(env|grep ROS|cut -d= -f1); do
-    unset $i
-done
-
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 
 COLOR_INFO='\033[32m'
