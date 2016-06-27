@@ -75,11 +75,14 @@ class OfflineViewer:
 
     def switchToTrain(self):
         #Create a dialog for waiting and then when finished say comething.
+        self.save_faces = False
         self.face_recognizer.train_dataset()
-        #Promot to finish the training.
+        self.save_face = False
+        #Promote to finish the training.
 
     def trimTrainingSet(self):
         #This one does traininf for the set of images in the system.
+        print("Not Implemented")
         pass
 
     def switchToSave(self):
@@ -105,15 +108,19 @@ class OfflineViewer:
 
             for i in face.objects:
                 tupl = []
+                if (i.tool_used_for_detection.data != "dlib"):
+                    # Skip faces which don't have dlib configuraiton. Need to integrate ci2cv and compare results
+                    continue
                 for pts in i.feature_point.points:
                     x, y = pts.x, pts.y
                     tupl.append((x, y))
-                cv2.rectangle(cv_image,(i.object.x_offset,i.object.y_offset),
-                              (i.object.x_offset + i.object.width,i.object.y_offset + i.object.width),(255,0,0))
+
                 #Now let's query every single time to which results group it belongs to and box output the result
                 if not self.save_faces:
                     result = self.face_recognizer.immediate_results(cv_image, tupl)
                     font = cv2.FONT_HERSHEY_COMPLEX_SMALL
+                    cv2.rectangle(cv_image, (i.object.x_offset, i.object.y_offset),
+                                  (i.object.x_offset + i.object.width, i.object.y_offset + i.object.width), (255, 0, 0))
                     cv2.putText(cv_image,str(result),(i.object.x_offset,i.object.y_offset),font,0.7,(255,0,0),2)
                 else:
                     if (self.image_sample_size > 0):

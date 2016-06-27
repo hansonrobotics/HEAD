@@ -14,7 +14,7 @@
     <arg name="offline" default="False"/>
     <group unless="$(arg testing)">
     <node pkg="usb_cam" type="usb_cam_node" name="camera">
-      <param name="video_device" value="/dev/video1"/>
+      <param name="video_device" value="/dev/video0"/>
       <param name="pixel_format" value="yuyv"/>
       <param name="width" value="640"/>
       <param name="height" value="480"/>
