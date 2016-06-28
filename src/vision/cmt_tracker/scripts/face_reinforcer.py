@@ -193,7 +193,9 @@ class face_reinforcer:
                     overlaped_faces.append(list)
                     cmt_overlap_num[i.tracker_name.data] = cmt_overlap_num.get(i.tracker_name.data, 0) + 1
             if j not in added_:
-                not_covered_faces_list.append(j)
+                not_covered_faces_list.append([j.object.x_offset, j.object.width, j.object.y_offset, j.object.height, 0,
+                        j.tool_used_for_detection.data,
+                        "0000000001"])
 
         #Area; Now let's add to those systems the name is added the system.
         for i in cmt.tracker_results:
@@ -206,44 +208,65 @@ class face_reinforcer:
             if cmt_overlap_num[key] > 1:
                 not_good.append(key)
 
-            #This section is for creating tracker locations by updating not_covered_faces
+        if not self.persistance_face:
+            self.persistance_face = not_covered_faces_list
+
+
+        #Now here we check for overlap.
+        not_covered = []
+        updated = []
+
         for j in not_covered_faces_list:
-            if (j.object.width * j.object.height > self.area_scale*(self.camera_width * self.camera_height)):
+            if (j[1] * j[4] > self.area_scale * (self.camera_width * self.camera_height)):
                 print('Face To Big to added')
                 continue
             overlp = False
             for get_element in self.persistance_face:
                 overlp = self.determine(get_element, j)
                 if overlp:
-                    if j.tool_used_for_detection.data == "dlib":
-                        get_element[5] += 1
-                    else:
-                        get_element[6] += 1
-                    if get_element[5] > self.dlib_count:
-                        not_covered_faces.append(j)
-                        self.persistance_face=[]
-                    elif get_element[6] > self.cv_count:
-                        not_covered_faces.append(j)
-                        self.persistance_face=[]
-                    # elif get_element[6] + get_element [5] > self.cv_dlib_count:
-                    #     not_covered_faces.append(j)
-                    #     self.persistance_face=[]
+                    updated.append(get_element)
+                    get_element[5] = j[5]
+                    get_element[6] = get_element[6][1:] + "1"
+            if not overlp:
+                not_covered.append(j)
+        #Now if not updated shift to the right.
+        for new_ in not_covered:
+            self.persistance_face.append(new_)
 
-            self.persistance_face.append(
-                        [j.object.x_offset, j.object.width, j.object.y_offset, j.object.height, 0,
-                         1 if j.tool_used_for_detection == "dlib" else 0,
-                         1 if j.tool_used_for_detection != "dlib" else 0])
 
+
+        remove_this = []
+        for j in self.persistance_face:
+            if j not in updated:
+                print("here")
+                j[6] = j[6][1:] + "0"
+
+            if j[5] is "dlib":
+                if j[6].count("1") > self.dlib_count:
+                    not_covered_faces.append(j)
+                    remove_this.append(j)
+            else:
+                if j[6].count("1") > self.cv_count:
+                    not_covered_faces.append(j)
+                    remove_this.append(j)
+
+
+
+        for remove in remove_this:
+            self.persistance_face.remove(remove)
+
+
+        print(self.persistance_face)
         self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element))]
 
-
+            # Now let's check if it overlaps with any locations that exist in the persistance
         return not_covered_faces, overlaped_faces, not_good
     def determine(self, get_element,j):
         epsilon_x = 15
         epsilon_y = 15
 
-        x_off = (j.object.x_offset)
-        y_off = j.object.y_offset
+        x_off = j[0]
+        y_off = j[2]
 
         gx_off =get_element[0]
         gy_off =get_element[2]
@@ -251,15 +274,16 @@ class face_reinforcer:
         x_res = abs(x_off - gx_off)
         y_res = abs(y_off - gy_off)
 
-        w_res = abs(j.object.width - get_element[1])
-        h_res = abs(j.object.height - get_element[3])
+        w_res = abs(j[1] - get_element[1])
+        h_res = abs(j[3] - get_element[3])
 
         if x_res < epsilon_x and y_res < epsilon_y and w_res < epsilon_y and h_res < epsilon_y:
             return True
         return False
 
     def trim(self,get_element):
-        if (get_element[4] < 10):
+        
+        if (get_element[6] != "0000000000"):
             return False
         return True
 
@@ -267,7 +291,10 @@ class face_reinforcer:
         message = Trackers()
         for i in face_locs:
             messg = Tracker()
-            messg.object = i
+            messg.object.object.x_offset = i[0]
+            messg.object.object.y_offset = i[2]
+            messg.object.object.width = i[1]
+            messg.object.object.height = i[3]
             message.tracker_results.append(messg)
         message.header.stamp = rospy.Time.now()
         return message
