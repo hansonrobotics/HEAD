@@ -29,18 +29,12 @@ Then to train the dataset run
 
 
 # Urgent TODO's
-* 3D location ouput to the relevant topics.
-
-* Merging overlapping tracking instances created when a face moves.
-
-* Inititial threshold configuration to make sure a random false positive doesn't wait large number of frame before deletion.
-
-* Enable gaze, attention and emotime output into the the relevant code.
 
 * Increase the training of the dlib object detetor or utilize higher FP opencv classifiers to reinforce temporay trackers
 to push them to the main tracker queue.
 
 #TODO
+* Enable gaze, attention and emotime output into the the relevant code.
 * Write Tests.
 * Remove unnecessary arguments and parameters in the launcher and code so to make it entirely configurable.
 * Write a documentation and clear API to trigger adding faces to the dataset.

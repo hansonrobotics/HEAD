@@ -272,10 +272,10 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 
     pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
 
-    for (int pi_res = 0; pi_res < pi_results.faces.size(); pi_res++)
-    {
-        pi_results.faces[pi_res] = filter_point(pi_results.faces[pi_res]);
-    }
+//    for (int pi_res = 0; pi_res < pi_results.faces.size(); pi_res++)
+//    {
+//        pi_results.faces[pi_res] = filter_point(pi_results.faces[pi_res]);
+//    }
 //  bool emo_enabled,pose_enabled;
 //  nh_.getParam("pose",pose_enabled);
 //  nh_.getParam("emotime",emo_enabled);
