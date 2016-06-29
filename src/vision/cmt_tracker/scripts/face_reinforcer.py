@@ -238,7 +238,6 @@ class face_reinforcer:
         remove_this = []
         for j in self.persistance_face:
             if j not in updated:
-                print("here")
                 j[6] = j[6][1:] + "0"
 
             if j[5] is "dlib":
@@ -256,9 +255,9 @@ class face_reinforcer:
             self.persistance_face.remove(remove)
 
 
-        print(self.persistance_face)
-        self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element))]
 
+        self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element))]
+        #print(self.persistance_face)
             # Now let's check if it overlaps with any locations that exist in the persistance
         return not_covered_faces, overlaped_faces, not_good
     def determine(self, get_element,j):
