@@ -7,3 +7,4 @@ std_msgs/String tracker_name #This is needed.
 std_msgs/String recognized_name #This is assigned when it's known to have a name
 std_msgs/Bool recognized # This is updated after tracker_name is updated from the recognizer function.
 std_msgs/Int32 before_demotion
+std_msgs/Bool validated #To check for merge fucntions.

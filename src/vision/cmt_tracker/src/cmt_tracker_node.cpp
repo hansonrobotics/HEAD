@@ -69,7 +69,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
 bool TrackerCMT::clear(cmt_tracker_msgs::Clear::Request &req, cmt_tracker_msgs::Clear::Response &res)
 {
   cmt_.clear();
-  poorly_tracked = cmt_.removeLost();
+  poorly_tracked = cmt_.lostFace();
   deleteOnLost();
   //nh_.setParam("tracker_updated", 2);
 
@@ -244,7 +244,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     tracker.recognized_name.data = (*v).recognized_as;
     tracker.before_demotion.data = (*v).before_being_demoted;
     tracker.header.stamp = ros::Time::now();
-
+    tracker.validated.data = (*v).validated;
     if ((*v).validated)
     {
     trackers_results.tracker_results.push_back(tracker);
@@ -260,9 +260,10 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     temp_results.tracker_results.push_back(tracker);
   }
     newly_tracked.clear();
-    poorly_tracked = cmt_.removeLost();
+    cmt_.removeLost();
+    poorly_tracked = cmt_.lostFace();
     newly_tracked = cmt_.newFace();
-    cmt_.clearFace();
+
     for ( int i = 0; i < newly_tracked.size(); i++)
     {
     pi_face_tracker::FaceEvent m = returnPiEvents("new_face", newly_tracked[i]);
