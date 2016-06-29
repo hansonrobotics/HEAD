@@ -267,14 +267,22 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     poorly_tracked = cmt_.lostFace();
     newly_tracked = cmt_.newFace();
     cmt_.clearFace();
-    for ( int i = 0; i < newly_tracked.size(); i++)
-    {
-    pi_face_tracker::FaceEvent m = returnPiEvents("new_face", newly_tracked[i]);
-    pi_events.publish(m);
-    pi_registry[newly_tracked[i]] = newly_tracked[i];
-    }
 
     pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
+
+
+    //Check if it exists in here before publishing:
+    for (int j = 0; j < pi_results.faces.size(); j ++)
+    {
+        if(std::find(newly_tracked.begin(), newly_tracked.end(),std::to_string(pi_results.faces[j].id))!=newly_tracked.end())
+        {
+            pi_face_tracker::FaceEvent m = returnPiEvents("new_face", std::to_string(pi_results.faces[j].id));
+            pi_events.publish(m);
+            pi_registry[std::to_string(pi_results.faces[j].id)] = std::to_string(pi_results.faces[j].id);
+        }
+    }
+
+
 
 //    for (int pi_res = 0; pi_res < pi_results.faces.size(); pi_res++)
 //    {

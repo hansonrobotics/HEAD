@@ -50,7 +50,7 @@
 </group>
 
 
-<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node" output="screen" />
+<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node"/>
 <group unless="$(arg offline)">
 <group if="$(arg cmt)">
 
@@ -60,11 +60,11 @@
 </group>
 
 <group unless="$(arg debug)">
-<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" />
+<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" output="screen"/>
 </group>
 
 <node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py" />
-<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py"  output="screen" />
+<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" />
 <node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  respawn="true"/>
 
 </group>
