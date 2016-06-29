@@ -266,10 +266,6 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 
     poorly_tracked = cmt_.lostFace();
     newly_tracked = cmt_.newFace();
-    for(std::vector<string>::iterator v = poorly_tracked.begin(); v!= poorly_tracked.end(); v++)
-    {
-    newly_tracked.erase(std::remove(newly_tracked.begin(), newly_tracked.end(), *v), newly_tracked.end());
-    }
     cmt_.clearFace();
     for ( int i = 0; i < newly_tracked.size(); i++)
     {
