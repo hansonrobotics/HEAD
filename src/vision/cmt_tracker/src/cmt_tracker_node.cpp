@@ -221,6 +221,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
   //Now let's copy an additional mat to do additional removal.
 
   poorly_tracked.clear();
+  newly_tracked.clear();
 
   std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor,merge);
   merge.clear();
@@ -228,8 +229,9 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
   std::vector<std::string> available_names;
   for(std::vector<cmt::cmt_message>::iterator v = messages.begin(); v!= messages.end(); v++)
   {
+    if (!((*v).tracker_lost))
+    {
     cmt_tracker_msgs::Tracker tracker;
-
     tracker.initial_points.data = (*v).initial_active_points;
     tracker.active_points.data = (*v).active_points;
     tracker.tracker_name.data = (*v).tracker_name;
@@ -260,9 +262,9 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     }
     else
     temp_results.tracker_results.push_back(tracker);
+    }
   }
     cmt_.removeLost();
-    newly_tracked.clear();
 
     poorly_tracked = cmt_.lostFace();
     newly_tracked = cmt_.newFace();
