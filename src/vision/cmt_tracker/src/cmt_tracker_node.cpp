@@ -224,6 +224,8 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 
   std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor,merge);
   merge.clear();
+  cmt_.removeLost();
+  std::vector<std::string> available_names;
   for(std::vector<cmt::cmt_message>::iterator v = messages.begin(); v!= messages.end(); v++)
   {
     cmt_tracker_msgs::Tracker tracker;
@@ -260,10 +262,10 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     temp_results.tracker_results.push_back(tracker);
   }
     newly_tracked.clear();
-    cmt_.removeLost();
+
     poorly_tracked = cmt_.lostFace();
     newly_tracked = cmt_.newFace();
-
+    cmt_.clearFace();
     for ( int i = 0; i < newly_tracked.size(); i++)
     {
     pi_face_tracker::FaceEvent m = returnPiEvents("new_face", newly_tracked[i]);
