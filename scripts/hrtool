@@ -127,6 +127,11 @@ install_other_deps() {
 
     # For chatbot
     sudo apt-get -y install python-yaml
+    sudo apt-get -y install npm
+
+    sudo npm install -g n
+    sudo n stable
+    sudo npm install xmlhttprequest --prefix $PROJECT/src/chatbot/src/server/
 
     # For blender_api_test
     sudo add-apt-repository -y ppa:mc3man/trusty-media
@@ -138,6 +143,9 @@ install_other_deps() {
     wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip -O /tmp/marytts-5.1.2.zip
     unzip /tmp/marytts-5.1.2.zip -d ~/.hr/tts/marytts
     rm /tmp/marytts-5.1.2.zip
+
+    sudo pip2 install pinyin==0.2.5
+
 }
 
 install_test_deps() {
@@ -326,6 +334,7 @@ update_opencog() {
         cd $HR_WORKSPACE/opencog/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
         if [[ $branch != $DEFAULT_BRANCH ]]; then
+            echo "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
         git pull origin $DEFAULT_BRANCH
@@ -339,6 +348,7 @@ do_update_hr() {
         cd $HR_WORKSPACE/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
         if [[ $branch != $DEFAULT_BRANCH ]]; then
+            echo "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
         git pull origin $DEFAULT_BRANCH
@@ -525,6 +535,33 @@ _do_clean_up() {
     sudo rm /usr/local/lib/libcogutil.so
 }
 
+do_clean_up() {
+    set +e
+    echo "Cleaning up"
+    _do_clean_up >/dev/null 2>&1
+    echo "Done"
+    set -e
+}
+
+_do_clean_up() {
+    rm -r ~/.cache/guile/ccache
+    if [[ ! -z $HR_WORKSPACE ]]; then
+        for repo in ${OPENCOG_REPOS[*]}
+        do
+            if [[ $repo != 'relex' ]]; then
+                sudo rm -r $HR_WORKSPACE/opencog/$repo/build
+            fi
+        done
+    fi
+    sudo rm -r /usr/local/include/opencog
+    sudo rm -r /usr/local/lib/opencog
+    sudo rm -r /usr/local/share/opencog
+    sudo rm /usr/local/bin/cogserver
+    sudo rm /usr/local/etc/cogserver.conf
+    sudo rm /usr/local/etc/opencog.conf
+    sudo rm /usr/local/lib/libcogutil.so
+}
+
 do_run() {
     while [[ $# > 0 ]]; do
         echo "Running $1"
@@ -587,6 +624,7 @@ EOF
 parse_opts() {
 
     while getopts "hw:igGbBuUvtpr:s:dc" opt; do
+
         case $opt in
         h)
             show_help
@@ -647,12 +685,12 @@ execute() {
     parse_opts $@
     set_ws
 
-    if [[ $GET_HR_SOURCE_CODE == 1 ||
-        $GET_SOURCE_CODE == 1 ||
-        $DEVELOPER_MODE == 1 ||
+
+    if [[ $DEVELOPER_MODE == 1 ||
         $UPDATE_HR_SOURCE_CODE == 1 ||
         $UPDATE_SOURCE_CODE == 1 ||
         $BUILD_HR_SOURCE_CODE == 1 ||
+        $BUILD_SOURCE_CODE == 1 ||
         $RUN_CUSTOM_FUNCTIONS == 1
         ]]; then
         check_ws
@@ -674,6 +712,12 @@ execute() {
 }
 
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+
+for i in $(env|grep ROS|cut -d= -f1); do
+    unset $i
+done
+unset HR_WORKSPACE
+
 eval DEFAULT_HR_WORKSPACE=~/hansonrobotics
 eval HR_ENVFILE_PATH=~/.hr/env.sh
 PROJECT=HEAD
