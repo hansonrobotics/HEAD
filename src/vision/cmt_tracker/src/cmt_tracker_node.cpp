@@ -74,8 +74,6 @@ bool TrackerCMT::clear(cmt_tracker_msgs::Clear::Request &req, cmt_tracker_msgs::
   cmt_.clear();
   poorly_tracked = cmt_.lostFace();
   deleteOnLost();
-  //nh_.setParam("tracker_updated", 2);
-
   std::cout<<"Remove all tracked service"<<std::endl;
   return true;
 }

@@ -77,6 +77,7 @@ class face_reinforcer:
         self.cv_dlib_count = config.open_dlib_count
         self.downgrade = config.downgrade
         self.area_scale = config.area_downgrade
+        self.window_size = config.window_size
         return config
 
     def can_update(self, req):
@@ -161,9 +162,9 @@ class face_reinforcer:
                 indic =self.mrg(merge_to=merge_to, merge_from=merge_from)
 
                 if not indic:
-                    pass
+                    self.logger.error("Merging Service call failed: %s" % e)
             except rospy.ServiceException, e:
-                self.logger.error("Merging Service call failed: %s" % e)
+                self.logger.error("Merging Service raised Exception: %s" % e)
 
         #Now pass to the merger.
 
@@ -196,7 +197,7 @@ class face_reinforcer:
                     overlap_area = float(SI) / float(SU)
                 else:
                     overlap_area = 1
-                print(overlap_area)
+                #print(overlap_area)
                 overlap = overlap_area > 0.5
                 if (overlap):
                     added_.append(j)
@@ -204,9 +205,12 @@ class face_reinforcer:
                     overlaped_faces.append(list)
                     cmt_overlap_num[i.tracker_name.data] = cmt_overlap_num.get(i.tracker_name.data, 0) + 1
             if j not in added_:
+                size = self.repeat(self.window_size)
+                size = size[1:] + "1"
+                #print(size)
                 not_covered_faces_list.append([j.object.x_offset, j.object.width, j.object.y_offset, j.object.height, 0,
                         j.tool_used_for_detection.data,
-                        "0000000001"])
+                        size])
 
         # Area; Now let's add to those systems the name is added the system.
         updated = []
@@ -288,9 +292,9 @@ class face_reinforcer:
 
 
 
-        self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element[6],10))]
-        #print(self.persistance_face)
-            # Now let's check if it overlaps with any locations that exist in the persistance
+        self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element[6],self.window_size))]
+        print(self.persistance_face)
+
         return not_covered_faces, overlaped_faces, not_good
     def determine(self, get_element,j):
         epsilon_x = 15

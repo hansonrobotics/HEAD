@@ -42,7 +42,7 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
 
   ui.paramsetters->addItem("Dlib-CMT Method");
   ui.paramsetters->addItem("Show Pose(dlib)");
-
+  ui.addToTrack->setEnabled(false);
   nh.getParam("camera_topic", subscribe_topic);
   nh.getParam("filtered_face_locations",subscribe_face);
 
@@ -498,9 +498,16 @@ void tracker_plugin::on_removeAllTracked_clicked()
 {
 
   cmt_tracker_msgs::Clear srv;
-  client.call(srv);
-  // {
-     std::cout << "Cleared" << std::endl;
+  ros::service::call("clear",srv);
+//  if (client.call(srv))
+//  {
+//
+//  std::cout << "Cleared" << std::endl;
+//  }
+//  else
+//  {
+//  std::cout << "Error" <<std::endl;
+//  }
   // }
   // else {
   //   std::cout << "Not Cleared" << std::endl;
