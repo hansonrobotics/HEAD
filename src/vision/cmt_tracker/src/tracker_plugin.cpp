@@ -28,24 +28,20 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
 
 
   firstrun = true;
-  ui.face_choice_method->addItem("Hand Selection Trackings");
-  ui.face_choice_method->addItem("Remove on LOST");
-  ui.face_choice_method->addItem("Face Recognition Method");
+  //ui.face_choice_method->addItem("Hand Selection Trackings");
+//  ui.face_choice_method->addItem("Remove on LOST");
+//  ui.face_choice_method->addItem("Face Recognition Method");
 
-  const QStandardItemModel* model = qobject_cast<const QStandardItemModel*>(ui.face_choice_method->model());
-  QStandardItem* item = model->item(2);
-
-  item->setFlags(disable ? item->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled) : Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-  item->setData(disable ? ui.face_choice_method->palette().color(QPalette::Disabled, QPalette::Text)
-                      : QVariant(), // clear item data in order to use default color
-              Qt::TextColorRole);
+//  const QStandardItemModel* model = qobject_cast<const QStandardItemModel*>(ui.face_choice_method->model());
+//  QStandardItem* item = model->item(2);
+//
+//  item->setFlags(disable ? item->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled) : Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+//  item->setData(disable ? ui.face_choice_method->palette().color(QPalette::Disabled, QPalette::Text)
+//                      : QVariant(), // clear item data in order to use default color
+//              Qt::TextColorRole);
 
   ui.paramsetters->addItem("Dlib-CMT Method");
-  ui.paramsetters->addItem("OpenCV-CMT Method");
   ui.paramsetters->addItem("Show Pose(dlib)");
-  ui.paramsetters->addItem("Pi-Vision");
-  ui.paramsetters->addItem("Emotime-Enable");
-  ui.paramsetters->addItem("Dlib Tracker");
 
   nh.getParam("camera_topic", subscribe_topic);
   nh.getParam("filtered_face_locations",subscribe_face);
@@ -64,22 +60,19 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
   tracker_locations_sub = (nh).subscribe("tracking_location", 1 , &rqt_tracker_view::tracker_plugin::trackerCb, this);
   nh.getParam("tracking_method", tracking_method);
 
-
-  connect(ui.face_choice_method, SIGNAL(currentIndexChanged(int)), this, SLOT(on_MethodChanged(int)));
+  ui.removeTracked->setEnabled(false);
+  //connect(ui.face_choice_method, SIGNAL(currentIndexChanged(int)), this, SLOT(on_MethodChanged(int)));
   connect(ui.face_output_list, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(on_addToTrack_clicked(QListWidgetItem *)));
   connect(ui.removeAllTracked, SIGNAL(pressed()), this, SLOT(on_removeAllTracked_clicked()));
-  connect(ui.removeTracked, SIGNAL(pressed()), this, SLOT(on_removeTracked_clicked()));
+  //connect(ui.removeTracked, SIGNAL(pressed()), this, SLOT(on_removeTracked_clicked()));
   connect(this, SIGNAL(updatefacelist()), this, SLOT(updateVisibleFaces()));
   connect(ui.paramsetters,SIGNAL(currentIndexChanged(int)), this, SLOT(on_ParamChanged(int)));
 
-  if (tracking_method.compare("handtracking") == 0) ui.face_choice_method->setCurrentIndex(0);
-  else if (tracking_method.compare("mustbeface") == 0) ui.face_choice_method->setCurrentIndex(1);
-  else  ui.face_choice_method->setCurrentIndex(2);
+//  if (tracking_method.compare("handtracking") == 0) ui.face_choice_method->setCurrentIndex(0);
+//  else if (tracking_method.compare("mustbeface") == 0) ui.face_choice_method->setCurrentIndex(1);
+//  else  ui.face_choice_method->setCurrentIndex(2);
 
-  std::string metho;
-  nh.getParam("face_detection_method",metho);
-  if (metho.compare("dlib") == 0) ui.paramsetters->setCurrentIndex(0);
-  else if (metho.compare("opencv") == 0) ui.paramsetters->setCurrentIndex(1);
+
 
 }
 bool tracker_plugin::updateTrackerNames(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
@@ -461,11 +454,11 @@ void tracker_plugin::shutdownPlugin()
   image_subscriber.shutdown();
 }
 
-void tracker_plugin::on_MethodChanged(int index)
-{
-  nh.setParam("tracking_method", "mustbeface");
-  std::cout << "tracking method change 2" << std::endl;
-}
+//void tracker_plugin::on_MethodChanged(int index)
+//{
+//  nh.setParam("tracking_method", "mustbeface");
+//  std::cout << "tracking method change 2" << std::endl;
+//}
 void tracker_plugin::on_ParamChanged(int index)
 {
   if(index == 0) {
@@ -473,28 +466,11 @@ void tracker_plugin::on_ParamChanged(int index)
 
     nh.setParam("pose",0);
   }
-  else if(index == 1) {
-    nh.setParam("face_detection_method","opencv");
 
-    nh.setParam("pose",0);
-  }
-  else if(index == 2){
+  else if(index == 1){
     nh.setParam("pose",1);
     nh.setParam("face_detection_method","dlib");
 
-  }
-  else if(index == 3) {
-    nh.setParam("pivision","set_pi");
-
-    nh.setParam("pose",0);
-  }
-  else if(index == 4) {
-    nh.setParam("emotime","True");
-
-    nh.setParam("pose",0);
-  }
-  else if(index == 5) {
-    
   }
 
 }
@@ -522,7 +498,7 @@ void tracker_plugin::on_removeAllTracked_clicked()
   cmt_tracker_msgs::Clear srv;
   client.call(srv);
   // {
-  //   std::cout << "Cleared" << std::endl;
+     std::cout << "Cleared" << std::endl;
   // }
   // else {
   //   std::cout << "Not Cleared" << std::endl;

@@ -34,6 +34,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   reinforce_service = nh_.advertiseService("reinforce", &cmt_wrap::TrackerCMT::reinforce, this);
   merge_service = nh_.advertiseService("merge", &cmt_wrap::TrackerCMT::merge_elements, this);
   delete_service = nh_.advertiseService("delete", &cmt_wrap::TrackerCMT::delete_elements, this);
+  updateArea_service = nh_.advertiseService("update_area", &cmt_wrap::TrackerCMT::updateArea, this);
 
   add_to_tracker = nh_.serviceClient<std_srvs::Empty>("can_add_tracker");
   //subscribers
@@ -68,11 +69,14 @@ TrackerCMT::TrackerCMT() : it_(nh_)
 
 bool TrackerCMT::clear(cmt_tracker_msgs::Clear::Request &req, cmt_tracker_msgs::Clear::Response &res)
 {
+  std::cout<<"Remove all tracked service"<<std::endl;
+
   cmt_.clear();
   poorly_tracked = cmt_.lostFace();
   deleteOnLost();
   //nh_.setParam("tracker_updated", 2);
 
+  std::cout<<"Remove all tracked service"<<std::endl;
   return true;
 }
 //this is a service that indicates wheteher new elements are going to be tracked or note.
@@ -102,7 +106,13 @@ bool TrackerCMT::reinforce(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tra
     return false;
 }
 
+bool TrackerCMT::updateArea(cmt_tracker_msgs::Reinitialize::Request &req, cmt_tracker_msgs::Reinitialize::Response &res)
+{
 
+cmt_.updateArea(im_gray, cv::Rect(req.object.x_offset, req.object.y_offset, req.object.width, req.object.height),req.name);
+
+return true;
+}
 /*
 Request the images in the system.
 */
@@ -138,10 +148,12 @@ bool TrackerCMT::merge_elements(cmt_tracker_msgs::MergeNames::Request &req, cmt_
 bool TrackerCMT::delete_elements(cmt_tracker_msgs::Delete::Request &req, cmt_tracker_msgs::Delete::Response &res)
 {
     //Callback are handled sequentially; http://answers.ros.org/question/28373/race-conditions-in-callbacks/
+    std::cout<<"Deleting Elements Because of Multiple overlap"<<std::endl;
     delete_trackers.clear();
     for(int i = 0; i< req.delete_trackers.size(); i++)
     {
         delete_trackers.push_back(req.delete_trackers[i]);
+        cmt_.deleteTracker(req.delete_trackers[i]);
     }
     poorly_tracked = delete_trackers;
     deleteOnLost();

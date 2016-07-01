@@ -64,8 +64,8 @@
 </group>
 
 <node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py" />
-<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" />
-<node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  respawn="true"/>
+<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" output="screen"/>
+<node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  output="screen" respawn="true"/>
 
 </group>
 </group>

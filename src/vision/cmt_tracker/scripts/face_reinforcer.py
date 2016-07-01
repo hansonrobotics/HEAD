@@ -62,6 +62,8 @@ class face_reinforcer:
 
         self.camera_width =rospy.get_param('width',640)
         self.camera_height =rospy.get_param('height',480)
+
+        self.not_good_holder = {}
         # self.dlib_count = 3
         # self.cv_count = 6
         # self.cv_dlib_count = 1
@@ -96,6 +98,9 @@ class face_reinforcer:
             self.update = False
 
         if not_good:
+            for i in not_good:
+                del self.not_good_holder[i]
+
             self.delete = rospy.ServiceProxy('delete',Delete)
             try:
                 indication = self.delete(delete_trackers=not_good)
@@ -133,7 +138,7 @@ class face_reinforcer:
                     a.object.object.y_offset - a.object.object.height, b.object.object.y_offset - b.object.object.height)))
             SU = SA + SB - SI
             if (SU != 0):
-                overlap_area_ = SI / SU
+                overlap_area_ = float(SI) / float(SU)
             else:
                 overlap_area_ = 1
 
@@ -164,6 +169,7 @@ class face_reinforcer:
         not_covered_faces_list = []
         not_covered_faces = []
         overlaped_faces = []
+        partial_overlaped_faces = []
         cmt_overlap_num = {}
         not_good = []
         added_ = []
@@ -183,9 +189,10 @@ class face_reinforcer:
                     j.object.y_offset - j.object.height, i.object.object.y_offset - i.object.object.height)))
                 SU = SA + SB - SI
                 if SU != 0:
-                    overlap_area = SI / SU
+                    overlap_area = float(SI) / float(SU)
                 else:
                     overlap_area = 1
+                print(overlap_area)
                 overlap = overlap_area > 0.5
                 if (overlap):
                     added_.append(j)
@@ -197,16 +204,37 @@ class face_reinforcer:
                         j.tool_used_for_detection.data,
                         "0000000001"])
 
-        #Area; Now let's add to those systems the name is added the system.
+        # Area; Now let's add to those systems the name is added the system.
+        updated = []
         for i in cmt.tracker_results:
             area = i.object.object.height * i.object.object.width
             if (area > self.area_scale*(self.camera_width * self.camera_height)):
-                not_good.append(i.tracker_name.data)
+                updated.append(i.tracker_name.data)
+                self.not_good_holder[i.tracker_name.data] = self.not_good_holder.get(i.tracker_name.data, self.repeat(5))[1:] + "1"
 
-        #To remove cmt instance which have two faces in the screen.
+        # To remove cmt instance which have two faces in the screen.
         for key in cmt_overlap_num:
             if cmt_overlap_num[key] > 1:
-                not_good.append(key)
+                updated.append(i.tracker_name.data)
+                self.not_good_holder[i.tracker_name.data] = self.not_good_holder.get(i.tracker_name.data, self.repeat(5))[1:] + "1"
+
+
+        # Now Let's add it to not_good
+        no_error = []
+        for keys in self.not_good_holder:
+            if keys not in updated:
+                self.not_good_holder[keys] = self.not_good_holder[keys][1:] + "0"
+
+            if self.not_good_holder[keys].count("1") > 3:
+                not_good.append(keys)
+
+            if self.not_good_holder[keys].count("0") == 5:
+                no_error.append(keys)
+
+        for k in no_error:
+            self.not_good_holder.pop(k)
+
+
 
         if not self.persistance_face:
             self.persistance_face = not_covered_faces_list
@@ -256,7 +284,7 @@ class face_reinforcer:
 
 
 
-        self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element))]
+        self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element[6],10))]
         #print(self.persistance_face)
             # Now let's check if it overlaps with any locations that exist in the persistance
         return not_covered_faces, overlaped_faces, not_good
@@ -280,12 +308,12 @@ class face_reinforcer:
             return True
         return False
 
-    def trim(self,get_element):
-        
-        if (get_element[6] != "0000000000"):
+    def trim(self,get_element,length):
+        if (get_element != self.repeat(length)):
             return False
         return True
-
+    def repeat(self, length):
+        return ("0" * ((length / len("0")) + 1))[:length]
     def convert(self, face_locs, opencv=False):
         message = Trackers()
         for i in face_locs:

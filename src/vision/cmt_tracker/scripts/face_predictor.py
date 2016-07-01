@@ -157,7 +157,7 @@ class face_predictor:
 
                 SU = SA + SB - SI
                 if SU != 0:
-                    overlap_area = SI / SU
+                    overlap_area = float(SI) / float(SU)
                 else:
                     overlap_area = 1
 

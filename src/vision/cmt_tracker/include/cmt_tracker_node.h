@@ -26,6 +26,7 @@
 #include <cmt_tracker_msgs/Clear.h>
 #include <cmt_tracker_msgs/Update.h>
 #include <cmt_tracker_msgs/Delete.h>
+#include <cmt_tracker_msgs/Reinitialize.h>
 #include <pi_face_tracker/Face.h>
 #include <pi_face_tracker/Faces.h>
 #include <pi_face_tracker/FaceEvent.h>
@@ -103,6 +104,7 @@ public:
 
 	bool merge_elements(cmt_tracker_msgs::MergeNames::Request &req, cmt_tracker_msgs::MergeNames::Response &res);
 	bool delete_elements(cmt_tracker_msgs::Delete::Request &req, cmt_tracker_msgs::Delete::Response &res);
+	bool updateArea(cmt_tracker_msgs::Reinitialize::Request &req, cmt_tracker_msgs::Reinitialize::Response &res);
 
 //    bool validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
 
@@ -148,6 +150,7 @@ private:
     ros::ServiceServer validation_service;
     ros::ServiceServer reinforce_service;
     ros::ServiceServer merge_service;
+    ros::ServiceServer updateArea_service;
     ros::ServiceServer delete_service;
 
 
