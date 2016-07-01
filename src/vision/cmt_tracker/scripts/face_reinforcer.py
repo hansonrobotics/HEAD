@@ -124,7 +124,7 @@ class face_reinforcer:
                     self.logger.error("Reinforcing Service call failed: %s" % e)
 
         # TODO if the cmt name has disappeared then remove it from the self.faces_cmt_overlap.get Via Subscriber to Face_events
-        self.cmt_merge = {}
+        #self.cmt_merge = {}
         merge_to=[]
         merge_from=[]
         ttp.tracker_results.sort(key=lambda tup: tup.object.object.height * tup.object.object.width)
@@ -145,10 +145,14 @@ class face_reinforcer:
             overlap_ = overlap_area_ > 0.5
             if (overlap_):
                 #TODO Choose which to merge too later information to which it's closer too.
-                self.cmt_merge[a.tracker_name.data] = self.cmt_merge.get(a.tracker_name.data,b.tracker_name.data)
-                merge_to.append(a.tracker_name.data)
-                merge_from.append(b.tracker_name.data)
-
+                if a.validated.data:
+                    #self.cmt_merge[a.tracker_name.data] = self.cmt_merge.get(a.tracker_name.data,b.tracker_name.data)
+                    merge_to.append(a.tracker_name.data)
+                    merge_from.append(b.tracker_name.data)
+                else:
+                    #self.cmt_merge[a.tracker_name.data] = self.cmt_merge.get(a.tracker_name.data,b.tracker_name.data)
+                    merge_to.append(b.tracker_name.data)
+                    merge_from.append(a.tracker_name.data)
         #TODO for now just delete the elements then latter put a mark on the merged elements and update if there is overlappings with the track.
         if merge_to and merge_from:
             try:

@@ -480,11 +480,13 @@ void tracker_plugin::on_ParamChanged(int index)
  */
 void tracker_plugin::on_addToTrack_clicked(QListWidgetItem *item)
 {
+  std::cout<<"add by handtracking"<<std::endl;
   int last_selected_item = ui.face_output_list->currentRow();
 
   track_location.object = face_locs.objects[last_selected_item];
 
   tracker_locations_pub.publish(track_location);
+  std::cout<<"added by handtracking"<<std::endl;
 }
 /**
  * @brief tracker_plugin::on_removeAllTracked_clicked
