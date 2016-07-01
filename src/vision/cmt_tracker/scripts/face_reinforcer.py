@@ -76,7 +76,7 @@ class face_reinforcer:
         self.cv_count = config.open_count
         self.cv_dlib_count = config.open_dlib_count
         self.downgrade = config.downgrade
-        self.area_scale = 0.6
+        self.area_scale = config.area_downgrade
         return config
 
     def can_update(self, req):
@@ -145,14 +145,14 @@ class face_reinforcer:
             overlap_ = overlap_area_ > 0.5
             if (overlap_):
                 #TODO Choose which to merge too later information to which it's closer too.
-                if a.validated.data:
-                    #self.cmt_merge[a.tracker_name.data] = self.cmt_merge.get(a.tracker_name.data,b.tracker_name.data)
-                    merge_to.append(a.tracker_name.data)
-                    merge_from.append(b.tracker_name.data)
-                else:
+                if b.validated.data:
                     #self.cmt_merge[a.tracker_name.data] = self.cmt_merge.get(a.tracker_name.data,b.tracker_name.data)
                     merge_to.append(b.tracker_name.data)
                     merge_from.append(a.tracker_name.data)
+                else:
+                    merge_to.append(a.tracker_name.data)
+                    merge_from.append(b.tracker_name.data)
+
         #TODO for now just delete the elements then latter put a mark on the merged elements and update if there is overlappings with the track.
         if merge_to and merge_from:
             try:
