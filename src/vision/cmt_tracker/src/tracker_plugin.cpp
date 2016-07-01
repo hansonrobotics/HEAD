@@ -42,7 +42,8 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
 
   ui.paramsetters->addItem("Dlib-CMT Method");
   ui.paramsetters->addItem("Show Pose(dlib)");
-  ui.addToTrack->setEnabled(false);
+  ui.addToTrack->setText("Get Internal State of CMT");
+  ui.addToTrack->setToolTip("Calls a cerfice to cmt_tracker_node querying the initial image the CMT is tracking");
   nh.getParam("camera_topic", subscribe_topic);
   nh.getParam("filtered_face_locations",subscribe_face);
 
@@ -61,7 +62,7 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
   nh.getParam("tracking_method", tracking_method);
 
   ui.removeTracked->setEnabled(false);
-  //connect(ui.face_choice_method, SIGNAL(currentIndexChanged(int)), this, SLOT(on_MethodChanged(int)));
+  connect(ui.addToTrack, SIGNAL(pressed()), this, SLOT(on_updateTracked()));
   connect(ui.face_output_list, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(on_addToTrack_clicked(QListWidgetItem *)));
   connect(ui.removeAllTracked, SIGNAL(pressed()), this, SLOT(on_removeAllTracked_clicked()));
   //connect(ui.removeTracked, SIGNAL(pressed()), this, SLOT(on_removeTracked_clicked()));
@@ -285,7 +286,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       previously_known = "as: " + (*v).recognized_name.data;
     }
     else {
-      previously_known = "false";
+      previously_known = "not recognzied";
     }
 
 
@@ -317,7 +318,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     }
 
     double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
-    std::string value = "ID-" + (*v).tracker_name.data+ "\nDemotion: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
+    std::string value = "ID-" + (*v).tracker_name.data+ "\nBF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
        "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
 
     temp_tracked_image_information.push_back( value );
@@ -513,6 +514,10 @@ void tracker_plugin::on_removeAllTracked_clicked()
   //   std::cout << "Not Cleared" << std::endl;
   // }
   // ui.tracker_initial_list->clear();
+}
+void tracker_plugin::on_updateTracked()
+{
+    firstrun = true; //One could have easily called the view but it's simpler to let firstrun code handle it.
 }
 /**
  * @brief tracker_plugin::on_removeTracked_clicked

@@ -1,5 +1,6 @@
 This the a wrapper code for CMT. 
 
+#Build
 As this code is dependent on the CppMT libary which it wrapps around it's always should be updated before
 building this particular code the time being to reflect the latest changes availble in that repo.
 
@@ -9,7 +10,7 @@ building this particular code the time being to reflect the latest changes avail
 
         ./hrtool -b # Build the library.
 
-
+#Running
 Launching it from scripts directory to launch it.
 
         ./vision.sh cmt
@@ -26,7 +27,7 @@ thus run have a new dataset available during each particular run of openface in 
 Then to train the dataset run
 
         ./vision.sh cmt_offline
-
+#API
 
 # Urgent TODO's
 

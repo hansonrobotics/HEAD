@@ -146,7 +146,7 @@ bool TrackerCMT::merge_elements(cmt_tracker_msgs::MergeNames::Request &req, cmt_
 bool TrackerCMT::delete_elements(cmt_tracker_msgs::Delete::Request &req, cmt_tracker_msgs::Delete::Response &res)
 {
     //Callback are handled sequentially; http://answers.ros.org/question/28373/race-conditions-in-callbacks/
-    std::cout<<"Deleting Elements Because of Multiple overlap"<<std::endl;
+    std::cout<<"Deleting Elements Because of Multiple overlap or Area Became very high"<<std::endl;
     delete_trackers.clear();
     for(int i = 0; i< req.delete_trackers.size(); i++)
     {

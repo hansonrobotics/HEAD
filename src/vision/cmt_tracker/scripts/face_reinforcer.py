@@ -78,6 +78,7 @@ class face_reinforcer:
         self.downgrade = config.downgrade
         self.area_scale = config.area_downgrade
         self.window_size = config.window_size
+        self.reinforce_count = config.reinforce_count
         return config
 
     def can_update(self, req):
@@ -106,7 +107,7 @@ class face_reinforcer:
             try:
                 indication = self.delete(delete_trackers=not_good)
                 if not indication:
-                    pass
+                    self.logger.error("Reinforcing Service call returned false.")
             except rospy.ServiceException, e:
                 self.logger.error("Removing elements not Working")
 
@@ -114,15 +115,15 @@ class face_reinforcer:
 
             self.faces_cmt_overlap[cmt.tracker_name.data] = self.faces_cmt_overlap.get(cmt.tracker_name.data, 0) + 1
 
-            if (self.faces_cmt_overlap[cmt.tracker_name.data] > 2):
+            if (self.faces_cmt_overlap[cmt.tracker_name.data] > self.reinforce_count):
                 try:
                     self.upt = rospy.ServiceProxy('reinforce',TrackerNames)
                     indication = self.upt(names=cmt.tracker_name.data, index=self.downgrade)
                     if not indication:
                         #TODO handle the error if the service is not available.
-                        pass
+                        self.logger.error("Reinforcing Service call returned false.")
                 except rospy.ServiceException, e:
-                    self.logger.error("Reinforcing Service call failed: %s" % e)
+                    self.logger.error("Reinforcing Service call exception: %s" % e)
 
         # TODO if the cmt name has disappeared then remove it from the self.faces_cmt_overlap.get Via Subscriber to Face_events
         #self.cmt_merge = {}
@@ -216,6 +217,8 @@ class face_reinforcer:
         updated = []
         for i in cmt.tracker_results:
             area = i.object.object.height * i.object.object.width
+            #TODO one has to take into account the area of the face when it is initialized. Thus if the area of the face
+            #when it's inititalized is great then deleting the face has no merit or value. 
             if (area > self.area_scale*(self.camera_width * self.camera_height)):
                 updated.append(i.tracker_name.data)
                 self.not_good_holder[i.tracker_name.data] = self.not_good_holder.get(i.tracker_name.data, self.repeat(5))[1:] + "1"
