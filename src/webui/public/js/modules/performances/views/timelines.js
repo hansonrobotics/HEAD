@@ -151,7 +151,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                                 duration: 1
                             });
                             self.model.nodes.add(node);
-                            self.createNodeEl(node, nodeEl.html());
                         }
                     }
                 });
@@ -210,28 +209,29 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     }
                 });
             },
-            createNodeEl: function (node, title) {
+            createNodeEl: function (node) {
                 var self = this,
-                    name = node.get('name'),
                     el = $('<div>').addClass('app-node label')
-                        .attr('data-node-name', name)
+                        .attr('data-node-name', node.get('name'))
                         .attr('data-cid', node.cid)
                         .on('click', function () {
                             self.showNodeSettings(node);
-                        }).html(title || name);
+                        });
 
-                this.initDraggable(el, {
-                    start: function () {
-                        // hide original when showing clone
-                        $(this).hide();
-                    },
-                    stop: function () {
-                        $(this).show();
-                    }
-                });
+                if (!this.options.readonly) {
+                    this.initDraggable(el, {
+                        start: function () {
+                            // hide original when showing clone
+                            $(this).hide();
+                        },
+                        stop: function () {
+                            $(this).show();
+                        }
+                    });
 
-                if (_.contains(['emotion', 'interaction', 'expression'], node.get('name')) && !this.options.readonly)
-                    this.initResizable(el);
+                    if (_.contains(['emotion', 'interaction', 'expression'], node.get('name')))
+                        this.initResizable(el);
+                }
 
                 node.set('el', el.get(0));
                 node.off('change', this.updateNode, this);
@@ -251,16 +251,12 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     $(node.get('el')).stop().css({
                         left: node.get('start_time') * this.config.pxPerSec,
                         width: node.get('duration') * this.config.pxPerSec
-                    }).attr('data-name', node.get('name'));
+                    }).attr('data-node-name', node.get('name'));
 
                     if (node.hasChanged('duration') || node.hasChanged('start_time'))
                         this.arrangeNodes();
 
-                    if (node.get('text')) $(node.get('el')).html(node.get('text'));
-                    else if (node.get('emotion')) $(node.get('el')).html(node.get('emotion'));
-                    else if (node.get('gesture')) $(node.get('el')).html(node.get('gesture'));
-                    else if (node.get('expression')) $(node.get('el')).html(node.get('expression'));
-                    else if (node.get('animation')) $(node.get('el')).html(node.get('animation'));
+                    $(node.get('el')).html(node.getTitle());
                 }
             },
             addNode: function (node) {

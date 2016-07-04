@@ -54,23 +54,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 'change @ui.attentionRegionSelect': 'selectAttentionRegion',
                 'change @ui.timeout': 'updateTimeout'
             },
-            config: {
-                nodes: {
-                    emotion: ['duration', 'magnitude', 'emotion'],
-                    interaction: ['duration', 'btree_mode', 'speech_event'],
-                    listening: ['duration'],
-                    expression: ['duration', 'expression', 'magnitude'],
-                    chat_pause: ['duration', 'message'],
-                    soma: ['duration', 'soma'],
-                    gesture: ['speed', 'animation', 'magnitude'],
-                    head_rotation: ['angle'],
-                    kfanimation: ['kfanimation', 'fps', 'kfmode'],
-                    speech: ['language', 'text'],
-                    look_at: ['attention_region', 'crosshair'],
-                    gaze_at: ['attention_region', 'crosshair'],
-                    pause: ['topic', 'timeout']
-                }
-            },
             modelEvents: {
                 change: 'modelChanged'
             },
@@ -84,7 +67,7 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
             },
             initFields: function () {
                 var self = this,
-                    properties = this.config.nodes[this.model.get('name')];
+                    properties = this.model.getConfig().properties;
 
                 this.ui.nodeProperties.hide();
                 if (properties)
