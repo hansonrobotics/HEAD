@@ -27,8 +27,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 frameCount: '.app-frame-count',
                 timeIndicator: '.app-current-time div',
                 deleteButton: '.app-delete-button',
-                timeAxis: '.app-time-axis',
-                hideButton: '.app-hide-settings-button'
+                timeAxis: '.app-time-axis'
             },
             regions: {
                 nodeSettings: {
@@ -47,8 +46,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 'click @ui.timeAxis': 'moveIndicator',
                 'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance',
-                'click @ui.loopButton': 'loop',
-                'click @ui.hideButton': 'hideNodeSettings'
+                'click @ui.loopButton': 'loop'
             },
             modelEvents: {
                 'change': 'modelChanged'
@@ -268,9 +266,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.ui.timelineContainer.find('.app-node').removeClass('active');
                 if (node.get('el')) $(node.get('el')).addClass('active');
                 this.nodeView.showSettings(node);
-            },
-            hideNodeSettings: function () {
-                this.nodeView.hideSettings();
             },
             arrangeNodes: function () {
                 var self = this,

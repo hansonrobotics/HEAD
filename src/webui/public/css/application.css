@@ -8,15 +8,20 @@ body {
 }
 
 .input-group-addon,
-.btn-default {
+.btn {
     color: #fff;
-    background-color: #182933;
+    line-height: 0;
     text-transform: uppercase;
     font-family: 'Yantramanav', 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     border: #5b6777 1px solid;
     font-size: 16px;
     height: 39px;
     padding: 7px 16px;
+}
+
+.input-group-addon,
+.btn-default {
+    background-color: #182933;
 }
 
 .btn-default:hover,
@@ -26,6 +31,7 @@ body {
     background-color: #1D262D;
     border-color: #6cadd3;
 }
+
 
 .btn:active, .btn:focus, .btn:active, .btn.active {
     outline: none !important;

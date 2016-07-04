@@ -129,20 +129,5 @@
                 <div class="input-group-addon">s</div>
             </div>
         </div>
-
-        <div class="node-setting-buttons form-group">
-            <div class="btn-group" role="group" aria-label="...">
-                <button class="app-delete-node-button btn btn-danger"><i
-                            class="glyphicon glyphicon-trash"></i>
-                    Delete
-                </button>
-                <button class="app-node-duration-indicator btn btn-default" disabled="disabled">0s
-                </button>
-                <button class="app-node-frames-indicator btn btn-default" disabled="disabled">0</button>
-                <button class="app-hide-settings-button btn btn-default" title="Hide node settings">
-                    ×
-                </button>
-            </div>
-        </div>
     </div>
 </div>

@@ -315,10 +315,8 @@ textarea.form-control.app-node-text {
 
 .app-options-tabs,
 .app-node-tabs {
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
-    display: -webkit-box;
-    display: -moz-box;
     border: 1px solid #323F48;
     float: left;
     height: 42px;
@@ -357,14 +355,6 @@ textarea.form-control.app-node-text {
     background-color: #323F48;
     cursor: default;
     padding: 10px 15px;
-}
-
-.app-options-tab {
-    float: right !important;
-}
-
-.app-node-tabs > li {
-    float: none;
 }
 
 .app-node-tabs > li > a {

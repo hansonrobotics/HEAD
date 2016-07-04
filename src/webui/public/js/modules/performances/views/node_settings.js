@@ -14,13 +14,10 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 startTime: '.app-node-start-time',
                 duration: '.app-node-duration',
                 crosshair: '.app-crosshair',
-                deleteButton: '.app-delete-node-button',
                 speedSlider: '.app-speed-slider',
                 speedLabel: '.app-speed-label',
                 magnitudeLabel: '.app-magnitude-label',
                 langSelect: 'select.app-lang-select',
-                frameCount: '.app-node-frames-indicator',
-                durationIndicator: '.app-node-duration-indicator',
                 topicInput: '.app-node-topic',
                 fpsSlider: '.app-fps-slider',
                 fpsLabel: '.app-fps-label',
@@ -46,7 +43,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 'change @ui.expressionSelect': 'setExpression',
                 'change @ui.topicInput': 'setTopic',
                 'change @ui.kfAnimationSelect': 'setKFAnimation',
-                'click @ui.deleteButton': 'deleteNode',
                 'change @ui.messageInput': 'setMessage',
                 'change @ui.btreeModeSelect': 'setBtreeMode',
                 'change @ui.speechEventSelect': 'setSpeechEvent',
@@ -58,9 +54,9 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 change: 'modelChanged'
             },
             modelChanged: function () {
-                if (this.model.hasChanged('start_time')) this.ui.startTime.val(this.model.get('start_time'));
-                if (this.model.hasChanged('duration')) this.ui.duration.val(this.model.get('duration'));
-                if (this.model.hasChanged('topic')) this.ui.topicInput.val(this.model.get('topic'));
+                this.ui.startTime.val(this.model.get('start_time'));
+                this.ui.duration.val(this.model.get('duration'));
+                this.ui.topicInput.val(this.model.get('topic'));
             },
             onRender: function () {
                 this.initFields();
@@ -78,11 +74,8 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 this.modelChanged();
 
                 if (_.contains(['pause'], this.model.get('name'))) {
-                    this.ui.durationIndicator.hide();
-                    this.ui.frameCount.hide();
                     this.ui.timeout.val(this.model.get('timeout') || '');
-                } else
-                    this.updateIndicators();
+                }
 
                 if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
                     var magnitude = this.model.get('magnitude') || 0;
@@ -140,7 +133,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                         // Disable blender head output by default
                         if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'no');
                         self.ui.kfModeSelect.val(this.model.get('blender_mode'));
-                        console.log(this.model.get('blender_mode'));
 
                         this.ui.fpsSlider.slider({
                             animate: true,
@@ -317,18 +309,9 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
             },
             setDuration: function () {
                 this.model.set('duration', Number($(this.ui.duration).val()));
-                this.updateIndicators();
             },
             setMessage: function () {
                 this.model.set('message', this.ui.messageInput.val());
-            },
-            updateIndicators: function () {
-                var fps = App.getOption('fps'),
-                    step = 1 / fps,
-                    duration = Number(parseInt(this.model.get('duration') / step) * step).toFixed(2);
-
-                this.ui.durationIndicator.html(duration + 's');
-                this.ui.frameCount.html(parseInt(duration * fps));
             },
             setText: function () {
                 this.model.set('text', this.ui.textInput.val());
@@ -340,7 +323,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 var self = this;
                 api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function (response) {
                     self.model.set('duration', response.length);
-                    self.updateIndicators();
                 });
             },
             setEmotion: function () {
@@ -427,13 +409,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 self.model.set('x', 1);
                 self.model.set('y', 0);
                 self.model.set('z', 0);
-            },
-            deleteNode: function () {
-                var self = this;
-                this.model.destroy();
-                this.$el.slideUp(null, function () {
-                    self.destroy();
-                });
             },
             selectAttentionRegion: function () {
                 this.model.set('attention_region', this.ui.attentionRegionSelect.val());
