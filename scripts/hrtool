@@ -156,6 +156,9 @@ install_other_deps() {
     rm /tmp/marytts-5.1.2.zip
 
     sudo pip2 install pinyin==0.2.5
+
+    # For rospy to run with python3
+    sudo apt-get -y install python3-yaml
 }
 
 install_test_deps() {
