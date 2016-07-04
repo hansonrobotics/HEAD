@@ -1,7 +1,7 @@
 define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './node',
-        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/extensions/animate_auto',
-        'jquery-ui', 'scrollbar'],
-    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance) {
+        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in',
+        'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
+    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion) {
         return Marionette.LayoutView.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
@@ -13,7 +13,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 timelineNodes: '.app-timeline-nodes .app-node',
                 nodes: '.app-nodes .app-node',
                 nodesContainer: '.app-nodes',
-                nodeSettings: '.app-node-settings',
+                nodeSettings: '.app-node-settings-container',
                 scrollContainer: '.app-scroll-container',
                 performanceName: '.app-performance-name',
                 saveButton: '.app-save-button',
@@ -29,6 +29,12 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 deleteButton: '.app-delete-button',
                 timeAxis: '.app-time-axis',
                 hideButton: '.app-hide-settings-button'
+            },
+            regions: {
+                nodeSettings: {
+                    el: '.app-node-settings-container',
+                    regionClass: FadeInRegion
+                }
             },
             events: {
                 'click @ui.nodes': 'nodeClicked',
@@ -49,16 +55,18 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             },
             initialize: function (options) {
                 var self = this,
-                    addReloadHandler = {success: function () {
-                        var handler = function () {
-                            if (self.isDestroyed)
-                                self.model.nodes.off('change add remove', handler);
-                            else
-                                self.model.loadNodes();
-                        };
+                    addReloadHandler = {
+                        success: function () {
+                            var handler = function () {
+                                if (self.isDestroyed)
+                                    self.model.nodes.off('change add remove', handler);
+                                else
+                                    self.model.loadNodes();
+                            };
 
-                        self.model.nodes.on('change add remove', handler);
-                    }};
+                            self.model.nodes.on('change add remove', handler);
+                        }
+                    };
 
                 this.mergeOptions(options, ['performances']);
 
@@ -80,8 +88,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             },
             onAttach: function () {
                 var self = this;
+                this.nodeView = new NodeView({collection: this.model.nodes});
+                this.getRegion('nodeSettings').show(this.nodeView);
                 this.modelChanged();
-                this.initDraggable(this.ui.nodes);
                 this.ui.scrollContainer.perfectScrollbar();
                 // Performance event handler
                 if (typeof this.options.performances != 'undefined')
@@ -125,7 +134,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
 
                 // init node droppable
                 this.ui.scrollContainer.droppable({
-                    accept: '.app-node[data-name]',
+                    accept: '[data-node-name]',
                     tolerance: 'touch',
                     drop: function (e, ui) {
                         var nodeEl = $(ui.helper),
@@ -135,12 +144,15 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
 
                         if (node)
                             node.set('start_time', startTime);
-                        else
-                            self.model.nodes.add({
-                                name: nodeEl.data('name'),
+                        else {
+                            node = new Node({
+                                name: nodeEl.data('node-name'),
                                 start_time: startTime,
                                 duration: 1
                             });
+                            self.model.nodes.add(node);
+                            self.createNodeEl(node, nodeEl.html());
+                        }
                     }
                 });
             },
@@ -198,11 +210,15 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     }
                 });
             },
-            createNodeEl: function (node) {
-                if (node.get('el')) return;
+            createNodeEl: function (node, title) {
                 var self = this,
-                    el = $('.app-node[data-name="' + node.get('name') + '"]', this.ui.nodesContainer).clone()
-                        .removeClass('hidden').get(0);
+                    name = node.get('name'),
+                    el = $('<div>').addClass('app-node label')
+                        .attr('data-node-name', name)
+                        .attr('data-cid', node.cid)
+                        .on('click', function () {
+                            self.showNodeSettings(node);
+                        }).html(title || name);
 
                 this.initDraggable(el, {
                     start: function () {
@@ -210,20 +226,15 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         $(this).hide();
                     },
                     stop: function () {
-                        // show original when hiding clone
                         $(this).show();
                     }
                 });
-                if (_.contains(['emotion', 'interaction', 'expression'], node.get('name')) && !this.options.readonly) {
+
+                if (_.contains(['emotion', 'interaction', 'expression'], node.get('name')) && !this.options.readonly)
                     this.initResizable(el);
-                }
 
-                // show node settings on click
-                $(el).attr('data-cid', node.cid).on('click', function () {
-                    self.toggleNodeSettings(node);
-                }).css({position: 'absolute'});
-
-                node.set('el', el);
+                node.set('el', el.get(0));
+                node.off('change', this.updateNode, this);
                 node.on('change', this.updateNode, this);
 
                 this.updateNode(node);
@@ -234,74 +245,36 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
              * @param node Node
              */
             updateNode: function (node) {
-                if (this.isDestroyed || ! node.get('el')) {
+                if (this.isDestroyed || !node.get('el')) {
                     node.off('change', this.updateNode, this);
-                    return;
+                } else {
+                    $(node.get('el')).stop().css({
+                        left: node.get('start_time') * this.config.pxPerSec,
+                        width: node.get('duration') * this.config.pxPerSec
+                    }).attr('data-name', node.get('name'));
+
+                    if (node.hasChanged('duration') || node.hasChanged('start_time'))
+                        this.arrangeNodes();
+
+                    if (node.get('text')) $(node.get('el')).html(node.get('text'));
+                    else if (node.get('emotion')) $(node.get('el')).html(node.get('emotion'));
+                    else if (node.get('gesture')) $(node.get('el')).html(node.get('gesture'));
+                    else if (node.get('expression')) $(node.get('el')).html(node.get('expression'));
+                    else if (node.get('animation')) $(node.get('el')).html(node.get('animation'));
                 }
-
-                var width = node.get('duration') * this.config.pxPerSec;
-
-                $(node.get('el')).stop().css({
-                    left: node.get('start_time') * this.config.pxPerSec,
-                    width: width
-                });
-
-                if (node.hasChanged('duration') || node.hasChanged('start_time'))
-                    this.arrangeNodes();
-
-                if (node.get('text'))
-                    node.get('el').childNodes[0].nodeValue = node.get('text');
-                else if (node.get('emotion'))
-                    node.get('el').childNodes[0].nodeValue = node.get('emotion');
-                else if (node.get('gesture'))
-                    node.get('el').childNodes[0].nodeValue = node.get('gesture');
-                else if (node.get('expression'))
-                    node.get('el').childNodes[0].nodeValue = node.get('expression');
-                else if (node.get('animation'))
-                    node.get('el').childNodes[0].nodeValue = node.get('animation');
             },
             addNode: function (node) {
                 this.arrangeNodes();
-                this.toggleNodeSettings(node);
+                this.showNodeSettings(node);
             },
-            toggleNodeSettings: function (node) {
-                if (this.options.readonly) {
-                    return;
-                }
-                var self = this,
-                    showSettings = !this.nodeView || this.nodeView.model != node;
-
+            showNodeSettings: function (node) {
+                if (this.options.readonly) return;
                 this.ui.timelineContainer.find('.app-node').removeClass('active');
-                if (showSettings)
-                    $(node.get('el')).addClass('active');
-
-                this.ui.nodeSettings.slideUp(function () {
-                    // show settings if no settings are shown or if shown settings are for a different node
-                    if (showSettings) {
-                        self.nodeView = new NodeView({model: node});
-                        self.nodeView.render();
-                        self.ui.nodeSettings.html(self.nodeView.el).hide().slideDown();
-                    } else {
-                        self.hideNodeSettings();
-                    }
-                });
+                if (node.get('el')) $(node.get('el')).addClass('active');
+                this.nodeView.showSettings(node);
             },
             hideNodeSettings: function () {
-                var self = this,
-                    destroy = function () {
-                        self.ui.timelineContainer.find('.app-node').removeClass('active');
-                        if (self.nodeView) {
-                            self.nodeView.destroy();
-                            self.nodeView = null;
-                        }
-                    };
-                if (this.ui.nodeSettings.is(':visible')) {
-                    self.ui.nodeSettings.slideUp(function () {
-                        destroy();
-                    });
-                } else {
-                    destroy();
-                }
+                this.nodeView.hideSettings();
             },
             arrangeNodes: function () {
                 var self = this,
@@ -309,10 +282,11 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     nodes = this.model.nodes;
 
                 nodes.each(function (node) {
-                    self.createNodeEl(node);
-
                     var begin = node.get('start_time'),
                         end = begin + node.get('duration');
+
+                    if (!node.get('el'))
+                        self.createNodeEl(node);
 
                     $('.app-timeline-nodes', self.ui.timelineContainer).each(function () {
                         available = true;

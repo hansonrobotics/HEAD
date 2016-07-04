@@ -54,21 +54,21 @@
     </div>
 </div>
 
-<div class="app-nodes clearfix">
-    <div class="app-node label label-info" data-name="emotion">Pose</div>
-    <div class="app-node label label-danger" data-name="gesture">Animation</div>
-    <div class="app-node label label-success" data-name="speech">Speech</div>
-    <div class="app-node label label-primary" data-name="look_at">LookAt</div>
-    <div class="app-node label label-warning" data-name="gaze_at">GazeAt</div>
-    <div class="app-node label label-default" data-name="interaction">Interaction</div>
-    <div class="app-node label label-default" data-name="pause">Pause</div>
-    <div class="app-node label label-default" data-name="random">Random</div>
-    <!--<div class="app-node label label-default hidden" data-name="chat_pause">Chat pause</div>-->
-    <!--<div class="app-node label label-info hidden" data-name="expression">Expression</div>-->
-    <div class="app-node label label-success" data-name="kfanimation">KF Animation</div>
-    <!--<div class="app-node label label-warning hidden" data-name="listening">Listening</div>-->
-    <!--<div class="app-node label label-primary hidden" data-name="soma">Soma State</div>-->
-    <div class="app-node label label-warning" data-name="head_rotation">Head Tilt</div>
-</div>
+<!--<div class="app-nodes clearfix">-->
+    <!--<div class="app-node label label-info" data-name="emotion">Pose</div>-->
+    <!--<div class="app-node label label-danger" data-name="gesture">Animation</div>-->
+    <!--<div class="app-node label label-success" data-name="speech">Speech</div>-->
+    <!--<div class="app-node label label-primary" data-name="look_at">LookAt</div>-->
+    <!--<div class="app-node label label-warning" data-name="gaze_at">GazeAt</div>-->
+    <!--<div class="app-node label label-default" data-name="interaction">Interaction</div>-->
+    <!--<div class="app-node label label-default" data-name="pause">Pause</div>-->
+    <!--<div class="app-node label label-default" data-name="random">Random</div>-->
+    <!--&lt;!&ndash;<div class="app-node label label-default hidden" data-name="chat_pause">Chat pause</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="app-node label label-info hidden" data-name="expression">Expression</div>&ndash;&gt;-->
+    <!--<div class="app-node label label-success" data-name="kfanimation">KF Animation</div>-->
+    <!--&lt;!&ndash;<div class="app-node label label-warning hidden" data-name="listening">Listening</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="app-node label label-primary hidden" data-name="soma">Soma State</div>&ndash;&gt;-->
+    <!--<div class="app-node label label-warning" data-name="head_rotation">Head Tilt</div>-->
+<!--</div>-->
 
-<div class="app-node-settings"></div>
+<div class="app-node-settings-container"></div>

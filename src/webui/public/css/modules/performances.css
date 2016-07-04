@@ -150,6 +150,7 @@
 .app-node-settings .form-group {
     margin-right: 5px;
 }
+
 .app-node-settings hr:first-child {
     margin: 9px 0 0;
 }
@@ -203,11 +204,12 @@
     -moz-border-radius: 4px 4px 4px 4px;
     -webkit-border-radius: 4px 4px 4px 4px;
 }
-.app-node-start-time,
-.app-node-duration,
-.app-node-timeout {
-    width: 70px !important;
-}
+
+/*.app-node-start-time,*/
+/*.app-node-duration,*/
+/*.app-node-timeout {*/
+    /*width: 70px !important;*/
+/*}*/
 
 .app-performance-template {
     display: none;
@@ -246,18 +248,6 @@ li.app-performance .app-status-indicator.active {
     font-family: sans-serif;
     font-size: 11px;
     stroke: #ebebeb;
-}
-
-.app-node[data-name="interaction"] {
-    background-color: #375748;
-}
-
-.app-node[data-name="pause"] {
-    background-color: #335B9E;
-}
-
-.app-node[data-name="speech_input"] {
-    background-color: #37753B;
 }
 
 textarea.form-control.app-node-text {
@@ -316,4 +306,150 @@ textarea.form-control.app-node-text {
     padding: 5px;
     border: 1px solid #323F48;
     border-bottom-color: transparent;
+}
+
+.app-node-settings {
+    position: relative;
+    margin-top: 10px;
+}
+
+.app-options-tabs,
+.app-node-tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: -webkit-box;
+    display: -moz-box;
+    border: 1px solid #323F48;
+    float: left;
+    height: 42px;
+}
+
+.app-settings-content {
+    position: relative;
+    border: 1px solid #323F48;
+    border-top: none;
+}
+
+.app-node-content,
+.app-options-content {
+    float: left;
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.app-node-tabs,
+.app-node-content {
+    width: 60%
+}
+
+.app-node-content {
+    border-right: 1px solid #323F48;
+}
+
+.app-options-tabs,
+.app-options-content {
+    width: 40%;
+}
+
+.app-node-tabs li.node-icon a,
+.app-options-tabs li.options-icon a {
+    background-color: #323F48;
+    cursor: default;
+    padding: 10px 15px;
+}
+
+.app-options-tab {
+    float: right !important;
+}
+
+.app-node-tabs > li {
+    float: none;
+}
+
+.app-node-tabs > li > a {
+    padding: 10px 5px;
+}
+
+.app-node-tabs > li > a {
+    border: none;
+}
+
+.app-node[data-node-name="emotion"],
+.app-node-tabs > li.active > a[data-node-name="emotion"],
+.app-node-tabs > li > a[data-node-name="emotion"]:hover,
+.app-node-tabs > li > a[data-node-name="emotion"]:focus {
+    background-color: #5bc0de;
+}
+
+.app-node[data-node-name="gesture"],
+.app-node-tabs > li.active > a[data-node-name="gesture"],
+.app-node-tabs > li > a[data-node-name="gesture"]:hover,
+.app-node-tabs > li > a[data-node-name="gesture"]:focus {
+    background-color: #d9544f;
+}
+
+.app-node[data-node-name="speech"],
+.app-node-tabs > li.active > a[data-node-name="speech"],
+.app-node-tabs > li > a[data-node-name="speech"]:hover,
+.app-node-tabs > li > a[data-node-name="speech"]:focus {
+    background-color: #5BB85D;
+}
+
+.app-node[data-node-name="look_at"],
+.app-node-tabs > li.active > a[data-node-name="look_at"],
+.app-node-tabs > li > a[data-node-name="look_at"]:hover,
+.app-node-tabs > li > a[data-node-name="look_at"]:focus {
+    background-color: #df691a;
+}
+
+.app-node[data-node-name="gaze_at"],
+.app-node-tabs > li.active > a[data-node-name="gaze_at"],
+.app-node-tabs > li > a[data-node-name="gaze_at"]:hover,
+.app-node-tabs > li > a[data-node-name="gaze_at"]:focus {
+    background-color: #f0ad4e;
+}
+
+.app-node[data-node-name="interaction"],
+.app-node-tabs > li.active > a[data-node-name="interaction"],
+.app-node-tabs > li > a[data-node-name="interaction"]:hover,
+.app-node-tabs > li > a[data-node-name="interaction"]:focus {
+    background-color: #375748;
+}
+
+.app-node[data-node-name="pause"],
+.app-node-tabs > li.active > a[data-node-name="pause"],
+.app-node-tabs > li > a[data-node-name="pause"]:hover,
+.app-node-tabs > li > a[data-node-name="pause"]:focus {
+    background-color: #335b9e;
+}
+
+.app-node[data-node-name="random"],
+.app-node-tabs > li.active > a[data-node-name="random"],
+.app-node-tabs > li > a[data-node-name="random"]:hover,
+.app-node-tabs > li > a[data-node-name="random"]:focus {
+    background-color: #46827f;
+}
+
+.app-node[data-node-name="kfanimation"],
+.app-node-tabs > li.active > a[data-node-name="kfanimation"],
+.app-node-tabs > li > a[data-node-name="kfanimation"]:hover,
+.app-node-tabs > li > a[data-node-name="kfanimation"]:focus {
+    background-color: #5bb85d;
+}
+
+.app-node[data-node-name="head_rotation"],
+.app-node-tabs > li.active > a[data-node-name="head_rotation"],
+.app-node-tabs > li > a[data-node-name="head_rotation"]:hover,
+.app-node-tabs > li > a[data-node-name="head_rotation"]:focus {
+    background-color: #f0ad4e;
+}
+
+.app-disabled .app-node-tabs {
+    width: 100%;
+}
+
+.app-disabled .app-options-tabs,
+.app-disabled .app-settings-content {
+    display: none;
 }

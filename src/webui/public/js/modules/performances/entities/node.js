@@ -1,7 +1,8 @@
-define(['application', 'backbone', 'lib/api'], function (App, Backbone, api) {
+define(['application', 'backbone', 'lib/api', 'jquery'], function (App, Backbone, api, $) {
     return Backbone.Model.extend({
         initialize: function () {
             this.set('id', this.cid);
+            this.on('change:el', this.updateEl);
         },
         call: function () {
             switch (this.get('name')) {
@@ -18,6 +19,9 @@ define(['application', 'backbone', 'lib/api'], function (App, Backbone, api) {
         },
         onDestroy: function () {
             this.removeEl();
+        },
+        updateEl: function () {
+            if (this.previous('el')) $(this.previous('el')).remove();
         },
         removeEl: function () {
             if (this.get('el')) $(this.get('el')).remove();
