@@ -1,15 +1,15 @@
 define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/api', 'underscore', 'jquery-ui',
-    'lib/crosshair-slider', 'select2'],
+        'lib/crosshair-slider', 'select2'],
     function (App, Marionette, template, api, _) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
                 nodeProperties: '[data-node-property]',
                 magnitudeSlider: '.app-magnitide-slider',
-                emotionSelect: '.app-emotion-select',
-                gestureSelect: 'select.app-gesture-select',
-                somaSelect: 'select.app-soma-select',
-                expressionSelect: 'select.app-expression-select',
+                emotionList: '.app-emotion-list',
+                gestureList: '.app-gesture-list',
+                somaList: '.app-soma-list',
+                expressionList: '.app-expression-list',
                 textInput: '.app-node-text',
                 startTime: '.app-node-start-time',
                 duration: '.app-node-duration',
@@ -21,14 +21,14 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 topicInput: '.app-node-topic',
                 fpsSlider: '.app-fps-slider',
                 fpsLabel: '.app-fps-label',
-                kfAnimationSelect: 'select.app-kfanimation-select',
+                kfAnimationList: '.app-kfanimation-list',
                 messageInput: '.app-node-message-input',
                 kfModeSelect: 'select.app-kfmode-select',
                 btreeModeSelect: 'select.app-btree-mode-select',
                 speechEventSelect: 'select.app-speech-event-select',
                 hrAngleSlider: '.app-hr-angle-slider',
                 hrAngleLabel: '.app-hr-angle-label',
-                attentionRegionSelect: '.app-attention-region-select',
+                attentionRegionList: '.app-attention-region-list',
                 timeout: '.app-node-timeout'
             },
             events: {
@@ -37,17 +37,11 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 'keyup @ui.textInput': 'setText',
                 'change @ui.textInput': 'setTextDuration',
                 'change @ui.langSelect': 'setLanguage',
-                'change @ui.emotionSelect': 'setEmotion',
-                'change @ui.gestureSelect': 'setGesture',
-                'change @ui.somaSelect': 'setSoma',
-                'change @ui.expressionSelect': 'setExpression',
                 'change @ui.topicInput': 'setTopic',
-                'change @ui.kfAnimationSelect': 'setKFAnimation',
                 'change @ui.messageInput': 'setMessage',
                 'change @ui.btreeModeSelect': 'setBtreeMode',
                 'change @ui.speechEventSelect': 'setSpeechEvent',
                 'change @ui.kfModeSelect': 'setKFMode',
-                'change @ui.attentionRegionSelect': 'selectAttentionRegion',
                 'change @ui.timeout': 'updateTimeout'
             },
             modelEvents: {
@@ -231,81 +225,44 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                         this.ui.messageInput.val(this.model.get('message'));
                 }
             },
-            updateEmotions: function (emotions) {
+            updateList: function (list, attr, container, options) {
+                if (this.isDestroyed) {
+                    return;
+                }
                 var self = this;
-                _.each(emotions, function (emotion) {
-                    $(self.ui.emotionSelect).append($('<option>').prop('value', emotion).html(emotion));
+                options = options || {};
+                container.html('');
+                _.each(list, function (val, key) {
+                    var name = key;
+                    if (list && list.constructor === Array) name = val;
+
+                    container.append($('<div>').addClass('app-node-thumbnail').attr('data-' + attr, name)
+                        .html($('<span>').html(val)).click(function () {
+                            self.model.set(attr, name);
+                            $('[data-' + attr + ']', container).removeClass('active');
+                            $(this).addClass('active');
+                            if (options.change) options.change(name);
+                        }));
                 });
 
-                if (!this.model.get('emotion') && emotions.length > 0)
-                    this.model.set('emotion', emotions[0]);
-
-                if (this.model.get('emotion'))
-                    $(this.ui.emotionSelect).val(this.model.get('emotion'));
-
-                $(this.ui.emotionSelect).select2();
+                if (this.model.get(attr))
+                    $('[data-' + attr + '="' + this.model.get(attr) + '"]', container).addClass('active');
+            },
+            updateEmotions: function (emotions) {
+                this.updateList(emotions, 'emotion', this.ui.emotionList);
             },
             updateKFAnimations: function (animations) {
-                var self = this;
-                _.each(animations, function (animation) {
-                    $(self.ui.kfAnimationSelect).append($('<option>').prop('value', animation.name).html(animation.name));
-                });
-
-                if (!this.model.get('animation') && animations.length > 0) {
-                    this.model.set('animation', animations[0].name);
-                    this.setKFAnimationDuration();
-                }
-
-                if (this.model.get('animation'))
-                    $(this.ui.kfAnimationSelect).val(this.model.get('animation'));
-
-                $(this.ui.kfAnimationSelect).select2();
+                this.updateList(animations, 'animation', this.ui.kfAnimationList);
                 $(this.ui.kfModeSelect).select2();
             },
             updateExpressions: function (expressions) {
-                var self = this;
-                _.each(expressions, function (expr) {
-                    $(self.ui.expressionSelect).append($('<option>').prop('value', expr).html(expr));
-                });
-
-                if (!self.model.get('expression') && expressions.length > 0)
-                    self.model.set('expression', expressions[0]);
-
-                if (self.model.get('expression'))
-                    $(self.ui.expressionSelect).val(self.model.get('expression'));
-
-                $(self.ui.expressionSelect).select2();
+                this.updateList(expressions, 'expression', this.ui.expressionList);
             },
             updateGestures: function (gestures) {
-                var self = this;
-                _.each(gestures, function (gesture) {
-                    $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
-                });
-
-                if (!this.model.get('gesture') && gestures.length > 0) {
-                    this.model.set('gesture', gestures[0]);
-                    this.setGestureLength();
-                }
-
-                if (this.model.get('gesture'))
-                    $(this.ui.gestureSelect).val(this.model.get('gesture'));
-
-                $(this.ui.gestureSelect).select2();
+                this.updateList(gestures, 'gesture', this.ui.gestureList);
             },
             updateSomaStates: function (somas) {
-                var self = this;
-                _.each(somas, function (soma) {
-                    $(self.ui.somaSelect).append($('<option>').prop('value', soma).html(soma));
-                });
-
-                if (!this.model.get('soma') && somas.length > 0) {
-                    this.model.set('soma', somas[0]);
-                }
-
-                if (this.model.get('soma'))
-                    $(this.ui.somaSelect).val(this.model.get('soma'));
-
-                $(this.ui.somaSelect).select2();
+                this.updateList(somas, 'soma', this.ui.somaList);
             },
             setDuration: function () {
                 this.model.set('duration', Number($(this.ui.duration).val()));
@@ -326,13 +283,13 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 });
             },
             setEmotion: function () {
-                this.model.set('emotion', this.ui.emotionSelect.val());
+                this.model.set('emotion', this.ui.emotionList.val());
             },
             setExpression: function () {
-                this.model.set('expression', this.ui.expressionSelect.val());
+                this.model.set('expression', this.ui.expressionList.val());
             },
             setGesture: function () {
-                this.model.set('gesture', this.ui.gestureSelect.val());
+                this.model.set('gesture', this.ui.gestureList.val());
                 this.setGestureLength();
             },
             setSoma: function () {
@@ -355,7 +312,7 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 this.model.set('topic', this.ui.topicInput.val());
             },
             setKFAnimation: function () {
-                this.model.set('animation', this.ui.kfAnimationSelect.val())
+                this.model.set('animation', this.ui.kfAnimationList.val())
                 this.setKFAnimationDuration();
             },
             setKFAnimationDuration: function () {
@@ -378,13 +335,13 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 this.ui.crosshair.hide();
 
                 api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
-                    self.ui.attentionRegionSelect.html('');
-                    _.each(regions, function (name, key) {
-                        self.ui.attentionRegionSelect.append($('<option>').attr('value', key).html(name));
+                    regions = regions || {};
+                    regions.custom = 'custom';
+                    self.updateList(regions, 'attention_region', self.ui.attentionRegionList, {
+                        change: function () {
+                            self.selectAttentionRegion();
+                        }
                     });
-                    self.ui.attentionRegionSelect.append($('<option>').attr('value', 'custom').html('Custom'));
-                    self.ui.attentionRegionSelect.val(self.model.get('attention_region') || 'custom');
-                    self.ui.attentionRegionSelect.select2();
                     self.selectAttentionRegion();
                 });
             },
@@ -411,13 +368,10 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 self.model.set('z', 0);
             },
             selectAttentionRegion: function () {
-                this.model.set('attention_region', this.ui.attentionRegionSelect.val());
-
-                if (this.ui.attentionRegionSelect.val() == 'custom') {
+                if (this.model.get('attention_region') == 'custom')
                     this.ui.crosshair.fadeIn();
-                } else {
+                else
                     this.ui.crosshair.fadeOut();
-                }
             },
             updateTimeout: function () {
                 this.model.set('timeout', this.ui.timeout.val());

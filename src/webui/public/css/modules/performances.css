@@ -273,7 +273,6 @@ textarea.form-control.app-node-text {
 .app-emotion-select,
 .app-gesture-select,
 .app-kfanimation-select {
-    width: 200px !important;
 }
 
 .app-lang-select {
@@ -313,13 +312,32 @@ textarea.form-control.app-node-text {
     margin-top: 10px;
 }
 
+.app-node-tabs {
+    padding-left: 48px;
+    position: relative;
+}
+
+.app-node-tabs li.node-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 .app-options-tabs,
 .app-node-tabs {
-    overflow-x: hidden;
-    overflow-y: hidden;
     border: 1px solid #323F48;
     float: left;
-    height: 42px;
+    height: 44px;
+}
+
+.app-options-tabs a,
+.app-node-tabs a {
+    height: 43px;
+    outline: none;
+}
+
+.app-node-tabs li:not(.node-icon) a {
+    padding: 10px;
 }
 
 .app-settings-content {
@@ -341,6 +359,30 @@ textarea.form-control.app-node-text {
     width: 60%
 }
 
+.app-node-content .app-node-thumbnail {
+    width: 90px;
+    height: 90px;
+    line-height: 65px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #323F48;
+    float: left;
+    cursor: pointer;
+    border: 1px solid #182934;
+    padding: 7px;
+}
+
+.app-node-content .app-node-thumbnail span {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 15px;
+}
+
+.app-node-content .app-node-thumbnail.active,
+.app-node-content .app-node-thumbnail:hover {
+    border-color: #6cadd3;
+}
+
 .app-node-content {
     border-right: 1px solid #323F48;
 }
@@ -354,15 +396,21 @@ textarea.form-control.app-node-text {
 .app-options-tabs li.options-icon a {
     background-color: #323F48;
     cursor: default;
-    padding: 10px 15px;
-}
-
-.app-node-tabs > li > a {
-    padding: 10px 5px;
 }
 
 .app-node-tabs > li > a {
     border: none;
+}
+
+.app-hide-settings-button {
+    margin-right: 0 !important;
+}
+
+.app-node-tabs [data-node-name]:hover,
+.app-node-tabs li.active [data-node-name],
+.app-options-tabs .btn {
+    border: none !important;
+    border-bottom: #323F48 solid 1px !important;
 }
 
 .app-node[data-node-name="emotion"],
@@ -376,6 +424,13 @@ textarea.form-control.app-node-text {
 .app-node-tabs > li.active > a[data-node-name="gesture"],
 .app-node-tabs > li > a[data-node-name="gesture"]:hover,
 .app-node-tabs > li > a[data-node-name="gesture"]:focus {
+    background-color: #d9544f;
+}
+
+.app-node[data-node-name="expression"],
+.app-node-tabs > li.active > a[data-node-name="expression"],
+.app-node-tabs > li > a[data-node-name="expression"]:hover,
+.app-node-tabs > li > a[data-node-name="expression"]:focus {
     background-color: #d9544f;
 }
 

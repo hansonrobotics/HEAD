@@ -6,7 +6,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
             ui: {
                 container: '.app-node-settings',
                 tabs: '.app-node-tabs li',
-                nameButtons: '.app-node-tabs a',
+                nameButtons: '.app-node-tabs li:not([role="presentation"]) a',
                 hideButton: '.app-hide-settings-button',
                 deleteButton: '.app-delete-node-button',
                 frameCount: '.app-node-frames-indicator',
