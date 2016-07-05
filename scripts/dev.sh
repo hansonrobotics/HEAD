@@ -26,6 +26,29 @@ source $HR_WORKSPACE/$MAJOR_PROJECT/devel/setup.bash
 export LAUNCH_DIR="$BASEDIR/../src/robots_config/launch/"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting/"
 
+#CMT and OpenFACE eralated stuff
+. $HR_WORKSPACE/torch/install/bin/torch-activate
+
+source $HR_WORKSPACE/HEAD/devel/setup.bash
+export PYTHONPATH=$PYTHONPATH:$HR_WORKSPACE/HEAD/src/vision/openface/:$HR_WORKSPACE/HEAD/src/vision/dlib-18.18/dist/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT/:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
+
+export tool="$1"
+if [[ -z $tool ]]; then
+    echo "Setting tool to pi_vision"
+    tool=pi_vision
+fi
+case $tool in
+    pi_vision)
+    vision="true"
+    ;;
+    cmt)
+    echo "Setting to use CMT"
+    vision="false"
+    ;;
+esac
+export vision
+#End
 #Kill existing session
 if [[ $(tmux ls) == ${NAME}* ]]; then
     tmux kill-session -t $NAME
@@ -33,7 +56,9 @@ if [[ $(tmux ls) == ${NAME}* ]]; then
 fi
 cd $BASEDIR
 
-tmux new-session -n 'roscore' -d -s $NAME 'roslaunch $LAUNCH_DIR/robot.launch basedir:=$LAUNCH_DIR name:=$NAME & rqt_console; $SHELL'
+
+tmux new-session -n 'roscore' -d -s $NAME 'roslaunch $LAUNCH_DIR/robot.launch basedir:=$LAUNCH_DIR name:=$NAME pi_vision:=$vision & rqt_console; $SHELL'
+
 sleep 3
 tmux new-window -n 'WebServers' 'python $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/__init__.py -p 4000 -s \
     -c $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/ssl/cert.crt  \

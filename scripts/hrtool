@@ -60,6 +60,10 @@ install_ros() {
     $SUDO apt-get -y install ros-indigo-joint-state-publisher
     $SUDO apt-get -y install ros-indigo-rosbridge-server
     $SUDO apt-get -y install python-catkin-tools
+
+    # Ready made messages to be utilized form opencv-apps repo.
+    $SUDO apt-get -y install ros-indigo-opencv-apps
+
     # for camera calibration
     $SUDO apt-get -y install ros-indigo-image-proc
     # for blender to find ros packages
@@ -167,6 +171,119 @@ install_test_deps() {
     $SUDO apt-get -y install xdotool
 }
 
+install_vision_deps() {
+    # For Dlib
+    cd $HR_WORKSPACE/HEAD/src/vision
+    #Tkinter error other wise.
+    sudo pip2 install -I Pillow
+
+    if [[ ! -d $HR_WORKSPACE/HEAD/src/vision/dlib/dlib-18.18 ]]; then
+    wget http://dlib.net/files/dlib-18.18.tar.bz2
+
+    tar -xf dlib-18.18.tar.bz2
+
+    rm dlib-18.18.tar.bz2
+    fi
+    #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
+    # Install dlib-models large file This is skiped as model in the openface are used to download the elements
+    # git clone https://github.com/davisking/dlib-models.git
+
+    # Install Torch
+    if [ ! -d $HR_WORKSPACE/torch/.git ]
+    then
+    git clone https://github.com/torch/distro.git $HR_WORKSPACE/torch --recursive
+
+    cd $HR_WORKSPACE/torch
+
+    bash install-deps
+    echo no | ./install.sh
+
+    #Source. May be not needed.
+    # source ~/.bashrc
+
+    # Install lua packages in the torch file in scripts directory.
+
+    #for NAME in dpnn nn optim csvigo; do luarocks install $NAME; done
+    cd install/bin
+    ./luarocks install nn
+    ./luarocks install dpnn
+    ./luarocks install image
+    ./luarocks install optim
+    ./luarocks install csvigo
+    ./luarocks install sys
+    else
+    echo "Skipping Torch installation Because it's found in HEAD."
+    fi
+    cd $HR_WORKSPACE/HEAD/src/vision
+
+    # Install openface
+
+    # Dependencies for openface
+
+    # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
+    sudo apt-get -y install python-skimage
+    for NAME in numpy pandas scipy scikit-learn; do sudo pip2 install $NAME; done
+
+    if [ ! -d $HR_WORKSPACE/HEAD/src/vision/openface/.git ];
+    then
+    #TODO a checkout verison that works with the latest.
+    git clone https://github.com/cmusatyalab/openface.git --recursive
+    else
+    echo "Skipping OpenFace Installation. Exists in vision"
+    fi
+    cd openface
+    cd models
+
+    # 150 Megabyes of data.
+    if [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/dlib/shape_predictor_68_face_landmarks.dat ] ||
+     [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/dlib/mean.csv ] || [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/dlib/std.csv ] ||
+     [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/openface/nn4.small2.v1.t7 ]; then
+    ./get-models.sh
+    else
+    echo "Models Exists. Skipped gettinf models for openface and dlib"
+    fi
+
+    # CMT and Emotime Libraries.
+
+
+    # CppMT i
+    cd $HR_WORKSPACE/HEAD/src/vision
+
+    #TODO this needs to be moved to a new HR repository.
+    if [ ! -d $HR_WORKSPACE/HEAD/src/vision/CppMT/.git ]
+    then
+    git clone https://github.com/tesYolan/CppMT.git
+    cd CppMT
+    git checkout wrapper
+    cmake .
+    make -j$(nproc)
+    else
+    echo "Pulling the latest form CppMT"
+    cd $HR_WORKSPACE/HEAD/src/vision/CppMT/
+    git checkout wrapper
+    git pull origin wrapper
+    cmake .
+    make -j$(nproc)
+    fi
+    # Emotime Steps
+    cd $HR_WORKSPACE/HEAD/src/vision
+
+    #TODO this needs to be moved to a new HR repository
+    if [ ! -d $HR_WORKSPACE/HEAD/src/vision/emotime/.git ]
+    then
+    git clone https://github.com/tesYolan/emotime.git
+    cd emotime
+    cd build
+    cmake ..
+    make -j$(nproc)
+    else
+    echo "Skipped Emotime Installation"
+    fi
+    cd $HR_WORKSPACE
+
+
+}
+
 check_or_create_ws() {
     if [[ -d $1 ]]; then
         export HR_WORKSPACE=$1
@@ -256,6 +373,24 @@ do_update_hr() {
     done
 }
 
+do_update_vision_tools() {
+
+    #Update CMT
+
+    local DEFAULT_BRANCH="wrapper"
+
+    cd $HR_WORKSPACE/HEAD/src/vision/CppMT
+
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    if [[ $branch != $DEFAULT_BRANCH ]]; then
+        continue
+    fi
+    git pull origin $DEFAULT_BRANCH
+
+    cmake .
+    make -j$(nproc)
+
+}
 do_install_deps() {
     _do_install_deps
 }
@@ -265,6 +400,7 @@ _do_install_deps() {
     install_ros
     install_opencog_deps
     install_other_deps
+    install_vision_deps
 }
 
 do_get_hr_src() {
@@ -305,16 +441,60 @@ undo_dev_mode() {
 }
 
 do_build_hr() {
+    _do_build_hr
+}
+
+_do_build_hr() {
     cd $HR_WORKSPACE/$PROJECT
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
         catkin init
     fi
+    #TODO remove items unnecessary here to take it all out.
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
+    #Needed for compiling emotime as it's dependent upon it for it being built.
+    export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
+    export DLIB_PATH=$HR_WORKSPACE/HEAD/src/vision/dlib-18.18
+    cd $DLIB_PATH && python setup.py build
+    cd $HR_WORKSPACE/$PROJECT
+    include_dirs=($HR_WORKSPACE/HEAD/src/vision/emotime/src/{facedetector,utils,gaborbank,detector,training})
+    include_path=$(printf "%s:" "${include_dirs[@]}")
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/include:$include_path
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
     pip2 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
     pip3 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
+}
+
+do_single_package() {
+
+    # With build a package.
+
+    # If package cmt_package.
+
+    cd $HR_WORKSPACE/$PROJECT
+    source /opt/ros/indigo/setup.bash
+    if [[ ! -d .catkin_tools ]]; then
+        catkin init
+    fi
+
+    include_dirs=($HR_WORKSPACE/HEAD/src/vision/emotime/src/{facedetector,utils,gaborbank,detector,training})
+    include_path=$(printf "%s:" "${include_dirs[@]}")
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/include:$include_path
+
+    if [ "$1" == "cmt_tracker" ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
+    #Needed for compiling emotime as it's dependent upon it for it being built.
+    export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
+    catkin build cmt_tracker_msgs cmt_tracker
+
+    else
+
+    catkin build $1
+
+    fi
+
 }
 
 build_opencog() {
@@ -343,6 +523,7 @@ do_test() {
 do_update() {
     update_opencog
     do_update_hr
+    do_update_vision_tools
 }
 
 do_clean_up() {
@@ -415,6 +596,7 @@ Usage: $0 OPTION
 -g      Get HR source code.
 -G      Get all source code including OpenCog and HR.
 -u      Update HR source code.
+-v      Update Vision Related dependencies.
 -U      Update all source code including OpenCog and HR.
 -b      Build HR source code.
 -B      Build HR and OpenCog source code.
@@ -425,12 +607,13 @@ Usage: $0 OPTION
 -d      Developer mode. Using latest OpenCog stack.
 -c      Clean up files.
 -h      Print this help.
+-s      Build a single package specified.
 
 EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUtpr:dc" opt; do
+    while getopts "hw:igGbBuUvtpr:s:dc" opt; do
         case $opt in
         h)
             show_help
@@ -444,8 +627,10 @@ parse_opts() {
         B) BUILD_SOURCE_CODE=1 ;;
         u) UPDATE_HR_SOURCE_CODE=1 ;;
         U) UPDATE_SOURCE_CODE=1 ;;
+        v) UPDATE_VISION_CODE=1 ;;
         t) RUN_TESTS=1 ;;
         p) PRINT_HR_WORKSPACE=1 ;;
+        s) BUILD_SINGLE_PKG=1  && CUSTOM_FUNCTIONS=$OPTARG ;;
         r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
         d) DEVELOPER_MODE=1 ;;
         c) CLEANUP=1 ;;
@@ -506,9 +691,11 @@ execute() {
     if [[ $UPDATE_SOURCE_CODE ]]; then do_update ; fi
     if [[ $CLEANUP ]]; then do_clean_up ; fi
     if [[ $BUILD_HR_SOURCE_CODE ]]; then do_build_hr; fi
+    if [[ $UPDATE_VISION_CODE ]]; then do_update_vision_tools; fi
     if [[ $BUILD_SOURCE_CODE ]]; then do_build; fi
     if [[ $RUN_TESTS ]]; then do_test; fi
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
+    if [[ $BUILD_SINGLE_PKG ]]; then do_single_package $CUSTOM_FUNCTIONS ; fi
     if [[ $RUN_CUSTOM_FUNCTIONS ]]; then do_run $CUSTOM_FUNCTIONS ; fi
 }
 
