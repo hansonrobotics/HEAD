@@ -25,6 +25,8 @@
 //Service call to reset the values of the images in the system
 #include <cmt_tracker_msgs/Clear.h>
 #include <cmt_tracker_msgs/Update.h>
+#include <cmt_tracker_msgs/Delete.h>
+#include <cmt_tracker_msgs/Reinitialize.h>
 #include <pi_face_tracker/Face.h>
 #include <pi_face_tracker/Faces.h>
 #include <pi_face_tracker/FaceEvent.h>
@@ -101,6 +103,8 @@ public:
 	void remove_tracker(std::string name);
 
 	bool merge_elements(cmt_tracker_msgs::MergeNames::Request &req, cmt_tracker_msgs::MergeNames::Response &res);
+	bool delete_elements(cmt_tracker_msgs::Delete::Request &req, cmt_tracker_msgs::Delete::Response &res);
+	bool updateArea(cmt_tracker_msgs::Reinitialize::Request &req, cmt_tracker_msgs::Reinitialize::Response &res);
 
 //    bool validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
 
@@ -146,6 +150,8 @@ private:
     ros::ServiceServer validation_service;
     ros::ServiceServer reinforce_service;
     ros::ServiceServer merge_service;
+    ros::ServiceServer updateArea_service;
+    ros::ServiceServer delete_service;
 
 
     ros::ServiceClient add_to_tracker;
@@ -186,6 +192,7 @@ private:
 	cmt::CMTMAP cmt_;
 
 	std::vector<std::string> poorly_tracked;
+	std::vector<std::string> newly_tracked;
 	cv::Rect bb_rect;
 	//premove
 	std::string tracking_method;
@@ -205,6 +212,7 @@ private:
 	std::vector<cv::Rect> locations_of_trackers;
 
     std::map<std::string, std::string> merge;
+    std::vector<std::string> delete_trackers;
 
 	std::string subscribe_topic;
 	std::string tool;

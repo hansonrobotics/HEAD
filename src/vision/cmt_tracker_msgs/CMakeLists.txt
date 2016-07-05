@@ -63,6 +63,8 @@ find_package(catkin REQUIRED COMPONENTS
    TrackerNames.srv
    Update.srv
    MergeNames.srv
+   Delete.srv
+   Reinitialize.srv
  )
 
 ## Generate actions in the 'action' folder

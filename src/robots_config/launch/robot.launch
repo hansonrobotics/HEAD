@@ -13,7 +13,9 @@
         <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/safety.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/attention_regions.yaml" command="load"/>
+
         <!-- Hardware specific nodes -->
+
 
         <!-- Set default chatbot language [en|zh] -->
         <param name="lang" value="en" />
@@ -26,9 +28,9 @@
     </group>
 
     <!-- Face Tracking -->
-    <include file="$(arg basedir)/face_tracker.launch">
+    <!-- include file="$(arg basedir)/face_tracker.launch">
     <arg name="pi_vision" value="$(arg pi_vision)"/>
-    </include>
+    </include -->
 
     <!-- Perception -->
     <include file="$(arg basedir)/perception.launch" />

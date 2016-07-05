@@ -28,25 +28,22 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
 
 
   firstrun = true;
-  ui.face_choice_method->addItem("Hand Selection Trackings");
-  ui.face_choice_method->addItem("Remove on LOST");
-  ui.face_choice_method->addItem("Face Recognition Method");
+  //ui.face_choice_method->addItem("Hand Selection Trackings");
+//  ui.face_choice_method->addItem("Remove on LOST");
+//  ui.face_choice_method->addItem("Face Recognition Method");
 
-  const QStandardItemModel* model = qobject_cast<const QStandardItemModel*>(ui.face_choice_method->model());
-  QStandardItem* item = model->item(2);
-
-  item->setFlags(disable ? item->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled) : Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-  item->setData(disable ? ui.face_choice_method->palette().color(QPalette::Disabled, QPalette::Text)
-                      : QVariant(), // clear item data in order to use default color
-              Qt::TextColorRole);
+//  const QStandardItemModel* model = qobject_cast<const QStandardItemModel*>(ui.face_choice_method->model());
+//  QStandardItem* item = model->item(2);
+//
+//  item->setFlags(disable ? item->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled) : Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+//  item->setData(disable ? ui.face_choice_method->palette().color(QPalette::Disabled, QPalette::Text)
+//                      : QVariant(), // clear item data in order to use default color
+//              Qt::TextColorRole);
 
   ui.paramsetters->addItem("Dlib-CMT Method");
-  ui.paramsetters->addItem("OpenCV-CMT Method");
   ui.paramsetters->addItem("Show Pose(dlib)");
-  ui.paramsetters->addItem("Pi-Vision");
-  ui.paramsetters->addItem("Emotime-Enable");
-  ui.paramsetters->addItem("Dlib Tracker");
-
+  ui.addToTrack->setText("Get Internal State of CMT");
+  ui.addToTrack->setToolTip("Calls a cerfice to cmt_tracker_node querying the initial image the CMT is tracking");
   nh.getParam("camera_topic", subscribe_topic);
   nh.getParam("filtered_face_locations",subscribe_face);
 
@@ -64,22 +61,19 @@ void tracker_plugin::initPlugin(qt_gui_cpp::PluginContext& context)
   tracker_locations_sub = (nh).subscribe("tracking_location", 1 , &rqt_tracker_view::tracker_plugin::trackerCb, this);
   nh.getParam("tracking_method", tracking_method);
 
-
-  connect(ui.face_choice_method, SIGNAL(currentIndexChanged(int)), this, SLOT(on_MethodChanged(int)));
+  ui.removeTracked->setEnabled(false);
+  connect(ui.addToTrack, SIGNAL(pressed()), this, SLOT(on_updateTracked()));
   connect(ui.face_output_list, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(on_addToTrack_clicked(QListWidgetItem *)));
   connect(ui.removeAllTracked, SIGNAL(pressed()), this, SLOT(on_removeAllTracked_clicked()));
-  connect(ui.removeTracked, SIGNAL(pressed()), this, SLOT(on_removeTracked_clicked()));
+  //connect(ui.removeTracked, SIGNAL(pressed()), this, SLOT(on_removeTracked_clicked()));
   connect(this, SIGNAL(updatefacelist()), this, SLOT(updateVisibleFaces()));
   connect(ui.paramsetters,SIGNAL(currentIndexChanged(int)), this, SLOT(on_ParamChanged(int)));
 
-  if (tracking_method.compare("handtracking") == 0) ui.face_choice_method->setCurrentIndex(0);
-  else if (tracking_method.compare("mustbeface") == 0) ui.face_choice_method->setCurrentIndex(1);
-  else  ui.face_choice_method->setCurrentIndex(2);
+//  if (tracking_method.compare("handtracking") == 0) ui.face_choice_method->setCurrentIndex(0);
+//  else if (tracking_method.compare("mustbeface") == 0) ui.face_choice_method->setCurrentIndex(1);
+//  else  ui.face_choice_method->setCurrentIndex(2);
 
-  std::string metho;
-  nh.getParam("face_detection_method",metho);
-  if (metho.compare("dlib") == 0) ui.paramsetters->setCurrentIndex(0);
-  else if (metho.compare("opencv") == 0) ui.paramsetters->setCurrentIndex(1);
+
 
 }
 bool tracker_plugin::updateTrackerNames(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
@@ -292,7 +286,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       previously_known = "as: " + (*v).recognized_name.data;
     }
     else {
-      previously_known = "false";
+      previously_known = "not recognzied";
     }
 
 
@@ -324,7 +318,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     }
 
     double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
-    std::string value = "ID-" + (*v).tracker_name.data+ "\nDemotion: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
+    std::string value = "ID-" + (*v).tracker_name.data+ "\nBF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
        "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
 
     temp_tracked_image_information.push_back( value );
@@ -336,7 +330,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
                                              temp_tracked_image_mats.back().step[0], QImage::Format_RGB888));
   }
 
-  if (tracker_updated_num == 2 || firstrun)
+  if (firstrun)
   {
     firstrun = false;
     cmt_tracker_msgs::TrackedImages results;
@@ -461,11 +455,11 @@ void tracker_plugin::shutdownPlugin()
   image_subscriber.shutdown();
 }
 
-void tracker_plugin::on_MethodChanged(int index)
-{
-  nh.setParam("tracking_method", "mustbeface");
-  std::cout << "tracking method change 2" << std::endl;
-}
+//void tracker_plugin::on_MethodChanged(int index)
+//{
+//  nh.setParam("tracking_method", "mustbeface");
+//  std::cout << "tracking method change 2" << std::endl;
+//}
 void tracker_plugin::on_ParamChanged(int index)
 {
   if(index == 0) {
@@ -473,28 +467,11 @@ void tracker_plugin::on_ParamChanged(int index)
 
     nh.setParam("pose",0);
   }
-  else if(index == 1) {
-    nh.setParam("face_detection_method","opencv");
 
-    nh.setParam("pose",0);
-  }
-  else if(index == 2){
+  else if(index == 1){
     nh.setParam("pose",1);
     nh.setParam("face_detection_method","dlib");
 
-  }
-  else if(index == 3) {
-    nh.setParam("pivision","set_pi");
-
-    nh.setParam("pose",0);
-  }
-  else if(index == 4) {
-    nh.setParam("emotime","True");
-
-    nh.setParam("pose",0);
-  }
-  else if(index == 5) {
-    
   }
 
 }
@@ -504,11 +481,13 @@ void tracker_plugin::on_ParamChanged(int index)
  */
 void tracker_plugin::on_addToTrack_clicked(QListWidgetItem *item)
 {
+  std::cout<<"add by handtracking"<<std::endl;
   int last_selected_item = ui.face_output_list->currentRow();
 
   track_location.object = face_locs.objects[last_selected_item];
 
   tracker_locations_pub.publish(track_location);
+  std::cout<<"added by handtracking"<<std::endl;
 }
 /**
  * @brief tracker_plugin::on_removeAllTracked_clicked
@@ -520,14 +499,25 @@ void tracker_plugin::on_removeAllTracked_clicked()
 {
 
   cmt_tracker_msgs::Clear srv;
-  client.call(srv);
-  // {
-  //   std::cout << "Cleared" << std::endl;
+  ros::service::call("clear",srv);
+//  if (client.call(srv))
+//  {
+//
+//  std::cout << "Cleared" << std::endl;
+//  }
+//  else
+//  {
+//  std::cout << "Error" <<std::endl;
+//  }
   // }
   // else {
   //   std::cout << "Not Cleared" << std::endl;
   // }
   // ui.tracker_initial_list->clear();
+}
+void tracker_plugin::on_updateTracked()
+{
+    firstrun = true; //One could have easily called the view but it's simpler to let firstrun code handle it.
 }
 /**
  * @brief tracker_plugin::on_removeTracked_clicked

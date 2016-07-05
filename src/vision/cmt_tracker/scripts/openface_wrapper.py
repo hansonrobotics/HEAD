@@ -15,7 +15,7 @@ from operator import itemgetter
 from collections import defaultdict
 import shutil
 import cv2
-
+import logging
 import numpy as np
 
 TEMPLATE = np.float32([
@@ -88,7 +88,7 @@ class face_recognizer:
         for the_file in os.listdir(self.image_dir_face_temp):
             file_path = os.path.join(self.image_dir_face_temp, the_file)
             shutil.rmtree(file_path)
-
+        self.logger = logging.getLogger('hr.cmt_tracker.face_reinforcer_node')
         self.face_results_aggregator = {}
 
         if os.path.exists("{}/classifier.pkl".format(self.feature_dir)):
@@ -97,7 +97,7 @@ class face_recognizer:
             pass
 
     def train(self):
-        print('Training Dataset')
+        self.logger.info('Training Dataset')
         fname = "{}/labels.csv".format(self.feature_dir)
         labels = pd.read_csv(fname, header=None).as_matrix()[:, 1]
         labels = map(itemgetter(1),
@@ -111,10 +111,10 @@ class face_recognizer:
         svm = SVC(C=1, kernel='linear', probability=True).fit(embeddings, labelsNum)
         with open("{}/classifier.pkl".format(self.feature_dir), 'w') as f:
             pickle.dump((le, svm), f)
-        print('Finished Training')
+        self.logger.info('Finished Training')
 
     def infer(self, net_forwarded_img):
-        print('Inferring Result')
+        self.logger.info('Inferring Result')
         if os.path.exists("{}/classifier.pkl".format(self.feature_dir)):
             with open("{}/classifier.pkl".format(self.feature_dir), 'r') as f:
                 (le, svm) = pickle.load(f)
@@ -122,7 +122,7 @@ class face_recognizer:
             maxI = np.argmax(prediction)
             person = le.inverse_transform(maxI)
             confidence = prediction[maxI]
-            print('Finished Inferring')
+            self.logger.info('Finished Inferring')
             return (person, confidence)
 
 
@@ -139,38 +139,40 @@ class face_recognizer:
 
 
     def save_faces(self, cv_image, tupl, loc_save,postfix):
-        print("saving faces in %s", self.image_dir_face_temp + "/" + loc_save)
+        self.logger.info("saving faces in %s", self.image_dir_face_temp + "/" + loc_save)
         if (not os.path.exists(self.image_dir_face_temp + "/" + loc_save)):
             os.makedirs(self.image_dir_face_temp + "/" + loc_save)
         img_aligned = self.align(cv_image, tupl)
         # Here let's create a method that it generated a name for itself.
         cv2.imwrite(self.image_dir_face_temp + "/" +loc_save + "/" + postfix + ".jpg", img_aligned)
-        print("saved faces %s",loc_save + "_" + postfix + ".jpg")
+        self.logger.info("saved faces %s",loc_save + "_" + postfix + ".jpg")
 
     def train_process(self, name):
-        print('starts training')
+        self.logger.info('starts training')
         file_loc = self.image_dir_face_temp + "/" + name
         if (os.path.exists(file_loc)):
             subprocess.call(['mv', self.image_dir_face_temp + "/" + name,
                          self.image_dir_face_imgs + "/" + name])
         # TO avoid calling training if the faces directory doesn't have faces at least two faces.
         if len(list(os.walk(self.image_dir_face_imgs).next()[1])) > 1:
-            # As at this point the dataset has changed thusly we have to delete the cache.
-            if (os.path.exists(self.image_dir_face_imgs + "/" + 'cache.t7')):
-                subprocess.call(['rm', self.image_dir_face_imgs + "/" + 'cache.t7'])
-                # Here call the batch represent file which is a lua function in a process of it's own.
             self.train_dataset()
-        print('finsihes training')
+        self.logger.info('finsihes training')
 
     def train_dataset(self):
-        print('Creating Representation')
+        self.logger.info('Creating Representation')
+        # As at this point the dataset has changed thusly we have to delete the cache.
+        if (os.path.exists(self.image_dir_face_imgs + "/" + 'cache.t7')):
+            subprocess.call(['rm', self.image_dir_face_imgs + "/" + 'cache.t7'])
+            # Here call the batch represent file which is a lua function in a process of it's own.
         subprocess.call([self.batch_represent, '-outDir', self.feature_dir, '-data', self.image_dir_face_imgs])
         # here the number of images in the classifier must be greater than 1
-        print('Training on Representation')
+        self.logger.info('Reset results to Zero')
+        self.logger.info('Training on Representation')
+        self.face_results_aggregator = {}
         self.train()
 
     def results(self, cv_image, tupl, name, threshold=0.85):
-        print('reaches results')
+        self.logger.info('reaches results')
         # TODO Even take out this existence
         img_aligned = self.align(cv_image, tupl, True)
         result = self.infer(img_aligned)
@@ -193,7 +195,7 @@ class face_recognizer:
             self.face_results_aggregator[name]['results'][result[0]] = \
                 self.face_results_aggregator[name]['results'][result[0]] + 0
 
-        print('finishes result')
+        self.logger.info('finishes result')
 
     def immediate_results(self, cv_image, tupl):
         img_aligned = self.align(cv_image, tupl, True)

@@ -33,6 +33,8 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   //validation_service = nh_.advertiseService("validation", &cmt_wrap::TrackerCMT::validate, this);
   reinforce_service = nh_.advertiseService("reinforce", &cmt_wrap::TrackerCMT::reinforce, this);
   merge_service = nh_.advertiseService("merge", &cmt_wrap::TrackerCMT::merge_elements, this);
+  delete_service = nh_.advertiseService("delete", &cmt_wrap::TrackerCMT::delete_elements, this);
+  updateArea_service = nh_.advertiseService("update_area", &cmt_wrap::TrackerCMT::updateArea, this);
 
   add_to_tracker = nh_.serviceClient<std_srvs::Empty>("can_add_tracker");
   //subscribers
@@ -67,9 +69,12 @@ TrackerCMT::TrackerCMT() : it_(nh_)
 
 bool TrackerCMT::clear(cmt_tracker_msgs::Clear::Request &req, cmt_tracker_msgs::Clear::Response &res)
 {
-  cmt_.clear();
-  nh_.setParam("tracker_updated", 2);
+  std::cout<<"Remove all tracked service"<<std::endl;
 
+  cmt_.clear();
+  poorly_tracked = cmt_.lostFace();
+  deleteOnLost();
+  std::cout<<"Remove all tracked service"<<std::endl;
   return true;
 }
 //this is a service that indicates wheteher new elements are going to be tracked or note.
@@ -99,7 +104,13 @@ bool TrackerCMT::reinforce(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tra
     return false;
 }
 
+bool TrackerCMT::updateArea(cmt_tracker_msgs::Reinitialize::Request &req, cmt_tracker_msgs::Reinitialize::Response &res)
+{
 
+cmt_.updateArea(im_gray, cv::Rect(req.object.x_offset, req.object.y_offset, req.object.width, req.object.height),req.name);
+
+return true;
+}
 /*
 Request the images in the system.
 */
@@ -132,12 +143,27 @@ bool TrackerCMT::merge_elements(cmt_tracker_msgs::MergeNames::Request &req, cmt_
     else
     return false;
 }
+bool TrackerCMT::delete_elements(cmt_tracker_msgs::Delete::Request &req, cmt_tracker_msgs::Delete::Response &res)
+{
+    //Callback are handled sequentially; http://answers.ros.org/question/28373/race-conditions-in-callbacks/
+    std::cout<<"Deleting Elements Because of Multiple overlap or Area Became very high"<<std::endl;
+    delete_trackers.clear();
+    for(int i = 0; i< req.delete_trackers.size(); i++)
+    {
+        delete_trackers.push_back(req.delete_trackers[i]);
+        cmt_.deleteTracker(req.delete_trackers[i]);
+    }
+    poorly_tracked = delete_trackers;
+    deleteOnLost();
+    return true;
+
+}
 bool TrackerCMT::updateTrackerNames(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
 {
     if( cmt_.updatemapname(req.names, req.index))
     {
     //TODO trigger an event here.
-    nh_.setParam("tracker_updated", 2);
+    //nh_.setParam("tracker_updated", 2);
     return true;
     }
     else
@@ -205,13 +231,17 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
   //Now let's copy an additional mat to do additional removal.
 
   poorly_tracked.clear();
+  newly_tracked.clear();
 
   std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor,merge);
+  merge.clear();
 
+  std::vector<std::string> available_names;
   for(std::vector<cmt::cmt_message>::iterator v = messages.begin(); v!= messages.end(); v++)
   {
+    if (!((*v).tracker_lost))
+    {
     cmt_tracker_msgs::Tracker tracker;
-
     tracker.initial_points.data = (*v).initial_active_points;
     tracker.active_points.data = (*v).active_points;
     tracker.tracker_name.data = (*v).tracker_name;
@@ -228,29 +258,48 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     tracker.recognized_name.data = (*v).recognized_as;
     tracker.before_demotion.data = (*v).before_being_demoted;
     tracker.header.stamp = ros::Time::now();
-
+    tracker.validated.data = (*v).validated;
     if ((*v).validated)
     {
     trackers_results.tracker_results.push_back(tracker);
-    if(pi_registry.find(tracker.tracker_name.data)==pi_registry.end())
-    {
-    pi_face_tracker::FaceEvent m = returnPiEvents("new_face", tracker.tracker_name.data);
-    pi_events.publish(m);
-    pi_registry[tracker.tracker_name.data] = tracker.tracker_name.data;
-    }
+//    if(pi_registry.find(tracker.tracker_name.data)==pi_registry.end())
+//    {
+//    pi_face_tracker::FaceEvent m = returnPiEvents("new_face", tracker.tracker_name.data);
+//    pi_events.publish(m);
+//    pi_registry[tracker.tracker_name.data] = tracker.tracker_name.data;
+//    }
 
     }
     else
     temp_results.tracker_results.push_back(tracker);
+    }
   }
-    poorly_tracked = cmt_.removeLost();
+    cmt_.removeLost();
+
+    poorly_tracked = cmt_.lostFace();
+    newly_tracked = cmt_.newFace();
+    cmt_.clearFace();
 
     pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
 
-    for (int pi_res = 0; pi_res < pi_results.faces.size(); pi_res++)
+
+    //Check if it exists in here before publishing:
+    for (int j = 0; j < pi_results.faces.size(); j ++)
     {
-        pi_results.faces[pi_res] = filter_point(pi_results.faces[pi_res]);
+        if(std::find(newly_tracked.begin(), newly_tracked.end(),std::to_string(pi_results.faces[j].id))!=newly_tracked.end())
+        {
+            pi_face_tracker::FaceEvent m = returnPiEvents("new_face", std::to_string(pi_results.faces[j].id));
+            pi_events.publish(m);
+            pi_registry[std::to_string(pi_results.faces[j].id)] = std::to_string(pi_results.faces[j].id);
+        }
     }
+
+
+
+//    for (int pi_res = 0; pi_res < pi_results.faces.size(); pi_res++)
+//    {
+//        pi_results.faces[pi_res] = filter_point(pi_results.faces[pi_res]);
+//    }
 //  bool emo_enabled,pose_enabled;
 //  nh_.getParam("pose",pose_enabled);
 //  nh_.getParam("emotime",emo_enabled);
@@ -282,20 +331,15 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 void TrackerCMT::deleteOnLost()
 {
   //std::cout<<"Enters DeleteOnLost"<<std::endl;
-  int size  = poorly_tracked.size();
-  for (int i = 0; i < size; i++)
+
+  for (int i = 0; i < poorly_tracked.size(); i++)
   {
-  ROS_INFO("Element %d - %s",i,poorly_tracked[i].c_str());
+  remove_tracker(poorly_tracked[i]);
+  face_filtered.erase(poorly_tracked[i]);
   }
-  if (size > 0)
-  {
-    for (int i = 0; i < poorly_tracked.size(); i++)
-    {
-      remove_tracker(poorly_tracked[i]);
-      face_filtered.erase(poorly_tracked[i]);
-    }
-    nh_.setParam("tracker_updated", 2);
-  }
+
+  //nh_.setParam("tracker_updated", 2);
+
   poorly_tracked.clear();
   //std::cout<<"Exits DeleteOnLost"<<std::endl;
 }
@@ -350,7 +394,7 @@ void TrackerCMT::set_trackers(const cmt_tracker_msgs::Trackers& tracker_location
     set_tracker(tracker_location.tracker_results[i]);
   }
 
-  nh_.setParam("tracker_updated", 2);
+  //nh_.setParam("tracker_updated", 2);
   int sizeof_t = cmt_.size_map();
   nh_.setParam("tracker_size",sizeof_t);
   ros::service::call("can_add_tracker",empty_info);
@@ -361,11 +405,7 @@ void TrackerCMT::remove_tracker(std::string name)
 {
   std::cout<<"Enters remove_tracker"<<std::endl;
 
-  if(pi_registry.find(name)==pi_registry.end())
-  {
-
-  }
-  else
+  if(pi_registry.find(name)!=pi_registry.end())
   {
   pi_face_tracker::FaceEvent m = returnPiEvents("lost_face", name);
   pi_events.publish(m);
@@ -379,13 +419,15 @@ pi_face_tracker::Face TrackerCMT::filter_point(pi_face_tracker::Face f)
 {
 double yz_sf = 0.64;
 double x_sf = 0.95;
+//std::cout<<"Filtered Locations: "<<face_filtered<<std::endl;
 
 if(face_filtered.find(std::to_string(f.id))==face_filtered.end())
 {
     face_filtered[std::to_string(f.id)] = f;
 }
-pi_face_tracker::Face fac= f;
+pi_face_tracker::Face fac = f;
 
+//Now there is a vlaue that would be assinged that is self.loc_3d = p
 double pha = yz_sf;
 double bet = 1 - pha;
 
@@ -395,6 +437,7 @@ double bet = 1 - pha;
  bet = 1.0 - pha;
  fac.point.x = pha * face_filtered[std::to_string(f.id)].point.x + bet * f.point.x;
 
+ face_filtered[std::to_string(f.id)] = fac;
 return fac;
 }
 
@@ -430,7 +473,7 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
   double height;
 
   if( locs.object.object.width != 0)
-  dp = 0.22 / (float)(locs.object.object.width); //This is how it's defined as above
+  dp = 0.17 / (float)(locs.object.object.width); //This is how it's defined as above
   else
   dp = 0;
 
@@ -442,7 +485,7 @@ pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker locs, camera_pro
 
   msg.point.y = dp * (width - ( (double)(locs.object.object.x_offset + locs.object.object.width) +
                 locs.object.object.x_offset) / 2.0 );
-  msg.point.z = dp * (height - ((locs.object.object.y_offset + locs.object.object.height) +
+  msg.point.z = dp * (height - ((double)(locs.object.object.y_offset + locs.object.object.height) +
                 locs.object.object.y_offset) / 2.0 );
   msg.emotion_value = locs.object.obj_accuracy.data;
   msg.emotion_id = locs.object.obj_states.data;
@@ -456,6 +499,7 @@ pi_face_tracker::Faces returnPiMessages(cmt_tracker_msgs::Trackers locs, camera_
   pi_face_tracker::Faces msgs;
   for (int i = 0; i < locs.tracker_results.size(); i++)
   {
+    if(std::atoi(locs.tracker_results[i].tracker_name.data.c_str()) != 0)
     msgs.faces.push_back(returnPiMessage(locs.tracker_results[i], camera_config));
   }
   return msgs;
@@ -485,7 +529,10 @@ cmt_tracker_msgs::Trackers returnOverlappingEmotion(cmt_tracker_msgs::Trackers l
       //if it overlaps with the one then break.
       cv::Rect cmt_overlap(facelocs.objects[i].object.x_offset, facelocs.objects[i].object.y_offset,
                               facelocs.objects[i].object.width, facelocs.objects[i].object.height);
-      overlap = (emotion_overlap & cmt_overlap).area() > 0;
+       double intersection_area = (emotion_overlap & cmt_overlap).area();
+       double union_area = (emotion_overlap | cmt_overlap).area();
+
+       overlap = (intersection_area/union_area) > 0.5;
       if (overlap)
         {
         //Now we add the to the cmt the overlapped emotion; if there are no emotion overlap then we add unknown emotion state to the system. 

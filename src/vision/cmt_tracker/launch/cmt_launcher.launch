@@ -25,9 +25,7 @@
 <param name="camera_topic" value="image_rect"/>
 
 <group if="$(arg testing)">
-    <node pkg="rosbag" name="player" type="play" output="screen" args="/home/icog-labs/Videos/out.bag --clock">
-    <remap from="/camera/clock" to="/clock"/>
-    </node>
+    <node pkg="cmt_tracker" name="cmt_test" type="cmt_test.py" output="screen"/>
     <node pkg="image_transport" type="republish" name="republish" args="compressed in:=/camera/image_raw raw out:=/camera/image"/>
     <param name="camera_topic" value="image"/>
 </group>
@@ -52,7 +50,8 @@
 </group>
 
 
-<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node" output="screen" />
+<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node"/>
+<group unless="$(arg offline)">
 <group if="$(arg cmt)">
 
 <group if="$(arg debug)">
@@ -61,17 +60,17 @@
 </group>
 
 <group unless="$(arg debug)">
-<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" output="screen" />
+<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" output="screen" required="true"/>
 </group>
 
 <node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py" />
-<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" />
-<node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  respawn="true"/>
+<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" output="screen" required="true"/>
+<node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  output="screen" respawn="true"/>
 
 </group>
-
+</group>
 <group if="$(arg offline)">
-<node pkg="cmt_tracker" name="offline_node" type="offline_trainer.py" output="screen"/>
+<node pkg="cmt_tracker" name="offline_node" type="offline_trainer.py" output="screen" required="true"/>
 </group>
 
 <!--

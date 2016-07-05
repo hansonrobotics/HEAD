@@ -277,7 +277,7 @@ class FaceBox():
         # Approx horizontal FOV of camera used (taken from config)
         p = Point()
         #FOV-X and FOV-Y are different, now using FOV-X
-        dp = 0.22 / float(self.bounding_size) # It should be same in both axis
+        dp = 0.17 / float(self.bounding_size) # It should be same in both axis
         # logger.warn("bbox size=" + str(self.bounding_size))
         #w = self.camera_width/2
         #h = self.camera_height/2

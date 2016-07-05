@@ -37,11 +37,18 @@
 #include <boost/thread.hpp>
 #include <iostream>
 #include <sstream>
+
+//Include Gaze Now from the gazr;
+#include "pupils.hpp"
+
 #define SSTR( x ) dynamic_cast< std::ostringstream & >(( std::ostringstream() << std::dec << x ) ).str()
 
 namespace face_detect {
 
-
+// Anthropometric for male adult
+// Relative position of various facial feature relative to sellion
+// Values taken from https://en.wikipedia.org/wiki/Human_head
+// X points forward
 const static cv::Point3f P3D_SELLION(0., 0.,0.);
 const static cv::Point3f P3D_RIGHT_EYE(-20., -65.5,-5.);
 const static cv::Point3f P3D_LEFT_EYE(-20., 65.5,-5.);
@@ -131,9 +138,22 @@ private:
   std_msgs::String tracking_method;
   std::string face_detection_method;
   bool setup;
-
+  cv::Mat _debug;
 
   head_pose facepose(cmt_tracker_msgs::Object face_description);
+
+  cv::Point2f coordsOf(size_t face_idx, FACIAL_FEATURE feature) const;
+
+    /** Returns true if the lines intersect (and set r to the intersection
+     *  coordinates), false otherwise.
+     */
+  bool intersection(cv::Point2f o1, cv::Point2f p1,
+                      cv::Point2f o2, cv::Point2f p2,
+                      cv::Point2f &r) const;
+
+  Pupils pupils_detector;
+
+
   float focalLength;
   float opticalCenterX;
   float opticalCenterY;

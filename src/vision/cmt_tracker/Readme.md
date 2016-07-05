@@ -1,5 +1,6 @@
 This the a wrapper code for CMT. 
 
+#Build
 As this code is dependent on the CppMT libary which it wrapps around it's always should be updated before
 building this particular code the time being to reflect the latest changes availble in that repo.
 
@@ -9,7 +10,7 @@ building this particular code the time being to reflect the latest changes avail
 
         ./hrtool -b # Build the library.
 
-
+#Running
 Launching it from scripts directory to launch it.
 
         ./vision.sh cmt
@@ -26,21 +27,15 @@ thus run have a new dataset available during each particular run of openface in 
 Then to train the dataset run
 
         ./vision.sh cmt_offline
-
+#API
 
 # Urgent TODO's
-* 3D location ouput to the relevant topics.
-
-* Merging overlapping tracking instances created when a face moves.
-
-* Inititial threshold configuration to make sure a random false positive doesn't wait large number of frame before deletion.
-
-* Enable gaze, attention and emotime output into the the relevant code.
 
 * Increase the training of the dlib object detetor or utilize higher FP opencv classifiers to reinforce temporay trackers
 to push them to the main tracker queue.
 
 #TODO
+* Enable gaze, attention and emotime output into the the relevant code.
 * Write Tests.
 * Remove unnecessary arguments and parameters in the launcher and code so to make it entirely configurable.
 * Write a documentation and clear API to trigger adding faces to the dataset.

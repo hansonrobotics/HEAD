@@ -104,6 +104,8 @@ protected slots:
 
     void on_removeTracked_clicked();
 
+    void on_updateTracked();
+
     void on_removeAllElements_clicked();
 
     void list_of_faces_update(const cmt_tracker_msgs::Objects& faces_info);

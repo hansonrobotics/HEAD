@@ -540,6 +540,33 @@ _do_clean_up() {
         for repo in ${OPENCOG_REPOS[*]}
         do
             if [[ $repo != 'relex' ]]; then
+                sudo rm -r $HR_WORKSPACE/opencog/$repo/build
+            fi
+        done
+    fi
+    sudo rm -r /usr/local/include/opencog
+    sudo rm -r /usr/local/lib/opencog
+    sudo rm -r /usr/local/share/opencog
+    sudo rm /usr/local/bin/cogserver
+    sudo rm /usr/local/etc/cogserver.conf
+    sudo rm /usr/local/etc/opencog.conf
+    sudo rm /usr/local/lib/libcogutil.so
+}
+
+do_clean_up() {
+    set +e
+    echo "Cleaning up"
+    _do_clean_up >/dev/null 2>&1
+    echo "Done"
+    set -e
+}
+
+_do_clean_up() {
+    rm -r ~/.cache/guile/ccache
+    if [[ ! -z $HR_WORKSPACE ]]; then
+        for repo in ${OPENCOG_REPOS[*]}
+        do
+            if [[ $repo != 'relex' ]]; then
                 $SUDO rm -r $HR_WORKSPACE/opencog/$repo/build
             fi
         done
@@ -673,6 +700,7 @@ set_ws() {
 execute() {
     parse_opts $@
     set_ws
+
 
     if [[ $DEVELOPER_MODE == 1 ||
         $UPDATE_HR_SOURCE_CODE == 1 ||
