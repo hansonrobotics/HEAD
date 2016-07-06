@@ -5,6 +5,7 @@ import rospy
 import time
 import logging
 import os
+import random
 
 import SoundFile
 from std_msgs.msg import String
@@ -22,6 +23,7 @@ class TTSTalker:
         rospy.Subscriber(topic+'_en', String, self.say, 'en')
         self.speech_active = rospy.Publisher('speech_events', String, queue_size=10)
         self.vis_topic = rospy.Publisher('/blender_api/queue_viseme', Viseme, queue_size=0)
+        self.blink_publisher = rospy.Publisher('chatbot_blink', String, queue_size=1)
         self.tts_api_config = rospy.get_param('tts_api_config', {'en': 'festival'})
         self.sound = SoundFile.SoundFile()
         self.tts_data = None
@@ -68,6 +70,10 @@ class TTSTalker:
             if time.time() > start+visemes[i]['start']:
                 logger.debug('{} viseme {}'.format(i, visemes[i]))
                 self.sendVisime(visemes[i])
+                # blink at next to last syllable with probability .7
+                if i == (len(visemes)-2):
+                    if random.random() < 0.7:
+                        self.blink_publisher.publish(String('tts_end'))
                 i += 1
             time.sleep(0.001)
         self.sendVisime({'name': 'Sil'})
