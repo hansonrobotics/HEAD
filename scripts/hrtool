@@ -152,7 +152,7 @@ install_other_deps() {
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
     wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip -O /tmp/marytts-5.1.2.zip
-    unzip /tmp/marytts-5.1.2.zip -d ~/.hr/tts/marytts
+    unzip -od ~/.hr/tts/marytts /tmp/marytts-5.1.2.zip
     rm /tmp/marytts-5.1.2.zip
 
     $SUDO pip2 install pinyin==0.2.5
