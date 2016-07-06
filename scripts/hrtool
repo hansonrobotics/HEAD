@@ -159,6 +159,9 @@ install_other_deps() {
 
     # For rospy to run with python3
     $SUDO apt-get -y install python3-yaml
+
+    # For telnet automation
+    $SUDO apt-get -y install expect
 }
 
 install_test_deps() {
