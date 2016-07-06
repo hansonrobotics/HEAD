@@ -143,11 +143,6 @@ install_other_deps() {
 
     # For chatbot
     $SUDO apt-get -y install python-yaml
-    $SUDO apt-get -y install npm
-
-    $SUDO npm install -g n
-    $SUDO n stable
-    $SUDO npm install xmlhttprequest --prefix $PROJECT/src/chatbot/src/server/
 
     # For blender_api_test
     $SUDO add-apt-repository -y ppa:mc3man/trusty-media
@@ -157,7 +152,7 @@ install_other_deps() {
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
     wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip -O /tmp/marytts-5.1.2.zip
-    unzip /tmp/marytts-5.1.2.zip -d ~/.hr/tts/marytts
+    unzip -od ~/.hr/tts/marytts /tmp/marytts-5.1.2.zip
     rm /tmp/marytts-5.1.2.zip
 
     $SUDO pip2 install pinyin==0.2.5
@@ -169,6 +164,11 @@ install_other_deps() {
 install_test_deps() {
     $SUDO apt-get -y install socat
     $SUDO apt-get -y install xdotool
+
+    $SUDO apt-get -y install npm
+    $SUDO npm install -g n
+    $SUDO n stable
+    $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/src/server/
 }
 
 install_vision_deps() {
