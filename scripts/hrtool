@@ -6,6 +6,15 @@
 
 set -e
 
+HR_PREFIX=/opt/hansonrobotics
+HR_CACHE=~/.hr/cache
+VISION_TOOL_PREFIX=$HR_PREFIX/vision
+DLIB_DIR=$VISION_TOOL_PREFIX/dlib
+TORCH_DIR=$VISION_TOOL_PREFIX/torch
+OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
+CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
+EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+
 SUDO=""
 if [[ $(id -u) != 0 ]]; then
     SUDO="sudo"
@@ -17,6 +26,10 @@ if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
 fi
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+
+$SUDO mkdir -p $HR_PREFIX
+$SUDO chmod 777 $HR_PREFIX
+mkdir -p $VISION_TOOL_PREFIX
 
 COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
@@ -175,116 +188,82 @@ install_test_deps() {
 }
 
 install_vision_deps() {
-    # For Dlib
-    cd $HR_WORKSPACE/HEAD/src/vision
-    #Tkinter error other wise.
-    sudo pip2 install -I Pillow
 
-    if [[ ! -d $HR_WORKSPACE/HEAD/src/vision/dlib/dlib-18.18 ]]; then
-    wget http://dlib.net/files/dlib-18.18.tar.bz2
+    # Tkinter error other wise.
+    info "Installing Pillow"
+    $SUDO pip2 install -qI Pillow
 
-    tar -xf dlib-18.18.tar.bz2
-
-    rm dlib-18.18.tar.bz2
+    if [[ ! -d $DLIB_DIR ]]; then
+      if [[ ! -f $HR_CACHE/dlib-18.18.tar.bz2 ]]; then
+        wget http://dlib.net/files/dlib-18.18.tar.bz2 -O $HR_CACHE/dlib-18.18.tar.bz2
+      fi
+      mkdir -p $DLIB_DIR
+      tar -xf $HR_CACHE/dlib-18.18.tar.bz2 -C $DLIB_DIR
+    else
+      warn "Skipping Dlib installation"
     fi
+    info "Building Dlib python API"
+    cd $DLIB_DIR/dlib-18.18 && python setup.py build
+
     #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
     # Install dlib-models large file This is skiped as model in the openface are used to download the elements
     # git clone https://github.com/davisking/dlib-models.git
 
     # Install Torch
-    if [ ! -d $HR_WORKSPACE/torch/.git ]
-    then
-    git clone https://github.com/torch/distro.git $HR_WORKSPACE/torch --recursive
+    if [ ! -d $TORCH_DIR ]; then
+      git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
 
-    cd $HR_WORKSPACE/torch
+      cd $TORCH_DIR
+      bash install-deps
+      echo no | ./install.sh
 
-    bash install-deps
-    echo no | ./install.sh
-
-    #Source. May be not needed.
-    # source ~/.bashrc
-
-    # Install lua packages in the torch file in scripts directory.
-
-    #for NAME in dpnn nn optim csvigo; do luarocks install $NAME; done
-    cd install/bin
-    ./luarocks install nn
-    ./luarocks install dpnn
-    ./luarocks install image
-    ./luarocks install optim
-    ./luarocks install csvigo
-    ./luarocks install sys
+      # Install lua packages in the torch file in scripts directory.
+      cd $TORCH_DIR/install/bin
+      ./luarocks install nn
+      ./luarocks install dpnn
+      ./luarocks install image
+      ./luarocks install optim
+      ./luarocks install csvigo
+      ./luarocks install sys
     else
-    echo "Skipping Torch installation Because it's found in HEAD."
+      warn "Skipping Torch installation"
     fi
-    cd $HR_WORKSPACE/HEAD/src/vision
 
     # Install openface
-
     # Dependencies for openface
-
     # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
-    sudo apt-get -y install python-skimage
-    for NAME in numpy pandas scipy scikit-learn; do sudo pip2 install $NAME; done
+    $SUDO apt-get -y install python-skimage
+    $SUDO pip2 install numpy pandas scipy scikit-learn
 
-    if [ ! -d $HR_WORKSPACE/HEAD/src/vision/openface/.git ];
-    then
-    #TODO a checkout verison that works with the latest.
-    git clone https://github.com/cmusatyalab/openface.git --recursive
+    if [ ! -d $OPENFACE_DIR ]; then
+      #TODO a checkout verison that works with the latest.
+      git clone https://github.com/cmusatyalab/openface.git $OPENFACE_DIR --recursive
     else
-    echo "Skipping OpenFace Installation. Exists in vision"
+      warn "Skipping openface clone"
     fi
-    cd openface
-    cd models
 
     # 150 Megabyes of data.
-    if [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/dlib/shape_predictor_68_face_landmarks.dat ] ||
-     [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/dlib/mean.csv ] || [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/dlib/std.csv ] ||
-     [ ! -f $HR_WORKSPACE/HEAD/src/vision/openface/models/openface/nn4.small2.v1.t7 ]; then
-    ./get-models.sh
-    else
-    echo "Models Exists. Skipped gettinf models for openface and dlib"
-    fi
+    $OPENFACE_DIR/models/get-models.sh
 
     # CMT and Emotime Libraries.
-
-
-    # CppMT i
-    cd $HR_WORKSPACE/HEAD/src/vision
-
-    #TODO this needs to be moved to a new HR repository.
-    if [ ! -d $HR_WORKSPACE/HEAD/src/vision/CppMT/.git ]
-    then
-    git clone https://github.com/tesYolan/CppMT.git
-    cd CppMT
-    git checkout wrapper
-    cmake .
-    make -j$(nproc)
+    if [ ! -d $CPPMT_DIR ]; then
+      git clone https://github.com/tesYolan/CppMT.git $CPPMT_DIR
+      cd $CPPMT_DIR
+      git checkout wrapper
+      cmake .
+      make -j$(nproc)
     else
-    echo "Pulling the latest form CppMT"
-    cd $HR_WORKSPACE/HEAD/src/vision/CppMT/
-    git checkout wrapper
-    git pull origin wrapper
-    cmake .
-    make -j$(nproc)
+      warn "Skipping CppMT clone"
     fi
-    # Emotime Steps
-    cd $HR_WORKSPACE/HEAD/src/vision
 
-    #TODO this needs to be moved to a new HR repository
-    if [ ! -d $HR_WORKSPACE/HEAD/src/vision/emotime/.git ]
-    then
-    git clone https://github.com/tesYolan/emotime.git
-    cd emotime
-    cd build
-    cmake ..
-    make -j$(nproc)
+    if [ ! -d $EMOTIME_DIR ]; then
+      git clone https://github.com/tesYolan/emotime.git $EMOTIME_DIR
+      cd $EMOTIME_DIR/build
+      cmake ..
+      make -j$(nproc)
     else
-    echo "Skipped Emotime Installation"
+      warn "Skipping emotime clone"
     fi
-    cd $HR_WORKSPACE
-
-
 }
 
 check_or_create_ws() {
@@ -374,26 +353,22 @@ do_update_hr() {
         fi
         git pull origin $DEFAULT_BRANCH
     done
+    do_update_vision_tools
 }
 
 do_update_vision_tools() {
-
     #Update CMT
-
     local DEFAULT_BRANCH="wrapper"
-
-    cd $HR_WORKSPACE/HEAD/src/vision/CppMT
-
+    cd $CPPMT_DIR
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [[ $branch != $DEFAULT_BRANCH ]]; then
         continue
     fi
     git pull origin $DEFAULT_BRANCH
-
     cmake .
     make -j$(nproc)
-
 }
+
 do_install_deps() {
     _do_install_deps
 }
@@ -453,16 +428,17 @@ _do_build_hr() {
     if [[ ! -d .catkin_tools ]]; then
         catkin init
     fi
+
     #TODO remove items unnecessary here to take it all out.
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
     #Needed for compiling emotime as it's dependent upon it for it being built.
-    export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
-    export DLIB_PATH=$HR_WORKSPACE/HEAD/src/vision/dlib-18.18
-    cd $DLIB_PATH && python setup.py build
+    export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+    export DLIB_PATH=$DLIB_DIR/dlib-18.18
     cd $HR_WORKSPACE/$PROJECT
-    include_dirs=($HR_WORKSPACE/HEAD/src/vision/emotime/src/{facedetector,utils,gaborbank,detector,training})
+    include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
     include_path=$(printf "%s:" "${include_dirs[@]}")
-    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/include:$include_path
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
+
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
@@ -482,22 +458,18 @@ do_single_package() {
         catkin init
     fi
 
-    include_dirs=($HR_WORKSPACE/HEAD/src/vision/emotime/src/{facedetector,utils,gaborbank,detector,training})
+    include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
     include_path=$(printf "%s:" "${include_dirs[@]}")
-    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/include:$include_path
+    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
 
     if [ "$1" == "cmt_tracker" ]; then
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
-    #Needed for compiling emotime as it's dependent upon it for it being built.
-    export LIBRARY_PATH=$LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
-    catkin build cmt_tracker_msgs cmt_tracker
-
+      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+      #Needed for compiling emotime as it's dependent upon it for it being built.
+      export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+      catkin build cmt_tracker_msgs cmt_tracker
     else
-
-    catkin build $1
-
+      catkin build $1
     fi
-
 }
 
 build_opencog() {
@@ -526,7 +498,6 @@ do_test() {
 do_update() {
     update_opencog
     do_update_hr
-    do_update_vision_tools
 }
 
 do_clean_up() {
