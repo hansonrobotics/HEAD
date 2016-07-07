@@ -60,11 +60,12 @@ class AnimationManager():
         self.eye_target_offset = -4
         # Face rotation
         self.headRotation = 0
-
+        # Latest face target
+        self.face_target = [0,1,0]
         # Head and Eye tracking parameters
         self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
                 Pipes.exponential(7),
-                Pipes.moving_average(window=0.1)],
+                Pipes.moving_average(window=0.3)],
                 Wrappers.in_spherical(origin=[0, self.face_target_offset, 0], radius=4)
         ))
         self.eyeTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap(
@@ -294,6 +295,16 @@ class AnimationManager():
                     self.emotionsList.append(emotion)
                 else:
                     emo.magnitude = num
+                # Fade all existing expressions
+                for emotion in self.emotionsList:
+                    if emotionName != emotion.name:
+                        # In addition needs to check if its about to finish
+                        start = emotion.magnitude.current
+                        num = blendedNum.Trajectory(start)
+                        num.add_keyframe(target=0.0, transition=[
+                             (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
+                        emotion.magnitude = num
+
 
     def newViseme(self, vis, duration=0.5, rampInRatio=0.1, rampOutRatio=0.8, startTime=0):
         '''Perform a new viseme'''
@@ -427,28 +438,39 @@ class AnimationManager():
         return locBU
 
 
-    def setFaceTarget(self, loc):
+    def setFaceTarget(self, loc, speed=1.0):
         '''Set the target used by eye and face tracking.'''
-
+        # If speed is not set default speed is used.
+        if speed < 0.01:
+            duration = 0.1
+        else:
+            duration = max(0.1 / (speed**2), 0.02)
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.face_target_offset)
+        self.headTargetLoc.transition = Wrappers.wrap([
+                Pipes.exponential(7),
+                Pipes.moving_average(window=duration)],
+                Wrappers.in_spherical(origin=[0, self.face_target_offset, 0], radius=4)
+        )
 
         self.headTargetLoc.target = locBU
 
         # Change offset for the eyes
         locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
 
-        # Move eyes too, slowly
+        # Move eyes too, really fast
         self.eyeTargetLoc.transition = Wrappers.wrap([
                 Pipes.linear(speed=300)],
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4))
         self.eyeTargetLoc.target = locBU
 
+
     # Rotates the face target which will make head roll
     def setHeadRotation(self,rot):
         self.headRotation.target = rot
 
-    def setGazeTarget(self, loc):
+    def setGazeTarget(self, loc, speed=1):
         '''Set the target used for eye tracking only.'''
+        ''' Ignores speed for now. Eyes should always move fast '''
 
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.eye_target_offset)
 
