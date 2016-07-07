@@ -1,0 +1,53 @@
+[35m[1mScanning dependencies of target _pi_face_tracker_generate_messages_check_deps_Face
+[0m[  0%] Built target _pi_face_tracker_generate_messages_check_deps_Face
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_py
+[0m[  0%] Built target sensor_msgs_generate_messages_py
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py
+[0m[  0%] Built target std_msgs_generate_messages_py
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_py
+[0m[  0%] Built target geometry_msgs_generate_messages_py
+[35m[1mScanning dependencies of target _pi_face_tracker_generate_messages_check_deps_FaceEvent
+[0m[  0%] Built target _pi_face_tracker_generate_messages_check_deps_FaceEvent
+[35m[1mScanning dependencies of target _pi_face_tracker_generate_messages_check_deps_SetROI
+[0m[  0%] Built target _pi_face_tracker_generate_messages_check_deps_SetROI
+[35m[1mScanning dependencies of target _pi_face_tracker_generate_messages_check_deps_Faces
+[0m[  0%] Built target _pi_face_tracker_generate_messages_check_deps_Faces
+[35m[1mScanning dependencies of target _pi_face_tracker_generate_messages_check_deps_KeyCommand
+[0m[  0%] Built target _pi_face_tracker_generate_messages_check_deps_KeyCommand
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp
+[0m[  0%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_lisp
+[0m[  0%] Built target sensor_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_lisp
+[0m[  0%] Built target geometry_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp
+[0m[  0%] Built target std_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_cpp
+[0m[  0%] Built target geometry_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_cpp
+[0m[  0%] Built target sensor_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target pi_face_tracker_generate_messages_py
+[0m[  5%] [34m[1mGenerating Python from MSG pi_face_tracker/Faces
+[0m[ 11%] [34m[1mGenerating Python from MSG pi_face_tracker/FaceEvent
+[0m[ 17%] [34m[1mGenerating Python from MSG pi_face_tracker/Face
+[0m[ 23%] [34m[1mGenerating Python code from SRV pi_face_tracker/KeyCommand
+[0m[35m[1mScanning dependencies of target pi_face_tracker_generate_messages_lisp
+[0m[ 29%] [34m[1mGenerating Lisp code from pi_face_tracker/Faces.msg
+[0m[ 35%] [ 41%] [34m[1mGenerating Lisp code from pi_face_tracker/FaceEvent.msg
+[0m[34m[1mGenerating Python code from SRV pi_face_tracker/SetROI
+[0m[ 47%] [34m[1mGenerating Lisp code from pi_face_tracker/Face.msg
+[0m[ 52%] [ 58%] [34m[1mGenerating Lisp code from pi_face_tracker/KeyCommand.srv
+[0m[34m[1mGenerating Python msg __init__.py for pi_face_tracker
+[0m[ 64%] [34m[1mGenerating Lisp code from pi_face_tracker/SetROI.srv
+[0m[ 70%] [34m[1mGenerating Python srv __init__.py for pi_face_tracker
+[0m[ 70%] Built target pi_face_tracker_generate_messages_lisp
+[35m[1mScanning dependencies of target pi_face_tracker_generate_messages_cpp
+[0m[ 76%] [34m[1mGenerating C++ code from pi_face_tracker/Faces.msg
+[0m[ 76%] Built target pi_face_tracker_generate_messages_py
+[ 82%] [34m[1mGenerating C++ code from pi_face_tracker/FaceEvent.msg
+[0m[ 88%] [34m[1mGenerating C++ code from pi_face_tracker/Face.msg
+[0m[ 94%] [34m[1mGenerating C++ code from pi_face_tracker/KeyCommand.srv
+[0m[100%] [34m[1mGenerating C++ code from pi_face_tracker/SetROI.srv
+[0m[100%] Built target pi_face_tracker_generate_messages_cpp
+[35m[1mScanning dependencies of target pi_face_tracker_generate_messages
+[0m[100%] Built target pi_face_tracker_generate_messages

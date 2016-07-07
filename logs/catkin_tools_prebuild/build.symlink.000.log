@@ -1,0 +1,8 @@
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/./env.sh
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/./setup.zsh
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/./setup.sh
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/./_setup_util.py
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/./setup.bash
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig-version.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/pkgconfig/catkin_tools_prebuild.pc

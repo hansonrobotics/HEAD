@@ -1,0 +1,477 @@
+[35m[1mScanning dependencies of target manyearslib
+[35m[1mScanning dependencies of target manyears_savestream
+[0m[35m[1mScanning dependencies of target position_exploitation
+[  7%] [0m[34m[1mCreating directories for 'manyearslib'
+[0m[0m[ 14%] [ 21%] [32mBuilding CXX object CMakeFiles/manyears_savestream.dir/src/manyears_savestream.cpp.o
+[0m[32mBuilding CXX object CMakeFiles/position_exploitation.dir/src/sound_position_exploitation.cpp.o
+[0m[ 28%] [34m[1mPerforming download step (SVN checkout) for 'manyearslib'
+[0m[31m[1mLinking CXX executable /home/natnael/hansonrobotics/HEAD/devel/.private/manyears_ros/lib/manyears_ros/manyears_savestream
+[0m[ 28%] Built target manyears_savestream
+A    manyearslib/Samples
+[31m[1mLinking CXX executable /home/natnael/hansonrobotics/HEAD/devel/.private/manyears_ros/lib/manyears_ros/position_exploitation
+[0m[ 28%] Built target position_exploitation
+A    manyearslib/Samples/rawdata_2srcs_90_90.raw
+A    manyearslib/demo
+A    manyearslib/demo/manyears_demo.c
+A    manyearslib/demo/CMakeLists.txt
+A    manyearslib/macros
+A    manyearslib/macros/FindJack.cmake
+A    manyearslib/macros/FindQtMobility.cmake
+A    manyearslib/Info.plist
+A    manyearslib/COPYING.TXT
+A    manyearslib/RTAudio
+A    manyearslib/RTAudio/asiodrvr.h
+A    manyearslib/RTAudio/asiodrivers.h
+A    manyearslib/RTAudio/asiosys.h
+A    manyearslib/RTAudio/ginclude.h
+A    manyearslib/RTAudio/asio.h
+A    manyearslib/RTAudio/dsound.h
+A    manyearslib/RTAudio/RtError.h
+A    manyearslib/RTAudio/RtAudio.cpp
+A    manyearslib/RTAudio/iasiothiscallresolver.cpp
+A    manyearslib/RTAudio/readme
+A    manyearslib/RTAudio/RtAudio.h
+A    manyearslib/RTAudio/iasiothiscallresolver.h
+A    manyearslib/RTAudio/iasiodrv.h
+A    manyearslib/RTAudio/soundcard.h
+A    manyearslib/RTAudio/asiolist.cpp
+A    manyearslib/RTAudio/asiodrivers.cpp
+A    manyearslib/RTAudio/asio.cpp
+A    manyearslib/RTAudio/asiolist.h
+A    manyearslib/RTAudio/CMakeLists.txt
+A    manyearslib/bin
+A    manyearslib/ManyEars.plist
+A    manyearslib/QtGUI
+A    manyearslib/QtGUI/winBeamformerLatitude.h
+A    manyearslib/QtGUI/trackedSourceManager.h
+A    manyearslib/QtGUI/sourceBuffer.h
+A    manyearslib/QtGUI/COPYING.TXT
+A    manyearslib/QtGUI/window.cpp
+A    manyearslib/QtGUI/winBeamformerLongitude.cpp
+A    manyearslib/QtGUI/winSphere.h
+A    manyearslib/QtGUI/sourceGenerator.h
+A    manyearslib/QtGUI/plot.cpp
+A    manyearslib/QtGUI/mdiSubWindow.h
+A    manyearslib/QtGUI/potentialSourceManager.h
+A    manyearslib/QtGUI/trackedSourceVector.cpp
+A    manyearslib/QtGUI/sphereObj.cpp
+A    manyearslib/QtGUI/coreThread.h
+A    manyearslib/QtGUI/listProperty.h
+A    manyearslib/QtGUI/potentialSource.h
+A    manyearslib/QtGUI/configurationLoadSave.cpp
+A    manyearslib/QtGUI/trackedSourceManager.cpp
+A    manyearslib/QtGUI/winBeamformerLatitude.cpp
+A    manyearslib/QtGUI/audioManager.cpp
+A    manyearslib/QtGUI/graph2D.h
+A    manyearslib/QtGUI/parametersManager.cpp
+A    manyearslib/QtGUI/PlotBeamformerLongitude.h
+A    manyearslib/QtGUI/soundInputConfig.cpp
+A    manyearslib/QtGUI/trackedSource.cpp
+A    manyearslib/QtGUI/aboutDialog.h
+A    manyearslib/QtGUI/propertyEditor.h
+A    manyearslib/QtGUI/source.cpp
+A    manyearslib/QtGUI/scrollListProperty.h
+A    manyearslib/QtGUI/sourceGenerator.cpp
+A    manyearslib/QtGUI/PlotBeamformerLatitude.cpp
+A    manyearslib/QtGUI/manyearsObj.cpp
+A    manyearslib/QtGUI/PlotLatitude.cpp
+A    manyearslib/QtGUI/mdiSubWindow.cpp
+A    manyearslib/QtGUI/potentialSourceManager.cpp
+A    manyearslib/QtGUI/winBeamformerLongitude.h
+A    manyearslib/QtGUI/resources.qrc
+A    manyearslib/QtGUI/inputOutputManager.h
+A    manyearslib/QtGUI/plot.h
+A    manyearslib/QtGUI/Images
+A    manyearslib/QtGUI/Images/logo5_bgwhite.png
+A    manyearslib/QtGUI/Images/logoonly.png
+A    manyearslib/QtGUI/Images/logo5.png
+A    manyearslib/QtGUI/property.cpp
+A    manyearslib/QtGUI/graph2D.cpp
+A    manyearslib/QtGUI/PlotBeamformerLongitude.cpp
+A    manyearslib/QtGUI/PlotLongitude.cpp
+A    manyearslib/QtGUI/spherePlot.h
+A    manyearslib/QtGUI/sourceEvents.h
+A    manyearslib/QtGUI/configurationVector.cpp
+A    manyearslib/QtGUI/configurationLoadSave.h
+A    manyearslib/QtGUI/propertyEditor.cpp
+A    manyearslib/QtGUI/winLatitude.h
+A    manyearslib/QtGUI/plotLongitude.h
+A    manyearslib/QtGUI/scrollListProperty.cpp
+A    manyearslib/QtGUI/sourceManager.h
+A    manyearslib/QtGUI/audioManager.h
+A    manyearslib/QtGUI/trackedSource.h
+A    manyearslib/QtGUI/soundInputConfig.h
+A    manyearslib/QtGUI/parametersManager.h
+A    manyearslib/QtGUI/algorithmCore.h
+A    manyearslib/QtGUI/source.h
+A    manyearslib/QtGUI/mdiWindow.h
+A    manyearslib/QtGUI/winLongitude.cpp
+A    manyearslib/QtGUI/potentialSourceVector.h
+A    manyearslib/QtGUI/inputOutputManager.cpp
+A    manyearslib/QtGUI/manyearsObj.h
+A    manyearslib/QtGUI/PlotBeamformerLatitude.h
+A    manyearslib/QtGUI/StreamOutputWidget.cpp
+A    manyearslib/QtGUI/main.cpp
+A    manyearslib/QtGUI/sourceEvents.cpp
+A    manyearslib/QtGUI/spherePlot.cpp
+A    manyearslib/QtGUI/graph3D.cpp
+A    manyearslib/QtGUI/property.h
+A    manyearslib/QtGUI/winLatitude.cpp
+A    manyearslib/QtGUI/README.TXT
+A    manyearslib/QtGUI/sourceBuffer.cpp
+A    manyearslib/QtGUI/sourceManager.cpp
+A    manyearslib/QtGUI/CMakeLists.txt
+A    manyearslib/QtGUI/algorithmCore.cpp
+A    manyearslib/QtGUI/configurationVector.h
+A    manyearslib/QtGUI/colorID.h
+A    manyearslib/QtGUI/mdiWindow.cpp
+A    manyearslib/QtGUI/colorPalette.h
+A    manyearslib/QtGUI/potentialSourceVector.cpp
+A    manyearslib/QtGUI/winSphere.cpp
+A    manyearslib/QtGUI/StreamOutputWidget.ui
+A    manyearslib/QtGUI/window.h
+A    manyearslib/QtGUI/winLongitude.h
+A    manyearslib/QtGUI/plotLatitude.h
+A    manyearslib/QtGUI/potentialSource.cpp
+A    manyearslib/QtGUI/listProperty.cpp
+A    manyearslib/QtGUI/coreThread.cpp
+A    manyearslib/QtGUI/StreamOutputWidget.h
+A    manyearslib/QtGUI/sphereObj.h
+A    manyearslib/QtGUI/trackedSourceVector.h
+A    manyearslib/QtGUI/aboutDialog.cpp
+A    manyearslib/QtGUI/Configuration_Vectors
+A    manyearslib/QtGUI/Configuration_Vectors/vector-13oct2010-Moderate delete-Very Slow detect.mes
+A    manyearslib/QtGUI/Configuration_Vectors/default.mes
+A    manyearslib/QtGUI/Configuration_Vectors/olddefault001.mes
+A    manyearslib/QtGUI/Configuration_Vectors/olddefault002.mes
+A    manyearslib/QtGUI/Configuration_Vectors/HRIDemo.mes
+A    manyearslib/QtGUI/Configuration_Vectors/vector14.mes
+A    manyearslib/QtGUI/colorID.cpp
+A    manyearslib/QtGUI/graph3D.h
+A    manyearslib/QtGUI/colorPalette.cpp
+A    manyearslib/INTROLAB-ManyEars.cbp
+A    manyearslib/ManyEars.icns
+A    manyearslib/README.TXT
+A    manyearslib/example
+A    manyearslib/example/manyears_live.cpp
+A    manyearslib/example/manyears_console.c
+A    manyearslib/example/manyears_iterative.c
+A    manyearslib/example/CMakeLists.txt
+A    manyearslib/CMakeLists.txt
+A    manyearslib/dsplib
+A    manyearslib/dsplib/sseTest.h
+A    manyearslib/dsplib/Localisation
+A    manyearslib/dsplib/Localisation/beamformer.c
+A    manyearslib/dsplib/Localisation/delays.c
+A    manyearslib/dsplib/Localisation/potentialSources.c
+A    manyearslib/dsplib/Localisation/beamformer.h
+A    manyearslib/dsplib/Localisation/rij.c
+A    manyearslib/dsplib/Localisation/delays.h
+A    manyearslib/dsplib/Localisation/sphere.c
+A    manyearslib/dsplib/Localisation/potentialSources.h
+A    manyearslib/dsplib/Localisation/rij.h
+A    manyearslib/dsplib/Localisation/sphere.h
+A    manyearslib/dsplib/Postprocessing
+A    manyearslib/dsplib/Postprocessing/postprocessor.c
+A    manyearslib/dsplib/Postprocessing/postprocessor.h
+A    manyearslib/dsplib/Preprocessing
+A    manyearslib/dsplib/Preprocessing/micst.c
+A    manyearslib/dsplib/Preprocessing/mcra.c
+A    manyearslib/dsplib/Preprocessing/micst.h
+A    manyearslib/dsplib/Preprocessing/preprocessor.c
+A    manyearslib/dsplib/Preprocessing/mcra.h
+A    manyearslib/dsplib/Preprocessing/preprocessor.h
+A    manyearslib/dsplib/hardware.h
+A    manyearslib/dsplib/parameters.c
+A    manyearslib/dsplib/parameters.h
+A    manyearslib/dsplib/overallContext.c
+A    manyearslib/dsplib/Geometry
+A    manyearslib/dsplib/Geometry/microphones.c
+A    manyearslib/dsplib/Geometry/microphones.h
+A    manyearslib/dsplib/overallContext.h
+A    manyearslib/dsplib/Output
+A    manyearslib/dsplib/Output/outputChunk.h
+A    manyearslib/dsplib/Output/outputSingleStream.c
+A    manyearslib/dsplib/Output/output.c
+A    manyearslib/dsplib/Output/outputSingleStream.h
+A    manyearslib/dsplib/Output/output.h
+A    manyearslib/dsplib/Output/outputChunk.c
+A    manyearslib/dsplib/Tracking
+A    manyearslib/dsplib/Tracking/trackedSources.c
+A    manyearslib/dsplib/Tracking/mixture.h
+A    manyearslib/dsplib/Tracking/filter.c
+A    manyearslib/dsplib/Tracking/trackedSources.h
+A    manyearslib/dsplib/Tracking/filter.h
+A    manyearslib/dsplib/Tracking/mixture.c
+A    manyearslib/dsplib/Separation
+A    manyearslib/dsplib/Separation/postfilter.h
+A    manyearslib/dsplib/Separation/gss.h
+A    manyearslib/dsplib/Separation/separatedSources.h
+A    manyearslib/dsplib/Separation/postfilteredSources.c
+A    manyearslib/dsplib/Separation/postfilter.c
+A    manyearslib/dsplib/Separation/gss.c
+A    manyearslib/dsplib/Separation/separatedSources.c
+A    manyearslib/dsplib/Separation/postfilteredSources.h
+A    manyearslib/dsplib/Utilities
+A    manyearslib/dsplib/Utilities/matrix.c
+A    manyearslib/dsplib/Utilities/transcendental.c
+A    manyearslib/dsplib/Utilities/window.c
+A    manyearslib/dsplib/Utilities/matrix.h
+A    manyearslib/dsplib/Utilities/transcendental.h
+A    manyearslib/dsplib/Utilities/window.h
+A    manyearslib/dsplib/Utilities/linearCorrelation.c
+A    manyearslib/dsplib/Utilities/dynamicMemory.c
+A    manyearslib/dsplib/Utilities/randGen.c
+A    manyearslib/dsplib/Utilities/fft.c
+A    manyearslib/dsplib/Utilities/linearCorrelation.h
+A    manyearslib/dsplib/Utilities/dynamicMemory.h
+A    manyearslib/dsplib/Utilities/randGen.h
+A    manyearslib/dsplib/Utilities/fft.h
+A    manyearslib/dsplib/Utilities/mathadvanced.h
+A    manyearslib/dsplib/Utilities/idManager.c
+A    manyearslib/dsplib/Utilities/idList.c
+A    manyearslib/dsplib/Utilities/idManager.h
+A    manyearslib/dsplib/Utilities/idList.h
+A    manyearslib/dsplib/sseTest.c
+A    manyearslib/dsplib/CMakeLists.txt
+Checked out revision 227.
+[ 35%] [ 42%] [34m[1mPerforming update step (SVN update) for 'manyearslib'
+[34m[1mNo patch step for 'manyearslib'
+[0m[0mUpdating '.':
+At revision 227.
+[ 50%] [34m[1mPerforming configure step for 'manyearslib'
+[0m-- The C compiler identification is GNU 4.9.3
+-- The CXX compiler identification is GNU 4.8.5
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Setting flags for GNU GCC
+-- Could NOT find QtMobility (missing:  QTMOBILITY_INCLUDE_DIR QTMOBILITY_MULTIMEDIAKIT_INCLUDE_DIR QTMOBILITY_MULTIMEDIAKIT_LIBRARY) 
+-- Looking for Q_WS_X11
+-- Looking for Q_WS_X11 - found
+-- Looking for Q_WS_WIN
+-- Looking for Q_WS_WIN - not found
+-- Looking for Q_WS_QWS
+-- Looking for Q_WS_QWS - not found
+-- Looking for Q_WS_MAC
+-- Looking for Q_WS_MAC - not found
+WARNING : ManyEars GUI will not be compiled because Qt4 not found or obsolete. You need Qt 4.8 or higher.Try using the latest QtSDK from http://qt-project.org
+DEBUG: QT4_FOUND: TRUE QT_MULTIMEDIA_FOUND:   QT_MOBILITY_FOUND: FALSE
+-- Buiding ManyEarsLib Library...
+-- Buiding RTAudio Library...
+-- Found PkgConfig: /usr/bin/pkg-config (found version "0.26") 
+-- checking for module 'jack'
+--   found jack, version 0.122.0
+-- Found jack: /usr/lib/x86_64-linux-gnu/libjack.so
+ALSA lib : -lasound -lpthread
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib-build
+[ 57%] [34m[1mPerforming build step for 'manyearslib'
+make[3]: warning: jobserver unavailable: using -j1.  Add `+' to parent make rule.
+[0m[35m[1mScanning dependencies of target ManyEarsLib
+[0m[  2%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Geometry/microphones.c.o
+[0m[  5%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Preprocessing/mcra.c.o
+[0m[  8%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Preprocessing/micst.c.o
+[0m[ 11%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Preprocessing/preprocessor.c.o
+[0m[ 13%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Localisation/beamformer.c.o
+[0m[ 16%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Localisation/delays.c.o
+[0m[ 19%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Localisation/potentialSources.c.o
+[0m[ 22%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Localisation/rij.c.o
+[0m[ 25%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Localisation/sphere.c.o
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Localisation/sphere.c: In function ‘sphereArcInit’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Localisation/sphere.c:723:9: warning: implicit declaration of function ‘printf’ [-Wimplicit-function-declaration]
+         printf("%u: %f %f %f\n",indexPoint,x,y,z);
+         ^
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Localisation/sphere.c:723:9: warning: incompatible implicit declaration of built-in function ‘printf’
+[0m[ 27%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Tracking/filter.c.o
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/filter.c: In function ‘filterPredict’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/filter.c:676:99: warning: ‘newB’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+         myFilter->velocity[indexParticle][0] = newA * myFilter->velocity[indexParticle][0] + newB * randn() * myFilter->FILTER_INERTIAX;
+                                                                                                   ^
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/filter.c:676:53: warning: ‘newA’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+         myFilter->velocity[indexParticle][0] = newA * myFilter->velocity[indexParticle][0] + newB * randn() * myFilter->FILTER_INERTIAX;
+                                                     ^
+[0m[ 30%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Tracking/mixture.c.o
+In file included from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/./Tracking/../Tracking/filter.h:100:0,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/./Tracking/mixture.h:100,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/mixture.c:90:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/./Tracking/../Tracking/../Utilities/mathadvanced.h:27:28: warning: ‘expest’ defined but not used [-Wunused-function]
+ static INLINE_PREFIX float expest(float _arg)
+                            ^
+[0m[ 33%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Tracking/trackedSources.c.o
+[0m[ 36%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Separation/gss.c.o
+[0m[ 38%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Separation/postfilter.c.o
+[0m[ 41%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Separation/postfilteredSources.c.o
+[0m[ 44%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Separation/separatedSources.c.o
+[0m[ 47%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Output/output.c.o
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/output.c: In function ‘outputGenerateWave’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/output.c:573:9: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&tmpChar,sizeof(char),1,ptrData);
+         ^
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/output.c:766:9: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&tmpSample, 1, sizeof(tmpSample), ptrData);
+         ^
+[0m[ 50%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Output/outputChunk.c.o
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputChunk.c: In function ‘outputChunkGenerateWave’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputChunk.c:671:9: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&tmpChar,sizeof(char),1,ptrData);
+         ^
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputChunk.c:864:9: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&tmpSample, 1, sizeof(tmpSample), ptrData);
+         ^
+[0m[ 52%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Output/outputSingleStream.c.o
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputSingleStream.c: In function ‘outputSingleStreamWatermark’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputSingleStream.c:654:9: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
+         elementInt = *((int*) &elementFloat);
+         ^
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputSingleStream.c: In function ‘outputSingleStreamReverseWatermark’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputSingleStream.c:731:9: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
+         elementFloat = *((float*) &elementInt);
+         ^
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputSingleStream.c: In function ‘outputSingleStreamGenerateWave’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputSingleStream.c:365:9: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&tmpChar,sizeof(char),1,ptrData);
+         ^
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Output/outputSingleStream.c:556:9: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&tmpSample, 1, sizeof(tmpSample), ptrData);
+         ^
+[0m[ 55%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Postprocessing/postprocessor.c.o
+[0m[ 58%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Utilities/linearCorrelation.c.o
+[0m[ 61%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Utilities/dynamicMemory.c.o
+[0m[ 63%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Utilities/fft.c.o
+[0m[ 66%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Utilities/idList.c.o
+[0m[ 69%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Utilities/idManager.c.o
+[0m[ 72%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Utilities/matrix.c.o
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Utilities/matrix.c: In function ‘matrixDeleteRow’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Utilities/matrix.c:662:23: warning: ‘oldMatrix’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+     struct objMatrix* oldMatrix;
+                       ^
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Utilities/matrix.c: In function ‘matrixDeleteCol’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Utilities/matrix.c:783:23: warning: ‘oldMatrix’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+     struct objMatrix* oldMatrix;
+                       ^
+[0m[ 75%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Utilities/randGen.c.o
+[0m[ 77%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Utilities/transcendental.c.o
+[0m[ 80%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/Utilities/window.c.o
+[0m[ 83%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/parameters.c.o
+[0m[ 86%] [32mBuilding C object dsplib/CMakeFiles/ManyEarsLib.dir/overallContext.c.o
+In file included from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/filter.h:100:0,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/mixture.h:100,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/overallContext.h:116,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/overallContext.c:90:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/../Utilities/mathadvanced.h:27:28: warning: ‘expest’ defined but not used [-Wunused-function]
+ static INLINE_PREFIX float expest(float _arg)
+                            ^
+[0m[31m[1mLinking C static library /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/bin/libmanyears.a
+[0m[ 86%] Built target ManyEarsLib
+[35m[1mScanning dependencies of target RTAudioLib
+[0m[ 88%] [32mBuilding CXX object RTAudio/CMakeFiles/RTAudioLib.dir/RtAudio.cpp.o
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/RTAudio/RtAudio.cpp: In member function ‘virtual bool RtApiJack::probeDeviceOpen(unsigned int, RtApi::StreamMode, unsigned int, unsigned int, unsigned int, RtAudioFormat, unsigned int*, RtAudio::StreamOptions*)’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/RTAudio/RtAudio.cpp:2098:29: warning: ‘jack_nframes_t jack_port_get_latency(jack_port_t*)’ is deprecated (declared at /usr/include/jack/jack.h:1038) [-Wdeprecated-declarations]
+     stream_.latency[mode] = jack_port_get_latency( jack_port_by_name( client, ports[ firstChannel ] ) );
+                             ^
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/RTAudio/RtAudio.cpp:2098:103: warning: ‘jack_nframes_t jack_port_get_latency(jack_port_t*)’ is deprecated (declared at /usr/include/jack/jack.h:1038) [-Wdeprecated-declarations]
+     stream_.latency[mode] = jack_port_get_latency( jack_port_by_name( client, ports[ firstChannel ] ) );
+                                                                                                       ^
+[0m[31m[1mLinking CXX shared library /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/bin/librtaudio.so
+[0m[ 88%] Built target RTAudioLib
+[35m[1mScanning dependencies of target manyears_console
+[0m[ 91%] [32mBuilding C object example/CMakeFiles/manyears_console.dir/manyears_console.c.o
+In file included from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/filter.h:100:0,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/mixture.h:100,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/overallContext.h:116,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/example/manyears_console.c:14:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/../Utilities/mathadvanced.h:27:28: warning: ‘expest’ defined but not used [-Wunused-function]
+ static INLINE_PREFIX float expest(float _arg)
+                            ^
+[0m[31m[1mLinking C executable /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/bin/manyears_console
+[0m[ 91%] Built target manyears_console
+[35m[1mScanning dependencies of target manyears_iterative
+[0m[ 94%] [32mBuilding C object example/CMakeFiles/manyears_iterative.dir/manyears_iterative.c.o
+In file included from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/filter.h:100:0,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/mixture.h:100,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/overallContext.h:116,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/example/manyears_iterative.c:7:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/../Utilities/mathadvanced.h:27:28: warning: ‘expest’ defined but not used [-Wunused-function]
+ static INLINE_PREFIX float expest(float _arg)
+                            ^
+[0m[31m[1mLinking C executable /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/bin/manyears_iterative
+[0m[ 94%] Built target manyears_iterative
+[35m[1mScanning dependencies of target manyears_live
+[0m[ 97%] [32mBuilding CXX object example/CMakeFiles/manyears_live.dir/manyears_live.cpp.o
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/example/manyears_live.cpp: In member function ‘bool AudioCapture::processFrame(double, short int*, unsigned int, int)’:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/example/manyears_live.cpp:108:54: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+             for (unsigned int channel = 0; channel < nb_channels; channel++)
+                                                      ^
+In file included from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/filter.h:100:0,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/mixture.h:100,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/overallContext.h:116,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/example/manyears_live.cpp:26:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/../Utilities/mathadvanced.h: At global scope:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/../Utilities/mathadvanced.h:27:28: warning: ‘float expest(float)’ defined but not used [-Wunused-function]
+ static INLINE_PREFIX float expest(float _arg)
+                            ^
+[0m[31m[1mLinking CXX executable /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/bin/manyears_live
+[0m[ 97%] Built target manyears_live
+[35m[1mScanning dependencies of target manyears_demo
+[0m[100%] [32mBuilding C object demo/CMakeFiles/manyears_demo.dir/manyears_demo.c.o
+In file included from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/filter.h:100:0,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/mixture.h:100,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/overallContext.h:116,
+                 from /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/demo/manyears_demo.c:12:
+/home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/dsplib/Tracking/../Tracking/../Utilities/mathadvanced.h:27:28: warning: ‘expest’ defined but not used [-Wunused-function]
+ static INLINE_PREFIX float expest(float _arg)
+                            ^
+[0m[31m[1mLinking C executable /home/natnael/hansonrobotics/HEAD/build/manyears_ros/manyearslib-prefix/src/manyearslib/bin/manyears_demo
+[0m[100%] Built target manyears_demo
+[ 64%] [34m[1mPerforming install step for 'manyearslib'
+[0m[ 71%] [34m[1mCompleted 'manyearslib'
+[0m[ 71%] Built target manyearslib
+[35m[1mScanning dependencies of target manyears_node
+[0m[ 78%] [ 85%] [32mBuilding CXX object CMakeFiles/manyears_node.dir/src/manyears_node.cpp.o
+[32mBuilding CXX object CMakeFiles/manyears_node.dir/src/manyears_config.cpp.o
+In file included from /opt/ros/indigo/include/ros/ros.h:40:0,
+                 from /home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/manyears_ros/include/manyears_ros/manyears_node.hpp:6,
+                 from /home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/manyears_ros/src/manyears_node.cpp:1:
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/manyears_ros/src/manyears_node.cpp: In member function ‘bool manyears_ros::ManyEarsNode::parseParams(const ros::NodeHandle&)’:
+/opt/ros/indigo/include/ros/console.h:342:176: warning: format ‘%i’ expects a matching ‘int’ argument [-Wformat=]
+     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, __VA_ARGS__)
+                                                                                                                                                                                ^
+/opt/ros/indigo/include/ros/console.h:345:5: note: in expansion of macro ‘ROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER’
+     ROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER(0, __VA_ARGS__)
+     ^
+/opt/ros/indigo/include/ros/console.h:375:7: note: in expansion of macro ‘ROSCONSOLE_PRINT_AT_LOCATION’
+       ROSCONSOLE_PRINT_AT_LOCATION(__VA_ARGS__); \
+       ^
+/opt/ros/indigo/include/ros/console.h:557:35: note: in expansion of macro ‘ROS_LOG_COND’
+ #define ROS_LOG(level, name, ...) ROS_LOG_COND(true, level, name, __VA_ARGS__)
+                                   ^
+/opt/ros/indigo/include/rosconsole/macros_generated.h:214:24: note: in expansion of macro ‘ROS_LOG’
+ #define ROS_ERROR(...) ROS_LOG(::ros::console::levels::Error, ROSCONSOLE_DEFAULT_NAME, __VA_ARGS__)
+                        ^
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/manyears_ros/src/manyears_node.cpp:162:17: note: in expansion of macro ‘ROS_ERROR’
+                 ROS_ERROR("Pos element of microphone %i is not a struct, "
+                 ^
+[0m[0m[31m[1mLinking CXX static library /home/natnael/hansonrobotics/HEAD/devel/.private/manyears_ros/lib/libmanyears_node.a
+[0m[ 85%] Built target manyears_node
+[35m[1mScanning dependencies of target manyears_node_standalone
+[35m[1mScanning dependencies of target manyears_ros
+[0m[0m[100%] [100%] [32mBuilding CXX object CMakeFiles/manyears_node_standalone.dir/src/manyears_node_standalone.cpp.o
+[32mBuilding CXX object CMakeFiles/manyears_ros.dir/src/manyears_ros.cpp.o
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/manyears_ros/src/manyears_ros.cpp: In constructor ‘manyears_node::many_ears::many_ears(ros::NodeHandle)’:
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/manyears_ros/src/manyears_ros.cpp:165:136: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+                 outputInit(libraryContext_.myOutputSeparated, libraryContext_.myParameters, NULL, NULL, "/tmp/source_sep_****.wav", '*');
+                                                                                                                                        ^
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/manyears_ros/src/manyears_ros.cpp:166:139: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+                 outputInit(libraryContext_.myOutputPostfiltered, libraryContext_.myParameters, NULL, NULL, "/tmp/source_post****.wav", '*');
+                                                                                                                                           ^
+[0m[0m[31m[1mLinking CXX executable /home/natnael/hansonrobotics/HEAD/devel/.private/manyears_ros/lib/manyears_ros/manyears_node_standalone
+[0m[100%] Built target manyears_node_standalone
+[31m[1mLinking CXX executable /home/natnael/hansonrobotics/HEAD/devel/.private/manyears_ros/lib/manyears_ros/manyears_ros
+[0m[100%] Built target manyears_ros

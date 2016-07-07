@@ -1,0 +1,31 @@
+[35m[1mScanning dependencies of target pau2motors_gencfg
+[0m[ 20%] [34m[1mGenerating dynamic reconfigure files from cfg/Pau2motors.cfg: /home/natnael/hansonrobotics/HEAD/devel/.private/pau2motors/include/pau2motors/Pau2motorsConfig.h /home/natnael/hansonrobotics/HEAD/devel/.private/pau2motors/lib/python2.7/dist-packages/pau2motors/cfg/Pau2motorsConfig.py
+[0mGenerating reconfiguration files for Pau2motors in pau2motors
+Wrote header file in /home/natnael/hansonrobotics/HEAD/devel/.private/pau2motors/include/pau2motors/Pau2motorsConfig.h
+[ 20%] Built target pau2motors_gencfg
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_py
+[0m[ 20%] Built target geometry_msgs_generate_messages_py
+[35m[1mScanning dependencies of target _pau2motors_generate_messages_check_deps_pau
+[0m[ 20%] Built target _pau2motors_generate_messages_check_deps_pau
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py
+[0m[ 20%] Built target std_msgs_generate_messages_py
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp
+[0m[ 20%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_lisp
+[0m[ 20%] Built target geometry_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp
+[0m[ 20%] Built target std_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_cpp
+[0m[ 20%] Built target geometry_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target pau2motors_generate_messages_py
+[0m[ 40%] [34m[1mGenerating Python from MSG pau2motors/pau
+[0m[ 60%] [34m[1mGenerating Python msg __init__.py for pau2motors
+[0m[ 60%] Built target pau2motors_generate_messages_py
+[35m[1mScanning dependencies of target pau2motors_generate_messages_lisp
+[0m[ 80%] [34m[1mGenerating Lisp code from pau2motors/pau.msg
+[0m[ 80%] Built target pau2motors_generate_messages_lisp
+[35m[1mScanning dependencies of target pau2motors_generate_messages_cpp
+[0m[100%] [34m[1mGenerating C++ code from pau2motors/pau.msg
+[0m[100%] Built target pau2motors_generate_messages_cpp
+[35m[1mScanning dependencies of target pau2motors_generate_messages
+[0m[100%] Built target pau2motors_generate_messages

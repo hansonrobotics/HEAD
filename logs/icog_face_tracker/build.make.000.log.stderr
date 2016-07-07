@@ -1,0 +1,14 @@
+/home/natnael/hansonrobotics/HEAD/src/vision/icog_face_tracker/src/3rdparty/cvblobs/BlobResult.cpp: In member function ‘void CBlobResult::PrintBlobs(char*) const’:
+/home/natnael/hansonrobotics/HEAD/src/vision/icog_face_tracker/src/3rdparty/cvblobs/BlobResult.cpp:939:112: warning: format ‘%f’ expects a matching ‘double’ argument [-Wformat=]
+      i, area[i], perimetre[i], externPerimeter[i], perimetreConvex[i], exterior[i], compacitat[i], longitud[i] );
+                                                                                                                ^
+/home/natnael/hansonrobotics/HEAD/src/vision/icog_face_tracker/src/libopentld/tld/TLD.cpp: In member function ‘void tld::TLD::writeToFile(const char*)’:
+/home/natnael/hansonrobotics/HEAD/src/vision/icog_face_tracker/src/libopentld/tld/TLD.cpp:441:74: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘std::vector<tld::NormalizedPatch>::size_type {aka long unsigned int}’ [-Wformat=]
+     fprintf(file, "%d #Positive Sample Size\n", nn->truePositives->size());
+                                                                          ^
+/home/natnael/hansonrobotics/HEAD/src/vision/icog_face_tracker/src/libopentld/tld/TLD.cpp:460:75: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘std::vector<tld::NormalizedPatch>::size_type {aka long unsigned int}’ [-Wformat=]
+     fprintf(file, "%d #Negative Sample Size\n", nn->falsePositives->size());
+                                                                           ^
+/home/natnael/hansonrobotics/HEAD/src/vision/icog_face_tracker/src/libopentld/tld/TLD.cpp:509:53: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘std::vector<tld::TldExportEntry>::size_type {aka long unsigned int}’ [-Wformat=]
+         fprintf(file, "%d #numLeaves\n", list.size());
+                                                     ^

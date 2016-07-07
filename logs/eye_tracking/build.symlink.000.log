@@ -1,0 +1,10 @@
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/eye_tracking/docs/EyeTrackingConfig-usage.dox
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/eye_tracking/docs/EyeTrackingConfig.dox
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/eye_tracking/docs/EyeTrackingConfig.wikidoc
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/eye_tracking/cmake/eye_trackingConfig.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/eye_tracking/cmake/eye_trackingConfig-version.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/python2.7/dist-packages/eye_tracking/__init__.py
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/python2.7/dist-packages/eye_tracking/cfg/EyeTrackingConfig.py
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/python2.7/dist-packages/eye_tracking/cfg/__init__.py
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/pkgconfig/eye_tracking.pc
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/include/eye_tracking/EyeTrackingConfig.h

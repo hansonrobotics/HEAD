@@ -1,0 +1,28 @@
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/GentleBoostCascadedClassifier.cpp: In member function ‘void GentleBoostCascadedClassifier::setHardNegativeTrainingExamplesFromBGImages()’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/GentleBoostCascadedClassifier.cpp:378:48: warning: ‘virtual void GentleBoostCascadedClassifier::setTrainingSet(const std::vector<ImagePatch*>&, const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/include/ros_nmpt_saliency/GentleBoostCascadedClassifier.h:263) [-Wdeprecated-declarations]
+  setTrainingSet(trainingPatches, trainingLabels); 
+                                                ^
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp: In member function ‘virtual std::vector<Feature*> Feature::getSimilarFeatures(int)’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:86:44: warning: ‘virtual void Feature::setFeatureParameters(const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:32) [-Wdeprecated-declarations]
+   retval[i]->setFeatureParameters(newParams); 
+                                            ^
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp: In member function ‘void Feature::setRandomParameterValues()’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:118:29: warning: ‘virtual void Feature::setFeatureParameters(const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:32) [-Wdeprecated-declarations]
+  setFeatureParameters(change); 
+                             ^
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp: In member function ‘Feature* Feature::copy() const’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:192:53: warning: ‘virtual void Feature::setFeatureParameters(const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:32) [-Wdeprecated-declarations]
+  patchFeature->setFeatureParameters(this->parameters); 
+                                                     ^
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp: In function ‘std::istream& operator>>(std::istream&, Feature*&)’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:307:36: warning: ‘virtual void Feature::setFeatureParameters(const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:32) [-Wdeprecated-declarations]
+  model->setFeatureParameters(params); 
+                                    ^
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/ImagePatch.cpp: In member function ‘void ImagePatch::setImage(const IplImage*, int, int)’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/ImagePatch.cpp:211:49: warning: ‘void ImagePatch::setImage(const IplImage*, CvRect, int, int)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/ImagePatch.cpp:205) [-Wdeprecated-declarations]
+  this->setImage(image, roi, setData, setIntegral); 
+                                                 ^
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/BlockTimer.cpp: In static member function ‘static timertype BlockTimer::getCurrentTimeInMicroseconds()’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/BlockTimer.cpp:82:41: warning: integer overflow in expression [-Woverflow]
+  timertype microsecondsPerDay = 1440*60*1000000; 
+                                         ^

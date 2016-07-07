@@ -1,0 +1,7 @@
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/rt_audio_ros/src/RTAudio/RtAudio.cpp: In member function ‘virtual bool RtApiJack::probeDeviceOpen(unsigned int, RtApi::StreamMode, unsigned int, unsigned int, unsigned int, RtAudioFormat, unsigned int*, RtAudio::StreamOptions*)’:
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/rt_audio_ros/src/RTAudio/RtAudio.cpp:2098:29: warning: ‘jack_nframes_t jack_port_get_latency(jack_port_t*)’ is deprecated (declared at /usr/include/jack/jack.h:1038) [-Wdeprecated-declarations]
+     stream_.latency[mode] = jack_port_get_latency( jack_port_by_name( client, ports[ firstChannel ] ) );
+                             ^
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/rt_audio_ros/src/RTAudio/RtAudio.cpp:2098:103: warning: ‘jack_nframes_t jack_port_get_latency(jack_port_t*)’ is deprecated (declared at /usr/include/jack/jack.h:1038) [-Wdeprecated-declarations]
+     stream_.latency[mode] = jack_port_get_latency( jack_port_by_name( client, ports[ firstChannel ] ) );
+                                                                                                       ^

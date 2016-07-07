@@ -1,0 +1,1 @@
+ALSA lib : -lasound -lpthread

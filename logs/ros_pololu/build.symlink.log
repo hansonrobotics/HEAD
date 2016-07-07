@@ -1,0 +1,13 @@
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/common-lisp/ros/ros_pololu/msg/_package.lisp
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/common-lisp/ros/ros_pololu/msg/ros_pololu-msg.asd
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/common-lisp/ros/ros_pololu/msg/_package_MotorCommand.lisp
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/common-lisp/ros/ros_pololu/msg/MotorCommand.lisp
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/ros_pololu/cmake/ros_pololuConfig-version.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/ros_pololu/cmake/ros_pololu-msg-extras.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/ros_pololu/cmake/ros_pololuConfig.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/ros_pololu/cmake/ros_pololu-msg-paths.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/python2.7/dist-packages/ros_pololu/__init__.py
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/python2.7/dist-packages/ros_pololu/msg/_MotorCommand.py
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/python2.7/dist-packages/ros_pololu/msg/__init__.py
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/pkgconfig/ros_pololu.pc
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/include/ros_pololu/MotorCommand.h

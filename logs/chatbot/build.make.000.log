@@ -1,0 +1,25 @@
+[35m[1mScanning dependencies of target chatbot_gencfg
+[0m[ 20%] [34m[1mGenerating dynamic reconfigure files from cfg/Chatbot.cfg: /home/natnael/hansonrobotics/HEAD/devel/.private/chatbot/include/chatbot/ChatbotConfig.h /home/natnael/hansonrobotics/HEAD/devel/.private/chatbot/lib/python2.7/dist-packages/chatbot/cfg/ChatbotConfig.py
+[0mGenerating reconfiguration files for Chatbot in chatbot
+Wrote header file in /home/natnael/hansonrobotics/HEAD/devel/.private/chatbot/include/chatbot/ChatbotConfig.h
+[ 20%] Built target chatbot_gencfg
+[35m[1mScanning dependencies of target _chatbot_generate_messages_check_deps_ChatMessage
+[0m[ 20%] Built target _chatbot_generate_messages_check_deps_ChatMessage
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp
+[0m[ 20%] Built target std_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp
+[0m[ 20%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py
+[0m[ 20%] Built target std_msgs_generate_messages_py
+[35m[1mScanning dependencies of target chatbot_generate_messages_cpp
+[0m[ 40%] [34m[1mGenerating C++ code from chatbot/ChatMessage.msg
+[0m[ 40%] Built target chatbot_generate_messages_cpp
+[35m[1mScanning dependencies of target chatbot_generate_messages_lisp
+[0m[ 60%] [34m[1mGenerating Lisp code from chatbot/ChatMessage.msg
+[0m[ 60%] Built target chatbot_generate_messages_lisp
+[35m[1mScanning dependencies of target chatbot_generate_messages_py
+[0m[ 80%] [34m[1mGenerating Python from MSG chatbot/ChatMessage
+[0m[100%] [34m[1mGenerating Python msg __init__.py for chatbot
+[0m[100%] Built target chatbot_generate_messages_py
+[35m[1mScanning dependencies of target chatbot_generate_messages
+[0m[100%] Built target chatbot_generate_messages

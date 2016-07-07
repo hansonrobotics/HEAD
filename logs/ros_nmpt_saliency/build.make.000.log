@@ -1,0 +1,119 @@
+[35m[1mScanning dependencies of target _ros_nmpt_saliency_generate_messages_check_deps_targets
+[0m[35m[1mScanning dependencies of target sensor_msgs_generate_messages_py
+[0m[  0%] Built target sensor_msgs_generate_messages_py
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_py
+[0m[  0%] Built target _ros_nmpt_saliency_generate_messages_check_deps_targets
+[  0%] Built target geometry_msgs_generate_messages_py
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_cpp
+[0m[35m[1mScanning dependencies of target sensor_msgs_generate_messages_lisp
+[0m[35m[1mScanning dependencies of target sensor_msgs_generate_messages_cpp
+[0m[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target sensor_msgs_generate_messages_cpp
+[  0%] [35m[1mScanning dependencies of target geometry_msgs_generate_messages_lisp
+[0mBuilt target sensor_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target roscpp_generate_messages_lisp
+[0m[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp
+[0m[  0%] Built target roscpp_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_lisp
+[0m[35m[1mScanning dependencies of target roscpp_generate_messages_py
+[0m[  0%] [  0%] [35m[1mScanning dependencies of target std_msgs_generate_messages_py
+Built target roscpp_generate_messages_py
+[0mBuilt target rosgraph_msgs_generate_messages_lisp
+[  0%] [35m[1mScanning dependencies of target std_msgs_generate_messages_lisp
+[0mBuilt target std_msgs_generate_messages_py
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_cpp
+[0m[  0%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_py
+[0m[  0%] [35m[1mScanning dependencies of target roscpp_generate_messages_cpp
+[0mBuilt target rosgraph_msgs_generate_messages_cpp
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[35m[1mScanning dependencies of target ros_nmpt_saliency_generate_messages_py
+[0m[  0%] Built target roscpp_generate_messages_cpp
+[  2%] [35m[1mScanning dependencies of target ros_nmpt_saliency_generate_messages_cpp
+[35m[1mScanning dependencies of target ros_nmpt_saliency_generate_messages_lisp
+[0m[0m[  4%] [34m[1mGenerating C++ code from ros_nmpt_saliency/targets.msg
+[0m[  6%] [34m[1mGenerating Python from MSG ros_nmpt_saliency/targets
+[34m[1mGenerating Lisp code from ros_nmpt_saliency/targets.msg
+[0m[0m[  6%] Built target ros_nmpt_saliency_generate_messages_lisp
+[  8%] [34m[1mGenerating Python msg __init__.py for ros_nmpt_saliency
+[0m[  8%] Built target ros_nmpt_saliency_generate_messages_py
+[  8%] Built target ros_nmpt_saliency_generate_messages_cpp
+[35m[1mScanning dependencies of target ros_nmpt_saliency_generate_messages
+[0m[  8%] Built target ros_nmpt_saliency_generate_messages
+[35m[1mScanning dependencies of target ros_nmpt_saliency_node
+[0m[ 10%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/src/ros_nmpt_saliency_node.cpp.o
+[0m[ 12%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/PatchList.cpp.o
+[0m[ 14%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/GentleBoostClassifier.cpp.o
+[0m[ 16%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/MatrixKalmanFilter.cpp.o
+[0m[ 18%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/ImageDataSet2.cpp.o
+[0m[ 20%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/KFPointTracker.cpp.o
+[0m[ 22%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/ImagePatch2.cpp.o
+[0m[ 25%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/PatchList2.cpp.o
+[0m[ 27%] [ 29%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/GentleBoostCascadedClassifier.cpp.o
+[0m[32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/KF.cpp.o
+[0m[ 31%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/PatchDataset.cpp.o
+[0m[ 33%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/FastPatchList2.cpp.o
+[0m[ 35%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/FastPatchList.cpp.o
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/GentleBoostCascadedClassifier.cpp: In member function ‘void GentleBoostCascadedClassifier::setHardNegativeTrainingExamplesFromBGImages()’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/GentleBoostCascadedClassifier.cpp:378:48: warning: ‘virtual void GentleBoostCascadedClassifier::setTrainingSet(const std::vector<ImagePatch*>&, const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/include/ros_nmpt_saliency/GentleBoostCascadedClassifier.h:263) [-Wdeprecated-declarations]
+  setTrainingSet(trainingPatches, trainingLabels); 
+                                                ^
+[0m[ 37%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/Feature.cpp.o
+[0m[ 39%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/HaarFeature2.cpp.o
+[0m[ 41%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/OpenLoopPolicies.cpp.o
+[0m[ 43%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/ImageKalmanFilter.cpp.o
+[0m[ 45%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/ImageDataSet.cpp.o
+[0m[ 47%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/BoxFeature2.cpp.o
+[ 50%] [0m[32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/ImagePatchPyramid.cpp.o
+[0m[ 52%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/LQRPointTracker.cpp.o
+[0m[ 54%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/MultiObjectTrackingState.cpp.o
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp: In member function ‘virtual std::vector<Feature*> Feature::getSimilarFeatures(int)’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:86:44: warning: ‘virtual void Feature::setFeatureParameters(const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:32) [-Wdeprecated-declarations]
+   retval[i]->setFeatureParameters(newParams); 
+                                            ^
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp: In member function ‘void Feature::setRandomParameterValues()’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:118:29: warning: ‘virtual void Feature::setFeatureParameters(const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:32) [-Wdeprecated-declarations]
+  setFeatureParameters(change); 
+                             ^
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp: In member function ‘Feature* Feature::copy() const’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:192:53: warning: ‘virtual void Feature::setFeatureParameters(const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:32) [-Wdeprecated-declarations]
+  patchFeature->setFeatureParameters(this->parameters); 
+                                                     ^
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp: In function ‘std::istream& operator>>(std::istream&, Feature*&)’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:307:36: warning: ‘virtual void Feature::setFeatureParameters(const CvMat*)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/Feature.cpp:32) [-Wdeprecated-declarations]
+  model->setFeatureParameters(params); 
+                                    ^
+[0m[ 56%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/OpenCV2BoxFilter.cpp.o
+[0m[ 58%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/MultinomialObservationModel.cpp.o
+[0m[ 60%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/NMPTUtils.cpp.o
+[0m[ 62%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/Feature2.cpp.o
+[0m[ 64%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/PatchDataset2.cpp.o
+[0m[ 66%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/ImagePatch.cpp.o
+[0m[ 68%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/OpenCVHaarDetector.cpp.o
+[0m[ 70%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/FeatureRegressor.cpp.o
+[0m[ 72%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/InternalMotionModel.cpp.o
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/ImagePatch.cpp: In member function ‘void ImagePatch::setImage(const IplImage*, int, int)’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/ImagePatch.cpp:211:49: warning: ‘void ImagePatch::setImage(const IplImage*, CvRect, int, int)’ is deprecated (declared at /home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/ImagePatch.cpp:205) [-Wdeprecated-declarations]
+  this->setImage(image, roi, setData, setIntegral); 
+                                                 ^
+[0m[ 75%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/FastSalience.cpp.o
+[0m[ 77%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/DetectionEvaluator2.cpp.o
+[0m[ 79%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/StructTypes.cpp.o
+[0m[ 81%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/BlockTimer.cpp.o
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/BlockTimer.cpp: In static member function ‘static timertype BlockTimer::getCurrentTimeInMicroseconds()’:
+/home/natnael/hansonrobotics/HEAD/src/vision/ros_nmpt_saliency/lib/BlockTimer.cpp:82:41: warning: integer overflow in expression [-Woverflow]
+  timertype microsecondsPerDay = 1440*60*1000000; 
+                                         ^
+[0m[ 83%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/LQR.cpp.o
+[0m[ 85%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/DetectionEvaluator.cpp.o
+[0m[ 87%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/MIPOMDP.cpp.o
+[0m[ 89%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/ConvolutionalLogisticPolicy.cpp.o
+[0m[ 91%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/FeatureRegressor2.cpp.o
+[0m[ 93%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/ObjectDetector.cpp.o
+[0m[ 95%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/GentleBoostClassifier2.cpp.o
+[0m[ 97%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/HaarFeature.cpp.o
+[0m[100%] [32mBuilding CXX object CMakeFiles/ros_nmpt_saliency_node.dir/lib/BoxFeature.cpp.o
+[0m[31m[1mLinking CXX executable /home/natnael/hansonrobotics/HEAD/devel/.private/ros_nmpt_saliency/lib/ros_nmpt_saliency/ros_nmpt_saliency_node
+[0m[100%] Built target ros_nmpt_saliency_node

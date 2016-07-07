@@ -1,0 +1,4 @@
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/testing_tools/cmake/testing_toolsConfig-version.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/testing_tools/cmake/testing_toolsConfig.cmake
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/python2.7/dist-packages/testing_tools/__init__.py
+Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/pkgconfig/testing_tools.pc

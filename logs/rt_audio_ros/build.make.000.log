@@ -1,0 +1,35 @@
+[35m[1mScanning dependencies of target RTAudioLib
+[0m[ 16%] [32mBuilding CXX object src/RTAudio/CMakeFiles/RTAudioLib.dir/RtAudio.cpp.o
+[0m[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp
+[0m[ 16%] Built target std_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target _rt_audio_ros_generate_messages_check_deps_AudioStream
+[0m[ 16%] Built target _rt_audio_ros_generate_messages_check_deps_AudioStream
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp
+[0m[ 16%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py
+[0m[ 16%] Built target std_msgs_generate_messages_py
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/rt_audio_ros/src/RTAudio/RtAudio.cpp: In member function ‘virtual bool RtApiJack::probeDeviceOpen(unsigned int, RtApi::StreamMode, unsigned int, unsigned int, unsigned int, RtAudioFormat, unsigned int*, RtAudio::StreamOptions*)’:
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/rt_audio_ros/src/RTAudio/RtAudio.cpp:2098:29: warning: ‘jack_nframes_t jack_port_get_latency(jack_port_t*)’ is deprecated (declared at /usr/include/jack/jack.h:1038) [-Wdeprecated-declarations]
+     stream_.latency[mode] = jack_port_get_latency( jack_port_by_name( client, ports[ firstChannel ] ) );
+                             ^
+/home/natnael/hansonrobotics/HEAD/src/Sound Source Localization/Manyears/src/rt_audio_ros/src/RTAudio/RtAudio.cpp:2098:103: warning: ‘jack_nframes_t jack_port_get_latency(jack_port_t*)’ is deprecated (declared at /usr/include/jack/jack.h:1038) [-Wdeprecated-declarations]
+     stream_.latency[mode] = jack_port_get_latency( jack_port_by_name( client, ports[ firstChannel ] ) );
+                                                                                                       ^
+[31m[1mLinking CXX shared library /home/natnael/hansonrobotics/HEAD/devel/.private/rt_audio_ros/lib/librtaudio.so
+[0m[ 16%] Built target RTAudioLib
+[35m[1mScanning dependencies of target rt_audio_ros_generate_messages_cpp
+[0m[ 33%] [34m[1mGenerating C++ code from rt_audio_ros/AudioStream.msg
+[0m[ 33%] Built target rt_audio_ros_generate_messages_cpp
+[35m[1mScanning dependencies of target rt_audio_ros_generate_messages_lisp
+[0m[ 50%] [34m[1mGenerating Lisp code from rt_audio_ros/AudioStream.msg
+[0m[ 50%] Built target rt_audio_ros_generate_messages_lisp
+[35m[1mScanning dependencies of target rt_audio_ros_generate_messages_py
+[0m[ 66%] [34m[1mGenerating Python from MSG rt_audio_ros/AudioStream
+[0m[ 83%] [34m[1mGenerating Python msg __init__.py for rt_audio_ros
+[0m[ 83%] Built target rt_audio_ros_generate_messages_py
+[35m[1mScanning dependencies of target rt_audio
+[0m[100%] [32mBuilding CXX object CMakeFiles/rt_audio.dir/src/rt_audio.cpp.o
+[0m[35m[1mScanning dependencies of target rt_audio_ros_generate_messages
+[0m[100%] Built target rt_audio_ros_generate_messages
+[31m[1mLinking CXX executable /home/natnael/hansonrobotics/HEAD/devel/.private/rt_audio_ros/lib/rt_audio_ros/rt_audio
+[0m[100%] Built target rt_audio

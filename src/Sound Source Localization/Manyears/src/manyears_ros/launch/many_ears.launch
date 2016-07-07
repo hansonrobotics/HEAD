@@ -5,7 +5,7 @@
 		<param name="iterative_delay" value="1"/>
 		<param name="iterative_enable" value="false"/>
 		<param name="raw_file" value="$(find manyears_ros)/data/debord.raw" />
-		<param name="config_file" value="$(find manyears_ros)/data/8sounds_cube.mes" />
+		<param name="config_file" value="$(find manyears_ros)/data/8sounds_parameters.mes" />
 		<param name="enable_separation" value="true" />
 		<param name="save_audio_file" value="$(find manyears_ros)/data/recorded.raw" />
 		<remap from="stream"  to="/audio_stream"/>
