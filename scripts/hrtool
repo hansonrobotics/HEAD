@@ -46,12 +46,6 @@ if [[ ! -d $HR_CACHE ]]; then
     mkdir -p $HR_CACHE
 fi
 
-if [[ ! -d $HR_PREFIX ]]; then
-    info "Creating $HR_PREFIX"
-    $SUDO mkdir -p $HR_PREFIX
-    $SUDO chmod 777 $HR_PREFIX
-fi
-
 install_basic() {
     $SUDO apt-get -y update
     $SUDO apt-get -y install git
@@ -195,6 +189,12 @@ install_test_deps() {
 }
 
 install_vision_deps() {
+    if [[ ! -d $HR_PREFIX ]]; then
+        info "Creating $HR_PREFIX"
+        $SUDO mkdir -p $HR_PREFIX
+        $SUDO chmod 777 $HR_PREFIX
+    fi
+
     mkdir -p $VISION_TOOL_PREFIX
     $SUDO apt-get -y install ros-indigo-opencv-apps
 
