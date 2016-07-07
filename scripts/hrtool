@@ -179,6 +179,9 @@ install_other_deps() {
 
     # For telnet automation
     $SUDO apt-get -y install expect
+
+    # For manyears
+    $SUDO apt-get -y install subversion
 }
 
 install_test_deps() {
