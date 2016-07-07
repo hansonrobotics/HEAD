@@ -41,6 +41,11 @@ fi
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 
+if [[ ! -d $HR_CACHE ]]; then
+    info "Creating $HR_CACHE"
+    mkdir -p $HR_CACHE
+fi
+
 if [[ ! -d $HR_PREFIX ]]; then
     info "Creating $HR_PREFIX"
     $SUDO mkdir -p $HR_PREFIX
@@ -654,7 +659,7 @@ parse_opts() {
 set_ws() {
     if [[ -z $HR_WORKSPACE ]]; then
         if [[ -f $HR_ENVFILE_PATH ]]; then
-            . $HR_ENVFILE_PATH
+            eval $(cat $HR_ENVFILE_PATH|grep "export HR_WORKSPACE=")
         else
             HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
         fi
@@ -722,8 +727,8 @@ for i in $(env|grep ROS|cut -d= -f1); do
 done
 unset HR_WORKSPACE
 
-eval DEFAULT_HR_WORKSPACE=~/hansonrobotics
-eval HR_ENVFILE_PATH=~/.hr/env.sh
+DEFAULT_HR_WORKSPACE=~/hansonrobotics
+HR_ENVFILE_PATH=~/.hr/env.sh
 PROJECT=HEAD
 export PATH=/usr/lib/ccache:$PATH
 
