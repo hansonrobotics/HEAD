@@ -233,7 +233,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
   poorly_tracked.clear();
   newly_tracked.clear();
 
-  std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor,merge);
+  std::vector<cmt::cmt_message> messages =  cmt_.process_map(im_gray, factor,merge,delete_counter);
   merge.clear();
 
   std::vector<std::string> available_names;
@@ -348,6 +348,8 @@ void TrackerCMT::callback(cmt_tracker_msgs::TrackerConfig &config, uint32_t leve
 {
   //std::cout<<"Factor to be Updated"<<std::endl;
   factor = config.factor;
+  //std::cout<<"config: "<<config.frame_counter;
+  delete_counter = config.frame_counter;
   //std::cout<<"Factor Updated to: "<<factor<<std::endl;
 }
 void TrackerCMT::list_of_faces_update(const cmt_tracker_msgs::Objects& faces_info)

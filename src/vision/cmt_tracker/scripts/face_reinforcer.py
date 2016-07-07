@@ -265,7 +265,11 @@ class face_reinforcer:
                 if overlp:
                     updated.append(get_element)
                     get_element[5] = j[5]
-                    get_element[6] = get_element[6][1:] + "1"
+
+                    if get_element[5] == "dlib_u":
+                        get_element[6] = get_element[6][2:] + "11"
+                    else:
+                        get_element[6] = get_element[6][1:] + "1"
             if not overlp:
                 not_covered.append(j)
         #Now if not updated shift to the right.
@@ -279,7 +283,7 @@ class face_reinforcer:
             if j not in updated:
                 j[6] = j[6][1:] + "0"
 
-            if j[5] is "dlib":
+            if j[5] == "dlib" or j[5] == "dlib_u":
                 if j[6].count("1") > self.dlib_count:
                     not_covered_faces.append(j)
                     remove_this.append(j)

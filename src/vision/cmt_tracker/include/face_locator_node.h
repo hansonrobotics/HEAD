@@ -44,7 +44,10 @@
 #define SSTR( x ) dynamic_cast< std::ostringstream & >(( std::ostringstream() << std::dec << x ) ).str()
 
 namespace face_detect {
-
+struct merged_message{
+   cmt_tracker_msgs::Objects message;
+   std::vector<int> overlapedDlibCV;
+};
 // Anthropometric for male adult
 // Relative position of various facial feature relative to sellion
 // Values taken from https://en.wikipedia.org/wiki/Human_head
@@ -164,8 +167,8 @@ private:
 //static class that may be called by implementing class. 
 namespace {
   std::vector<cv::Rect> facedetect(cv::Mat frame_gray);
-  cmt_tracker_msgs::Objects convert(std::vector<cv::Rect> faces);
-  cmt_tracker_msgs::Objects returnOverlapping(std::vector<cv::Rect> dlib_locations, std::vector<cv::Rect> opencv_locs);
+  cmt_tracker_msgs::Objects convert(std::vector<cv::Rect> faces, std::string tool_used);
+  merged_message returnNoneOverlappingCV(std::vector<cv::Rect> dlib_locations, std::vector<cv::Rect> opencv_locs);
 }
 }
 #endif // FACE_LOCATOR_H
