@@ -1,8 +1,0 @@
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/manyears_ros/cmake/manyears_rosConfig.cmake
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/manyears_ros/cmake/manyears_rosConfig-version.cmake
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/libmanyears_node.a
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/pkgconfig/manyears_ros.pc
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/manyears_ros/manyears_savestream
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/manyears_ros/manyears_node_standalone
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/manyears_ros/position_exploitation
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/manyears_ros/manyears_ros

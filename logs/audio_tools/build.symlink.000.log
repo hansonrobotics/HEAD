@@ -1,6 +1,0 @@
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/audio_tools/cmake/audio_toolsConfig-version.cmake
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/share/audio_tools/cmake/audio_toolsConfig.cmake
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/audio_tools/stream_extract
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/audio_tools/upscaler
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/audio_tools/stream_player
-Symlinking /home/natnael/hansonrobotics/HEAD/devel/lib/pkgconfig/audio_tools.pc

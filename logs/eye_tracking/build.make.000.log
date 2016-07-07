@@ -1,5 +1,0 @@
-[35m[1mScanning dependencies of target eye_tracking_gencfg
-[0m[100%] [34m[1mGenerating dynamic reconfigure files from cfg/EyeTracking.cfg: /home/natnael/hansonrobotics/HEAD/devel/.private/eye_tracking/include/eye_tracking/EyeTrackingConfig.h /home/natnael/hansonrobotics/HEAD/devel/.private/eye_tracking/lib/python2.7/dist-packages/eye_tracking/cfg/EyeTrackingConfig.py
-[0mGenerating reconfiguration files for EyeTracking in eye_tracking
-Wrote header file in /home/natnael/hansonrobotics/HEAD/devel/.private/eye_tracking/include/eye_tracking/EyeTrackingConfig.h
-[100%] Built target eye_tracking_gencfg
