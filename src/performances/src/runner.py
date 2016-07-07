@@ -67,6 +67,7 @@ class Runner:
         rospy.Service('~load_nodes', srv.LoadNodes, self.load_nodes_callback)
         rospy.Service('~load_sequence', srv.LoadSequence, self.load_sequence_callback)
         rospy.Service('~run', srv.Run, self.run_callback)
+        rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
         rospy.Service('~resume', srv.Resume, self.resume_callback)
         rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
@@ -83,6 +84,13 @@ class Runner:
 
     def load_sequence_callback(self, request):
         return srv.LoadSequenceResponse(success=True, nodes=json.dumps(self.load_sequence(request.ids)))
+
+    def run_by_name_callback(self, request):
+        nodes = self.load_sequence([request.id])
+        if not nodes:
+            return srv.RunByNameResponse(False)
+        return srv.RunResponse(self.run(0.0))
+
 
     def load_sequence(self, ids):
         nodes = []
@@ -125,7 +133,6 @@ class Runner:
 
         with self.lock:
             logger.info("Put nodes {} to queue".format(nodes))
-            self.running = False
             self.running_nodes = nodes
             self.ids = ids
 

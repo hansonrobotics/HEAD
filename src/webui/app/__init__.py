@@ -396,7 +396,7 @@ def load_params(param_file, namespace):
 
 
 def run_performance(performance):
-    Popen("rosservice call /performances/run_by_name \"{}\"".format(performance), shell=True)
+    Popen("rosservice call /performances/run_by_name \"idf/{}\"".format(performance), shell=True)
 
 
 if __name__ == '__main__':
