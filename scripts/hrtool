@@ -681,6 +681,14 @@ set_env() {
     set_ws
 cat <<EOF >>$HR_ENVFILE_PATH
 export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
+export HR_PREFIX=/opt/hansonrobotics
+export HR_CACHE=~/.hr/cache
+export VISION_TOOL_PREFIX=$HR_PREFIX/vision
+export DLIB_DIR=$VISION_TOOL_PREFIX/dlib
+export TORCH_DIR=$VISION_TOOL_PREFIX/torch
+export OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
+export CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
+export EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
 export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
