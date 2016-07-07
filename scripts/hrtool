@@ -15,22 +15,6 @@ OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
 
-SUDO=""
-if [[ $(id -u) != 0 ]]; then
-    SUDO="sudo"
-fi
-
-if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
-    echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
-    exit 1
-fi
-
-OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
-
-$SUDO mkdir -p $HR_PREFIX
-$SUDO chmod 777 $HR_PREFIX
-mkdir -p $VISION_TOOL_PREFIX
-
 COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
 COLOR_ERROR='\033[31m'
@@ -44,6 +28,24 @@ warn() {
 error() {
     printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
 }
+
+SUDO=""
+if [[ $(id -u) != 0 ]]; then
+    SUDO="sudo"
+fi
+
+if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
+    echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
+    exit 1
+fi
+
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+
+if [[ ! -d $HR_PREFIX ]]; then
+    info "Creating $HR_PREFIX"
+    $SUDO mkdir -p $HR_PREFIX
+    $SUDO chmod 777 $HR_PREFIX
+fi
 
 install_basic() {
     $SUDO apt-get -y update
@@ -185,6 +187,7 @@ install_test_deps() {
 }
 
 install_vision_deps() {
+    mkdir -p $VISION_TOOL_PREFIX
     $SUDO apt-get -y install ros-indigo-opencv-apps
 
     # Tkinter error other wise.
