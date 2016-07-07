@@ -52,6 +52,9 @@ class MaryTTSClient(TTSBase):
             f.write(response.content)
         tts_data = TTSData()
         tts_data.wavout = self.wavout
+
+        filters.balance_to_match_head(tts_data.wavout)
+
         return tts_data
 
 if __name__ == "__main__":

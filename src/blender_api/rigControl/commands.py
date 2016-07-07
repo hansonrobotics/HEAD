@@ -191,7 +191,9 @@ class EvaAPI(RigAPI):
     def setHeadRotation(self,rot):
         bpy.evaAnimationManager.setHeadRotation(rot)
         return 0
-
+    
+    def getHeadTarget(self):
+        return bpy.evaAnimationManager.headTargetLoc.current;
 
     def setGazeTarget(self, loc):
         mloc = [loc[1],  loc[0], loc[2]]

@@ -80,6 +80,8 @@ class FestivalTTSClient(TTSBase):
         tts_data.phonemes = self.get_phonemes()
         tts_data.visemes = self.viseme_config.get_visemes(tts_data.phonemes)
 
+        filters.balance_to_match_head(tts_data.wavout)
+
         os.remove(self.timing)
         os.remove(self.script)
         return tts_data
