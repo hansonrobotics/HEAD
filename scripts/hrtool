@@ -74,9 +74,6 @@ install_ros() {
     $SUDO apt-get -y install ros-indigo-rosbridge-server
     $SUDO apt-get -y install python-catkin-tools
 
-    # Ready made messages to be utilized form opencv-apps repo.
-    $SUDO apt-get -y install ros-indigo-opencv-apps
-
     # for camera calibration
     $SUDO apt-get -y install ros-indigo-image-proc
     # for blender to find ros packages
@@ -188,6 +185,7 @@ install_test_deps() {
 }
 
 install_vision_deps() {
+    $SUDO apt-get -y install ros-indigo-opencv-apps
 
     # Tkinter error other wise.
     info "Installing Pillow"
