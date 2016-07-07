@@ -129,11 +129,12 @@ def saccade(self):
         get=lambda _: '{:0.3f}s'.format(interval)))
 
     # Register GUI-controllable parameters
-    intervalMean, intervalVariation, paintScale = (
+    intervalMean, intervalVariation, paintScale, scale = (
         self.add_parameter(prop) for prop in [
             bpy.props.FloatProperty(name='interval mean', min=0.0, max=3.0, default=1.0),
             bpy.props.FloatProperty(name='interval variation', min=0.0, max=1.0, default=0.5),
-            bpy.props.FloatProperty(name='paint scale', min=0.0, max=5.0, default=1.0)
+            bpy.props.FloatProperty(name='paint scale', min=0.0, max=5.0, default=1.0),
+            bpy.props.FloatProperty(name='scale', min=0.0, max=2.0, default=1.0)
         ]
     )
 
@@ -162,8 +163,8 @@ def saccade(self):
         if time >= nexttime:
             # Calculate new eye offset
             pos = np.random.choice(mat.size, p=mat.flat)
-            pos = ((pos % mat.shape[0] - mat.shape[0]/2) * paintScale.val/mat.shape[0],
-                   (pos // mat.shape[0] - mat.shape[1]/2) * paintScale.val/mat.shape[1])
+            pos = ((pos % mat.shape[0] - mat.shape[0]/2) * paintScale.val * scale.val /mat.shape[0],
+                   (pos // mat.shape[0] - mat.shape[1]/2) * paintScale.val * scale.val /mat.shape[1])
 
             offset = [0,0,0]
             offset[0] = pos[0] # Horizontal

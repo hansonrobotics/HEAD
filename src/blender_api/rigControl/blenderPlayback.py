@@ -165,10 +165,19 @@ class BLPlayback(bpy.types.Operator):
 
             head_loc = eva.headTargetLoc.current
             head_loc[0] = -head_loc[0]
+            head_loc_old = eva.face_target
             headControl.location = head_loc
             eye_loc = eva.eyeTargetLoc.current
             eye_loc[1] = -eye_loc[1]
             eyeControl.location = eye_loc
+            if abs(head_loc[0] + head_loc_old[0]) > 0.01:
+                print(abs(head_loc[0] + head_loc_old[0]))
+                bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_scale = 0
+            else:
+                bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_scale = 1
+
+
+            scale = 0 if abs(head_loc[0] - head_loc_old[0]) else 1
             # Rotation
             headControl.rotation_euler[1] = eva.headRotation.current
             # udpate emotions

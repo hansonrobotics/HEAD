@@ -74,10 +74,11 @@ class RigAPI:
     # coordinates: 'x' is forward, 'y' to the left, and 'z' up.
     # Distances are measured in meters.  Origin of the coordinate
     # system is somewhere (where?) in the middle of the head.
-    def setFaceTarget(self, location):
+    # Speed is added for more control. Uses moving average over period of time
+    def setFaceTarget(self, location, speed=1.0):
         return None
 
-    def setGazeTarget(self, location):
+    def setGazeTarget(self, location, speed=1.0):
         return None
 
     # Head roll ----------------------------------
