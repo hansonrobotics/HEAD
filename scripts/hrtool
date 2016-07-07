@@ -667,13 +667,25 @@ set_ws() {
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
     HR_WORKSPACE=${HR_WORKSPACE%/}
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
+}
+
+set_env() {
+    set_ws
+cat <<EOF >>$HR_ENVFILE_PATH
+export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
+export ROS_LOG_DIR="$HOME/.hr/log"
+export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+source $TORCH_DIR/install/bin/torch-activate
+EOF
+
     cp $HR_ENVFILE_PATH $BASEDIR >/dev/null 2>&1 # For compatibility
 }
 
 execute() {
     parse_opts $@
-    set_ws
-
+    set_env
 
     if [[ $DEVELOPER_MODE == 1 ||
         $UPDATE_HR_SOURCE_CODE == 1 ||
