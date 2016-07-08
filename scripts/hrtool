@@ -35,6 +35,7 @@ error() {
 install_basic() {
     $SUDO apt-get -y update
     $SUDO apt-get -y install git
+    $SUDO apt-get -y install subversion
     $SUDO apt-get -y install wget
     $SUDO apt-get -y install python3-pip
     $SUDO apt-get -y install python-pip
