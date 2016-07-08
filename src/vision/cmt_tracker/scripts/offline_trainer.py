@@ -108,8 +108,9 @@ class OfflineViewer:
 
             for i in face.objects:
                 tupl = []
-                if (i.tool_used_for_detection.data != "dlib"):
+                if i.tool_used_for_detection.data == "opencv":
                     # Skip faces which don't have dlib configuraiton. Need to integrate ci2cv and compare results
+                    print(i.tool_used_for_detection.data)
                     continue
                 for pts in i.feature_point.points:
                     x, y = pts.x, pts.y
@@ -118,6 +119,7 @@ class OfflineViewer:
                 #Now let's query every single time to which results group it belongs to and box output the result
                 if not self.save_faces:
                     result = self.face_recognizer.immediate_results(cv_image, tupl)
+                    print(result)
                     font = cv2.FONT_HERSHEY_COMPLEX_SMALL
                     cv2.rectangle(cv_image, (i.object.x_offset, i.object.y_offset),
                                   (i.object.x_offset + i.object.width, i.object.y_offset + i.object.width), (255, 0, 0))

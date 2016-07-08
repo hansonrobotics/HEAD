@@ -27,7 +27,11 @@ thus run have a new dataset available during each particular run of openface in 
 Then to train the dataset run
 
         ./vision.sh cmt_offline
-        
+
+# How to use the Offline Trainer. 
+
+OpenFace uses images to train it's dataset. So to check the available set of iamges that we are going to train the system. 
+Go to HEAD/src/vision/images/Faces
 
 # Services Provided
 
