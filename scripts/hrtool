@@ -9,18 +9,30 @@ set -e
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 PROJECT=HEAD
+DEFAULT_HR_WORKSPACE=~/hansonrobotics
+HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
 HR_CACHE=~/.hr/cache
+
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+HR_REPOS=($PROJECT)
+
 VISION_TOOL_PREFIX=$HR_PREFIX/vision
 DLIB_DIR=$VISION_TOOL_PREFIX/dlib
 TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
-OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
-HR_REPOS=($PROJECT)
-DEFAULT_HR_WORKSPACE=~/hansonrobotics
-HR_ENVFILE_PATH=~/.hr/env.sh
+
+export DLIB_PATH=$DLIB_DIR/dlib-18.18
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+#Needed for compiling emotime as it's dependent upon it for it being built.
+export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+export DLIB_PATH=$DLIB_DIR/dlib-18.18
+include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
+include_path=$(printf "%s:" "${include_dirs[@]}")
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
+
 
 COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
@@ -453,16 +465,6 @@ _do_build_hr() {
         catkin init
     fi
 
-    #TODO remove items unnecessary here to take it all out.
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-    #Needed for compiling emotime as it's dependent upon it for it being built.
-    export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-    export DLIB_PATH=$DLIB_DIR/dlib-18.18
-    cd $HR_WORKSPACE/$PROJECT
-    include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
-    include_path=$(printf "%s:" "${include_dirs[@]}")
-    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
-
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
@@ -471,25 +473,13 @@ _do_build_hr() {
 }
 
 do_single_package() {
-
-    # With build a package.
-
-    # If package cmt_package.
-
     cd $HR_WORKSPACE/$PROJECT
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
         catkin init
     fi
 
-    include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
-    include_path=$(printf "%s:" "${include_dirs[@]}")
-    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
-
     if [ "$1" == "cmt_tracker" ]; then
-      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-      #Needed for compiling emotime as it's dependent upon it for it being built.
-      export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
       catkin build cmt_tracker_msgs cmt_tracker
     else
       catkin build $1
@@ -672,18 +662,25 @@ set_env() {
     set_ws
 cat <<EOF >>$HR_ENVFILE_PATH
 export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
-export HR_PREFIX=/opt/hansonrobotics
-export HR_CACHE=~/.hr/cache
-export VISION_TOOL_PREFIX=$HR_PREFIX/vision
-export DLIB_DIR=$VISION_TOOL_PREFIX/dlib
-export TORCH_DIR=$VISION_TOOL_PREFIX/torch
-export OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
-export CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
-export EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+export HR_PREFIX=$HR_PREFIX
+export HR_CACHE=$HR_CACHE
+
+export VISION_TOOL_PREFIX=$VISION_TOOL_PREFIX
+export DLIB_DIR=$DLIB_DIR
+export TORCH_DIR=$TORCH_DIR
+export OPENFACE_DIR=$OPENFACE_DIR
+export CPPMT_DIR=$CPPMT_DIR
+export EMOTIME_DIR=$EMOTIME_DIR
+
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
 export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+export LIBRARY_PATH=$LIBRARY_PATH
+export DLIB_PATH=$DLIB_PATH
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
+
 source $TORCH_DIR/install/bin/torch-activate
 EOF
 
