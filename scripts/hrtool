@@ -398,8 +398,6 @@ do_update_vision_tools() {
     fi
     info "Updating [$repo]"
     git pull origin $DEFAULT_BRANCH
-    cmake .
-    make -j$(nproc)
 }
 
 do_install_deps() {
@@ -459,6 +457,11 @@ do_build_hr() {
 }
 
 _do_build_hr() {
+    # build CppMT
+    cd $CPPMT_DIR
+    cmake .
+    make -j$(nproc)
+
     cd $HR_WORKSPACE/$PROJECT
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
