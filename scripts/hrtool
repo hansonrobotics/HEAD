@@ -6,6 +6,9 @@
 
 set -e
 
+BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+
+PROJECT=HEAD
 HR_PREFIX=/opt/hansonrobotics
 HR_CACHE=~/.hr/cache
 VISION_TOOL_PREFIX=$HR_PREFIX/vision
@@ -14,6 +17,10 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+HR_REPOS=($PROJECT)
+DEFAULT_HR_WORKSPACE=~/hansonrobotics
+HR_ENVFILE_PATH=~/.hr/env.sh
 
 COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
@@ -29,6 +36,8 @@ error() {
     printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
 }
 
+export PATH=/usr/lib/ccache:$PATH
+
 SUDO=""
 if [[ $(id -u) != 0 ]]; then
     SUDO="sudo"
@@ -38,8 +47,6 @@ if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
     echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
     exit 1
 fi
-
-OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 
 if [[ ! -d $HR_CACHE ]]; then
     info "Creating $HR_CACHE"
@@ -352,7 +359,7 @@ update_opencog() {
 
 do_update_hr() {
     local DEFAULT_BRANCH="master"
-    for repo in $PROJECT
+    for repo in ${HR_REPOS[*]}
     do
         cd $HR_WORKSPACE/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
@@ -391,8 +398,11 @@ _do_install_deps() {
 }
 
 do_get_hr_src() {
-    cd $HR_WORKSPACE
-    clone hansonrobotics $PROJECT
+    for repo in ${HR_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        clone hansonrobotics $repo
+    done
 }
 
 do_get_src() {
@@ -731,17 +741,10 @@ execute() {
     if [[ $RUN_CUSTOM_FUNCTIONS ]]; then do_run $CUSTOM_FUNCTIONS ; fi
 }
 
-BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
-
 for i in $(env|grep ROS|cut -d= -f1); do
     unset $i
 done
 unset HR_WORKSPACE
-
-DEFAULT_HR_WORKSPACE=~/hansonrobotics
-HR_ENVFILE_PATH=~/.hr/env.sh
-PROJECT=HEAD
-export PATH=/usr/lib/ccache:$PATH
 
 ############
 
