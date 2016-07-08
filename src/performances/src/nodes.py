@@ -11,6 +11,7 @@ from topic_tools.srv import MuxSelect
 import time
 import logging
 import random
+from threading import Timer
 
 logger = logging.getLogger('hr.performances.nodes')
 
@@ -240,27 +241,34 @@ class pause(Node):
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
         self.subscriber = False
+        self.timer = False
 
     def start(self, run_time):
         self.runner.pause()
         if 'topic' in self.data:
             topic = self.data['topic'].strip()
             if topic:
-                def resume(msg):
+                def resume(msg=None):
                     if not self.finished:
                         self.runner.resume()
-
                     if self.subscriber:
                         self.subscriber.unregister()
+                    if self.timer:
+                        self.timer.cancel()
 
                 if topic[0] != '/':
                     topic = '/' + self.runner.robot_name + '/' + topic
 
                 self.subscriber = rospy.Subscriber(topic, String, resume)
+        if 'timeout' in self.data and self.data['timeout'] > 0.1:
+            self.timer = Timer(self.data['timeout'], resume)
 
     def stop(self, run_time):
         if self.subscriber:
             self.subscriber.unregister()
+        if self.timer:
+            self.timer.cancel()
+
 
     def end_time(self):
         return self.start_time + 0.1
