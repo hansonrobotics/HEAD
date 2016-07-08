@@ -44,7 +44,7 @@ if [[ $(id -u) != 0 ]]; then
 fi
 
 if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
-    echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
+    error "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
     exit 1
 fi
 
@@ -353,6 +353,7 @@ update_opencog() {
             warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
+        info "Updating [${repo}]"
         git pull origin $DEFAULT_BRANCH
     done
 }
@@ -367,6 +368,7 @@ do_update_hr() {
             warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
+        info "Updating [${repo}]"
         git pull origin $DEFAULT_BRANCH
     done
     do_update_vision_tools
@@ -376,10 +378,13 @@ do_update_vision_tools() {
     #Update CMT
     local DEFAULT_BRANCH="wrapper"
     cd $CPPMT_DIR
+    repo=CppMT
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [[ $branch != $DEFAULT_BRANCH ]]; then
+        warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
         continue
     fi
+    info "Updating [$repo]"
     git pull origin $DEFAULT_BRANCH
     cmake .
     make -j$(nproc)
@@ -521,36 +526,9 @@ do_update() {
 
 do_clean_up() {
     set +e
-    echo "Cleaning up"
+    info "Cleaning up"
     _do_clean_up >/dev/null 2>&1
-    echo "Done"
-    set -e
-}
-
-_do_clean_up() {
-    rm -r ~/.cache/guile/ccache
-    if [[ ! -z $HR_WORKSPACE ]]; then
-        for repo in ${OPENCOG_REPOS[*]}
-        do
-            if [[ $repo != 'relex' ]]; then
-                sudo rm -r $HR_WORKSPACE/opencog/$repo/build
-            fi
-        done
-    fi
-    sudo rm -r /usr/local/include/opencog
-    sudo rm -r /usr/local/lib/opencog
-    sudo rm -r /usr/local/share/opencog
-    sudo rm /usr/local/bin/cogserver
-    sudo rm /usr/local/etc/cogserver.conf
-    sudo rm /usr/local/etc/opencog.conf
-    sudo rm /usr/local/lib/libcogutil.so
-}
-
-do_clean_up() {
-    set +e
-    echo "Cleaning up"
-    _do_clean_up >/dev/null 2>&1
-    echo "Done"
+    info "Done"
     set -e
 }
 
@@ -575,7 +553,7 @@ _do_clean_up() {
 
 do_run() {
     while [[ $# > 0 ]]; do
-        echo "Running $1"
+        info "Running $1"
         $1
         shift
     done
@@ -655,12 +633,12 @@ parse_opts() {
         d) DEVELOPER_MODE=1 ;;
         c) CLEANUP=1 ;;
         \?)
-            echo "Invalid option: -$OPTARG" >&2
+            error "Invalid option: -$OPTARG" >&2
             show_help
             exit 1
             ;;
         :)
-            echo "Option -$OPTARG requires an argument." >&2
+            error "Option -$OPTARG requires an argument." >&2
             show_help
             exit 1
             ;;
@@ -682,7 +660,7 @@ set_ws() {
     fi
     check_or_create_ws $HR_WORKSPACE
     if [[ ! -d $HR_WORKSPACE ]]; then
-        echo "HR_WORKSPACE is incorrect, exit"
+        error "HR_WORKSPACE is incorrect, exit"
         exit 1;
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
