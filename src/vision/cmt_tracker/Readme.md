@@ -27,7 +27,12 @@ thus run have a new dataset available during each particular run of openface in 
 Then to train the dataset run
 
         ./vision.sh cmt_offline
-#API
+        
+
+# Services Provided
+
+# Configuration 
+
 
 # Urgent TODO's
 
@@ -40,4 +45,5 @@ to push them to the main tracker queue.
 * Remove unnecessary arguments and parameters in the launcher and code so to make it entirely configurable.
 * Write a documentation and clear API to trigger adding faces to the dataset.
 * Resolve how to deal with the openface current limitiation that training can be done from the local image.
-* Pose based image saving.
+* Help implement the issues discussed at this parituclar locations: https://github.com/cmusatyalab/openface/issues/144
+* Pose based image saving for variety. 
