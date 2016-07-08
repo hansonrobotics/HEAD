@@ -147,7 +147,7 @@ class face_predictor:
         for j in face.objects:
             overlap = False
             SA = j.object.height * j.object.width
-            if (j.tool_used_for_detection.data != "dlib" or j.tool_used_for_detection.data != "dlib_u"):
+            if j.tool_used_for_detection.data == "opencv":
                 #Skip faces which don't have dlib configuraiton. Need to integrate ci2cv and compare results
                 continue
             for i in cmt.tracker_results:
