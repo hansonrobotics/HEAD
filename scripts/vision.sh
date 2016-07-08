@@ -4,12 +4,28 @@
 export BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 eval $($BASEDIR/hrtool -p|grep -E ^HR_WORKSPACE=)
 export HR_WORKSPACE=$HR_WORKSPACE
-
-. $HR_WORKSPACE/torch/install/bin/torch-activate
-
+export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
+export HR_PREFIX=/opt/hansonrobotics
+export HR_CACHE=~/.hr/cache
+export VISION_TOOL_PREFIX=$HR_PREFIX/vision
+export DLIB_DIR=$VISION_TOOL_PREFIX/dlib
+export TORCH_DIR=$VISION_TOOL_PREFIX/torch
+export OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
+export CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
+export EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+export ROS_LOG_DIR="$HOME/.hr/log"
+export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+source $TORCH_DIR/install/bin/torch-activate
 source $HR_WORKSPACE/HEAD/devel/setup.bash
-export PYTHONPATH=$PYTHONPATH:$HR_WORKSPACE/HEAD/src/vision/openface/:$HR_WORKSPACE/HEAD/src/vision/dlib-18.18/dist/
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_WORKSPACE/HEAD/src/vision/CppMT/:$HR_WORKSPACE/HEAD/src/vision/emotime/build/src
+export DLIB_PATH=$DLIB_DIR/dlib-18.18
+
+cd $HR_WORKSPACE/$PROJECT
+
+include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
+include_path=$(printf "%s:" "${include_dirs[@]}")
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
 
 export tool="$1"
 if [[ -z $tool ]]; then
@@ -40,3 +56,6 @@ case $tool in
 esac
 # Enable visualzation tools
 #roslaunch robots_config perception.launch
+
+
+

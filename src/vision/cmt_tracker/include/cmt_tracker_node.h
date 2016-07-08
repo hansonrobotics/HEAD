@@ -206,6 +206,7 @@ private:
 
 	//the threshold value that is passed to the cmt instance. 
 	double factor;
+	int delete_counter;
 	int downgrade;
 
 	//for setting the tracking to higher levels.

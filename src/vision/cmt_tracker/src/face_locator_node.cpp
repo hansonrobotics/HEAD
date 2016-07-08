@@ -124,10 +124,14 @@ cameramodel.fromCameraInfo(camerainfo);
     thread_1.join();
 
     //Now let's filter
-    cmt_tracker_msgs::Objects cv_message = returnOverlapping(dlib_faces,opencv_faces);
-    for(int i= 0; i < cv_message.objects.size(); i++)
+    merged_message cv_message = returnNoneOverlappingCV(dlib_faces,opencv_faces);
+    for(int i= 0; i < cv_message.message.objects.size(); i++)
     {
-        cmt_face_locations.objects.push_back(cv_message.objects[i]);
+        cmt_face_locations.objects.push_back(cv_message.message.objects[i]);
+    }
+    for(int i= 0; i < cv_message.overlapedDlibCV.size(); i++)
+    {
+        cmt_face_locations.objects[cv_message.overlapedDlibCV[i]].tool_used_for_detection.data = "dlib_u";
     }
     cmt_face_locations.header.stamp = ros::Time::now();
     faces_locations.publish(cmt_face_locations);
@@ -145,10 +149,6 @@ cameramodel.fromCameraInfo(camerainfo);
      dlib::pyramid_up(img);
      std::vector<dlib::rectangle> facesd = detector(img);
      std::vector<dlib::full_object_detection> pose_shapes;
-//     win.clear_overlay();
-//     win.set_image(cimg);
-     //win.add_overlay(facesd, dlib::rgb_pixel(255,0,0));
-     //Now the rectangles are giving value based on the upscaled value of the rectangle. Now let's down sample it.
      for(size_t i = 0; i < facesd.size(); i++)
      {
         dlib::full_object_detection shape= sp(img,facesd[i]);
@@ -175,8 +175,6 @@ cameramodel.fromCameraInfo(camerainfo);
             face_description.feature_point.points.push_back(pt);
         }
         auto pose = facepose(face_description);
-//        cv::imshow("ello",_debug);
-//        cv::waitKey(30);
         tf::Transform face_pose;
 
         auto z = -pose(2,3);
@@ -320,70 +318,6 @@ head_pose Face_Detection::facepose(cmt_tracker_msgs::Object face_description)
                     0,                0,                0,                     1
     };
 
-//    std::vector<cv::Point3d> axes;
-//    std::vector<cv::Point2d> projected_axes;
-//
-//    axes.clear();
-//    axes.push_back(toPoint3d(pose * cv::Vec4d(0,0,0,1)));
-//    axes.push_back(toPoint3d(pose * cv::Vec4d(0.05,0,0,1))); // axis are 5cm long
-//    axes.push_back(toPoint3d(pose * cv::Vec4d(0,0.05,0,1)));
-//    axes.push_back(toPoint3d(pose * cv::Vec4d(0,0,0.05,1)));
-//
-//    projectPoints(axes, cv::Vec3f(0.,0.,0.), cv::Vec3f(0.,0.,0.), projection, cv::noArray(), projected_axes);
-//
-//    line(_debug, projected_axes[0], projected_axes[1], cv::Scalar(255,0,0),2,CV_AA);
-//    line(_debug, projected_axes[0], projected_axes[2], cv::Scalar(0,255,0),2,CV_AA);
-//    line(_debug, projected_axes[0], projected_axes[3], cv::Scalar(0,0,255),2,CV_AA);
-//
-//    auto P0 = toVec3d(pose.col(3)); // translation component of the pose
-//    auto V = toVec3d(pose * cv::Vec4d(1,0,0,1)) - P0;
-//    cv::normalize(V,V);
-//    auto N = cv::Vec3d(0,0,1);
-//
-//    auto t = - (P0.dot(N)) / (V.dot(N));
-//
-//    auto P = P0 + t * V;
-
-//    std::cout << std::endl << "Origin of the gaze: " << P0 << std::endl;
-//    std::cout << "Gaze vector: " << V << std::endl;
-//    std::cout << "Position of the gaze on the screen: " << P << std::endl;
-
-//    axes.clear();
-//    axes.push_back(cv::Point3d(V * 0.1 + P0));
-//    axes.push_back(cv::Point3d(cv::Vec3d(P0)));
-//
-//    projectPoints(axes, cv::Vec3f(0.,0.,0.), cv::Vec3f(0.,0.,0.), projection, cv::noArray(), projected_axes);
-//
-//    line(_debug, projected_axes[0], projected_axes[1], cv::Scalar(255,255,255),2,CV_AA);
-
-//
-//#ifdef HEAD_POSE_ESTIMATION_DEBUG
-//
-//    std::vector<Point2f> reprojected_points;
-//
-//    projectPoints(head_points, rvec, tvec, projection, noArray(), reprojected_points);
-//
-//    for (auto point : reprojected_points) {
-//        circle(_debug, point,2, Scalar(0,255,255),2);
-//    }
-//
-//    std::vector<Point3f> axes;
-//    axes.push_back(Point3f(0,0,0));
-//    axes.push_back(Point3f(50,0,0));
-//    axes.push_back(Point3f(0,50,0));
-//    axes.push_back(Point3f(0,0,50));
-//    std::vector<Point2f> projected_axes;
-//
-//    projectPoints(axes, rvec, tvec, projection, noArray(), projected_axes);
-//
-//    line(_debug, projected_axes[0], projected_axes[3], Scalar(255,0,0),2,CV_AA);
-//    line(_debug, projected_axes[0], projected_axes[2], Scalar(0,255,0),2,CV_AA);
-//    line(_debug, projected_axes[0], projected_axes[1], Scalar(0,0,255),2,CV_AA);
-//
-//    putText(_debug, "(" + to_string(int(pose(0,3) * 100)) + "cm, " + to_string(int(pose(1,3) * 100)) + "cm, " + to_string(int(pose(2,3) * 100)) + "cm)", coordsOf(face_idx, SELLION), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0,0,255),2);
-//
-//
-//#endif
 
     return pose;
 }
@@ -407,10 +341,12 @@ cmt_tracker_msgs::Objects convert(std::vector<cv::Rect> faces)
   return tracker_description;
 }
 
-cmt_tracker_msgs::Objects returnOverlapping(std::vector<cv::Rect> dlib_locations, std::vector<cv::Rect> opencv_locs)
+merged_message returnNoneOverlappingCV(std::vector<cv::Rect> dlib_locations, std::vector<cv::Rect> opencv_locs)
 {
 //This function returns non overlapped Rects for the opencv to be published
+merged_message message;
 std::vector<cv::Rect> non_overlaped_rects;
+std::vector<int> string_val;
   for (int i = 0; i < opencv_locs.size(); i++)
     {
     bool overlap = false;
@@ -422,15 +358,19 @@ std::vector<cv::Rect> non_overlaped_rects;
 
      overlap = (intersection_area/union_area) > 0.5;
      if (overlap)
+     {
+     string_val.push_back(j);
      break;
+     }
     }
 
     if(!overlap)
     non_overlaped_rects.push_back(opencv_locs[i]);
 
     }
-
-    return convert(non_overlaped_rects);
+    message.message = convert(non_overlaped_rects);
+    message.overlapedDlibCV = string_val;
+    return message;
 }
 
 }
