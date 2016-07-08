@@ -611,7 +611,7 @@ EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUvtpr:s:dc" opt; do
+    while getopts ":hw:igGbBuUvtpr:s:dc" opt; do
         case $opt in
         h)
             show_help
