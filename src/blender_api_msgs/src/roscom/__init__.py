@@ -294,6 +294,11 @@ class CommandWrappers:
         #sets only pitch and roll
         api.setHeadRotation(msg.data)
 
+    @publish_live("~get_head_target", msg.Target)
+    def getHeadTarget():
+        val = api.getHeadTarget();
+        return msg.Target(val[0],val[1],val[2])
+
     # Pau messages --------------------------------
     @publish_live("~get_pau", paumsg.pau)
     def getPau():
