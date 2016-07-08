@@ -300,7 +300,7 @@ class face_reinforcer:
 
 
         self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element[6],self.window_size))]
-        print(self.persistance_face)
+        # print(self.persistance_face)
 
         return not_covered_faces, overlaped_faces, not_good
     def determine(self, get_element,j):
