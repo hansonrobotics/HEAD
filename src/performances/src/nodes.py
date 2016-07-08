@@ -323,7 +323,9 @@ class attention(Node):
             point = self.get_point(self.data['attention_region'])
         else:
             point = self.data
-        self.runner.topics[self.topic].publish(Target(point['x'], point['y'], point['z'],1))
+
+        speed = 1 if 'speed' not in self.data else self.data['speed']
+        self.runner.topics[self.topic].publish(Target(point['x'], point['y'], point['z'], speed))
 
 
 class look_at(attention):
