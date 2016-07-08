@@ -7,6 +7,7 @@
 set -e
 
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+HR_VERSION=0.1.0
 
 PROJECT=HEAD
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
@@ -599,12 +600,13 @@ Usage: $0 OPTION
 -c      Clean up files.
 -h      Print this help.
 -s      Build a single package specified.
+-m      Migrate.
 
 EOF
 }
 
 parse_opts() {
-    while getopts ":hw:igGbBuUvtpr:s:dc" opt; do
+    while getopts ":hw:igGbBuUvtpr:s:dcm" opt; do
         case $opt in
         h)
             show_help
@@ -625,6 +627,7 @@ parse_opts() {
         r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
         d) DEVELOPER_MODE=1 ;;
         c) CLEANUP=1 ;;
+        m) MIGRATE=1 ;;
         \?)
             error "Invalid option: -$OPTARG" >&2
             show_help
@@ -664,6 +667,7 @@ set_ws() {
 set_env() {
     set_ws
 cat <<EOF >>$HR_ENVFILE_PATH
+export HR_VERSION=$HR_VERSION
 export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
 export HR_PREFIX=$HR_PREFIX
 export HR_CACHE=$HR_CACHE
@@ -688,6 +692,21 @@ source $TORCH_DIR/install/bin/torch-activate
 EOF
 
     cp $HR_ENVFILE_PATH $BASEDIR >/dev/null 2>&1 # For compatibility
+}
+
+_change_remote() {
+    repo_url=$1
+    branch=$2
+    git remote remove old 2>&1 1>/dev/null || true
+    git remote rename origin old
+    git remote add -f origin $repo_url
+    git branch $branch -u origin/$branch
+    git reset --hard origin/$branch
+}
+
+do_migrate() {
+    [[ -d $EMOTIME_DIR ]] && cd $EMOTIME_DIR &&  _change_remote https://github.com/hansonrobotics/emotime.git master
+    [[ -d $CPPMT_DIR ]] && cd $CPPMT_DIR && _change_remote https://github.com/hansonrobotics/CppMT.git wrapper
 }
 
 execute() {
@@ -717,6 +736,7 @@ execute() {
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
     if [[ $BUILD_SINGLE_PKG ]]; then do_single_package $CUSTOM_FUNCTIONS ; fi
     if [[ $RUN_CUSTOM_FUNCTIONS ]]; then do_run $CUSTOM_FUNCTIONS ; fi
+    if [[ $MIGRATE ]]; then do_migrate ; fi
 }
 
 for i in $(env|grep ROS|cut -d= -f1); do
