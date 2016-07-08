@@ -98,15 +98,33 @@ class Node(object):
             except:
                 return 0.0
 
+
 class speech(Node):
+
+    def __init__(self, data, runner):
+        Node.__init__(self, data, runner)
+        if 'pitch' not in data:
+            self.data['pitch'] = 1.0
+        if 'speed' not in data:
+            self.data['speed'] = 1.0
+        if 'volume' not in data:
+            self.data['volume'] = 1.0
+
+
     def start(self, run_time):
         self.say(self.data['text'], self.data['lang'])
 
     def say(self, text, lang):
         if lang not in ['en', 'zh']:
             lang = 'default'
+        text = self._add_ssml(text)
         self.runner.topics['tts'][lang].publish(String(text))
 
+    # adds SSML tags for whole text returns updated text.
+
+    def _add_ssml(self, txt):
+        return '<prosody rate="%.2f" pitch="%+d%%" volume="%+d%%">%s</prosody>' % \
+               (self.data['speed'], 100*(self.data['pitch']-1), 100*(self.data['volume']-1), txt)
 
 class gesture(Node):
     def start(self, run_time):
@@ -167,7 +185,6 @@ class soma(Node):
         s.ease_in.nsecs = 0
         s.name = self.data['soma']
         self.runner.topics['soma_state'].publish(s)
-
 
 
 class expression(Node):
@@ -303,6 +320,7 @@ class chat_pause(Node):
         if self.subscriber:
             self.subscriber.unregister()
             self.subscriber = False
+
 
 class attention(Node):
     # Find current region at runtime
