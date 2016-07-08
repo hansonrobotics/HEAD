@@ -372,6 +372,8 @@ update_opencog() {
 }
 
 do_update_hr() {
+    do_migrate
+
     local DEFAULT_BRANCH="master"
     for repo in ${HR_REPOS[*]}
     do
@@ -705,8 +707,14 @@ _change_remote() {
 }
 
 do_migrate() {
-    [[ -d $EMOTIME_DIR ]] && cd $EMOTIME_DIR &&  _change_remote https://github.com/hansonrobotics/emotime.git master
-    [[ -d $CPPMT_DIR ]] && cd $CPPMT_DIR && _change_remote https://github.com/hansonrobotics/CppMT.git wrapper
+    if [[ -d $EMOTIME_DIR ]]; then
+        info "Migrating [emotime]"
+        cd $EMOTIME_DIR &&  _change_remote https://github.com/hansonrobotics/emotime.git master
+    fi
+    if [[ -d $CPPMT_DIR ]]; then
+        info "Migrating [CppMT]"
+        cd $CPPMT_DIR && _change_remote https://github.com/hansonrobotics/CppMT.git wrapper
+    fi
 }
 
 execute() {
