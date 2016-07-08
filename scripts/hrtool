@@ -24,6 +24,7 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
 
 export DLIB_PATH=$DLIB_DIR/dlib-18.18
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
@@ -69,7 +70,6 @@ fi
 install_basic() {
     $SUDO apt-get -y update
     $SUDO apt-get -y install git
-    $SUDO apt-get -y install subversion
     $SUDO apt-get -y install wget
     $SUDO apt-get -y install python3-pip
     $SUDO apt-get -y install python-pip
@@ -196,8 +196,11 @@ install_other_deps() {
     $SUDO apt-get -y install expect
 
     # For manyears
-    $SUDO apt-get -y install subversion
+    wget https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz -O /tmp/manyears.tar.gz
+    tar zxf /tmp/manyears.tar.gz -C $HR_PREFIX
+    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
 }
+
 
 install_test_deps() {
     $SUDO apt-get -y install socat
@@ -689,6 +692,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LIBRARY_PATH
 export DLIB_PATH=$DLIB_PATH
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
+export MANYEARSLIB_PREFIX=$MANYEARSLIB_PREFIX
 
 source $TORCH_DIR/install/bin/torch-activate
 EOF

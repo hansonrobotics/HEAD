@@ -19,16 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 # catkin_python_setup()
 
-# The ManyEars library can be found on SourceForge, and will be built internally
-# to this package as an external project.
-include(ExternalProject)
-externalproject_add(
-    manyearslib
-    SVN_REPOSITORY     http://svn.code.sf.net/p/manyears/code/trunk/manyears-C
-    BUILD_COMMAND      make
-)
-set(manyearslib_PREFIX
-    ${CMAKE_CURRENT_BINARY_DIR}/manyearslib-prefix/src/manyearslib)
+set(manyearslib_PREFIX $ENV{MANYEARSLIB_PREFIX})
 
 ################################################
 ## Declare ROS messages, services and actions ##
