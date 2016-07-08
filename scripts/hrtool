@@ -275,7 +275,7 @@ install_vision_deps() {
 
     # CMT and Emotime Libraries.
     if [ ! -d $CPPMT_DIR ]; then
-      git clone https://github.com/tesYolan/CppMT.git $CPPMT_DIR
+      git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
       cd $CPPMT_DIR
       git checkout wrapper
       cmake .
@@ -285,7 +285,7 @@ install_vision_deps() {
     fi
 
     if [ ! -d $EMOTIME_DIR ]; then
-      git clone https://github.com/tesYolan/emotime.git $EMOTIME_DIR
+      git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
       cd $EMOTIME_DIR/build
       cmake ..
       make -j$(nproc)
