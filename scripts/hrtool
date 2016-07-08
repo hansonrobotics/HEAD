@@ -6,14 +6,34 @@
 
 set -e
 
+BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+HR_VERSION=0.1.0
+
+PROJECT=HEAD
+DEFAULT_HR_WORKSPACE=~/hansonrobotics
+HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
 HR_CACHE=~/.hr/cache
+
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+HR_REPOS=($PROJECT)
+
 VISION_TOOL_PREFIX=$HR_PREFIX/vision
 DLIB_DIR=$VISION_TOOL_PREFIX/dlib
 TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+
+export DLIB_PATH=$DLIB_DIR/dlib-18.18
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+#Needed for compiling emotime as it's dependent upon it for it being built.
+export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+export DLIB_PATH=$DLIB_DIR/dlib-18.18
+include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
+include_path=$(printf "%s:" "${include_dirs[@]}")
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
+
 
 COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
@@ -29,17 +49,17 @@ error() {
     printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
 }
 
+export PATH=/usr/lib/ccache:$PATH
+
 SUDO=""
 if [[ $(id -u) != 0 ]]; then
     SUDO="sudo"
 fi
 
 if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
-    echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
+    error "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
     exit 1
 fi
-
-OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 
 if [[ ! -d $HR_CACHE ]]; then
     info "Creating $HR_CACHE"
@@ -49,6 +69,7 @@ fi
 install_basic() {
     $SUDO apt-get -y update
     $SUDO apt-get -y install git
+    $SUDO apt-get -y install subversion
     $SUDO apt-get -y install wget
     $SUDO apt-get -y install python3-pip
     $SUDO apt-get -y install python-pip
@@ -192,9 +213,8 @@ install_vision_deps() {
     if [[ ! -d $HR_PREFIX ]]; then
         info "Creating $HR_PREFIX"
         $SUDO mkdir -p $HR_PREFIX
-        $SUDO chmod 777 $HR_PREFIX
     fi
-
+    $SUDO chmod 777 $HR_PREFIX
     mkdir -p $VISION_TOOL_PREFIX
     $SUDO apt-get -y install ros-indigo-opencv-apps
 
@@ -256,7 +276,7 @@ install_vision_deps() {
 
     # CMT and Emotime Libraries.
     if [ ! -d $CPPMT_DIR ]; then
-      git clone https://github.com/tesYolan/CppMT.git $CPPMT_DIR
+      git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
       cd $CPPMT_DIR
       git checkout wrapper
       cmake .
@@ -266,7 +286,7 @@ install_vision_deps() {
     fi
 
     if [ ! -d $EMOTIME_DIR ]; then
-      git clone https://github.com/tesYolan/emotime.git $EMOTIME_DIR
+      git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
       cd $EMOTIME_DIR/build
       cmake ..
       make -j$(nproc)
@@ -346,13 +366,16 @@ update_opencog() {
             warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
+        info "Updating [${repo}]"
         git pull origin $DEFAULT_BRANCH
     done
 }
 
 do_update_hr() {
+    do_migrate
+
     local DEFAULT_BRANCH="master"
-    for repo in $PROJECT
+    for repo in ${HR_REPOS[*]}
     do
         cd $HR_WORKSPACE/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
@@ -360,6 +383,7 @@ do_update_hr() {
             warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
+        info "Updating [${repo}]"
         git pull origin $DEFAULT_BRANCH
     done
     do_update_vision_tools
@@ -369,13 +393,14 @@ do_update_vision_tools() {
     #Update CMT
     local DEFAULT_BRANCH="wrapper"
     cd $CPPMT_DIR
+    repo=CppMT
     branch=$(git rev-parse --abbrev-ref HEAD)
     if [[ $branch != $DEFAULT_BRANCH ]]; then
+        warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
         continue
     fi
+    info "Updating [$repo]"
     git pull origin $DEFAULT_BRANCH
-    cmake .
-    make -j$(nproc)
 }
 
 do_install_deps() {
@@ -391,8 +416,11 @@ _do_install_deps() {
 }
 
 do_get_hr_src() {
-    cd $HR_WORKSPACE
-    clone hansonrobotics $PROJECT
+    for repo in ${HR_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        clone hansonrobotics $repo
+    done
 }
 
 do_get_src() {
@@ -432,21 +460,16 @@ do_build_hr() {
 }
 
 _do_build_hr() {
+    # build CppMT
+    cd $CPPMT_DIR
+    cmake .
+    make -j$(nproc)
+
     cd $HR_WORKSPACE/$PROJECT
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
         catkin init
     fi
-
-    #TODO remove items unnecessary here to take it all out.
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-    #Needed for compiling emotime as it's dependent upon it for it being built.
-    export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-    export DLIB_PATH=$DLIB_DIR/dlib-18.18
-    cd $HR_WORKSPACE/$PROJECT
-    include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
-    include_path=$(printf "%s:" "${include_dirs[@]}")
-    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
 
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status
@@ -456,25 +479,13 @@ _do_build_hr() {
 }
 
 do_single_package() {
-
-    # With build a package.
-
-    # If package cmt_package.
-
     cd $HR_WORKSPACE/$PROJECT
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
         catkin init
     fi
 
-    include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
-    include_path=$(printf "%s:" "${include_dirs[@]}")
-    export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
-
     if [ "$1" == "cmt_tracker" ]; then
-      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-      #Needed for compiling emotime as it's dependent upon it for it being built.
-      export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
       catkin build cmt_tracker_msgs cmt_tracker
     else
       catkin build $1
@@ -511,36 +522,9 @@ do_update() {
 
 do_clean_up() {
     set +e
-    echo "Cleaning up"
+    info "Cleaning up"
     _do_clean_up >/dev/null 2>&1
-    echo "Done"
-    set -e
-}
-
-_do_clean_up() {
-    rm -r ~/.cache/guile/ccache
-    if [[ ! -z $HR_WORKSPACE ]]; then
-        for repo in ${OPENCOG_REPOS[*]}
-        do
-            if [[ $repo != 'relex' ]]; then
-                sudo rm -r $HR_WORKSPACE/opencog/$repo/build
-            fi
-        done
-    fi
-    sudo rm -r /usr/local/include/opencog
-    sudo rm -r /usr/local/lib/opencog
-    sudo rm -r /usr/local/share/opencog
-    sudo rm /usr/local/bin/cogserver
-    sudo rm /usr/local/etc/cogserver.conf
-    sudo rm /usr/local/etc/opencog.conf
-    sudo rm /usr/local/lib/libcogutil.so
-}
-
-do_clean_up() {
-    set +e
-    echo "Cleaning up"
-    _do_clean_up >/dev/null 2>&1
-    echo "Done"
+    info "Done"
     set -e
 }
 
@@ -565,7 +549,7 @@ _do_clean_up() {
 
 do_run() {
     while [[ $# > 0 ]]; do
-        echo "Running $1"
+        info "Running $1"
         $1
         shift
     done
@@ -618,12 +602,13 @@ Usage: $0 OPTION
 -c      Clean up files.
 -h      Print this help.
 -s      Build a single package specified.
+-m      Migrate.
 
 EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUvtpr:s:dc" opt; do
+    while getopts ":hw:igGbBuUvtpr:s:dcm" opt; do
         case $opt in
         h)
             show_help
@@ -644,13 +629,14 @@ parse_opts() {
         r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
         d) DEVELOPER_MODE=1 ;;
         c) CLEANUP=1 ;;
+        m) MIGRATE=1 ;;
         \?)
-            echo "Invalid option: -$OPTARG" >&2
+            error "Invalid option: -$OPTARG" >&2
             show_help
             exit 1
             ;;
         :)
-            echo "Option -$OPTARG requires an argument." >&2
+            error "Option -$OPTARG requires an argument." >&2
             show_help
             exit 1
             ;;
@@ -672,7 +658,7 @@ set_ws() {
     fi
     check_or_create_ws $HR_WORKSPACE
     if [[ ! -d $HR_WORKSPACE ]]; then
-        echo "HR_WORKSPACE is incorrect, exit"
+        error "HR_WORKSPACE is incorrect, exit"
         exit 1;
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
@@ -683,23 +669,52 @@ set_ws() {
 set_env() {
     set_ws
 cat <<EOF >>$HR_ENVFILE_PATH
+export HR_VERSION=$HR_VERSION
 export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
-export HR_PREFIX=/opt/hansonrobotics
-export HR_CACHE=~/.hr/cache
-export VISION_TOOL_PREFIX=$HR_PREFIX/vision
-export DLIB_DIR=$VISION_TOOL_PREFIX/dlib
-export TORCH_DIR=$VISION_TOOL_PREFIX/torch
-export OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
-export CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
-export EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+export HR_PREFIX=$HR_PREFIX
+export HR_CACHE=$HR_CACHE
+
+export VISION_TOOL_PREFIX=$VISION_TOOL_PREFIX
+export DLIB_DIR=$DLIB_DIR
+export TORCH_DIR=$TORCH_DIR
+export OPENFACE_DIR=$OPENFACE_DIR
+export CPPMT_DIR=$CPPMT_DIR
+export EMOTIME_DIR=$EMOTIME_DIR
+
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
 export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+export LIBRARY_PATH=$LIBRARY_PATH
+export DLIB_PATH=$DLIB_PATH
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
+
 source $TORCH_DIR/install/bin/torch-activate
 EOF
 
     cp $HR_ENVFILE_PATH $BASEDIR >/dev/null 2>&1 # For compatibility
+}
+
+_change_remote() {
+    repo_url=$1
+    branch=$2
+    git remote remove old 2>&1 1>/dev/null || true
+    git remote rename origin old
+    git remote add -f origin $repo_url
+    git branch $branch -u origin/$branch
+    git reset --hard origin/$branch
+}
+
+do_migrate() {
+    if [[ -d $EMOTIME_DIR ]]; then
+        info "Migrating [emotime]"
+        cd $EMOTIME_DIR &&  _change_remote https://github.com/hansonrobotics/emotime.git master
+    fi
+    if [[ -d $CPPMT_DIR ]]; then
+        info "Migrating [CppMT]"
+        cd $CPPMT_DIR && _change_remote https://github.com/hansonrobotics/CppMT.git wrapper
+    fi
 }
 
 execute() {
@@ -729,19 +744,13 @@ execute() {
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
     if [[ $BUILD_SINGLE_PKG ]]; then do_single_package $CUSTOM_FUNCTIONS ; fi
     if [[ $RUN_CUSTOM_FUNCTIONS ]]; then do_run $CUSTOM_FUNCTIONS ; fi
+    if [[ $MIGRATE ]]; then do_migrate ; fi
 }
-
-BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 for i in $(env|grep ROS|cut -d= -f1); do
     unset $i
 done
 unset HR_WORKSPACE
-
-DEFAULT_HR_WORKSPACE=~/hansonrobotics
-HR_ENVFILE_PATH=~/.hr/env.sh
-PROJECT=HEAD
-export PATH=/usr/lib/ccache:$PATH
 
 ############
 
