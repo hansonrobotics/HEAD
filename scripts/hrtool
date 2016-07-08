@@ -266,7 +266,7 @@ install_vision_deps() {
 
     if [ ! -d $OPENFACE_DIR ]; then
       #TODO a checkout verison that works with the latest.
-      git clone https://github.com/cmusatyalab/openface.git $OPENFACE_DIR --recursive
+      git clone https://github.com/hansonrobotics/openface.git $OPENFACE_DIR --recursive
     else
       warn "Skipping openface clone"
     fi
