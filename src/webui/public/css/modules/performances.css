@@ -317,10 +317,18 @@ textarea.form-control.app-node-text {
     position: relative;
 }
 
+.app-options-tabs li.options-icon,
 .app-node-tabs li.node-icon {
     position: absolute;
     left: 0;
     top: 0;
+    width: 43px;
+    background-color: #323F48;
+    cursor: default;
+}
+
+.app-options-tabs {
+    padding: 0 37px 0 43px;
 }
 
 .app-options-tabs,
@@ -328,6 +336,67 @@ textarea.form-control.app-node-text {
     border: 1px solid #323F48;
     float: left;
     height: 44px;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;
+}
+
+.app-options-tabs li,
+.app-node-tabs li {
+    float: none;
+    display: inline-block;
+    position: relative;
+    z-index: 99;
+}
+
+.app-options-tabs [role="presentation"],
+.app-node-tabs [role="presentation"] {
+    z-index: 999;
+}
+
+.app-options-tabs.nav-tabs > li > a,
+.app-node-tabs.nav-tabs > li > a {
+    margin: 0;
+}
+
+.app-node-tabs.app-overflow {
+    padding-right: 37px;
+    padding-left: 82px;
+}
+
+.app-options-tabs.app-overflow {
+    padding-left: 82px;
+    padding-right: 74px;
+}
+
+.app-options-tabs.app-overflow li {
+    float: none !important;
+}
+
+.nav-tabs .app-scroll-left {
+    position: absolute;
+    left: 43px;
+    top: 0;
+    width: 37px;
+    background-color: #182934;
+    border-left: 1px solid #182934;
+}
+
+.nav-tabs .app-scroll-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 37px;
+    background-color: #182934;
+}
+
+.app-options-tabs .app-scroll-right {
+    right: 37px;
 }
 
 .app-options-tabs a,
@@ -336,7 +405,7 @@ textarea.form-control.app-node-text {
     outline: none;
 }
 
-.app-node-tabs li:not(.node-icon) a {
+.app-node-tabs li:not([role="presentation"]) a {
     padding: 10px;
 }
 
@@ -392,14 +461,16 @@ textarea.form-control.app-node-text {
     width: 40%;
 }
 
-.app-node-tabs li.node-icon a,
-.app-options-tabs li.options-icon a {
-    background-color: #323F48;
-    cursor: default;
+.app-options-tabs > li > a,
+.app-node-tabs > li > a {
+    border: none !important;
 }
 
-.app-node-tabs > li > a {
-    border: none;
+.nav > li.hide-settings-tab {
+    position: absolute;
+    width: 37px;
+    right: 0;
+    top: 0;
 }
 
 .app-hide-settings-button {

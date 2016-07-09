@@ -368,10 +368,12 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 self.model.set('z', 0);
             },
             selectAttentionRegion: function () {
-                if (this.model.get('attention_region') == 'custom')
-                    this.ui.crosshair.fadeIn();
-                else
-                    this.ui.crosshair.fadeOut();
+                if (!this.isDestroyed) {
+                    if (this.model.get('attention_region') == 'custom')
+                        this.ui.crosshair.fadeIn();
+                    else
+                        this.ui.crosshair.fadeOut();
+                }
             },
             updateTimeout: function () {
                 this.model.set('timeout', this.ui.timeout.val());
