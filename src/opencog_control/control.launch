@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="opencog_control" type="control.py" name="opencog_control" />
+</launch>

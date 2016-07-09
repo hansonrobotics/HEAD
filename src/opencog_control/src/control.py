@@ -2,7 +2,7 @@
 import rospy
 
 from dynamic_reconfigure.server import Server
-from opencog.cfg import OpenpsiConfig
+from opencog_control.cfg import OpenpsiConfig
 
 def callback(config, level):
     return config

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>opencog</name>
+  <name>opencog_control</name>
   <version>0.0.0</version>
   <description>
       The opencog package used for interfactin with opencog
