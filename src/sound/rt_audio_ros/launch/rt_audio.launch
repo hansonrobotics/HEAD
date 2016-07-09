@@ -1,0 +1,8 @@
+<launch>
+
+	<node pkg="rt_audio_ros" type="rt_audio" name="rt_audio" output="screen"> 
+		<!--launch-prefix="xterm -e gdb -\-args"-->
+		<param name="save_raw_file" value="false"/>
+	</node>
+
+</launch>

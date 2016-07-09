@@ -180,11 +180,11 @@ class EvaAPI(RigAPI):
     # Distances are measured in meters.  Origin of the coordinate
     # system is somewhere (where?) in the middle of the head.
 
-    def setFaceTarget(self, loc):
+    def setFaceTarget(self, loc, speed=1.0):
         # Eva uses y==forward x==right. Distances in meters from
         # somewhere in the middle of the head.
         mloc = [loc[1], loc[0], loc[2]]
-        bpy.evaAnimationManager.setFaceTarget(mloc)
+        bpy.evaAnimationManager.setFaceTarget(mloc, speed)
         return 0
 
     # Rotates the face target which will make head roll
@@ -193,9 +193,9 @@ class EvaAPI(RigAPI):
         return 0
 
 
-    def setGazeTarget(self, loc):
+    def setGazeTarget(self, loc, speed=1.0):
         mloc = [loc[1],  loc[0], loc[2]]
-        bpy.evaAnimationManager.setGazeTarget(mloc)
+        bpy.evaAnimationManager.setGazeTarget(mloc, speed)
         return 0
     # ========== procedural animations with unique parameters =============
     def setBlinkRandomly(self,interval_mean,interval_variation):

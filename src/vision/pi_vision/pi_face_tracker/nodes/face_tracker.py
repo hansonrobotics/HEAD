@@ -89,6 +89,10 @@ class FaceBox():
         self.camera_name = rospy.get_param("~camera_name", 'camera')
         self.camera_width = rospy.get_param(self.camera_name + '/width',640)
         self.camera_height = rospy.get_param(self.camera_name + '/height',480)
+        self.cam_w = self.camera_width/2
+        self.cam_h = self.camera_height/2
+        self.K_const=(self.cam_w / tan(self.camera_fov_x/2.0))
+
         # init time needed for full time since added, start time
         # needed in case face will reappear.
         self.init_time = self.start_time = rospy.Time.now()
@@ -109,6 +113,7 @@ class FaceBox():
         self.abs_min_features = 6
         self.pyramid = None
         # size of the face to meassure realative distance. Face width is enough
+        #update_bounding_size is different from initialization. why?
         self.bounding_size = pt2[0] - pt1[0]
         # New face event fired, so Lost Face event has to be fired as well
         self.lost_face_event = False
@@ -258,7 +263,10 @@ class FaceBox():
         )
 
     def update_bounding_box(self):
-        self.bounding_size = self.pt2[1] - self.pt1[1]
+        #is dp 0.22 the correct size for width or height of face?
+        #now using width instead of height as initialized
+        #self.bounding_size = self.pt2[1] - self.pt1[1]
+        self.bounding_size = self.pt2[0] - self.pt1[0]
 
     def get_3d_point(self):
         # TODO will need to be updated:
@@ -268,15 +276,15 @@ class FaceBox():
         # Standard 640x480 image used (taken from config)
         # Approx horizontal FOV of camera used (taken from config)
         p = Point()
-        # same FOV for both, so calculate the relative distance of one pixel
-        dp = 0.22 / float(self.bounding_size) # It should be same in both axis
+        #FOV-X and FOV-Y are different, now using FOV-X
+        dp = 0.17 / float(self.bounding_size) # It should be same in both axis
         # logger.warn("bbox size=" + str(self.bounding_size))
-        w = self.camera_width/2
-        h = self.camera_height/2
+        #w = self.camera_width/2
+        #h = self.camera_height/2
         # Y is to the left in camera image, Z is to top
-        p.x = dp *  (h / tan(self.camera_fov_x/2.0))
-        p.y = dp * (w-(self.pt2[0]+self.pt1[0])/2)
-        p.z = dp * (h-(self.pt2[1]+self.pt1[1])/2)
+        p.x = dp * self.K_const
+        p.y = dp * (self.cam_w-(self.pt2[0]+self.pt1[0])/2)
+        p.z = dp * (self.cam_h-(self.pt2[1]+self.pt1[1])/2)
         return p
 
     # Smooth out the 3D location of the face, by using an

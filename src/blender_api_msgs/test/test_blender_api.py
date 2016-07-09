@@ -146,11 +146,11 @@ class BlenderAPITest(unittest.TestCase):
             'blender_api_msgs/Target', True)
         timeout = 1
         targets = {
-            'center': (1,0,0),
-            'right':(0,1,0),
-            'left':(0,-1,0),
-            'up':(1,0,0.5),
-            'down':(1,0,-0.5)}
+            'center': (1,0,0,1),
+            'right':(0,1,0,1),
+            'left':(0,-1,0,1),
+            'up':(1,0,0.5,1),
+            'down':(1,0,-0.5,1)}
         videos = []
         for name in ['right', 'up', 'left', 'down', 'center']:
             video = '%s/gaze-%s.avi' % (self.output_dir, name)
@@ -170,11 +170,11 @@ class BlenderAPITest(unittest.TestCase):
             'blender_api_msgs/Target', True)
         timeout = 2
         targets = {
-            'center': (1,0,0),
-            'right':(0,1,0),
-            'left':(0,-1,0),
-            'up':(1,0,0.5),
-            'down':(1,0,-0.5)}
+            'center': (1,0,0,1),
+            'right':(0,1,0,1),
+            'left':(0,-1,0,1),
+            'up':(1,0,0.5,1),
+            'down':(1,0,-0.5,1)}
         videos = []
         for name in ['right', 'up', 'left', 'down', 'center']:
             video = '%s/face-%s.avi' % (self.output_dir, name)

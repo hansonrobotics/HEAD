@@ -1,8 +1,9 @@
 <!-- -*- mode: XML -*- -->
 <launch>
+    <arg name="oc_chatbot"/>
     <param name="tts_topic" value="tts" />
     <node name="tts_talker" pkg="tts" type="tts_talker.py" respawn="true" />
-    <node name="chatbot" pkg="chatbot" type="ai.py" respawn="true">
+    <node name="chatbot" pkg="chatbot" type="ai.py" respawn="true" unless="$(arg oc_chatbot)">
         <param name="sentiment" value="True" />
         <param name="botid" value="sophia" />
     </node>

@@ -2,6 +2,8 @@
 <launch>
     <arg name="basedir" default="." />
     <arg name="name" default="robot"/>
+    <arg name="pi_vision" default="true"/>
+    <arg name="oc_chatbot" default="False"/>
     <param name="robot_name" value="$(arg name)" />
 
     <group ns="$(arg name)">
@@ -12,20 +14,26 @@
         <rosparam file="$(find robots_config)/$(arg name)/animations.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/safety.yaml" command="load"/>
         <rosparam file="$(find robots_config)/$(arg name)/attention_regions.yaml" command="load"/>
+
         <!-- Hardware specific nodes -->
+
 
         <!-- Set default chatbot language [en|zh] -->
         <param name="lang" value="en" />
 
         <!-- Launch chatbot -->
-        <include file="$(arg basedir)/chat.launch" />
+        <include file="$(arg basedir)/chat.launch" >
+          <arg name="oc_chatbot" value="$(arg oc_chatbot)"/>
+        </include>
 
         <!-- Topic Mux for webui -->
         <include file="$(arg basedir)/topic_tools.launch" />
     </group>
 
     <!-- Face Tracking -->
-    <include file="$(arg basedir)/face_tracker.launch" />
+    <include file="$(arg basedir)/face_tracker.launch">
+      <arg name="pi_vision" value="$(arg pi_vision)"/>
+    </include>
 
     <!-- Perception -->
     <include file="$(arg basedir)/perception.launch" />
@@ -35,3 +43,10 @@
     <include file="$(arg basedir)/rosbridge.launch" />
     <include file="$(arg basedir)/rosbridge_ssl.launch" />
 </launch>
+<!--
+372.297065764 K-Const
+70 Self.bounding_size
+1.1700764924 x
+0.600285714286 y
+-0.317428571429 z
+-->
