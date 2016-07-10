@@ -10,10 +10,9 @@ body {
 .input-group-addon,
 .btn {
     color: #fff;
-    line-height: 0;
     text-transform: uppercase;
     font-family: 'Yantramanav', 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    border: #5b6777 1px solid;
+    border: none;
     font-size: 16px;
     height: 39px;
     padding: 7px 16px;
@@ -21,6 +20,7 @@ body {
 
 .input-group-addon,
 .btn-default {
+    border: #5b6777 1px solid;
     background-color: #182933;
 }
 
@@ -192,12 +192,12 @@ nav.navbar {
     height: 132px;
     padding: 5px;
     background: #323F48;
-    border: solid 1px #df691a;
+    border: solid 1px #5cb85c;
 }
 
 .ui-sortable-helper {
     background-color: #182934;
-    border: solid 1px #df691a;
+    border: solid 1px #5cb85c;
     padding: 10px 5px 5px;
 }
 

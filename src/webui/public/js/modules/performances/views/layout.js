@@ -1,7 +1,8 @@
 define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
-        '../entities/performance_collection', '../entities/performance', './queue', './timelines', 'jquery', 'select2'],
+        '../entities/performance_collection', '../entities/performance', './queue', './timelines', 'jquery',
+        'underscore', 'select2'],
     function (Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
-              QueueView, TimelinesView, $) {
+              QueueView, TimelinesView, $, _) {
         return Marionette.LayoutView.extend({
             template: template,
             cssClass: 'app-performances-page',
@@ -43,7 +44,7 @@ define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fad
                                 queueView: queueView
                             });
 
-                        self.showTimeline(current);
+                        self.showTimeline(current, {readonly: true});
                         self.getRegion('queue').show(queueView);
                         self.getRegion('performances').show(performancesView);
 
@@ -67,13 +68,13 @@ define(['marionette', 'backbone', 'tpl!./templates/layout.tpl', 'lib/regions/fad
                     }
                 });
             },
-            showTimeline: function (performance) {
-                var timelinesView = new TimelinesView({
+            showTimeline: function (performance, options) {
+                var timelinesView = new TimelinesView(_.extend({
                     collection: new Backbone.Collection(),
                     model: performance,
                     performances: this.performanceCollection,
                     readonly: false
-                });
+                }, options));
                 this.getRegion('timeline').show(timelinesView);
             },
             changeLanguage: function (e) {

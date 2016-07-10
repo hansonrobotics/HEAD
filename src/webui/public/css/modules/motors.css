@@ -112,7 +112,7 @@
 }
 
 .backgrid-paginator ul > li > a:hover, .backgrid-paginator ul > .active > a, .backgrid-paginator ul > .active > span {
-    background-color: #df691a;
+    background-color: #5cb85c;
     color: #FFF;
 }
 

@@ -86,18 +86,22 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             },
             onAttach: function () {
                 var self = this;
-                this.nodeView = new NodeView({collection: this.model.nodes});
-                this.getRegion('nodeSettings').show(this.nodeView);
+
+                if (this.options.readonly)
+                    this.ui.nodesContainer.hide();
+                else {
+                    this.nodeView = new NodeView({collection: this.model.nodes});
+                    this.getRegion('nodeSettings').show(this.nodeView);
+                }
+
                 this.modelChanged();
                 this.ui.scrollContainer.perfectScrollbar();
+
                 // Performance event handler
                 if (typeof this.options.performances != 'undefined')
                     this.options.performances.eventHandler = function (msg) {
                         self.handleEvents(msg);
                     };
-
-                if (this.options.readonly)
-                    this.ui.nodesContainer.hide();
 
                 var nodeListener = function () {
                     if (self.isDestroyed)

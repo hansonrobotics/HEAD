@@ -12,7 +12,7 @@
 }
 
 .app-performances.active {
-    border-color: #df691a;
+    border-color: #5cb85c;
 }
 
 .app-performances button {
@@ -115,7 +115,7 @@
 }
 
 .app-node.active {
-    box-shadow: 0 0 3pt 2pt #df691a;
+    box-shadow: 0 0 3pt 2pt #5cb85c;
     z-index: 9999999;
 }
 
@@ -184,7 +184,7 @@
     position: absolute;
     height: 100%;
     width: 2px;
-    background-color: #df691a;
+    background-color: #5cb85c;
     z-index: 9999999999;
     cursor: pointer;
 }
@@ -195,7 +195,7 @@
 }
 
 .app-current-time div {
-    background-color: #df691a;
+    background-color: #5cb85c;
     padding: 0 3px;
     margin-left: -50%;
     margin-right: 50%;
@@ -215,6 +215,13 @@
     display: none;
 }
 
+li.app-performance .app-remove,
+li.app-performance .app-edit {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
 li.app-performance .app-status-indicator {
     height: 14px;
     width: 14px;
@@ -224,7 +231,7 @@ li.app-performance .app-status-indicator {
 }
 
 li.app-performance .app-status-indicator.active {
-    background-color: #df691a;
+    background-color: #5cb85c;
 }
 
 .app-performance-queue .ui-state-highlight {
@@ -238,7 +245,7 @@ li.app-performance .app-status-indicator.active {
 
 .app-time-axis path,
 .app-time-axis line {
-    stroke: #df691a;
+    stroke: #5cb85c;
     fill: none;
     stroke-width: 2px;
     shape-rendering: crispEdges;
@@ -298,7 +305,7 @@ textarea.form-control.app-node-text {
 }
 
 .app-performance-group-tabs li.highlight a {
-    border-color: #df691a !important;
+    border-color: #5cb85c !important;
 }
 
 .app-new-dir {
@@ -516,7 +523,7 @@ textarea.form-control.app-node-text {
 .app-node-tabs > li.active > a[data-node-name="look_at"],
 .app-node-tabs > li > a[data-node-name="look_at"]:hover,
 .app-node-tabs > li > a[data-node-name="look_at"]:focus {
-    background-color: #df691a;
+    background-color: #5cb85c;
 }
 
 .app-node[data-node-name="gaze_at"],

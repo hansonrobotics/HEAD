@@ -1,6 +1,6 @@
-define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/api', 'underscore', 'jquery-ui',
+define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/api', 'underscore', 'jquery', 'jquery-ui',
         'lib/crosshair-slider', 'select2'],
-    function (App, Marionette, template, api, _) {
+    function (App, Marionette, template, api, _, $) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
@@ -29,7 +29,8 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 hrAngleSlider: '.app-hr-angle-slider',
                 hrAngleLabel: '.app-hr-angle-label',
                 attentionRegionList: '.app-attention-region-list',
-                timeout: '.app-node-timeout'
+                timeout: '.app-node-timeout',
+                createButton: '.app-create-button'
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -42,7 +43,8 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 'change @ui.btreeModeSelect': 'setBtreeMode',
                 'change @ui.speechEventSelect': 'setSpeechEvent',
                 'change @ui.kfModeSelect': 'setKFMode',
-                'change @ui.timeout': 'updateTimeout'
+                'change @ui.timeout': 'updateTimeout',
+                'click @ui.createButton': 'addPerformance'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -51,9 +53,18 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 this.ui.startTime.val(this.model.get('start_time'));
                 this.ui.duration.val(this.model.get('duration'));
                 this.ui.topicInput.val(this.model.get('topic'));
+
+                if (this.collection.contains(this.model)) {
+                    this.ui.createButton.hide();
+                } else {
+                    this.ui.createButton.fadeIn();
+                }
             },
             onRender: function () {
                 this.initFields();
+            },
+            addPerformance: function () {
+                this.collection.add(this.model);
             },
             initFields: function () {
                 var self = this,

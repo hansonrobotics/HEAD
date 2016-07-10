@@ -36,19 +36,6 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 this.mergeOptions(options, ['node']);
             },
             onAttach: function () {
-                this.ui.nodeTypeButtons.draggable({
-                    helper: function () {
-                        return $('<span>').addClass('label app-node').attr('data-node-name',
-                            $(this).data('node-name')).html($(this).html()).get(0);
-                    },
-                    appendTo: 'body',
-                    revert: 'invalid',
-                    delay: 100,
-                    snap: '.app-timeline-nodes',
-                    snapMode: 'inner',
-                    zIndex: 1000
-                });
-
                 if (this.node)
                     this.showSettings(this.node);
                 else
@@ -125,6 +112,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
 
                 this.node = null;
                 this.ui.nodeTabs.removeClass('active');
+                $('.app-node.active').removeClass('active');
 
                 if (current) {
                     current.model.unbind('change:duration', this.updateNode, this);
@@ -146,7 +134,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 this.ui.nodeTabs.removeClass('active');
                 this.ui.nodeTypeButtons.filter('[data-node-name="' + node.get('name') + '"]')
                     .closest('li').addClass('active');
-                this.getRegion('settings').show(new NodeSettingsView({model: node}));
+                this.getRegion('settings').show(new NodeSettingsView({model: node, collection: this.collection}));
                 this.updateIndicators();
                 $(window).resize();
             },
@@ -159,8 +147,6 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                     currentView.destroy();
 
                 var node = new Node({name: name, start_time: 0, duration: 1});
-                this.collection.add(node);
-
                 this.showSettings(node);
             },
             updateNode: function (node) {

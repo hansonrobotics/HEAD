@@ -96,7 +96,7 @@ define(['application', 'backbone', 'lib/api', 'jquery'], function (App, Backbone
                 title = this.get('gesture');
             else if (this.get('expression'))
                 title = this.get('expression');
-            else if (this.get('animation'))
+            else if (this.get('animation') || this.get('kfanimation'))
                 title = this.get('animation');
 
             return title

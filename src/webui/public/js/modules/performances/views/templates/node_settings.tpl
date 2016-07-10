@@ -136,5 +136,9 @@
         <div class="form-group" data-node-property="crosshair">
             <div class="app-crosshair"></div>
         </div>
+
+        <div class="form-group">
+            <button class="app-create-button pull-right btn btn-primary">Create</button>
+        </div>
     </div>
 </div>
