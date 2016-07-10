@@ -1,0 +1,87 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+
+<arg name="head_tracking_frame" default="camera"/>
+<arg name="choose_web_cam" default="False"/>
+<arg name="emotime" default="True"/>
+<arg name="dlib" default="True"/>
+<arg name="cmt" default="True"/>
+<arg name="offline" default="False"/>
+<arg name="headless" default="False"/>
+<arg name="testing" default="False"/>
+
+<param name="tracking_method" value="mustbeface"/>
+<param name="tracker_updated" value="0"/>
+<param name="pose" value="0"/>
+<param name="publish_topic_event" value="face_event"/>
+<param name="publish_topic_location" value="face_locations"/>
+<param name="being_initialized_stop" value ="0"/>
+<param name="filtered_face_locations" value="filterd_face_locations"/>
+<param name="face_cascade" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+<param name="profile_cascade" value="$(find pi_face_tracker)/params/haarcascade_profileface.xml" />
+<param name="shape_predictor" value="$(env OPENFACE_DIR)/models/dlib/shape_predictor_68_face_landmarks.dat"/>
+<param name="openface" value="$(env OPENFACE_DIR)"/>
+<param name="image_locations" value="$(env HR_WORKSPACE)/HEAD/src/vision/images"/>
+<param name="camera_topic" value="image_rect"/>
+
+<group if="$(arg testing)">
+    <node pkg="cmt_tracker" name="cmt_test" type="cmt_test.py" output="screen"/>
+    <node pkg="image_transport" type="republish" name="republish" args="compressed in:=/camera/image_raw raw out:=/camera/image"/>
+    <param name="camera_topic" value="image"/>
+</group>
+<group if="$(arg dlib)">
+<param name="face_detection_method" value="dlib"/>
+</group>
+
+<group unless="$(arg dlib)">
+<param name="face_detection_method" value="opencv"/>
+</group>
+
+<!--<node name="camera_transform" pkg="tf" type="static_transform_publisher" args="0.1 0 0 1.57 0 1. /base_footprint $(arg head_tracking_frame) 100"/>-->
+
+<arg name="debug" default="False"/>
+
+<group if="$(arg choose_web_cam)">
+    <param name= "usb_cam/pixel_format" value="yuyv"/>
+    <param name= "usb_cam/video_device" value="/dev/video0"/>
+    <param name= "camera_topic" value="/usb_cam/image_raw"/>
+    <param name="emotime" value="False"/>
+    <node pkg="usb_cam" name="usb_cam" type="usb_cam_node"/>
+</group>
+
+
+<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node"/>
+<group unless="$(arg offline)">
+<group if="$(arg cmt)">
+
+<group if="$(arg debug)">
+<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" respawn="true" output="screen" launch-prefix="xterm -e gdb -ex run"/>
+<!--launch-prefix="xterm -e gdb -ex run respawn="true"launch-prefix="xterm -e valgrind -leak-check=full" "-->
+</group>
+
+<group unless="$(arg debug)">
+<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" output="screen" required="true"/>
+</group>
+
+<node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py" />
+<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" output="screen" required="true"/>
+
+<group unless="$(arg headless)">
+<node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  output="screen" respawn="true"/>
+</group>
+
+
+</group>
+</group>
+<group if="$(arg offline)">
+<node pkg="cmt_tracker" name="offline_node" type="offline_trainer.py" output="screen" required="true"/>
+</group>
+
+<!--
+<group if="$(arg emotime)">
+    <param name="emotime" value="True"/>
+    <include file="$(find emotime)/launch/emotime.launch"/>
+</group>
+-->
+
+</launch>

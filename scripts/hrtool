@@ -6,57 +6,108 @@
 
 set -e
 
+BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+HR_VERSION=0.1.0
+
+PROJECT=HEAD
+DEFAULT_HR_WORKSPACE=~/hansonrobotics
+HR_ENVFILE_PATH=~/.hr/env.sh
+HR_PREFIX=/opt/hansonrobotics
+HR_CACHE=~/.hr/cache
+
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+HR_REPOS=($PROJECT)
+
+VISION_TOOL_PREFIX=$HR_PREFIX/vision
+DLIB_DIR=$VISION_TOOL_PREFIX/dlib
+TORCH_DIR=$VISION_TOOL_PREFIX/torch
+OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
+CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
+EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+
+export DLIB_PATH=$DLIB_DIR/dlib-18.18
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+#Needed for compiling emotime as it's dependent upon it for it being built.
+export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+export DLIB_PATH=$DLIB_DIR/dlib-18.18
+include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
+include_path=$(printf "%s:" "${include_dirs[@]}")
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
+
+
+COLOR_INFO='\033[32m'
+COLOR_WARN='\033[33m'
+COLOR_ERROR='\033[31m'
+COLOR_RESET='\033[0m'
+info() {
+    printf "${COLOR_INFO}[INFO] ${1}${COLOR_RESET}\n"
+}
+warn() {
+    printf "${COLOR_WARN}[WARN] ${1}${COLOR_RESET}\n"
+}
+error() {
+    printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
+}
+
+export PATH=/usr/lib/ccache:$PATH
+
+SUDO=""
+if [[ $(id -u) != 0 ]]; then
+    SUDO="sudo"
+fi
+
 if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
-    echo "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
+    error "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
     exit 1
 fi
 
-for i in $(env|grep ROS|cut -d= -f1); do
-    unset $i
-done
-
-OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+if [[ ! -d $HR_CACHE ]]; then
+    info "Creating $HR_CACHE"
+    mkdir -p $HR_CACHE
+fi
 
 install_basic() {
-    sudo apt-get -y update
-    sudo apt-get -y install git
-    sudo apt-get -y install wget
-    sudo apt-get -y install python3-pip
-    sudo apt-get -y install python-pip
-    sudo apt-get -y install build-essential
-    sudo apt-get -y install software-properties-common
+    $SUDO apt-get -y update
+    $SUDO apt-get -y install git
+    $SUDO apt-get -y install subversion
+    $SUDO apt-get -y install wget
+    $SUDO apt-get -y install python3-pip
+    $SUDO apt-get -y install python-pip
+    $SUDO apt-get -y install build-essential
+    $SUDO apt-get -y install software-properties-common
 }
 
 install_ros() {
-    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-#    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
-    sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
-    sudo apt-get -y update
-    sudo apt-get -y install ros-indigo-desktop
-    sudo apt-get -y install ros-indigo-tf
-    sudo apt-get -y install ros-indigo-driver-common
-    sudo apt-get -y install ros-indigo-cv-bridge
-    sudo apt-get -y install ros-indigo-image-transport
-    sudo apt-get -y install ros-indigo-openni-camera
-    sudo apt-get -y install ros-indigo-mjpeg-server
-    sudo apt-get -y install ros-indigo-usb-cam
-    sudo apt-get -y install ros-indigo-dynamixel-motor
-    sudo apt-get -y install ros-indigo-robot-state-publisher
-    sudo apt-get -y install ros-indigo-joint-state-publisher
-    sudo apt-get -y install ros-indigo-rosbridge-server
-    sudo apt-get -y install python-catkin-tools
+    $SUDO sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+#    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | $SUDO apt-key add -
+    $SUDO apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
+    $SUDO apt-get -y update
+    $SUDO apt-get -y install ros-indigo-desktop
+    $SUDO apt-get -y install ros-indigo-tf
+    $SUDO apt-get -y install ros-indigo-driver-common
+    $SUDO apt-get -y install ros-indigo-cv-bridge
+    $SUDO apt-get -y install ros-indigo-image-transport
+    $SUDO apt-get -y install ros-indigo-openni-camera
+    $SUDO apt-get -y install ros-indigo-mjpeg-server
+    $SUDO apt-get -y install ros-indigo-usb-cam
+    $SUDO apt-get -y install ros-indigo-dynamixel-motor
+    $SUDO apt-get -y install ros-indigo-robot-state-publisher
+    $SUDO apt-get -y install ros-indigo-joint-state-publisher
+    $SUDO apt-get -y install ros-indigo-rosbridge-server
+    $SUDO apt-get -y install python-catkin-tools
+
     # for camera calibration
-    sudo apt-get -y install ros-indigo-image-proc
+    $SUDO apt-get -y install ros-indigo-image-proc
     # for blender to find ros packages
-    sudo pip3 install rospkg catkin_pkg
+    $SUDO pip3 install rospkg catkin_pkg
     set +e
-    sudo rosdep init
+    $SUDO rosdep init
     rosdep update
     set -e
 }
 
 install_opencog_deps() {
-    sudo apt-get -y install ccache
+    $SUDO apt-get -y install ccache
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
     chmod +rx octool
     ./octool -rdpv
@@ -66,11 +117,11 @@ install_opencog_deps() {
 }
 
 install_relex_deps() {
-    sudo apt-get -y update
-    sudo apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
-    sudo apt-get -y install wordnet-dev wordnet-sense-index
-    sudo apt-get -y install openjdk-7-jdk
-    sudo apt-get -y install ant libcommons-logging-java libgetopt-java
+    $SUDO apt-get -y update
+    $SUDO apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
+    $SUDO apt-get -y install wordnet-dev wordnet-sense-index
+    $SUDO apt-get -y install openjdk-7-jdk
+    $SUDO apt-get -y install ant libcommons-logging-java libgetopt-java
 
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
     chmod +rx octool
@@ -80,35 +131,35 @@ install_relex_deps() {
     # Java WordNet Library
     wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
     unzip -o jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
-    sudo mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
+    $SUDO mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
     rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
-    sudo chmod -v 0644 /usr/local/share/java/jwnl.jar
+    $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
 }
 
 install_other_deps() {
-    sudo add-apt-repository -y ppa:irie/blender
-    sudo apt-get -y update
+    $SUDO add-apt-repository -y ppa:irie/blender
+    $SUDO apt-get -y update
 
-    sudo apt-get -y install blender
+    $SUDO apt-get -y install blender
 
     # For webui
-    sudo pip2 install flask EasyProcess
+    $SUDO pip2 install flask EasyProcess
 
     # For rosbridge_server
-    sudo apt-get -y install python-bson
+    $SUDO apt-get -y install python-bson
 
     # For pololu-motors
     # DO NOT UPGRADE WITH PIP
-    sudo apt-get -y install python-serial
+    $SUDO apt-get -y install python-serial
 
     # For Blender
-    sudo apt-get -y install python3-numpy
+    $SUDO apt-get -y install python3-numpy
 
     # For running scripts
-    sudo apt-get -y install tmux
+    $SUDO apt-get -y install tmux
 
     # For Festival
-    sudo apt-get -y install festival festival-dev
+    $SUDO apt-get -y install festival festival-dev
     # Install female voice
     mkdir -p ~/.hr/tts/festival/voices
     # Install female voice
@@ -116,37 +167,132 @@ install_other_deps() {
         wget http://festvox.org/packed/festival/2.1/festvox_cmu_us_slt_arctic_hts.tar.gz -P ~/.hr/tts/festival/voices
     fi
     tar zxf ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz -C /tmp
-    sudo cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
+    $SUDO cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
     rm -rf /tmp/festival
 
     # For tts playing audio
-    sudo apt-get -y install python-pyglet
+    $SUDO apt-get -y install python-pyglet
 
     # For chatbot
-    sudo apt-get -y install python-yaml
-    sudo apt-get -y install npm
-
-    sudo npm install -g n
-    sudo n stable
-    sudo npm install xmlhttprequest --prefix $PROJECT/src/chatbot/src/server/
+    $SUDO apt-get -y install python-yaml
 
     # For blender_api_test
-    sudo add-apt-repository -y ppa:mc3man/trusty-media
-    sudo apt-get update
-    sudo apt-get install -y ffmpeg
+    $SUDO add-apt-repository -y ppa:mc3man/trusty-media
+    $SUDO apt-get update
+    $SUDO apt-get install -y ffmpeg
 
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
     wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip -O /tmp/marytts-5.1.2.zip
-    unzip /tmp/marytts-5.1.2.zip -d ~/.hr/tts/marytts
+    unzip -od ~/.hr/tts/marytts /tmp/marytts-5.1.2.zip
     rm /tmp/marytts-5.1.2.zip
 
-    sudo pip2 install pinyin==0.2.5
+    $SUDO pip2 install pinyin==0.2.5
+
+    # For rospy to run with python3
+    $SUDO apt-get -y install python3-yaml
+
+    # For telnet automation
+    $SUDO apt-get -y install expect
+
+    # For manyears
+    $SUDO apt-get -y install subversion
 }
 
 install_test_deps() {
-    sudo apt-get -y install socat
-    sudo apt-get -y install xdotool
+    $SUDO apt-get -y install socat
+    $SUDO apt-get -y install xdotool
+
+    $SUDO apt-get -y install npm
+    $SUDO npm install -g n
+    $SUDO n stable
+    $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/src/server/
+}
+
+install_vision_deps() {
+    if [[ ! -d $HR_PREFIX ]]; then
+        info "Creating $HR_PREFIX"
+        $SUDO mkdir -p $HR_PREFIX
+    fi
+    $SUDO chmod 777 $HR_PREFIX
+    mkdir -p $VISION_TOOL_PREFIX
+    $SUDO apt-get -y install ros-indigo-opencv-apps
+
+    # Tkinter error other wise.
+    info "Installing Pillow"
+    $SUDO pip2 install -qI Pillow
+
+    if [[ ! -d $DLIB_DIR ]]; then
+      if [[ ! -f $HR_CACHE/dlib-18.18.tar.bz2 ]]; then
+        wget http://dlib.net/files/dlib-18.18.tar.bz2 -O $HR_CACHE/dlib-18.18.tar.bz2
+      fi
+      mkdir -p $DLIB_DIR
+      tar -xf $HR_CACHE/dlib-18.18.tar.bz2 -C $DLIB_DIR
+    else
+      warn "Skipping Dlib installation"
+    fi
+    info "Building Dlib python API"
+    cd $DLIB_DIR/dlib-18.18 && python setup.py build
+
+    #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
+    # Install dlib-models large file This is skiped as model in the openface are used to download the elements
+    # git clone https://github.com/davisking/dlib-models.git
+
+    # Install Torch
+    if [ ! -d $TORCH_DIR ]; then
+      git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
+
+      cd $TORCH_DIR
+      bash install-deps
+      echo no | ./install.sh
+
+      # Install lua packages in the torch file in scripts directory.
+      cd $TORCH_DIR/install/bin
+      ./luarocks install nn
+      ./luarocks install dpnn
+      ./luarocks install image
+      ./luarocks install optim
+      ./luarocks install csvigo
+      ./luarocks install sys
+    else
+      warn "Skipping Torch installation"
+    fi
+
+    # Install openface
+    # Dependencies for openface
+    # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
+    $SUDO apt-get -y install python-skimage
+    $SUDO pip2 install numpy pandas scipy scikit-learn
+
+    if [ ! -d $OPENFACE_DIR ]; then
+      #TODO a checkout verison that works with the latest.
+      git clone https://github.com/hansonrobotics/openface.git $OPENFACE_DIR --recursive
+    else
+      warn "Skipping openface clone"
+    fi
+
+    # 150 Megabyes of data.
+    $OPENFACE_DIR/models/get-models.sh
+
+    # CMT and Emotime Libraries.
+    if [ ! -d $CPPMT_DIR ]; then
+      git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
+      cd $CPPMT_DIR
+      git checkout wrapper
+      cmake .
+      make -j$(nproc)
+    else
+      warn "Skipping CppMT clone"
+    fi
+
+    if [ ! -d $EMOTIME_DIR ]; then
+      git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
+      cd $EMOTIME_DIR/build
+      cmake ..
+      make -j$(nproc)
+    else
+      warn "Skipping emotime clone"
+    fi
 }
 
 check_or_create_ws() {
@@ -172,7 +318,7 @@ clone() {
     dest=${3-"."}/$repo
     # if ssh clone failed, then try https clone
     if [[ -d $dest ]]; then
-        echo "$dest already exists"
+        info "$dest already exists"
     else
         git clone git@github.com:$owner/$repo.git $dest || git clone https://github.com/$owner/$repo.git $dest
     fi
@@ -193,16 +339,16 @@ check_local_changes() {
             cd $HR_WORKSPACE/opencog/$repo
             branch=$(git rev-parse --abbrev-ref HEAD)
             if [[ $branch != 'master' ]]; then
-                echo "HEAD branch is not master $(pwd)" 1>&2
+                warn "HEAD branch is not master $(pwd)" 1>&2
                 return 1
             fi
             if [[ $(git status -uno --porcelain|wc -c) != 0 ]]; then
-                echo "Plese commit the change(s) $(pwd)" 1>&2
-                echo $(git status --porcelain) 1>&2
+                warn "Plese commit the change(s) $(pwd)" 1>&2
+                warn $(git status --porcelain) 1>&2
                 return 1
             fi
             if [[ $(git diff --name-only master origin/master|wc -c) != 0 ]]; then
-                echo "Master branch is not synchronized with origin $(pwd)" 1>&2
+                warn "Master branch is not synchronized with origin $(pwd)" 1>&2
                 return 1
             fi
         fi
@@ -217,25 +363,44 @@ update_opencog() {
         cd $HR_WORKSPACE/opencog/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
         if [[ $branch != $DEFAULT_BRANCH ]]; then
-            echo "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
+            warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
+        info "Updating [${repo}]"
         git pull origin $DEFAULT_BRANCH
     done
 }
 
 do_update_hr() {
+    do_migrate
+
     local DEFAULT_BRANCH="master"
-    for repo in $PROJECT
+    for repo in ${HR_REPOS[*]}
     do
         cd $HR_WORKSPACE/$repo
         branch=$(git rev-parse --abbrev-ref HEAD)
         if [[ $branch != $DEFAULT_BRANCH ]]; then
-            echo "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
+            warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
             continue
         fi
+        info "Updating [${repo}]"
         git pull origin $DEFAULT_BRANCH
     done
+    do_update_vision_tools
+}
+
+do_update_vision_tools() {
+    #Update CMT
+    local DEFAULT_BRANCH="wrapper"
+    cd $CPPMT_DIR
+    repo=CppMT
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    if [[ $branch != $DEFAULT_BRANCH ]]; then
+        warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
+        continue
+    fi
+    info "Updating [$repo]"
+    git pull origin $DEFAULT_BRANCH
 }
 
 do_install_deps() {
@@ -247,11 +412,15 @@ _do_install_deps() {
     install_ros
     install_opencog_deps
     install_other_deps
+    install_vision_deps
 }
 
 do_get_hr_src() {
-    cd $HR_WORKSPACE
-    clone hansonrobotics $PROJECT
+    for repo in ${HR_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        clone hansonrobotics $repo
+    done
 }
 
 do_get_src() {
@@ -264,7 +433,7 @@ do_get_src() {
 do_dev_mode() {
     DOMAIN=${1-"opencog"}
     check_local_changes || exit 1
-    echo "Switching to $DOMAIN repositories"
+    warn "Switching to $DOMAIN repositories"
     for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE
@@ -287,16 +456,40 @@ undo_dev_mode() {
 }
 
 do_build_hr() {
+    _do_build_hr
+}
+
+_do_build_hr() {
+    # build CppMT
+    cd $CPPMT_DIR
+    cmake .
+    make -j$(nproc)
+
     cd $HR_WORKSPACE/$PROJECT
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
         catkin init
     fi
+
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
     pip2 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
     pip3 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
+}
+
+do_single_package() {
+    cd $HR_WORKSPACE/$PROJECT
+    source /opt/ros/indigo/setup.bash
+    if [[ ! -d .catkin_tools ]]; then
+        catkin init
+    fi
+
+    if [ "$1" == "cmt_tracker" ]; then
+      catkin build cmt_tracker_msgs cmt_tracker
+    else
+      catkin build $1
+    fi
 }
 
 build_opencog() {
@@ -306,9 +499,9 @@ build_opencog() {
             if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
                 mkdir $HR_WORKSPACE/opencog/$repo/build
             fi
-            cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && sudo make install
+            cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && $SUDO make install
         else
-            cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && sudo ant install
+            cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && $SUDO ant install
         fi
     done
 }
@@ -329,9 +522,9 @@ do_update() {
 
 do_clean_up() {
     set +e
-    echo "Cleaning up"
+    info "Cleaning up"
     _do_clean_up >/dev/null 2>&1
-    echo "Done"
+    info "Done"
     set -e
 }
 
@@ -341,22 +534,22 @@ _do_clean_up() {
         for repo in ${OPENCOG_REPOS[*]}
         do
             if [[ $repo != 'relex' ]]; then
-                sudo rm -r $HR_WORKSPACE/opencog/$repo/build
+                $SUDO rm -r $HR_WORKSPACE/opencog/$repo/build
             fi
         done
     fi
-    sudo rm -r /usr/local/include/opencog
-    sudo rm -r /usr/local/lib/opencog
-    sudo rm -r /usr/local/share/opencog
-    sudo rm /usr/local/bin/cogserver
-    sudo rm /usr/local/etc/cogserver.conf
-    sudo rm /usr/local/etc/opencog.conf
-    sudo rm /usr/local/lib/libcogutil.so
+    $SUDO rm -r /usr/local/include/opencog
+    $SUDO rm -r /usr/local/lib/opencog
+    $SUDO rm -r /usr/local/share/opencog
+    $SUDO rm /usr/local/bin/cogserver
+    $SUDO rm /usr/local/etc/cogserver.conf
+    $SUDO rm /usr/local/etc/opencog.conf
+    $SUDO rm /usr/local/lib/libcogutil.so
 }
 
 do_run() {
     while [[ $# > 0 ]]; do
-        echo "Running $1"
+        info "Running $1"
         $1
         shift
     done
@@ -381,7 +574,7 @@ check_ws() {
     local ws=$(readlink -f ${HR_WORKSPACE})
     if [[ $rel_ws != $ws ]]; then
         local confirm
-        printf "WARN: the workspace configured ${ws} doesn't match the your working path ${rel_ws}\n"
+        warn "The workspace configured ${ws} doesn't match the your working path ${rel_ws}"
         _get_confirm "Continue using ${ws}?"
         [[ ${confirm} -eq 1 ]] || exit 0
     fi
@@ -397,6 +590,7 @@ Usage: $0 OPTION
 -g      Get HR source code.
 -G      Get all source code including OpenCog and HR.
 -u      Update HR source code.
+-v      Update Vision Related dependencies.
 -U      Update all source code including OpenCog and HR.
 -b      Build HR source code.
 -B      Build HR and OpenCog source code.
@@ -407,12 +601,14 @@ Usage: $0 OPTION
 -d      Developer mode. Using latest OpenCog stack.
 -c      Clean up files.
 -h      Print this help.
+-s      Build a single package specified.
+-m      Migrate.
 
 EOF
 }
 
 parse_opts() {
-    while getopts "hw:igGbBuUtpr:dc" opt; do
+    while getopts ":hw:igGbBuUvtpr:s:dcm" opt; do
         case $opt in
         h)
             show_help
@@ -426,18 +622,21 @@ parse_opts() {
         B) BUILD_SOURCE_CODE=1 ;;
         u) UPDATE_HR_SOURCE_CODE=1 ;;
         U) UPDATE_SOURCE_CODE=1 ;;
+        v) UPDATE_VISION_CODE=1 ;;
         t) RUN_TESTS=1 ;;
         p) PRINT_HR_WORKSPACE=1 ;;
+        s) BUILD_SINGLE_PKG=1  && CUSTOM_FUNCTIONS=$OPTARG ;;
         r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
         d) DEVELOPER_MODE=1 ;;
         c) CLEANUP=1 ;;
+        m) MIGRATE=1 ;;
         \?)
-            echo "Invalid option: -$OPTARG" >&2
+            error "Invalid option: -$OPTARG" >&2
             show_help
             exit 1
             ;;
         :)
-            echo "Option -$OPTARG requires an argument." >&2
+            error "Option -$OPTARG requires an argument." >&2
             show_help
             exit 1
             ;;
@@ -449,7 +648,7 @@ parse_opts() {
 set_ws() {
     if [[ -z $HR_WORKSPACE ]]; then
         if [[ -f $HR_ENVFILE_PATH ]]; then
-            . $HR_ENVFILE_PATH
+            eval $(cat $HR_ENVFILE_PATH|grep "export HR_WORKSPACE=")
         else
             HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
         fi
@@ -459,17 +658,68 @@ set_ws() {
     fi
     check_or_create_ws $HR_WORKSPACE
     if [[ ! -d $HR_WORKSPACE ]]; then
-        echo "HR_WORKSPACE is incorrect, exit"
+        error "HR_WORKSPACE is incorrect, exit"
         exit 1;
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
+    HR_WORKSPACE=${HR_WORKSPACE%/}
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
+}
+
+set_env() {
+    set_ws
+cat <<EOF >>$HR_ENVFILE_PATH
+export HR_VERSION=$HR_VERSION
+export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
+export HR_PREFIX=$HR_PREFIX
+export HR_CACHE=$HR_CACHE
+
+export VISION_TOOL_PREFIX=$VISION_TOOL_PREFIX
+export DLIB_DIR=$DLIB_DIR
+export TORCH_DIR=$TORCH_DIR
+export OPENFACE_DIR=$OPENFACE_DIR
+export CPPMT_DIR=$CPPMT_DIR
+export EMOTIME_DIR=$EMOTIME_DIR
+
+export ROS_LOG_DIR="$HOME/.hr/log"
+export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+export LIBRARY_PATH=$LIBRARY_PATH
+export DLIB_PATH=$DLIB_PATH
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
+
+source $TORCH_DIR/install/bin/torch-activate
+EOF
+
     cp $HR_ENVFILE_PATH $BASEDIR >/dev/null 2>&1 # For compatibility
+}
+
+_change_remote() {
+    repo_url=$1
+    branch=$2
+    git remote remove old 2>&1 1>/dev/null || true
+    git remote rename origin old
+    git remote add -f origin $repo_url
+    git branch $branch -u origin/$branch
+    git reset --hard origin/$branch
+}
+
+do_migrate() {
+    if [[ -d $EMOTIME_DIR ]]; then
+        info "Migrating [emotime]"
+        cd $EMOTIME_DIR &&  _change_remote https://github.com/hansonrobotics/emotime.git master
+    fi
+    if [[ -d $CPPMT_DIR ]]; then
+        info "Migrating [CppMT]"
+        cd $CPPMT_DIR && _change_remote https://github.com/hansonrobotics/CppMT.git wrapper
+    fi
 }
 
 execute() {
     parse_opts $@
-    set_ws
+    set_env
 
     if [[ $DEVELOPER_MODE == 1 ||
         $UPDATE_HR_SOURCE_CODE == 1 ||
@@ -488,23 +738,19 @@ execute() {
     if [[ $UPDATE_SOURCE_CODE ]]; then do_update ; fi
     if [[ $CLEANUP ]]; then do_clean_up ; fi
     if [[ $BUILD_HR_SOURCE_CODE ]]; then do_build_hr; fi
+    if [[ $UPDATE_VISION_CODE ]]; then do_update_vision_tools; fi
     if [[ $BUILD_SOURCE_CODE ]]; then do_build; fi
     if [[ $RUN_TESTS ]]; then do_test; fi
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
+    if [[ $BUILD_SINGLE_PKG ]]; then do_single_package $CUSTOM_FUNCTIONS ; fi
     if [[ $RUN_CUSTOM_FUNCTIONS ]]; then do_run $CUSTOM_FUNCTIONS ; fi
+    if [[ $MIGRATE ]]; then do_migrate ; fi
 }
-
-BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 for i in $(env|grep ROS|cut -d= -f1); do
     unset $i
 done
 unset HR_WORKSPACE
-
-eval DEFAULT_HR_WORKSPACE=~/hansonrobotics
-eval HR_ENVFILE_PATH=~/.hr/env.sh
-PROJECT=HEAD
-export PATH=/usr/lib/ccache:$PATH
 
 ############
 

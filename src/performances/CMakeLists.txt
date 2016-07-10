@@ -53,6 +53,7 @@ add_message_files(
 add_service_files(
   FILES
   Run.srv
+  RunByName.srv
   Stop.srv
   Pause.srv
   Resume.srv

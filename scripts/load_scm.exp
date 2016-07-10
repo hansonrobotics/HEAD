@@ -1,0 +1,18 @@
+#!/usr/bin/expect
+
+set timeout 10
+
+set host localhost
+set port 17020
+set HR_WORKSPACE $::env(HR_WORKSPACE)
+set OC_AIML_FILE $::env(OC_AIML_FILE)
+
+spawn telnet $host $port
+
+expect "Escape character"
+sleep 1
+
+send "(load \"$HR_WORKSPACE/opencog/opencog/opencog/nlp/chatbot-psi/chatbot.scm\")\n"
+send "(load \"$OC_AIML_FILE\")\n"
+
+interact

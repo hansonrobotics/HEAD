@@ -1,0 +1,21 @@
+<library path="lib/libcmt_tracker">
+  <!-- The name of the plugin that is exported via the PLUGINLIB_DECLARE_CLASS macro.  -->
+  <class name="rqt_tracker_view/tracker_plugin" type="rqt_tracker_view::tracker_plugin" base_class_type="rqt_gui_cpp::Plugin">
+    <description>
+      An example Cpp GUI plugin to create a great user interface.
+    </description>
+    <qtgui>
+
+      <group>
+        <label>Visualization</label>
+        <icon type="theme">folder</icon>
+        <statustip>Plugins related to visualization.</statustip>
+      </group>
+
+
+      <label>CMT Tracker</label>
+      <icon type="theme">system-help</icon>
+      <statustip>A GUI interface to monitor and control the process of CMT Tracking</statustip>
+    </qtgui>
+  </class>
+</library>

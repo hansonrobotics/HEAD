@@ -11,6 +11,7 @@ from topic_tools.srv import MuxSelect
 import time
 import logging
 import random
+from threading import Timer
 
 logger = logging.getLogger('hr.performances.nodes')
 
@@ -97,15 +98,33 @@ class Node(object):
             except:
                 return 0.0
 
+
 class speech(Node):
+
+    def __init__(self, data, runner):
+        Node.__init__(self, data, runner)
+        if 'pitch' not in data:
+            self.data['pitch'] = 1.0
+        if 'speed' not in data:
+            self.data['speed'] = 1.0
+        if 'volume' not in data:
+            self.data['volume'] = 1.0
+
+
     def start(self, run_time):
         self.say(self.data['text'], self.data['lang'])
 
     def say(self, text, lang):
         if lang not in ['en', 'zh']:
             lang = 'default'
+        text = self._add_ssml(text)
         self.runner.topics['tts'][lang].publish(String(text))
 
+    # adds SSML tags for whole text returns updated text.
+
+    def _add_ssml(self, txt):
+        return '<prosody rate="%.2f" pitch="%+d%%" volume="%+d%%">%s</prosody>' % \
+               (self.data['speed'], 100*(self.data['pitch']-1), 100*(self.data['volume']-1), txt)
 
 class gesture(Node):
     def start(self, run_time):
@@ -166,7 +185,6 @@ class soma(Node):
         s.ease_in.nsecs = 0
         s.name = self.data['soma']
         self.runner.topics['soma_state'].publish(s)
-
 
 
 class expression(Node):
@@ -240,27 +258,34 @@ class pause(Node):
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
         self.subscriber = False
+        self.timer = False
 
     def start(self, run_time):
         self.runner.pause()
         if 'topic' in self.data:
             topic = self.data['topic'].strip()
             if topic:
-                def resume(msg):
+                def resume(msg=None):
                     if not self.finished:
                         self.runner.resume()
-
                     if self.subscriber:
                         self.subscriber.unregister()
+                    if self.timer:
+                        self.timer.cancel()
 
                 if topic[0] != '/':
                     topic = '/' + self.runner.robot_name + '/' + topic
 
                 self.subscriber = rospy.Subscriber(topic, String, resume)
+        if 'timeout' in self.data and self.data['timeout'] > 0.1:
+            self.timer = Timer(self.data['timeout'], resume)
 
     def stop(self, run_time):
         if self.subscriber:
             self.subscriber.unregister()
+        if self.timer:
+            self.timer.cancel()
+
 
     def end_time(self):
         return self.start_time + 0.1
@@ -296,6 +321,7 @@ class chat_pause(Node):
             self.subscriber.unregister()
             self.subscriber = False
 
+
 class attention(Node):
     # Find current region at runtime
     def __init__(self, data, runner):
@@ -323,7 +349,9 @@ class attention(Node):
             point = self.get_point(self.data['attention_region'])
         else:
             point = self.data
-        self.runner.topics[self.topic].publish(Target(point['x'], point['y'], point['z']))
+
+        speed = 1 if 'speed' not in self.data else self.data['speed']
+        self.runner.topics[self.topic].publish(Target(point['x'], point['y'], point['z'], speed))
 
 
 class look_at(attention):

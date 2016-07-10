@@ -277,7 +277,7 @@ class CommandWrappers:
         if api.pauAnimationMode & (api.PAU_ACTIVE | api.PAU_HEAD_YAW) == api.PAU_ACTIVE | api.PAU_HEAD_YAW:
             return
         flist = [msg.x, msg.y, msg.z]
-        api.setFaceTarget(flist)
+        api.setFaceTarget(flist, msg.speed)
 
     # Location that Eva will look at (only).
     @subscribe("~set_gaze_target", msg.Target)
@@ -285,7 +285,7 @@ class CommandWrappers:
         if api.pauAnimationMode & (api.PAU_ACTIVE | api.PAU_EYE_TARGET) == api.PAU_ACTIVE | api.PAU_EYE_TARGET:
             return
         flist = [msg.x, msg.y, msg.z]
-        api.setGazeTarget(flist)
+        api.setGazeTarget(flist, msg.speed)
 
     @subscribe("~set_head_rotation", stdmsg.Float32)
     def setHeadRotation(msg):
