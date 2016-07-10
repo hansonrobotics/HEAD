@@ -31,7 +31,7 @@ define(['application', 'backbone', 'lib/api', 'jquery'], function (App, Backbone
             },
             head_rotation: {
                 label: 'Head Tilt',
-                properties: ['angle']
+                properties: ['angle', 'speed']
             },
             kfanimation: {
                 label: 'KF Animation',
@@ -39,15 +39,15 @@ define(['application', 'backbone', 'lib/api', 'jquery'], function (App, Backbone
             },
             speech: {
                 label: 'Speech',
-                properties: ['language', 'text']
+                properties: ['language', 'speed', 'pitch', 'volume', 'text']
             },
             look_at: {
                 label: 'Look at',
-                properties: ['attention_region', 'crosshair']
+                properties: ['attention_region', 'crosshair', 'speed']
             },
             gaze_at: {
                 label: 'Gaze at',
-                properties: ['attention_region', 'crosshair']
+                properties: ['attention_region', 'crosshair', 'speed']
             },
             pause: {
                 label: 'Pause',

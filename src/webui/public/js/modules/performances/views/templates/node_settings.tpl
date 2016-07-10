@@ -117,6 +117,18 @@
             <div class="app-fps-slider"></div>
         </div>
 
+        <div class="form-group" data-node-property="pitch">
+            <label title="FPS">Pitch <span
+                        class="app-pitch-label pull-right label label-default"></span></label>
+            <div class="app-pitch-slider"></div>
+        </div>
+
+        <div class="form-group" data-node-property="volume">
+            <label title="FPS">Volume <span
+                        class="app-volume-label pull-right label label-default"></span></label>
+            <div class="app-volume-slider"></div>
+        </div>
+
         <div class="form-group" data-node-property="kfmode">
             <label title="Arms">Blender Disabled</label>
             <select class="app-kfmode-select">

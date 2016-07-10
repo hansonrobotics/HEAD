@@ -20,6 +20,10 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 langSelect: 'select.app-lang-select',
                 topicInput: '.app-node-topic',
                 fpsSlider: '.app-fps-slider',
+                pitchLabel: '.app-pitch-label',
+                pitchSlider: '.app-pitch-slider',
+                volumeLabel: '.app-volume-label',
+                volumeSlider: '.app-volume-slider',
                 fpsLabel: '.app-fps-label',
                 kfAnimationList: '.app-kfanimation-list',
                 messageInput: '.app-node-message-input',
@@ -77,6 +81,59 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                     });
 
                 this.modelChanged();
+
+
+                if (_.contains(properties, 'speed')) {
+                    if (this.model.get('speed') == null) this.model.set('speed', 1);
+                    this.ui.speedLabel.html(this.model.get('speed'));
+                    this.ui.speedSlider.slider({
+                        range: 'min',
+                        animate: true,
+                        min: 50,
+                        max: 200,
+                        value: this.model.get('speed') * 100,
+                        slide: function (e, ui) {
+                            var speed = ui.value / 100;
+                            self.model.set('speed', speed);
+                            self.setGestureLength();
+                            self.ui.speedLabel.html(speed.toFixed(2));
+                        }
+                    });
+                }
+
+                if (_.contains(properties, 'pitch')) {
+                    if (this.model.get('pitch') == null) this.model.set('pitch', 1);
+                    this.ui.pitchLabel.html(this.model.get('pitch'));
+                    this.ui.pitchSlider.slider({
+                        range: 'min',
+                        animate: true,
+                        min: 0,
+                        max: 150,
+                        value: this.model.get('pitch') * 100,
+                        slide: function (e, ui) {
+                            var pitch = ui.value / 100;
+                            self.model.set('pitch', pitch);
+                            self.ui.pitchLabel.html(pitch.toFixed(2));
+                        }
+                    });
+                }
+
+                if (_.contains(properties, 'volume')) {
+                    if (this.model.get('volume') == null) this.model.set('volume', 1);
+                    this.ui.volumeLabel.html(this.model.get('volume'));
+                    this.ui.volumeSlider.slider({
+                        range: 'min',
+                        animate: true,
+                        min: 0,
+                        max: 150,
+                        value: this.model.get('volume') * 100,
+                        slide: function (e, ui) {
+                            var volume = ui.value / 100;
+                            self.model.set('volume', volume);
+                            self.ui.volumeLabel.html(volume.toFixed(2));
+                        }
+                    });
+                }
 
                 if (_.contains(['pause'], this.model.get('name'))) {
                     this.ui.timeout.val(this.model.get('timeout') || '');
@@ -175,22 +232,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                             self.updateGestures(gestures)
                         });
 
-                        if (!this.model.get('speed')) this.model.set('speed', 1);
-
-                        this.ui.speedLabel.html(this.model.get('speed'));
-                        this.ui.speedSlider.slider({
-                            range: 'min',
-                            animate: true,
-                            min: 50,
-                            max: 200,
-                            value: this.model.get('speed') * 100,
-                            slide: function (e, ui) {
-                                var speed = ui.value / 100;
-                                self.model.set('speed', speed);
-                                self.setGestureLength();
-                                self.ui.speedLabel.html(speed.toFixed(2));
-                            }
-                        });
                         break;
                     case 'soma':
                         // init with empty list

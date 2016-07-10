@@ -258,7 +258,7 @@ li.app-performance .app-status-indicator.active {
 }
 
 textarea.form-control.app-node-text {
-    height: 39px;
+    height: 100px;
 }
 
 .input-group .form-control.app-performance-name {
