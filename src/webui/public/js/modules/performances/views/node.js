@@ -36,6 +36,19 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 this.mergeOptions(options, ['node']);
             },
             onAttach: function () {
+                this.ui.nodeTypeButtons.draggable({
+                    helper: function () {
+                        return $('<span>').addClass('label app-node').attr('data-node-name',
+                            $(this).data('node-name')).html($(this).html()).get(0);
+                    },
+                    appendTo: 'body',
+                    revert: 'invalid',
+                    delay: 100,
+                    snap: '.app-timeline-nodes',
+                    snapMode: 'inner',
+                    zIndex: 1000
+                });
+
                 if (this.node)
                     this.showSettings(this.node);
                 else
@@ -127,6 +140,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 }
             },
             showSettings: function (node) {
+                if (node === this.node) return;
                 node.bind('change', this.updateNode, this);
                 if (this.node) this.node.unbind('change', this.updateNode, this);
                 this.node = node;
@@ -146,7 +160,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 if (currentView)
                     currentView.destroy();
 
-                var node = new Node({name: name, start_time: 0, duration: 1});
+                var node = Node.create({name: name, start_time: 0, duration: 1});
                 this.showSettings(node);
             },
             updateNode: function (node) {

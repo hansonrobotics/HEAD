@@ -64,7 +64,7 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                     this.ui.createButton.fadeIn();
                 }
             },
-            onRender: function () {
+            onAttach: function () {
                 this.initFields();
             },
             addPerformance: function () {
@@ -81,7 +81,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                     });
 
                 this.modelChanged();
-
 
                 if (_.contains(properties, 'speed')) {
                     if (this.model.get('speed') == null) this.model.set('speed', 1);
@@ -277,44 +276,66 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                         this.ui.messageInput.val(this.model.get('message'));
                 }
             },
-            updateList: function (list, attr, container, options) {
-                if (this.isDestroyed) {
-                    return;
-                }
+            initList: function (list, attr, container, options) {
+                if (this.isDestroyed) return;
                 var self = this;
                 options = options || {};
                 container.html('');
-                _.each(list, function (val, key) {
-                    var name = key;
-                    if (list && list.constructor === Array) name = val;
+                _.each(list, function (label, val) {
+                    if (list && list.constructor === Array) val = label;
 
-                    container.append($('<div>').addClass('app-node-thumbnail').attr('data-' + attr, name)
-                        .html($('<span>').html(val)).click(function () {
-                            self.model.set(attr, name);
+                    var thumbnail = $('<div>').addClass('app-node-thumbnail')
+                        .attr('data-node-name', self.model.get('name')).attr('data-' + attr, val)
+                        .html($('<span>').html(label)).click(function () {
+                            self.model.set(attr, val);
                             $('[data-' + attr + ']', container).removeClass('active');
                             $(this).addClass('active');
-                            if (options.change) options.change(name);
-                        }));
+                            if (options.change) options.change(val);
+                        }).draggable({
+                            helper: function () {
+                                return $('<span>').attr('data-node-name', self.model.get('name'))
+                                    .attr('data-node-id', self.model.get('id'))
+                                    .addClass('label app-node').html(self.model.getTitle());
+                            },
+                            start: function () {
+                                self.model.set(attr, val);
+                            },
+                            appendTo: 'body',
+                            revert: 'invalid',
+                            delay: 100,
+                            snap: '.app-timeline-nodes',
+                            snapMode: 'inner',
+                            zIndex: 1000
+                        });
+
+                    container.append(thumbnail);
                 });
 
-                if (this.model.get(attr))
-                    $('[data-' + attr + '="' + this.model.get(attr) + '"]', container).addClass('active');
+                var update = function () {
+                    if (self.model.get(attr)) {
+                        $('[data-' + attr + ']', container).removeClass('active');
+                        $('[data-' + attr + '="' + self.model.get(attr) + '"]', container).addClass('active');
+                    }
+                };
+
+                this.model.on('change:' + attr, update);
+                update();
             },
             updateEmotions: function (emotions) {
-                this.updateList(emotions, 'emotion', this.ui.emotionList);
+                this.initList(emotions, 'emotion', this.ui.emotionList);
             },
             updateKFAnimations: function (animations) {
-                this.updateList(animations, 'animation', this.ui.kfAnimationList);
+                this.initList(animations, 'animation', this.ui.kfAnimationList);
                 $(this.ui.kfModeSelect).select2();
             },
             updateExpressions: function (expressions) {
-                this.updateList(expressions, 'expression', this.ui.expressionList);
+                this.initList(expressions, 'expression', this.ui.expressionList);
             },
             updateGestures: function (gestures) {
-                this.updateList(gestures, 'gesture', this.ui.gestureList);
+                this.initList(gestures, 'gesture', this.ui.gestureList);
             },
             updateSomaStates: function (somas) {
-                this.updateList(somas, 'soma', this.ui.somaList);
+                this.initList(somas, 'soma', this.ui.somaList);
             },
             setDuration: function () {
                 this.model.set('duration', Number($(this.ui.duration).val()));
@@ -389,7 +410,7 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
                     regions = regions || {};
                     regions.custom = 'custom';
-                    self.updateList(regions, 'attention_region', self.ui.attentionRegionList, {
+                    self.initList(regions, 'attention_region', self.ui.attentionRegionList, {
                         change: function () {
                             self.selectAttentionRegion();
                         }

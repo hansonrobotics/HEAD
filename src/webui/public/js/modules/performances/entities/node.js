@@ -1,5 +1,5 @@
-define(['application', 'backbone', 'lib/api', 'jquery'], function (App, Backbone, api, $) {
-    return Backbone.Model.extend({
+define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'], function (App, Backbone, api, $, Supermodel) {
+    return Supermodel.Model.extend({
         config: {
             emotion: {
                 label: 'Emotion',
@@ -58,8 +58,9 @@ define(['application', 'backbone', 'lib/api', 'jquery'], function (App, Backbone
                 properties: []
             }
         },
-        initialize: function () {
-            this.set('id', this.cid);
+        initialize: function (options) {
+            Supermodel.Model.prototype.initialize.call(this, options);
+            if (!this.get('id')) this.set('id', this.cid);
             this.on('change:el', this.updateEl);
         },
         call: function () {
@@ -108,7 +109,7 @@ define(['application', 'backbone', 'lib/api', 'jquery'], function (App, Backbone
             if (this.get('el')) $(this.get('el')).remove();
         },
         toJSON: function () {
-            var json = Backbone.Model.prototype.toJSON.call(this);
+            var json = Supermodel.Model.prototype.toJSON.call(this);
             if (this.get('el')) delete json['el'];
 
             return json;
@@ -118,7 +119,7 @@ define(['application', 'backbone', 'lib/api', 'jquery'], function (App, Backbone
             if (this.collection) this.collection.remove(this);
             if (this.get('el')) $(this.get('el')).remove();
             this.unset('id');
-            Backbone.Model.prototype.destroy.call(this);
+            Supermodel.Model.prototype.destroy.call(this);
         }
     });
 });

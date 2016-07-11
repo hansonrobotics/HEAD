@@ -31,9 +31,14 @@ requirejs.config({
         emoticons: 'vendor/jquery.cssemoticons.min',
         typeahead: 'vendor/bootstrap3-typeahead',
         selectareas: 'vendor/jquery.selectareas',
-        robot_config: '/robot_config'
+        robot_config: '/robot_config',
+        supermodel: 'vendor/supermodel.min'
     },
     shim: {
+        supermodel: {
+            depends: ['backbone', 'underscore'],
+            exports: 'Supermodel'
+        },
         selectareas: ['jquery'],
         typeahead: ['jquery'],
         emoticons: ['jquery'],

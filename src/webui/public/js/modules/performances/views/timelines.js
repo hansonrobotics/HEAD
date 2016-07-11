@@ -87,6 +87,32 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             onAttach: function () {
                 var self = this;
 
+                // init node droppable
+                this.ui.scrollContainer.droppable({
+                    accept: '[data-node-name], [data-node-id]',
+                    tolerance: 'touch',
+                    drop: function (e, ui) {
+                        var nodeEl = $(ui.helper),
+                            id = nodeEl.data('node-id'),
+                            node = Node.all().get(id),
+                            startTime = Math.round(
+                                    ($(this).scrollLeft() + ui.offset.left - $(this).offset().left) / self.config.pxPerSec * 100) / 100;
+
+                        if (id && node) {
+                            node.set('start_time', startTime);
+                            if (!self.model.nodes.contains(node))
+                                self.model.nodes.add(node);
+                        } else {
+                            node = Node.create({
+                                name: nodeEl.data('node-name'),
+                                start_time: startTime,
+                                duration: 1
+                            });
+                            self.model.nodes.add(node);
+                        }
+                    }
+                });
+
                 if (this.options.readonly)
                     this.ui.nodesContainer.hide();
                 else {
@@ -133,29 +159,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         self.updateTimelineWidth();
                 };
                 $(window).on('resize', updateWidth);
-
-                // init node droppable
-                this.ui.scrollContainer.droppable({
-                    accept: '[data-node-name]',
-                    tolerance: 'touch',
-                    drop: function (e, ui) {
-                        var nodeEl = $(ui.helper),
-                            node = self.model.nodes.get({cid: nodeEl.data('cid')}),
-                            startTime = Math.round(
-                                    ($(this).scrollLeft() + ui.offset.left - $(this).offset().left) / self.config.pxPerSec * 100) / 100;
-
-                        if (node)
-                            node.set('start_time', startTime);
-                        else {
-                            node = new Node({
-                                name: nodeEl.data('node-name'),
-                                start_time: startTime,
-                                duration: 1
-                            });
-                            self.model.nodes.add(node);
-                        }
-                    }
-                });
             },
             onDestroy: function () {
                 this.stopIndicator();
@@ -176,7 +179,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 });
             },
             nodeClicked: function (e) {
-                var node = new Node({
+                var node = Node.create({
                     name: $(e.target).data('name'),
                     start_time: 0,
                     duration: 1
@@ -206,7 +209,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 $(el).append(handle).resizable({
                     handles: 'w, e',
                     resize: function () {
-                        var node = self.model.nodes.get({cid: $(this).data('cid')});
+                        var node = self.model.nodes.get({cid: $(this).data('node-id')});
                         node.set('duration', Math.round($(this).outerWidth() / self.config.pxPerSec * 100) / 100);
                     }
                 });
@@ -215,7 +218,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 var self = this,
                     el = $('<div>').addClass('app-node label')
                         .attr('data-node-name', node.get('name'))
-                        .attr('data-cid', node.cid)
+                        .attr('data-node-id', node.cid)
                         .on('click', function () {
                             self.showNodeSettings(node);
                         });
