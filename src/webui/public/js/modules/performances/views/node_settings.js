@@ -94,7 +94,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                         slide: function (e, ui) {
                             var speed = ui.value / 100;
                             self.model.set('speed', speed);
-                            self.setGestureLength();
                             self.ui.speedLabel.html(speed.toFixed(2));
                         }
                     });
@@ -195,6 +194,8 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                         if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'no');
                         self.ui.kfModeSelect.val(this.model.get('blender_mode'));
 
+                        this.model.on('change', this.setKFAnimationDuration, this);
+
                         this.ui.fpsSlider.slider({
                             animate: true,
                             range: 'min',
@@ -230,6 +231,8 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                         api.getAvailableGestures(function (gestures) {
                             self.updateGestures(gestures)
                         });
+
+                        this.model.on('change', this.setGestureLength, this);
 
                         break;
                     case 'soma':
@@ -365,9 +368,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                 this.model.set('gesture', this.ui.gestureList.val());
                 this.setGestureLength();
             },
-            setSoma: function () {
-                this.model.set('soma', this.ui.somaSelect.val());
-            },
             setGestureLength: function () {
                 var self = this;
                 api.getAnimationLength(this.model.get('gesture'), function (response) {
@@ -383,10 +383,6 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
             },
             setTopic: function () {
                 this.model.set('topic', this.ui.topicInput.val());
-            },
-            setKFAnimation: function () {
-                this.model.set('animation', this.ui.kfAnimationList.val())
-                this.setKFAnimationDuration();
             },
             setKFAnimationDuration: function () {
                 var self = this;
