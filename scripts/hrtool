@@ -315,7 +315,7 @@ install_marky_markov() {
     fi
     wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
-    tar zxf /tmp/markov_modeling.tar.gz -C $HR_MODELS
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
     $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
     $SUDO apt-get -y update
