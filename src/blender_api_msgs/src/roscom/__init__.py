@@ -297,7 +297,7 @@ class CommandWrappers:
     @publish_live("~get_head_target", msg.Target)
     def getHeadTarget():
         val = api.getHeadTarget();
-        return msg.Target(val[0],val[1],val[2])
+        return msg.Target(val[0],val[1],val[2],0)
 
     # Pau messages --------------------------------
     @publish_live("~get_pau", paumsg.pau)
