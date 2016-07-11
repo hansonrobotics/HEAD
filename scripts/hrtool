@@ -14,6 +14,7 @@ DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
 HR_CACHE=~/.hr/cache
+HR_MODELS=~/.hr/models
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 HR_REPOS=($PROJECT)
@@ -24,6 +25,8 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
+MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 
 export DLIB_PATH=$DLIB_DIR/dlib-18.18
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
@@ -69,7 +72,6 @@ fi
 install_basic() {
     $SUDO apt-get -y update
     $SUDO apt-get -y install git
-    $SUDO apt-get -y install subversion
     $SUDO apt-get -y install wget
     $SUDO apt-get -y install python3-pip
     $SUDO apt-get -y install python-pip
@@ -195,8 +197,13 @@ install_other_deps() {
     # For telnet automation
     $SUDO apt-get -y install expect
 
-    # For manyears
-    $SUDO apt-get -y install subversion
+    install_manyears_deps
+}
+
+install_manyears_deps() {
+    wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
+    tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
+    mkdir $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
 }
 
 install_test_deps() {
@@ -293,6 +300,29 @@ install_vision_deps() {
     else
       warn "Skipping emotime clone"
     fi
+}
+
+wget_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+    # TODO check file integrity
+}
+
+install_marky_markov() {
+    if [ ! -d $MARKY_MARKOV_DIR ]; then
+      git clone https://github.com/hansonrobotics/marky_markov.git $MARKY_MARKOV_DIR
+    else
+      warn "Skipping marky_markov clone"
+    fi
+    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
+    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
+
+    $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
+    $SUDO apt-get -y update
+    $SUDO apt-get -y install ruby2.3 ruby2.3-dev
+    $SUDO gem install msgpack
 }
 
 check_or_create_ws() {
@@ -681,6 +711,9 @@ export OPENFACE_DIR=$OPENFACE_DIR
 export CPPMT_DIR=$CPPMT_DIR
 export EMOTIME_DIR=$EMOTIME_DIR
 
+export MARKY_MARKOV_DIR=$MARKY_MARKOV_DIR
+export HR_MODELS=$HR_MODELS
+
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
 export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
@@ -689,6 +722,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LIBRARY_PATH
 export DLIB_PATH=$DLIB_PATH
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
+export MANYEARSLIB_PREFIX=$MANYEARSLIB_PREFIX
 
 source $TORCH_DIR/install/bin/torch-activate
 EOF
@@ -715,11 +749,16 @@ do_migrate() {
         info "Migrating [CppMT]"
         cd $CPPMT_DIR && _change_remote https://github.com/hansonrobotics/CppMT.git wrapper
     fi
+    if [[ -d $OPENFACE_DIR ]]; then
+        info "Migrating [openface]"
+        cd $OPENFACE_DIR && _change_remote https://github.com/hansonrobotics/openface.git master
+    fi
 }
 
 execute() {
     parse_opts $@
     set_env
+    source $BASEDIR/env.sh
 
     if [[ $DEVELOPER_MODE == 1 ||
         $UPDATE_HR_SOURCE_CODE == 1 ||

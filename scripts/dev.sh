@@ -58,9 +58,10 @@ if [[ $(tmux ls) == ${NAME}* ]]; then
 fi
 
 ros_args="basedir:=$LAUNCH_DIR name:=$NAME dev:=true"
-
+pi_arg="pi_vision:=true"
 if [[ $CMT_TRACKING == 1 ]]; then
     ros_args="$ros_args pi_vision:=false"
+    pi_arg="pi_vision:=false"
 fi
 
 if [[ $OC_CHATBOT == 1 ]]; then
@@ -111,5 +112,7 @@ if [[ -d $OCBHAVE ]]; then
     tmux new-window -n 'fce' "python ../face_track/main.py; $SHELL"
 fi
 
+sleep 4
+tmux new-window -n 'cmt' "roslaunch robots_config face_tracker.launch ${pi_arg}; $SHELL"
 tmux new-window -n 'bash' "cd $BASEDIR; $SHELL"
 tmux attach;
