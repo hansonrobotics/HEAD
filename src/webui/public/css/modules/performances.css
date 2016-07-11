@@ -116,7 +116,7 @@
 
 .app-node.active {
     box-shadow: 0 0 3pt 2pt #5cb85c;
-    z-index: 9999999;
+    z-index: 9999;
 }
 
 .app-timeline {
@@ -185,7 +185,7 @@
     height: 100%;
     width: 2px;
     background-color: #5cb85c;
-    z-index: 9999999999;
+    z-index: 99999;
     cursor: pointer;
 }
 
