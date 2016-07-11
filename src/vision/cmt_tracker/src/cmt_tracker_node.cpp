@@ -279,7 +279,13 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     poorly_tracked = cmt_.lostFace();
     newly_tracked = cmt_.newFace();
     cmt_.clearFace();
-
+//    bool emo_enabled;
+//    nh_.getParam("emotime",emo_enabled);
+//    if(emo_enabled)
+//    {
+    //TODO there needs to be a way to better the emotion recognizer here.
+    trackers_results = returnOverlappingEmotion(trackers_results, emo_locs);
+//    }
     pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
 
 
@@ -304,12 +310,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 //  nh_.getParam("pose",pose_enabled);
 //  nh_.getParam("emotime",emo_enabled);
 //
-//  if(emo_enabled)
-//  {
-//  //TODO there needs to be a way to better the emotion recognizer here.
-//  trackers_results = returnOverlappingEmotion(trackers_results, emo_locs);
-//  pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
-//  }
+
 //  if(pose_enabled)
 //  {
 //  trackers_results = returnOverlappingPose(trackers_results, face_locs);
