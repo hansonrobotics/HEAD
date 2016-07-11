@@ -223,6 +223,13 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                             self.showNodeSettings(node);
                         });
 
+                node.set('el', el.get(0));
+                node.off('change', this.updateNode, this);
+                node.on('change', this.updateNode, this);
+
+                this.updateNode(node);
+
+
                 if (!this.options.readonly) {
                     this.initDraggable(el, {
                         start: function () {
@@ -237,12 +244,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     if (_.contains(['emotion', 'interaction', 'expression'], node.get('name')))
                         this.initResizable(el);
                 }
-
-                node.set('el', el.get(0));
-                node.off('change', this.updateNode, this);
-                node.on('change', this.updateNode, this);
-
-                this.updateNode(node);
             },
             /**
              * Updates node element
@@ -253,7 +254,8 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 if (this.isDestroyed || !node.get('el')) {
                     node.off('change', this.updateNode, this);
                 } else {
-                    $(node.get('el')).stop().css({
+                    var el = $(node.get('el'));
+                    el.stop().css({
                         left: node.get('start_time') * this.config.pxPerSec,
                         width: node.get('duration') * this.config.pxPerSec
                     }).attr('data-node-name', node.get('name'));
@@ -261,7 +263,10 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     if (node.hasChanged('duration') || node.hasChanged('start_time'))
                         this.arrangeNodes();
 
-                    $(node.get('el')).html(node.getTitle());
+                    if (el.is(':empty'))
+                        el.html(node.getTitle());
+                    else
+                        el.get(0).childNodes[0].nodeValue = node.getTitle();
                 }
             },
             addNode: function (node) {
