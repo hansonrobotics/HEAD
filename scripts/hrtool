@@ -14,6 +14,7 @@ DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
 HR_CACHE=~/.hr/cache
+HR_MODELS=~/.hr/models
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 HR_REPOS=($PROJECT)
@@ -25,6 +26,7 @@ OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
 MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
+MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 
 export DLIB_PATH=$DLIB_DIR/dlib-18.18
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
@@ -296,6 +298,29 @@ install_vision_deps() {
     else
       warn "Skipping emotime clone"
     fi
+}
+
+wget_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+    # TODO check file integrity
+}
+
+install_marky_markov() {
+    if [ ! -d $MARKY_MARKOV_DIR ]; then
+      git clone https://github.com/hansonrobotics/marky_markov.git $MARKY_MARKOV_DIR
+    else
+      warn "Skipping marky_markov clone"
+    fi
+    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
+    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    tar zxf /tmp/markov_modeling.tar.gz -C $HR_MODELS
+
+    $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
+    $SUDO apt-get -y update
+    $SUDO apt-get -y install ruby2.3 ruby2.3-dev
+    $SUDO gem install msgpack
 }
 
 check_or_create_ws() {
@@ -683,6 +708,9 @@ export TORCH_DIR=$TORCH_DIR
 export OPENFACE_DIR=$OPENFACE_DIR
 export CPPMT_DIR=$CPPMT_DIR
 export EMOTIME_DIR=$EMOTIME_DIR
+
+export MARKY_MARKOV_DIR=$MARKY_MARKOV_DIR
+export HR_MODELS=$HR_MODELS
 
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
