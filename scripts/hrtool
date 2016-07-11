@@ -719,6 +719,10 @@ do_migrate() {
         info "Migrating [CppMT]"
         cd $CPPMT_DIR && _change_remote https://github.com/hansonrobotics/CppMT.git wrapper
     fi
+    if [[ -d $OPENFACE_DIR ]]; then
+        info "Migrating [openface]"
+        cd $OPENFACE_DIR && _change_remote https://github.com/hansonrobotics/openface.git master
+    fi
 }
 
 execute() {
