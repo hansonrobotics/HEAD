@@ -126,11 +126,14 @@ class OfflineViewer:
                     cv2.putText(cv_image,str(result),(i.object.x_offset,i.object.y_offset),font,0.7,(255,0,0),2)
                 else:
                     if (self.image_sample_size > 0):
+                        cv2.rectangle(cv_image, (i.object.x_offset, i.object.y_offset),
+                                      (i.object.x_offset + i.object.width, i.object.y_offset + i.object.width),
+                                      (255, 0, 0))
                         self.face_recognizer.save_faces(cv_image,tupl,self.generate_unique,str(self.image_sample_size))
                         self.image_sample_size -= 1
                         break
                     else:
-                        self.face_recognizer.train_process(self.generate_unique)
+                        #self.face_recognizer.train_process(self.generate_unique)
                         self.image_sample_size = self.back_up
                         self.save_faces = False
 

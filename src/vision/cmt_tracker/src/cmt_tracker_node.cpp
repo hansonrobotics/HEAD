@@ -62,8 +62,8 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   server.setCallback(f);
 
   //Now let's read the camera pictures form the system.
-  camera_config.width = 640;
-  camera_config.height = 480;
+  nh_.param<int>("width", camera_config.width, 640);
+  nh_.param<int>("height", camera_config.height, 480);
   camera_config.fov = 1.42;
 }
 
