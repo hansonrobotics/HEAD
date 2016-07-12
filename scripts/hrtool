@@ -116,6 +116,9 @@ install_opencog_deps() {
     rm octool
 
     install_relex_deps
+
+    # For sentiment analysis
+    $SUDO pip2 install nltk
 }
 
 install_relex_deps() {
@@ -202,7 +205,7 @@ install_other_deps() {
 install_manyears_deps() {
     wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
     tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
-    mkdir $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
+    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
 }
 
 install_test_deps() {
@@ -713,7 +716,7 @@ export HR_MODELS=$HR_MODELS
 
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
-export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist:/usr/local/share/opencog/python
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LIBRARY_PATH
