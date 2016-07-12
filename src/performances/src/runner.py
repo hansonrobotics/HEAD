@@ -86,10 +86,11 @@ class Runner:
         return srv.LoadSequenceResponse(success=True, nodes=json.dumps(self.load_sequence(request.ids)))
 
     def run_by_name_callback(self, request):
+        self.stop()
         nodes = self.load_sequence([request.id])
         if not nodes:
             return srv.RunByNameResponse(False)
-        return srv.RunResponse(self.run(0.0))
+        return srv.RunByNameResponse(self.run(0.0))
 
 
     def load_sequence(self, ids):
