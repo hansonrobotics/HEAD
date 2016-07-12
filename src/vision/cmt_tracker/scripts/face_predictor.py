@@ -80,12 +80,15 @@ class face_predictor:
                 tupl.append((x,y))
             key = cmt.tracker_name.data
 
+            #TODO Can we Query state only:
+            query_only = rospy.get_param('query_only', True)
+
             self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key,{'count': 0, 'state':self.state['query_save']})
             print(self.cmt_tracker_instances)
             if self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
 
-            elif self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
+            elif not query_only and (self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']):
                 self.face_recognizer.save_faces(cv_image, tupl, key, str(self.cmt_tracker_instances[key]['count']))
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
@@ -116,8 +119,9 @@ class face_predictor:
                             self.logger.error("Service call failed: %s" % e)
 
                     else:
-                        self.cmt_tracker_instances[key]['state'] = self.state['save_only']
-                        self.cmt_tracker_instances[key]['count'] = 0
+                        if not query_only:
+                            self.cmt_tracker_instances[key]['state'] = self.state['save_only']
+                            self.cmt_tracker_instances[key]['count'] = 0
             elif self.cmt_tracker_instances[key]['count'] == self.sample_size + self.image_sample_size:
                 if self.cmt_tracker_instances[key]['state'] == self.state['save_only']:
                     self.face_recognizer.train_process(cmt.tracker_name.data)

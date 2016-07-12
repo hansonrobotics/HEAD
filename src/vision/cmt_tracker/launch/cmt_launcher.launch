@@ -23,6 +23,7 @@
 <param name="openface" value="$(env OPENFACE_DIR)"/>
 <param name="image_locations" value="$(env HR_WORKSPACE)/HEAD/src/vision/images"/>
 <param name="camera_topic" value="image_rect"/>
+<param name="query_only" value="True"/>
 
 <group if="$(arg testing)">
     <node pkg="cmt_tracker" name="cmt_test" type="cmt_test.py" output="screen"/>
