@@ -31,9 +31,9 @@
     </group>
 
     <!-- Face Tracking -->
-    <include file="$(arg basedir)/face_tracker.launch">
+    <!-- include file="$(arg basedir)/face_tracker.launch">
       <arg name="pi_vision" value="$(arg pi_vision)"/>
-    </include>
+    </include -->
 
     <!-- Perception -->
     <include file="$(arg basedir)/perception.launch" />
