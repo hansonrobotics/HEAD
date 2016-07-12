@@ -68,6 +68,7 @@ class OfflineViewer:
         trimFacesButton.pack(side=tk.LEFT)
 
         #add buttons
+        self.new_faces_array = []
         self.window.mainloop()  # Starts GUI
 
     def switchToLive(self):
@@ -76,6 +77,8 @@ class OfflineViewer:
     def switchToTrain(self):
         #Create a dialog for waiting and then when finished say comething.
         self.save_faces = False
+        self.face_recognizer.move_folders(self.new_faces_array)
+        self.new_faces_array = []
         self.face_recognizer.train_dataset()
         self.save_face = False
         #Promote to finish the training.
@@ -133,6 +136,7 @@ class OfflineViewer:
                         self.image_sample_size -= 1
                         break
                     else:
+                        self.new_faces_array.append(self.generate_unique)
                         #self.face_recognizer.train_process(self.generate_unique)
                         self.image_sample_size = self.back_up
                         self.save_faces = False

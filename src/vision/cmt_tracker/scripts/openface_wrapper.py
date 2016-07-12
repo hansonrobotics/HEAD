@@ -146,7 +146,12 @@ class face_recognizer:
         # Here let's create a method that it generated a name for itself.
         cv2.imwrite(self.image_dir_face_temp + "/" +loc_save + "/" + postfix + ".jpg", img_aligned)
         self.logger.info("saved faces %s",loc_save + "_" + postfix + ".jpg")
-
+    def move_folders(self, names_array):
+        for name in names_array:
+            file_loc = self.image_dir_face_temp + "/" + name
+            if (os.path.exists(file_loc)):
+                subprocess.call(['mv', self.image_dir_face_temp + "/" + name,
+                                 self.image_dir_face_imgs + "/" + name])
     def train_process(self, name):
         self.logger.info('starts training')
         file_loc = self.image_dir_face_temp + "/" + name

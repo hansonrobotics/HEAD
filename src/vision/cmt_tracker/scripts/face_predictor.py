@@ -82,9 +82,14 @@ class face_predictor:
 
             #TODO Can we Query state only:
             query_only = rospy.get_param('query_only', True)
-
-            self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key,{'count': 0, 'state':self.state['query_save']})
-            print(self.cmt_tracker_instances)
+            print query_only
+            if not query_only:
+                # This is to avoid adding faces sample size by saving while querying.
+                self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key,{'count': 0, 'state':self.state['query_save']})
+            else:
+                self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key, {'count': 0, 'state': self.state[
+                    'query_only']})
+            #print(self.cmt_tracker_instances)
             if self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
 
@@ -106,7 +111,7 @@ class face_predictor:
                         self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].iterkeys(),
                         key=(
                         lambda key: self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results']))
-                    print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index])
+                    #print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
                     if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][
                         max_index] > self.num_positive:
                         try:
@@ -121,6 +126,9 @@ class face_predictor:
                     else:
                         if not query_only:
                             self.cmt_tracker_instances[key]['state'] = self.state['save_only']
+                            self.cmt_tracker_instances[key]['count'] = 0
+                        else:
+                            self.cmt_tracker_instances[key]['state'] = self.state['ignore']
                             self.cmt_tracker_instances[key]['count'] = 0
             elif self.cmt_tracker_instances[key]['count'] == self.sample_size + self.image_sample_size:
                 if self.cmt_tracker_instances[key]['state'] == self.state['save_only']:
