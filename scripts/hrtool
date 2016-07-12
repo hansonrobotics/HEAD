@@ -185,9 +185,8 @@ install_other_deps() {
 
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
-    wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip -O /tmp/marytts-5.1.2.zip
-    unzip -od ~/.hr/tts/marytts /tmp/marytts-5.1.2.zip
-    rm /tmp/marytts-5.1.2.zip
+    wget_cache https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
+    unzip -od ~/.hr/tts/marytts ${HR_CACHE}/marytts-5.1.2.zip
 
     $SUDO pip2 install pinyin==0.2.5
 
@@ -230,9 +229,7 @@ install_vision_deps() {
     $SUDO pip2 install -qI Pillow
 
     if [[ ! -d $DLIB_DIR ]]; then
-      if [[ ! -f $HR_CACHE/dlib-18.18.tar.bz2 ]]; then
-        wget http://dlib.net/files/dlib-18.18.tar.bz2 -O $HR_CACHE/dlib-18.18.tar.bz2
-      fi
+      wget_cache http://dlib.net/files/dlib-18.18.tar.bz2
       mkdir -p $DLIB_DIR
       tar -xf $HR_CACHE/dlib-18.18.tar.bz2 -C $DLIB_DIR
     else
