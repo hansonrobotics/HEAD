@@ -203,7 +203,7 @@ install_other_deps() {
 install_manyears_deps() {
     wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
     tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
-    mkdir $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
+    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
 }
 
 install_test_deps() {
