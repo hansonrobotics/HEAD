@@ -228,7 +228,7 @@ install_vision_deps() {
     $SUDO pip2 install -qI Pillow
 
     if [[ ! -d $DLIB_DIR ]]; then
-      wget_cache http://dlib.net/files/dlib-18.18.tar.bz2
+      wget_cache http://dlib.net/files/dlib-19.0.tar.bz2
       mkdir -p $DLIB_DIR
       tar -xf $HR_CACHE/dlib-19.0.tar.bz2 -C $DLIB_DIR
     else
