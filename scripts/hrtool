@@ -197,12 +197,14 @@ install_other_deps() {
     # For telnet automation
     $SUDO apt-get -y install expect
 
-    # For manyears
-    wget https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz -O /tmp/manyears.tar.gz
-    tar zxf /tmp/manyears.tar.gz -C $HR_PREFIX
-    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
+    install_manyears_deps
 }
 
+install_manyears_deps() {
+    wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
+    tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
+    mkdir $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
+}
 
 install_test_deps() {
     $SUDO apt-get -y install socat
@@ -756,6 +758,7 @@ do_migrate() {
 execute() {
     parse_opts $@
     set_env
+    source $BASEDIR/env.sh
 
     if [[ $DEVELOPER_MODE == 1 ||
         $UPDATE_HR_SOURCE_CODE == 1 ||
