@@ -119,6 +119,7 @@ install_opencog_deps() {
 
     # For sentiment analysis
     $SUDO pip2 install nltk
+    $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
 }
 
 install_relex_deps() {
@@ -559,7 +560,8 @@ do_clean_up() {
 }
 
 _do_clean_up() {
-    rm -r ~/.cache/guile/ccache
+    rm -r ~/.cache/guile
+    rm -r ~/.hr/cache/res
     if [[ ! -z $HR_WORKSPACE ]]; then
         for repo in ${OPENCOG_REPOS[*]}
         do
