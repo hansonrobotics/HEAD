@@ -10,7 +10,7 @@ define(['jquery', 'json_editor'], function ($, JSONEditor) {
                     step: this.options.schema.step || 0.1,
                     value: this.value,
                     slide: function (e, ui) {
-                        $(self.input).val(ui.value);
+                        $(self.input).val(ui.value).change();
                     }
                 });
 
