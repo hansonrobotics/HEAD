@@ -219,11 +219,6 @@ install_test_deps() {
 }
 
 install_vision_deps() {
-    if [[ ! -d $HR_PREFIX ]]; then
-        info "Creating $HR_PREFIX"
-        $SUDO mkdir -p $HR_PREFIX
-    fi
-    $SUDO chmod 777 $HR_PREFIX
     mkdir -p $VISION_TOOL_PREFIX
     $SUDO apt-get -y install ros-indigo-opencv-apps
 
@@ -438,6 +433,11 @@ do_install_deps() {
 }
 
 _do_install_deps() {
+    if [[ ! -d $HR_PREFIX ]]; then
+        info "Creating $HR_PREFIX"
+        $SUDO mkdir -p $HR_PREFIX
+    fi
+    $SUDO chmod 777 $HR_PREFIX
     install_basic
     install_ros
     install_opencog_deps
