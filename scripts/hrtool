@@ -119,6 +119,7 @@ install_opencog_deps() {
 
     # For sentiment analysis
     $SUDO pip2 install nltk
+    $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
 }
 
 install_relex_deps() {
