@@ -116,6 +116,9 @@ install_opencog_deps() {
     rm octool
 
     install_relex_deps
+
+    # For sentiment analysis
+    $SUDO pip2 install nltk
 }
 
 install_relex_deps() {
@@ -713,7 +716,7 @@ export HR_MODELS=$HR_MODELS
 
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
-export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist:/usr/local/share/opencog/python
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LIBRARY_PATH
