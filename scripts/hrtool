@@ -25,12 +25,12 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
-MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 
+# Needed for compiling
+export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
 export DLIB_PATH=$DLIB_DIR/dlib-18.18
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-#Needed for compiling emotime as it's dependent upon it for it being built.
 export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
 export DLIB_PATH=$DLIB_DIR/dlib-18.18
 include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
@@ -758,7 +758,6 @@ do_migrate() {
 execute() {
     parse_opts $@
     set_env
-    source $BASEDIR/env.sh
 
     if [[ $DEVELOPER_MODE == 1 ||
         $UPDATE_HR_SOURCE_CODE == 1 ||
