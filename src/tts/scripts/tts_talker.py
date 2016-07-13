@@ -18,7 +18,7 @@ logger = logging.getLogger('hr.tts.tts_talker')
 
 class TTSTalker:
     def __init__(self):
-        topic = rospy.get_param('~topic_name', 'tts')
+        topic = rospy.get_param('~topic_name', 'chatbot_responses')
         tts_control = rospy.get_param('tts_control', 'tts_control')
         rospy.Subscriber(topic, String, self.say)
         rospy.Subscriber(topic+'_en', String, self.say, 'en')
