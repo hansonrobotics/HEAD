@@ -113,14 +113,26 @@ class face_predictor:
             #Change state now;
 
             if self.cmt_tracker_instances[key]['count'] == self.sample_size:
-                print "Query Google Scrapper: TO be Threaded Out: "
-                self.image_scraper.image_scraper("/tmp/" + key + ".png")
-                print "Querying Image Saved. "
+                try:
+                    print "Upload Imgur and Query Google Scrapper: "
+                    results = self.image_scraper.image_scraper("/tmp/" + key + ".png")
+                    try:
+                        self.gog = rospy.ServiceProxy('google_scraper', TrackerNames)
+                        indication = self.gog(names=str(results), index=int(cmt.tracker_name.data))
+                        if not indication:
+                            self.logger.info("there was the same id in the id chamber.....")
+                    except rospy.ServiceException, e:
+                        self.logger.error("Service call failed: %s" % e)
+
+                    print  type(results)
+                    print "Finished Query of Google Images"
+                except Exception, e:
+                    print e
                 if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
                     max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'], key=self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].get)
+                    print("openface output results: ")
                     print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
-                    if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][
-                        max_index] > self.num_positive:
+                    if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index] > self.num_positive:
                         try:
                             self.upt = rospy.ServiceProxy('recognition', TrackerNames)
                             indication = self.upt(names=cmt.tracker_name.data, index=int(max_index))

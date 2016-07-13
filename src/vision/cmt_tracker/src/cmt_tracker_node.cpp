@@ -30,7 +30,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   image_service = nh_.advertiseService("get_cmt_rects", &cmt_wrap::TrackerCMT::getTrackedImages, this);
   update_service = nh_.advertiseService("update", &cmt_wrap::TrackerCMT::updated, this);
   recognition_service  = nh_.advertiseService("recognition", &cmt_wrap::TrackerCMT::updateTrackerNames,this);
-  //validation_service = nh_.advertiseService("validation", &cmt_wrap::TrackerCMT::validate, this);
+  google_service = nh_.advertiseService("google_scraper", &cmt_wrap::TrackerCMT::validate, this);
   reinforce_service = nh_.advertiseService("reinforce", &cmt_wrap::TrackerCMT::reinforce, this);
   merge_service = nh_.advertiseService("merge", &cmt_wrap::TrackerCMT::merge_elements, this);
   delete_service = nh_.advertiseService("delete", &cmt_wrap::TrackerCMT::delete_elements, this);
@@ -88,13 +88,11 @@ bool TrackerCMT::updated(cmt_tracker_msgs::Update::Request &req, cmt_tracker_msg
   }
   return true;
 }
-//bool TrackerCMT::validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
-//{
-//    if(cmt_.validate(req.names))
-//    return true;
-//    else
-//    return false;
-//}
+bool TrackerCMT::validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
+{
+    google_results[std::to_string(req.index)] = req.names;
+    return true;
+}
 
 bool TrackerCMT::reinforce(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
 {
@@ -245,6 +243,9 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     tracker.initial_points.data = (*v).initial_active_points;
     tracker.active_points.data = (*v).active_points;
     tracker.tracker_name.data = (*v).tracker_name;
+
+    if (google_results.find(tracker.tracker_name.data) != google_results.end())
+        tracker.google_best_guess.data = google_results[tracker.tracker_name.data];
 
     tracker.object.object.x_offset = (*v).rect.x;
     tracker.object.object.y_offset = (*v).rect.y;

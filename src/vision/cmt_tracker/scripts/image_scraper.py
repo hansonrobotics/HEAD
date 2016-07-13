@@ -189,9 +189,9 @@ class image_scaper:
 
         # output of the results
 
-        print json.dumps( scrapeResults, indent=4, sort_keys=False)
-
+        #print json.dumps( scrapeResults, indent=4, sort_keys=False)
+        return scrapeResults["bestguess"]
 if __name__ == '__main__':
     image_scraper = image_scaper('/home/icog-labs/hansonrobotics/HEAD/src/vision/cmt_tracker/resources/useragents.txt')
-    image_scraper.image_scraper('/home/icog-labs/Pictures/ben7.png')
+    image_scraper.image_scraper('/tmp/96218.png')
 

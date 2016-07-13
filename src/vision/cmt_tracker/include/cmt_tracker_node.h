@@ -105,8 +105,9 @@ public:
 	bool merge_elements(cmt_tracker_msgs::MergeNames::Request &req, cmt_tracker_msgs::MergeNames::Response &res);
 	bool delete_elements(cmt_tracker_msgs::Delete::Request &req, cmt_tracker_msgs::Delete::Response &res);
 	bool updateArea(cmt_tracker_msgs::Reinitialize::Request &req, cmt_tracker_msgs::Reinitialize::Response &res);
+	bool googleUpdate(cmt_tracker_msgs::Reinitialize::Request &req, cmt_tracker_msgs::Reinitialize::Response &res);
 
-//    bool validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
+    bool validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
 
     bool reinforce(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res);
 
@@ -147,7 +148,7 @@ private:
 	ros::ServiceServer image_service;
 	ros::ServiceServer update_service;
 	ros::ServiceServer recognition_service;
-    ros::ServiceServer validation_service;
+    ros::ServiceServer google_service;
     ros::ServiceServer reinforce_service;
     ros::ServiceServer merge_service;
     ros::ServiceServer updateArea_service;
@@ -156,7 +157,7 @@ private:
 
     ros::ServiceClient add_to_tracker;
 
-
+    std::map<std::string, std::string> google_results;
     std_srvs::Empty empty_info;
 	image_transport::ImageTransport it_;
 
