@@ -30,7 +30,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   image_service = nh_.advertiseService("get_cmt_rects", &cmt_wrap::TrackerCMT::getTrackedImages, this);
   update_service = nh_.advertiseService("update", &cmt_wrap::TrackerCMT::updated, this);
   recognition_service  = nh_.advertiseService("recognition", &cmt_wrap::TrackerCMT::updateTrackerNames,this);
-  //validation_service = nh_.advertiseService("validation", &cmt_wrap::TrackerCMT::validate, this);
+  google_service = nh_.advertiseService("google_scraper", &cmt_wrap::TrackerCMT::validate, this);
   reinforce_service = nh_.advertiseService("reinforce", &cmt_wrap::TrackerCMT::reinforce, this);
   merge_service = nh_.advertiseService("merge", &cmt_wrap::TrackerCMT::merge_elements, this);
   delete_service = nh_.advertiseService("delete", &cmt_wrap::TrackerCMT::delete_elements, this);
@@ -62,8 +62,8 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   server.setCallback(f);
 
   //Now let's read the camera pictures form the system.
-  camera_config.width = 640;
-  camera_config.height = 480;
+  nh_.param<int>("width", camera_config.width, 640);
+  nh_.param<int>("height", camera_config.height, 480);
   camera_config.fov = 1.42;
 }
 
@@ -88,13 +88,11 @@ bool TrackerCMT::updated(cmt_tracker_msgs::Update::Request &req, cmt_tracker_msg
   }
   return true;
 }
-//bool TrackerCMT::validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
-//{
-//    if(cmt_.validate(req.names))
-//    return true;
-//    else
-//    return false;
-//}
+bool TrackerCMT::validate(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
+{
+    google_results[std::to_string(req.index)] = req.names;
+    return true;
+}
 
 bool TrackerCMT::reinforce(cmt_tracker_msgs::TrackerNames::Request &req, cmt_tracker_msgs::TrackerNames::Response &res)
 {
@@ -246,6 +244,9 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     tracker.active_points.data = (*v).active_points;
     tracker.tracker_name.data = (*v).tracker_name;
 
+    if (google_results.find(tracker.tracker_name.data) != google_results.end())
+        tracker.google_best_guess.data = google_results[tracker.tracker_name.data];
+
     tracker.object.object.x_offset = (*v).rect.x;
     tracker.object.object.y_offset = (*v).rect.y;
 
@@ -279,7 +280,13 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
     poorly_tracked = cmt_.lostFace();
     newly_tracked = cmt_.newFace();
     cmt_.clearFace();
-
+//    bool emo_enabled;
+//    nh_.getParam("emotime",emo_enabled);
+//    if(emo_enabled)
+//    {
+    //TODO there needs to be a way to better the emotion recognizer here.
+    trackers_results = returnOverlappingEmotion(trackers_results, emo_locs);
+//    }
     pi_face_tracker::Faces pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
 
 
@@ -304,12 +311,7 @@ void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs
 //  nh_.getParam("pose",pose_enabled);
 //  nh_.getParam("emotime",emo_enabled);
 //
-//  if(emo_enabled)
-//  {
-//  //TODO there needs to be a way to better the emotion recognizer here.
-//  trackers_results = returnOverlappingEmotion(trackers_results, emo_locs);
-//  pi_results = returnPiMessages(trackers_results, camera_config);//Currently zero then let's get the overlapped
-//  }
+
 //  if(pose_enabled)
 //  {
 //  trackers_results = returnOverlappingPose(trackers_results, face_locs);

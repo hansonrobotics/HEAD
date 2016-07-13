@@ -26,13 +26,13 @@ OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
+DLIB_VERSION=19.0
 
+export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
 # Needed for compiling
 export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
-export DLIB_PATH=$DLIB_DIR/dlib-18.18
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
 export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-export DLIB_PATH=$DLIB_DIR/dlib-18.18
 include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 include_path=$(printf "%s:" "${include_dirs[@]}")
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
@@ -227,15 +227,15 @@ install_vision_deps() {
     info "Installing Pillow"
     $SUDO pip2 install -qI Pillow
 
-    if [[ ! -d $DLIB_DIR ]]; then
-      wget_cache http://dlib.net/files/dlib-18.18.tar.bz2
-      mkdir -p $DLIB_DIR
-      tar -xf $HR_CACHE/dlib-18.18.tar.bz2 -C $DLIB_DIR
+    if [[ ! -d $DLIB_PATH ]]; then
+      wget_cache http://dlib.net/files/dlib-${DLIB_VERSION}.tar.bz2
+      mkdir -p $DLIB_PATH
+      tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
     else
       warn "Skipping Dlib installation"
     fi
     info "Building Dlib python API"
-    cd $DLIB_DIR/dlib-18.18 && python setup.py build
+    cd $DLIB_PATH && python setup.py build
 
     #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
     # Install dlib-models large file This is skiped as model in the openface are used to download the elements
@@ -718,7 +718,7 @@ export HR_MODELS=$HR_MODELS
 
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
-export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist:/usr/local/share/opencog/python
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-${DLIB_VERSION}/dist:/usr/local/share/opencog/python
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LIBRARY_PATH
