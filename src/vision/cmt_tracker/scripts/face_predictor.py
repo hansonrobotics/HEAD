@@ -14,11 +14,13 @@ from cmt_tracker_msgs.cfg import RecogntionConfig
 from dynamic_reconfigure.server import Server
 
 from openface_wrapper import face_recognizer
-
-
+from image_scraper import image_scaper
+import cv2
 class face_predictor:
     def __init__(self):
         rospy.init_node('face_recognizer', anonymous=True)
+        self.user_agents = rospy.get_param('user_agents')
+        self.image_scraper = image_scaper(self.user_agents)
         self.openface_loc = rospy.get_param('openface')
         self.camera_topic = rospy.get_param('camera_topic')
         self.filtered_face_locations = rospy.get_param('filtered_face_locations')
@@ -42,7 +44,7 @@ class face_predictor:
 
         self.service_ = rospy.Service('add_to_query', TrackerNames, self.add_to_query)
         self.cmt_state = {}
-        self.confidence = 0.85
+        #self.confidence = 0.85
         self.states = ['results','save']
 
 
@@ -53,6 +55,7 @@ class face_predictor:
 
         self.overall_state = ''
         self.initial_run = True
+        self.google_query = []
         #So the logic goes; if the trainer is called when save_tracker_images has saved enough images.
         #And for get_tracker_results -> returns the
 
@@ -82,7 +85,7 @@ class face_predictor:
 
             #TODO Can we Query state only:
             query_only = rospy.get_param('query_only', True)
-            print query_only
+            # print("Confidence: %f" % self.confidence)
             if not query_only:
                 # This is to avoid adding faces sample size by saving while querying.
                 self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key,{'count': 0, 'state':self.state['query_save']})
@@ -93,11 +96,16 @@ class face_predictor:
             if self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
 
+
             elif not query_only and (self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']):
                 self.face_recognizer.save_faces(cv_image, tupl, key, str(self.cmt_tracker_instances[key]['count']))
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
+                if key not in self.google_query:
+                    self.face_recognizer.temp_save_faces(cv_image, tupl, key)
+                    self.google_query.append(key)
+                    # print "Image Saved"
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['ignore']:
                 pass
@@ -105,13 +113,12 @@ class face_predictor:
             #Change state now;
 
             if self.cmt_tracker_instances[key]['count'] == self.sample_size:
-                if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] \
-                        or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
-                    max_index = max(
-                        self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].iterkeys(),
-                        key=(
-                        lambda key: self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results']))
-                    #print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
+                print "Query Google Scrapper: TO be Threaded Out: "
+                self.image_scraper.image_scraper("/tmp/" + key + ".png")
+                print "Querying Image Saved. "
+                if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
+                    max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'], key=self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].get)
+                    print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
                     if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][
                         max_index] > self.num_positive:
                         try:
@@ -141,6 +148,7 @@ class face_predictor:
 
 
     def sample_callback(self,config, level):
+        self.cmt_tracker_instances = {}
         self.image_sample_size = config.image_number
         self.sample_size = config.sample_size
         self.confidence = config.confidence

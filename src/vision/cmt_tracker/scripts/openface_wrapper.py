@@ -144,8 +144,12 @@ class face_recognizer:
             os.makedirs(self.image_dir_face_temp + "/" + loc_save)
         img_aligned = self.align(cv_image, tupl)
         # Here let's create a method that it generated a name for itself.
-        cv2.imwrite(self.image_dir_face_temp + "/" +loc_save + "/" + postfix + ".jpg", img_aligned)
-        self.logger.info("saved faces %s",loc_save + "_" + postfix + ".jpg")
+        cv2.imwrite(self.image_dir_face_temp + "/" +loc_save + "/" + postfix + ".png", img_aligned)
+        self.logger.info("saved faces %s",loc_save + "_" + postfix + ".png")
+
+    def temp_save_faces(self, cv_image, tupl, name):
+        img_aligned = self.align(cv_image, tupl)
+        cv2.imwrite('/tmp/' + name + ".png" , img_aligned)
     def move_folders(self, names_array):
         for name in names_array:
             file_loc = self.image_dir_face_temp + "/" + name

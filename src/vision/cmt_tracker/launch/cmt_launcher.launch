@@ -24,7 +24,7 @@
 <param name="image_locations" value="$(env HR_WORKSPACE)/HEAD/src/vision/images"/>
 <param name="camera_topic" value="image_rect"/>
 <param name="query_only" value="True"/>
-
+<param name="user_agents" value="$(find cmt_tracker)/resources/useragents.txt"/>
 <group if="$(arg testing)">
     <node pkg="cmt_tracker" name="cmt_test" type="cmt_test.py" output="screen"/>
     <node pkg="image_transport" type="republish" name="republish" args="compressed in:=/camera/image_raw raw out:=/camera/image"/>
@@ -61,14 +61,14 @@
 </group>
 
 <group unless="$(arg debug)">
-<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node" output="screen" required="true"/>
+<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node"  required="true"/>
 </group>
 
-<node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py" />
-<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py" output="screen" required="true"/>
+<node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py" output="screen" />
+<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py"  required="true"/>
 
 <group unless="$(arg headless)">
-<node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"  output="screen" respawn="true"/>
+<node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"   respawn="true"/>
 </group>
 
 
