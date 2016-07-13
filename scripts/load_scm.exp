@@ -6,12 +6,18 @@ set host localhost
 set port 17020
 set HR_WORKSPACE $::env(HR_WORKSPACE)
 set OC_AIML_FILE $::env(OC_AIML_FILE)
+set OC_LOG_LEVEL $::env(OC_LOG_LEVEL)
 
 spawn telnet $host $port
 
 expect "Escape character"
 sleep 1
 
+# Set log level
+send "(use-modules (opencog logger))\n"
+send "(cog-logger-set-level! \"$OC_LOG_LEVEL\")\n"
+
+# Load chat bot and aiml rules
 send "(load \"$HR_WORKSPACE/opencog/opencog/opencog/nlp/chatbot-psi/main.scm\")\n"
 send "(load \"$OC_AIML_FILE\")\n"
 
