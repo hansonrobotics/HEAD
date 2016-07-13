@@ -57,7 +57,7 @@ def emotiveSpeech(filename,typeOfEmotion):
                 for i in best_pitch_marks_freq_chunk:
                     best_pitch_marks.append(i)
 
-        new_x = psola.freq_shift_using_td_psola_helper_new_two(x,best_pitch_marks,1.08)
+        new_x = psola.freq_shift_using_td_psola_helper_new_two(x,best_pitch_marks,1.03)
         new_sndarray = []
         for i in range(0,len(new_x)):
             new_sndarray.append(numpy.int16(new_x[i]))
@@ -72,7 +72,7 @@ def emotiveSpeech(filename,typeOfEmotion):
         dur = sndinfo(filenameFreqShift)[1]
         sf = SfPlayer(filenameFreqShift, speed=1, loop=False)
         t2 = NewTable(length=dur)
-        out = Atone(sf, 8000,mul=2).out()
+        out = Atone(sf, 8000,mul=5).out()
         rec2 = TableRec(out, table=t2)
         rec2.play()
         s.start()
@@ -85,7 +85,7 @@ def emotiveSpeech(filename,typeOfEmotion):
         sf2 = SfPlayer(filenameHappy, speed=1, loop=False)
         dur = sndinfo(filenameHappy)[1]
         t3 = NewTable(length=dur)
-        out2 = Average(sf2,30,mul=10).out()
+        out2 = Average(sf2,80,mul=10).out()
         rec3 = TableRec(out2, table=t3)
         rec3.play()
         s.start()
@@ -120,7 +120,7 @@ def emotiveSpeech(filename,typeOfEmotion):
                 for i in best_pitch_marks_freq_chunk:
                     best_pitch_marks.append(i)
 
-        new_x = psola.freq_shift_using_td_psola_helper_new_two(x,best_pitch_marks,0.85)
+        new_x = psola.freq_shift_using_td_psola_helper_new_two(x,best_pitch_marks,0.95)
         new_sndarray = []
         for i in range(0,len(new_x)):
             new_sndarray.append(numpy.int16(new_x[i]))
@@ -144,7 +144,7 @@ def emotiveSpeech(filename,typeOfEmotion):
 
 
 if __name__ == "__main__":
-    filename= "C:/Users/rediet/Documents/Vocie-samples/salli.wav"
+    filename= "C:/Users/rediet/Documents/Vocie-samples/eric.wav"
     emotiveSpeech(filename,"Happy")
 
 
