@@ -25,12 +25,12 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
-MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 
+# Needed for compiling
+export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
 export DLIB_PATH=$DLIB_DIR/dlib-18.18
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-#Needed for compiling emotime as it's dependent upon it for it being built.
 export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
 export DLIB_PATH=$DLIB_DIR/dlib-18.18
 include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
@@ -116,6 +116,10 @@ install_opencog_deps() {
     rm octool
 
     install_relex_deps
+
+    # For sentiment analysis
+    $SUDO pip2 install nltk
+    $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
 }
 
 install_relex_deps() {
@@ -131,10 +135,10 @@ install_relex_deps() {
     rm octool
 
     # Java WordNet Library
-    wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
-    unzip -o jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
-    $SUDO mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
-    rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
+    wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
+    unzip -o ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
+    $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
+    rm -r /tmp/jwnl14-rc2
     $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
 }
 
@@ -185,9 +189,8 @@ install_other_deps() {
 
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
-    wget https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip -O /tmp/marytts-5.1.2.zip
-    unzip -od ~/.hr/tts/marytts /tmp/marytts-5.1.2.zip
-    rm /tmp/marytts-5.1.2.zip
+    wget_cache https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
+    unzip -od ~/.hr/tts/marytts ${HR_CACHE}/marytts-5.1.2.zip
 
     $SUDO pip2 install pinyin==0.2.5
 
@@ -203,7 +206,7 @@ install_other_deps() {
 install_manyears_deps() {
     wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
     tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
-    mkdir $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
+    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
 }
 
 install_test_deps() {
@@ -217,11 +220,6 @@ install_test_deps() {
 }
 
 install_vision_deps() {
-    if [[ ! -d $HR_PREFIX ]]; then
-        info "Creating $HR_PREFIX"
-        $SUDO mkdir -p $HR_PREFIX
-    fi
-    $SUDO chmod 777 $HR_PREFIX
     mkdir -p $VISION_TOOL_PREFIX
     $SUDO apt-get -y install ros-indigo-opencv-apps
 
@@ -230,9 +228,7 @@ install_vision_deps() {
     $SUDO pip2 install -qI Pillow
 
     if [[ ! -d $DLIB_DIR ]]; then
-      if [[ ! -f $HR_CACHE/dlib-18.18.tar.bz2 ]]; then
-        wget http://dlib.net/files/dlib-18.18.tar.bz2 -O $HR_CACHE/dlib-18.18.tar.bz2
-      fi
+      wget_cache http://dlib.net/files/dlib-18.18.tar.bz2
       mkdir -p $DLIB_DIR
       tar -xf $HR_CACHE/dlib-18.18.tar.bz2 -C $DLIB_DIR
     else
@@ -438,6 +434,11 @@ do_install_deps() {
 }
 
 _do_install_deps() {
+    if [[ ! -d $HR_PREFIX ]]; then
+        info "Creating $HR_PREFIX"
+        $SUDO mkdir -p $HR_PREFIX
+    fi
+    $SUDO chmod 777 $HR_PREFIX
     install_basic
     install_ros
     install_opencog_deps
@@ -559,7 +560,8 @@ do_clean_up() {
 }
 
 _do_clean_up() {
-    rm -r ~/.cache/guile/ccache
+    rm -r ~/.cache/guile
+    rm -r ~/.hr/cache/res
     if [[ ! -z $HR_WORKSPACE ]]; then
         for repo in ${OPENCOG_REPOS[*]}
         do
@@ -716,7 +718,7 @@ export HR_MODELS=$HR_MODELS
 
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
-export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist:/usr/local/share/opencog/python
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LIBRARY_PATH
@@ -758,7 +760,6 @@ do_migrate() {
 execute() {
     parse_opts $@
     set_env
-    source $BASEDIR/env.sh
 
     if [[ $DEVELOPER_MODE == 1 ||
         $UPDATE_HR_SOURCE_CODE == 1 ||

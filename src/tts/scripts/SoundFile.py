@@ -1,4 +1,5 @@
 import pyglet
+pyglet.options['shadow_window']=False
 import threading
 import rospy
 
@@ -13,6 +14,10 @@ class SoundFile():
     def stop(self):
         self.is_playing = False
 
+    def interrupt(self):
+        self.gletplayer.pause()
+        self.gletplayer = pyglet.media.Player()
+
     def start(self, filename):
         # Load file to pyglet, for playing
         gletsource = pyglet.media.load(filename, streaming=False)
@@ -26,6 +31,6 @@ class SoundFile():
         pyglet.clock._get_sleep_time = pyglet.clock.get_sleep_time
         pyglet.clock.get_sleep_time = lambda sleep_idle: pyglet.clock._get_sleep_time(False)
 
-        threading.Timer(0.0, pyglet.app.run).start()
+        threading.Timer(0.2, pyglet.app.run).start()
         rospy.on_shutdown(pyglet.app.exit)
         self.gletplayer = pyglet.media.Player()
