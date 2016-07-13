@@ -8,6 +8,7 @@ import pysptk
 from libs import dspUtil
 import freqModulation as fm
 from pyo import *
+import pitch_shifter as ps
 import matplotlib as plt
 import heapq
 
@@ -113,7 +114,7 @@ def get_pitch_marks_freq_chunk(sndarray,freq,chunk_start,chunk_end, numPitchMark
     # print "window_end0 "  + str(window_end)
 
     cnt = 0
-    while tm <= chunk_end-70:
+    while tm <= chunk_end-120:
         print "window_start and window end 1 "  + str(window_start) + "-" + str(window_end) + "tm " + str(tm)
         if window_end >= chunk_end:
             window_end = chunk_end
@@ -173,7 +174,7 @@ def get_pitch_marks_freq_chunk(sndarray,freq,chunk_start,chunk_end, numPitchMark
     if window_start <= chunk_start:
         window_start = chunk_start
     window_end = tm + shift
-    while tm >= chunk_start+70:
+    while tm >= chunk_start+120:
         shift = numpy.int(factor*periodToSamps)
         window_end = tm - shift
         window_start = tm - 2 * periodToSamps + shift

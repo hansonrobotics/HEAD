@@ -26,17 +26,12 @@ def inflection_two(sndarray,voiced_regions_info, inflection_duration, fs,chunk_s
 
     duration_to_samps = inflection_duration * fs
     no_of_freq_chunks = int(numpy.floor(duration_to_samps/chunk_size))
-    # pa_list_devices()
-    print pa_count_devices()
-
 
     print "duration_to_samps " + str(duration_to_samps)
     print "no_of_freq_chunks " + str(no_of_freq_chunks)
     for i in sndarray:
         new_sndarray.append(i)
 
-
-    # durations = []
     win_sizes = []
     vr_ends = []
     for i in range(0,len(voiced_regions_info)):
@@ -54,16 +49,21 @@ def inflection_two(sndarray,voiced_regions_info, inflection_duration, fs,chunk_s
              winsize = vr_end - vr_start
         win_sizes.append(winsize)
         vr_ends.append(vr_end)
- 
-        print voiced_regions_info[i]
-        print voiced_regions
+
         pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(snd_arr,voiced_regions,chunk_size, "voiced")
-         # print voiced_region_freq_chunk_windows_pitch_marks_obj
         best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(snd_arr,voiced_region_freq_chunk_windows_pitch_marks_obj)
+
         best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
         freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
-        new_snd = tp.freq_shift_using_td_psola(snd_arr,chunk_size,1.15,best_pitch_marks_info , freq_chunks_info)
-         # print "new_snd " + str(new_snd)
+
+        # new_snd = tp.freq_shift_using_td_psola(snd_arr,chunk_size,1.15,best_pitch_marks_info , freq_chunks_info)
+        best_pitch_marks = []
+        for best_pitch_marks_region in best_pitch_marks_info:
+            for best_pitch_marks_freq_chunk in best_pitch_marks_region:
+                for j in best_pitch_marks_freq_chunk:
+                    best_pitch_marks.append(j)
+
+        new_snd = tp.freq_shift_using_td_psola_helper_new_two(snd_arr,best_pitch_marks,1.12)
 
         start = voiced_regions_info[i][0]
         for i in range(0,len(new_snd)):
@@ -73,7 +73,7 @@ def inflection_two(sndarray,voiced_regions_info, inflection_duration, fs,chunk_s
 def inflection(sndarray,voiced_regions_info, inflection_duration, fs,chunk_size):
     new_sndarray = []
 
-    duration_to_samps = inflection_duration * fs
+    duration_to_samps = float(inflection_duration) * float(fs)
     no_of_freq_chunks = int(numpy.floor(duration_to_samps/chunk_size))
     # pa_list_devices()
     print pa_count_devices()
@@ -104,47 +104,95 @@ def inflection(sndarray,voiced_regions_info, inflection_duration, fs,chunk_size)
         win_sizes.append(winsize)
         vr_ends.append(vr_end)
 
+        no_l_h_l = int((3.0/20.0) * no_of_freq_chunks)
+        no_h = no_of_freq_chunks - (2 * no_l_h_l)
+
         new_snd = []
-        for n in range(0,no_of_freq_chunks):
+        b = 0.9
+        a = float(1.1- b)/float(no_l_h_l-1)
+        for n in range(0,no_l_h_l):
             fr_start = n * chunk_size + voiced_regions_info [i] [0]
-            fr_end = (n*chunk_size) + chunk_size + voiced_regions_info [i][0]
+            fr_end = fr_start + chunk_size
             if fr_start >= voiced_regions_info[i][1]:
                 break
             if fr_end >= voiced_regions_info[i][1]:
                 fr_end = voiced_regions_info [i][1]
             snd_arr_inflect = new_sndarray[fr_start:fr_end]
-            b = 1.1
-            a = float(1- b)/float(no_of_freq_chunks-3)
-            if n > 2:
-                pitch_shift = (float(a) *float(n)) + float(b)
-            else:
-                pitch_shift = 0.85
+            pitch_shift = (float(a)*float(n)) + float(b)
+
             voiced_regions = []
             voiced_regions.append([0,chunk_size-1])
 
             pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(snd_arr_inflect,voiced_regions,chunk_size, "voiced")
-
             best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(snd_arr_inflect,voiced_region_freq_chunk_windows_pitch_marks_obj)
             best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
-            freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
+
             best_pitch_marks = []
             for best_pitch_marks_region in best_pitch_marks_info:
                 for best_pitch_marks_freq_chunk in best_pitch_marks_region:
                     for j in best_pitch_marks_freq_chunk:
                         best_pitch_marks.append(j)
-            print "freq chunk number " + str(n)
-            print "best_pitch_marks "  + str(best_pitch_marks)
-            print voiced_region_freq_chunk_windows_pitch_marks_obj
+
             new_snd_tmp = tp.freq_shift_using_td_psola_helper_new_two(snd_arr_inflect,best_pitch_marks,pitch_shift)
             new_snd = numpy.concatenate([new_snd,new_snd_tmp])
+
+        fr_start = no_l_h_l * chunk_size + voiced_regions_info [i] [0]
+        fr_end = fr_start + (chunk_size*no_h)
+        snd_arr_inflect = new_sndarray[fr_start:fr_end]
+        pitch_shift = 1.12
+
+
+        voiced_regions = []
+        voiced_regions.append([0,fr_end-fr_start-1])
+        pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(snd_arr_inflect,voiced_regions,chunk_size, "voiced")
+        best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(snd_arr_inflect,voiced_region_freq_chunk_windows_pitch_marks_obj)
+        best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
+
+        best_pitch_marks = []
+        for best_pitch_marks_region in best_pitch_marks_info:
+            for best_pitch_marks_freq_chunk in best_pitch_marks_region:
+                for j in best_pitch_marks_freq_chunk:
+                    best_pitch_marks.append(j)
+
+        new_snd_tmp = tp.freq_shift_using_td_psola_helper_new_two(snd_arr_inflect,best_pitch_marks,pitch_shift)
+        new_snd = numpy.concatenate([new_snd,new_snd_tmp])
+
+        b = 1.12
+        a = float(1- b)/float(no_l_h_l-1)
+        for n in range(0,no_l_h_l):
+            fr_start = fr_end
+            fr_end = fr_start + chunk_size
+            if fr_start >= voiced_regions_info[i][1]:
+                break
+            if fr_end >= voiced_regions_info[i][1]:
+                fr_end = voiced_regions_info [i][1]
+            snd_arr_inflect = new_sndarray[fr_start:fr_end]
+            pitch_shift = (float(a)*float(n)) + float(b)
+
+            voiced_regions = []
+            voiced_regions.append([0,chunk_size-1])
+
+            pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(snd_arr_inflect,voiced_regions,chunk_size, "voiced")
+            best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(snd_arr_inflect,voiced_region_freq_chunk_windows_pitch_marks_obj)
+            best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
+
+            best_pitch_marks = []
+            for best_pitch_marks_region in best_pitch_marks_info:
+                for best_pitch_marks_freq_chunk in best_pitch_marks_region:
+                    for j in best_pitch_marks_freq_chunk:
+                        best_pitch_marks.append(j)
+
+            new_snd_tmp = tp.freq_shift_using_td_psola_helper_new_two(snd_arr_inflect,best_pitch_marks,pitch_shift)
+            new_snd = numpy.concatenate([new_snd,new_snd_tmp])
+
         new_sndTwo= []
         for k in new_snd:
             new_sndTwo.append(numpy.int16(k))
 
-        print "i " + str(i) + " " + str(voiced_regions_info) + " " + str(len(voiced_regions_info))
-        print "len new sndtwo " + str(len(new_sndTwo)/chunk_size)
+        # print "i " + str(i) + " " + str(voiced_regions_info) + " " + str(len(voiced_regions_info))
+        # print "len new sndtwo " + str(len(new_sndTwo)/chunk_size)
         start = voiced_regions_info[i][0]
-        print "m plus start " + str(len(new_sndTwo)+start)
+        # print "m plus start " + str(len(new_sndTwo)+start)
         for m in range(0,len(new_sndTwo)):
             new_sndarray[m+start] = new_sndTwo[m]
     return new_sndarray

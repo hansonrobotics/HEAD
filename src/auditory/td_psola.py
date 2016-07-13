@@ -566,8 +566,8 @@ def freq_shift_using_td_psola(sndarray,chunk_size,freqShiftFactor,best_pitch_mar
     return new_sndarray
 
 if __name__ == "__main__":
-    filename= "C:/Users/rediet/Documents/Vocie-samples/amy.wav"
-    filenameFreqShift = "C:/Users/rediet/Documents/Vocie-samples/kendraVoicedFreqShift1_5_bad_3.wav"
+    filename= "C:/Users/rediet/Documents/Vocie-samples/salli.wav"
+    filenameFreqShift = "C:/Users/rediet/Documents/Vocie-samples/salliVoicedFreqShift1_5_bad_3.wav"
     filenameFreqShiftAverage = "C:/Users/rediet/Documents/Vocie-samples/kendraFreqShiftAverage.wav"
     filenameHappy = "C:/Users/rediet/Documents/Vocie-samples/kendraHappy.wav"
     filenameHappyTwo = "C:/Users/rediet/Documents/Vocie-samples/kendraHappyTwo.wav"
@@ -655,39 +655,39 @@ if __name__ == "__main__":
     # #
     # savefileFromTable(t2,filenameFreqShiftAverage,0,0)
 
-    s = Server().boot()
-    s.start()
-    sf2 = SfPlayer(filenameFreqShift, speed=1, loop=False)
-    dur = sndinfo(filenameFreqShift)[1]
-    t3 = NewTable(length=dur)
-    out2 = Average(sf2,2000).out()
-    rec3 = TableRec(out2, table=t3)
-    rec3.play()
-    s.start()
-    time.sleep(dur*4)
-    # # rec2.stop()
-    s.stop()
-
-
-    savefileFromTable(t3,filenameFreqShiftAverage,0,0)
-
     # s = Server().boot()
-    s.start()
-    dur = sndinfo(filenameFreqShiftAverage)[1]
-    sf = SfPlayer(filenameFreqShiftAverage, speed=1, loop=False)
+    # s.start()
+    # sf2 = SfPlayer(filenameFreqShift, speed=1, loop=False)
+    # dur = sndinfo(filenameFreqShift)[1]
+    # t3 = NewTable(length=dur)
+    # out2 = Average(sf2,2000).out()
+    # rec3 = TableRec(out2, table=t3)
+    # rec3.play()
+    # s.start()
+    # time.sleep(dur*4)
+    # # # rec2.stop()
+    # s.stop()
     #
-    t2 = NewTable(length=dur)
-    # out = EQ(sf, freq=8000, q=200, boost=-3, type=2).out()
-    out = Atone(sf, 2000,mul=200).out()
-    # out = IRWinSinc(sf,8000,bw=500,type=1).out()
-    rec2 = TableRec(out, table=t2)
-    rec2.play()
-    s.start()
-    time.sleep(dur*4)
-    # # rec2.stop()
-    s.stop()
-
-    savefileFromTable(t2,filenameHappy,0,0)
+    #
+    # savefileFromTable(t3,filenameFreqShiftAverage,0,0)
+    #
+    # # s = Server().boot()
+    # s.start()
+    # dur = sndinfo(filenameFreqShiftAverage)[1]
+    # sf = SfPlayer(filenameFreqShiftAverage, speed=1, loop=False)
+    # #
+    # t2 = NewTable(length=dur)
+    # # out = EQ(sf, freq=8000, q=200, boost=-3, type=2).out()
+    # out = Atone(sf, 2000,mul=200).out()
+    # # out = IRWinSinc(sf,8000,bw=500,type=1).out()
+    # rec2 = TableRec(out, table=t2)
+    # rec2.play()
+    # s.start()
+    # time.sleep(dur*4)
+    # # # rec2.stop()
+    # s.stop()
+    #
+    # savefileFromTable(t2,filenameHappy,0,0)
 
     # print unvoiced_regions
     # print new_x
