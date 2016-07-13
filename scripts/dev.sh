@@ -97,22 +97,19 @@ tmux new-window -n 'blender' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/blender_api &&
 tmux new-window -n 'chat_server' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/chatbot/src/server && python run.py; $SHELL"
 tmux new-window -n 'marytts' "~/.hr/tts/marytts/marytts-5.1.2/bin/marytts-server; $SHELL"
 
+# btree needs blender to be ready
+sleep 8
+
 # OpenCog chatbot
 if [[ $OC_CHATBOT == 1 ]]; then
   tmux new-window -n 'relex_server' "cd $HR_WORKSPACE/opencog/relex/ && bash opencog-server.sh; $SHELL"
   tmux new-window -n 'tel' "while true; do nc -zv localhost 17020 && break; sleep 1; done; expect $BASEDIR/load_scm.exp; $SHELL"
+  tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree-psi.scm; $SHELL"
+else
+  tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"
 fi
 
-# btree needs blender to be ready
-sleep 8
-
-# btree
-export ROS_NAMESPACE=$NAME
-if [[ -d $OCBHAVE ]]; then
-    cd $OCBHAVE/src
-    tmux new-window -n 'cog' "guile -l btree.scm; $SHELL"
-    tmux new-window -n 'fce' "python ../face_track/main.py; $SHELL"
-fi
+tmux new-window -n 'fce' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./main.py; $SHELL"
 
 sleep 4
 tmux new-window -n 'cmt' "roslaunch robots_config face_tracker.launch ${pi_arg}; $SHELL"
