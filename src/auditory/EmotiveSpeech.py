@@ -12,10 +12,10 @@ def emotiveSpeech(filename,typeOfEmotion):
     if typeOfEmotion == "Happy":
         sep = filename.split("/")
         name = sep[len(sep)-1].split(".")[0]
-        filenameFreqShift = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "FreqShiftHappy.wav"
-        filenameInflection = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "InflectionHappy.wav"
-        filenameAverage = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "AverageHappy.wav"
-        filenameHappy = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "Happy.wav"
+        filenameFreqShift = "Vocie-samples/" + str(name) + "FreqShiftHappy.wav"
+        filenameInflection = "Vocie-samples/" + str(name) + "InflectionHappy.wav"
+        filenameAverage = "Vocie-samples/" + str(name) + "AverageHappy.wav"
+        filenameHappy = "Vocie-samples/" + str(name) + "Happy.wav"
 
         fs, x = wavfile.read(filename)
         x = voi.get_one_channel_array(x)
@@ -92,8 +92,8 @@ def emotiveSpeech(filename,typeOfEmotion):
     if typeOfEmotion == "Sad":
         sep = filename.split("/")
         name = sep[len(sep)-1].split(".")[0]
-        filenameFreqShift = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "FreqShiftSad.wav"
-        filenameSad = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "Sad.wav"
+        filenameFreqShift = "Vocie-samples/" + str(name) + "FreqShiftSad.wav"
+        filenameSad = "Vocie-samples/" + str(name) + "Sad.wav"
 
         fs, x = wavfile.read(filename)
         x = voi.get_one_channel_array(x)
@@ -140,7 +140,7 @@ def emotiveSpeech(filename,typeOfEmotion):
 
 
 if __name__ == "__main__":
-    filename= "C:/Users/rediet/Documents/Vocie-samples/salli.wav"
+    filename= "Vocie-samples/salli.wav"
     emotiveSpeech(filename,"Happy")
 
 
