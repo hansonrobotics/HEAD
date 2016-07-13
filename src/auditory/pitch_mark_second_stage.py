@@ -190,11 +190,10 @@ if __name__ == "__main__":
     x = voi.get_one_channel_array(x)
     chunk_size = 1024
 
-    # voi.plot(y,x,len(x),"signal amplitude")
-
     vSig = voi.get_signal_voiced_unvoiced_starting_info(x,44100,chunk_size)
     lengthVoiced = voi.get_signal_voiced_length_info(x,vSig)
     voiced_regions = voi.get_voiced_region_chunks(vSig,lengthVoiced)
+
     pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(x,voiced_regions,chunk_size, "voiced")
     best_voiced_region_freq_chunk_windows_pitch_marks_obj = optimal_accumulated_log_probability(x,voiced_region_freq_chunk_windows_pitch_marks_obj)
 

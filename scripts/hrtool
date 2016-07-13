@@ -84,7 +84,10 @@ install_relex_deps() {
     rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
     sudo chmod -v 0644 /usr/local/share/java/jwnl.jar
 }
-
+install_auditory_deps(){
+    sudo pip2 install pyo
+    sudo pip2 install pysptk
+}
 install_other_deps() {
     sudo add-apt-repository -y ppa:irie/blender
     sudo apt-get -y update
@@ -240,6 +243,7 @@ _do_install_deps() {
     install_ros
     install_opencog_deps
     install_other_deps
+    install_auditory_deps
 }
 
 do_get_hr_src() {

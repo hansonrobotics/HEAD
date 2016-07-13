@@ -8,7 +8,6 @@ import pysptk
 from libs import dspUtil
 import freqModulation as fm
 from pyo import *
-import pitch_shifter as ps
 import matplotlib as plt
 import heapq
 

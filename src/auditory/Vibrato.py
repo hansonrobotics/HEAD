@@ -11,7 +11,6 @@ from pyo import *
 import td_psola
 import pitch_mark_second_stage as pmss
 import pitch_mark_first_step as pmfs
-import pitch_shifter as ps
 import matplotlib as plt
 
 s = Server(audio='pa', nchnls=2).boot()

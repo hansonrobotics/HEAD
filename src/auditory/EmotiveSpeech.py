@@ -1,6 +1,5 @@
 from pyo import *
 import numpy
-import td_psola as tp
 import voiced_unvoiced as voi
 import pitch_mark_first_step as pmfs
 import pitch_mark_second_stage as pmss
@@ -12,6 +11,7 @@ def emotiveSpeech(filename,typeOfEmotion):
     if typeOfEmotion == "Happy":
         sep = filename.split("/")
         name = sep[len(sep)-1].split(".")[0]
+        print name
         filenameFreqShift = "Vocie-samples/" + str(name) + "FreqShiftHappy.wav"
         filenameInflection = "Vocie-samples/" + str(name) + "InflectionHappy.wav"
         filenameAverage = "Vocie-samples/" + str(name) + "AverageHappy.wav"
