@@ -30,7 +30,6 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
 
                 if (this.options.refresh)
                     this.refreshInterval = setInterval(function () {
-                        console.log('refresh');
                         self.model.fetch()
                     }, 1000);
             },
