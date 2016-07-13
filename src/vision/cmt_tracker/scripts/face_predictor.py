@@ -22,7 +22,7 @@ class face_predictor:
         self.user_agents = rospy.get_param('user_agents')
         self.image_scraper = image_scaper(self.user_agents)
         self.openface_loc = rospy.get_param('openface')
-        self.camera_topic = rospy.get_param('camera_topic')
+        self.camera_topic = rospy.get_param('recognition_topic')
         self.filtered_face_locations = rospy.get_param('filtered_face_locations')
         self.shape_predictor_file = rospy.get_param("shape_predictor")
         self.image_dir = rospy.get_param("image_locations")

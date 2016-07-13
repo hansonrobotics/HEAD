@@ -23,6 +23,7 @@
 <param name="openface" value="$(env OPENFACE_DIR)"/>
 <param name="image_locations" value="$(env HR_WORKSPACE)/HEAD/src/vision/images"/>
 <param name="camera_topic" value="image_rect"/>
+<param name="recognition_topic" value="image_color"/>
 <param name="query_only" value="True"/>
 <param name="user_agents" value="$(find cmt_tracker)/resources/useragents.txt"/>
 <group if="$(arg testing)">
