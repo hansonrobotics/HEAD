@@ -10,12 +10,20 @@ define(['jquery', 'json_editor'], function ($, JSONEditor) {
                     step: this.options.schema.step || 0.1,
                     value: this.value,
                     slide: function (e, ui) {
-                        $(self.input).val(ui.value).change();
+                        $(self.input).val(ui.value);
+                    },
+                    stop: function (e, ui) {
+                        $(self.input).val('');
+                        self.setValue(ui.value);
                     }
                 });
 
             $(this.input).after(slider).on('change', function () {
-                slider.slider("value", $(self.input).val());
+                slider.slider("value", self.value);
+            });
+
+            self.jsoneditor.on('change', function () {
+                slider.slider("value", self.value);
             });
         }
     });
