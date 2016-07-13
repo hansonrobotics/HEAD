@@ -135,10 +135,10 @@ install_relex_deps() {
     rm octool
 
     # Java WordNet Library
-    wget http://downloads.sourceforge.net/project/jwordnet/jwnl/JWNL%201.4/jwnl14-rc2.zip
-    unzip -o jwnl14-rc2.zip jwnl14-rc2/jwnl.jar
-    $SUDO mv -v jwnl14-rc2/jwnl.jar /usr/local/share/java/
-    rm -v jwnl14-rc2.zip && rmdir jwnl14-rc2
+    wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
+    unzip -o ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
+    $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
+    rm -r /tmp/jwnl14-rc2
     $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
 }
 

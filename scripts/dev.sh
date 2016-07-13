@@ -49,6 +49,7 @@ export NAME=robot
 export ROS_PYTHON_LOG_CONFIG_FILE="$BASEDIR/python_logging.conf"
 export ROSCONSOLE_FORMAT='[${logger}][${severity}] [${time}]: ${message}'
 export LAUNCH_DIR="$BASEDIR/../src/robots_config/launch/"
+export OC_LOG_LEVEL=info        # error, warn, info, debug and fine
 source $HR_WORKSPACE/$MAJOR_PROJECT/devel/setup.bash
 echo HR_WORKSPACE=$HR_WORKSPACE
 
@@ -96,6 +97,7 @@ tmux new-window -n 'blender' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/blender_api &&
 tmux new-window -n 'chat_server' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/chatbot/src/server && python run.py; $SHELL"
 tmux new-window -n 'marytts' "~/.hr/tts/marytts/marytts-5.1.2/bin/marytts-server; $SHELL"
 
+# OpenCog chatbot
 if [[ $OC_CHATBOT == 1 ]]; then
   tmux new-window -n 'relex_server' "cd $HR_WORKSPACE/opencog/relex/ && bash opencog-server.sh; $SHELL"
   tmux new-window -n 'tel' "while true; do nc -zv localhost 17020 && break; sleep 1; done; expect $BASEDIR/load_scm.exp; $SHELL"
