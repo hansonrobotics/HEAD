@@ -24,6 +24,7 @@ except ImportError:
 # library for performing HTTP(S) requests
 import urllib2
 from imgurpython import ImgurClient
+from imgurpython.helpers.error import ImgurClientError
 import json
 
 """ Parser model to extract the content only and not the tags """
@@ -162,7 +163,11 @@ class image_scaper:
 
     def image_scraper(self, image_path):
         print "To Upload Image"
-        result = self.client.upload_from_path(image_path)
+        try:
+            result = self.client.upload_from_path(image_path)
+        except ImgurClientError as e:
+            print(e.error_message)
+            print(e.status_code)
         print(result['link'])
         print "Uploaded Image"
         request_url = "https://www.google.com/searchbyimage?&image_url=" + result['link']
