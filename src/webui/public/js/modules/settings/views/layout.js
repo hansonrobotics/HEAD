@@ -1,6 +1,5 @@
-define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jquery', 'lib/api', 'push_menu'],
-    function (Marionette, template, FadeInRegion, $, api) {
-        var self = this;
+define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jquery', 'lib/api', 'underscore', 'push_menu'],
+    function (Marionette, template, FadeInRegion, $, api, _) {
         return Marionette.LayoutView.extend({
             template: template,
             regions: {
@@ -12,47 +11,33 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jque
             ui: {
                 navigation: '.app-settings-navigation',
                 nodeList: '.app-nav-node-list',
-                nodeLinks: '.app-nav-node-list a',
-                robotSettingsLink: '.app-robot-settings'
+                navLinks: '.app-settings-navigation a'
             },
             events: {
-                'click @ui.nodeLinks': 'nodeClicked',
-                'click @ui.robotSettingsLink': 'robotClicked'
-            },
-            nodeClicked: function (e) {
-                self.trigger('node_settings', $(e.target).html());
-                self.collapseNav();
-            },
-            robotClicked: function () {
-                self.trigger('robot_settings');
-            },
-            initialize: function () {
-                self = this;
+                'click @ui.navLinks': 'collapseNav'
             },
             onShow: function () {
                 this.ui.navigation.multilevelpushmenu({
                     menuWidth: '250px',
                     menuHeight: $(document).height(),
                     collapsed: true,
-                    preventItemClick: false,
-                    onItemClick: function () {
-                        self.collapseNav();
-                    }
+                    preventItemClick: false
                 });
 
-                $(window).on("resize", this.updateNavHeight);
-                this.nodeListInterval = setInterval(this.updateNodeList, 10000);
+                $(window).on("resize", this.updateNavHeight, this);
+                this.nodeListInterval = setInterval(_.bind(this.updateNodeList, this), 10000);
                 this.updateNodeList();
             },
             collapseNav: function () {
                 $(this.ui.navigation).multilevelpushmenu('collapse');
             },
             updateNodeList: function () {
+                var self = this;
                 api.services.get_configurable_nodes.callService({}, function (response) {
                     var container = $('<div>');
                     $.each(response.nodes, function () {
                         var link = $('<a>').prop({
-                            href: '#/admin/settings'
+                            href: '#/admin/settings/node/' + encodeURIComponent(this)
                         }).html(this);
                         container.append($('<li>').append(link));
                     });
@@ -62,11 +47,11 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jque
                 });
             },
             updateNavHeight: function () {
-                self.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(document).height());
-                self.ui.navigation.multilevelpushmenu('redraw');
+                this.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(document).height());
+                this.ui.navigation.multilevelpushmenu('redraw');
             },
             onDestroy: function () {
-                $(window).off("resize", this.updateNavHeight);
+                $(window).off("resize", this.updateNavHeight, this);
                 clearInterval(this.nodeListInterval);
             }
         });

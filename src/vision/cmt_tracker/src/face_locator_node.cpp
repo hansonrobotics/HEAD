@@ -355,8 +355,11 @@ std::vector<int> string_val;
 
      double intersection_area = (opencv_locs[i] & dlib_locations[j]).area();
      double union_area = (opencv_locs[i] | dlib_locations[j]).area();
+     if (union_area > 0)
+     {
+     overlap = (intersection_area/union_area) > 0;
+     }
 
-     overlap = (intersection_area/union_area) > 0.5;
      if (overlap)
      {
      string_val.push_back(j);

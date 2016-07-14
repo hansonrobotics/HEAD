@@ -30,6 +30,7 @@
 .app-settings-navigation-container {
     position: absolute;
     top: 0;
+    z-index: 99;
 }
 
 .app-settings-navigation {

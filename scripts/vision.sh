@@ -15,11 +15,11 @@ export CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 export EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
-export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-18.18/dist
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-19.0/dist
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
 source $TORCH_DIR/install/bin/torch-activate
 source $HR_WORKSPACE/HEAD/devel/setup.bash
-export DLIB_PATH=$DLIB_DIR/dlib-18.18
+export DLIB_PATH=$DLIB_DIR/dlib-19.0
 
 cd $HR_WORKSPACE/$PROJECT
 
