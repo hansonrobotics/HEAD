@@ -37,7 +37,6 @@ include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 include_path=$(printf "%s:" "${include_dirs[@]}")
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
 
-
 COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
 COLOR_ERROR='\033[31m'
@@ -68,6 +67,11 @@ if [[ ! -d $HR_CACHE ]]; then
     info "Creating $HR_CACHE"
     mkdir -p $HR_CACHE
 fi
+if [[ ! "$(id -nG)" =~ .*"dialout".* ]]; then
+    info "Adding current user $(id -nu) to \"dialout\" group"
+    $SUDO gpasswd -a $(id -un) dialout
+fi
+
 
 install_basic() {
     $SUDO apt-get -y update
