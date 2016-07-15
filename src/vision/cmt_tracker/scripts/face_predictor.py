@@ -15,12 +15,16 @@ from dynamic_reconfigure.server import Server
 
 from openface_wrapper import face_recognizer
 from image_scraper import image_scaper
-import cv2
+from pi_face_tracker.msg import FaceEvent
 class face_predictor:
     def __init__(self):
         rospy.init_node('face_recognizer', anonymous=True)
-        self.user_agents = rospy.get_param('user_agents')
-        self.image_scraper = image_scaper(self.user_agents)
+        self.image_scraper_enable = rospy.get_param('image_scraper')
+        if self.image_scraper_enable != 0:
+            self.user_agents = rospy.get_param('user_agents')
+            self.image_scraper = image_scaper(self.user_agents)
+
+        self.face_event_topic = rospy.get_param('publish_topic_event')
         self.openface_loc = rospy.get_param('openface')
         self.camera_topic = rospy.get_param('recognition_topic')
         self.filtered_face_locations = rospy.get_param('filtered_face_locations')
@@ -28,6 +32,7 @@ class face_predictor:
         self.image_dir = rospy.get_param("image_locations")
         self.face_recognizer = face_recognizer(self.openface_loc, self.image_dir)
         self.bridge = CvBridge()
+        self.event_pub = rospy.Publisher( self.face_event_topic, FaceEvent, queue_size=10 )
         self.image_sub = message_filters.Subscriber(self.camera_topic, Image)
         self.cmt_sub = message_filters.Subscriber('tracker_results',Trackers)
         self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
@@ -122,6 +127,13 @@ class face_predictor:
                         try:
                             self.upt = rospy.ServiceProxy('recognition', TrackerNames)
                             indication = self.upt(names=str(max_index), index=int(cmt.tracker_name.data))
+                            recognized_event = FaceEvent()
+                            recognized_event.face_event = "recognized_face"
+                            recognized_event.face_id = int(cmt.tracker_name.data)
+                            recognized_event.recognized_id = str(max_index)
+
+                            self.event_pub.publish(recognized_event)
+
                             if not indication:
                                 self.logger.info("there was the same id in the id chamber.....")
                             self.cmt_tracker_instances[key]['state'] = self.state['ignore']
@@ -129,6 +141,12 @@ class face_predictor:
                             self.logger.error("Service call failed: %s" % e)
 
                     else:
+                        recognized_event = FaceEvent()
+                        recognized_event.face_event = "recognized_face"
+                        recognized_event.face_id = int(cmt.tracker_name.data)
+                        recognized_event.recognized_id = str(0)
+
+                        self.event_pub.publish(recognized_event)
                         if not query_only:
                             self.cmt_tracker_instances[key]['state'] = self.state['save_only']
                             self.cmt_tracker_instances[key]['count'] = 0
@@ -137,23 +155,24 @@ class face_predictor:
                             self.cmt_tracker_instances[key]['count'] = 0
 
                     # Google Scrapper
-                    try:
-                        print "Upload Imgur and Query Google Scrapper: "
-                        results = self.image_scraper.image_scraper("/tmp/" + key + ".png")
+                    if self.image_scraper_enable != 0:
                         try:
-                            self.gog = rospy.ServiceProxy('google_scraper', TrackerNames)
+                            print "Upload Imgur and Query Google Scrapper: "
+                            results = self.image_scraper.image_scraper("/tmp/" + key + ".png")
+                            try:
+                                self.gog = rospy.ServiceProxy('google_scraper', TrackerNames)
 
-                            indication = self.gog(names=str(results), index=int(cmt.tracker_name.data))
+                                indication = self.gog(names=str(results), index=int(cmt.tracker_name.data))
 
-                            if not indication:
-                                self.logger.info("there was the same id in the id chamber.....")
-                        except rospy.ServiceException, e:
-                            self.logger.error("Service call failed: %s" % e)
+                                if not indication:
+                                    self.logger.info("there was the same id in the id chamber.....")
+                            except rospy.ServiceException, e:
+                                self.logger.error("Service call failed: %s" % e)
 
-                        print  (results)
-                        print "Finished Query of Google Images"
-                    except Exception, e:
-                        print e
+                            print  (results)
+                            print "Finished Query of Google Images"
+                        except Exception, e:
+                            print e
             elif self.cmt_tracker_instances[key]['count'] == self.sample_size + self.image_sample_size:
                 if self.cmt_tracker_instances[key]['state'] == self.state['save_only']:
                     self.face_recognizer.train_process(cmt.tracker_name.data)
