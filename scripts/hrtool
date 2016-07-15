@@ -226,6 +226,7 @@ install_vision_deps() {
     # Tkinter error other wise.
     info "Installing Pillow"
     $SUDO pip2 install -qI Pillow
+    $SUDO pip2 install imgurpython
 
     if [[ ! -d $DLIB_PATH ]]; then
       wget_cache http://dlib.net/files/dlib-${DLIB_VERSION}.tar.bz2
