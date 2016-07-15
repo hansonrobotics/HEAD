@@ -38,6 +38,7 @@
 
                 <span class="input-group-btn">
                     <button class="app-send-button btn btn-primary">Send</button>
+                    <button class="app-shut-up-button btn">ShutUp</button>
                     <button class="app-record-button btn btn-info"><i class="fa fa-microphone"></i></button>
                 </span>
             </div>
