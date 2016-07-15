@@ -5,6 +5,7 @@ import pitch_mark_first_step as pmfs
 import pitch_mark_second_stage as pmss
 from pyo import *
 import pysptk
+import freq_shift_array as fsa
 
 def freq_shift_using_td_psola_helper_old(sndarray, freq_chunk, best_pitch_marks_freq_chunk,freqShiftFactor):
     best_pitch_marks_freq_chunk_sorted=  numpy.sort(best_pitch_marks_freq_chunk)
@@ -548,13 +549,21 @@ def freq_shift_using_td_psola_helper_newest(sndarray,voiced_region, best_pitch_m
     cntFreqChunks = 0
     while new_pitch_mark < len(sndarray) + voiced_region[0]:
         new_pitch_marks.append(new_pitch_mark)
+        while cntFreqChunks != len(best_pitch_marks_freq_chunks) and len(best_pitch_marks_freq_chunks[cntFreqChunks]) == 0:
+            cntFreqChunks = cntFreqChunks + 1
         freq_chunk_pitch_marks_sorted = numpy.sort(best_pitch_marks_freq_chunks[cntFreqChunks])
         dist_array = numpy.abs(freq_chunk_pitch_marks_sorted-new_pitch_mark)
         preMinArg = numpy.argmin(dist_array)
 
         lenSort = len(freq_chunk_pitch_marks_sorted)
+
         if new_pitch_mark > freq_chunk_pitch_marks_sorted[lenSort-1] and cntFreqChunks + 1 != len(best_pitch_marks_freq_chunks):
+            while cntFreqChunks+1 != len(best_pitch_marks_freq_chunks) and len(best_pitch_marks_freq_chunks[cntFreqChunks+1]) == 0:
+                cntFreqChunks = cntFreqChunks + 1
+            if cntFreqChunks + 1 == len(best_pitch_marks_freq_chunks):
+                break
             freq_chunk_pitch_marks_sorted_next = numpy.sort(best_pitch_marks_freq_chunks[cntFreqChunks+1])
+            # print freq_chunk_pitch_marks_sorted_next
             dist_array_next = numpy.abs(freq_chunk_pitch_marks_sorted_next - new_pitch_mark)
             if dist_array_next[0] <= dist_array[len(dist_array)-1]:
                 preMinArg = 0
@@ -684,32 +693,7 @@ def freq_shift_using_td_psola_newest(sndarray,voiced_regions,best_pitch_marks,fr
         cnt = cnt + 1
     return sndarray_cp
 
-def create_vibrato_freq_shift_array(freq_chunks,chunk_size):
-    freq_shift_arr = []
-    cnt = 0
-    frequency = 10.0/(44100.0/float(chunk_size))
-    fctr = frequency * numpy.pi * 2
-    for freq_region in freq_chunks:
-        freq_shift_arr.append([])
-        cntTwo = 0
-        for freq_chunk in freq_region:
-            freqShiftFactor = numpy.sin(fctr*cntTwo) * 0.15
-            freq_shift_arr[cnt].append(1+freqShiftFactor)
-            cntTwo = cntTwo + 1
-        cnt = cnt + 1
 
-    return freq_shift_arr
-
-def create_constant_freq_shift_array(freq_chunks,freqShiftFactor):
-    freq_shift_arr = []
-    cnt = 0
-    for freq_region in freq_chunks:
-        freq_shift_arr.append([])
-        for freq_chunk in freq_region:
-            freq_shift_arr[cnt].append(freqShiftFactor)
-        cnt = cnt + 1
-
-    return freq_shift_arr
 
 def freq_shift_using_td_psola(sndarray,chunk_size,freqShiftFactor,best_pitch_marks_info,freq_chunks_info):
     # new_sndarray_zeros = numpy.zeros(len(sndarray))
@@ -810,7 +794,7 @@ if __name__ == "__main__":
     # voiced_regions,unvoiced_regions,freq_array = voi.get_voiced_region_chunks_two(x,chunk_size)
     voiced_regions = voi.get_voiced_region_chunks(vSig,lengthVoiced)
     eTime = time.time()
-    print "time taken by get voiced regions " + str(eTime - sTime)
+    # print "time taken by get voiced regions " + str(eTime - sTime)
     # unvoiced_regions = voi.get_unvoiced_region_chunks(vSig,lengthUnvoiced)
     # voiced_regions = []
     # vr_start = 45056
@@ -822,11 +806,11 @@ if __name__ == "__main__":
     sTime = time.time()
     pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(x, f0, voiced_regions,chunk_size, "voiced")
     eTime = time.time()
-    print "time taken by pmfs is " + str(eTime-sTime)
+    # print "time taken by pmfs is " + str(eTime-sTime)
     sTime = time.time()
     best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(x,voiced_region_freq_chunk_windows_pitch_marks_obj)
     eTime = time.time()
-    print "time taken by pmss is " + str(eTime - sTime)
+    # print "time taken by pmss is " + str(eTime - sTime)
 
     best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
     freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
@@ -836,9 +820,9 @@ if __name__ == "__main__":
 
     # freq_shift_arr = create_constant_freq_shift_array(freq_chunks_info,1.5)
     sTime = time.time()
-    freq_shift_arr = create_vibrato_freq_shift_array(freq_chunks_info,chunk_size)
+    freq_shift_arr = fsa.create_vibrato_freq_shift_array(freq_chunks_info,chunk_size)
     eTime = time.time()
-    print "time taken by create vibrato is " + str(eTime-sTime)
+    # print "time taken by create vibrato is " + str(eTime-sTime)
 
     # print freq_shift_arr
     # best_pitch_marks = []
@@ -855,8 +839,8 @@ if __name__ == "__main__":
     new_x = freq_shift_using_td_psola_newest(x,voiced_regions,best_pitch_marks_info,freq_shift_arr)
     eTime = time.time()
     eTimeAll = eTime
-    print "time taken by create td_psola newest " + str(eTime-sTime)
-    print "time taken by all modules is " + str(eTimeAll-sTimeAll)
+    # print "time taken by create td_psola newest " + str(eTime-sTime)
+    # print "time taken by all modules is " + str(eTimeAll-sTimeAll)
 
     # new_sndarray = []
     # for i in range(0,len(new_x)):

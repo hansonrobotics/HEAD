@@ -198,9 +198,9 @@ def get_freq_array(sndarray,fs, chunk_size):
     for i in sndarray:
         new_sndarray.append(numpy.float64(i))
     sTime = time.time()
-    f0 = pysptk.swipe(numpy.asarray(new_sndarray), fs, chunk_size, 75,500,0.001,1)
+    f0 = pysptk.swipe(numpy.asarray(new_sndarray), fs, chunk_size, 65,500,0.001,1)
     eTime = time.time()
-    print "time taken by freq detector two is " + str(eTime-sTime)
+    # print "time taken by freq detector two is " + str(eTime-sTime)
     return f0
 
 def merge_voiced_unvoiced_regions(xVoiced,xUnvoiced,vSig):
