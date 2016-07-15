@@ -125,6 +125,9 @@ class Chatbot():
     if 'shut up' in chat_message.utterance.lower():
       logger.info("Robot's talking wants to be interruptted")
       self.tts_ctrl_pub.publish("shutup")
+      rospy.sleep(0.5)
+      self._response_publisher.publish(String('Okay'))
+      self._affect_publisher.publish(String('sad'))
       return
 
     lang = rospy.get_param('lang', None)
