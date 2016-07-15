@@ -50,7 +50,7 @@ def get_zero_derivative_indices_fast(arr):
     return pitch_points
 
 
-def get_zero_derivative_indices(arr):
+def  get_zero_derivative_indices(arr):
     indices = []
     i = 0
     while i <=  len(arr)-3:
@@ -115,7 +115,7 @@ def get_pitch_marks_freq_chunk(sndarray,freq,chunk_start,chunk_end, numPitchMark
 
     cnt = 0
     while tm <= chunk_end-120:
-        print "window_start and window end 1 "  + str(window_start) + "-" + str(window_end) + "tm " + str(tm)
+        # print "window_start and window end 1 "  + str(window_start) + "-" + str(window_end) + "tm " + str(tm)
         if window_end >= chunk_end:
             window_end = chunk_end
         if window_end <= window_start:
@@ -127,7 +127,10 @@ def get_pitch_marks_freq_chunk(sndarray,freq,chunk_start,chunk_end, numPitchMark
         window_pitch_obj["windows"].append([window_start,window_end])
         window_pitch_obj["pitch_marks"].append([tm])
         pitch_marks.append(tm)
+        sTime = time.time()
         ind = get_zero_derivative_indices(sndarray[window_start:window_end+1])
+        eTime = time.time()
+        print "time taken by get zero derivative indices is " + str(eTime-sTime)
         # print ind
         vals = []
 
@@ -137,7 +140,7 @@ def get_pitch_marks_freq_chunk(sndarray,freq,chunk_start,chunk_end, numPitchMark
 
         pitchMarksInd = numPitchMarks
         largest = heapq.nlargest(pitchMarksInd, vals)
-        print largest
+        # print largest
         if len(largest) < pitchMarksInd:
             pitchMarksInd = len(largest)
 
@@ -148,7 +151,7 @@ def get_pitch_marks_freq_chunk(sndarray,freq,chunk_start,chunk_end, numPitchMark
             window_pitch_obj["pitch_marks"][cnt].append(window_start + spot_chunk)
             pitch_marks.append(window_start + spot_chunk)
             pitchMarksInd = pitchMarksInd - 1
-        print "pitch_marks_in_window " + str(window_pitch_obj["pitch_marks"][cnt])
+        # print "pitch_marks_in_window " + str(window_pitch_obj["pitch_marks"][cnt])
         shift = numpy.int(factor*periodToSamps)
         window_start = tm + shift
         window_end = tm + 2 * periodToSamps - shift
@@ -178,7 +181,7 @@ def get_pitch_marks_freq_chunk(sndarray,freq,chunk_start,chunk_end, numPitchMark
         shift = numpy.int(factor*periodToSamps)
         window_end = tm - shift
         window_start = tm - 2 * periodToSamps + shift
-        print "window_start and window end 2  "  + str(window_start) + "-" + str(window_end) + "tm " + str(tm)
+        # print "window_start and window end 2  "  + str(window_start) + "-" + str(window_end) + "tm " + str(tm)
         if window_start <= chunk_start:
             window_start = chunk_start
         # print "window_start3 "  + str(window_start)
@@ -196,7 +199,10 @@ def get_pitch_marks_freq_chunk(sndarray,freq,chunk_start,chunk_end, numPitchMark
         pitch_marks.append(tm)
         window_pitch_obj["pitch_marks"].append([tm])
         # print "window_end1 "  + str(window_end)
+        sTime = time.time()
         ind = get_zero_derivative_indices(sndarray[window_start:window_end+1])
+        eTime = time.time()
+        print "time taken by get zero derivative indices two is " + str(eTime-sTime)
         # print ind
         vals = []
         #
@@ -218,24 +224,25 @@ def get_pitch_marks_freq_chunk(sndarray,freq,chunk_start,chunk_end, numPitchMark
             window_pitch_obj["pitch_marks"][cnt].append(window_start + spot_chunk)
             pitch_marks.append(window_start + spot_chunk)
             pitchMarksInd = pitchMarksInd - 1
-        print "pitch_marks_in_window " + str(window_pitch_obj["pitch_marks"][cnt])
+        # print "pitch_marks_in_window " + str(window_pitch_obj["pitch_marks"][cnt])
         cnt = cnt + 1
-    print "window_pitch_obj " + str(window_pitch_obj)
-    print "pitch_marks " + str(pitch_marks)
+    # print "window_pitch_obj " + str(window_pitch_obj)
+    # print "pitch_marks " + str(pitch_marks)
     return pitch_marks,window_pitch_obj
 
 def get_pitch_marks_unvoiced_chunk():
     return
 
-def get_pitch_marks_region(sndarray, region, chunk_size, type):
+def get_pitch_marks_region(sndarray, region, f0, chunk_size, type):
     pitch_marks = []
     len = region[1] - region[0] + 1
     steps = int(numpy.ceil(float(len)/float(chunk_size)))
     numPitchMarksPerChunk = 3
     freq_chunk_windows_pitch_marks_obj = {"freq_chunks":[],"windows":[],"pitch_marks":[]}
-    f0 = voi.get_freq_array(sndarray,44100,chunk_size)
-    print "number of freq chunks " + str(steps)
-    print "freq is " + str(f0)
+
+    # print "number of freq chunks " + str(steps)
+    # print "freq is " + str(f0)
+    sTime = time.time()
     for i in range(0,steps):
         chunk_start = i * chunk_size + region[0]
         if chunk_start >= region[1]:
@@ -248,37 +255,43 @@ def get_pitch_marks_region(sndarray, region, chunk_size, type):
         spot = chunk_start/chunk_size
         # print " len of snd chunk " + str(numpy.size(numpy.asarray(sndarray[chunk_start:chunk_end+1]).tolist()))
         # print " snd chunk start end" + str(sndarray[chunk_start:chunk_end+1])
-        print " chunk_start " + str(chunk_start)
-        print " chunk_end " + str(chunk_end)
+        # print " chunk_start " + str(chunk_start)
+        # print " chunk_end " + str(chunk_end)
         # f0 = voi.get_freq_array(numpy.asarray(sndarray[chunk_start:chunk_end+1]).tolist(),44100,chunk_size)
 
         freq = f0[spot]
         # freq = get_freq_chunk(sndarray,chunk_start,chunk_size)
 
-        print "freq chunk number " + str(i) + " range is " + str([chunk_start,chunk_end])
+        # print "freq chunk number " + str(i) + " range is " + str([chunk_start,chunk_end])
         if type == "voiced":
             freq_chunk_windows_pitch_marks_obj["freq_chunks"].append([chunk_start,chunk_end])
+            sTime = time.time()
             pitch_marks_chunk,window_pitch_obj = get_pitch_marks_freq_chunk(sndarray,freq,chunk_start, chunk_end, numPitchMarksPerChunk)
+            eTime = time.time()
+            print "time taken by get pitch marks freq chunk is " + str(eTime-sTime)
             freq_chunk_windows_pitch_marks_obj["windows"].append(window_pitch_obj["windows"])
             freq_chunk_windows_pitch_marks_obj["pitch_marks"].append(window_pitch_obj["pitch_marks"])
         else:
             pitch_marks_chunk = get_pitch_marks_unvoiced_chunk(sndarray,freq,chunk_start, chunk_size, numPitchMarksPerChunk)
         for i in pitch_marks_chunk:
             pitch_marks.append(i)
+    eTime = time.time()
+    print "time taken by for loop in pmfs region is " + str(eTime-sTime)
     return pitch_marks,freq_chunk_windows_pitch_marks_obj
 
-def get_pitch_marks_regions(sndarray,regions, chunk_size, type):
+def get_pitch_marks_regions(sndarray,f0,regions, chunk_size, type):
     pitch_marks = []
     cnt = 0
-    print "Number of Regions " + str(len(regions))
-    print "regions " + str(regions)
+    # print "Number of Regions " + str(len(regions))
+    # print "regions " + str(regions)
     voiced_region_freq_chunk_windows_pitch_marks_obj = {"voiced_region":[],"freq_chunks":[],"windows":[],"pitch_marks":[]}
-
     for i in regions:
-        print "Region range" + str(i)
+        # print "Region range" + str(i)
         voiced_region_freq_chunk_windows_pitch_marks_obj["voiced_region"].append(i)
-
-        pitch_marks_region,freq_chunk_windows_pitch_marks_obj = get_pitch_marks_region(sndarray, i, chunk_size, type)
+        sTime = time.time()
+        pitch_marks_region,freq_chunk_windows_pitch_marks_obj = get_pitch_marks_region(sndarray, i, f0, chunk_size, type)
+        eTime = time.time()
+        print "time taken by get pitch marks region is " + str(eTime-sTime)
 
         voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"].append(freq_chunk_windows_pitch_marks_obj["freq_chunks"])
         voiced_region_freq_chunk_windows_pitch_marks_obj["windows"].append(freq_chunk_windows_pitch_marks_obj["windows"])
@@ -309,9 +322,9 @@ if __name__ == "__main__":
 
 
     pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = get_pitch_marks_regions(x,voiced_regions,chunk_size, "voiced")
-    print voiced_region_freq_chunk_windows_pitch_marks_obj["pitch_marks"]
-    print voiced_region_freq_chunk_windows_pitch_marks_obj["voiced_region"]
-    print pitch_marks
+    # print voiced_region_freq_chunk_windows_pitch_marks_obj["pitch_marks"]
+    # print voiced_region_freq_chunk_windows_pitch_marks_obj["voiced_region"]
+    # print pitch_marks
 
 
     numpy.savetxt(filenameTxt,pitch_marks)

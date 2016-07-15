@@ -171,8 +171,7 @@ def plot(x,y,total_len,desc):
     plt.legend()
     plt.show()
 
-def get_signal_voiced_unvoiced_starting_info(x,fs,chunk_size):
-    f0 = get_freq_array(x,fs,chunk_size)
+def get_signal_voiced_unvoiced_starting_info(x,f0,fs,chunk_size):
     vSig = {"unvoicedStart":[],"voicedStart":[]}
     unvoiced_starting_pts(f0,vSig,chunk_size)
     voiced_starting_pts(f0,vSig,chunk_size)
@@ -198,7 +197,10 @@ def get_freq_array(sndarray,fs, chunk_size):
     new_sndarray = []
     for i in sndarray:
         new_sndarray.append(numpy.float64(i))
+    sTime = time.time()
     f0 = pysptk.swipe(numpy.asarray(new_sndarray), fs, chunk_size, 75,500,0.001,1)
+    eTime = time.time()
+    print "time taken by freq detector two is " + str(eTime-sTime)
     return f0
 
 def merge_voiced_unvoiced_regions(xVoiced,xUnvoiced,vSig):
@@ -280,9 +282,9 @@ def write_to_new_file(filename,sndarray):
 
 if __name__ == "__main__":
     mydir = 'C:/Users/rediet/Documents/Vocie-samples/'
-    myfile = 'kendra.wav'
+    myfile = 'eric.wav'
     file = os.path.join(mydir, myfile)
-    filenameVoiced = 'C:/Users/rediet/Documents/Vocie-samples/kendraVoiced.wav'
+    filenameVoiced = 'C:/Users/rediet/Documents/Vocie-samples/ericVoiced.wav'
     filenameVoicedResampled = 'C:/Users/rediet/Documents/Vocie-samples/kendraVoicedResampled.wav'
     fs, x = wavfile.read(file)
     chunk_size = 1024
@@ -300,10 +302,10 @@ if __name__ == "__main__":
     #make a signal array with only voiced regions
     # xVoiced = get_voiced_region_array(xOne,vSig,lengthVoiced)
     # xUnvoiced = get_unvoiced_region_array(xOne,vSig,lengthUnvoiced)
-    print voiced_regions
+    # print voiced_regions
     voiced_region_hi = []
-    vr_start = 0
-    vr_stop = vr_start + (chunk_size*1) - 1
+    vr_start = 45056
+    vr_stop = vr_start + (chunk_size*20) - 1
     for i in range(vr_start,vr_stop):
         voiced_region_hi.append(x[i])
     write_to_new_file(filenameVoiced,voiced_region_hi)

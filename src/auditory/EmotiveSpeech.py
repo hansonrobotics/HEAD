@@ -72,7 +72,7 @@ def emotiveSpeech(filename,typeOfEmotion):
         dur = sndinfo(filenameFreqShift)[1]
         sf = SfPlayer(filenameFreqShift, speed=1, loop=False)
         t2 = NewTable(length=dur)
-        out = Atone(sf, 8000,mul=5).out()
+        out = ButHP(sf, 8000,mul=5).out()
         rec2 = TableRec(out, table=t2)
         rec2.play()
         s.start()
@@ -133,7 +133,7 @@ def emotiveSpeech(filename,typeOfEmotion):
         dur = sndinfo(filenameFreqShift)[1]
         sf = SfPlayer(filenameFreqShift, speed=1, loop=False)
         t2 = NewTable(length=dur)
-        out = Tone(sf, 8000,mul=2).out()
+        out = ButLP(sf, 8000,mul=5).out()
         rec2 = TableRec(out, table=t2)
         rec2.play()
         s.start()
@@ -145,7 +145,7 @@ def emotiveSpeech(filename,typeOfEmotion):
 
 if __name__ == "__main__":
     filename= "C:/Users/rediet/Documents/Vocie-samples/eric.wav"
-    emotiveSpeech(filename,"Happy")
+    emotiveSpeech(filename,"Sad")
 
 
 

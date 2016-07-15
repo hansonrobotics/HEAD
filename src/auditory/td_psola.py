@@ -245,7 +245,7 @@ def freq_shift_using_td_psola_helper_new(sndarray, freq_chunk, best_pitch_marks_
     # new_segments_range = []
     # new_prepared_segments = []
     cntTwo = 0
-    print "best_pitch_marks " + str(best_pitch_marks_freq_chunk)
+    # print "best_pitch_marks " + str(best_pitch_marks_freq_chunk)
     while new_pitch_mark <= freq_chunk[1]:
         new_pitch_marks.append(new_pitch_mark)
         diff_array = numpy.abs(numpy.asarray(best_pitch_marks_freq_chunk)-new_pitch_mark)
@@ -262,19 +262,19 @@ def freq_shift_using_td_psola_helper_new(sndarray, freq_chunk, best_pitch_marks_
         newRightSeg = new_pitch_mark - freq_chunk[0] + newScopeRight
 
         if newRightSeg >= len(new_snd_array)-1:
-            print " IM HERE " + str(new_pitch_mark)
+            # print " IM HERE " + str(new_pitch_mark)
             newScopeRight = len(new_snd_array) - (new_pitch_mark - freq_chunk[0])
             newRightSeg = len(new_snd_array)-1
 
-        print "freq_chunk " + str(freq_chunk)
-        print "new_pitch_marks " + str(new_pitch_marks)
-        print "current syn pitch mark " + str(new_pitch_mark)
-        print "segments range " + str(segments_range)
-        print "minArg " + str(minArg)
-        print "newScopeRight " + str(newScopeRight)
-        print "newScopeLeft " + str(newScopeLeft)
-        print "newLeftSeg " + str(newLeftSeg)
-        print "newRightSeg " + str(newRightSeg)
+        # print "freq_chunk " + str(freq_chunk)
+        # print "new_pitch_marks " + str(new_pitch_marks)
+        # print "current syn pitch mark " + str(new_pitch_mark)
+        # print "segments range " + str(segments_range)
+        # print "minArg " + str(minArg)
+        # print "newScopeRight " + str(newScopeRight)
+        # print "newScopeLeft " + str(newScopeLeft)
+        # print "newLeftSeg " + str(newLeftSeg)
+        # print "newRightSeg " + str(newRightSeg)
 
         scopeLeft = segments_range[minArg][0]
         scopeRight = segments_range[minArg][1]
@@ -284,8 +284,8 @@ def freq_shift_using_td_psola_helper_new(sndarray, freq_chunk, best_pitch_marks_
                 xLeft = numpy.arange(0,scopeLeft,newLeftFreqShiftFactor)
                 xpLeft = numpy.arange(0,scopeLeft)
                 newSegmentLeft = numpy.interp(xLeft,xpLeft,prepared_segments[minArg][0:scopeLeft])
-                print "lenxLeft "  + str(len(xLeft))
-                print "lenxpLeft " + str(len(xpLeft))
+                # print "lenxLeft "  + str(len(xLeft))
+                # print "lenxpLeft " + str(len(xpLeft))
             else:
                 newSegmentLeft = []
                 newLeftSeg = new_pitch_mark - freq_chunk[0]
@@ -298,8 +298,8 @@ def freq_shift_using_td_psola_helper_new(sndarray, freq_chunk, best_pitch_marks_
                 xRight = numpy.arange(0,scopeRight,newRightFreqShiftFactor)
                 xpRight = numpy.arange(0,scopeRight)
                 newSegmentRight = numpy.interp(xRight,xpRight,prepared_segments[minArg][scopeLeft:])
-                print "lenxRight "  + str(len(xRight))
-                print "lenxpRight " + str(len(xpRight))
+                # print "lenxRight "  + str(len(xRight))
+                # print "lenxpRight " + str(len(xpRight))
             else:
                 newSegmentRight = []
                 newRightSeg = new_pitch_mark - freq_chunk[0]
@@ -309,7 +309,7 @@ def freq_shift_using_td_psola_helper_new(sndarray, freq_chunk, best_pitch_marks_
         newSegmentHanning = numpy.concatenate([newSegmentLeft,newSegmentRight])
         newSegmentHanning = newSegmentHanning[0:newRightSeg-newLeftSeg]
         added_snd_array = newSegmentHanning
-        print "lenHanning " + str(len(newSegmentHanning))
+        # print "lenHanning " + str(len(newSegmentHanning))
 
         # new_segments_range.append([newScopeLeft,newScopeRight])
         # new_prepared_segments.append(newSegmentHanning)
@@ -344,6 +344,8 @@ def freq_shift_using_td_psola_helper_new(sndarray, freq_chunk, best_pitch_marks_
     # plt.show()
     return numpy.asarray(new_snd_array)
 
+#Analyzes a whole sndarray only in reference to its pitch marks without considering freq chunks nor voiced regions
+#Yields much better result reducing the amount of jitter
 def freq_shift_using_td_psola_helper_new_two(sndarray, best_pitch_marks, freqShiftFactor):
     best_pitch_marks =  numpy.sort(best_pitch_marks)
     diff_pitch_marks = numpy.diff(best_pitch_marks)
@@ -384,13 +386,13 @@ def freq_shift_using_td_psola_helper_new_two(sndarray, best_pitch_marks, freqShi
     # new_segments_range = []
     # new_prepared_segments = []
     cntTwo = 0
-    print "best_pitch_marks " + str(best_pitch_marks)
+    # print "best_pitch_marks " + str(best_pitch_marks)
     while new_pitch_mark < len(sndarray):
         new_pitch_marks.append(new_pitch_mark)
         diff_array = numpy.abs(numpy.asarray(best_pitch_marks)-new_pitch_mark)
         minArg = numpy.argmin(diff_array)
         newScopeRight = int(float(segments_range[minArg][1])/float(freqShiftFactor))
-        print "minArg " + str(minArg)
+        # print "minArg " + str(minArg)
         if minArg == len(best_pitch_marks)-1 and cntTwo != 0:
             # newScopeRight = int(float(segments_range[minArg-1][1])/float(freqShiftFactor))
             newScopeRight = new_pitch_mark - new_pitch_marks[cntTwo-1]
@@ -403,20 +405,20 @@ def freq_shift_using_td_psola_helper_new_two(sndarray, best_pitch_marks, freqShi
         newRightSeg = new_pitch_mark + newScopeRight
 
         if newRightSeg >= len(new_snd_array)-1:
-            print " IM HERE " + str(new_pitch_mark)
+            # print " IM HERE " + str(new_pitch_mark)
             newScopeRight = len(new_snd_array) - new_pitch_mark
             newRightSeg = len(new_snd_array)-1
 
-        print "len of sndarray " + str(len(sndarray))
+        # print "len of sndarray " + str(len(sndarray))
 
-        print "new_pitch_marks " + str(new_pitch_marks)
-        print "current syn pitch mark " + str(new_pitch_mark)
-        print "segments range " + str(segments_range)
+        # print "new_pitch_marks " + str(new_pitch_marks)
+        # print "current syn pitch mark " + str(new_pitch_mark)
+        # print "segments range " + str(segments_range)
 
-        print "newScopeRight " + str(newScopeRight)
-        print "newScopeLeft " + str(newScopeLeft)
-        print "newLeftSeg " + str(newLeftSeg)
-        print "newRightSeg " + str(newRightSeg)
+        # print "newScopeRight " + str(newScopeRight)
+        # print "newScopeLeft " + str(newScopeLeft)
+        # print "newLeftSeg " + str(newLeftSeg)
+        # print "newRightSeg " + str(newRightSeg)
 
         scopeLeft = segments_range[minArg][0]
         scopeRight = segments_range[minArg][1]
@@ -426,8 +428,8 @@ def freq_shift_using_td_psola_helper_new_two(sndarray, best_pitch_marks, freqShi
                 xLeft = numpy.arange(0,scopeLeft,newLeftFreqShiftFactor)
                 xpLeft = numpy.arange(0,scopeLeft)
                 newSegmentLeft = numpy.interp(xLeft,xpLeft,prepared_segments[minArg][0:scopeLeft])
-                print "lenxLeft "  + str(len(xLeft))
-                print "lenxpLeft " + str(len(xpLeft))
+                # print "lenxLeft "  + str(len(xLeft))
+                # print "lenxpLeft " + str(len(xpLeft))
             else:
                 newSegmentLeft = []
                 newLeftSeg = new_pitch_mark
@@ -440,8 +442,8 @@ def freq_shift_using_td_psola_helper_new_two(sndarray, best_pitch_marks, freqShi
                 xRight = numpy.arange(0,scopeRight,newRightFreqShiftFactor)
                 xpRight = numpy.arange(0,scopeRight)
                 newSegmentRight = numpy.interp(xRight,xpRight,prepared_segments[minArg][scopeLeft:])
-                print "lenxRight "  + str(len(xRight))
-                print "lenxpRight " + str(len(xpRight))
+                # print "lenxRight "  + str(len(xRight))
+                # print "lenxpRight " + str(len(xpRight))
             else:
                 newSegmentRight = []
                 newRightSeg = new_pitch_mark
@@ -451,7 +453,7 @@ def freq_shift_using_td_psola_helper_new_two(sndarray, best_pitch_marks, freqShi
         newSegmentHanning = numpy.concatenate([newSegmentLeft,newSegmentRight])
         newSegmentHanning = newSegmentHanning[0:newRightSeg-newLeftSeg]
         added_snd_array = newSegmentHanning
-        print "lenHanning " + str(len(newSegmentHanning))
+        # print "lenHanning " + str(len(newSegmentHanning))
 
         # new_segments_range.append([newScopeLeft,newScopeRight])
         # new_prepared_segments.append(newSegmentHanning)
@@ -486,6 +488,228 @@ def freq_shift_using_td_psola_helper_new_two(sndarray, best_pitch_marks, freqShi
     # # plt.legend()
     # plt.show()
     return numpy.asarray(new_snd_array)
+
+#same function as helper_new_two but accepts an array for freqshiftfactor
+def freq_shift_using_td_psola_helper_newest(sndarray,voiced_region, best_pitch_marks_freq_chunks,freqShiftFactor):
+    best_pitch_marks = []
+    pitch_marks_cnt = []
+    for p_marks_freq_chunk in best_pitch_marks_freq_chunks:
+        pitch_marks_cnt.append(len(p_marks_freq_chunk))
+        for p_marks in p_marks_freq_chunk:
+            best_pitch_marks.append(p_marks)
+
+    best_pitch_marks =  numpy.sort(best_pitch_marks)
+    diff_pitch_marks = numpy.diff(best_pitch_marks)
+
+    if len(best_pitch_marks) == 0:
+        return sndarray
+
+    prepared_segments=[]
+    segments_range = []
+    cnt = 0
+    # print "Voiced REGION " + str(voiced_region)
+    # print "diff pitch marks" + str(diff_pitch_marks)
+    # print "best pitch marks" + str(best_pitch_marks)
+    for i in best_pitch_marks:
+        if cnt != 0:
+            scopeLeft = diff_pitch_marks[cnt-1]
+        if cnt != len(diff_pitch_marks):
+            scopeRight = diff_pitch_marks[cnt]
+        if cnt == 0:
+            scopeLeft = i - voiced_region[0]
+        if cnt == len(diff_pitch_marks):
+            scopeRight = len(sndarray)-(i - voiced_region[0])
+        leftSeg = i - scopeLeft - voiced_region[0]
+        rightSeg = i + scopeRight - voiced_region[0]
+
+        # print "cnt " + str(cnt)
+        # print "best pitch mark " + str(i)
+        # print "scope right " + str(scopeRight)
+        # print "scope left " + str(scopeLeft)
+        # print "leftSeg " + str(leftSeg)
+        # print "rightSeg " + str(rightSeg)
+        additional_len = numpy.abs(scopeLeft-scopeRight)
+        hanning = numpy.asarray(numpy.hanning(scopeLeft +  scopeRight + additional_len))
+        if scopeRight >= scopeLeft:
+            new_hanning = hanning[additional_len:]
+        else:
+            new_hanning = hanning[0:scopeLeft+scopeRight]
+        segment = numpy.asarray(sndarray[leftSeg:rightSeg])
+        segmentHanning = segment * new_hanning
+
+        segments_range.append([scopeLeft,scopeRight])
+        prepared_segments.append(segmentHanning)
+        cnt = cnt + 1
+
+    new_pitch_mark = best_pitch_marks[0]
+    new_snd_array = numpy.zeros(len(sndarray))
+    new_pitch_marks =[]
+    cntTwo = 0
+    cntFreqChunks = 0
+    while new_pitch_mark < len(sndarray) + voiced_region[0]:
+        new_pitch_marks.append(new_pitch_mark)
+        freq_chunk_pitch_marks_sorted = numpy.sort(best_pitch_marks_freq_chunks[cntFreqChunks])
+        dist_array = numpy.abs(freq_chunk_pitch_marks_sorted-new_pitch_mark)
+        preMinArg = numpy.argmin(dist_array)
+
+        lenSort = len(freq_chunk_pitch_marks_sorted)
+        if new_pitch_mark > freq_chunk_pitch_marks_sorted[lenSort-1] and cntFreqChunks + 1 != len(best_pitch_marks_freq_chunks):
+            freq_chunk_pitch_marks_sorted_next = numpy.sort(best_pitch_marks_freq_chunks[cntFreqChunks+1])
+            dist_array_next = numpy.abs(freq_chunk_pitch_marks_sorted_next - new_pitch_mark)
+            if dist_array_next[0] <= dist_array[len(dist_array)-1]:
+                preMinArg = 0
+                cntFreqChunks = cntFreqChunks + 1
+
+        cntPrevPmarks = int(numpy.sum(pitch_marks_cnt[0:cntFreqChunks]))
+        minArg = cntPrevPmarks + preMinArg
+        # print "minArg " + str(minArg)
+        # print "cntFreqChunks " + str(cntFreqChunks)
+        # print best_pitch_marks_freq_chunks
+        newScopeRight = int(float(segments_range[minArg][1])/float(freqShiftFactor[cntFreqChunks]))
+
+        # comment below is another approach to dealing with ends of freq chunks
+        # I move the new pitch mark immediately to the next freq chunk but needs more work
+
+        # if preMinArg == len(best_pitch_marks_freq_chunks[cntFreqChunks])-1:
+        #     cntFreqChunks = cntFreqChunks + 1
+        #     while cntFreqChunks != len(best_pitch_marks_freq_chunks) and len(best_pitch_marks_freq_chunks[cntFreqChunks]) == 0:
+        #         cntFreqChunks = cntFreqChunks + 1
+        #     if cntFreqChunks == len(best_pitch_marks_freq_chunks):
+        #         break
+        #     p_marks_sorted = numpy.sort(best_pitch_marks_freq_chunks[cntFreqChunks])
+        #     # if len(best_pitch_marks_freq_chunks[cntFreqChunks]) != 0:
+        #     #     new_pitch_mark = p_marks_sorted[0]
+        #     #     continue
+        #     newScopeRight = p_marks_sorted[0] - new_pitch_mark
+
+        if cntTwo != 0:
+            newScopeLeft = new_pitch_mark - new_pitch_marks[cntTwo-1]
+        else:
+            newScopeLeft = segments_range[0][0]
+
+        newLeftSeg = new_pitch_mark - newScopeLeft - voiced_region[0]
+        newRightSeg = new_pitch_mark + newScopeRight - voiced_region[0]
+
+        if newRightSeg >= len(new_snd_array)-1:
+            newScopeRight = len(new_snd_array) - (new_pitch_mark - voiced_region[0])
+            newRightSeg = len(new_snd_array)-1
+            # print "len of sndarray " + str(len(sndarray))
+
+        # print "new_pitch_marks " + str(new_pitch_marks)
+        # print "current syn pitch mark " + str(new_pitch_mark)
+        # print "segments range " + str(segments_range)
+
+        # print "newScopeRight " + str(newScopeRight)
+        # print "newScopeLeft " + str(newScopeLeft)
+        # print "newLeftSeg " + str(newLeftSeg)
+        # print "newRightSeg " + str(newRightSeg)
+
+        scopeLeft = segments_range[minArg][0]
+        scopeRight = segments_range[minArg][1]
+        if newScopeLeft != 0:
+            newLeftFreqShiftFactor = float(scopeLeft)/float(newScopeLeft)
+            if scopeLeft != 0:
+                xLeft = numpy.arange(0,scopeLeft,newLeftFreqShiftFactor)
+                xpLeft = numpy.arange(0,scopeLeft)
+                newSegmentLeft = numpy.interp(xLeft,xpLeft,prepared_segments[minArg][0:scopeLeft])
+            else:
+                newSegmentLeft = []
+                newLeftSeg = new_pitch_mark
+        else:
+            newSegmentLeft = []
+
+        if newScopeRight != 0:
+            newRightFreqShiftFactor = float(scopeRight)/float(newScopeRight)
+            if scopeRight != 0:
+                xRight = numpy.arange(0,scopeRight,newRightFreqShiftFactor)
+                xpRight = numpy.arange(0,scopeRight)
+                newSegmentRight = numpy.interp(xRight,xpRight,prepared_segments[minArg][scopeLeft:])
+            else:
+                newSegmentRight = []
+                newRightSeg = new_pitch_mark
+        else:
+            newSegmentRight = []
+
+        newSegmentHanning = numpy.concatenate([newSegmentLeft,newSegmentRight])
+        newSegmentHanning = newSegmentHanning[0:newRightSeg-newLeftSeg]
+        added_snd_array = newSegmentHanning
+
+        new_snd_array[newLeftSeg:newRightSeg] = numpy.asarray(new_snd_array[newLeftSeg:newRightSeg]) + numpy.asarray(added_snd_array)
+        new_pitch_mark = new_pitch_mark + newScopeRight
+        cntTwo = cntTwo + 1
+
+    best_pitch_marks_y = []
+    for i in best_pitch_marks:
+        best_pitch_marks_y.append(sndarray[i-voiced_region[0]])
+
+    new_pitch_marks_y = []
+    for i in new_pitch_marks:
+        new_pitch_marks_y.append(0.0)
+
+    start = 16000
+    end = len(sndarray)-3500
+    diff = end - start
+    xplotTwo = []
+    for i in range(start,end):
+        xplotTwo.append(i)
+
+    import matplotlib.pyplot as plt
+    # plt.plot(best_pitch_marks,best_pitch_marks_y,'x',markersize=30,color='red', label=" analysis pitch markers")
+    # plt.plot(new_pitch_marks,new_pitch_marks_y,'o',markersize=10,color='black', label=" synthesis pitch markers")
+    # # plt.plot(leftSegs,leftSegs_y,'o',markersize=20,color='red', label=" leftSegsStart")
+    # # plt.plot(rightSegs,rightSegs_y,'o',markersize=20,color='black', label=" rightSegsStart")
+    # plt.plot(xplotTwo,sndarray[start:end],'-',color='blue',label="amplitude old sound")
+    # plt.plot(xplotTwo,new_snd_array[start:end],'-o',color='red',label="amplitude new sound")
+    # plt.xlim(start, end)
+    # plt.xticks()
+    # # plt.legend()
+    # plt.show()
+    return new_snd_array
+
+def freq_shift_using_td_psola_newest(sndarray,voiced_regions,best_pitch_marks,freqShiftFactor):
+    sndarray_cp = []
+    for snd in sndarray:
+        sndarray_cp.append(snd)
+    cnt = 0
+    for voiced_region in voiced_regions:
+        sndarray_in = sndarray_cp[voiced_region[0]:voiced_region[1]+1]
+        best_pitch_marks_in = best_pitch_marks[cnt]
+        # freq_chunks_in = freq_chunks[cnt]
+        freqShiftFactor_in = freqShiftFactor[cnt]
+        new_snd = freq_shift_using_td_psola_helper_newest(sndarray_in,voiced_region, best_pitch_marks_in, freqShiftFactor_in)
+        cnt_two = 0
+        for snd_out in new_snd:
+            sndarray_cp[voiced_region[0]+cnt_two] = numpy.int16(snd_out)
+            cnt_two = cnt_two + 1
+        cnt = cnt + 1
+    return sndarray_cp
+
+def create_vibrato_freq_shift_array(freq_chunks,chunk_size):
+    freq_shift_arr = []
+    cnt = 0
+    frequency = 10.0/(44100.0/float(chunk_size))
+    fctr = frequency * numpy.pi * 2
+    for freq_region in freq_chunks:
+        freq_shift_arr.append([])
+        cntTwo = 0
+        for freq_chunk in freq_region:
+            freqShiftFactor = numpy.sin(fctr*cntTwo) * 0.15
+            freq_shift_arr[cnt].append(1+freqShiftFactor)
+            cntTwo = cntTwo + 1
+        cnt = cnt + 1
+
+    return freq_shift_arr
+
+def create_constant_freq_shift_array(freq_chunks,freqShiftFactor):
+    freq_shift_arr = []
+    cnt = 0
+    for freq_region in freq_chunks:
+        freq_shift_arr.append([])
+        for freq_chunk in freq_region:
+            freq_shift_arr[cnt].append(freqShiftFactor)
+        cnt = cnt + 1
+
+    return freq_shift_arr
 
 def freq_shift_using_td_psola(sndarray,chunk_size,freqShiftFactor,best_pitch_marks_info,freq_chunks_info):
     # new_sndarray_zeros = numpy.zeros(len(sndarray))
@@ -568,56 +792,78 @@ def freq_shift_using_td_psola(sndarray,chunk_size,freqShiftFactor,best_pitch_mar
 if __name__ == "__main__":
     filename= "C:/Users/rediet/Documents/Vocie-samples/salli.wav"
     filenameFreqShift = "C:/Users/rediet/Documents/Vocie-samples/salliVoicedFreqShift1_5_bad_3.wav"
-    filenameFreqShiftAverage = "C:/Users/rediet/Documents/Vocie-samples/kendraFreqShiftAverage.wav"
-    filenameHappy = "C:/Users/rediet/Documents/Vocie-samples/kendraHappy.wav"
-    filenameHappyTwo = "C:/Users/rediet/Documents/Vocie-samples/kendraHappyTwo.wav"
 
     fs, x = wavfile.read(filename)
     y = numpy.arange(0,len(x),1)
     x = voi.get_one_channel_array(x)
     chunk_size = 1024
 
+    import time
+    sTime = time.time()
+    sTimeAll = sTime
     # voi.plot(y,x,len(x),"signal amplitude")
-
-    vSig = voi.get_signal_voiced_unvoiced_starting_info(x,fs,chunk_size)
+    f0 = voi.get_freq_array(x,fs,chunk_size)
+    vSig = voi.get_signal_voiced_unvoiced_starting_info(x,f0,fs,chunk_size)
     lengthVoiced = voi.get_signal_voiced_length_info(x,vSig)
     # lengthUnvoiced = voi.get_signal_unvoiced_length_info(x,vSig)
     #
     # voiced_regions,unvoiced_regions,freq_array = voi.get_voiced_region_chunks_two(x,chunk_size)
     voiced_regions = voi.get_voiced_region_chunks(vSig,lengthVoiced)
+    eTime = time.time()
+    print "time taken by get voiced regions " + str(eTime - sTime)
     # unvoiced_regions = voi.get_unvoiced_region_chunks(vSig,lengthUnvoiced)
     # voiced_regions = []
-    # vr_start = 16384
-    # vr_stop = 16884 + (1024*24) - 1
+    # vr_start = 45056
+    # vr_stop = vr_start + (chunk_size*20) - 1
     # diff = vr_stop - vr_start + 1
     # voiced_regions.append([0,diff])
     # print " voiced regions " + str(voiced_regions)
-    pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(x,voiced_regions,chunk_size, "voiced")
+
+    sTime = time.time()
+    pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(x, f0, voiced_regions,chunk_size, "voiced")
+    eTime = time.time()
+    print "time taken by pmfs is " + str(eTime-sTime)
+    sTime = time.time()
     best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(x,voiced_region_freq_chunk_windows_pitch_marks_obj)
+    eTime = time.time()
+    print "time taken by pmss is " + str(eTime - sTime)
 
     best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
     freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
-    print " voiced regions " + str(voiced_regions)
-    # print " unvoiced regions " + str(unvoiced_regions)
-    # print " freq array " + str(freq_array)
-    print best_pitch_marks_info
-    print freq_chunks_info
+    # print " voiced regions " + str(voiced_regions)
+    # print "best pitch marks " + str(best_pitch_marks_info)
+    # print "freq chunks " + str(freq_chunks_info)
 
-    best_pitch_marks = []
-    for best_pitch_marks_region in best_pitch_marks_info:
-        for best_pitch_marks_freq_chunk in best_pitch_marks_region:
-            for i in best_pitch_marks_freq_chunk:
-                best_pitch_marks.append(i)
+    # freq_shift_arr = create_constant_freq_shift_array(freq_chunks_info,1.5)
+    sTime = time.time()
+    freq_shift_arr = create_vibrato_freq_shift_array(freq_chunks_info,chunk_size)
+    eTime = time.time()
+    print "time taken by create vibrato is " + str(eTime-sTime)
 
+    # print freq_shift_arr
+    # best_pitch_marks = []
+    # for best_pitch_marks_region in best_pitch_marks_info:
+    #     for best_pitch_marks_freq_chunk in best_pitch_marks_region:
+    #         for i in best_pitch_marks_freq_chunk:
+    #             best_pitch_marks.append(i)
+    #
+    #
+    # # new_x = freq_shift_using_td_psola(x,chunk_size,2,best_pitch_marks_info , freq_chunks_info)
+    # new_x = freq_shift_using_td_psola_helper_new_two(x,best_pitch_marks,1.5)
 
-    # new_x = freq_shift_using_td_psola(x,chunk_size,2,best_pitch_marks_info , freq_chunks_info)
-    new_x = freq_shift_using_td_psola_helper_new_two(x,best_pitch_marks,1.5)
-    new_sndarray = []
-    for i in range(0,len(new_x)):
-        new_sndarray.append(numpy.int16(new_x[i]))
+    sTime = time.time()
+    new_x = freq_shift_using_td_psola_newest(x,voiced_regions,best_pitch_marks_info,freq_shift_arr)
+    eTime = time.time()
+    eTimeAll = eTime
+    print "time taken by create td_psola newest " + str(eTime-sTime)
+    print "time taken by all modules is " + str(eTimeAll-sTimeAll)
 
-    new_sndarray = voi.make_two_channels(new_sndarray)
-    voi.write_to_new_file(filenameFreqShift,numpy.asarray(new_sndarray))
+    # new_sndarray = []
+    # for i in range(0,len(new_x)):
+    #     new_sndarray.append(numpy.int16(new_x[i]))
+    #
+    # new_sndarray = voi.make_two_channels(new_sndarray)
+    # voi.write_to_new_file(filenameFreqShift,numpy.asarray(new_sndarray))
 
 
 
@@ -632,75 +878,5 @@ if __name__ == "__main__":
     # plt.plot(xplotTwo,new_sndarray[start:end],'-o',markersize = 5, color='red',label="amplitude new sound")
     # plt.xlim(start, end)
     # plt.xticks()
-    # plt.legend()
-    # plt.show()
-
-
-
-    # s = Server().boot()
-    # s.start()
-    # dur = sndinfo(filenameFreqShift)[1]
-    # sf = SfPlayer(filenameFreqShift, speed=1, loop=False)
-    # #
-    # t2 = NewTable(length=dur)
-    # # out = EQ(sf, freq=8000, q=200, boost=-3, type=2).out()
-    # out = Atone(sf, 4000).out()
-    # # out = IRWinSinc(sf,8000,bw=500,type=1).out()
-    # rec2 = TableRec(out, table=t2)
-    # rec2.play()
-    # s.start()
-    # time.sleep(dur*4)
-    # # # rec2.stop()
-    # s.stop()
-    # #
-    # savefileFromTable(t2,filenameFreqShiftAverage,0,0)
-
-    # s = Server().boot()
-    # s.start()
-    # sf2 = SfPlayer(filenameFreqShift, speed=1, loop=False)
-    # dur = sndinfo(filenameFreqShift)[1]
-    # t3 = NewTable(length=dur)
-    # out2 = Average(sf2,2000).out()
-    # rec3 = TableRec(out2, table=t3)
-    # rec3.play()
-    # s.start()
-    # time.sleep(dur*4)
-    # # # rec2.stop()
-    # s.stop()
-    #
-    #
-    # savefileFromTable(t3,filenameFreqShiftAverage,0,0)
-    #
-    # # s = Server().boot()
-    # s.start()
-    # dur = sndinfo(filenameFreqShiftAverage)[1]
-    # sf = SfPlayer(filenameFreqShiftAverage, speed=1, loop=False)
-    # #
-    # t2 = NewTable(length=dur)
-    # # out = EQ(sf, freq=8000, q=200, boost=-3, type=2).out()
-    # out = Atone(sf, 2000,mul=200).out()
-    # # out = IRWinSinc(sf,8000,bw=500,type=1).out()
-    # rec2 = TableRec(out, table=t2)
-    # rec2.play()
-    # s.start()
-    # time.sleep(dur*4)
-    # # # rec2.stop()
-    # s.stop()
-    #
-    # savefileFromTable(t2,filenameHappy,0,0)
-
-    # print unvoiced_regions
-    # print new_x
-    #
-    # start = voiced_regions[0][0]
-    # end = voiced_regions[0][1]
-    # diff = end - start
-    #
-    # import matplotlib.pyplot as plt
-    #
-    #
-    # plt.plot(new_x[start:end],'-',markersize=10,color='red', label=" amplitude_new sound")
-    # plt.plot(x[start:end],'-',color='black',label='amplitude old sound')
-    # plt.xlim(0, len(x[0:diff]))
     # plt.legend()
     # plt.show()
