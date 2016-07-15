@@ -75,7 +75,7 @@ def inflection_two(sndarray,voiced_regions_info, inflection_duration, fs,chunk_s
             new_sndarray[i+start] = new_snd[i]
     return new_sndarray
 
-#inflects the pitch with according to DAVID
+#inflects the pitch according to DAVID - does not use an inflection array
 def inflection_happy(sndarray,voiced_regions_info, inflection_duration, fs,chunk_size):
     new_sndarray = []
 
@@ -223,7 +223,99 @@ def inflection_happy(sndarray,voiced_regions_info, inflection_duration, fs,chunk
             new_sndarray[m+start] = new_sndTwo[m]
     return new_sndarray
 
-def inflection_vibrato(sndarray,voiced_regions_info, inflection_duration, fs,chunk_size):
+#inflects the pitch according to DAVID- uses an inflection array to do so
+def inflection_happy_two(sndarray,voiced_regions_info, inflection_duration, fs,chunk_size):
+    new_sndarray = []
+
+    duration_to_samps = float(inflection_duration) * float(fs)
+    no_of_freq_chunks = int(numpy.floor(duration_to_samps/chunk_size))
+
+    # print "duration_to_samps " + str(duration_to_samps)
+    # print "no_of_freq_chunks " + str(no_of_freq_chunks)
+    for i in sndarray:
+        new_sndarray.append(i)
+
+    for i in range(0,len(voiced_regions_info)):
+        len_vr = voiced_regions_info[i][1] - voiced_regions_info[i][0] + 1
+        vr_start = 0
+        vr_end = (no_of_freq_chunks * chunk_size) - 1
+        if vr_end >= len_vr:
+            vr_end = len_vr - 1
+        # duration = float(vr_end-vr_start+1)/float(fs)
+        voiced_regions = []
+        voiced_regions.append([vr_start,vr_end])
+
+        snd_arr = new_sndarray[voiced_regions_info[i][0]:vr_end+ voiced_regions_info[i][0] + 1]
+
+        f0 = voi.get_freq_array(snd_arr,fs,chunk_size)
+
+        pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(snd_arr,f0,voiced_regions,chunk_size, "voiced")
+        best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(snd_arr,voiced_region_freq_chunk_windows_pitch_marks_obj)
+        best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
+        freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
+
+        print freq_chunks_info
+
+        freq_shift_arr = fsa.create_happiness_inflection_array(freq_chunks_info)
+        new_snd = psola.freq_shift_using_td_psola_newest(snd_arr,voiced_regions,best_pitch_marks_info,freq_shift_arr)
+
+        new_sndTwo= []
+        for k in new_snd:
+            new_sndTwo.append(numpy.int16(k))
+
+        # print "i " + str(i) + " " + str(voiced_regions_info) + " " + str(len(voiced_regions_info))
+        # print "len new sndtwo " + str(len(new_sndTwo)/chunk_size)
+        start = voiced_regions_info[i][0]
+        # print "m plus start " + str(len(new_sndTwo)+start)
+        for m in range(0,len(new_sndTwo)):
+            new_sndarray[m+start] = new_sndTwo[m]
+    return new_sndarray
+
+#inflects the pitch according to DAVID- uses an inflection array to do so
+def inflection_fear(sndarray,voiced_regions_info, inflection_duration, fs,chunk_size):
+    new_sndarray = []
+
+    duration_to_samps = float(inflection_duration) * float(fs)
+    no_of_freq_chunks = int(numpy.floor(duration_to_samps/chunk_size))
+
+    # print "duration_to_samps " + str(duration_to_samps)
+    # print "no_of_freq_chunks " + str(no_of_freq_chunks)
+    for i in sndarray:
+        new_sndarray.append(i)
+
+    for i in range(0,len(voiced_regions_info)):
+        len_vr = voiced_regions_info[i][1] - voiced_regions_info[i][0] + 1
+        vr_start = 0
+        vr_end = (no_of_freq_chunks * chunk_size) - 1
+        if vr_end >= len_vr:
+            vr_end = len_vr - 1
+        # duration = float(vr_end-vr_start+1)/float(fs)
+        voiced_regions = []
+        voiced_regions.append([vr_start,vr_end])
+
+        snd_arr = new_sndarray[voiced_regions_info[i][0]:vr_end+ voiced_regions_info[i][0] + 1]
+
+        f0 = voi.get_freq_array(snd_arr,fs,chunk_size)
+
+        pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(snd_arr,f0,voiced_regions,chunk_size, "voiced")
+        best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(snd_arr,voiced_region_freq_chunk_windows_pitch_marks_obj)
+        best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
+        freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
+
+        freq_shift_arr = fsa.create_fear_inflection_array(freq_chunks_info, chunk_size)
+        new_snd = psola.freq_shift_using_td_psola_newest(snd_arr,voiced_regions,best_pitch_marks_info,freq_shift_arr)
+
+        new_sndTwo= []
+        for k in new_snd:
+            new_sndTwo.append(numpy.int16(k))
+
+        # print "i " + str(i) + " " + str(voiced_regions_info) + " " + str(len(voiced_regions_info))
+        # print "len new sndtwo " + str(len(new_sndTwo)/chunk_size)
+        start = voiced_regions_info[i][0]
+        # print "m plus start " + str(len(new_sndTwo)+start)
+        for m in range(0,len(new_sndTwo)):
+            new_sndarray[m+start] = new_sndTwo[m]
+    return new_sndarray
     return
 if __name__ == "__main__":
     filename= "C:/Users/rediet/Documents/Vocie-samples/salli.wav"

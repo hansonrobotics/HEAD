@@ -29,7 +29,7 @@ def emotiveSpeech(filename,typeOfEmotion):
 
         voiced_regions = voi.get_voiced_region_chunks(vSig,lengthVoiced)
 
-        new_snd = inflect.inflection_happy(x,voiced_regions,0.53,fs,chunk_size)
+        new_snd = inflect.inflection_happy_two(x,voiced_regions,0.53,fs,chunk_size)
         new_snd_new = []
         cnt = 0
         for i in new_snd:
@@ -132,12 +132,72 @@ def emotiveSpeech(filename,typeOfEmotion):
         for i in range(0,len(snd_low_shelf)):
             new_sndarray_low_shelf.append(numpy.int16(snd_low_shelf[i]))
         voi.write_to_new_file(filenameSad,numpy.asarray(new_sndarray_low_shelf))
+    if typeOfEmotion == "Afraid":
+        sep = filename.split("/")
+        name = sep[len(sep)-1].split(".")[0]
+        # filenameFreqShift = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "FreqShiftAfraid.wav"
+        filenameInflection = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "InflectionAfraid.wav"
+        filenameAverage = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "AverageAfraid.wav"
+        filenameAfraid = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "Afraid.wav"
 
+        fs, x = wavfile.read(filename)
+        x = voi.get_one_channel_array(x)
+        chunk_size = 1024
+
+        f0 = voi.get_freq_array(x,fs,chunk_size)
+        vSig = voi.get_signal_voiced_unvoiced_starting_info(x,f0, fs,chunk_size)
+        lengthVoiced = voi.get_signal_voiced_length_info(x,vSig)
+
+        voiced_regions = voi.get_voiced_region_chunks(vSig,lengthVoiced)
+
+        new_snd = inflect.inflection_fear(x,voiced_regions,0.53,fs,chunk_size)
+        new_snd_new = []
+        cnt = 0
+        for i in new_snd:
+            new_snd_new.append(numpy.int16(i))
+            if cnt == len(new_snd)-1:
+                break
+            cnt = cnt + 1
+        wavfile.write(filenameInflection,fs,numpy.array(new_snd_new))
+
+
+        fs, xf = wavfile.read(filenameInflection)
+        # xf = voi.get_one_channel_array(x)
+        chunk_size = 1024
+
+        f0 = voi.get_freq_array(xf,fs,chunk_size)
+        vSig = voi.get_signal_voiced_unvoiced_starting_info(xf,f0, fs,chunk_size)
+        lengthVoiced = voi.get_signal_voiced_length_info(xf,vSig)
+        voiced_regions = voi.get_voiced_region_chunks(vSig,lengthVoiced)
+
+        pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(xf, f0, voiced_regions,chunk_size, "voiced")
+        best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(xf,voiced_region_freq_chunk_windows_pitch_marks_obj)
+
+        best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
+        freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
+
+
+        best_pitch_marks = []
+        for best_pitch_marks_region in best_pitch_marks_info:
+            for best_pitch_marks_freq_chunk in best_pitch_marks_region:
+                for i in best_pitch_marks_freq_chunk:
+                    best_pitch_marks.append(i)
+
+        # new_x = psola.freq_shift_using_td_psola_helper_new_two(x,best_pitch_marks,1.03)
+        freq_shift_arr = fsa.create_vibrato_freq_shift_array(freq_chunks_info,chunk_size,shift_amt=0.07)
+        new_xf = psola.freq_shift_using_td_psola_newest(xf,voiced_regions,best_pitch_marks_info,freq_shift_arr)
+
+        new_sndarray = []
+        for i in range(0,len(new_xf)):
+            new_sndarray.append(numpy.int16(new_xf[i]))
+
+        new_sndarray = voi.make_two_channels(new_sndarray)
+        voi.write_to_new_file(filenameAfraid,numpy.asarray(new_sndarray))
 
 if __name__ == "__main__":
     filename= "C:/Users/rediet/Documents/Vocie-samples/eric.wav"
     sTime = time.time()
-    emotiveSpeech(filename,"Happy")
+    emotiveSpeech(filename,"Afraid")
     eTime = time.time()
     print "time taken by emotiveSpeech " + str(eTime-sTime)
 

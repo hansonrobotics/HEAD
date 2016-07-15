@@ -820,7 +820,7 @@ if __name__ == "__main__":
 
     # freq_shift_arr = create_constant_freq_shift_array(freq_chunks_info,1.5)
     sTime = time.time()
-    freq_shift_arr = fsa.create_vibrato_freq_shift_array(freq_chunks_info,chunk_size)
+    freq_shift_arr = fsa.create_vibrato_freq_shift_array(freq_chunks_info,chunk_size,shift_amt=0.05)
     eTime = time.time()
     # print "time taken by create vibrato is " + str(eTime-sTime)
 
