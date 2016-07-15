@@ -254,9 +254,13 @@ def inflection_happy_two(sndarray,voiced_regions_info, inflection_duration, fs,c
         best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
         freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
 
-        print freq_chunks_info
-
         freq_shift_arr = fsa.create_happiness_inflection_array(freq_chunks_info)
+        # print freq_shift_arr
+        # print len(freq_shift_arr[0])
+        # print len(snd_arr)
+        # print voiced_regions
+        # print best_pitch_marks_info
+        # print len(best_pitch_marks_info[0])
         new_snd = psola.freq_shift_using_td_psola_newest(snd_arr,voiced_regions,best_pitch_marks_info,freq_shift_arr)
 
         new_sndTwo= []
