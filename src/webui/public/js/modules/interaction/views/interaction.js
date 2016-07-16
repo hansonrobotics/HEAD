@@ -320,7 +320,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 this.ui.messageInput.val('');
             },
             shutUpClicked: function () {
-                api.sendChatMessage('shut up');
+                api.shutUp();
             },
             attachHtml: function (collectionView, childView) {
                 var self = this;
