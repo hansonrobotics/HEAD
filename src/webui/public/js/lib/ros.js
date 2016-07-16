@@ -234,6 +234,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     name: '/webui/log/chat',
                     messageType: 'std_msgs/String'
                 }),
+                tts_control: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/tts_control',
+                    messageType: 'std_msgs/String'
+                }),
             };
         },
         initServices: function () {
