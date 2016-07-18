@@ -324,13 +324,17 @@ textarea.form-control.app-node-text {
     position: relative;
 }
 
-.app-options-tabs li.options-icon,
-.app-node-tabs li.node-icon {
+.app-options-tabs .options-icon,
+.app-node-tabs .node-icon {
     position: absolute;
     left: 0;
     top: 0;
     width: 43px;
     background-color: #323F48;
+}
+
+.app-options-tabs .options-icon a,
+.app-node-tabs .node-icon a {
     cursor: default;
 }
 

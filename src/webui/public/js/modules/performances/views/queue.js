@@ -7,10 +7,12 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', 'u
                 performances: '.app-performance-queue .app-performance',
                 performanceTemplate: '.app-performance-template',
                 clearButton: '.app-clear',
-                emptyNotice: '.app-empty-notice'
+                emptyNotice: '.app-empty-notice',
+                reloadButton: '.app-reload-button'
             },
             events: {
-                'click @ui.clearButton': 'clear'
+                'click @ui.clearButton': 'clear',
+                'click @ui.reloadButton': 'updateTimeline'
             },
             queue: [],
             initialize: function (options) {
