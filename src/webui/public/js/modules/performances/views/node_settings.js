@@ -185,6 +185,7 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                         self.updateKFAnimations([]);
                         // load emotions
                         api.getAnimations(function (animations) {
+                            animations = _.pluck(animations, 'name');
                             self.updateKFAnimations(animations)
                         });
                         // init slider
