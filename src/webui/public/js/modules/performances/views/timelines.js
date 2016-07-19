@@ -53,7 +53,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             },
             initialize: function (options) {
                 var self = this,
-                    addReloadHandler = {
+                    loadOptions = {
                         success: function () {
                             var handler = function () {
                                 if (self.isDestroyed)
@@ -70,15 +70,15 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
 
                 if (options.sequence instanceof Array) {
                     this.model = new Performance();
-                    this.model.loadSequence(options.sequence, addReloadHandler);
+                    this.model.loadSequence(options.sequence, loadOptions);
                 } else if (this.model) {
                     if (this.model.id && this.model.nodes.isEmpty()) {
-                        this.model.load(addReloadHandler);
+                        this.model.load(loadOptions);
                     } else
-                        this.model.loadNodes(addReloadHandler);
+                        this.model.loadNodes(loadOptions);
                 } else {
                     this.model = new Performance();
-                    this.model.fetchCurrent(addReloadHandler);
+                    this.model.fetchCurrent(loadOptions);
                 }
             },
             childViewOptions: function () {
