@@ -43,19 +43,21 @@ define(["application", "tpl!./templates/message.tpl", 'lib/api', 'emoticons'], f
                     this.$el.fadeIn(null, scroll);
             },
             updateFKeyLabel: function () {
-                var type = this.model.get('type');
-                if (type && type == 'suggestion') {
-                    var suggestions = this.collection.getSuggestions(),
-                        length = suggestions.length,
-                        i = suggestions.indexOf(this.model),
-                        fKey = length - i;
+                if (!this.isDestroyed) {
+                    var type = this.model.get('type');
+                    if (type && type == 'suggestion') {
+                        var suggestions = this.collection.getSuggestions(),
+                            length = suggestions.length,
+                            i = suggestions.indexOf(this.model),
+                            fKey = length - i;
 
-                    this.ui.shortcutLabel.html('F' + fKey.toString()).stop();
+                        this.ui.shortcutLabel.html('F' + fKey.toString()).stop();
 
-                    if (i > -1 && fKey <= 12)
-                        this.ui.shortcutLabel.fadeIn();
-                    else
-                        this.ui.shortcutLabel.fadeOut();
+                        if (i > -1 && fKey <= 12)
+                            this.ui.shortcutLabel.fadeIn();
+                        else
+                            this.ui.shortcutLabel.fadeOut();
+                    }
                 }
             },
             currentTime: function () {
