@@ -41,8 +41,11 @@ class Chatbot():
     # sentiment dictionary
     self.polarity = Polarity()
     self._polarity_threshold=0.2
+    self.speech = False
 
     rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
+    rospy.Subscriber('speech_events', String, self._speech_event_callback)
+    self.tts_ctrl_pub = rospy.Publisher('tts_control', String)
 
     self._response_publisher = rospy.Publisher(
         'chatbot_responses', String, queue_size=1)
@@ -111,7 +114,22 @@ class Chatbot():
 
       return response
 
+  def _speech_event_callback(self, msg):
+    if msg.data == 'start':
+      self.speech = True
+    if msg.data == 'stop':
+      rospy.sleep(2)
+      self.speech = False
+
   def _request_callback(self, chat_message):
+    if 'shut up' in chat_message.utterance.lower():
+      logger.info("Robot's talking wants to be interruptted")
+      self.tts_ctrl_pub.publish("shutup")
+      rospy.sleep(0.5)
+      self._response_publisher.publish(String('Okay'))
+      self._affect_publisher.publish(String('sad'))
+      return
+
     lang = rospy.get_param('lang', None)
 
     response = ''

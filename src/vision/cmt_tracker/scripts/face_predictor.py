@@ -14,18 +14,25 @@ from cmt_tracker_msgs.cfg import RecogntionConfig
 from dynamic_reconfigure.server import Server
 
 from openface_wrapper import face_recognizer
-
-
+from image_scraper import image_scaper
+from pi_face_tracker.msg import FaceEvent
 class face_predictor:
     def __init__(self):
         rospy.init_node('face_recognizer', anonymous=True)
+        self.image_scraper_enable = rospy.get_param('image_scraper')
+        if self.image_scraper_enable != 0:
+            self.user_agents = rospy.get_param('user_agents')
+            self.image_scraper = image_scaper(self.user_agents)
+
+        self.face_event_topic = rospy.get_param('publish_topic_event')
         self.openface_loc = rospy.get_param('openface')
-        self.camera_topic = rospy.get_param('camera_topic')
+        self.camera_topic = rospy.get_param('recognition_topic')
         self.filtered_face_locations = rospy.get_param('filtered_face_locations')
         self.shape_predictor_file = rospy.get_param("shape_predictor")
         self.image_dir = rospy.get_param("image_locations")
         self.face_recognizer = face_recognizer(self.openface_loc, self.image_dir)
         self.bridge = CvBridge()
+        self.event_pub = rospy.Publisher( self.face_event_topic, FaceEvent, queue_size=10 )
         self.image_sub = message_filters.Subscriber(self.camera_topic, Image)
         self.cmt_sub = message_filters.Subscriber('tracker_results',Trackers)
         self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
@@ -42,9 +49,13 @@ class face_predictor:
 
         self.service_ = rospy.Service('add_to_query', TrackerNames, self.add_to_query)
         self.cmt_state = {}
-        self.confidence = 0.85
+        # self.confidence = 0.85
         self.states = ['results','save']
-
+        if not self.face_recognizer.get_state():
+            print ("No Classifier")
+            query_only = rospy.get_param('query_only', True)
+            if query_only:
+                print("Operating in Query Mode There is Model so No Queries would happen")
 
         self.state ={'query_save': '00', 'save_only': '01','query_only': '10', 'ignore': '11'}
         #format
@@ -53,6 +64,7 @@ class face_predictor:
 
         self.overall_state = ''
         self.initial_run = True
+        self.google_query = []
         #So the logic goes; if the trainer is called when save_tracker_images has saved enough images.
         #And for get_tracker_results -> returns the
 
@@ -61,6 +73,7 @@ class face_predictor:
 
     def add_to_db(self,req):
         pass
+
     def callback(self,data, cmt, face,temp):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
@@ -80,16 +93,31 @@ class face_predictor:
                 tupl.append((x,y))
             key = cmt.tracker_name.data
 
-            self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key,{'count': 0, 'state':self.state['query_save']})
-            print(self.cmt_tracker_instances)
+            #TODO Can we Query state only:
+            query_only = rospy.get_param('query_only', True)
+            # print("Confidence: %f" % self.confidence)
+            if not query_only:
+                # This is to avoid adding faces sample size by saving while querying.
+                self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key,{'count': 0, 'state':self.state['query_save']})
+            else:
+                self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key, {'count': 0, 'state': self.state[
+                    'query_only']})
+            #print(self.cmt_tracker_instances)
             if self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
+                print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
 
-            elif self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
+
+            elif not query_only and (self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']):
                 self.face_recognizer.save_faces(cv_image, tupl, key, str(self.cmt_tracker_instances[key]['count']))
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
+                print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
+                if key not in self.google_query:
+                    self.face_recognizer.temp_save_faces(cv_image, tupl, key)
+                    self.google_query.append(key)
+                    # print "Image Saved"
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['ignore']:
                 pass
@@ -97,18 +125,22 @@ class face_predictor:
             #Change state now;
 
             if self.cmt_tracker_instances[key]['count'] == self.sample_size:
-                if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] \
-                        or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
-                    max_index = max(
-                        self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].iterkeys(),
-                        key=(
-                        lambda key: self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results']))
-                    print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index])
-                    if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][
-                        max_index] > self.num_positive:
+
+                if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
+                    max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'], key=self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].get)
+                    print("openface output results: ")
+                    print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
+                    if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index] > self.num_positive:
                         try:
                             self.upt = rospy.ServiceProxy('recognition', TrackerNames)
-                            indication = self.upt(names=cmt.tracker_name.data, index=int(max_index))
+                            indication = self.upt(names=str(max_index), index=int(cmt.tracker_name.data))
+                            recognized_event = FaceEvent()
+                            recognized_event.face_event = "recognized_face"
+                            recognized_event.face_id = int(cmt.tracker_name.data)
+                            recognized_event.recognized_id = str(max_index)
+
+                            self.event_pub.publish(recognized_event)
+
                             if not indication:
                                 self.logger.info("there was the same id in the id chamber.....")
                             self.cmt_tracker_instances[key]['state'] = self.state['ignore']
@@ -116,8 +148,38 @@ class face_predictor:
                             self.logger.error("Service call failed: %s" % e)
 
                     else:
-                        self.cmt_tracker_instances[key]['state'] = self.state['save_only']
-                        self.cmt_tracker_instances[key]['count'] = 0
+                        recognized_event = FaceEvent()
+                        recognized_event.face_event = "recognized_face"
+                        recognized_event.face_id = int(cmt.tracker_name.data)
+                        recognized_event.recognized_id = str(0)
+
+                        self.event_pub.publish(recognized_event)
+                        if not query_only:
+                            self.cmt_tracker_instances[key]['state'] = self.state['save_only']
+                            self.cmt_tracker_instances[key]['count'] = 0
+                        else:
+                            self.cmt_tracker_instances[key]['state'] = self.state['ignore']
+                            self.cmt_tracker_instances[key]['count'] = 0
+
+                    # Google Scrapper
+                    if self.image_scraper_enable != 0:
+                        try:
+                            print "Upload Imgur and Query Google Scrapper: "
+                            results = self.image_scraper.image_scraper("/tmp/" + key + ".png")
+                            try:
+                                self.gog = rospy.ServiceProxy('google_scraper', TrackerNames)
+
+                                indication = self.gog(names=str(results), index=int(cmt.tracker_name.data))
+
+                                if not indication:
+                                    self.logger.info("there was the same id in the id chamber.....")
+                            except rospy.ServiceException, e:
+                                self.logger.error("Service call failed: %s" % e)
+
+                            print  (results)
+                            print "Finished Query of Google Images"
+                        except Exception, e:
+                            print e
             elif self.cmt_tracker_instances[key]['count'] == self.sample_size + self.image_sample_size:
                 if self.cmt_tracker_instances[key]['state'] == self.state['save_only']:
                     self.face_recognizer.train_process(cmt.tracker_name.data)
@@ -129,6 +191,7 @@ class face_predictor:
 
 
     def sample_callback(self,config, level):
+        self.cmt_tracker_instances = {}
         self.image_sample_size = config.image_number
         self.sample_size = config.sample_size
         self.confidence = config.confidence
@@ -160,7 +223,7 @@ class face_predictor:
                     overlap_area = float(SI) / float(SU)
                 else:
                     overlap_area = 1
-
+                #print overlap_area
                 overlap = overlap_area > 0.5
                 if (overlap):
                     list = [j,i]

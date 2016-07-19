@@ -292,7 +292,8 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
 
     double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
     std::string value = "ID-" + (*v).tracker_name.data+ "\nBF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
-       "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
+       "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data) + "\ngoogle results: " +
+       (*v).google_best_guess.data;
     tracked_image_information.push_back( value );
 
 
@@ -319,7 +320,8 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
 
     double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
     std::string value = "ID-" + (*v).tracker_name.data+ "\nBF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
-       "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data);
+       "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data) + "\ngoogle results: " +
+       (*v).google_best_guess.data;
 
     temp_tracked_image_information.push_back( value );
 

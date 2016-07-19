@@ -79,6 +79,10 @@ class face_reinforcer:
         self.area_scale = config.area_downgrade
         self.window_size = config.window_size
         self.reinforce_count = config.reinforce_count
+        self.epi_x = config.epi_x
+        self.epi_y = config.epi_y
+        self.epi_w = config.epi_w
+        self.epi_h = config.epi_h
         return config
 
     def can_update(self, req):
@@ -300,13 +304,10 @@ class face_reinforcer:
 
 
         self.persistance_face[:] = [get_element for get_element in self.persistance_face if not (self.trim(get_element[6],self.window_size))]
-        # print(self.persistance_face)
+        print(self.persistance_face)
 
         return not_covered_faces, overlaped_faces, not_good
     def determine(self, get_element,j):
-        epsilon_x = 15
-        epsilon_y = 15
-
         x_off = j[0]
         y_off = j[2]
 
@@ -319,7 +320,7 @@ class face_reinforcer:
         w_res = abs(j[1] - get_element[1])
         h_res = abs(j[3] - get_element[3])
 
-        if x_res < epsilon_x and y_res < epsilon_y and w_res < epsilon_y and h_res < epsilon_y:
+        if x_res < self.epi_x and y_res < self.epi_y and w_res < self.epi_w and h_res < self.epi_h:
             return True
         return False
 

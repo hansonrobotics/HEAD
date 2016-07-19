@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(manyears_ros)
+project(opencog_control)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rt_audio_ros
-  tf
+  dynamic_reconfigure
+  rospy
+  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -19,8 +19,6 @@ find_package(catkin REQUIRED COMPONENTS
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 # catkin_python_setup()
 
-set(manyearslib_PREFIX $ENV{MANYEARSLIB_PREFIX})
-
 ################################################
 ## Declare ROS messages, services and actions ##
 ################################################
@@ -30,10 +28,10 @@ set(manyearslib_PREFIX $ENV{MANYEARSLIB_PREFIX})
 ## * Let MSG_DEP_SET be the set of packages whose message types you use in
 ##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
 ## * In the file package.xml:
+##   * add a build_depend tag for "message_generation"
 ##   * add a build_depend and a run_depend tag for each package in MSG_DEP_SET
-##   * If MSG_DEP_SET isn't empty the following dependencies might have been
-##     pulled in transitively but can be declared for certainty nonetheless:
-##     * add a build_depend tag for "message_generation"
+##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
+##     but can be declared for certainty nonetheless:
 ##     * add a run_depend tag for "message_runtime"
 ## * In this file (CMakeLists.txt):
 ##   * add "message_generation" and every package in MSG_DEP_SET to
@@ -72,6 +70,25 @@ set(manyearslib_PREFIX $ENV{MANYEARSLIB_PREFIX})
 #   std_msgs  # Or other packages containing msgs
 # )
 
+################################################
+## Declare ROS dynamic reconfigure parameters ##
+################################################
+
+## To declare and build dynamic reconfigure parameters within this
+## package, follow these steps:
+## * In the file package.xml:
+##   * add a build_depend and a run_depend tag for "dynamic_reconfigure"
+## * In this file (CMakeLists.txt):
+##   * add "dynamic_reconfigure" to
+##     find_package(catkin REQUIRED COMPONENTS ...)
+##   * uncomment the "generate_dynamic_reconfigure_options" section below
+##     and list every .cfg file to be processed
+
+## Generate dynamic reconfigure parameters in the 'cfg' folder
+generate_dynamic_reconfigure_options(
+    cfg/Openpsi.cfg
+)
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -82,9 +99,9 @@ set(manyearslib_PREFIX $ENV{MANYEARSLIB_PREFIX})
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-#  LIBRARIES manyears_ros
-#  CATKIN_DEPENDS roscpp rt_audio_ros tf
+#  INCLUDE_DIRS include
+#  LIBRARIES opencog
+#  CATKIN_DEPENDS dynamic_reconfigure rospy std_msg
 #  DEPENDS system_lib
 )
 
@@ -96,58 +113,30 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-  ${PROJECT_SOURCE_DIR}/include
   ${catkin_INCLUDE_DIRS}
-  ${manyearslib_PREFIX}/dsplib
 )
 
-## Declare a cpp library
-# add_library(manyears_ros
-#   src/${PROJECT_NAME}/manyears_ros.cpp
+## Declare a C++ library
+# add_library(opencog
+#   src/${PROJECT_NAME}/opencog.cpp
 # )
 
-## Declare a cpp executable
-add_executable(manyears_ros          src/manyears_ros.cpp)
-add_executable(manyears_savestream   src/manyears_savestream.cpp)
-add_executable(position_exploitation src/sound_position_exploitation.cpp)
+## Add cmake target dependencies of the library
+## as an example, code may need to be generated before libraries
+## either from message generation or dynamic reconfigure
+# add_dependencies(opencog ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-add_library(manyears_node STATIC
-    src/manyears_config.cpp
-    src/manyears_node.cpp
-)
-add_executable(manyears_node_standalone
-    src/manyears_node_standalone.cpp)
+## Declare a C++ executable
+# add_executable(opencog_node src/opencog_node.cpp)
 
-
-## Add cmake target dependencies of the executable/library
-## as an example, message headers may need to be generated before nodes
-add_dependencies(manyears_ros          manyears_msgs_generate_messages_cpp)
-add_dependencies(manyears_node         manyears_msgs_generate_messages_cpp)
-add_dependencies(manyears_savestream   manyears_msgs_generate_messages_cpp)
-add_dependencies(position_exploitation manyears_msgs_generate_messages_cpp)
+## Add cmake target dependencies of the executable
+## same as for the library above
+# add_dependencies(opencog_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-add_dependencies(manyears_node
-  manyearslib # Making sure the external project is built first. 
-)
-target_link_libraries(manyears_node
-  ${manyearslib_PREFIX}/bin/libmanyears.a # WARNING: This aussumes we're on Linux.
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(manyears_ros
-  manyears_node
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(manyears_savestream
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(position_exploitation
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(manyears_node_standalone
-  manyears_node 
-  ${catkin_LIBRARIES}
-)
+# target_link_libraries(opencog_node
+#   ${catkin_LIBRARIES}
+# )
 
 #############
 ## Install ##
@@ -164,7 +153,7 @@ target_link_libraries(manyears_node_standalone
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS manyears_ros manyears_ros_node
+# install(TARGETS opencog opencog_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -189,7 +178,7 @@ target_link_libraries(manyears_node_standalone
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_manyears_ros.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_opencog.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

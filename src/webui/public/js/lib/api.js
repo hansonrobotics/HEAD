@@ -533,6 +533,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
                 msg: '[#]'+message,
             });
         },
+        shutUp:function(){
+            this.topics.tts_control.publish({data: 'shutup'});
+        }
+
     };
 
     return api;

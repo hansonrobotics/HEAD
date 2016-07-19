@@ -26,7 +26,7 @@ class OfflineViewer:
         self.save_faces = False
         rospy.init_node('offline_viewer', anonymous=True)
         self.openface_loc = rospy.get_param('openface')
-        self.camera_topic = rospy.get_param('camera_topic')
+        self.camera_topic = rospy.get_param('recognition_topic')
         self.filtered_face_locations = rospy.get_param('filtered_face_locations')
         self.shape_predictor_file = rospy.get_param("shape_predictor")
         self.image_dir = rospy.get_param("image_locations")
@@ -68,6 +68,7 @@ class OfflineViewer:
         trimFacesButton.pack(side=tk.LEFT)
 
         #add buttons
+        self.new_faces_array = []
         self.window.mainloop()  # Starts GUI
 
     def switchToLive(self):
@@ -76,6 +77,8 @@ class OfflineViewer:
     def switchToTrain(self):
         #Create a dialog for waiting and then when finished say comething.
         self.save_faces = False
+        self.face_recognizer.move_folders(self.new_faces_array)
+        self.new_faces_array = []
         self.face_recognizer.train_dataset()
         self.save_face = False
         #Promote to finish the training.
@@ -127,10 +130,15 @@ class OfflineViewer:
                 else:
                     if (self.image_sample_size > 0):
                         self.face_recognizer.save_faces(cv_image,tupl,self.generate_unique,str(self.image_sample_size))
+                        cv2.rectangle(cv_image, (i.object.x_offset, i.object.y_offset),
+                                      (i.object.x_offset + i.object.width, i.object.y_offset + i.object.width),
+                                      (255, 0, 0))
                         self.image_sample_size -= 1
+                        print(self.image_sample_size)
                         break
                     else:
-                        self.face_recognizer.train_process(self.generate_unique)
+                        self.new_faces_array.append(self.generate_unique)
+                        #self.face_recognizer.train_process(self.generate_unique)
                         self.image_sample_size = self.back_up
                         self.save_faces = False
 

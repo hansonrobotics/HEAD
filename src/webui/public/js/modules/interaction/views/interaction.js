@@ -10,6 +10,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 recordButton: '.app-record-button',
                 messageInput: '.app-message-input',
                 sendButton: '.app-send-button',
+                shutUpButton: '.app-shut-up-button',
                 unsupported: '.app-unsupported',
                 supported: '.app-supported',
                 recordContainer: '.record-container',
@@ -30,6 +31,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 'click @ui.recordButton': 'toggleSpeech',
                 'keypress @ui.messageInput': 'messageKeyUp',
                 'click @ui.sendButton': 'sendClicked',
+                'click @ui.shutUpButton': 'shutUpClicked',
                 'click @ui.languageButton': 'languageButtonClick',
                 'click @ui.recognitionMethodButton': 'recognitionButtonClick',
                 'click @ui.adjustNoiseButton': 'adjustButtonClick'
@@ -316,6 +318,9 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                     api.loginfo('[CLICK ACTION][CHAT] '+message);
                 }
                 this.ui.messageInput.val('');
+            },
+            shutUpClicked: function () {
+                api.shutUp();
             },
             attachHtml: function (collectionView, childView) {
                 var self = this;

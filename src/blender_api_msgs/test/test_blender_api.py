@@ -80,6 +80,7 @@ class BlenderAPITest(unittest.TestCase):
     def test_emotion_state(self):
         available_emotions = parse_msg(run_shell_cmd(
             'rostopic echo -n1 /blender_api/available_emotion_states', True))
+        available_emotions = available_emotions[:1]
         pub, msg_class = rostopic.create_publisher(
             '/blender_api/set_emotion_state',
             'blender_api_msgs/EmotionState', True)
@@ -100,6 +101,7 @@ class BlenderAPITest(unittest.TestCase):
     def test_gesture(self):
         available_gestures = parse_msg(run_shell_cmd(
             'rostopic echo -n1 /blender_api/available_gestures', True))
+        available_gestures = available_gestures[:2]
         pub, msg_class = rostopic.create_publisher(
             '/blender_api/set_gesture',
             'blender_api_msgs/SetGesture', True)
@@ -121,6 +123,7 @@ class BlenderAPITest(unittest.TestCase):
     def test_viseme(self):
         available_visemes = parse_msg(run_shell_cmd(
             'rostopic echo -n1 /blender_api/available_visemes', True))
+        available_visemes = available_visemes[:1]
         pub, msg_class = rostopic.create_publisher(
             '/blender_api/queue_viseme',
             'blender_api_msgs/Viseme', True)
@@ -152,7 +155,8 @@ class BlenderAPITest(unittest.TestCase):
             'up':(1,0,0.5,1),
             'down':(1,0,-0.5,1)}
         videos = []
-        for name in ['right', 'up', 'left', 'down', 'center']:
+        #for name in ['right', 'up', 'left', 'down', 'center']:
+        for name in ['right', 'center']:
             video = '%s/gaze-%s.avi' % (self.output_dir, name)
             with capture_screen(video, timeout):
                 pub.publish(msg_class(*targets[name]))
@@ -176,7 +180,8 @@ class BlenderAPITest(unittest.TestCase):
             'up':(1,0,0.5,1),
             'down':(1,0,-0.5,1)}
         videos = []
-        for name in ['right', 'up', 'left', 'down', 'center']:
+        #for name in ['right', 'up', 'left', 'down', 'center']:
+        for name in ['right', 'center']:
             video = '%s/face-%s.avi' % (self.output_dir, name)
             with capture_screen(video, timeout):
                 pub.publish(msg_class(*targets[name]))
