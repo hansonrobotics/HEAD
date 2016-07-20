@@ -9,7 +9,7 @@ set -e
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 HR_VERSION=0.1.0
 
-PROJECT=HEAD
+PROJECT=${PROJECT:-HEAD}
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
