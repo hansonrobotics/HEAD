@@ -1,6 +1,6 @@
-define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/api', 'underscore', 'jquery', 'jquery-ui',
-        'lib/crosshair-slider', 'select2'],
-    function (App, Marionette, template, api, _, $) {
+define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../entities/node', 'lib/api', 'underscore',
+    'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2'],
+    function (App, Marionette, template, Node, api, _, $) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
@@ -297,19 +297,27 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', 'lib/a
                             if (options.change) options.change(val);
                         }).draggable({
                             helper: function () {
-                                return $('<span>').attr('data-node-name', self.model.get('name'))
-                                    .attr('data-node-id', self.model.get('id'))
-                                    .addClass('label app-node').html(self.model.getTitle());
-                            },
-                            start: function () {
-                                self.model.set(attr, val);
+                                var node = self.model;
+
+                                if (self.collection && self.collection.contains(node)) {
+                                    var attributes = node.toJSON();
+                                    delete attributes['id'];
+                                    node = Node.create(attributes);
+                                }
+
+                                node.set(attr, val);
+                                return $('<span>').attr('data-node-name', node.get('name'))
+                                    .attr('data-node-id', node.get('id'))
+                                    .addClass('label app-node').html(node.getTitle());
                             },
                             appendTo: 'body',
                             revert: 'invalid',
                             delay: 100,
                             snap: '.app-timeline-nodes',
                             snapMode: 'inner',
-                            zIndex: 1000
+                            zIndex: 1000,
+                            cursor: 'move',
+                            cursorAt: {top: 0, left: 0}
                         });
 
                     container.append(thumbnail);

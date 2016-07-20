@@ -60,7 +60,7 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'], function 
         },
         initialize: function (options) {
             Supermodel.Model.prototype.initialize.call(this, options);
-            if (!this.get('id')) this.set('id', this.cid);
+            this.set('id', this.cid);
             this.on('change:el', this.updateEl);
         },
         call: function () {

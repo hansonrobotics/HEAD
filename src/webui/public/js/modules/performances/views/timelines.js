@@ -87,28 +87,26 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             onAttach: function () {
                 var self = this;
 
-                // init node droppable
                 this.ui.scrollContainer.droppable({
                     accept: '[data-node-name], [data-node-id]',
                     tolerance: 'touch',
                     drop: function (e, ui) {
-                        var nodeEl = $(ui.helper),
-                            id = nodeEl.data('node-id'),
+                        var el = $(ui.helper),
+                            id = el.data('node-id'),
                             node = Node.all().get(id),
                             startTime = Math.round(
                                     ($(this).scrollLeft() + ui.offset.left - $(this).offset().left) / self.config.pxPerSec * 100) / 100;
 
                         if (id && node) {
                             node.set('start_time', startTime);
-                            if (!self.model.nodes.contains(node))
-                                self.model.nodes.add(node);
+                            self.model.nodes.add(node);
                         } else {
-                            node = Node.create({
-                                name: nodeEl.data('node-name'),
+                            node = self.model.nodes.add({
+                                name: el.data('node-name'),
                                 start_time: startTime,
                                 duration: 1
                             });
-                            self.model.nodes.add(node);
+                            self.showNodeSettings(node);
                         }
                     }
                 });
@@ -190,18 +188,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             modelChanged: function () {
                 this.ui.performanceName.val(this.model.get('name'));
             },
-            initDraggable: function (el, options) {
-                if (!this.options.readonly)
-                    $(el).draggable(_.extend({
-                        helper: 'clone',
-                        appendTo: 'body',
-                        revert: 'invalid',
-                        delay: 100,
-                        snap: '.app-timeline-nodes',
-                        snapMode: 'inner',
-                        zIndex: 1000
-                    }, options));
-            },
             initResizable: function (el) {
                 var self = this,
                     handle = $('<span>').addClass('ui-resizable-handle ui-resizable-e ui-icon ui-icon-gripsmall-diagonal-se');
@@ -229,9 +215,15 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
 
                 this.updateNode(node);
 
-
                 if (!this.options.readonly) {
-                    this.initDraggable(el, {
+                    el.draggable({
+                        helper: 'clone',
+                        appendTo: 'body',
+                        revert: 'invalid',
+                        delay: 100,
+                        snap: '.app-timeline-nodes',
+                        snapMode: 'inner',
+                        zIndex: 1000,
                         start: function () {
                             // hide original when showing clone
                             $(this).hide();
@@ -271,7 +263,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             },
             addNode: function (node) {
                 this.arrangeNodes();
-                this.showNodeSettings(node);
             },
             showNodeSettings: function (node) {
                 if (this.options.readonly) return;

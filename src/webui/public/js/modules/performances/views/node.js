@@ -10,7 +10,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 nodeScrollLeft: '.app-node-scroll.app-scroll-left a',
                 nodeScrollRight: '.app-node-scroll.app-scroll-right a',
                 nodeTypeButtons: '.app-node-tabs li:not([role="presentation"]) a',
-                
+
                 optionsTabBar: '.app-options-tabs',
                 optionsTabs: '.app-options-tabs li:not([role="presentation"])',
                 optionsScrollLeft: '.app-options-scroll.app-scroll-left a',
@@ -46,7 +46,9 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                     delay: 100,
                     snap: '.app-timeline-nodes',
                     snapMode: 'inner',
-                    zIndex: 1000
+                    zIndex: 1000,
+                    cursor: 'move',
+                    cursorAt: {top: 0, left: 0}
                 });
 
                 if (this.node)
