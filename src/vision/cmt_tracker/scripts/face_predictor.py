@@ -49,9 +49,16 @@ class face_predictor:
 
         self.service_ = rospy.Service('add_to_query', TrackerNames, self.add_to_query)
         self.cmt_state = {}
-        #self.confidence = 0.85
+        # self.confidence = 0.85
         self.states = ['results','save']
-
+        if not self.face_recognizer.get_state():
+            print ("No Classifier")
+            query_only = rospy.get_param('query_only', True)
+            if query_only:
+                print("Operating in Query Mode There is Model so No Queries would happen")
+                rospy.signal_shutdown("Query Mode; No Model Found. Shutting Down Node")
+        else:
+            print ("Classifier Found")
 
         self.state ={'query_save': '00', 'save_only': '01','query_only': '10', 'ignore': '11'}
         #format
@@ -69,6 +76,7 @@ class face_predictor:
 
     def add_to_db(self,req):
         pass
+
     def callback(self,data, cmt, face,temp):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
@@ -100,6 +108,7 @@ class face_predictor:
             #print(self.cmt_tracker_instances)
             if self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
+                # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
 
 
             elif not query_only and (self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']):
@@ -107,6 +116,7 @@ class face_predictor:
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
+                # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
                 if key not in self.google_query:
                     self.face_recognizer.temp_save_faces(cv_image, tupl, key)
                     self.google_query.append(key)
@@ -121,8 +131,8 @@ class face_predictor:
 
                 if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
                     max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'], key=self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].get)
-                    print("openface output results: ")
-                    print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
+                    # print("openface output results: ")
+                    # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
                     if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index] > self.num_positive:
                         try:
                             self.upt = rospy.ServiceProxy('recognition', TrackerNames)
