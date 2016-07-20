@@ -527,14 +527,14 @@ textarea.form-control.app-node-text {
 .app-node-tabs > li.active > a[data-node-name="look_at"],
 .app-node-tabs > li > a[data-node-name="look_at"]:hover,
 .app-node-tabs > li > a[data-node-name="look_at"]:focus {
-    background-color: #5cb85c;
+    background-color: #459098;
 }
 
 .app-node[data-node-name="gaze_at"],
 .app-node-tabs > li.active > a[data-node-name="gaze_at"],
 .app-node-tabs > li > a[data-node-name="gaze_at"]:hover,
 .app-node-tabs > li > a[data-node-name="gaze_at"]:focus {
-    background-color: #f0ad4e;
+    background-color: #3b843d;
 }
 
 .app-node[data-node-name="interaction"],
@@ -562,7 +562,7 @@ textarea.form-control.app-node-text {
 .app-node-tabs > li.active > a[data-node-name="kfanimation"],
 .app-node-tabs > li > a[data-node-name="kfanimation"]:hover,
 .app-node-tabs > li > a[data-node-name="kfanimation"]:focus {
-    background-color: #5bb85d;
+    background-color: #a54343;
 }
 
 .app-node[data-node-name="head_rotation"],
