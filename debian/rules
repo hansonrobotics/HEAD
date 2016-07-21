@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# required targets:
+# clean
+# build
+# build-arch
+# build-indep
+# binary
+# binary-arch
+# binary-indep
+
+PROJECT = head-0.1.0
+
+build:
+	bash _build.sh
+
+clean:
+	bash _clean.sh
+
+%:
+	dh $@ 
