@@ -686,7 +686,16 @@ parse_opts() {
 set_ws() {
     if [[ -z $HR_WORKSPACE ]]; then
         if [[ -f $HR_ENVFILE_PATH ]]; then
-            eval $(cat $HR_ENVFILE_PATH|grep "export HR_WORKSPACE=")
+            local str=$(cat $HR_ENVFILE_PATH|grep "export HR_WORKSPACE=")
+            if [[ -z $str ]]; then
+                error "HR_WORKSPACE is not found in $HR_ENVFILE_PATH"
+                local confirm
+                _get_confirm "Do you want to reset to default ${DEFAULT_HR_WORKSPACE}? [y/N]"
+                [[ ${confirm} -eq 1 ]] || exit 0
+                HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
+            else
+                eval $str
+            fi
         else
             HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
         fi
