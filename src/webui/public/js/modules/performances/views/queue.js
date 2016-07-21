@@ -7,12 +7,10 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', 'u
                 performances: '.app-performance-queue .app-performance',
                 performanceTemplate: '.app-performance-template',
                 clearButton: '.app-clear',
-                emptyNotice: '.app-empty-notice',
-                reloadButton: '.app-reload-button'
+                emptyNotice: '.app-empty-notice'
             },
             events: {
-                'click @ui.clearButton': 'clear',
-                'click @ui.reloadButton': 'updateTimeline'
+                'click @ui.clearButton': 'clear'
             },
             queue: [],
             initialize: function (options) {
@@ -117,9 +115,14 @@ define(['marionette', 'backbone', 'tpl!./templates/queue.tpl', './timelines', 'u
                 return ids;
             },
             _showTimeline: function (options) {
-                var timelinesView = new TimelinesView(_.extend({
+                var self = this,
+                    timelinesView = new TimelinesView(_.extend({
                     performances: this.options.performances
                 }, options));
+
+                timelinesView.on('close', function () {
+                    if (!self.isDestroyed) self.updateTimeline();
+                });
 
                 // show configuration UI
                 this.options.layoutView.getRegion('timeline').show(timelinesView);

@@ -27,7 +27,8 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 frameCount: '.app-frame-count',
                 timeIndicator: '.app-current-time div',
                 deleteButton: '.app-delete-button',
-                timeAxis: '.app-time-axis'
+                timeAxis: '.app-time-axis',
+                closeButton: '.app-close-button'
             },
             regions: {
                 nodeSettings: {
@@ -46,6 +47,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 'click @ui.timeAxis': 'moveIndicator',
                 'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance',
+                'click @ui.closeButton': 'close',
                 'click @ui.loopButton': 'loop'
             },
             modelEvents: {
@@ -84,6 +86,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             childViewOptions: function () {
                 return {performance: this.model, config: this.config};
             },
+            close: function () {
+                this.trigger('close');
+            },
             onAttach: function () {
                 var self = this;
 
@@ -111,9 +116,10 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     }
                 });
 
-                if (this.options.readonly)
+                if (this.options.readonly) {
                     this.ui.nodesContainer.hide();
-                else {
+                    this.ui.closeButton.hide();
+                } else {
                     this.nodeView = new NodeView({collection: this.model.nodes});
                     this.getRegion('nodeSettings').show(this.nodeView);
                 }
@@ -514,7 +520,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
              */
             clearPerformance: function () {
                 this.model.nodes.reset();
-                this.hideNodeSettings();
             },
             deletePerformance: function () {
                 var self = this;
