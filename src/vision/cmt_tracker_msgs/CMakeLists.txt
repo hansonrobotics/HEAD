@@ -98,10 +98,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##     and list every .cfg file to be processed
 
  generate_dynamic_reconfigure_options(
-   cfg/tracker.cfg
-   cfg/locator.cfg
-   cfg/reinforcer.cfg
-   cfg/recognizer.cfg
+   cfg/Tracker.cfg
+   cfg/Locator.cfg
+   cfg/Reinforcer.cfg
+   cfg/Recognizer.cfg
  )
 
 ###################################
