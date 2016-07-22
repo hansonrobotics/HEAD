@@ -37,7 +37,7 @@ import shutil
 if 'HR_CHARACTER_PATH' not in os.environ:
     os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
 
-from chatbot.server.chatbot import (ask, list_character, session_manager, set_weights,
+from chatbot.server.chatbot_agent import (ask, list_character, session_manager, set_weights,
             dump_history, add_character, list_character_names)
 
 json_encode = json.JSONEncoder().encode
