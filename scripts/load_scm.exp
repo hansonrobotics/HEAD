@@ -19,6 +19,8 @@ send "(cog-logger-set-level! \"$OC_LOG_LEVEL\")\n"
 
 # Load chat bot and aiml rules
 send "(load \"$HR_WORKSPACE/opencog/opencog/opencog/nlp/chatbot-psi/main.scm\")\n"
+send "(psi-halt)\n"
 send "(load \"$OC_AIML_FILE\")\n"
+send "(if (not (psi-running?)) (psi-run))\n"
 
 interact
