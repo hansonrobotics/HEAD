@@ -19,5 +19,6 @@ catkin_package(
 
 install(DIRECTORY
   launch
+  robot
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
