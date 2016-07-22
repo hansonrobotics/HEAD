@@ -4,8 +4,8 @@
 import os
 import logging
 import datetime as dt
-from auth import requires_auth
-from auth import check_auth, authenticate
+from chatbot.server.auth import requires_auth
+from chatbot.server.auth import check_auth, authenticate
 
 log_dir = os.environ.get('ROS_LOG_DIR', os.path.expanduser('~/.hr/log'))
 if not os.path.isdir(log_dir):
@@ -33,7 +33,11 @@ from flask import Flask, request, Response, send_from_directory
 
 import json
 import shutil
-from chatbot import (ask, list_character, session_manager, set_weights,
+
+if 'HR_CHARACTER_PATH' not in os.environ:
+    os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
+
+from chatbot.server.chatbot import (ask, list_character, session_manager, set_weights,
             dump_history, add_character, list_character_names)
 
 json_encode = json.JSONEncoder().encode

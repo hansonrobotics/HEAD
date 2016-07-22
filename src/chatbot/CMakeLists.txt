@@ -134,6 +134,12 @@ include_directories(
 #   scripts/my_python_script
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
+install(PROGRAMS
+  scripts/ai.py
+  scripts/run_server.py
+  scripts/client.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS chatbot chatbot_node
@@ -148,6 +154,12 @@ include_directories(
 #   FILES_MATCHING PATTERN "*.h"
 #   PATTERN ".svn" EXCLUDE
 # )
+
+install(DIRECTORY
+  scripts/characters
+  scripts/aiml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/scripts
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
