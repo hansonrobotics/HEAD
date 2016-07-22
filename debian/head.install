@@ -1,4 +1,4 @@
 install/* opt/hansonrobotics
 install/.catkin opt/hansonrobotics
-scripts opt/hansonrobotics/scripts
+scripts opt/hansonrobotics
 src/blender_api opt/hansonrobotics
