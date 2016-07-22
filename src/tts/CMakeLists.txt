@@ -133,6 +133,11 @@ catkin_package(
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
+install(PROGRAMS
+  scripts/tts_talker.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 ## Mark executables and/or libraries for installation
 # install(TARGETS tts tts_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
