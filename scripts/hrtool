@@ -790,18 +790,20 @@ do_build_package() {
     tar zxf $archive -C ${build_dir}
     cd $workspace
 
-cat << EOF > _build.sh
+    install_target=$workspace/install/lib/python2.7/dist-packages/
+cat <<EOF > _build.sh
 #!/usr/bin/env bash
+set -e
 source /opt/ros/indigo/setup.bash
 catkin init
 catkin build -c -j$(nproc) --make-args install
-local install_target=$workspace/install/lib/python2.7/dist-packages/
 pip2 install -t $install_target $workspace/src/hardware/pololu-motors --upgrade --no-deps
 pip3 install -t $install_target $workspace/src/blender_api_msgs --upgrade --no-deps
 EOF
 
 cat <<EOF > _clean.sh
 #!/usr/bin/env bash
+set -e
 catkin init
 catkin clean -y || true
 rm -rf .catkin_tools
