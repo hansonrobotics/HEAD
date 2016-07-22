@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
-import aiml
 import rospy
 import os
 import logging
 import requests
 import json
-import uuid
 import time
 
 from chatbot.polarity import Polarity
