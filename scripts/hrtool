@@ -811,7 +811,7 @@ rm -f $workspace/scripts/env.sh
 EOF
 
     dh_make --yes --single --createorig || true
-    dpkg-buildpackage
+    dpkg-buildpackage -b
 }
 
 execute() {
