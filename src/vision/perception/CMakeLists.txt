@@ -140,6 +140,12 @@ include_directories(
 #   PATTERN ".svn" EXCLUDE
 # )
 
+install(PROGRAMS
+  nodes/faces_tf2_broadcaster.py
+  nodes/joint_state_publisher.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 install(DIRECTORY
   launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
