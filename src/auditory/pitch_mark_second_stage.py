@@ -3,6 +3,7 @@ import numpy
 import voiced_unvoiced as voi
 import pitch_mark_first_step as pmfs
 import math
+from pyo import *
 
 def calculate_state_probability(hcanditate, hmax, hmin):
     num = hcanditate - hmin
@@ -143,6 +144,7 @@ def optimal_accumulated_log_probability(sndarray, all_snd_info):
     best_voiced_region_freq_chunk_windows_pitch_marks_obj["pitch_marks"] = new_snd_info["pitch_marks"]
 
     cntVoicedRegions = 0
+    tot_time_two = 0.0
     for pitch_marks_voiced_region in all_snd_info["pitch_marks"]:
         best_pitch_marks_freq_chunks = []
         voiced_region_start = best_voiced_region_freq_chunk_windows_pitch_marks_obj["voiced_region"][cntVoicedRegions][0]
@@ -158,23 +160,31 @@ def optimal_accumulated_log_probability(sndarray, all_snd_info):
         hmin = sndarray[voiced_region_start + hminIndex]
         # print "hmax " + str(hmax)
         # print "hmin " + str(hmin)
+        tot_time = 0.0
         for pitch_marks_freq_chunk in pitch_marks_voiced_region:
             # print "pitch_marks_freq_chunk " + str(pitch_marks_freq_chunk)
             best_pitch_marks = []
             if len(pitch_marks_freq_chunk) == 0:
                 best_pitch_marks_freq_chunks.append(best_pitch_marks)
             else:
+                sTime = time.time()
                 x = optimal_accumulated_log_probability_recur(sndarray,pitch_marks_freq_chunk,hmax,hmin,44100)
+                eTime = time.time()
+                tot_time = tot_time + (eTime-sTime)
+                # print "time taken by log prob recur is " + str(eTime-sTime)
                 for j in range(0,len(pitch_marks_freq_chunk)):
                     # print " j !!! " + str(j)
                     # print "pitch_marks!!!!"  + str(sndarray[pitch_marks_freq_chunk[j][x[j]]])
                     best_pitch_marks.append(pitch_marks_freq_chunk[j][x[j]])
                 # print "optimal pitch marks " + str(best_pitch_marks) + "best pitch marks " + str(pitch_marks_freq_chunk)
                 best_pitch_marks_freq_chunks.append(best_pitch_marks)
+        # print "time taken by log prob recur all is " + str(tot_time)
+        tot_time_two = tot_time_two + tot_time
         # print "length of freq chunks " + str(len(pitch_marks_voiced_region))
         # print best_pitch_marks_freq_chunks
         best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"].append(best_pitch_marks_freq_chunks)
         cntVoicedRegions = cntVoicedRegions + 1
+    print "time taken by log prob recur two all is " + str(tot_time_two)
     return best_voiced_region_freq_chunk_windows_pitch_marks_obj
 
 if __name__ == "__main__":
@@ -191,37 +201,42 @@ if __name__ == "__main__":
     chunk_size = 1024
 
     # voi.plot(y,x,len(x),"signal amplitude")
-
-    vSig = voi.get_signal_voiced_unvoiced_starting_info(x,44100,chunk_size)
+    f0 = voi.get_freq_array(x,fs,chunk_size)
+    vSig = voi.get_signal_voiced_unvoiced_starting_info(x,f0,44100,chunk_size,)
     lengthVoiced = voi.get_signal_voiced_length_info(x,vSig)
     voiced_regions = voi.get_voiced_region_chunks(vSig,lengthVoiced)
-    pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(x,voiced_regions,chunk_size, "voiced")
+    pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(x, f0, voiced_regions,chunk_size, "voiced")
+    import time
+    sTime = time.time()
     best_voiced_region_freq_chunk_windows_pitch_marks_obj = optimal_accumulated_log_probability(x,voiced_region_freq_chunk_windows_pitch_marks_obj)
+    eTime = time.time()
+    print "time taken by pmss is " + str(eTime - sTime)
+
 
 
     # print best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
     # print best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
 
-    best_pitch_marks = []
-    for best_pitch_marks_voiced_region in best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]:
-        for best_pitch_marks_chunk in best_pitch_marks_voiced_region:
-            for i in best_pitch_marks_chunk:
-                best_pitch_marks.append(i)
-
-    best_pitch_marks_y = []
-    for i in best_pitch_marks:
-        best_pitch_marks_y.append(x[i])
-
-    start = 0
-    end = 24100
-    diff = end - start
-    best_pitch_marks_new = []
-    for j in best_pitch_marks:
-        best_pitch_marks_new.append(j-start)
-
-    import matplotlib.pyplot as plt
-    plt.plot(best_pitch_marks_new,best_pitch_marks_y,'o',markersize=10,color='red', label=" best pitch markers")
-    plt.plot(y[0:diff],x[start:end],'-',color='black')
-    plt.xlim(0, len(x[0:diff]))
-    plt.legend()
-    plt.show()
+    # best_pitch_marks = []
+    # for best_pitch_marks_voiced_region in best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]:
+    #     for best_pitch_marks_chunk in best_pitch_marks_voiced_region:
+    #         for i in best_pitch_marks_chunk:
+    #             best_pitch_marks.append(i)
+    #
+    # best_pitch_marks_y = []
+    # for i in best_pitch_marks:
+    #     best_pitch_marks_y.append(x[i])
+    #
+    # start = 0
+    # end = 24100
+    # diff = end - start
+    # best_pitch_marks_new = []
+    # for j in best_pitch_marks:
+    #     best_pitch_marks_new.append(j-start)
+    #
+    # import matplotlib.pyplot as plt
+    # plt.plot(best_pitch_marks_new,best_pitch_marks_y,'o',markersize=10,color='red', label=" best pitch markers")
+    # plt.plot(y[0:diff],x[start:end],'-',color='black')
+    # plt.xlim(0, len(x[0:diff]))
+    # plt.legend()
+    # plt.show()

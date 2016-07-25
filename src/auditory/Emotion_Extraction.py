@@ -3,15 +3,6 @@ __author__ = 'zelalem'
 from ems import em
 from textblob import TextBlob
 
-name = input("What's your name? ")
-print("Nice to meet you " + name + "!")
-age = input("Your age? ")
-print("So, you are are already " + str(age) + " years old, " + name + "!")
-
-
-
-
-f = open('/home/zelalem/sample_emotion.txt')
 
 def analyze_sentiment(sent):
     if(sent.sentiment.polarity > 0):
@@ -23,16 +14,20 @@ def analyze_sentiment(sent):
 
     return val
 
-for line in iter(f):
-    line = line.strip('\n').lower()
-    line = line.strip('.').lower()
-    sent_splited = line.split(' ')
-    # print sent_splited
-    for x in em:
-        if sent_splited.__contains__(x):
-            sent_sentiment =analyze_sentiment(TextBlob(line))
-            print line+'.'+' '+'<'+em[x]+'>'+' '+'<'+sent_sentiment+'>'
-            # print line+'.'+' '+'<'+em[x]+'>'
+if __name__ == "__main__":
+    f = open('C:/Users/rediet/Documents/Vocie-samples/readTTS.txt')
+
+    for line in iter(f):
+        line = line.strip('\n').lower()
+        line = line.strip('.').lower()
+        sent_splited = line.split(' ')
+        # print sent_splited
+        for x in em:
+            # print str(sent_splited) + " " + str(sent_splited.__contains__(x)) + " " + str(x)
+            if sent_splited.__contains__(x):
+                sent_sentiment =analyze_sentiment(TextBlob(line))
+                print line+'.'+' '+'<'+em[x]+'>'+' '+'<'+sent_sentiment+'>'
+                # print line+'.'+' '+'<'+em[x]+'>'
 #
 
 # import numpy as np

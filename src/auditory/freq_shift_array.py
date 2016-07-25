@@ -26,8 +26,11 @@ def create_fear_inflection_array(freq_chunks,chunk_size):
         freq_shift_arr.append([])
         cntTwo = 0
         for freq_chunk in freq_region:
-            b = 0.1
-            a = float(-b)/float(no_of_freq_chunks-1)
+            b = 0.08
+            if no_of_freq_chunks != 1:
+                a = float(-b)/float(no_of_freq_chunks-1)
+            else:
+                a = 0
             shift_amt = (float(a)*float(cntTwo)) + float(b)
             # print shift_amt
             freqShiftFactor = numpy.sin(fctr*cntTwo) * shift_amt
@@ -56,19 +59,19 @@ def create_happiness_inflection_array(freq_chunks):
             if cntTwo < no_l_h_l:
                 b = 0.9
                 if no_l_h_l != 1:
-                    a = float(1.1- b)/float(no_l_h_l-1)
+                    a = float(1.15- b)/float(no_l_h_l-1)
                 else:
                     a = 0
                 freqShiftFactor = (float(a)*float(cntTwo)) + float(b)
             elif cntTwo > no_l_h_l + no_h:
-                b = 1.12
+                b = 1.15
                 if no_l_h_l != 1:
-                    a = float(1.1- b)/float(no_l_h_l-1)
+                    a = float(1.15- b)/float(no_l_h_l-1)
                 else:
                     a = 0
                 freqShiftFactor = (float(a)*float(cntTwo)) + float(b)
             else:
-                freqShiftFactor = 1.12
+                freqShiftFactor = 1.15
             freq_shift_arr[cnt].append(freqShiftFactor)
             cntTwo = cntTwo + 1
         cnt = cnt + 1

@@ -10,7 +10,7 @@ import subprocess
 from ems import em
 
 def marytts_server():
-    subprocess.call(['/home/zelalem/marytts-5.0/bin/marytts-server.sh'])
+    subprocess.call(['C:/Users/rediet/Documents/HEADrediet/src/auditory/libs/marytts-5.0/bin/marytts-server.bat'])
 
 class maryclient:
 
@@ -121,91 +121,14 @@ class maryclient:
                 response.reason))
         return response.read()
 
-#
-# pulseaudio / playback stuff
-#
-
-pa = ctypes.cdll.LoadLibrary('libpulse-simple.so.0')
- 
-PA_STREAM_PLAYBACK = 1
-PA_SAMPLE_S16LE = 3
-BUFFSIZE = 1024
-
-class struct_pa_sample_spec(ctypes.Structure):
-    __slots__ = [
-        'format',
-        'rate',
-        'channels',
-    ]
- 
-struct_pa_sample_spec._fields_ = [
-    ('format', ctypes.c_int),
-    ('rate', ctypes.c_uint32),
-    ('channels', ctypes.c_uint8),
-]
-pa_sample_spec = struct_pa_sample_spec  # /usr/include/pulse/sample.h:174
-
-class pulseplayer:
-        def __init__(self, name):
-                self.name = name
-
-        def play(self, a_sound):
-
-                buf = StringIO.StringIO(a_sound)
-                
-                wf = wave.open(buf, 'rb')
-
-        	ss = struct_pa_sample_spec()
-	        ss.rate = wf.getframerate()
-        	ss.channels = wf.getnchannels()
-	        ss.format = PA_SAMPLE_S16LE
-        	error = ctypes.c_int(0)
-	
-        	s = pa.pa_simple_new(
-	            None,                # Default server.
-        	    self.name,           # Application's name.
-	            PA_STREAM_PLAYBACK,  # Stream for playback.
-        	    None,                # Default device.
-	            'playback',          # Stream's description.
-        	    ctypes.byref(ss),    # Sample format.
-	            None,                # Default channel map.
-        	    None,                # Default buffering attributes.
-	            ctypes.byref(error)  # Ignore error code.
-        	)
-        	if not s:
-	            raise Exception('Could not create pulse audio stream: {0}!'.format(
-	                pa.strerror(ctypes.byref(error))))
-
-		while True:
-		    #latency = pa.pa_simple_get_latency(s, error)
-		    #if latency == -1:
-		    #    raise Exception('Getting latency failed!')
-		
-		    #print('{0} usec'.format(latency))
-		
-		    # Reading frames and writing to the stream.
-		    buf = wf.readframes(BUFFSIZE)
-		    if buf == '':
-		        break
-		
-		    if pa.pa_simple_write(s, buf, len(buf), error):
-		        raise Exception('Could not play file!')
-		
-		wf.close()
-		
-		# Waiting for all sent data to finish playing.
-		if pa.pa_simple_drain(s, error):
-		    raise Exception('Could not simple drain!')
-		
-		# Freeing resources and closing connection.
-		pa.pa_simple_free(s)
-
 if __name__ == "__main__":
 
     t = threading.Thread(target = marytts_server)
     t.start()
+    import time
+    time.sleep(5)
+    #marytts_server()
     client = maryclient()
-
     client.set_locale ("en_US")
     #client.set_locale ("de")
     # english, male
@@ -213,24 +136,87 @@ if __name__ == "__main__":
     #client.set_voice ("dfki-obadiah")
     # client.set_voice ("dfki-obadiah-hsmm")
     #client.set_voice ("cmu-bdl-hsmm")
-    #client.set_voice ("cmu-rms-hsmm")
-        # english, female
-    #client.set_voice ("dfki-poppy")
+    # client.set_voice ("cmu-rms-hsmm")
+    #english, female
+    # client.set_voice ("dfki-poppy")
     #client.set_voice ("dfki-poppy-hsmm")
     #client.set_voice ("dfki-prudence")
     # client.set_voice ("dfki-prudence-hsmm")
     client.set_voice ("cmu-slt-hsmm")
+    filename = "C:/Users/rediet/Documents/Vocie-samples/maryTTS.wav"
+    f = open('C:/Users/rediet/Documents/Vocie-samples/readTTS.txt')
 
-f = open('/home/zelalem/sample_emotion.txt')
+    for line in iter(f):
+        line = line.strip('\n').lower()
+        line = line.strip('.').lower()
 
-for line in iter(f):
-    line = line.strip('\n').lower()
-    line = line.strip('.').lower()
-    print line
 
     the_sound = client.generate(line)
-            #the_sound = client.generate("Der Atomkern ist der, im Vergleich zur Atomhülle, winzig kleine Kern des Atoms.")
+    buf = StringIO.StringIO(the_sound)
+    print buf.len
+    wf = wave.open(buf, 'rb')
+    print wf.getnframes()
+    print wf.getframerate()
+    print wf.getparams()
+    print wf.getnchannels()
+    print wf.getsampwidth()
+    BUFFSIZE = 2
+    g = 2.2
+    import sys
+    print sys.byteorder
+    # print sys.getsizeof(BUFFSIZE)
+    # print sys.getsizeof(g)
+    snd_array = []
+    for i in range(0,wf.getnframes()):
+        import struct
+        buf = wf.readframes(1)
 
-    player = pulseplayer("HAL 9000")
-    player.play(the_sound)
+        v = buf[0] + buf[1]
+        val = struct.unpack('<h', v)[0]
+        snd_array.append(val)
+        # print str(int_no) + " " + str(buf) + " " + str(list(buf))
+        # print str(ord(buf[0])) + " " + str(i) + " " + str(ord(buf[1]))
+
+
+    # import struct
+    # print struct.unpack("<H", buf)
+    from scipy.io import wavfile
+    import numpy
+    import voiced_unvoiced as voi
+    import EmotiveSpeech as ES
+
+    # x = numpy.array(map(ord, list(buf)))
+    # y = map(numpy.int16,x)
+    # print x[0:10000].tolist()
+    # print snd_array
+    snd_array  = voi.make_two_channels(snd_array)
+    sep = filename.split("/")
+    name = sep[len(sep)-1].split(".")[0]
+    import Emotion_Extraction as ee
+    from textblob import TextBlob
+    # emotionType = "Neutral"
+    from ems import em
+    emotionType = "Neutral"
+    f = open('C:/Users/rediet/Documents/Vocie-samples/readTTS.txt')
+    for line in iter(f):
+
+        line = line.strip('\n').lower()
+        line = line.strip('.').lower()
+        sent_splited = line.split(' ')
+        for x in em:
+
+            # print str(sent_splited) + " " + str(sent_splited.__contains__(x)) + " " + str(x)
+            if sent_splited.__contains__(x):
+                sent_sentiment =ee.analyze_sentiment(TextBlob(line))
+                emotionType = em[x]
+                print line+'.'+' '+'<'+em[x]+'>'+' '+'<'+sent_sentiment+'>'
+                break
+
+    filenameChanged = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + str(emotionType) + ".wav"
+    wavfile.write(filenameChanged,44100,numpy.array(numpy.int16(snd_array)))
+    ES.emotiveSpeech(filenameChanged,str(emotionType))
+
+    # import winsound
+    # winsound.PlaySound(the_sound,winsound.SND_MEMORY)
+
 

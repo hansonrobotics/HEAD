@@ -224,7 +224,7 @@ def inflection_happy(sndarray,voiced_regions_info, inflection_duration, fs,chunk
     return new_sndarray
 
 #inflects the pitch according to DAVID- uses an inflection array to do so
-def inflection_happy_two(sndarray,voiced_regions_info, inflection_duration, fs,chunk_size):
+def inflection_happy_two(sndarray,voiced_regions_info,inflection_duration, fs,chunk_size):
     new_sndarray = []
 
     duration_to_samps = float(inflection_duration) * float(fs)
@@ -234,7 +234,8 @@ def inflection_happy_two(sndarray,voiced_regions_info, inflection_duration, fs,c
     # print "no_of_freq_chunks " + str(no_of_freq_chunks)
     for i in sndarray:
         new_sndarray.append(i)
-
+    sTimeAll = time.time()
+    time_taken = 0
     for i in range(0,len(voiced_regions_info)):
         len_vr = voiced_regions_info[i][1] - voiced_regions_info[i][0] + 1
         vr_start = 0
@@ -244,16 +245,25 @@ def inflection_happy_two(sndarray,voiced_regions_info, inflection_duration, fs,c
         # duration = float(vr_end-vr_start+1)/float(fs)
         voiced_regions = []
         voiced_regions.append([vr_start,vr_end])
-
+        sTime = time.time()
         snd_arr = new_sndarray[voiced_regions_info[i][0]:vr_end+ voiced_regions_info[i][0] + 1]
 
         f0 = voi.get_freq_array(snd_arr,fs,chunk_size)
+        # f_start = voiced_regions_info[i][0]/chunk_size
+        # f_end = (vr_end + voiced_regions_info[i][0])/chunk_size
+        # f_arr = f[f_start:f_end+1]
+        # print "f0 " + str(f0)
+        # print "f_arr!! " + str(f_arr)
 
         pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(snd_arr,f0,voiced_regions,chunk_size, "voiced")
         best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(snd_arr,voiced_region_freq_chunk_windows_pitch_marks_obj)
+        # eTime = time.time()
+        # print "time taken by pmfs and pmss is " + str(eTime - sTime)
+
         best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
         freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
 
+        # sTime = time.time()
         freq_shift_arr = fsa.create_happiness_inflection_array(freq_chunks_info)
         # print freq_shift_arr
         # print len(freq_shift_arr[0])
@@ -262,6 +272,102 @@ def inflection_happy_two(sndarray,voiced_regions_info, inflection_duration, fs,c
         # print best_pitch_marks_info
         # print len(best_pitch_marks_info[0])
         new_snd = psola.freq_shift_using_td_psola_newest(snd_arr,voiced_regions,best_pitch_marks_info,freq_shift_arr)
+
+
+        new_sndTwo= []
+        for k in new_snd:
+            new_sndTwo.append(numpy.int16(k))
+
+
+        # print "i " + str(i) + " " + str(voiced_regions_info) + " " + str(len(voiced_regions_info))
+        # print "len new sndtwo " + str(len(new_sndTwo)/chunk_size)
+        start = voiced_regions_info[i][0]
+        # print "m plus start " + str(len(new_sndTwo)+start)
+        for m in range(0,len(new_sndTwo)):
+            new_sndarray[m+start] = new_sndTwo[m]
+        eTime = time.time()
+        time_taken = time_taken + (eTime - sTime)
+        print "time taken by psola in inflection happy two is " + str(eTime - sTime)
+    eTime = time.time()
+    print "time taken by inflection happy two for loop is " + str(eTime-sTimeAll)
+    print "time taken by inflection happy two for loop is " + str(time_taken)
+    return new_sndarray
+
+def inflection_happy_newest(sndarray,voiced_regions_info, f0, inflection_duration, fs,chunk_size):
+    new_sndarray = []
+
+    duration_to_samps = float(inflection_duration) * float(fs)
+    no_of_freq_chunks = int(numpy.floor(duration_to_samps/chunk_size))
+
+    # print "duration_to_samps " + str(duration_to_samps)
+    # print "no_of_freq_chunks " + str(no_of_freq_chunks)
+    for i in sndarray:
+        new_sndarray.append(i)
+    sTime = time.time()
+    pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(sndarray,f0,voiced_regions_info,chunk_size, "voiced")
+    eTime = time.time()
+    print "time taken by pmfs  is " + str(eTime - sTime)
+    sTime = time.time()
+    best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(sndarray,voiced_region_freq_chunk_windows_pitch_marks_obj)
+    eTime = time.time()
+    print "time taken by pmss is " + str(eTime - sTime)
+    sTimeAll = time.time()
+    for i in range(0,len(voiced_regions_info)):
+        len_vr = voiced_regions_info[i][1] - voiced_regions_info[i][0] + 1
+        vr_start = 0
+        vr_end = (no_of_freq_chunks * chunk_size) - 1
+        if vr_end >= len_vr:
+            vr_end = len_vr - 1
+            no_of_freq_chunks =  int(numpy.floor(vr_end-vr_start/chunk_size))
+        # duration = float(vr_end-vr_start+1)/float(fs)
+        voiced_regions = []
+        voiced_regions.append([vr_start,vr_end])
+
+        snd_arr = new_sndarray[voiced_regions_info[i][0]:vr_end+ voiced_regions_info[i][0] + 1]
+        # print best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"][i][0:no_of_freq_chunks]
+
+        sTime = time.time()
+        best_pitch_marks_info = []
+        cnt = 0
+        for p_mark_freq_chunk in best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"][i][0:no_of_freq_chunks]:
+            best_pitch_marks_info.append([])
+            for p_mark in p_mark_freq_chunk:
+                best_pitch_marks_info[cnt].append(p_mark - voiced_regions_info[i][0])
+            cnt = cnt + 1
+        freq_chunks_info = []
+        cnt = 0
+        for freq_chunk in best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"][i][0:no_of_freq_chunks]:
+            freq_chunks_info.append([])
+            for freq_chunk_s_e in freq_chunk:
+                freq_chunks_info[cnt].append(freq_chunk_s_e - voiced_regions_info[i][0])
+            cnt = cnt + 1
+
+        # eTime = time.time()
+        # print "time taken by the two for loops is " + str(eTime-sTime)
+
+
+        # best_pitch_marks_sub = numpy.abs(numpy.asarray(best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"][i][0:no_of_freq_chunks])-voiced_regions_info[i][0])
+        best_pitch_marks_info = [best_pitch_marks_info]
+        freq_chunks_info = [freq_chunks_info]
+
+        # print "best_pitch_marks_info " + str(best_pitch_marks_info)
+        # print "freq_chunks_info" + str(freq_chunks_info)
+        # print voiced_regions_info
+        # if i < 12:
+        #    continue
+        # else:
+        #     break
+        # sTime = time.time()
+        freq_shift_arr = fsa.create_happiness_inflection_array(freq_chunks_info)
+        # print freq_shift_arr
+        # print len(freq_shift_arr[0])
+        # print len(snd_arr)
+        # print voiced_regions
+        # print best_pitch_marks_info
+        # print len(best_pitch_marks_info[0])
+        new_snd = psola.freq_shift_using_td_psola_newest(snd_arr,voiced_regions,best_pitch_marks_info,freq_shift_arr)
+        eTime = time.time()
+        print "time taken by td psola and two for loops is " + str(eTime-sTime)
 
         new_sndTwo= []
         for k in new_snd:
@@ -273,8 +379,75 @@ def inflection_happy_two(sndarray,voiced_regions_info, inflection_duration, fs,c
         # print "m plus start " + str(len(new_sndTwo)+start)
         for m in range(0,len(new_sndTwo)):
             new_sndarray[m+start] = new_sndTwo[m]
+    eTime = time.time()
+    print "time taken by for loop is " + str(eTime - sTimeAll)
     return new_sndarray
 
+def inflection_happy_newest_two(sndarray,voiced_regions_info,f0, inflection_duration, fs,chunk_size):
+    new_sndarray = []
+
+    duration_to_samps = float(inflection_duration) * float(fs)
+    no_of_freq_chunks = int(numpy.floor(duration_to_samps/chunk_size))
+
+    # print "duration_to_samps " + str(duration_to_samps)
+    # print "no_of_freq_chunks " + str(no_of_freq_chunks)
+    for i in sndarray:
+        new_sndarray.append(i)
+    sTimeAll = time.time()
+    time_taken = 0
+    for i in range(0,len(voiced_regions_info)):
+        len_vr = voiced_regions_info[i][1] - voiced_regions_info[i][0] + 1
+        vr_start = 0
+        vr_end = (no_of_freq_chunks * chunk_size) - 1
+        if vr_end >= len_vr:
+            vr_end = len_vr - 1
+        # duration = float(vr_end-vr_start+1)/float(fs)
+        voiced_regions = []
+        voiced_regions.append([vr_start,vr_end])
+        sTime = time.time()
+        snd_arr = new_sndarray[voiced_regions_info[i][0]:vr_end+ voiced_regions_info[i][0] + 1]
+        # f0 = voi.get_freq_array(snd_arr,fs,chunk_size)
+        f_start = voiced_regions_info[i][0]/chunk_size
+        f_end = (vr_end + voiced_regions_info[i][0])/chunk_size
+        f_arr = f0[f_start:f_end+1]
+
+
+        pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj = pmfs.get_pitch_marks_regions(snd_arr,f_arr,voiced_regions,chunk_size, "voiced")
+        best_voiced_region_freq_chunk_windows_pitch_marks_obj = pmss.optimal_accumulated_log_probability(snd_arr,voiced_region_freq_chunk_windows_pitch_marks_obj)
+        # eTime = time.time()
+        # print "time taken by pmfs and pmss is " + str(eTime - sTime)
+
+        best_pitch_marks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["best_pitch_marks"]
+        freq_chunks_info = best_voiced_region_freq_chunk_windows_pitch_marks_obj["freq_chunks"]
+
+        # sTime = time.time()
+        freq_shift_arr = fsa.create_happiness_inflection_array(freq_chunks_info)
+        # print freq_shift_arr
+        # print len(freq_shift_arr[0])
+        # print len(snd_arr)
+        # print voiced_regions
+        # print best_pitch_marks_info
+        # print len(best_pitch_marks_info[0])
+        new_snd = psola.freq_shift_using_td_psola_newest(snd_arr,voiced_regions,best_pitch_marks_info,freq_shift_arr)
+
+
+        new_sndTwo= []
+        for k in new_snd:
+            new_sndTwo.append(numpy.int16(k))
+
+
+        # print "i " + str(i) + " " + str(voiced_regions_info) + " " + str(len(voiced_regions_info))
+        # print "len new sndtwo " + str(len(new_sndTwo)/chunk_size)
+        start = voiced_regions_info[i][0]
+        # print "m plus start " + str(len(new_sndTwo)+start)
+        for m in range(0,len(new_sndTwo)):
+            new_sndarray[m+start] = new_sndTwo[m]
+        eTime = time.time()
+        time_taken = time_taken + (eTime - sTime)
+        # print "time taken by psola in inflection happy two is " + str(eTime - sTime)
+    eTime = time.time()
+    # print "time taken by inflection happy two for loop is " + str(eTime-sTimeAll)
+    return new_sndarray
 #inflects the pitch according to DAVID- uses an inflection array to do so
 def inflection_fear(sndarray,voiced_regions_info, inflection_duration, fs,chunk_size):
     new_sndarray = []
@@ -320,37 +493,37 @@ def inflection_fear(sndarray,voiced_regions_info, inflection_duration, fs,chunk_
         for m in range(0,len(new_sndTwo)):
             new_sndarray[m+start] = new_sndTwo[m]
     return new_sndarray
-    return
 if __name__ == "__main__":
     filename= "C:/Users/rediet/Documents/Vocie-samples/salli.wav"
     filenameInflection = "C:/Users/rediet/Documents/Vocie-samples/emmaInflection.wav"
     filenameInflectionAverage = "C:/Users/rediet/Documents/Vocie-samples/kendraInflectionAverage.wav"
     filenameInflectionHappy = "C:/Users/rediet/Documents/Vocie-samples/kendraInflectionHappy.wav"
 
-
+    sTime = time.time()
     fs, x = wavfile.read(filename)
-    y = numpy.arange(0,len(x),1)
     x = voi.get_one_channel_array(x)
     chunk_size = 1024
 
-    # voi.plot(y,x,len(x),"signal amplitude")
-
-    vSig = voi.get_signal_voiced_unvoiced_starting_info(x,fs,chunk_size)
+    f0 = voi.get_freq_array(x,fs,chunk_size)
+    vSig = voi.get_signal_voiced_unvoiced_starting_info(x,f0, fs,chunk_size)
     lengthVoiced = voi.get_signal_voiced_length_info(x,vSig)
-    # lengthUnvoiced = voi.get_signal_unvoiced_length_info(x,vSig)
-
     voiced_regions = voi.get_voiced_region_chunks(vSig,lengthVoiced)
+    eTime = time.time()
+    print "time taken by get freq array for inflection " + str(eTime-sTime)
 
-    new_snd = inflection_two(x,voiced_regions,0.5,fs,chunk_size)
-    new_snd_new = []
-    cnt = 0
-    for i in new_snd:
-        # print str(cnt) + " " + str(len(new_snd))
-        new_snd_new.append(numpy.int16(i))
-        if cnt == len(new_snd)-1:
-            break
-        cnt = cnt + 1
-    wavfile.write(filenameInflection,fs,numpy.array(new_snd_new))
+    sTime = time.time()
+    new_snd = inflection_happy_newest_two(x,voiced_regions,f0,0.53,fs,chunk_size)
+    # new_snd_new = []
+    # cnt = 0
+    # for i in new_snd:
+    #     new_snd_new.append(numpy.int16(i))
+    #     if cnt == len(new_snd)-1:
+    #         break
+    #     cnt = cnt + 1
+    # eTime = time.time()
+    print "time taken by inflection happy two " + str(eTime-sTime)
+    voi.write_to_new_file(filenameInflection,numpy.asarray(new_snd))
+
 
 
 
