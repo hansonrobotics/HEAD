@@ -25,11 +25,13 @@ class TTSTalker:
         self.speech_active = rospy.Publisher('speech_events', String, queue_size=10)
         self.vis_topic = rospy.Publisher('/blender_api/queue_viseme', Viseme, queue_size=0)
         self.blink_publisher = rospy.Publisher('chatbot_blink', String, queue_size=1)
-        self.tts_api_config = rospy.get_param('tts_api_config', {'en': 'festival'})
         self.sound = SoundFile.SoundFile()
         self.tts_data = None
         self.interrupt = False
         rospy.Subscriber(tts_control, String, self.tts_control)
+
+    def _get_tts_api_config(self):
+        return rospy.get_param('tts_api_config', {'en': 'festival'})
 
     def tts_length(self, req):
         return TTSLengthResponse(1)
@@ -55,7 +57,9 @@ class TTSTalker:
 
     def _say(self, text, lang):
         logger.info('Say "{}" in {}'.format(text, lang))
-        api_name = self.tts_api_config.get(lang, None)
+        self.tts_data = None
+        tts_api_config = self._get_tts_api_config()
+        api_name = tts_api_config.get(lang, None)
         api = get_api(api_name)
         if api is None:
             logger.error("No TTS API")
