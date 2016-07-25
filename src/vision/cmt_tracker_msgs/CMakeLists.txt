@@ -53,6 +53,7 @@ find_package(catkin REQUIRED COMPONENTS
    Objects.msg
    Tracker.msg
    Trackers.msg
+   TrackerEvents.msg
  )
 
 ## Generate services in the 'srv' folder

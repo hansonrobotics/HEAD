@@ -1,0 +1,3 @@
+std_msgs/String face_event
+std_msgs/Int32 face_id
+std_msgs/String recognized_id

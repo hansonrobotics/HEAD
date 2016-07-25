@@ -7,6 +7,7 @@
 #include <cmt_tracker_msgs/Objects.h>
 #include <cmt_tracker_msgs/TrackedImages.h>
 #include <cmt_tracker_msgs/TrackerNames.h>
+#include <cmt_tracker_msgs/TrackerEvents.h>
 #include <cmt_tracker_msgs/MergeNames.h>
 //OpenCV libraries
 #include <opencv2/core/core.hpp>
@@ -27,9 +28,6 @@
 #include <cmt_tracker_msgs/Update.h>
 #include <cmt_tracker_msgs/Delete.h>
 #include <cmt_tracker_msgs/Reinitialize.h>
-#include <pi_face_tracker/Face.h>
-#include <pi_face_tracker/Faces.h>
-#include <pi_face_tracker/FaceEvent.h>
 #include <cmt_tracker_msgs/TrackerConfig.h>
 #include <dynamic_reconfigure/server.h>
 #include <std_srvs/Empty.h>
@@ -116,7 +114,7 @@ public:
 	//Rules
 	void deleteOnLost();
 
-    pi_face_tracker::Face filter_point(pi_face_tracker::Face f);
+
 
 
 private: 
@@ -140,6 +138,7 @@ private:
 
 	cmt_tracker_msgs::Tracker tracker_set;
 	cmt_tracker_msgs::Objects face_locs;
+	cmt_tracker_msgs::TrackerEvents face_events;
 
 	//This is a poor persons version of the results. Would need to be updated in the system mgoing forward.
 	cmt_tracker_msgs::Objects emo_locs;
@@ -175,8 +174,8 @@ private:
 	ros::Publisher tracker_results_temp;
 
 	ros::Publisher pi_vision_results; 
-	ros::Publisher pi_events; 
-    std::map<std::string,pi_face_tracker::Face> face_filtered;
+	ros::Publisher face_events_pub;
+
     std::map<std::string,std::string> pi_registry;
 	//Now this is face results; Moving to another function. 
 	ros::Subscriber face_results;
@@ -241,9 +240,7 @@ private:
 };
 namespace {
   cmt_tracker_msgs::Trackers convert(std::vector<cv::Rect> faces);
-  pi_face_tracker::Face returnPiMessage(cmt_tracker_msgs::Tracker loc, camera_properties camera_config); 
-  pi_face_tracker::Faces returnPiMessages(cmt_tracker_msgs::Trackers locs, camera_properties camera_config); 
-  pi_face_tracker::FaceEvent returnPiEvents(std::string event, std::string face_id);
+  geometry_msgs::Point return3DLocations(cmt_tracker_msgs::Tracker loc, camera_properties camera_config);
   cmt_tracker_msgs::Trackers returnOverlappingEmotion(cmt_tracker_msgs::Trackers locs, cmt_tracker_msgs::Objects facelocs);
   cmt_tracker_msgs::Trackers returnOverlappingPose(cmt_tracker_msgs::Trackers locs, cmt_tracker_msgs::Objects facelocs);
 }

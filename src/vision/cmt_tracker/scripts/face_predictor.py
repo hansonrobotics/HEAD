@@ -7,7 +7,7 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import message_filters
 
-from cmt_tracker_msgs.msg import Trackers,Tracker,Objects
+from cmt_tracker_msgs.msg import Trackers,Tracker,Objects,TrackerEvents
 from cmt_tracker_msgs.srv import TrackerNames
 from cmt_tracker_msgs.cfg import RecognitionConfig
 
@@ -15,7 +15,7 @@ from dynamic_reconfigure.server import Server
 
 from openface_wrapper import face_recognizer
 from image_scraper import image_scaper
-from pi_face_tracker.msg import FaceEvent
+
 class face_predictor:
     def __init__(self):
         rospy.init_node('face_recognizer', anonymous=True)
@@ -32,7 +32,7 @@ class face_predictor:
         self.image_dir = rospy.get_param("image_locations")
         self.face_recognizer = face_recognizer(self.openface_loc, self.image_dir)
         self.bridge = CvBridge()
-        self.event_pub = rospy.Publisher( self.face_event_topic, FaceEvent, queue_size=10 )
+        self.event_pub = rospy.Publisher( self.face_event_topic, TrackerEvents, queue_size=10 )
         self.image_sub = message_filters.Subscriber(self.camera_topic, Image)
         self.cmt_sub = message_filters.Subscriber('tracker_results',Trackers)
         self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
@@ -137,10 +137,10 @@ class face_predictor:
                         try:
                             self.upt = rospy.ServiceProxy('recognition', TrackerNames)
                             indication = self.upt(names=str(max_index), index=int(cmt.tracker_name.data))
-                            recognized_event = FaceEvent()
-                            recognized_event.face_event = "recognized_face"
-                            recognized_event.face_id = int(cmt.tracker_name.data)
-                            recognized_event.recognized_id = str(max_index)
+                            recognized_event = TrackerEvents()
+                            recognized_event.face_event.data = "recognized_face"
+                            recognized_event.face_id.data = int(cmt.tracker_name.data)
+                            recognized_event.recognized_id.data = str(max_index)
 
                             self.event_pub.publish(recognized_event)
 
@@ -151,10 +151,10 @@ class face_predictor:
                             self.logger.error("Service call failed: %s" % e)
 
                     else:
-                        recognized_event = FaceEvent()
-                        recognized_event.face_event = "recognized_face"
-                        recognized_event.face_id = int(cmt.tracker_name.data)
-                        recognized_event.recognized_id = str(0)
+                        recognized_event = TrackerEvents()
+                        recognized_event.face_event.data = "recognized_face"
+                        recognized_event.face_id.data = int(cmt.tracker_name.data)
+                        recognized_event.recognized_id.data = str(0)
 
                         self.event_pub.publish(recognized_event)
                         if not query_only:
