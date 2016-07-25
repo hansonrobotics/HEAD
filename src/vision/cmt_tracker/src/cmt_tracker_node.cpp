@@ -381,7 +381,7 @@ void TrackerCMT::set_tracker(const cmt_tracker_msgs::Tracker& tracker_location)
   cv::Mat im_gray = frame_gray.clone(); //To avoid change when being run.
   cv::Rect rect(tracker_location.object.object.x_offset, tracker_location.object.object.y_offset,
                       tracker_location.object.object.width, tracker_location.object.object.height);
-
+  rect = rect & cv::Rect(0, 0, im_gray.size().width, im_gray.size().height);
   if (!im_gray.empty() && rect.area() > 50)
   {
     std::string tracker_name = cmt_.addtomap(im_gray, rect);

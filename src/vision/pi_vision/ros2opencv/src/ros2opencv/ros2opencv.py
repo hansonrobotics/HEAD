@@ -31,8 +31,6 @@
       
 """
 
-import roslib
-roslib.load_manifest('ros2opencv')
 import rospy
 import cv
 import sys

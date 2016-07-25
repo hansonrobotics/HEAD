@@ -68,7 +68,7 @@
 
 <node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py"  output="screen" />
 <node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py"  output="screen" required="true"/>
-
+<node name="dynamic_reconfigure_load" pkg="dynamic_reconfigure" type="dynparam" output="screen" args="load face_recognizer $(find cmt_tracker)/params/recognize.yaml"/>
 <group unless="$(arg headless)">
 <node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"   respawn="true"/>
 </group>

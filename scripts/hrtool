@@ -9,7 +9,7 @@ set -e
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 HR_VERSION=0.1.0
 
-PROJECT=HEAD
+PROJECT=${PROJECT:-HEAD}
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
@@ -37,6 +37,7 @@ include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 include_path=$(printf "%s:" "${include_dirs[@]}")
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
 
+ASSUME_YES=0
 
 COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
@@ -323,18 +324,16 @@ install_marky_markov() {
 }
 
 check_or_create_ws() {
+    [[ ! -z $1 ]]
     if [[ -d $1 ]]; then
         export HR_WORKSPACE=$1
     else
-        if [[ $1 ]]; then
-            echo -n "The workspace $1 does not exist, create (Y/n)? "
-            read -e create
-            if [[ $create == "Y" || $create == "y" || $create == "" ]]; then
-                mkdir -p $1
-                echo "Workspace directory $1 is created"
-                export HR_WORKSPACE=$1
-            fi
-            unset create
+        local confirm
+        _get_confirm "The workspace ${1} does not exist, create? [y/N]"
+        if [[ ${confirm} -eq 1 ]]; then
+            mkdir -p ${1}
+            echo "Workspace directory ${1} is created"
+            export HR_WORKSPACE=${1}
         fi
     fi
 }
@@ -595,6 +594,10 @@ _get_rel_ws() {
 _get_confirm() {
     local message="${1:-Are you sure?}"
     local answer
+    if [ "$ASSUME_YES" -eq 1 ] ; then
+        confirm=1
+        return
+    fi
     printf '%s ' "$message"
     read -r answer
     ! printf '%s\n' "$answer" | grep -Eq "$(locale yesexpr)"
@@ -608,7 +611,7 @@ check_ws() {
     if [[ $rel_ws != $ws ]]; then
         local confirm
         warn "The workspace configured ${ws} doesn't match the your working path ${rel_ws}"
-        _get_confirm "Continue using ${ws}?"
+        _get_confirm "Continue using ${ws}? [y/N]"
         [[ ${confirm} -eq 1 ]] || exit 0
     fi
 }
@@ -636,12 +639,13 @@ Usage: $0 OPTION
 -h      Print this help.
 -s      Build a single package specified.
 -m      Migrate.
+-y      Assume yes to all queries and don't prompt.
 
 EOF
 }
 
 parse_opts() {
-    while getopts ":hw:igGbBuUvtpr:s:dcm" opt; do
+    while getopts ":hw:igGbBuUvtpr:s:dcmy" opt; do
         case $opt in
         h)
             show_help
@@ -663,6 +667,7 @@ parse_opts() {
         d) DEVELOPER_MODE=1 ;;
         c) CLEANUP=1 ;;
         m) MIGRATE=1 ;;
+        y) ASSUME_YES=1 ;;
         \?)
             error "Invalid option: -$OPTARG" >&2
             show_help
@@ -681,7 +686,16 @@ parse_opts() {
 set_ws() {
     if [[ -z $HR_WORKSPACE ]]; then
         if [[ -f $HR_ENVFILE_PATH ]]; then
-            eval $(cat $HR_ENVFILE_PATH|grep "export HR_WORKSPACE=")
+            local str=$(cat $HR_ENVFILE_PATH|grep "export HR_WORKSPACE=")
+            if [[ -z $str ]]; then
+                error "HR_WORKSPACE is not found in $HR_ENVFILE_PATH"
+                local confirm
+                _get_confirm "Do you want to reset to default ${DEFAULT_HR_WORKSPACE}? [y/N]"
+                [[ ${confirm} -eq 1 ]] || exit 0
+                HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
+            else
+                eval $str
+            fi
         else
             HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
         fi
