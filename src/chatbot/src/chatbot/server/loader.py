@@ -2,7 +2,7 @@ import os
 import sys
 import yaml
 import logging
-from server.character import AIMLCharacter, Character
+from chatbot.server.character import AIMLCharacter, Character
 from zipfile import ZipFile
 
 logger = logging.getLogger('hr.chatbot.loader')

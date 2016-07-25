@@ -7,12 +7,12 @@ import logging
 import os
 import random
 
-import SoundFile
 from std_msgs.msg import String
-from tts.srv import TTSLengthResponse
 from blender_api_msgs.msg import Viseme
 from common.visemes import BaseVisemes
-from ttsapi import get_api
+from tts.ttsapi import get_api
+from tts import SoundFile
+from tts.srv import TTSLengthResponse
 
 logger = logging.getLogger('hr.tts.tts_talker')
 

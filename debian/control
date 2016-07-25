@@ -1,0 +1,19 @@
+Source: head
+Section: devel
+Priority: optional
+Maintainer: Wenwei Huang <dut.hww@gmail.com>
+Build-Depends: debhelper (>= 9), python-catkin-tools (>= 0.4.2)
+Standards-Version: 3.9.4
+Homepage: https://github.com/hansonrobotics/HEAD
+
+Package: head
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Hanson Environment for Application Development
+  This repository contains the integrated code for controlling and interacting with many Hanson Robotics robot heads. It includes the full performance pipeline and infrastructure:
+    - Perception, via ROS webcam nodes.
+    - Face detection, for seeing faces in the room.
+    - Blender robot model, for gracefully controlling facial expressions.
+    - Behavior tree, for scripting performaces.
+    - Motor control ROS nodes, for controlling the physical robot.
+ 

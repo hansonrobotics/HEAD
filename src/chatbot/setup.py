@@ -5,6 +5,6 @@ from distutils.core import setup
 
 setup(
     version='0.0.1',
-    packages=['aiml', 'server'],
+    packages=['chatbot', 'chatbot.server', 'chatbot.aiml'],
     package_dir={'': 'src'}
 )

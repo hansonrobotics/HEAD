@@ -3,18 +3,18 @@ import os
 import rospy
 import logging
 from chatbot.msg import ChatMessage
-from commands import MotionCommand, MathCommand, ForwardCommand
+from speech2command.commands import MotionCommand, MathCommand, ForwardCommand
 
 logger = logging.getLogger('hr.speech2command.speech2command')
 CWD = os.path.dirname(os.path.abspath(__file__))
 
 class Speech2Command(object):
 
-    def __init__(self):
+    def __init__(self, config):
         rospy.Subscriber('speech', ChatMessage, self.handle_speech)
         self.command_chain = [
-            MotionCommand('{}/motion_command_config.yaml'.format(CWD)),
-            MathCommand(), ForwardCommand('chatbot_speech')]
+            MotionCommand(config), MathCommand(),
+            ForwardCommand('chatbot_speech')]
 
     def handle_speech(self, msg):
         for command in self.command_chain:
@@ -28,6 +28,10 @@ class Speech2Command(object):
 
 if __name__ == '__main__':
     rospy.init_node('speech2command')
-    Speech2Command()
+    from rospkg import RosPack                                                    
+    rp = RosPack()                                                                
+    Speech2Command(
+        os.path.join(
+            rp.get_path('speech2command'), 'motion_command_config.yaml'))
     rospy.spin()
 

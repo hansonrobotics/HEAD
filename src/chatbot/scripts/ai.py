@@ -1,19 +1,17 @@
 #!/usr/bin/env python
 
-import aiml
 import rospy
 import os
 import logging
 import requests
 import json
+import time
 
-from polarity import Polarity
+from chatbot.polarity import Polarity
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
-import uuid
-import time
 
 logger = logging.getLogger('hr.chatbot.ai')
 VERSION = 'v1.1'
@@ -214,8 +212,10 @@ class Chatbot():
 if __name__ == '__main__':
   rospy.init_node('chatbot_en')
   bot = Chatbot()
-  current = os.path.dirname(os.path.realpath(__file__))
-  sent3_file = os.path.join(current, "../aiml/senticnet3.props.csv")
+  from rospkg import RosPack
+  rp = RosPack()
+  data_dir = os.path.join(rp.get_path('chatbot'), 'scripts/aiml')
+  sent3_file = os.path.join(data_dir, "senticnet3.props.csv")
   bot.polarity.load_sentiment_csv(sent3_file)
   Server(ChatbotConfig, bot.reconfig)
   rospy.spin()

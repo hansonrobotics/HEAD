@@ -1,5 +1,5 @@
 import os
-import aiml
+from chatbot.aiml import Kernel
 import logging
 
 logger = logging.getLogger('hr.chatbot.character')
@@ -40,7 +40,7 @@ class AIMLCharacter(Character):
 
     def __init__(self, id, name, level=99):
         super(AIMLCharacter, self).__init__(id, name, level)
-        self.kernel = aiml.Kernel()
+        self.kernel = Kernel()
         self.aiml_files = []
         self.kernel.verbose(True)
         self.current_topic = ''
