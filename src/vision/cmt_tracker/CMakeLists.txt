@@ -17,7 +17,6 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
   message_generation
   cmt_tracker_msgs
-  pi_face_tracker
   tf
   image_geometry
   std_srvs
