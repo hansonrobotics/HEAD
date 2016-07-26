@@ -3,19 +3,20 @@ from threading import Thread, Lock, Condition
 import Queue
 import rospy
 import logging
-import performances.srv as srv
 import json
+import time
+import rospkg
+import yaml
+import os
+
 from std_msgs.msg import String, Int32, Float32
 from chatbot.msg import ChatMessage
 from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
+from performances.nodes import Node
 from performances.msg import Event
-import time
-from nodes import Node
-import rospkg
-import yaml
-import os
+import performances.srv as srv
 
 logger = logging.getLogger('hr.performances')
 rospack = rospkg.RosPack()

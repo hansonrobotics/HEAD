@@ -9,4 +9,4 @@ weight:
 level:
     90
 aiml:
-    - ../../../aiml/futurist/*.aiml
+    - ../aiml/futurist/*.aiml

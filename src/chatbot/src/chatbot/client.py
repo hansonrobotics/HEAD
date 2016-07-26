@@ -8,7 +8,6 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 VERSION = 'v1.1'
-
 key='AAAAB3NzaC'
 
 class Client(cmd.Cmd, object):
@@ -300,8 +299,4 @@ Syntax: upload package
 
     def help_trace(self):
         self.stdout.write('Print the trace of last reponse\n')
-
-if __name__ == '__main__':
-    client = Client()
-    client.cmdloop()
 

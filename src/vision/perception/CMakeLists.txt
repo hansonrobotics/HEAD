@@ -140,6 +140,22 @@ include_directories(
 #   PATTERN ".svn" EXCLUDE
 # )
 
+install(PROGRAMS
+  nodes/faces_tf2_broadcaster.py
+  nodes/joint_state_publisher.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY
+  launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(FILES
+  description.urdf
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
 #   # myfile1
