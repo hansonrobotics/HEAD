@@ -53,7 +53,7 @@ class NMPT_SERVO:
 
   def face_event_cb(self, data):
     if data.face_event == self.EVENT_NEW_FACE:
-	print ("Controlling pkg: PyFace Tracker")
+	print ("Controlling pkg: Face Tracker")
 	self.GLOBAL_FLAG = 0
     elif data.face_event == self.EVENT_LOST_FACE:
         print ("Controlling pkg: Salience Detector")
