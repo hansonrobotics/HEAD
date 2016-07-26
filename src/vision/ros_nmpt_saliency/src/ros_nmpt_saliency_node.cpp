@@ -188,7 +188,7 @@ double getdegree(double x, double y)
                 flag=1;
                 Lturnaround = timel - degreeHandler[i][4];
                 delay = timel - degreeHandler[i][2] ;
-                defaultMax = 7.5 * Lturnaround;
+                defaultMax = 10.5 * Lturnaround; //considering the performance of core i7 machinew/ 2.34 ghz
                 /* How long the point identified as salient?  */
                 if  (Lturnaround < turn_around_time)
                 {
