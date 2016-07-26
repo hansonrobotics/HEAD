@@ -7,6 +7,8 @@ set port 17020
 set HR_WORKSPACE $::env(HR_WORKSPACE)
 set OC_AIML_FILE $::env(OC_AIML_FILE)
 set OC_LOG_LEVEL $::env(OC_LOG_LEVEL)
+set MARKY_MARKOV_DIR $::env(MARKY_MARKOV_DIR)
+set HR_MODELS $::env(HR_MODELS)
 
 spawn telnet $host $port
 
@@ -17,8 +19,15 @@ sleep 1
 send "(use-modules (opencog logger))\n"
 send "(cog-logger-set-level! \"$OC_LOG_LEVEL\")\n"
 
-# Load chat bot and aiml rules
+# Load chatbot
 send "(load \"$HR_WORKSPACE/opencog/opencog/opencog/nlp/chatbot-psi/main.scm\")\n"
+
+# Set up the random sentence generator
+send "(markov-setup \"$MARKY_MARKOV_DIR/bin\" \"$HR_MODELS/markov_modeling\")\n"
+
+# Load the AIML rules and pickup lines
+send "(psi-halt)\n"
 send "(load \"$OC_AIML_FILE\")\n"
+send "(if (not (psi-running?)) (psi-run))\n"
 
 interact
