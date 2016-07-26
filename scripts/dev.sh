@@ -94,7 +94,9 @@ tmux new-window -n 'webui' "python $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/__
 python $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/__init__.py -p 8000; $SHELL"
 
 tmux new-window -n 'blender' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/blender_api && blender -y Sophia.blend -P autostart.py; $SHELL"
-tmux new-window -n 'chat_server' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/chatbot/src/server && python run.py; $SHELL"
+if [[ $OC_CHATBOT != 1 ]]; then
+    tmux new-window -n 'chat_server' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/chatbot/scripts && python run_server.py; $SHELL"
+fi
 tmux new-window -n 'marytts' "~/.hr/tts/marytts/marytts-5.1.2/bin/marytts-server; $SHELL"
 
 # btree needs blender to be ready
