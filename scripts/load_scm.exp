@@ -26,6 +26,8 @@ send "(load \"$HR_WORKSPACE/opencog/opencog/opencog/nlp/chatbot-psi/main.scm\")\
 send "(markov-setup \"$MARKY_MARKOV_DIR/bin\" \"$HR_MODELS/markov_modeling\")\n"
 
 # Load the AIML rules and pickup lines
+send "(psi-halt)\n"
 send "(load \"$OC_AIML_FILE\")\n"
+send "(if (not (psi-running?)) (psi-run))\n"
 
 interact
