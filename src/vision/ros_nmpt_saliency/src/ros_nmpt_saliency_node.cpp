@@ -84,8 +84,9 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         degree = getdegree(pt.x, pt.y);
 
 
-        /* for the purpose of visualizing points above degree 7 */
-        /* use it for debug mode only */
+        /* for the purpose of visualizing points above degree 7
+        green for degree >=7 features, yellow for degree <7 and >=4 ...
+         */
         double realx = 320*pt.x;
         double realy = 240*pt.y;
 
@@ -115,71 +116,6 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         }
 }
 
-int main(int argc, char **argv)
-   {
-        ros::init(argc, argv, "image_listener");
-        ros::NodeHandle nh;
-        nh.getParam("debug",debug_mode);
-        if (debug_mode) cvNamedWindow("view");
-        cvStartWindowThread();
-        image_transport::ImageTransport it(nh);
-
-        image_transport::Subscriber sub = it.subscribe("/camera/image_raw", 1, imageCallback);
-        pub = nh.advertise<ros_nmpt_saliency::targets>("/nmpt_saliency_point", 50);
-
-        salientSpot.setTrackerTarget(lqrpt);
-        bt.blockRestart(1);
-
-        ros::spin();
-   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Put this function under some  Header */
 /* Declared the following variables to handle the flow of degree calculation */
@@ -187,7 +123,7 @@ double L,R, T,B; //Bounding Box
 double timel =0.0; //Current Time Handler
 int counter = 0; //Keeps Track of Newly Identified Salient Point
 vector< vector<double> > degreeHandler(10000, vector<double>(5,0)); //Salient Points
-double passDeg, defaultMax; // holds random degree value during init
+double DegreeVal, defaultMax; // holds random degree value during init
 double turn_around_time=1;
 
 /* This method computes the degree of salient points identified through time.
@@ -203,7 +139,7 @@ double getdegree(double x, double y)
     int flag=0; //for the purpose of switchin to "Add as unique salient point mode"
     double delay; // interval between the last change at a point and now
     double Lturnaround; // time to trigger reconfiguration per each salient point
-    double passDeg; // to store/pass the final degree value
+    double DegreeVal; // to store/pass the final degree value
 
     /* .
     Take Degree one along w/ points as newly coming salient point if it is first time func. call
@@ -214,7 +150,7 @@ double getdegree(double x, double y)
         degreeHandler[counter][1]=y;
         degreeHandler[counter][2]=timel;
 
-        passDeg = degreeHandler[counter][3] = 1;
+        DegreeVal = degreeHandler[counter][3] = 1;
         // Reference for Turn_Around
         degreeHandler[counter][4] = timel;
         degreeHandler[counter][5]=timel;
@@ -233,7 +169,7 @@ double getdegree(double x, double y)
             //27 X 21 Pixel Bounding box
          L=degreeHandler[i][0]- 0.09; R=degreeHandler[i][0]+ 0.09;
          T=degreeHandler[i][1]- 0.09; B=degreeHandler[i][1]+ 0.09;
-       /* //max degree check up
+       /* //max degree checking point
             L=degreeHandler[i][0]- 1.0; R=degreeHandler[i][0]+ 1.0;
             T=degreeHandler[i][1]- 1.0; B=degreeHandler[i][1]+ 1.0;
        */
@@ -257,13 +193,13 @@ double getdegree(double x, double y)
                 if  (Lturnaround < turn_around_time)
                 {
                     /* add the naromalized salience value (will be one if it has high freq. of occurance)*/
-                    passDeg = (degreeHandler[i][3] += (0.02/delay))* Lturnaround;// maximum possible freq. in time.
+                    DegreeVal = (degreeHandler[i][3] += (0.02/delay))* Lturnaround;// maximum possible freq. in time.
 
                  }
                 else
                 {
 
-                    passDeg=degreeHandler[i][3] =1;
+                    DegreeVal=degreeHandler[i][3] =1;
                     degreeHandler[i][4] = timel;
                 }
                 degreeHandler[i][2] = timel;
@@ -280,7 +216,7 @@ double getdegree(double x, double y)
             degreeHandler[counter][1]=y;
             delay = timel - degreeHandler[counter][2];
             degreeHandler[counter][2]=timel;
-            passDeg = degreeHandler[counter][3]=0.1;
+            DegreeVal = degreeHandler[counter][3]=0.1;
             degreeHandler[counter][4] = timel;
             degreeHandler[counter][5]=timel;
             ++counter;
@@ -290,8 +226,28 @@ double getdegree(double x, double y)
 
     /* put the number in between 1 and 10 */
 
-    int roundD =  ((passDeg*10)/defaultMax) + 0.5;
-    //cout<<"Degree Raw: "<<passDeg<<" Degree Tenth  "<<roundD<<" Possible Raw "<<Lturnaround * 7.5<<endl;
-    passDeg = roundD;
-    return passDeg;
+    int roundD =  ((DegreeVal*10)/defaultMax) + 0.5;
+    //cout<<"Degree Raw: "<<DegreeVal<<" Degree Tenth  "<<roundD<<" Possible Raw "<<Lturnaround * 7.5<<endl;
+    DegreeVal = roundD;
+    return DegreeVal;
 }
+
+
+
+int main(int argc, char **argv)
+   {
+        ros::init(argc, argv, "image_listener");
+        ros::NodeHandle nh;
+        nh.getParam("debug",debug_mode);
+        if (debug_mode) cvNamedWindow("view");
+        cvStartWindowThread();
+        image_transport::ImageTransport it(nh);
+
+        image_transport::Subscriber sub = it.subscribe("/camera/image_raw", 1, imageCallback);
+        pub = nh.advertise<ros_nmpt_saliency::targets>("/nmpt_saliency_point", 50);
+
+        salientSpot.setTrackerTarget(lqrpt);
+        bt.blockRestart(1);
+
+        ros::spin();
+   }
