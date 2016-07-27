@@ -191,7 +191,7 @@ double getdegree(double x, double y)
                 flag=1;
                 Lturnaround = timel - degreeHandler[i][4];
                 delay = timel - degreeHandler[i][2] ;
-                defaultMax = 9.5 * Lturnaround; //considering the performance of core i7 machinew/ 2.34 ghz and w/ pyface tracker : cmt take much resource so better to deduct the value
+                defaultMax = 10 * Lturnaround; //considering the performance of core i7 machinew/ 2.34 ghz and w/ pyface tracker : cmt take much resource so better to deduct the value
                 /* How long the point identified as salient?  */
                 if  (Lturnaround < turn_around_time)
                 {
