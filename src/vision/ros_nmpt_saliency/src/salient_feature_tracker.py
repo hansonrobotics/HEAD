@@ -17,7 +17,7 @@ class NMPT_SERVO:
     self.TOPIC_GAZE_TARGET = "/blender_api/set_gaze_target"
     self.TOPIC_SALIENT_POINT = "/nmpt_saliency_point"
     self.TOPIC_FACE_EVENT = "/camera/face_event"
-    self.TOPIC_FACE_LOC = "/camera/face_location"
+    self.TOPIC_FACE_LOC = "/camera/face_locations"
     
     self.EVENT_NEW_FACE = "new_face"
     self.EVENT_LOST_FACE = "lost_face"
@@ -47,7 +47,7 @@ class NMPT_SERVO:
         loc.y =(0.5 -loc.y)
     t.z = loc.y
 
-    if self.GLOBAL_FLAG and degree >=5: # Look to Certainly Determined Salient Point
+    if self.GLOBAL_FLAG and degree >=7: # Look to Certainly Determined Salient Point
         self.look_pub.publish(t)
         self.look_gaze.publish(t)
 

@@ -30,7 +30,8 @@ using namespace cv;
 	ros::Publisher pub;
 	geometry_msgs::Point pt;
 	bool debug_mode;
-        //degree calculator
+
+    /* will put this under  degree.h file */
 	double getdegree(double x, double y);//function declaration for degree of saliency
 
 
@@ -84,7 +85,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         degree = getdegree(pt.x, pt.y);
 
 
-        /* for the purpose of visualizing points above degree 7
+        /* for the purpose of visualizing points above degree 7:the most certain
         green for degree >=7 features, yellow for degree <7 and >=4 ...
          */
         double realx = 320*pt.x;
@@ -93,6 +94,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         if(degree >= 7) {       circle(vizRect,cvPoint(realx,realy),5,CV_RGB(0,255,0),-1);        }
         else if(degree >= 4) {       circle(vizRect,cvPoint(realx,realy),5,CV_RGB(128,128,0),-1);        }
         else {       circle(vizRect,cvPoint(realx,realy),5,CV_RGB(255,0,0),-1);        }
+
+        //end: discard me
 
         ros_nmpt_saliency::targets trg;
         trg.positions.push_back(pt);
@@ -117,9 +120,9 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 }
 
 
-/* Put this function under some  Header */
-/* Declared the following variables to handle the flow of degree calculation */
-double L,R, T,B; //Bounding Box
+
+/* Declared the following variables to handle the values in the degree calculation */
+double L,R, T,B; //Bounding Box: point relativeness
 double timel =0.0; //Current Time Handler
 int counter = 0; //Keeps Track of Newly Identified Salient Point
 vector< vector<double> > degreeHandler(10000, vector<double>(5,0)); //Salient Points
@@ -131,7 +134,7 @@ double turn_around_time=1;
 - The maximum possible freq. per t is used to normzlie the frequency.
 - Freq. Values are further normalized b/n 1 and 10 w/ the intetion of putting their degree.
 */
-
+/* put this under degree.cpp and include degree.h here*/
 double getdegree(double x, double y)
 {
     /*   */
@@ -188,7 +191,7 @@ double getdegree(double x, double y)
                 flag=1;
                 Lturnaround = timel - degreeHandler[i][4];
                 delay = timel - degreeHandler[i][2] ;
-                defaultMax = 4.5 * Lturnaround; //considering the performance of core i7 machinew/ 2.34 ghz and w/ pyface tracker : cmt take much resource so better to deduct the value
+                defaultMax = 9.5 * Lturnaround; //considering the performance of core i7 machinew/ 2.34 ghz and w/ pyface tracker : cmt take much resource so better to deduct the value
                 /* How long the point identified as salient?  */
                 if  (Lturnaround < turn_around_time)
                 {
