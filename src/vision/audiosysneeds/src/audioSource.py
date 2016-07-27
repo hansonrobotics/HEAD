@@ -58,7 +58,7 @@ if __name__ == '__main__':
         Vsource = rospy.Publisher('/opencog/AudioFeature', String, queue_size=1)
         Vchange = rospy.Publisher('/opencog/suddenchange', String, queue_size=1)
         rospy.init_node('AudioFeature', anonymous=True)
-        rate = rospy.Rate(10)
+        rate = rospy.Rate(5)
 
         loop = 0
         global loop
