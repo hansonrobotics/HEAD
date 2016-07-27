@@ -3,8 +3,7 @@
 <param name="debug" value="True"/>
 <node pkg="ros_nmpt_saliency" name="ros_nmpt_saliency_node" type="ros_nmpt_saliency_node" output="screen" />
 
-<!-- uncomment me for auto- salient feature tracking
 <node pkg="ros_nmpt_saliency" name="salient_feature_tracker" type="salient_feature_tracker.py" output="screen" />
 
--->
+
 </launch>
