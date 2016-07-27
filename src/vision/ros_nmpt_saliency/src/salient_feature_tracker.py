@@ -65,7 +65,7 @@ class NMPT_SERVO:
     self.FACES = 0
     for face in data.faces:
     	self.FACES = self.FACES +1
-    print self.FACES
+    #print self.FACES
     	
 
 if __name__ == '__main__':
