@@ -79,7 +79,9 @@ timertype BlockTimer::getCurrentTimeInMicroseconds() {
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
 	timertype numdays = timeinfo->tm_yday + 365*timeinfo->tm_year + (timeinfo->tm_year)/4; 
-	timertype microsecondsPerDay = 86400000000; 
+	// microsecondsPerDay is long long type variable which could handle upto 19 digit no. 
+        // solved the overflow issue by replacing it with the product/final value ;-)
+        timertype microsecondsPerDay = 86400000000; 
 	now += numdays*microsecondsPerDay; 	
 	
     return now; 
