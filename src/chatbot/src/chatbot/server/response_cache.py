@@ -59,6 +59,9 @@ class ResponseCache(object):
         self.last_answer = answer
         self.last_time = time
 
+    def rate(self, rate, idx):
+        self.record[idx]['Rate'] = rate
+
     def contain(self, question, answer):
         question=self._norm(question)
         answer=self._norm(answer)
@@ -96,7 +99,7 @@ class ResponseCache(object):
         if not records_to_dump:
             logger.debug("Nothing to dump")
             return
-        header = ['Datetime', 'Question', 'Answer']
+        header = ['Datetime', 'Question', 'Answer', 'Rate']
         for k in records_to_dump[0].keys():
             if k not in header:
                 header.append(k)
