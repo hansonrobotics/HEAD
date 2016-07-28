@@ -6,7 +6,7 @@ This is a premature question-answering server. The goal is to provide a ROS inde
 The default port is 8001.
 
 ## Load Characters
-The default path of the characters is the current [characters](https://github.com/hansonrobotics/HEAD/tree/master/src/chatbot/src/server/characters) directory.
+The default path of the characters is the current [characters](https://github.com/hansonrobotics/HEAD/tree/master/src/chatbot/scripts/characters) directory.
 But you can overwrite it by setting the environment variable `HR_CHARACTER_PATH`. Use comma seperator. For example
 
 `$ HR_CHARACTER_PATH=/path/to/characters1:/path/to/characters2 python run.py`
@@ -49,7 +49,7 @@ aiml:
 ```
 
 ## Client for testing
-There is a client for testing purpose. It is called [client.py](https://github.com/hansonrobotics/HEAD/blob/master/src/chatbot/src/server/client.py).
+There is a client for testing purpose. It is called [client.py](https://github.com/hansonrobotics/HEAD/blob/master/src/chatbot/scripts/client.py).
 
 Run `$ python client.py`, then you can ask questions and get the answers. Type `help` for the usage.
 
