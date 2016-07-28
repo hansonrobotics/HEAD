@@ -192,6 +192,18 @@ def get_responding_characters(lang, sid):
 
     return responding_characters
 
+def rate_answer(sid, idx, rate):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        logger.error("Session doesn't exist")
+        return False
+    try:
+        sess.rate(rate, idx)
+    except Exception as ex:
+        logger.error("Rate error: {}".format(ex))
+        return False
+    return True
+
 def ask(question, lang, sid):
     """
     return (response dict, return code)

@@ -289,6 +289,9 @@ Syntax: upload package
             self.stdout.write('pong')
         self.stdout.write('\n')
 
+    def help_ping(self):
+        self.stdout.write('Ping the server\n')
+
     def do_trace(self, line):
         if self.last_response:
             trace = self.last_response.get('trace', None)
@@ -299,4 +302,43 @@ Syntax: upload package
 
     def help_trace(self):
         self.stdout.write('Print the trace of last reponse\n')
+
+    help_t = help_trace
+
+    def _rate(self, rate):
+        params = {
+            "session": self.session,
+            "rate": rate,
+            "index": -1,
+            "Auth": key
+        }
+        r = requests.get('{}/rate'.format(self.chatbot_url), params=params)
+        response = r.json().get('response')
+        return response
+
+    def do_gd(self, line):
+        self._rate('good')
+
+    def help_gd(self):
+        self.stdout.write('Rate the last response as GOOD result\n')
+
+    def do_bd(self, line):
+        self._rate('bad')
+
+    def help_bd(self):
+        self.stdout.write('Rate the last response as BAD result\n')
+
+    def do_dump(self, line):
+        r = requests.get('{}/dump_history'.format(self.chatbot_url))
+        ret = r.json().get('ret')
+        if ret:
+            self.stdout.write('Done\n')
+        else:
+            self.stdout.write('Failed\n')
+
+    def help_dump(self):
+        self.stdout.write('Dump chat history\n')
+
+    do_d = do_dump
+    help_d = help_dump
 

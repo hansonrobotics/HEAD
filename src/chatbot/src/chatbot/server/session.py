@@ -25,6 +25,9 @@ class Session(object):
     def add(self, question, answer, **kwargs):
         self.cache.add(question, answer, **kwargs)
 
+    def rate(self, rate, idx):
+        self.cache.rate(rate, idx)
+
     def reset(self):
         self.dump()
         self.cache.clean()
