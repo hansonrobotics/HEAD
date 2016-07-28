@@ -88,7 +88,6 @@ def _batch_chat():
 @app.route(ROOT+'/rate', methods=['GET'])
 @requires_auth
 def _rate():
-    import ipdb; ipdb.set_trace() # BREAKPOINT
     data = request.args
     response = ''
     try:
