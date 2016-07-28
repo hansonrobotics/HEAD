@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./client.css">
+    </head>
+    <body>
+        <div class="chat-position">
+            <div class="chat-content">
+                <div class="content">
+                </div>
+            </div>
+            <input class="message" type="text" placeholder="Type your message here">
+        </div>
+        <script src="./client.js"></script>
+        <script src="./interface.js"></script>
+        <script>
+            function write(message, tag){
+                console.log(message);
+                if(!tag)
+                    tag='\'text\'';
+                message = "" + message;
+                message = message.split("\n").join("<br>");
+                messageHistory.innerHTML += '<div class=' + tag + '>\n'+
+                                            message+'\n'+
+                                            '</div>\n';
+            }
+            client.print = function(msg){console.log(msg);};
+            client.error = function(msg){console.log(msg);};
+        </script>
+        <script src="./client_test.js"></script>
+        <script>
+            let test_client = new TestClient();
+            test_client.run_tests();
+        </script>
+    </body>
+</html>
