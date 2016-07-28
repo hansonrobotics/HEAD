@@ -156,3 +156,17 @@ Parameters:
 Return:
 - *ret* - Return code
 - *response*
+
+```
+GET /v1.1/rate
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *session* - Session ID
+- *index* - Index of the answer in the session
+- *rate* - Rate string
+
+Return:
+- *ret* - Return code
+- *response*
