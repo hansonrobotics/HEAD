@@ -32,13 +32,13 @@ full performance pipeline and infrastructure:
 
 `/tmp/hrtool -w <workspace>`
 
-* Get HEAD and OpenCog source code
-
-`/tmp/hrtool -G`
-
 * Install Dependencies
 
 `/tmp/hrtool -i`
+
+* Get HEAD and OpenCog source code
+
+`/tmp/hrtool -G`
 
 * Build HR workspace and OpenCog
 

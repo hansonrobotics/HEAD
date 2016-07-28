@@ -38,7 +38,7 @@ if 'HR_CHARACTER_PATH' not in os.environ:
     os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
 
 from chatbot.server.chatbot_agent import (ask, list_character, session_manager, set_weights,
-            dump_history, add_character, list_character_names)
+            dump_history, add_character, list_character_names, rate_answer)
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -83,6 +83,18 @@ def _batch_chat():
         response, ret = ask(str(question), lang, session)
         responses.append((idx, response, ret))
     return Response(json_encode({'ret': 0, 'response': responses}),
+        mimetype="application/json")
+
+@app.route(ROOT+'/rate', methods=['GET'])
+@requires_auth
+def _rate():
+    data = request.args
+    response = ''
+    try:
+        ret = rate_answer(data.get('session'), int(data.get('index')), data.get('rate'))
+    except Exception as ex:
+        response = ex.message
+    return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
 @app.route(ROOT+'/chatbots', methods=['GET'])
