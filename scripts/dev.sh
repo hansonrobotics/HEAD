@@ -53,7 +53,7 @@ export OC_LOG_LEVEL=info        # error, warn, info, debug and fine
 source $HR_WORKSPACE/$MAJOR_PROJECT/devel/setup.bash
 echo HR_WORKSPACE=$HR_WORKSPACE
 
-if [[ $(tmux ls) == ${NAME}* ]]; then
+if [[ $(tmux ls 2>/dev/null) == ${NAME}* ]]; then
     tmux kill-session -t $NAME
     echo "Killed session $NAME"
 fi
