@@ -79,7 +79,7 @@ timertype BlockTimer::getCurrentTimeInMicroseconds() {
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
 	timertype numdays = timeinfo->tm_yday + 365*timeinfo->tm_year + (timeinfo->tm_year)/4; 
-	timertype microsecondsPerDay = 1440*60*1000000; 
+	timertype microsecondsPerDay = 86400000000; 
 	now += numdays*microsecondsPerDay; 	
 	
     return now; 
