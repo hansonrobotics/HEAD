@@ -1,5 +1,5 @@
-<div class="app-node-settings">
-    <div class="clearfix">
+<div class="app-node-settings row">
+    <div class="node-select-container col-md-8">
         <ul class="app-node-tabs nav nav-tabs" role="tablist">
             <li role="presentation" class="node-icon">
                 <a href="javascript:void(0)"><i class="glyphicon glyphicon-list-alt"></i></a>
@@ -41,6 +41,11 @@
                 <a href="javascript:void(0)"><i class="glyphicon glyphicon-chevron-right"></i></a>
             </li>
         </ul>
+
+        <div class="app-node-select-content"></div>
+    </div>
+
+    <div class="node-settings-container col-md-4">
         <ul class="app-options-tabs nav nav-tabs" role="tablist">
             <li role="presentation" class="options-icon">
                 <a href="javascript:void(0)"><i class="glyphicon glyphicon glyphicon-tasks"></i></a>
@@ -71,6 +76,7 @@
                    href="javascript:void(0)">×</a>
             </li>
         </ul>
+
+        <div class="app-settings-content"></div>
     </div>
-    <div class="app-settings-content clearfix"></div>
 </div>

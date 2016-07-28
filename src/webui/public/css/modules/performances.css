@@ -270,7 +270,7 @@ textarea.form-control.app-node-text {
     margin-right: 5px;
 }
 
-@media (min-width: 606px) {
+@media (min-width: 613px) {
     .performance-action-buttons {
         float: right;
     }
@@ -345,7 +345,6 @@ textarea.form-control.app-node-text {
 .app-options-tabs,
 .app-node-tabs {
     border: 1px solid #323F48;
-    float: left;
     height: 44px;
     position: relative;
     white-space: nowrap;
@@ -428,15 +427,9 @@ textarea.form-control.app-node-text {
 
 .app-node-content,
 .app-options-content {
-    float: left;
     padding: 10px;
     height: 300px;
     overflow-y: auto;
-}
-
-.app-node-tabs,
-.app-node-content {
-    width: 60%
 }
 
 .app-node-content .app-node-thumbnail {
@@ -464,12 +457,8 @@ textarea.form-control.app-node-text {
 }
 
 .app-node-content {
-    border-right: 1px solid #323F48;
-}
-
-.app-options-tabs,
-.app-options-content {
-    width: 40%;
+    border: 1px solid #323F48;
+    border-top: none;
 }
 
 .app-options-tabs > li > a,
@@ -572,11 +561,26 @@ textarea.form-control.app-node-text {
     background-color: #f0ad4e;
 }
 
-.app-disabled .app-node-tabs {
+.node-select-container {
+    padding-right: 0;
+}
+
+.node-settings-container {
+    padding-left: 0;
+}
+
+.app-disabled .node-select-container {
     width: 100%;
 }
 
-.app-disabled .app-options-tabs,
-.app-disabled .app-settings-content {
+.app-disabled .node-settings-container {
     display: none;
+}
+
+.app-mobile .node-select-container {
+    padding-right: 15px;
+}
+
+.app-mobile .node-settings-container {
+    padding-left: 15px;
 }

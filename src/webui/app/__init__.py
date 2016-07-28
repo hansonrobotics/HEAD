@@ -13,7 +13,7 @@ import datetime
 from monitor import get_logs
 from rospkg import RosPack
 from pi_face_tracker.msg import Faces, Face
-
+import copy
 rp = RosPack()
 import rospy
 
@@ -250,14 +250,15 @@ def update_performances(robot_name, id):
             performance['nodes'] = current['nodes']
             del performance['ignore_nodes']
 
-        for key in ['id', 'path']:
-            if key in performance: del performance[key]
+        content = copy.deepcopy(performance)
+        content.pop('id', None)
+        content.pop('path', None)
 
-        write_yaml(filename, performance)
+        write_yaml(filename, content)
     except Exception as e:
         return json_encode({'error': str(e)})
 
-    return json_encode(get_performance(id, robot_name))
+    return json_encode(performance)
 
 
 @app.route('/performances/<robot_name>/<path:id>', methods=['DELETE'])

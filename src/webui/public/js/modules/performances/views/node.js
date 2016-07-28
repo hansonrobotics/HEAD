@@ -1,6 +1,6 @@
-define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'underscore', './node_settings',
-        'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2'],
-    function (App, Marionette, template, api, _, NodeSettingsView, FadeInRegion, Node, $) {
+define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'underscore', './node_select',
+        './node_settings', 'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2'],
+    function (App, Marionette, template, api, _, NodeSelectView, NodeSettingsView, FadeInRegion, Node, $) {
         return Marionette.LayoutView.extend({
             template: template,
             ui: {
@@ -22,6 +22,10 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 durationIndicator: '.app-node-duration-indicator'
             },
             regions: {
+                select: {
+                    el: '.app-node-select-content',
+                    regionClass: FadeInRegion
+                },
                 settings: {
                     el: '.app-settings-content',
                     regionClass: FadeInRegion
@@ -58,25 +62,21 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
 
                 this.initTabScrolling(this.ui.nodeTabBar, this.ui.nodeTabs, this.ui.nodeScrollLeft, this.ui.nodeScrollRight);
                 this.initTabScrolling(this.ui.optionsTabBar, this.ui.optionsTabs, this.ui.optionsScrollLeft, this.ui.optionsScrollRight);
+
+                this.initResponsive();
             },
-            /**
-             * Calculate precise sum of widths
-             * @param tabs
-             * @returns {number}
-             */
-            getWidthSum: function (tabs) {
-                var width = 0;
-                $(tabs).each(function () {
-                    var rect = $(this).get(0).getBoundingClientRect();
-                    if (rect.width) {
-                        // `width` is available for IE9+
-                        width += rect.width;
-                    } else {
-                        // Calculate width for IE8 and below
-                        width += rect.right - rect.left;
-                    }
-                });
-                return width;
+            initResponsive: function () {
+                var self = this,
+                    resize = function () {
+                        if (self.isDestroyed)
+                            $(window).unbind('resize', resize);
+                        else if (self.ui.nodeTabBar.offset().left < self.ui.optionsTabBar.offset().left)
+                            self.ui.container.removeClass('app-mobile');
+                        else
+                            self.ui.container.addClass('app-mobile');
+                    };
+
+                $(window).bind('resize', resize);
             },
             initTabScrolling: function (tabBar, tabs, scrollLeft, scrollRight) {
                 var self = this,
@@ -98,14 +98,13 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                             $(scrollLeft).hide();
                             $(scrollRight).hide();
                         }
+                    },
+                    eventData = {
+                        tabBar: tabBar,
+                        tabs: tabs,
+                        scrollLeft: scrollLeft,
+                        scrollRight: scrollRight
                     };
-
-                var eventData = {
-                    tabBar: tabBar,
-                    tabs: tabs,
-                    scrollLeft: scrollLeft,
-                    scrollRight: scrollRight
-                };
 
                 $(scrollLeft).click(eventData, function (e) {
                     $(this).blur();
@@ -121,18 +120,37 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 $(window).resize(resize);
                 resize();
             },
+            /**
+             * Calculate precise sum of node tab widths
+             * @param tabs
+             * @returns {number}
+             */
+            getWidthSum: function (tabs) {
+                var width = 0;
+                $(tabs).each(function () {
+                    var rect = $(this).get(0).getBoundingClientRect();
+                    if (rect.width) {
+                        // `width` is available for IE9+
+                        width += rect.width;
+                    } else {
+                        // Calculate width for IE8 and below
+                        width += rect.right - rect.left;
+                    }
+                });
+                return width;
+            },
             hideSettings: function () {
                 var self = this,
-                    current = this.getRegion('settings').currentView;
+                    selectView = this.getRegion('select').currentView,
+                    settingsView = this.getRegion('settings').currentView;
 
                 this.node = null;
                 this.ui.nodeTabs.removeClass('active');
                 $('.app-node.active').removeClass('active');
 
-                if (current) {
-                    current.model.unbind('change:duration', this.updateNode, this);
-                    current.$el.slideUp(null, function () {
-                        current.destroy();
+                if (settingsView) {
+                    settingsView.model.unbind('change:duration', this.updateNode, this);
+                    $(selectView.$el).add(settingsView.$el).slideUp(null, function () {
                         self.ui.container.addClass('app-disabled');
                         $(window).resize();
                     });
@@ -148,8 +166,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 this.node = node;
                 this.ui.container.removeClass('app-disabled');
                 this.ui.nodeTabs.removeClass('active');
-                this.ui.nodeTypeButtons.filter('[data-node-name="' + node.get('name') + '"]')
-                    .closest('li').addClass('active');
+                this.ui.nodeTypeButtons.filter('[data-node-name="' + node.get('name') + '"]').closest('li').addClass('active');
+                this.getRegion('select').show(new NodeSelectView({model: node, collection: this.collection}));
                 this.getRegion('settings').show(new NodeSettingsView({model: node, collection: this.collection}));
                 this.updateIndicators();
                 $(window).resize();
@@ -158,18 +176,16 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 this.createNode($(e.target).data('node-name'));
             },
             createNode: function (name) {
-                var currentView = this.getRegion('settings').currentView;
-                if (currentView)
-                    currentView.destroy();
-
                 var node = Node.create({name: name, start_time: 0, duration: 1});
                 this.showSettings(node);
             },
             updateNode: function (node) {
-                if (this.node != node)
+                if (this.node != node || this.isDestroyed)
                     node.unbind('change', this.updateNode, this);
                 else {
                     if (node.changed['duration']) this.updateIndicators();
+                    if (this.collection.contains(node)) this.ui.deleteButton.fadeIn();
+                    else this.ui.deleteButton.hide();
                 }
             },
             updateIndicators: function () {
