@@ -22,7 +22,7 @@ define(['application', 'lib/api', 'lib/utilities'], function (App, api, utilitie
             },
             checkUpdatedValue: function () {
                 if (this.previous('value') != this.get('value'))
-                    api._sendMotorCommand(this.toJSON(), this.get('value'));
+                    api.sendMotorCommand(this.toJSON(), this.get('value'));
             },
             getDegrees: function (attribute) {
                 return Math.round(utilities.radToDeg(this.get(attribute))) || 0;

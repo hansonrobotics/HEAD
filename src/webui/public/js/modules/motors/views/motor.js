@@ -37,7 +37,7 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                     min: this.model.getDegrees('min'),
                     max: this.model.getDegrees('max'),
                     slide: function (e, ui) {
-                        self.model.setDegrees('value', ui.value, {silent: true});
+                        self.model.setDegrees('value', ui.value);
                         self.updateLabels();
                     }
                 });
