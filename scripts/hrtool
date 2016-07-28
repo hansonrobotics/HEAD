@@ -423,6 +423,10 @@ do_update_hr() {
 
 do_update_vision_tools() {
     #Update CMT
+    if [[ ! -d $CPPMT_DIR ]]; then
+        warn "CppMT doesn't exist"
+        return
+    fi
     local DEFAULT_BRANCH="wrapper"
     cd $CPPMT_DIR
     repo=CppMT
