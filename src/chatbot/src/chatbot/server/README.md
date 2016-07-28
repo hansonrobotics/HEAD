@@ -157,6 +157,8 @@ Return:
 - *ret* - Return code
 - *response*
 
+### Rate the answer
+
 ```
 GET /v1.1/rate
 ```
