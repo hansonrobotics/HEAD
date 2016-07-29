@@ -97,8 +97,6 @@ class HRSlackBot(SlackClient):
                 if ret != 0:
                     answer = u"Sorry, I can't answer it right now"
 
-                if trace:
-                    trace = '\n'.join([os.path.basename(f) for f in trace])
                 attachments = [{
                     'pretext': answer,
                     'title': 'answered by {}\ntrace:\n{}'.format(botid, str(trace)),

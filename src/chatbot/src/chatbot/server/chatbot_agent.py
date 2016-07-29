@@ -132,6 +132,7 @@ def _ask_characters(characters, question, lang, sid):
                             path = path.strip()
                             if not path: continue
                             trace = [f.replace(path, '') for f in trace]
+                        _response['trace'] = trace
                     sess.add(_question, answer, AnsweredBy=c.name,
                             User=user, BotName=botname, Trace=trace)
                     return _response
