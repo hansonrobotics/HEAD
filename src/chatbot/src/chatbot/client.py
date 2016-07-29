@@ -8,11 +8,12 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 VERSION = 'v1.1'
-key='AAAAB3NzaC'
 
 class Client(cmd.Cmd, object):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, username, key, *args, **kwargs):
         super(Client, self).__init__(*args, **kwargs)
+        self.user = username
+        self.key = key
         self.prompt = '[me]: '
         self.botname = 'sophia'
         self.chatbot_ip = 'localhost'
@@ -20,14 +21,13 @@ class Client(cmd.Cmd, object):
         self.chatbot_url = 'http://{}:{}/{}'.format(
             self.chatbot_ip, self.chatbot_port, VERSION)
         self.lang = 'en'
-        self.user = 'client'
         self.session = None
         self.last_response = None
         self.do_conn()
 
     def set_sid(self):
         params = {
-            "Auth": key,
+            "Auth": self.key,
             "botname": self.botname,
             "user": self.user
         }
@@ -42,7 +42,7 @@ class Client(cmd.Cmd, object):
                 self.stdout.flush()
                 time.sleep(1)
         if r is None:
-            self.stdout.write("Can't get session\n")
+            self.stdout.write("Can't get session\nPlease check the url {}\n".format(self.chatbot_url))
             return
         ret = r.json().get('ret')
         if r.status_code != 200:
@@ -55,7 +55,7 @@ class Client(cmd.Cmd, object):
             "question": "{}".format(question),
             "session": self.session,
             "lang": self.lang,
-            "Auth": key
+            "Auth": self.key
         }
         r = requests.get('{}/chat'.format(self.chatbot_url), params=params)
         ret = r.json().get('ret')
@@ -72,14 +72,14 @@ class Client(cmd.Cmd, object):
         return ret, response
 
     def list_chatbot(self):
-        params={'Auth':key, 'lang':self.lang, 'session': self.session}
+        params={'Auth':self.key, 'lang':self.lang, 'session': self.session}
         r = requests.get(
             '{}/chatbots'.format(self.chatbot_url), params=params)
         chatbots = r.json().get('response')
         return chatbots
 
     def list_chatbot_names(self):
-        params={'Auth':key, 'lang':self.lang, 'session': self.session}
+        params={'Auth':self.key, 'lang':self.lang, 'session': self.session}
         r = requests.get(
             '{}/bot_names'.format(self.chatbot_url), params=params)
         names = r.json().get('response')
@@ -206,7 +206,7 @@ For example, port 8001
         try:
             params = {
                 "session":"{}".format(self.session),
-                'Auth':key
+                'Auth':self.key
             }
             r = requests.get(
                 '{}/reset_session'.format(self.chatbot_url), params=params)
@@ -224,7 +224,7 @@ For example, port 8001
         try:
             params = {
                 "weights": line,
-                "Auth": key,
+                "Auth": self.key,
                 "lang": self.lang,
                 "session": self.session
             }
@@ -253,7 +253,7 @@ For example, rw .2, .4, .5
         files = {'zipfile': open(line, 'rb')}
         params = {
             "user": self.user,
-            "Auth": key,
+            "Auth": self.key,
             "lang": 'en'
         }
         try:
@@ -310,14 +310,18 @@ Syntax: upload package
             "session": self.session,
             "rate": rate,
             "index": -1,
-            "Auth": key
+            "Auth": self.key
         }
         r = requests.get('{}/rate'.format(self.chatbot_url), params=params)
+        ret = r.json().get('ret')
         response = r.json().get('response')
-        return response
+        if ret:
+            self.stdout.write("[Thanks for rating]\n")
+        else:
+            self.stdout.write("[Rating failed]\n")
 
     def do_gd(self, line):
-        self._rate('good')
+        ret, response = self._rate('good')
 
     def help_gd(self):
         self.stdout.write('Rate the last response as GOOD result\n')
@@ -331,7 +335,7 @@ Syntax: upload package
     def do_dump(self, line):
         params = {
             "session": self.session,
-            "Auth": key
+            "Auth": self.key
         }
         r = requests.get('{}/dump_session'.format(self.chatbot_url), params=params)
         if r.status_code == 200:
