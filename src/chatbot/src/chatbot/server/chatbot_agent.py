@@ -127,6 +127,11 @@ def _ask_characters(characters, question, lang, sid):
             if random.random()<weight:
                 if not NON_REPEAT or sess.check(_question, answer, lang):
                     trace = _response.get('trace')
+                    if trace:
+                        for path in CHARACTER_PATH.split(','):
+                            path = path.strip()
+                            if not path: continue
+                            trace = [f.replace(path, '') for f in trace]
                     sess.add(_question, answer, AnsweredBy=c.name,
                             User=user, BotName=botname, Trace=trace)
                     return _response
@@ -253,7 +258,10 @@ def ask(question, lang, sid):
         return response, NO_PATTERN_MATCH
 
 def dump_history():
-    session_manager.dump()
+    return session_manager.dump_all()
+
+def dump_session(sid):
+    return session_manager.dump(sid)
 
 atexit.register(dump_history)
 

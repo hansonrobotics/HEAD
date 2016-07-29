@@ -329,12 +329,19 @@ Syntax: upload package
         self.stdout.write('Rate the last response as BAD result\n')
 
     def do_dump(self, line):
-        r = requests.get('{}/dump_history'.format(self.chatbot_url))
-        ret = r.json().get('ret')
-        if ret:
+        params = {
+            "session": self.session,
+            "Auth": key
+        }
+        r = requests.get('{}/dump_session'.format(self.chatbot_url), params=params)
+        if r.status_code == 200:
+            fname = '{}.csv'.format(self.session)
+            with open(fname, 'w') as f:
+                f.write(r.text)
             self.stdout.write('Done\n')
+            self.stdout.write('Dump to {}\n'.format(fname))
         else:
-            self.stdout.write('Failed\n')
+            self.stdout.write('Failed, error code {}\n'.format(r.status_code))
 
     def help_dump(self):
         self.stdout.write('Dump chat history\n')
