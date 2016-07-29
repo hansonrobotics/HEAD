@@ -16,7 +16,15 @@ full performance pipeline and infrastructure:
 
 ## Prerequisites
 
- * **Only Ubuntu 14.04 is supported**
+### Hardware
+
+* Powerful graphics card
+
+### Software
+
+ * Ubuntu 14.04 is installed. **Only Ubuntu 14.04 is supported**.
+ * X Server is running.
+ * Use root or create user with the ability to gain root privileges.
 
 ## Install, build and run
 
@@ -98,4 +106,10 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
 ### pip3 is not found
 Reinstall pip3 `apt-get install -y --reinstall python3-pip`
+
+### Workspace warning
+> [WARN] The workspace configured /home/ubuntu/hansonrobotics doesn't match the your working path /
+> Continue using /home/ubuntu/hansonrobotics? [y/N]
+
+If you are using orphan hrtool like /tmp/hrtool, you can ignore it.  
 
