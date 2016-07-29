@@ -16,16 +16,17 @@ logger = logging.getLogger('hr.chatbot.slackclient')
 
 class HRSlackBot(SlackClient):
 
-    def __init__(self):
+    def __init__(self, host, port):
         self.sc = SlackClient(SLACKBOT_API_TOKEN)
         self.sc.rtm_connect()
         self.botname = 'sophia'
-        self.chatbot_ip = 'localhost'
-        self.chatbot_port = '8001'
+        self.chatbot_ip = host
+        self.chatbot_port = str(port)
         self.chatbot_url = 'http://{}:{}/{}'.format(
             self.chatbot_ip, self.chatbot_port, VERSION)
         self.lang = 'en'
         self.session = None
+        self.icon_url='https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg'
 
     def set_sid(self, user):
         params = {
@@ -48,7 +49,7 @@ class HRSlackBot(SlackClient):
         if r.status_code != 200:
             logger.error("Request error: {}\n".format(r.status_code))
         self.session = r.json().get('sid')
-        logger.info("New session {}\n".format(self.session))
+        logger.info("Get session {}\n".format(self.session))
 
     def ask(self, question):
         params = {
@@ -71,6 +72,24 @@ class HRSlackBot(SlackClient):
 
         return ret, response
 
+    def _rate(self, rate):
+        params = {
+            "session": self.session,
+            "rate": rate,
+            "index": -1,
+            "Auth": KEY
+        }
+        r = requests.get('{}/rate'.format(self.chatbot_url), params=params)
+        ret = r.json().get('ret')
+        response = r.json().get('response')
+        return ret, response
+
+    def send_message(self, channel, attachments):
+        self.sc.api_call(
+            "chat.postMessage", channel=channel,
+            attachments=attachments, username=self.botname.title(),
+            icon_url=self.icon_url)
+
     def run(self):
         while True:
             messages = self.sc.rtm_read()
@@ -87,6 +106,40 @@ class HRSlackBot(SlackClient):
                     continue
                 name = usr_obj['user']['profile']['first_name']
                 question = message.get('text')
+                channel = message.get('channel')
+
+                logger.info("Question {}".format(question))
+                if question in [':+1:', ':slightly_smiling_face:']:
+                    ret, _ = self._rate('good')
+                    if ret:
+                        logger.info("Rate good")
+                        answer = 'Thanks for rating'
+                    else:
+                        logger.info("Rate failed")
+                        answer = 'Rating failed'
+                    attachments = [{
+                        'title': answer,
+                        'color': 'good',
+                        'fallback': answer
+                    }]
+                    self.send_message(channel, attachments)
+                    continue
+                if question in [':-1:', ':disappointed:']:
+                    ret, _ = self._rate('bad')
+                    if ret:
+                        logger.info("Rate bad")
+                        answer = 'Thanks for rating'
+                    else:
+                        logger.info("Rate failed")
+                        answer = 'Rating failed'
+                    attachments = [{
+                        'title': answer,
+                        'color': 'danger',
+                        'fallback': answer
+                    }]
+                    self.send_message(channel, attachments)
+                    continue
+
                 ret, response = self.ask(question)
                 if ret == 3:
                     self.set_sid(name)
@@ -96,24 +149,25 @@ class HRSlackBot(SlackClient):
                 botid = response.get('botid', '')
                 if ret != 0:
                     answer = u"Sorry, I can't answer it right now"
-
+                    title = ''
+                else:
+                    title = 'answered by {}\ntrace:\n{}'.format(botid, str(trace))
                 attachments = [{
                     'pretext': answer,
-                    'title': 'answered by {}\ntrace:\n{}'.format(botid, str(trace)),
+                    'title': title,
                     'color': '#3AA3E3',
                     'fallback': answer,
                 }]
-                self.sc.api_call(
-                    "chat.postMessage", channel=message['channel'],
-                    attachments=attachments, username=self.botname.title(),
-                    icon_url='https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg')
+                self.send_message(channel, attachments)
 
 if __name__ == '__main__':
     logging.basicConfig()
     logging.getLogger().setLevel(logging.INFO)
+    host = 'localhost'
+    port = 8001
     while True:
         try:
-            HRSlackBot().run()
+            HRSlackBot(host, port).run()
         except Exception:
             pass
 
