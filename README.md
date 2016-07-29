@@ -20,6 +20,10 @@ full performance pipeline and infrastructure:
 
 ## Install, build and run
 
+* Install wget
+
+sudo apt-get install wget (Run apt-get update first if wget is not found)
+
 * Get hrtool
 
 `wget https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hrtool -O /tmp/hrtool`
@@ -50,7 +54,7 @@ full performance pipeline and infrastructure:
 
 * Run
 
-`cd ~/hansonrobotics/HEAD && ./dev.sh`
+`cd ~/hansonrobotics/HEAD/scripts && ./dev.sh`
 
 * Open web browser
 
@@ -58,7 +62,7 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
 ## Some other options of hrtool
 
-hrtool is included in ~/hansonrobotics/HEAD/scripts
+**The same hrtool script is included in ~/hansonrobotics/HEAD/scripts**
 
 * `-s` Build a single ROS package and it's related dependecies.
 
@@ -66,7 +70,7 @@ hrtool is included in ~/hansonrobotics/HEAD/scripts
 
 * `-d` Checkout latest OpenCog (developer mode).
 
-> This option is used when you want to get the latest OpenCog stack. It will set the remote of git repositories of OpenCog to [OpenCog](https://github.com/opencog) domain.
+> **This option is used when you want to get the latest OpenCog stack. It will set the remote of git repositories of OpenCog to [OpenCog](https://github.com/opencog) domain.**
 
 * `-U` Update the code to the latest including HEAD and OpenCog stack.
 
