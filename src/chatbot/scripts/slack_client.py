@@ -92,12 +92,22 @@ class HRSlackBot(SlackClient):
                     self.set_sid(name)
                     ret, response = self.ask(question)
                 answer = response.get('text')
-                trace = response.get('trace', None)
+                trace = response.get('trace', '')
+                botid = response.get('botid', '')
                 if ret != 0:
                     answer = u"Sorry, I can't answer it right now"
+
+                if trace:
+                    trace = '\n'.join([os.path.basename(f) for f in trace])
+                attachments = [{
+                    'pretext': answer,
+                    'title': 'answered by {}\ntrace:\n{}'.format(botid, str(trace)),
+                    'color': '#3AA3E3',
+                    'fallback': answer,
+                }]
                 self.sc.api_call(
                     "chat.postMessage", channel=message['channel'],
-                    text=answer, username=self.botname.title(),
+                    attachments=attachments, username=self.botname.title(),
                     icon_url='https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg')
 
 if __name__ == '__main__':
