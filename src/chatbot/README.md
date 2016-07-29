@@ -166,8 +166,8 @@ GET /v1.1/rate
 Parameters:
 - *Auth* - Authorization token
 - *session* - Session ID
-- *index* - Index of the answer in the session
-- *rate* - Rate string
+- *index* - Index of the answer in the session. For exmaple, -1 means the last response.
+- *rate* - Rate string, such as "good" or "bad".
 
 Return:
 - *ret* - Return code
