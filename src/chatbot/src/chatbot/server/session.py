@@ -45,7 +45,10 @@ class Session(object):
         if not os.path.isdir(DIRNAME):
             os.makedirs(DIRNAME)
         fname = os.path.join(DIRNAME, '{}.csv'.format(self.sid))
-        self.cache.dump(fname)
+        if self.cache.dump(fname):
+            return fname
+        else:
+            return None
 
     def get_session_data(self):
         return self.sdata
@@ -145,9 +148,20 @@ class SessionManager(object):
                 logger.info("Removed session {}".format(sid))
             time.sleep(1)
 
-    def dump(self):
+    def dump_all(self):
+        fnames = []
         for sid, sess in self._sessions.iteritems():
-            sess.dump()
+            fname = sess.dump()
+            if fname:
+                fnames.append(fname)
+        return fnames
+
+    def dump(self, sid):
+        fname = None
+        sess = self._sessions.get(sid)
+        if sess:
+            fname = sess.dump()
+        return fname
 
 if __name__ == '__main__':
     session_manager = SessionManager()

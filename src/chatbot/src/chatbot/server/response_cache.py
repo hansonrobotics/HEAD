@@ -98,7 +98,7 @@ class ResponseCache(object):
         records_to_dump = all_records[self.cursor:]
         if not records_to_dump:
             logger.debug("Nothing to dump")
-            return
+            return False
         header = ['Datetime', 'Question', 'Answer', 'Rate']
         for k in records_to_dump[0].keys():
             if k not in header:
@@ -109,6 +109,7 @@ class ResponseCache(object):
             writer.writerows(records_to_dump)
             logger.info("Dumpped chat history to {}".format(fname))
             self.cursor = len(all_records)
+        return True
 
 if __name__ == '__main__':
     cache = ResponseCache()
