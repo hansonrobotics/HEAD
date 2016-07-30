@@ -16,9 +16,21 @@ full performance pipeline and infrastructure:
 
 ## Prerequisites
 
- * **Only Ubuntu 14.04 is supported**
+### Hardware
+
+* Powerful graphics card
+
+### Software
+
+ * Ubuntu 14.04 is installed. **Only Ubuntu 14.04 is supported**.
+ * X Server is running.
+ * Use root or create user with the ability to gain root privileges.
 
 ## Install, build and run
+
+* Install wget
+
+sudo apt-get install wget (Run apt-get update first if wget is not found)
 
 * Get hrtool
 
@@ -50,7 +62,7 @@ full performance pipeline and infrastructure:
 
 * Run
 
-`cd ~/hansonrobotics/HEAD && ./dev.sh`
+`cd ~/hansonrobotics/HEAD/scripts && ./dev.sh`
 
 * Open web browser
 
@@ -58,7 +70,7 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
 ## Some other options of hrtool
 
-hrtool is included in ~/hansonrobotics/HEAD/scripts
+**The same hrtool script is included in ~/hansonrobotics/HEAD/scripts**
 
 * `-s` Build a single ROS package and it's related dependecies.
 
@@ -66,7 +78,7 @@ hrtool is included in ~/hansonrobotics/HEAD/scripts
 
 * `-d` Checkout latest OpenCog (developer mode).
 
-> This option is used when you want to get the latest OpenCog stack. It will set the remote of git repositories of OpenCog to [OpenCog](https://github.com/opencog) domain.
+> **This option is used when you want to get the latest OpenCog stack. It will set the remote of git repositories of OpenCog to [OpenCog](https://github.com/opencog) domain.**
 
 * `-U` Update the code to the latest including HEAD and OpenCog stack.
 
@@ -94,4 +106,10 @@ hrtool is included in ~/hansonrobotics/HEAD/scripts
 
 ### pip3 is not found
 Reinstall pip3 `apt-get install -y --reinstall python3-pip`
+
+### Workspace warning
+> [WARN] The workspace configured /home/ubuntu/hansonrobotics doesn't match the your working path /
+> Continue using /home/ubuntu/hansonrobotics? [y/N]
+
+If you are using orphan hrtool like /tmp/hrtool, you can ignore it.  
 

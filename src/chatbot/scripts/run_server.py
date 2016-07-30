@@ -37,8 +37,10 @@ import shutil
 if 'HR_CHARACTER_PATH' not in os.environ:
     os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
 
-from chatbot.server.chatbot_agent import (ask, list_character, session_manager, set_weights,
-            dump_history, add_character, list_character_names, rate_answer)
+from chatbot.server.chatbot_agent import (
+        ask, list_character, session_manager, set_weights,
+        dump_history, dump_session, add_character, list_character_names,
+        rate_answer)
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -226,6 +228,22 @@ def _dump_history():
             'response': response
         }),
         mimetype="application/json")
+
+@app.route(ROOT+'/dump_session', methods=['GET'])
+@requires_auth
+def _dump_session():
+    try:
+        data = request.args
+        sid = data.get('session')
+        fname = dump_session(sid)
+        hist_dir = os.path.expanduser('~/.hr/chatbot/history/')
+        if fname:
+            return send_from_directory(hist_dir, os.path.basename(fname))
+        else:
+            return '', 404
+    except Exception as ex:
+        logger.error("Dump error {}".format(ex))
+        return '', 500
 
 @app.route(ROOT+'/ping', methods=['GET'])
 def _ping():
