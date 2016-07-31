@@ -14,13 +14,14 @@ from cmt_tracker_msgs.cfg import RecognitionConfig
 from dynamic_reconfigure.server import Server
 
 from openface_wrapper import face_recognizer
-from image_scraper import image_scaper
+
 from pi_face_tracker.msg import FaceEvent
 class face_predictor:
     def __init__(self):
         rospy.init_node('face_recognizer', anonymous=True)
         self.image_scraper_enable = rospy.get_param('image_scraper')
         if self.image_scraper_enable != 0:
+            from image_scraper import image_scaper
             self.user_agents = rospy.get_param('user_agents')
             self.image_scraper = image_scaper(self.user_agents)
 
