@@ -7,6 +7,9 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 import atexit
 
+from threading import RLock
+sync = RLock()
+
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
@@ -263,6 +266,11 @@ def dump_history():
 
 def dump_session(sid):
     return session_manager.dump(sid)
+
+def reload_characters():
+    with sync:
+        logger.info("Reloading")
+        CHARACTERS = load_characters(CHARACTER_PATH)
 
 atexit.register(dump_history)
 
