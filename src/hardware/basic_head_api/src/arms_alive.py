@@ -13,7 +13,7 @@ class ArmsAlive:
     def __init__(self):
         rospy.init_node('arms_alive')
         rospy.wait_for_service('animation_length', timeout=3)
-        rospy.Subscriber('speech_events', self.tts_status)
+        rospy.Subscriber('speech_events', String, self.tts_status)
         self.enabled = rospy.get_param('arms_alive')
         self.arm_movements = rospy.get_param('arm_movements')
         self.anim_length = rospy.ServiceProxy('animation_length', AnimationLength)
@@ -54,7 +54,7 @@ class ArmsAlive:
             if 4 <= duration and r < arm['probabilities'][2]:
                 animation,fps = self.pickAnimation(arm,duration)
             if fps:
-                self.play(PlayAnimation(animation,fps))
+                self.play.publish(PlayAnimation(animation,fps))
 
     # Picks animations
     # Currently random animation and FPS
