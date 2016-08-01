@@ -12,7 +12,7 @@ import message_filters
 
 from cmt_tracker_msgs.msg import Trackers,Tracker,Objects
 from cmt_tracker_msgs.srv import TrackerNames
-from cmt_tracker_msgs.cfg import RecogntionConfig
+from cmt_tracker_msgs.cfg import RecognitionConfig
 from std_srvs.srv import Empty
 from sensor_msgs.msg import Image as Imge
 from dynamic_reconfigure.server import Server
@@ -38,7 +38,7 @@ class OfflineViewer:
         ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.face_sub],
                                                          10, 0.25)
         ts.registerCallback(self.callback)
-        Server(RecogntionConfig, self.sample_callback)
+        Server(RecognitionConfig, self.sample_callback)
         #Set up GUI
         self.window = tk.Tk()  #Makes main window
         self.window.wm_title("Offline Vizualizer For OpenFace ")
