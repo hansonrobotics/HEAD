@@ -5,6 +5,7 @@ from slackclient import SlackClient
 import time
 import logging
 import requests
+import re
 
 VERSION = 'v1.1'
 KEY='AAAAB3NzaC'
@@ -13,6 +14,20 @@ SLACKBOT_API_TOKEN = os.environ.get('SLACKBOT_API_TOKEN')
 SLACKTEST_TOKEN = os.environ.get('SLACKTEST_TOKEN')
 
 logger = logging.getLogger('hr.chatbot.slackclient')
+
+
+def format_trace(trace):
+    pattern = re.compile(r'/../(?P<fname>.*), \(line (?P<line>\d+), column .*\)')
+    prefix="<https://github.com/hansonrobotics/character_dev/blob/update"
+    formated_trace = []
+    for t in trace:
+        matchobj = pattern.match(t)
+        if matchobj:
+            line = matchobj.groupdict()['line']
+            fname = matchobj.groupdict()['fname']
+            t2 = '{prefix}/{fname}#L{line}|{present}>'.format(prefix=prefix, fname=fname, line=line, present=t)
+            formated_trace.append(t2)
+    return formated_trace
 
 class HRSlackBot(SlackClient):
 
@@ -150,12 +165,14 @@ class HRSlackBot(SlackClient):
                     ret, response = self.ask(question)
                 answer = response.get('text')
                 trace = response.get('trace', '')
+
                 botid = response.get('botid', '')
                 if ret != 0:
                     answer = u"Sorry, I can't answer it right now"
                     title = ''
                 else:
-                    title = 'answered by {}\ntrace:\n{}'.format(botid, str(trace))
+                    formated_trace = format_trace(trace)
+                    title = 'answered by {}\ntrace:\n{}'.format(botid, '\n'.join(formated_trace))
                 attachments = [{
                     'pretext': answer,
                     'title': title,
