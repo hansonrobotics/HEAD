@@ -42,9 +42,8 @@ class Session(object):
         return self.cache.check(question, answer, lang)
 
     def dump(self):
-        if not os.path.isdir(DIRNAME):
-            os.makedirs(DIRNAME)
-        fname = os.path.join(DIRNAME, '{}.csv'.format(self.sid))
+        dirname = os.path.join(DIRNAME, self.created.strftime('%Y%m%d'))
+        fname = os.path.join(dirname, '{}.csv'.format(self.sid))
         if self.cache.dump(fname):
             return fname
         else:
