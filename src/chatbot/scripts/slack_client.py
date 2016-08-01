@@ -109,32 +109,36 @@ class HRSlackBot(SlackClient):
                 channel = message.get('channel')
 
                 logger.info("Question {}".format(question))
-                if question in [':+1:', ':slightly_smiling_face:']:
+                if question in [':+1:', ':slightly_smiling_face:', ':)', 'gd']:
                     ret, _ = self._rate('good')
                     if ret:
                         logger.info("Rate good")
                         answer = 'Thanks for rating'
+                        color = 'good'
                     else:
                         logger.info("Rate failed")
                         answer = 'Rating failed'
+                        color = 'danger'
                     attachments = [{
                         'title': answer,
-                        'color': 'good',
+                        'color': color,
                         'fallback': answer
                     }]
                     self.send_message(channel, attachments)
                     continue
-                if question in [':-1:', ':disappointed:']:
+                if question in [':-1:', ':disappointed:', ':(', 'bd']:
                     ret, _ = self._rate('bad')
                     if ret:
                         logger.info("Rate bad")
                         answer = 'Thanks for rating'
+                        color = 'good'
                     else:
                         logger.info("Rate failed")
                         answer = 'Rating failed'
+                        color = 'danger'
                     attachments = [{
                         'title': answer,
-                        'color': 'danger',
+                        'color': color,
                         'fallback': answer
                     }]
                     self.send_message(channel, attachments)
