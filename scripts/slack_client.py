@@ -107,6 +107,7 @@ class HRSlackBot(SlackClient):
 
     def run(self):
         while True:
+            time.sleep(0.2)
             messages = self.sc.rtm_read()
             if not messages:
                 continue
