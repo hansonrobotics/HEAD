@@ -250,9 +250,14 @@ def _ping():
     return Response(json_encode({'ret': 0, 'response': 'pong'}),
         mimetype="application/json")
 
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
     else:
         port = 8001
+    if 'HR_CHATBOT_SERVER_EXT_PATH' in os.environ:
+        sys.path.insert(0, os.path.expanduser(os.environ['HR_CHATBOT_SERVER_EXT_PATH']))
+        import ext
+        ext.load(app, ROOT)
     app.run(host='0.0.0.0', debug=False, use_reloader=False, port=port)
