@@ -268,6 +268,7 @@ def dump_session(sid):
     return session_manager.dump(sid)
 
 def reload_characters():
+    global CHARACTERS
     with sync:
         logger.info("Reloading")
         CHARACTERS = load_characters(CHARACTER_PATH)
@@ -275,7 +276,11 @@ def reload_characters():
 atexit.register(dump_history)
 
 if __name__ == '__main__':
-    sid = session_manager.start_session()
-    for character in CHARACTERS:
-        print ask('what is your name', 'en', sid)
-
+    import logging
+    logging.basicConfig()
+    logging.getLogger().setLevel(logging.DEBUG)
+    sid = session_manager.start_session('test')
+    sess = session_manager.get_session(sid)
+    sess.sdata.botname = 'sophia'
+    sess.sdata.user = 'test'
+    print ask('what is your name', 'en', sid)
