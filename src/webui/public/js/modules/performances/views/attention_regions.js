@@ -13,7 +13,7 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
             events: {
                 'click @ui.clear': 'clear',
                 'click @ui.save': 'save',
-                'change @ui.typeSelect': 'selectType'
+                'change @ui.typeSelect': 'updateType'
             },
             config: {
                 width: 200,
@@ -48,11 +48,13 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
 
                 this.width = this.ui.container.innerWidth();
                 this.ui.areaselect.selectAreas({
-                    allowSelect: false,
-                    allowDelete: false,
+                    allowSelect: true,
+                    allowDelete: true,
                     width: this.width,
                     allowDisplayId: false
                 }).on('changed', function (event, id) {
+                    console.log(event);
+                    console.log(id);
                     var model = self.collection.get(id),
                         area = self.areaToJSON(_.findWhere(self.ui.areaselect.selectAreas('relativeAreas'), {id: id}));
 
@@ -78,32 +80,11 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
                 }
             },
             updateAreas: function () {
-                var self = this,
-                    models = [];
-
-                api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
-                    _.each(regions, function (name, key) {
-                        var model = self.collection.findWhere({type: key});
-                        if (!model)
-                            model = {
-                                id: models.length,
-                                width: 0.5,
-                                height: 0.5,
-                                x: -1 + 0.6 * models.length,
-                                y: 0.5,
-                                type: key
-                            };
-                        else
-                            model.set('id', models.length);
-
-                        models.push(model);
-                    });
-
-                    self.ui.areaselect.selectAreas('reset');
-                    self.collection.reset(models);
-                    self.collection.each(function (area) {
-                        self.ui.areaselect.selectAreas('add', self.jsonToArea(area.toJSON()));
-                    });
+                var self = this;
+                self.ui.areaselect.selectAreas('reset');
+                self.collection.each(function (area, i) {
+                    area.set('id', i);
+                    self.ui.areaselect.selectAreas('add', self.jsonToArea(area.toJSON()));
                 });
             },
             save: function () {

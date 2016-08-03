@@ -34,6 +34,12 @@
             <div class="app-speed-slider"></div>
         </div>
 
+        <div class="form-group" data-node-property="interval">
+            <label>Interval <span class="app-interval-label pull-right label label-default"></span></label>
+
+            <div class="app-interval-slider"></div>
+        </div>
+
         <div class="form-group" data-node-property="fps">
             <label title="FPS">FPS <span
                         class="app-fps-label pull-right label label-default"></span></label>

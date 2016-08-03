@@ -11,6 +11,8 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                 crosshair: '.app-crosshair',
                 speedSlider: '.app-speed-slider',
                 speedLabel: '.app-speed-label',
+                intervalSlider: '.app-interval-slider',
+                intervalLabel: '.app-interval-label',
                 magnitudeLabel: '.app-magnitude-label',
                 fpsSlider: '.app-fps-slider',
                 pitchLabel: '.app-pitch-label',
@@ -73,6 +75,21 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                             var speed = ui.value / 100;
                             self.model.set('speed', speed);
                             self.ui.speedLabel.html(speed.toFixed(2));
+                        }
+                    });
+                }
+
+                if (this.model.hasProperty('interval')) {
+                    this.ui.intervalLabel.html(this.model.get('interval'));
+                    this.ui.intervalSlider.slider({
+                        range: 'min',
+                        animate: true,
+                        min: 0.5,
+                        max: 10,
+                        value: this.model.get('interval'),
+                        slide: function (e, ui) {
+                            self.model.set('interval', ui.value);
+                            self.ui.intervalLabel.html(ui.value.toFixed(2) + 's');
                         }
                     });
                 }

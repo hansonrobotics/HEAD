@@ -46,7 +46,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api',
         };
         Application.language = 'en';
 
-        if (RobotConfig.mode == 'start'){
+        if (RobotConfig.mode == 'start') {
             // Lightweight application for startup
             require([
                     'modules/start/router'
@@ -54,7 +54,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api',
                 function () {
                     Application.start();
                 });
-        }else{
+        } else {
             // Make sure only monitor is loaded before connection is made
             Backbone.Router.prototype.execute = function (callback, args) {
                 if (checkConnection())

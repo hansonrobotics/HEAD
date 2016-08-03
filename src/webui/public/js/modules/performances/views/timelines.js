@@ -239,7 +239,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         }
                     });
 
-                    if (_.contains(['emotion', 'interaction', 'expression'], node.get('name')))
+                    if (node.hasProperty('duration'))
                         this.initResizable(el);
                 }
             },

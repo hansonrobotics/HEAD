@@ -52,13 +52,13 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 },
                 look_at: {
                     label: 'Look at',
-                    properties: ['attention_region', 'crosshair', 'speed'],
-                    defaultValues: {speed: 1}
+                    properties: ['attention_region', 'duration', 'crosshair', 'speed', 'interval'],
+                    defaultValues: {speed: 1, interval: 1}
                 },
                 gaze_at: {
                     label: 'Gaze at',
-                    properties: ['attention_region', 'crosshair', 'speed'],
-                    defaultValues: {speed: 1}
+                    properties: ['attention_region', 'duration', 'crosshair', 'speed', 'interval'],
+                    defaultValues: {speed: 1, interval: 1}
                 },
                 pause: {
                     label: 'Pause',
@@ -108,18 +108,21 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 return this.getConfig().label;
             },
             getTitle: function () {
-                var title = this.getLabel();
+                var title = this.getLabel(),
+                    name = this.get('name');
 
-                if (this.get('text'))
+                if (name == 'speech')
                     title = this.get('text');
-                else if (this.get('emotion'))
+                else if (name === 'emotion')
                     title = this.get('emotion');
-                else if (this.get('gesture'))
+                else if (name === 'gesture')
                     title = this.get('gesture');
-                else if (this.get('expression'))
+                else if (name === 'expression')
                     title = this.get('expression');
-                else if (this.get('animation') || this.get('kfanimation'))
+                else if (name == 'animation' || name == 'kfanimation')
                     title = this.get('animation');
+                else if (name == 'gaze_at' || name == 'look_at')
+                    title = this.get('attention_region');
 
                 return title
             },

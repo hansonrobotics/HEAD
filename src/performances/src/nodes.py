@@ -21,7 +21,7 @@ class Node(object):
     @staticmethod
     def subClasses(cls):
         return cls.__subclasses__() + [g for s in cls.__subclasses__()
-                                   for g in cls.subClasses(s)]
+                                       for g in cls.subClasses(s)]
 
     @classmethod
     def createNode(cls, data, runner, start_time=0):
@@ -86,6 +86,7 @@ class Node(object):
     # Method to call while node is running
     def cont(self, run_time):
         pass
+
     # Method to get magnitude from either one number or range
     @staticmethod
     def _magnitude(magnitude):
@@ -100,7 +101,6 @@ class Node(object):
 
 
 class speech(Node):
-
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
         if 'pitch' not in data:
@@ -109,7 +109,6 @@ class speech(Node):
             self.data['speed'] = 1.0
         if 'volume' not in data:
             self.data['volume'] = 1.0
-
 
     def start(self, run_time):
         self.say(self.data['text'], self.data['lang'])
@@ -124,7 +123,8 @@ class speech(Node):
 
     def _add_ssml(self, txt):
         return '<prosody rate="%.2f" pitch="%+d%%" volume="%+d%%">%s</prosody>' % \
-               (self.data['speed'], 100*(self.data['pitch']-1), 100*(self.data['volume']-1), txt)
+               (self.data['speed'], 100 * (self.data['pitch'] - 1), 100 * (self.data['volume'] - 1), txt)
+
 
 class gesture(Node):
     def start(self, run_time):
@@ -150,7 +150,6 @@ class interaction(Node):
         time.sleep(0.02)
         self.runner.topics['interaction'].publish(String('btree_on'))
 
-
     def stop(self, run_time):
         # Disable all outputs
         self.runner.topics['bt_control'].publish(Int32(0))
@@ -162,9 +161,9 @@ class interaction(Node):
         time.sleep(0.02)
         self.runner.topics['interaction'].publish(String('btree_off'))
 
+
 # Rotates head by given angle
 class head_rotation(Node):
-
     def start(self, run_time):
         self.runner.topics['head_rotation'].publish(Float32(self.data['angle']))
 
@@ -174,7 +173,7 @@ class soma(Node):
         s = SomaState()
         s.magnitude = 1
         s.ease_in.secs = 0
-        s.ease_in.nsecs = 1000000*300
+        s.ease_in.nsecs = 1000000 * 300
         s.name = self.data['soma']
         self.runner.topics['soma_state'].publish(s)
 
@@ -236,7 +235,6 @@ class kfanimation(Node):
             self.shown = True
             logger.error(ex)
 
-
     def cont(self, run_time):
         # Publish expression message after some delay once node is started
         if (not self.shown) and (run_time > self.start_time + 0.05):
@@ -286,7 +284,6 @@ class pause(Node):
         if self.timer:
             self.timer.cancel()
 
-
     def end_time(self):
         return self.start_time + 0.1
 
@@ -327,31 +324,80 @@ class attention(Node):
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
         self.topic = 'look_at'
+        self.times_shown = 0
 
-    def get_region(self, region):
-        regions = rospy.get_param('/' + self.runner.robot_name + "/attention_regions")
-        return next((r for r in regions if r['type'] == region), False)
+    def get_random_axis_position(self, regions, axis):
+        """
+        :param regions: list of dictionaries
+        :param axis: string 'x' or 'y'
+        :return: position and matched regions
+        """
+
+        position = 0
+        matched = []
+
+        if regions:
+            regions = sorted(regions, key=lambda r: r[axis])
+            prev_end = regions[0][axis]
+            length = 0
+            lengths = []
+
+            for r in regions:
+                begin = r[axis]
+                end = begin + (r['width'] if axis == 'x' else r['height'])
+
+                if prev_end > begin:
+                    diff = prev_end - begin
+                    lengths.append([length - diff, length - diff + end - begin])
+                    begin = prev_end
+                else:
+                    lengths.append([length, length + end - begin])
+                length += max(0, end - begin)
+                prev_end = max(begin, end)
+
+            rval = random.random() * length
+
+            for i, length in enumerate(lengths):
+                if length[0] <= rval <= length[1]:
+                    matched.append(regions[i])
+                    if not position:
+                        position = regions[i][axis] + (regions[i]['width'] if axis == 'x' else regions[i]['height']) * (
+                            (rval - length[0]) / (length[1] - length[0]))
+
+        return position, matched
 
     # returns random coordinate from the region
     def get_point(self, region):
-        region = self.get_region(region)
-        if not region:
-            # Look forward
-            return {'x':1, 'y':0, 'z':0}
-        return {
-            'x': 1,
-            'y': region['x'] + region['width']*random.random(),
-            'z': region['y'] - region['height']*random.random(),
-        }
+        regions = rospy.get_param('/' + self.runner.robot_name + "/attention_regions")
+        regions = [{'x': r['x'], 'y': r['y'] - r['height'], 'width': r['width'], 'height': r['height']} for r in regions
+                   if r['type'] == region]
 
-    def start(self, run_time):
-        if 'attention_region' in self.data and self.data['attention_region'] != 'custom':
-            point = self.get_point(self.data['attention_region'])
+        if regions:
+            y, matched = self.get_random_axis_position(regions, 'x')
+            z, matched = self.get_random_axis_position(matched, 'y')
+
+            return {
+                'x': 1,
+                'y': y,
+                'z': z,
+            }
         else:
-            point = self.data
+            # Look forward
+            return {'x': 1, 'y': 0, 'z': 0}
 
+    def set_point(self, point):
         speed = 1 if 'speed' not in self.data else self.data['speed']
         self.runner.topics[self.topic].publish(Target(point['x'], point['y'], point['z'], speed))
+
+    def cont(self, run_time):
+        if 'attention_region' in self.data and self.data['attention_region'] != 'custom':
+            if 'interval' in self.data and run_time > self.times_shown * self.data['interval'] or not self.times_shown:
+                self.set_point(self.get_point(self.data['attention_region']))
+                self.times_shown += 1
+
+        if not self.times_shown:
+            self.set_point(self.data)
+            self.times_shown += 1
 
 
 class look_at(attention):

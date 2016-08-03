@@ -95,11 +95,16 @@ h2, .h2 {
     z-index: 9999999;
 }
 
+.bootbox {
+    z-index: 99999999;
+}
+
 #navbar-container {
     padding: 5px 15px;
 }
 
 #logo {
+    margin-top: 3px;
     padding-right: 10px;
     height: 20px;
 }
@@ -116,13 +121,16 @@ nav.navbar {
 
 .navbar-default .navbar-nav > li {
     margin-right: 10px;
+    text-align: center;
 }
 
 .navbar-default .navbar-nav > li > a,
 .navbar-default .navbar-nav > li > button {
-    font-size: 18px;
-    padding: 3px;
+    font-size: 17px;
+    padding: 5px;
     color: #a2aaad;
+    border-bottom: 1px solid transparent;
+    display: inline-block;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
@@ -131,7 +139,6 @@ nav.navbar {
 .navbar-default .navbar-nav > li > button:focus{
     background: inherit;
     color: #FFF;
-    /*border-bottom: 1px solid #6cadd3;*/
     border-bottom: 1px solid #6cadd3;
 }
 
@@ -263,7 +270,7 @@ Styling for JsonEditor slider extension
     width: auto;
     font-family: "Yantramanav", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 30px;
-    line-height: 23px;
+    line-height: 30px;
 }
 
 .select2-container {
