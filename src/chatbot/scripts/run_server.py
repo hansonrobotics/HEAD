@@ -4,8 +4,8 @@
 import os
 import logging
 import datetime as dt
-from chatbot.server.auth import requires_auth
-from chatbot.server.auth import check_auth, authenticate
+import json
+import shutil
 
 log_dir = os.environ.get('ROS_LOG_DIR', os.path.expanduser('~/.hr/log'))
 if not os.path.isdir(log_dir):
@@ -28,19 +28,21 @@ root_logger.addHandler(sh)
 
 import sys
 CWD = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, os.path.join(CWD, '..'))
-from flask import Flask, request, Response, send_from_directory
-
-import json
-import shutil
+sys.path.insert(0, os.path.join(CWD, '../src'))
 
 if 'HR_CHARACTER_PATH' not in os.environ:
     os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
+
+from chatbot.server.auth import requires_auth
+from chatbot.server.auth import check_auth, authenticate
+
+from flask import Flask, request, Response, send_from_directory
 
 from chatbot.server.chatbot_agent import (
         ask, list_character, session_manager, set_weights,
         dump_history, dump_session, add_character, list_character_names,
         rate_answer)
+from chatbot.server.session import HISTORY_DIR
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -236,9 +238,8 @@ def _dump_session():
         data = request.args
         sid = data.get('session')
         fname = dump_session(sid)
-        hist_dir = os.path.expanduser('~/.hr/chatbot/history/')
         if fname:
-            return send_from_directory(hist_dir, os.path.basename(fname))
+            return send_from_directory(os.path.dirname(fname), os.path.basename(fname))
         else:
             return '', 404
     except Exception as ex:
@@ -250,9 +251,54 @@ def _ping():
     return Response(json_encode({'ret': 0, 'response': 'pong'}),
         mimetype="application/json")
 
+@app.route(ROOT+'/stats', methods=['GET'])
+@requires_auth
+def _stats():
+    try:
+        import pandas as pd
+        import glob
+        dump_history()
+        today = dt.datetime.now()
+        dfs = []
+        days = 7
+        for d in glob.glob('{}/*'.format(HISTORY_DIR)):
+            if os.path.isdir(d):
+                dirname = os.path.basename(d)
+                if (today-dt.datetime.strptime(dirname, '%Y%m%d')).days < days:
+                    for fname in glob.glob('{}/{}/*.csv'.format(HISTORY_DIR, dirname)):
+                        dfs.append(pd.read_csv(fname))
+        df = pd.concat(dfs, ignore_index=True)
+        df = df[df.Datetime != 'Datetime'].sort(['User', 'Datetime'])
+        stats_csv = '{}/last_{}_days.csv'.format(HISTORY_DIR, days)
+        df.to_csv(stats_csv, index=False)
+        logger.info("Write statistic records to {}".format(stats_csv))
+        records = len(df)
+        rates = len(df[df.Rate.notnull()])
+        good_rates = len(df[df.Rate == 'good'])
+        bad_rates = len(df[df.Rate == 'bad'])
+        if records > 0:
+            csd = float(records-bad_rates)/records
+        response = {
+            'customers_satisfaction_degree': csd,
+            'number_of_records': records,
+            'number_of_rates': rates,
+            'number_of_good_rates': good_rates,
+            'number_of_bad_rates': bad_rates,
+        }
+        ret = True
+    except Exception as ex:
+        ret, response = False, {'err_msg' : str(ex)}
+        logger.error(ex)
+    return Response(json_encode({'ret': ret, 'response': response}),
+        mimetype="application/json")
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
     else:
         port = 8001
+    if 'HR_CHATBOT_SERVER_EXT_PATH' in os.environ:
+        sys.path.insert(0, os.path.expanduser(os.environ['HR_CHATBOT_SERVER_EXT_PATH']))
+        import ext
+        ext.load(app, ROOT)
     app.run(host='0.0.0.0', debug=False, use_reloader=False, port=port)

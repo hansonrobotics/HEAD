@@ -1,6 +1,7 @@
 import datetime as dt
 from collections import defaultdict
 import logging
+import os
 
 logger = logging.getLogger('hr.chatbot.server.response_cache')
 
@@ -103,13 +104,18 @@ class ResponseCache(object):
         for k in records_to_dump[0].keys():
             if k not in header:
                 header.append(k)
+
+        dirname = os.path.dirname(fname)
+        if not os.path.isdir(dirname):
+            os.makedirs(dirname)
         with open(fname, 'a') as f:
             writer = csv.DictWriter(f, header, extrasaction='ignore')
             writer.writeheader()
             writer.writerows(records_to_dump)
             logger.info("Dumpped chat history to {}".format(fname))
             self.cursor = len(all_records)
-        return True
+            return True
+        return False
 
 if __name__ == '__main__':
     cache = ResponseCache()

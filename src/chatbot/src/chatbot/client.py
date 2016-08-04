@@ -48,7 +48,7 @@ class Client(cmd.Cmd, object):
         if r.status_code != 200:
             self.stdout.write("Request error: {}\n".format(r.status_code))
         self.session = r.json().get('sid')
-        self.stdout.write("New session {}\n".format(self.session))
+        self.stdout.write("Init session {}\n".format(self.session))
 
     def ask(self, question):
         params = {
@@ -315,19 +315,24 @@ Syntax: upload package
         r = requests.get('{}/rate'.format(self.chatbot_url), params=params)
         ret = r.json().get('ret')
         response = r.json().get('response')
+        return ret, response
+
+    def do_gd(self, line):
+        ret, response = self._rate('good')
         if ret:
             self.stdout.write("[Thanks for rating]\n")
         else:
             self.stdout.write("[Rating failed]\n")
 
-    def do_gd(self, line):
-        ret, response = self._rate('good')
-
     def help_gd(self):
         self.stdout.write('Rate the last response as GOOD result\n')
 
     def do_bd(self, line):
-        self._rate('bad')
+        ret, response = self._rate('bad')
+        if ret:
+            self.stdout.write("[Thanks for rating]\n")
+        else:
+            self.stdout.write("[Rating failed]\n")
 
     def help_bd(self):
         self.stdout.write('Rate the last response as BAD result\n')
@@ -353,3 +358,22 @@ Syntax: upload package
     do_d = do_dump
     help_d = help_dump
 
+    def do_summary(self, line):
+        params = {
+            "Auth": self.key
+        }
+        r = requests.get('{}/stats'.format(self.chatbot_url), params=params)
+        ret = r.json().get('ret')
+        response = r.json().get('response')
+        if ret:
+            self.stdout.write(
+                'Customers satisfaction degree {customers_satisfaction_degree:.4f}\n'\
+                'Number of records {number_of_records}\n'\
+                'Number of rates {number_of_rates}\n'\
+                'Number of good rates {number_of_good_rates}\n'\
+                'Number of bad rates {number_of_bad_rates}\n'.format(**response))
+        else:
+            self.stdout.write(response['err_msg'])
+
+    def help_summary(self):
+        self.stdout.write('Report the summary of the chat history\n')
