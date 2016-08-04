@@ -315,19 +315,24 @@ Syntax: upload package
         r = requests.get('{}/rate'.format(self.chatbot_url), params=params)
         ret = r.json().get('ret')
         response = r.json().get('response')
+        return ret, response
+
+    def do_gd(self, line):
+        ret, response = self._rate('good')
         if ret:
             self.stdout.write("[Thanks for rating]\n")
         else:
             self.stdout.write("[Rating failed]\n")
 
-    def do_gd(self, line):
-        ret, response = self._rate('good')
-
     def help_gd(self):
         self.stdout.write('Rate the last response as GOOD result\n')
 
     def do_bd(self, line):
-        self._rate('bad')
+        ret, response = self._rate('bad')
+        if ret:
+            self.stdout.write("[Thanks for rating]\n")
+        else:
+            self.stdout.write("[Rating failed]\n")
 
     def help_bd(self):
         self.stdout.write('Rate the last response as BAD result\n')
