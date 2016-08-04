@@ -25,6 +25,11 @@ send "(load \"$HR_WORKSPACE/opencog/opencog/opencog/nlp/chatbot-psi/main.scm\")\
 # Set up the random sentence generator
 send "(markov-setup \"$MARKY_MARKOV_DIR/bin\" \"$HR_MODELS/markov_modeling\")\n"
 
+# Load the file for sentiment analysis
+if { [info exist ::env(OC_SA)] && $::env(OC_SA) == 1 } {
+    send "(load \"$HR_WORKSPACE/opencog/opencog/opencog/nlp/chatbot/loadSentiList.scm\")\n"
+}
+
 # Load the AIML rules and pickup lines
 send "(psi-halt)\n"
 send "(load \"$OC_AIML_FILE\")\n"

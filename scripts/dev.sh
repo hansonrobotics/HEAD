@@ -9,11 +9,13 @@ set -e
 
 show_help() {
 cat << EOF
-Usage: $0 [--cmt] [--oc]
+Usage: $0 [--cmt] [--oc] [--sa]
   --cmt
     Run CMT based face tracking
   --oc
     Run OpenCog based chatbot and behavior tree
+  --sa
+    Enable OpenCog NLP sentiment analysis, should run with --oc
 EOF
 }
 
@@ -26,6 +28,10 @@ while [[ $# > 0 ]]; do
         --oc)
             export OC_CHATBOT=1
             export OC_BTREE=1
+            shift
+            ;;
+       --sa)
+            export OC_SA=1
             shift
             ;;
         --help|-h)
