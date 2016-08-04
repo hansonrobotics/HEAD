@@ -19,6 +19,9 @@
 <param name="filtered_face_locations" value="filterd_face_locations"/>
 <param name="face_cascade" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
 <param name="profile_cascade" value="$(find pi_face_tracker)/params/haarcascade_profileface.xml" />
+
+<param name="clandmark" value="$(env CLANDMARK_DIR)/data/flandmark_model.xml"/>
+
 <param name="shape_predictor" value="$(env OPENFACE_DIR)/models/dlib/shape_predictor_68_face_landmarks.dat"/>
 <param name="openface" value="$(env OPENFACE_DIR)"/>
 <param name="image_locations" value="$(env HR_WORKSPACE)/HEAD/src/vision/images"/>

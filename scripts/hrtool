@@ -25,17 +25,23 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+CMAKE_DIR=$VISION_TOOL_PREFIX/cmake
+CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
-
+CMAKE_VERSION=3.6.1
 export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
+export CMAKE_PATH=$CMAKE_DIR/cmake-${CMAKE_VERSION}
 # Needed for compiling
 export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/build/libclandmark
+
 include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 include_path=$(printf "%s:" "${include_dirs[@]}")
-export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
+
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/3rd_party/CImg-1.5.6/:$CLANDMARK_DIR/3rd_party/rapidxml-1.13/:$CLANDMARK_DIR/build/:$CLANDMARK_DIR/libclandmark/:$include_path
+export LIBRARY_PATH=$LIBRARY_PATH:$CLANDMARK_DIR/build/:$CLANDMARK_DIR/libclandmark:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/build/libclandmark
+
 
 ASSUME_YES=0
 
@@ -249,7 +255,31 @@ install_vision_deps() {
     #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
     # Install dlib-models large file This is skiped as model in the openface are used to download the elements
     # git clone https://github.com/davisking/dlib-models.git
+    # Download CMAKE 3.6 to compile clandmark
+    info "Downloading CMAKE above 3 to compile clandmark"
+    if [ ! -d $CMAKE_PATH ]; then
+       wget_cache https://cmake.org/files/v3.6/cmake-3.6.1.tar.gz
+       mkdir -p $CMAKE_PATH
+       tar -xf $HR_CACHE/cmake-${CMAKE_VERSION}.tar.gz -C $CMAKE_DIR
+       cd $CMAKE_PATH
+       cmake .
+       make -j$(nproc)
+    else
+       warn "Skipping Downloading CMAKE-3.6.1 for compiling clandmark"
+    fi
 
+    # Install clandmarks
+    info "Installing clandmarks"
+    if [ ! -d $CLANDMARK_DIR ]; then
+      git clone https://github.com/uricamic/clandmark.git $CLANDMARK_DIR
+      cd $CLANDMARK_DIR
+      mkdir build
+      cd build
+      ${CMAKE_PATH}/bin/cmake ..
+      make -j$(nproc)
+    else
+      warn "Skipping clandmark installation"
+    fi
     # Install Torch
     if [ ! -d $TORCH_DIR ]; then
       git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
@@ -450,10 +480,10 @@ _do_install_deps() {
         $SUDO mkdir -p $HR_PREFIX
     fi
     $SUDO chmod 777 $HR_PREFIX
-    install_basic
-    install_ros
-    install_opencog_deps
-    install_other_deps
+#    install_basic
+#    install_ros
+#    install_opencog_deps
+#    install_other_deps
     install_vision_deps
 }
 
@@ -527,11 +557,8 @@ do_single_package() {
         catkin init
     fi
 
-    if [ "$1" == "cmt_tracker" ]; then
-      catkin build cmt_tracker_msgs cmt_tracker
-    else
-      catkin build $1
-    fi
+    catkin build $1
+
 }
 
 build_opencog() {

@@ -150,6 +150,7 @@ class face_recognizer:
     def temp_save_faces(self, cv_image, tupl, name):
         img_aligned = self.align(cv_image, tupl)
         cv2.imwrite('/tmp/' + name + ".png" , img_aligned)
+
     def move_folders(self, names_array):
         for name in names_array:
             file_loc = self.image_dir_face_temp + "/" + name
