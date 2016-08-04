@@ -21,8 +21,7 @@ CWD = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger('hr.chatbot.server.chatbot')
 
 from loader import load_characters
-DEFAULT_CHARACTER_PATH = os.path.join(CWD, 'characters')
-CHARACTER_PATH = os.environ.get('HR_CHARACTER_PATH', DEFAULT_CHARACTER_PATH)
+from config import CHARACTER_PATH
 CHARACTERS = load_characters(CHARACTER_PATH)
 
 def get_character(id, lang=None):

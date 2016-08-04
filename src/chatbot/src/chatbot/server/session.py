@@ -1,14 +1,11 @@
-from response_cache import ResponseCache
 import threading
 import time
 import os
 import datetime as dt
 import logging
 import uuid
-
-SESSION_RESET_TIMEOUT = 120 # Timeout seconds for a session to be reset
-SESSION_REMOVE_TIMEOUT = 600 # Timeout seconds for a session to be removed
-HISTORY_DIR = os.path.expanduser('~/.hr/chatbot/history')
+from config import HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
+from response_cache import ResponseCache
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
@@ -24,9 +21,13 @@ class Session(object):
         self.characters = []
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
+        self.removed = False
 
     def add(self, question, answer, **kwargs):
-        self.cache.add(question, answer, **kwargs)
+        if not self.removed:
+            self.cache.add(question, answer, **kwargs)
+            return True
+        return False
 
     def rate(self, rate, idx):
         self.cache.rate(rate, idx)
@@ -50,14 +51,14 @@ class Session(object):
     def get_session_data(self):
         return self.sdata
 
-    def since_idle(self):
+    def since_idle(self, since):
         if self.cache.last_time is not None:
-            return (dt.datetime.now() - self.cache.last_time).seconds
+            return (since - self.cache.last_time).total_seconds()
         else:
-            return (dt.datetime.now() - self.created).seconds
+            return (since - self.created).total_seconds()
 
-    def since_reset(self):
-        return (dt.datetime.now() - self.init).seconds
+    def since_reset(self, since):
+        return (since - self.init).total_seconds()
 
     def __repr__(self):
         return "<Session {} init {} active {}>".format(
@@ -75,14 +76,15 @@ class Locker(object):
 
 class SessionManager(object):
 
-    def __init__(self):
+    def __init__(self, auto_clean=True):
         self._sessions = dict()
         self._users = dict()
+        self._locker = Locker()
         self._session_cleaner = threading.Thread(
             target=self._clean_sessions, name="SessionCleaner")
-        self._locker = Locker()
         self._session_cleaner.daemon = True
-        self._session_cleaner.start()
+        if auto_clean:
+            self._session_cleaner.start()
 
     def _threadsafe(f):
         def wrap(self, *args, **kwargs):
@@ -99,10 +101,11 @@ class SessionManager(object):
         self._sessions[sid] = Session(sid)
 
     @_threadsafe
-    def _remove_session(self, sid):
+    def remove_session(self, sid):
         if sid in self._sessions:
             session = self._sessions.pop(sid)
             session.dump()
+            session.removed = True
             del session
 
     def reset_session(self, sid):
@@ -132,18 +135,19 @@ class SessionManager(object):
     def _clean_sessions(self):
         while True:
             reset_sessions, remove_sessions = [], []
+            since = dt.datetime.now()
             for sid, s in self._sessions.iteritems():
-                if s.since_reset() > SESSION_RESET_TIMEOUT:
+                if s.since_reset(since) > SESSION_RESET_TIMEOUT:
                     reset_sessions.append(sid)
-                if s.since_idle() > SESSION_REMOVE_TIMEOUT:
+                if s.since_idle(since) > SESSION_REMOVE_TIMEOUT:
                     remove_sessions.append(sid)
             for sid in reset_sessions:
                 self.reset_session(sid)
                 logger.info("Reset session {}".format(sid))
             for sid in remove_sessions:
-                self._remove_session(sid)
+                self.remove_session(sid)
                 logger.info("Removed session {}".format(sid))
-            time.sleep(1)
+            time.sleep(0.1)
 
     def dump_all(self):
         fnames = []
@@ -158,19 +162,3 @@ class SessionManager(object):
         if sess and sess.dump():
             fname = sess.fname
         return fname
-
-if __name__ == '__main__':
-    session_manager = SessionManager()
-    sid = session_manager.start_session('test')
-    session = session_manager.get_session(sid)
-    print session
-    sid = session_manager.start_session('test')
-    session = session_manager.get_session(sid)
-    session.add("hello", "hello, how are you")
-    print session
-    time.sleep(4)
-    session = session_manager.get_session(sid)
-    print session
-    time.sleep(4)
-    session = session_manager.get_session(sid)
-    print session
