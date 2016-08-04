@@ -21,9 +21,13 @@ class Session(object):
         self.characters = []
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
+        self.removed = False
 
     def add(self, question, answer, **kwargs):
-        self.cache.add(question, answer, **kwargs)
+        if not self.removed:
+            self.cache.add(question, answer, **kwargs)
+            return True
+        return False
 
     def rate(self, rate, idx):
         self.cache.rate(rate, idx)
@@ -100,6 +104,7 @@ class SessionManager(object):
         if sid in self._sessions:
             session = self._sessions.pop(sid)
             session.dump()
+            session.removed = True
             del session
 
     def reset_session(self, sid):
