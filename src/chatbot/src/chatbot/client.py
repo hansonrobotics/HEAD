@@ -358,3 +358,22 @@ Syntax: upload package
     do_d = do_dump
     help_d = help_dump
 
+    def do_summary(self, line):
+        params = {
+            "Auth": self.key
+        }
+        r = requests.get('{}/stats'.format(self.chatbot_url), params=params)
+        ret = r.json().get('ret')
+        response = r.json().get('response')
+        if ret:
+            self.stdout.write(
+                'Customers satisfaction degree {customers_satisfaction_degree:.4f}\n'\
+                'Number of records {number_of_records}\n'\
+                'Number of rates {number_of_rates}\n'\
+                'Number of good rates {number_of_good_rates}\n'\
+                'Number of bad rates {number_of_bad_rates}\n'.format(**response))
+        else:
+            self.stdout.write(response['err_msg'])
+
+    def help_summary(self):
+        self.stdout.write('Report the summary of the chat history\n')
