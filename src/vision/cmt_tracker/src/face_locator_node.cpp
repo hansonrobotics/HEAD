@@ -134,9 +134,9 @@ cameramodel.fromCameraInfo(camerainfo);
 
     //Now let's filter
     merged_message cv_message = returnNoneOverlappingCV(dlib_faces,opencv_faces);
-    for(int i= 0; i < cv_message.message.objects.size(); i++)
+    for(int i= 0; i < cv_message.notoverlapedCV.size(); i++)
     {
-        cmt_face_locations.objects.push_back(cv_message.message.objects[i]);
+        cmt_face_locations.objects.push_back(cv_face_locations.objects[cv_message.notoverlapedCV[i]]);
     }
     for(int i= 0; i < cv_message.overlapedDlibCV.size(); i++)
     {
@@ -262,6 +262,8 @@ cameramodel.fromCameraInfo(camerainfo);
   }
   void Face_Detection::opencv_detector(cv::Mat opencv_img)
   {
+    std::cout<<"Reaches Here"<<std::endl;
+    cv_face_locations.objects.clear();
     cv::Mat frame_gray;
     cimg_library::CImg<unsigned char>* frm_gray = 0x0; //= new cimg_library::CImg<unsigned char>();
     cv::cvtColor(opencv_img, frame_gray, cv::COLOR_BGR2GRAY);
@@ -287,19 +289,39 @@ cameramodel.fromCameraInfo(camerainfo);
 		flandmarks->detect(frm_gray, bbox);
 		delete frm_gray;
 		landmarks = flandmarks->getLandmarks();
-//        cmt_tracker_msgs::Object face_description;
-//        face_description.object.x_offset = faces[i].x;
-//        face_description.object.y_offset = faces[i].y;
-//
-//        face_description.object.height = faces[i].height;
-//        face_description.object.width = faces[i].width;
-        opencv_faces.push_back(cv::Rect(faces[i].x,faces[i].y,faces[i].width,faces[i].height));
+
+		opencv_faces.push_back(cv::Rect(faces[i].x,faces[i].y,faces[i].width,faces[i].height));
+
+        cmt_tracker_msgs::Object face_description;
+
+        face_description.header.stamp = ros::Time::now();
+
+        face_description.object.x_offset = faces[i].x;
+        face_description.object.y_offset = faces[i].y;
+
+        face_description.object.height = faces[i].height;
+        face_description.object.width = faces[i].width;
+        opencv_apps::Point2D pt;
+
+        //TODO this has to mimick the way the dlib values come pack. That is fill the others to the value
+        pt.x = landmarks[0];
+        pt.y = landmarks[1];
+        face_description.feature_point.points.push_back(pt);
+        for (int j=2; j< 2*flandmarks->getLandmarksCount(); i+=2)
+        {
+
+        pt.x = landmarks[i];
+        pt.y = landmarks[i+1];
+        face_description.feature_point.points.push_back(pt);
+        }
+
+        face_description.tool_used_for_detection.data = "opencv";
 //        face_description.object.id.data = counter;
 //        counter++;
 
 //        face_description.obj_states.data = "Neutral";
 
-        //cv_face_locations.objects.push_back(face_description);
+        cv_face_locations.objects.push_back(face_description);
     }
   }
 
@@ -390,7 +412,7 @@ merged_message returnNoneOverlappingCV(std::vector<cv::Rect> dlib_locations, std
 {
 //This function returns non overlapped Rects for the opencv to be published
 merged_message message;
-std::vector<cv::Rect> non_overlaped_rects;
+std::vector<int> non_overlaped_rects;
 std::vector<int> string_val;
   for (int i = 0; i < opencv_locs.size(); i++)
     {
@@ -413,11 +435,12 @@ std::vector<int> string_val;
     }
 
     if(!overlap)
-    non_overlaped_rects.push_back(opencv_locs[i]);
+    non_overlaped_rects.push_back(i);
 
     }
-    message.message = convert(non_overlaped_rects);
+    //message.message = convert(non_overlaped_rects);
     message.overlapedDlibCV = string_val;
+    message.notoverlapedCV = non_overlaped_rects;
     return message;
 }
 

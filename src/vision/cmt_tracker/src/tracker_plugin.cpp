@@ -259,6 +259,15 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
       x1.y = (*v).feature_point.points[67].y;
     cv::line(image,x1,x0,cv::Scalar(255,0,0));
     }
+   if(pose && (*v).feature_point.points.size() == 8)
+   {
+   		cv::circle(image, cv::Point(int((*v).feature_point.points[0].x), int((*v).feature_point.points[0].y)), 2, cv::Scalar(255, 0, 0), -1);
+		for (int i=1; i < (*v).feature_point.points.size(); i++)
+		{
+			cv::circle(image, cv::Point(int((*v).feature_point.points[i].x), int((*v).feature_point.points[i].y)), 2, cv::Scalar(0, 0, 255), -1);
+		}
+   }
+
     cv::Mat mat = image(cv::Rect((*v).object.x_offset, (*v).object.y_offset,
        (*v).object.width, (*v).object.height));
     mat_images.push_back(mat);

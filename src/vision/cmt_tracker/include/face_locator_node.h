@@ -53,8 +53,9 @@
 
 namespace face_detect {
 struct merged_message{
-   cmt_tracker_msgs::Objects message;
+   //cmt_tracker_msgs::Objects message;
    std::vector<int> overlapedDlibCV;
+   std::vector<int> notoverlapedCV;
 };
 // Anthropometric for male adult
 // Relative position of various facial feature relative to sellion

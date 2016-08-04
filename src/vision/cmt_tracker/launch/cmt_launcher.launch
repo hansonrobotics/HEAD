@@ -46,6 +46,7 @@
 <!--<node name="camera_transform" pkg="tf" type="static_transform_publisher" args="0.1 0 0 1.57 0 1. /base_footprint $(arg head_tracking_frame) 100"/>-->
 
 <arg name="debug" default="False"/>
+<arg name="debug_" default="True"/>
 
 <group if="$(arg choose_web_cam)">
     <param name= "usb_cam/pixel_format" value="yuyv"/>
@@ -56,7 +57,7 @@
 </group>
 
 
-<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node"/>
+
 <group unless="$(arg offline)">
 <group if="$(arg cmt)">
 
@@ -65,8 +66,19 @@
 <!--launch-prefix="xterm -e gdb -ex run respawn="true"launch-prefix="xterm -e valgrind -leak-check=full" "-->
 </group>
 
+<group if="$(arg debug_)">
+<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node" respawn="true" output="screen" launch-prefix="xterm -e gdb -ex run"/>
+<!--launch-prefix="xterm -e gdb -ex run respawn="true"launch-prefix="xterm -e valgrind -leak-check=full" "-->
+</group>
+
+
+
 <group unless="$(arg debug)">
 <node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node"  required="true"/>
+</group>
+
+<group unless="$(arg debug_)">
+<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node" required="true"/>
 </group>
 
 <node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py"  output="screen" />
