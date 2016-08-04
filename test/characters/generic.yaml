@@ -1,0 +1,10 @@
+id:
+    generic
+name:
+    generic
+weight:
+    1
+level:
+    93
+aiml:
+    - generic.aiml
