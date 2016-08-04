@@ -23,7 +23,10 @@ class Client(cmd.Cmd, object):
         self.lang = 'en'
         self.session = None
         self.last_response = None
-        self.do_conn()
+        if self.ping():
+            self.do_conn()
+        else:
+            self.stdout.write("Chatbot server is not responding. Server url {}\n".format(self.chatbot_url))
 
     def set_sid(self):
         params = {
@@ -142,7 +145,7 @@ class Client(cmd.Cmd, object):
                 self.stdout.write("Wrong conn argument\n")
                 self.help_conn()
                 return
-        self.stdout.write("Connecting.")
+        self.stdout.write("Connecting {}\n".format(self.chatbot_url))
         self.set_sid()
 
     def help_conn(self):
