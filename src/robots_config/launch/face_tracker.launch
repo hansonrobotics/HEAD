@@ -12,7 +12,7 @@
     <arg name="testing" default="False"/>
     <arg name="viz" default="False"/>
     <arg name="offline" default="False"/>
-    <arg name="one_camera_setup" default="False"/>
+    <arg name="one_camera_setup" default="True"/>
     <group if="$(arg one_camera_setup)">
     <group unless="$(arg testing)">
     <node pkg="usb_cam" type="usb_cam_node" name="camera">
