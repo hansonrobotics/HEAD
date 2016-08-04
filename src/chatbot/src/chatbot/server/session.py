@@ -51,14 +51,14 @@ class Session(object):
     def get_session_data(self):
         return self.sdata
 
-    def since_idle(self):
+    def since_idle(self, since):
         if self.cache.last_time is not None:
-            return (dt.datetime.now() - self.cache.last_time).seconds
+            return (since - self.cache.last_time).total_seconds()
         else:
-            return (dt.datetime.now() - self.created).seconds
+            return (since - self.created).total_seconds()
 
-    def since_reset(self):
-        return (dt.datetime.now() - self.init).seconds
+    def since_reset(self, since):
+        return (since - self.init).total_seconds()
 
     def __repr__(self):
         return "<Session {} init {} active {}>".format(
@@ -100,7 +100,7 @@ class SessionManager(object):
         self._sessions[sid] = Session(sid)
 
     @_threadsafe
-    def _remove_session(self, sid):
+    def remove_session(self, sid):
         if sid in self._sessions:
             session = self._sessions.pop(sid)
             session.dump()
@@ -134,18 +134,19 @@ class SessionManager(object):
     def _clean_sessions(self):
         while True:
             reset_sessions, remove_sessions = [], []
+            since = dt.datetime.now()
             for sid, s in self._sessions.iteritems():
-                if s.since_reset() > SESSION_RESET_TIMEOUT:
+                if s.since_reset(since) > SESSION_RESET_TIMEOUT:
                     reset_sessions.append(sid)
-                if s.since_idle() > SESSION_REMOVE_TIMEOUT:
+                if s.since_idle(since) > SESSION_REMOVE_TIMEOUT:
                     remove_sessions.append(sid)
             for sid in reset_sessions:
                 self.reset_session(sid)
                 logger.info("Reset session {}".format(sid))
             for sid in remove_sessions:
-                self._remove_session(sid)
+                self.remove_session(sid)
                 logger.info("Removed session {}".format(sid))
-            time.sleep(1)
+            time.sleep(0.1)
 
     def dump_all(self):
         fnames = []
