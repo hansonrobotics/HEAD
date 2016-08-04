@@ -237,9 +237,8 @@ def _dump_session():
         data = request.args
         sid = data.get('session')
         fname = dump_session(sid)
-        hist_dir = os.path.expanduser('~/.hr/chatbot/history/')
         if fname:
-            return send_from_directory(hist_dir, os.path.basename(fname))
+            return send_from_directory(os.path.dirname(fname), os.path.basename(fname))
         else:
             return '', 404
     except Exception as ex:
