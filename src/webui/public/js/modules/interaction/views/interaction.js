@@ -270,7 +270,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                         this.speechPaused = true;
                         this.disableSpeech();
                     }
-                } else if ((msg.data != 'start') && this.speechPaused) {
+                } else if ((msg.data == 'stop') && this.speechPaused) {
                     this.enableSpeech();
                 }
             },
