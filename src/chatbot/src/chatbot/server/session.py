@@ -162,19 +162,3 @@ class SessionManager(object):
         if sess and sess.dump():
             fname = sess.fname
         return fname
-
-if __name__ == '__main__':
-    session_manager = SessionManager()
-    sid = session_manager.start_session('test')
-    session = session_manager.get_session(sid)
-    print session
-    sid = session_manager.start_session('test')
-    session = session_manager.get_session(sid)
-    session.add("hello", "hello, how are you")
-    print session
-    time.sleep(4)
-    session = session_manager.get_session(sid)
-    print session
-    time.sleep(4)
-    session = session_manager.get_session(sid)
-    print session
