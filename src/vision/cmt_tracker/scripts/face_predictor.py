@@ -9,18 +9,19 @@ import message_filters
 
 from cmt_tracker_msgs.msg import Trackers,Tracker,Objects
 from cmt_tracker_msgs.srv import TrackerNames
-from cmt_tracker_msgs.cfg import RecogntionConfig
+from cmt_tracker_msgs.cfg import RecognitionConfig
 
 from dynamic_reconfigure.server import Server
 
 from openface_wrapper import face_recognizer
-from image_scraper import image_scaper
+
 from pi_face_tracker.msg import FaceEvent
 class face_predictor:
     def __init__(self):
         rospy.init_node('face_recognizer', anonymous=True)
         self.image_scraper_enable = rospy.get_param('image_scraper')
         if self.image_scraper_enable != 0:
+            from image_scraper import image_scaper
             self.user_agents = rospy.get_param('user_agents')
             self.image_scraper = image_scaper(self.user_agents)
 
@@ -39,7 +40,7 @@ class face_predictor:
         self.temp_sub = message_filters.Subscriber('temporary_trackers',Trackers)
         ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub,self.temp_sub], 1,0.25)
         ts.registerCallback(self.callback)
-        self.srv = Server(RecogntionConfig, self.sample_callback)
+        self.srv = Server(RecognitionConfig, self.sample_callback)
         self.faces_cmt_overlap = {}
         self.logger = logging.getLogger('hr.cmt_tracker.face_reinforcer_node')
         #This would hold the trackers that the system would hold.
@@ -56,6 +57,9 @@ class face_predictor:
             query_only = rospy.get_param('query_only', True)
             if query_only:
                 print("Operating in Query Mode There is Model so No Queries would happen")
+                rospy.signal_shutdown("Query Mode; No Model Found. Shutting Down Node")
+        else:
+            print ("Classifier Found")
 
         self.state ={'query_save': '00', 'save_only': '01','query_only': '10', 'ignore': '11'}
         #format
@@ -105,7 +109,7 @@ class face_predictor:
             #print(self.cmt_tracker_instances)
             if self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
-                print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
+                # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
 
 
             elif not query_only and (self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']):
@@ -113,7 +117,7 @@ class face_predictor:
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
                 self.queryAddResults(cv_image, tupl, key, self.confidence)
-                print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
+                # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
                 if key not in self.google_query:
                     self.face_recognizer.temp_save_faces(cv_image, tupl, key)
                     self.google_query.append(key)
@@ -128,8 +132,8 @@ class face_predictor:
 
                 if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
                     max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'], key=self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].get)
-                    print("openface output results: ")
-                    print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
+                    # print("openface output results: ")
+                    # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
                     if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index] > self.num_positive:
                         try:
                             self.upt = rospy.ServiceProxy('recognition', TrackerNames)

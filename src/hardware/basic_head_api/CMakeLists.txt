@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions
@@ -70,6 +71,11 @@ generate_messages(
   DEPENDENCIES
   std_msgs
 )
+
+generate_dynamic_reconfigure_options(
+  cfg/arms.cfg
+)
+
 
 ###################################
 ## catkin specific configuration ##

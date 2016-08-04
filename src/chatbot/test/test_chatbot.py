@@ -9,9 +9,9 @@ import subprocess
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 
-server_path = os.path.join(CWD, '../src/server')
+server_path = os.path.join(CWD, '../scripts')
 PORT = '8002'
-cmd = ['python', 'run.py', PORT]
+cmd = ['python', 'run_server.py', PORT]
 proc = subprocess.Popen(cmd, cwd=server_path, preexec_fn=os.setsid)
 def shutdown():
     if proc:
@@ -23,14 +23,14 @@ class ChatbotTest(unittest.TestCase):
 
     def test_pyaiml(self):
         script = os.path.join(CWD, os.path.sep.join(
-            ['..', 'src', 'aiml', 'Kernel.py']))
+            ['..', 'src', 'chatbot', 'aiml', 'Kernel.py']))
         cmd = 'python '+script
         ret = os.system(cmd)
         self.assertTrue(ret==0)
 
     def test_prologue(self):
-        from server.client import Client
-        cli = Client()
+        from chatbot.client import Client
+        cli = Client('test_client', 'AAAAB3NzaC')
         cli.do_conn('localhost:'+PORT)
         while not cli.ping():
             time.sleep(1)
