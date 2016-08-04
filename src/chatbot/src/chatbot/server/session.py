@@ -76,14 +76,15 @@ class Locker(object):
 
 class SessionManager(object):
 
-    def __init__(self):
+    def __init__(self, auto_clean=True):
         self._sessions = dict()
         self._users = dict()
+        self._locker = Locker()
         self._session_cleaner = threading.Thread(
             target=self._clean_sessions, name="SessionCleaner")
-        self._locker = Locker()
         self._session_cleaner.daemon = True
-        self._session_cleaner.start()
+        if auto_clean:
+            self._session_cleaner.start()
 
     def _threadsafe(f):
         def wrap(self, *args, **kwargs):
