@@ -9,6 +9,7 @@ import subprocess
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 
+os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
 server_path = os.path.join(CWD, '../scripts')
 PORT = '8002'
 cmd = ['python', 'run_server.py', PORT]
@@ -17,7 +18,6 @@ def shutdown():
     if proc:
         os.killpg(proc.pid, 2)
 atexit.register(shutdown)
-sys.path.insert(0, os.path.join(CWD, '../src'))
 
 class ChatbotTest(unittest.TestCase):
 
@@ -31,14 +31,20 @@ class ChatbotTest(unittest.TestCase):
     def test_prologue(self):
         from chatbot.client import Client
         cli = Client('test_client', 'AAAAB3NzaC')
-        cli.do_conn('localhost:'+PORT)
+        cli.do_port(PORT)
         while not cli.ping():
             time.sleep(1)
+        cli.do_conn('localhost:'+PORT)
+        cli.do_select('generic')
+        ret, response = cli.ask('hello sophia')
+        self.assertTrue(ret == 0)
+        self.assertTrue(response.get('text') == 'Hi there from generic')
+
         cli.do_select('sophia')
-        ret, response = cli.ask('what is your name')
-        ans = response.get('text')
-        names = ['Soepheeyeh', 'Sophia']
-        self.assertTrue(any([name in ans for name in names]))
+        ret, response = cli.ask('hello sophia')
+        self.assertTrue(ret == 0)
+        self.assertTrue(response.get('text') == 'Hi there from sophia')
+
 
 if __name__ == '__main__':
     unittest.main()
