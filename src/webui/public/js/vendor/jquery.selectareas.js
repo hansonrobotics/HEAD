@@ -472,6 +472,7 @@
         // Initialize a selection layer and place it above the outline layer
         $selection = $("<div />")
             .addClass("select-areas-background-area")
+            .attr('data-area-id', id)
             .css({
                 background: "#fff url(" + $image.attr("src") + ") no-repeat",
                 backgroundSize: $image.width() + "px",

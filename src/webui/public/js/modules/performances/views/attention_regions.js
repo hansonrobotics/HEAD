@@ -37,8 +37,11 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
             enableTypeSelect: function () {
                 var self = this;
                 api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
-                    _.each(regions, function (name, key) {
-                        self.ui.typeSelect.append($('<option>').attr('value', key).html(name));
+                    var regionIds = _.keys(regions);
+                    self.lastType = regionIds.length ? regionIds[0] : null;
+                    self.regions = regions;
+                    _.each(regions, function (data, key) {
+                        self.ui.typeSelect.append($('<option>').attr('value', key).html(data.label));
                     });
                 });
                 this.ui.typeSelect.select2();
@@ -53,17 +56,15 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
                     width: this.width,
                     allowDisplayId: false
                 }).on('changed', function (event, id) {
-                    console.log(event);
-                    console.log(id);
                     var model = self.collection.get(id),
                         area = self.areaToJSON(_.findWhere(self.ui.areaselect.selectAreas('relativeAreas'), {id: id}));
-
-                    if (model && area)
+                    if (model && area) {
                         model.set(area);
-                    else if (model)
+                        self.lastType = model.get('type');
+                    } else if (model)
                         self.collection.remove(model);
-                    else if (area)
-                        self.collection.add(area);
+                    else if (area && self.lastType)
+                        self.collection.add(_.extend(area, {type: self.lastType}));
 
                     self.setActiveRegion(id);
                 });
@@ -85,6 +86,17 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
                 self.collection.each(function (area, i) {
                     area.set('id', i);
                     self.ui.areaselect.selectAreas('add', self.jsonToArea(area.toJSON()));
+                });
+                this.updateColors();
+            },
+            updateColors: function () {
+                var self = this;
+                _.each(this.regions, function (r, key) {
+                    if (r['color'])
+                        _.each(self.collection.where({type: key}), function (area) {
+                            console.log($('[data-area-id="' + area.get('id') + '"]', self.ui.container));
+                            $('[data-area-id="' + area.get('id') + '"]', self.ui.container).css('background', r['color']);
+                        });
                 });
             },
             save: function () {
@@ -116,17 +128,14 @@ define(['application', 'marionette', 'tpl!./templates/attention_regions.tpl', '.
                     $('.select2-container.app-region-type', this.el).fadeOut();
                 }
             },
-            selectType: function () {
-                var type = this.ui.typeSelect.val(),
-                    model = this.collection.findWhere({type: type});
-
-                if (model) this.ui.areaselect.selectAreas('focus', model.id);
-            },
             updateType: function () {
                 if (this.lastId != null) {
                     var region = this.collection.get(this.lastId);
-                    if (region)
-                        region.set('type', this.ui.typeSelect.val());
+                    if (region) {
+                        this.lastType = this.ui.typeSelect.val();
+                        region.set('type', this.lastType);
+                    }
+                    this.updateColors();
                 }
             },
             areaToJSON: function (area) {
