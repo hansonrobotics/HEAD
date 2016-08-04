@@ -1,3 +1,5 @@
+#
+#
 # Implements ROS node to convert from ROS messages to the
 # blender API defined in rigAPI.py.  The actual commands
 # are transmitted to blender using the CommandListener.
@@ -206,7 +208,7 @@ class CommandWrappers:
     def getEmotionStates():
         return msg.EmotionStates([
             # Emotion state has no current duration
-            msg.EmotionState(name, vals['magnitude'], 0)
+            msg.EmotionState(name, vals['magnitude'], rospy.Duration.from_sec(0))
             for name, vals in api.getEmotionStates().items()
         ])
 
