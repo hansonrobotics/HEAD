@@ -45,6 +45,50 @@ class ChatbotTest(unittest.TestCase):
         self.assertTrue(ret == 0)
         self.assertTrue(response.get('text') == 'Hi there from sophia')
 
+    def test_session_manager(self):
+        from chatbot.server.session import SessionManager
+        session_manager = SessionManager(False)
+        sid = session_manager.start_session(user='test')
+        session = session_manager.get_session(sid)
+        self.assertIsNotNone(session)
+        self.assertIsNone(session.cache.last_time)
+
+        self.assertTrue(session.add("hi", "hi there"))
+        self.assertIsNotNone(session.cache.last_time)
+
+        session_manager.reset_session(sid)
+        self.assertIsNotNone(session)
+        self.assertIsNone(session.cache.last_time)
+
+        session_manager.remove_session(sid)
+        self.assertFalse(session.add("hi", "hi there"))
+        session = session_manager.get_session(sid)
+        self.assertIsNone(session)
+
+    def test_session_manager_auto(self):
+        import chatbot.server.config
+        chatbot.server.config.SESSION_RESET_TIMEOUT = 1
+        chatbot.server.config.SESSION_REMOVE_TIMEOUT = 2
+        from chatbot.server.session import SessionManager
+        reload(chatbot.server.session)
+
+        session_manager = SessionManager(True)
+        sid = session_manager.start_session(user='test')
+        session = session_manager.get_session(sid)
+        self.assertIsNotNone(session)
+        self.assertIsNone(session.cache.last_time)
+
+        self.assertTrue(session.add("hi", "hi there"))
+        self.assertIsNotNone(session.cache.last_time)
+
+        time.sleep(1.5)
+        self.assertIsNotNone(session)
+        self.assertIsNone(session.cache.last_time)
+
+        time.sleep(1)
+        self.assertFalse(session.add("hi", "hi there"))
+        session = session_manager.get_session(sid)
+        self.assertIsNone(session)
 
 if __name__ == '__main__':
     unittest.main()
