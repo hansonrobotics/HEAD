@@ -1,14 +1,11 @@
-from response_cache import ResponseCache
 import threading
 import time
 import os
 import datetime as dt
 import logging
 import uuid
-
-SESSION_RESET_TIMEOUT = 120 # Timeout seconds for a session to be reset
-SESSION_REMOVE_TIMEOUT = 600 # Timeout seconds for a session to be removed
-HISTORY_DIR = os.path.expanduser('~/.hr/chatbot/history')
+from config import HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
+from response_cache import ResponseCache
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
