@@ -48,7 +48,7 @@ class Client(cmd.Cmd, object):
         if r.status_code != 200:
             self.stdout.write("Request error: {}\n".format(r.status_code))
         self.session = r.json().get('sid')
-        self.stdout.write("New session {}\n".format(self.session))
+        self.stdout.write("Init session {}\n".format(self.session))
 
     def ask(self, question):
         params = {

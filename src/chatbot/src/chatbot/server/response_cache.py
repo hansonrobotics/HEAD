@@ -114,7 +114,8 @@ class ResponseCache(object):
             writer.writerows(records_to_dump)
             logger.info("Dumpped chat history to {}".format(fname))
             self.cursor = len(all_records)
-        return True
+            return True
+        return False
 
 if __name__ == '__main__':
     cache = ResponseCache()

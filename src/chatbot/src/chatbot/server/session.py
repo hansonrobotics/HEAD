@@ -8,7 +8,8 @@ import uuid
 
 SESSION_RESET_TIMEOUT = 120 # Timeout seconds for a session to be reset
 SESSION_REMOVE_TIMEOUT = 600 # Timeout seconds for a session to be removed
-DIRNAME = os.path.expanduser('~/.hr/chatbot/history')
+HISTORY_DIR = os.path.expanduser('~/.hr/chatbot/history')
+
 logger = logging.getLogger('hr.chatbot.server.session')
 
 class SessionData(object): pass
@@ -21,6 +22,8 @@ class Session(object):
         self.created = dt.datetime.now()
         self.init = self.created
         self.characters = []
+        dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
+        self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
 
     def add(self, question, answer, **kwargs):
         self.cache.add(question, answer, **kwargs)
@@ -42,12 +45,7 @@ class Session(object):
         return self.cache.check(question, answer, lang)
 
     def dump(self):
-        dirname = os.path.join(DIRNAME, self.created.strftime('%Y%m%d'))
-        fname = os.path.join(dirname, '{}.csv'.format(self.sid))
-        if self.cache.dump(fname):
-            return fname
-        else:
-            return None
+        return self.cache.dump(self.fname)
 
     def get_session_data(self):
         return self.sdata
@@ -150,16 +148,15 @@ class SessionManager(object):
     def dump_all(self):
         fnames = []
         for sid, sess in self._sessions.iteritems():
-            fname = sess.dump()
-            if fname:
-                fnames.append(fname)
+            if sess and sess.dump():
+                fnames.append(sess.fname)
         return fnames
 
     def dump(self, sid):
         fname = None
         sess = self._sessions.get(sid)
-        if sess:
-            fname = sess.dump()
+        if sess and sess.dump():
+            fname = sess.fname
         return fname
 
 if __name__ == '__main__':
