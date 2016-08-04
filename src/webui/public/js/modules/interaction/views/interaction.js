@@ -465,15 +465,19 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
 
                     };
                     this.speechRecognition.onend = function () {
-                        if (self.speechEnabled && self.speechRecognition) {
-                            var timeSinceLastStart = new Date().getTime() - self.speechStarted;
+                        if (self.speechEnabled) {
+                            if (self.speechRecognition) {
+                                var timeSinceLastStart = new Date().getTime() - self.speechStarted;
 
-                            if (timeSinceLastStart < 1000) {
-                                setTimeout(function () {
+                                if (timeSinceLastStart < 1000) {
+                                    setTimeout(function () {
+                                        self.speechRecognition.start();
+                                    }, 1000);
+                                } else {
                                     self.speechRecognition.start();
-                                }, 1000);
+                                }
                             } else {
-                                self.speechRecognition.start();
+                                self.enableWebspeech();
                             }
                         } else {
                             console.log('end of speech');
