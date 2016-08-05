@@ -266,7 +266,10 @@ def _stats():
                 dirname = os.path.basename(d)
                 if (today-dt.datetime.strptime(dirname, '%Y%m%d')).days < days:
                     for fname in glob.glob('{}/{}/*.csv'.format(HISTORY_DIR, dirname)):
-                        dfs.append(pd.read_csv(fname))
+                        try:
+                            dfs.append(pd.read_csv(fname))
+                        except Exception as ex:
+                            logger.warn("Reading {} error: {}".format(fname, ex))
         df = pd.concat(dfs, ignore_index=True)
         df = df[df.Datetime != 'Datetime'].sort(['User', 'Datetime'])
         stats_csv = '{}/last_{}_days.csv'.format(HISTORY_DIR, days)
