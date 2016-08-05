@@ -34,7 +34,7 @@ class Session(object):
         return False
 
     def rate(self, rate, idx):
-        self.cache.rate(rate, idx)
+        return self.cache.rate(rate, idx)
 
     def reset(self):
         self.active = False

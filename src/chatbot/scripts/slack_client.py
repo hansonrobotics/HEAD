@@ -120,7 +120,8 @@ class HRSlackBot(SlackClient):
                     'users.info', token=SLACKTEST_TOKEN, user=message['user'])
                 if not usr_obj['ok']:
                     continue
-                name = usr_obj['user']['profile']['first_name']
+                profile = usr_obj['user']['profile']
+                name = profile.get('first_name') or profile.get('email')
                 question = message.get('text')
                 channel = message.get('channel')
 
