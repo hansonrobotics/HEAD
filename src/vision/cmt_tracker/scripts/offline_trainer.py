@@ -122,7 +122,7 @@ class OfflineViewer:
                 #Now let's query every single time to which results group it belongs to and box output the result
                 if not self.save_faces:
                     result = self.face_recognizer.immediate_results(cv_image, tupl,i.tool_used_for_detection.data)
-                    print(str(result) + str(i.tool_used_for_detection.data))
+                    print(str(result) + " <-> "+ str(i.tool_used_for_detection.data))
                     font = cv2.FONT_HERSHEY_COMPLEX_SMALL
                     cv2.rectangle(cv_image, (i.object.x_offset, i.object.y_offset),
                                   (i.object.x_offset + i.object.width, i.object.y_offset + i.object.width), (255, 0, 0))
@@ -130,7 +130,7 @@ class OfflineViewer:
                 else:
                     if (self.image_sample_size > 0):
 
-                        self.face_recognizer.save_faces(cv_image,tupl,self.generate_unique,str(self.image_sample_size),opencv=i.tool_used_for_detection.data)
+                        self.face_recognizer.save_faces(cv_image,tupl,self.generate_unique,str(self.image_sample_size),i.tool_used_for_detection.data)
                         cv2.rectangle(cv_image, (i.object.x_offset, i.object.y_offset),
                                       (i.object.x_offset + i.object.width, i.object.y_offset + i.object.width),
                                       (255, 0, 0))

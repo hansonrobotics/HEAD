@@ -134,7 +134,9 @@ class face_recognizer:
             npLandmarksIndices = np.array(self.outer_eyes_and_nose)
         else:
             npLandmarksIndices = np.array(self.clandmark_outer_eyes_and_nose)
-
+        # print()
+        # print(opencv)
+        # print(npLandmarks[npLandmarksIndices])
         H = cv2.getAffineTransform(npLandmarks[npLandmarksIndices],
                                        96 * MINMAX_TEMPLATE[npLandmarksIndices])
         thumbnail = cv2.warpAffine(img, H, (96, 96))
@@ -156,6 +158,8 @@ class face_recognizer:
         img_aligned = self.align(cv_image, tupl,opencv=opencv)
         # Here let's create a method that it generated a name for itself.
         cv2.imwrite(self.image_dir_face_temp + "/" +loc_save + "/" + postfix + ".png", img_aligned)
+        # cv2.imshow("window",img_aligned)
+        # cv2.waitKey(0)
         self.logger.info("saved faces %s",loc_save + "_" + postfix + ".png")
 
     def temp_save_faces(self, cv_image, tupl, name,tool_used):
