@@ -61,7 +61,13 @@ class ResponseCache(object):
         self.last_time = time
 
     def rate(self, rate, idx):
-        self.record[idx]['Rate'] = rate
+        all_records = self.staged_record + self.record
+        if idx < 0:
+            idx = len(all_records) + idx
+        if idx >= self.cursor:
+            all_records[idx]['Rate'] = rate
+            return True
+        return False
 
     def contain(self, question, answer):
         question=self._norm(question)

@@ -206,7 +206,7 @@ def rate_answer(sid, idx, rate):
         logger.error("Session doesn't exist")
         return False
     try:
-        sess.rate(rate, idx)
+        return sess.rate(rate, idx)
     except Exception as ex:
         logger.error("Rate error: {}".format(ex))
         return False
