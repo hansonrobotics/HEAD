@@ -78,13 +78,25 @@ class ChatbotTest(unittest.TestCase):
         self.assertIsNotNone(session)
         self.assertIsNone(session.cache.last_time)
 
+        # session cache should have record
         self.assertTrue(session.add("hi", "hi there"))
         self.assertIsNotNone(session.cache.last_time)
 
+        # session should be resetted
         time.sleep(1.5)
+        session = session_manager.get_session(sid)
         self.assertIsNotNone(session)
         self.assertIsNone(session.cache.last_time)
 
+        # session should be reactivated
+        self.assertTrue(session.add("hi", "hi there"))
+        self.assertIsNotNone(session.cache.last_time)
+        time.sleep(1.5)
+        session = session_manager.get_session(sid)
+        self.assertIsNotNone(session)
+        self.assertIsNone(session.cache.last_time)
+
+        # session should be removed
         time.sleep(1)
         self.assertFalse(session.add("hi", "hi there"))
         session = session_manager.get_session(sid)
