@@ -22,12 +22,14 @@ class Session(object):
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
         self.removed = False
+        self.active = False
         self.last_active_time = None
 
     def add(self, question, answer, **kwargs):
         if not self.removed:
             self.cache.add(question, answer, **kwargs)
             self.last_active_time = self.cache.last_time
+            self.active = True
             return True
         return False
 
@@ -35,6 +37,7 @@ class Session(object):
         self.cache.rate(rate, idx)
 
     def reset(self):
+        self.active = False
         self.dump()
         self.cache.clean()
         self.init = dt.datetime.now()
@@ -106,11 +109,14 @@ class SessionManager(object):
             session.dump()
             session.removed = True
             del session
+            logger.info("Removed session {}".format(sid))
 
     def reset_session(self, sid):
         if sid in self._sessions:
             session = self._sessions.get(sid)
-            session.reset()
+            if session.active:
+                session.reset()
+                logger.info("Resetted session {}".format(sid))
 
     def get_session(self, sid):
         if sid is not None:
@@ -142,10 +148,8 @@ class SessionManager(object):
                     remove_sessions.append(sid)
             for sid in reset_sessions:
                 self.reset_session(sid)
-                logger.info("Reset session {}".format(sid))
             for sid in remove_sessions:
                 self.remove_session(sid)
-                logger.info("Removed session {}".format(sid))
             time.sleep(0.1)
 
     def dump_all(self):
