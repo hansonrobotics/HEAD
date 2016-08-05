@@ -22,10 +22,12 @@ class Session(object):
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
         self.removed = False
+        self.last_active_time = None
 
     def add(self, question, answer, **kwargs):
         if not self.removed:
             self.cache.add(question, answer, **kwargs)
+            self.last_active_time = self.cache.last_time
             return True
         return False
 
@@ -52,8 +54,8 @@ class Session(object):
         return self.sdata
 
     def since_idle(self, since):
-        if self.cache.last_time is not None:
-            return (since - self.cache.last_time).total_seconds()
+        if self.last_active_time is not None:
+            return (since - self.last_active_time).total_seconds()
         else:
             return (since - self.created).total_seconds()
 
