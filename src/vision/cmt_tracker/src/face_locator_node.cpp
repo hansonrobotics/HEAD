@@ -304,13 +304,13 @@ cameramodel.fromCameraInfo(camerainfo);
         opencv_apps::Point2D pt;
 
         //TODO this has to mimick the way the dlib values come pack. That is fill the others to the value
-        pt.x = landmarks[0];
-        pt.y = landmarks[1];
+        pt.x = int(landmarks[0]);
+        pt.y = int(landmarks[1]);
         face_description.feature_point.points.push_back(pt);
         for (int j=2; j< 2*flandmarks->getLandmarksCount(); j+=2)
         {
-        pt.x = landmarks[j];
-        pt.y = landmarks[j+1];
+        pt.x = int(landmarks[j]);
+        pt.y = int(landmarks[j+1]);
         face_description.feature_point.points.push_back(pt);
         }
 

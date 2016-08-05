@@ -134,12 +134,14 @@ class face_recognizer:
             npLandmarksIndices = np.array(self.outer_eyes_and_nose)
         else:
             npLandmarksIndices = np.array(self.clandmark_outer_eyes_and_nose)
-        # print()
-        # print(opencv)
-        # print(npLandmarks[npLandmarksIndices])
+        print
+        print(opencv)
+        print(npLandmarks[npLandmarksIndices])
         H = cv2.getAffineTransform(npLandmarks[npLandmarksIndices],
-                                       96 * MINMAX_TEMPLATE[npLandmarksIndices])
+                                       96 * MINMAX_TEMPLATE[self.outer_eyes_and_nose])
         thumbnail = cv2.warpAffine(img, H, (96, 96))
+        # cv2.imshow("window",thumbnail)
+        # cv2.waitKey(33)
         if (net):
             thumbnail = self.net.forward(thumbnail).reshape(1, -1)
             return thumbnail
