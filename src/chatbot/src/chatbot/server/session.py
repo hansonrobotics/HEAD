@@ -59,9 +59,6 @@ class Session(object):
         else:
             return (since - self.created).total_seconds()
 
-    def since_reset(self, since):
-        return (since - self.init).total_seconds()
-
     def __repr__(self):
         return "<Session {} init {} active {}>".format(
             self.sid, self.init, self.cache.last_time)
@@ -139,7 +136,7 @@ class SessionManager(object):
             reset_sessions, remove_sessions = [], []
             since = dt.datetime.now()
             for sid, s in self._sessions.iteritems():
-                if s.since_reset(since) > SESSION_RESET_TIMEOUT:
+                if SESSION_RESET_TIMEOUT < s.since_idle(since) < SESSION_REMOVE_TIMEOUT:
                     reset_sessions.append(sid)
                 if s.since_idle(since) > SESSION_REMOVE_TIMEOUT:
                     remove_sessions.append(sid)
