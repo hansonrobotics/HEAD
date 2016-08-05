@@ -196,6 +196,7 @@ class face_predictor:
 
     def sample_callback(self,config, level):
         self.cmt_tracker_instances = {}
+        self.face_recognizer.face_results_aggregator = {}
         self.image_sample_size = config.image_number
         self.sample_size = config.sample_size
         self.confidence = config.confidence
