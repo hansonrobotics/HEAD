@@ -95,8 +95,8 @@ def set_weights(weights, lang, sid):
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
-from session import SessionManager
-session_manager = SessionManager()
+from session import ChatSessionManager
+session_manager = ChatSessionManager()
 MAX_CHAT_TRIES = 5
 NON_REPEAT = True
 def _ask_characters(characters, question, lang, sid):

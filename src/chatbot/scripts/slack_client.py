@@ -6,6 +6,7 @@ import time
 import logging
 import requests
 import re
+from chatbot.server.session import SessionManager
 
 VERSION = 'v1.1'
 KEY='AAAAB3NzaC'
@@ -14,7 +15,6 @@ SLACKBOT_API_TOKEN = os.environ.get('SLACKBOT_API_TOKEN')
 SLACKTEST_TOKEN = os.environ.get('SLACKTEST_TOKEN')
 
 logger = logging.getLogger('hr.chatbot.slackclient')
-
 
 def format_trace(trace):
     pattern = re.compile(r'/../(?P<fname>.*), \(line (?P<line>\d+), column .*\)')
@@ -40,7 +40,7 @@ class HRSlackBot(SlackClient):
         self.chatbot_url = 'http://{}:{}/{}'.format(
             self.chatbot_ip, self.chatbot_port, VERSION)
         self.lang = 'en'
-        self.session = None
+        self.session_manager = SessionManager()
         self.icon_url='https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg'
 
     def set_sid(self, user):
@@ -63,13 +63,14 @@ class HRSlackBot(SlackClient):
         ret = r.json().get('ret')
         if r.status_code != 200:
             logger.error("Request error: {}\n".format(r.status_code))
-        self.session = r.json().get('sid')
-        logger.info("Get session {}\n".format(self.session))
+        sid = r.json().get('sid')
+        logger.info("Get session {}\n".format(sid))
+        self.session_manager.add_session(user, sid)
 
-    def ask(self, question):
+    def ask(self, user, question):
         params = {
             "question": "{}".format(question),
-            "session": self.session,
+            "session": self.session_manager.get_sid(user),
             "lang": self.lang,
             "Auth": KEY
         }
@@ -161,10 +162,10 @@ class HRSlackBot(SlackClient):
                     self.send_message(channel, attachments)
                     continue
 
-                ret, response = self.ask(question)
+                ret, response = self.ask(name, question)
                 if ret == 3:
                     self.set_sid(name)
-                    ret, response = self.ask(question)
+                    ret, response = self.ask(name, question)
                 answer = response.get('text')
                 trace = response.get('trace', '')
 

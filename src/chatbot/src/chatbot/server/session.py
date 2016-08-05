@@ -98,11 +98,6 @@ class SessionManager(object):
         return wrap
                 
     @_threadsafe
-    def _add_session(self, sid):
-        if sid in self._sessions: return
-        self._sessions[sid] = Session(sid)
-
-    @_threadsafe
     def remove_session(self, sid):
         if sid in self._sessions:
             session = self._sessions.pop(sid)
@@ -122,16 +117,30 @@ class SessionManager(object):
         if sid is not None:
             return self._sessions.get(sid, None)
 
-    @_threadsafe
-    def start_session(self, user):
+    def get_sid(self, user):
         if user in self._users:
             sid = self._users.get(user)
             session = self._sessions.get(sid)
             if session:
                 return sid
-        sid = str(uuid.uuid1())
-        self._add_session(sid)
+
+    def gen_sid(self):
+        return str(uuid.uuid1())
+
+    @_threadsafe
+    def add_session(self, user, sid):
+        if sid in self._sessions:
+            return False
+        self._sessions[sid] = Session(sid)
         self._users[user] = sid
+        return True
+
+    def start_session(self, user):
+        _sid = self.get_sid(user)
+        if _sid:
+            return _sid
+        sid = self.gen_sid()
+        self.add_session(user, sid)
         return sid
 
     def has_session(self, sid):
@@ -151,6 +160,10 @@ class SessionManager(object):
             for sid in remove_sessions:
                 self.remove_session(sid)
             time.sleep(0.1)
+
+class ChatSessionManager(SessionManager):
+    def __init__(self, auto_clean=True):
+        super(ChatSessionManager, self).__init__(auto_clean)
 
     def dump_all(self):
         fnames = []
