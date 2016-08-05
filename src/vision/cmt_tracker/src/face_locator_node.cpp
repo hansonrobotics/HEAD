@@ -287,7 +287,7 @@ cameramodel.fromCameraInfo(camerainfo);
 		bbox[6] = faces[i].x;
 		bbox[7] = faces[i].y + faces[i].height;
 		flandmarks->detect(frm_gray, bbox);
-		delete frm_gray;
+
 		landmarks = flandmarks->getLandmarks();
 
 		opencv_faces.push_back(cv::Rect(faces[i].x,faces[i].y,faces[i].width,faces[i].height));
@@ -307,11 +307,10 @@ cameramodel.fromCameraInfo(camerainfo);
         pt.x = landmarks[0];
         pt.y = landmarks[1];
         face_description.feature_point.points.push_back(pt);
-        for (int j=2; j< 2*flandmarks->getLandmarksCount(); i+=2)
+        for (int j=2; j< 2*flandmarks->getLandmarksCount(); j+=2)
         {
-
-        pt.x = landmarks[i];
-        pt.y = landmarks[i+1];
+        pt.x = landmarks[j];
+        pt.y = landmarks[j+1];
         face_description.feature_point.points.push_back(pt);
         }
 
@@ -323,6 +322,7 @@ cameramodel.fromCameraInfo(camerainfo);
 
         cv_face_locations.objects.push_back(face_description);
     }
+    delete frm_gray;
   }
 
 

@@ -74,6 +74,8 @@ class face_recognizer:
         # This is one that is used for trained model nn4.small2
         self.outer_eyes_and_nose = [36, 45, 33]
 
+        self.clandmark_outer_eyes_and_nose = [5, 6, 7]
+
         if (not os.path.exists(image_dir)):
             os.makedirs(image_dir)
 
@@ -126,11 +128,15 @@ class face_recognizer:
             return (person, confidence)
 
 
-    def align(self, img, landmarks, net=False):
+    def align(self, img, landmarks, net=False, opencv=False):
         npLandmarks = np.float32(landmarks)
-        npLandmarksIndices = np.array(self.outer_eyes_and_nose)
+        if not opencv:
+            npLandmarksIndices = np.array(self.outer_eyes_and_nose)
+        else:
+            npLandmarksIndices = np.array(self.clandmark_outer_eyes_and_nose)
+
         H = cv2.getAffineTransform(npLandmarks[npLandmarksIndices],
-                                   96 * MINMAX_TEMPLATE[npLandmarksIndices])
+                                       96 * MINMAX_TEMPLATE[npLandmarksIndices])
         thumbnail = cv2.warpAffine(img, H, (96, 96))
         if (net):
             thumbnail = self.net.forward(thumbnail).reshape(1, -1)
@@ -138,17 +144,26 @@ class face_recognizer:
         return thumbnail
 
 
-    def save_faces(self, cv_image, tupl, loc_save,postfix):
+    def save_faces(self, cv_image, tupl, loc_save,postfix,tool_used):
         self.logger.info("saving faces in %s", self.image_dir_face_temp + "/" + loc_save)
         if (not os.path.exists(self.image_dir_face_temp + "/" + loc_save)):
             os.makedirs(self.image_dir_face_temp + "/" + loc_save)
-        img_aligned = self.align(cv_image, tupl)
+        if tool_used == "opencv":
+            opencv = True
+        else:
+            opencv = False
+
+        img_aligned = self.align(cv_image, tupl,opencv=opencv)
         # Here let's create a method that it generated a name for itself.
         cv2.imwrite(self.image_dir_face_temp + "/" +loc_save + "/" + postfix + ".png", img_aligned)
         self.logger.info("saved faces %s",loc_save + "_" + postfix + ".png")
 
-    def temp_save_faces(self, cv_image, tupl, name):
-        img_aligned = self.align(cv_image, tupl)
+    def temp_save_faces(self, cv_image, tupl, name,tool_used):
+        if tool_used == "opencv":
+            opencv = True
+        else:
+            opencv = False
+        img_aligned = self.align(cv_image, tupl,opencv=opencv)
         cv2.imwrite('/tmp/' + name + ".png" , img_aligned)
 
     def move_folders(self, names_array):
@@ -181,10 +196,14 @@ class face_recognizer:
         self.face_results_aggregator = {}
         self.train()
 
-    def results(self, cv_image, tupl, name, threshold=0.85):
+    def results(self, cv_image, tupl, name, threshold=0.85,tool_used="opencv"):
         self.logger.info('reaches results')
         # TODO Even take out this existence
-        img_aligned = self.align(cv_image, tupl, True)
+        if tool_used == "opencv":
+            opencv = True
+        else:
+            opencv = False
+        img_aligned = self.align(cv_image, tupl, True,opencv=opencv)
         result = self.infer(img_aligned)
         self.face_results_aggregator[name] = self.face_results_aggregator.get(name, {})
         self.face_results_aggregator[name]['results'] = self.face_results_aggregator[name].get(
@@ -207,8 +226,12 @@ class face_recognizer:
 
         self.logger.info('finishes result')
 
-    def immediate_results(self, cv_image, tupl):
-        img_aligned = self.align(cv_image, tupl, True)
+    def immediate_results(self, cv_image, tupl,tool_used):
+        if tool_used == "opencv":
+            opencv = True
+        else:
+            opencv = False
+        img_aligned = self.align(cv_image, tupl, True,opencv=opencv)
         result = self.infer(img_aligned)
         return result
 
