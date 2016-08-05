@@ -1,7 +1,7 @@
 <div class="app-selectareas-container">
     <img src="public/img/areaselect.png" alt="" class="app-selectareas"/>
 </div>
-<div class="select-areas-footbar">
+<div class="select-areas-footbar form-inline">
     <div class="btn-group" role="group" aria-label="Attention regions' actions">
         <button class="app-save-areas btn btn-primary"><i
                     class="glyphicon glyphicon-floppy-save"></i> Save</button>

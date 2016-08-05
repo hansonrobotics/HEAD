@@ -259,6 +259,9 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
 
                 api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
                     regions = regions || {};
+                    _.each(regions, function (r, i) {
+                        regions[i] = r['label'];
+                    });
                     regions.custom = 'custom';
                     self.initList(regions, 'attention_region', self.ui.attentionRegionList);
                 });
