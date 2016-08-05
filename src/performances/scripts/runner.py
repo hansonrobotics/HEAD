@@ -93,7 +93,6 @@ class Runner:
             return srv.RunByNameResponse(False)
         return srv.RunByNameResponse(self.run(0.0))
 
-
     def load_sequence(self, ids):
         nodes = []
 
@@ -125,18 +124,12 @@ class Runner:
         if ids is None:
             ids = []
 
+        for node in nodes:
+            node.pop('id', None)
+
         with self.lock:
             self.ids = ids
             self.running_nodes = nodes
-
-    def load(self, nodes, ids=None):
-        if ids is None:
-            ids = []
-
-        with self.lock:
-            logger.info("Put nodes {} to queue".format(nodes))
-            self.running_nodes = nodes
-            self.ids = ids
 
     def run_callback(self, request):
         return srv.RunResponse(self.run(request.startTime))

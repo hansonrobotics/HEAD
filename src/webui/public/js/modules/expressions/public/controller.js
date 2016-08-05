@@ -24,8 +24,8 @@ define(['application', './views/expressions', 'lib/api', 'lib/utilities', 'lib/c
                 knob: {
                     max: 55,
                     maxShow: 11,
-                    fgColor: "#df691a",
-                    fgColorExtreme: "#df691a"
+                    fgColor: "#5cb85c",
+                    fgColorExtreme: "#5cb85c"
                 }
             },
             initExpressions: function () {

@@ -62,6 +62,7 @@ define(["marionette", "./pose", 'tpl!./templates/poses.tpl', 'entities/emotion_c
                 // init duration slider
                 this.ui.durationSlider.slider({
                     range: "min",
+                    animate: true,
                     min: this.config.duration.min * 100,
                     max: this.config.duration.max * 100,
                     value: this.config.duration.default * 100,
@@ -79,6 +80,7 @@ define(["marionette", "./pose", 'tpl!./templates/poses.tpl', 'entities/emotion_c
                 // init magnitude slider
                 this.ui.magnitudeSlider.slider({
                     range: "min",
+                    animate: true,
                     min: this.config.magnitude.min * 100,
                     max: this.config.magnitude.max * 100,
                     value: this.config.magnitude.default * 100,

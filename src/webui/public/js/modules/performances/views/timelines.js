@@ -1,7 +1,7 @@
 define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './node',
-        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/extensions/animate_auto',
-        'jquery-ui', 'scrollbar'],
-    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance) {
+        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in',
+        'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
+    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion) {
         return Marionette.LayoutView.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
@@ -13,7 +13,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 timelineNodes: '.app-timeline-nodes .app-node',
                 nodes: '.app-nodes .app-node',
                 nodesContainer: '.app-nodes',
-                nodeSettings: '.app-node-settings',
+                nodeSettings: '.app-node-settings-container',
                 scrollContainer: '.app-scroll-container',
                 performanceName: '.app-performance-name',
                 saveButton: '.app-save-button',
@@ -28,7 +28,13 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 timeIndicator: '.app-current-time div',
                 deleteButton: '.app-delete-button',
                 timeAxis: '.app-time-axis',
-                hideButton: '.app-hide-settings-button'
+                closeButton: '.app-close-button'
+            },
+            regions: {
+                nodeSettings: {
+                    el: '.app-node-settings-container',
+                    regionClass: FadeInRegion
+                }
             },
             events: {
                 'click @ui.nodes': 'nodeClicked',
@@ -41,56 +47,91 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 'click @ui.timeAxis': 'moveIndicator',
                 'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance',
-                'click @ui.loopButton': 'loop',
-                'click @ui.hideButton': 'hideNodeSettings'
+                'click @ui.closeButton': 'close',
+                'click @ui.loopButton': 'loop'
             },
             modelEvents: {
                 'change': 'modelChanged'
             },
             initialize: function (options) {
                 var self = this,
-                    addReloadHandler = {success: function () {
-                        var handler = function () {
-                            if (self.isDestroyed)
-                                self.model.nodes.off('change add remove', handler);
-                            else
-                                self.model.loadNodes();
-                        };
+                    loadOptions = {
+                        success: function () {
+                            var handler = function () {
+                                if (self.isDestroyed)
+                                    self.model.nodes.off('change add remove', handler);
+                                else
+                                    self.model.loadNodes();
+                            };
 
-                        self.model.nodes.on('change add remove', handler);
-                    }};
+                            self.model.nodes.on('change add remove', handler);
+                        }
+                    };
 
                 this.mergeOptions(options, ['performances']);
 
                 if (options.sequence instanceof Array) {
                     this.model = new Performance();
-                    this.model.loadSequence(options.sequence, addReloadHandler);
+                    this.model.loadSequence(options.sequence, loadOptions);
                 } else if (this.model) {
                     if (this.model.id && this.model.nodes.isEmpty()) {
-                        this.model.load(addReloadHandler);
+                        this.model.load(loadOptions);
                     } else
-                        this.model.loadNodes(addReloadHandler);
+                        this.model.loadNodes(loadOptions);
                 } else {
                     this.model = new Performance();
-                    this.model.fetchCurrent(addReloadHandler);
+                    this.model.fetchCurrent(loadOptions);
                 }
             },
             childViewOptions: function () {
                 return {performance: this.model, config: this.config};
             },
+            close: function () {
+                this.trigger('close');
+            },
             onAttach: function () {
                 var self = this;
+
+                this.ui.scrollContainer.droppable({
+                    accept: '[data-node-name], [data-node-id]',
+                    tolerance: 'touch',
+                    drop: function (e, ui) {
+                        var el = $(ui.helper),
+                            id = el.data('node-id'),
+                            node = Node.all().get(id),
+                            startTime = Math.round(
+                                    ($(this).scrollLeft() + ui.offset.left - $(this).offset().left) / self.config.pxPerSec * 100) / 100;
+
+                        if (id && node) {
+                            node.set('start_time', startTime);
+                            self.model.nodes.add(node);
+                        } else {
+                            node = self.model.nodes.add({
+                                name: el.data('node-name'),
+                                start_time: startTime,
+                                duration: 1
+                            });
+                            self.showNodeSettings(node);
+                        }
+                    }
+                });
+
+                if (this.options.readonly) {
+                    this.ui.nodesContainer.hide();
+                    this.ui.closeButton.hide();
+                } else {
+                    this.nodeView = new NodeView({collection: this.model.nodes});
+                    this.getRegion('nodeSettings').show(this.nodeView);
+                }
+
                 this.modelChanged();
-                this.initDraggable(this.ui.nodes);
                 this.ui.scrollContainer.perfectScrollbar();
+
                 // Performance event handler
                 if (typeof this.options.performances != 'undefined')
                     this.options.performances.eventHandler = function (msg) {
                         self.handleEvents(msg);
                     };
-
-                if (this.options.readonly)
-                    this.ui.nodesContainer.hide();
 
                 var nodeListener = function () {
                     if (self.isDestroyed)
@@ -122,27 +163,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         self.updateTimelineWidth();
                 };
                 $(window).on('resize', updateWidth);
-
-                // init node droppable
-                this.ui.scrollContainer.droppable({
-                    accept: '.app-node[data-name]',
-                    tolerance: 'touch',
-                    drop: function (e, ui) {
-                        var nodeEl = $(ui.helper),
-                            node = self.model.nodes.get({cid: nodeEl.data('cid')}),
-                            startTime = Math.round(
-                                    ($(this).scrollLeft() + ui.offset.left - $(this).offset().left) / self.config.pxPerSec * 100) / 100;
-
-                        if (node)
-                            node.set('start_time', startTime);
-                        else
-                            self.model.nodes.add({
-                                name: nodeEl.data('name'),
-                                start_time: startTime,
-                                duration: 1
-                            });
-                    }
-                });
             },
             onDestroy: function () {
                 this.stopIndicator();
@@ -163,7 +183,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 });
             },
             nodeClicked: function (e) {
-                var node = new Node({
+                var node = Node.create({
                     name: $(e.target).data('name'),
                     start_time: 0,
                     duration: 1
@@ -174,18 +194,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             modelChanged: function () {
                 this.ui.performanceName.val(this.model.get('name'));
             },
-            initDraggable: function (el, options) {
-                if (!this.options.readonly)
-                    $(el).draggable(_.extend({
-                        helper: 'clone',
-                        appendTo: 'body',
-                        revert: 'invalid',
-                        delay: 100,
-                        snap: '.app-timeline-nodes',
-                        snapMode: 'inner',
-                        zIndex: 1000
-                    }, options));
-            },
             initResizable: function (el) {
                 var self = this,
                     handle = $('<span>').addClass('ui-resizable-handle ui-resizable-e ui-icon ui-icon-gripsmall-diagonal-se');
@@ -193,40 +201,47 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 $(el).append(handle).resizable({
                     handles: 'w, e',
                     resize: function () {
-                        var node = self.model.nodes.get({cid: $(this).data('cid')});
+                        var node = self.model.nodes.get({cid: $(this).data('node-id')});
                         node.set('duration', Math.round($(this).outerWidth() / self.config.pxPerSec * 100) / 100);
                     }
                 });
             },
             createNodeEl: function (node) {
-                if (node.get('el')) return;
                 var self = this,
-                    el = $('.app-node[data-name="' + node.get('name') + '"]', this.ui.nodesContainer).clone()
-                        .removeClass('hidden').get(0);
+                    el = $('<div>').addClass('app-node label')
+                        .attr('data-node-name', node.get('name'))
+                        .attr('data-node-id', node.cid)
+                        .on('click', function () {
+                            self.showNodeSettings(node);
+                        });
 
-                this.initDraggable(el, {
-                    start: function () {
-                        // hide original when showing clone
-                        $(this).hide();
-                    },
-                    stop: function () {
-                        // show original when hiding clone
-                        $(this).show();
-                    }
-                });
-                if (_.contains(['emotion', 'interaction', 'expression'], node.get('name')) && !this.options.readonly) {
-                    this.initResizable(el);
-                }
-
-                // show node settings on click
-                $(el).attr('data-cid', node.cid).on('click', function () {
-                    self.toggleNodeSettings(node);
-                }).css({position: 'absolute'});
-
-                node.set('el', el);
+                node.set('el', el.get(0));
+                node.off('change', this.updateNode, this);
                 node.on('change', this.updateNode, this);
 
                 this.updateNode(node);
+
+                if (!this.options.readonly) {
+                    el.draggable({
+                        helper: 'clone',
+                        appendTo: 'body',
+                        revert: 'invalid',
+                        delay: 100,
+                        snap: '.app-timeline-nodes',
+                        snapMode: 'inner',
+                        zIndex: 1000,
+                        start: function () {
+                            // hide original when showing clone
+                            $(this).hide();
+                        },
+                        stop: function () {
+                            $(this).show();
+                        }
+                    });
+
+                    if (node.hasProperty('duration'))
+                        this.initResizable(el);
+                }
             },
             /**
              * Updates node element
@@ -234,74 +249,32 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
              * @param node Node
              */
             updateNode: function (node) {
-                if (this.isDestroyed || ! node.get('el')) {
+                if (this.isDestroyed || !node.get('el')) {
                     node.off('change', this.updateNode, this);
-                    return;
+                } else {
+                    var el = $(node.get('el'));
+                    el.stop().css({
+                        left: node.get('start_time') * this.config.pxPerSec,
+                        width: node.get('duration') * this.config.pxPerSec
+                    }).attr('data-node-name', node.get('name'));
+
+                    if (node.hasChanged('duration') || node.hasChanged('start_time'))
+                        this.arrangeNodes();
+
+                    if (el.is(':empty'))
+                        el.html(node.getTitle());
+                    else
+                        el.get(0).childNodes[0].nodeValue = node.getTitle();
                 }
-
-                var width = node.get('duration') * this.config.pxPerSec;
-
-                $(node.get('el')).stop().css({
-                    left: node.get('start_time') * this.config.pxPerSec,
-                    width: width
-                });
-
-                if (node.hasChanged('duration') || node.hasChanged('start_time'))
-                    this.arrangeNodes();
-
-                if (node.get('text'))
-                    node.get('el').childNodes[0].nodeValue = node.get('text');
-                else if (node.get('emotion'))
-                    node.get('el').childNodes[0].nodeValue = node.get('emotion');
-                else if (node.get('gesture'))
-                    node.get('el').childNodes[0].nodeValue = node.get('gesture');
-                else if (node.get('expression'))
-                    node.get('el').childNodes[0].nodeValue = node.get('expression');
-                else if (node.get('animation'))
-                    node.get('el').childNodes[0].nodeValue = node.get('animation');
             },
             addNode: function (node) {
                 this.arrangeNodes();
-                this.toggleNodeSettings(node);
             },
-            toggleNodeSettings: function (node) {
-                if (this.options.readonly) {
-                    return;
-                }
-                var self = this,
-                    showSettings = !this.nodeView || this.nodeView.model != node;
-
+            showNodeSettings: function (node) {
+                if (this.options.readonly) return;
                 this.ui.timelineContainer.find('.app-node').removeClass('active');
-                if (showSettings)
-                    $(node.get('el')).addClass('active');
-
-                this.ui.nodeSettings.slideUp(function () {
-                    // show settings if no settings are shown or if shown settings are for a different node
-                    if (showSettings) {
-                        self.nodeView = new NodeView({model: node});
-                        self.nodeView.render();
-                        self.ui.nodeSettings.html(self.nodeView.el).hide().slideDown();
-                    } else {
-                        self.hideNodeSettings();
-                    }
-                });
-            },
-            hideNodeSettings: function () {
-                var self = this,
-                    destroy = function () {
-                        self.ui.timelineContainer.find('.app-node').removeClass('active');
-                        if (self.nodeView) {
-                            self.nodeView.destroy();
-                            self.nodeView = null;
-                        }
-                    };
-                if (this.ui.nodeSettings.is(':visible')) {
-                    self.ui.nodeSettings.slideUp(function () {
-                        destroy();
-                    });
-                } else {
-                    destroy();
-                }
+                if (node.get('el')) $(node.get('el')).addClass('active');
+                this.nodeView.showSettings(node);
             },
             arrangeNodes: function () {
                 var self = this,
@@ -309,10 +282,11 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     nodes = this.model.nodes;
 
                 nodes.each(function (node) {
-                    self.createNodeEl(node);
-
                     var begin = node.get('start_time'),
                         end = begin + node.get('duration');
+
+                    if (!node.get('el'))
+                        self.createNodeEl(node);
 
                     $('.app-timeline-nodes', self.ui.timelineContainer).each(function () {
                         available = true;
@@ -546,7 +520,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
              */
             clearPerformance: function () {
                 this.model.nodes.reset();
-                this.hideNodeSettings();
             },
             deletePerformance: function () {
                 var self = this;

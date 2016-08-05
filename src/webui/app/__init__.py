@@ -13,7 +13,7 @@ import datetime
 from monitor import get_logs
 from rospkg import RosPack
 from pi_face_tracker.msg import Faces, Face
-
+import copy
 rp = RosPack()
 import rospy
 
@@ -197,7 +197,6 @@ def update_attention_regions(robot_name):
 
 def get_performance(id, robot_name):
     root = os.path.join(config_root, robot_name, 'performances')
-    print id
     filename = os.path.join(root, id + '.yaml')
     if os.path.isfile(filename):
         performance = read_yaml(filename)
@@ -251,14 +250,15 @@ def update_performances(robot_name, id):
             performance['nodes'] = current['nodes']
             del performance['ignore_nodes']
 
-        for key in ['id', 'path']:
-            if key in performance: del performance[key]
+        content = copy.deepcopy(performance)
+        content.pop('id', None)
+        content.pop('path', None)
 
-        write_yaml(filename, performance)
+        write_yaml(filename, content)
     except Exception as e:
         return json_encode({'error': str(e)})
 
-    return json_encode(get_performance(id, robot_name))
+    return json_encode(performance)
 
 
 @app.route('/performances/<robot_name>/<path:id>', methods=['DELETE'])
@@ -282,7 +282,6 @@ def start_performance():
 
 @app.route('/slide_performance/<performance>', methods=['GET'])
 def slide_performance(performance):
-    print(performance)
     run_performance(performance)
     return json_encode({'result': True})
 
@@ -406,7 +405,6 @@ if __name__ == '__main__':
     @app.route('/public/<path:path>')
     def send_js(path):
         return send_from_directory(app.static_folder, path)
-
 
     parser = OptionParser()
     parser.add_option("-s", action="store_true", dest="ssl", default=False, help="Use SSL")

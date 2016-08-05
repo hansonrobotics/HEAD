@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h4>Poses: </h4>
+        <h2>Poses: </h2>
 
         <div class="row">
             <div class="col-md-6">
