@@ -91,9 +91,9 @@ class HRSlackBot(SlackClient):
 
         return ret, response
 
-    def _rate(self, rate):
+    def _rate(self, user, rate):
         params = {
-            "session": self.session,
+            "session": self.session_manager.get_sid(user),
             "rate": rate,
             "index": -1,
             "Auth": KEY
@@ -131,7 +131,7 @@ class HRSlackBot(SlackClient):
 
                 logger.info("Question {}".format(question))
                 if question in [':+1:', ':slightly_smiling_face:', ':)', 'gd']:
-                    ret, _ = self._rate('good')
+                    ret, _ = self._rate(name, 'good')
                     if ret:
                         logger.info("Rate good")
                         answer = 'Thanks for rating'
@@ -148,7 +148,7 @@ class HRSlackBot(SlackClient):
                     self.send_message(channel, attachments)
                     continue
                 if question in [':-1:', ':disappointed:', ':(', 'bd']:
-                    ret, _ = self._rate('bad')
+                    ret, _ = self._rate(name, 'bad')
                     if ret:
                         logger.info("Rate bad")
                         answer = 'Thanks for rating'
@@ -195,6 +195,6 @@ if __name__ == '__main__':
     while True:
         try:
             HRSlackBot(host, port).run()
-        except Exception:
-            pass
+        except Exception as ex:
+            logger.error(ex)
 
