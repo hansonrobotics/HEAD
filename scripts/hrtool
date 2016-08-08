@@ -623,7 +623,7 @@ check_ws() {
         local confirm
         warn "The workspace configured ${ws} doesn't match the your working path ${rel_ws}"
         _get_confirm "Continue using ${ws}? [y/N]"
-        [[ ${confirm} -eq 1 ]] || exit 0
+        [[ ${confirm} -eq 1 ]] || exit 1
     fi
 }
 
