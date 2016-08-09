@@ -463,10 +463,10 @@ _do_install_deps() {
         $SUDO mkdir -p $HR_PREFIX
     fi
     $SUDO chmod 777 $HR_PREFIX
-#    install_basic
-#    install_ros
-#    install_opencog_deps
-#    install_other_deps
+    install_basic
+    install_ros
+    install_opencog_deps
+    install_other_deps
     install_vision_deps
 }
 
