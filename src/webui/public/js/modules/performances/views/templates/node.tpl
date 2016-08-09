@@ -26,6 +26,9 @@
                 <a href="javascript:void(0)" role="tab" data-node-name="interaction">Interaction</a>
             </li>
             <li>
+                <a href="javascript:void(0)" role="tab" data-node-name="listen">Listen</a>
+            </li>
+            <li>
                 <a href="javascript:void(0)" role="tab" data-node-name="pause">Pause</a>
             </li>
             <!--<li>-->

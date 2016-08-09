@@ -12,6 +12,7 @@ import time
 import logging
 import random
 from threading import Timer
+from performances.msg import Event
 
 logger = logging.getLogger('hr.performances.nodes')
 
@@ -310,8 +311,42 @@ class chat_pause(Node):
         self.resume()
 
     def resume(self):
-        self.runner.resume()
         self.duration = 0
+        self.runner.resume()
+
+    def stop(self, run_time):
+        if self.subscriber:
+            self.subscriber.unregister()
+            self.subscriber = False
+
+
+class listen(Node):
+    def __init__(self, data, runner):
+        Node.__init__(self, data, runner)
+        self.subscriber = False
+
+    def start(self, run_time):
+        self.runner.pause()
+
+        def input_callback(event):
+            if 'responses' in self.data and isinstance(self.data['responses'], list):
+                input = event.data.lower()
+                matches = []
+                for response in self.data['responses']:
+                    if response['input'] in input:
+                        matches.append(response['output'])
+
+                if len(matches):
+                    self.runner.topics['tts']['default'].publish(String(matches[int(random.randint(0, len(matches) - 1))]))
+
+            self.resume()
+
+        self.subscriber = rospy.Subscriber('/' + self.runner.robot_name + '/nodes/listen/input', String, input_callback)
+        self.runner.topics['events'].publish(Event('listen', 0))
+
+    def resume(self):
+        self.duration = 0
+        self.runner.resume()
 
     def stop(self, run_time):
         if self.subscriber:

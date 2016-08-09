@@ -1,6 +1,6 @@
 define(['application', "marionette", './message', "tpl!./templates/interaction.tpl", 'lib/api', '../entities/message_collection',
-        'jquery', './faces', 'underscore', 'scrollbar'],
-    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView, _) {
+        'jquery', './faces', 'underscore', 'lib/speech_recognition', 'scrollbar'],
+    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView, _, speechRecognition) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: MessageView,
@@ -315,7 +315,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 var message = this.ui.messageInput.val();
                 if (message != '') {
                     api.sendChatMessage(message);
-                    api.loginfo('[CLICK ACTION][CHAT] '+message);
+                    api.loginfo('[CLICK ACTION][CHAT] ' + message);
                 }
                 this.ui.messageInput.val('');
             },
@@ -415,19 +415,8 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 var self = this;
 
                 if (!this.speechRecognition || !this.speechEnabled) {
-                    if ('webkitSpeechRecognition' in window) {
-                        this.speechRecognition = new webkitSpeechRecognition();
-                    } else if ('SpeechRecognition' in window) {
-                        this.speechRecognition = new SpeechRecognition();
-                    } else {
-                        console.log('webspeech api not supported');
-                        this.speechRecognition = null;
-                        return;
-                    }
-
-                    this.speechRecognition.lang = this.language == 'zh' ? 'cmn-Hans-CN' : 'en-US';
-                    this.speechRecognition.interimResults = false;
-                    this.speechRecognition.continuous = false;
+                    this.speechRecognition = speechRecognition.getInstance(this.language == 'zh' ? 'cmn-Hans-CN' : 'en-US');
+                    if (!this.speechRecognition) return;
 
                     this.speechRecognition.onstart = function () {
                         console.log('starting webspeech');
@@ -441,16 +430,12 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                         api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechend'}));
                     };
                     this.speechRecognition.onresult = function (event) {
-                        var mostConfidentResult = null;
+                        var mostConfidentResult = speechRecognition.getMostConfidentResult(event.results);
 
-                        _.each(event.results[event.results.length - 1], function (result) {
-                            if ((!mostConfidentResult || mostConfidentResult.confidence <= result.confidence))
-                                mostConfidentResult = result;
-                        });
-
-                        if (mostConfidentResult)
+                        if (mostConfidentResult) {
                             api.sendChatMessage(mostConfidentResult.transcript);
-                            api.loginfo('[ASR ACTION][CHAT] '+mostConfidentResult.transcript);
+                            api.loginfo('[ASR ACTION][CHAT] ' + mostConfidentResult.transcript);
+                        }
                     };
 
                     this.speechRecognition.onerror = function (event) {

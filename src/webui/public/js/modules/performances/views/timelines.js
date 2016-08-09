@@ -1,7 +1,7 @@
 define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './node',
-        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in',
-        'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
-    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion) {
+        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
+        'lib/api', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
+    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition, api) {
         return Marionette.LayoutView.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
@@ -544,6 +544,20 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     this.startIndicator(e.time, duration);
                 } else if (e.event == 'resume') {
                     this.startIndicator(e.time, duration);
+                } else if (e.event == 'listen') {
+                    this.enableListening();
+                }
+            },
+            enableListening: function () {
+                if (speechRecognition) {
+                    var instance = speechRecognition.getInstance();
+
+                    instance.onresult = function (event) {
+                        var mostConfidentResult = speechRecognition.getMostConfidentResult(event.results);
+                        if (mostConfidentResult) api.topics.listen_node_input.publish({data: mostConfidentResult.transcript});
+                    };
+
+                    instance.start();
                 }
             }
         });

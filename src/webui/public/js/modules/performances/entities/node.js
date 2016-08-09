@@ -26,6 +26,11 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                     properties: ['duration', 'message'],
                     defaultValues: {message: ''}
                 },
+                listen: {
+                    label: 'Listen',
+                    properties: ['responses'],
+                    defaultValues: {duration: 0.2, responses: []}
+                },
                 soma: {
                     label: 'Soma State',
                     properties: ['duration', 'soma']

@@ -19,14 +19,22 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 speechEventSelect: 'select.app-speech-event-select',
                 timeout: '.app-node-timeout',
                 hrAngleSlider: '.app-hr-angle-slider',
-                hrAngleLabel: '.app-hr-angle-label'
+                hrAngleLabel: '.app-hr-angle-label',
+                listenResponseTemplate: '.app-listen-response-template',
+                listenResponseInputs: '.app-listen-response-template input',
+                listenAddResponseButton: '.app-listen-add-response',
+                listenResponseList: '.app-listen-response-list',
+                removeListenResponseButton: '.app-remove-listen-response'
             },
             events: {
                 'keyup @ui.textInput': 'setText',
                 'change @ui.textInput': 'setTextDuration',
                 'change @ui.langSelect': 'setLanguage',
                 'change @ui.topicInput': 'setTopic',
-                'change @ui.timeout': 'updateTimeout'
+                'change @ui.timeout': 'updateTimeout',
+                'change @ui.listenResponseInputs': 'updateListenResponses',
+                'click @ui.listenAddResponseButton': 'addListenResponse',
+                'click @ui.removeListenResponseButton': 'removeListenResponse'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -49,6 +57,9 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 });
 
                 this.modelChanged();
+
+                if (this.model.hasProperty('responses'))
+                    this.ui.listenAddResponseButton.click();
 
                 if (this.model.hasProperty('emotion')) {
                     // init with empty list
@@ -268,6 +279,31 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
             },
             updateTimeout: function () {
                 this.model.set('timeout', this.ui.timeout.val());
+            },
+            updateListenResponses: function () {
+                var responses = [],
+                    inputs = $('input', this.ui.listenResponseList),
+                    i;
+
+                for (i = 0; i < inputs.length / 2; i++) {
+                    var input = $(inputs[i * 2]).val(),
+                        output = $(inputs[i * 2 + 1]).val();
+
+                    if (input && output) responses.push({input: input, output: output});
+                }
+
+                console.log(responses);
+                this.model.set('responses', responses);
+            },
+            addListenResponse: function () {
+                this.ui.listenResponseList.append(this.ui.listenResponseTemplate.clone().hide().fadeIn());
+            },
+            removeListenResponse: function (e) {
+                var self = this;
+                $(e.target).closest('.app-listen-response-template').fadeOut(100, function () {
+                    $(this).remove();
+                    self.updateListenResponses();
+                });
             }
         });
     });

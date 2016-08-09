@@ -561,6 +561,13 @@ textarea.form-control.app-node-text {
     background-color: #f0ad4e;
 }
 
+.app-node[data-node-name="listen"],
+.app-node-tabs > li.active > a[data-node-name="listen"],
+.app-node-tabs > li > a[data-node-name="listen"]:hover,
+.app-node-tabs > li > a[data-node-name="listen"]:focus {
+    background-color: #36baaa;
+}
+
 .node-select-container {
     padding-right: 0;
 }
@@ -583,4 +590,8 @@ textarea.form-control.app-node-text {
 
 .app-mobile .node-settings-container {
     padding-left: 15px;
+}
+
+.app-listen-response-list .form-inline {
+    margin-bottom: 10px;
 }
