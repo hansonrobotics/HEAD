@@ -18,12 +18,15 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+import os
 import rospy
-from general_behavior import Tree
+from behavior.general_behavior import Tree
 import logging
+from rospkg import RosPack
 
 if __name__ == "__main__":
-    logger = logging.getLogger('hr.eva_behavior.main')
-    rospy.init_node("Eva_Behavior")
+    logger = logging.getLogger('hr.behavior.main')
+    rospy.init_node("Behavior")
     logger.info("Starting Behavior Node")
-    tree = Tree()
+    cfg = os.path.join(RosPack().get_path('behavior'), 'behavior.cfg')
+    tree = Tree(cfg)

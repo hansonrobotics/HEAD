@@ -1,0 +1,5 @@
+Flask==0.11.1
+pinyin==0.2.5
+EasyProcess==0.1.9
+psutil==1.2.1
+pyparsing==2.1.5

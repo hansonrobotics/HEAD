@@ -169,12 +169,13 @@ class Tree():
             self.blackboard["search_for_attention_targets"].append(trg)
 
 
-    def __init__(self):
+    def __init__(self, config_file):
 
         self.blackboard = blackboard.Blackboard("rig expressions")
 
         config = ConfigParser.ConfigParser()
-        config.readfp(open(os.path.join(os.path.dirname(__file__), "../behavior.cfg")))
+        with open(config_file) as f:
+            config.readfp(f)
         self.blackboard["current_emotion"] = config.get("emotion", "default_emotion")
         self.blackboard["current_emotion_intensity"] = config.getfloat("emotion", "default_emotion_intensity")
         self.blackboard["current_emotion_duration"] = config.getfloat("emotion", "default_emotion_duration")
@@ -367,7 +368,7 @@ class Tree():
             BlinkCycle,queue_size=1)
         self.saccade_pub = rospy.Publisher("/blender_api/set_saccade",
             SaccadeCycle,queue_size=1)
-        self.chat_pub = rospy.Publisher("/han/chatbot_responses", String, queue_size=1)
+        self.chat_pub = rospy.Publisher("chatbot_responses", String, queue_size=1)
 
         self.do_pub_gestures = True
         self.do_pub_emotions = True
@@ -375,8 +376,8 @@ class Tree():
         self.tree = self.build_tree()
         time.sleep(0.1)
 
-        log_filename = os.path.join(os.path.abspath(
-                os.path.dirname(__file__)), "../bhlog.csv")
+        log_filename = os.path.join(
+            os.path.expanduser("~/.hr/log/bhlog.csv"))
         self.log_file = open(log_filename, 'wb')
         self.log_file.write('Action,Timestamp,Event\n')
         try:
@@ -726,7 +727,7 @@ class Tree():
     # ------------------------------------------------------------------
     # Build the main tree
     def build_tree(self):
-        eva_behavior_tree = \
+        behavior_tree = \
             owyl.repeatAlways(
                 owyl.selector(
                     owyl.sequence(
@@ -746,7 +747,7 @@ class Tree():
                     self.idle_spin()
                 )
             )
-        return owyl.visit(eva_behavior_tree, blackboard=self.blackboard)
+        return owyl.visit(behavior_tree, blackboard=self.blackboard)
 
     # Print a single status message
     @owyl.taskmethod

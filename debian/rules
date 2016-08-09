@@ -16,6 +16,7 @@
 PROJECT = head-0.1.0
 
 build:
+	bash _build_deps.sh
 	bash _build.sh
 
 clean:

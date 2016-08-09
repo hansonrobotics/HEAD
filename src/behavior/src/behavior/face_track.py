@@ -30,7 +30,7 @@ import logging
 
 from std_msgs.msg import Int32
 
-logger = logging.getLogger('hr.eva_behavior.face_track')
+logger = logging.getLogger('hr.behavior.face_track')
 
 # A Face. Currently consists only of an ID number, a 3D location,
 # and the time it was last seen.  Should be extended to include

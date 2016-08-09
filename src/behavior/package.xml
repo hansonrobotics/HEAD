@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>eva_behavior</name>
+  <name>behavior</name>
   <version>0.0.4</version>
   <description>Scripted behaviors for the Eva rig</description>
 
@@ -17,7 +17,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/eva_behavior</url> -->
+  <!-- <url type="website">http://wiki.ros.org/behavior</url> -->
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
   <!-- Authors do not have to be maintianers, but could be -->

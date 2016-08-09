@@ -8,7 +8,7 @@ Homepage: https://github.com/hansonrobotics/HEAD
 
 Package: head
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, head-deps (>= 0.1.0-alpha)
 Description: Hanson Environment for Application Development
   This repository contains the integrated code for controlling and interacting with many Hanson Robotics robot heads. It includes the full performance pipeline and infrastructure:
     - Perception, via ROS webcam nodes.
@@ -17,3 +17,29 @@ Description: Hanson Environment for Application Development
     - Behavior tree, for scripting performaces.
     - Motor control ROS nodes, for controlling the physical robot.
  
+Package: head-deps
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+    blender (= 2.71~git201406121839.169c95b-0irie1~trusty1),
+    tmux (>= 1.8-5),
+    ros-indigo-roslaunch (>= 1.11.16-0trusty-20151111-0653-+0000),
+    ros-indigo-rospy (>= 1.11.16-0trusty-20151111-0417-+0000),
+    ros-indigo-topic-tools (>= 1.11.16-0trusty-20151111-0702-+0000),
+    ros-indigo-dynamic-reconfigure (>= 1.5.38-0trusty-20151111-0717-+0000),
+    ros-indigo-tf (>= 1.11.8-0trusty-20160628-080730-0700),
+    ros-indigo-dynamixel-motor (>= 0.4.0-0trusty-20160629-005530-0700),
+    ros-indigo-rosbash (>= 1.11.11-0trusty-20151111-0040-+0000),
+    ros-indigo-cv-bridge (>= 1.11.12-0trusty-20160628-072812-0700),
+    ros-indigo-image-transport (>= 1.11.10-0trusty-20160628-072707-0700),
+    ros-indigo-rosbridge-server (>= 0.7.15-0trusty-20160628-112512-0700),
+    ros-indigo-robot-state-publisher (>= 1.11.2-0trusty-20160628-114357-0700),
+    ros-indigo-joint-state-publisher (>= 1.11.11-0trusty-20160627-235104-0700),
+    ros-indigo-rviz (>= 1.11.10-0trusty-20151130-1428-+0000),
+    python-pyglet (>= 1.1.4.dfsg-2build1),
+    default-jre (>= 2:1.7-51),
+Description: HEAD dependencies
+
+Package: head-data
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+Description: HEAD data

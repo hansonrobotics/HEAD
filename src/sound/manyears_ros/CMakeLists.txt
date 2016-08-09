@@ -98,7 +98,7 @@ catkin_package(
 include_directories(
   ${PROJECT_SOURCE_DIR}/include
   ${catkin_INCLUDE_DIRS}
-  ${manyearslib_PREFIX}/dsplib
+  ${manyearslib_PREFIX}/include
 )
 
 ## Declare a cpp library
@@ -131,7 +131,7 @@ add_dependencies(manyears_node
   manyearslib # Making sure the external project is built first. 
 )
 target_link_libraries(manyears_node
-  ${manyearslib_PREFIX}/bin/libmanyears.a # WARNING: This aussumes we're on Linux.
+  ${manyearslib_PREFIX}/lib/libmanyears.a # WARNING: This aussumes we're on Linux.
   ${catkin_LIBRARIES}
 )
 target_link_libraries(manyears_ros

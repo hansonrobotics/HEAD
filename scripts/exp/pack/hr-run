@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+set -e
+
+show_help() {
+cat << EOF
+Usage: $0 [--cmt]
+  --cmt
+    Run CMT based face tracking
+EOF
+}
+
+while [[ $# > 0 ]]; do
+    case "$1" in
+        --cmt)
+            export CMT_TRACKING=1
+            shift
+            ;;
+        --help|-h)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo "Unknown argument $1"
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+BASEDIR=/opt/hansonrobotics
+source $BASEDIR/setup.bash
+export NAME=robot
+export ROS_PYTHON_LOG_CONFIG_FILE="$BASEDIR/etc/python_logging.conf"
+export ROS_LOG_DIR="$HOME/.hr/log"
+export ROSCONSOLE_FORMAT='[${logger}][${severity}] [${time}]: ${message}'
+export LAUNCH_DIR="$BASEDIR/share/robots_config/launch/"
+export HR_CHARACTER_PATH=$BASEDIR/share/chatbot/scripts/characters/
+
+if [[ $(tmux ls) == ${NAME}* ]]; then
+    tmux kill-session -t $NAME
+    echo "Killed session $NAME"
+fi
+
+ros_args="basedir:=$LAUNCH_DIR name:=$NAME dev:=true"
+pi_arg="pi_vision:=true"
+if [[ $CMT_TRACKING == 1 ]]; then
+    ros_args="$ros_args pi_vision:=false"
+    pi_arg="pi_vision:=false"
+fi
+
+echo "ROS launch args \"${ros_args}\""
+
+tmux new-session -n 'roscore'  -d -s $NAME "roslaunch ${LAUNCH_DIR}/robot.launch ${ros_args}; $SHELL"
+
+sleep 3
+tmux new-window -n 'webui' "python $BASEDIR/share/webui/app/__init__.py -p 4000 -s \
+    -c $BASEDIR/share/webui/app/ssl/cert.crt  \
+    -k $BASEDIR/share/webui/app/ssl/key.pem &
+python $BASEDIR/share/webui/app/__init__.py -p 8000; $SHELL"
+
+tmux new-window -n 'blender' "cd $BASEDIR/blender_api && blender -y Sophia.blend -P autostart.py; $SHELL"
+tmux new-window -n 'chat_server' "cd $BASEDIR/lib/chatbot/ && python run_server.py; $SHELL"
+tmux new-window -n 'marytts' "/opt/hansonrobotics/marytts-5.1.2/bin/marytts-server; $SHELL"
+tmux new-window -n 'btree' "export ROS_NAMESPACE=$NAME; rosrun behavior main.py; $SHELL"
+tmux attach;
