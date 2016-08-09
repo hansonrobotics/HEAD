@@ -46,7 +46,7 @@
 #include "Flandmark.h"
 #include "CFeaturePool.h"
 #include "CSparseLBPFeatures.h"
-#include "helpers.h"
+
 
 
 #define SSTR( x ) dynamic_cast< std::ostringstream & >(( std::ostringstream() << std::dec << x ) ).str()

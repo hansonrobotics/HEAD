@@ -33,13 +33,13 @@ export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
 
 # Needed for compiling
 export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/build/libclandmark
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/lib
 
 include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 include_path=$(printf "%s:" "${include_dirs[@]}")
 
-export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/3rd_party/CImg-1.5.6/:$CLANDMARK_DIR/3rd_party/rapidxml-1.13/:$CLANDMARK_DIR/build/:$CLANDMARK_DIR/libclandmark/:$include_path
-export LIBRARY_PATH=$LIBRARY_PATH:$CLANDMARK_DIR/build/:$CLANDMARK_DIR/libclandmark:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/build/libclandmark
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$include_path
+export LIBRARY_PATH=$LIBRARY_PATH:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src:k
 
 
 ASSUME_YES=0
@@ -257,9 +257,9 @@ install_vision_deps() {
     # Install clandmarks
     info "Installing clandmarks"
     if [ ! -d $CLANDMARK_DIR ]; then
-      wget_cache https://github.com/hansonrobotics/clandmark/archive/v0.1.tar.gz
+      wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/clandmark.tar.bz2
       mkdir -p $CLANDMARK_DIR
-      tar -xf $HR_CACHE/v0.1.tar.gz -C $CLANDMARK_DIR --strip-components=1
+      tar -xf $HR_CACHE/clandmark.tar.bz2 -C $CLANDMARK_DIR --strip-components=1
     else
       warn "Skipping clandmark downloading"
     fi
@@ -463,10 +463,10 @@ _do_install_deps() {
         $SUDO mkdir -p $HR_PREFIX
     fi
     $SUDO chmod 777 $HR_PREFIX
-    install_basic
-    install_ros
-    install_opencog_deps
-    install_other_deps
+#    install_basic
+#    install_ros
+#    install_opencog_deps
+#    install_other_deps
     install_vision_deps
 }
 
