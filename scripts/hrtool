@@ -29,11 +29,9 @@ CMAKE_DIR=$VISION_TOOL_PREFIX/cmake
 CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
-CMAKE_MAJOR_VERSION=3
-CMAKE_MINOR_VERSION=6
-CMAKE_PATCH_VERSION=1
+
 export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
-export CMAKE_PATH=$CMAKE_DIR/cmake-${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}
+
 # Needed for compiling
 export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/build/libclandmark
@@ -255,32 +253,16 @@ install_vision_deps() {
     cd $DLIB_PATH && python setup.py build
 
     #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
-    # Install dlib-models large file This is skiped as model in the openface are used to download the elements
-    # git clone https://github.com/davisking/dlib-models.git
-    # Download CMAKE 3.6 to compile clandmark
-    info "Downloading CMAKE above 3 to compile clandmark"
-    if [ ! -d $CMAKE_PATH ]; then
-       wget_cache https://cmake.org/files/v${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}/cmake-${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}.tar.gz
-       mkdir -p $CMAKE_PATH
-       tar -xf $HR_CACHE/cmake-${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}.tar.gz -C $CMAKE_DIR
-       cd $CMAKE_PATH
-       cmake .
-       make -j$(nproc)
-    else
-       warn "Skipping Downloading CMAKE-3.6.1 for compiling clandmark"
-    fi
+
 
     # Install clandmarks
     info "Installing clandmarks"
     if [ ! -d $CLANDMARK_DIR ]; then
-      git clone https://github.com/uricamic/clandmark.git $CLANDMARK_DIR
-      cd $CLANDMARK_DIR
-      mkdir build
-      cd build
-      ${CMAKE_PATH}/bin/cmake ..
-      make -j$(nproc)
+      wget_cache https://github.com/hansonrobotics/clandmark/archive/v0.1.tar.gz
+      mkdir -p $CLANDMARK_DIR
+      tar -xf $HR_CACHE/v0.1.tar.gz -C $CLANDMARK_DIR --strip-components=1
     else
-      warn "Skipping clandmark installation"
+      warn "Skipping clandmark downloading"
     fi
     # Install Torch
     if [ ! -d $TORCH_DIR ]; then
