@@ -44,7 +44,7 @@ class Chatbot():
 
     rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
     rospy.Subscriber('speech_events', String, self._speech_event_callback)
-    self.tts_ctrl_pub = rospy.Publisher('tts_control', String)
+    self.tts_ctrl_pub = rospy.Publisher('tts_control', String, queue_size=1)
 
     self._response_publisher = rospy.Publisher(
         'chatbot_responses', String, queue_size=1)
