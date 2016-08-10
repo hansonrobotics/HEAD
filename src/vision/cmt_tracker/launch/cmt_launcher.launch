@@ -19,6 +19,9 @@
 <param name="filtered_face_locations" value="filterd_face_locations"/>
 <param name="face_cascade" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
 <param name="profile_cascade" value="$(find pi_face_tracker)/params/haarcascade_profileface.xml" />
+
+<param name="clandmark" value="$(env CLANDMARK_DIR)/share/clandmark/models/flandmark_model.xml"/>
+
 <param name="shape_predictor" value="$(env OPENFACE_DIR)/models/dlib/shape_predictor_68_face_landmarks.dat"/>
 <param name="openface" value="$(env OPENFACE_DIR)"/>
 <param name="image_locations" value="$(env HR_WORKSPACE)/HEAD/src/vision/images"/>
@@ -43,6 +46,7 @@
 <!--<node name="camera_transform" pkg="tf" type="static_transform_publisher" args="0.1 0 0 1.57 0 1. /base_footprint $(arg head_tracking_frame) 100"/>-->
 
 <arg name="debug" default="False"/>
+<arg name="debug_" default="False"/>
 
 <group if="$(arg choose_web_cam)">
     <param name= "usb_cam/pixel_format" value="yuyv"/>
@@ -52,8 +56,16 @@
     <node pkg="usb_cam" name="usb_cam" type="usb_cam_node"/>
 </group>
 
+<group if="$(arg debug_)">
+<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node" respawn="true" output="screen" launch-prefix="xterm -e gdb -ex run"/>
+<!--launch-prefix="xterm -e gdb -ex run respawn="true"launch-prefix="xterm -e valgrind -leak-check=full" "-->
+</group>
 
-<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node"/>
+
+<group unless="$(arg debug_)">
+<node pkg="cmt_tracker" name="face_locator_node" type="face_locator_node" required="true"/>
+</group>
+
 <group unless="$(arg offline)">
 <group if="$(arg cmt)">
 
@@ -62,12 +74,17 @@
 <!--launch-prefix="xterm -e gdb -ex run respawn="true"launch-prefix="xterm -e valgrind -leak-check=full" "-->
 </group>
 
+
+
+
 <group unless="$(arg debug)">
-<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node"  output="screen" required="true"/>
+<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node"  required="true"/>
 </group>
 
+
+
 <node pkg="cmt_tracker" name="face_recognizer" type="face_predictor.py"  output="screen" />
-<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py"  output="screen" required="true"/>
+<node pkg="cmt_tracker" name="face_reinforcer" type="face_reinforcer.py"  required="true"/>
 <node name="dynamic_reconfigure_load" pkg="dynamic_reconfigure" type="dynparam" output="screen" args="load face_recognizer $(find cmt_tracker)/params/recognize.yaml"/>
 <group unless="$(arg headless)">
 <node pkg="cmt_tracker" name="cmt_tracker_view" type="cmt_tracker"   respawn="true"/>

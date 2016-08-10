@@ -149,7 +149,7 @@ add_library(gazr SHARED
             src/find_eye_center.cpp
             src/helpers.cpp)
 add_executable(face_locator_node src/face_locator_node.cpp)
- target_link_libraries(face_locator_node dlib ${catkin_LIBRARIES} ${OpenCV_LIBS} gazr )
+ target_link_libraries(face_locator_node dlib ${catkin_LIBRARIES} ${OpenCV_LIBS} gazr flandmark clandmark)
 
 add_executable(cmt_tracker_node src/cmt_tracker_node.cpp)
 target_link_libraries(cmt_tracker_node dlib ${catkin_LIBRARIES} ${OpenCV_LIBS} cmt)

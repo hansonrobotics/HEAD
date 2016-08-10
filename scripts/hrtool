@@ -25,17 +25,22 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
 
 export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
+
 # Needed for compiling
 export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
-export LIBRARY_PATH=$LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/lib
+
 include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 include_path=$(printf "%s:" "${include_dirs[@]}")
-export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
+
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$include_path
+export LIBRARY_PATH=$LIBRARY_PATH:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src:k
+
 
 ASSUME_YES=0
 
@@ -247,9 +252,17 @@ install_vision_deps() {
     cd $DLIB_PATH && python setup.py build
 
     #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
-    # Install dlib-models large file This is skiped as model in the openface are used to download the elements
-    # git clone https://github.com/davisking/dlib-models.git
 
+
+    # Install clandmarks
+    info "Installing clandmarks"
+    if [ ! -d $CLANDMARK_DIR ]; then
+      wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/clandmark.tar.bz2
+      mkdir -p $CLANDMARK_DIR
+      tar -xf $HR_CACHE/clandmark.tar.bz2 -C $CLANDMARK_DIR --strip-components=1
+    else
+      warn "Skipping clandmark downloading"
+    fi
     # Install Torch
     if [ ! -d $TORCH_DIR ]; then
       git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
@@ -527,11 +540,8 @@ do_single_package() {
         catkin init
     fi
 
-    if [ "$1" == "cmt_tracker" ]; then
-      catkin build cmt_tracker_msgs cmt_tracker
-    else
-      catkin build $1
-    fi
+    catkin build $1
+
 }
 
 build_opencog() {
@@ -754,6 +764,7 @@ export DLIB_PATH=$DLIB_PATH
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
 export MANYEARSLIB_PREFIX=$MANYEARSLIB_PREFIX
 
+export CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 source $TORCH_DIR/install/bin/torch-activate
 EOF
 

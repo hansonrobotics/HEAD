@@ -108,18 +108,18 @@ class face_predictor:
                     'query_only']})
             #print(self.cmt_tracker_instances)
             if self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
-                self.queryAddResults(cv_image, tupl, key, self.confidence)
+                self.queryAddResults(cv_image, tupl, key, self.confidence,face.tool_used_for_detection.data)
                 # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
 
 
             elif not query_only and (self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']):
-                self.face_recognizer.save_faces(cv_image, tupl, key, str(self.cmt_tracker_instances[key]['count']))
+                self.face_recognizer.save_faces(cv_image, tupl, key, str(self.cmt_tracker_instances[key]['count']),face.tool_used_for_detection.data)
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
-                self.queryAddResults(cv_image, tupl, key, self.confidence)
-                # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
+                self.queryAddResults(cv_image, tupl, key, self.confidence,face.tool_used_for_detection.data)
+                print(self.face_recognizer.face_results_aggregator[key]['results'])
                 if key not in self.google_query:
-                    self.face_recognizer.temp_save_faces(cv_image, tupl, key)
+                    self.face_recognizer.temp_save_faces(cv_image, tupl, key,face.tool_used_for_detection.data)
                     self.google_query.append(key)
                     # print "Image Saved"
 
@@ -132,8 +132,8 @@ class face_predictor:
 
                 if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
                     max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'], key=self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].get)
-                    # print("openface output results: ")
-                    # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
+                    print("openface output results: ")
+                    print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
                     if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index] > self.num_positive:
                         try:
                             self.upt = rospy.ServiceProxy('recognition', TrackerNames)
@@ -196,15 +196,16 @@ class face_predictor:
 
     def sample_callback(self,config, level):
         self.cmt_tracker_instances = {}
+        self.face_recognizer.face_results_aggregator = {}
         self.image_sample_size = config.image_number
         self.sample_size = config.sample_size
         self.confidence = config.confidence
         self.num_positive = config.num_positive
         return config
 
-    def queryAddResults(self, cv_image, tupl, name,threshold=0.85):
+    def queryAddResults(self, cv_image, tupl, name,threshold=0.85,tool_used="opencv"):
         self.logger.info('getting results')
-        self.face_recognizer.results(cv_image, tupl, name,threshold)
+        self.face_recognizer.results(cv_image, tupl, name,threshold,tool_used)
         self.logger.info('adding to tally')
 
     def returnOverlapping(self, face, cmt):
@@ -214,9 +215,9 @@ class face_predictor:
         for j in face.objects:
             overlap = False
             SA = j.object.height * j.object.width
-            if j.tool_used_for_detection.data == "opencv":
-                #Skip faces which don't have dlib configuraiton. Need to integrate ci2cv and compare results
-                continue
+            # if j.tool_used_for_detection.data == "opencv":
+            #     #Skip faces which don't have dlib configuraiton. Need to integrate ci2cv and compare results
+            #     continue
             for i in cmt.tracker_results:
                 SB = i.object.object.height * i.object.object.width
                 SI = max(0, ( max(j.object.x_offset + j.object.width,i.object.object.x_offset + i.object.object.width)- min(j.object.x_offset,i.object.object.x_offset) )

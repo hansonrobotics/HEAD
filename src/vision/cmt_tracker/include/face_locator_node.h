@@ -41,12 +41,21 @@
 //Include Gaze Now from the gazr;
 #include "pupils.hpp"
 
+// clandmarks headers
+
+#include "Flandmark.h"
+#include "CFeaturePool.h"
+#include "CSparseLBPFeatures.h"
+
+
+
 #define SSTR( x ) dynamic_cast< std::ostringstream & >(( std::ostringstream() << std::dec << x ) ).str()
 
 namespace face_detect {
 struct merged_message{
-   cmt_tracker_msgs::Objects message;
+   //cmt_tracker_msgs::Objects message;
    std::vector<int> overlapedDlibCV;
+   std::vector<int> notoverlapedCV;
 };
 // Anthropometric for male adult
 // Relative position of various facial feature relative to sellion
@@ -161,6 +170,11 @@ private:
   float opticalCenterX;
   float opticalCenterY;
 
+  //clandmarks
+  std::string clandmark_xml;
+  clandmark::Flandmark *flandmarks;
+  cimg_library::CImg<unsigned char> * cvImgToCImg(cv::Mat &cvImg);
+  cv::Mat & CImgtoCvImg(cv::Mat &result, cimg_library::CImg<unsigned char> *img);
 
 
 };

@@ -111,25 +111,26 @@ class OfflineViewer:
 
             for i in face.objects:
                 tupl = []
-                if i.tool_used_for_detection.data == "opencv":
-                    # Skip faces which don't have dlib configuraiton. Need to integrate ci2cv and compare results
-                    print(i.tool_used_for_detection.data)
-                    continue
+                # if i.tool_used_for_detection.data == "opencv":
+                #     # Skip faces which don't have dlib configuraiton. Need to integrate ci2cv and compare results
+                #     print(i.tool_used_for_detection.data)
+                #     continue
                 for pts in i.feature_point.points:
                     x, y = pts.x, pts.y
                     tupl.append((x, y))
 
                 #Now let's query every single time to which results group it belongs to and box output the result
                 if not self.save_faces:
-                    result = self.face_recognizer.immediate_results(cv_image, tupl)
-                    print(result)
+                    result = self.face_recognizer.immediate_results(cv_image, tupl,i.tool_used_for_detection.data)
+                    print(str(result) + " <-> "+ str(i.tool_used_for_detection.data))
                     font = cv2.FONT_HERSHEY_COMPLEX_SMALL
                     cv2.rectangle(cv_image, (i.object.x_offset, i.object.y_offset),
                                   (i.object.x_offset + i.object.width, i.object.y_offset + i.object.width), (255, 0, 0))
                     cv2.putText(cv_image,str(result),(i.object.x_offset,i.object.y_offset),font,0.7,(255,0,0),2)
                 else:
                     if (self.image_sample_size > 0):
-                        self.face_recognizer.save_faces(cv_image,tupl,self.generate_unique,str(self.image_sample_size))
+
+                        self.face_recognizer.save_faces(cv_image,tupl,self.generate_unique,str(self.image_sample_size),i.tool_used_for_detection.data)
                         cv2.rectangle(cv_image, (i.object.x_offset, i.object.y_offset),
                                       (i.object.x_offset + i.object.width, i.object.y_offset + i.object.width),
                                       (255, 0, 0))
