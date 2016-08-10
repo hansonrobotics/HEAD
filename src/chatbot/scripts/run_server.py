@@ -259,20 +259,29 @@ def _stats():
         import glob
         dump_history()
         today = dt.datetime.now()
+        data = request.args
+        days = int(data.get('lookback', 7))
         dfs = []
-        days = 7
         for d in glob.glob('{}/*'.format(HISTORY_DIR)):
             if os.path.isdir(d):
                 dirname = os.path.basename(d)
-                if (today-dt.datetime.strptime(dirname, '%Y%m%d')).days < days:
+                dirdate = None
+                try:
+                    dirdate = dt.datetime.strptime(dirname, '%Y%m%d')
+                except Exception as ex:
+                    logger.error(ex)
+                if dirdate and (days == -1 or (today-dirdate).days < days):
                     for fname in glob.glob('{}/{}/*.csv'.format(HISTORY_DIR, dirname)):
                         try:
                             dfs.append(pd.read_csv(fname))
                         except Exception as ex:
                             logger.warn("Reading {} error: {}".format(fname, ex))
         df = pd.concat(dfs, ignore_index=True)
-        df = df[df.Datetime != 'Datetime'].sort(['User', 'Datetime'])
-        stats_csv = '{}/last_{}_days.csv'.format(HISTORY_DIR, days)
+        df = df[df.Datetime != 'Datetime'].sort(['User', 'Datetime']).drop_duplicates()
+        if days == -1:
+            stats_csv = '{}/last_all_days.csv'.format(HISTORY_DIR)
+        else:
+            stats_csv = '{}/last_{}_days.csv'.format(HISTORY_DIR, days)
         df.to_csv(stats_csv, index=False)
         logger.info("Write statistic records to {}".format(stats_csv))
         records = len(df)
