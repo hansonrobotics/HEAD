@@ -19,7 +19,7 @@ key='AAAAB3NzaC'
 
 class Chatbot():
   def __init__(self):
-    self.chatbot_url = 'http://localhost:8001'
+    self.chatbot_url = rospy.get_param('chatbot_url', 'http://localhost:8001')
     self.botname = rospy.get_param('botname', 'sophia')
     self.user = 'hr'
     while not self.ping():
@@ -210,7 +210,7 @@ class Chatbot():
     return config
 
 if __name__ == '__main__':
-  rospy.init_node('chatbot_en')
+  rospy.init_node('chatbot')
   bot = Chatbot()
   from rospkg import RosPack
   rp = RosPack()
