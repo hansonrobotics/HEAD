@@ -19,3 +19,5 @@ botname: sophia
 tts_api_config:
   en: festival # mary
 
+chatbot:
+  chatbot_url: http://localhost:8001
