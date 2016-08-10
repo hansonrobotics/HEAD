@@ -11,7 +11,9 @@ if [ -z "$1" ]; then
 else
     NAME=$1
 fi
-if [[ $(tmux ls 2>/dev/null) == ${NAME}* ]]; then
+
+SESSION_INFO=$(tmux ls 2>/dev/null | grep $NAME)
+if [[ ${SESSION_INFO} == ${NAME}* ]]; then
     curl -G localhost:8001/v1.1/dump_history
     tmux kill-session -t $NAME
 fi
