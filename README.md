@@ -123,6 +123,9 @@ Return:
 GET /v1.1/bot_names
 ```
 
+Parameters: 
+- *Auth* - Authorization token
+
 Return:
 - *ret* - Return code
 - *response*
