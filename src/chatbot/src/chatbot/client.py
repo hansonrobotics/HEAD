@@ -9,6 +9,12 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 VERSION = 'v1.1'
 
+def get_default_username():
+    import subprocess
+    user = subprocess.check_output('id -nu', shell=True).strip()
+    host = subprocess.check_output('hostid', shell=True).strip()
+    return '{}@{}'.format(user, host)
+
 class Client(cmd.Cmd, object):
     def __init__(self, username, key, *args, **kwargs):
         super(Client, self).__init__(*args, **kwargs)
