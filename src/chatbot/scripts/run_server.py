@@ -43,6 +43,7 @@ from chatbot.server.chatbot_agent import (
         dump_history, dump_session, add_character, list_character_names,
         rate_answer)
 from chatbot.server.session import HISTORY_DIR
+from chatbot.stats import history_stats
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -255,39 +256,10 @@ def _ping():
 @requires_auth
 def _stats():
     try:
-        import pandas as pd
-        import glob
+        data = request.args
+        days = int(data.get('lookback', 7))
         dump_history()
-        today = dt.datetime.now()
-        dfs = []
-        days = 7
-        for d in glob.glob('{}/*'.format(HISTORY_DIR)):
-            if os.path.isdir(d):
-                dirname = os.path.basename(d)
-                if (today-dt.datetime.strptime(dirname, '%Y%m%d')).days < days:
-                    for fname in glob.glob('{}/{}/*.csv'.format(HISTORY_DIR, dirname)):
-                        try:
-                            dfs.append(pd.read_csv(fname))
-                        except Exception as ex:
-                            logger.warn("Reading {} error: {}".format(fname, ex))
-        df = pd.concat(dfs, ignore_index=True)
-        df = df[df.Datetime != 'Datetime'].sort(['User', 'Datetime'])
-        stats_csv = '{}/last_{}_days.csv'.format(HISTORY_DIR, days)
-        df.to_csv(stats_csv, index=False)
-        logger.info("Write statistic records to {}".format(stats_csv))
-        records = len(df)
-        rates = len(df[df.Rate.notnull()])
-        good_rates = len(df[df.Rate == 'good'])
-        bad_rates = len(df[df.Rate == 'bad'])
-        if records > 0:
-            csd = float(records-bad_rates)/records
-        response = {
-            'customers_satisfaction_degree': csd,
-            'number_of_records': records,
-            'number_of_rates': rates,
-            'number_of_good_rates': good_rates,
-            'number_of_bad_rates': bad_rates,
-        }
+        response = history_stats(HISTORY_DIR, days)
         ret = True
     except Exception as ex:
         ret, response = False, {'err_msg' : str(ex)}

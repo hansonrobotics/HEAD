@@ -368,8 +368,17 @@ Syntax: upload package
     help_d = help_dump
 
     def do_summary(self, line):
+        if line:
+            try:
+                lookback = int(line)
+            except Exception as ex:
+                self.stdout.write('{}\n'.format(ex))
+                return
+        else:
+            lookback = 7
         params = {
-            "Auth": self.key
+            "Auth": self.key,
+            "lookback": lookback
         }
         r = requests.get('{}/stats'.format(self.chatbot_url), params=params)
         ret = r.json().get('ret')
@@ -382,7 +391,9 @@ Syntax: upload package
                 'Number of good rates {number_of_good_rates}\n'\
                 'Number of bad rates {number_of_bad_rates}\n'.format(**response))
         else:
-            self.stdout.write(response['err_msg'])
+            self.stdout.write('{}\n'.format(response['err_msg']))
 
     def help_summary(self):
         self.stdout.write('Report the summary of the chat history\n')
+        self.stdout.write('Usage: summary [lookback days]\n')
+        self.stdout.write('lookback days: -1 means all\n')
