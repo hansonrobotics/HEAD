@@ -23,6 +23,8 @@ def history_stats(history_dir, days):
                         dfs.append(pd.read_csv(fname))
                     except Exception as ex:
                         logger.warn("Reading {} error: {}".format(fname, ex))
+    if not dfs:
+        return {}
     df = pd.concat(dfs, ignore_index=True)
     df = df[df.Datetime != 'Datetime'].sort(['User', 'Datetime']).drop_duplicates()
     if days == -1:
@@ -51,3 +53,4 @@ if __name__ == '__main__':
     logging.basicConfig()
     logging.getLogger().setLevel(logging.INFO)
     history_stats(os.path.expanduser('~/.hr/chatbot/history'), -1)
+    history_stats(os.path.expanduser('~/.hr/chatbot/history'), 7)
