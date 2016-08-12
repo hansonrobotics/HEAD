@@ -79,6 +79,7 @@ class face_predictor:
         pass
 
     def callback(self,data, cmt, face,temp):
+        ## TODO Make this query based on the pose and sporadically.
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
         except CvBridgeError as e:
