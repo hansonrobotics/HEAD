@@ -538,9 +538,10 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 if (e.event == 'paused') {
                     this.pauseIndicator(e.time);
                     this.model.b_pause(e);
-                } else if (e.event == 'idle')
+                } else if (e.event == 'idle') {
+                    this.disableChat();
                     this.stopIndicator();
-                else if (e.event == 'running')
+                } else if (e.event == 'running')
                     this.startIndicator(e.time, duration);
                 else if (e.event == 'resume')
                     this.startIndicator(e.time, duration);

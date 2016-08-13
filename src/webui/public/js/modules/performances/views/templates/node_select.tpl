@@ -48,6 +48,13 @@
         <div class="app-hr-angle-slider"></div>
     </div>
 
+
+
+    <div class="checkbox" data-node-property="enable_chatbot">
+        <label>
+            <input class="app-enable-chatbot-checkbox" type="checkbox"> Enable chatbot
+        </label>
+    </div>
     <div class="form-group" data-node-property="responses">
         <div class="hidden">
             <div class="app-listen-response-template">

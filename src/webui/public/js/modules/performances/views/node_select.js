@@ -23,7 +23,9 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 listenResponseInputs: '.app-listen-response-template input',
                 listenAddResponseButton: '.app-listen-add-response',
                 listenResponseList: '.app-chat-response-list',
-                removeListenResponseButton: '.app-remove-listen-response'
+                removeListenResponseButton: '.app-remove-listen-response',
+                enableChatbotCheckbox: '.app-enable-chatbot-checkbox',
+                responsesProperty: '[data-node-property="responses"]'
             },
             events: {
                 'keyup @ui.textInput': 'setText',
@@ -32,7 +34,8 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 'change @ui.topicInput': 'setTopic',
                 'change @ui.listenResponseInputs': 'updateChatResponses',
                 'click @ui.listenAddResponseButton': 'addListenResponse',
-                'click @ui.removeListenResponseButton': 'removeListenResponse'
+                'click @ui.removeListenResponseButton': 'removeListenResponse',
+                'change @ui.enableChatbotCheckbox': 'setEnableChatbot'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -54,6 +57,11 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 });
 
                 this.modelChanged();
+
+                if (this.model.hasProperty('enable_chatbot')) {
+                    this.ui.enableChatbotCheckbox.prop('checked', !!this.model.get('enable_chatbot'));
+                    this.setEnableChatbot();
+                }
 
                 if (this.model.hasProperty('responses')) {
                     this.initChatReponses();
@@ -312,6 +320,16 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                     $(this).remove();
                     self.updateChatResponses();
                 });
+            },
+            setEnableChatbot: function () {
+                var checked = this.ui.enableChatbotCheckbox.is(':checked');
+
+                this.model.set('enable_chatbot', checked ? '1' : '');
+
+                if (checked)
+                    this.ui.responsesProperty.fadeOut();
+                else
+                    this.ui.responsesProperty.fadeIn();
             }
         });
     });
