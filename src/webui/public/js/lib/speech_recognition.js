@@ -9,7 +9,6 @@ define(['underscore'], function (_) {
                 speechRecognition = new SpeechRecognition();
 
             speechRecognition.interimResults = false;
-            speechRecognition.continuous = false;
 
             return speechRecognition;
         },

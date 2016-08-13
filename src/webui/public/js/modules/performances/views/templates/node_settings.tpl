@@ -20,6 +20,14 @@
             </div>
         </div>
 
+        <div class="form-group" data-node-property="timeout">
+            <label>Timeout</label>
+            <div class="input-group">
+                <input type="number" class="app-node-timeout form-control" title="Timeout"/>
+                <div class="input-group-addon">s</div>
+            </div>
+        </div>
+
         <div class="form-group" data-node-property="message">
             <label>Message</label>
 
@@ -76,6 +84,21 @@
 
         <div class="form-group" data-node-property="crosshair">
             <div class="app-crosshair"></div>
+        </div>
+
+        <div class="form-group" data-node-property="dialog_turns">
+            <label>Dialog turns</label>
+            <input type="number" class="app-dialog-turns-input form-control">
+        </div>
+
+        <div class="form-group" data-node-property="no_match">
+            <label>No match response</label>
+            <input type="text" class="app-no-match-input form-control">
+        </div>
+
+        <div class="form-group" data-node-property="no_speech">
+            <label>No speech response</label>
+            <input type="text" class="app-no-speech-input form-control">
         </div>
 
         <div class="form-group">

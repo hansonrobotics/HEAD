@@ -561,10 +561,10 @@ textarea.form-control.app-node-text {
     background-color: #f0ad4e;
 }
 
-.app-node[data-node-name="listen"],
-.app-node-tabs > li.active > a[data-node-name="listen"],
-.app-node-tabs > li > a[data-node-name="listen"]:hover,
-.app-node-tabs > li > a[data-node-name="listen"]:focus {
+.app-node[data-node-name="chat"],
+.app-node-tabs > li.active > a[data-node-name="chat"],
+.app-node-tabs > li > a[data-node-name="chat"]:hover,
+.app-node-tabs > li > a[data-node-name="chat"]:focus {
     background-color: #36baaa;
 }
 
@@ -592,6 +592,6 @@ textarea.form-control.app-node-text {
     padding-left: 15px;
 }
 
-.app-listen-response-list .form-inline {
+.app-chat-response-list .form-inline {
     margin-bottom: 10px;
 }

@@ -17,13 +17,12 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 topicInput: '.app-node-topic',
                 btreeModeSelect: 'select.app-btree-mode-select',
                 speechEventSelect: 'select.app-speech-event-select',
-                timeout: '.app-node-timeout',
                 hrAngleSlider: '.app-hr-angle-slider',
                 hrAngleLabel: '.app-hr-angle-label',
                 listenResponseTemplate: '.app-listen-response-template',
                 listenResponseInputs: '.app-listen-response-template input',
                 listenAddResponseButton: '.app-listen-add-response',
-                listenResponseList: '.app-listen-response-list',
+                listenResponseList: '.app-chat-response-list',
                 removeListenResponseButton: '.app-remove-listen-response'
             },
             events: {
@@ -31,8 +30,7 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 'change @ui.textInput': 'setTextDuration',
                 'change @ui.langSelect': 'setLanguage',
                 'change @ui.topicInput': 'setTopic',
-                'change @ui.timeout': 'updateTimeout',
-                'change @ui.listenResponseInputs': 'updateListenResponses',
+                'change @ui.listenResponseInputs': 'updateChatResponses',
                 'click @ui.listenAddResponseButton': 'addListenResponse',
                 'click @ui.removeListenResponseButton': 'removeListenResponse'
             },
@@ -41,7 +39,6 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
             },
             modelChanged: function () {
                 this.ui.topicInput.val(this.model.get('topic'));
-                this.ui.timeout.val(this.model.get('timeout'));
             },
             onAttach: function () {
                 this.initFields();
@@ -58,8 +55,10 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
 
                 this.modelChanged();
 
-                if (this.model.hasProperty('responses'))
+                if (this.model.hasProperty('responses')) {
+                    this.initChatReponses();
                     this.ui.listenAddResponseButton.click();
+                }
 
                 if (this.model.hasProperty('emotion')) {
                     // init with empty list
@@ -277,10 +276,20 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                     self.initList(regions, 'attention_region', self.ui.attentionRegionList);
                 });
             },
-            updateTimeout: function () {
-                this.model.set('timeout', this.ui.timeout.val());
+            initChatReponses: function () {
+                var self = this;
+                self.ui.listenResponseList.html('');
+
+                _.each(this.model.get('responses'), function (response) {
+                    var template = self.ui.listenResponseTemplate.clone(),
+                        input = $('.app-chat-input', template),
+                        output = $('.app-chat-output', template);
+                    input.val(response['input']);
+                    output.val(response['output']);
+                    self.ui.listenResponseList.append(template.hide().fadeIn());
+                });
             },
-            updateListenResponses: function () {
+            updateChatResponses: function () {
                 var responses = [],
                     inputs = $('input', this.ui.listenResponseList),
                     i;
@@ -292,7 +301,6 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                     if (input && output) responses.push({input: input, output: output});
                 }
 
-                console.log(responses);
                 this.model.set('responses', responses);
             },
             addListenResponse: function () {
@@ -302,7 +310,7 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 var self = this;
                 $(e.target).closest('.app-listen-response-template').fadeOut(100, function () {
                     $(this).remove();
-                    self.updateListenResponses();
+                    self.updateChatResponses();
                 });
             }
         });

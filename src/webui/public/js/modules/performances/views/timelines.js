@@ -538,26 +538,42 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 if (e.event == 'paused') {
                     this.pauseIndicator(e.time);
                     this.model.b_pause(e);
-                } else if (e.event == 'idle') {
+                } else if (e.event == 'idle')
                     this.stopIndicator();
-                } else if (e.event == 'running') {
+                else if (e.event == 'running')
                     this.startIndicator(e.time, duration);
-                } else if (e.event == 'resume') {
+                else if (e.event == 'resume')
                     this.startIndicator(e.time, duration);
-                } else if (e.event == 'listen') {
-                    this.enableListening();
-                }
+                else if (e.event == 'chat')
+                    this.enableChat();
+                else if (e.event == 'chat_end')
+                    this.disableChat();
             },
-            enableListening: function () {
+            enableChat: function () {
+                var self = this;
+                this.chatEnabled = true;
                 if (speechRecognition) {
-                    var instance = speechRecognition.getInstance();
+                    this.speechRecognition = speechRecognition.getInstance();
+                    speechRecognition.continuous = true;
 
-                    instance.onresult = function (event) {
+                    this.speechRecognition.onresult = function (event) {
                         var mostConfidentResult = speechRecognition.getMostConfidentResult(event.results);
                         if (mostConfidentResult) api.topics.listen_node_input.publish({data: mostConfidentResult.transcript});
                     };
 
-                    instance.start();
+                    this.speechRecognition.onend = function () {
+                        if (self.chatEnabled)
+                            self.enableChat();
+                    };
+
+                    this.speechRecognition.start();
+                }
+            },
+            disableChat: function () {
+                this.chatEnabled = false;
+                if (this.speechRecognition) {
+                    this.speechRecognition.abort();
+                    this.speechRecognition = null;
                 }
             }
         });

@@ -26,9 +26,9 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                     properties: ['duration', 'message'],
                     defaultValues: {message: ''}
                 },
-                listen: {
-                    label: 'Listen',
-                    properties: ['responses'],
+                chat: {
+                    label: 'Chat',
+                    properties: ['responses', 'timeout', 'no_match', 'no_speech', 'dialog_turns'],
                     defaultValues: {duration: 0.2, responses: []}
                 },
                 soma: {
