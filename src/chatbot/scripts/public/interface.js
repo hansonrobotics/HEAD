@@ -18,9 +18,12 @@ function write(message, tag){
         tag='\'text\'';
     message = "" + message;
     message = message.split("\n").join("<br>");
-    messageHistory.innerHTML += '<span class=' + tag + '>\n'+
-                                message+'\n'+
-                                '</span>'+'\n';
+
+    const line = document.createElement("span");
+    line.classList = [tag];
+    line.innerHTML = message;
+
+    messageHistory.appendChild(line);
 }
 
 function write_error(message){
@@ -37,6 +40,14 @@ function exit(){
     write("Window is dead.", ERROR_OUTPUT_TAG);
 }
 
+function download(text, fname, file){
+    const elem = document.createElement("a");
+    const file = new Blob([txt], {type: type});
+    elem.href = URL.createObjectURL(file);
+    elem.download = name;
+    elem.innerText = "Click here to download";
+    messageHistory.appendChild(elem);
+}
 function exec(cmd, param){
     const f_name = 'do_' + cmd;
     let fn = client[f_name];
@@ -64,5 +75,6 @@ function keypress(e){
 client.print = write;
 client.error = write_error;
 client.exit = exit;
+client.download = download;
 
 messageBox.addEventListener("keydown", keypress);
