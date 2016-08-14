@@ -119,7 +119,9 @@ class speech(Node):
     def say(self, text, lang):
         if lang not in ['en', 'zh']:
             lang = 'default'
-        text = self._add_ssml(text)
+        # SSML tags for english TTS only.
+        if lang == 'en':
+            text = self._add_ssml(text)
         self.runner.topics['tts'][lang].publish(String(text))
 
     # adds SSML tags for whole text returns updated text.
@@ -347,8 +349,10 @@ class chat(Node):
         self.runner.topics['events'].publish(Event('chat', 0))
 
     def start_chatbot_session(self):
-        botname = rospy.get_param('/' + self.runner.robot_name + '/performances/chat/botname')
-        user = rospy.get_param('/' + self.runner.robot_name + '/performances/chat/user')
+        # TODO need to be selectable from UI.
+        botname = 'sophia'
+        # Can be hardcoded. or find system uname.
+        user = 'performances'
 
         params = {
             'Auth': 'AAAAB3NzaC',

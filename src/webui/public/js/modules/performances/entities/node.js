@@ -112,6 +112,7 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
             getLabel: function () {
                 return this.getConfig().label;
             },
+
             getTitle: function () {
                 var title = this.getLabel(),
                     name = this.get('name');
@@ -129,7 +130,7 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 else if (name == 'gaze_at' || name == 'look_at')
                     title = this.get('attention_region');
 
-                return title
+                return title || name;
             },
             updateEl: function () {
                 if (this.previous('el')) $(this.previous('el')).remove();

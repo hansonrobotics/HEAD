@@ -105,12 +105,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         if (id && node) {
                             node.set('start_time', startTime);
                             self.model.nodes.add(node);
-                        } else {
-                            node = self.model.nodes.add({
-                                name: el.data('node-name'),
-                                start_time: startTime,
-                                duration: 1
-                            });
                             self.showNodeSettings(node);
                         }
                     }

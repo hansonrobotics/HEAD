@@ -143,7 +143,6 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 if (this.model.hasProperty('text')) {
                     if (!this.model.get('text'))
                         this.model.set('text', '');
-                    console.log(this.model.get('text'));
                     this.ui.textInput.val(this.model.get('text'));
                 }
 

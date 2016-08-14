@@ -40,10 +40,26 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 this.mergeOptions(options, ['node']);
             },
             onAttach: function () {
+                var self = this;
                 this.ui.nodeTypeButtons.draggable({
                     helper: function () {
-                        return $('<span>').addClass('label app-node').attr('data-node-name',
-                            $(this).data('node-name')).html($(this).html()).get(0);
+                        var attributes;
+                        if (self.node && self.collection && self.node.get('name') == $(this).data('node-name')){
+                            // Copy current view attributes if node is same
+                                attributes = self.node.toJSON();
+                                delete attributes['id'];
+
+                        }else{
+                            attributes = {
+                                name: $(this).data('node-name'),
+                                duration: 1
+                            }
+                        }
+                        var node = Node.create(attributes);
+                        node.setDefaultValues();
+                        return $('<span>').attr('data-node-name', node.get('name'))
+                            .attr('data-node-id', node.get('id'))
+                            .addClass('label app-node').html(node.getTitle());
                     },
                     appendTo: 'body',
                     revert: 'invalid',
