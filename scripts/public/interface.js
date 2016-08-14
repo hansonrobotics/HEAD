@@ -1,5 +1,5 @@
 const messageBox = document.getElementsByClassName("message")[0];
-const messageHistory = document.getElementsByClassName("content")[0];
+const messageHistory = document.getElementsByClassName("chat-content")[0];
 
 let client = new Client();
 client.do_conn();
@@ -24,6 +24,7 @@ function write(message, tag){
     line.innerHTML = message;
 
     messageHistory.appendChild(line);
+    messageHistory.scrollTop = messageHistory.scrollHeight;
 }
 
 function write_error(message){
