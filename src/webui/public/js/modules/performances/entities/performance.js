@@ -12,6 +12,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
 
                 if (options && options.nodes)
                     _.each(options.nodes, function (attributes) {
+                        delete attributes['id'];
                         self.nodes.add(new self.nodes.model(attributes));
                     });
 

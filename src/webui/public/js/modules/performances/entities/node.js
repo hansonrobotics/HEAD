@@ -26,6 +26,11 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                     properties: ['duration', 'message'],
                     defaultValues: {message: ''}
                 },
+                chat: {
+                    label: 'Chat',
+                    properties: ['responses', 'timeout', 'no_match', 'no_speech', 'dialog_turns', 'enable_chatbot'],
+                    defaultValues: {duration: 0.2, responses: []}
+                },
                 soma: {
                     label: 'Soma State',
                     properties: ['duration', 'soma']
@@ -107,6 +112,7 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
             getLabel: function () {
                 return this.getConfig().label;
             },
+
             getTitle: function () {
                 var title = this.getLabel(),
                     name = this.get('name');
@@ -124,7 +130,7 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 else if (name == 'gaze_at' || name == 'look_at')
                     title = this.get('attention_region');
 
-                return title
+                return title || name;
             },
             updateEl: function () {
                 if (this.previous('el')) $(this.previous('el')).remove();

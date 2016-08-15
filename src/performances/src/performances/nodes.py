@@ -12,6 +12,9 @@ import time
 import logging
 import random
 from threading import Timer
+from performances.msg import Event
+import requests
+import urllib
 
 logger = logging.getLogger('hr.performances.nodes')
 
@@ -116,7 +119,9 @@ class speech(Node):
     def say(self, text, lang):
         if lang not in ['en', 'zh']:
             lang = 'default'
-        text = self._add_ssml(text)
+        # SSML tags for english TTS only.
+        if lang == 'en':
+            text = self._add_ssml(text)
         self.runner.topics['tts'][lang].publish(String(text))
 
     # adds SSML tags for whole text returns updated text.
@@ -310,10 +315,107 @@ class chat_pause(Node):
         self.resume()
 
     def resume(self):
-        self.runner.resume()
         self.duration = 0
+        self.runner.resume()
 
     def stop(self, run_time):
+        if self.subscriber:
+            self.subscriber.unregister()
+            self.subscriber = False
+
+
+class chat(Node):
+    def __init__(self, data, runner):
+        Node.__init__(self, data, runner)
+        self.subscriber = False
+        self.turns = 0
+        self.chatbot_session_id = False
+        self.enable_chatbot = 'enable_chatbot' in self.data and self.data['enable_chatbot']
+
+    def start(self, run_time):
+        self.runner.pause()
+
+        if self.enable_chatbot:
+            self.start_chatbot_session()
+
+        def input_callback(event):
+            self.respond(
+                    self.get_chatbot_response(event.data) if self.enable_chatbot else self.match_response(event.data))
+
+            if 'dialog_turns' not in self.data or int(self.data['dialog_turns']) <= self.turns:
+                self.resume()
+
+        self.subscriber = rospy.Subscriber('/' + self.runner.robot_name + '/nodes/listen/input', String, input_callback)
+        self.runner.topics['events'].publish(Event('chat', 0))
+
+    def start_chatbot_session(self):
+        # TODO need to be selectable from UI.
+        botname = 'sophia'
+        # Can be hardcoded. or find system uname.
+        user = 'performances'
+
+        params = {
+            'Auth': 'AAAAB3NzaC',
+            'botname': botname,
+            'user': user
+        }
+
+        r = requests.get('http://127.0.0.1:8001/v1.1/start_session?' + urllib.urlencode(params))
+
+        if r.status_code == 200:
+            self.chatbot_session_id = r.json()['sid']
+            return True
+        return False
+
+    def get_chatbot_response(self, speech):
+        if self.chatbot_session_id:
+            params = {
+                'Auth': 'AAAAB3NzaC',
+                'lang': 'en',
+                'question': speech,
+                'session': self.chatbot_session_id
+            }
+
+            r = requests.get('http://127.0.0.1:8001/v1.1/chat?' + urllib.urlencode(params))
+            if r.status_code == 200:
+                return r.json()['response']['text']
+
+        return ''
+
+    def match_response(self, speech):
+        response = ''
+        if 'responses' in self.data and isinstance(self.data['responses'], list):
+            input = speech.lower()
+            matches = []
+            for r in self.data['responses']:
+                if r['input'] in input:
+                    matches.append(r['output'])
+
+            if len(matches):
+                response = matches[int(random.randint(0, len(matches) - 1))]
+
+        if not response and 'no_match' in self.data:
+            response = self.data['no_match']
+
+        return response
+
+    def cont(self, run_time):
+        if 'timeout' in self.data and int(self.data['timeout']) and self.runner.start_timestamp + self.start_time + int(
+                self.data['timeout']) >= time.time():
+            if not self.turns and 'no_speech' in self.data:
+                self.respond(self.data['no_speech'])
+
+            self.resume()
+
+    def respond(self, response):
+        self.turns += 1
+        self.runner.topics['tts']['default'].publish(String(response))
+
+    def resume(self):
+        self.duration = 0
+        self.runner.resume()
+        self.runner.topics['events'].publish(Event('chat_end', 0))
+
         if self.subscriber:
             self.subscriber.unregister()
             self.subscriber = False

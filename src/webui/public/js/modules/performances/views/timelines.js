@@ -1,7 +1,7 @@
 define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './node',
-        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in',
-        'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
-    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion) {
+        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
+        'lib/api', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
+    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition, api) {
         return Marionette.LayoutView.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
@@ -105,12 +105,6 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         if (id && node) {
                             node.set('start_time', startTime);
                             self.model.nodes.add(node);
-                        } else {
-                            node = self.model.nodes.add({
-                                name: el.data('node-name'),
-                                start_time: startTime,
-                                duration: 1
-                            });
                             self.showNodeSettings(node);
                         }
                     }
@@ -539,11 +533,42 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     this.pauseIndicator(e.time);
                     this.model.b_pause(e);
                 } else if (e.event == 'idle') {
+                    this.disableChat();
                     this.stopIndicator();
-                } else if (e.event == 'running') {
+                } else if (e.event == 'running')
                     this.startIndicator(e.time, duration);
-                } else if (e.event == 'resume') {
+                else if (e.event == 'resume')
                     this.startIndicator(e.time, duration);
+                else if (e.event == 'chat')
+                    this.enableChat();
+                else if (e.event == 'chat_end')
+                    this.disableChat();
+            },
+            enableChat: function () {
+                var self = this;
+                this.chatEnabled = true;
+                if (speechRecognition) {
+                    this.speechRecognition = speechRecognition.getInstance();
+                    speechRecognition.continuous = true;
+
+                    this.speechRecognition.onresult = function (event) {
+                        var mostConfidentResult = speechRecognition.getMostConfidentResult(event.results);
+                        if (mostConfidentResult) api.topics.listen_node_input.publish({data: mostConfidentResult.transcript});
+                    };
+
+                    this.speechRecognition.onend = function () {
+                        if (self.chatEnabled)
+                            self.enableChat();
+                    };
+
+                    this.speechRecognition.start();
+                }
+            },
+            disableChat: function () {
+                this.chatEnabled = false;
+                if (this.speechRecognition) {
+                    this.speechRecognition.abort();
+                    this.speechRecognition = null;
                 }
             }
         });

@@ -23,7 +23,11 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                 messageInput: '.app-node-message-input',
                 kfModeSelect: 'select.app-blender-mode-select',
                 btreeModeSelect: 'select.app-btree-mode-select',
-                createButton: '.app-create-button'
+                createButton: '.app-create-button',
+                timeout: '.app-node-timeout',
+                dialogTurnsInput: '.app-dialog-turns-input',
+                noMatchInput: '.app-no-match-input',
+                noSpeechInput: '.app-no-speech-input'
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -31,7 +35,11 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                 'change @ui.messageInput': 'setMessage',
                 'change @ui.btreeModeSelect': 'setBtreeMode',
                 'change @ui.kfModeSelect': 'setBlenderMode',
-                'click @ui.createButton': 'addPerformance'
+                'click @ui.createButton': 'addPerformance',
+                'change @ui.timeout': 'updateTimeout',
+                'change @ui.dialogTurnsInput': 'updateDialogTurns',
+                'change @ui.noMatchInput': 'updateNoMatch',
+                'change @ui.noSpeechInput': 'updateNoSpeech'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -39,6 +47,10 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
             modelChanged: function () {
                 this.ui.startTime.val(this.model.get('start_time'));
                 this.ui.duration.val(this.model.get('duration'));
+                this.ui.timeout.val(this.model.get('timeout'));
+                this.ui.dialogTurnsInput.val(this.model.get('dialog_turns'));
+                this.ui.noMatchInput.val(this.model.get('no_match'));
+                this.ui.noSpeechInput.val(this.model.get('no_speech'));
 
                 if (this.model.hasProperty('blender_mode')) this.ui.kfModeSelect.val(this.model.get('blender_mode'));
                 if (this.model.hasProperty('message')) this.ui.messageInput.val(this.model.get('message'));
@@ -215,6 +227,18 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                     this.ui.crosshair.fadeIn();
                 else
                     this.ui.crosshair.fadeOut();
+            },
+            updateTimeout: function () {
+                this.model.set('timeout', this.ui.timeout.val());
+            },
+            updateDialogTurns: function () {
+                this.model.set('dialog_turns', this.ui.dialogTurnsInput.val());
+            },
+            updateNoMatch: function () {
+                this.model.set('no_match', this.ui.noMatchInput.val());
+            },
+            updateNoSpeech: function () {
+                this.model.set('no_speech', this.ui.noSpeechInput.val());
             }
         });
     });

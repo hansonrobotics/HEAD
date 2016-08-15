@@ -17,23 +17,31 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 topicInput: '.app-node-topic',
                 btreeModeSelect: 'select.app-btree-mode-select',
                 speechEventSelect: 'select.app-speech-event-select',
-                timeout: '.app-node-timeout',
                 hrAngleSlider: '.app-hr-angle-slider',
-                hrAngleLabel: '.app-hr-angle-label'
+                hrAngleLabel: '.app-hr-angle-label',
+                listenResponseTemplate: '.app-listen-response-template',
+                listenResponseInputs: '.app-listen-response-template input',
+                listenAddResponseButton: '.app-listen-add-response',
+                listenResponseList: '.app-chat-response-list',
+                removeListenResponseButton: '.app-remove-listen-response',
+                enableChatbotCheckbox: '.app-enable-chatbot-checkbox',
+                responsesProperty: '[data-node-property="responses"]'
             },
             events: {
                 'keyup @ui.textInput': 'setText',
                 'change @ui.textInput': 'setTextDuration',
                 'change @ui.langSelect': 'setLanguage',
                 'change @ui.topicInput': 'setTopic',
-                'change @ui.timeout': 'updateTimeout'
+                'change @ui.listenResponseInputs': 'updateChatResponses',
+                'click @ui.listenAddResponseButton': 'addListenResponse',
+                'click @ui.removeListenResponseButton': 'removeListenResponse',
+                'change @ui.enableChatbotCheckbox': 'setEnableChatbot'
             },
             modelEvents: {
                 change: 'modelChanged'
             },
             modelChanged: function () {
                 this.ui.topicInput.val(this.model.get('topic'));
-                this.ui.timeout.val(this.model.get('timeout'));
             },
             onAttach: function () {
                 this.initFields();
@@ -49,6 +57,16 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 });
 
                 this.modelChanged();
+
+                if (this.model.hasProperty('enable_chatbot')) {
+                    this.ui.enableChatbotCheckbox.prop('checked', !!this.model.get('enable_chatbot'));
+                    this.setEnableChatbot();
+                }
+
+                if (this.model.hasProperty('responses')) {
+                    this.initChatReponses();
+                    this.ui.listenAddResponseButton.click();
+                }
 
                 if (this.model.hasProperty('emotion')) {
                     // init with empty list
@@ -125,7 +143,6 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 if (this.model.hasProperty('text')) {
                     if (!this.model.get('text'))
                         this.model.set('text', '');
-                    console.log(this.model.get('text'));
                     this.ui.textInput.val(this.model.get('text'));
                 }
 
@@ -259,12 +276,59 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
 
                 api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
                     regions = regions || {};
+                    _.each(regions, function (r, i) {
+                        regions[i] = r['label'];
+                    });
                     regions.custom = 'custom';
                     self.initList(regions, 'attention_region', self.ui.attentionRegionList);
                 });
             },
-            updateTimeout: function () {
-                this.model.set('timeout', this.ui.timeout.val());
+            initChatReponses: function () {
+                var self = this;
+                self.ui.listenResponseList.html('');
+
+                _.each(this.model.get('responses'), function (response) {
+                    var template = self.ui.listenResponseTemplate.clone(),
+                        input = $('.app-chat-input', template),
+                        output = $('.app-chat-output', template);
+                    input.val(response['input']);
+                    output.val(response['output']);
+                    self.ui.listenResponseList.append(template.hide().fadeIn());
+                });
+            },
+            updateChatResponses: function () {
+                var responses = [],
+                    inputs = $('input', this.ui.listenResponseList),
+                    i;
+
+                for (i = 0; i < inputs.length / 2; i++) {
+                    var input = $(inputs[i * 2]).val(),
+                        output = $(inputs[i * 2 + 1]).val();
+
+                    if (input && output) responses.push({input: input, output: output});
+                }
+
+                this.model.set('responses', responses);
+            },
+            addListenResponse: function () {
+                this.ui.listenResponseList.append(this.ui.listenResponseTemplate.clone().hide().fadeIn());
+            },
+            removeListenResponse: function (e) {
+                var self = this;
+                $(e.target).closest('.app-listen-response-template').fadeOut(100, function () {
+                    $(this).remove();
+                    self.updateChatResponses();
+                });
+            },
+            setEnableChatbot: function () {
+                var checked = this.ui.enableChatbotCheckbox.is(':checked');
+
+                this.model.set('enable_chatbot', checked ? '1' : '');
+
+                if (checked)
+                    this.ui.responsesProperty.fadeOut();
+                else
+                    this.ui.responsesProperty.fadeIn();
             }
         });
     });
