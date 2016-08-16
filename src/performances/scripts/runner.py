@@ -229,8 +229,6 @@ class Runner:
                     if not self.running:
                         self.topics['events'].publish(Event('finished', run_time))
                         break
-                    elif self.paused:
-                        continue
 
                 running = False
                 # checks if any nodes still running

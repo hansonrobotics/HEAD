@@ -64,6 +64,8 @@ class Node(object):
                 self.stop(run_time)
                 self.finished = True
                 return False
+            elif self.runner.paused:
+                self.paused(run_time)
             else:
                 self.cont(run_time)
         else:
@@ -88,6 +90,10 @@ class Node(object):
 
     # Method to call while node is running
     def cont(self, run_time):
+        pass
+
+    # Method to call while runner is paused
+    def paused(self, run_time):
         pass
 
     # Method to get magnitude from either one number or range
@@ -329,11 +335,13 @@ class chat(Node):
         Node.__init__(self, data, runner)
         self.subscriber = False
         self.turns = 0
+        self.last_turn_at = 0
         self.chatbot_session_id = False
         self.enable_chatbot = 'enable_chatbot' in self.data and self.data['enable_chatbot']
 
     def start(self, run_time):
         self.runner.pause()
+        self.last_turn_at = time.time()
 
         if self.enable_chatbot:
             self.start_chatbot_session()
@@ -341,9 +349,6 @@ class chat(Node):
         def input_callback(event):
             self.respond(
                     self.get_chatbot_response(event.data) if self.enable_chatbot else self.match_response(event.data))
-
-            if 'dialog_turns' not in self.data or int(self.data['dialog_turns']) <= self.turns:
-                self.resume()
 
         self.subscriber = rospy.Subscriber('/' + self.runner.robot_name + '/nodes/listen/input', String, input_callback)
         self.runner.topics['events'].publish(Event('chat', 0))
@@ -399,17 +404,33 @@ class chat(Node):
 
         return response
 
-    def cont(self, run_time):
-        if 'timeout' in self.data and int(self.data['timeout']) and self.runner.start_timestamp + self.start_time + int(
-                self.data['timeout']) >= time.time():
-            if not self.turns and 'no_speech' in self.data:
-                self.respond(self.data['no_speech'])
+    def paused(self, run_time):
+        try:
+            timeout = int(self.data['timeout'])
+        except (ValueError, KeyError):
+            timeout = 0
 
+        if timeout and time.time() - self.last_turn_at >= timeout:
+            if 'no_speech' in self.data:
+                self.respond(self.data['no_speech'])
+            else:
+                self.add_turn()
+
+        try:
+            dialog_turns = int(self.data['dialog_turns'])
+        except (ValueError, KeyError):
+            dialog_turns = 0
+
+        if timeout and dialog_turns and dialog_turns <= self.turns:
             self.resume()
 
     def respond(self, response):
-        self.turns += 1
+        self.add_turn()
         self.runner.topics['tts']['default'].publish(String(response))
+
+    def add_turn(self):
+        self.turns += 1
+        self.last_turn_at = time.time()
 
     def resume(self):
         self.duration = 0
