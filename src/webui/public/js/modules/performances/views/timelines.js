@@ -269,6 +269,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.ui.timelineContainer.find('.app-node').removeClass('active');
                 if (node.get('el')) $(node.get('el')).addClass('active');
                 this.nodeView.showSettings(node);
+                this.nodeView.updateNode(node);
             },
             arrangeNodes: function () {
                 var self = this,
