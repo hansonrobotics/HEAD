@@ -213,6 +213,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 this.ui.frameCount.html(parseInt(duration * fps));
             },
             deleteNode: function () {
+                this.collection.remove(this.node);
                 if (this.node) this.node.destroy();
                 this.hideSettings();
             }
