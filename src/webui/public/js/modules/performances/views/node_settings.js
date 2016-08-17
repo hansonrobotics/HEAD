@@ -22,6 +22,7 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                 fpsLabel: '.app-fps-label',
                 messageInput: '.app-node-message-input',
                 kfModeSelect: 'select.app-blender-mode-select',
+                rosNodeSelect: 'select.app-ros-node-select',
                 btreeModeSelect: 'select.app-btree-mode-select',
                 createButton: '.app-create-button',
                 timeout: '.app-node-timeout',
@@ -36,6 +37,7 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                 'change @ui.btreeModeSelect': 'setBtreeMode',
                 'change @ui.kfModeSelect': 'setBlenderMode',
                 'click @ui.createButton': 'addPerformance',
+                'change @ui.rosNodeSelect': 'changeRosNode',
                 'change @ui.timeout': 'updateTimeout',
                 'change @ui.dialogTurnsInput': 'updateDialogTurns',
                 'change @ui.noMatchInput': 'updateNoMatch',
@@ -162,6 +164,17 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
 
                 if (this.model.hasProperty('blender_mode'))
                     $(this.ui.kfModeSelect).select2();
+
+                if (this.model.hasProperty('rosnode')){
+                    api.services.get_configurable_nodes.callService({}, function (response) {
+                        $.each(response.nodes, function () {
+                            $(self.ui.rosNodeSelect).append($('<option>').prop('value',this).html(this));
+                        });
+                    }, function (error) {
+                        console.log(error);
+                    });
+                    $(this.ui.rosNodeSelect).select2();
+                }
 
                 if (this.model.hasProperty('fps')) {
                     this.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');

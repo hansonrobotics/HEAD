@@ -70,6 +70,11 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                     properties: ['topic', 'timeout'],
                     defaultValues: {duration: 0.2}
                 },
+                settings: {
+                    label: 'Settings',
+                    properties: ['rosnode','schema','values'],
+                    defaultValues: {duration: 0.2}
+                },
                 default: {
                     label: 'Node',
                     properties: []

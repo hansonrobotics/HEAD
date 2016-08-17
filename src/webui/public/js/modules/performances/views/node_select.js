@@ -1,6 +1,6 @@
-define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../entities/node', 'lib/api', 'underscore',
+define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../entities/node', '../../settings/views/settings', 'lib/api', 'underscore',
         'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2'],
-    function (App, Marionette, template, Node, api, _, $) {
+    function (App, Marionette, template, Node, SettingsView, api, _, $) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
@@ -11,6 +11,7 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 somaList: '.app-soma-list',
                 expressionList: '.app-expression-list',
                 kfAnimationList: '.app-kfanimation-list',
+                settingsEditor: '.app-settings-editor',
                 textInput: '.app-node-text',
                 langSelect: 'select.app-lang-select',
                 attentionRegionList: '.app-attention-region-list',
@@ -27,6 +28,7 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 enableChatbotCheckbox: '.app-enable-chatbot-checkbox',
                 responsesProperty: '[data-node-property="responses"]'
             },
+
             events: {
                 'keyup @ui.textInput': 'setText',
                 'change @ui.textInput': 'setTextDuration',
@@ -158,6 +160,24 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                         this.model.set('mode', 255);
                     this.ui.btreeModeSelect.val(this.model.get('mode'));
                     $(self.ui.btreeModeSelect).select2();
+                }
+                if (this.model.hasProperty('rosnode')) {
+                    // Temporary
+                    var settingsSchema = {
+                        title: "sophia_body/pau2motors settings",
+                        properties:{
+                            reload: {
+                                format: "checkbox",
+                                title: "Reload motor configuration",
+                                type: "boolean"
+                            }
+                        }
+                    }
+                    var settings = new SettingsView({model: this.model, schema: settingsSchema, refresh: false});
+                    var rendered = settings.render().$el;
+                    this.ui.settingsEditor.html(rendered);
+
+
                 }
 
                 if (this.model.hasProperty('speech_event')) {
