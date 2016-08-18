@@ -229,7 +229,7 @@ install_test_deps() {
     $SUDO apt-get -y install npm
     $SUDO npm install -g n
     $SUDO n stable
-    $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/src/server/
+    $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
 }
 
 install_vision_deps() {
