@@ -214,7 +214,6 @@ install_other_deps() {
     $SUDO apt-get -y install expect
 
     install_manyears_deps
-    install_test_deps
 }
 
 install_manyears_deps() {
