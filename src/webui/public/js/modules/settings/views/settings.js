@@ -37,8 +37,9 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                 clearInterval(this.refreshInterval);
             },
             setConfig: function () {
-                if (this.editor)
-                    this.editor.setValue(this.model.toJSON());
+            // TODO fix model reloading
+//                if (this.editor)
+//                    this.editor.setValue(this.model.toJSON());
             },
             update: function () {
                 if (this.editor.validate().length === 0) {

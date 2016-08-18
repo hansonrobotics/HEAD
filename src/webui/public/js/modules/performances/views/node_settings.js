@@ -173,7 +173,7 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                     }, function (error) {
                         console.log(error);
                     });
-                    $(this.ui.rosNodeSelect).select2();
+                    $(this.ui.rosNodeSelect).select2({placeholder: 'Select node...'});
                 }
 
                 if (this.model.hasProperty('fps')) {
@@ -212,6 +212,9 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
             },
             setBtreeMode: function () {
                 this.model.set('mode', parseInt(this.ui.btreeModeSelect.val()));
+            },
+            changeRosNode: function(){
+                this.model.set('rosnode', this.ui.rosNodeSelect.val());
             },
             buildCrosshair: function () {
                 var self = this;

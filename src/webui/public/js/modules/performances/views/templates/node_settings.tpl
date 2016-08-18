@@ -68,7 +68,9 @@
 
         <div class="form-group" data-node-property="rosnode">
             <label title="Arms">Ros Node</label>
-            <select class="app-ros-node-select"></select>
+            <select class="app-ros-node-select">
+                <option></option>
+            </select>
         </div>
 
         <div class="form-group" data-node-property="blender_mode">

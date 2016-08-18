@@ -1,6 +1,7 @@
-define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../entities/node', '../../settings/views/settings', 'lib/api', 'underscore',
+define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../entities/node',
+        '../../settings/views/settings', '../../settings/entities/node_config_schema',  'lib/api', 'underscore',
         'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2'],
-    function (App, Marionette, template, Node, SettingsView, api, _, $) {
+    function (App, Marionette, template, Node, SettingsView, SettingsSchemaModel, api, _, $) {
         return Marionette.ItemView.extend({
             template: template,
             ui: {
@@ -164,19 +165,13 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 if (this.model.hasProperty('rosnode')) {
                     // Temporary
                     var settingsSchema = {
-                        title: "sophia_body/pau2motors settings",
-                        properties:{
-                            reload: {
-                                format: "checkbox",
-                                title: "Reload motor configuration",
-                                type: "boolean"
-                            }
-                        }
+                        title: "No Node Selected",
+                        properties:{}
                     }
-                    var settings = new SettingsView({model: this.model, schema: settingsSchema, refresh: false});
-                    var rendered = settings.render().$el;
-                    this.ui.settingsEditor.html(rendered);
-
+                    this.setSettingsEditor(settingsSchema);
+                    this.model.on('change:rosnode', function(){
+                            self.updateSettingsSchema();
+                    });
 
                 }
 
@@ -268,6 +263,24 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
             },
             updateSomaStates: function (somas) {
                 this.initList(somas, 'soma', this.ui.somaList);
+            },
+            updateSettingsSchema: function(){
+                var self = this;
+                var rosnode = this.model.get('rosnode');
+                api.services.get_node_description.callService({node: rosnode}, function (response) {
+                    console.log(SettingsSchemaModel);
+                    var schema = SettingsSchemaModel.getSchemaFromDesc(JSON.parse(response.description), rosnode);
+                    // Destroy previous node
+                    self.setSettingsEditor(schema)
+                }, function (error) {
+                    console.log('Error fetching configuration schema');
+                });
+            },
+            setSettingsEditor: function(schema){
+                if (this.model.get('el_Settings')) this.model.el_settings.destroy();
+                this.model.el_settings = new SettingsView({model: this.model, schema: schema, refresh: false});
+                this.model.el_settings.render();
+                this.ui.settingsEditor.html(this.model.el_settings.$el);
             },
             setText: function () {
                 this.model.set('text', this.ui.textInput.val());
