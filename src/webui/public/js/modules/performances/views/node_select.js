@@ -163,16 +163,10 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                     $(self.ui.btreeModeSelect).select2();
                 }
                 if (this.model.hasProperty('rosnode')) {
-                    // Temporary
-                    var settingsSchema = {
-                        title: "No Node Selected",
-                        properties:{}
-                    }
-                    this.setSettingsEditor(settingsSchema);
-                    this.model.on('change:rosnode', function(){
-                            self.updateSettingsSchema();
+                    this.setSettingsEditor(this.model.get('schema'));
+                    this.listenTo(this.model, 'change:rosnode', function(){
+                        self.updateSettingsSchema();
                     });
-
                 }
 
                 if (this.model.hasProperty('speech_event')) {
@@ -268,10 +262,14 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 var self = this;
                 var rosnode = this.model.get('rosnode');
                 api.services.get_node_description.callService({node: rosnode}, function (response) {
-                    console.log(SettingsSchemaModel);
                     var schema = SettingsSchemaModel.getSchemaFromDesc(JSON.parse(response.description), rosnode);
-                    // Destroy previous node
-                    self.setSettingsEditor(schema)
+                    self.model.set({schema: schema, values: {}});
+                    self.setSettingsEditor(schema);
+                    api.services.get_node_configuration.callService({node: rosnode}, function (response) {
+                        self.model.set({values: JSON.parse(response.configuration)});
+                    }, function(error){
+                        console.log("Cant retrieve node settings")
+                    });
                 }, function (error) {
                     console.log('Error fetching configuration schema');
                 });

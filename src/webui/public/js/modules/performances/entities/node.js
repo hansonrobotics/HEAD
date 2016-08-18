@@ -73,7 +73,13 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 settings: {
                     label: 'Settings',
                     properties: ['rosnode','schema','values'],
-                    defaultValues: {duration: 0.2}
+                    defaultValues: {
+                        duration: 0.2,
+                        schema: {
+                            title: "No Node Selected",
+                            properties:{}
+                        }
+                    }
                 },
                 default: {
                     label: 'Node',

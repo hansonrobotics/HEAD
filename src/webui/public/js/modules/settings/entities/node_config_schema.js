@@ -14,7 +14,7 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
             }
         },
         getSchemaFromDescription: function (description) {
-            return this.getSchemaFromDesc(description. this.node_name)
+            return this.constructor.getSchemaFromDesc(description, this.node_name)
         }
     },
     {

@@ -166,14 +166,27 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                     $(this.ui.kfModeSelect).select2();
 
                 if (this.model.hasProperty('rosnode')){
+                    var rosnode = this.model.get('rosnode');
+                    var selected = false
                     api.services.get_configurable_nodes.callService({}, function (response) {
                         $.each(response.nodes, function () {
-                            $(self.ui.rosNodeSelect).append($('<option>').prop('value',this).html(this));
+                            if (this == rosnode){
+                                selected = true
+                                $(self.ui.rosNodeSelect).append($('<option>').prop('value',this).prop('selected', true).html(this));
+                            }else{
+                                $(self.ui.rosNodeSelect).append($('<option>').prop('value',this).html(this));
+                            }
+
                         });
                     }, function (error) {
                         console.log(error);
                     });
-                    $(this.ui.rosNodeSelect).select2({placeholder: 'Select node...'});
+                    if (rosnode && !selected){
+                        // in case configuration not available, node not running
+                        $(this.ui.rosNodeSelect).select2({placeholder: rosnode});
+                    }else{
+                        $(this.ui.rosNodeSelect).select2({placeholder: 'Select node...'});
+                    }
                 }
 
                 if (this.model.hasProperty('fps')) {

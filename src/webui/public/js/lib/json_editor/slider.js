@@ -23,7 +23,7 @@ define(['jquery', 'json_editor'], function ($, JSONEditor) {
             });
 
             self.jsoneditor.on('change', function () {
-                slider.slider("value", self.value);
+                slider.attr("value", self.value);
             });
         }
     });
