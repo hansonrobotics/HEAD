@@ -275,7 +275,7 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 });
             },
             setSettingsEditor: function(schema){
-                if (this.model.get('el_Settings')) this.model.el_settings.destroy();
+                if (this.model.el_settings) this.model.el_settings.destroy();
                 this.model.el_settings = new SettingsView({model: this.model, schema: schema, refresh: false});
                 this.model.el_settings.render();
                 this.ui.settingsEditor.html(this.model.el_settings.$el);

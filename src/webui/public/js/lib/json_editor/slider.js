@@ -21,9 +21,8 @@ define(['jquery', 'json_editor'], function ($, JSONEditor) {
             $(this.input).after(slider).on('change', function () {
                 slider.slider("value", self.value);
             });
-
             self.jsoneditor.on('change', function () {
-                slider.attr("value", self.value);
+                slider.slider("value", self.value);
             });
         }
     });

@@ -34,6 +34,7 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                     }, 1000);
             },
             onDestroy: function () {
+                this.editor.destroy();
                 clearInterval(this.refreshInterval);
             },
             setConfig: function () {
