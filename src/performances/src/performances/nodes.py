@@ -15,6 +15,7 @@ from threading import Timer
 from performances.msg import Event
 import requests
 import urllib
+import dynamic_reconfigure.client
 
 logger = logging.getLogger('hr.performances.nodes')
 
@@ -514,3 +515,13 @@ class gaze_at(attention):
     def __init__(self, data, runner):
         attention.__init__(self, data, runner)
         self.topic = 'gaze_at'
+
+class settings(Node):
+    def setParameters(self,rosnode, params):
+        cl = dynamic_reconfigure.client.Client(rosnode)
+        res = cl.update_configuration(params)
+        cl.close()
+
+    def start(self, run_time):
+        if (self.data['rosnode']):
+            self.setParameters(self.data['rosnode'], self.data['values'])

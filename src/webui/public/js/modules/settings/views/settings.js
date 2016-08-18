@@ -50,7 +50,7 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                 if (this.editor.validate().length === 0) {
                     // Only valid settings could be saved in timeline
                     if (this.model.get('name') == 'settings'){
-                        this.model.set({'values': this.editor.getValue()}, {silent: true});
+                        this.model.set({'values': this.editor.getValue()});
                     }else{
                         this.model.save(this.editor.getValue(), {
                             error: function () {
