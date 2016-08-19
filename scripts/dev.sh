@@ -16,6 +16,8 @@ Usage: $0 [--cmt] [--oc] [--sa]
     Run OpenCog based chatbot and behavior tree
   --sa
     Enable OpenCog NLP sentiment analysis, should run with --oc
+  --st
+    Enable saliency tracking.
 EOF
 }
 
@@ -30,8 +32,12 @@ while [[ $# > 0 ]]; do
             export OC_BTREE=1
             shift
             ;;
-       --sa)
+        --sa)
             export OC_SA=1
+            shift
+            ;;
+        --st)
+            export ENABLE_SALIENCY_TRACKING=1
             shift
             ;;
         --help|-h)
@@ -80,6 +86,10 @@ if [[ $OC_CHATBOT == 1 ]]; then
       tar zxf /tmp/aiml.tar.gz -C ~/.hr/cache
       rm /tmp/aiml.tar.gz
     fi
+fi
+
+if [[ $ENABLE_SALIENCY_TRACKING == 1 ]]; then
+    ros_args="$ros_args saliency_tracking:=true"
 fi
 
 echo "ROS launch args \"${ros_args}\""
