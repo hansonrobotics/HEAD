@@ -66,6 +66,13 @@
             <div class="app-volume-slider"></div>
         </div>
 
+        <div class="form-group" data-node-property="rosnode">
+            <label title="Arms">Ros Node</label>
+            <select class="app-ros-node-select">
+                <option></option>
+            </select>
+        </div>
+
         <div class="form-group" data-node-property="blender_mode">
             <label title="Arms">Blender Disabled</label>
             <select class="app-blender-mode-select">

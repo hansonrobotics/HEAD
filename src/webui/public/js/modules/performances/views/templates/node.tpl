@@ -40,6 +40,9 @@
             <li>
                 <a href="javascript:void(0)" role="tab" data-node-name="head_rotation">Head Tilt</a>
             </li>
+            <li>
+                <a href="javascript:void(0)" role="tab" data-node-name="settings">Settings</a>
+            </li>
             <li class="app-scroll-right app-node-scroll" role="presentation">
                 <a href="javascript:void(0)"><i class="glyphicon glyphicon-chevron-right"></i></a>
             </li>
