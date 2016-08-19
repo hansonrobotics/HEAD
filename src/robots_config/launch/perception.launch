@@ -1,7 +1,8 @@
 <!-- -*- mode: XML -*- -->
 <launch>
+    <arg name="saliency_tracking" default="false" />
     <include file="$(find perception)/launch/geometry.launch">
         <arg name="model" value="$(find perception)/description.urdf" />
     </include>
-    <include file="$(find ros_nmpt_saliency)/launch/saliency.launch"/>
+    <include file="$(find ros_nmpt_saliency)/launch/saliency.launch" if="$(arg saliency_tracking)" />
 </launch>
