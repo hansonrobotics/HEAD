@@ -46,6 +46,9 @@
             <li class="app-scroll-right app-node-scroll" role="presentation">
                 <a href="javascript:void(0)"><i class="glyphicon glyphicon-chevron-right"></i></a>
             </li>
+            <li>
+                <a href="javascript:void(0)" role="tab" data-node-name="expression">Expression</a>
+            </li>
         </ul>
 
         <div class="app-node-select-content"></div>
