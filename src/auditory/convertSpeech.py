@@ -76,7 +76,7 @@ def convertSpeech(txtFileName, wavFileName):
     snd_array  = voi.make_two_channels(snd_array)
     sep = filename.split("/")
     name = sep[len(sep)-1].split(".")[0]
-    from src.auditory.unused_files import Emotion_Extraction as ee
+    import Emotion_Extraction as ee
     from textblob import TextBlob
     # emotionType = "Neutral"
     from ems import em

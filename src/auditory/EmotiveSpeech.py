@@ -14,15 +14,20 @@ def emotiveSpeech(filename,typeOfEmotion):
     if typeOfEmotion == "Happy":
         sTimeAll = time.time()
         sep = filename.split("/")
+        print sep
+        rootName = ""
+        for i in range(1,len(sep)):
+            rootName = str(rootName) + "/" + str(sep[i])
+        print rootName
         name = sep[len(sep)-1].split(".")[0]
-        filenameFreqShift = "Voice-samples/" + str(name) + "FreqShiftHappy.wav"
-        filenameInflection = "Voice-samples/" + str(name) + "InflectionHappy.wav"
-        filenameAverage = "Voice-samples/" + str(name) + "AverageHappy.wav"
-        filenameHappy = "Voice-samples/" + str(name) + "Happy.wav"
+        filenameFreqShift = str(rootName) + "/" + str(name) + "FreqShiftHappy.wav"
+        filenameInflection = str(rootName) + "/" + str(name) + "InflectionHappy.wav"
+        filenameAverage = str(rootName) + "/" + str(name) + "AverageHappy.wav"
+        filenameHappy = str(rootName) + "/" + str(name) + "Happy.wav"
 
         sTime = time.time()
         fs, x = wavfile.read(filename)
-        x = voi.get_one_channel_array(x)
+        # x = voi.get_one_channel_array(x)
         chunk_size = 1024
 
         f0 = voi.get_freq_array(x,fs,chunk_size)
@@ -114,11 +119,15 @@ def emotiveSpeech(filename,typeOfEmotion):
         eTimeAll = time.time()
         print "time taken by all " + str(eTimeAll-sTimeAll)
 
-    if typeOfEmotion == "Sad":
+    elif typeOfEmotion == "Sad":
         sep = filename.split("/")
         name = sep[len(sep)-1].split(".")[0]
-        filenameFreqShift = "Voice-samples/" + str(name) + "FreqShiftSad.wav"
-        filenameSad = "Voice-samples/" + str(name) + "Sad.wav"
+        rootName = ""
+        for i in range(1, len(sep)):
+            rootName = str(rootName) + "/" + str(sep[i])
+        print rootName
+        filenameFreqShift = str(rootName) + "/" + str(name) + "FreqShiftSad.wav"
+        filenameSad = str(rootName) + "/" + str(name) + "Sad.wav"
 
         fs, x = wavfile.read(filename)
         x = voi.get_one_channel_array(x)
@@ -164,11 +173,14 @@ def emotiveSpeech(filename,typeOfEmotion):
         for i in range(0,len(snd_low_shelf)):
             new_sndarray_low_shelf.append(numpy.int16(snd_low_shelf[i]))
         voi.write_to_new_file(filenameSad,numpy.asarray(new_sndarray_low_shelf))
-    if typeOfEmotion == "Afraid":
+    elif typeOfEmotion == "Afraid":
         sep = filename.split("/")
         name = sep[len(sep)-1].split(".")[0]
-        filenameInflection = "Voice-samples/" + str(name) + "InflectionAfraid.wav"
-        filenameAfraid = "Voice-samples/" + str(name) + "Afraid.wav"
+        rootName = ""
+        for i in range(1, len(sep)):
+            rootName = str(rootName) + "/" + str(sep[i])
+        filenameInflection = str(rootName) + "/" + str(name) + "InflectionAfraid.wav"
+        filenameAfraid = str(rootName) + "/" + str(name) + "Afraid.wav"
 
         fs, x = wavfile.read(filename)
         x = voi.get_one_channel_array(x)
@@ -229,7 +241,7 @@ def emotiveSpeech(filename,typeOfEmotion):
         voi.write_to_new_file(filename,numpy.asarray(x))
 
 if __name__ == "__main__":
-    filename= "Voice-samples/jennifer.wav"
+    filename= "/home/naty/Desktop/Vocie-samples/jennifer.wav"
     sTime = time.time()
     emotiveSpeech(filename,"Happy")
     eTime = time.time()

@@ -10,7 +10,7 @@ import wave
 
 
 def marytts_server():
-    subprocess.call(['libs/marytts-5.0/bin/marytts-server.bat'])
+    subprocess.call(['libs/marytts-5.0/bin/marytts-server.sh'])
 
 class maryclient:
 
