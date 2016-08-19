@@ -33,6 +33,8 @@ to a Windows-style INI file with the following format:
     # IS").
     [normal]
     what's = what is
+
+
 """
 
 defaultGender = {
@@ -48,7 +50,7 @@ defaultGender = {
     "hers": "his",
     "herself": "himself",
 }
-
+# These now match the comment above
 defaultPerson2 = {
     # 1st->3rd (masculine)
     "I": "he",
