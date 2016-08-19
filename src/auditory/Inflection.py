@@ -223,7 +223,7 @@ def inflection_happy(sndarray,voiced_regions_info, inflection_duration, fs,chunk
             new_sndarray[m+start] = new_sndTwo[m]
     return new_sndarray
 
-#inflects the pitch according to DAVID- uses an inflection array to do so
+#inflects the pitch according to DAVID- uses an inflection array to do so - calls pmfs and pmss in a for loop-calls get_freq_array in a for loop
 def inflection_happy_two(sndarray,voiced_regions_info,inflection_duration, fs,chunk_size):
     new_sndarray = []
 
@@ -293,6 +293,7 @@ def inflection_happy_two(sndarray,voiced_regions_info,inflection_duration, fs,ch
     print "time taken by inflection happy two for loop is " + str(time_taken)
     return new_sndarray
 
+#inflects the pitch according to DAVID- uses an inflection array to do so-calls pmfs and pmss once
 def inflection_happy_newest(sndarray,voiced_regions_info, f0, inflection_duration, fs,chunk_size):
     new_sndarray = []
 
@@ -383,6 +384,7 @@ def inflection_happy_newest(sndarray,voiced_regions_info, f0, inflection_duratio
     print "time taken by for loop is " + str(eTime - sTimeAll)
     return new_sndarray
 
+#inflects the pitch according to DAVID- uses an inflection array to do so - calls pmfs and pmss in a for loop-doesn't call get_freq_array in a for loop - fastest
 def inflection_happy_newest_two(sndarray,voiced_regions_info,f0, inflection_duration, fs,chunk_size):
     new_sndarray = []
 
@@ -448,6 +450,7 @@ def inflection_happy_newest_two(sndarray,voiced_regions_info,f0, inflection_dura
     eTime = time.time()
     # print "time taken by inflection happy two for loop is " + str(eTime-sTimeAll)
     return new_sndarray
+
 #inflects the pitch according to DAVID- uses an inflection array to do so
 def inflection_fear(sndarray,voiced_regions_info, inflection_duration, fs,chunk_size):
     new_sndarray = []
@@ -493,11 +496,12 @@ def inflection_fear(sndarray,voiced_regions_info, inflection_duration, fs,chunk_
         for m in range(0,len(new_sndTwo)):
             new_sndarray[m+start] = new_sndTwo[m]
     return new_sndarray
+
 if __name__ == "__main__":
-    filename= "C:/Users/rediet/Documents/Vocie-samples/salli.wav"
-    filenameInflection = "C:/Users/rediet/Documents/Vocie-samples/emmaInflection.wav"
-    filenameInflectionAverage = "C:/Users/rediet/Documents/Vocie-samples/kendraInflectionAverage.wav"
-    filenameInflectionHappy = "C:/Users/rediet/Documents/Vocie-samples/kendraInflectionHappy.wav"
+    filename= "Voice-samples/salli.wav"
+    filenameInflection = "Voice-samples/emmaInflection.wav"
+    filenameInflectionAverage = "Voice-samples/kendraInflectionAverage.wav"
+    filenameInflectionHappy = "Voice-samples/kendraInflectionHappy.wav"
 
     sTime = time.time()
     fs, x = wavfile.read(filename)

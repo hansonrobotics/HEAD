@@ -4,8 +4,8 @@ from pyo import *
 
 s = Server(audio='pa', nchnls=2).boot()
 s.start()
-file= "C:/Users/rediet/Documents/Vocie-samples/amy.wav"
-filenameRecord = 'C:/Users/rediet/Documents/Vocie-samples/eric500Shifted.wav'
+file= "Voice-samples/amy.wav"
+filenameRecord = 'Voice-samples/eric500Shifted.wav'
 sf = SfPlayer(file, speed=1, loop=False)
 # lf1 = Sine(freq=.04, mul=10)
 # lf1= 508.355

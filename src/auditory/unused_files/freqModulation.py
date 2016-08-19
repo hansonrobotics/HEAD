@@ -1,7 +1,7 @@
 from pyo import *
 import wave, struct,math
 import array
-import voiced_unvoiced as voi
+import src.auditory.voiced_unvoiced as voi
 from scipy.io import wavfile
 import scipy
 import numpy
@@ -55,16 +55,16 @@ def FreqMod(filename,filenameFM):
 if __name__ == "__main__":
     import wave, struct, math
     import array
-    import voiced_unvoiced as voi
+    import src.auditory.voiced_unvoiced as voi
     import os
     from scipy.io import wavfile
     import numpy
     import pysptk
-    from libs import dspUtil
+    from src.auditory.libs import dspUtil
     import freqModulation as fm
 
-    filename= "C:/Users/rediet/Documents/Vocie-samples/amy.wav"
-    filenameFM = "C:/Users/rediet/Documents/Vocie-samples/amyFM.wav"
+    filename= "Voice-samples/amy.wav"
+    filenameFM = "Voice-samples/amyFM.wav"
 
     buckets = []
     for i in xrange(0,100000):
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     # fm.FreqMod(filename,filenameFM)
     fm.FreqModArray(buckets,timeArray,3,filenameFM)
 
-    mydir = 'C:/Users/rediet/Documents/Vocie-samples/'
+    mydir = 'Voice-samples/'
     myfile = 'amyFM.wav'
     file = os.path.join(mydir, myfile)
     fs, x = wavfile.read(file)

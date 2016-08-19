@@ -188,12 +188,12 @@ def optimal_accumulated_log_probability(sndarray, all_snd_info):
     return best_voiced_region_freq_chunk_windows_pitch_marks_obj
 
 if __name__ == "__main__":
-    filename= "C:/Users/rediet/Documents/Vocie-samples/eric.wav"
-    filenameTxt = "C:/Users/rediet/Documents/Vocie-samples/kendraVU500Pitch_marks.txt"
-    filename500= "C:/Users/rediet/Documents/Vocie-samples/kendra500.wav"
-    filenameFM = "C:/Users/rediet/Documents/Vocie-samples/kendraFM.wav"
-    filenameVoiced = "C:/Users/rediet/Documents/Vocie-samples/kendraVoiced.wav"
-    filenameVibrato = "C:/Users/rediet/Documents/Vocie-samples/kendraVibrato.wav"
+    filename= "Voice-samples/eric.wav"
+    filenameTxt = "Voice-samples/kendraVU500Pitch_marks.txt"
+    filename500= "Voice-samples/kendra500.wav"
+    filenameFM = "Voice-samples/kendraFM.wav"
+    filenameVoiced = "Voice-samples/kendraVoiced.wav"
+    filenameVibrato = "Voice-samples/kendraVibrato.wav"
 
     fs, x = wavfile.read(filename)
     y = numpy.arange(0,len(x),1)

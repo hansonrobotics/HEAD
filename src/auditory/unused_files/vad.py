@@ -222,9 +222,9 @@ def locateInArray(list1, list2):
 if __name__ == "__main__":
     # 'C:/Users/rediet/Downloads/Listener-master/Listener-master'
     from scipy.io import wavfile
-    import voiced_unvoiced as voi
-    filename  = 'C:/Users/rediet/Documents/Vocie-samples/kendraVoiced.wav'
-    filenameOneChannel = 'C:/Users/rediet/Documents/Vocie-samples/kendraVoicedOneChannel.wav'
+    import src.auditory.voiced_unvoiced as voi
+    filename  = 'Vocie-samples/kendraVoiced.wav'
+    filenameOneChannel = 'Vocie-samples/kendraVoicedOneChannel.wav'
     fs, x = wavfile.read(filename)
     y = numpy.arange(0,len(x),1)
     x = voi.get_one_channel_array(x)

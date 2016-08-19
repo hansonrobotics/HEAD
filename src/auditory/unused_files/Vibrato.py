@@ -1,27 +1,21 @@
-import wave, struct, math
-import array
-import voiced_unvoiced as voi
-import os
-from scipy.io import wavfile
 import numpy
-import pysptk
-from libs import dspUtil
-import freqModulation as fm
 from pyo import *
-import td_psola
-import pitch_mark_second_stage as pmss
-import pitch_mark_first_step as pmfs
-import pitch_shifter as ps
-import matplotlib as plt
+from scipy.io import wavfile
+
+import src.auditory.pitch_mark_first_step as pmfs
+import src.auditory.pitch_mark_second_stage as pmss
+import src.auditory.td_psola
+import src.auditory.voiced_unvoiced as voi
+from src.auditory.unused_files import freqModulation as fm
 
 s = Server(audio='pa', nchnls=2).boot()
 s.start()
 
-filename= "C:/Users/rediet/Documents/Vocie-samples/eric.wav"
-filename500= "C:/Users/rediet/Documents/Vocie-samples/kendra500.wav"
-filenameFM = "C:/Users/rediet/Documents/Vocie-samples/kendraFM.wav"
-filenameVoiced = "C:/Users/rediet/Documents/Vocie-samples/kendraVoiced.wav"
-filenameVibrato = "C:/Users/rediet/Documents/Vocie-samples/kendraVibrato.wav"
+filename= "Voice-samples/eric.wav"
+filename500= "Voice-samples/kendra500.wav"
+filenameFM = "Voice-samples/kendraFM.wav"
+filenameVoiced = "Voice-samples/kendraVoiced.wav"
+filenameVibrato = "Voice-samples/kendraVibrato.wav"
 # xOne = voi.get_one_channel_array(x)
 #
 # #vSig is a dictonary of voiced and unvoiced regions starting points
@@ -107,7 +101,7 @@ for i in hertzToFactor:
     sndarray = x[freq_chunks_info[cnt][0]:freq_chunks_info[cnt][1]+1]
     best_pitch_marks_info_new  = []
     best_pitch_marks_info_new.append([best_pitch_marks_info[cnt]])
-    new_x = td_psola.freq_shift_using_td_psola(sndarray,chunk_size,i,best_pitch_marks_info , freq_chunks_info)
+    new_x = src.auditory.td_psola.freq_shift_using_td_psola(sndarray, chunk_size, i, best_pitch_marks_info, freq_chunks_info)
     cnt = cnt + 1
 
 

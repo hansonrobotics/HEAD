@@ -3,10 +3,10 @@ from scipy.io import wavfile
 import os
 import pysptk
 import numpy
-from libs import dspUtil
+from src.auditory.libs import dspUtil
 import scipy
 
-mydir = 'C:/Users/rediet/Documents/Vocie-samples/'
+mydir = 'Voice-samples/'
 myfile = 'amy.wav'
 file = os.path.join(mydir, myfile)
 fs, x = wavfile.read(file)

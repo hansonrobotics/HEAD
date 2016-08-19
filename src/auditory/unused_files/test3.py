@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy
-from libs import dspUtil
+from src.auditory.libs import dspUtil
 import os
 import ctypes
 import pysptk
@@ -63,9 +63,9 @@ from scipy.io import wavfile
 # plt.show()
 
 import matplotlib.pyplot as plt
-from libs import swipe
+from src.auditory.libs import swipe
 import numpy
-from libs import dspUtil
+from src.auditory.libs import dspUtil
 
 
 class disable_file_system_redirection:
@@ -82,7 +82,7 @@ class disable_file_system_redirection:
 
 
 with disable_file_system_redirection():
-    mydir = 'C:/Users/rediet/Documents/Vocie-samples/'
+    mydir = 'Voice-samples/'
     myfile = 'eric.wav'
     file = os.path.join(mydir, myfile)
 pitch = swipe.swipe(file, 75, 600) # read in pitch track via swipe

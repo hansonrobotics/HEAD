@@ -708,8 +708,6 @@ def freq_shift_using_td_psola_newest(sndarray,voiced_regions,best_pitch_marks,fr
     # print "totaltime " + str(total_time)
     return sndarray_cp
 
-
-
 def freq_shift_using_td_psola(sndarray,chunk_size,freqShiftFactor,best_pitch_marks_info,freq_chunks_info):
     # new_sndarray_zeros = numpy.zeros(len(sndarray))
     new_sndarray = []
@@ -789,8 +787,8 @@ def freq_shift_using_td_psola(sndarray,chunk_size,freqShiftFactor,best_pitch_mar
     return new_sndarray
 
 if __name__ == "__main__":
-    filename= "C:/Users/rediet/Documents/Vocie-samples/eric.wav"
-    filenameFreqShift = "C:/Users/rediet/Documents/Vocie-samples/salliVoicedFreqShift1_5_bad_3.wav"
+    filename= "Voice-samples/eric.wav"
+    filenameFreqShift = "Voice-samples/salliVoicedFreqShift1_5_bad_3.wav"
 
     fs, x = wavfile.read(filename)
     y = numpy.arange(0,len(x),1)

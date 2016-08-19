@@ -1,6 +1,6 @@
 __author__ = 'zelalem'
 
-from ems import em
+from src.auditory.ems import em
 from textblob import TextBlob
 
 

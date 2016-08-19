@@ -15,10 +15,10 @@ def emotiveSpeech(filename,typeOfEmotion):
         sTimeAll = time.time()
         sep = filename.split("/")
         name = sep[len(sep)-1].split(".")[0]
-        filenameFreqShift = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "FreqShiftHappy.wav"
-        filenameInflection = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "InflectionHappy.wav"
-        filenameAverage = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "AverageHappy.wav"
-        filenameHappy = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "Happy.wav"
+        filenameFreqShift = "Voice-samples/" + str(name) + "FreqShiftHappy.wav"
+        filenameInflection = "Voice-samples/" + str(name) + "InflectionHappy.wav"
+        filenameAverage = "Voice-samples/" + str(name) + "AverageHappy.wav"
+        filenameHappy = "Voice-samples/" + str(name) + "Happy.wav"
 
         sTime = time.time()
         fs, x = wavfile.read(filename)
@@ -117,8 +117,8 @@ def emotiveSpeech(filename,typeOfEmotion):
     if typeOfEmotion == "Sad":
         sep = filename.split("/")
         name = sep[len(sep)-1].split(".")[0]
-        filenameFreqShift = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "FreqShiftSad.wav"
-        filenameSad = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "Sad.wav"
+        filenameFreqShift = "Voice-samples/" + str(name) + "FreqShiftSad.wav"
+        filenameSad = "Voice-samples/" + str(name) + "Sad.wav"
 
         fs, x = wavfile.read(filename)
         x = voi.get_one_channel_array(x)
@@ -167,8 +167,8 @@ def emotiveSpeech(filename,typeOfEmotion):
     if typeOfEmotion == "Afraid":
         sep = filename.split("/")
         name = sep[len(sep)-1].split(".")[0]
-        filenameInflection = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "InflectionAfraid.wav"
-        filenameAfraid = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + "Afraid.wav"
+        filenameInflection = "Voice-samples/" + str(name) + "InflectionAfraid.wav"
+        filenameAfraid = "Voice-samples/" + str(name) + "Afraid.wav"
 
         fs, x = wavfile.read(filename)
         x = voi.get_one_channel_array(x)
@@ -229,7 +229,7 @@ def emotiveSpeech(filename,typeOfEmotion):
         voi.write_to_new_file(filename,numpy.asarray(x))
 
 if __name__ == "__main__":
-    filename= "C:/Users/rediet/Documents/Vocie-samples/eric.wav"
+    filename= "Voice-samples/jennifer.wav"
     sTime = time.time()
     emotiveSpeech(filename,"Happy")
     eTime = time.time()

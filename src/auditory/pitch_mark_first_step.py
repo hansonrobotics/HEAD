@@ -1,16 +1,11 @@
-import wave, struct, math
-import array
-import voiced_unvoiced as voi
-import os
-from scipy.io import wavfile
-import numpy
-import pysptk
-from libs import dspUtil
-import freqModulation as fm
-from pyo import *
-import pitch_shifter as ps
-import matplotlib as plt
 import heapq
+
+import numpy
+from pyo import *
+from scipy.io import wavfile
+
+import voiced_unvoiced as voi
+
 
 def get_freq_regions_from_voiced_region(voiced_region_range, chunk_size):
     freq_regions = []
@@ -344,8 +339,8 @@ def get_pitch_marks_regions(sndarray,f0,regions, chunk_size, type):
     return pitch_marks,voiced_region_freq_chunk_windows_pitch_marks_obj
 
 if __name__ == "__main__":
-    filename= "C:/Users/rediet/Documents/Vocie-samples/eric.wav"
-    filenameTxt = "C:/Users/rediet/Documents/Vocie-samples/kendraVU500Pitch_marks.txt"
+    filename= "Voice-samples/eric.wav"
+    filenameTxt = "Voice-samples/kendraVU500Pitch_marks.txt"
 
     fs, x = wavfile.read(filename)
     y = numpy.arange(0,len(x),1)

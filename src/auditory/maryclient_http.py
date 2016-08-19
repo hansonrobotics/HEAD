@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import threading
-import httplib, urllib
 import StringIO
-import ctypes
-import wave
+import httplib
 import subprocess
-from ems import em
+import threading
+import urllib
+import wave
+
 
 def marytts_server():
-    subprocess.call(['C:/Users/rediet/Documents/HEADrediet/src/auditory/libs/marytts-5.0/bin/marytts-server.bat'])
+    subprocess.call(['libs/marytts-5.0/bin/marytts-server.bat'])
 
 class maryclient:
 
@@ -143,8 +143,8 @@ if __name__ == "__main__":
     #client.set_voice ("dfki-prudence")
     # client.set_voice ("dfki-prudence-hsmm")
     client.set_voice ("cmu-slt-hsmm")
-    filename = "C:/Users/rediet/Documents/Vocie-samples/maryTTS.wav"
-    f = open('C:/Users/rediet/Documents/Vocie-samples/readTTS.txt')
+    filename = "Voice-samples/maryTTS.wav"
+    f = open('Voice-samples/readTTS.txt')
 
     for line in iter(f):
         line = line.strip('\n').lower()
@@ -192,12 +192,12 @@ if __name__ == "__main__":
     snd_array  = voi.make_two_channels(snd_array)
     sep = filename.split("/")
     name = sep[len(sep)-1].split(".")[0]
-    import Emotion_Extraction as ee
+    from src.auditory.unused_files import Emotion_Extraction as ee
     from textblob import TextBlob
     # emotionType = "Neutral"
     from ems import em
     emotionType = "Neutral"
-    f = open('C:/Users/rediet/Documents/Vocie-samples/readTTS.txt')
+    f = open('Voice-samples/readTTS.txt')
     for line in iter(f):
 
         line = line.strip('\n').lower()
@@ -212,7 +212,7 @@ if __name__ == "__main__":
                 print line+'.'+' '+'<'+em[x]+'>'+' '+'<'+sent_sentiment+'>'
                 break
 
-    filenameChanged = "C:/Users/rediet/Documents/Vocie-samples/" + str(name) + str(emotionType) + ".wav"
+    filenameChanged = "Voice-samples/" + str(name) + str(emotionType) + ".wav"
     wavfile.write(filenameChanged,44100,numpy.array(numpy.int16(snd_array)))
     ES.emotiveSpeech(filenameChanged,str(emotionType))
 

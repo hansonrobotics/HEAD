@@ -281,11 +281,11 @@ def write_to_new_file(filename,sndarray):
     scipy.io.wavfile.write(filename,44100,sndarray)
 
 if __name__ == "__main__":
-    mydir = 'C:/Users/rediet/Documents/Vocie-samples/'
+    mydir = 'Voice-samples/'
     myfile = 'eric.wav'
     file = os.path.join(mydir, myfile)
-    filenameVoiced = 'C:/Users/rediet/Documents/Vocie-samples/ericVoiced.wav'
-    filenameVoicedResampled = 'C:/Users/rediet/Documents/Vocie-samples/kendraVoicedResampled.wav'
+    filenameVoiced = 'Voice-samples/ericVoiced.wav'
+    filenameVoicedResampled = 'Voice-samples/kendraVoicedResampled.wav'
     fs, x = wavfile.read(file)
     chunk_size = 1024
     xOne = get_one_channel_array(x)
