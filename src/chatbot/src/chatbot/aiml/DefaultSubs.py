@@ -49,7 +49,7 @@ defaultGender = {
     "herself": "himself",
 }
 
-defaultPerson = {
+defaultPerson2 = {
     # 1st->3rd (masculine)
     "I": "he",
     "me": "him",
@@ -72,7 +72,7 @@ defaultPerson = {
     "herself":"myself",
 }
 
-defaultPerson2 = {
+defaultPerson = {
     # 1st -> 2nd
     "I": "you",
     "me": "you",
