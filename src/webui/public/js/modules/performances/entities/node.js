@@ -28,7 +28,8 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 },
                 chat: {
                     label: 'Chat',
-                    properties: ['responses', 'timeout', 'no_match', 'no_speech', 'dialog_turns', 'enable_chatbot'],
+                    properties: ['responses', 'timeout', 'no_match', 'no_speech', 'dialog_turns', 'enable_chatbot',
+                        'chatbot', 'chat_timeout_mode'],
                     defaultValues: {duration: 0.2, responses: []}
                 },
                 soma: {

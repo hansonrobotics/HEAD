@@ -27,7 +27,9 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                 timeout: '.app-node-timeout',
                 dialogTurnsInput: '.app-dialog-turns-input',
                 noMatchInput: '.app-no-match-input',
-                noSpeechInput: '.app-no-speech-input'
+                noSpeechInput: '.app-no-speech-input',
+                chatTimeoutModeSelect: '.app-chat-timeout-mode-select',
+                chatbotSelect: '.app-chatbot-select'
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -39,7 +41,9 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                 'change @ui.timeout': 'updateTimeout',
                 'change @ui.dialogTurnsInput': 'updateDialogTurns',
                 'change @ui.noMatchInput': 'updateNoMatch',
-                'change @ui.noSpeechInput': 'updateNoSpeech'
+                'change @ui.noSpeechInput': 'updateNoSpeech',
+                'change @ui.chatbotSelect': 'updateChatbot',
+                'change @ui.chatTimeoutModeSelect': 'updateChatTimeoutMode'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -74,6 +78,22 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
                     });
 
                 this.modelChanged();
+
+                if (this.model.hasProperty('chat_timeout_mode'))
+                    this.ui.chatTimeoutModeSelect.val(this.model.get('timeout_mode')).select2();
+
+                if (this.model.hasProperty('chatbot')) {
+                    this.ui.chatbotSelect.select2();
+                    api.services.chatbot.bot_names.callService({}, function (data) {
+                        if (data.success) {
+                            _.each(JSON.parse(data.response)['response'], function (name) {
+                                self.ui.chatbotSelect.append($('<option>').prop({value: name}).html(name));
+                            });
+
+                            self.ui.chatbotSelect.val(self.model.get('bot_name'))
+                        }
+                    })
+                }
 
                 if (this.model.hasProperty('speed')) {
                     this.ui.speedLabel.html(this.model.get('speed'));
@@ -239,6 +259,12 @@ define(['application', 'marionette', 'tpl!./templates/node_settings.tpl', '../en
             },
             updateNoSpeech: function () {
                 this.model.set('no_speech', this.ui.noSpeechInput.val());
+            },
+            updateChatbot: function () {
+                this.model.set('bot_name', this.ui.chatbotSelect.val());
+            },
+            updateChatTimeoutMode: function () {
+                this.model.set('timeout_mode', this.ui.chatTimeoutModeSelect.val());
             }
         });
     });

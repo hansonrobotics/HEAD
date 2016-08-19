@@ -42,6 +42,7 @@ class Node(object):
         self.duration = data['duration']
         self.start_time = data['start_time']
         self.started = False
+        self.started_at = 0
         self.finished = False
         # Node runner for accessing ROS topics and method
         # TODO make ROS topics and services singletons class for shared use.
@@ -75,6 +76,7 @@ class Node(object):
                 except Exception as ex:
                     logger.error(ex)
                 self.started = True
+                self.started_at = time.time()
         return True
 
     def __str__(self):
@@ -350,6 +352,11 @@ class chat(Node):
         except (ValueError, KeyError):
             self.timeout = 0
 
+        try:
+            self.timeout_mode = self.data['timeout_mode']
+        except:
+            self.timeout_mode = 'each'
+
     def start(self, run_time):
         self.runner.pause()
         self.last_turn_at = time.time()
@@ -369,11 +376,13 @@ class chat(Node):
         self.runner.unregister('speech_events', self.speech_event_callback)
 
     def paused(self, run_time):
-        if self.timeout and time.time() - self.last_turn_at >= self.timeout and not self.talking:
-            if 'no_speech' in self.data:
-                self.respond(self.data['no_speech'])
-            else:
-                self.add_turn()
+        if self.timeout and not self.talking:
+            if (self.timeout_mode == 'each' and time.time() - self.last_turn_at >= self.timeout) or (
+                    self.timeout_mode == 'whole' and time.time() - self.started_at >= self.timeout):
+                if 'no_speech' in self.data:
+                    self.respond(self.data['no_speech'])
+                else:
+                    self.add_turn()
 
     def speech_event_callback(self, msg):
         event = msg.data
@@ -391,23 +400,16 @@ class chat(Node):
                 self.resume()
 
     def start_chatbot_session(self):
-        # TODO need to be selectable from UI.
-        botname = 'sophia'
-        # Can be hardcoded. or find system uname.
-        user = 'performances'
-
         params = {
             'Auth': 'AAAAB3NzaC',
-            'botname': botname,
-            'user': user
+            'botname': self.data['bot_name'],
+            'user': 'performances'
         }
 
         r = requests.get('http://127.0.0.1:8001/v1.1/start_session?' + urllib.urlencode(params))
 
         if r.status_code == 200:
             self.chatbot_session_id = r.json()['sid']
-            return True
-        return False
 
     def get_chatbot_response(self, speech):
         if self.chatbot_session_id:

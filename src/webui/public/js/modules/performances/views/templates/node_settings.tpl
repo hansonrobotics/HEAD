@@ -20,6 +20,19 @@
             </div>
         </div>
 
+        <div class="form-group" data-node-property="chatbot">
+            <label>Chatbot</label>
+            <select class="app-chatbot-select" style="width: 100%;"></select>
+        </div>
+
+        <div class="form-group" data-node-property="chat_timeout_mode">
+            <label>Timeout Mode</label>
+            <select class="app-chat-timeout-mode-select" style="width: 100%;">
+                <option value="each">Each turn</option>
+                <option value="whole">Whole chat</option>
+            </select>
+        </div>
+
         <div class="form-group" data-node-property="timeout">
             <label>Timeout</label>
             <div class="input-group">
@@ -67,7 +80,7 @@
         </div>
 
         <div class="form-group" data-node-property="blender_mode">
-            <label title="Arms">Blender Disabled</label>
+            <label>Blender Disabled</label>
             <select class="app-blender-mode-select">
                 <option value="no">No</option>
                 <option value="face">Face</option>
