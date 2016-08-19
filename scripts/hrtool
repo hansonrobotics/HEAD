@@ -85,8 +85,9 @@ install_relex_deps() {
     sudo chmod -v 0644 /usr/local/share/java/jwnl.jar
 }
 install_auditory_deps(){
-    sudo pip2 install pyo
+    sudo apt-get install python-pyo
     sudo pip2 install pysptk
+    sudo pip2 install textblob
 }
 install_other_deps() {
     sudo add-apt-repository -y ppa:irie/blender
