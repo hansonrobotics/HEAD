@@ -117,6 +117,8 @@ class Runner:
                     for node in data['nodes']:
                         if not 'start_time' in node:
                             node['start_time'] = 0
+                        if node['name'] == 'pause':
+                            node['duration'] = 0.1
                         duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
                         node['start_time'] += offset
                     offset += duration

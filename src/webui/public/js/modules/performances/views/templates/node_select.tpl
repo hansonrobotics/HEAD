@@ -4,7 +4,7 @@
     <div data-node-property="expression" class="app-expression-list"></div>
     <div class="app-soma-list"></div>
     <div class="app-kfanimation-list"></div>
-
+    <div class="app-settings-editor"></div>
     <div class="form-group" data-node-property="language">
         <label title="Language">Language</label>
         <select class="app-lang-select">
