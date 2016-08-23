@@ -32,6 +32,34 @@ class BaseCommand(object):
         """
         return True
 
+class WakeUpCommand(BaseCommand):
+
+    def __init__(self):
+        self.sleeping = False
+        self.sub_sleep = rospy.Subscriber('sleeper', String, self.sleep_cb)
+        self.btree = rospy.Publisher("/behavior_switch", String, queue_size=2)
+
+    def sleep_cb(self, msg):
+        if msg.data == 'sleep':
+            self.sleeping = True
+        if 'wake' in msg.data:
+            self.sleeping = False
+
+    def parse(self, msg):
+        if self.sleeping:
+            text = msg.utterance.decode('utf-8').lower()
+            if "wake" in text:
+                self.sleeping = False
+            if "makeup" in text:
+                self.sleeping = False
+            return True
+        return False
+
+    def execute(self):
+        if not self.sleeping:
+            # wakeup
+            self.btree.publish(String("btree_on"))
+
 class ForwardCommand(BaseCommand):
     def __init__(self, forward_topic_name):
         self.forward_topic_name = forward_topic_name
