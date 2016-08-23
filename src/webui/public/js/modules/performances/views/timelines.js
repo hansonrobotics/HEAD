@@ -58,13 +58,10 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     loadOptions = {
                         success: function () {
                             var handler = function () {
-                                if (self.isDestroyed)
-                                    self.model.nodes.off('change add remove', handler);
-                                else
-                                    self.model.loadNodes();
+                                self.model.loadNodes();
                             };
 
-                            self.model.nodes.on('change add remove', handler);
+                            self.listenTo(self.model.nodes, 'change add remove', handler);
                         }
                     };
 
@@ -128,14 +125,13 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     };
 
                 var nodeListener = function () {
-                    if (self.isDestroyed)
-                        this.off('add remove reset', nodeListener);
-                    else if (self.model.nodes.isEmpty())
+                    if (self.model.nodes.isEmpty())
                         self.ui.clearButton.fadeOut();
                     else if (!self.options.readonly)
                         self.ui.clearButton.fadeIn();
                 };
-                this.model.nodes.on('add remove reset', nodeListener);
+
+                this.listenTo(this.model.nodes, 'add remove reset', nodeListener);
 
                 // hide delete and clear buttons for new models
                 if (!this.model.get('id')) {
@@ -210,9 +206,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         });
 
                 node.set('el', el.get(0));
-                node.off('change', this.updateNode, this);
-                node.on('change', this.updateNode, this);
-
+                this.listenTo(node, 'change', this.updateNode);
                 this.updateNode(node);
 
                 if (!this.options.readonly) {
@@ -243,9 +237,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
              * @param node Node
              */
             updateNode: function (node) {
-                if (this.isDestroyed || !node.get('el')) {
-                    node.off('change', this.updateNode, this);
-                } else {
+                if (node.get('el')) {
                     var el = $(node.get('el'));
                     el.stop().css({
                         left: node.get('start_time') * this.config.pxPerSec,
