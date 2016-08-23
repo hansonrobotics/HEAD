@@ -21,3 +21,7 @@
 .app-animations-region {
     padding-bottom: 10px;
 }
+
+.app-animation-mode-region button {
+    margin-bottom: 5px;
+}

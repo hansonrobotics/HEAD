@@ -15,6 +15,7 @@ from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
 from topic_tools.srv import MuxSelect
 from performances.nodes import Node
+from performances.weak_method import WeakMethod
 from performances.msg import Event
 import performances.srv as srv
 
@@ -37,6 +38,8 @@ class Runner:
         self.queue = Queue.Queue()
         self.ids = []
         self.running_nodes = []
+        # References to event subscribing node callbacks
+        self.observers = {}
         self.worker = Thread(target=self.worker)
         self.worker.setDaemon(True)
         rospy.init_node('performances')
@@ -73,6 +76,10 @@ class Runner:
         rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
         rospy.Service('~current', srv.Current, self.current_callback)
+        # Shared subscribers for nodes
+        rospy.Subscriber('/' + self.robot_name + '/speech_events', String,
+                         lambda msg: self.notify('speech_events', msg))
+
         self.worker.start()
         rospy.spin()
 
@@ -92,7 +99,6 @@ class Runner:
         if not nodes:
             return srv.RunByNameResponse(False)
         return srv.RunByNameResponse(self.run(0.0))
-
 
     def load_sequence(self, ids):
         nodes = []
@@ -125,18 +131,12 @@ class Runner:
         if ids is None:
             ids = []
 
+        for node in nodes:
+            node.pop('id', None)
+
         with self.lock:
             self.ids = ids
             self.running_nodes = nodes
-
-    def load(self, nodes, ids=None):
-        if ids is None:
-            ids = []
-
-        with self.lock:
-            logger.info("Put nodes {} to queue".format(nodes))
-            self.running_nodes = nodes
-            self.ids = ids
 
     def run_callback(self, request):
         return srv.RunResponse(self.run(request.startTime))
@@ -261,6 +261,31 @@ class Runner:
                 run_time += time.time() - self.start_timestamp
 
         return run_time
+
+    # Notifies register nodes on the events from ROS.
+    def notify(self, event, msg):
+        if event not in self.observers.keys():
+            return
+        for i in xrange(len(self.observers[event]) - 1, -1, -1):
+            try:
+                self.observers[event][i](msg)
+            except TypeError:
+                # Remove dead methods
+                del self.observers[event][i]
+
+    # Registers callbacks for specific events. Uses weak reference to allow nodes cleanup after finish.
+    def register(self, event, cb):
+        if not event in self.observers:
+            self.observers[event] = []
+        m = WeakMethod(cb)
+        self.observers[event].append(m)
+        return m
+
+    # Allows nodes to unsubscribe from events
+    def unregister(self, event, ref):
+        if event in self.observers:
+            if ref in self.observers[event]:
+                self.observers[event].remove(ref)
 
 
 if __name__ == '__main__':

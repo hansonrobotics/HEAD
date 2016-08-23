@@ -44,7 +44,7 @@
 </div>
 <div class="status-list-row row">
     <div class="col-xs-6">
-        <h4>Hardware</h4>
+        <h2>Hardware</h2>
         <ul class="list-group">
             <li class="list-group-item">
                 USB2Dynamixel
@@ -61,7 +61,7 @@
         </ul>
     </div>
     <div class="col-xs-6">
-        <h4>Software</h4>
+        <h2>Software</h2>
         <ul class="list-group">
             <li class="list-group-item">
                 ROS
@@ -81,7 +81,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h4>ROS Nodes</h4>
+        <h2>ROS Nodes</h2>
     </div>
 </div>
 

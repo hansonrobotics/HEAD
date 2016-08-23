@@ -9,6 +9,12 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 VERSION = 'v1.1'
 
+def get_default_username():
+    import subprocess
+    user = subprocess.check_output('id -nu', shell=True).strip()
+    host = subprocess.check_output('hostid', shell=True).strip()
+    return '{}@{}'.format(user, host)
+
 class Client(cmd.Cmd, object):
     def __init__(self, username, key, *args, **kwargs):
         super(Client, self).__init__(*args, **kwargs)
@@ -23,7 +29,10 @@ class Client(cmd.Cmd, object):
         self.lang = 'en'
         self.session = None
         self.last_response = None
-        self.do_conn()
+        if self.ping():
+            self.do_conn()
+        else:
+            self.stdout.write("Chatbot server is not responding. Server url {}\n".format(self.chatbot_url))
 
     def set_sid(self):
         params = {
@@ -142,7 +151,7 @@ class Client(cmd.Cmd, object):
                 self.stdout.write("Wrong conn argument\n")
                 self.help_conn()
                 return
-        self.stdout.write("Connecting.")
+        self.stdout.write("Connecting {}\n".format(self.chatbot_url))
         self.set_sid()
 
     def help_conn(self):
@@ -359,8 +368,17 @@ Syntax: upload package
     help_d = help_dump
 
     def do_summary(self, line):
+        if line:
+            try:
+                lookback = int(line)
+            except Exception as ex:
+                self.stdout.write('{}\n'.format(ex))
+                return
+        else:
+            lookback = 7
         params = {
-            "Auth": self.key
+            "Auth": self.key,
+            "lookback": lookback
         }
         r = requests.get('{}/stats'.format(self.chatbot_url), params=params)
         ret = r.json().get('ret')
@@ -373,7 +391,9 @@ Syntax: upload package
                 'Number of good rates {number_of_good_rates}\n'\
                 'Number of bad rates {number_of_bad_rates}\n'.format(**response))
         else:
-            self.stdout.write(response['err_msg'])
+            self.stdout.write('{}\n'.format(response['err_msg']))
 
     def help_summary(self):
         self.stdout.write('Report the summary of the chat history\n')
+        self.stdout.write('Usage: summary [lookback days]\n')
+        self.stdout.write('lookback days: -1 means all\n')

@@ -3,10 +3,9 @@ import json
 import requests
 import random
 from bs4 import BeautifulSoup, NavigableString, Tag
+from config import SOLR_URL
 
 logger = logging.getLogger('hr.chatbot.server.solr_match')
-
-solr_url = 'http://localhost:8983'
 
 def solr3col(text):
     # No match, try improving with SOLR
@@ -20,7 +19,7 @@ def solr3col(text):
     }
 
     params['q'] = 'title:{}'.format(text)
-    lucText = requests.get(solr_url+'/solr/3colpattern/select', params=params).text
+    lucText = requests.get(SOLR_URL+'/solr/3colpattern/select', params=params).text
 
     if len(lucText)>0:
         logger.debug('RESPONSE: ' + lucText)
@@ -33,7 +32,7 @@ def solr3col(text):
             query = doc['body'][0]
 
             params['q'] = 'body:{}'.format(query)
-            templText = requests.get(solr_url+'/solr/3coltemplate/select', params=params).text
+            templText = requests.get(SOLR_URL+'/solr/3coltemplate/select', params=params).text
             
             if len(templText) > 0:
                 templResp = json.loads(templText)
@@ -56,7 +55,7 @@ def solr_aiml(text):
       "wt":"json",
       "rows":"20"
     }
-    lucText = requests.get(solr_url+'/solr/aiml/select', params=params).text
+    lucText = requests.get(SOLR_URL+'/solr/aiml/select', params=params).text
 
     if len(lucText)>0:
         logger.debug('RESPONSE: ' + lucText)

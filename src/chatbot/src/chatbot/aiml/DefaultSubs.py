@@ -11,8 +11,9 @@ to a Windows-style INI file with the following format:
     he = she
     she = he
     # and so on...
-
-    # The 'person' section contains the substitutions performed by the
+    # Comments that follow contradict AIML 1.0 person and person2 definitions, which were swapped for AIML 2.0
+    #
+    # The person section contains the substitutions performed by the
     # <person> AIML tag, which swaps 1st and 2nd person pronouns.
     [person]
     I = you
@@ -33,6 +34,8 @@ to a Windows-style INI file with the following format:
     # IS").
     [normal]
     what's = what is
+
+
 """
 
 defaultGender = {
@@ -48,8 +51,8 @@ defaultGender = {
     "hers": "his",
     "herself": "himself",
 }
-
-defaultPerson = {
+# These now match the comment above
+defaultPerson2 = {
     # 1st->3rd (masculine)
     "I": "he",
     "me": "him",
@@ -72,7 +75,7 @@ defaultPerson = {
     "herself":"myself",
 }
 
-defaultPerson2 = {
+defaultPerson = {
     # 1st -> 2nd
     "I": "you",
     "me": "you",

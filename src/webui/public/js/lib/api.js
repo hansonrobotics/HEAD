@@ -536,7 +536,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         shutUp:function(){
             this.topics.tts_control.publish({data: 'shutup'});
         }
-
     };
 
     return api;

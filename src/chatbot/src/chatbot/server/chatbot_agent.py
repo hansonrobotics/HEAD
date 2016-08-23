@@ -21,8 +21,7 @@ CWD = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger('hr.chatbot.server.chatbot')
 
 from loader import load_characters
-DEFAULT_CHARACTER_PATH = os.path.join(CWD, 'characters')
-CHARACTER_PATH = os.environ.get('HR_CHARACTER_PATH', DEFAULT_CHARACTER_PATH)
+from config import CHARACTER_PATH
 CHARACTERS = load_characters(CHARACTER_PATH)
 
 def get_character(id, lang=None):
@@ -96,8 +95,8 @@ def set_weights(weights, lang, sid):
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
-from session import SessionManager
-session_manager = SessionManager()
+from session import ChatSessionManager
+session_manager = ChatSessionManager()
 MAX_CHAT_TRIES = 5
 NON_REPEAT = True
 def _ask_characters(characters, question, lang, sid):
@@ -207,7 +206,7 @@ def rate_answer(sid, idx, rate):
         logger.error("Session doesn't exist")
         return False
     try:
-        sess.rate(rate, idx)
+        return sess.rate(rate, idx)
     except Exception as ex:
         logger.error("Rate error: {}".format(ex))
         return False

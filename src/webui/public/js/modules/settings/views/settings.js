@@ -34,19 +34,30 @@ define(['application', 'marionette', 'tpl!./templates/settings.tpl', 'json_edito
                     }, 1000);
             },
             onDestroy: function () {
+                this.editor.destroy();
                 clearInterval(this.refreshInterval);
             },
             setConfig: function () {
-                if (this.editor)
-                    this.editor.setValue(this.model.toJSON());
+                // Used to get the values from performance nodes
+                if (this.model.get('name') == 'settings'){
+                    this.editor.setValue(this.model.get('values'));
+                }else{
+                    if (this.editor)
+                        this.editor.setValue(this.model.toJSON());
+                }
             },
             update: function () {
                 if (this.editor.validate().length === 0) {
-                    this.model.save(this.editor.getValue(), {
-                        error: function () {
-                            console.log('error updating node configuration');
-                        }
-                    });
+                    // Only valid settings could be saved in timeline
+                    if (this.model.get('name') == 'settings'){
+                        this.model.set({'values': this.editor.getValue()});
+                    }else{
+                        this.model.save(this.editor.getValue(), {
+                            error: function () {
+                                console.log('error updating node configuration');
+                            }
+                        });
+                    }
                 }
             }
         });

@@ -62,7 +62,7 @@ class SpecificRobotCtrl:
 
 
     def play_animation(self, animation, fps):
-        self.playback.play(self.animations[animation],fps)
+        self.playback.play(self.animations[animation],fps, animation)
 
     def animation_length(self, req):
         if req.name in self.animations.keys():
@@ -88,7 +88,11 @@ class SpecificRobotCtrl:
         self.animations = Animation.from_yaml(animations)
         # Motor commands will be sent to this publisher.
         self.publishers = {}
-        self.playback = Playback(to_dict(motors, "name"), self.publisher)
+        # Prevents from playing two animations with same prefix
+        # For example Left and Right arms can be played at same time but not two animations for same arm.
+        # loaded from param server in robot config
+        self.animationChannels = rospy.get_param('kf_anim_channels', [])
+        self.playback = Playback(to_dict(motors, "name"), self.publisher, self.animationChannels)
         # Subscribe motor topics based on their type
         for m in motors:
             if not m['topic'] in self.publishers.keys():

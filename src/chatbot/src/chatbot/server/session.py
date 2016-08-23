@@ -1,14 +1,11 @@
-from response_cache import ResponseCache
 import threading
 import time
 import os
 import datetime as dt
 import logging
 import uuid
-
-SESSION_RESET_TIMEOUT = 120 # Timeout seconds for a session to be reset
-SESSION_REMOVE_TIMEOUT = 600 # Timeout seconds for a session to be removed
-HISTORY_DIR = os.path.expanduser('~/.hr/chatbot/history')
+from config import HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
+from response_cache import ResponseCache
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
@@ -24,14 +21,23 @@ class Session(object):
         self.characters = []
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
+        self.removed = False
+        self.active = False
+        self.last_active_time = None
 
     def add(self, question, answer, **kwargs):
-        self.cache.add(question, answer, **kwargs)
+        if not self.removed:
+            self.cache.add(question, answer, **kwargs)
+            self.last_active_time = self.cache.last_time
+            self.active = True
+            return True
+        return False
 
     def rate(self, rate, idx):
-        self.cache.rate(rate, idx)
+        return self.cache.rate(rate, idx)
 
     def reset(self):
+        self.active = False
         self.dump()
         self.cache.clean()
         self.init = dt.datetime.now()
@@ -50,14 +56,11 @@ class Session(object):
     def get_session_data(self):
         return self.sdata
 
-    def since_idle(self):
-        if self.cache.last_time is not None:
-            return (dt.datetime.now() - self.cache.last_time).seconds
+    def since_idle(self, since):
+        if self.last_active_time is not None:
+            return (since - self.last_active_time).total_seconds()
         else:
-            return (dt.datetime.now() - self.created).seconds
-
-    def since_reset(self):
-        return (dt.datetime.now() - self.init).seconds
+            return (since - self.created).total_seconds()
 
     def __repr__(self):
         return "<Session {} init {} active {}>".format(
@@ -75,14 +78,15 @@ class Locker(object):
 
 class SessionManager(object):
 
-    def __init__(self):
+    def __init__(self, auto_clean=True):
         self._sessions = dict()
         self._users = dict()
+        self._locker = Locker()
         self._session_cleaner = threading.Thread(
             target=self._clean_sessions, name="SessionCleaner")
-        self._locker = Locker()
         self._session_cleaner.daemon = True
-        self._session_cleaner.start()
+        if auto_clean:
+            self._session_cleaner.start()
 
     def _threadsafe(f):
         def wrap(self, *args, **kwargs):
@@ -94,36 +98,49 @@ class SessionManager(object):
         return wrap
                 
     @_threadsafe
-    def _add_session(self, sid):
-        if sid in self._sessions: return
-        self._sessions[sid] = Session(sid)
-
-    @_threadsafe
-    def _remove_session(self, sid):
+    def remove_session(self, sid):
         if sid in self._sessions:
             session = self._sessions.pop(sid)
             session.dump()
+            session.removed = True
             del session
+            logger.info("Removed session {}".format(sid))
 
     def reset_session(self, sid):
         if sid in self._sessions:
             session = self._sessions.get(sid)
-            session.reset()
+            if session.active:
+                session.reset()
+                logger.info("Resetted session {}".format(sid))
 
     def get_session(self, sid):
         if sid is not None:
             return self._sessions.get(sid, None)
 
-    @_threadsafe
-    def start_session(self, user):
+    def get_sid(self, user):
         if user in self._users:
             sid = self._users.get(user)
             session = self._sessions.get(sid)
             if session:
                 return sid
-        sid = str(uuid.uuid1())
-        self._add_session(sid)
+
+    def gen_sid(self):
+        return str(uuid.uuid1())
+
+    @_threadsafe
+    def add_session(self, user, sid):
+        if sid in self._sessions:
+            return False
+        self._sessions[sid] = Session(sid)
         self._users[user] = sid
+        return True
+
+    def start_session(self, user):
+        _sid = self.get_sid(user)
+        if _sid:
+            return _sid
+        sid = self.gen_sid()
+        self.add_session(user, sid)
         return sid
 
     def has_session(self, sid):
@@ -132,18 +149,21 @@ class SessionManager(object):
     def _clean_sessions(self):
         while True:
             reset_sessions, remove_sessions = [], []
+            since = dt.datetime.now()
             for sid, s in self._sessions.iteritems():
-                if s.since_reset() > SESSION_RESET_TIMEOUT:
+                if SESSION_RESET_TIMEOUT < s.since_idle(since) < SESSION_REMOVE_TIMEOUT:
                     reset_sessions.append(sid)
-                if s.since_idle() > SESSION_REMOVE_TIMEOUT:
+                if s.since_idle(since) > SESSION_REMOVE_TIMEOUT:
                     remove_sessions.append(sid)
             for sid in reset_sessions:
                 self.reset_session(sid)
-                logger.info("Reset session {}".format(sid))
             for sid in remove_sessions:
-                self._remove_session(sid)
-                logger.info("Removed session {}".format(sid))
-            time.sleep(1)
+                self.remove_session(sid)
+            time.sleep(0.1)
+
+class ChatSessionManager(SessionManager):
+    def __init__(self, auto_clean=True):
+        super(ChatSessionManager, self).__init__(auto_clean)
 
     def dump_all(self):
         fnames = []
@@ -158,19 +178,3 @@ class SessionManager(object):
         if sess and sess.dump():
             fname = sess.fname
         return fname
-
-if __name__ == '__main__':
-    session_manager = SessionManager()
-    sid = session_manager.start_session('test')
-    session = session_manager.get_session(sid)
-    print session
-    sid = session_manager.start_session('test')
-    session = session_manager.get_session(sid)
-    session.add("hello", "hello, how are you")
-    print session
-    time.sleep(4)
-    session = session_manager.get_session(sid)
-    print session
-    time.sleep(4)
-    session = session_manager.get_session(sid)
-    print session

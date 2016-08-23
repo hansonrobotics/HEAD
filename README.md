@@ -26,6 +26,16 @@ full performance pipeline and infrastructure:
  * X Server is running.
  * Use root or create user with the ability to gain root privileges.
 
+## TL;NR
+
+Install dependencies, get source code, build
+
+`sudo apt-get update && sudo apt-get install wget && wget https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hrtool -O /tmp/hrtool && chmod +x /tmp/hrtool && /tmp/hrtool -iGBy`
+
+Then run
+
+`~/hansonrobotics/HEAD/scripts/dev.sh`
+
 ## Install, build and run
 
 * Install wget

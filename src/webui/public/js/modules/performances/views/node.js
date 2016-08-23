@@ -1,446 +1,221 @@
-define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'underscore', 'jquery-ui', 'lib/crosshair-slider',
-        'select2'],
-    function (App, Marionette, template, api, _) {
-        return Marionette.ItemView.extend({
+define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'underscore', './node_select',
+        './node_settings', 'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2'],
+    function (App, Marionette, template, api, _, NodeSelectView, NodeSettingsView, FadeInRegion, Node, $) {
+        return Marionette.LayoutView.extend({
             template: template,
             ui: {
-                magnitudeSlider: '.app-magnitide-slider',
-                emotionSelect: 'select.app-emotion-select',
-                gestureSelect: 'select.app-gesture-select',
-                somaSelect: 'select.app-soma-select',
-                expressionSelect: 'select.app-expression-select',
-                textInput: '.app-node-text',
-                startTime: '.app-node-start-time',
-                duration: '.app-node-duration',
-                crosshair: '.app-crosshair',
+                container: '.app-node-settings',
+                nodeTabBar: '.app-node-tabs',
+                nodeTabs: '.app-node-tabs li:not([role="presentation"])',
+                nodeScrollLeft: '.app-node-scroll.app-scroll-left a',
+                nodeScrollRight: '.app-node-scroll.app-scroll-right a',
+                nodeTypeButtons: '.app-node-tabs li:not([role="presentation"]) a',
+
+                optionsTabBar: '.app-options-tabs',
+                optionsTabs: '.app-options-tabs li:not([role="presentation"])',
+                optionsScrollLeft: '.app-options-scroll.app-scroll-left a',
+                optionsScrollRight: '.app-options-scroll.app-scroll-right a',
+
+                hideButton: '.app-hide-settings-button',
                 deleteButton: '.app-delete-node-button',
-                speedSlider: '.app-speed-slider',
-                speedLabel: '.app-speed-label',
-                magnitudeLabel: '.app-magnitude-label',
-                langSelect: 'select.app-lang-select',
                 frameCount: '.app-node-frames-indicator',
-                durationIndicator: '.app-node-duration-indicator',
-                topicInput: '.app-node-topic',
-                fpsSlider: '.app-fps-slider',
-                fpsLabel: '.app-fps-label',
-                kfAnimationSelect: 'select.app-kfanimation-select',
-                messageInput: '.app-node-message-input',
-                kfModeSelect: 'select.app-kfmode-select',
-                btreeModeSelect: 'select.app-btree-mode-select',
-                speechEventSelect: 'select.app-speech-event-select',
-                hrAngleSlider: '.app-hr-angle-slider',
-                hrAngleLabel: '.app-hr-angle-label',
-                attentionRegionSelect: '.app-attention-region-select',
-                timeout: '.app-node-timeout',
-                randomNodePerformance: '.app-random-node-performance-select'
+                durationIndicator: '.app-node-duration-indicator'
+            },
+            regions: {
+                select: {
+                    el: '.app-node-select-content',
+                    regionClass: FadeInRegion
+                },
+                settings: {
+                    el: '.app-settings-content',
+                    regionClass: FadeInRegion
+                }
             },
             events: {
-                'change @ui.duration': 'setDuration',
-                'change @ui.startTime': 'setStartTime',
-                'keyup @ui.textInput': 'setText',
-                'change @ui.textInput': 'setTextDuration',
-                'change @ui.langSelect': 'setLanguage',
-                'change @ui.emotionSelect': 'setEmotion',
-                'change @ui.gestureSelect': 'setGesture',
-                'change @ui.somaSelect': 'setSoma',
-                'change @ui.expressionSelect': 'setExpression',
-                'change @ui.topicInput': 'setTopic',
-                'change @ui.kfAnimationSelect': 'setKFAnimation',
+                'click @ui.hideButton': 'hideSettings',
                 'click @ui.deleteButton': 'deleteNode',
-                'change @ui.messageInput': 'setMessage',
-                'change @ui.btreeModeSelect': 'setBtreeMode',
-                'change @ui.speechEventSelect': 'setSpeechEvent',
-                'change @ui.kfModeSelect': 'setKFMode',
-                'change @ui.attentionRegionSelect': 'selectAttentionRegion',
-                'change @ui.timeout': 'updateTimeout',
-                'change @ui.randomNodePerformance': 'changeRandomNodePerformance'
+                'click @ui.nodeTypeButtons': 'typeButtonClick'
             },
-            modelEvents: {
-                change: 'modelChanged'
+            initialize: function (options) {
+                this.mergeOptions(options, ['node']);
             },
-            modelChanged: function () {
-                if (this.model.hasChanged('start_time'))
-                    this.ui.startTime.val(this.model.get('start_time'));
-                if (this.model.hasChanged('duration'))
-                    this.ui.duration.val(this.model.get('duration'));
-            },
-            onRender: function () {
+            onAttach: function () {
                 var self = this;
+                this.ui.nodeTypeButtons.draggable({
+                    helper: function () {
+                        var attributes;
+                        if (self.node && self.collection && self.node.get('name') == $(this).data('node-name')){
+                            // Copy current view attributes if node is same
+                                attributes = self.node.toJSON();
+                                delete attributes['id'];
 
-                if (_.contains(['pause'], this.model.get('name'))) {
-                    this.ui.durationIndicator.hide();
-                    this.ui.frameCount.hide();
-                    this.ui.timeout.val(this.model.get('timeout') || '');
-                } else
-                    this.updateIndicators();
-
-                if (_.contains(['emotion', 'gesture', 'expression'], this.model.get('name'))) {
-                    var magnitude = this.model.get('magnitude') || 0;
-
-                    // set default
-                    if (!this.model.get('magnitude'))
-                        this.model.set('magnitude', [0.9,1]);
-
-                    if (magnitude instanceof Array && magnitude.length == 2)
-                        magnitude = [magnitude[0] * 100, magnitude[1] * 100];
-                    else
-                        // computable with previous version of single value magnitude
-                        magnitude = [magnitude*100, magnitude*100];
-
-                    this.ui.magnitudeLabel.html(magnitude[0] + '-' + magnitude[1] + '%');
-
-                    // init slider
-                    this.ui.magnitudeSlider.slider({
-                        animate: true,
-                        range: true,
-                        values: magnitude,
-                        slide: function( event, ui ) {
-                            self.model.set('magnitude', [ui.values[0] / 100, ui.values[1] / 100]);
-                            self.ui.magnitudeLabel.html(ui.values[0] + '-' + ui.values[1] + '%');
+                        }else{
+                            attributes = {
+                                name: $(this).data('node-name'),
+                                duration: 1
+                            }
                         }
-                    });
-                }
+                        var node = Node.create(attributes);
+                        node.setDefaultValues();
+                        return $('<span>').attr('data-node-name', node.get('name'))
+                            .attr('data-node-id', node.get('id'))
+                            .addClass('label app-node').html(node.getTitle());
+                    },
+                    appendTo: 'body',
+                    revert: 'invalid',
+                    delay: 100,
+                    snap: '.app-timeline-nodes',
+                    snapMode: 'inner',
+                    zIndex: 1000,
+                    cursor: 'move',
+                    cursorAt: {top: 0, left: 0}
+                });
 
-                switch (this.model.get('name')) {
-                    case 'emotion':
-                        // init with empty list
-                        self.updateEmotions([]);
-                        // load emotions
-                        api.getAvailableEmotionStates(function (emotions) {
-                            self.updateEmotions(emotions);
-                        });
-                        break;
-                    case 'expression':
-                        // init with empty list
-                        self.updateExpressions([]);
-                        // load emotions
-                        api.expressionList(function (expressions) {
-                            self.updateExpressions(expressions.exprnames)
-                        });
-                        break;
-                    case 'kfanimation':
-                        // init with empty list
-                        self.updateKFAnimations([]);
-                        // load emotions
-                        api.getAnimations(function (animations) {
-                            self.updateKFAnimations(animations)
-                        });
-                        // init slider
-                        if (!this.model.get('fps')) this.model.set('fps', 24);
-                        self.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');
-                        // Disable blender head output by default
-                        if (!this.model.get('blender_mode')) this.model.set('blender_mode', 'no');
-                        self.ui.kfModeSelect.val(this.model.get('blender_mode'));
-                        console.log(this.model.get('blender_mode'));
+                if (this.node)
+                    this.showSettings(this.node);
+                else
+                    this.hideSettings();
 
-                        this.ui.fpsSlider.slider({
-                            animate: true,
-                            range: 'min',
-                            min: 12,
-                            max: 48,
-                            value: this.model.get('fps'),
-                            slide: function (e, ui) {
-                                self.model.set('fps', ui.value);
-                                self.setKFAnimationDuration();
-                                self.ui.fpsLabel.html(Math.floor(self.model.get('fps')) + ' fps');
-                            }
-                        });
-                        break;
-                    case 'head_rotation':
-                        if (!this.model.get('angle')) this.model.set('angle', 0);
-                        this.ui.hrAngleSlider.slider({
-                            animate: true,
-                            range: 'min',
-                            min: -50,
-                            max: 50,
-                            value: this.model.get('angle') * 100,
-                            slide: function (e, ui) {
-                                self.model.set('angle', 0 - parseFloat(ui.value) / 100.0);
-                                self.model.call();
-                                self.ui.hrAngleLabel.html(parseFloat(self.model.get('angle')).toFixed(2) + ' rad');
-                            }
-                        });
-                        break;
-                    case 'gesture':
-                        // init with empty list
-                        self.updateGestures([]);
-                        // load gestures
-                        api.getAvailableGestures(function (gestures) {
-                            self.updateGestures(gestures)
-                        });
+                this.initTabScrolling(this.ui.nodeTabBar, this.ui.nodeTabs, this.ui.nodeScrollLeft, this.ui.nodeScrollRight);
+                this.initTabScrolling(this.ui.optionsTabBar, this.ui.optionsTabs, this.ui.optionsScrollLeft, this.ui.optionsScrollRight);
 
-                        if (!this.model.get('speed')) this.model.set('speed', 1);
-
-                        this.ui.speedLabel.html(this.model.get('speed'));
-                        this.ui.speedSlider.slider({
-                            range: 'min',
-                            animate: true,
-                            min: 50,
-                            max: 200,
-                            value: this.model.get('speed') * 100,
-                            slide: function (e, ui) {
-                                var speed = ui.value / 100;
-                                self.model.set('speed', speed);
-                                self.setGestureLength();
-                                self.ui.speedLabel.html(speed.toFixed(2));
-                            }
-                        });
-                        break;
-                    case 'soma':
-                        // init with empty list
-                        self.updateSomaStates([]);
-                        // load gestures
-                        api.getAvailableSomaStates(function (somas) {
-                            self.updateSomaStates(somas)
-                        });
-                        break;
-                    case 'look_at':
-                        this.enableAttentionRegionSelect();
-                        break;
-                    case 'gaze_at':
-                        this.enableAttentionRegionSelect();
-                        break;
-                    case 'speech':
-                        if (this.model.get('text'))
-                            this.ui.textInput.val(this.model.get('text'));
+                this.initResponsive();
+            },
+            initResponsive: function () {
+                var self = this,
+                    resize = function () {
+                        if (self.isDestroyed)
+                            $(window).unbind('resize', resize);
+                        else if (self.ui.nodeTabBar.offset().left < self.ui.optionsTabBar.offset().left)
+                            self.ui.container.removeClass('app-mobile');
                         else
-                            this.model.set('text', '');
+                            self.ui.container.addClass('app-mobile');
+                    };
 
-                        if (!this.model.get('lang'))
-                            this.model.set('lang', 'en');
-                        this.ui.langSelect.val(this.model.get('lang'));
-                        $(self.ui.langSelect).select2();
-                        break;
-                    case 'interaction':
-                        if (!this.model.get('mode'))
-                            this.model.set('mode', 255);
-                        this.ui.btreeModeSelect.val(this.model.get('mode'));
-                        $(self.ui.btreeModeSelect).select2();
-                        if (!this.model.get('chat'))
-                            this.model.set('chat', '');
-                        this.ui.speechEventSelect.val(this.model.get('chat'));
-                        $(self.ui.speechEventSelect).select2();
-                        break;
-                    case 'pause':
-                        this.model.set('duration', 0.2);
-                        break;
-                    case 'chat_pause':
-                        if (!this.model.get('message'))
-                            this.model.set('message', '');
-                        this.ui.messageInput.val(this.model.get('message'));
+                $(window).bind('resize', resize);
+            },
+            initTabScrolling: function (tabBar, tabs, scrollLeft, scrollRight) {
+                var self = this,
+                    resize = function () {
+                        if (self.isDestroyed) {
+                            $(window).off('resize', resize);
+                            return;
+                        }
+
+                        var width = self.getWidthSum(tabs);
+
+                        if (width > $(tabBar).width()) {
+                            $(tabBar).addClass('app-overflow');
+                            $(scrollLeft).fadeIn();
+                            $(scrollRight).fadeIn();
+                        } else {
+                            $(tabBar).removeClass('app-overflow');
+                            $('li:not([role="presentation"])', tabBar).css('right', 0);
+                            $(scrollLeft).hide();
+                            $(scrollRight).hide();
+                        }
+                    },
+                    eventData = {
+                        tabBar: tabBar,
+                        tabs: tabs,
+                        scrollLeft: scrollLeft,
+                        scrollRight: scrollRight
+                    };
+
+                $(scrollLeft).click(eventData, function (e) {
+                    $(this).blur();
+                    $(e.data.tabs).stop().animate({right: Math.max(parseInt(e.data.tabs.css('right')) - 200, 0)});
+                });
+
+                $(scrollRight).click(eventData, function (e) {
+                    $(this).blur();
+                    var max = self.getWidthSum(e.data.tabs) - e.data.tabBar.width();
+                    $(e.data.tabs).stop().animate({right: Math.min(parseInt(e.data.tabs.css('right')) + 200, max)});
+                });
+
+                $(window).resize(resize);
+                resize();
+            },
+            /**
+             * Calculate precise sum of node tab widths
+             * @param tabs
+             * @returns {number}
+             */
+            getWidthSum: function (tabs) {
+                var width = 0;
+                $(tabs).each(function () {
+                    var rect = $(this).get(0).getBoundingClientRect();
+                    if (rect.width) {
+                        // `width` is available for IE9+
+                        width += rect.width;
+                    } else {
+                        // Calculate width for IE8 and below
+                        width += rect.right - rect.left;
+                    }
+                });
+                return width;
+            },
+            hideSettings: function () {
+                var self = this,
+                    selectView = this.getRegion('select').currentView,
+                    settingsView = this.getRegion('settings').currentView;
+
+                this.node = null;
+                this.ui.nodeTabs.removeClass('active');
+                $('.app-node.active').removeClass('active');
+
+                if (settingsView) {
+                    settingsView.model.unbind('change:duration', this.updateNode, this);
+                    $(selectView.$el).add(settingsView.$el).slideUp(null, function () {
+                        self.ui.container.addClass('app-disabled');
+                        $(window).resize();
+                    });
+                } else {
+                    this.ui.container.addClass('app-disabled');
+                    $(window).resize();
                 }
             },
-            updateEmotions: function (emotions) {
-                var self = this;
-                _.each(emotions, function (emotion) {
-                    $(self.ui.emotionSelect).append($('<option>').prop('value', emotion).html(emotion));
-                });
-
-                if (!this.model.get('emotion') && emotions.length > 0)
-                    this.model.set('emotion', emotions[0]);
-
-                if (this.model.get('emotion'))
-                    $(this.ui.emotionSelect).val(this.model.get('emotion'));
-
-                $(this.ui.emotionSelect).select2();
-            },
-            updateKFAnimations: function (animations) {
-                var self = this;
-                _.each(animations, function (animation) {
-                    $(self.ui.kfAnimationSelect).append($('<option>').prop('value', animation.name).html(animation.name));
-                });
-
-                if (!this.model.get('animation') && animations.length > 0) {
-                    this.model.set('animation', animations[0].name);
-                    this.setKFAnimationDuration();
-                }
-
-                if (this.model.get('animation'))
-                    $(this.ui.kfAnimationSelect).val(this.model.get('animation'));
-
-                $(this.ui.kfAnimationSelect).select2();
-                $(this.ui.kfModeSelect).select2();
-            },
-            updateExpressions: function (expressions) {
-                var self = this;
-                _.each(expressions, function (expr) {
-                    $(self.ui.expressionSelect).append($('<option>').prop('value', expr).html(expr));
-                });
-
-                if (!self.model.get('expression') && expressions.length > 0)
-                    self.model.set('expression', expressions[0]);
-
-                if (self.model.get('expression'))
-                    $(self.ui.expressionSelect).val(self.model.get('expression'));
-
-                $(self.ui.expressionSelect).select2();
-            },
-            updateGestures: function (gestures) {
-                var self = this;
-                _.each(gestures, function (gesture) {
-                    $(self.ui.gestureSelect).append($('<option>').prop('value', gesture).html(gesture));
-                });
-
-                if (!this.model.get('gesture') && gestures.length > 0) {
-                    this.model.set('gesture', gestures[0]);
-                    this.setGestureLength();
-                }
-
-                if (this.model.get('gesture'))
-                    $(this.ui.gestureSelect).val(this.model.get('gesture'));
-
-                $(this.ui.gestureSelect).select2();
-            },
-            updateSomaStates: function (somas) {
-                var self = this;
-                _.each(somas, function (soma) {
-                    $(self.ui.somaSelect).append($('<option>').prop('value', soma).html(soma));
-                });
-
-                if (!this.model.get('soma') && somas.length > 0) {
-                    this.model.set('soma', somas[0]);
-                }
-
-                if (this.model.get('soma'))
-                    $(this.ui.somaSelect).val(this.model.get('soma'));
-
-                $(this.ui.somaSelect).select2();
-            },
-            setDuration: function () {
-                this.model.set('duration', Number($(this.ui.duration).val()));
+            showSettings: function (node) {
+                if (node === this.node) return;
+                node.bind('change', this.updateNode, this);
+                if (this.node) this.node.unbind('change', this.updateNode, this);
+                this.node = node;
+                this.ui.container.removeClass('app-disabled');
+                this.ui.nodeTabs.removeClass('active');
+                this.ui.nodeTypeButtons.filter('[data-node-name="' + node.get('name') + '"]').closest('li').addClass('active');
+                this.getRegion('select').show(new NodeSelectView({model: node, collection: this.collection}));
+                this.getRegion('settings').show(new NodeSettingsView({model: node, collection: this.collection}));
                 this.updateIndicators();
+                $(window).resize();
             },
-            setMessage: function () {
-                this.model.set('message', this.ui.messageInput.val());
+            typeButtonClick: function (e) {
+                this.createNode($(e.target).data('node-name'));
+            },
+            createNode: function (name) {
+                var node = Node.create({name: name, start_time: 0, duration: 1});
+                this.showSettings(node);
+            },
+            updateNode: function (node) {
+                if (this.node != node || this.isDestroyed)
+                    node.unbind('change', this.updateNode, this);
+                else {
+                    if (node.changed['duration']) this.updateIndicators();
+                    if (this.collection.contains(node)) this.ui.deleteButton.fadeIn();
+                    else this.ui.deleteButton.hide();
+                }
             },
             updateIndicators: function () {
                 var fps = App.getOption('fps'),
                     step = 1 / fps,
-                    duration = Number(parseInt(this.model.get('duration') / step) * step).toFixed(2);
+                    duration = Number(parseInt(this.node.get('duration') / step) * step).toFixed(2);
 
                 this.ui.durationIndicator.html(duration + 's');
                 this.ui.frameCount.html(parseInt(duration * fps));
             },
-            setText: function () {
-                this.model.set('text', this.ui.textInput.val());
-            },
-            setLanguage: function () {
-                this.model.set('lang', this.ui.langSelect.val());
-            },
-            setTextDuration: function () {
-                var self = this;
-                api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function (response) {
-                    self.model.set('duration', response.length);
-                    self.updateIndicators();
-                });
-            },
-            setEmotion: function () {
-                this.model.set('emotion', this.ui.emotionSelect.val());
-            },
-            setExpression: function () {
-                this.model.set('expression', this.ui.expressionSelect.val());
-            },
-            setGesture: function () {
-                this.model.set('gesture', this.ui.gestureSelect.val());
-                this.setGestureLength();
-            },
-            setSoma: function () {
-                this.model.set('soma', this.ui.somaSelect.val());
-            },
-            setGestureLength: function () {
-                var self = this;
-                api.getAnimationLength(this.model.get('gesture'), function (response) {
-                    self.gestureDuration = response.length;
-                    self.model.set('duration', self.gestureDuration / self.model.get('speed'));
-                });
-            },
-            setStartTime: function () {
-                this.model.set('start_time', Number($(this.ui.startTime).val()));
-            },
-            setKFMode: function () {
-                this.model.set('blender_mode', $(this.ui.kfModeSelect).val());
-            },
-            setTopic: function () {
-                this.model.set('topic', this.ui.topicInput.val());
-            },
-            setKFAnimation: function () {
-                this.model.set('animation', this.ui.kfAnimationSelect.val())
-                this.setKFAnimationDuration();
-            },
-            setKFAnimationDuration: function () {
-                var self = this;
-                api.getKFAnimationLength(this.model.get('animation'), function (response) {
-                    self.animationFrames = response.frames;
-                    self.model.set('duration', 0.1 + self.animationFrames / self.model.get('fps'));
-                });
-            },
-            setBtreeMode: function () {
-                this.model.set('mode', parseInt(this.ui.btreeModeSelect.val()));
-            },
-            setSpeechEvent: function () {
-                this.model.set('chat', this.ui.speechEventSelect.val());
-            },
-            enableAttentionRegionSelect: function () {
-                var self = this;
-
-                this.buildCrosshair();
-                this.ui.crosshair.hide();
-
-                api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function (regions) {
-                    self.ui.attentionRegionSelect.html('');
-                    _.each(regions, function (name, key) {
-                        self.ui.attentionRegionSelect.append($('<option>').attr('value', key).html(name));
-                    });
-                    self.ui.attentionRegionSelect.append($('<option>').attr('value', 'custom').html('Custom'));
-                    self.ui.attentionRegionSelect.val(self.model.get('attention_region') || 'custom');
-                    self.ui.attentionRegionSelect.select2();
-                    self.selectAttentionRegion();
-                });
-            },
-            buildCrosshair: function () {
-                var self = this;
-                $(this.ui.crosshair).crosshairsl({
-                    xmin: -1,
-                    xmax: 1,
-                    xval: this.model.get('y') ? this.model.get('y') : 0,
-                    ymin: -1,
-                    ymax: 1,
-                    yval: this.model.get('z') ? -1 * this.model.get('z') : 0,
-                    change: function (e, ui) {
-                        self.model.set('x', 1);
-                        self.model.set('y', ui.xval);
-                        self.model.set('z', -1 * ui.yval);
-
-                        self.model.call();
-                    }
-                });
-
-                self.model.set('x', 1);
-                self.model.set('y', 0);
-                self.model.set('z', 0);
-            },
             deleteNode: function () {
-                var self = this;
-                this.model.destroy();
-                this.$el.slideUp(null, function () {
-                    self.destroy();
-                });
-            },
-            selectAttentionRegion: function () {
-                this.model.set('attention_region', this.ui.attentionRegionSelect.val());
-
-                if (this.ui.attentionRegionSelect.val() == 'custom') {
-                    this.ui.crosshair.fadeIn();
-                } else {
-                    this.ui.crosshair.fadeOut();
-                }
-            },
-            updateTimeout: function () {
-                this.model.set('timeout', this.ui.timeout.val());
-            },
-            enableRandomNodePerformanceSelect: function () {
-            },
-            changeRandomNodePerformance: function () {
+                this.collection.remove(this.node);
+                if (this.node) this.node.destroy();
+                this.hideSettings();
             }
         });
     });
