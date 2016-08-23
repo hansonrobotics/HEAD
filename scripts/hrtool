@@ -527,7 +527,7 @@ _do_build_hr() {
     fi
 
     catkin clean -y || catkin clean -a
-    catkin build --force-cmake -j$(nproc) --no-status
+    catkin build --force-cmake -j$(nproc) --no-status --make-args install
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
     pip2 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
     pip3 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
