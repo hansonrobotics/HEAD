@@ -14,6 +14,11 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
             }
         },
         getSchemaFromDescription: function (description) {
+            return this.constructor.getSchemaFromDesc(description, this.node_name)
+        }
+    },
+    {
+        getSchemaFromDesc: function (description, node_name) {
             var properties = {};
 
             $.each(description, function (i, param) {
@@ -58,7 +63,7 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
             });
 
             return {
-                title: this.node_name + ' settings',
+                title: node_name + ' settings',
                 type: 'object',
                 properties: properties
             };

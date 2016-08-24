@@ -55,32 +55,40 @@ Client.post = function(url, params, file){
     return HTTP_REQ;
 }
 
-function Client(auto_connect){
+function Client(username, key){
     const PROMPT = '[me]: ';
-
     let session = undefined;
     let lang = 'en';
     let chatbot_port = '8001';
     let chatbot_ip = 'localhost';
     let chatbot_url = 'http://' + chatbot_ip + ':' + chatbot_port + '/' + Client.VERSION;
     let bot_name = 'sophia';
-    let user = 'client';
+    let user = username || 'client';
+    let last_response = undefined;
+
+    Client.KEY = key || 'AAAAB3NzaC';
+
     const self = this;
 
     this.print = function(msg){
         console.log(msg);
-    };
+    }
     this.println = function(msg){
         self.print(msg);
         self.print('\n');
     }
     this.error = function(msg){
         console.error(msg);
-    };//If we want to change the write function
+    }//If we want to change the write function
+
+
+    this.download = function(text, fname, file){
+        self.error("Function not implemented.");
+    }
 
     this.exit = function(){
         self.println("Bye");
-    };
+    }
     //Callback to be set outside of the function.
 
     let exec = function(cmd,param){
@@ -262,6 +270,7 @@ function Client(auto_connect){
                 });
                 return;
             }
+            last_response = response;
             const message = bot_name + '[by ' + response['botname'] + ']: ' + response['text'];
             self.println(message);
         }catch(e){
@@ -606,6 +615,132 @@ function Client(auto_connect){
         }else{
             self.println('');
         }
+    }
+
+    this.help_ping = function(){
+        const msg = "Print the trace of last response";
+        self.println(msg);
+    }
+
+    this.do_trace = function(line){
+        if(last_response && last_response['trace']){
+            const trace = last_response['trace'];
+            self.print(trace.join('\n'));
+        }
+        self.println('');
+    }
+
+    this.do_t = this.do_trace;
+
+    this.help_trace = function(){
+        const msg = write('Print the trace of last response\n')
+        self.println(msg);
+    }
+
+    this.help_t = this.help_trace;
+
+    let _rate = function(rate){
+        const params = {
+            "session": session,
+            "rate": rate,
+            "index": -1,
+            "Auth": Client.KEY
+        };
+        const msg = chatbot_url + '/rate';
+        const req = Client.get(msg, params).responseText;
+        const json = JSON.parse(req);
+        const ret = json['ret'];
+        const res = json['response'];
+        return [ret, res];
+    }
+
+    this.do_gd = function(line){
+        if(_rate('good')[0]){
+            self.println("[Thanks for rating]");
+        }else{
+            self.println("[Rating failed]");
+        }
+    }
+
+    this.help_gd = function(){
+        const msg = "Rate the last resposne as GOOD result";
+        self.println(msg);
+    }
+
+    this.do_bd = function(line){
+        if(_rate('bad')[0]){
+            self.println("[Thanks for rating]");
+        }else{
+            self.println("[Rating failed]");
+        }
+    }
+
+    this.help_bd = function(){
+        const msg = "Rate the last resposne as BAD result";
+        self.println(msg);
+    }
+
+    this.do_dump = function(line){
+        const params = {
+            "session": session,
+            "Auth": Client.KEY
+        };
+        const req = Client.get(chatbot_url + '/dump_session', params);
+        if(req.status_code == 200){
+            const fname = session + '.csv';
+            this.download(req.responseText, fname, 'text/plain');
+        }
+    }
+
+    this.help_dump = function(){
+        const msg = "Dump chat history";
+        self.println(msg);
+    }
+
+    this.do_d = this.do_dump;
+    this.help_d = this.help_dump;
+
+    this.do_summary = function(line){
+        let lookback;
+        if(line){
+            try{
+                lookback = parseInt(line);
+            }catch(err){
+                self.error(err);
+            }
+        }else{
+            lookback = 7;
+        }
+
+        const params = {
+            "Auth": Client.KEY,
+            "lookback": lookback
+        };
+        const url = chatbot_url + '/stats';
+        const req = Client.get(url, params);
+        const json = JSON.parse(req.responseText);
+        const ret = json['ret'];
+        const res = json['response'];
+        if(ret){
+            const deg = res['customers_satisfaction_degree'];
+            const rec = res['number_of_records'];
+            const rat = res['number_of_rates'];
+            const good = res['number_of_good_rates'];
+            const bad = res['number_of_bad_rates'];
+            self.println('Customers satisfaction degree ' + deg);
+            self.println('Number of records ' + rec);
+            self.println('Number of rates ' + rat);
+            self.println('Number of good rates ' + good);
+            self.println('Number of bad rates ' + bad);
+        }else{
+            self.println(response['err_msg']);
+        }
+    }
+
+    this.help_summary = function(){
+        self.println('Report the summary of the chat history');
+        self.println('Usage: summary [lookback days]');
+        self.println('lookback days: -1 means all');
     }
 
     this.get_PROMPT = function(){return PROMPT;}

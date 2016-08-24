@@ -8,6 +8,6 @@ def callback(config, level):
     return config
 
 if __name__ == "__main__":
-    rospy.init_node("openpsi_control", anonymous = True)
+    rospy.init_node("openpsi_control")
     srv = Server(OpenpsiConfig, callback)
     rospy.spin()

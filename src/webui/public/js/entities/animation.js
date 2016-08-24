@@ -5,15 +5,15 @@ define(['application', 'lib/api'], function (App, api) {
         });
         Entities.Animation = Backbone.Model.extend({});
         Entities.AnimationsCollection = Backbone.Collection.extend({
-            model: Entities.Expression,
+            model: Entities.Animation,
             fetch: function () {
                 var self = this;
                 api.getAnimations(function (animations) {
                     _.each(animations, function (animation) {
-                        self.add(new Backbone.Model({
+                        self.add({
                             name: animation.name,
                             frames_collection: new Entities.FramesCollection(animation.frames)
-                        }));
+                        });
                     });
                 });
             },

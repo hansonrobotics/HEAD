@@ -8,11 +8,18 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 VERSION = 'v1.1'
-key='AAAAB3NzaC'
+
+def get_default_username():
+    import subprocess
+    user = subprocess.check_output('id -nu', shell=True).strip()
+    host = subprocess.check_output('hostid', shell=True).strip()
+    return '{}@{}'.format(user, host)
 
 class Client(cmd.Cmd, object):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, username, key, *args, **kwargs):
         super(Client, self).__init__(*args, **kwargs)
+        self.user = username
+        self.key = key
         self.prompt = '[me]: '
         self.botname = 'sophia'
         self.chatbot_ip = 'localhost'
@@ -20,14 +27,16 @@ class Client(cmd.Cmd, object):
         self.chatbot_url = 'http://{}:{}/{}'.format(
             self.chatbot_ip, self.chatbot_port, VERSION)
         self.lang = 'en'
-        self.user = 'client'
         self.session = None
         self.last_response = None
-        self.do_conn()
+        if self.ping():
+            self.do_conn()
+        else:
+            self.stdout.write("Chatbot server is not responding. Server url {}\n".format(self.chatbot_url))
 
     def set_sid(self):
         params = {
-            "Auth": key,
+            "Auth": self.key,
             "botname": self.botname,
             "user": self.user
         }
@@ -42,20 +51,20 @@ class Client(cmd.Cmd, object):
                 self.stdout.flush()
                 time.sleep(1)
         if r is None:
-            self.stdout.write("Can't get session\n")
+            self.stdout.write("Can't get session\nPlease check the url {}\n".format(self.chatbot_url))
             return
         ret = r.json().get('ret')
         if r.status_code != 200:
             self.stdout.write("Request error: {}\n".format(r.status_code))
         self.session = r.json().get('sid')
-        self.stdout.write("New session {}\n".format(self.session))
+        self.stdout.write("Init session {}\n".format(self.session))
 
     def ask(self, question):
         params = {
             "question": "{}".format(question),
             "session": self.session,
             "lang": self.lang,
-            "Auth": key
+            "Auth": self.key
         }
         r = requests.get('{}/chat'.format(self.chatbot_url), params=params)
         ret = r.json().get('ret')
@@ -72,14 +81,14 @@ class Client(cmd.Cmd, object):
         return ret, response
 
     def list_chatbot(self):
-        params={'Auth':key, 'lang':self.lang, 'session': self.session}
+        params={'Auth':self.key, 'lang':self.lang, 'session': self.session}
         r = requests.get(
             '{}/chatbots'.format(self.chatbot_url), params=params)
         chatbots = r.json().get('response')
         return chatbots
 
     def list_chatbot_names(self):
-        params={'Auth':key, 'lang':self.lang, 'session': self.session}
+        params={'Auth':self.key, 'lang':self.lang, 'session': self.session}
         r = requests.get(
             '{}/bot_names'.format(self.chatbot_url), params=params)
         names = r.json().get('response')
@@ -142,7 +151,7 @@ class Client(cmd.Cmd, object):
                 self.stdout.write("Wrong conn argument\n")
                 self.help_conn()
                 return
-        self.stdout.write("Connecting.")
+        self.stdout.write("Connecting {}\n".format(self.chatbot_url))
         self.set_sid()
 
     def help_conn(self):
@@ -206,7 +215,7 @@ For example, port 8001
         try:
             params = {
                 "session":"{}".format(self.session),
-                'Auth':key
+                'Auth':self.key
             }
             r = requests.get(
                 '{}/reset_session'.format(self.chatbot_url), params=params)
@@ -224,7 +233,7 @@ For example, port 8001
         try:
             params = {
                 "weights": line,
-                "Auth": key,
+                "Auth": self.key,
                 "lang": self.lang,
                 "session": self.session
             }
@@ -253,7 +262,7 @@ For example, rw .2, .4, .5
         files = {'zipfile': open(line, 'rb')}
         params = {
             "user": self.user,
-            "Auth": key,
+            "Auth": self.key,
             "lang": 'en'
         }
         try:
@@ -289,6 +298,9 @@ Syntax: upload package
             self.stdout.write('pong')
         self.stdout.write('\n')
 
+    def help_ping(self):
+        self.stdout.write('Ping the server\n')
+
     def do_trace(self, line):
         if self.last_response:
             trace = self.last_response.get('trace', None)
@@ -300,3 +312,88 @@ Syntax: upload package
     def help_trace(self):
         self.stdout.write('Print the trace of last reponse\n')
 
+    help_t = help_trace
+
+    def _rate(self, rate):
+        params = {
+            "session": self.session,
+            "rate": rate,
+            "index": -1,
+            "Auth": self.key
+        }
+        r = requests.get('{}/rate'.format(self.chatbot_url), params=params)
+        ret = r.json().get('ret')
+        response = r.json().get('response')
+        return ret, response
+
+    def do_gd(self, line):
+        ret, response = self._rate('good')
+        if ret:
+            self.stdout.write("[Thanks for rating]\n")
+        else:
+            self.stdout.write("[Rating failed]\n")
+
+    def help_gd(self):
+        self.stdout.write('Rate the last response as GOOD result\n')
+
+    def do_bd(self, line):
+        ret, response = self._rate('bad')
+        if ret:
+            self.stdout.write("[Thanks for rating]\n")
+        else:
+            self.stdout.write("[Rating failed]\n")
+
+    def help_bd(self):
+        self.stdout.write('Rate the last response as BAD result\n')
+
+    def do_dump(self, line):
+        params = {
+            "session": self.session,
+            "Auth": self.key
+        }
+        r = requests.get('{}/dump_session'.format(self.chatbot_url), params=params)
+        if r.status_code == 200:
+            fname = '{}.csv'.format(self.session)
+            with open(fname, 'w') as f:
+                f.write(r.text)
+            self.stdout.write('Done\n')
+            self.stdout.write('Dump to {}\n'.format(fname))
+        else:
+            self.stdout.write('Failed, error code {}\n'.format(r.status_code))
+
+    def help_dump(self):
+        self.stdout.write('Dump chat history\n')
+
+    do_d = do_dump
+    help_d = help_dump
+
+    def do_summary(self, line):
+        if line:
+            try:
+                lookback = int(line)
+            except Exception as ex:
+                self.stdout.write('{}\n'.format(ex))
+                return
+        else:
+            lookback = 7
+        params = {
+            "Auth": self.key,
+            "lookback": lookback
+        }
+        r = requests.get('{}/stats'.format(self.chatbot_url), params=params)
+        ret = r.json().get('ret')
+        response = r.json().get('response')
+        if ret:
+            self.stdout.write(
+                'Customers satisfaction degree {customers_satisfaction_degree:.4f}\n'\
+                'Number of records {number_of_records}\n'\
+                'Number of rates {number_of_rates}\n'\
+                'Number of good rates {number_of_good_rates}\n'\
+                'Number of bad rates {number_of_bad_rates}\n'.format(**response))
+        else:
+            self.stdout.write('{}\n'.format(response['err_msg']))
+
+    def help_summary(self):
+        self.stdout.write('Report the summary of the chat history\n')
+        self.stdout.write('Usage: summary [lookback days]\n')
+        self.stdout.write('lookback days: -1 means all\n')

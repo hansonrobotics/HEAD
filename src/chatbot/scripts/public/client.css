@@ -1,15 +1,14 @@
 body{
-    margin:0;
-    padding:0;
     background-color:#131415;
 }
 
 .chat-position{
     position:absolute;
     display:block;
+    top:0px;
     left:50%;
-    height:100%;
     width:1000px;
+    height:100%;
     margin-left:-500px;
     background-color:#333;
     color:#f0f0f0;
@@ -17,11 +16,11 @@ body{
 }
 .chat-position > input{
     position:absolute;
+    display:block;
     bottom:0;
-    left:0;
+    width:1000px;
     border: solid #333;
     border-width: 30px;
-    width:1000px;
     padding: 10px 20px 10px 20px;
     background-color:#484444;
     font:inherit;
@@ -30,29 +29,38 @@ body{
 
 .chat-position > .chat-content{
     position:absolute;
-    display:block;
-    bottom:0;
-    left:0;
-    height:inherit;
-    width:940px;
+    top:0;
+    bottom:104px;
+    width:955px;
+    overflow-y:scroll;
+    overflow-x:initial;
     line-height:30px;
-    overflow-y:hidden;
-}
-
-.chat-position > .chat-content > .content{
-    position:absolute;
-    bottom:0;
-    padding: 0 30px 100px 30px;
+    padding: 30px 30px 0 30px;
 }
 
 .chat-position > .chat-content > br{
     line-height: 300%;
 }
 
-.chat-position > .chat-content > .content > .error{
+.chat-position > .chat-content > .error{
     color:#ffaaaa;
 }
 
-.chat-position > .chat-content > .content > .user{
+.chat-position > .chat-content > .user{
     color:#ddbbaa;
 }
+
+/*
+::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background: #808080;
+    border: 0px none #ffffff;
+    border-radius: 00px;
+}*/

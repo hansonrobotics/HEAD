@@ -11,8 +11,9 @@ to a Windows-style INI file with the following format:
     he = she
     she = he
     # and so on...
-
-    # The 'person' section contains the substitutions performed by the
+    # Comments that follow contradict AIML 1.0 person and person2 definitions, which were swapped for AIML 2.0
+    #
+    # The person section contains the substitutions performed by the
     # <person> AIML tag, which swaps 1st and 2nd person pronouns.
     [person]
     I = you

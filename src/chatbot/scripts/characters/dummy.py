@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from server.character import Character
+from chatbot.server.character import Character
 import random
 
 NO_ANSWER = {

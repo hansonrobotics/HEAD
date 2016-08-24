@@ -9,11 +9,15 @@ set -e
 
 show_help() {
 cat << EOF
-Usage: $0 [--cmt] [--oc]
+Usage: $0 [--cmt] [--oc] [--sa]
   --cmt
     Run CMT based face tracking
   --oc
     Run OpenCog based chatbot and behavior tree
+  --sa
+    Enable OpenCog NLP sentiment analysis, should run with --oc
+  --st
+    Enable saliency tracking.
 EOF
 }
 
@@ -26,6 +30,14 @@ while [[ $# > 0 ]]; do
         --oc)
             export OC_CHATBOT=1
             export OC_BTREE=1
+            shift
+            ;;
+        --sa)
+            export OC_SA=1
+            shift
+            ;;
+        --st)
+            export ENABLE_SALIENCY_TRACKING=1
             shift
             ;;
         --help|-h)
@@ -53,7 +65,7 @@ export OC_LOG_LEVEL=info        # error, warn, info, debug and fine
 source $HR_WORKSPACE/$MAJOR_PROJECT/devel/setup.bash
 echo HR_WORKSPACE=$HR_WORKSPACE
 
-if [[ $(tmux ls) == ${NAME}* ]]; then
+if [[ $(tmux ls 2>/dev/null) == ${NAME}* ]]; then
     tmux kill-session -t $NAME
     echo "Killed session $NAME"
 fi
@@ -74,6 +86,10 @@ if [[ $OC_CHATBOT == 1 ]]; then
       tar zxf /tmp/aiml.tar.gz -C ~/.hr/cache
       rm /tmp/aiml.tar.gz
     fi
+fi
+
+if [[ $ENABLE_SALIENCY_TRACKING == 1 ]]; then
+    ros_args="$ros_args saliency_tracking:=true"
 fi
 
 echo "ROS launch args \"${ros_args}\""

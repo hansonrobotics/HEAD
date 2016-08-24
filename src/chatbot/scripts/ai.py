@@ -12,6 +12,7 @@ from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
+from chatbot.client import get_default_username
 
 logger = logging.getLogger('hr.chatbot.ai')
 VERSION = 'v1.1'
@@ -19,9 +20,9 @@ key='AAAAB3NzaC'
 
 class Chatbot():
   def __init__(self):
-    self.chatbot_url = 'http://localhost:8001'
+    self.chatbot_url = rospy.get_param('chatbot_url', 'http://localhost:8001')
     self.botname = rospy.get_param('botname', 'sophia')
-    self.user = 'hr'
+    self.user = get_default_username()
     while not self.ping():
         logger.info("Ping server")
         time.sleep(1)
@@ -43,7 +44,7 @@ class Chatbot():
 
     rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
     rospy.Subscriber('speech_events', String, self._speech_event_callback)
-    self.tts_ctrl_pub = rospy.Publisher('tts_control', String)
+    self.tts_ctrl_pub = rospy.Publisher('tts_control', String, queue_size=1)
 
     self._response_publisher = rospy.Publisher(
         'chatbot_responses', String, queue_size=1)
@@ -210,7 +211,7 @@ class Chatbot():
     return config
 
 if __name__ == '__main__':
-  rospy.init_node('chatbot_en')
+  rospy.init_node('chatbot')
   bot = Chatbot()
   from rospkg import RosPack
   rp = RosPack()

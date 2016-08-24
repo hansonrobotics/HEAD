@@ -6,11 +6,11 @@
 
 .app-frames li {
     padding: 10px 5px;
-    border-bottom: 1px solid #4E5D6C;
+    border-bottom: 1px solid #323F48;
 }
 
 .app-frames li.active {
-    background-color: #3C546B;
+    background-color: #323f48;
 }
 
 .app-animation-edit {
@@ -29,8 +29,12 @@ button.app-animation {
     cursor: pointer;
 }
 
-.app-controls {
+.animation-controls {
     margin-top: 10px;
+}
+
+.animation-controls .btn {
+    margin-bottom: 5px;
 }
 
 .app-animations-column,

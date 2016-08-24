@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h4>Event sequence</h4>
+        <h2>Event sequence</h2>
         <ul class="app-performance-queue list-group">
             <li class="app-empty-notice list-group-item"><span class="label label-warning">empty</span></li>
         </ul>
@@ -14,7 +14,6 @@
 
         <li class="app-performance-template app-performance list-group-item">
             <span class="app-drag-handle pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>
-            <!--<span class="app-status-indicator"></span>-->
             <span class="app-name"></span>
             <div class="pull-right">
                 <span class="label label-primary">duration: <span class="app-duration"></span> sec</span>

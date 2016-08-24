@@ -7,6 +7,9 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 import atexit
 
+from threading import RLock
+sync = RLock()
+
 SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
@@ -18,8 +21,7 @@ CWD = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger('hr.chatbot.server.chatbot')
 
 from loader import load_characters
-DEFAULT_CHARACTER_PATH = os.path.join(CWD, 'characters')
-CHARACTER_PATH = os.environ.get('HR_CHARACTER_PATH', DEFAULT_CHARACTER_PATH)
+from config import CHARACTER_PATH
 CHARACTERS = load_characters(CHARACTER_PATH)
 
 def get_character(id, lang=None):
@@ -93,8 +95,8 @@ def set_weights(weights, lang, sid):
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
-from session import SessionManager
-session_manager = SessionManager()
+from session import ChatSessionManager
+session_manager = ChatSessionManager()
 MAX_CHAT_TRIES = 5
 NON_REPEAT = True
 def _ask_characters(characters, question, lang, sid):
@@ -127,6 +129,12 @@ def _ask_characters(characters, question, lang, sid):
             if random.random()<weight:
                 if not NON_REPEAT or sess.check(_question, answer, lang):
                     trace = _response.get('trace')
+                    if trace:
+                        for path in CHARACTER_PATH.split(','):
+                            path = path.strip()
+                            if not path: continue
+                            trace = [f.replace(path, '') for f in trace]
+                        _response['trace'] = trace
                     sess.add(_question, answer, AnsweredBy=c.name,
                             User=user, BotName=botname, Trace=trace)
                     return _response
@@ -192,6 +200,18 @@ def get_responding_characters(lang, sid):
 
     return responding_characters
 
+def rate_answer(sid, idx, rate):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        logger.error("Session doesn't exist")
+        return False
+    try:
+        return sess.rate(rate, idx)
+    except Exception as ex:
+        logger.error("Rate error: {}".format(ex))
+        return False
+    return True
+
 def ask(question, lang, sid):
     """
     return (response dict, return code)
@@ -241,12 +261,25 @@ def ask(question, lang, sid):
         return response, NO_PATTERN_MATCH
 
 def dump_history():
-    session_manager.dump()
+    return session_manager.dump_all()
+
+def dump_session(sid):
+    return session_manager.dump(sid)
+
+def reload_characters():
+    global CHARACTERS
+    with sync:
+        logger.info("Reloading")
+        CHARACTERS = load_characters(CHARACTER_PATH)
 
 atexit.register(dump_history)
 
 if __name__ == '__main__':
-    sid = session_manager.start_session()
-    for character in CHARACTERS:
-        print ask('what is your name', 'en', sid)
-
+    import logging
+    logging.basicConfig()
+    logging.getLogger().setLevel(logging.DEBUG)
+    sid = session_manager.start_session('test')
+    sess = session_manager.get_session(sid)
+    sess.sdata.botname = 'sophia'
+    sess.sdata.user = 'test'
+    print ask('what is your name', 'en', sid)

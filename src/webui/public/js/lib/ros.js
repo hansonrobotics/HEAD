@@ -239,6 +239,11 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                     name: '/' + api.config.robot + '/tts_control',
                     messageType: 'std_msgs/String'
                 }),
+                listen_node_input: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/nodes/listen/input',
+                    messageType: 'std_msgs/String'
+                })
             };
         },
         initServices: function () {

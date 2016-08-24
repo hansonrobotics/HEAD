@@ -3,7 +3,8 @@
     <arg name="basedir" default="." />
     <arg name="name" default="robot"/>
     <arg name="pi_vision" default="true"/>
-    <arg name="oc_chatbot" default="False"/>
+    <arg name="oc_chatbot" default="false"/>
+    <arg name="saliency_tracking" default="false" />
     <param name="robot_name" value="$(arg name)" />
 
     <group ns="$(arg name)">
@@ -36,7 +37,9 @@
     </include -->
 
     <!-- Perception -->
-    <include file="$(arg basedir)/perception.launch" />
+    <include file="$(arg basedir)/perception.launch">
+        <arg name="saliency_tracking" value="$(arg saliency_tracking)" />
+    </include>
 
     <!-- Web UI and rosbridge for webui -->
     <include file="$(find webui)/webui.launch" />

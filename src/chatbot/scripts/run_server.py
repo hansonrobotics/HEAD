@@ -4,8 +4,8 @@
 import os
 import logging
 import datetime as dt
-from chatbot.server.auth import requires_auth
-from chatbot.server.auth import check_auth, authenticate
+import json
+import shutil
 
 log_dir = os.environ.get('ROS_LOG_DIR', os.path.expanduser('~/.hr/log'))
 if not os.path.isdir(log_dir):
@@ -28,17 +28,22 @@ root_logger.addHandler(sh)
 
 import sys
 CWD = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, os.path.join(CWD, '..'))
-from flask import Flask, request, Response, send_from_directory
-
-import json
-import shutil
+sys.path.insert(0, os.path.join(CWD, '../src'))
 
 if 'HR_CHARACTER_PATH' not in os.environ:
     os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
 
-from chatbot.server.chatbot_agent import (ask, list_character, session_manager, set_weights,
-            dump_history, add_character, list_character_names)
+from chatbot.server.auth import requires_auth
+from chatbot.server.auth import check_auth, authenticate
+
+from flask import Flask, request, Response, send_from_directory
+
+from chatbot.server.chatbot_agent import (
+        ask, list_character, session_manager, set_weights,
+        dump_history, dump_session, add_character, list_character_names,
+        rate_answer)
+from chatbot.server.session import HISTORY_DIR
+from chatbot.stats import history_stats
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
@@ -83,6 +88,18 @@ def _batch_chat():
         response, ret = ask(str(question), lang, session)
         responses.append((idx, response, ret))
     return Response(json_encode({'ret': 0, 'response': responses}),
+        mimetype="application/json")
+
+@app.route(ROOT+'/rate', methods=['GET'])
+@requires_auth
+def _rate():
+    data = request.args
+    response = ''
+    try:
+        ret = rate_answer(data.get('session'), int(data.get('index')), data.get('rate'))
+    except Exception as ex:
+        response = ex.message
+    return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
 @app.route(ROOT+'/chatbots', methods=['GET'])
@@ -215,9 +232,39 @@ def _dump_history():
         }),
         mimetype="application/json")
 
+@app.route(ROOT+'/dump_session', methods=['GET'])
+@requires_auth
+def _dump_session():
+    try:
+        data = request.args
+        sid = data.get('session')
+        fname = dump_session(sid)
+        if fname:
+            return send_from_directory(os.path.dirname(fname), os.path.basename(fname))
+        else:
+            return '', 404
+    except Exception as ex:
+        logger.error("Dump error {}".format(ex))
+        return '', 500
+
 @app.route(ROOT+'/ping', methods=['GET'])
 def _ping():
     return Response(json_encode({'ret': 0, 'response': 'pong'}),
+        mimetype="application/json")
+
+@app.route(ROOT+'/stats', methods=['GET'])
+@requires_auth
+def _stats():
+    try:
+        data = request.args
+        days = int(data.get('lookback', 7))
+        dump_history()
+        response = history_stats(HISTORY_DIR, days)
+        ret = True
+    except Exception as ex:
+        ret, response = False, {'err_msg' : str(ex)}
+        logger.error(ex)
+    return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 
 if __name__ == '__main__':
@@ -225,4 +272,8 @@ if __name__ == '__main__':
         port = int(sys.argv[1])
     else:
         port = 8001
+    if 'HR_CHATBOT_SERVER_EXT_PATH' in os.environ:
+        sys.path.insert(0, os.path.expanduser(os.environ['HR_CHATBOT_SERVER_EXT_PATH']))
+        import ext
+        ext.load(app, ROOT)
     app.run(host='0.0.0.0', debug=False, use_reloader=False, port=port)
