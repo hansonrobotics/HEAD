@@ -2,13 +2,13 @@
     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
                href="#collapse" aria-expanded="false" aria-controls="collapse">
     <div class="panel-heading" role="tab" id="heading">
-        <h4 class="panel-title">
+        <h2 class="panel-title">
                 <%- node %>
                 <div class="pull-right">
                     <span id="warning_count" class="label label-warning"></span>
                     <span id="error_count" class="label label-danger"></span>
                 </div>
-        </h4>
+        </h2>
     </div>
     </a>
     <div id="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">

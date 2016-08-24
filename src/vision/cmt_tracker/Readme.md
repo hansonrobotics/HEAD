@@ -174,6 +174,50 @@ click on train; Once it's finished with training it would revert back to the liv
 
 # Configuration 
 
+The recognize.yaml in params holds the confidence values and is loaded during configuration. It is made having made changes in rqt_reconfigure
+
+    rosrun dynamic_reconfigure dynparam dump /camera/face_recognizer recognize.yaml
+
+Due to https://github.com/ros-visualization/rqt_common_plugins/issues/162 ; The output of the avoid would be like: 
+
+    !!python/object/new:dynamic_reconfigure.encoding.Config
+    dictitems:
+      check_again: 200
+      confidence: 0.6
+      groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+        dictitems:
+          check_again: 200
+          confidence: 0.6
+          groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+            state: []
+          id: 0
+          image_number: 20
+          name: Default
+          num_positive: 4
+          parameters: !!python/object/new:dynamic_reconfigure.encoding.Config
+            state: []
+          parent: 0
+          sample_size: 10
+          state: true
+          type: ''
+        state: []
+      image_number: 20
+      num_positive: 4
+      sample_size: 10
+    state: []
+
+One has to remove groups tab to make the final output like: 
+
+    !!python/object/new:dynamic_reconfigure.encoding.Config
+    dictitems:
+      check_again: 200
+      confidence: 0.6
+      image_number: 20
+      num_positive: 4
+      sample_size: 10
+    state: []
+
+One can modify the confidence level here and the changes would persist across multiple instances. 
 
 # Urgent TODO's
 

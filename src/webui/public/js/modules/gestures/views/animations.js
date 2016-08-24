@@ -57,6 +57,7 @@ define(["marionette", "./animation", 'tpl!./templates/animations.tpl', 'entities
                     min: this.config.speed.min * 100,
                     max: this.config.speed.max * 100,
                     value: this.config.speed.current * 100,
+                    animate: true,
                     change: function (e, ui) {
                         var speed = ui.value / 100.0;
 
@@ -71,6 +72,7 @@ define(["marionette", "./animation", 'tpl!./templates/animations.tpl', 'entities
                 // init magnitude slider
                 this.ui.magnitudeSlider.slider({
                     range: "min",
+                    animate: true,
                     min: this.config.magnitude.min * 100,
                     max: this.config.magnitude.max * 100,
                     value: this.config.magnitude.current * 100,

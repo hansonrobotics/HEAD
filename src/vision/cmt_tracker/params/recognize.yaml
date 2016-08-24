@@ -1,0 +1,8 @@
+!!python/object/new:dynamic_reconfigure.encoding.Config
+dictitems:
+  check_again: 200
+  confidence: 0.85
+  image_number: 20
+  num_positive: 4
+  sample_size: 10
+state: []

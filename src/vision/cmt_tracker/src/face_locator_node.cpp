@@ -1,4 +1,5 @@
 #include "face_locator_node.h"
+
 namespace face_detect {
 
 Face_Detection::Face_Detection()
@@ -12,6 +13,14 @@ Face_Detection::Face_Detection()
   nh_.getParam("filtered_face_locations", publish_topic);
   image_sub_ = it_.subscribeCamera(subscribe_topic, 1,&face_detect::Face_Detection::imageCb, this);
 
+  nh_.getParam("clandmark",clandmark_xml);
+  flandmarks = clandmark::Flandmark::getInstanceOf(clandmark_xml.c_str());
+
+  	if (!flandmarks)
+	{
+		std::cerr << "Error Loading clandmark classifier" << std::endl;
+
+	}
   faces_locations = nh_.advertise<cmt_tracker_msgs::Objects>(publish_topic, 10);
 
   if ( !face_cascade.load(cascade_file_face ))
@@ -125,9 +134,9 @@ cameramodel.fromCameraInfo(camerainfo);
 
     //Now let's filter
     merged_message cv_message = returnNoneOverlappingCV(dlib_faces,opencv_faces);
-    for(int i= 0; i < cv_message.message.objects.size(); i++)
+    for(int i= 0; i < cv_message.notoverlapedCV.size(); i++)
     {
-        cmt_face_locations.objects.push_back(cv_message.message.objects[i]);
+        cmt_face_locations.objects.push_back(cv_face_locations.objects[cv_message.notoverlapedCV[i]]);
     }
     for(int i= 0; i < cv_message.overlapedDlibCV.size(); i++)
     {
@@ -231,31 +240,89 @@ cameramodel.fromCameraInfo(camerainfo);
         cmt_face_locations.objects.push_back(face_description);
      }
   }
+  cimg_library::CImg<unsigned char> * Face_Detection::cvImgToCImg(cv::Mat &cvImg)
+  {
+	cimg_library::CImg<unsigned char> * result = new cimg_library::CImg<unsigned char>(cvImg.cols, cvImg.rows);
+
+	for (int x = 0; x < cvImg.cols; ++x)
+		for (int y = 0; y < cvImg.rows; ++y)
+			(*result)(x, y) = cvImg.at<uchar>(y, x);
+
+	return result;
+  }
+  cv::Mat & Face_Detection::CImgtoCvImg(cv::Mat &result, cimg_library::CImg<unsigned char> *img)
+  {
+	result = cv::Mat(img->height(), img->width(), CV_8U);
+
+	for (int x=0; x < result.cols; ++x)
+		for (int y=0; y < result.rows; ++y)
+			result.at<uchar>(y, x) = (*img)(x, y);
+
+	return result;
+  }
   void Face_Detection::opencv_detector(cv::Mat opencv_img)
   {
+    std::cout<<"Reaches Here"<<std::endl;
+    cv_face_locations.objects.clear();
     cv::Mat frame_gray;
+    cimg_library::CImg<unsigned char>* frm_gray = 0x0; //= new cimg_library::CImg<unsigned char>();
     cv::cvtColor(opencv_img, frame_gray, cv::COLOR_BGR2GRAY);
     cv::equalizeHist( frame_gray, frame_gray );
 
+    frm_gray = cvImgToCImg(frame_gray);
+
+    int bbox[8];
+    clandmark::fl_double_t *landmarks;
     face_cascade.detectMultiScale( frame_gray, faces, 1.1, 3, 0 | cv::CASCADE_SCALE_IMAGE, cv::Size(40, 40) );
     //TODO: namespace mapping to the system.
 
     for (size_t i = 0; i < faces.size(); i++)
     {
-//        cmt_tracker_msgs::Object face_description;
-//        face_description.object.x_offset = faces[i].x;
-//        face_description.object.y_offset = faces[i].y;
-//
-//        face_description.object.height = faces[i].height;
-//        face_description.object.width = faces[i].width;
-        opencv_faces.push_back(cv::Rect(faces[i].x,faces[i].y,faces[i].width,faces[i].height));
+        bbox[0] = faces[i].x;
+		bbox[1] = faces[i].y;
+		bbox[2] = faces[i].x + faces[i].width;
+		bbox[3] = faces[i].y;
+		bbox[4] = faces[i].x + faces[i].width;
+		bbox[5] = faces[i].y + faces[i].height;
+		bbox[6] = faces[i].x;
+		bbox[7] = faces[i].y + faces[i].height;
+		flandmarks->detect(frm_gray, bbox);
+
+		landmarks = flandmarks->getLandmarks();
+
+		opencv_faces.push_back(cv::Rect(faces[i].x,faces[i].y,faces[i].width,faces[i].height));
+
+        cmt_tracker_msgs::Object face_description;
+
+        face_description.header.stamp = ros::Time::now();
+
+        face_description.object.x_offset = faces[i].x;
+        face_description.object.y_offset = faces[i].y;
+
+        face_description.object.height = faces[i].height;
+        face_description.object.width = faces[i].width;
+        opencv_apps::Point2D pt;
+
+        //TODO this has to mimick the way the dlib values come pack. That is fill the others to the value
+        pt.x = landmarks[0];
+        pt.y = landmarks[1];
+        face_description.feature_point.points.push_back(pt);
+        for (int j=2; j< 2*flandmarks->getLandmarksCount(); j+=2)
+        {
+        pt.x = landmarks[j];
+        pt.y = landmarks[j+1];
+        face_description.feature_point.points.push_back(pt);
+        }
+
+        face_description.tool_used_for_detection.data = "opencv";
 //        face_description.object.id.data = counter;
 //        counter++;
 
 //        face_description.obj_states.data = "Neutral";
 
-        //cv_face_locations.objects.push_back(face_description);
+        cv_face_locations.objects.push_back(face_description);
     }
+    delete frm_gray;
   }
 
 
@@ -345,7 +412,7 @@ merged_message returnNoneOverlappingCV(std::vector<cv::Rect> dlib_locations, std
 {
 //This function returns non overlapped Rects for the opencv to be published
 merged_message message;
-std::vector<cv::Rect> non_overlaped_rects;
+std::vector<int> non_overlaped_rects;
 std::vector<int> string_val;
   for (int i = 0; i < opencv_locs.size(); i++)
     {
@@ -368,11 +435,12 @@ std::vector<int> string_val;
     }
 
     if(!overlap)
-    non_overlaped_rects.push_back(opencv_locs[i]);
+    non_overlaped_rects.push_back(i);
 
     }
-    message.message = convert(non_overlaped_rects);
+    //message.message = convert(non_overlaped_rects);
     message.overlapedDlibCV = string_val;
+    message.notoverlapedCV = non_overlaped_rects;
     return message;
 }
 

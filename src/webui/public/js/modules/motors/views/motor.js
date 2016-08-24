@@ -32,11 +32,13 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                 $(this.ui.slider).slider({
                     disabled: !!this.options.monitoring,
                     range: "min",
+                    animate: true,
                     value: this.model.getDegrees('default'),
                     min: this.model.getDegrees('min'),
                     max: this.model.getDegrees('max'),
                     slide: function (e, ui) {
-                        self.model.setDegrees('value', ui.value)
+                        self.model.setDegrees('value', ui.value);
+                        self.updateLabels();
                     }
                 });
 
@@ -60,17 +62,20 @@ define(["marionette", "tpl!./templates/motor.tpl", 'jquery', 'jquery-ui'],
                     return data;
             },
             modelChanged: function () {
-                this.ui.value.text(this.model.getDegrees('value') + '°');
-                this.ui.sliderMinVal.text(this.model.getDegrees('min') + '°');
-                this.ui.sliderMaxVal.text(this.model.getDegrees('max') + '°');
-                this.ui.labelLeft.text(this.model.get('labelleft') || this.model.get('name'));
-                this.ui.labelright.text(this.model.get('labelright'));
-                $(this.ui.slider).slider('value', this.model.getDegrees('value') || 0);
+                this.updateLabels();
+                this.ui.slider.slider('value', this.model.getDegrees('value'));
 
                 if (this.options['monitoring'])
                     this.updateState();
 
                 this.selected(this.model.selected());
+            },
+            updateLabels: function () {
+                this.ui.value.text(this.model.getDegrees('value') + '°');
+                this.ui.sliderMinVal.text(this.model.getDegrees('min') + '°');
+                this.ui.sliderMaxVal.text(this.model.getDegrees('max') + '°');
+                this.ui.labelLeft.text(this.model.get('labelleft') || this.model.get('name'));
+                this.ui.labelright.text(this.model.get('labelright'));
             },
             updateState: function () {
                 var self = this,

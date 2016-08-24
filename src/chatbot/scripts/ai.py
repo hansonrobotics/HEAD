@@ -1,19 +1,18 @@
 #!/usr/bin/env python
 
-import aiml
 import rospy
 import os
 import logging
 import requests
 import json
+import time
 
-from polarity import Polarity
+from chatbot.polarity import Polarity
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
-import uuid
-import time
+from chatbot.client import get_default_username
 
 logger = logging.getLogger('hr.chatbot.ai')
 VERSION = 'v1.1'
@@ -21,9 +20,9 @@ key='AAAAB3NzaC'
 
 class Chatbot():
   def __init__(self):
-    self.chatbot_url = 'http://localhost:8001'
+    self.chatbot_url = rospy.get_param('chatbot_url', 'http://localhost:8001')
     self.botname = rospy.get_param('botname', 'sophia')
-    self.user = 'hr'
+    self.user = get_default_username()
     while not self.ping():
         logger.info("Ping server")
         time.sleep(1)
@@ -45,7 +44,7 @@ class Chatbot():
 
     rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
     rospy.Subscriber('speech_events', String, self._speech_event_callback)
-    self.tts_ctrl_pub = rospy.Publisher('tts_control', String)
+    self.tts_ctrl_pub = rospy.Publisher('tts_control', String, queue_size=1)
 
     self._response_publisher = rospy.Publisher(
         'chatbot_responses', String, queue_size=1)
@@ -212,10 +211,12 @@ class Chatbot():
     return config
 
 if __name__ == '__main__':
-  rospy.init_node('chatbot_en')
+  rospy.init_node('chatbot')
   bot = Chatbot()
-  current = os.path.dirname(os.path.realpath(__file__))
-  sent3_file = os.path.join(current, "../aiml/senticnet3.props.csv")
+  from rospkg import RosPack
+  rp = RosPack()
+  data_dir = os.path.join(rp.get_path('chatbot'), 'scripts/aiml')
+  sent3_file = os.path.join(data_dir, "senticnet3.props.csv")
   bot.polarity.load_sentiment_csv(sent3_file)
   Server(ChatbotConfig, bot.reconfig)
   rospy.spin()

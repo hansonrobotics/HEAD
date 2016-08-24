@@ -19,7 +19,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h4>Hardware</h4>
+        <h2>Hardware</h2>
     </div>
 </div>
 

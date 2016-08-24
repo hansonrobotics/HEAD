@@ -9,11 +9,15 @@ set -e
 
 show_help() {
 cat << EOF
-Usage: $0 [--cmt] [--oc]
+Usage: $0 [--cmt] [--oc] [--sa]
   --cmt
     Run CMT based face tracking
   --oc
     Run OpenCog based chatbot and behavior tree
+  --sa
+    Enable OpenCog NLP sentiment analysis, should run with --oc
+  --st
+    Enable saliency tracking.
 EOF
 }
 
@@ -26,6 +30,14 @@ while [[ $# > 0 ]]; do
         --oc)
             export OC_CHATBOT=1
             export OC_BTREE=1
+            shift
+            ;;
+        --sa)
+            export OC_SA=1
+            shift
+            ;;
+        --st)
+            export ENABLE_SALIENCY_TRACKING=1
             shift
             ;;
         --help|-h)
@@ -53,7 +65,7 @@ export OC_LOG_LEVEL=info        # error, warn, info, debug and fine
 source $HR_WORKSPACE/$MAJOR_PROJECT/devel/setup.bash
 echo HR_WORKSPACE=$HR_WORKSPACE
 
-if [[ $(tmux ls) == ${NAME}* ]]; then
+if [[ $(tmux ls 2>/dev/null) == ${NAME}* ]]; then
     tmux kill-session -t $NAME
     echo "Killed session $NAME"
 fi
@@ -76,6 +88,10 @@ if [[ $OC_CHATBOT == 1 ]]; then
     fi
 fi
 
+if [[ $ENABLE_SALIENCY_TRACKING == 1 ]]; then
+    ros_args="$ros_args saliency_tracking:=true"
+fi
+
 echo "ROS launch args \"${ros_args}\""
 
 tmux new-session -n 'roscore'  -d -s $NAME "roslaunch ${LAUNCH_DIR}/robot.launch ${ros_args}; $SHELL"
@@ -94,7 +110,9 @@ tmux new-window -n 'webui' "python $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/__
 python $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/__init__.py -p 8000; $SHELL"
 
 tmux new-window -n 'blender' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/blender_api && blender -y Sophia.blend -P autostart.py; $SHELL"
-tmux new-window -n 'chat_server' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/chatbot/src/server && python run.py; $SHELL"
+if [[ $OC_CHATBOT != 1 ]]; then
+    tmux new-window -n 'chat_server' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/chatbot/scripts && python run_server.py; $SHELL"
+fi
 tmux new-window -n 'marytts' "~/.hr/tts/marytts/marytts-5.1.2/bin/marytts-server; $SHELL"
 
 # btree needs blender to be ready
@@ -105,6 +123,7 @@ sleep 8
 if [[ $OC_CHATBOT == 1 ]]; then
   tmux new-window -n 'relex_server' "cd $HR_WORKSPACE/opencog/relex/ && bash opencog-server.sh; $SHELL"
   tmux new-window -n 'tel' "while true; do nc -zv localhost 17020 && break; sleep 1; done; expect $BASEDIR/load_scm.exp; $SHELL"
+  tmux new-window -n 'oc-ctrl' "roslaunch opencog_control psi.launch; $SHELL"
   tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree-psi.scm; $SHELL"
 else
   tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"

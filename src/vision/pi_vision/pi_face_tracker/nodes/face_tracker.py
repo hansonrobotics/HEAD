@@ -38,7 +38,7 @@ import cv2
 import sys
 from sensor_msgs.msg import RegionOfInterest, Image
 from math import *
-from ros2opencv import ROS2OpenCV
+from ros2opencv.ros2opencv import ROS2OpenCV
 from pi_face_tracker.srv import *
 from pi_face_tracker.msg import Faces
 from pi_face_tracker.msg import Face

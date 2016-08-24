@@ -53,7 +53,7 @@ set(tracker_plugin_INCLUDE_DIRECTORIES
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-catkin_python_setup()
+# catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -149,7 +149,7 @@ add_library(gazr SHARED
             src/find_eye_center.cpp
             src/helpers.cpp)
 add_executable(face_locator_node src/face_locator_node.cpp)
- target_link_libraries(face_locator_node dlib ${catkin_LIBRARIES} ${OpenCV_LIBS} gazr )
+ target_link_libraries(face_locator_node dlib ${catkin_LIBRARIES} ${OpenCV_LIBS} gazr flandmark clandmark)
 
 add_executable(cmt_tracker_node src/cmt_tracker_node.cpp)
 target_link_libraries(cmt_tracker_node dlib ${catkin_LIBRARIES} ${OpenCV_LIBS} cmt)

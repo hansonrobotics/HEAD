@@ -270,7 +270,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                         this.speechPaused = true;
                         this.disableSpeech();
                     }
-                } else if ((msg.data != 'start') && this.speechPaused) {
+                } else if ((msg.data == 'stop') && this.speechPaused) {
                     this.enableSpeech();
                 }
             },
@@ -422,6 +422,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                     } else {
                         console.log('webspeech api not supported');
                         this.speechRecognition = null;
+                        return;
                     }
 
                     this.speechRecognition.lang = this.language == 'zh' ? 'cmn-Hans-CN' : 'en-US';
@@ -465,13 +466,18 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                     };
                     this.speechRecognition.onend = function () {
                         if (self.speechEnabled) {
-                            var timeSinceLastStart = new Date().getTime() - self.speechStarted;
-                            if (timeSinceLastStart < 1000) {
-                                setTimeout(function () {
+                            if (self.speechRecognition) {
+                                var timeSinceLastStart = new Date().getTime() - self.speechStarted;
+
+                                if (timeSinceLastStart < 1000) {
+                                    setTimeout(function () {
+                                        self.speechRecognition.start();
+                                    }, 1000);
+                                } else {
                                     self.speechRecognition.start();
-                                }, 1000);
+                                }
                             } else {
-                                self.speechRecognition.start();
+                                self.enableWebspeech();
                             }
                         } else {
                             console.log('end of speech');

@@ -4,9 +4,9 @@
 export BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 eval $($BASEDIR/hrtool -p|grep -E ^HR_WORKSPACE=)
 export HR_WORKSPACE=$HR_WORKSPACE
-export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
+
 export HR_PREFIX=/opt/hansonrobotics
-export HR_CACHE=~/.hr/cache
+
 export VISION_TOOL_PREFIX=$HR_PREFIX/vision
 export DLIB_DIR=$VISION_TOOL_PREFIX/dlib
 export TORCH_DIR=$VISION_TOOL_PREFIX/torch
@@ -14,18 +14,22 @@ export OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 export CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 export EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
 export ROS_LOG_DIR="$HOME/.hr/log"
-export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
+
 export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-19.0/dist
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src
 source $TORCH_DIR/install/bin/torch-activate
 source $HR_WORKSPACE/HEAD/devel/setup.bash
 export DLIB_PATH=$DLIB_DIR/dlib-19.0
-
+export CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 cd $HR_WORKSPACE/$PROJECT
+
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/build/libclandmark
 
 include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 include_path=$(printf "%s:" "${include_dirs[@]}")
-export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$include_path
+
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/3rd_party/CImg-1.5.6/:$CLANDMARK_DIR/3rd_party/rapidxml-1.13/:$CLANDMARK_DIR/build/:$CLANDMARK_DIR/libclandmark/:$include_path
+export LIBRARY_PATH=$LIBRARY_PATH:$CLANDMARK_DIR/build/:$CLANDMARK_DIR/libclandmark:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/build/libclandmark
 
 export tool="$1"
 if [[ -z $tool ]]; then

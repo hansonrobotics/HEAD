@@ -30,7 +30,8 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
         setTitle: function (title) {
             this.ui.title.text(title);
         },
-        reportClicked: function () {
+        reportClicked: function (e) {
+            e.preventDefault();
             bootbox.prompt({
                 title: "Describe the problem you have found",
                 inputType: 'textarea',
