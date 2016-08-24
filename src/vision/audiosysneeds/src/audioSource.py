@@ -6,7 +6,8 @@ import math
 import struct
 import time
 import numpy as np
-from std_msgs.msg import String
+from std_msgs.msg import Float32
+from audiosysneeds.msg import audio
 
 '''
    The main purpose of this Node is to publish Input Audio(Numpy array) and some of its features such as Decibel and
@@ -55,8 +56,8 @@ def suddenChanges(dd):
 if __name__ == '__main__':
     d = deque()
     try:
-        Vsource = rospy.Publisher('/opencog/AudioFeature', String, queue_size=1)
-        Vchange = rospy.Publisher('/opencog/suddenchange', String, queue_size=1)
+        Vsource = rospy.Publisher('/opencog/AudioFeature', Float32, queue_size=1)
+        Vchange = rospy.Publisher('/opencog/suddenchange', Float32, queue_size=1)
         rospy.init_node('AudioFeature', anonymous=True)
         rate = rospy.Rate(5)
 
@@ -89,9 +90,13 @@ if __name__ == '__main__':
                     d.popleft();d.append(Decibel);
             loop = loop + 1
             Frequency=getFreq(AudioData)
-            feature= str(Decibel)+'_'+str(Frequency)
-            Vsource.publish(feature)
-            Vchange.publish(str(suddenChanges(d)))
+            msg = audio()
+            msg.Decibel = Decibel
+            msg.Frequency = Frequency
+            
+            #feature= (Decibel) #+'_'+(Frequency)
+            Vsource.publish(msg)
+            Vchange.publish(suddenChanges(d))
 
             rate.sleep()
     except rospy.ROSInterruptException as e:

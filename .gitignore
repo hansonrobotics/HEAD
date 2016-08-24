@@ -6,6 +6,7 @@
 /src/vision/face-analysis-sdk/
 /logs
 /scripts/env.sh
+/scripts/opencog.log
 /src/vision/images/
 !.gitignore
 !/src
@@ -19,5 +20,6 @@ build
 .idea
 *.pyc
 .catkin_tools
+.catkin_workspace
 *.swp
 logs
