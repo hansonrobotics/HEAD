@@ -241,7 +241,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 }
 
                 // setting min height height
-                height = Math.max(250, height - this.ui.footer.outerHeight())
+                height = Math.max(250, height - this.ui.footer.innerHeight());
                 this.ui.scrollbar.css('height', height).perfectScrollbar('update');
             },
             operatorModeSwitched: function () {

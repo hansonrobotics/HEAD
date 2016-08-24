@@ -153,14 +153,12 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
             toJSON: function () {
                 var json = Supermodel.Model.prototype.toJSON.call(this);
                 if (this.get('el')) delete json['el'];
-                if (this.get('el_settings')) delete json['el_settings'];
                 return json;
             },
             destroy: function () {
                 // remove an associated element
                 if (this.collection) this.collection.remove(this);
                 if (this.get('el')) $(this.get('el')).remove();
-                if (this.get('el_settings')) this.get('el_settings').destroy();
                 this.unset('id');
                 Supermodel.Model.prototype.destroy.call(this);
             },

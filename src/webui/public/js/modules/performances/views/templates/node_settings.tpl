@@ -22,7 +22,7 @@
 
         <div class="form-group" data-node-property="chatbot">
             <label>Chatbot</label>
-            <select class="app-chatbot-select" style="width: 100%;"></select>
+            <select class="app-chatbot-select"></select>
         </div>
 
         <div class="form-group" data-node-property="chat_timeout_mode">
