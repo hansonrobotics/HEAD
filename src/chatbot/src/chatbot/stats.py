@@ -31,7 +31,7 @@ def history_stats(history_dir, days):
         stats_csv = '{}/full_history.csv'.format(history_dir)
     else:
         stats_csv = '{}/last_{}_days.csv'.format(history_dir, days)
-    columns = [u'Datetime', u'User', u'BotName', u'AnsweredBy', u'Question', u'Answer', u'Trace']
+    columns = [u'Datetime', u'Revision', u'User', u'BotName', u'AnsweredBy', u'Question', u'Answer', u'Trace']
     df.to_csv(stats_csv, index=False, columns=columns)
     logger.info("Write statistic records to {}".format(stats_csv))
     records = len(df)
