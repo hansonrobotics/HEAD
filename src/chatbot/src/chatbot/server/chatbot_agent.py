@@ -24,7 +24,7 @@ logger = logging.getLogger('hr.chatbot.server.chatbot')
 from loader import load_characters
 from config import CHARACTER_PATH
 CHARACTERS = load_characters(CHARACTER_PATH)
-REVISION = None
+REVISION = os.environ.get('HR_CHATBOT_REVISION')
 
 def get_character(id, lang=None):
     for character in CHARACTERS:
