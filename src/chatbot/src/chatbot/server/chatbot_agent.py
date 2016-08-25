@@ -14,6 +14,7 @@ SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
 INVALID_SESSION=3
+INVALID_QUESTION=4
 
 useSOLR = True
 CWD = os.path.dirname(os.path.realpath(__file__))
@@ -222,6 +223,9 @@ def ask(question, lang, sid):
     if sess is None:
         return response, INVALID_SESSION
 
+    if not question or not question.strip():
+        return response, INVALID_QUESTION
+
     responding_characters = get_responding_characters(lang, sid)
     if not responding_characters:
         logger.error("Wrong characer name")
@@ -274,12 +278,3 @@ def reload_characters():
 
 atexit.register(dump_history)
 
-if __name__ == '__main__':
-    import logging
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.DEBUG)
-    sid = session_manager.start_session('test')
-    sess = session_manager.get_session(sid)
-    sess.sdata.botname = 'sophia'
-    sess.sdata.user = 'test'
-    print ask('what is your name', 'en', sid)
