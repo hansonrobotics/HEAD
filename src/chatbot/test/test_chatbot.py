@@ -108,6 +108,19 @@ class ChatbotTest(unittest.TestCase):
         session = session_manager.get_session(sid)
         self.assertIsNone(session)
 
+    def test_chat_agent(self):
+        from chatbot.server.chatbot_agent import session_manager, ask
+        sid = session_manager.start_session('test')
+        sess = session_manager.get_session(sid)
+        sess.sdata.botname = 'sophia'
+        sess.sdata.user = 'test'
+        response, ret = ask('what is your name', 'en', sid)
+        self.assertEqual(ret, 0)
+        response, ret = ask('', 'en', sid)
+        self.assertEqual(ret, 4)
+        response, ret = ask(None, 'en', sid)
+        self.assertEqual(ret, 4)
+
 if __name__ == '__main__':
     unittest.main()
 

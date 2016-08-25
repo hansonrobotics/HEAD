@@ -34,12 +34,19 @@ class ResponseCache(object):
 
     def check(self, question, answer, lang):
         if lang == 'zh':
+            logger.info("Don't check Chinese answer")
+            return True
+        if len(answer) < 50:
+            logger.info("Allow short repeat answer")
             return True
         if self._norm(answer) == self.last_answer:
+            logger.info("Last answer repeat")
             return False
         if not self.is_unique(answer):
+            logger.info("Non unique answer")
             return False
         if self.contain(question, answer):
+            logger.info("Repeat answer")
             return False
         return True
 
