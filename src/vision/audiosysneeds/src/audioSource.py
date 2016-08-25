@@ -7,7 +7,7 @@ import struct
 import time
 import numpy as np
 from std_msgs.msg import Float32
-from audiosysneeds.msg import audio
+#from audiosysneeds.msg import audio
 
 '''
    The main purpose of this Node is to publish Input Audio(Numpy array) and some of its features such as Decibel and
@@ -90,12 +90,12 @@ if __name__ == '__main__':
                     d.popleft();d.append(Decibel);
             loop = loop + 1
             Frequency=getFreq(AudioData)
-            msg = audio()
-            msg.Decibel = Decibel
-            msg.Frequency = Frequency
+            #msg = audio()
+            #msg.Decibel = Decibel
+            #msg.Frequency = Frequency
             
             #feature= (Decibel) #+'_'+(Frequency)
-            Vsource.publish(msg)
+            Vsource.publish(Decibel)
             Vchange.publish(suddenChanges(d))
 
             rate.sleep()

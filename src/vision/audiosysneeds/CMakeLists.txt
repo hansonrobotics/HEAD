@@ -4,12 +4,11 @@ project(audiosysneeds)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS 
+find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   image_transport
   roscpp
   rospy
-  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -46,11 +45,11 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
- add_message_files(
-   FILES
-   audio.msg
+# add_message_files(
+#   FILES
+#   Message1.msg
 #   Message2.msg
- )
+# )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -67,11 +66,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-   std_msgs
-   audiosysneeds  # Or other packages containing msgs
- )
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs  # Or other packages containing msgs
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -103,10 +101,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS 
-  LIBRARIES audiosysneeds
-  CATKIN_DEPENDS cv_bridge image_transport roscpp rospy message_runtime
-# DEPENDS system_lib
+#  INCLUDE_DIRS include
+#  LIBRARIES audiosysneeds
+#  CATKIN_DEPENDS cv_bridge image_transport roscpp rospy
+#  DEPENDS system_lib
 )
 
 ###########
@@ -157,7 +155,6 @@ include_directories(
 # )
 
 ## Mark executables and/or libraries for installation
-
 # install(TARGETS audiosysneeds audiosysneeds_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
@@ -165,16 +162,11 @@ include_directories(
 # )
 
 ## Mark cpp header files for installation
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  FILES_MATCHING PATTERN "*.h"
-  PATTERN ".svn" EXCLUDE
-)
-
-install(DIRECTORY
-  launch
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
+# install(DIRECTORY include/${PROJECT_NAME}/
+#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+#   FILES_MATCHING PATTERN "*.h"
+#   PATTERN ".svn" EXCLUDE
+# )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
