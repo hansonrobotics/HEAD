@@ -32,23 +32,16 @@
     </group>
 
     <!-- Face Tracking -->
-
     <!-- include file="$(arg basedir)/face_tracker.launch">
       <arg name="pi_vision" value="$(arg pi_vision)"/>
     </include -->
 
-
-    <!-- Perception -->
-<<<<<<< HEAD
-    <include file="$(arg basedir)/perception.launch" />
-    <!-- Perception -->
+     <!-- Perception -->
     <include file="$(arg basedir)/audio.launch" />
-=======
     <include file="$(arg basedir)/perception.launch">
         <arg name="saliency_tracking" value="$(arg saliency_tracking)" />
     </include>
 
->>>>>>> master
     <!-- Web UI and rosbridge for webui -->
     <include file="$(find webui)/webui.launch" />
     <include file="$(arg basedir)/rosbridge.launch" />
