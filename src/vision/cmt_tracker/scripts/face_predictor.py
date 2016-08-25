@@ -7,7 +7,7 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import message_filters
 
-from cmt_tracker_msgs.msg import Trackers,Tracker,Objects
+from cmt_tracker_msgs.msg import Trackers, Tracker, Objects
 from cmt_tracker_msgs.srv import TrackerNames
 from cmt_tracker_msgs.cfg import RecognitionConfig
 
@@ -16,6 +16,8 @@ from dynamic_reconfigure.server import Server
 from openface_wrapper import face_recognizer
 
 from pi_face_tracker.msg import FaceEvent
+
+
 class face_predictor:
     def __init__(self):
         rospy.init_node('face_recognizer', anonymous=True)
@@ -33,25 +35,26 @@ class face_predictor:
         self.image_dir = rospy.get_param("image_locations")
         self.face_recognizer = face_recognizer(self.openface_loc, self.image_dir)
         self.bridge = CvBridge()
-        self.event_pub = rospy.Publisher( self.face_event_topic, FaceEvent, queue_size=10 )
+        self.event_pub = rospy.Publisher(self.face_event_topic, FaceEvent, queue_size=10)
         self.image_sub = message_filters.Subscriber(self.camera_topic, Image)
-        self.cmt_sub = message_filters.Subscriber('tracker_results',Trackers)
+        self.cmt_sub = message_filters.Subscriber('tracker_results', Trackers)
         self.face_sub = message_filters.Subscriber(self.filtered_face_locations, Objects)
-        self.temp_sub = message_filters.Subscriber('temporary_trackers',Trackers)
-        ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub,self.face_sub,self.temp_sub], 1,0.25)
+        self.temp_sub = message_filters.Subscriber('temporary_trackers', Trackers)
+        ts = message_filters.ApproximateTimeSynchronizer([self.image_sub, self.cmt_sub, self.face_sub, self.temp_sub],
+                                                         1, 0.25)
         ts.registerCallback(self.callback)
         self.srv = Server(RecognitionConfig, self.sample_callback)
         self.faces_cmt_overlap = {}
         self.logger = logging.getLogger('hr.cmt_tracker.face_reinforcer_node')
-        #This would hold the trackers that the system would hold.
+        # This would hold the trackers that the system would hold.
         self.save_tracker_images = []
-        #This query x results of this particular tracking instances.
+        # This query x results of this particular tracking instances.
         self.get_tracker_results = []
 
         self.service_ = rospy.Service('add_to_query', TrackerNames, self.add_to_query)
         self.cmt_state = {}
         # self.confidence = 0.85
-        self.states = ['results','save']
+        self.states = ['results', 'save']
         if not self.face_recognizer.get_state():
             print ("No Classifier")
             query_only = rospy.get_param('query_only', True)
@@ -61,24 +64,25 @@ class face_predictor:
         else:
             print ("Classifier Found")
 
-        self.state ={'query_save': '00', 'save_only': '01','query_only': '10', 'ignore': '11'}
-        #format
-        #tracker_name : {state: state in self.state or 'query_save', count: int}
+        self.state = {'query_save': '00', 'save_only': '01', 'query_only': '10', 'ignore': '11'}
+        # format
+        # tracker_name : {state: state in self.state or 'query_save', count: int}
         self.cmt_tracker_instances = {}
 
         self.overall_state = ''
         self.initial_run = True
         self.google_query = []
-        #So the logic goes; if the trainer is called when save_tracker_images has saved enough images.
-        #And for get_tracker_results -> returns the
+        self.query_only = rospy.get_param('query_only', True)
+        # So the logic goes; if the trainer is called when save_tracker_images has saved enough images.
+        # And for get_tracker_results -> returns the
 
-    def add_to_query(self,req):
+    def add_to_query(self, req):
         pass
 
-    def add_to_db(self,req):
+    def add_to_db(self, req):
         pass
 
-    def callback(self,data, cmt, face,temp):
+    def callback(self, data, cmt, face, temp):
         ## TODO Make this query based on the pose and sporadically.
         try:
             cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
@@ -89,53 +93,60 @@ class face_predictor:
         for val in temp.tracker_results:
             ttp.tracker_results.append(val)
 
-        not_covered_faces,covered_faces = self.returnOverlapping(face,ttp)
+        not_covered_faces, covered_faces = self.returnOverlapping(face, ttp)
 
-        for face,cmt in covered_faces:
+        for face, cmt in covered_faces:
             tupl = []
             for pts in face.feature_point.points:
-                x,y = pts.x, pts.y
-                tupl.append((x,y))
+                x, y = pts.x, pts.y
+                tupl.append((x, y))
             key = cmt.tracker_name.data
 
-            #TODO Can we Query state only:
-            query_only = rospy.get_param('query_only', True)
+            # TODO Can we Query state only:
+
             # print("Confidence: %f" % self.confidence)
-            if not query_only:
+            if not self.query_only:
                 # This is to avoid adding faces sample size by saving while querying.
-                self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key,{'count': 0, 'state':self.state['query_save']})
+                self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key, dict(count=0, state=self.state[
+                    'query_save']))
             else:
-                self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key, {'count': 0, 'state': self.state[
-                    'query_only']})
-            #print(self.cmt_tracker_instances)
+                self.cmt_tracker_instances[key] = self.cmt_tracker_instances.get(key, dict(count=0, state=self.state[
+                    'query_only']))
+            # print(self.cmt_tracker_instances)
             if self.cmt_tracker_instances[key]['state'] == self.state['query_save']:
-                self.queryAddResults(cv_image, tupl, key, self.confidence,face.tool_used_for_detection.data)
+                self.queryAddResults(cv_image, tupl, key, self.confidence, face.tool_used_for_detection.data)
                 # print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
 
 
-            elif not query_only and (self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or self.cmt_tracker_instances[key]['state'] == self.state['query_save']):
-                self.face_recognizer.save_faces(cv_image, tupl, key, str(self.cmt_tracker_instances[key]['count']),face.tool_used_for_detection.data)
+            elif not self.query_only and (self.cmt_tracker_instances[key]['state'] == self.state['save_only'] or
+                                                  self.cmt_tracker_instances[key]['state'] == self.state['query_save']):
+                self.face_recognizer.save_faces(cv_image, tupl, key, str(self.cmt_tracker_instances[key]['count']),
+                                                face.tool_used_for_detection.data)
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
-                self.queryAddResults(cv_image, tupl, key, self.confidence,face.tool_used_for_detection.data)
+                self.queryAddResults(cv_image, tupl, key, self.confidence, face.tool_used_for_detection.data)
                 print(self.face_recognizer.face_results_aggregator[key]['results'])
                 if key not in self.google_query:
-                    self.face_recognizer.temp_save_faces(cv_image, tupl, key,face.tool_used_for_detection.data)
+                    self.face_recognizer.temp_save_faces(cv_image, tupl, key, face.tool_used_for_detection.data)
                     self.google_query.append(key)
                     # print "Image Saved"
 
             elif self.cmt_tracker_instances[key]['state'] == self.state['ignore']:
                 pass
 
-            #Change state now;
+            # Change state now;
 
-            if self.cmt_tracker_instances[key]['count'] == self.sample_size:
+            if self.sample_size == self.cmt_tracker_instances[key]['count']:
 
-                if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] or self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
-                    max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'], key=self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'].get)
+                if self.cmt_tracker_instances[key]['state'] == self.state['query_save'] or \
+                                self.cmt_tracker_instances[key]['state'] == self.state['query_only']:
+                    max_index = max(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'],
+                                    key=self.face_recognizer.face_results_aggregator[cmt.tracker_name.data][
+                                        'results'].get)
                     print("openface output results: ")
                     print(self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'])
-                    if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][max_index] > self.num_positive:
+                    if self.face_recognizer.face_results_aggregator[cmt.tracker_name.data]['results'][
+                        max_index] > self.num_positive:
                         try:
                             self.upt = rospy.ServiceProxy('recognition', TrackerNames)
                             indication = self.upt(names=str(max_index), index=int(cmt.tracker_name.data))
@@ -159,7 +170,7 @@ class face_predictor:
                         recognized_event.recognized_id = str(0)
 
                         self.event_pub.publish(recognized_event)
-                        if not query_only:
+                        if not self.query_only:
                             self.cmt_tracker_instances[key]['state'] = self.state['save_only']
                             self.cmt_tracker_instances[key]['count'] = 0
                         else:
@@ -185,17 +196,15 @@ class face_predictor:
                             print "Finished Query of Google Images"
                         except Exception, e:
                             print e
-            elif self.cmt_tracker_instances[key]['count'] == self.sample_size + self.image_sample_size:
+            elif self.sample_size + self.image_sample_size == self.cmt_tracker_instances[key]['count']:
                 if self.cmt_tracker_instances[key]['state'] == self.state['save_only']:
                     self.face_recognizer.train_process(cmt.tracker_name.data)
-                    #Now let's change to query state;
+                    # Now let's change to query state;
                     self.cmt_tracker_instances[key]['state'] = self.state['query_only']
-
 
             self.cmt_tracker_instances[key]['count'] += 1
 
-
-    def sample_callback(self,config, level):
+    def sample_callback(self, config, level):
         self.cmt_tracker_instances = {}
         self.face_recognizer.face_results_aggregator = {}
         self.image_sample_size = config.image_number
@@ -204,9 +213,9 @@ class face_predictor:
         self.num_positive = config.num_positive
         return config
 
-    def queryAddResults(self, cv_image, tupl, name,threshold=0.85,tool_used="opencv"):
+    def queryAddResults(self, cv_image, tupl, name, threshold=0.85, tool_used="opencv"):
         self.logger.info('getting results')
-        self.face_recognizer.results(cv_image, tupl, name,threshold,tool_used)
+        self.face_recognizer.results(cv_image, tupl, name, threshold, tool_used)
         self.logger.info('adding to tally')
 
     def returnOverlapping(self, face, cmt):
@@ -221,24 +230,26 @@ class face_predictor:
             #     continue
             for i in cmt.tracker_results:
                 SB = i.object.object.height * i.object.object.width
-                SI = max(0, ( max(j.object.x_offset + j.object.width,i.object.object.x_offset + i.object.object.width)- min(j.object.x_offset,i.object.object.x_offset) )
-                         * max(0,max(j.object.y_offset,i.object.object.y_offset) - min(j.object.y_offset - j.object.height,i.object.object.y_offset - i.object.object.height)))
+                SI = max(0, (
+                max(j.object.x_offset + j.object.width, i.object.object.x_offset + i.object.object.width) - min(
+                    j.object.x_offset, i.object.object.x_offset))
+                         * max(0, max(j.object.y_offset, i.object.object.y_offset) - min(
+                    j.object.y_offset - j.object.height, i.object.object.y_offset - i.object.object.height)))
 
                 SU = SA + SB - SI
                 if SU != 0:
                     overlap_area = float(SI) / float(SU)
                 else:
                     overlap_area = 1
-                #print overlap_area
+                # print overlap_area
                 overlap = overlap_area > 0.5
                 if (overlap):
-                    list = [j,i]
+                    list = [j, i]
                     overlaped_faces.append(list)
                     break
             if not overlap:
                 not_covered_faces.append(j)
         return not_covered_faces, overlaped_faces
-
 
 
 if __name__ == '__main__':
@@ -247,5 +258,3 @@ if __name__ == '__main__':
         rospy.spin()
     except KeyboardInterrupt:
         logging.warn("Shutting down")
-
-

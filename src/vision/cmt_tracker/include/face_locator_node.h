@@ -38,8 +38,6 @@
 #include <iostream>
 #include <sstream>
 
-//Include Gaze Now from the gazr;
-#include "pupils.hpp"
 
 // clandmarks headers
 
@@ -163,7 +161,7 @@ private:
                       cv::Point2f o2, cv::Point2f p2,
                       cv::Point2f &r) const;
 
-  Pupils pupils_detector;
+
 
 
   float focalLength;

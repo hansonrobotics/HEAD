@@ -142,14 +142,10 @@ include_directories(
 qt4_wrap_cpp(tracker_plugin_MOCS ${tracker_plugin_HDRS})
 qt4_wrap_ui(tracker_plugin_UIS_H ${tracker_plugin_UIS})
 
-set(FACE_HEADERS include/helpers.hpp include/pupils.hpp include/find_eye_center.hpp)
 ## Declare a C++ executable
-add_library(gazr SHARED
-            src/pupils.cpp
-            src/find_eye_center.cpp
-            src/helpers.cpp)
+
 add_executable(face_locator_node src/face_locator_node.cpp)
- target_link_libraries(face_locator_node dlib ${catkin_LIBRARIES} ${OpenCV_LIBS} gazr flandmark clandmark)
+ target_link_libraries(face_locator_node dlib ${catkin_LIBRARIES} ${OpenCV_LIBS} flandmark clandmark)
 
 add_executable(cmt_tracker_node src/cmt_tracker_node.cpp)
 target_link_libraries(cmt_tracker_node dlib ${catkin_LIBRARIES} ${OpenCV_LIBS} cmt)
