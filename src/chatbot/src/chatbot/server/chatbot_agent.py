@@ -24,6 +24,7 @@ logger = logging.getLogger('hr.chatbot.server.chatbot')
 from loader import load_characters
 from config import CHARACTER_PATH
 CHARACTERS = load_characters(CHARACTER_PATH)
+REVISION = None
 
 def get_character(id, lang=None):
     for character in CHARACTERS:
@@ -137,7 +138,8 @@ def _ask_characters(characters, question, lang, sid):
                             trace = [f.replace(path, '') for f in trace]
                         _response['trace'] = trace
                     sess.add(_question, answer, AnsweredBy=c.name,
-                            User=user, BotName=botname, Trace=trace)
+                            User=user, BotName=botname, Trace=trace,
+                            Revision=REVISION)
                     return _response
 
     # Ask the same question to every tier to sync internal state
@@ -270,10 +272,13 @@ def dump_history():
 def dump_session(sid):
     return session_manager.dump(sid)
 
-def reload_characters():
-    global CHARACTERS
+def reload_characters(**kwargs):
+    global CHARACTERS, REVISION
     with sync:
         logger.info("Reloading")
+        revision = kwargs.get('revision')
+        if revision:
+            REVISION = revision
         CHARACTERS = load_characters(CHARACTER_PATH)
 
 atexit.register(dump_history)

@@ -93,8 +93,3 @@ class AIMLCharacterZipLoader(object):
                                 os.path.join(dirpath, yaml_file)))
         return characters
 
-if __name__ == '__main__':
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.INFO)
-    characters = load_characters('characters')
-    print characters

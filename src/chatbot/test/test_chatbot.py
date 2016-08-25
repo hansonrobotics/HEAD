@@ -121,6 +121,13 @@ class ChatbotTest(unittest.TestCase):
         response, ret = ask(None, 'en', sid)
         self.assertEqual(ret, 4)
 
+    def test_loader(self):
+        from chatbot.server.loader import load_characters
+        character_path = os.environ.get('HR_CHARACTER_PATH')
+        characters = load_characters(character_path)
+        names = [character.name for character in characters]
+        self.assertEqual(names, ['dummy', 'generic', 'sophia'])
+
 if __name__ == '__main__':
     unittest.main()
 
