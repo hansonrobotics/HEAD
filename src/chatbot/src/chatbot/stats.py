@@ -27,6 +27,8 @@ def history_stats(history_dir, days):
         return {}
     df = pd.concat(dfs, ignore_index=True)
     df = df[df.Datetime != 'Datetime'].sort(['User', 'Datetime']).drop_duplicates()
+    if hasattr(df, 'Lang'):
+        df = df[df.Lang.isin(['en'])]
     if days == -1:
         stats_csv = '{}/full_history.csv'.format(history_dir)
     else:
