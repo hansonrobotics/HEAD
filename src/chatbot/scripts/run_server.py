@@ -125,7 +125,9 @@ def _bot_names():
 def _start_session():
     botname = request.args.get('botname')
     user = request.args.get('user')
-    sid = session_manager.start_session(user)
+    test = request.args.get('test')
+    test = test.lower() == 'true'
+    sid = session_manager.start_session(user, test)
     sess = session_manager.get_session(sid)
     sess.sdata.botname = botname
     sess.sdata.user = user
