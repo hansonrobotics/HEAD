@@ -16,10 +16,11 @@ def get_default_username():
     return '{}@{}'.format(user, host)
 
 class Client(cmd.Cmd, object):
-    def __init__(self, username, key, *args, **kwargs):
+    def __init__(self, username, key, test=False, *args, **kwargs):
         super(Client, self).__init__(*args, **kwargs)
         self.user = username
         self.key = key
+        self.test = test
         self.prompt = '[me]: '
         self.botname = 'sophia'
         self.chatbot_ip = 'localhost'
@@ -38,7 +39,8 @@ class Client(cmd.Cmd, object):
         params = {
             "Auth": self.key,
             "botname": self.botname,
-            "user": self.user
+            "user": self.user,
+            "test": self.test
         }
         r = None
         retry = 3
