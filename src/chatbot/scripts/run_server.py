@@ -240,6 +240,7 @@ def _dump_session():
         data = request.args
         sid = data.get('session')
         fname = dump_session(sid)
+        session_manager.remove_session(sid)
         if fname:
             return send_from_directory(os.path.dirname(fname), os.path.basename(fname))
         else:
@@ -251,10 +252,10 @@ def _dump_session():
 @app.route(ROOT+'/chat_history', methods=['GET'])
 @requires_auth
 def _chat_history():
+    history_stats(HISTORY_DIR, 7)
     history_file = os.path.join(HISTORY_DIR, 'last_7_days.csv')
-    if history_file:
-        return send_from_directory(
-            os.path.dirname(HISTORY_DIR), os.path.basename(history_file))
+    if os.path.isfile(history_file):
+        return send_from_directory(HISTORY_DIR, os.path.basename(history_file))
     else:
         return '', 404
 
