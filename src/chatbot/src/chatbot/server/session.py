@@ -4,7 +4,7 @@ import os
 import datetime as dt
 import logging
 import uuid
-from config import HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
+from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
 from response_cache import ResponseCache
 
 logger = logging.getLogger('hr.chatbot.server.session')
@@ -20,7 +20,7 @@ class Session(object):
         self.init = self.created
         self.characters = []
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
-        test_dirname = os.path.join(HISTORY_DIR, 'test', self.created.strftime('%Y%m%d'))
+        test_dirname = os.path.join(TEST_HISTORY_DIR, self.created.strftime('%Y%m%d'))
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
         self.test_fname = os.path.join(test_dirname, '{}.csv'.format(self.sid))
         self.dump_file = None
