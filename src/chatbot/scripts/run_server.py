@@ -203,6 +203,7 @@ def _log():
                 yield row
     return Response(generate(), mimetype='text/plain')
 
+
 @app.route(ROOT+'/reset_session', methods=['GET'])
 @requires_auth
 def _reset_session():
@@ -246,6 +247,16 @@ def _dump_session():
     except Exception as ex:
         logger.error("Dump error {}".format(ex))
         return '', 500
+
+@app.route(ROOT+'/chat_history', methods=['GET'])
+@requires_auth
+def _chat_history():
+    history_file = os.path.join(HISTORY_DIR, 'last_7_days.csv')
+    if history_file:
+        return send_from_directory(
+            os.path.dirname(HISTORY_DIR), os.path.basename(history_file))
+    else:
+        return '', 404
 
 @app.route(ROOT+'/ping', methods=['GET'])
 def _ping():
