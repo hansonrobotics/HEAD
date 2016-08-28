@@ -178,6 +178,7 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
             showSettings: function (node) {
                 if (node === this.node) return;
                 node.bind('change', this.updateNode, this);
+                this.updateNode(node);
                 if (this.node) this.node.unbind('change', this.updateNode, this);
                 this.node = node;
                 this.ui.container.removeClass('app-disabled');

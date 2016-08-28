@@ -32,9 +32,11 @@ requirejs.config({
         typeahead: 'vendor/bootstrap3-typeahead',
         selectareas: 'vendor/jquery.selectareas',
         robot_config: '/robot_config',
-        supermodel: 'vendor/supermodel.min'
+        supermodel: 'vendor/supermodel.min',
+        scrollTo: 'vendor/jquery.scrollTo.min'
     },
     shim: {
+        scrollTo: ['jquery'],
         supermodel: {
             depends: ['backbone', 'underscore'],
             exports: 'Supermodel'

@@ -1,6 +1,6 @@
 define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './node',
         '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
-        'lib/api', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar'],
+        'lib/api', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar', 'scrollTo'],
     function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition, api) {
         return Marionette.LayoutView.extend({
             template: template,
@@ -142,8 +142,9 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.stopIndicator();
                 this.removeNodeElements();
                 this.arrangeNodes();
-                this.model.nodes.bind('add', this.addNode, this);
-                this.model.nodes.bind('remove reset', this.arrangeNodes, this);
+                this.listenTo(this.model.nodes, 'add', this.addNode);
+                this.listenTo(this.model.nodes, 'reset', this.arrangeNodes);
+                this.listenTo(this.model.nodes, 'remove', this.removeNode);
 
                 // add resize event
                 var updateWidth = function () {
@@ -158,14 +159,8 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                 this.stopIndicator();
 
                 this.model.stop();
-                this.model.nodes.unbind('add', this.addNode, this);
-                this.model.nodes.unbind('remove reset', this.arrangeNodes, this);
-                this.model.nodes.each(function (node) {
-                    $(node.get('el')).remove();
-                });
-                if (typeof this.options.performances != 'undefined') {
+                if (typeof this.options.performances != 'undefined')
                     this.options.performances.eventHandler = false;
-                }
             },
             removeNodeElements: function () {
                 this.model.nodes.each(function (node) {
@@ -206,8 +201,10 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         });
 
                 node.set('el', el.get(0));
-                this.listenTo(node, 'change', this.updateNode);
-                this.updateNode(node);
+                this.listenTo(node, 'change', this.placeNode);
+                this.listenTo(node, 'change', this.focusNode);
+                this.listenTo(node, 'change', this.updateNodeEl);
+                this.updateNodeEl(node);
 
                 if (!this.options.readonly) {
                     el.draggable({
@@ -236,16 +233,13 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
              *
              * @param node Node
              */
-            updateNode: function (node) {
-                if (node.get('el')) {
-                    var el = $(node.get('el'));
+            updateNodeEl: function (node) {
+                var el = $(node.get('el'));
+                if (el.length) {
                     el.stop().css({
                         left: node.get('start_time') * this.config.pxPerSec,
                         width: node.get('duration') * this.config.pxPerSec
                     }).attr('data-node-name', node.get('name'));
-
-                    if (node.hasChanged('duration') || node.hasChanged('start_time'))
-                        this.arrangeNodes();
 
                     if (el.is(':empty'))
                         el.html(node.getTitle());
@@ -253,67 +247,87 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                         el.get(0).childNodes[0].nodeValue = node.getTitle();
                 }
             },
-            addNode: function (node) {
-                this.arrangeNodes();
-            },
             showNodeSettings: function (node) {
                 if (this.options.readonly) return;
                 this.ui.timelineContainer.find('.app-node').removeClass('active');
                 if (node.get('el')) $(node.get('el')).addClass('active');
                 this.nodeView.showSettings(node);
-                this.nodeView.updateNode(node);
+            },
+            addNode: function (node) {
+                this.placeNode(node);
+                this.updateTimelineWidth();
+                this.focusNode(node);
+            },
+            focusNode: function (node) {
+                var el = $(node.get('el'));
+                if (el.length)
+                    this.ui.scrollContainer.scrollTo(el);
+            },
+            removeNode: function (node) {
+                this.stopListening(node);
+
+                var el = $(node.get('el'));
+                if (el.length)
+                    el.remove();
+                node.unset('el');
+                this.removeEmptyTimelines();
             },
             arrangeNodes: function () {
-                var self = this,
-                    available = false,
-                    nodes = this.model.nodes;
+                var self = this;
 
-                nodes.each(function (node) {
-                    var begin = node.get('start_time'),
-                        end = begin + node.get('duration');
-
-                    if (!node.get('el'))
-                        self.createNodeEl(node);
-
-                    $('.app-timeline-nodes', self.ui.timelineContainer).each(function () {
-                        available = true;
-
-                        $('.app-node', this).each(function () {
-                            var model = nodes.findWhere({'el': this});
-
-                            if (model && model != node) {
-                                var compareBegin = model.get('start_time'),
-                                    compareEnd = compareBegin + model.get('duration');
-
-                                // check if intersects
-                                if ((compareBegin <= begin && compareEnd > begin) ||
-                                    (compareBegin < end && compareEnd >= end) ||
-                                    (compareBegin <= begin && compareEnd >= end)
-                                ) {
-                                    available = false;
-                                    return false;
-                                }
-                            }
-
-                            return true;
-                        });
-
-                        if (available) $(this).append(node.get('el'));
-                        return !available;
-                    });
-
-                    if (!available) {
-                        self.addTimeline();
-                        $('.app-timeline-nodes:last-child').append(node.get('el'));
-                    }
+                this.ui.timelineContainer.html('');
+                this.model.nodes.each(function (node) {
+                    self.placeNode(node);
                 });
 
-                // remove empty timelines
-                $('.app-timeline-nodes', this.el).filter(':empty').remove();
-
-                // add an empty timeline
-                this.addTimeline();
+                this.removeEmptyTimelines();
                 this.updateTimelineWidth();
+            },
+            removeEmptyTimelines: function () {
+                $('.app-timeline-nodes', this.el).filter(':empty').remove();
+            },
+            placeNode: function (node) {
+                var self = this,
+                    begin = node.get('start_time'),
+                    end = begin + node.get('duration'),
+                    available = false,
+                    el = $(node.get('el'));
+
+                if (!el.length) {
+                    self.createNodeEl(node);
+                    el = $(node.get('el'));
+                }
+
+                $('.app-timeline-nodes', self.ui.timelineContainer).each(function () {
+                    available = true;
+
+                    $('.app-node', this).each(function () {
+                        var model = self.model.nodes.findWhere({'el': this});
+
+                        if (model && model != node) {
+                            var compareBegin = model.get('start_time'),
+                                compareEnd = compareBegin + model.get('duration');
+
+                            // check if intersects
+                            if ((compareBegin <= begin && compareEnd > begin) ||
+                                (compareBegin < end && compareEnd >= end) ||
+                                (compareBegin <= begin && compareEnd >= end)
+                            ) {
+                                available = false;
+                            }
+                        }
+
+                        return available;
+                    });
+
+                    if (available) $(this).append(node.get('el'));
+                    return !available;
+                });
+
+                if (!available) {
+                    self.addTimeline();
+                    $('.app-timeline-nodes:last-child').append(el);
+                }
             },
             addTimeline: function () {
                 this.ui.timelineContainer.append($('<div>').addClass('app-timeline-nodes'));
