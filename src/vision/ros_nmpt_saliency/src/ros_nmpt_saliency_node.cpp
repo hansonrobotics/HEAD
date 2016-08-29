@@ -30,8 +30,12 @@ using namespace cv;
 	ros::Publisher pub;
 	geometry_msgs::Point pt;
 	bool debug_mode;
+<<<<<<< HEAD
+        //degree calculator
+=======
 
     /* will put this under  degree.h file */
+>>>>>>> 9789e363033dbffea6e22efa9458689913a22743
 	double getdegree(double x, double y);//function declaration for degree of saliency
 
 
@@ -85,18 +89,29 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         degree = getdegree(pt.x, pt.y);
 
 
+<<<<<<< HEAD
+        /* for the purpose of visualizing points above degree 7 */
+        /* use it for debug mode only */
+=======
         /* for the purpose of visualizing points above degree 7:the most certain
         green for degree >=7 features, yellow for degree <7 and >=4 ...
          */
+>>>>>>> 9789e363033dbffea6e22efa9458689913a22743
         double realx = 320*pt.x;
         double realy = 240*pt.y;
 
         if(degree >= 7) {       circle(vizRect,cvPoint(realx,realy),5,CV_RGB(0,255,0),-1);        }
+<<<<<<< HEAD
+        else if(degree >= 5) {       circle(vizRect,cvPoint(realx,realy),5,CV_RGB(128,128,0),-1);        }
+        else {       circle(vizRect,cvPoint(realx,realy),5,CV_RGB(255,0,0),-1);        }
+
+=======
         else if(degree >= 4) {       circle(vizRect,cvPoint(realx,realy),5,CV_RGB(128,128,0),-1);        }
         else {       circle(vizRect,cvPoint(realx,realy),5,CV_RGB(255,0,0),-1);        }
 
         //end: discard me
 
+>>>>>>> 9789e363033dbffea6e22efa9458689913a22743
         ros_nmpt_saliency::targets trg;
         trg.positions.push_back(pt);
         trg.degree=degree;
@@ -254,3 +269,161 @@ int main(int argc, char **argv)
 
         ros::spin();
    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Put this function under some relevant Header */
+/* Declared the following variables to handle the flow of degree calculation */
+double L,R, T,B; //Bounding Box
+double timel =0.0; //Current Time Handler
+int counter = 0; //Keeps Track of Newly Identified Salient Point
+vector< vector<double> > degreeHandler(10000, vector<double>(5,0)); //Salient Points
+double passDeg, defaultMax=5; // holds random degree value during init
+double turn_around_time=1;
+
+/* This method computes the degree of salient points identified through time.
+- It computes the frequency of identified points over a fixed time interval t.
+- The maximum possible freq. per t is used to normzlie the frequency.
+- Freq. Values are further normalized b/n 1 and 10 w/ the intetion of putting their degree.
+*/
+
+double getdegree(double x, double y)
+{
+    /*   */
+    timel+=bt.getCurrTime(0);
+    int flag=0; //for the purpose of switchin to "Add as unique salient point mode"
+    double delay; // interval between the last change at a point and now
+    double Lturnaround; // time to trigger reconfiguration per each salient point
+    double passDeg; // to store/pass the final degree value
+
+    /* .
+    Take Degree one along w/ points as newly coming salient point if it is first time func. call
+    */
+    if (not counter)
+    {
+        degreeHandler[counter][0]=x;
+        degreeHandler[counter][1]=y;
+        degreeHandler[counter][2]=timel;
+
+        passDeg = degreeHandler[counter][3] = 1;
+        // Reference for Turn_Around
+        degreeHandler[counter][4] = timel;
+        degreeHandler[counter][5]=timel;
+
+        ++counter;
+    }
+    else
+    {
+        /* In each function call we have to check the belongingness of
+        of salient point to the exsiting point                      */
+        for(int i=0;i<counter;i++)
+        {
+            /* creating a bounding rectangle for the upcoming salient point.
+            This helps to consider  close enough salient points as one.
+            */
+            L=degreeHandler[i][0]- 0.03; R=degreeHandler[i][0]+ 0.03;
+            T=degreeHandler[i][1]- 0.03; B=degreeHandler[i][1]+ 0.03;
+
+            /* check whether this point relys in the exsiting group or not */
+            /* uncomment these two lines and comment the following two lines
+            to make per point degree checkup */
+
+            /*if(degreeHandler[i][0] == x  && degreeHandler[i][1] == y) //use this for default comparison for "per point comparision"
+            {
+            */
+            /* Checking the belonginingess of the point*/
+            if ((x>=L && y>=T) && (x<=R && y>=T) && (x>=L && y<=B) && (x<=R && y<=B))
+            {
+                flag=1;
+                Lturnaround = timel - degreeHandler[i][4];
+                delay = timel - degreeHandler[i][2] ;
+
+                /* How long the point identified as salient?  */
+                if  (Lturnaround < turn_around_time)
+                {
+                    /* add the naromalized salience value (will be one if it has high freq. of occurance)*/
+                    passDeg = degreeHandler[i][3] += (0.023/delay);// maximum possible freq. in time.
+                    if(degreeHandler[i][3]>defaultMax){defaultMax=degreeHandler[i][3];} //substituting max ref. value w/ the better/ if any
+                }
+                else
+                {
+                    /* Was this point the most salient point? if so,  affect the max point of ref. along w/ the reconfiguration of that point */
+                    if(degreeHandler[i][3]-1 >= defaultMax || degreeHandler[i][3]+1 <= defaultMax ) {defaultMax =5;   }
+
+                    degreeHandler[i][3]= 2 ;
+                    passDeg=degreeHandler[i][3];
+                    degreeHandler[i][4] = timel;
+                }
+                degreeHandler[i][2] = timel;
+                //cout<<x<<","<<y<<"  Category "<<degreeHandler[i][0]<<","<<degreeHandler[i][1]<<" Delay: "<<delay<<" Degree: "<<degreeHandler[i][3]<<endl;
+                break; // jumpout from the loop given the point group is found
+            }
+            else { continue;  } // loop till it get the end or find the group
+        }
+
+        /* New point identified*/
+        if (not flag)
+        {
+            degreeHandler[counter][0]=x;
+            degreeHandler[counter][1]=y;
+            delay = timel - degreeHandler[counter][2];
+            degreeHandler[counter][2]=timel;
+            passDeg = degreeHandler[counter][3]=1;
+            degreeHandler[counter][4] = timel;
+            degreeHandler[counter][5]=timel;
+            ++counter;
+        }
+    }
+
+
+    /* put the number in between 1 and 10 */
+    int roundD =  ((passDeg*10)/defaultMax) + 0.5;
+    passDeg = roundD;
+    return passDeg;
+}
