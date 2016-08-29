@@ -49,16 +49,15 @@ class AIMLCharacter(Character):
         self.languages = ['en']
 
     def load_aiml_files(self, kernel, aiml_files):
+        errors = []
         for f in aiml_files:
             if '*' not in f and not os.path.isfile(f):
                 logger.warn("[{}] {} is not found".format(self.id, f))
-            errors = kernel.learn(f)
-            if errors:
-                raise Exception("Load {} error\n{}".format(
-                    os.path.basename(f), errors[0][1]))
+            errors.extend(kernel.learn(f))
             logger.info("[{}] Load {}".format(self.id, f))
             if f not in self.aiml_files:
                 self.aiml_files.append(f)
+        return errors
 
     def set_property_file(self, propname):
         try:
