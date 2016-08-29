@@ -10,10 +10,7 @@ from std_msgs.msg import Float32
 from audiosysneeds.msg import audiodata
 
 '''
-   The main purpose of this Node is to publish Input Audio(Numpy array) and some of its features such as Decibel and
-   Frequency. It publishes to two major Topics namely /opencog/AudioFeature and /opencog/change. The first one contains Decibel and Frequency of a given chunk as a String with "Decibel_Frequency" format. The second one holds 0 -
-   for No Sudden Change Events and 10 for events which have sudden change.Better to change the THRESHOLD value based on the performance of speaker on the Robot.
- '''
+   The main purpose of this Node is to publish Input Audio(Numpy array) and some of its features such as Decibel and Frequency. It publishes to two Topics namely /opencog/AudioFeature and /opencog/suddenchange. The first one contains Decibel and Frequency of a given chunk as Float. The second one holds 0 for No Sudden Change Events and 10 for events which have sudden change. '''
 # Converts Stream (which is in byte format) to List of +ve and -ve Integers
 def convData(V):
     count = len(V) / 2

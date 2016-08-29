@@ -17,6 +17,7 @@
 .DS_Store
 devel
 build
+opencog.log
 .idea
 *.pyc
 .catkin_tools
