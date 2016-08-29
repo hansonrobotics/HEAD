@@ -30,7 +30,7 @@ class ChatbotTest(unittest.TestCase):
 
     def test_prologue(self):
         from chatbot.client import Client
-        cli = Client('test_client', 'AAAAB3NzaC')
+        cli = Client('test_client', 'AAAAB3NzaC', test=True)
         cli.do_port(PORT)
         while not cli.ping():
             time.sleep(1)
@@ -48,7 +48,7 @@ class ChatbotTest(unittest.TestCase):
     def test_session_manager(self):
         from chatbot.server.session import SessionManager
         session_manager = SessionManager(False)
-        sid = session_manager.start_session(user='test')
+        sid = session_manager.start_session(user='test', test=True)
         session = session_manager.get_session(sid)
         self.assertIsNotNone(session)
         self.assertIsNone(session.cache.last_time)
@@ -73,7 +73,7 @@ class ChatbotTest(unittest.TestCase):
         reload(chatbot.server.session)
 
         session_manager = SessionManager(True)
-        sid = session_manager.start_session(user='test')
+        sid = session_manager.start_session(user='test', test=True)
         session = session_manager.get_session(sid)
         self.assertIsNotNone(session)
         self.assertIsNone(session.cache.last_time)
@@ -110,7 +110,7 @@ class ChatbotTest(unittest.TestCase):
 
     def test_chat_agent(self):
         from chatbot.server.chatbot_agent import session_manager, ask
-        sid = session_manager.start_session('test')
+        sid = session_manager.start_session('test', test=True)
         sess = session_manager.get_session(sid)
         sess.sdata.botname = 'sophia'
         sess.sdata.user = 'test'
