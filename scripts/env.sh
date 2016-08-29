@@ -25,4 +25,4 @@ export CPLUS_INCLUDE_PATH=:/opt/hansonrobotics/vision/CppMT:/opt/hansonrobotics/
 export MANYEARSLIB_PREFIX=/opt/hansonrobotics/manyears-C-1.0.0
 
 export CLANDMARK_DIR=/opt/hansonrobotics/vision/clandmark
-source /opt/hansonrobotics/vision/torch/install/bin/torch-activate
+[ -f /opt/hansonrobotics/vision/torch/install/bin/torch-activate ] && source /opt/hansonrobotics/vision/torch/install/bin/torch-activate
