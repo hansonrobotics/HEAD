@@ -6,7 +6,7 @@ import re
 import string
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
-from blender_api_msgs.msg import EmotionState, SetGesture, Target
+from blender_api_msgs.msg import EmotionState, SetGesture, Target, SomaState
 from calc import calculate
 
 logger = logging.getLogger('hr.speech2command.commands')
@@ -32,33 +32,70 @@ class BaseCommand(object):
         """
         return True
 
-class WakeUpCommand(BaseCommand):
+class SleepingCommand(BaseCommand):
 
     def __init__(self):
         self.sleeping = False
+        self.exe = False
         self.sub_sleep = rospy.Subscriber('sleeper', String, self.sleep_cb)
         self.btree = rospy.Publisher("/behavior_switch", String, queue_size=2)
+        self.soma_pub = rospy.Publisher('/blender_api/set_soma_state', SomaState, queue_size=10)
+        self.look_pub = rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
 
     def sleep_cb(self, msg):
         if msg.data == 'sleep':
             self.sleeping = True
         if 'wake' in msg.data:
             self.sleeping = False
+        self.exe = True
+        self.execute()
 
     def parse(self, msg):
+        text = msg.utterance.decode('utf-8').lower()
         if self.sleeping:
-            text = msg.utterance.decode('utf-8').lower()
             if "wake" in text:
                 self.sleeping = False
+                self.exe = True
+                return  True
             if "makeup" in text:
                 self.sleeping = False
-            return True
+                self.exe = True
+                return True
+        else:
+            if "go sleep" in text or \
+                "go to sleep" in text:
+                self.sleeping = True
+                self.exe = True
+                return True
+
         return False
 
     def execute(self):
+        if not self.exe:
+            return
+        self.exe = False
+
         if not self.sleeping:
             # wakeup
             self.btree.publish(String("btree_on"))
+            self.soma_pub.publish(self.getSoma('sleep',0))
+            self.soma_pub.publish(self.getSoma('normal',0.1))
+            self.look_pub.publish(Target(1,0,0,0))
+
+        if self.sleeping:
+            self.btree.publish(String("btree_off"))
+            self.soma_pub.publish(self.getSoma('sleep',1))
+            self.soma_pub.publish(self.getSoma('normal',0))
+            self.look_pub.publish(Target(1,0,-0.2,0))
+
+    def getSoma(self, name, magnitude):
+        s = SomaState()
+        s.name = name
+        s.ease_in.secs = 0
+        s.ease_in.nsecs = 0.1 *1000000000
+        s.magnitude = magnitude
+        s.rate = 1
+        return s
 
 class ForwardCommand(BaseCommand):
     def __init__(self, forward_topic_name):
