@@ -121,6 +121,9 @@ class Chatbot():
       self.speech = False
 
   def _request_callback(self, chat_message):
+    if not self.enable:
+      logger.info("Chatbot is disabled")
+      return
     if 'shut up' in chat_message.utterance.lower():
       logger.info("Robot's talking wants to be interruptted")
       self.tts_ctrl_pub.publish("shutup")
@@ -208,6 +211,7 @@ class Chatbot():
     if self.chatbot_url != config.chatbot_url:
       self.chatbot_url = config.chatbot_url
       self.session = self.start_session()
+    self.enable = config.enable
     return config
 
 if __name__ == '__main__':
