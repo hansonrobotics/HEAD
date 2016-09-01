@@ -385,21 +385,6 @@ class chat(Node):
                 else:
                     self.add_turn()
 
-    def speech_event_callback(self, msg):
-        event = msg.data
-
-        if event == 'start':
-            self.runner.topics['events'].publish(Event('chat_end', 0))
-            self.talking = True
-        elif event == 'stop':
-            self.add_turn()
-            self.talking = False
-
-            if self.turns < self.dialog_turns:
-                self.runner.topics['events'].publish(Event('chat', 0))
-            else:
-                self.resume()
-
     def start_chatbot_session(self):
         params = {
             'Auth': 'AAAAB3NzaC',
@@ -444,9 +429,6 @@ class chat(Node):
 
         return response
 
-    def respond(self, response):
-        self.runner.topics['tts']['default'].publish(String(response))
-
     def add_turn(self):
         self.turns += 1
         self.last_turn_at = time.time()
@@ -459,6 +441,23 @@ class chat(Node):
         if self.subscriber:
             self.subscriber.unregister()
             self.subscriber = False
+
+    def respond(self, response):
+        self.runner.topics['events'].publish(Event('chat_end', 0))
+        self.talking = True
+        self.runner.topics['tts']['default'].publish(String(response))
+
+    def speech_event_callback(self, msg):
+        event = msg.data
+
+        if event == 'stop':
+            self.add_turn()
+            self.talking = False
+
+            if self.turns < self.dialog_turns:
+                self.runner.topics['events'].publish(Event('chat', 0))
+            else:
+                self.resume()
 
 
 class attention(Node):

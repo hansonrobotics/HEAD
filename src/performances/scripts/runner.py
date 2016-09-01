@@ -230,6 +230,7 @@ class Runner:
 
             if len(nodes) == 0:
                 continue
+
             running = True
             while running:
                 with self.lock:
