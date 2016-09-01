@@ -275,11 +275,17 @@ def dump_session(sid):
 def reload_characters(**kwargs):
     global CHARACTERS, REVISION
     with sync:
+        characters = None
         logger.info("Reloading")
         revision = kwargs.get('revision')
         if revision:
             REVISION = revision
-        CHARACTERS = load_characters(CHARACTER_PATH)
+        try:
+            characters = load_characters(CHARACTER_PATH)
+            del CHARACTERS[:]
+            CHARACTERS = characters
+        except Exception as ex:
+            logger.error("Reloading characters error {}".format(ex))
 
 atexit.register(dump_history)
 
