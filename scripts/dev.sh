@@ -62,6 +62,8 @@ export ROS_PYTHON_LOG_CONFIG_FILE="$BASEDIR/python_logging.conf"
 export ROSCONSOLE_FORMAT='[${logger}][${severity}] [${time}]: ${message}'
 export LAUNCH_DIR="$BASEDIR/../src/robots_config/launch/"
 export OC_LOG_LEVEL=info        # error, warn, info, debug and fine
+export HR_CHARACTER_PATH=$HR_WORKSPACE/$MAJOR_PROJECT/src/chatbot/scripts/characters
+export HR_CHATBOT_REVISION=$(git -C $HR_CHARACTER_PATH log -1 --format='%ci|%h' 2>/dev/null)
 source $HR_WORKSPACE/$MAJOR_PROJECT/devel/setup.bash
 echo HR_WORKSPACE=$HR_WORKSPACE
 

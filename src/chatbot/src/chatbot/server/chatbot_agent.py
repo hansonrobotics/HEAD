@@ -14,6 +14,7 @@ SUCCESS=0
 WRONG_CHARACTER_NAME=1
 NO_PATTERN_MATCH=2
 INVALID_SESSION=3
+INVALID_QUESTION=4
 
 useSOLR = True
 CWD = os.path.dirname(os.path.realpath(__file__))
@@ -23,6 +24,7 @@ logger = logging.getLogger('hr.chatbot.server.chatbot')
 from loader import load_characters
 from config import CHARACTER_PATH
 CHARACTERS = load_characters(CHARACTER_PATH)
+REVISION = os.environ.get('HR_CHATBOT_REVISION')
 
 def get_character(id, lang=None):
     for character in CHARACTERS:
@@ -136,7 +138,8 @@ def _ask_characters(characters, question, lang, sid):
                             trace = [f.replace(path, '') for f in trace]
                         _response['trace'] = trace
                     sess.add(_question, answer, AnsweredBy=c.name,
-                            User=user, BotName=botname, Trace=trace)
+                            User=user, BotName=botname, Trace=trace,
+                            Revision=REVISION, Lang=lang)
                     return _response
 
     # Ask the same question to every tier to sync internal state
@@ -150,7 +153,7 @@ def _ask_characters(characters, question, lang, sid):
             _response = dummy_character.respond("NO_ANSWER", lang, sid)
         answer = _response.get('text', '')
         sess.add(_question, answer, AnsweredBy=dummy_character.name,
-                User=user, BotName=botname, Trace=None)
+                User=user, BotName=botname, Trace=None, Revision=REVISION, Lang=lang)
         return _response
 
 def get_responding_characters(lang, sid):
@@ -222,6 +225,9 @@ def ask(question, lang, sid):
     if sess is None:
         return response, INVALID_SESSION
 
+    if not question or not question.strip():
+        return response, INVALID_QUESTION
+
     responding_characters = get_responding_characters(lang, sid)
     if not responding_characters:
         logger.error("Wrong characer name")
@@ -266,20 +272,20 @@ def dump_history():
 def dump_session(sid):
     return session_manager.dump(sid)
 
-def reload_characters():
-    global CHARACTERS
+def reload_characters(**kwargs):
+    global CHARACTERS, REVISION
     with sync:
+        characters = None
         logger.info("Reloading")
-        CHARACTERS = load_characters(CHARACTER_PATH)
+        revision = kwargs.get('revision')
+        if revision:
+            REVISION = revision
+        try:
+            characters = load_characters(CHARACTER_PATH)
+            del CHARACTERS[:]
+            CHARACTERS = characters
+        except Exception as ex:
+            logger.error("Reloading characters error {}".format(ex))
 
 atexit.register(dump_history)
 
-if __name__ == '__main__':
-    import logging
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.DEBUG)
-    sid = session_manager.start_session('test')
-    sess = session_manager.get_session(sid)
-    sess.sdata.botname = 'sophia'
-    sess.sdata.user = 'test'
-    print ask('what is your name', 'en', sid)

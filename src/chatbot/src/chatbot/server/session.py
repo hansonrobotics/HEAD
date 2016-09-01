@@ -4,7 +4,7 @@ import os
 import datetime as dt
 import logging
 import uuid
-from config import HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
+from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
 from response_cache import ResponseCache
 
 logger = logging.getLogger('hr.chatbot.server.session')
@@ -20,10 +20,19 @@ class Session(object):
         self.init = self.created
         self.characters = []
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
+        test_dirname = os.path.join(TEST_HISTORY_DIR, self.created.strftime('%Y%m%d'))
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
+        self.test_fname = os.path.join(test_dirname, '{}.csv'.format(self.sid))
+        self.dump_file = None
         self.removed = False
         self.active = False
         self.last_active_time = None
+        self.test = False
+
+    def set_test(self, test):
+        if test:
+            logger.info("Set test session")
+        self.test = test
 
     def add(self, question, answer, **kwargs):
         if not self.removed:
@@ -51,7 +60,11 @@ class Session(object):
         return self.cache.check(question, answer, lang)
 
     def dump(self):
-        return self.cache.dump(self.fname)
+        if self.test:
+            self.dump_file = self.test_fname
+        else:
+            self.dump_file = self.fname
+        return self.cache.dump(self.dump_file)
 
     def get_session_data(self):
         return self.sdata
@@ -135,13 +148,15 @@ class SessionManager(object):
         self._users[user] = sid
         return True
 
-    def start_session(self, user):
+    def start_session(self, user, test=False):
         _sid = self.get_sid(user)
-        if _sid:
-            return _sid
-        sid = self.gen_sid()
-        self.add_session(user, sid)
-        return sid
+        if not _sid:
+            _sid = self.gen_sid()
+            self.add_session(user, _sid)
+        session = self.get_session(_sid)
+        assert(session is not None)
+        session.set_test(test)
+        return _sid
 
     def has_session(self, sid):
         return sid in self._sessions
@@ -169,12 +184,12 @@ class ChatSessionManager(SessionManager):
         fnames = []
         for sid, sess in self._sessions.iteritems():
             if sess and sess.dump():
-                fnames.append(sess.fname)
+                fnames.append(sess.dump_file)
         return fnames
 
     def dump(self, sid):
         fname = None
         sess = self._sessions.get(sid)
         if sess and sess.dump():
-            fname = sess.fname
+            fname = sess.dump_file
         return fname

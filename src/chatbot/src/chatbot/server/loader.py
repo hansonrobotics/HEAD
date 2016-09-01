@@ -53,6 +53,7 @@ class AIMLCharacterLoader(object):
             return os.path.join(root_dir, p)
 
         characters = []
+        errors = []
         with open(character_yaml) as f:
             spec = yaml.load(f)
             try:
@@ -64,11 +65,13 @@ class AIMLCharacterLoader(object):
                     character.level = int(spec['level'])
                 if 'aiml' in spec:
                     aiml_files = [abs_path(f) for f in spec['aiml']]
-                    character.load_aiml_files(character.kernel, aiml_files)
+                    errors = character.load_aiml_files(character.kernel, aiml_files)
                 if 'weight' in spec:
                     character.weight = float(spec['weight'])
             except KeyError as ex:
                 logger.error(ex)
+            if errors:
+                raise Exception("Loading {} error {}".format(character_yaml, '\n'.join(errors)))
             characters.append(character)
         return characters
 
@@ -93,8 +96,3 @@ class AIMLCharacterZipLoader(object):
                                 os.path.join(dirpath, yaml_file)))
         return characters
 
-if __name__ == '__main__':
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.INFO)
-    characters = load_characters('characters')
-    print characters
