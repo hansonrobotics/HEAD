@@ -1,6 +1,6 @@
 define(['application', "marionette", './message', "tpl!./templates/interaction.tpl", 'lib/api', '../entities/message_collection',
-        'jquery', './faces', 'underscore', 'lib/speech_recognition', 'scrollbar'],
-    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView, _, speechRecognition) {
+        'jquery', './faces', 'underscore', 'lib/speech_recognition', 'annyang', 'scrollbar'],
+    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView, _, speechRecognition, annyang) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: MessageView,
@@ -87,7 +87,6 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 api.getRosParam('/' + api.config.robot + '/webui/speech_recognition', function (method) {
                     self.setRecognitionMethod(method);
                 });
-                this.speechStarted = 0;
 
                 this.ui.noiseSlider.slider({
                     range: "min",
@@ -414,71 +413,45 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             enableWebspeech: function () {
                 var self = this;
 
-                if (!this.speechRecognition || !this.speechEnabled) {
-                    this.speechRecognition = speechRecognition.getInstance(this.language == 'zh' ? 'cmn-Hans-CN' : 'en-US');
-                    if (!this.speechRecognition) return;
-
-                    this.speechRecognition.onstart = function () {
-                        console.log('starting webspeech');
+                if (annyang) {
+                    annyang.abort();
+                    annyang.removeCommands();
+                    annyang.setLanguage(this.language == 'zh' ? 'zh-CN' : 'en-US');
+                    annyang.addCallback('start', function () {
+                        console.log('starting speech recognition');
                         api.topics.chat_events.publish(new ROSLIB.Message({data: 'start'}));
-                        self.onSpeechEnabled();
-                    };
-                    this.speechRecognition.onspeechstart = function () {
                         api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechstart'}));
-                    };
-                    this.speechRecognition.onspeechend = function () {
+
+                        self.onSpeechEnabled();
+                    });
+                    annyang.addCallback('end', function () {
+                        console.log('end of speech');
                         api.topics.chat_events.publish(new ROSLIB.Message({data: 'speechend'}));
-                    };
-                    this.speechRecognition.onresult = function (event) {
-                        var mostConfidentResult = speechRecognition.getMostConfidentResult(event.results);
+                        api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
 
-                        if (mostConfidentResult) {
-                            api.sendChatMessage(mostConfidentResult.transcript);
-                            api.loginfo('[ASR ACTION][CHAT] ' + mostConfidentResult.transcript);
+                        self.onSpeechDisabled();
+                    });
+
+                    annyang.addCallback('error', function (error) {
+                        console.log('speech recognition error');
+                        console.log(error);
+                    });
+                    annyang.addCallback('result', function (results) {
+                        if (results.length) {
+                            api.sendChatMessage(results[0]);
+                            api.loginfo('speech recognised: ' + results[0]);
                         }
-                    };
+                    });
 
-                    this.speechRecognition.onerror = function (event) {
-                        switch (event.error) {
-                            case 'not-allowed':
-                            case 'service-not-allowed':
-                                self.onSpeechDisabled();
-                                break;
-                        }
-                        console.log('error recognising speech');
-                        console.log(event);
-
-                    };
-                    this.speechRecognition.onend = function () {
-                        if (self.speechEnabled) {
-                            if (self.speechRecognition) {
-                                var timeSinceLastStart = new Date().getTime() - self.speechStarted;
-
-                                if (timeSinceLastStart < 1000) {
-                                    setTimeout(function () {
-                                        self.speechRecognition.start();
-                                    }, 1000);
-                                } else {
-                                    self.speechRecognition.start();
-                                }
-                            } else {
-                                self.enableWebspeech();
-                            }
-                        } else {
-                            console.log('end of speech');
-                            api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
-                        }
-                    };
-                    this.speechStarted = new Date().getTime();
-                    this.speechRecognition.start();
+                    annyang.start({
+                        autoRestart: true,
+                        continuous: true,
+                        paused: false
+                    });
                 }
             },
             disableWebspeech: function () {
-                if (this.speechRecognition) {
-                    this.onSpeechDisabled();
-                    this.speechRecognition.stop();
-                    this.speechRecognition = null;
-                }
+                if (annyang) annyang.abort();
             },
             recognitionButtonClick: function (e) {
                 this.setRecognitionMethod($(e.target).data('method'));
