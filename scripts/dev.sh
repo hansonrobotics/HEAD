@@ -81,12 +81,13 @@ fi
 
 if [[ $OC_CHATBOT == 1 ]]; then
     ros_args="$ros_args oc_chatbot:=true"
-    export OC_AIML_FILE=~/.hr/cache/res/load-all.scm
+    export OC_AIML_FILE=~/.hr/cache/oc_aiml/load.scm
+    mkdir -p ~/.hr/cache/oc_aiml
     if [[ ! -f ${OC_AIML_FILE} ]] ; then
       echo "Downloading OpenCog AIML file"
-      wget https://github.com/opencog/test-datasets/releases/download/current/aiml-current.tar.gz -O /tmp/aiml.tar.gz
-      tar zxf /tmp/aiml.tar.gz -C ~/.hr/cache
-      rm /tmp/aiml.tar.gz
+      wget https://github.com/opencog/test-datasets/releases/download/current/oc_public_aiml.tar.gz -O /tmp/oc_public_aiml.tar.gz
+      tar zxf /tmp/oc_public_aiml.tar.gz -C ~/.hr/cache/oc_aiml
+      rm /tmp/oc_public_aiml.tar.gz
     fi
 fi
 
