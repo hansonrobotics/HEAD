@@ -275,7 +275,7 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
             arrangeNodes: function () {
                 var self = this;
 
-                this.ui.timelineContainer.html('');
+                this.ui.timelineContainer.find('.app-timeline-nodes').remove();
                 this.model.nodes.each(function (node) {
                     self.placeNode(node);
                 });
