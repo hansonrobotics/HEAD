@@ -582,7 +582,7 @@ do_clean_up() {
 
 _do_clean_up() {
     rm -r ~/.cache/guile
-    rm -r ~/.hr/cache/res
+    rm -r ~/.hr/cache/oc_aiml
     if [[ ! -z $HR_WORKSPACE ]]; then
         for repo in ${OPENCOG_REPOS[*]}
         do
