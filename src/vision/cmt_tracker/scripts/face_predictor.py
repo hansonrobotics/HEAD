@@ -73,6 +73,7 @@ class face_predictor:
         self.initial_run = True
         self.google_query = []
         self.query_only = rospy.get_param('query_only', True)
+        self.query_again = rospy.get_param('query_again', True)
         # So the logic goes; if the trainer is called when save_tracker_images has saved enough images.
         # And for get_tracker_results -> returns the
 
