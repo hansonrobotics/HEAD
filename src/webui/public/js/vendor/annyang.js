@@ -1,10 +1,20 @@
 //! annyang
-//! version : 2.0.0
+//! version : 2.5.0
 //! author  : Tal Ater @TalAter
 //! license : MIT
 //! https://www.TalAter.com/annyang/
-
-(function (undefined) {
+(function (root, factory) {
+  "use strict";
+  if (typeof define === 'function' && define.amd) { // AMD + global
+    define([], function () {
+      return (root.annyang = factory(root));
+    });
+  } else if (typeof module === 'object' && module.exports) { // CommonJS
+    module.exports = factory(root);
+  } else { // Browser globals
+    root.annyang = factory(root);
+  }
+}(typeof window !== 'undefined' ? window : this, function (root, undefined) {
   "use strict";
 
   /**
@@ -17,21 +27,19 @@
    * # API Reference
    */
 
-  // Save a reference to the global object (window in the browser)
-  var root = this;
+  var annyang;
 
   // Get the SpeechRecognition object, while handling browser prefixes
   var SpeechRecognition = root.SpeechRecognition ||
-                          root.webkitSpeechRecognition ||
-                          root.mozSpeechRecognition ||
-                          root.msSpeechRecognition ||
-                          root.oSpeechRecognition;
+      root.webkitSpeechRecognition ||
+      root.mozSpeechRecognition ||
+      root.msSpeechRecognition ||
+      root.oSpeechRecognition;
 
   // Check browser support
   // This is done as early as possible, to make it as fast as possible for unsupported browsers
   if (!SpeechRecognition) {
-    root.annyang = null;
-    return undefined;
+    return null;
   }
 
   var commandsList = [];
@@ -39,9 +47,11 @@
   var callbacks = { start: [], error: [], end: [], result: [], resultMatch: [], resultNoMatch: [], errorNetwork: [], errorPermissionBlocked: [], errorPermissionDenied: [] };
   var autoRestart;
   var lastStartedAt = 0;
+  var autoRestartCount = 0;
   var debugState = false;
   var debugStyle = 'font-weight: bold; color: #00f;';
   var pauseListening = false;
+  var isListening = false;
 
   // The command matching code is a modified version of Backbone.Router by Jeremy Ashkenas, under the MIT license.
   var optionalParam = /\s*\((.*?)\)\s*/g;
@@ -51,12 +61,12 @@
   var escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#]/g;
   var commandToRegExp = function(command) {
     command = command.replace(escapeRegExp, '\\$&')
-                  .replace(optionalParam, '(?:$1)?')
-                  .replace(namedParam, function(match, optional) {
-                    return optional ? match : '([^\\s]+)';
-                  })
-                  .replace(splatParam, '(.*?)')
-                  .replace(optionalRegex, '\\s*$1?\\s*');
+        .replace(optionalParam, '(?:$1)?')
+        .replace(namedParam, function(match, optional) {
+          return optional ? match : '([^\\s]+)';
+        })
+        .replace(splatParam, '(.*?)')
+        .replace(optionalRegex, '\\s*$1?\\s*');
     return new RegExp('^' + command + '$', 'i');
   };
 
@@ -68,24 +78,67 @@
     });
   };
 
-  var initIfNeeded = function() {
-    if (!isInitialized()) {
-      root.annyang.init({}, false);
+  var isInitialized = function() {
+    return recognition !== undefined;
+  };
+
+  // method for logging in developer console when debug mode is on
+  var logMessage = function(text, extraParameters) {
+    if (text.indexOf('%c') === -1 && !extraParameters) {
+      console.log(text);
+    } else {
+      extraParameters = extraParameters || debugStyle;
+      console.log(text, extraParameters);
     }
   };
 
-  var isInitialized = function() {
-    return recognition !== undefined;
+  var initIfNeeded = function() {
+    if (!isInitialized()) {
+      annyang.init({}, false);
+    }
   };
 
   var registerCommand = function(command, cb, phrase) {
     commandsList.push({ command: command, callback: cb, originalPhrase: phrase });
     if (debugState) {
-      root.console.log('Command successfully loaded: %c'+phrase, debugStyle);
+      logMessage('Command successfully loaded: %c'+phrase, debugStyle);
     }
   };
 
-  root.annyang = {
+  var parseResults = function(results) {
+    invokeCallbacks(callbacks.result, results);
+    var commandText;
+    // go over each of the 5 results and alternative results received (we've set maxAlternatives to 5 above)
+    for (var i = 0; i<results.length; i++) {
+      // the text recognized
+      commandText = results[i].trim();
+      if (debugState) {
+        logMessage('Speech recognized: %c'+commandText, debugStyle);
+      }
+
+      // try and match recognized text to one of the commands on the list
+      for (var j = 0, l = commandsList.length; j < l; j++) {
+        var currentCommand = commandsList[j];
+        var result = currentCommand.command.exec(commandText);
+        if (result) {
+          var parameters = result.slice(1);
+          if (debugState) {
+            logMessage('command matched: %c'+currentCommand.originalPhrase, debugStyle);
+            if (parameters.length) {
+              logMessage('with parameters', parameters);
+            }
+          }
+          // execute the matched command
+          currentCommand.callback.apply(this, parameters);
+          invokeCallbacks(callbacks.resultMatch, commandText, currentCommand.originalPhrase, results);
+          return;
+        }
+      }
+    }
+    invokeCallbacks(callbacks.resultNoMatch, results);
+  };
+
+  annyang = {
 
     /**
      * Initialize annyang with a list of commands to recognize.
@@ -103,7 +156,7 @@
      * As of v1.1.0 it is no longer required to call init(). Just start() listening whenever you want, and addCommands() whenever, and as often as you like.
      *
      * @param {Object} commands - Commands that annyang should listen to
-     * @param {Boolean} [resetCommands=true] - Remove all commands before initializing?
+     * @param {boolean} [resetCommands=true] - Remove all commands before initializing?
      * @method init
      * @deprecated
      * @see [Commands Object](#commands-object)
@@ -135,46 +188,58 @@
       // Sets the language to the default 'en-US'. This can be changed with annyang.setLanguage()
       recognition.lang = 'en-US';
 
-      recognition.onstart   = function()      { invokeCallbacks(callbacks.start); };
+      recognition.onstart = function() {
+        isListening = true;
+        invokeCallbacks(callbacks.start);
+      };
 
-      recognition.onerror   = function(event) {
-        invokeCallbacks(callbacks.error);
+      recognition.onerror = function(event) {
+        invokeCallbacks(callbacks.error, event);
         switch (event.error) {
-        case 'network':
-          invokeCallbacks(callbacks.errorNetwork);
-          break;
-        case 'not-allowed':
-        case 'service-not-allowed':
-          // if permission to use the mic is denied, turn off auto-restart
-          autoRestart = false;
-          // determine if permission was denied by user or automatically.
-          if (new Date().getTime()-lastStartedAt < 200) {
-            invokeCallbacks(callbacks.errorPermissionBlocked);
-          } else {
-            invokeCallbacks(callbacks.errorPermissionDenied);
-          }
-          break;
+          case 'network':
+            invokeCallbacks(callbacks.errorNetwork, event);
+            break;
+          case 'not-allowed':
+          case 'service-not-allowed':
+            // if permission to use the mic is denied, turn off auto-restart
+            autoRestart = false;
+            // determine if permission was denied by user or automatically.
+            if (new Date().getTime()-lastStartedAt < 200) {
+              invokeCallbacks(callbacks.errorPermissionBlocked, event);
+            } else {
+              invokeCallbacks(callbacks.errorPermissionDenied, event);
+            }
+            break;
         }
       };
 
-      recognition.onend     = function() {
+      recognition.onend = function() {
+        isListening = false;
         invokeCallbacks(callbacks.end);
         // annyang will auto restart if it is closed automatically and not by user action.
         if (autoRestart) {
           // play nicely with the browser, and never restart annyang automatically more than once per second
           var timeSinceLastStart = new Date().getTime()-lastStartedAt;
+          autoRestartCount += 1;
+          if (autoRestartCount % 10 === 0) {
+            if (debugState) {
+              logMessage('Speech Recognition is repeatedly stopping and starting. See http://is.gd/annyang_restarts for tips.');
+            }
+          }
           if (timeSinceLastStart < 1000) {
-            setTimeout(root.annyang.start, 1000-timeSinceLastStart);
+            setTimeout(function() {
+              annyang.start({ paused: pauseListening });
+            }, 1000-timeSinceLastStart);
           } else {
-            root.annyang.start();
+            annyang.start({ paused: pauseListening });
           }
         }
       };
 
-      recognition.onresult  = function(event) {
+      recognition.onresult = function(event) {
         if(pauseListening) {
           if (debugState) {
-            root.console.log('Speech heard, but annyang is paused');
+            logMessage('Speech heard, but annyang is paused');
           }
           return false;
         }
@@ -186,36 +251,7 @@
           results[k] = SpeechRecognitionResult[k].transcript;
         }
 
-        invokeCallbacks(callbacks.result, results);
-        var commandText;
-        // go over each of the 5 results and alternative results received (we've set maxAlternatives to 5 above)
-        for (var i = 0; i<results.length; i++) {
-          // the text recognized
-          commandText = results[i].trim();
-          if (debugState) {
-            root.console.log('Speech recognized: %c'+commandText, debugStyle);
-          }
-
-          // try and match recognized text to one of the commands on the list
-          for (var j = 0, l = commandsList.length; j < l; j++) {
-            var result = commandsList[j].command.exec(commandText);
-            if (result) {
-              var parameters = result.slice(1);
-              if (debugState) {
-                root.console.log('command matched: %c'+commandsList[j].originalPhrase, debugStyle);
-                if (parameters.length) {
-                  root.console.log('with parameters', parameters);
-                }
-              }
-              // execute the matched command
-              commandsList[j].callback.apply(this, parameters);
-              invokeCallbacks(callbacks.resultMatch, commandText, commandsList[j].originalPhrase, results);
-              return true;
-            }
-          }
-        }
-        invokeCallbacks(callbacks.resultNoMatch, results);
-        return false;
+        parseResults(results);
       };
 
       // build commands list
@@ -232,8 +268,10 @@
      * It's a good idea to call this after adding some commands first, but not mandatory.
      *
      * Receives an optional options object which supports the following options:
-     * - `autoRestart` (Boolean, default: true) Should annyang restart itself if it is closed indirectly, because of silence or window conflicts?
-     * - `continuous`  (Boolean, default: undefined) Allow forcing continuous mode on or off. Annyang is pretty smart about this, so only set this if you know what you're doing.
+     *
+     * - `autoRestart`  (boolean, default: true) Should annyang restart itself if it is closed indirectly, because of silence or window conflicts?
+     * - `continuous`   (boolean) Allow forcing continuous mode on or off. Annyang is pretty smart about this, so only set this if you know what you're doing.
+     * - `paused`       (boolean, default: true) Start annyang in paused mode.
      *
      * #### Examples:
      * ````javascript
@@ -246,9 +284,13 @@
      * @method start
      */
     start: function(options) {
-      pauseListening = false;
       initIfNeeded();
       options = options || {};
+      if (options.paused !== undefined) {
+        pauseListening = !!options.paused;
+      } else {
+        pauseListening = false;
+      }
       if (options.autoRestart !== undefined) {
         autoRestart = !!options.autoRestart;
       } else {
@@ -263,7 +305,7 @@
         recognition.start();
       } catch(e) {
         if (debugState) {
-          root.console.log(e.message);
+          logMessage(e.message);
         }
       }
     },
@@ -278,7 +320,8 @@
      */
     abort: function() {
       autoRestart = false;
-      if (isInitialized) {
+      autoRestartCount = 0;
+      if (isInitialized()) {
         recognition.abort();
       }
     },
@@ -302,13 +345,13 @@
      * @method resume
      */
     resume: function() {
-      root.annyang.start();
+      annyang.start();
     },
 
     /**
      * Turn on output of debug messages to the console. Ugly, but super-handy!
      *
-     * @param {Boolean} [newState=true] - Turn on/off debug messages
+     * @param {boolean} [newState=true] - Turn on/off debug messages
      * @method debug
      */
     debug: function(newState) {
@@ -324,7 +367,7 @@
      *
      * @param {String} language - The language (locale)
      * @method setLanguage
-     * @see [Languages](#languages)
+     * @see [Languages](https://github.com/TalAter/annyang/blob/master/docs/FAQ.md#what-languages-are-supported)
      */
     setLanguage: function(language) {
       initIfNeeded();
@@ -364,7 +407,7 @@
             registerCommand(new RegExp(cb.regexp.source, 'i'), cb.callback, phrase);
           } else {
             if (debugState) {
-              root.console.log('Can not register command: %c'+phrase, debugStyle);
+              logMessage('Can not register command: %c'+phrase, debugStyle);
             }
             continue;
           }
@@ -415,27 +458,31 @@
      *
      * * `start` - Fired as soon as the browser's Speech Recognition engine starts listening
      * * `error` - Fired when the browser's Speech Recogntion engine returns an error, this generic error callback will be followed by more accurate error callbacks (both will fire if both are defined)
+     *     Callback function will be called with the error event as the first argument
      * * `errorNetwork` - Fired when Speech Recognition fails because of a network error
+     *     Callback function will be called with the error event as the first argument
      * * `errorPermissionBlocked` - Fired when the browser blocks the permission request to use Speech Recognition.
+     *     Callback function will be called with the error event as the first argument
      * * `errorPermissionDenied` - Fired when the user blocks the permission request to use Speech Recognition.
+     *     Callback function will be called with the error event as the first argument
      * * `end` - Fired when the browser's Speech Recognition engine stops
      * * `result` - Fired as soon as some speech was identified. This generic callback will be followed by either the `resultMatch` or `resultNoMatch` callbacks.
-     *     Callback functions registered to this event will include an array of possible phrases the user said as the first argument
+     *     Callback functions for to this event will be called with an array of possible phrases the user said as the first argument
      * * `resultMatch` - Fired when annyang was able to match between what the user said and a registered command
-     *     Callback functions registered to this event will include three arguments in the following order:
+     *     Callback functions for this event will be called with three arguments in the following order:
      *       * The phrase the user said that matched a command
      *       * The command that was matched
-     *       * An array of possible alternative phrases the user might've said
-     * * `resultNoMatch` - Fired when what the user said didn't match any of the registered commands
-     *     Callback functions registered to this event will include an array of possible phrases the user might've said as the first argument
+     *       * An array of possible alternative phrases the user might have said
+     * * `resultNoMatch` - Fired when what the user said didn't match any of the registered commands.
+     *     Callback functions for this event will be called with an array of possible phrases the user might've said as the first argument
      *
      * #### Examples:
      * ````javascript
-     * annyang.addCallback('error', function () {
+     * annyang.addCallback('error', function() {
      *   $('.myErrorText').text('There was an error!');
      * });
      *
-     * annyang.addCallback('resultMatch', function (userSaid, commandText, phrases) {
+     * annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
      *   console.log(userSaid); // sample output: 'hello'
      *   console.log(commandText); // sample output: 'hello (there)'
      *   console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
@@ -458,10 +505,126 @@
         return;
       }
       callbacks[type].push({callback: cb, context: context || this});
+    },
+
+    /**
+     * Remove callbacks from events.
+     *
+     * - Pass an event name and a callback command to remove that callback command from that event type.
+     * - Pass just an event name to remove all callback commands from that event type.
+     * - Pass undefined as event name and a callback command to remove that callback command from all event types.
+     * - Pass no params to remove all callback commands from all event types.
+     *
+     * #### Examples:
+     * ````javascript
+     * annyang.addCallback('start', myFunction1);
+     * annyang.addCallback('start', myFunction2);
+     * annyang.addCallback('end', myFunction1);
+     * annyang.addCallback('end', myFunction2);
+     *
+     * // Remove all callbacks from all events:
+     * annyang.removeCallback();
+     *
+     * // Remove all callbacks attached to end event:
+     * annyang.removeCallback('end');
+     *
+     * // Remove myFunction2 from being called on start:
+     * annyang.removeCallback('start', myFunction2);
+     *
+     * // Remove myFunction1 from being called on all events:
+     * annyang.removeCallback(undefined, myFunction1);
+     * ````
+     *
+     * @param type Name of event type to remove callback from
+     * @param callback The callback function to remove
+     * @returns undefined
+     * @method removeCallback
+     */
+    removeCallback: function(type, callback) {
+      var compareWithCallbackParameter = function(cb) {
+        return cb.callback !== callback;
+      };
+      // Go over each callback type in callbacks store object
+      for (var callbackType in callbacks) {
+        if (callbacks.hasOwnProperty(callbackType)) {
+          // if this is the type user asked to delete, or he asked to delete all, go ahead.
+          if (type === undefined || type === callbackType) {
+            // If user asked to delete all callbacks in this type or all types
+            if (callback === undefined) {
+              callbacks[callbackType] = [];
+            } else {
+              // Remove all matching callbacks
+              callbacks[callbackType] = callbacks[callbackType].filter(compareWithCallbackParameter);
+            }
+          }
+        }
+      }
+    },
+
+    /**
+     * Returns true if speech recognition is currently on.
+     * Returns false if speech recognition is off or annyang is paused.
+     *
+     * @return boolean true = SpeechRecognition is on and annyang is listening
+     * @method isListening
+     */
+    isListening: function() {
+      return isListening && !pauseListening;
+    },
+
+    /**
+     * Returns the instance of the browser's SpeechRecognition object used by annyang.
+     * Useful in case you want direct access to the browser's Speech Recognition engine.
+     *
+     * @returns SpeechRecognition The browser's Speech Recognizer currently used by annyang
+     * @method getSpeechRecognizer
+     */
+    getSpeechRecognizer: function() {
+      return recognition;
+    },
+
+    /**
+     * Simulate speech being recognized. This will trigger the same events and behavior as when the Speech Recognition
+     * detects speech.
+     *
+     * Can accept either a string containing a single sentence, or an array containing multiple sentences to be checked
+     * in order until one of them matches a command (similar to the way Speech Recognition Alternatives are parsed)
+     *
+     * #### Examples:
+     * ````javascript
+     * annyang.trigger('Time for some thrilling heroics');
+     * annyang.trigger(
+     *     ['Time for some thrilling heroics', 'Time for some thrilling aerobics']
+     *   );
+     * ````
+     *
+     * @param string|array sentences A sentence as a string or an array of strings of possible sentences
+     * @returns undefined
+     * @method trigger
+     */
+    trigger: function(sentences) {
+      if(!annyang.isListening()) {
+        if (debugState) {
+          if (!isListening) {
+            logMessage('Cannot trigger while annyang is aborted');
+          } else {
+            logMessage('Speech heard, but annyang is paused');
+          }
+        }
+        return;
+      }
+
+      if (!Array.isArray(sentences)) {
+        sentences = [sentences];
+      }
+
+      parseResults(sentences);
     }
   };
 
-}).call(this);
+  return annyang;
+
+}));
 
 /**
  * # Good to Know
@@ -482,7 +645,7 @@
  * var commands = {
  *   // annyang will capture anything after a splat (*) and pass it to the function.
  *   // e.g. saying "Show me Batman and Robin" will call showFlickr('Batman and Robin');
- *   'show me *term': showFlickr,
+ *   'show me *tag': showFlickr,
  *
  *   // A named variable is a one word variable, that can fit anywhere in your command.
  *   // e.g. saying "calculate October stats" will call calculateStats('October');
@@ -493,7 +656,7 @@
  *   'say hello (to my little) friend': greeting
  * };
  *
- * var showFlickr = function(term) {
+ * var showFlickr = function(tag) {
  *   var url = 'http://api.flickr.com/services/rest/?tags='+tag;
  *   $.getJSON(url);
  * }
@@ -525,107 +688,5 @@
  *   'calculate :quarter stats': {'regexp': /^calculate (January|April|July|October) stats$/, 'callback': calculateFunction}
  * }
  ````
- *
- * ## Languages
- *
- * While there isn't an official list of supported languages (cultures? locales?), here is a list based on [anecdotal evidence](http://stackoverflow.com/a/14302134/338039).
- *
- * * Afrikaans `af`
- * * Basque `eu`
- * * Bulgarian `bg`
- * * Catalan `ca`
- * * Arabic (Egypt) `ar-EG`
- * * Arabic (Jordan) `ar-JO`
- * * Arabic (Kuwait) `ar-KW`
- * * Arabic (Lebanon) `ar-LB`
- * * Arabic (Qatar) `ar-QA`
- * * Arabic (UAE) `ar-AE`
- * * Arabic (Morocco) `ar-MA`
- * * Arabic (Iraq) `ar-IQ`
- * * Arabic (Algeria) `ar-DZ`
- * * Arabic (Bahrain) `ar-BH`
- * * Arabic (Lybia) `ar-LY`
- * * Arabic (Oman) `ar-OM`
- * * Arabic (Saudi Arabia) `ar-SA`
- * * Arabic (Tunisia) `ar-TN`
- * * Arabic (Yemen) `ar-YE`
- * * Czech `cs`
- * * Dutch `nl-NL`
- * * English (Australia) `en-AU`
- * * English (Canada) `en-CA`
- * * English (India) `en-IN`
- * * English (New Zealand) `en-NZ`
- * * English (South Africa) `en-ZA`
- * * English(UK) `en-GB`
- * * English(US) `en-US`
- * * Finnish `fi`
- * * French `fr-FR`
- * * Galician `gl`
- * * German `de-DE`
- * * Hebrew `he`
- * * Hungarian `hu`
- * * Icelandic `is`
- * * Italian `it-IT`
- * * Indonesian `id`
- * * Japanese `ja`
- * * Korean `ko`
- * * Latin `la`
- * * Mandarin Chinese `zh-CN`
- * * Traditional Taiwan `zh-TW`
- * * Simplified China zh-CN `?`
- * * Simplified Hong Kong `zh-HK`
- * * Yue Chinese (Traditional Hong Kong) `zh-yue`
- * * Malaysian `ms-MY`
- * * Norwegian `no-NO`
- * * Polish `pl`
- * * Pig Latin `xx-piglatin`
- * * Portuguese `pt-PT`
- * * Portuguese (Brasil) `pt-BR`
- * * Romanian `ro-RO`
- * * Russian `ru`
- * * Serbian `sr-SP`
- * * Slovak `sk`
- * * Spanish (Argentina) `es-AR`
- * * Spanish (Bolivia) `es-BO`
- * * Spanish (Chile) `es-CL`
- * * Spanish (Colombia) `es-CO`
- * * Spanish (Costa Rica) `es-CR`
- * * Spanish (Dominican Republic) `es-DO`
- * * Spanish (Ecuador) `es-EC`
- * * Spanish (El Salvador) `es-SV`
- * * Spanish (Guatemala) `es-GT`
- * * Spanish (Honduras) `es-HN`
- * * Spanish (Mexico) `es-MX`
- * * Spanish (Nicaragua) `es-NI`
- * * Spanish (Panama) `es-PA`
- * * Spanish (Paraguay) `es-PY`
- * * Spanish (Peru) `es-PE`
- * * Spanish (Puerto Rico) `es-PR`
- * * Spanish (Spain) `es-ES`
- * * Spanish (US) `es-US`
- * * Spanish (Uruguay) `es-UY`
- * * Spanish (Venezuela) `es-VE`
- * * Swedish `sv-SE`
- * * Turkish `tr`
- * * Zulu `zu`
- *
- * ## Developing
- *
- * Prerequisities: node.js
- *
- * First, install dependencies in your local annyang copy:
- *
- *     npm install
- *
- * Make sure to run the default grunt task after each change to annyang.js. This can also be done automatically by running:
- *
- *     grunt watch
- *
- * You can also run a local server for testing your work with:
- *
- *     grunt dev
- *
- * Point your browser to `https://localhost:8443/demo/` to see the demo page.
- * Since it's using self-signed certificate, you might need to click *"Proceed Anyway"*.
  *
  */

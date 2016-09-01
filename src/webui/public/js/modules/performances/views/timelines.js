@@ -1,7 +1,7 @@
 define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'bootbox', './node',
         '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
-        'lib/api', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar', 'scrollTo'],
-    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition, api) {
+        'lib/api', 'annyang', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar', 'scrollTo'],
+    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition, api, annyang) {
         return Marionette.LayoutView.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
@@ -552,31 +552,35 @@ define(['application', 'marionette', 'tpl!./templates/timelines.tpl', 'd3', 'boo
                     this.disableChat();
             },
             enableChat: function () {
-                var self = this;
-                this.chatEnabled = true;
-                if (speechRecognition) {
-                    this.speechRecognition = speechRecognition.getInstance();
-                    speechRecognition.continuous = true;
-
-                    this.speechRecognition.onresult = function (event) {
-                        var mostConfidentResult = speechRecognition.getMostConfidentResult(event.results);
-                        if (mostConfidentResult) api.topics.listen_node_input.publish({data: mostConfidentResult.transcript});
-                    };
-
-                    this.speechRecognition.onend = function () {
-                        if (self.chatEnabled)
-                            self.enableChat();
-                    };
-
-                    this.speechRecognition.start();
+                if (annyang) {
+                    annyang.abort();
+                    annyang.removeCommands();
+                    annyang.setLanguage('en-US');
+                    annyang.addCallback('start', function () {
+                        console.log('starting speech recognition');
+                    });
+                    annyang.addCallback('end', function () {
+                        console.log('end of speech');
+                    });
+                    annyang.addCallback('error', function (error) {
+                        console.log('speech recognition error:');
+                        console.log(error);
+                    });
+                    annyang.addCallback('result', function (results) {
+                        if (results.length) {
+                            api.topics.listen_node_input.publish({data: results[0]});
+                            api.loginfo('speech recognised: ' + results[0]);
+                        }
+                    });
+                    annyang.start({
+                        autoRestart: true,
+                        continuous: true,
+                        paused: false
+                    });
                 }
             },
             disableChat: function () {
-                this.chatEnabled = false;
-                if (this.speechRecognition) {
-                    this.speechRecognition.abort();
-                    this.speechRecognition = null;
-                }
+                if (annyang) annyang.abort();
             }
         });
     });
