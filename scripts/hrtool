@@ -214,6 +214,10 @@ install_other_deps() {
     $SUDO apt-get -y install expect
 
     install_manyears_deps
+
+    # For audio recording
+    sudo apt-get -y install pulseaudio
+    sudo apt-get -y install python-pyaudio
 }
 
 install_manyears_deps() {
