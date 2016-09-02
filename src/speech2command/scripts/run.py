@@ -3,7 +3,7 @@ import os
 import rospy
 import logging
 from chatbot.msg import ChatMessage
-from speech2command.commands import MotionCommand, MathCommand, ForwardCommand, SleepingCommand
+from speech2command.commands import MotionCommand, MathCommand, ForwardCommand, WholeShowCommand
 
 logger = logging.getLogger('hr.speech2command.speech2command')
 CWD = os.path.dirname(os.path.abspath(__file__))
@@ -13,7 +13,7 @@ class Speech2Command(object):
     def __init__(self, config):
         rospy.Subscriber('speech', ChatMessage, self.handle_speech)
         self.command_chain = [
-            SleepingCommand(),
+            WholeShowCommand(),
             ForwardCommand('chatbot_speech')]
 
     def handle_speech(self, msg):
