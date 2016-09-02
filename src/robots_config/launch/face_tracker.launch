@@ -32,7 +32,7 @@
 
         <group if="$(arg pi_vision)">
             <arg name="auto_face_tracking" default="True" />
-            <node pkg="pi_face_tracker" name="body_face_tracker" type="face_tracker.py" output="screen">
+            <node pkg="pi_face_tracker" name="body_face_tracker" type="face_tracker.py" >
 
                 <!--remap the topics if using multiple cameras -->
                 <remap from="input_rgb_image" to="camera/image_raw" />
