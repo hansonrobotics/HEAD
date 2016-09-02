@@ -4,7 +4,11 @@ cmake_minimum_required(VERSION 2.8.3)
 project(pi_face_tracker)
 # Load catkin and all dependencies required for this package
 # TODO: remove all from COMPONENTS that are not catkin packages.
-find_package(catkin REQUIRED COMPONENTS rospy roscpp ros2opencv std_msgs sensor_msgs geometry_msgs cv_bridge image_transport openni_camera message_generation)
+find_package(catkin REQUIRED COMPONENTS
+    rospy roscpp ros2opencv std_msgs sensor_msgs geometry_msgs cv_bridge
+    image_transport openni_camera message_generation
+    dynamic_reconfigure
+)
 
 # include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 # CATKIN_MIGRATION: removed during catkin migration
@@ -48,6 +52,10 @@ add_service_files(
   SetROI.srv
 )
 
+generate_dynamic_reconfigure_options(
+  cfg/PiFaceTracker.cfg
+)
+
 #common commands for building c++ executables and libraries
 #add_library(${PROJECT_NAME} src/example.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)
@@ -71,6 +79,11 @@ catkin_package(
     CATKIN_DEPENDS # TODO
     INCLUDE_DIRS # TODO include
     LIBRARIES # TODO
+)
+
+install(PROGRAMS
+    scripts/face_tracker.py
+    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 find_package(catkin COMPONENTS rostest)
