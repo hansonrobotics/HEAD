@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
  - tracker.launch
  -
@@ -13,25 +14,25 @@
     <arg name="viz" default="False"/>
     <arg name="offline" default="False"/>
     <arg name="one_camera_setup" default="True"/>
+
     <group if="$(arg one_camera_setup)">
-    <group unless="$(arg testing)">
-    <node pkg="usb_cam" type="usb_cam_node" name="camera">
-      <param name="video_device" value="/dev/video0"/>
-      <param name="pixel_format" value="yuyv"/>
-      <param name="width" value="640"/>
-      <param name="height" value="480"/>
-      <param name="camera_info_url" value="package://robots_config/robot/camera.yaml"/>
-      <param name="camera_name" value="camera"/>
-      <param name="camera_frame_id" value="camera"/>
-      <param name="frame_id" value="camera"/>
-    </node>
-    <node ns="camera" name="cam_calib" pkg="image_proc" type="image_proc"/>
-    </group>
+        <group unless="$(arg testing)">
+            <node pkg="usb_cam" type="usb_cam_node" name="camera">
+                <param name="video_device" value="/dev/video0"/>
+                <param name="pixel_format" value="yuyv"/>
+                <param name="width" value="640"/>
+                <param name="height" value="480"/>
+                <param name="camera_info_url" value="package://robots_config/robot/camera.yaml"/>
+                <param name="camera_name" value="camera"/>
+                <param name="camera_frame_id" value="camera"/>
+                <param name="frame_id" value="camera"/>
+            </node>
+            <node ns="camera" name="cam_calib" pkg="image_proc" type="image_proc"/>
+        </group>
 
         <group if="$(arg pi_vision)">
             <arg name="auto_face_tracking" default="True" />
-            <node pkg="pi_face_tracker" name="body_face_tracker"
-                  type="face_tracker.py" output="screen">
+            <node pkg="pi_face_tracker" name="body_face_tracker" type="face_tracker.py" output="screen">
 
                 <!--remap the topics if using multiple cameras -->
                 <remap from="input_rgb_image" to="camera/image_raw" />
@@ -54,69 +55,63 @@
                   camera_fov_x: 1.42
                 </rosparam>
 
-                <param name="cascade_frontal_alt"
-                       value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+                <param name="cascade_frontal_alt" value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
             </node>
-            </group>
+        </group>
 
-         <group unless="$(arg pi_vision)">
+        <group unless="$(arg pi_vision)">
             <include file="$(find cmt_tracker)/launch/cmt_launcher.launch" ns="camera">
-            <arg name="testing" value="$(arg testing)"/>
-            <arg name="offline" value="$(arg offline)"/>
+                <arg name="testing" value="$(arg testing)"/>
+                <arg name="offline" value="$(arg offline)"/>
             </include>
-         </group>
-
+        </group>
     </group>
 
     <group unless="$(arg one_camera_setup)">
-    <group unless="$(arg testing)">
+        <group unless="$(arg testing)">
+            <node pkg="usb_cam" type="usb_cam_node" name="left_eye_camera">
+                <param name="video_device" value="/dev/video1"/>
+                <param name="pixel_format" value="yuyv"/>
+                <param name="width" value="320"/>
+                <param name="height" value="240"/>
+                <param name="camera_info_url" value="package://robots_config/robot/camera.yaml"/>
+                <param name="camera_name" value="left_eye_camera"/>
+                <param name="camera_frame_id" value="left_eye_camera"/>
+                <param name="framerate" value="15"/>
+                <param name="frame_id" value="left_eye_camera"/>
+            </node>
 
-    <node pkg="usb_cam" type="usb_cam_node" name="left_eye_camera">
-      <param name="video_device" value="/dev/video1"/>
-      <param name="pixel_format" value="yuyv"/>
-      <param name="width" value="320"/>
-      <param name="height" value="240"/>
-      <param name="camera_info_url" value="package://robots_config/robot/camera.yaml"/>
-      <param name="camera_name" value="left_eye_camera"/>
-      <param name="camera_frame_id" value="left_eye_camera"/>
-      <param name="framerate" value="15"/>
-      <param name="frame_id" value="left_eye_camera"/>
-    </node>
+            <node pkg="usb_cam" type="usb_cam_node" name="right_eye_camera">
+                <param name="video_device" value="/dev/video2"/>
+                <param name="pixel_format" value="yuyv"/>
+                <param name="width" value="320"/>
+                <param name="height" value="240"/>
+                <param name="camera_info_url" value="package://robots_config/robot/camera.yaml"/>
+                <param name="camera_name" value="right_eye_camera"/>
+                <param name="camera_frame_id" value="right_eye_camera"/>
+                <param name="framerate" value="15"/>
+                <param name="frame_id" value="right_eye_camera"/>
+            </node>
 
-    <node pkg="usb_cam" type="usb_cam_node" name="right_eye_camera">
-      <param name="video_device" value="/dev/video2"/>
-      <param name="pixel_format" value="yuyv"/>
-      <param name="width" value="320"/>
-      <param name="height" value="240"/>
-      <param name="camera_info_url" value="package://robots_config/robot/camera.yaml"/>
-      <param name="camera_name" value="right_eye_camera"/>
-      <param name="camera_frame_id" value="right_eye_camera"/>
-      <param name="framerate" value="15"/>
-      <param name="frame_id" value="right_eye_camera"/>
-    </node>
+            <node pkg="usb_cam" type="usb_cam_node" name="chest_camera">
+                <param name="video_device" value="/dev/video0"/>
+                <param name="pixel_format" value="yuyv"/>
+                <param name="width" value="320"/>
+                <param name="height" value="240"/>
+                <param name="camera_info_url" value="package://robots_config/robot/camera.yaml"/>
+                <param name="camera_name" value="chest_camera"/>
+                <param name="camera_frame_id" value="chest_camera"/>
+                <param name="frame_id" value="chest_camera"/>
+            </node>
 
-    <node pkg="usb_cam" type="usb_cam_node" name="chest_camera">
-      <param name="video_device" value="/dev/video0"/>
-      <param name="pixel_format" value="yuyv"/>
-      <param name="width" value="320"/>
-      <param name="height" value="240"/>
-      <param name="camera_info_url" value="package://robots_config/robot/camera.yaml"/>
-      <param name="camera_name" value="chest_camera"/>
-      <param name="camera_frame_id" value="chest_camera"/>
-      <param name="frame_id" value="chest_camera"/>
-    </node>
+            <node ns="chest_camera" name="cam_calib" pkg="image_proc" type="image_proc"/>
+            <node ns="left_eye_camera" name="cam_calib" pkg="image_proc" type="image_proc"/>
+            <node ns="right_eye_camera" name="cam_calib" pkg="image_proc" type="image_proc"/>
 
-    <node ns="chest_camera" name="cam_calib" pkg="image_proc" type="image_proc"/>
-    <node ns="left_eye_camera" name="cam_calib" pkg="image_proc" type="image_proc"/>
-    <node ns="right_eye_camera" name="cam_calib" pkg="image_proc" type="image_proc"/>
-
+        </group>
     </group>
 
+    <group if="$(arg viz)">
+        <include file="$(find robots_config)/launch/perception.launch" />
     </group>
-
-
-
-<group if="$(arg viz)">
-    <include file="$(find robots_config)/launch/perception.launch" />
-</group>
 </launch>
