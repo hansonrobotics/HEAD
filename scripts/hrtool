@@ -213,6 +213,9 @@ install_other_deps() {
     # For telnet automation
     $SUDO apt-get -y install expect
 
+    # For performances
+    $SUDO pip2 install transitions
+
     install_manyears_deps
 }
 

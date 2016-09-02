@@ -48,6 +48,7 @@ class WholeShow(Machine):
         self.soma_pub.publish(self._getSoma('sleep', 1))
         self.soma_pub.publish(self._getSoma('normal', 0))
         # Look down
+
         self.look_pub.publish(Target(1,0,-0.15,0))
 
     def stop_sleeping(self):
