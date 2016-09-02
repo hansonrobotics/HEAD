@@ -274,23 +274,29 @@ class pause(Node):
 
     def start(self, run_time):
         self.runner.pause()
+
+        def resume(msg=None):
+            print 'resuming'
+            if not self.finished:
+                self.runner.resume()
+            if self.subscriber:
+                self.subscriber.unregister()
+            if self.timer:
+                self.timer.cancel()
+
         if 'topic' in self.data:
             topic = self.data['topic'].strip()
-            if topic:
-                def resume(msg=None):
-                    if not self.finished:
-                        self.runner.resume()
-                    if self.subscriber:
-                        self.subscriber.unregister()
-                    if self.timer:
-                        self.timer.cancel()
-
-                if topic[0] != '/':
-                    topic = '/' + self.runner.robot_name + '/' + topic
-
+            if topic and topic[0] != '/':
+                topic = '/' + self.runner.robot_name + '/' + topic
                 self.subscriber = rospy.Subscriber(topic, String, resume)
-        if 'timeout' in self.data and self.data['timeout'] > 0.1:
-            self.timer = Timer(self.data['timeout'], resume)
+
+        try:
+            timeout = int(self.data['timeout'])
+            if timeout > 0.1:
+                self.timer = Timer(timeout, resume)
+                self.timer.start()
+        except (ValueError, KeyError) as e:
+            logger.error(e)
 
     def stop(self, run_time):
         if self.subscriber:
