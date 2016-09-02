@@ -277,13 +277,14 @@ def reload_characters(**kwargs):
     with sync:
         characters = None
         logger.info("Reloading")
-        revision = kwargs.get('revision')
-        if revision:
-            REVISION = revision
         try:
             characters = load_characters(CHARACTER_PATH)
             del CHARACTERS[:]
             CHARACTERS = characters
+            revision = kwargs.get('revision')
+            if revision:
+                REVISION = revision
+                logger.info("Revision {}".format(revision))
         except Exception as ex:
             logger.error("Reloading characters error {}".format(ex))
 
