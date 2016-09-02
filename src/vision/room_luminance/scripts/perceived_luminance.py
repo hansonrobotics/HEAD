@@ -1,34 +1,41 @@
 #!/usr/bin/env python
-from sensor_msgs.msg import Image
-
-from pi_face_tracker.msg import FaceEvent,Faces
-from room_luminance.msg import Luminance
-from cv_bridge import CvBridge, CvBridgeError
+import sys
+import math
+import time
+import numpy as np
 from collections import deque
+
 import roslib
 import rospy
 import cv2
-import sys
-import  numpy as np
-import math
-import time
 
+from cv_bridge import CvBridge, CvBridgeError
+from sensor_msgs.msg import Image
+from pi_face_tracker.msg import FaceEvent,Faces
+from room_luminance.msg import Luminance
 
 roslib.load_manifest('room_luminance')
 
 '''
-This Class contains the states and behaviours required to get the amount of light in the captured frame and detects object blocks above N% of coverage.
+This Class contains the states and behaviours required to get the amount of
+light in the captured frame and detects object blocks above N% of coverage.
  '''
+
+d = deque()
 
 class ROIluminance:
 
- # initialize publishers, subscribers and static members inside class constructor.
+  # initialize publishers, subscribers and static members inside class
+  # constructor.
   def __init__(self):
-    self.pub = rospy.Publisher('/opencog/room_luminance', Luminance, queue_size=10)
+    self.pub = rospy.Publisher(
+        '/opencog/room_luminance', Luminance, queue_size=10)
 
     self.bridge = CvBridge()
-    self.image_sub = rospy.Subscriber("/camera/image_raw", Image, self.Visibility)
-    self.face_event = rospy.Subscriber("/camera/face_locations", Faces, self.count_faces) # event = new_face: informs released/uncovered screen
+    self.image_sub = rospy.Subscriber(
+        "/camera/image_raw", Image, self.Visibility)
+    self.face_event = rospy.Subscriber(
+        "/camera/face_locations", Faces, self.count_faces) # event = new_face: informs released/uncovered screen
 
     self.cntThresh = 100
     self.count = 25
@@ -41,10 +48,9 @@ class ROIluminance:
     self.face = 0
     self.waittime = 0
 
-
-
   '''
-  # BGR/True Color based: could be used for other feature extraction. i.e hsv would be more than enough for the current req.
+  # BGR/True Color based: could be used for other feature extraction.
+    i.e hsv would be more than enough for the current req.
 
   def luminance_BGR(self, image_raw_bgr):
       #split into channels
@@ -64,7 +70,6 @@ class ROIluminance:
       return [Y1, Y2]
   '''
 
-
   # HSV based Room Luminance Detection
   def luminance_HSV(self, image_raw_hsv):
       h, s, v = cv2.split(image_raw_hsv)
@@ -81,25 +86,29 @@ class ROIluminance:
 
  # calculates the percent of screen covered by any object
   def objectBlock(self, image_raw):
-    # image_raw is the absolute difference of the reference and the current frame
-    # get the hight and width of a frame: important because of varity of camera hxw in different machines
+    # image_raw is the absolute difference of the reference and the current
+    # frame get the hight and width of a frame: important because of varity
+    # of camera hxw in different machines
     h, w = image_raw.shape
     self.totalArea = float(h * w)
 
     thresh = cv2.threshold(image_raw, 25, 255, cv2.THRESH_BINARY)[1]
     thresh = cv2.dilate(thresh, None, iterations=10)
 
-    (cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    (cnts, _) = cv2.findContours(
+        thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     for c in cnts:
-        # Discard objects/contours that usually does not have relevance if they are created by close enough/blocking objects
+        # Discard objects/contours that usually does not have relevance if
+        # they are created by close enough/blocking objects
         if cv2.contourArea(c) <= self.cntThresh:
             pass
         self.RefArea = self.RefArea + cv2.contourArea(c)
     return math.ceil(((self.RefArea / self.totalArea) * 100)) #return the percent of covered space and round up the result
 
 
-  # Regardless of the state of coverage this function returns  category of room light in general manner
+  # Regardless of the state of coverage this function returns
+  # category of room light in general manner
   def classifyLuminance(self, lumene):
     if lumene <= 25:
         return "Dark"
@@ -119,7 +128,8 @@ class ROIluminance:
           self.Flag = 0
 
 
-  #checks for sudden changes from bright to dar or vice versa w/ 5 tolerance frames
+  # checks for sudden changes from bright to dar or
+  # vice versa w/ 5 tolerance frames
   def sudden_change(self, room_light):
       dict = {"Dark": -10, "Nominal": 1, "Bright": 10}
       if len(d) < 5:
@@ -155,7 +165,8 @@ class ROIluminance:
             self.count = 1
         self.count += 1
 
-        #absolute difference of the ref. frame and the current frame - purpose:detect changes
+        # absolute difference of the ref.
+        # frame and the current frame - purpose:detect changes
         diff = cv2.absdiff(self.ref, gray)
 
         # get the luminance of HSV frame and put it to lumene var.
@@ -173,8 +184,6 @@ class ROIluminance:
 
         self.RefArea = 0
         room_light =self.classifyLuminance(lumene)
-
-
 
         msg = Luminance()
         msg.covered = self.Flag
@@ -196,8 +205,6 @@ class ROIluminance:
 def main(args):
     rospy.init_node('perceived_luminance', anonymous=True)
     ROIluminance()
-    global d
-    d = deque()
     try:
         rospy.spin()
     except KeyboardInterrupt:
