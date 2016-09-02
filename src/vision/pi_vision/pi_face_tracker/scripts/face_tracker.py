@@ -30,8 +30,6 @@
 
 """
 
-import roslib
-roslib.load_manifest('pi_face_tracker')
 import rospy
 import cv
 import cv2
@@ -39,7 +37,7 @@ import sys
 from sensor_msgs.msg import RegionOfInterest, Image
 from math import *
 from ros2opencv.ros2opencv import ROS2OpenCV
-from pi_face_tracker.srv import *
+from pi_face_tracker.srv import KeyCommand
 from pi_face_tracker.msg import Faces
 from pi_face_tracker.msg import Face
 from pi_face_tracker.msg import FaceEvent
@@ -47,6 +45,8 @@ from geometry_msgs.msg import Point
 import time
 import os
 import logging
+from pi_face_tracker.cfg import PiFaceTrackerConfig
+from dynamic_reconfigure.server import Server
 
 logger = logging.getLogger('hr.pi_vision.pi_face_tracker')
 
@@ -458,6 +458,8 @@ class PatchTracker(ROS2OpenCV):
 
         ROS2OpenCV.__init__(self, node_name)
 
+        self.enable = False
+
         self.node_name = node_name
 
         self.auto_face_tracking = rospy.get_param("~auto_face_tracking", True)
@@ -539,6 +541,10 @@ class PatchTracker(ROS2OpenCV):
 
 
     def process_image(self, cv_image):
+        if not self.enable:
+            grey = cv.CreateImage(self.image_size, 8, 1)
+            cv.CvtColor(cv_image, grey, cv.CV_BGR2GRAY)
+            return grey
 
         self.frame_count = self.frame_count + 1
         haar = False
@@ -642,7 +648,7 @@ class PatchTracker(ROS2OpenCV):
         for f in faces:
             face = self.detect_box.getFace(f)
             fname = os.path.join(self.image_dir, "Face{}.jpg".format(f))
-            logger.info(fname)
+            logger.info('Image file name: {}'.format(fname))
             img = self.cv2_image[face.pt1[1]:face.pt2[1], face.pt1[0]:face.pt2[0]]
             cv2.imwrite(fname,img)
 
@@ -966,6 +972,12 @@ class PatchTracker(ROS2OpenCV):
         self.detect_box = (req.roi.x_offset, req.roi.y_offset, req.roi.width, req.roi.height)
         return SetROIResponse()
 
+    def reconfig(self, config, level):
+        self.enable = config.enable
+        if not self.enable:
+            self.detect_box.faces.clear()
+        return config
+
 def main(args):
     """ Display a help message if appropriate """
     help_message =  "Hot keys: \n" \
@@ -980,6 +992,7 @@ def main(args):
 
     """ Fire up the Face Tracker node """
     PT = PatchTracker("pi_face_tracker")
+    Server(PiFaceTrackerConfig, PT.reconfig)
 
     try:
       rospy.spin()
