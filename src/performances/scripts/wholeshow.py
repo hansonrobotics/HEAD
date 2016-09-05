@@ -93,6 +93,15 @@ class WholeShow(Machine):
                 on = False
             except:
                 pass
+        if 'introduce' in speech or \
+            'tell us about yourself' in speech:
+            try:
+                self.perform()
+                self.performance_runner('intro')
+                on = False
+            except:
+                pass
+
         return srv.SpeechOnResponse(on)
 
     def performances_cb(self,msg):
