@@ -86,7 +86,7 @@ class WholeShow(Machine):
             except:
                 pass
         if 'play rock paper' in speech or \
-            'play rock paper' in speech:
+            'play rock-paper' in speech:
             try:
                 self.perform()
                 self.performance_runner('rps')
