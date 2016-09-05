@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import logging
+
+from itsdangerous import NoneAlgorithm
 from transitions import *
 import rospy
 import yaml
@@ -14,22 +16,25 @@ import time
 logger = logging.getLogger('hr.performance.wholeshow')
 import performances.srv as srv
 from performances.msg import Event
+import subprocess
 
 class WholeShow(Machine):
 
     def __init__(self):
         # States for wholeshow
-        states = ['sleeping', 'interacting', 'performing']
+        states = ['sleeping', 'interacting', 'performing', 'shutting']
         Machine.__init__(self, states=states, initial='interacting')
         # Transitions
         self.add_transition('wake_up', 'sleeping', 'interacting')
         # Transitions
         self.add_transition('perform', 'interacting', 'performing')
+        self.add_transition('shut', 'sleeping', 'shutting')
         # States handling
         self.on_enter_sleeping("start_sleeping")
         self.on_exit_sleeping("stop_sleeping")
         self.on_enter_interacting("start_interacting")
         self.on_exit_interacting("stop_interacting")
+        self.on_enter_shutting("system_shutdown")
         # ROS Handling
         rospy.init_node('WholeShow')
         self.sub_sleep = rospy.Subscriber('sleeper', String, self.sleep_cb)
@@ -44,7 +49,7 @@ class WholeShow(Machine):
         rospy.wait_for_service('/blender_api/get_animation_length')
         time.sleep(0.1)
         self.to_sleeping()
-
+        self.after_performance = None
 
     """States callbacks """
     def start_sleeping(self):
@@ -101,16 +106,22 @@ class WholeShow(Machine):
                 on = False
             except:
                 pass
-
+        if 'shutdown' in speech:
+            try:
+                self.shut()
+            except:
+                pass
         return srv.SpeechOnResponse(on)
 
     def performances_cb(self,msg):
         if msg.event == 'running':
             self.to_performing()
-        if msg.event == 'finished':
-            self.to_interacting()
-        if msg.event == 'idle':
-            self.to_interacting()
+        if msg.event == 'finished'\
+            or msg.event == 'idle':
+            if self.after_performance:
+                self.after_performance()
+            else:
+                self.to_interacting()
 
     def sleep_cb(self, msg):
         if msg.data == 'sleep':
@@ -130,6 +141,12 @@ class WholeShow(Machine):
         s.magnitude = magnitude
         s.rate = 1
         return s
+
+    def system_shutdown(self,shutdown):
+        subprocess.call(['sudo', 'shutdown', '-P', 'now'])
+
+
+
 
 if __name__ == '__main__':
     WholeShow()
