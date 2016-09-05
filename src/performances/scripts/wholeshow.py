@@ -56,6 +56,7 @@ class WholeShow(HierarchicalMachine):
         # Parse on load.
         # TODO make sure we reload those once performances are saved.
         self.find_performances_properties()
+        print  self.performances_keywords
 
     """States callbacks """
     def start_sleeping(self):
@@ -151,11 +152,12 @@ class WholeShow(HierarchicalMachine):
         path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
         for root, dirnames, filenames in os.walk(path):
             if '.properties' in filenames:
-                self.add_performance(path, root)
+                self.add_performance(path, os.path.relpath(root, path))
 
     def add_performance(self, path, performance):
-        properties_file = os.path.join(path, performance)
-        with open(properties_file, 'w') as f:
+        print (performance)
+        properties_file = os.path.join(path, performance, '.properties')
+        with open(properties_file, 'r') as f:
             properties = yaml.load(f.read())
         if 'keywords' in properties.keys() and properties['keywords']:
             self.performances_keywords[performance] = properties['keywords']
@@ -168,7 +170,7 @@ class WholeShow(HierarchicalMachine):
                 # Currently only simple matching
                 if keyword in speech:
                     performances.append(performance)
-        return performance
+        return performances
 
 
 if __name__ == '__main__':
