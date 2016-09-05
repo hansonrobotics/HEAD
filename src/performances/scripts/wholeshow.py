@@ -2,39 +2,39 @@
 
 import logging
 
-from itsdangerous import NoneAlgorithm
 from transitions import *
+from transitions.extensions import HierarchicalMachine
 import rospy
-import yaml
-import re
 import string
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState, SetGesture, Target, SomaState
 from threading import Timer
 import time
-logger = logging.getLogger('hr.performance.wholeshow')
 import performances.srv as srv
 from performances.msg import Event
 import subprocess
 
-class WholeShow(Machine):
+logger = logging.getLogger('hr.performance.wholeshow')
+
+
+class WholeShow(HierarchicalMachine):
 
     def __init__(self):
         # States for wholeshow
-        states = ['sleeping', 'interacting', 'performing', 'shutting']
-        Machine.__init__(self, states=states, initial='interacting')
+        states = [{'name': 'sleeping', 'children':['shutting']}, 'interacting', 'performing', ]
+        HierarchicalMachine.__init__(self, states=states, initial='interacting')
         # Transitions
         self.add_transition('wake_up', 'sleeping', 'interacting')
         # Transitions
         self.add_transition('perform', 'interacting', 'performing')
-        self.add_transition('shut', 'sleeping', 'shutting')
+        self.add_transition('shut', 'sleeping', 'sleeping_shutting')
         # States handling
         self.on_enter_sleeping("start_sleeping")
         self.on_exit_sleeping("stop_sleeping")
         self.on_enter_interacting("start_interacting")
         self.on_exit_interacting("stop_interacting")
-        self.on_enter_shutting("system_shutdown")
+        self.on_enter_sleeping_shutting("system_shutdown")
         # ROS Handling
         rospy.init_node('WholeShow')
         self.sub_sleep = rospy.Subscriber('sleeper', String, self.sleep_cb)
@@ -142,9 +142,8 @@ class WholeShow(Machine):
         s.rate = 1
         return s
 
-    def system_shutdown(self,shutdown):
+    def system_shutdown(self):
         subprocess.call(['sudo', 'shutdown', '-P', 'now'])
-
 
 
 
