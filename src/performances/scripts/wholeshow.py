@@ -100,6 +100,8 @@ class WholeShow(Machine):
             self.to_performing()
         if msg.event == 'finished':
             self.to_interacting()
+        if msg.event == 'idle':
+            self.to_interacting()
 
     def sleep_cb(self, msg):
         if msg.data == 'sleep':
