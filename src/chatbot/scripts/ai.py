@@ -115,9 +115,10 @@ class Chatbot():
 
   def _speech_event_callback(self, msg):
     if msg.data == 'start':
+      logger.info("Speech is started")
       self.speech = True
     if msg.data == 'stop':
-      rospy.sleep(2)
+      logger.info("Speech is stopped")
       self.speech = False
 
   def _request_callback(self, chat_message):
@@ -130,6 +131,10 @@ class Chatbot():
       rospy.sleep(0.5)
       self._response_publisher.publish(String('Okay'))
       self._affect_publisher.publish(String('sad'))
+      return
+
+    if self.speech:
+      logger.info("Robot is talking, ignore question")
       return
 
     lang = rospy.get_param('lang', None)
