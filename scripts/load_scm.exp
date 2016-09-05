@@ -33,6 +33,8 @@ if { [info exist ::env(OC_SA)] && $::env(OC_SA) == 1 } {
 # Load the AIML rules and pickup lines
 send "(psi-halt)\n"
 send "(load \"$OC_AIML_FILE\")\n"
+send "(load-generic)\n"
 send "(if (not (psi-running?)) (psi-run))\n"
+send ".\n.\n"
 
 interact

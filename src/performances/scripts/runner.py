@@ -117,6 +117,8 @@ class Runner:
                     for node in data['nodes']:
                         if not 'start_time' in node:
                             node['start_time'] = 0
+                        if node['name'] == 'pause':
+                            node['duration'] = 0.1
                         duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
                         node['start_time'] += offset
                     offset += duration
@@ -143,14 +145,16 @@ class Runner:
 
     def run(self, start_time):
         self.stop()
-
+        # Wait for worker to stop performance and enter waiting before proceeding
+        self.run_condition.acquire()
         with self.lock:
+            rospy.logerr(start_time)
             if len(self.running_nodes) > 0:
                 self.running = True
                 self.start_time = start_time
                 self.start_timestamp = time.time()
                 # notify worker thread
-                self.run_condition.acquire()
+
                 self.run_condition.notify()
                 self.run_condition.release()
                 return True

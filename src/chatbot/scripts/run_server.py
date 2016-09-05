@@ -125,7 +125,9 @@ def _bot_names():
 def _start_session():
     botname = request.args.get('botname')
     user = request.args.get('user')
-    sid = session_manager.start_session(user)
+    test = request.args.get('test', 'false')
+    test = test.lower() == 'true'
+    sid = session_manager.start_session(user, test)
     sess = session_manager.get_session(sid)
     sess.sdata.botname = botname
     sess.sdata.user = user
@@ -203,6 +205,7 @@ def _log():
                 yield row
     return Response(generate(), mimetype='text/plain')
 
+
 @app.route(ROOT+'/reset_session', methods=['GET'])
 @requires_auth
 def _reset_session():
@@ -239,6 +242,7 @@ def _dump_session():
         data = request.args
         sid = data.get('session')
         fname = dump_session(sid)
+        session_manager.remove_session(sid)
         if fname:
             return send_from_directory(os.path.dirname(fname), os.path.basename(fname))
         else:
@@ -246,6 +250,16 @@ def _dump_session():
     except Exception as ex:
         logger.error("Dump error {}".format(ex))
         return '', 500
+
+@app.route(ROOT+'/chat_history', methods=['GET'])
+@requires_auth
+def _chat_history():
+    history_stats(HISTORY_DIR, 7)
+    history_file = os.path.join(HISTORY_DIR, 'last_7_days.csv')
+    if os.path.isfile(history_file):
+        return send_from_directory(HISTORY_DIR, os.path.basename(history_file))
+    else:
+        return '', 404
 
 @app.route(ROOT+'/ping', methods=['GET'])
 def _ping():

@@ -281,6 +281,7 @@ class Kernel:
         will be loaded and learned.
 
         """
+        errors = []
         for f in glob.glob(filename):
             if self._verboseMode: logger.info("Loading %s..." % f,)
             start = time.clock()
@@ -291,6 +292,7 @@ class Kernel:
             try: parser.parse(f)
             except xml.sax.SAXParseException, msg:
                 err = "\nFATAL PARSE ERROR in file %s:\n%s\n" % (f,msg)
+                errors.append(err)
                 logger.error(err)
                 continue
             # store the pattern/template pairs in the PatternMgr.
@@ -299,6 +301,7 @@ class Kernel:
             # Parsing was successful.
             if self._verboseMode:
                 logger.info("done (%.2f seconds)" % (time.clock() - start))
+        return errors
 
     def respond(self, input, sessionID = _globalSessionID):
         """Return the Kernel's response to the input string."""

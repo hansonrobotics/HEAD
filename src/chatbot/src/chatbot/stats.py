@@ -27,17 +27,19 @@ def history_stats(history_dir, days):
         return {}
     df = pd.concat(dfs, ignore_index=True)
     df = df[df.Datetime != 'Datetime'].sort(['User', 'Datetime']).drop_duplicates()
+    if hasattr(df, 'Lang'):
+        df = df[df.Lang.isin(['en'])]
     if days == -1:
         stats_csv = '{}/full_history.csv'.format(history_dir)
     else:
         stats_csv = '{}/last_{}_days.csv'.format(history_dir, days)
-    columns = [u'Datetime', u'User', u'BotName', u'AnsweredBy', u'Question', u'Answer', u'Trace']
+    columns = [u'Datetime', u'Revision', u'User', u'BotName', u'AnsweredBy', u'Question', u'Answer', u'Rate', u'Trace']
     df.to_csv(stats_csv, index=False, columns=columns)
     logger.info("Write statistic records to {}".format(stats_csv))
     records = len(df)
     rates = len(df[df.Rate.notnull()])
-    good_rates = len(df[df.Rate == 'good'])
-    bad_rates = len(df[df.Rate == 'bad'])
+    good_rates = len(df[df.Rate.isin(['good'])])
+    bad_rates = len(df[df.Rate.isin(['bad'])])
     if records > 0:
         csd = float(records-bad_rates)/records
     response = {
