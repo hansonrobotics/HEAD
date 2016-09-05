@@ -73,7 +73,7 @@ class Runner:
         rospy.Service('~load_sequence', srv.LoadSequence, self.load_sequence_callback)
         rospy.Service('~run', srv.Run, self.run_callback)
         rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
-        rospy.Service('~run_full_perfromance', srv.RunByName, self.run_full_perfromance_callback)
+        rospy.Service('~run_full_performance', srv.RunByName, self.run_full_perfromance_callback)
         rospy.Service('~resume', srv.Resume, self.resume_callback)
         rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
