@@ -8,6 +8,7 @@ import time
 import rospkg
 import yaml
 import os
+import fnmatch
 
 from std_msgs.msg import String, Int32, Float32
 from chatbot.msg import ChatMessage
@@ -72,6 +73,7 @@ class Runner:
         rospy.Service('~load_sequence', srv.LoadSequence, self.load_sequence_callback)
         rospy.Service('~run', srv.Run, self.run_callback)
         rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
+        rospy.Service('~run_full_perfromance', srv.RunByName, self.run_full_perfromance_callback)
         rospy.Service('~resume', srv.Resume, self.resume_callback)
         rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
@@ -100,13 +102,33 @@ class Runner:
             return srv.RunByNameResponse(False)
         return srv.RunByNameResponse(self.run(0.0))
 
+    def run_full_perfromance_callback(self, request):
+        self.stop()
+        nodes = self.load_folder(request.id)
+        if not nodes:
+            return srv.RunByNameResponse(False)
+        return srv.RunByNameResponse(self.run(0.0))
+
+    def load_folder(self, id):
+        robot_name = rospy.get_param('/robot_name')
+        dir_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id)
+        if os.path.isdir(dir_path):
+            files = os.listdir(dir_path)
+            files = fnmatch.filter(sorted(files), "*.yaml")
+            if not files:
+                return []
+            # make names in folder/file format
+            ids = ["{}/{}".format(id,f[:-5]) for f in files]
+            return self.load_sequence(ids)
+        return []
+
     def load_sequence(self, ids):
         nodes = []
 
         offset = 0
         for id in ids:
             robot_name = rospy.get_param('/robot_name')
-            path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + '.yaml')
+            path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + ".yaml")
             duration = 0
 
             if os.path.isfile(path):

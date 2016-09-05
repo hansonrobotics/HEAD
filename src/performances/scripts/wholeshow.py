@@ -23,6 +23,8 @@ class WholeShow(Machine):
         Machine.__init__(self, states=states, initial='interacting')
         # Transitions
         self.add_transition('wake_up', 'sleeping', 'interacting')
+        # Transitions
+        self.add_transition('perform', 'interacting', 'performing')
         # States handling
         self.on_enter_sleeping("start_sleeping")
         self.on_exit_sleeping("stop_sleeping")
@@ -35,6 +37,7 @@ class WholeShow(Machine):
         self.btree_pub = rospy.Publisher("/behavior_switch", String, queue_size=2)
         self.soma_pub = rospy.Publisher('/blender_api/set_soma_state', SomaState, queue_size=10)
         self.look_pub = rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
+        self.performance_runner = rospy.ServiceProxy('/performances/run_full_perfromance', srv.RunByName)
         # Chat messages
         rospy.Service('speech_on', srv.SpeechOn, self.speech_cb)
         # Start sleeping. Wait for Blender to load
@@ -79,6 +82,14 @@ class WholeShow(Machine):
             'makeup' in speech:
             try:
                 self.wake_up()
+                on = False
+            except:
+                pass
+        if 'play rock paper' in speech or \
+            'play rock paper' in speech:
+            try:
+                self.perform()
+                self.performance_runner('rps')
                 on = False
             except:
                 pass
