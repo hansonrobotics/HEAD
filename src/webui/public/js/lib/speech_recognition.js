@@ -8,6 +8,7 @@ define(['underscore'], function (_) {
             else if ('SpeechRecognition' in window)
                 speechRecognition = new SpeechRecognition();
 
+            speechRecognition.lang = lang;
             speechRecognition.interimResults = false;
 
             return speechRecognition;

@@ -4,12 +4,13 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
         template: template,
         ui: {
             title: '#app-title',
-            navContainer: '#app-navbar',
-            nav: '#app-nav',
-            adminNav: '#app-admin-nav',
-            navLinks: '#app-nav a, #app-admin-nav a',
-            content: '#app-content',
+            navbar: '#navbar',
             navbarContainer: '#navbar-container',
+            navContainer: '#app-nav',
+            userNav: '#app-user-nav',
+            adminNav: '#app-admin-nav',
+            navLinks: '#app-user-nav a, #app-admin-nav a',
+            content: '#app-content',
             reportButton: '.app-report-button',
             notifications: '#notifications'
         },
@@ -43,17 +44,17 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
         showAdminNav: function () {
             if (!this.ui.adminNav.is(':visible')) {
                 this.ui.adminNav.show();
-                this.ui.nav.hide();
+                this.ui.userNav.hide();
             }
         },
         showNav: function () {
-            if (!this.ui.nav.is(':visible')) {
-                this.ui.nav.show();
+            if (!this.ui.userNav.is(':visible')) {
+                this.ui.userNav.show();
                 this.ui.adminNav.hide();
             }
         },
         hideNav: function(){
-            this.ui.nav.hide();
+            this.ui.userNav.hide();
             this.ui.adminNav.hide();
             this.ui.notifications.hide();
             this.ui.reportButton.hide();
@@ -72,7 +73,7 @@ define(['jquery', 'marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_
             }
         },
         getContentHeight: function () {
-            return window.innerHeight - this.ui.navContainer.outerHeight()
+            return window.innerHeight - this.ui.navbar.outerHeight();
         }
     });
 });

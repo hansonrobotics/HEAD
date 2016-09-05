@@ -5,10 +5,8 @@
 }
 
 .app-performances {
-    padding: 10px 5px 5px 10px;
+    padding-top: 10px;
     width: 100%;
-    border: 1px solid #323F48;
-    margin-top: -1px;
 }
 
 .app-performances.active {
@@ -78,7 +76,6 @@
 
 .app-timeline-nodes .app-node {
     position: absolute;
-    overflow: hidden;
 }
 
 .app-timeline-editor {
@@ -94,6 +91,7 @@
     z-index: 999;
     cursor: pointer;
     border: 1px solid #182934;
+    overflow: hidden;
 }
 
 .app-node[data-name="expression"] {
@@ -594,4 +592,8 @@ textarea.form-control.app-node-text {
 
 .app-chat-response-list .form-inline {
     margin-bottom: 10px;
+}
+
+.app-options-content select {
+    width: 100%;
 }

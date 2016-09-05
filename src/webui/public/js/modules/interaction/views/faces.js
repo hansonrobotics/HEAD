@@ -20,7 +20,7 @@ define(['marionette', 'tpl!./templates/faces.tpl', '../entities/face_collection'
             },
             onRender: function () {
                 var self = this;
-                this.collection.on('change', this.updateFaces, this);
+                this.listenTo(this.collection, 'change', this.updateFaces);
                 this.collection.subscribe();
                 if (this.options.always_visible)
                     this.setFaceVisibility(true);

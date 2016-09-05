@@ -4,7 +4,7 @@
 }
 
 body {
-    margin-top: 60px;
+    margin-top: 52px;
 }
 
 .input-group-addon,
@@ -93,6 +93,7 @@ h2, .h2 {
 #navbar {
     border-bottom: 2px solid #6cadd3;
     z-index: 9999999;
+    margin: 0;
 }
 
 .bootbox {
@@ -115,7 +116,7 @@ nav.navbar {
     box-shadow: 1px 1px 5px 0 #182934;
 }
 
-#app-navbar .nav {
+#app-nav .nav {
     margin-top: 7px;
 }
 

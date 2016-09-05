@@ -14,6 +14,7 @@ from monitor import get_logs
 from rospkg import RosPack
 from pi_face_tracker.msg import Faces, Face
 import copy
+
 rp = RosPack()
 import rospy
 
@@ -26,6 +27,7 @@ config_root = rp.get_path('robots_config')
 performance_dir = os.path.join(rp.get_path('performances'), 'robots')
 
 app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
+
 
 def get_pub():
     db = getattr(g, '_database', None)
@@ -205,6 +207,7 @@ def get_performance(id, robot_name):
         performance['id'] = os.path.join(*relative)
         relative_path = relative[:-1]
         performance['path'] = os.path.join(*relative_path) if relative_path else ''
+        del performance['nodes']
         return performance
     else:
         return {}
@@ -219,7 +222,6 @@ def get_performances(robot_name):
             filename = os.path.join(path, name)
             id = os.path.join(*filename.split('.')[0].split('/')[len(root.split('/')):])
             performances.append(get_performance(id, robot_name))
-
     return json_encode(performances)
 
 
@@ -402,9 +404,11 @@ if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
     logging.basicConfig()
 
+
     @app.route('/public/<path:path>')
     def send_js(path):
         return send_from_directory(app.static_folder, path)
+
 
     parser = OptionParser()
     parser.add_option("-s", action="store_true", dest="ssl", default=False, help="Use SSL")

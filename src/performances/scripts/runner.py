@@ -149,17 +149,15 @@ class Runner:
         self.run_condition.acquire()
         with self.lock:
             rospy.logerr(start_time)
-            if len(self.running_nodes) > 0:
+            success = len(self.running_nodes) > 0
+            if success:
                 self.running = True
                 self.start_time = start_time
                 self.start_timestamp = time.time()
                 # notify worker thread
-
                 self.run_condition.notify()
-                self.run_condition.release()
-                return True
-            else:
-                return False
+            self.run_condition.release()
+            return success
 
     def resume_callback(self, request):
         success = self.resume()
@@ -232,6 +230,7 @@ class Runner:
 
             if len(nodes) == 0:
                 continue
+
             running = True
             while running:
                 with self.lock:
@@ -240,14 +239,11 @@ class Runner:
                     if not self.running:
                         self.topics['events'].publish(Event('finished', run_time))
                         break
-                    elif self.paused:
-                        continue
 
                 running = False
                 # checks if any nodes still running
                 for node in nodes:
                     running = node.run(run_time) or running
-
         self.run_condition.release()
 
     def get_run_time(self):
