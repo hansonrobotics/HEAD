@@ -19,7 +19,10 @@ performance pipeline and infrastructure:
 
 ### Hardware
 
-* Powerful graphics card
+* Intel/AMD workstation or laptop w/4GB or more RAM, 20GB disk, and 
+  a fairly powerful graphics card.
+* If a dedicated workstation is not available, consider using LXC, so
+  as to not mess up your base OS.
 
 ### Software
 
@@ -37,7 +40,10 @@ Then run
 
 `~/hansonrobotics/HEAD/scripts/dev.sh`
 
-## Install, build and run
+## Native install, build and run
+Use these instructions, if you are willing to install the system "natively" 
+on your machine (i.e. into the root file system). Otherwise, use the LXC instructions,
+further down below.
 
 * Install wget
 
@@ -113,6 +119,52 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 * Run vision tools
 
 `./vision.sh cmt` #For running with cmt/pi_vision
+
+## LXC Install, build and run directions.
+LXC -- Linux Containers -- is a tool that allows you to run a virtualized
+operating system container on your machine.  Because each container can
+have a different root file system, it is convenient for experiments, and
+for isolating your main system from robot-related configuration issues.
+One can run multiple containers, too -- even dozens or more.
+
+Start by installing LXC: review [LXC Getting Started](https://linuxcontainers.org/lxc/getting-started/)
+```
+sudo apt-get install lxc
+lxc-create -t download -n my-hr-HEAD -- -d ubuntu -r trusty -a amd64
+lxc-start -n my-hr-HEAD -d
+lxc-attach -n my-hr-HEAD --clear-env
+(then, at the prompt of the attached container):
+apt-get install openssh-server
+cd /home/ubuntu
+mkdir .ssh
+cd .ssh
+vi authorized_keys
+(add your public key)
+chmod go-rwx . authorized_keys
+chown ubuntu:ubuntu . authorized_keys
+passwd ubuntu
+(change passwd -- this is needed because hrtool needs it)
+```
+After the above, you should be able to ssh into your new container.
+After doing so, the instructions are essentially the same as the
+native install.  These are repeated below.
+```
+lxc-ls -f
+ssh -X ubuntu@10.0.3.239  (or whatever IP address lxc-ls shows)
+sudo apt-get install wget
+wget https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hrtool -O /tmp/hrtool
+chmod +x /tmp/hrtool
+/tmp/hrtool -i
+/tmp/hrtool -G
+/tmp/hrtool -B
+```
+To get video (the webcam, used for vision) working from an LXC container,
+you will need to do some config file tinkering.  Edit the file
+`~/.local/share/lxc/my-hr-HEAD/config` and add the line:
+```
+lxc.cgroup.devices.allow = c 81:0 rwm
+```
+
 
 ## Troubleshooting
 
