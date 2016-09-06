@@ -1,8 +1,7 @@
 # HEAD
+**H**anson **E**nvironment for **A**pplication **D**evelopment
 
 [![Build Status](http://61.92.69.39:8080/buildStatus/icon?job=ci-HEAD)](http://61.92.69.39:8080/view/hansonrobotics/job/ci-HEAD/)
-
-**H**anson **E**nvironment for **A**pplication **D**evelopment
 
 This repository contains the integrated code for controlling and
 interacting with various Hanson Robotics robot heads, including a
@@ -193,7 +192,7 @@ If you know of a better way, let us know!
 To test the webcam, try running `cheese` -- it should work.
 You may need to `apt-get install cheese` first.
 
-## Troubleshooting
+# Troubleshooting
 
 ### pip3 is not found
 Install pip3 (again): `apt-get install -y --reinstall python3-pip`
