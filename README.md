@@ -5,12 +5,13 @@
 **H**anson **E**nvironment for **A**pplication **D**evelopment
 
 This repository contains the integrated code for controlling and
-interacting with many Hanson Robotics robot heads. It includes the
-full performance pipeline and infrastructure:
+interacting with various Hanson Robotics robot heads, including a
+pure-software implementation. It includes the full theatrical 
+performance pipeline and infrastructure:
 
-* Perception, via ROS webcam nodes.
+* Vision and audio perception, via ROS webcam nodes.
 * Face detection, for seeing faces in the room.
-* Blender robot model, for gracefully controlling facial expressions.
+* Blender robot model, for animating movements and facial expressions.
 * Behavior tree, for scripting performaces.
 * Motor control ROS nodes, for controlling the physical robot.
 
@@ -26,7 +27,7 @@ full performance pipeline and infrastructure:
  * X Server is running.
  * Use root or create user with the ability to gain root privileges.
 
-## TL;NR
+## TL;DR
 
 Install dependencies, get source code, build
 
