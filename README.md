@@ -2,7 +2,7 @@
 
 [![Build Status](http://61.92.69.39:8080/buildStatus/icon?job=ci-HEAD)](http://61.92.69.39:8080/view/hansonrobotics/job/ci-HEAD/)
 
-Hanson Environment for Application Development
+**H**anson **E**nvironment for **A**pplication **D**evelopment
 
 This repository contains the integrated code for controlling and
 interacting with many Hanson Robotics robot heads. It includes the
