@@ -125,6 +125,8 @@ install_ros() {
 install_opencog_deps() {
     info "Installing OpenCog dependencies"
     $SUDO apt-get ${APT_GET_OPTS} install cmake ccache
+    $SUDO apt-get ${APT_GET_OPTS} install binutils-dev
+    $SUDO apt-get ${APT_GET_OPTS} install libboost-dev libboost-date-time-dev libboost-filesystem-dev libboost-program-options-dev libboost-regex-dev libboost-serialization-dev libboost-system-dev libboost-thread-dev
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
     ./octool -rdpv >/dev/null
