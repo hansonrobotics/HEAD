@@ -124,7 +124,7 @@ install_ros() {
 
 install_opencog_deps() {
     info "Installing OpenCog dependencies"
-    $SUDO apt-get ${APT_GET_OPTS} install ccache
+    $SUDO apt-get ${APT_GET_OPTS} install cmake ccache
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
     ./octool -rdpv >/dev/null
