@@ -161,13 +161,37 @@ chmod +x /tmp/hrtool
 rm /tmp/hrtool
 ~/hansonrobotics/HEAD/scripts/hrtool -B
 ```
+
+### Enabling the webcam in LXC
 To get video (the webcam, used for vision) working from an LXC container,
 you will need to do some config file tinkering.  Edit the file
-`~/.local/share/lxc/my-hr-HEAD/config` and add the line:
+`~/.local/share/lxc/my-hr-HEAD/config` (on your local filesystem,
+NOT in the container!) and add the lines:
 ```
 lxc.cgroup.devices.allow = c 81:0 rwm
+lxc.mount.entry = /dev/video0 dev/video0 none bind,optional,create=file
 ```
+The above assumes that your webcam appears at `/dev/video0` and that
+the device major:minor is 81:0 and that its a character (c) device.
+You may need to adjust this for your specific webcam.
+Be sure to stop and restart the container, to pick up this change.
+Next (and this is very annoying) udev fails to create the webcam
+runtime configuration, and so you have to do the below, manually,
+**every** time you start the container.
+On the master system:
+```
+scp /run/udev/data/c81:0 ubuntu@10.0.3.239:/home/ubuntu
+```
+In the container:
+```
+sudo mkdir /run/udev/data
+sudo cp /home/ubuntu/c81:0 /run/udev/data
+sudo chown root:root /run/udev/data/c81:0
+```
+If you know of a better way, let us know!
 
+To test the webcam, try running `cheese` -- it should work.
+You may need to `apt-get install cheese` first.
 
 ## Troubleshooting
 
