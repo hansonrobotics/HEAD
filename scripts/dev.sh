@@ -81,12 +81,13 @@ fi
 
 if [[ $OC_CHATBOT == 1 ]]; then
     ros_args="$ros_args oc_chatbot:=true"
-    export OC_AIML_FILE=~/.hr/cache/res/load-all.scm
+    export OC_AIML_FILE=~/.hr/cache/oc_aiml/load.scm
+    mkdir -p ~/.hr/cache/oc_aiml
     if [[ ! -f ${OC_AIML_FILE} ]] ; then
       echo "Downloading OpenCog AIML file"
-      wget https://github.com/opencog/test-datasets/releases/download/current/aiml-current.tar.gz -O /tmp/aiml.tar.gz
-      tar zxf /tmp/aiml.tar.gz -C ~/.hr/cache
-      rm /tmp/aiml.tar.gz
+      wget https://github.com/opencog/test-datasets/releases/download/current/oc_public_aiml.tar.gz -O /tmp/oc_public_aiml.tar.gz
+      tar zxf /tmp/oc_public_aiml.tar.gz -C ~/.hr/cache/oc_aiml
+      rm /tmp/oc_public_aiml.tar.gz
     fi
 fi
 
@@ -123,14 +124,12 @@ sleep 8
 # OpenCog chatbot
 if [[ $OC_CHATBOT == 1 ]]; then
   tmux new-window -n 'relex_server' "cd $HR_WORKSPACE/opencog/relex/ && bash opencog-server.sh; $SHELL"
-  tmux new-window -n 'tel' "while true; do nc -zv localhost 17020 && break; sleep 1; done; expect $BASEDIR/load_scm.exp; $SHELL"
+  tmux new-window -n 'tel' "while true; do nc -zv localhost 17020 && break; sleep 1; done; expect $BASEDIR/load_scm.exp; export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./main.py;  $SHELL"
   tmux new-window -n 'oc-ctrl' "roslaunch opencog_control psi.launch; $SHELL"
   tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree-psi.scm; $SHELL"
 else
   tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"
 fi
-
-tmux new-window -n 'fce' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./main.py; $SHELL"
 
 sleep 4
 tmux new-window -n 'cmt' "roslaunch robots_config face_tracker.launch ${pi_arg}; $SHELL"

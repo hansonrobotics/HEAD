@@ -65,6 +65,9 @@ if [[ $(id -u) != 0 ]]; then
     SUDO="sudo"
 fi
 
+APT_GET_OPTS="-y -qq"
+PIP_OPTS="-q"
+
 if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
     error "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
     exit 1
@@ -76,195 +79,214 @@ if [[ ! -d $HR_CACHE ]]; then
 fi
 
 install_basic() {
-    $SUDO apt-get -y update
-    $SUDO apt-get -y install git
-    $SUDO apt-get -y install wget
-    $SUDO apt-get -y install telnet
-    $SUDO apt-get -y install python3-pip
-    $SUDO apt-get -y install python-pip
-    $SUDO apt-get -y install build-essential
-    $SUDO apt-get -y install software-properties-common
+    info "Installing basic dependencies"
+    $SUDO apt-get ${APT_GET_OPTS} update
+    $SUDO apt-get ${APT_GET_OPTS} install git
+    $SUDO apt-get ${APT_GET_OPTS} install wget
+    $SUDO apt-get ${APT_GET_OPTS} install telnet
+    $SUDO apt-get ${APT_GET_OPTS} install python3-pip
+    $SUDO apt-get ${APT_GET_OPTS} install python-pip
+    $SUDO apt-get ${APT_GET_OPTS} install build-essential
+    $SUDO apt-get ${APT_GET_OPTS} install software-properties-common
+    info "Installing basic dependencies is done"
 }
 
 install_ros() {
+    info "Installing ROS"
     $SUDO sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-#    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | $SUDO apt-key add -
     $SUDO apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
-    $SUDO apt-get -y update
-    $SUDO apt-get -y install ros-indigo-desktop
-    $SUDO apt-get -y install ros-indigo-tf
-    $SUDO apt-get -y install ros-indigo-driver-common
-    $SUDO apt-get -y install ros-indigo-cv-bridge
-    $SUDO apt-get -y install ros-indigo-image-transport
-    $SUDO apt-get -y install ros-indigo-openni-camera
-    $SUDO apt-get -y install ros-indigo-mjpeg-server
-    $SUDO apt-get -y install ros-indigo-usb-cam
-    $SUDO apt-get -y install ros-indigo-dynamixel-motor
-    $SUDO apt-get -y install ros-indigo-robot-state-publisher
-    $SUDO apt-get -y install ros-indigo-joint-state-publisher
-    $SUDO apt-get -y install ros-indigo-rosbridge-server
-    $SUDO apt-get -y install python-catkin-tools
-
+    $SUDO apt-get ${APT_GET_OPTS} update
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-desktop
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-tf
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-driver-common
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-cv-bridge
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-image-transport
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-openni-camera
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-mjpeg-server
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-usb-cam
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-dynamixel-motor
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-robot-state-publisher
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-joint-state-publisher
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-rosbridge-server
+    $SUDO apt-get ${APT_GET_OPTS} install python-catkin-tools
     # for camera calibration
-    $SUDO apt-get -y install ros-indigo-image-proc
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-image-proc
+
     # for blender to find ros packages
-    $SUDO pip3 install rospkg catkin_pkg
+    $SUDO pip3 ${PIP_OPTS} install rospkg catkin_pkg
+
     set +e
-    $SUDO rosdep init
-    rosdep update
+    $SUDO rosdep init -q
+    rosdep update -q
     set -e
+    info "Installing ROS is done"
 }
 
 install_opencog_deps() {
-    $SUDO apt-get -y install ccache
-    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
+    info "Installing OpenCog dependencies"
+    $SUDO apt-get ${APT_GET_OPTS} install ccache
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -rdpv
+    ./octool -rdpv >/dev/null
     rm octool
 
     install_relex_deps
 
     # For sentiment analysis
-    $SUDO pip2 install nltk
+    $SUDO pip2 ${PIP_OPTS} install nltk
     $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
 
     # For random sentence generator
     install_marky_markov
+    info "Installing OpenCog dependencies is done"
 }
 
 install_relex_deps() {
-    $SUDO apt-get -y update
-    $SUDO apt-get -y install build-essential python-dev swig zlib1g-dev unzip wget
-    $SUDO apt-get -y install wordnet-dev wordnet-sense-index
-    $SUDO apt-get -y install openjdk-7-jdk
-    $SUDO apt-get -y install ant libcommons-logging-java libgetopt-java
+    info "Installing RelEX dependencies"
+    $SUDO apt-get ${APT_GET_OPTS} update
+    $SUDO apt-get ${APT_GET_OPTS} install build-essential python-dev swig zlib1g-dev unzip wget
+    $SUDO apt-get ${APT_GET_OPTS} install wordnet-dev wordnet-sense-index
+    $SUDO apt-get ${APT_GET_OPTS} install openjdk-7-jdk
+    $SUDO apt-get ${APT_GET_OPTS} install ant libcommons-logging-java libgetopt-java
 
-    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -O octool
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -l
+    ./octool -l >/dev/null
     rm octool
 
     # Java WordNet Library
     wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
-    unzip -o ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
+    unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
     $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
     rm -r /tmp/jwnl14-rc2
     $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
+    info "Installing RelEX dependencies is done"
 }
 
 install_other_deps() {
+    info "Installing other dependencies"
     $SUDO add-apt-repository -y ppa:irie/blender
-    $SUDO apt-get -y update
+    $SUDO apt-get ${APT_GET_OPTS} update
 
-    $SUDO apt-get -y install blender
+    $SUDO apt-get ${APT_GET_OPTS} install blender
 
     # For webui
-    $SUDO pip2 install flask EasyProcess psutil
+    $SUDO pip2 ${PIP_OPTS} install flask EasyProcess psutil
 
     # For rosbridge_server
-    $SUDO apt-get -y install python-bson
+    $SUDO apt-get ${APT_GET_OPTS} install python-bson
 
     # For pololu-motors
     # DO NOT UPGRADE WITH PIP
-    $SUDO apt-get -y install python-serial
+    $SUDO apt-get ${APT_GET_OPTS} install python-serial
 
     # For Blender
-    $SUDO apt-get -y install python3-numpy
+    $SUDO apt-get ${APT_GET_OPTS} install python3-numpy
 
     # For running scripts
-    $SUDO apt-get -y install tmux
+    $SUDO apt-get ${APT_GET_OPTS} install tmux
 
     # For Festival
-    $SUDO apt-get -y install festival festival-dev
+    $SUDO apt-get ${APT_GET_OPTS} install festival festival-dev
     # Install female voice
     mkdir -p ~/.hr/tts/festival/voices
     # Install female voice
     if [[ ! -f ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz ]]; then
-        wget http://festvox.org/packed/festival/2.1/festvox_cmu_us_slt_arctic_hts.tar.gz -P ~/.hr/tts/festival/voices
+        wget -q http://festvox.org/packed/festival/2.1/festvox_cmu_us_slt_arctic_hts.tar.gz -P ~/.hr/tts/festival/voices
     fi
     tar zxf ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz -C /tmp
     $SUDO cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
     rm -rf /tmp/festival
 
     # For tts playing audio
-    $SUDO apt-get -y install python-pyglet
+    $SUDO apt-get ${APT_GET_OPTS} install python-pyglet
 
     # For chatbot
-    $SUDO apt-get -y install python-yaml
+    $SUDO apt-get ${APT_GET_OPTS} install python-yaml
 
     # For blender_api_test
     $SUDO add-apt-repository -y ppa:mc3man/trusty-media
-    $SUDO apt-get update
-    $SUDO apt-get install -y ffmpeg
+    $SUDO apt-get ${APT_GET_OPTS} update
+    $SUDO apt-get ${APT_GET_OPTS} install ffmpeg
 
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
     wget_cache https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
-    unzip -od ~/.hr/tts/marytts ${HR_CACHE}/marytts-5.1.2.zip
+    unzip -qod ~/.hr/tts/marytts ${HR_CACHE}/marytts-5.1.2.zip
 
-    $SUDO pip2 install pinyin==0.2.5
+    $SUDO pip2 ${PIP_OPTS} install pinyin==0.2.5
 
     # For speech2command
-    $SUDO pip2 install pyparsing
+    $SUDO pip2 ${PIP_OPTS} install pyparsing
 
     # For rospy to run with python3
-    $SUDO apt-get -y install python3-yaml
+    $SUDO apt-get ${APT_GET_OPTS} install python3-yaml
 
     # For telnet automation
-    $SUDO apt-get -y install expect
+    $SUDO apt-get ${APT_GET_OPTS} install expect
 
-    install_manyears_deps
+    # For audio recording
+    sudo apt-get ${APT_GET_OPTS} install pulseaudio
+    sudo apt-get ${APT_GET_OPTS} install python-pyaudio
+    info "Installing other dependencies is done"
 }
 
 install_manyears_deps() {
+    info "Installing Manyears dependencies"
     wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
     tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
     mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
+    info "Installing Manyears dependencies is done"
 }
 
 install_test_deps() {
-    $SUDO apt-get -y install socat
-    $SUDO apt-get -y install xdotool
+    info "Installing test dependencies"
+    $SUDO apt-get ${APT_GET_OPTS} install socat
+    $SUDO apt-get ${APT_GET_OPTS} install xdotool
 
-    $SUDO apt-get -y install npm
+    $SUDO apt-get ${APT_GET_OPTS} install npm
     $SUDO npm install -g n
     $SUDO n stable
     $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
+    info "Installing test dependencies is done"
 }
 
 install_vision_deps() {
+    info "Installing vision dependencies"
     mkdir -p $VISION_TOOL_PREFIX
-    $SUDO apt-get -y install ros-indigo-opencv-apps
+    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-opencv-apps
 
     # Tkinter error other wise.
-    info "Installing Pillow"
-    $SUDO pip2 install -qI Pillow
-    $SUDO pip2 install imgurpython
+    $SUDO pip2 ${PIP_OPTS} install -I Pillow
+    $SUDO pip2 ${PIP_OPTS} install imgurpython
 
     if [[ ! -d $DLIB_PATH ]]; then
+      info "Installing dlib"
       wget_cache http://dlib.net/files/dlib-${DLIB_VERSION}.tar.bz2
       mkdir -p $DLIB_PATH
       tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
+      cd $DLIB_PATH && python setup.py build >/dev/null
+      info "Installing dlib is done"
     else
-      warn "Skipping Dlib installation"
+      warn "Skipping dlib installation"
     fi
-    info "Building Dlib python API"
-    cd $DLIB_PATH && python setup.py build
 
     #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
 
 
     # Install clandmarks
-    info "Installing clandmarks"
     if [ ! -d $CLANDMARK_DIR ]; then
+      info "Installing clandmarks"
       wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/clandmark.tar.bz2
       mkdir -p $CLANDMARK_DIR
       tar -xf $HR_CACHE/clandmark.tar.bz2 -C $CLANDMARK_DIR --strip-components=1
+      info "Installing clandmarks is done"
     else
       warn "Skipping clandmark downloading"
     fi
     # Install Torch
     if [ ! -d $TORCH_DIR ]; then
+      info "Installing torch"
       git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
 
       cd $TORCH_DIR
@@ -272,6 +294,7 @@ install_vision_deps() {
       echo no | ./install.sh
 
       # Install lua packages in the torch file in scripts directory.
+      info "Installing lua packages"
       cd $TORCH_DIR/install/bin
       ./luarocks install nn
       ./luarocks install dpnn
@@ -279,6 +302,8 @@ install_vision_deps() {
       ./luarocks install optim
       ./luarocks install csvigo
       ./luarocks install sys
+      info "Installing lua packages is done"
+      info "Installing torch is done"
     else
       warn "Skipping Torch installation"
     fi
@@ -286,21 +311,25 @@ install_vision_deps() {
     # Install openface
     # Dependencies for openface
     # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
-    $SUDO apt-get -y install python-skimage
-    $SUDO pip2 install numpy pandas scipy scikit-learn
+    info "Installing openface"
+    $SUDO apt-get ${APT_GET_OPTS} install python-skimage
+    $SUDO pip2 ${PIP_OPTS} install numpy pandas scipy scikit-learn
 
     if [ ! -d $OPENFACE_DIR ]; then
+      info "Cloning openface"
       #TODO a checkout verison that works with the latest.
       git clone https://github.com/hansonrobotics/openface.git $OPENFACE_DIR --recursive
     else
       warn "Skipping openface clone"
     fi
+    info "Installing openface is done"
 
     # 150 Megabyes of data.
     $OPENFACE_DIR/models/get-models.sh
 
     # CMT and Emotime Libraries.
     if [ ! -d $CPPMT_DIR ]; then
+      info "Cloning CppMT"
       git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
       cd $CPPMT_DIR
       git checkout wrapper
@@ -311,6 +340,7 @@ install_vision_deps() {
     fi
 
     if [ ! -d $EMOTIME_DIR ]; then
+      info "Cloning emotime"
       git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
       cd $EMOTIME_DIR/build
       cmake ..
@@ -318,16 +348,20 @@ install_vision_deps() {
     else
       warn "Skipping emotime clone"
     fi
+    info "Installing vision dependencies is done"
 }
 
 wget_cache() {
     url=$1
     ofile=${2-${url##*/}}
-    [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+    info "Getting $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -qO ${HR_CACHE}/${ofile}
     # TODO check file integrity
+    info "Getting $1 is done"
 }
 
 install_marky_markov() {
+    info "Installing Marky Markov"
     if [ ! -d $MARKY_MARKOV_DIR ]; then
       git clone https://github.com/hansonrobotics/marky_markov.git $MARKY_MARKOV_DIR
     else
@@ -338,9 +372,10 @@ install_marky_markov() {
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
     $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
-    $SUDO apt-get -y update
-    $SUDO apt-get -y install ruby2.3 ruby2.3-dev
+    $SUDO apt-get ${APT_GET_OPTS} update
+    $SUDO apt-get ${APT_GET_OPTS} install ruby2.3 ruby2.3-dev
     $SUDO gem install msgpack
+    info "Installing Marky Markov is done"
 }
 
 check_or_create_ws() {
@@ -366,16 +401,20 @@ clone() {
     if [[ -d $dest ]]; then
         info "$dest already exists"
     else
+        info "Cloning $repo"
         git clone git@github.com:$owner/$repo.git $dest || git clone https://github.com/$owner/$repo.git $dest
+        info "Cloning $repo is done"
     fi
 }
 
 get_opencog_src(){
+    info "Cloning OpenCog source code"
     for repo in ${OPENCOG_REPOS[*]}
     do
         cd $HR_WORKSPACE
         clone hansonrobotics $repo opencog
     done
+    info "Cloning OpenCog source code is done"
 }
 
 check_local_changes() {
@@ -403,6 +442,7 @@ check_local_changes() {
 }
 
 update_opencog() {
+    info "Updating OpenCog source code"
     local DEFAULT_BRANCH="master"
     for repo in ${OPENCOG_REPOS[*]}
     do
@@ -414,10 +454,13 @@ update_opencog() {
         fi
         info "Updating [${repo}]"
         git pull origin $DEFAULT_BRANCH
+        info "Updating [${repo}] is done"
     done
+    info "Updating OpenCog source code is done"
 }
 
 do_update_hr() {
+    info "Updating HR source code"
     do_migrate
 
     local DEFAULT_BRANCH="master"
@@ -431,8 +474,10 @@ do_update_hr() {
         fi
         info "Updating [${repo}]"
         git pull origin $DEFAULT_BRANCH
+        info "Updating [${repo}] is done"
     done
     do_update_vision_tools
+    info "Updating HR source code is done"
 }
 
 do_update_vision_tools() {
@@ -451,10 +496,13 @@ do_update_vision_tools() {
     fi
     info "Updating [$repo]"
     git pull origin $DEFAULT_BRANCH
+    info "Updating [$repo] is done"
 }
 
 do_install_deps() {
+    info "Installing dependencies"
     _do_install_deps
+    info "Installing dependencies is done"
 }
 
 _do_install_deps() {
@@ -466,16 +514,19 @@ _do_install_deps() {
     install_basic
     install_ros
     install_opencog_deps
-    install_other_deps
     install_vision_deps
+    install_manyears_deps
+    install_other_deps
 }
 
 do_get_hr_src() {
+    info "Cloning HR source code"
     for repo in ${HR_REPOS[*]}
     do
         cd $HR_WORKSPACE
         clone hansonrobotics $repo
     done
+    info "Cloning HR source code is done"
 }
 
 do_get_src() {
@@ -493,6 +544,7 @@ do_dev_mode() {
     do
         cd $HR_WORKSPACE
         if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
+            info "Set [$repo] origin to https://github.com/$DOMAIN/$repo"
             cd opencog/$repo
             git remote remove old || true
             git remote rename origin old
@@ -511,7 +563,9 @@ undo_dev_mode() {
 }
 
 do_build_hr() {
+    info "Building HR"
     _do_build_hr
+    info "Building HR is done"
 }
 
 _do_build_hr() {
@@ -529,8 +583,8 @@ _do_build_hr() {
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status --make-args install
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
-    pip2 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
-    pip3 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
+    pip2 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
+    pip3 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
 }
 
 do_single_package() {
@@ -539,12 +593,11 @@ do_single_package() {
     if [[ ! -d .catkin_tools ]]; then
         catkin init
     fi
-
     catkin build $1
-
 }
 
 build_opencog() {
+    info "Building OpenCog"
     for repo in ${OPENCOG_REPOS[*]}
     do
         if [[ $repo != 'relex' ]]; then
@@ -556,6 +609,7 @@ build_opencog() {
             cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && $SUDO ant install
         fi
     done
+    info "Building OpenCog is done"
 }
 
 do_build() {
@@ -573,16 +627,16 @@ do_update() {
 }
 
 do_clean_up() {
-    set +e
     info "Cleaning up"
+    set +e
     _do_clean_up >/dev/null 2>&1
-    info "Done"
     set -e
+    info "Cleaning up is done"
 }
 
 _do_clean_up() {
     rm -r ~/.cache/guile
-    rm -r ~/.hr/cache/res
+    rm -r ~/.hr/cache/oc_aiml
     if [[ ! -z $HR_WORKSPACE ]]; then
         for repo in ${OPENCOG_REPOS[*]}
         do
@@ -798,7 +852,7 @@ do_migrate() {
 
 do_build_package() {
     info "Building DEB package"
-    # sudo apt-get -y install packaging-dev
+    # sudo apt-get ${APT_GET_OPTS} install packaging-dev
     local archive="head-${HR_VERSION}.tar.gz"
     local build_dir=$HR_WORKSPACE/build-area
     local workspace=${build_dir}/head-${HR_VERSION}

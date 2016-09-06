@@ -2,15 +2,16 @@
 
 [![Build Status](http://61.92.69.39:8080/buildStatus/icon?job=ci-HEAD)](http://61.92.69.39:8080/view/hansonrobotics/job/ci-HEAD/)
 
-Hanson Environment for Application Development
+**H**anson **E**nvironment for **A**pplication **D**evelopment
 
 This repository contains the integrated code for controlling and
-interacting with many Hanson Robotics robot heads. It includes the
-full performance pipeline and infrastructure:
+interacting with various Hanson Robotics robot heads, including a
+pure-software implementation. It includes the full theatrical 
+performance pipeline and infrastructure:
 
-* Perception, via ROS webcam nodes.
+* Vision and audio perception, via ROS webcam nodes.
 * Face detection, for seeing faces in the room.
-* Blender robot model, for gracefully controlling facial expressions.
+* Blender robot model, for animating movements and facial expressions.
 * Behavior tree, for scripting performaces.
 * Motor control ROS nodes, for controlling the physical robot.
 
@@ -26,7 +27,7 @@ full performance pipeline and infrastructure:
  * X Server is running.
  * Use root or create user with the ability to gain root privileges.
 
-## TL;NR
+## TL;DR
 
 Install dependencies, get source code, build
 
@@ -50,11 +51,11 @@ sudo apt-get install wget (Run apt-get update first if wget is not found)
 
 `chmod +x /tmp/hrtool`
 
-* Set the workspace, default workspace is ~/hansonrobotics (optional)
+* Optionally, set the workspace. The default workspace is `~/hansonrobotics`
 
 `/tmp/hrtool -w <workspace>`
 
-* Install Dependencies
+* Install dependencies
 
 `/tmp/hrtool -i`
 
@@ -66,7 +67,8 @@ sudo apt-get install wget (Run apt-get update first if wget is not found)
 
 `/tmp/hrtool -B`
 
-* Remove hrtool. After the source code is built we don't need this script anymore.
+* Remove hrtool. After the source code is built, this script is not
+  needed anymore. A copy of the script is in `<workspace>/scripts/hrtool/hrtool`
 
 `rm /tmp/hrtool`
 
@@ -74,23 +76,23 @@ sudo apt-get install wget (Run apt-get update first if wget is not found)
 
 `cd ~/hansonrobotics/HEAD/scripts && ./dev.sh`
 
-* Open web browser
+* Open a web browser
 
 HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
-## Some other options of hrtool
+## Other options of hrtool
 
-**The same hrtool script is included in ~/hansonrobotics/HEAD/scripts**
+**The hrtool script is located in `~/hansonrobotics/HEAD/scripts`**
 
 * `-s` Build a single ROS package and it's related dependecies.
 
-* `-v` Get the latest vision codes relating to cmt.
+* `-v` Get the latest code for the cmt vision system.
 
-* `-d` Checkout latest OpenCog (developer mode).
+* `-d` Get the latest OpenCog source code (developer mode -- this is the unstable branch).
+   **Use this option only if you want to get the latest OpenCog stack. It will change the
+     remote of git repositories for OpenCog to the [OpenCog](https://github.com/opencog) domain.**
 
-> **This option is used when you want to get the latest OpenCog stack. It will set the remote of git repositories of OpenCog to [OpenCog](https://github.com/opencog) domain.**
-
-* `-U` Update the code to the latest including HEAD and OpenCog stack.
+* `-U` Update the code to the latest, including both HEAD and the OpenCog stack.
 
 * `-c` Clean up OpenCog installation and cache.
 
@@ -115,11 +117,12 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 ## Troubleshooting
 
 ### pip3 is not found
-Reinstall pip3 `apt-get install -y --reinstall python3-pip`
+Install pip3 (again): `apt-get install -y --reinstall python3-pip`
 
 ### Workspace warning
 > [WARN] The workspace configured /home/ubuntu/hansonrobotics doesn't match the your working path /
 > Continue using /home/ubuntu/hansonrobotics? [y/N]
 
-If you are using orphan hrtool like /tmp/hrtool, you can ignore it.  
+If you are using `/tmp/hrtool`, you can ignore this error. From this point forward, 
+use `<workspace>/scripts/hrtool`
 
