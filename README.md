@@ -9,7 +9,7 @@ interacting with various Hanson Robotics robot heads, including a
 pure-software implementation. It includes the full theatrical 
 performance pipeline and infrastructure:
 
-* Vision and audio perception, via ROS webcam nodes.
+* Vision and audio perception, via ROS webcam and microphone nodes.
 * Face detection, for seeing faces in the room.
 * Blender robot model, for animating movements and facial expressions.
 * Behavior tree, for scripting performaces.
@@ -32,7 +32,7 @@ performance pipeline and infrastructure:
 
 ## TL;DR
 
-Install dependencies, get source code, build
+Install dependencies, get source code, build. This may take several hours.
 
 `sudo apt-get update && sudo apt-get install wget && wget https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hrtool -O /tmp/hrtool && chmod +x /tmp/hrtool && /tmp/hrtool -iGBy`
 
@@ -43,7 +43,8 @@ Then run
 ## Native install, build and run
 Use these instructions, if you are willing to install the system "natively" 
 on your machine (i.e. into the root file system). Otherwise, use the LXC instructions,
-further down below.
+further down below.  Install may take several hours; a fast internet connection is
+strongly recommended.
 
 * Install wget
 
@@ -69,14 +70,15 @@ sudo apt-get install wget (Run apt-get update first if wget is not found)
 
 `/tmp/hrtool -G`
 
-* Build HR workspace and OpenCog
-
-`/tmp/hrtool -B`
 
 * Remove hrtool. After the source code is built, this script is not
   needed anymore. A copy of the script is in `<workspace>/scripts/hrtool/hrtool`
 
 `rm /tmp/hrtool`
+
+* Build the HR workspace and OpenCog
+
+`~/hansonrobotics/HEAD/scripts/hrtool -B`
 
 * Run
 
@@ -156,7 +158,8 @@ wget https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hrtool
 chmod +x /tmp/hrtool
 /tmp/hrtool -i
 /tmp/hrtool -G
-/tmp/hrtool -B
+rm /tmp/hrtool
+~/hansonrobotics/HEAD/scripts/hrtool -B
 ```
 To get video (the webcam, used for vision) working from an LXC container,
 you will need to do some config file tinkering.  Edit the file
@@ -176,5 +179,5 @@ Install pip3 (again): `apt-get install -y --reinstall python3-pip`
 > Continue using /home/ubuntu/hansonrobotics? [y/N]
 
 If you are using `/tmp/hrtool`, you can ignore this error. From this point forward, 
-use `<workspace>/scripts/hrtool`
+use `<workspace>/scripts/hrtool` instead.
 
