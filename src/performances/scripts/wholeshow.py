@@ -135,9 +135,9 @@ class WholeShow(HierarchicalMachine):
         performances = self.find_performance_by_speech(speech)
         if len(performances) > 0:
             try:
-                running = self.performance_runner(random.choice(performances))
                 self.perform()
-                on = on and not running
+                on = False
+                running = self.performance_runner(random.choice(performances))
             except:
                 pass
         return srv.SpeechOnResponse(on)
