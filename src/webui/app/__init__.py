@@ -263,6 +263,32 @@ def update_performances(robot_name, id):
     return json_encode(performance)
 
 
+@app.route('/performances/keywords/<robot_name>', methods=['GET'], defaults={'path': ''})
+@app.route('/performances/keywords/<robot_name>/<path:path>', methods=['GET'])
+def get_performance_keywords(robot_name, path):
+    filename = os.path.join(config_root, robot_name, 'performances', path, '.properties')
+    keywords = {'keywords': []}
+    if os.path.isfile(filename):
+        keywords = read_yaml(filename)
+    print keywords
+    return json_encode(keywords)
+
+
+@app.route('/performances/keywords/<robot_name>', methods=['POST'], defaults={'path': ''})
+@app.route('/performances/keywords/<robot_name>/<path:path>', methods=['POST'])
+def update_performance_keywords(robot_name, path):
+    filename = os.path.join(config_root, robot_name, 'performances', path, '.properties')
+    data = request.get_data()
+    data = json.loads(data)
+    keywords = []
+    print data
+    if 'keywords' in data and isinstance(data['keywords'], list):
+        keywords = data['keywords']
+
+    write_yaml(filename, {'keywords': keywords})
+    return json_encode(True)
+
+
 @app.route('/performances/<robot_name>/<path:id>', methods=['DELETE'])
 def delete_performances(robot_name, id):
     performance = os.path.join(config_root, robot_name, 'performances', id + '.yaml')
