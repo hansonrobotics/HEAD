@@ -58,7 +58,7 @@ class TTSBase(object):
 class OnlineTTS(TTSBase):
 
     def __init__(self, output_dir):
-        super(OnlineTTS, self).__init__(self, output_dir)
+        super(OnlineTTS, self).__init__(output_dir)
         self.cache_dir =  os.path.expanduser('{}/cache'.format(output_dir))
         if not os.path.isdir(self.cache_dir):
             os.makedirs(self.cache_dir)
@@ -90,9 +90,9 @@ class OnlineTTS(TTSBase):
     def online_tts(self, text):
         return NotImplemented
 
-class ChineseTTSBase(TTSBase):
-    def __init__(self, *args, **kwargs):
-        TTSBase.__init__(self, *args, **kwargs)
+class ChineseTTSBase(OnlineTTS):
+    def __init__(self, output_dir):
+        super(ChineseTTSBase, self).__init__(output_dir)
 
     def get_cache_file(self, text):
         delimiter = '#'
@@ -182,7 +182,7 @@ class ChineseTTSBase(TTSBase):
         return source.duration
 
     def _tts(self, text):
-        tts_data = OnlineTTS._tts(self, text)
+        tts_data = super(ChineseTTSBase, self)._tts(text)
         tts_data.phonemes = self.get_phonemes(text)
         return tts_data
 
