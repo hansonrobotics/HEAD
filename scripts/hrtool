@@ -624,6 +624,7 @@ _do_build_hr() {
         catkin init
     fi
 
+    catkin config --blacklist icog_face_tracker
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status --make-args install
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
