@@ -160,7 +160,7 @@ bool ManyEarsNode::parseParams(const ros::NodeHandle& np)
             XmlRpcValue& posv = v["pos"];
             if (posv.getType() != XmlRpcValue::TypeStruct) {
                 ROS_ERROR("Pos element of microphone %i is not a struct, "
-                          "using (0, 0, 0).");
+                          "using (0, 0, 0).", i);
             } else {
                 if (posv.hasMember("x")) {
                     XmlRpcValue& xv = posv["x"];

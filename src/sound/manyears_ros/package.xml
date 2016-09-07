@@ -43,6 +43,7 @@
   <build_depend>roscpp</build_depend>
   <build_depend>rt_audio_ros</build_depend>
   <build_depend>tf</build_depend>
+  <build_depend>manyears_msgs</build_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>rt_audio_ros</run_depend>
   <run_depend>tf</run_depend>
