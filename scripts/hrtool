@@ -44,6 +44,7 @@ export LIBRARY_PATH=$LIBRARY_PATH:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/bu
 
 ASSUME_YES=0
 
+### COMMON FUNCTIONS BEGIN ###
 COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
 COLOR_ERROR='\033[31m'
@@ -57,6 +58,47 @@ warn() {
 error() {
     printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
 }
+
+md5str() {
+  local FNAME=$1
+  case $(uname) in
+    "Linux")
+      echo $(md5sum "$FNAME" | cut -d ' ' -f 1)
+      ;;
+    "Darwin")
+      echo $(md5 -q "$FNAME")
+      ;;
+  esac
+}
+
+checkmd5() {
+    local FNAME=$1
+    if [[ ! -f $FNAME ]]; then
+        error "$FNAME is not a file"
+        return 1
+    fi
+    local EXPECTED=$2
+    local ACTUAL=$(md5str "$FNAME")
+    if [ $EXPECTED = $ACTUAL ]; then
+        info "$FNAME: successfully checked"
+        return 0
+    else
+        error "$FNAME md5sum did not match."
+        error "Expected: $EXPECTED"
+        error "Actual: $ACTUAL"
+        rm $FNAME && warn "$FNAME is removed"
+        return 1
+    fi
+}
+
+wget_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    info "Downloading $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+    info "Downloading $1 is done"
+}
+### COMMON FUNCTIONS END ###
 
 export PATH=/usr/lib/ccache:$PATH
 
@@ -159,6 +201,7 @@ install_relex_deps() {
 
     # Java WordNet Library
     wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
+    checkmd5 ${HR_CACHE}/jwnl14-rc2.zip c1c35ce1d1590938abe48d7785f87ae0
     unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
     $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
     rm -r /tmp/jwnl14-rc2
@@ -215,7 +258,11 @@ install_other_deps() {
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
     wget_cache https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
+    checkmd5 ${HR_CACHE}/marytts-5.1.2.zip 99e774dd4c6e791ad916ae76351522f0
     unzip -qod ~/.hr/tts/marytts ${HR_CACHE}/marytts-5.1.2.zip
+
+    # Swig for iflytek SDK
+    $SUDO apt-get -y install swig
 
     $SUDO pip2 ${PIP_OPTS} install pinyin==0.2.5
 
@@ -237,6 +284,7 @@ install_other_deps() {
 install_manyears_deps() {
     info "Installing Manyears dependencies"
     wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
+    checkmd5 ${HR_CACHE}/manyears.tar.gz cf8688959e6d6a7ea9cdd1167814862a
     tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
     mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
     info "Installing Manyears dependencies is done"
@@ -266,6 +314,7 @@ install_vision_deps() {
     if [[ ! -d $DLIB_PATH ]]; then
       info "Installing dlib"
       wget_cache http://dlib.net/files/dlib-${DLIB_VERSION}.tar.bz2
+      checkmd5 ${HR_CACHE}/dlib-${DLIB_VERSION}.tar.bz2 da930a35c2aa88612dd2ebf893f48f60 # md5sum for dlib-19.0
       mkdir -p $DLIB_PATH
       tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
       cd $DLIB_PATH && python setup.py build >/dev/null
@@ -354,15 +403,6 @@ install_vision_deps() {
     info "Installing vision dependencies is done"
 }
 
-wget_cache() {
-    url=$1
-    ofile=${2-${url##*/}}
-    info "Getting $1"
-    [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -qO ${HR_CACHE}/${ofile}
-    # TODO check file integrity
-    info "Getting $1 is done"
-}
-
 install_marky_markov() {
     info "Installing Marky Markov"
     if [ ! -d $MARKY_MARKOV_DIR ]; then
@@ -371,6 +411,7 @@ install_marky_markov() {
       warn "Skipping marky_markov clone"
     fi
     wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 77d0a3e130f0339c501f929de54ba36a
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
