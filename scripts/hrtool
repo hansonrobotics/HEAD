@@ -305,6 +305,7 @@ install_test_deps() {
 install_vision_deps() {
     info "Installing vision dependencies"
     mkdir -p $VISION_TOOL_PREFIX
+    $SUDO apt-get ${APT_GET_OPTS} install libopencv-dev
     $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-opencv-apps
 
     # Tkinter error other wise.
