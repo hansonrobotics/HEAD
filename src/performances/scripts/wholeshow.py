@@ -23,13 +23,17 @@ class WholeShow(HierarchicalMachine):
 
     def __init__(self):
         # States for wholeshow
-        states = [{'name': 'sleeping', 'children': ['shutting']}, 'interacting', 'performing', ]
+        states = [{'name': 'sleeping', 'children': ['shutting']},
+                  {'name': 'interacting', 'children': ['nonverbal']},
+                  'performing']
         HierarchicalMachine.__init__(self, states=states, initial='interacting')
         # Transitions
         self.add_transition('wake_up', 'sleeping', 'interacting')
         # Transitions
         self.add_transition('perform', 'interacting', 'performing')
         self.add_transition('shut', 'sleeping', 'sleeping_shutting')
+        self.add_transition('be_quiet', 'interacting', 'interacting_nonverbal')
+        self.add_transition('start_talking', 'interacting_nonverbal', 'interacting')
         # States handling
         self.on_enter_sleeping("start_sleeping")
         self.on_exit_sleeping("stop_sleeping")
@@ -77,7 +81,6 @@ class WholeShow(HierarchicalMachine):
     def stop_interacting(self):
         self.btree_pub.publish(String("btree_off"))
 
-    """ Transition callbacks """
     """ ROS Callbacks """
     def speech_cb(self, req):
         speech = req.speech
@@ -85,14 +88,17 @@ class WholeShow(HierarchicalMachine):
         # Special states keywords
         if 'go to sleep' in speech:
             try:
-                self.to_sleeping()
+                # use to_performng() instead of perform() so it can be called from other than interaction states
+                self.to_performing()
+                self.after_performance = self.to_sleeping
+                self.performance_runner('robot/sleep')
                 return srv.SpeechOnResponse(False)
             except:
                 pass
         if 'wake' in speech or \
                 'makeup' in speech:
             try:
-                self.wake_up()
+                self.do_wake_up()
                 return srv.SpeechOnResponse(False)
             except:
                 pass
@@ -102,6 +108,30 @@ class WholeShow(HierarchicalMachine):
                 return srv.SpeechOnResponse(False)
             except:
                 pass
+        if 'be quiet' in speech:
+            try:
+                self.be_quiet()
+                return srv.SpeechOnResponse(False)
+            except:
+                pass
+        if 'hi sophia' in speech or \
+                'hey sophia' in speech or \
+                'hello sofia' in speech or \
+                'hello sophia' in speech or \
+                'hi sofia' in speech or \
+                'hey sofia' in speech:
+            try:
+                self.start_talking()
+                return srv.SpeechOnResponse(True)
+            except:
+                pass
+            # Try wake up
+            try:
+                self.do_wake_up()
+                return srv.SpeechOnResponse(False)
+            except:
+                pass
+
         performances = self.find_performance_by_speech(speech)
         if len(performances) > 0:
             try:
@@ -119,6 +149,7 @@ class WholeShow(HierarchicalMachine):
                 or msg.event == 'idle':
             if self.after_performance:
                 self.after_performance()
+                self.after_performance = None
             else:
                 self.to_interacting()
 
@@ -130,6 +161,12 @@ class WholeShow(HierarchicalMachine):
                 self.wake_up()
             except:
                 pass
+
+    def do_wake_up(self):
+        assert (self.current_state.name == 'sleeping')
+        self.after_performance = self.to_interacting
+        # Start performance before triggerring state change so soma state will be sinced with performance
+        self.performance_runner('robot/wakeup')
 
     """ Speech"""
     @staticmethod
