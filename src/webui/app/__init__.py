@@ -270,7 +270,6 @@ def get_performance_keywords(robot_name, path):
     keywords = {'keywords': []}
     if os.path.isfile(filename):
         keywords = read_yaml(filename)
-    print keywords
     return json_encode(keywords)
 
 
@@ -281,9 +280,11 @@ def update_performance_keywords(robot_name, path):
     data = request.get_data()
     data = json.loads(data)
     keywords = []
-    print data
     if 'keywords' in data and isinstance(data['keywords'], list):
         keywords = data['keywords']
+        for i, keyword in enumerate(keywords):
+            keywords[i] = keyword.strip()
+        keywords = filter(bool, keywords)
 
     write_yaml(filename, {'keywords': keywords})
     return json_encode(True)
