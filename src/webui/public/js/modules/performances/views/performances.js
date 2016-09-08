@@ -138,7 +138,7 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
                 $.ajax({
                     type: "GET",
                     dataType: 'json',
-                    url: '/performances/keywords/' + api.config.robot + '/' + path,
+                    url: '/performances/keywords/' + api.config.robot + (path ? '/' + path : ''),
                     success: function (data) {
                         console.log(data);
                         var keywords = data['keywords'].join(', ');
