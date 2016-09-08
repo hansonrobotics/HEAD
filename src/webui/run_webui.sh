@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+#
+# Run webui with chatbot only. This is mainly for test.
+#
 
 source ~/hansonrobotics/HEAD/devel/setup.bash
 pidfile=$(mktemp)
