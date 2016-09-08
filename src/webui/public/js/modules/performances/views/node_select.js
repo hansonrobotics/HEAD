@@ -1,8 +1,8 @@
 define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../entities/node',
-        '../../settings/views/settings', '../../settings/entities/node_config_schema',  'lib/api', 'underscore',
+        '../../settings/views/settings', '../../settings/entities/node_config_schema', 'lib/api', 'underscore',
         'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2'],
     function (App, Marionette, template, Node, SettingsView, SettingsSchemaModel, api, _, $) {
-        return Marionette.ItemView.extend({
+        return Marionette.LayoutView.extend({
             template: template,
             ui: {
                 nodeProperties: '[data-node-property]',
@@ -12,7 +12,6 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 somaList: '.app-soma-list',
                 expressionList: '.app-expression-list',
                 kfAnimationList: '.app-kfanimation-list',
-                settingsEditor: '.app-settings-editor',
                 textInput: '.app-node-text',
                 langSelect: 'select.app-lang-select',
                 attentionRegionList: '.app-attention-region-list',
@@ -29,7 +28,6 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 enableChatbotCheckbox: '.app-enable-chatbot-checkbox',
                 responsesProperty: '[data-node-property="responses"]'
             },
-
             events: {
                 'keyup @ui.textInput': 'setText',
                 'change @ui.textInput': 'setTextDuration',
@@ -39,6 +37,9 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 'click @ui.listenAddResponseButton': 'addListenResponse',
                 'click @ui.removeListenResponseButton': 'removeListenResponse',
                 'change @ui.enableChatbotCheckbox': 'setEnableChatbot'
+            },
+            regions: {
+                settingsEditor: '.app-settings-editor'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -164,7 +165,7 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                 }
                 if (this.model.hasProperty('rosnode')) {
                     this.setSettingsEditor(this.model.get('schema'));
-                    this.listenTo(this.model, 'change:rosnode', function(){
+                    this.listenTo(this.model, 'change:rosnode', function () {
                         self.updateSettingsSchema();
                     });
                 }
@@ -258,7 +259,7 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
             updateSomaStates: function (somas) {
                 this.initList(somas, 'soma', this.ui.somaList);
             },
-            updateSettingsSchema: function(){
+            updateSettingsSchema: function () {
                 var self = this;
                 var rosnode = this.model.get('rosnode');
                 api.services.get_node_description.callService({node: rosnode}, function (response) {
@@ -267,18 +268,19 @@ define(['application', 'marionette', 'tpl!./templates/node_select.tpl', '../enti
                     self.setSettingsEditor(schema);
                     api.services.get_node_configuration.callService({node: rosnode}, function (response) {
                         self.model.set({values: JSON.parse(response.configuration)});
-                    }, function(error){
+                    }, function (error) {
                         console.log("Cant retrieve node settings")
                     });
                 }, function (error) {
                     console.log('Error fetching configuration schema');
                 });
             },
-            setSettingsEditor: function(schema){
-                if (this.model.el_settings) this.model.el_settings.destroy();
-                this.model.el_settings = new SettingsView({model: this.model, schema: schema, refresh: false});
-                this.model.el_settings.render();
-                this.ui.settingsEditor.html(this.model.el_settings.$el);
+            setSettingsEditor: function (schema) {
+                this.getRegion('settingsEditor').show(new SettingsView({
+                    model: this.model,
+                    schema: schema,
+                    refresh: false
+                }));
             },
             setText: function () {
                 this.model.set('text', this.ui.textInput.val());

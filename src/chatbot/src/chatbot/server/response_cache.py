@@ -36,9 +36,20 @@ class ResponseCache(object):
         if lang == 'zh':
             logger.info("Don't check Chinese answer")
             return True
-        if len(answer) < 50:
+
+        answer = self._norm(answer)
+
+        # each additional character over the 15 characters, adds 30 seconds
+        # delay before that AIML string is allowed to repeat.
+        same_answers = [r for r in self.record if r['Answer'] == answer]
+        time_elapsed = (dt.datetime.now()-same_answers[-1]['Datetime']
+                        ).seconds if same_answers else 0
+        if max(0, len(answer)-15)*30 <= time_elapsed:
             logger.info("Allow short repeat answer")
+            logger.debug("Answer length {}, time elapsed {}".format(
+                len(answer), time_elapsed))
             return True
+
         if self._norm(answer) == self.last_answer:
             logger.info("Last answer repeat")
             return False

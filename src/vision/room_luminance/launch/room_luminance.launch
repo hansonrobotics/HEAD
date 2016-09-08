@@ -1,0 +1,4 @@
+<launch>
+<param name="debug" value="True"/>
+<node pkg="room_luminance" name="perceived_luminance" type="perceived_luminance.py" output="screen" />
+</launch>

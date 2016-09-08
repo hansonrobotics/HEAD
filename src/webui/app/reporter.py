@@ -3,7 +3,6 @@ from subprocess import call, check_output, Popen
 from easyprocess import EasyProcess
 import threading
 import time
-from pololu.motors import Maestro
 from configs import Configs
 import math
 import psutil
@@ -13,7 +12,9 @@ try:
     from subprocess import DEVNULL
 except ImportError:
     import os
+
     DEVNULL = open(os.devnull, 'wb')
+
 
 class Reporter:
     # Executes a number of shell commands, interprets their return codes as
@@ -69,7 +70,7 @@ class Reporter:
     def motor_states(self, motors, robot_name):
         # Dynamixel monitor start
         if not self.monitor_started:
-            for i,m in enumerate(motors):
+            for i, m in enumerate(motors):
                 if m['hardware'] == 'pololu':
                     self.pololu_boards[m['topic']] = {}
             self.start_motors_monitor(robot_name)
@@ -88,11 +89,11 @@ class Reporter:
                 else:
                     m['error'] = 1
                 motor = PololuMotor(m['name'], m)
-                #Conert to angles
-                m['init'] = round(math.degrees(motor.get_angle(m['init']*4)))
-                m['min'] = round(math.degrees(motor.get_angle(m['min']*4)))
-                m['max'] = round(math.degrees(motor.get_angle(m['max']*4)))
-            #Dynamixel motors
+                # Conert to angles
+                m['init'] = round(math.degrees(motor.get_angle(m['init'] * 4)))
+                m['min'] = round(math.degrees(motor.get_angle(m['min'] * 4)))
+                m['max'] = round(math.degrees(motor.get_angle(m['max'] * 4)))
+            # Dynamixel motors
             else:
                 if m['motor_id'] in self.dynamixel_motors_states.keys():
                     motors[i]['error'] = 0
@@ -122,7 +123,7 @@ class Reporter:
                 states = yaml.load(out)
                 self.dynamixel_motors_states = {m['id']: m for m in states['motor_states']}
             except:
-                self.dynamixel_motors_states= {}
+                self.dynamixel_motors_states = {}
             # Pololu states
             for i in self.pololu_boards.keys():
                 cmd_pol = 'rostopic echo /{}/{}/motors_states -n 1'.format(self.robot_name, i)
@@ -149,7 +150,7 @@ class Reporter:
             'system': {
                 'cpu': int(psutil.cpu_percent()),
                 'mem': int(psutil.virtual_memory().percent),
-                'total_mem': round(psutil.virtual_memory().total/float(1024*1024*1024)),
+                'total_mem': round(psutil.virtual_memory().total / float(1024 * 1024 * 1024)),
                 'fps': self.get_blender_fps(),
             },
             'robot': {
@@ -160,9 +161,9 @@ class Reporter:
                 'ros': self.get_ros_status(),
                 'blender': self.get_blender_status(),
                 'internet': self.get_internet_status(),
-                'pololu': self.check("test -e /dev/ttyACM0") * -1 +1,
-                'usb2dynamixel': self.check("test -e /dev/ttyUSB0") * -1 +1,
-                'camera': self.check("test -e /dev/video0") * -1 +1,
+                'pololu': self.check("test -e /dev/ttyACM0") * -1 + 1,
+                'usb2dynamixel': self.check("test -e /dev/ttyUSB0") * -1 + 1,
+                'camera': self.check("test -e /dev/video0") * -1 + 1,
             },
             # Ros nodes based on config
             'nodes': []
@@ -174,10 +175,10 @@ class Reporter:
             status["robot"]['current_name'] = robot_name
             # ROS Nodes
             nodes_running = str(EasyProcess("rosnode list").call().stdout).splitlines()
-            nod_file = os.path.join(config_dir,robot_name,'nodes.yaml')
+            nod_file = os.path.join(config_dir, robot_name, 'nodes.yaml')
             with open(nod_file, 'r') as stream:
                 node_cfg = yaml.load(stream)
-            for i,n in enumerate(node_cfg['nodes']):
+            for i, n in enumerate(node_cfg['nodes']):
                 if len([nd for nd in nodes_running if nd == n['node']]) > 0:
                     node_cfg['nodes'][i]['status'] = 0
                 else:
@@ -187,7 +188,7 @@ class Reporter:
 
         return status
 
-    def start_status(self, config_dir, robot_name, started = -1):
+    def start_status(self, config_dir, robot_name, started=-1):
         # Check if software started only if its status wasnt changed on same call,
         # in which case current status would be passed as argument
         if started < 0:
@@ -198,11 +199,11 @@ class Reporter:
             'system': {
                 'cpu': int(psutil.cpu_percent()),
                 'mem': int(psutil.virtual_memory().percent),
-                'total_mem': round(psutil.virtual_memory().total/float(1024*1024*1024)),
+                'total_mem': round(psutil.virtual_memory().total / float(1024 * 1024 * 1024)),
             },
             'status': {
-               'internet': self.get_internet_status(),
-               'camera': self.check("test -e /dev/video0") * -1 +1,
+                'internet': self.get_internet_status(),
+                'camera': self.check("test -e /dev/video0") * -1 + 1,
             },
             # Hardware Checks
             'checks': []
@@ -212,14 +213,14 @@ class Reporter:
             # Check if software already running:
 
             # Hardware checks
-            checks = os.path.join(config_dir,robot_name,'hw_monitor.yaml')
+            checks = os.path.join(config_dir, robot_name, 'hw_monitor.yaml')
             with open(checks, 'r') as stream:
                 hw = yaml.load(stream)
             # Check dynamixels
             if 'dynamixel' in hw:
                 for c in hw['dynamixel']:
                     # Check device
-                    dev =  self.check("test -e "+c['device']) * -1 +1
+                    dev = self.check("test -e " + c['device']) * -1 + 1
                     status['checks'].append({
                         'label': c['label'] + " USB",
                         'status': dev,
@@ -250,7 +251,7 @@ class Reporter:
                     })
             if 'pololu' in hw:
                 for c in hw['pololu']:
-                    dev =  self.check("test -e "+c['device']) * -1 +1
+                    dev = self.check("test -e " + c['device']) * -1 + 1
                     status['checks'].append({
                         'label': c['label'] + " USB",
                         'status': dev,
@@ -267,6 +268,7 @@ class Reporter:
             'status': self.get_internet_status(),
         })
         return status
+
     def get_dynamixel_motor_number(self, device):
         if not self.mx_tool:
             return 0
@@ -274,7 +276,7 @@ class Reporter:
         out = EasyProcess(cmd).call()
         if out.return_code > 0:
             return 0
-        return len(out.stdout.splitlines())-1
+        return len(out.stdout.splitlines()) - 1
 
     def get_pololu_power(self):
         return 0
@@ -343,7 +345,7 @@ class Reporter:
     def robot_started(self, robot_name):
         if not robot_name:
             return 0
-        cmd ='tmux list-sessions'
+        cmd = 'tmux list-sessions'
         out = EasyProcess(cmd).call()
         if out.return_code > 0:
             return 0
@@ -355,17 +357,6 @@ class Reporter:
                 else:
                     return 2
         return 0
-
-    def get_pololu_power(self, port, channel):
-        try:
-            m = Maestro(port);
-            pos = m.getPosition(channel)
-            m.close()
-            if pos > 100:
-                return 0
-            return 1
-        except:
-            return 1
 
 
 def deepupdate(original, new):

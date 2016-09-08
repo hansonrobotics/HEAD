@@ -28,7 +28,8 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 },
                 chat: {
                     label: 'Chat',
-                    properties: ['responses', 'timeout', 'no_match', 'no_speech', 'dialog_turns', 'enable_chatbot'],
+                    properties: ['responses', 'timeout', 'no_match', 'no_speech', 'dialog_turns', 'enable_chatbot',
+                        'chatbot', 'chat_timeout_mode'],
                     defaultValues: {duration: 0.2, responses: []}
                 },
                 soma: {
@@ -152,14 +153,12 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
             toJSON: function () {
                 var json = Supermodel.Model.prototype.toJSON.call(this);
                 if (this.get('el')) delete json['el'];
-                if (this.get('el_settings')) delete json['el_settings'];
                 return json;
             },
             destroy: function () {
                 // remove an associated element
                 if (this.collection) this.collection.remove(this);
                 if (this.get('el')) $(this.get('el')).remove();
-                if (this.get('el_settings')) this.get('el_settings').destroy();
                 this.unset('id');
                 Supermodel.Model.prototype.destroy.call(this);
             },

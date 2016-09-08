@@ -3,7 +3,7 @@ import pyaudio
 import contextlib
 import rospy
 
-from audio_stream.msg import AudioData
+from std_msgs.msg import UInt8MultiArray, MultiArrayDimension
 
 @contextlib.contextmanager
 def record_audio(channels, rate, chunk):
@@ -22,7 +22,7 @@ def record_audio(channels, rate, chunk):
 
 if __name__ == '__main__':
     rospy.init_node('audio_stream')
-    audio_publisher = rospy.Publisher('speech_audio', AudioData, queue_size=1)
+    audio_publisher = rospy.Publisher('speech_audio', UInt8MultiArray, queue_size=1)
     rate = rospy.get_param('audio_rate', 16000)
     channels = rospy.get_param('audio_channels', 1)
     chunk = int(rate / 10)  # 100ms
@@ -31,4 +31,10 @@ if __name__ == '__main__':
             data = audio_stream.read(chunk)
             if not data:
                 raise StopIteration()
-            audio_publisher.publish(data)
+            msg = UInt8MultiArray()
+            msg.data = data
+            msg.layout.dim = [
+                MultiArrayDimension('wave', chunk, channels*2),
+                MultiArrayDimension('channel', channels, channels)
+            ]
+            audio_publisher.publish(msg)

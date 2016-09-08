@@ -44,12 +44,12 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 this.ui.nodeTypeButtons.draggable({
                     helper: function () {
                         var attributes;
-                        if (self.node && self.collection && self.node.get('name') == $(this).data('node-name')){
+                        if (self.node && self.collection && self.node.get('name') == $(this).data('node-name')) {
                             // Copy current view attributes if node is same
-                                attributes = self.node.toJSON();
-                                delete attributes['id'];
+                            attributes = self.node.toJSON();
+                            delete attributes['id'];
 
-                        }else{
+                        } else {
                             attributes = {
                                 name: $(this).data('node-name'),
                                 duration: 1
@@ -160,26 +160,23 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                     selectView = this.getRegion('select').currentView,
                     settingsView = this.getRegion('settings').currentView;
 
+                this.stopListening(this.node, 'change');
                 this.node = null;
                 this.ui.nodeTabs.removeClass('active');
                 $('.app-node.active').removeClass('active');
-
                 if (settingsView) {
-                    settingsView.model.unbind('change:duration', this.updateNode, this);
                     $(selectView.$el).add(settingsView.$el).slideUp(null, function () {
                         self.ui.container.addClass('app-disabled');
-                        $(window).resize();
                     });
                 } else {
                     this.ui.container.addClass('app-disabled');
-                    $(window).resize();
                 }
             },
             showSettings: function (node) {
                 if (node === this.node) return;
-                node.bind('change', this.updateNode, this);
-                if (this.node) this.node.unbind('change', this.updateNode, this);
                 this.node = node;
+                this.listenTo(node, 'change', this.updateNode);
+                this.updateNode(node);
                 this.ui.container.removeClass('app-disabled');
                 this.ui.nodeTabs.removeClass('active');
                 this.ui.nodeTypeButtons.filter('[data-node-name="' + node.get('name') + '"]').closest('li').addClass('active');
@@ -196,8 +193,8 @@ define(['application', 'marionette', 'tpl!./templates/node.tpl', 'lib/api', 'und
                 this.showSettings(node);
             },
             updateNode: function (node) {
-                if (this.node != node || this.isDestroyed)
-                    node.unbind('change', this.updateNode, this);
+                if (this.node != node)
+                    this.stopListening(node);
                 else {
                     if (node.changed['duration']) this.updateIndicators();
                     if (this.collection.contains(node)) this.ui.deleteButton.fadeIn();

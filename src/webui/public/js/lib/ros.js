@@ -361,6 +361,13 @@ define(['jquery', 'roslib', 'jsyaml', './api'], function ($, ROSLIB, jsyaml, api
                         name: '/' + api.config.robot + '/tts_zh_select',
                         messageType: 'topic_tools/MuxSelect'
                     })
+                },
+                chatbot: {
+                    bot_names: new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/webui/chatbot_controller/bot_names',
+                        messageType: 'webui/Json'
+                    })
                 }
             };
         },

@@ -5,4 +5,6 @@
         <arg name="model" value="$(find perception)/description.urdf" />
     </include>
     <include file="$(find ros_nmpt_saliency)/launch/saliency.launch" if="$(arg saliency_tracking)" />
+    <include file="$(find room_luminance)/launch/room_luminance.launch" />
+    <node name="audio_stream" pkg="audio_stream" type="run.py" respawn="true"/>
 </launch>
