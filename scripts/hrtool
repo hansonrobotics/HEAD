@@ -305,6 +305,7 @@ install_test_deps() {
 install_vision_deps() {
     info "Installing vision dependencies"
     mkdir -p $VISION_TOOL_PREFIX
+    $SUDO apt-get ${APT_GET_OPTS} install libopencv-dev
     $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-opencv-apps
 
     # Tkinter error other wise.
@@ -383,23 +384,25 @@ install_vision_deps() {
     if [ ! -d $CPPMT_DIR ]; then
       info "Cloning CppMT"
       git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
-      cd $CPPMT_DIR
-      git checkout wrapper
-      cmake .
-      make -j$(nproc)
     else
       warn "Skipping CppMT clone"
     fi
+    cd $CPPMT_DIR
+    git checkout wrapper
+    mkdir build
+    cd build
+    cmake ..
+    make -j$(nproc)
 
     if [ ! -d $EMOTIME_DIR ]; then
       info "Cloning emotime"
       git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
-      cd $EMOTIME_DIR/build
-      cmake ..
-      make -j$(nproc)
     else
       warn "Skipping emotime clone"
     fi
+    cd $EMOTIME_DIR/build
+    cmake ..
+    make -j$(nproc)
     info "Installing vision dependencies is done"
 }
 
