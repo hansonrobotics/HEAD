@@ -11,7 +11,6 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "express": "~4.14.0",
-    "yamljs": "~0.2.8",
-    "coffee-script": "~1.10.0"
+    "yamljs": "~0.2.8"
   }
 }
