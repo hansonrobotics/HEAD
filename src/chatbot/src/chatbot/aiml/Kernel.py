@@ -470,6 +470,8 @@ class Kernel:
             trace = {}
             trace['doc'] = elem[1]['doc']
             trace['loc'] = elem[1]['line']
+            trace['pattern'] = elem[1]['pattern']
+            trace['pattern-loc'] = elem[1]['pattern-loc']
             trace['input'] = elem[2:]
             trace['response'] = _response
             self._trace.append(trace)

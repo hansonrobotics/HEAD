@@ -32,6 +32,7 @@ class AimlHandler(ContentHandler):
         self._namespace = ""
         self._forwardCompatibleMode = False
         self._currentPattern = ""
+        self._currentPatternLocation = ""
         self._currentThat = ""
         self._currentTopic = ""
         self._insideTopic = False
@@ -183,6 +184,7 @@ class AimlHandler(ContentHandler):
                 raise AimlParserError, "Unexpected <category> tag " + self._location()
             self._state = self._STATE_InsideCategory
             self._currentPattern = u""
+            self._currentPatternLocation = u""
             self._currentThat = u""
             # If we're not inside a topic, the topic is implicitly set to *
             if not self._insideTopic:
@@ -283,6 +285,7 @@ class AimlHandler(ContentHandler):
         if self._state == self._STATE_InsidePattern:
             # TODO: text inside patterns must be upper-case!
             self._currentPattern += string.upper(text)
+            self._currentPatternLocation = self._location()
         elif self._state == self._STATE_InsideThat:
             self._currentThat += text
         elif self._state == self._STATE_InsideTemplate:
@@ -399,6 +402,10 @@ class AimlHandler(ContentHandler):
             key = (self._currentPattern.strip(),
                    self._currentThat.strip(), self._currentTopic.strip())
             self.categories[key] = self._elemStack[-1]
+            # Add `pattern` and `pattern-loc` to template attrDict
+            assert self._elemStack[0][0] == 'template'
+            self._elemStack[0][1]['pattern'] = self._currentPattern
+            self._elemStack[0][1]['pattern-loc'] = self._currentPatternLocation
             self._whitespaceBehaviorStack.pop()
         elif name == "pattern":
             # </pattern> tags are only legal in the InsidePattern state
