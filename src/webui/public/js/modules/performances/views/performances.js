@@ -134,11 +134,12 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
             },
             editKeywords: function () {
                 var self = this,
-                    path = this.currentPath;
+                    path = this.currentPath,
+                    url = '/performances/keywords/' + api.config.robot + (path ? ('/' + path) : '');
                 $.ajax({
                     type: "GET",
                     dataType: 'json',
-                    url: '/performances/keywords/' + api.config.robot + (path ? '/' + path : ''),
+                    url: url,
                     success: function (data) {
                         console.log(data);
                         var keywords = data['keywords'].join(', ');
@@ -152,7 +153,7 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
                                 if (keywords !== null) {
                                     $.ajax({
                                         type: "POST",
-                                        url: '/performances/keywords/' + api.config.robot + path,
+                                        url: url,
                                         dataType: 'json',
                                         data: JSON.stringify({
                                             path: self.currentPath,
