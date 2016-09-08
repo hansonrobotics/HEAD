@@ -416,6 +416,7 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 if (annyang) {
                     annyang.abort();
                     annyang.removeCommands();
+                    annyang.removeCallback();
                     annyang.setLanguage(this.language == 'zh' ? 'zh-CN' : 'en-US');
                     annyang.addCallback('start', function () {
                         console.log('starting speech recognition');
