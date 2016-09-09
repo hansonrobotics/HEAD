@@ -96,7 +96,7 @@ Parameters:
 - *question* - Question
 - *lang* - Language
 - *session* - Session ID
-- *query* - It's a try ask
+- *query* - It's a try ask (True or False)
 
 Return:
 - *ret* - Return code
