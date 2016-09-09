@@ -69,7 +69,8 @@ def _chat():
     question = data.get('question')
     session = data.get('session')
     lang = data.get('lang', 'en')
-    response, ret = ask(question, lang, session)
+    query = data.get('query', False)
+    response, ret = ask(question, lang, session, query)
     return Response(json_encode({'ret': ret, 'response': response}),
         mimetype="application/json")
 

@@ -19,7 +19,7 @@ INVALID_QUESTION=4
 useSOLR = True
 CWD = os.path.dirname(os.path.realpath(__file__))
 
-logger = logging.getLogger('hr.chatbot.server.chatbot')
+logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
 from config import CHARACTER_PATH
@@ -101,7 +101,7 @@ from session import ChatSessionManager
 session_manager = ChatSessionManager()
 MAX_CHAT_TRIES = 5
 NON_REPEAT = True
-def _ask_characters(characters, question, lang, sid):
+def _ask_characters(characters, question, lang, sid, query):
     chat_tries = 0
     sess = session_manager.get_session(sid)
     if sess is None:
@@ -120,7 +120,7 @@ def _ask_characters(characters, question, lang, sid):
     while chat_tries < MAX_CHAT_TRIES:
         chat_tries += 1
         for c, weight in zip(characters, weights):
-            _response = c.respond(_question, lang, sid)
+            _response = c.respond(_question, lang, sid, query)
             assert isinstance(_response, dict), "Response must be a dict"
             answer = _response.get('text', '')
             if not answer:
@@ -135,6 +135,7 @@ def _ask_characters(characters, question, lang, sid):
                         for path in CHARACTER_PATH.split(','):
                             path = path.strip()
                             if not path: continue
+                            path = path+'/'
                             trace = [f.replace(path, '') for f in trace]
                         _response['trace'] = trace
                     sess.add(_question, answer, AnsweredBy=c.name,
@@ -143,14 +144,14 @@ def _ask_characters(characters, question, lang, sid):
                     return _response
 
     # Ask the same question to every tier to sync internal state
-    [c.respond(_question, lang, sid) for c in characters]
+    [c.respond(_question, lang, sid, query) for c in characters]
 
     dummy_character = get_character('dummy', lang)
     if dummy_character:
         if not sess.check(_question, answer, lang):
-            _response = dummy_character.respond("REPEAT_ANSWER", lang, sid)
+            _response = dummy_character.respond("REPEAT_ANSWER", lang, sid, query)
         else:
-            _response = dummy_character.respond("NO_ANSWER", lang, sid)
+            _response = dummy_character.respond("NO_ANSWER", lang, sid, query)
         answer = _response.get('text', '')
         sess.add(_question, answer, AnsweredBy=dummy_character.name,
                 User=user, BotName=botname, Trace=None, Revision=REVISION, Lang=lang)
@@ -215,7 +216,7 @@ def rate_answer(sid, idx, rate):
         return False
     return True
 
-def ask(question, lang, sid):
+def ask(question, lang, sid, query=False):
     """
     return (response dict, return code)
     """
@@ -238,25 +239,25 @@ def ask(question, lang, sid):
         session_manager.reset_session(sid)
         logger.info("Session is cleaned by hi")
 
-    # TODO: Sync session data
-
     logger.info("Responding characters {}".format(responding_characters))
-    _response = _ask_characters(responding_characters, question, lang, sid)
+    _response = _ask_characters(responding_characters, question, lang, sid, query)
 
-    context = {}
-    for c in responding_characters:
-        context.update(c.get_context(sid))
-    for c in responding_characters:
-        try:
-            c.set_context(sid, context)
-        except NotImplementedError:
-            pass
+    if not query:
+        # Sync session data
+        context = {}
+        for c in responding_characters:
+            context.update(c.get_context(sid))
+        for c in responding_characters:
+            try:
+                c.set_context(sid, context)
+            except NotImplementedError:
+                pass
 
-    for c in responding_characters:
-        try:
-            c.check_reset_topic(sid)
-        except Exception:
-            continue
+        for c in responding_characters:
+            try:
+                c.check_reset_topic(sid)
+            except Exception:
+                continue
 
     if _response is not None:
         response.update(_response)

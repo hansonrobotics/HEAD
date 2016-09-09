@@ -124,7 +124,7 @@ class SessionManager(object):
             session = self._sessions.get(sid)
             if session.active:
                 session.reset()
-                logger.info("Resetted session {}".format(sid))
+                logger.info("Reset session {}".format(sid))
 
     def get_session(self, sid):
         if sid is not None:
