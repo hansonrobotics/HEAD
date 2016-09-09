@@ -11,4 +11,3 @@ from chatbot.client import get_default_username
 if __name__ == '__main__':
     client = Client(get_default_username(), 'AAAAB3NzaC')
     client.cmdloop()
-

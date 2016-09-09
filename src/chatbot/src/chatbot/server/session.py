@@ -9,9 +9,13 @@ from response_cache import ResponseCache
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
-class SessionData(object): pass
+
+class SessionData(object):
+    pass
+
 
 class Session(object):
+
     def __init__(self, sid):
         self.sid = sid
         self.sdata = SessionData()
@@ -20,7 +24,8 @@ class Session(object):
         self.init = self.created
         self.characters = []
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
-        test_dirname = os.path.join(TEST_HISTORY_DIR, self.created.strftime('%Y%m%d'))
+        test_dirname = os.path.join(
+            TEST_HISTORY_DIR, self.created.strftime('%Y%m%d'))
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
         self.test_fname = os.path.join(test_dirname, '{}.csv'.format(self.sid))
         self.dump_file = None
@@ -79,7 +84,9 @@ class Session(object):
         return "<Session {} init {} active {}>".format(
             self.sid, self.init, self.cache.last_time)
 
+
 class Locker(object):
+
     def __init__(self):
         self._lock = threading.RLock()
 
@@ -88,6 +95,7 @@ class Locker(object):
 
     def unlock(self):
         self._lock.release()
+
 
 class SessionManager(object):
 
@@ -109,7 +117,7 @@ class SessionManager(object):
             finally:
                 self._locker.unlock()
         return wrap
-                
+
     @_threadsafe
     def remove_session(self, sid):
         if sid in self._sessions:
@@ -176,7 +184,9 @@ class SessionManager(object):
                 self.remove_session(sid)
             time.sleep(0.1)
 
+
 class ChatSessionManager(SessionManager):
+
     def __init__(self, auto_clean=True):
         super(ChatSessionManager, self).__init__(auto_clean)
 

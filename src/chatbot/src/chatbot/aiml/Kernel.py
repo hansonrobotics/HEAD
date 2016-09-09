@@ -1163,7 +1163,8 @@ class Kernel:
     def getTraceDocs(self):
         docs = []
         for trace in self._trace:
-            docs.append('{doc}, {loc}, {pattern}, {pattern-loc}'.format(**trace))
+            docs.append(
+                '{doc}, {loc}, {pattern}, {pattern-loc}'.format(**trace))
         docs.reverse()
         return docs
 

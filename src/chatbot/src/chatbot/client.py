@@ -9,13 +9,16 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 VERSION = 'v1.1'
 
+
 def get_default_username():
     import subprocess
     user = subprocess.check_output('id -nu', shell=True).strip()
     host = subprocess.check_output('hostname', shell=True).strip()
     return '{}@{}'.format(user, host)
 
+
 class Client(cmd.Cmd, object):
+
     def __init__(self, username, key, test=False, *args, **kwargs):
         super(Client, self).__init__(*args, **kwargs)
         self.user = username
@@ -33,7 +36,8 @@ class Client(cmd.Cmd, object):
         if self.ping():
             self.do_conn()
         else:
-            self.stdout.write("Chatbot server is not responding. Server url {}\n".format(self.chatbot_url))
+            self.stdout.write(
+                "Chatbot server is not responding. Server url {}\n".format(self.chatbot_url))
 
     def set_sid(self):
         params = {
@@ -46,14 +50,16 @@ class Client(cmd.Cmd, object):
         retry = 3
         while r is None and retry > 0:
             try:
-                r = requests.get('{}/start_session'.format(self.chatbot_url), params=params)
+                r = requests.get(
+                    '{}/start_session'.format(self.chatbot_url), params=params)
             except Exception:
                 retry -= 1
                 self.stdout.write('.')
                 self.stdout.flush()
                 time.sleep(1)
         if r is None:
-            self.stdout.write("Can't get session\nPlease check the url {}\n".format(self.chatbot_url))
+            self.stdout.write(
+                "Can't get session\nPlease check the url {}\n".format(self.chatbot_url))
             return
         ret = r.json().get('ret')
         if r.status_code != 200:
@@ -83,14 +89,14 @@ class Client(cmd.Cmd, object):
         return ret, response
 
     def list_chatbot(self):
-        params={'Auth':self.key, 'lang':self.lang, 'session': self.session}
+        params = {'Auth': self.key, 'lang': self.lang, 'session': self.session}
         r = requests.get(
             '{}/chatbots'.format(self.chatbot_url), params=params)
         chatbots = r.json().get('response')
         return chatbots
 
     def list_chatbot_names(self):
-        params={'Auth':self.key, 'lang':self.lang, 'session': self.session}
+        params = {'Auth': self.key, 'lang': self.lang, 'session': self.session}
         r = requests.get(
             '{}/bot_names'.format(self.chatbot_url), params=params)
         names = r.json().get('response')
@@ -115,7 +121,8 @@ class Client(cmd.Cmd, object):
         chatbots = []
         try:
             chatbots = self.list_chatbot()
-            chatbots = ['{}: weight: {} level: {}'.format(c,w,l) for c, w, l in chatbots]
+            chatbots = ['{}: weight: {} level: {}'.format(
+                c, w, l) for c, w, l in chatbots]
             self.stdout.write('\n'.join(chatbots))
             self.stdout.write('\n')
         except Exception as ex:
@@ -171,7 +178,6 @@ For example, conn
         self.chatbot_url = 'http://{}:{}/{}'.format(
             self.chatbot_ip, self.chatbot_port, VERSION)
 
-
     def help_ip(self):
         s = """
 Set the IP address of chatbot server
@@ -208,7 +214,8 @@ For example, port 8001
             self.lang = lang
             self.stdout.write("Set lang to {}\n".format(self.lang))
         else:
-            self.stdout.write("Current lang {}. \nSet lang by 'lang [en|zh]'\n".format(self.lang))
+            self.stdout.write(
+                "Current lang {}. \nSet lang by 'lang [en|zh]'\n".format(self.lang))
 
     def help_lang(self):
         self.stdout.write("Set language. [en|zh]\n")
@@ -216,8 +223,8 @@ For example, port 8001
     def do_c(self, line):
         try:
             params = {
-                "session":"{}".format(self.session),
-                'Auth':self.key
+                "session": "{}".format(self.session),
+                'Auth': self.key
             }
             r = requests.get(
                 '{}/reset_session'.format(self.chatbot_url), params=params)
@@ -353,7 +360,8 @@ Syntax: upload package
             "session": self.session,
             "Auth": self.key
         }
-        r = requests.get('{}/dump_session'.format(self.chatbot_url), params=params)
+        r = requests.get(
+            '{}/dump_session'.format(self.chatbot_url), params=params)
         if r.status_code == 200:
             fname = '{}.csv'.format(self.session)
             with open(fname, 'w') as f:
@@ -387,10 +395,10 @@ Syntax: upload package
         response = r.json().get('response')
         if ret:
             self.stdout.write(
-                'Customers satisfaction degree {customers_satisfaction_degree:.4f}\n'\
-                'Number of records {number_of_records}\n'\
-                'Number of rates {number_of_rates}\n'\
-                'Number of good rates {number_of_good_rates}\n'\
+                'Customers satisfaction degree {customers_satisfaction_degree:.4f}\n'
+                'Number of records {number_of_records}\n'
+                'Number of rates {number_of_rates}\n'
+                'Number of good rates {number_of_good_rates}\n'
                 'Number of bad rates {number_of_bad_rates}\n'.format(**response))
         else:
             self.stdout.write('{}\n'.format(response['err_msg']))
