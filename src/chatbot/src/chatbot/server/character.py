@@ -20,7 +20,7 @@ class Character(object):
     def set_properties(self, props):
         self.properties.update(props)
 
-    def respond(self, question, lang, session=None):
+    def respond(self, question, lang, session=None, query=False):
         raise NotImplementedError
 
     def refresh(self, sid):
@@ -101,12 +101,12 @@ class AIMLCharacter(Character):
         self.kernel.setPredicate('topic', '', session)
         logger.info("[{}] Topic is reset".format(self.id))
 
-    def respond(self, question, lang, session):
+    def respond(self, question, lang, session, query):
         ret = {}
         if lang not in self.languages:
             ret['text'] = ''
         else:
-            ret['text'] = self.kernel.respond(question, session)
+            ret['text'] = self.kernel.respond(question, session, query)
         ret['emotion'] = self.kernel.getPredicate('emotion', session)
         ret['botid'] = self.id
         ret['botname'] = self.name
