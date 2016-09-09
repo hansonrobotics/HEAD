@@ -16,7 +16,7 @@ class DummyCharacter(Character):
         super(DummyCharacter, self).__init__(id, name, level)
         self.languages = ['en', 'zh']
 
-    def respond(self, question, lang, session=None):
+    def respond(self, question, lang, *args, **kwargs):
         ret = {}
         ret['text'] = ''
         ret['botid'] = self.id
