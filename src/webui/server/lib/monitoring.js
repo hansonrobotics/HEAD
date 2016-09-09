@@ -1,4 +1,4 @@
-var os = require('os'),
+let os = require('os'),
     yaml = require('yamljs'),
     memory = require('./memory'),
     cp = require('child_process'),
@@ -14,7 +14,7 @@ module.exports = {
         if (started < 0)
             started = this.robot_started(robot_name);
 
-        var totalMem = memory.totalMemory(),
+        let totalMem = memory.totalMemory(),
             usedMem = memory.usedMemory(),
             status = {
                 'software': started,
@@ -35,40 +35,61 @@ module.exports = {
                 'checks': []
             };
 
+        // Check Hardware only if software not running to avoid accessing same hardware
         if (status['software'] == 0) {
-            var hw = yaml.load(path.join(config_dir, robot_name, 'hw_monitor.yaml'));
+            let hw = yaml.load(path.join(config_dir, robot_name, 'hw_monitor.yaml'));
+
             if ('dynamixel' in hw) {
                 for (let c of hw.dynamixel) {
                     // Check device
-                    var dev = this.check("test", ['-e', c['device']]) * -1 + 1;
+                    let dev = this.check("test", ['-e', c['device']]) * -1 + 1;
                     status['checks'].push({
                         'label': c['label'] + " USB",
                         'status': dev,
                     });
 
                     // Check for motors if device found
-                    var found = 0;
+                    let found = 0;
                     if (dev == 0)
-                        found = this.get_dynamixel_motor_number(c['device'])
+                        found = this.get_dynamixel_motor_number(c['device']);
 
-                    var total = 0;
+                    let total = 0;
                     if ('motor_count' in c)
                         total = c['motor_count'];
                     // All motors found
-                    var st = 1;
+                    let st = 1;
                     if (found >= total && total > 0)
                         st = 0;
                     else if (found > 0)
                         st = 2;
 
-                    var val = str(found);
+                    let val = found.toString();
                     if (total > 0)
-                        val += "/{}".format(total);
+                        val += "/" + total;
 
-                    status['checks'].append({
+                    status['checks'].push({
                         'label': c['label'] + " Motors found",
                         'status': st,
                         'value': val,
+                    });
+                }
+            }
+
+            if ('pololu' in hw) {
+                for (let c of hw.pololu) {
+                    let dev = this.check("test", ['-e', c['device']]) * -1 + 1;
+                    status['checks'].push({
+                        'label': c['label'] + " USB",
+                        'status': dev
+                    });
+
+                    let val = 2;
+                    if ('channel' in c)
+                        val = this.get_pololu_power(c['device'], c['channel']);
+
+                    status['checks'].push({
+                        'label': c['label'] + " Power",
+                        'status': val
                     });
                 }
             }
@@ -85,7 +106,7 @@ module.exports = {
         if (args.constructor !== Array)
             args = [];
 
-        var res = cp.spawnSync('rosservice', ['call', service].concat(args), {encoding: 'utf8'});
+        let res = cp.spawnSync('rosservice', ['call', service].concat(args), {encoding: 'utf8'});
 
         if (res.status > 0)
             return null;
@@ -93,7 +114,7 @@ module.exports = {
             return res.stdout;
     },
     get_blender_fps: function () {
-        var res = this.call_ros_service("/blender_api/get_param", ['"bpy.data.scenes[\'Scene\'].evaFPS"'])
+        let res = this.call_ros_service("/blender_api/get_param", ['"bpy.data.scenes[\'Scene\'].evaFPS"'])
         if (res) {
             res = yaml.parse(res);
             if ('value' in res)
@@ -103,9 +124,9 @@ module.exports = {
         return 0;
     },
     robot_started: function (name) {
-        var res = cp.spawnSync('tmux', ['list-sessions'], {encoding: 'utf8'});
+        let res = cp.spawnSync('tmux', ['list-sessions'], {encoding: 'utf8'});
         if (res.status <= 0) {
-            var lines = res.stdout.split("\n");
+            let lines = res.stdout.split("\n");
             for (let line of lines) {
                 if (line.indexOf(name) !== -1) {
                     if (line.indexOf('attached') !== -1)
@@ -115,6 +136,9 @@ module.exports = {
                 }
             }
         }
+        return 0;
+    },
+    get_pololu_power: function (device, channel) {
         return 0;
     },
     get_internet_status: function () {
@@ -130,8 +154,8 @@ module.exports = {
         return cp.spawnSync(cmd, args, {encoding: 'utf8'}).status === 0;
     },
     get_dynamixel_motor_number: function(device) {
-        if (self.mx_tool) {
-            var res = cp.spawnSync(self.mx_tool, ['--device', device], {encoding: 'utf8'});
+        if (this.mx_tool) {
+            let res = cp.spawnSync(this.mx_tool, ['--device', device], {encoding: 'utf8'});
             if (res.status <= 0) return res.stdout.split("\n").length - 1;
         }
         return 0;
