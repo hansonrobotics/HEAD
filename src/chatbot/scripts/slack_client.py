@@ -19,18 +19,28 @@ SLACKTEST_TOKEN = os.environ.get('SLACKTEST_TOKEN')
 
 logger = logging.getLogger('hr.chatbot.slackclient')
 
-def format_trace(trace):
-    pattern = re.compile(r'/../(?P<fname>.*), \(line (?P<line>\d+), column .*\)')
-    prefix="<https://github.com/hansonrobotics/character_dev/blob/update"
-    formated_trace = []
-    for t in trace:
-        matchobj = pattern.match(t)
+def format_trace(traces):
+    pattern = re.compile(r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
+    line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
+    urlprefix="https://github.com/hansonrobotics/character_dev/blob/update"
+    formated_traces = []
+    for trace in traces:
+        matchobj = pattern.match(trace)
         if matchobj:
-            line = matchobj.groupdict()['line']
             fname = matchobj.groupdict()['fname']
-            t2 = '{prefix}/{fname}#L{line}|{present}>'.format(prefix=prefix, fname=fname, line=line, present=t)
-            formated_trace.append(t2)
-    return formated_trace
+            tloc = matchobj.groupdict()['tloc']
+            pname = matchobj.groupdict()['pname']
+            ploc = matchobj.groupdict()['ploc']
+            tline = line_pattern.match(tloc).group('line')
+            pline = line_pattern.match(ploc).group('line')
+
+            p = '<{urlprefix}/{fname}#L{pline}|{pname} {ploc}>'.format(
+                pname=pname, urlprefix=urlprefix, fname=fname, pline=pline, ploc=ploc)
+            t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
+                urlprefix=urlprefix, fname=fname, tline=tline, tloc=tloc)
+            formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
+            formated_traces.append(formated_trace)
+    return formated_traces
 
 class HRSlackBot(SlackClient):
 
