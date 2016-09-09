@@ -25,6 +25,7 @@ logger = logging.getLogger('hr.chatbot.aiml.kernel')
 class Kernel:
     # module constants
     _globalSessionID = "_global"  # key of the global session (duh)
+    _querySessionID = "_query"  # key of the query session (duh)
     _maxHistorySize = 10  # maximum length of the _inputs and _responses lists
     # maximum number of recursive <srai>/<sr> tags before the response is
     # aborted.
@@ -326,7 +327,7 @@ class Kernel:
                 logger.info("done (%.2f seconds)" % (time.clock() - start))
         return errors
 
-    def respond(self, input, sessionID=_globalSessionID):
+    def respond(self, input, sessionID=_globalSessionID, query=False):
         """Return the Kernel's response to the input string."""
         if len(input) == 0:
             return ""
@@ -344,6 +345,14 @@ class Kernel:
 
         # Add the session, if it doesn't already exist
         self._addSession(sessionID)
+
+        if query:
+            # Copy current session data to new query session, and delete it
+            # use
+            sessionData = self.getSessionData(sessionID)
+            sessionID = self._querySessionID
+            self._addSession(sessionID)
+            self._sessions[sessionID].update(sessionData)
 
         self._trace = []
         # split the input into discrete sentences
@@ -374,6 +383,7 @@ class Kernel:
 
         assert(len(self.getPredicate(self._inputStack, sessionID)) == 0)
 
+        self._deleteSession(sessionID)
         logger.debug("Trace: {}".format(self._trace))
         # release the lock and return
         self._respondLock.release()
@@ -397,7 +407,7 @@ class Kernel:
             if self._verboseMode:
                 err = "WARNING: maximum recursion depth exceeded (input='%s')" % input.encode(
                     self._textEncoding, 'replace')
-                logger.error(err)
+                logger.warn(err)
             return ""
 
         # push the input onto the input stack
@@ -428,7 +438,7 @@ class Kernel:
             if self._verboseMode:
                 err = "WARNING: No match found for input: %s\n" % input.encode(
                     self._textEncoding)
-                logger.error(err)
+                logger.warn(err)
         else:
             # Process the element into a response string.
             _response = self._processElement(elem, sessionID).strip()
@@ -462,7 +472,7 @@ class Kernel:
             if self._verboseMode:
                 err = "WARNING: No handler found for <%s> element\n" % elem[
                     0].encode(self._textEncoding, 'replace')
-                logger.error(err)
+                logger.warn(err)
             return ""
 
         _response = handlerFunc(elem, sessionID)
@@ -472,9 +482,8 @@ class Kernel:
             trace['loc'] = elem[1]['line']
             trace['pattern'] = elem[1]['pattern']
             trace['pattern-loc'] = elem[1]['pattern-loc']
-            trace['input'] = elem[2:]
-            trace['response'] = _response
             self._trace.append(trace)
+
         return _response
 
     ######################################################
@@ -970,7 +979,7 @@ class Kernel:
             if self._verboseMode:
                 err = "WARNING: RuntimeError while processing \"system\" element:\n%s\n" % msg.encode(
                     self._textEncoding, 'replace')
-                logger.error(err)
+                logger.warn(err)
             return "There was an error while computing my response.  Please inform my botmaster."
         # I'm told this works around a potential IOError exception.
         time.sleep(0.01)
@@ -1153,7 +1162,7 @@ class Kernel:
     def getTraceDocs(self):
         docs = []
         for trace in self._trace:
-            docs.append(trace['doc'] + ', ' + trace['loc'])
+            docs.append('{doc}, {loc}, {pattern}, {pattern-loc}'.format(**trace))
         docs.reverse()
         return docs
 
