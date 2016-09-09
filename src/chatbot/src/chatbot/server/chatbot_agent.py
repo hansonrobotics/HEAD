@@ -138,9 +138,10 @@ def _ask_characters(characters, question, lang, sid, query):
                             path = path+'/'
                             trace = [f.replace(path, '') for f in trace]
                         _response['trace'] = trace
-                    sess.add(_question, answer, AnsweredBy=c.name,
-                            User=user, BotName=botname, Trace=trace,
-                            Revision=REVISION, Lang=lang)
+                    if not query:
+                        sess.add(_question, answer, AnsweredBy=c.name,
+                                User=user, BotName=botname, Trace=trace,
+                                Revision=REVISION, Lang=lang)
                     return _response
 
     # Ask the same question to every tier to sync internal state
@@ -153,8 +154,11 @@ def _ask_characters(characters, question, lang, sid, query):
         else:
             _response = dummy_character.respond("NO_ANSWER", lang, sid, query)
         answer = _response.get('text', '')
-        sess.add(_question, answer, AnsweredBy=dummy_character.name,
-                User=user, BotName=botname, Trace=None, Revision=REVISION, Lang=lang)
+
+        if not query:
+            sess.add(_question, answer, AnsweredBy=dummy_character.name,
+                    User=user, BotName=botname, Trace=None,
+                    Revision=REVISION, Lang=lang)
         return _response
 
 def get_responding_characters(lang, sid):
