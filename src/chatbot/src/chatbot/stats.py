@@ -6,6 +6,7 @@ import datetime as dt
 
 logger = logging.getLogger('hr.chatbot.stats')
 
+
 def history_stats(history_dir, days):
     today = dt.datetime.now()
     dfs = []
@@ -17,7 +18,7 @@ def history_stats(history_dir, days):
                 dirdate = dt.datetime.strptime(dirname, '%Y%m%d')
             except Exception as ex:
                 logger.error(ex)
-            if dirdate and (days == -1 or (today-dirdate).days < days):
+            if dirdate and (days == -1 or (today - dirdate).days < days):
                 for fname in glob.glob('{}/{}/*.csv'.format(history_dir, dirname)):
                     try:
                         dfs.append(pd.read_csv(fname))
@@ -26,14 +27,16 @@ def history_stats(history_dir, days):
     if not dfs:
         return {}
     df = pd.concat(dfs, ignore_index=True)
-    df = df[df.Datetime != 'Datetime'].sort(['User', 'Datetime']).drop_duplicates()
+    df = df[df.Datetime != 'Datetime'].sort(
+        ['User', 'Datetime']).drop_duplicates()
     if hasattr(df, 'Lang'):
         df = df[df.Lang.isin(['en'])]
     if days == -1:
         stats_csv = '{}/full_history.csv'.format(history_dir)
     else:
         stats_csv = '{}/last_{}_days.csv'.format(history_dir, days)
-    columns = [u'Datetime', u'Revision', u'User', u'BotName', u'AnsweredBy', u'Question', u'Answer', u'Rate', u'Trace']
+    columns = [u'Datetime', u'Revision', u'User', u'BotName',
+               u'AnsweredBy', u'Question', u'Answer', u'Rate', u'Trace']
     df.to_csv(stats_csv, index=False, columns=columns)
     logger.info("Write statistic records to {}".format(stats_csv))
     records = len(df)
@@ -41,7 +44,7 @@ def history_stats(history_dir, days):
     good_rates = len(df[df.Rate.isin(['good'])])
     bad_rates = len(df[df.Rate.isin(['bad'])])
     if records > 0:
-        csd = float(records-bad_rates)/records
+        csd = float(records - bad_rates) / records
     response = {
         'customers_satisfaction_degree': csd,
         'number_of_records': records,

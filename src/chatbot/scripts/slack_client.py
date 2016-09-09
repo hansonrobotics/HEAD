@@ -12,17 +12,19 @@ sys.path.insert(0, os.path.join(CWD, '../src'))
 from chatbot.server.session import SessionManager
 
 VERSION = 'v1.1'
-KEY='AAAAB3NzaC'
+KEY = 'AAAAB3NzaC'
 
 SLACKBOT_API_TOKEN = os.environ.get('SLACKBOT_API_TOKEN')
 SLACKTEST_TOKEN = os.environ.get('SLACKTEST_TOKEN')
 
 logger = logging.getLogger('hr.chatbot.slackclient')
 
+
 def format_trace(traces):
-    pattern = re.compile(r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
+    pattern = re.compile(
+        r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
     line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
-    urlprefix="https://github.com/hansonrobotics/character_dev/blob/update"
+    urlprefix = "https://github.com/hansonrobotics/character_dev/blob/update"
     formated_traces = []
     for trace in traces:
         matchobj = pattern.match(trace)
@@ -42,6 +44,7 @@ def format_trace(traces):
             formated_traces.append(formated_trace)
     return formated_traces
 
+
 class HRSlackBot(SlackClient):
 
     def __init__(self, host, port):
@@ -54,7 +57,7 @@ class HRSlackBot(SlackClient):
             self.chatbot_ip, self.chatbot_port, VERSION)
         self.lang = 'en'
         self.session_manager = SessionManager()
-        self.icon_url='https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg'
+        self.icon_url = 'https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg'
 
     def set_sid(self, user):
         params = {
@@ -66,7 +69,8 @@ class HRSlackBot(SlackClient):
         retry = 3
         while r is None and retry > 0:
             try:
-                r = requests.get('{}/start_session'.format(self.chatbot_url), params=params)
+                r = requests.get(
+                    '{}/start_session'.format(self.chatbot_url), params=params)
             except Exception:
                 retry -= 1
                 time.sleep(1)
@@ -126,9 +130,9 @@ class HRSlackBot(SlackClient):
             if not messages:
                 continue
             for message in messages:
-                if message['type']!=u'message':
+                if message['type'] != u'message':
                     continue
-                if message.get('subtype')==u'bot_message':
+                if message.get('subtype') == u'bot_message':
                     continue
                 usr_obj = self.sc.api_call(
                     'users.info', token=SLACKTEST_TOKEN, user=message['user'])
@@ -188,7 +192,8 @@ class HRSlackBot(SlackClient):
                     title = ''
                 else:
                     formated_trace = format_trace(trace)
-                    title = 'answered by {}\ntrace:\n{}'.format(botid, '\n'.join(formated_trace))
+                    title = 'answered by {}\ntrace:\n{}'.format(
+                        botid, '\n'.join(formated_trace))
                 attachments = [{
                     'pretext': answer,
                     'title': title,
@@ -207,4 +212,3 @@ if __name__ == '__main__':
             HRSlackBot(host, port).run()
         except Exception as ex:
             logger.error(ex)
-

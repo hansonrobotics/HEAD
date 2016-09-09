@@ -5,7 +5,9 @@ import os
 
 logger = logging.getLogger('hr.chatbot.server.response_cache')
 
+
 class ResponseCache(object):
+
     def __init__(self):
         self.record = []
         self.index = defaultdict(list)
@@ -29,7 +31,7 @@ class ResponseCache(object):
         s = s.lower().strip()
         s = s.replace(',', ' ')
         s = s.replace('.', ' ')
-        s = ' '.join(s.split()) # remove consecutive spaces
+        s = ' '.join(s.split())  # remove consecutive spaces
         return s
 
     def check(self, question, answer, lang):
@@ -42,9 +44,9 @@ class ResponseCache(object):
         # each additional character over the 15 characters, adds 30 seconds
         # delay before that AIML string is allowed to repeat.
         same_answers = [r for r in self.record if r['Answer'] == answer]
-        time_elapsed = (dt.datetime.now()-same_answers[-1]['Datetime']
+        time_elapsed = (dt.datetime.now() - same_answers[-1]['Datetime']
                         ).seconds if same_answers else 0
-        if max(0, len(answer)-15)*30 <= time_elapsed:
+        if max(0, len(answer) - 15) * 30 <= time_elapsed:
             logger.info("Allow short repeat answer")
             logger.debug("Answer length {}, time elapsed {}".format(
                 len(answer), time_elapsed))
@@ -73,7 +75,7 @@ class ResponseCache(object):
         if kwargs:
             record.update(kwargs)
         self.record.append(record)
-        self.index[question].append(len(self.record)-1)
+        self.index[question].append(len(self.record) - 1)
         self.last_question = question
         self.last_answer = answer
         self.last_time = time
@@ -88,8 +90,8 @@ class ResponseCache(object):
         return False
 
     def contain(self, question, answer):
-        question=self._norm(question)
-        answer=self._norm(answer)
+        question = self._norm(question)
+        answer = self._norm(answer)
         records = self._get_records(question)
         answers = [r['Answer'] for r in records]
         return answer in answers
@@ -100,7 +102,7 @@ class ResponseCache(object):
         return not answer in answers
 
     def _get_records(self, question):
-        question=self._norm(question)
+        question = self._norm(question)
         records = [self.record[i] for i in self.index[question]]
         return records
 
@@ -108,7 +110,8 @@ class ResponseCache(object):
         records = self._get_records(question)
         answers = [r['Answer'] for r in records]
         now = dt.datetime.now()
-        weights = [sum([(now-r['Datetime']).seconds>600, len(r['Answer'])<20, answers.count(r['Answer'])<2]) for r in records]
+        weights = [sum([(now - r['Datetime']).seconds > 600, len(r['Answer'])
+                        < 20, answers.count(r['Answer']) < 2]) for r in records]
         return weights
 
     def get_best_response(self, question):
@@ -143,7 +146,8 @@ class ResponseCache(object):
 
 if __name__ == '__main__':
     cache = ResponseCache()
-    cache.add('a', 'hi', dt.datetime(2016, 4, 22, 12, 0, 0), Answeredby='bot', User='user')
+    cache.add('a', 'hi', dt.datetime(2016, 4, 22, 12, 0, 0),
+              Answeredby='bot', User='user')
     cache.add('a', 'hi there', dt.datetime(2016, 4, 22, 12, 30, 0))
     cache.add('a', 'how are you', dt.datetime(2016, 4, 22, 12, 30, 0))
     cache.add('a', 'hi there', dt.datetime(2016, 4, 22, 12, 30, 0))

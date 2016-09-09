@@ -11,14 +11,15 @@ log_dir = os.environ.get('ROS_LOG_DIR', os.path.expanduser('~/.hr/log'))
 if not os.path.isdir(log_dir):
     os.makedirs(log_dir)
 LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(log_dir,
-        dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
+                                                    dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
 link_log_fname = os.path.join(log_dir, 'chatbot_server_latest.log')
 if os.path.islink(link_log_fname):
     os.unlink(link_log_fname)
 os.symlink(LOG_CONFIG_FILE, link_log_fname)
 fh = logging.FileHandler(LOG_CONFIG_FILE)
 sh = logging.StreamHandler()
-formatter = logging.Formatter('[%(name)s][%(levelname)s] %(asctime)s: %(message)s')
+formatter = logging.Formatter(
+    '[%(name)s][%(levelname)s] %(asctime)s: %(message)s')
 fh.setFormatter(formatter)
 sh.setFormatter(formatter)
 root_logger = logging.getLogger()
@@ -39,30 +40,33 @@ from chatbot.server.auth import check_auth, authenticate
 from flask import Flask, request, Response, send_from_directory
 
 from chatbot.server.chatbot_agent import (
-        ask, list_character, session_manager, set_weights,
-        dump_history, dump_session, add_character, list_character_names,
-        rate_answer)
+    ask, list_character, session_manager, set_weights,
+    dump_history, dump_session, add_character, list_character_names,
+    rate_answer)
 from chatbot.server.session import HISTORY_DIR
 from chatbot.stats import history_stats
 
 json_encode = json.JSONEncoder().encode
 app = Flask(__name__)
 VERSION = 'v1.1'
-ROOT='/{}'.format(VERSION)
+ROOT = '/{}'.format(VERSION)
 INCOMING_DIR = os.path.expanduser('~/.hr/aiml/incoming')
 
 logger = logging.getLogger('hr.chatbot.server')
 app.config['UPLOAD_FOLDER'] = os.path.expanduser('~/.hr/aiml')
 
-@app.route(ROOT+'/<path:path>')
+
+@app.route(ROOT + '/<path:path>')
 def send_client(path):
     return send_from_directory('public', path)
 
-@app.route(ROOT+'/client', methods=['GET'])
-def client():
-    return send_from_directory('public','client.html')
 
-@app.route(ROOT+'/chat', methods=['GET'])
+@app.route(ROOT + '/client', methods=['GET'])
+def client():
+    return send_from_directory('public', 'client.html')
+
+
+@app.route(ROOT + '/chat', methods=['GET'])
 @requires_auth
 def _chat():
     data = request.args
@@ -72,9 +76,10 @@ def _chat():
     query = data.get('query', False)
     response, ret = ask(question, lang, session, query)
     return Response(json_encode({'ret': ret, 'response': response}),
-        mimetype="application/json")
+                    mimetype="application/json")
 
-@app.route(ROOT+'/batch_chat', methods=['POST'])
+
+@app.route(ROOT + '/batch_chat', methods=['POST'])
 def _batch_chat():
     auth = request.form.get('Auth')
     if not auth or not check_auth(auth):
@@ -89,21 +94,24 @@ def _batch_chat():
         response, ret = ask(str(question), lang, session)
         responses.append((idx, response, ret))
     return Response(json_encode({'ret': 0, 'response': responses}),
-        mimetype="application/json")
+                    mimetype="application/json")
 
-@app.route(ROOT+'/rate', methods=['GET'])
+
+@app.route(ROOT + '/rate', methods=['GET'])
 @requires_auth
 def _rate():
     data = request.args
     response = ''
     try:
-        ret = rate_answer(data.get('session'), int(data.get('index')), data.get('rate'))
+        ret = rate_answer(data.get('session'), int(
+            data.get('index')), data.get('rate'))
     except Exception as ex:
         response = ex.message
     return Response(json_encode({'ret': ret, 'response': response}),
-        mimetype="application/json")
+                    mimetype="application/json")
 
-@app.route(ROOT+'/chatbots', methods=['GET'])
+
+@app.route(ROOT + '/chatbots', methods=['GET'])
 @requires_auth
 def _chatbots():
     data = request.args
@@ -111,17 +119,18 @@ def _chatbots():
     session = data.get('session')
     characters = list_character(lang, session)
     return Response(json_encode({'ret': 0, 'response': characters}),
-        mimetype="application/json")
+                    mimetype="application/json")
 
 
-@app.route(ROOT+'/bot_names', methods=['GET'])
+@app.route(ROOT + '/bot_names', methods=['GET'])
 @requires_auth
 def _bot_names():
     names = list_character_names()
     return Response(json_encode({'ret': 0, 'response': names}),
-        mimetype="application/json")
+                    mimetype="application/json")
 
-@app.route(ROOT+'/start_session', methods=['GET'])
+
+@app.route(ROOT + '/start_session', methods=['GET'])
 @requires_auth
 def _start_session():
     botname = request.args.get('botname')
@@ -133,9 +142,10 @@ def _start_session():
     sess.sdata.botname = botname
     sess.sdata.user = user
     return Response(json_encode({'ret': 0, 'sid': str(sid)}),
-        mimetype="application/json")
+                    mimetype="application/json")
 
-@app.route(ROOT+'/set_weights', methods=['GET'])
+
+@app.route(ROOT + '/set_weights', methods=['GET'])
 @requires_auth
 def _set_weights():
     data = request.args
@@ -144,9 +154,10 @@ def _set_weights():
     session = data.get('session')
     ret, response = set_weights(weights, lang, session)
     return Response(json_encode({'ret': ret, 'response': response}),
-        mimetype="application/json")
+                    mimetype="application/json")
 
-@app.route(ROOT+'/upload_character', methods=['POST'])
+
+@app.route(ROOT + '/upload_character', methods=['POST'])
 def _upload_character():
     auth = request.form.get('Auth')
     if not auth or not check_auth(auth):
@@ -173,7 +184,8 @@ def _upload_character():
         logger.info("Get zip file {}".format(zipfile.filename))
 
         from loader import AIMLCharacterZipLoader
-        characters = AIMLCharacterZipLoader.load(saved_zipfile, saved_dir, 'upload')
+        characters = AIMLCharacterZipLoader.load(
+            saved_zipfile, saved_dir, 'upload')
         ret, response = True, "Done"
         for character in characters:
             character.local = False
@@ -185,16 +197,16 @@ def _upload_character():
         os.remove(saved_zipfile)
 
         return Response(json_encode({
-                'ret': ret,
-                'response': response
-            }),
+            'ret': ret,
+            'response': response
+        }),
             mimetype="application/json")
 
     except Exception as ex:
         return Response(json_encode({
-                'ret': False,
-                'response': str(ex)
-            }),
+            'ret': False,
+            'response': str(ex)
+        }),
             mimetype="application/json")
 
 
@@ -207,7 +219,7 @@ def _log():
     return Response(generate(), mimetype='text/plain')
 
 
-@app.route(ROOT+'/reset_session', methods=['GET'])
+@app.route(ROOT + '/reset_session', methods=['GET'])
 @requires_auth
 def _reset_session():
     data = request.args
@@ -218,12 +230,13 @@ def _reset_session():
     else:
         ret, response = False, "No such session"
     return Response(json_encode({
-            'ret': ret,
-            'response': response
-        }),
+        'ret': ret,
+        'response': response
+    }),
         mimetype="application/json")
 
-@app.route(ROOT+'/dump_history', methods=['GET'])
+
+@app.route(ROOT + '/dump_history', methods=['GET'])
 def _dump_history():
     try:
         dump_history()
@@ -231,12 +244,13 @@ def _dump_history():
     except Exception:
         ret, response = False, "Failure"
     return Response(json_encode({
-            'ret': ret,
-            'response': response
-        }),
+        'ret': ret,
+        'response': response
+    }),
         mimetype="application/json")
 
-@app.route(ROOT+'/dump_session', methods=['GET'])
+
+@app.route(ROOT + '/dump_session', methods=['GET'])
 @requires_auth
 def _dump_session():
     try:
@@ -252,7 +266,8 @@ def _dump_session():
         logger.error("Dump error {}".format(ex))
         return '', 500
 
-@app.route(ROOT+'/chat_history', methods=['GET'])
+
+@app.route(ROOT + '/chat_history', methods=['GET'])
 @requires_auth
 def _chat_history():
     history_stats(HISTORY_DIR, 7)
@@ -262,12 +277,14 @@ def _chat_history():
     else:
         return '', 404
 
-@app.route(ROOT+'/ping', methods=['GET'])
+
+@app.route(ROOT + '/ping', methods=['GET'])
 def _ping():
     return Response(json_encode({'ret': 0, 'response': 'pong'}),
-        mimetype="application/json")
+                    mimetype="application/json")
 
-@app.route(ROOT+'/stats', methods=['GET'])
+
+@app.route(ROOT + '/stats', methods=['GET'])
 @requires_auth
 def _stats():
     try:
@@ -277,10 +294,10 @@ def _stats():
         response = history_stats(HISTORY_DIR, days)
         ret = True
     except Exception as ex:
-        ret, response = False, {'err_msg' : str(ex)}
+        ret, response = False, {'err_msg': str(ex)}
         logger.error(ex)
     return Response(json_encode({'ret': ret, 'response': response}),
-        mimetype="application/json")
+                    mimetype="application/json")
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
@@ -288,7 +305,8 @@ if __name__ == '__main__':
     else:
         port = 8001
     if 'HR_CHATBOT_SERVER_EXT_PATH' in os.environ:
-        sys.path.insert(0, os.path.expanduser(os.environ['HR_CHATBOT_SERVER_EXT_PATH']))
+        sys.path.insert(0, os.path.expanduser(
+            os.environ['HR_CHATBOT_SERVER_EXT_PATH']))
         import ext
         ext.load(app, ROOT)
     app.run(host='0.0.0.0', debug=False, use_reloader=False, port=port)

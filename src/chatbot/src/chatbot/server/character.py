@@ -4,14 +4,16 @@ import logging
 
 logger = logging.getLogger('hr.chatbot.character')
 
+
 class Character(object):
+
     def __init__(self, id, name, level=99):
         self.id = id
         self.name = name
         self.level = level
         self.properties = {}
-        self.weight = 1 # How likely its response is used. [0-1]
-        self.languages = ['en'] # List of lanugages it supports
+        self.weight = 1  # How likely its response is used. [0-1]
+        self.languages = ['en']  # List of lanugages it supports
         self.local = True
 
     def get_properties(self):
@@ -36,6 +38,7 @@ class Character(object):
         return "<Character id: {}, name: {}, level: {}>".format(
             self.id, self.name, self.level)
 
+
 class AIMLCharacter(Character):
 
     def __init__(self, id, name, level=99):
@@ -45,7 +48,7 @@ class AIMLCharacter(Character):
         self.kernel.verbose(True)
         self.current_topic = ''
         self.counter = 0
-        self.N = 10 # How many times of reponse on the same topic
+        self.N = 10  # How many times of reponse on the same topic
         self.languages = ['en']
 
     def load_aiml_files(self, kernel, aiml_files):
@@ -68,7 +71,8 @@ class AIMLCharacter(Character):
                     value = parts[1].strip()
                     self.kernel.setBotPredicate(key, value)
                     self.properties[key] = value
-                logger.info("[{}] Set properties file {}".format(self.id, propname))
+                logger.info("[{}] Set properties file {}".format(
+                    self.id, propname))
         except Exception:
             logger.error("Couldn't open {}".format(propname))
 
@@ -89,8 +93,8 @@ class AIMLCharacter(Character):
                 self.id, topic, self.counter))
         else:
             self.counter = 0
-            logger.info('[{}] Topic is changed from "{}" to "{}", '\
-                'reset counter'.format(self.id, self.current_topic, topic))
+            logger.info('[{}] Topic is changed from "{}" to "{}", '
+                        'reset counter'.format(self.id, self.current_topic, topic))
             self.current_topic = topic
         if self.counter >= self.N:
             self.counter = 0
@@ -130,4 +134,3 @@ class AIMLCharacter(Character):
                 continue
             self.kernel.setPredicate(k, v, sid)
             logger.info("[{}] Set predicate {}={}".format(self.id, k, v))
-
