@@ -383,7 +383,8 @@ class Kernel:
 
         assert(len(self.getPredicate(self._inputStack, sessionID)) == 0)
 
-        self._deleteSession(sessionID)
+        if query:
+            self._deleteSession(self._querySessionID)
         logger.debug("Trace: {}".format(self._trace))
         # release the lock and return
         self._respondLock.release()
