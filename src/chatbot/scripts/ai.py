@@ -176,8 +176,7 @@ class Chatbot():
                 question = ' '.join(questions)
                 logger.info("Current input: {}".format(question))
                 if len(question) < 10:
-                    self._response_publisher.publish(String('uha'))
-                    self.condition.wait(2)
+                    self.condition.wait(3)
                     if len(self.input_stack) > num_input:
                         continue
                 self.respond(questions)
