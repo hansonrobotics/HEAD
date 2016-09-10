@@ -40,10 +40,11 @@ Then run
 `~/hansonrobotics/HEAD/scripts/dev.sh`
 
 ## Native install, build and run
-Use these instructions, if you are willing to install the system "natively" 
-on your machine (i.e. into the root file system). Otherwise, use the LXC instructions,
-further down below.  Install may take several hours; a fast internet connection is
-strongly recommended.
+Use these instructions, if you are willing to install the system
+"natively" on your machine (i.e. into the root file system).
+Otherwise, use the LXC instructions, further down below.  Install
+may take several hours; a fast internet connection is strongly
+recommended.
 
 * Install wget
 
@@ -139,8 +140,8 @@ apt-get install openssh-server
 cd /home/ubuntu
 mkdir .ssh
 cd .ssh
-vi authorized_keys
-(add your public key)
+(add your public key, e.g. cat mykey.pub >> ~/.ssh/authorized_keys)
+(or use an editor to edit authorized_keys)
 chmod go-rwx . authorized_keys
 chown ubuntu:ubuntu . authorized_keys
 passwd ubuntu
@@ -201,6 +202,6 @@ Install pip3 (again): `apt-get install -y --reinstall python3-pip`
 > [WARN] The workspace configured /home/ubuntu/hansonrobotics doesn't match the your working path /
 > Continue using /home/ubuntu/hansonrobotics? [y/N]
 
-If you are using `/tmp/hrtool`, you can ignore this error. From this point forward, 
-use `<workspace>/scripts/hrtool` instead.
+If you are using `/tmp/hrtool`, you can ignore this error. From this
+point forward, use `<workspace>/scripts/hrtool` instead.
 
