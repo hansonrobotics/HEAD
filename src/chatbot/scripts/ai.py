@@ -8,6 +8,7 @@ import json
 import time
 import threading
 import re
+from functools import wraps
 
 from chatbot.polarity import Polarity
 from chatbot.msg import ChatMessage
@@ -108,6 +109,22 @@ class Chatbot():
     def sentiment_active(self, active):
         self._sentiment_active = active
 
+    def retry(times):
+        def wrap(f):
+            @wraps(f)
+            def wrap_f(*args):
+                for i in range(times):
+                    try:
+                        return f(*args)
+                    except Exception as ex:
+                        logger.error(ex)
+                        self = args[0]
+                        self.session = self.start_session()
+                        continue
+            return wrap_f
+        return wrap
+
+    @retry(3)
     def get_response(self, question, lang, query=False):
         params = {
             "question": "{}".format(question),
@@ -195,11 +212,7 @@ class Chatbot():
                     question, ' '.join(pattern)))
 
         question = ' '.join(questions)
-        try:
-            answer = self.get_response(question, lang)
-        except Exception:
-            self.session = self.start_session()
-            answer = self.get_response(question, lang)
+        answer = self.get_response(question, lang)
 
         response = answer.get('text')
         emotion = answer.get('emotion')
