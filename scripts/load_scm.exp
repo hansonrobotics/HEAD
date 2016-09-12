@@ -10,7 +10,7 @@ set OC_LOG_LEVEL $::env(OC_LOG_LEVEL)
 set MARKY_MARKOV_DIR $::env(MARKY_MARKOV_DIR)
 set HR_MODELS $::env(HR_MODELS)
 
-spawn telnet $host $port
+spawn rlwrap telnet $host $port
 
 expect "Escape character"
 sleep 1
