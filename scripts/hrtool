@@ -314,6 +314,9 @@ install_vision_deps() {
 
     if [[ ! -d $DLIB_PATH ]]; then
       info "Installing dlib"
+      # The dlib DNS server sometimes times out. Pinging it first
+      # makes it much more likely that the wget will succeed.
+      ping -c 5 dlib.net
       wget_cache http://dlib.net/files/dlib-${DLIB_VERSION}.tar.bz2
       checkmd5 ${HR_CACHE}/dlib-${DLIB_VERSION}.tar.bz2 da930a35c2aa88612dd2ebf893f48f60 # md5sum for dlib-19.0
       mkdir -p $DLIB_PATH
