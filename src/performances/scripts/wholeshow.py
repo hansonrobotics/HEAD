@@ -60,7 +60,6 @@ class WholeShow(HierarchicalMachine):
         # Parse on load.
         # TODO make sure we reload those once performances are saved.
         self.find_performances_properties()
-        print  self.performances_keywords
 
     """States callbacks """
     def start_sleeping(self):
@@ -192,7 +191,6 @@ class WholeShow(HierarchicalMachine):
                 self.add_performance(path, os.path.relpath(root, path))
 
     def add_performance(self, path, performance):
-        print (performance)
         properties_file = os.path.join(path, performance, '.properties')
         with open(properties_file, 'r') as f:
             properties = yaml.load(f.read())
