@@ -3,6 +3,13 @@
 
 [![Build Status](http://61.92.69.39:8080/buildStatus/icon?job=ci-HEAD)](http://61.92.69.39:8080/view/hansonrobotics/job/ci-HEAD/)
 
+ - [Prerequisites](#prereq)
+ - [TL;DR](#tldr)
+ - [Native install, build and run](#steps)
+ - [Other options of hrtool](#options)
+ - [LXC Install, build and run directions](#lxcsteps)
+ - [Troubleshooting](#trbshoot)
+
 This repository contains the integrated code for controlling and
 interacting with various Hanson Robotics robot heads, including a
 pure-software implementation. It includes the full theatrical 
@@ -14,7 +21,7 @@ performance pipeline and infrastructure:
 * Behavior tree, for scripting performaces.
 * Motor control ROS nodes, for controlling the physical robot.
 
-## Prerequisites
+## <a name="prereq"></a>Prerequisites
 
 ### Hardware
 
@@ -29,7 +36,7 @@ performance pipeline and infrastructure:
  * X Server is running.
  * Use root or create user with the ability to gain root privileges.
 
-## TL;DR
+## <a name="tldr"></a>TL;DR
 
 Install dependencies, get source code, build. This may take several hours.
 
@@ -39,7 +46,7 @@ Then run
 
 `~/hansonrobotics/HEAD/scripts/dev.sh`
 
-## Native install, build and run
+## <a name="steps"></a>Native install, build and run
 Use these instructions, if you are willing to install the system
 "natively" on your machine (i.e. into the root file system).
 Otherwise, use the LXC instructions, further down below.  Install
@@ -70,7 +77,6 @@ sudo apt-get install wget (Run apt-get update first if wget is not found)
 
 `/tmp/hrtool -G`
 
-
 * Remove hrtool. After the source code is built, this script is not
   needed anymore. A copy of the script is in `<workspace>/scripts/hrtool/hrtool`
 
@@ -88,7 +94,7 @@ sudo apt-get install wget (Run apt-get update first if wget is not found)
 
 HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
-## Other options of hrtool
+## <a name="options"></a>Other options of hrtool
 
 **The hrtool script is located in `~/hansonrobotics/HEAD/scripts`**
 
@@ -106,7 +112,7 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
 * `-h` Show more options.
 
-## Other options for running HEAD.
+### Other options for running HEAD.
 
 `cd ~/hansonrobotics/HEAD/scripts`
 
@@ -122,7 +128,8 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
 `./vision.sh cmt` #For running with cmt/pi_vision
 
-## LXC Install, build and run directions.
+## <a name="lxcsteps"></a>LXC Install, build and run directions
+
 LXC -- Linux Containers -- is a tool that allows you to run a virtualized
 operating system container on your machine.  Because each container can
 have a different root file system, it is convenient for experiments, and
@@ -147,9 +154,11 @@ chown ubuntu:ubuntu . authorized_keys
 passwd ubuntu
 (change passwd -- this is needed because hrtool needs it)
 ```
+
 After the above, you should be able to ssh into your new container.
 After doing so, the instructions are essentially the same as the
 native install.  These are repeated below.
+
 ```
 lxc-ls -f
 ssh -X ubuntu@10.0.3.239  (or whatever IP address lxc-ls shows)
@@ -167,10 +176,12 @@ To get video (the webcam, used for vision) working from an LXC container,
 you will need to do some config file tinkering.  Edit the file
 `~/.local/share/lxc/my-hr-HEAD/config` (on your local filesystem,
 NOT in the container!) and add the lines:
+
 ```
 lxc.cgroup.devices.allow = c 81:0 rwm
 lxc.mount.entry = /dev/video0 dev/video0 none bind,optional,create=file
 ```
+
 The above assumes that your webcam appears at `/dev/video0` and that
 the device major:minor is 81:0 and that its a character (c) device.
 You may need to adjust this for your specific webcam.
@@ -179,21 +190,25 @@ Next (and this is very annoying) udev fails to create the webcam
 runtime configuration, and so you have to do the below, manually,
 **every** time you start the container.
 On the master system:
+
 ```
 scp /run/udev/data/c81:0 ubuntu@10.0.3.239:/home/ubuntu
 ```
+
 In the container:
+
 ```
 sudo mkdir /run/udev/data
 sudo cp /home/ubuntu/c81:0 /run/udev/data
 sudo chown root:root /run/udev/data/c81:0
 ```
+
 If you know of a better way, let us know!
 
 To test the webcam, try running `cheese` -- it should work.
 You may need to `apt-get install cheese` first.
 
-# Troubleshooting
+## <a name="trbshoot"></a>Troubleshooting
 
 ### pip3 is not found
 Install pip3 (again): `apt-get install -y --reinstall python3-pip`
