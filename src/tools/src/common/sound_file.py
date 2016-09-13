@@ -2,6 +2,7 @@ import pyaudio
 import wave
 import threading
 import logging
+import time
 
 logger = logging.getLogger('hr.common.sound_file')
 
@@ -31,12 +32,14 @@ class SoundFile(object):
         try:
             with self.lock:
                 self.open(wavfile)
-                data = self.wf.readframes(self.chunk)
                 self.is_playing = True
                 logger.info("Playing {}".format(wavfile))
+                data = self.wf.readframes(self.chunk)
                 while len(data) > 0 and not self._interrupt.is_set():
                     self.stream.write(data)
                     data = self.wf.readframes(self.chunk)
+                if not self._interrupt.is_set():
+                    time.sleep(self.stream.get_output_latency()+0.2)
         finally:
             self.is_playing = False
             if self.stream:
@@ -52,11 +55,11 @@ class SoundFile(object):
         logger.info("Sound file is interrupted")
 
 if __name__ == '__main__':
-    import time
     sound = SoundFile()
-    threading.Timer(0, sound.play, ('sample.wav',)).start()
+    fname = 'sample.wav'
+    threading.Timer(0, sound.play, (fname,)).start()
     threading.Timer(0.5, sound.interrupt).start()
-    threading.Timer(1, sound.play, ('sample.wav',)).start()
+    threading.Timer(1, sound.play, (fname,)).start()
     while True:
         print "Playing", sound.is_playing
         time.sleep(0.1)
