@@ -275,6 +275,10 @@ install_other_deps() {
     # For telnet automation
     $SUDO apt-get ${APT_GET_OPTS} install expect
 
+    # For performances
+    $SUDO pip2 install transitions
+
+    install_manyears_deps
     # For audio recording
     sudo apt-get ${APT_GET_OPTS} install pulseaudio
     sudo apt-get ${APT_GET_OPTS} install python-pyaudio
