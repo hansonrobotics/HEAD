@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from docutils.parsers.rst.directives import percentage
 from threading import Thread, Lock, Condition
 import Queue
 import rospy
