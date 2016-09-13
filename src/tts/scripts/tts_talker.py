@@ -10,8 +10,8 @@ import random
 from std_msgs.msg import String
 from blender_api_msgs.msg import Viseme
 from common.visemes import BaseVisemes
+from common.sound_file import SoundFile
 from tts.ttsapi import get_api
-from tts import SoundFile
 from tts.srv import TTSLengthResponse
 
 logger = logging.getLogger('hr.tts.tts_talker')
@@ -25,7 +25,7 @@ class TTSTalker:
         self.speech_active = rospy.Publisher('speech_events', String, queue_size=10)
         self.vis_topic = rospy.Publisher('/blender_api/queue_viseme', Viseme, queue_size=0)
         self.blink_publisher = rospy.Publisher('chatbot_blink', String, queue_size=1)
-        self.sound = SoundFile.SoundFile()
+        self.sound = SoundFile()
         self.tts_data = None
         self.interrupt = False
         rospy.Subscriber(tts_control, String, self.tts_control)
@@ -75,7 +75,7 @@ class TTSTalker:
         self.speech_active.publish("stop")
 
     def doLipSync(self):
-        self.sound.start(self.tts_data.wavout)
+        self.sound.play(self.tts_data.wavout)
 
         visemes = self.tts_data.visemes
         start = time.time()
@@ -98,7 +98,6 @@ class TTSTalker:
             time.sleep(0.05)
             elapsed_time += 0.05
         logger.info('elapsed time {}'.format(elapsed_time))
-        self.sound.stop()
 
     def sendVisime(self, visime):
         if visime['name'] != 'Sil':
