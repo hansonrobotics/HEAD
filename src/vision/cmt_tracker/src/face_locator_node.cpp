@@ -82,12 +82,14 @@ cameramodel.fromCameraInfo(camerainfo);
   opticalCenterX = cameramodel.cx();
   opticalCenterY = cameramodel.cy();
 
+  cv::Mat conversion_mat_;//TODO: check if this fixes the crash
 
     try
     {
       // First let cv_bridge do its magic
       cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(msg, sensor_msgs::image_encodings::RGB8);
       conversion_mat_ = cv_ptr->image;
+      //cv_ptr->image.copyTo(conversion_mat_);
     }
     catch (cv_bridge::Exception& e)
     {
