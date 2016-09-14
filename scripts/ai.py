@@ -185,6 +185,7 @@ class Chatbot():
 
     def process_input(self):
         while True:
+            time.sleep(0.1)
             with self.condition:
                 if not self.input_stack:
                     continue
@@ -198,7 +199,6 @@ class Chatbot():
                         continue
                 self.respond(questions)
                 del self.input_stack[:]
-            time.sleep(0.1)
 
     def respond(self, questions):
         lang = rospy.get_param('lang', None)
