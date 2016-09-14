@@ -239,9 +239,9 @@ double getdegree(double x, double y)
 
 int main(int argc, char **argv)
    {
-        ros::init(argc, argv, "image_listener");
-        ros::NodeHandle nh;
-        nh.getParam("debug",debug_mode);
+        ros::init(argc, argv, "nmpt_saliency");
+        ros::NodeHandle nh("~");
+        nh.getParam("gui",debug_mode);
         if (debug_mode) cvNamedWindow("view");
         cvStartWindowThread();
         image_transport::ImageTransport it(nh);
