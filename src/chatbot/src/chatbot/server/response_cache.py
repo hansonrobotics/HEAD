@@ -28,6 +28,8 @@ class ResponseCache(object):
         self.last_time = None
 
     def _norm(self, s):
+        if s is None:
+            return s
         s = s.lower().strip()
         s = s.replace(',', ' ')
         s = s.replace('.', ' ')
