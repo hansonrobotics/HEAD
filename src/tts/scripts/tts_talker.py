@@ -6,6 +6,7 @@ import time
 import logging
 import os
 import random
+import threading
 
 from std_msgs.msg import String
 from blender_api_msgs.msg import Viseme
@@ -75,7 +76,7 @@ class TTSTalker:
         self.speech_active.publish("stop")
 
     def doLipSync(self):
-        self.sound.play(self.tts_data.wavout)
+        threading.Timer(0, self.sound.play, (tts_data.wavout,)).start()
 
         visemes = self.tts_data.visemes
         start = time.time()
