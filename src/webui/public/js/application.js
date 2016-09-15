@@ -1,5 +1,10 @@
-define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api', 'robot_config'],
-    function (Backbone, Marionette, ros, LayoutView, api, RobotConfig) {
+define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api', 'robot_config', 'jquery'],
+    function (Backbone, Marionette, ros, LayoutView, api, RobotConfig, $) {
+        $.ajaxSetup({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        });
+
         var Application = new Marionette.Application({
                 fps: 48
             }),

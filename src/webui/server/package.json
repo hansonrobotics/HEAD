@@ -10,9 +10,12 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "body-parser": "~1.15.2",
     "express": "~4.14.0",
+    "glob": "^7.0.6",
+    "js-yaml": "^3.6.1",
     "lodash": "^4.15.0",
-    "yamljs": "~0.2.8",
+    "mkdirp": "^0.5.1",
     "yargs": "^5.0.0"
   }
 }
