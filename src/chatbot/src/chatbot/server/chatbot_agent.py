@@ -149,7 +149,7 @@ def _ask_characters(characters, question, lang, sid, query):
                             trace = [f.replace(path, '') for f in trace]
                         _response['trace'] = trace
                     if not query:
-                        sess.add(_question, answer, AnsweredBy=c.name,
+                        sess.add(question, answer, AnsweredBy=c.name,
                                  User=user, BotName=botname, Trace=trace,
                                  Revision=REVISION, Lang=lang)
                     return _response
@@ -167,7 +167,7 @@ def _ask_characters(characters, question, lang, sid, query):
         answer = _response.get('text', '')
 
         if not query:
-            sess.add(_question, answer, AnsweredBy=dummy_character.name,
+            sess.add(question, answer, AnsweredBy=dummy_character.name,
                      User=user, BotName=botname, Trace=None,
                      Revision=REVISION, Lang=lang)
         return _response
