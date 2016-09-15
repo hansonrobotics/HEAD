@@ -107,6 +107,20 @@ class Chatbot():
             self._affect_publisher.publish(String('sad'))
             return
 
+        # Handle chatbot command
+        cmd, arg, line = self.client.parseline(chat_message.utterance)
+        func = None
+        try:
+            func = getattr(self.client, 'do_' + cmd)
+        except AttributeError:
+            pass
+        if func:
+            try:
+                func(arg)
+            except Exception as ex:
+                logger.error(ex)
+            return
+
         # blink that we heard something, request, probability defined in
         # callback
         self._blink_publisher.publish('chat_heard')
