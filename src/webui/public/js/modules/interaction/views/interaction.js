@@ -23,7 +23,9 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 noiseSlider: '.app-noise-slider',
                 noiseValue: '.app-noise-value .value',
                 scrollbar: '.app-scrollbar',
-                facesContainer: '.app-faces-container'
+                facesContainer: '.app-faces-container',
+                rateGoodButton: '.app-rate-good-button',
+                rateBadButton: '.app-rate-bad-button',
             },
             events: {
                 'touchstart @ui.recordButton': 'toggleSpeech',
@@ -34,7 +36,9 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 'click @ui.shutUpButton': 'shutUpClicked',
                 'click @ui.languageButton': 'languageButtonClick',
                 'click @ui.recognitionMethodButton': 'recognitionButtonClick',
-                'click @ui.adjustNoiseButton': 'adjustButtonClick'
+                'click @ui.adjustNoiseButton': 'adjustButtonClick',
+                'click @ui.rateGoodButton': 'rateGoodClicked',
+                'click @ui.rateBadButton': 'rateBadClicked',
             },
             childViewOptions: function () {
                 return {
@@ -320,6 +324,12 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
             },
             shutUpClicked: function () {
                 api.shutUp();
+            },
+            rateGoodClicked: function () {
+                api.sendChatMessage("gd");
+            },
+            rateBadClicked: function () {
+                api.sendChatMessage("bd");
             },
             attachHtml: function (collectionView, childView) {
                 var self = this;
