@@ -84,7 +84,8 @@ class Chatbot():
         self._sentiment_active = active
 
     def get_response(self, question, lang, query=False):
-        self.client.do_lang(lang)
+        if lang:
+            self.client.lang = lang
         ret, response = self.client.ask(question, query)
         return response
 
