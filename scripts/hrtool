@@ -741,8 +741,13 @@ check_ws() {
     if [[ $rel_ws != $ws ]]; then
         local confirm
         warn "The workspace configured ${ws} doesn't match the your working path ${rel_ws}"
-        _get_confirm "Continue using ${ws}? [y/N]"
-        [[ ${confirm} -eq 1 ]] || exit 1
+        _get_confirm "Set workspace to your working path ${rel_ws}? [y/N]"
+        if [[ ${confirm} -eq 1 ]]; then
+            HR_WORKSPACE=${rel_ws}
+            set_env
+        else
+            exit 1
+        fi
     fi
 }
 
