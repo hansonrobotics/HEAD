@@ -326,10 +326,10 @@ define(['application', "marionette", './message', "tpl!./templates/interaction.t
                 api.shutUp();
             },
             rateGoodClicked: function () {
-                api.sendChatRequest("gd");
+                api.sendChatMessage("gd");
             },
             rateBadClicked: function () {
-                api.sendChatRequest("bd");
+                api.sendChatMessage("bd");
             },
             attachHtml: function (collectionView, childView) {
                 var self = this;

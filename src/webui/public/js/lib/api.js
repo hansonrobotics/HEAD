@@ -95,9 +95,6 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
 
             api.topics.speech_topic.publish(message);
         },
-        sendChatRequest: function (text) {
-            console.log('Sending request: ' + text);
-        },
         sendMotorCommand: utilities.limitCallRate(30, function () {
             api._sendMotorCommand.apply(api, arguments);
         }),
