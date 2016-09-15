@@ -313,7 +313,8 @@ Syntax: upload package
     def do_trace(self, line):
         if self.last_response:
             trace = self.last_response.get('trace', None)
-            self.stdout.write('\n'.join(trace))
+            if trace:
+                self.stdout.write('\n'.join(trace))
         self.stdout.write('\n')
 
     do_t = do_trace

@@ -207,10 +207,11 @@ class Chatbot():
             tmp_answer = self.get_response(question, lang, True)
             traces = tmp_answer.get('trace')
             if traces:
-                pattern = [trace_pattern.match(trace).group('pname')
-                           for trace in traces]
-                logger.info("Question {}, Pattern {}".format(
-                    question, ' '.join(pattern)))
+                match_obj = trace_pattern.match(trace)
+                if match_obj:
+                    pattern = [match_obj.group('pname') for trace in traces]
+                    logger.info("Question {}, Pattern {}".format(
+                        question, ' '.join(pattern)))
 
         question = ' '.join(questions)
         answer = self.get_response(question, lang)
