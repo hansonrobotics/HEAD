@@ -21,12 +21,16 @@ HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 trace_pattern = re.compile(
     r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
 
+class Console(object):
+    def write(self, msg):
+        logger.info("Console: {}".format(msg.strip()))
 
 class Chatbot():
 
     def __init__(self):
         self.botname = rospy.get_param('botname', 'sophia')
-        self.client = Client(get_default_username(), HR_CHATBOT_AUTHKEY)
+        self.client = Client(
+            get_default_username(), HR_CHATBOT_AUTHKEY, stdout=Console())
         self.client.chatbot_url = rospy.get_param(
             'chatbot_url', 'http://localhost:8001')
         # chatbot now saves a bit of simple state to handle sentiment analysis
