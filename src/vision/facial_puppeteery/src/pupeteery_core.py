@@ -27,8 +27,11 @@ class facial_puppetry:
     self.baseline = []
     self.bridge = CvBridge()
     self.image_sub = rospy.Subscriber("/dlib_values", land_marks, self.get_dlib_val)
-    self.width = 0
-    self.hight = 0
+    self.ref_width = 0
+    self.ref_hight = 0
+    self.cur_hight = 0
+    self.cur_width = 0
+    self.FLAG = 1
     self.count = 0
     self.shapekey_name = ['brow_center_UP', 'brow_center_DN', 'brow_inner_UP.L', 'brow_inner_DN.L', 'brow_inner_UP.R',
                           'brow_inner_DN.R', 'brow_outer_UP.L', 'brow_outer_DN.L', 'brow_outer_up.R', 'brow_outer_DN.R',
@@ -42,24 +45,22 @@ class facial_puppetry:
   
 
   # The final DLIB LM - Blender Shapekey mapping is here
-  def map_to_Sophia(self, baseline_dist, current_dist, maxN):
+  def map_to_Sophia(self, baseline_dist, current_dist, maxN, C_width, C_hight):
       final_val = []
       #put handled shapekey indexs here
       H_shapekeys = [0,2,4,6,8,10,11,12,13,14,15,16,17,20,21,30,31,32,34,44]
 
+      if C_hight < 0:
+          self.FLAG = -1
+      else:
+          self.FLAG = 1
       for i in range(0,45):
           MAX = 1; MIN = 0
           if i in H_shapekeys:
               if i == 44:
                   MAX = 0.5
-              # if i == 0 or  i== 2 or i==4 or i==6 or  i==8 or  i == 10 or i == 11 or i == 12 or i == 13 or i ==14 or i == 15 or i == 16 or i == 17 \
-              #         or i == 20 or  i == 21 or  i == 30 or i == 31 or  i == 32 or i == 34 :
-              blend_val= min(MAX,max(MIN, (current_dist[i] - baseline_dist[i])/maxN[i])) #make sure the values are in b/n 0 and 1
+              blend_val= min(MAX,max(MIN, ((current_dist[i] - baseline_dist[i]) + self.FLAG*(((current_dist[i] - baseline_dist[i]) * C_hight)/self.ref_hight))/maxN[i])) #make sure the values are in b/n 0 and 1
               final_val.append(blend_val)
-
-              # elif i ==44:
-              #     blend_val = min(0.6, max(0, (current_dist[i] - baseline_dist[i]) / maxN[i]))
-              #     final_val.append(blend_val)
           else: #if it is not handled put 0
               final_val.append(0.0)
       return final_val
@@ -72,8 +73,8 @@ class facial_puppetry:
           self.max = data.max_ref
 
           #not used for now
-          self.width = data.distX
-          self.hight = data.distY
+          self.ref_width = data.distW - data.distX
+          self.ref_hight = data.distH - data.distY
 
       #change this with event_driven condition -- UI based
       if self.count >10:
@@ -102,9 +103,10 @@ class facial_puppetry:
           head_pau.m_eyeGazeRightPitch = 0.01
           head_pau.m_eyeGazeRightYaw = 0.1
 
-
+          C_W = self.ref_width - self.cur_width
+          C_H = self.ref_hight - self.cur_hight
           # assign final values to pau
-          head_pau.m_coeffs = self.map_to_Sophia(self.baseline, data.dlib_val, self.max)
+          head_pau.m_coeffs = self.map_to_Sophia(self.baseline, data.dlib_val, self.max, C_W, C_H)
           head_pau.m_shapekeys = self.shapekey_name
 
           #publish to pau

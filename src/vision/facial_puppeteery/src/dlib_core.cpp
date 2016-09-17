@@ -162,7 +162,7 @@ void dlib_callback(const sensor_msgs::ImageConstPtr& msg) {
 //k=cvWaitKey(0);
 //if(k == 'A')
 //{
-//cout<<"Hello";
+//cout<<"Staring ...";
 //
 //}
 
