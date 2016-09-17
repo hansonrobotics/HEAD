@@ -18,6 +18,8 @@ Usage: $0 [--cmt] [--oc] [--sa]
     Enable OpenCog NLP sentiment analysis, should run with --oc
   --st
     Enable saliency tracking.
+  --p
+    Enable Puppeteering.
 EOF
 }
 
@@ -38,6 +40,10 @@ while [[ $# > 0 ]]; do
             ;;
         --st)
             export ENABLE_SALIENCY_TRACKING=1
+            shift
+            ;;
+        --p)
+            export PUPPETEER=1
             shift
             ;;
         --help|-h)
@@ -135,5 +141,10 @@ tmux new-window -n 'fce' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./
 
 sleep 4
 tmux new-window -n 'cmt' "roslaunch robots_config face_tracker.launch ${pi_arg}; $SHELL"
+sleep 3
+if [[ $PUPPETEER == 1 ]]; then
+    tmux new-window -n 'puppeteering' "roslaunch facial_puppetry facial_puppetry.launch; $SHELL"
+fi
+
 tmux new-window -n 'bash' "cd $BASEDIR; $SHELL"
 tmux attach;
