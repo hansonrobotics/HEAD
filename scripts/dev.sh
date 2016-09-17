@@ -18,7 +18,7 @@ Usage: $0 [--cmt] [--oc] [--sa]
     Enable OpenCog NLP sentiment analysis, should run with --oc
   --st
     Enable saliency tracking.
-  --p
+  --op
     Enable Puppeteering.
 EOF
 }
@@ -42,7 +42,7 @@ while [[ $# > 0 ]]; do
             export ENABLE_SALIENCY_TRACKING=1
             shift
             ;;
-        --p)
+        --op)
             export PUPPETEER=1
             shift
             ;;
@@ -134,7 +134,9 @@ if [[ $OC_CHATBOT == 1 ]]; then
   tmux new-window -n 'tel' "while true; do nc -zv localhost 17020 && break; sleep 1; done; expect $BASEDIR/load_scm.exp; $SHELL"
   tmux new-window -n 'oc-ctrl' "roslaunch opencog_control psi.launch; $SHELL"
 else
-  tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"
+  if [[ $PUPPETEER == 0 ]]; then
+     tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"
+  fi
 fi
 
 tmux new-window -n 'fce' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./main.py; $SHELL"
@@ -143,7 +145,7 @@ sleep 4
 tmux new-window -n 'cmt' "roslaunch robots_config face_tracker.launch ${pi_arg}; $SHELL"
 sleep 3
 if [[ $PUPPETEER == 1 ]]; then
-    tmux new-window -n 'puppeteering' "roslaunch facial_puppetry facial_puppetry.launch; $SHELL"
+    tmux new-window -n 'DLIB_puppeteering' "roslaunch facial_puppetry facial_puppetry.launch; $SHELL"
 fi
 
 tmux new-window -n 'bash' "cd $BASEDIR; $SHELL"
