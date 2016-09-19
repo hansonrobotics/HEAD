@@ -1,11 +1,13 @@
 let os = require('os'),
     yaml = require('yamljs'),
+    yamlIO = require('./yaml'),
     memory = require('./memory'),
+    _ = require('lodash'),
     cp = require('child_process'),
     path = require('path');
 
 module.exports = {
-    startStatus: function (config_dir, robot_name, started) {
+    system_status: function (config_dir, robot_name, started) {
         if (typeof started == 'undefined')
             started = -1;
 
@@ -15,35 +17,58 @@ module.exports = {
             started = this.robot_started(robot_name);
 
         let totalMem = memory.totalMemory(),
-            usedMem = memory.usedMemory(),
-            status = {
-                'software': started,
-                'system': {
-                    'cpu': parseInt(os.loadavg()[0] / os.cpus().length * 100),
-                    'mem': parseInt(usedMem / totalMem * 100),
-                    'total_mem': parseInt(totalMem),
-                    'fps': this.get_blender_fps()
-                },
-                'status': {
-                    'internet': this.get_internet_status(),
-                    'ros': this.get_ros_status(),
-                    'blender': this.get_blender_status(),
-                    'pololu': this.check('test', ['-e', '/dev/ttyACM0']) * -1 + 1,
-                    'usb2dynamixel': this.check('test', ['-e', '/dev/ttyUSB0']) * -1 + 1,
-                    'camera': this.check('test', ['-e', '/dev/video0']) * -1 + 1
-                },
-                'checks': []
-            };
+            usedMem = memory.usedMemory();
 
+        return {
+            software: started,
+            system: {
+                'cpu': parseInt(os.loadavg()[0] / os.cpus().length * 100),
+                'mem': parseInt(usedMem / totalMem * 100),
+                'total_mem': parseInt(totalMem),
+                'fps': this.get_blender_fps()
+            },
+            robot: {
+                'current_name': robot_name,
+                'robots': ['sophia', 'sophia_body'],
+            },
+            status: {
+                internet: this.get_internet_status(),
+                ros: this.get_ros_status(),
+                blender: this.get_blender_status(),
+                pololu: this.check('test', ['-e', '/dev/ttyACM0']) * -1 + 1,
+                usb2dynamixel: this.check('test', ['-e', '/dev/ttyUSB0']) * -1 + 1,
+                camera: this.check('test', ['-e', '/dev/video0']) * -1 + 1
+            },
+            motors: this.getMotorStatus(config_dir, robot_name, started),
+            nodes: this.getNodeStatus(config_dir, robot_name),
+        };
+    },
+    getNodeStatus: function (config_dir, robot_name) {
+        var running = [],
+            res = cp.spawnSync('rosnode', ['list'], {encoding: 'utf8'}),
+            nodes = yamlIO.readFile(path.join(config_dir, robot_name, 'nodes.yaml'));
+
+        nodes = 'nodes' in nodes ? nodes['nodes'] : [];
+
+        if (res.status === 0)
+            running = _.compact(res.stdout.split('\n'));
+
+        for (node of nodes)
+            node['status'] = _.includes(running, node['node']) ? 0 : 1;
+
+        return nodes;
+    },
+    getMotorStatus: function (config_dir, robot_name, started) {
+        var checks = [];
         // Check Hardware only if software not running to avoid accessing same hardware
-        if (status['software'] == 0) {
+        if (started == 0) {
             let hw = yaml.load(path.join(config_dir, robot_name, 'hw_monitor.yaml'));
 
             if ('dynamixel' in hw) {
                 for (let c of hw.dynamixel) {
                     // Check device
                     let dev = this.check("test", ['-e', c['device']]) * -1 + 1;
-                    status['checks'].push({
+                    checks.push({
                         'label': c['label'] + " USB",
                         'status': dev,
                     });
@@ -67,7 +92,7 @@ module.exports = {
                     if (total > 0)
                         val += "/" + total;
 
-                    status['checks'].push({
+                    checks.push({
                         'label': c['label'] + " Motors found",
                         'status': st,
                         'value': val,
@@ -78,7 +103,7 @@ module.exports = {
             if ('pololu' in hw) {
                 for (let c of hw.pololu) {
                     let dev = this.check("test", ['-e', c['device']]) * -1 + 1;
-                    status['checks'].push({
+                    checks.push({
                         'label': c['label'] + " USB",
                         'status': dev
                     });
@@ -87,7 +112,7 @@ module.exports = {
                     if ('channel' in c)
                         val = this.get_pololu_power(c['device'], c['channel']);
 
-                    status['checks'].push({
+                    checks.push({
                         'label': c['label'] + " Power",
                         'status': val
                     });
@@ -95,12 +120,12 @@ module.exports = {
             }
         }
 
-        status['checks'].push({
+        checks.push({
             'label': "Internet Connection",
             'status': this.get_internet_status(),
         });
 
-        return status;
+        return checks;
     },
     call_ros_service: function (service, args) {
         if (args.constructor !== Array)
@@ -145,15 +170,15 @@ module.exports = {
         return cp.spawnSync('ping', ['8.8.8.8', '-c', '1', '-W', '1'], {encoding: 'utf8'}).status
     },
     get_ros_status: function () {
-        return cp.spawnSync('pgrep', ['roscore'], {encoding: 'utf8'}).status
+        return cp.spawnSync('pgrep', ['rosmaster'], {encoding: 'utf8'}).status
     },
     get_blender_status: function () {
         return cp.spawnSync('pgrep', ['blender'], {encoding: 'utf8'}).status;
     },
-    check: function (cmd, args) {
+    check: function (cmd, args, env) {
         return cp.spawnSync(cmd, args, {encoding: 'utf8'}).status === 0;
     },
-    get_dynamixel_motor_number: function(device) {
+    get_dynamixel_motor_number: function (device) {
         if (this.mx_tool) {
             let res = cp.spawnSync(this.mx_tool, ['--device', device], {encoding: 'utf8'});
             if (res.status <= 0) return res.stdout.split("\n").length - 1;

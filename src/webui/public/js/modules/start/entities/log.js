@@ -17,7 +17,7 @@ define(['application', 'lib/api'], function (App, api) {
                 $.ajax('/monitor/logs/warn', {
                     method: 'POST',
                     dataType: 'json',
-                    data: self.cursors,
+                    data: JSON.stringify(self.cursors),
                     success: function (response) {
                         _.each(response.logs, function (log) {
                             var m = self.get(log.node);

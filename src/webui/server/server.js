@@ -7,6 +7,7 @@ var express = require('express'),
     performances = require('./lib/performances'),
     bodyParser = require('body-parser'),
     mkdirp = require('mkdirp'),
+    PythonShell = require('python-shell'),
     ros = require('./lib/ros'),
     argv = require('yargs').options({
         r: {
@@ -71,8 +72,8 @@ app.post('/robot_config/:name', function (req, res) {
         res.sendStatus(500);
 });
 
-app.get('/monitor/start_status', function (req, res) {
-    res.json(monitoring.startStatus(argv.config, argv.robot));
+app.get('/monitor/status', function (req, res) {
+    res.json(monitoring.system_status(argv.config, argv.robot));
 });
 
 app.get('/motors/get/:name', function (req, res) {
@@ -134,7 +135,7 @@ app.get('/slide_performance/:performance', function (req, res) {
     res.json({result: performances.run('idf/' + req.params['performance'])});
 });
 
-app.get('/lookat', function (req, res) {
+app.post('/lookat', function (req, res) {
     res.json({
         result: ros.publish('/camera/face_locations', 'pi_face_tracker/Faces', [{
             id: 1,
@@ -145,6 +146,17 @@ app.get('/lookat', function (req, res) {
             },
             attention: 0.99
         }])
+    });
+});
+
+app.post('/monitor/logs/:level', function (req, res) {
+    PythonShell.run('scripts/logs.py', {
+        args: [req.params['level'], JSON.stringify(req.body)]
+    }, function (err, data) {
+        if (err)
+            res.json([]);
+        else
+            res.json(JSON.parse(data));
     });
 });
 

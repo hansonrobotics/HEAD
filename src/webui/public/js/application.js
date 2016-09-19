@@ -14,7 +14,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api',
                     return false;
                 }
                 if (api.ros.connected == false) {
-                    Backbone.history.navigate('admin/monitor', {trigger: true})
+                    Backbone.history.navigate('admin/monitor', {trigger: true});
                     return true;
                 }
                 return false;
@@ -77,8 +77,7 @@ define(['backbone', 'marionette', 'lib/ros', 'modules/layout/layout', 'lib/api',
                         'modules/interaction/interaction_app',
                         'modules/monitor/router',
                         'modules/start/router',
-                        'modules/settings/router',
-                        'modules/status/status_app'],
+                        'modules/settings/router'],
                     function () {
                         Application.start();
                     });

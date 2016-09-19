@@ -9,7 +9,6 @@ define(['application', './public/controller', './admin/controller'],
 
             Expressions.AdminRouter = Marionette.AppRouter.extend({
                 'appRoutes': {
-                    'admin': 'index',
                     'admin/expressions': 'index'
                 }
             });
