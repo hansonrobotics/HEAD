@@ -81,7 +81,9 @@ app.get('/motors/get/:name', function (req, res) {
 });
 
 app.post('/motors/update/:name', function (req, res) {
-    yamlIO.writeFile(path.join(argv.config, req.params['name'], 'motors_settings.yaml'), req.body);
+    var robot_name = req.params['name'];
+    yamlIO.writeFile(path.join(argv.config, robot_name, 'motors_settings.yaml'), req.body);
+    ros.updateMotors(robot_name, req.body);
     res.json({error: false});
 });
 
@@ -136,17 +138,13 @@ app.get('/slide_performance/:performance', function (req, res) {
 });
 
 app.post('/lookat', function (req, res) {
-    res.json({
-        result: ros.publish('/camera/face_locations', 'pi_face_tracker/Faces', [{
-            id: 1,
-            point: {
-                x: req.body['x'],
-                y: -1 * req.body['y'],
-                z: req.body['z']
-            },
-            attention: 0.99
-        }])
+    ros.lookAt({
+        x: req.body['x'],
+        y: -1 * req.body['y'],
+        z: req.body['z']
     });
+
+    res.json({result: true});
 });
 
 app.post('/monitor/logs/:level', function (req, res) {

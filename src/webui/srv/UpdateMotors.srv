@@ -1,0 +1,4 @@
+string robot_name
+string motors
+---
+bool success

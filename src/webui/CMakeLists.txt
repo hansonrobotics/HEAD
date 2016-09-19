@@ -57,6 +57,7 @@ add_service_files(
     NodeDescription.srv
     ConfigurableNodes.srv
     MotorStates.srv
+    UpdateMotors.srv
     Json.srv
 )
 
