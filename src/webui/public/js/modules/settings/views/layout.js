@@ -17,6 +17,16 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jque
                 'click @ui.navLinks': 'collapseNav'
             },
             onShow: function () {
+                var self = this,
+                    updateNavHeight = function () {
+                        if (self.isDestroyed)
+                            $(window).off("resize", updateNavHeight);
+                        else {
+                            self.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(document).height());
+                            self.ui.navigation.multilevelpushmenu('redraw');
+                        }
+                    };
+
                 this.ui.navigation.multilevelpushmenu({
                     menuWidth: '250px',
                     menuHeight: $(document).height(),
@@ -24,9 +34,12 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jque
                     preventItemClick: false
                 });
 
-                $(window).on("resize", this.updateNavHeight, this);
+                $(window).on("resize", updateNavHeight);
                 this.nodeListInterval = setInterval(_.bind(this.updateNodeList, this), 10000);
                 this.updateNodeList();
+            },
+            destroy: function () {
+                $(window).off("resize", this.updateNavHeight);
             },
             collapseNav: function () {
                 $(this.ui.navigation).multilevelpushmenu('collapse');
@@ -45,10 +58,6 @@ define(['marionette', 'tpl!./templates/layout.tpl', 'lib/regions/fade_in', 'jque
                 }, function (error) {
                     console.log(error);
                 });
-            },
-            updateNavHeight: function () {
-                this.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(document).height());
-                this.ui.navigation.multilevelpushmenu('redraw');
             },
             onDestroy: function () {
                 $(window).off("resize", this.updateNavHeight, this);
