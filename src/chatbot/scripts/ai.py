@@ -8,7 +8,9 @@ import json
 import time
 import threading
 import re
+import random
 from functools import wraps
+from operator import itemgetter
 
 from chatbot.polarity import Polarity
 from chatbot.msg import ChatMessage
@@ -16,6 +18,7 @@ from std_msgs.msg import String
 from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
 from chatbot.client import get_default_username
+
 
 logger = logging.getLogger('hr.chatbot.ai')
 VERSION = 'v1.1'
@@ -50,13 +53,17 @@ class Chatbot():
         self._polarity_threshold = 0.2
         self.speech = False
 
-        self.input_stack = []
-        self.condition = threading.Condition()
-        self.respond_worker = threading.Thread(target=self.process_input)
-        self.respond_worker.daemon = True
-        self.respond_worker.start()
-        self.delay_response = rospy.get_param('delay_response', False)
-        self.delay_time = rospy.get_param('delay_time', 2)
+        #self.input_stack = []
+        #self.condition = threading.Condition()
+        #self.respond_worker = threading.Thread(target=self.process_input)
+        #self.respond_worker.daemon = True
+        #self.respond_worker.start()
+        #self.delay_response = rospy.get_param('delay_response', False)
+        #self.delay_time = rospy.get_param('delay_time', 2)
+
+        # initialize word buffer and timeout timer
+        self.words = []
+        self.timer = None
 
         rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
         rospy.Subscriber('speech_events', String, self._speech_event_callback)
@@ -176,48 +183,157 @@ class Chatbot():
             self._response_publisher.publish('Could you say that again?')
             return
 
-        if self.delay_response:
-            with self.condition:
-                logger.info("Add input: {}".format(chat_message.utterance))
-                self.input_stack.append((time.clock(), chat_message))
-                self.condition.notify_all()
+        #if self.delay_response:
+        #    with self.condition:
+        #        logger.info("Add input: {}".format(chat_message.utterance))
+        #        self.input_stack.append((time.clock(), chat_message))
+        #        self.condition.notify_all()
+        #else:
+
+        # only pass as single question
+        self.respond(chat_message.utterance)
+
+    #def process_input(self):
+    #    while True:
+    #        time.sleep(0.1)
+    #        with self.condition:
+    #            if not self.input_stack:
+    #                continue
+    #            num_input = len(self.input_stack)
+    #            questions = [i[1].utterance for i in self.input_stack]
+    #            question = ' '.join(questions)
+    #            logger.info("Current input: {}".format(question))
+    #            if len(question) < 10:
+    #                self.condition.wait(self.delay_time)
+    #                if len(self.input_stack) > num_input:
+    #                    continue
+    #            self.respond(questions)
+    #            del self.input_stack[:]
+
+    def score_question(self,question,lang):
+
+        # get response and category, but don't execute the question
+        response = self.get_response(question,lang,True)
+
+        if not "trace" in response:
+            logger.info("no trace found")
+            return 0
+
+        # lift patterns from the trace (assuming it's always trace[3], where trace is response["trace"] split by commas)
+        patterns = []
+        for trace in response["trace"]:
+            patterns.append(trace.split(',')[3])
+        
+        logger.info("question:" + question + "   patterns:" + str(patterns))
+
+
+        # first idea: count number of words in response and count number of wildcards in pattern, and rank according to these counts
+        
+        # combine all patterns
+        total_words = 0.0
+        total_wildcards = 0.0
+        total_underscores = 0.0
+        total_all = 0.0
+        for pattern in patterns:
+            words = pattern.split()
+            for word in words:
+                total_all = total_all + 1.0
+                if word == "*":
+                    total_wildcards = total_wildcards + 1.0
+                elif word == "_":
+                    total_underscores = total_underscores + 1.0
+                else:
+                    total_words = total_words + 1.0
+        #print "    total words:",total_words
+        #print "    total wildcards:",total_wildcards
+        #print "    total underscores:",total_underscores
+        #print "    wordage:",total_words / total_all
+        #print "    wildcardage:",total_wildcards / total_all
+        #print "    underscorage:",total_underscores / total_all
+        #print "    wildcards per word:",total_wildcards / total_words
+        #print "    underscores per word:",total_underscores / total_words
+
+        # diagnose possible illnesses of the patterns
+        very_short = False
+        if total_words < 3:
+            very_short = True
+
+        small_match = False
+        if total_wildcards >= 1:
+            small_match = True
+
+        very_hard = False
+        if total_wildcards >= 2:
+            very_hard = True
+
+        # determine fitness of the patterns according to the illnesses
+        score = 0
+        if very_short and very_hard:
+            score = 0
+        elif very_short and small_match:
+            score = 1
+        elif very_hard or small_match or very_short:
+            score = 2
         else:
-            self.respond([chat_message.utterance])
+            score = 3
 
-    def process_input(self):
-        while True:
-            time.sleep(0.1)
-            with self.condition:
-                if not self.input_stack:
-                    continue
-                num_input = len(self.input_stack)
-                questions = [i[1].utterance for i in self.input_stack]
-                question = ' '.join(questions)
-                logger.info("Current input: {}".format(question))
-                if len(question) < 10:
-                    self.condition.wait(self.delay_time)
-                    if len(self.input_stack) > num_input:
-                        continue
-                self.respond(questions)
-                del self.input_stack[:]
+        #print "    final score:",score
+            
+        return score
 
-    def respond(self, questions):
-        lang = rospy.get_param('lang', None)
-        for question in questions:
-            tmp_answer = self.get_response(question, lang, True)
-            traces = tmp_answer.get('trace')
-            if traces:
-                pattern = [trace_pattern.match(trace).group('pname')
-                           for trace in traces]
-                logger.info("Question {}, Pattern {}".format(
-                    question, ' '.join(pattern)))
 
-        question = ' '.join(questions)
-        answer = self.get_response(question, lang)
+    def get_question_scores(self,question,lang):
 
-        response = answer.get('text')
-        emotion = answer.get('emotion')
-        botid = answer.get('botid')
+        logger.info("incoming text: " + question)
+
+        # pre-test the text for number of words
+        sentence = question.split()
+        num_of_words = len(sentence)
+
+        # test if entire question is not too small and sufficiently useful
+        if (num_of_words > 2) and (self.score_question(question,lang) > 2):
+            result = {"value":3,"question":question}
+            return [result]
+            
+        # combine with previous words from the word buffer (if anything)
+        for word in sentence:
+            self.words.append(word)
+
+        logger.info("trying multiple combinations")
+
+        # reset statistics
+        scores = []
+
+        # try all possible options from back to front and fill up scores[]
+        for i in range(0,len(self.words)):
+
+            attempt = ""
+            for k in range(i,len(self.words)):
+                attempt = attempt + " " + self.words[k]
+
+            # test the attempt
+            score = { "question": attempt, "value": 0 }
+            score["value"] = self.score_question(attempt,lang)
+
+            # and add to the list
+            scores.append(score)
+
+        # sort the list
+        results = sorted(scores,key=itemgetter("value"),reverse=True)
+
+        # debug
+        for result in results:
+            logger.info(str(result["value"]) + ": " + result["question"])
+
+        return results
+
+
+    def finally_respond(self,question,lang):
+
+        answer = self.get_response(question,lang,False)
+        response = answer["text"]
+        emotion = answer["emotion"]
+        botid = answer["botid"]
 
         # Add space after punctuation for multi-sentence responses
         response = response.replace('?', '? ')
@@ -263,6 +379,61 @@ class Chatbot():
         self._response_publisher.publish(String(response))
         logger.info("Ask: {}, answer: {}, answered by: {}".format(
             question, response.encode('utf-8'), botid))
+
+        # we're done, forget the state (clear buffer, reset timer)
+        self.words = []
+        if self.timer is not None:
+            self.timer.shutdown()
+        self.timer = None
+
+
+    def respond(self,question):
+        lang = rospy.get_param('lang', None)
+        results = self.get_question_scores(question,lang)
+
+        # if best one is reasonable, publish it
+        if results[0]["value"] > 2:
+            self.finally_respond(results[0]["question"],lang)
+        else:
+            logger.info("nothing reasonable found, 'go on'...")
+    
+            # output something enticing to get the user to talk more
+            # find the shortest of the almost reasonable (2) scores
+            least_i = -1
+            least = 10
+            i = 0
+            for result in results:
+                if result["value"] == 2:
+                    count = len(result["question"].split())
+                    if (least_i == -1) or (count < least):
+                        least_i = i
+                        least = count
+                i = i + 1
+            sarq = results[least_i]["question"] # smallest almost reasonable question
+            choice = random.randint(0,5)
+            if choice == 0:
+                self._response_publisher.publish(String("I'm not sure I understand " + sarq + "."))
+            elif choice == 1:
+                self._response_publisher.publish(String("Tell me more about " + sarq + "."))
+            elif choice == 2:
+                self._response_publisher.publish(String("Go on, what " + sarq + "."))
+            elif choice == 3:
+                self._response_publisher.publish(String("What do you mean by " + sarq + "?"))
+            elif choice == 4:
+                self.finally_respond(results[0]["question"],lang) # ask anyway, it could be funny
+            else:
+                self._response_publisher.publish(String("What " + sarq + "?"))
+
+            # reset timer
+            if self.timer is not None:
+                self.timer.shutdown()
+            self.timer = rospy.Timer(rospy.Duration(5),self.reset_tick,True)
+
+    def reset_tick(self,event):
+        logger.info("reset, silence was too long")
+        self.words = []
+        self.timer.shutdown()
+        self.timer = None
 
     # Just repeat the chat message, as a plain string.
     def _echo_callback(self, chat_message):
