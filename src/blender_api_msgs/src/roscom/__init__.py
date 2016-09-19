@@ -319,6 +319,7 @@ class CommandWrappers:
         shapekeys = api.getFaceData()
 
         msg.m_coeffs = shapekeys.values()
+        msg.m_shapekeys = shapekeys.keys()
         # Manage timeout for set_pau
         if api.pauTimeout < time.time():
             api.setAnimationMode(api.pauAnimationMode & ~api.PAU_ACTIVE)
