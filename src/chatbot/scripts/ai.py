@@ -232,7 +232,6 @@ class Chatbot():
         # combine all patterns
         total_words = 0.0
         total_wildcards = 0.0
-        total_underscores = 0.0
         total_all = 0.0
         total_full_patterns = 0.0
         for pattern in patterns:
@@ -240,24 +239,13 @@ class Chatbot():
             no_wildcards = True
             for word in words:
                 total_all = total_all + 1.0
-                if word == "*":
+                if (word == "*") or (word == "_"):
                     total_wildcards = total_wildcards + 1.0
-                    no_wildcards = False
-                elif word == "_":
-                    total_underscores = total_underscores + 1.0
                     no_wildcards = False
                 else:
                     total_words = total_words + 1.0
-                if no_wildcards:
-                    total_full_patterns = total_full_patterns + 1.0
-        #print "    total words:",total_words
-        #print "    total wildcards:",total_wildcards
-        #print "    total underscores:",total_underscores
-        #print "    wordage:",total_words / total_all
-        #print "    wildcardage:",total_wildcards / total_all
-        #print "    underscorage:",total_underscores / total_all
-        #print "    wildcards per word:",total_wildcards / total_words
-        #print "    underscores per word:",total_underscores / total_words
+            if no_wildcards:
+                total_full_patterns = total_full_patterns + 1.0
 
         # diagnose possible illnesses of the patterns
         very_short = False
@@ -278,7 +266,7 @@ class Chatbot():
 
         # determine fitness of the patterns according to the illnesses
         score = 0
-        if did_resolve: # if one of the patterns healthily resolved the question, this should pass
+        if did_resolve: # if one of the patterns healthily resolved the question, this could pass
             score = 3
         elif very_short and very_hard: # if the patterns are very short and have a lot of wildcards, they are bad
             score = 0
@@ -287,7 +275,7 @@ class Chatbot():
         elif very_hard or small_match or very_short: # if the patterns are very short or have atleast one wildcard, they are almost ok
             score = 2
         else:
-            score = 3
+            score = 4
 
         #print "    final score:",score
             
@@ -303,8 +291,8 @@ class Chatbot():
         num_of_words = len(sentence)
 
         # test if entire question is not too small and sufficiently useful
-        if (num_of_words > 2) and (self.score_question(question,lang) > 2):
-            result = {"value":3,"question":question}
+        if (num_of_words > 2) and (self.score_question(question,lang) > 3):
+            result = {"value":4,"question":question}
             return [result]
             
         # combine with previous words from the word buffer (if anything)
@@ -404,23 +392,30 @@ class Chatbot():
         results = self.get_question_scores(question,lang)
 
         # if best one is reasonable, publish it
-        if results[0]["value"] > 2:
+        if results[0]["value"] > 3:
             self.finally_respond(results[0]["question"],lang)
         else:
             logger.info("nothing reasonable found, 'go on'...")
     
             # output something enticing to get the user to talk more
-            # find the shortest of the almost reasonable (2) scores
+            # find the shortest of the almost reasonable (2 and 3) scores
             least_i = -1
             least = 10
             i = 0
+	    num_of_threes = 0
             for result in results:
-                if result["value"] == 2:
+                if result["value"] >= 2:
                     count = len(result["question"].split())
                     if (least_i == -1) or (count < least):
                         least_i = i
                         least = count
+		if result["value"] == 3:
+		    num_of_threes = num_of_threes + 1
                 i = i + 1
+	    if num_of_threes > 0: # apparently some of the patterns were dodgy but acceptable
+		self.finally_respond(results[0]["question"],lang)
+		return
+
             sarq = results[least_i]["question"] # smallest almost reasonable question
             choice = random.randint(0,5)
             if choice == 0:
@@ -433,6 +428,7 @@ class Chatbot():
                 self._response_publisher.publish(String("What do you mean by " + sarq + "?"))
             elif choice == 4:
                 self.finally_respond(results[0]["question"],lang) # ask anyway, it could be funny
+		return
             else:
                 self._response_publisher.publish(String("What " + sarq + "?"))
 
