@@ -234,16 +234,22 @@ class Chatbot():
         total_wildcards = 0.0
         total_underscores = 0.0
         total_all = 0.0
+        total_full_patterns = 0.0
         for pattern in patterns:
             words = pattern.split()
+            no_wildcards = True
             for word in words:
                 total_all = total_all + 1.0
                 if word == "*":
                     total_wildcards = total_wildcards + 1.0
+                    no_wildcards = False
                 elif word == "_":
                     total_underscores = total_underscores + 1.0
+                    no_wildcards = False
                 else:
                     total_words = total_words + 1.0
+                if no_wildcards:
+                    total_full_patterns = total_full_patterns + 1.0
         #print "    total words:",total_words
         #print "    total wildcards:",total_wildcards
         #print "    total underscores:",total_underscores
@@ -266,13 +272,19 @@ class Chatbot():
         if total_wildcards >= 2:
             very_hard = True
 
+        did_resolve = False
+        if total_full_patterns >= 1:
+            did_resolve = True
+
         # determine fitness of the patterns according to the illnesses
         score = 0
-        if very_short and very_hard:
+        if did_resolve: # if one of the patterns healthily resolved the question, this should pass
+            score = 3
+        elif very_short and very_hard: # if the patterns are very short and have a lot of wildcards, they are bad
             score = 0
-        elif very_short and small_match:
+        elif very_short and small_match: # if the patterns are very short and have atleast one wildcard, they are a little less bad
             score = 1
-        elif very_hard or small_match or very_short:
+        elif very_hard or small_match or very_short: # if the patterns are very short or have atleast one wildcard, they are almost ok
             score = 2
         else:
             score = 3
