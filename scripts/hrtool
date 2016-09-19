@@ -846,7 +846,9 @@ set_ws() {
         exit 1;
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
-    HR_WORKSPACE=${HR_WORKSPACE%/}
+    if [[ $HR_WORKSPACE != '/' ]]; then
+        HR_WORKSPACE=${HR_WORKSPACE%/}
+    fi
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
 }
 
