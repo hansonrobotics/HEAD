@@ -434,15 +434,12 @@ install_marky_markov() {
 
 check_or_create_ws() {
     [[ ! -z $1 ]]
-    if [[ -d $1 ]]; then
-        export HR_WORKSPACE=$1
-    else
+    if [[ ! -d $1 ]]; then
         local confirm
         _get_confirm "The workspace ${1} does not exist, create? [y/N]"
         if [[ ${confirm} -eq 1 ]]; then
             mkdir -p ${1}
             echo "Workspace directory ${1} is created"
-            export HR_WORKSPACE=${1}
         fi
     fi
 }
@@ -741,8 +738,13 @@ check_ws() {
     if [[ $rel_ws != $ws ]]; then
         local confirm
         warn "The workspace configured ${ws} doesn't match the your working path ${rel_ws}"
-        _get_confirm "Continue using ${ws}? [y/N]"
-        [[ ${confirm} -eq 1 ]] || exit 1
+        _get_confirm "Set workspace to your working path ${rel_ws}? [y/N]"
+        if [[ ${confirm} -eq 1 ]]; then
+            HR_WORKSPACE=${rel_ws}
+            set_env
+        else
+            exit 1
+        fi
     fi
 }
 
@@ -826,7 +828,7 @@ set_ws() {
                 [[ ${confirm} -eq 1 ]] || exit 0
                 HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
             else
-                eval $str
+                HR_WORKSPACE=${str#export HR_WORKSPACE=}
             fi
         else
             HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
@@ -841,8 +843,11 @@ set_ws() {
         exit 1;
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
-    HR_WORKSPACE=${HR_WORKSPACE%/}
+    if [[ $HR_WORKSPACE != '/' ]]; then
+        HR_WORKSPACE=${HR_WORKSPACE%/}
+    fi
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
+    export HR_WORKSPACE=$HR_WORKSPACE
 }
 
 set_env() {
@@ -957,7 +962,9 @@ execute() {
         $RUN_CUSTOM_FUNCTIONS == 1 ||
         $BUILD_PACKAGE == 1
         ]]; then
-        check_ws
+        if [[ $ASSUME_YES == 0 ]] ; then
+            check_ws
+        fi
     fi
     if [[ $INSTALL_DEPENDENCIES ]]; then do_install_deps; fi
     if [[ $GET_HR_SOURCE_CODE ]]; then do_get_hr_src; fi

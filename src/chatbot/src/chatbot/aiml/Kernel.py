@@ -580,6 +580,10 @@ class Kernel:
                         # get the value to check against
                         liValue = liAttr['value']
                         # do the test
+                        if liValue == '*' and self.getPredicate(liName, sessionID):
+                            foundMatch = True
+                            response += self._processElement(li, sessionID)
+                            break
                         if self.getPredicate(liName, sessionID) == liValue:
                             foundMatch = True
                             response += self._processElement(li, sessionID)
