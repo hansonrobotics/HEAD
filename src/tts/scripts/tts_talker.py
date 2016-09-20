@@ -76,7 +76,7 @@ class TTSTalker:
         self.speech_active.publish("stop")
 
     def doLipSync(self):
-        threading.Timer(0, self.sound.play, (tts_data.wavout,)).start()
+        threading.Timer(0, self.sound.play, (self.tts_data.wavout,)).start()
 
         visemes = self.tts_data.visemes
         start = time.time()
