@@ -4,8 +4,10 @@ import os
 import datetime as dt
 import logging
 import uuid
-from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
+from config import (HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT,
+                    SESSION_RESET_TIMEOUT, SESSION_DIR)
 from response_cache import ResponseCache
+import pickle
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
@@ -26,6 +28,7 @@ class Session(object):
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
         test_dirname = os.path.join(
             TEST_HISTORY_DIR, self.created.strftime('%Y%m%d'))
+        self.session_dirname = os.path.join(SESSION_DIR, self.created.strftime('%Y%m%d'))
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
         self.test_fname = os.path.join(test_dirname, '{}.csv'.format(self.sid))
         self.dump_file = None
@@ -69,7 +72,35 @@ class Session(object):
             self.dump_file = self.test_fname
         else:
             self.dump_file = self.fname
+            self._dump_context()
         return self.cache.dump(self.dump_file)
+
+    def _dump_context(self):
+        user = getattr(self.sdata, 'user', 'default')
+        context_fname = os.path.join(SESSION_DIR, '{}.obj'.format(user))
+        if not os.path.isdir(SESSION_DIR):
+            os.makedirs(SESSION_DIR)
+        context = {}
+        for c in self.characters:
+            context[c.id] = c.get_context(self.sid)
+        with open(context_fname, 'wb') as f:
+            pickle.dump(context, f)
+            logger.info("Context data is saved to {}".format(context_fname))
+
+    def resume_context(self):
+        user = getattr(self.sdata, 'user', 'default')
+        context_fname = os.path.join(SESSION_DIR, '{}.obj'.format(user))
+        if os.path.isfile(context_fname):
+            logger.info("Loading context data from {}".format(context_fname))
+            with open(context_fname) as f:
+                context = pickle.load(f)
+                for c in self.characters:
+                    data = context.get(c.id)
+                    if data:
+                        try:
+                            c.set_context(data, self.sid)
+                        except NotImplementedError:
+                            pass
 
     def get_session_data(self):
         return self.sdata
@@ -152,8 +183,10 @@ class SessionManager(object):
     def add_session(self, user, sid):
         if sid in self._sessions:
             return False
-        self._sessions[sid] = Session(sid)
+        session = Session(sid)
+        self._sessions[sid] = session
         self._users[user] = sid
+        session.resume_context()
         return True
 
     def start_session(self, user, test=False):
