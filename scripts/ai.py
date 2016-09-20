@@ -8,34 +8,31 @@ import json
 import time
 import threading
 import re
-from functools import wraps
 
 from chatbot.polarity import Polarity
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
-from chatbot.client import get_default_username
+from chatbot.client import get_default_username, Client
 
 logger = logging.getLogger('hr.chatbot.ai')
-VERSION = 'v1.1'
-key = 'AAAAB3NzaC'
+HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 trace_pattern = re.compile(
     r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
 
+class Console(object):
+    def write(self, msg):
+        logger.info("Console: {}".format(msg.strip()))
 
 class Chatbot():
 
     def __init__(self):
-        self.chatbot_url = rospy.get_param(
-            'chatbot_url', 'http://localhost:8001')
         self.botname = rospy.get_param('botname', 'sophia')
-        self.user = get_default_username()
-        while not self.ping():
-            logger.info("Ping server")
-            time.sleep(1)
-        self.session = self.start_session()
-
+        self.client = Client(
+            get_default_username(), HR_CHATBOT_AUTHKEY, stdout=Console())
+        self.client.chatbot_url = rospy.get_param(
+            'chatbot_url', 'http://localhost:8001')
         # chatbot now saves a bit of simple state to handle sentiment analysis
         # after formulating a response it saves it in a buffer if S.A. active
         # It has a simple state transition - initialized in wait_client
@@ -83,70 +80,13 @@ class Chatbot():
         rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
         rospy.set_param('node_status/chatbot', 'running')
 
-    def ping(self):
-        try:
-            r = requests.get('{}/{}/ping'.format(self.chatbot_url, VERSION))
-            response = r.json().get('response')
-            if response == 'pong':
-                return True
-        except Exception:
-            return False
-
-    def start_session(self):
-        params = {
-            "Auth": key,
-            "botname": self.botname,
-            "user": self.user
-        }
-        r = requests.get('{}/{}/start_session'.format(
-            self.chatbot_url, VERSION), params=params)
-        ret = r.json().get('ret')
-        if r.status_code != 200:
-            raise Exception("Request error: {}\n".format(r.status_code))
-        sid = r.json().get('sid')
-        logger.info("Start new session {}".format(sid))
-        return sid
-
     def sentiment_active(self, active):
         self._sentiment_active = active
 
-    def retry(times):
-        def wrap(f):
-            @wraps(f)
-            def wrap_f(*args):
-                for i in range(times):
-                    try:
-                        return f(*args)
-                    except Exception as ex:
-                        logger.error(ex)
-                        self = args[0]
-                        self.session = self.start_session()
-                        continue
-            return wrap_f
-        return wrap
-
-    @retry(3)
     def get_response(self, question, lang, query=False):
-        params = {
-            "question": "{}".format(question),
-            "session": self.session,
-            "lang": lang,
-            "Auth": key,
-            "query": query,
-        }
-        r = requests.get('{}/{}/chat'.format(self.chatbot_url, VERSION),
-                         params=params)
-        ret = r.json().get('ret')
-        if r.status_code != 200:
-            logger.error("Request error: {}".format(r.status_code))
-
-        if ret != 0:
-            logger.error("QA error: error code {}, botname {}, question {}".format(
-                ret, self.botname, question))
-            raise Exception("QA Error: {}".format(ret))
-
-        response = r.json().get('response', {})
-
+        if lang:
+            self.client.lang = lang
+        ret, response = self.client.ask(question, query)
         return response
 
     def _speech_event_callback(self, msg):
@@ -166,6 +106,20 @@ class Chatbot():
             rospy.sleep(0.5)
             self._response_publisher.publish(String('Okay'))
             self._affect_publisher.publish(String('sad'))
+            return
+
+        # Handle chatbot command
+        cmd, arg, line = self.client.parseline(chat_message.utterance)
+        func = None
+        try:
+            func = getattr(self.client, 'do_' + cmd)
+        except AttributeError:
+            pass
+        if func:
+            try:
+                func(arg)
+            except Exception as ex:
+                logger.error(ex)
             return
 
         # blink that we heard something, request, probability defined in
@@ -207,10 +161,13 @@ class Chatbot():
             tmp_answer = self.get_response(question, lang, True)
             traces = tmp_answer.get('trace')
             if traces:
-                pattern = [trace_pattern.match(trace).group('pname')
-                           for trace in traces]
+                patterns = []
+                for trace in traces:
+                    match_obj = trace_pattern.match(trace)
+                    if match_obj:
+                        patterns.append(match_obj.group('pname'))
                 logger.info("Question {}, Pattern {}".format(
-                    question, ' '.join(pattern)))
+                    question, ' '.join(patterns)))
 
         question = ' '.join(questions)
         answer = self.get_response(question, lang)
@@ -272,9 +229,7 @@ class Chatbot():
 
     def reconfig(self, config, level):
         self.sentiment_active(config.sentiment)
-        if self.chatbot_url != config.chatbot_url:
-            self.chatbot_url = config.chatbot_url
-            self.session = self.start_session()
+        self.client.chatbot_url = config.chatbot_url
         self.enable = config.enable
         self.delay_response = config.delay_response
         self.delay_time = config.delay_time
