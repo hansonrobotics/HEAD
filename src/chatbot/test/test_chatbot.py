@@ -39,13 +39,11 @@ class ChatbotTest(unittest.TestCase):
             time.sleep(1)
         cli.do_conn('localhost:' + PORT)
         cli.do_select('generic')
-        ret, response = cli.ask('hello sophia')
-        self.assertTrue(ret == 0)
+        response = cli.ask('hello sophia')
         self.assertTrue(response.get('text') == 'Hi there from generic')
 
         cli.do_select('sophia')
-        ret, response = cli.ask('hello sophia')
-        self.assertTrue(ret == 0)
+        response = cli.ask('hello sophia')
         self.assertTrue(response.get('text') == 'Hi there from sophia')
 
     def test_session_manager(self):
