@@ -132,7 +132,7 @@ else
 fi
 
 tmux new-window -n 'fce' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./main.py; $SHELL"
-
+tmux new-window -n 'sound' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/sound; ./audioclass.py; $SHELL"
 sleep 4
 tmux new-window -n 'cmt' "roslaunch robots_config face_tracker.launch ${pi_arg}; $SHELL"
 tmux new-window -n 'bash' "cd $BASEDIR; $SHELL"
