@@ -11,12 +11,15 @@ REPEAT_ANSWER = {
     'en': ["I've already answered this question, let's talk about something else.", "I've already answered this question"],
     'zh': [u"这个问题我已经回答过了，换个问题吧。", u"这个问题我已经回答过了", u"我不爱回答相同的问题。"]
 }
+
+
 class DummyCharacter(Character):
+
     def __init__(self, id, name, level=99):
         super(DummyCharacter, self).__init__(id, name, level)
         self.languages = ['en', 'zh']
 
-    def respond(self, question, lang, session=None):
+    def respond(self, question, lang, *args, **kwargs):
         ret = {}
         ret['text'] = ''
         ret['botid'] = self.id

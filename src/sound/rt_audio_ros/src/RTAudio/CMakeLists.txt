@@ -81,7 +81,6 @@ IF (UNIX)
 		    target_link_libraries(RTAudioLib ${ALSA_LIBRARY})
 		ENDIF(JACK_FOUND)
 		
-		MESSAGE("ALSA lib : ${ALSA_LIBRARY}")	
         set_target_properties(RTAudioLib PROPERTIES OUTPUT_NAME rtaudio) 
 	ENDIF(APPLE)
 	

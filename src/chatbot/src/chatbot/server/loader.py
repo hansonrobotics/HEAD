@@ -7,11 +7,13 @@ from zipfile import ZipFile
 
 logger = logging.getLogger('hr.chatbot.loader')
 
+
 def load_characters(character_path):
     characters = []
     for path in character_path.split(','):
         path = path.strip()
-        if not path: continue
+        if not path:
+            continue
         sys.path.insert(0, path)
         module_names = [f for f in os.listdir(path) if f.endswith('.py')]
         for module_name in module_names:
@@ -25,6 +27,7 @@ def load_characters(character_path):
 
     logger.info("Add characters {}".format(characters))
     return characters
+
 
 class PyModuleCharacterLoader(object):
 
@@ -40,6 +43,7 @@ class PyModuleCharacterLoader(object):
         except Exception as ex:
             logger.error(ex)
         return characters
+
 
 class AIMLCharacterLoader(object):
 
@@ -65,17 +69,21 @@ class AIMLCharacterLoader(object):
                     character.level = int(spec['level'])
                 if 'aiml' in spec:
                     aiml_files = [abs_path(f) for f in spec['aiml']]
-                    errors = character.load_aiml_files(character.kernel, aiml_files)
+                    errors = character.load_aiml_files(
+                        character.kernel, aiml_files)
                 if 'weight' in spec:
                     character.weight = float(spec['weight'])
             except KeyError as ex:
                 logger.error(ex)
             if errors:
-                raise Exception("Loading {} error {}".format(character_yaml, '\n'.join(errors)))
+                raise Exception("Loading {} error {}".format(
+                    character_yaml, '\n'.join(errors)))
             characters.append(character)
         return characters
 
 from gsheet_chatter import batch_csv2aiml
+
+
 class AIMLCharacterZipLoader(object):
 
     @staticmethod
@@ -93,6 +101,5 @@ class AIMLCharacterZipLoader(object):
         for yaml_file in os.listdir(dirpath):
             if yaml_file.endswith('.yaml'):
                 characters.extend(AIMLCharacterLoader.load(
-                                os.path.join(dirpath, yaml_file)))
+                    os.path.join(dirpath, yaml_file)))
         return characters
-

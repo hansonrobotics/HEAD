@@ -115,7 +115,7 @@ private:
 
   int scale_factor;
 
-  cv::Mat conversion_mat_;
+  //cv::Mat conversion_mat_;
   int counter;
   geometry_msgs::Point face_points;
   int center;
@@ -176,7 +176,7 @@ private:
 
 
 };
-//static class that may be called by implementing class. 
+//static class that may be called by implementing class.
 namespace {
   std::vector<cv::Rect> facedetect(cv::Mat frame_gray);
   cmt_tracker_msgs::Objects convert(std::vector<cv::Rect> faces, std::string tool_used);

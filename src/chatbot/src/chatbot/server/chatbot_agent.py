@@ -10,21 +10,22 @@ import atexit
 from threading import RLock
 sync = RLock()
 
-SUCCESS=0
-WRONG_CHARACTER_NAME=1
-NO_PATTERN_MATCH=2
-INVALID_SESSION=3
-INVALID_QUESTION=4
+SUCCESS = 0
+WRONG_CHARACTER_NAME = 1
+NO_PATTERN_MATCH = 2
+INVALID_SESSION = 3
+INVALID_QUESTION = 4
 
 useSOLR = True
 CWD = os.path.dirname(os.path.realpath(__file__))
 
-logger = logging.getLogger('hr.chatbot.server.chatbot')
+logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
 from config import CHARACTER_PATH
 CHARACTERS = load_characters(CHARACTER_PATH)
 REVISION = os.environ.get('HR_CHATBOT_REVISION')
+
 
 def get_character(id, lang=None):
     for character in CHARACTERS:
@@ -35,16 +36,19 @@ def get_character(id, lang=None):
         elif lang in character.languages:
             return character
 
+
 def add_character(character):
     if character.id not in [c.id for c in CHARACTERS]:
         CHARACTERS.append(character)
         return True, "Character added"
-    #TODO: Update character
+    # TODO: Update character
     else:
         return False, "Character exists"
 
+
 def is_local_character(character):
     return character.local
+
 
 def get_characters_by_name(name, local=True, lang=None, user=None):
     characters = []
@@ -68,6 +72,7 @@ def get_characters_by_name(name, local=True, lang=None, user=None):
         logger.warn('No character is satisfied')
     return characters
 
+
 def list_character(lang, sid):
     sess = session_manager.get_session(sid)
     if sess is None:
@@ -79,9 +84,11 @@ def list_character(lang, sid):
     else:
         return [(c.id, c.weight, c.level) for c in responding_characters]
 
+
 def list_character_names():
     names = list(set([c.name for c in CHARACTERS if c.name != 'dummy']))
     return names
+
 
 def set_weights(weights, lang, sid):
     sess = session_manager.get_session(sid)
@@ -101,7 +108,9 @@ from session import ChatSessionManager
 session_manager = ChatSessionManager()
 MAX_CHAT_TRIES = 5
 NON_REPEAT = True
-def _ask_characters(characters, question, lang, sid):
+
+
+def _ask_characters(characters, question, lang, sid, query):
     chat_tries = 0
     sess = session_manager.get_session(sid)
     if sess is None:
@@ -116,11 +125,11 @@ def _ask_characters(characters, question, lang, sid):
         weights = [c.weight for c in characters]
 
     _question = question.lower().strip()
-    _question = ' '.join(_question.split()) # remove consecutive spaces
+    _question = ' '.join(_question.split())  # remove consecutive spaces
     while chat_tries < MAX_CHAT_TRIES:
         chat_tries += 1
         for c, weight in zip(characters, weights):
-            _response = c.respond(_question, lang, sid)
+            _response = c.respond(_question, lang, sid, query)
             assert isinstance(_response, dict), "Response must be a dict"
             answer = _response.get('text', '')
             if not answer:
@@ -128,33 +137,41 @@ def _ask_characters(characters, question, lang, sid):
 
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
-            if random.random()<weight:
+            if random.random() < weight:
                 if not NON_REPEAT or sess.check(_question, answer, lang):
                     trace = _response.get('trace')
                     if trace:
                         for path in CHARACTER_PATH.split(','):
                             path = path.strip()
-                            if not path: continue
+                            if not path:
+                                continue
+                            path = path + '/'
                             trace = [f.replace(path, '') for f in trace]
                         _response['trace'] = trace
-                    sess.add(_question, answer, AnsweredBy=c.name,
-                            User=user, BotName=botname, Trace=trace,
-                            Revision=REVISION, Lang=lang)
+                    if not query:
+                        sess.add(question, answer, AnsweredBy=c.name,
+                                 User=user, BotName=botname, Trace=trace,
+                                 Revision=REVISION, Lang=lang)
                     return _response
 
     # Ask the same question to every tier to sync internal state
-    [c.respond(_question, lang, sid) for c in characters]
+    [c.respond(_question, lang, sid, query) for c in characters]
 
     dummy_character = get_character('dummy', lang)
     if dummy_character:
         if not sess.check(_question, answer, lang):
-            _response = dummy_character.respond("REPEAT_ANSWER", lang, sid)
+            _response = dummy_character.respond(
+                "REPEAT_ANSWER", lang, sid, query)
         else:
-            _response = dummy_character.respond("NO_ANSWER", lang, sid)
+            _response = dummy_character.respond("NO_ANSWER", lang, sid, query)
         answer = _response.get('text', '')
-        sess.add(_question, answer, AnsweredBy=dummy_character.name,
-                User=user, BotName=botname, Trace=None, Revision=REVISION, Lang=lang)
+
+        if not query:
+            sess.add(question, answer, AnsweredBy=dummy_character.name,
+                     User=user, BotName=botname, Trace=None,
+                     Revision=REVISION, Lang=lang)
         return _response
+
 
 def get_responding_characters(lang, sid):
     sess = session_manager.get_session(sid)
@@ -167,7 +184,8 @@ def get_responding_characters(lang, sid):
     user = sess.sdata.user
 
     # current character > local character with the same name > solr > generic
-    responding_characters = get_characters_by_name(botname, local=False, lang=lang, user=user)
+    responding_characters = get_characters_by_name(
+        botname, local=False, lang=lang, user=user)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
 
     character = None
@@ -203,6 +221,7 @@ def get_responding_characters(lang, sid):
 
     return responding_characters
 
+
 def rate_answer(sid, idx, rate):
     sess = session_manager.get_session(sid)
     if sess is None:
@@ -215,7 +234,8 @@ def rate_answer(sid, idx, rate):
         return False
     return True
 
-def ask(question, lang, sid):
+
+def ask(question, lang, sid, query=False):
     """
     return (response dict, return code)
     """
@@ -238,25 +258,26 @@ def ask(question, lang, sid):
         session_manager.reset_session(sid)
         logger.info("Session is cleaned by hi")
 
-    # TODO: Sync session data
-
     logger.info("Responding characters {}".format(responding_characters))
-    _response = _ask_characters(responding_characters, question, lang, sid)
+    _response = _ask_characters(
+        responding_characters, question, lang, sid, query)
 
-    context = {}
-    for c in responding_characters:
-        context.update(c.get_context(sid))
-    for c in responding_characters:
-        try:
-            c.set_context(sid, context)
-        except NotImplementedError:
-            pass
+    if not query:
+        # Sync session data
+        context = {}
+        for c in responding_characters:
+            context.update(c.get_context(sid))
+        for c in responding_characters:
+            try:
+                c.set_context(sid, context)
+            except NotImplementedError:
+                pass
 
-    for c in responding_characters:
-        try:
-            c.check_reset_topic(sid)
-        except Exception:
-            continue
+        for c in responding_characters:
+            try:
+                c.check_reset_topic(sid)
+            except Exception:
+                continue
 
     if _response is not None:
         response.update(_response)
@@ -266,11 +287,14 @@ def ask(question, lang, sid):
         logger.error("No pattern match")
         return response, NO_PATTERN_MATCH
 
+
 def dump_history():
     return session_manager.dump_all()
 
+
 def dump_session(sid):
     return session_manager.dump(sid)
+
 
 def reload_characters(**kwargs):
     global CHARACTERS, REVISION
@@ -289,4 +313,3 @@ def reload_characters(**kwargs):
             logger.error("Reloading characters error {}".format(ex))
 
 atexit.register(dump_history)
-

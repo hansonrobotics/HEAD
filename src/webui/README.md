@@ -19,12 +19,15 @@ Application can run on any webserver, which could connect to the rosbridge webso
 
 Troubleshooting
 ----------
-Sometimes not all topics subscribed or beiiing publsihed after refresh. 
+Sometimes not all topics subscribed or beiiing publsihed after refresh. See the issue https://github.com/RobotWebTools/rosbridge_suite/issues/138
 
-https://github.com/RobotWebTools/rosbridge_suite/issues/138
+Need patch for rosbridge module. By default the path on Ubuntu:
+`/opt/ros/indigo/lib/python2.7/dist-packages/rosbridge_library/internal/publishers.py`
 
-Need patch for rosbridge module.
-By default the path on ubuntu:
-`/opt/ros/indigo/lib/python2.7/dist-packages/rosbridge_library/internal/topics.py`
+```
+A quick hack to prevent the problem is commenting out topic unregistration in pulibhser.py
 
-
+311# if not self._publishers[topic].has_clients():
+312#           self._publishers[topic].unregister()
+313#            del self._publishers[topic]
+```

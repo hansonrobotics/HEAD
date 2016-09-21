@@ -58,7 +58,7 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   //Bind to call the dynamic reconfigure values by which we delete the cmt instances.
   f = boost::bind(&cmt_wrap::TrackerCMT::callback, this, _1, _2);
   //TODO initialization doesn't trigger unless the rqt_reconfigure is triggered.
-  
+
   server.setCallback(f);
 
   //Now let's read the camera pictures form the system.
@@ -519,32 +519,32 @@ pi_face_tracker::FaceEvent returnPiEvents(std::string evt, std::string face_id)
 
 cmt_tracker_msgs::Trackers returnOverlappingEmotion(cmt_tracker_msgs::Trackers locs, cmt_tracker_msgs::Objects facelocs)
 {
-  cmt_tracker_msgs::Trackers registeredEmotions; 
+  cmt_tracker_msgs::Trackers registeredEmotions;
   for (int i = 0; i < locs.tracker_results.size(); i++)
   {
-    cmt_tracker_msgs::Tracker emotion; 
+    cmt_tracker_msgs::Tracker emotion;
     cv::Rect emotion_overlap(locs.tracker_results[i].object.object.x_offset, locs.tracker_results[i].object.object.y_offset,
       locs.tracker_results[i].object.object.width, locs.tracker_results[i].object.object.height);
-    emotion = locs.tracker_results[i]; 
+    emotion = locs.tracker_results[i];
     //Now the other part of the tracker are the same as the locs results; we just need to append the emotional state to the system
     bool overlap = false;
     for (int j = 0; j < facelocs.objects.size(); j++)
     {
       //if it overlaps with the one then break.
-      cv::Rect cmt_overlap(facelocs.objects[i].object.x_offset, facelocs.objects[i].object.y_offset,
-                              facelocs.objects[i].object.width, facelocs.objects[i].object.height);
+      cv::Rect cmt_overlap(facelocs.objects[j].object.x_offset, facelocs.objects[j].object.y_offset,
+                              facelocs.objects[j].object.width, facelocs.objects[j].object.height);
        double intersection_area = (emotion_overlap & cmt_overlap).area();
        double union_area = (emotion_overlap | cmt_overlap).area();
 
        overlap = (intersection_area/union_area) > 0.5;
       if (overlap)
         {
-        //Now we add the to the cmt the overlapped emotion; if there are no emotion overlap then we add unknown emotion state to the system. 
+        //Now we add the to the cmt the overlapped emotion; if there are no emotion overlap then we add unknown emotion state to the system.
         //assign and break
-          emotion.object.obj_states.data = facelocs.objects[i].obj_states.data;
-          emotion.object.obj_accuracy.data = facelocs.objects[i].obj_accuracy.data;
+          emotion.object.obj_states.data = facelocs.objects[j].obj_states.data;
+          emotion.object.obj_accuracy.data = facelocs.objects[j].obj_accuracy.data;
           //Now update this value to the system as the rest of the overlapps are unnecessary
-          break; 
+          break;
         }
       else
       {
@@ -552,7 +552,7 @@ cmt_tracker_msgs::Trackers returnOverlappingEmotion(cmt_tracker_msgs::Trackers l
           emotion.object.obj_accuracy.data = 0;
       }
     }
-    registeredEmotions.tracker_results.push_back(emotion); 
+    registeredEmotions.tracker_results.push_back(emotion);
   }
 
   return registeredEmotions;

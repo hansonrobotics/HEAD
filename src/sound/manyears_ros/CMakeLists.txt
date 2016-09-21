@@ -20,6 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
 # catkin_python_setup()
 
 set(manyearslib_PREFIX $ENV{MANYEARSLIB_PREFIX})
+set(CMAKE_CXX_FLAGS "-Wno-write-strings")
 
 ################################################
 ## Declare ROS messages, services and actions ##

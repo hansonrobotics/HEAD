@@ -10,15 +10,15 @@
                 <span id="app-connection-error" class="label label-danger" style="display: none">Connection error. Click to refresh</span>
             </span>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#app-navbar">
+                    data-target="#app-navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div id="app-navbar" class="collapse navbar-collapse">
-            <ul id="app-nav" class="nav navbar-nav navbar-right">
+        <div id="app-nav" class="collapse navbar-collapse">
+            <ul id="app-user-nav" class="nav navbar-nav navbar-right">
                 <li><a href="#/puppeteering">Puppeteering</a></li>
                 <li><a href="#/performances">Performances</a></li>
                 <!-- <li><a href="#/attention">Attention Regions</a></li> -->

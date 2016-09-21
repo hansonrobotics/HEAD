@@ -43,6 +43,7 @@ class Node(object):
         self.duration = data['duration']
         self.start_time = data['start_time']
         self.started = False
+        self.started_at = 0
         self.finished = False
         # Node runner for accessing ROS topics and method
         # TODO make ROS topics and services singletons class for shared use.
@@ -65,6 +66,8 @@ class Node(object):
                 self.stop(run_time)
                 self.finished = True
                 return False
+            elif self.runner.paused:
+                self.paused(run_time)
             else:
                 self.cont(run_time)
         else:
@@ -74,6 +77,7 @@ class Node(object):
                 except Exception as ex:
                     logger.error(ex)
                 self.started = True
+                self.started_at = time.time()
         return True
 
     def __str__(self):
@@ -89,6 +93,10 @@ class Node(object):
 
     # Method to call while node is running
     def cont(self, run_time):
+        pass
+
+    # Method to call while runner is paused
+    def paused(self, run_time):
         pass
 
     # Method to get magnitude from either one number or range
@@ -266,23 +274,29 @@ class pause(Node):
 
     def start(self, run_time):
         self.runner.pause()
+
+        def resume(msg=None):
+            print 'resuming'
+            if not self.finished:
+                self.runner.resume()
+            if self.subscriber:
+                self.subscriber.unregister()
+            if self.timer:
+                self.timer.cancel()
+
         if 'topic' in self.data:
             topic = self.data['topic'].strip()
-            if topic:
-                def resume(msg=None):
-                    if not self.finished:
-                        self.runner.resume()
-                    if self.subscriber:
-                        self.subscriber.unregister()
-                    if self.timer:
-                        self.timer.cancel()
-
-                if topic[0] != '/':
-                    topic = '/' + self.runner.robot_name + '/' + topic
-
+            if topic and topic[0] != '/':
+                topic = '/' + self.runner.robot_name + '/' + topic
                 self.subscriber = rospy.Subscriber(topic, String, resume)
-        if 'timeout' in self.data and self.data['timeout'] > 0.1:
-            self.timer = Timer(self.data['timeout'], resume)
+
+        try:
+            timeout = int(self.data['timeout'])
+            if timeout > 0.1:
+                self.timer = Timer(timeout, resume)
+                self.timer.start()
+        except (ValueError, KeyError) as e:
+            logger.error(e)
 
     def stop(self, run_time):
         if self.subscriber:
@@ -330,11 +344,29 @@ class chat(Node):
         Node.__init__(self, data, runner)
         self.subscriber = False
         self.turns = 0
+        self.last_turn_at = 0
         self.chatbot_session_id = False
         self.enable_chatbot = 'enable_chatbot' in self.data and self.data['enable_chatbot']
+        self.talking = False
+
+        try:
+            self.dialog_turns = int(self.data['dialog_turns'])
+        except (ValueError, KeyError):
+            self.dialog_turns = 1
+
+        try:
+            self.timeout = float(self.data['timeout'])
+        except (ValueError, KeyError):
+            self.timeout = 0
+
+        try:
+            self.timeout_mode = self.data['timeout_mode']
+        except:
+            self.timeout_mode = 'each'
 
     def start(self, run_time):
         self.runner.pause()
+        self.last_turn_at = time.time()
 
         if self.enable_chatbot:
             self.start_chatbot_session()
@@ -343,30 +375,33 @@ class chat(Node):
             self.respond(
                     self.get_chatbot_response(event.data) if self.enable_chatbot else self.match_response(event.data))
 
-            if 'dialog_turns' not in self.data or int(self.data['dialog_turns']) <= self.turns:
-                self.resume()
-
         self.subscriber = rospy.Subscriber('/' + self.runner.robot_name + '/nodes/listen/input', String, input_callback)
         self.runner.topics['events'].publish(Event('chat', 0))
+        self.runner.register('speech_events', self.speech_event_callback)
+
+    def stop(self, run_time):
+        self.runner.unregister('speech_events', self.speech_event_callback)
+
+    def paused(self, run_time):
+        if self.timeout and not self.talking:
+            if (self.timeout_mode == 'each' and time.time() - self.last_turn_at >= self.timeout) or (
+                    self.timeout_mode == 'whole' and time.time() - self.started_at >= self.timeout):
+                if 'no_speech' in self.data:
+                    self.respond(self.data['no_speech'])
+                else:
+                    self.add_turn()
 
     def start_chatbot_session(self):
-        # TODO need to be selectable from UI.
-        botname = 'sophia'
-        # Can be hardcoded. or find system uname.
-        user = 'performances'
-
         params = {
             'Auth': 'AAAAB3NzaC',
-            'botname': botname,
-            'user': user
+            'botname': self.data['bot_name'],
+            'user': 'performances'
         }
 
         r = requests.get('http://127.0.0.1:8001/v1.1/start_session?' + urllib.urlencode(params))
 
         if r.status_code == 200:
             self.chatbot_session_id = r.json()['sid']
-            return True
-        return False
 
     def get_chatbot_response(self, speech):
         if self.chatbot_session_id:
@@ -400,17 +435,9 @@ class chat(Node):
 
         return response
 
-    def cont(self, run_time):
-        if 'timeout' in self.data and int(self.data['timeout']) and self.runner.start_timestamp + self.start_time + int(
-                self.data['timeout']) >= time.time():
-            if not self.turns and 'no_speech' in self.data:
-                self.respond(self.data['no_speech'])
-
-            self.resume()
-
-    def respond(self, response):
+    def add_turn(self):
         self.turns += 1
-        self.runner.topics['tts']['default'].publish(String(response))
+        self.last_turn_at = time.time()
 
     def resume(self):
         self.duration = 0
@@ -420,6 +447,23 @@ class chat(Node):
         if self.subscriber:
             self.subscriber.unregister()
             self.subscriber = False
+
+    def respond(self, response):
+        self.runner.topics['events'].publish(Event('chat_end', 0))
+        self.talking = True
+        self.runner.topics['tts']['default'].publish(String(response))
+
+    def speech_event_callback(self, msg):
+        event = msg.data
+
+        if event == 'stop':
+            self.add_turn()
+            self.talking = False
+
+            if self.turns < self.dialog_turns:
+                self.runner.topics['events'].publish(Event('chat', 0))
+            else:
+                self.resume()
 
 
 class attention(Node):
