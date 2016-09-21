@@ -280,19 +280,18 @@ install_other_deps() {
 
     install_manyears_deps
     # For audio recording
-    sudo apt-get ${APT_GET_OPTS} install pulseaudio
-    sudo apt-get ${APT_GET_OPTS} install python-pyaudio
+    $SUDO apt-get ${APT_GET_OPTS} install pulseaudio
+    $SUDO apt-get ${APT_GET_OPTS} install python-pyaudio
     info "Installing other dependencies is done"
 }
 
 install_manyears_deps() {
     info "Installing Manyears dependencies"
-    # FOR GUI to build
-    $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
+    # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
     wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
     checkmd5 ${HR_CACHE}/manyears.tar.gz cf8688959e6d6a7ea9cdd1167814862a
     tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
-    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
+    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
     info "Installing Manyears dependencies is done"
 }
 
