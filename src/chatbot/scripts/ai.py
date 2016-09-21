@@ -86,7 +86,10 @@ class Chatbot():
     def get_response(self, question, lang, query=False):
         if lang:
             self.client.lang = lang
-        ret, response = self.client.ask(question, query)
+        response = self.client.ask(question, query)
+        if response is None:
+            logger.error("No response")
+            response = {}
         return response
 
     def _speech_event_callback(self, msg):
@@ -113,13 +116,13 @@ class Chatbot():
         func = None
         try:
             func = getattr(self.client, 'do_' + cmd)
-        except AttributeError:
+        except AttributeError as ex:
             pass
         if func:
             try:
                 func(arg)
             except Exception as ex:
-                logger.error(ex)
+                logger.error("Executing command {} error {}".format(func, ex))
             return
 
         # blink that we heard something, request, probability defined in
@@ -175,6 +178,9 @@ class Chatbot():
         response = answer.get('text')
         emotion = answer.get('emotion')
         botid = answer.get('botid')
+
+        if response is None:
+            return
 
         # Add space after punctuation for multi-sentence responses
         response = response.replace('?', '? ')

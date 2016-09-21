@@ -70,7 +70,7 @@ class Client(cmd.Cmd, object):
             response = requests.get(
                 '{}/start_session'.format(self.root_url), params=params)
         except Exception as ex:
-            self.stdout.write(ex)
+            self.stdout.write('{}\n'.format(ex))
         if response is None:
             self.stdout.write(
                 "Can't get session\nPlease check the url {}\n".format(self.chatbot_url))
@@ -107,7 +107,7 @@ class Client(cmd.Cmd, object):
         response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
         response.update(r.json().get('response'))
 
-        return ret, response
+        return response
 
     def list_chatbot(self):
         params = {'Auth': self.key, 'lang': self.lang, 'session': self.session}
@@ -126,15 +126,11 @@ class Client(cmd.Cmd, object):
     def default(self, line):
         try:
             if line:
-                ret, response = self.ask(line)
-                if ret != 0:
-                    self.do_conn()
-                    ret, response = self.ask(line)
-                else:
-                    self.last_response = response
-                    self.stdout.write('{}[by {}]: {}\n'.format(
-                        self.botname, response.get('botid'),
-                        response.get('text')))
+                response = self.ask(line)
+                self.last_response = response
+                self.stdout.write('{}[by {}]: {}\n'.format(
+                    self.botname, response.get('botid'),
+                    response.get('text')))
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
 
