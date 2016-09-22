@@ -1,4 +1,4 @@
-define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../entities/performance', 'underscore',
+define(['marionette', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
         'jquery', 'bootbox', 'lib/api', 'typeahead', 'jquery-ui'],
     function (Marionette, template, PerformanceView, Performance, _, $, bootbox, api) {
         return Marionette.CompositeView.extend({
@@ -134,12 +134,11 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
             },
             editKeywords: function () {
                 var self = this,
-                    path = this.currentPath,
-                    url = '/performances/keywords/' + api.config.robot + (path ? ('/' + path) : '');
+                    path = this.currentPath;
+
                 $.ajax({
-                    type: "GET",
-                    dataType: 'json',
-                    url: url,
+                    method: 'GET',
+                    url: '/performances/keywords/' + api.config.robot + (path ? ('/' + path) : ''),
                     success: function (data) {
                         console.log(data);
                         var keywords = data['keywords'].join(', ');
@@ -152,9 +151,8 @@ define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../e
 
                                 if (keywords !== null) {
                                     $.ajax({
-                                        type: "POST",
-                                        url: url,
-                                        dataType: 'json',
+                                        method: 'POST',
+                                        url: '/performances/keywords/update/' + api.config.robot + (path ? ('/' + path) : ''),
                                         data: JSON.stringify({
                                             path: self.currentPath,
                                             keywords: keywords.split(',')

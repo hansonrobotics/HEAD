@@ -1,6 +1,7 @@
 var ROSLIB = require('roslib'),
+    url = 'ws://localhost:9090',
     ros = new ROSLIB.Ros({
-        url: 'ws://localhost:9090'
+        url: url
     });
 
 ros.on('connection', function() {
@@ -8,7 +9,11 @@ ros.on('connection', function() {
 });
 
 ros.on('error', function(error) {
-    console.log('Error connecting to websocket server: ', error);
+    console.log('Error connecting to websocket server: \n', error);
+    console.log('Retrying in 2 seconds')
+    setTimeout(function () {
+        ros.connect(url);
+    }, 2000);
 });
 
 ros.on('close', function() {

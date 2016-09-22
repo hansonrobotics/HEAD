@@ -1,4 +1,5 @@
 <div class="app-selectareas-container">
+    <img src="/areaselect.png" alt="" class="app-selectareas">
 </div>
 <div class="select-areas-footbar form-inline">
     <div class="btn-group" role="group" aria-label="Attention regions' actions">

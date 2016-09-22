@@ -1,4 +1,5 @@
 var express = require('express'),
+    https = require("https"),
     app = express(),
     monitoring = require('./lib/monitoring'),
     fs = require('fs'),
@@ -9,19 +10,12 @@ var express = require('express'),
     mkdirp = require('mkdirp'),
     PythonShell = require('python-shell'),
     ros = require('./lib/ros'),
+    _ = require('lodash'),
     argv = require('yargs').options({
         r: {
             alias: 'robot',
             describe: 'Robot name',
             demand: true
-        },
-        e: {
-            alias: 'exec',
-            describe: 'Robot execution script'
-        },
-        s: {
-            alias: 'stop',
-            describe: 'Robot stop script'
         },
         c: {
             alias: 'config',
@@ -34,9 +28,10 @@ var express = require('express'),
             describe: 'Port',
             default: 8003
         },
-        m: {
-            alias: 'mx',
-            describe: 'Dynamixel motor command line tool'
+        s: {
+            alias: 'ssl',
+            describe: 'Enable ssl',
+            type: 'boolean'
         }
     }).usage('Usage: $0 [options]').help('h').alias('h', 'help').argv;
 
@@ -158,4 +153,35 @@ app.post('/monitor/logs/:level', function (req, res) {
     });
 });
 
-app.listen(argv.port);
+var updateKeywords = function (req, res) {
+    var keywords = _.compact(req.body['keywords'] || []);
+    console.log('save');
+    console.log(path.join(argv.config, req.params['name'], 'performances', req.params['path'] || '', '.properties'));
+
+    res.json(yamlIO.writeFile(
+        path.join(argv.config, req.params['name'], 'performances', req.params['path'] || '', '.properties'), {keywords: keywords}));
+};
+
+app.get('/performances/keywords/:name/:path*?', function (req, res) {
+    console.log('get');
+
+    res.json(
+        yamlIO.readFile(
+            path.join(argv.config, req.params['name'], 'performances', req.params['path'] || '', '.properties')) || {keywords: []});
+});
+
+app.post('/performances/keywords/update/:name', updateKeywords);
+app.post('/performances/keywords/update/:name/:path*?', updateKeywords);
+
+if (argv.ssl) {
+    var privateKey = fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
+        certificate = fs.readFileSync(path.join(__dirname, 'ssl', 'cert.crt'));
+
+    https.createServer({
+        key: privateKey,
+        cert: certificate
+    }, app).listen(argv.port);
+} else {
+    app.listen(argv.port);
+}
+
