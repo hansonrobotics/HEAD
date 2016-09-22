@@ -300,7 +300,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
 
 
     double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
-    std::string value = "ID-" + (*v).tracker_name.data+ "\nBF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
+    std::string value = "ID-" + (*v).tracker_name.data+ "\nBF Demo: " + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
        "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data) + "\ngoogle results: " +
        (*v).google_best_guess.data;
     tracked_image_information.push_back( value );
@@ -328,7 +328,7 @@ void tracker_plugin::imageCb(const sensor_msgs::ImageConstPtr& msg)
     }
 
     double division = (double)(*v).active_points.data/(double)(*v).initial_points.data;
-    std::string value = "ID-" + (*v).tracker_name.data+ "\nBF Demo: -" + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
+    std::string value = "ID-" + (*v).tracker_name.data+ "\nBF Demo: " + SSTR((*v).before_demotion.data) +"\nOpenFace: " + previously_known +
        "\n" + "Ratio: " + SSTR(division) + "\n" + ";) " + (*v).object.obj_states.data + "\n" +"%: " + SSTR((*v).object.obj_accuracy.data) + "\ngoogle results: " +
        (*v).google_best_guess.data;
 
@@ -396,34 +396,26 @@ void tracker_plugin::updateVisibleFaces()
   ui.tracker_output_list->clear();
   ui.tracker_initial_list->clear();
   ui.tracker_output_list_2->clear();
-  
-  int count_info = 0 ;//Zip Iterator Maybe
+
   for (std::vector<QImage>::iterator v = face_images.begin(); v != face_images.end(); ++v)
   {
-    ui.face_output_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(faces_image_information[count_info])));
-    count_info++;
+    ui.face_output_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(faces_image_information[v - face_images.begin()])));
   }
 
-  count_info = 0;
   for (std::vector<QImage>::iterator v = tracked_faces.begin(); v != tracked_faces.end(); ++v)
   {
-    ui.tracker_initial_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(tracked_images_names[count_info])));
-    count_info++;
+    ui.tracker_initial_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(tracked_images_names[v - tracked_faces.begin()])));
   }
 
-
-  count_info = 0;
   for (std::vector<QImage>::iterator v = tracked_image_results.begin(); v != tracked_image_results.end(); ++v)
   {
-    ui.tracker_output_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(tracked_image_information[count_info])));
-    count_info++;
+    ui.tracker_output_list->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(tracked_image_information[v - tracked_image_results.begin()])));
+
   }
 
-  count_info = 0;
   for (std::vector<QImage>::iterator v = temp_tracked_image_results.begin(); v != temp_tracked_image_results.end(); ++v)
   {
-    ui.tracker_output_list_2->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(temp_tracked_image_information[count_info])));
-    count_info++;
+    ui.tracker_output_list_2->addItem(new QListWidgetItem(QIcon(QPixmap::fromImage(*v)), QString::fromStdString(temp_tracked_image_information[v - temp_tracked_image_results.begin()])));
   }
 
 }

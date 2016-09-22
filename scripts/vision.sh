@@ -11,7 +11,7 @@ export VISION_TOOL_PREFIX=$HR_PREFIX/vision
 export DLIB_DIR=$VISION_TOOL_PREFIX/dlib
 export TORCH_DIR=$VISION_TOOL_PREFIX/torch
 export OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
-export CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
+export CPPMT_DIR=/home/icog-labs/hansonrobotics/CppMT
 export EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
 export ROS_LOG_DIR="$HOME/.hr/log"
 

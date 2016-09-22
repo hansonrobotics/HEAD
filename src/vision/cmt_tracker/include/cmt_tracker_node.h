@@ -193,7 +193,13 @@ private:
 	ros::Subscriber face_subscriber;
 
 	//Instances of MAP.
-	cmt::CMTMAP cmt_;
+	cmt::CMT_MAP cmt_;
+
+    //This one holds
+    std::map<std::string,std::string> recognized_names;
+    std::map<std::string,bool> validated;
+
+    std::map<std::string,int> poor_results_counter;
 
 	std::vector<std::string> poorly_tracked;
 	std::vector<std::string> newly_tracked;
