@@ -60,7 +60,8 @@ module.exports = {
             typeahead: 'bootstrap-3-typeahead',
             json_editor: 'json-editor',
             multilevelpushmenu: 'vendor/jquery.multilevelpushmenu.min',
-            'jquery-ui': 'jquery-ui-bundle/jquery-ui'
+            'jquery-ui': 'jquery-ui-bundle/jquery-ui',
+            emoticons: 'vendor/jquery.cssemoticons.min'
         },
         extensions: ['', '.js', '.png', '.gif', '.jpg', '.jpeg'],
         root: [path.join(__dirname, './client')],
