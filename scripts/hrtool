@@ -397,9 +397,7 @@ install_vision_deps() {
     fi
     cd $CPPMT_DIR
     git checkout wrapper
-    mkdir build
-    cd build
-    cmake ..
+    cmake .
     make -j$(nproc)
 
     if [ ! -d $EMOTIME_DIR ]; then
