@@ -1,6 +1,6 @@
-define(['marionette', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
-        'jquery', 'typeahead', 'jquery-ui'],
-    function (Marionette, template, PerformanceView, Performance, _, $) {
+define(['marionette', 'tpl!./templates/performances.tpl', './performance', '../entities/performance', 'underscore',
+        'jquery', 'bootbox', 'lib/api', 'typeahead', 'jquery-ui'],
+    function (Marionette, template, PerformanceView, Performance, _, $, bootbox, api) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: PerformanceView,
@@ -49,11 +49,11 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                 this.collection.add(performance);
                 this.trigger('new', performance);
             },
-            addAll: function (){
+            addAll: function () {
                 var self = this;
                 var added = false;
-                this.collection.each(function(performance){
-                    if ((performance.get('path') || '') == self.currentPath){
+                this.collection.each(function (performance) {
+                    if ((performance.get('path') || '') == self.currentPath) {
                         self.options.queueView.addPerformance(performance, true);
                         added = true;
                     }
@@ -126,10 +126,51 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     input.focus();
                 });
 
-                self.ui.tabs.append(addNewTab);
+                self.ui.tabs.append(addNewTab)
+                    .append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'))
+                    .append(this.createTab(this.currentPath, 'Keywords', true).addClass('pull-right').click(function () {
+                        self.editKeywords();
+                    }));
+            },
+            editKeywords: function () {
+                var self = this,
+                    path = this.currentPath,
+                    url = '/performances/keywords/' + api.config.robot + (path ? ('/' + path) : '');
+                $.ajax({
+                    type: "GET",
+                    dataType: 'json',
+                    url: url,
+                    success: function (data) {
+                        console.log(data);
+                        var keywords = data['keywords'].join(', ');
 
-                this.ui.tabs.append(
-                    this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'));
+                        bootbox.prompt({
+                            title: "Edit trigger keywords",
+                            value: keywords,
+                            callback: function (keywords) {
+                                console.log(keywords);
+
+                                if (keywords !== null) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: url,
+                                        dataType: 'json',
+                                        data: JSON.stringify({
+                                            path: self.currentPath,
+                                            keywords: keywords.split(',')
+                                        }),
+                                        success: function () {
+                                            console.log('success');
+                                        },
+                                        error: function () {
+                                            console.log('error');
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
             },
             createTab: function (dir, content, disableEvents) {
                 var self = this;

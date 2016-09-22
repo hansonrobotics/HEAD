@@ -61,6 +61,7 @@ add_service_files(
   Load.srv
   LoadNodes.srv
   LoadSequence.srv
+  SpeechOn.srv
 )
 
 ## Generate actions in the 'action' folder

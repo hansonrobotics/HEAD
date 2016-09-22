@@ -4,8 +4,8 @@ DEFAULT_CHARACTER_PATH = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), 'characters')
 CHARACTER_PATH = os.environ.get('HR_CHARACTER_PATH', DEFAULT_CHARACTER_PATH)
 
-SESSION_RESET_TIMEOUT = 120 # Timeout seconds for a session to be reset
-SESSION_REMOVE_TIMEOUT = 600 # Timeout seconds for a session to be removed
+SESSION_RESET_TIMEOUT = 120  # Timeout seconds for a session to be reset
+SESSION_REMOVE_TIMEOUT = 600  # Timeout seconds for a session to be removed
 
 HISTORY_DIR = os.path.expanduser('~/.hr/chatbot/history')
 TEST_HISTORY_DIR = os.path.expanduser('~/.hr/chatbot/test/history')

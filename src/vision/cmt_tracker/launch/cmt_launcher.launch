@@ -3,7 +3,7 @@
 
 <arg name="head_tracking_frame" default="camera"/>
 <arg name="choose_web_cam" default="False"/>
-<arg name="emotime" default="True"/>
+<arg name="emotime" default="False"/>
 <arg name="dlib" default="True"/>
 <arg name="cmt" default="True"/>
 <arg name="offline" default="False"/>

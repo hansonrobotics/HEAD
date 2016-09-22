@@ -10,7 +10,7 @@ set OC_LOG_LEVEL $::env(OC_LOG_LEVEL)
 set MARKY_MARKOV_DIR $::env(MARKY_MARKOV_DIR)
 set HR_MODELS $::env(HR_MODELS)
 
-spawn telnet $host $port
+spawn rlwrap telnet $host $port
 
 expect "Escape character"
 sleep 1
@@ -31,10 +31,7 @@ if { [info exist ::env(OC_SA)] && $::env(OC_SA) == 1 } {
 }
 
 # Load the AIML rules and pickup lines
-send "(psi-halt)\n"
 send "(load \"$OC_AIML_FILE\")\n"
 send "(load-generic)\n"
-send "(if (not (psi-running?)) (psi-run))\n"
-send ".\n.\n"
 
 interact

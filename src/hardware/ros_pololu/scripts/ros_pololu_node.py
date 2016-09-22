@@ -28,6 +28,8 @@ class RosPololuNode:
         self._dynamic_speed = rospy.get_param("~dyn_speed", "off")
         self._servo_rate = rospy.get_param("~servo_rate", 50)
         self._controller_type = rospy.get_param("~controller", "Maestro")
+        self._hw_fail = rospy.get_param("~hw_required", False)
+
         self._motors = {}
         self.idle = False
         if rospy.has_param("~pololu_motors_yaml"):
@@ -58,6 +60,10 @@ class RosPololuNode:
             if self._controller_type == 'MicroSSC':
                 self.controller = MicroSSC(port)
         except Exception as ex:
+            if self._hw_fail:
+                rospy.logfatal("Hardware needs to be attached")
+                rospy.signal_shutdown("HW Failure")
+                return
             logger.warn("Error creating the motor controller")
             logger.warn(ex)
             self.idle = True

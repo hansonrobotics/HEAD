@@ -8,6 +8,8 @@ import time
 import rospkg
 import yaml
 import os
+import fnmatch
+import random
 
 from std_msgs.msg import String, Int32, Float32
 from chatbot.msg import ChatMessage
@@ -40,6 +42,8 @@ class Runner:
         self.running_nodes = []
         # References to event subscribing node callbacks
         self.observers = {}
+        # Performances that already played as alternatives. Used to maximize different performance in single demo
+        self.performances_played = {}
         self.worker = Thread(target=self.worker)
         self.worker.setDaemon(True)
         rospy.init_node('performances')
@@ -72,6 +76,7 @@ class Runner:
         rospy.Service('~load_sequence', srv.LoadSequence, self.load_sequence_callback)
         rospy.Service('~run', srv.Run, self.run_callback)
         rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
+        rospy.Service('~run_full_performance', srv.RunByName, self.run_full_perfromance_callback)
         rospy.Service('~resume', srv.Resume, self.resume_callback)
         rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
@@ -100,13 +105,50 @@ class Runner:
             return srv.RunByNameResponse(False)
         return srv.RunByNameResponse(self.run(0.0))
 
+    def run_full_perfromance_callback(self, request):
+        self.stop()
+        nodes = self.load_folder(request.id)
+        if not nodes:
+            return srv.RunByNameResponse(False)
+        return srv.RunByNameResponse(self.run(0.0))
+
+    def load_folder(self, performance):
+        robot_name = rospy.get_param('/robot_name')
+        dir_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', performance)
+        if os.path.isdir(dir_path):
+            root, dirs, files = next(os.walk(dir_path))
+            files = fnmatch.filter(sorted(files), "*.yaml")
+            if not files:
+                # If no folder is picked one directory
+                # Sub-directories are counted as sub-performances
+                if not dirs:
+                    return []
+                if performance in self.performances_played:
+                    # All performances played. Pick any but last played
+                    if set(self.performances_played[performance]) == set(dirs):
+                        dirs = self.performances_played[performance][:-1]
+                        self.performances_played[performance] = []
+                    else:
+                        # Pick from not played performances
+                        dirs = list(set(dirs) - set(self.performances_played[performance]))
+                else:
+                    self.performances_played[performance] = []
+                # Pick random performance
+                p = random.choice(dirs)
+                self.performances_played[performance].append(p)
+                return self.load_folder(os.path.join(performance, p))
+            # make names in folder/file format
+            ids = ["{}/{}".format(performance, f[:-5]) for f in files]
+            return self.load_sequence(ids)
+        return []
+
     def load_sequence(self, ids):
         nodes = []
 
         offset = 0
         for id in ids:
             robot_name = rospy.get_param('/robot_name')
-            path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + '.yaml')
+            path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + ".yaml")
             duration = 0
 
             if os.path.isfile(path):

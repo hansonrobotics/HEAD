@@ -6,12 +6,15 @@ from config import HR_CHATBOT_AUTHKEY
 
 json_encode = json.JSONEncoder().encode
 
+
 def check_auth(auth):
     return auth == HR_CHATBOT_AUTHKEY
 
+
 def authenticate():
     return Response(json_encode({'ret': 401, 'response': {'text': 'Could not verify your access'}}),
-        mimetype="application/json")
+                    mimetype="application/json")
+
 
 def requires_auth(f):
     @wraps(f)
