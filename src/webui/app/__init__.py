@@ -25,6 +25,7 @@ app.config['CHAT_AUDIO_DIR'] = os.path.join(os.path.dirname(os.path.abspath(__fi
 rep = reporter.Reporter(os.path.dirname(os.path.abspath(__file__)) + '/checks.yaml')
 config_root = rp.get_path('robots_config')
 performance_dir = os.path.join(rp.get_path('performances'), 'robots')
+shared_performances_folder = 'shared'
 
 app.add_url_rule('/monitor/logs/<loglevel>', None, get_logs, methods=['POST'])
 
@@ -216,18 +217,29 @@ def get_performance(id, robot_name):
 @app.route('/performances/<robot_name>', methods=['GET'])
 def get_performances(robot_name):
     performances = []
-    root = os.path.join(config_root, robot_name, 'performances')
-    for path, dirnames, filenames in os.walk(root):
-        for name in fnmatch.filter(filenames, '*.yaml'):
-            filename = os.path.join(path, name)
-            id = os.path.join(*filename.split('.')[0].split('/')[len(root.split('/')):])
-            performances.append(get_performance(id, robot_name))
+    robot_root = os.path.join(config_root, robot_name, 'performances')
+    # Common performances for robots
+    common_root = os.path.join(config_root, 'common', 'performances')
+    ids = []
+    for root in [robot_root, common_root]:
+        if root == common_root:
+            robot_name = 'common'
+        for path, dirnames, filenames in os.walk(root):
+            for name in fnmatch.filter(filenames, '*.yaml'):
+                filename = os.path.join(path, name)
+                id = os.path.join(*filename.split('.')[0].split('/')[len(root.split('/')):])
+                # Prevent duplicate ids
+                if id not in ids:
+                    performances.append(get_performance(id, robot_name))
+                    ids.append(id)
     return json_encode(performances)
 
 
 @app.route('/performances/<robot_name>/<path:id>', methods=['PUT', 'POST'])
 def update_performances(robot_name, id):
     performance = json.loads(request.get_data())
+    if id.startswith(shared_performances_folder):
+        robot_name = 'common'
     root = os.path.join(config_root, robot_name, 'performances')
     if not os.path.exists(root):
         os.makedirs(root)
@@ -266,6 +278,8 @@ def update_performances(robot_name, id):
 @app.route('/performances/keywords/<robot_name>', methods=['GET'], defaults={'path': ''})
 @app.route('/performances/keywords/<robot_name>/<path:path>', methods=['GET'])
 def get_performance_keywords(robot_name, path):
+    if path.startswith(shared_performances_folder):
+        robot_name = 'common'
     filename = os.path.join(config_root, robot_name, 'performances', path, '.properties')
     keywords = {'keywords': []}
     if os.path.isfile(filename):
@@ -276,6 +290,8 @@ def get_performance_keywords(robot_name, path):
 @app.route('/performances/keywords/<robot_name>', methods=['POST'], defaults={'path': ''})
 @app.route('/performances/keywords/<robot_name>/<path:path>', methods=['POST'])
 def update_performance_keywords(robot_name, path):
+    if path.startswith(shared_performances_folder):
+        robot_name = 'common'
     filename = os.path.join(config_root, robot_name, 'performances', path, '.properties')
     data = request.get_data()
     data = json.loads(data)
@@ -292,6 +308,8 @@ def update_performance_keywords(robot_name, path):
 
 @app.route('/performances/<robot_name>/<path:id>', methods=['DELETE'])
 def delete_performances(robot_name, id):
+    if id.startswith(shared_performances_folder):
+        robot_name = 'common'
     performance = os.path.join(config_root, robot_name, 'performances', id + '.yaml')
 
     if os.path.isfile(performance):
