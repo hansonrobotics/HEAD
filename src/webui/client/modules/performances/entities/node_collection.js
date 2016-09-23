@@ -1,4 +1,4 @@
-define(['backbone', './node'], function (Backbone, Node) {
+define(['backbone', './node', 'supermodel'], function (Backbone, Node, Supermodel) {
     return Backbone.Collection.extend({
         model: function(attrs, options) {
             return Node.create(attrs, options);
@@ -10,6 +10,9 @@ define(['backbone', './node'], function (Backbone, Node) {
                     model.removeEl();
                 });
             });
-        }
+        },
+        _isModel: function(model) {
+            return model instanceof Backbone.Model || model instanceof Supermodel.Model;
+        },
     });
 });

@@ -1,5 +1,5 @@
-define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscore'],
-    function (App, Backbone, api, $, Supermodel, _) {
+define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
+    function (App, Backbone, api, $, Supermodel) {
         return Supermodel.Model.extend({
             config: {
                 emotion: {
@@ -73,12 +73,12 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 },
                 settings: {
                     label: 'Settings',
-                    properties: ['rosnode','schema','values'],
+                    properties: ['rosnode', 'schema', 'values'],
                     defaultValues: {
                         duration: 0.2,
                         schema: {
                             title: "No Node Selected",
-                            properties:{}
+                            properties: {}
                         }
                     }
                 },
@@ -119,7 +119,7 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 return this.config[name] || this.config['default'];
             },
             hasProperty: function (property) {
-                return _.contains(this.getConfig().properties, property);
+                return _.includes(this.getConfig().properties, property);
             },
             getLabel: function () {
                 return this.getConfig().label;
@@ -151,8 +151,10 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 if (this.get('el')) $(this.get('el')).remove();
             },
             toJSON: function () {
+                var el = this.get('el');
+                this.unset('el', {silent: true});
                 var json = Supermodel.Model.prototype.toJSON.call(this);
-                if (this.get('el')) delete json['el'];
+                this.set('el', el, {silent: true});
                 return json;
             },
             destroy: function () {
@@ -162,10 +164,10 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel', 'underscor
                 this.unset('id');
                 Supermodel.Model.prototype.destroy.call(this);
             },
-            save: function(attrs, options){
-                if (this.get('name') == 'settings'){
+            save: function (attrs, options) {
+                if (this.get('name') == 'settings') {
                     console.log(attrs);
-                }else{
+                } else {
                     Supermodel.Model.prototype.save.call(this, attrs, options);
                 }
             }

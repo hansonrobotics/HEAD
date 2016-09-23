@@ -48,7 +48,6 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                             // Copy current view attributes if node is same
                             attributes = self.node.toJSON();
                             delete attributes['id'];
-
                         } else {
                             attributes = {
                                 name: $(this).data('node-name'),
@@ -56,7 +55,6 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                             }
                         }
                         var node = Node.create(attributes);
-                        node.setDefaultValues();
                         return $('<span>').attr('data-node-name', node.get('name'))
                             .attr('data-node-id', node.get('id'))
                             .addClass('label app-node').html(node.getTitle());

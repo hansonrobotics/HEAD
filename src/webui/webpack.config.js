@@ -86,5 +86,5 @@ module.exports = {
     debug: true,
     displayErrorDetails: true,
     outputPathinfo: true,
-    devtool: 'sourcemap'
+    devtool: 'eval-source-map'
 };
