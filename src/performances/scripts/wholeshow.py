@@ -92,7 +92,7 @@ class WholeShow(HierarchicalMachine):
                 # use to_performng() instead of perform() so it can be called from other than interaction states
                 self.to_performing()
                 self.after_performance = self.to_sleeping
-                self.performance_runner('robot/sleep')
+                self.performance_runner('common/sleep')
                 return srv.SpeechOnResponse(False)
             except:
                 pass
@@ -167,7 +167,7 @@ class WholeShow(HierarchicalMachine):
         assert (self.current_state.name == 'sleeping')
         self.after_performance = self.to_interacting
         # Start performance before triggerring state change so soma state will be sinced with performance
-        self.performance_runner('robot/wakeup')
+        self.performance_runner('common/wakeup')
 
     """ Speech"""
     @staticmethod
@@ -187,10 +187,12 @@ class WholeShow(HierarchicalMachine):
     """ Finds properties files for performances and adds keywords for execution """
     def find_performances_properties(self):
         robot_name = rospy.get_param('/robot_name')
-        path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
-        for root, dirnames, filenames in os.walk(path):
-            if '.properties' in filenames:
-                self.add_performance(path, os.path.relpath(root, path))
+        robot_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
+        common_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
+        for path in [common_path, robot_path]:
+            for root, dirnames, filenames in os.walk(path):
+                if '.properties' in filenames:
+                    self.add_performance(path, os.path.relpath(root, path))
 
     def add_performance(self, path, performance):
         properties_file = os.path.join(path, performance, '.properties')

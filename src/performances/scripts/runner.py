@@ -113,7 +113,10 @@ class Runner:
         return srv.RunByNameResponse(self.run(0.0))
 
     def load_folder(self, performance):
-        robot_name = rospy.get_param('/robot_name')
+        if performance.startswith('shared'):
+            robot_name = 'common'
+        else:
+            robot_name = rospy.get_param('/robot_name')
         dir_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', performance)
         if os.path.isdir(dir_path):
             root, dirs, files = next(os.walk(dir_path))
@@ -147,7 +150,10 @@ class Runner:
 
         offset = 0
         for id in ids:
-            robot_name = rospy.get_param('/robot_name')
+            if id.startswith('shared'):
+                robot_name = 'common'
+            else:
+                robot_name = rospy.get_param('/robot_name')
             path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + ".yaml")
             duration = 0
 
