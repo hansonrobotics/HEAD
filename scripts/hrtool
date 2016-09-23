@@ -575,7 +575,7 @@ _do_install_deps() {
     install_opencog_deps
     install_vision_deps
     install_manyears_deps
-    install_webui_deps()
+    install_webui_deps
     install_other_deps
 }
 
