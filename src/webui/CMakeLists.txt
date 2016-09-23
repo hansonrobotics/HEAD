@@ -164,7 +164,7 @@ install(PROGRAMS
 
 ## Mark cpp header files for installation
 install(DIRECTORY
-  app public
+  client backend public
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
