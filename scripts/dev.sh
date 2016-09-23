@@ -107,10 +107,10 @@ tmux new-session -n 'roscore'  -d -s $NAME "roslaunch ${LAUNCH_DIR}/robot.launch
 #    ;;
 #esac
 sleep 3
-tmux new-window -n 'webui' "python $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/__init__.py -p 4000 -s \
-    -c $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/ssl/cert.crt  \
-    -k $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/ssl/key.pem &
-python $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/app/__init__.py -p 8000; $SHELL"
+
+tmux new-window -n 'webui' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/webui; webpack -w &
+    nodemon $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/backend/entry.js -p 4000 -s -c $ROBOT_CONFIG_DIR -r $NAME &
+    nodemon $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/backend/entry.js -c $ROBOT_CONFIG_DIR -r $NAME -p 8000; $SHELL"
 
 tmux new-window -n 'blender' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/blender_api && blender -y Sophia.blend -P autostart.py; $SHELL"
 if [[ $OC_CHATBOT != 1 ]]; then

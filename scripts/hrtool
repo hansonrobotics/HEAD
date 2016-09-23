@@ -302,10 +302,19 @@ install_test_deps() {
 
     $SUDO apt-get ${APT_GET_OPTS} install npm
     $SUDO npm install -g n
-    $SUDO n stable
+    # WebUI compatable webserver
+    $SUDO n 6.6.0
     $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
     info "Installing test dependencies is done"
 }
+
+install_webui_deps() {
+    sudo apt-get ${APT_GET_OPTS} install npm
+    sudo npm install -g n webpack nodemon
+    sudo n 6.6.0
+    sudo ln -sf /usr/local/n/versions/node/6.6.0/bin/node /usr/bin/node
+}
+
 
 install_vision_deps() {
     info "Installing vision dependencies"
@@ -566,6 +575,7 @@ _do_install_deps() {
     install_opencog_deps
     install_vision_deps
     install_manyears_deps
+    install_webui_deps()
     install_other_deps
 }
 
@@ -934,6 +944,8 @@ catkin init
 catkin build -c -j$(nproc) --make-args install
 pip2 install -t $install_target $workspace/src/hardware/pololu-motors --upgrade --no-deps
 pip3 install -t $install_target $workspace/src/blender_api_msgs --upgrade --no-deps
+cd $workspace/HEAD/src/webui
+npm install
 EOF
 
 cat <<EOF > _clean.sh
