@@ -2,6 +2,7 @@
     <node name="performances" pkg="performances" type="runner.py" respawn="true"/>
 
     <group ns="/webui">
+        <node name="motors_controller" pkg="webui" type="motors_controller.py"/>
         <node name="chatbot_controller" pkg="webui" type="chatbot_controller.py"/>
         <node name="node_configuration" pkg="webui" type="node_configuration.py"/>
         <node name="logging_controller" pkg="webui" type="logging_controller.py"/>
