@@ -11,6 +11,7 @@ var express = require('express'),
     PythonShell = require('python-shell'),
     ros = require('./lib/ros'),
     _ = require('lodash'),
+    shared_performances_folder = 'shared',
     argv = require('yargs').options({
         r: {
             alias: 'robot',
@@ -106,13 +107,16 @@ app.post('/animations/update/:name', function (req, res) {
 });
 
 app.get('/performances/:name', function (req, res) {
-    res.json(performances.all(path.join(argv.config, req.params['name'], 'performances'), {skip_nodes: true}));
+    res.json(performances.all([path.join(argv.config, req.params['name'], 'performances'),
+        path.join(argv.config, 'common', 'performances')], {skip_nodes: true}));
 });
 
 var updatePerformance = function (req, res) {
-    var dir = path.join(argv.config, req.params['name'], 'performances');
-    if (performances.update(dir, req.params['id'], req.body))
-        res.json(performances.get(dir, req.params['id']));
+    var name = req.params['id'].indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'],
+        root = path.join(argv.config, name, 'performances');
+
+    if (performances.update(root, req.params['id'], req.body))
+        res.json(performances.get(root, req.params['id']));
     else
         res.sendStatus(500);
 };
@@ -121,7 +125,9 @@ app.post('/performances/:name/:id', updatePerformance);
 app.put('/performances/:name/:id', updatePerformance);
 
 app.delete('/performances/:name/:id', function (req, res) {
-    res.json(performances.remove(path.join(argv.config, req.params['name'], 'performances'), req.params['id']));
+    var name = req.params['id'].indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'];
+    console.log(path.join(argv.config, name, 'performances'), req.params['id']);
+    res.json(performances.remove(path.join(argv.config, name, 'performances'), req.params['id']));
 });
 
 app.post('/run_performance', function (req, res) {
@@ -154,20 +160,22 @@ app.post('/monitor/logs/:level', function (req, res) {
 });
 
 var updateKeywords = function (req, res) {
-    var keywords = _.compact(req.body['keywords'] || []);
-    console.log('save');
-    console.log(path.join(argv.config, req.params['name'], 'performances', req.params['path'] || '', '.properties'));
+    var dir = req.params['path'] || '',
+        keywords = _.compact(req.body['keywords'] || []),
+        name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'];
 
     res.json(yamlIO.writeFile(
-        path.join(argv.config, req.params['name'], 'performances', req.params['path'] || '', '.properties'), {keywords: keywords}));
+        path.join(argv.config, name, 'performances', dir, '.properties'), {keywords: keywords}));
 };
 
 app.get('/performances/keywords/:name/:path*?', function (req, res) {
-    console.log('get');
-
+    var dir = req.params['path'] || '',
+        name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'];
+    console.log(req.params);
+    console.log(path.join(argv.config, name, 'performances', dir, '.properties'));
     res.json(
         yamlIO.readFile(
-            path.join(argv.config, req.params['name'], 'performances', req.params['path'] || '', '.properties')) || {keywords: []});
+            path.join(argv.config, name, 'performances', dir, '.properties')) || {keywords: []});
 });
 
 app.post('/performances/keywords/update/:name', updateKeywords);

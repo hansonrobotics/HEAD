@@ -1,5 +1,6 @@
 var glob = require('glob'),
     path = require('path'),
+    fs = require('fs'),
     yaml = require('js-yaml'),
     yamlIO = require('./yaml'),
     cp = require('child_process'),
@@ -7,17 +8,23 @@ var glob = require('glob'),
 
 module.exports = {
     ext: '.yaml',
-    all: function (dir, options) {
+    all: function (dirs, options) {
         options = typeof options == 'object' ? options : {};
 
-        var performances = [],
-            files = glob.sync(path.join(dir, '**', '*.yaml'));
+        if (dirs.constructor !== Array)
+            dirs = [dirs];
 
-        for (var file of files) {
-            var id = file.replace(path.join(dir), '').replace(this.ext, '').substr(1),
-                performance = this.get(dir, id, options);
+        var performances = [];
 
-            if (performance) performances.push(performance);
+        for (let dir of dirs) {
+            var files = glob.sync(path.join(dir, '**', '*.yaml'));
+
+            for (var file of files) {
+                var id = file.replace(path.join(dir), '').replace(this.ext, '').substr(1),
+                    performance = this.get(dir, id, options);
+
+                if (performance) performances.push(performance);
+            }
         }
 
         return performances;
@@ -44,12 +51,15 @@ module.exports = {
         if ('previous_id' in performance) {
             current = this.get(dir, performance['previous_id']);
             this.remove(dir, performance['previous_id']);
+            delete performance['previous_id'];
         }
 
         if (!current) current = this.get(dir, id);
 
-        if ('ignore_nodes' in performance && performance['ignore_nodes'] && 'nodes' in current)
+        if ('ignore_nodes' in performance && performance['ignore_nodes'] && 'nodes' in current) {
             performance['nodes'] = current['nodes'];
+            delete performance['ignore_nodes'];
+        }
 
         delete performance['id'];
         delete performance['path'];
