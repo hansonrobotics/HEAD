@@ -39,9 +39,8 @@
 #include <new>
 
 #include "CMT_MAP.h"
+#include "Config.h"
 
-//Threading Libraries
-#include <boost/thread.hpp>
 #include <string>
 
 #include <cmath> 
@@ -194,6 +193,7 @@ private:
 
 	//Instances of MAP.
 	cmt::CMT_MAP cmt_;
+	cmt::Config config;
 
     //This one holds
     std::map<std::string,std::string> recognized_names;
@@ -216,6 +216,11 @@ private:
 
 	//the threshold value that is passed to the cmt instance. 
 	double factor;
+
+	std::string detector;
+	std::string descriptor;
+	std::string estimation;
+
 	int delete_counter;
 	int downgrade;
 

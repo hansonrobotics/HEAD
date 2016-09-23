@@ -51,6 +51,9 @@ TrackerCMT::TrackerCMT() : it_(nh_)
   tracker_results_pub = nh_.advertise<cmt_tracker_msgs::Trackers>("tracker_results", 10);
   tracker_results_temp = nh_.advertise<cmt_tracker_msgs::Trackers>("temporary_trackers", 10);
 
+  detector = "HARRIS";
+  descriptor = "BRISK";
+  estimation = "RANSAC";
 
   pi_vision_results = nh_.advertise<pi_face_tracker::Faces>(face_location_topics, 10);
   pi_events = (nh_).advertise<pi_face_tracker::FaceEvent>(face_event_topics, 10);
@@ -416,6 +419,13 @@ void TrackerCMT::callback(cmt_tracker_msgs::TrackerConfig &config, uint32_t leve
   factor = config.factor;
   //std::cout<<"config: "<<config.frame_counter;
   delete_counter = config.frame_counter;
+  std::cout<<"Detector"<<config.detector<<std::endl;
+  std::cout<<"Descriptor"<<config.descriptor<<std::endl;
+  std::cout<<"Estimation"<<config.estimation<<std::endl;
+
+  detector = config.detector;
+  descriptor = config.descriptor;
+  estimation = config.estimation;
   //std::cout<<"Factor Updated to: "<<factor<<std::endl;
 }
 void TrackerCMT::list_of_faces_update(const cmt_tracker_msgs::Objects& faces_info)
@@ -461,7 +471,7 @@ void TrackerCMT::set_tracker(const cmt_tracker_msgs::Tracker& tracker_location)
 
     std::string tracker_name = std::to_string(tracker_num);
 
-    bool b_return = cmt_.addTracker(im_gray, rect,tracker_name);
+    bool b_return = cmt_.addTracker(im_gray, rect,tracker_name,cmt::Config(detector,descriptor,estimation,factor));
 
     if (b_return)
     {

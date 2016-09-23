@@ -79,7 +79,7 @@
 
 
 <group unless="$(arg debug)">
-<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node"  required="true"/>
+<node pkg="cmt_tracker" name="cmt_tracker_node" type="cmt_tracker_node"  output="screen" required="true"/>
 </group>
 
 
