@@ -212,6 +212,8 @@ class Chatbot():
 
     def score_question(self,question,lang):
 
+        # this calculates a score for the given question, by querying the pattern trace from the chatbot server
+
         # get response and category, but don't execute the question
         response = self.get_response(question,lang,True)
 
@@ -226,10 +228,12 @@ class Chatbot():
         
         logger.info("question:" + question + "   patterns:" + str(patterns))
 
+        # patterns with * and _ are catch-all patterns that somehow try to generalize the incoming user input
+        # the idea is that patterns with * or _ are less preferable than patterns with complete matches
 
-        # first idea: count number of words in response and count number of wildcards in pattern, and rank according to these counts
+        # count number of words in response and count number of * in pattern, and rank according to these counts
         
-        # combine all patterns
+        # take all patterns in the trace as one
         total_words = 0.0
         total_wildcards = 0.0
         total_all = 0.0
@@ -244,31 +248,36 @@ class Chatbot():
                     no_wildcards = False
                 else:
                     total_words = total_words + 1.0
+            # special case: if one of the patterns has no wildcards, it is preferred
             if no_wildcards:
                 total_full_patterns = total_full_patterns + 1.0
 
         # diagnose possible illnesses of the patterns
+        # patterns that are very short tend to fit a general response
         very_short = False
         if total_words < 3:
             very_short = True
 
+        # pattern traces that have one or more wildcards are a bit problematic
         small_match = False
         if total_wildcards >= 1:
             small_match = True
 
+        # pattern traces that have two or more wildcards are more problematic 
         very_hard = False
         if total_wildcards >= 2:
             very_hard = True
 
+        # if one of the patterns in the trace had no wildcards, this is a good thing
         did_resolve = False
         if total_full_patterns >= 1:
             did_resolve = True
 
         # determine fitness of the patterns according to the illnesses
         score = 0
-        if did_resolve: # if one of the patterns healthily resolved the question, this could pass
+        if did_resolve: # if one of the patterns in the trace resolved the question, this could pass
             score = 3
-        elif very_short and very_hard: # if the patterns are very short and have a lot of wildcards, they are bad
+        elif very_short and very_hard: # if the patterns are very short and have a lot of wildcards, they are very bad
             score = 0
         elif very_short and small_match: # if the patterns are very short and have atleast one wildcard, they are a little less bad
             score = 1
@@ -290,12 +299,22 @@ class Chatbot():
         sentence = question.split()
         num_of_words = len(sentence)
 
-        # test if entire question is not too small and sufficiently useful
+        # it seems preselection works best for very short questions (not
+        # patterns), like "you?", "do you", "is that true?", "I think so",
+        # "yes", etc.
+        # for that purpose, we cut away all questions that are longer
+        # than 2 words, and score high enough
+
         if (num_of_words > 2) and (self.score_question(question,lang) > 3):
             result = {"value":4,"question":question}
             return [result]
-            
-        # combine with previous words from the word buffer (if anything)
+
+        # what is left are difficult to answer (ill patterns) or short question chunks
+
+        # one of the reasons might be that the question was interrupted by
+        # the STT system, and we need to combine with previously said chunks
+        # as well
+
         for word in sentence:
             self.words.append(word)
 
@@ -307,11 +326,12 @@ class Chatbot():
         # try all possible options from back to front and fill up scores[]
         for i in range(0,len(self.words)):
 
+            # build question
             attempt = ""
             for k in range(i,len(self.words)):
                 attempt = attempt + " " + self.words[k]
 
-            # test the attempt
+            # find the score for this question
             score = { "question": attempt, "value": 0 }
             score["value"] = self.score_question(attempt,lang)
 
@@ -321,7 +341,7 @@ class Chatbot():
         # sort the list
         results = sorted(scores,key=itemgetter("value"),reverse=True)
 
-        # debug
+        # debug output
         for result in results:
             logger.info(str(result["value"]) + ": " + result["question"])
 
@@ -329,6 +349,8 @@ class Chatbot():
 
 
     def finally_respond(self,question,lang):
+
+        # this finally processes the question and outputs the answer, like before
 
         answer = self.get_response(question,lang,False)
         response = answer["text"]
@@ -380,7 +402,8 @@ class Chatbot():
         logger.info("Ask: {}, answer: {}, answered by: {}".format(
             question, response.encode('utf-8'), botid))
 
-        # we're done, forget the state (clear buffer, reset timer)
+        # since this was processed, we don't need any previously stored words anymore,
+        # and we can switch off the reset timer
         self.words = []
         if self.timer is not None:
             self.timer.shutdown()
@@ -388,56 +411,71 @@ class Chatbot():
 
 
     def respond(self,question):
+
+        # first get a sorted list of scores for the words in this question,
+        # where needed combined with previously stored words
         lang = rospy.get_param('lang', None)
         results = self.get_question_scores(question,lang)
 
-        # if best one is reasonable, publish it
+        # if the best one is reasonable, publish it
         if results[0]["value"] > 3:
             self.finally_respond(results[0]["question"],lang)
         else:
+
             logger.info("nothing reasonable found, 'go on'...")
     
             # output something enticing to get the user to talk more
-            # find the shortest of the almost reasonable (2 and 3) scores
+
+            # the shorter the response, the more ambivalent, so the more
+            # it 'fits' to the user's idea of what is going on, therefore,
+            # find the shortest question and use that in the enticing comment
             least_i = -1
             least = 10
             i = 0
-	    num_of_threes = 0
+            num_of_threes = 0
             for result in results:
                 if result["value"] >= 2:
                     count = len(result["question"].split())
                     if (least_i == -1) or (count < least):
                         least_i = i
                         least = count
-		if result["value"] == 3:
-		    num_of_threes = num_of_threes + 1
+                    if result["value"] == 3:
+                        num_of_threes = num_of_threes + 1
                 i = i + 1
-	    if num_of_threes > 0: # apparently some of the patterns were dodgy but acceptable
-		self.finally_respond(results[0]["question"],lang)
-		return
 
-            sarq = results[least_i]["question"] # smallest almost reasonable question
-            choice = random.randint(0,5)
-            if choice == 0:
+            # added later: if one or more of the patterns were slightly dodgy,
+            # but acceptable, respond with them
+    	    if num_of_threes > 0:
+        		self.finally_respond(results[0]["question"],lang)
+        		return
+
+            # take the Smallest Almost Reasonable Question
+            sarq = results[least_i]["question"]
+
+            # randomly choose how to proceed
+            choice = random.randint(0,6)
+
+            if choice == 0:  # get user to reformulate in more clear sentence
                 self._response_publisher.publish(String("I'm not sure I understand " + sarq + "."))
-            elif choice == 1:
+            elif choice == 1:  # get user to explain more about the topic
                 self._response_publisher.publish(String("Tell me more about " + sarq + "."))
-            elif choice == 2:
+            elif choice == 2:  # get user to continue talking about the topic
                 self._response_publisher.publish(String("Go on, what " + sarq + "."))
-            elif choice == 3:
+            elif choice == 3:  # get user to reformulate the topic
                 self._response_publisher.publish(String("What do you mean by " + sarq + "?"))
-            elif choice == 4:
-                self.finally_respond(results[0]["question"],lang) # ask anyway, it could be funny
-		return
-            else:
+            elif choice == 4:  # take the AIML response from the chatbot (could be funny anyway)
+                self.finally_respond(results[0]["question"],lang)
+                return
+            else:  # indicate general feeling of cluelessness about the topic
                 self._response_publisher.publish(String("What " + sarq + "?"))
 
-            # reset timer
+            # reset timer, the next words from the user could help, but don't wait too long
             if self.timer is not None:
                 self.timer.shutdown()
             self.timer = rospy.Timer(rospy.Duration(5),self.reset_tick,True)
 
     def reset_tick(self,event):
+        # the user waited too long, so we can't use the currently stored words anymore
         logger.info("reset, silence was too long")
         self.words = []
         self.timer.shutdown()
