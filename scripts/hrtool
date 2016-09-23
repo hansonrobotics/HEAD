@@ -646,7 +646,7 @@ _do_build_hr() {
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
     pip2 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
     pip3 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
-    cd $workspace/HEAD/src/webui
+    cd $HR_WORKSPACE/$PROJECT/src/webui
     npm install
 }
 
