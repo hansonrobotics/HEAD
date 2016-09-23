@@ -646,6 +646,8 @@ _do_build_hr() {
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
     pip2 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
     pip3 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
+    cd $workspace/HEAD/src/webui
+    npm install
 }
 
 do_single_package() {
@@ -944,8 +946,6 @@ catkin init
 catkin build -c -j$(nproc) --make-args install
 pip2 install -t $install_target $workspace/src/hardware/pololu-motors --upgrade --no-deps
 pip3 install -t $install_target $workspace/src/blender_api_msgs --upgrade --no-deps
-cd $workspace/HEAD/src/webui
-npm install
 EOF
 
 cat <<EOF > _clean.sh
