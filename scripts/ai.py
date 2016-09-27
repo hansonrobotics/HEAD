@@ -14,7 +14,7 @@ from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
-from chatbot.client import get_default_username, Client
+from chatbot.client import Client
 
 logger = logging.getLogger('hr.chatbot.ai')
 HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
@@ -29,8 +29,7 @@ class Chatbot():
 
     def __init__(self):
         self.botname = rospy.get_param('botname', 'sophia')
-        self.client = Client(
-            get_default_username(), HR_CHATBOT_AUTHKEY, stdout=Console())
+        self.client = Client(HR_CHATBOT_AUTHKEY, stdout=Console())
         self.client.chatbot_url = rospy.get_param(
             'chatbot_url', 'http://localhost:8001')
         # chatbot now saves a bit of simple state to handle sentiment analysis
