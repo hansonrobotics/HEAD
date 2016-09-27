@@ -102,7 +102,7 @@ class Client(cmd.Cmd, object):
         if ret != 0:
             self.stdout.write("QA error: error code {}, botname {}, question {}, lang {}\n".format(
                 ret, self.botname, question, self.lang))
-            raise
+            raise Exception("QA error code {}".format(ret))
 
         response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
         response.update(r.json().get('response'))
@@ -127,10 +127,11 @@ class Client(cmd.Cmd, object):
         try:
             if line:
                 response = self.ask(line)
-                self.last_response = response
-                self.stdout.write('{}[by {}]: {}\n'.format(
-                    self.botname, response.get('botid'),
-                    response.get('text')))
+                if response is not None:
+                    self.last_response = response
+                    self.stdout.write('{}[by {}]: {}\n'.format(
+                        self.botname, response.get('botid'),
+                        response.get('text')))
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
 
