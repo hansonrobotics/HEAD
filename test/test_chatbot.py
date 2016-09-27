@@ -46,7 +46,6 @@ class ChatbotTest(unittest.TestCase):
         self.assertTrue(response.get('text') == 'Hi there from sophia')
 
     def test_two_clients(self):
-        import ipdb; ipdb.set_trace() # BREAKPOINT
         cli = Client('AAAAB3NzaC', botname='generic', port=PORT, test=True)
         cli2 = Client('AAAAB3NzaC', botname='sophia', port=PORT, test=True)
         while not cli.ping():
