@@ -20,9 +20,12 @@ define(['application', 'marionette', './templates/attention_regions.tpl', '../en
                 height: 100,
                 convertRatio: 0.01
             },
+            initialize: function (options) {
+                this.collection = new AttentionRegions();
+                this.collection.setPerformancePath(options.performancePath);
+            },
             onAttach: function () {
                 var self = this;
-
                 this.enableTypeSelect();
                 if (this.ui.areaselect.get(0).naturalWidth) {
                     self.enableAreaSelect();
@@ -49,8 +52,9 @@ define(['application', 'marionette', './templates/attention_regions.tpl', '../en
             enableAreaSelect: function () {
                 var self = this;
 
-                this.width = this.ui.container.innerWidth();
-                this.ui.areaselect.selectAreas({
+                this.areas = this.collection.toJSON();
+                this.width = Math.max(this.ui.container.innerWidth(), this.config.width);
+                this.ui.areaselect.selectAreas('destroy').selectAreas({
                     allowSelect: true,
                     allowDelete: true,
                     width: this.width,
@@ -58,6 +62,7 @@ define(['application', 'marionette', './templates/attention_regions.tpl', '../en
                 }).on('changed', function (event, id) {
                     var model = self.collection.get(id),
                         area = self.areaToJSON(_.findWhere(self.ui.areaselect.selectAreas('relativeAreas'), {id: id}));
+
                     if (model && area) {
                         model.set(area);
                         self.lastType = model.get('type');
@@ -67,23 +72,23 @@ define(['application', 'marionette', './templates/attention_regions.tpl', '../en
                         self.collection.add(_.extend(area, {type: self.lastType}));
 
                     self.setActiveRegion(id);
+                }).on('loaded', function () {
+                    self.collection.reset(self.areas);
+                    self.updateAreas();
                 });
             },
             fetchAreas: function () {
                 var self = this;
-                if (!this.collection) {
-                    this.collection = new AttentionRegions();
-                    this.collection.fetch({
-                        success: function () {
-                            self.updateAreas();
-                        }
-                    });
-                }
+
+                this.collection.fetch({
+                    success: function () {
+                        self.updateAreas();
+                    }
+                });
             },
             updateAreas: function () {
                 var self = this;
-                self.ui.areaselect.selectAreas('reset');
-                self.collection.each(function (area, i) {
+                this.collection.each(function (area, i) {
                     area.set('id', i);
                     self.ui.areaselect.selectAreas('add', self.jsonToArea(area.toJSON()));
                 });
@@ -94,7 +99,6 @@ define(['application', 'marionette', './templates/attention_regions.tpl', '../en
                 _.each(this.regions, function (r, key) {
                     if (r['color'])
                         _.each(self.collection.where({type: key}), function (area) {
-                            console.log($('[data-area-id="' + area.get('id') + '"]', self.ui.container));
                             $('[data-area-id="' + area.get('id') + '"]', self.ui.container).css('background', r['color']);
                         });
                 });

@@ -3,7 +3,7 @@ define(['backbone', './performance', 'lib/api'], function (Backbone, Performance
         eventHandler: false,
         model: Performance,
         comparator: function (model) {
-            return model.get('name').toLowerCase();
+            return (model.get('name') || '').toLowerCase();
         },
         url: function () {
             return '/performances/' + api.config.robot;

@@ -1,6 +1,6 @@
 define(['marionette', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
-        'jquery', 'bootbox', 'lib/api', 'typeahead', 'jquery-ui'],
-    function (Marionette, template, PerformanceView, Performance, _, $, bootbox, api) {
+        'jquery', 'bootbox', 'lib/api', './settings', 'typeahead', 'jquery-ui'],
+    function (Marionette, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: PerformanceView,
@@ -128,46 +128,23 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
 
                 self.ui.tabs.append(addNewTab)
                     .append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'))
-                    .append(this.createTab(this.currentPath, 'Keywords', true).addClass('pull-right').click(function () {
-                        self.editKeywords();
+                    .append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function () {
+                        self.showSettings();
                     }));
             },
-            editKeywords: function () {
-                var self = this,
-                    path = this.currentPath;
+            showSettings: function () {
+                var settingsView = new SettingsView({
+                    performancePath: this.currentPath
+                });
 
-                $.ajax({
-                    method: 'GET',
-                    url: '/performances/keywords/' + api.config.robot + (path ? ('/' + path) : ''),
-                    success: function (data) {
-                        console.log(data);
-                        var keywords = data['keywords'].join(', ');
-
-                        bootbox.prompt({
-                            title: "Edit trigger keywords",
-                            value: keywords,
-                            callback: function (keywords) {
-                                console.log(keywords);
-
-                                if (keywords !== null) {
-                                    $.ajax({
-                                        method: 'POST',
-                                        url: '/performances/keywords/update/' + api.config.robot + (path ? ('/' + path) : ''),
-                                        data: JSON.stringify({
-                                            path: self.currentPath,
-                                            keywords: keywords.split(',')
-                                        }),
-                                        success: function () {
-                                            console.log('success');
-                                        },
-                                        error: function () {
-                                            console.log('error');
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    }
+                bootbox.dialog({
+                    title: 'Settings',
+                    message: settingsView.$el,
+                    onEscape: true,
+                    backdrop: true,
+                    size: 'large'
+                }).on("shown.bs.modal", function() {
+                    settingsView.render();
                 });
             },
             createTab: function (dir, content, disableEvents) {
