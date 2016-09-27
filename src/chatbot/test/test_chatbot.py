@@ -15,6 +15,7 @@ PORT = '8002'
 cmd = ['python', 'run_server.py', PORT]
 proc = subprocess.Popen(cmd, cwd=server_path, preexec_fn=os.setsid)
 
+from chatbot.client import Client
 
 def shutdown():
     if proc:
@@ -32,9 +33,7 @@ class ChatbotTest(unittest.TestCase):
         self.assertTrue(ret == 0)
 
     def test_prologue(self):
-        from chatbot.client import Client
-        cli = Client('test_client', 'AAAAB3NzaC', test=True)
-        cli.do_port(PORT)
+        cli = Client('AAAAB3NzaC', 'test_client', port=PORT, test=True)
         while not cli.ping():
             time.sleep(1)
         cli.do_conn('localhost:' + PORT)
@@ -46,10 +45,23 @@ class ChatbotTest(unittest.TestCase):
         response = cli.ask('hello sophia')
         self.assertTrue(response.get('text') == 'Hi there from sophia')
 
+    def test_two_clients(self):
+        cli = Client('AAAAB3NzaC', botname='generic', port=PORT, test=True)
+        cli2 = Client('AAAAB3NzaC', botname='sophia', port=PORT, test=True)
+        while not cli.ping():
+            time.sleep(1)
+        cli.do_conn('localhost:' + PORT)
+        cli2.do_conn('localhost:' + PORT)
+        response = cli.ask('hello sophia')
+        self.assertTrue(response.get('text') == 'Hi there from generic')
+
+        response = cli2.ask('hello sophia')
+        self.assertTrue(response.get('text') == 'Hi there from sophia')
+
     def test_session_manager(self):
         from chatbot.server.session import SessionManager
         session_manager = SessionManager(False)
-        sid = session_manager.start_session(user='test', test=True)
+        sid = session_manager.start_session(user='test', key='key', test=True)
         session = session_manager.get_session(sid)
         self.assertIsNotNone(session)
         self.assertIsNone(session.cache.last_time)
@@ -74,7 +86,7 @@ class ChatbotTest(unittest.TestCase):
         reload(chatbot.server.session)
 
         session_manager = SessionManager(True)
-        sid = session_manager.start_session(user='test', test=True)
+        sid = session_manager.start_session(user='test', key='key', test=True)
         session = session_manager.get_session(sid)
         self.assertIsNotNone(session)
         self.assertIsNone(session.cache.last_time)
@@ -111,7 +123,7 @@ class ChatbotTest(unittest.TestCase):
 
     def test_chat_agent(self):
         from chatbot.server.chatbot_agent import session_manager, ask
-        sid = session_manager.start_session('test', test=True)
+        sid = session_manager.start_session(user='test', key='key', test=True)
         sess = session_manager.get_session(sid)
         sess.sdata.botname = 'sophia'
         sess.sdata.user = 'test'

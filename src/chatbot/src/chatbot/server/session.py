@@ -6,6 +6,7 @@ import logging
 import uuid
 from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
 from response_cache import ResponseCache
+from collections import defaultdict
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
@@ -101,7 +102,7 @@ class SessionManager(object):
 
     def __init__(self, auto_clean=True):
         self._sessions = dict()
-        self._users = dict()
+        self._users = defaultdict(dict)
         self._locker = Locker()
         self._session_cleaner = threading.Thread(
             target=self._clean_sessions, name="SessionCleaner")
@@ -138,29 +139,36 @@ class SessionManager(object):
         if sid is not None:
             return self._sessions.get(sid, None)
 
-    def get_sid(self, user):
+    def get_sid(self, user, key):
         if user in self._users:
-            sid = self._users.get(user)
-            session = self._sessions.get(sid)
-            if session:
-                return sid
+            sessions = self._users.get(user)
+            if sessions:
+                sid = sessions.get(key)
+                session = self._sessions.get(sid)
+                if session:
+                    return sid
 
     def gen_sid(self):
         return str(uuid.uuid1())
 
     @_threadsafe
-    def add_session(self, user, sid):
+    def add_session(self, user, key, sid):
         if sid in self._sessions:
             return False
         self._sessions[sid] = Session(sid)
-        self._users[user] = sid
+        self._users[user][key] = sid
         return True
 
-    def start_session(self, user, test=False):
-        _sid = self.get_sid(user)
+    def start_session(self, user, key, test=False):
+        """
+        user: username
+        key: a string to identify session in user scope
+        test: if it's a session for test
+        """
+        _sid = self.get_sid(user, key)
         if not _sid:
             _sid = self.gen_sid()
-            self.add_session(user, _sid)
+            self.add_session(user, key, _sid)
         session = self.get_session(_sid)
         assert(session is not None)
         session.set_test(test)
