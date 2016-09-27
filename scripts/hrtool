@@ -309,7 +309,7 @@ install_test_deps() {
 }
 
 install_webui_deps() {
-    sudo apt-get ${APT_GET_OPTS} install nodejs
+    sudo apt-get ${APT_GET_OPTS} install npm
     sudo npm install -g n webpack nodemon
     sudo n 6.6.0
     sudo ln -sf /usr/local/n/versions/node/6.6.0/bin/node /usr/bin/node
