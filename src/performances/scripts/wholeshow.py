@@ -92,7 +92,7 @@ class WholeShow(HierarchicalMachine):
                 # use to_performng() instead of perform() so it can be called from other than interaction states
                 self.to_performing()
                 self.after_performance = self.to_sleeping
-                self.performance_runner('common/sleep')
+                self.performance_runner('shared/sleep')
                 return srv.SpeechOnResponse(False)
             except:
                 pass
@@ -167,7 +167,7 @@ class WholeShow(HierarchicalMachine):
         assert (self.current_state.name == 'sleeping')
         self.after_performance = self.to_interacting
         # Start performance before triggerring state change so soma state will be sinced with performance
-        self.performance_runner('common/wakeup')
+        self.performance_runner('shared/wakeup')
 
     """ Speech"""
     @staticmethod
