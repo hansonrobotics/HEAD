@@ -29,7 +29,8 @@ class Chatbot():
 
     def __init__(self):
         self.botname = rospy.get_param('botname', 'sophia')
-        self.client = Client(HR_CHATBOT_AUTHKEY, stdout=Console())
+        self.client = Client(
+            HR_CHATBOT_AUTHKEY, botname=self.botname, stdout=Console())
         self.client.chatbot_url = rospy.get_param(
             'chatbot_url', 'http://localhost:8001')
         # chatbot now saves a bit of simple state to handle sentiment analysis
