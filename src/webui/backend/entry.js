@@ -62,10 +62,12 @@ app.get('/robot_config/:name', function (req, res) {
 });
 
 app.post('/robot_config/:name', function (req, res) {
-    if (yamlIO.writeFile(path.join(argv.config, req.params['name'], 'config.yaml'), req.body))
-        res.json(req.body);
-    else
-        res.sendStatus(500);
+    // Do not overwrite config
+    res.json(req.body);
+//    if (yamlIO.writeFile(path.join(argv.config, req.params['name'], 'config.yaml'), req.body))
+//        res.json(req.body);
+//    else
+//        res.sendStatus(500);
 });
 
 app.get('/monitor/status', function (req, res) {
@@ -160,7 +162,13 @@ app.post('/monitor/logs/:level', function (req, res) {
     });
 });
 
-var updateKeywords = function (req, res) {
+app.get('/keywords/:path(*)?', function (req, res) {
+    var dir = req.params['path'] || '',
+        name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot;
+    res.json(yamlIO.readFile(path.join(argv.config, name, 'performances', dir, '.properties')) || {keywords: []});
+});
+
+app.post('/keywords/:path(*)?', function (req, res) {
     var dir = path.join(req.params['path'] || '', req.params['0'] || ''),
         keywords = _.map(req.body['keywords'] || [], function (k) { return k.trim(); }),
         name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot,
@@ -168,32 +176,22 @@ var updateKeywords = function (req, res) {
         data = yamlIO.readFile(filename) || {};
 
     res.json(yamlIO.writeFile(filename, _.extend(data, {keywords: keywords})));
-};
-
-app.get('/keywords/:path*?', function (req, res) {
-    var dir = path.join(req.params['path'] || '', req.params['0'] || ''),
-        name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot;
-    res.json(yamlIO.readFile(path.join(argv.config, name, 'performances', dir, '.properties')) || {keywords: []});
 });
 
-app.post('/keywords', updateKeywords);
-app.post('/keywords/:path*?', updateKeywords);
-
-app.get('/performance/attention/:path*?', function (req, res) {
+app.get('/performance/attention/:path(*)?', function (req, res) {
     var dir = path.join(req.params['path'] || '', req.params['0'] || ''),
         regions = yamlIO.readFile(path.join(argv.config, argv.robot, 'performances', dir || '', '.properties'));
     res.json(regions ? regions['regions'] : []);
 });
 
-app.post('/performance/attention/:path*?', function (req, res) {
-    var dir = path.join(req.params['path'] || '', req.params['0'] || ''),
+app.post('/performance/attention/:path(*)?', function (req, res) {
+    var dir = req.params['path'] || '',
         name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot,
         filename = path.join(argv.config, name, 'performances', dir, '.properties'),
         data = yamlIO.readFile(filename);
 
     res.json(yamlIO.writeFile(filename, _.extend(data, {regions: req.body})));
 });
-
 
 if (argv.ssl) {
     var privateKey = fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
