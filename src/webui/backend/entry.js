@@ -123,10 +123,10 @@ var updatePerformance = function (req, res) {
         res.sendStatus(500);
 };
 
-app.post('/performances/:name/:id', updatePerformance);
-app.put('/performances/:name/:id', updatePerformance);
+app.post('/performances/:name/:id*', updatePerformance);
+app.put('/performances/:name/:id*', updatePerformance);
 
-app.delete('/performances/:name/:id', function (req, res) {
+app.delete('/performances/:name/:id*', function (req, res) {
     var name = req.params['id'].indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'];
     console.log(path.join(argv.config, name, 'performances'), req.params['id']);
     res.json(performances.remove(path.join(argv.config, name, 'performances'), req.params['id']));
