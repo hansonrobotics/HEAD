@@ -12,8 +12,7 @@ sys.path.insert(0, os.path.join(CWD, '../src'))
 from chatbot.server.session import SessionManager
 
 VERSION = 'v1.1'
-KEY = 'AAAAB3NzaC'
-
+HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 SLACKBOT_API_TOKEN = os.environ.get('SLACKBOT_API_TOKEN')
 SLACKTEST_TOKEN = os.environ.get('SLACKTEST_TOKEN')
 
@@ -61,7 +60,7 @@ class HRSlackBot(SlackClient):
 
     def set_sid(self, user):
         params = {
-            "Auth": KEY,
+            "Auth": HR_CHATBOT_AUTHKEY,
             "botname": self.botname,
             "user": user
         }
@@ -89,7 +88,7 @@ class HRSlackBot(SlackClient):
             "question": "{}".format(question),
             "session": self.session_manager.get_sid(user),
             "lang": self.lang,
-            "Auth": KEY
+            "Auth": HR_CHATBOT_AUTHKEY
         }
         r = requests.get('{}/chat'.format(self.chatbot_url), params=params)
         ret = r.json().get('ret')
@@ -110,7 +109,7 @@ class HRSlackBot(SlackClient):
             "session": self.session_manager.get_sid(user),
             "rate": rate,
             "index": -1,
-            "Auth": KEY
+            "Auth": HR_CHATBOT_AUTHKEY
         }
         r = requests.get('{}/rate'.format(self.chatbot_url), params=params)
         ret = r.json().get('ret')
