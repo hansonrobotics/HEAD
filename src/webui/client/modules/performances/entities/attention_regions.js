@@ -1,4 +1,4 @@
-define(['application', 'backbone', 'lib/api', 'underscore', 'jquery'], function (App, Backbone, api, _, $) {
+define(['application', 'backbone', 'lib/api', 'path'], function (App, Backbone, api, path) {
     var AttentionRegion = Backbone.Model.extend({
         toJSON: function (options) {
             var json = Backbone.Model.prototype.toJSON.call(this, options);
@@ -10,14 +10,15 @@ define(['application', 'backbone', 'lib/api', 'underscore', 'jquery'], function 
         comparator: 'id',
         model: AttentionRegion,
         url: function () {
-            return '/attention_regions/' + api.config.robot
+            return typeof this.performancePath === 'string' ? path.join('/performance/attention', this.performancePath)
+                : '/attention_regions/' + api.config.robot
         },
         save: function (options) {
             this.sync("create", this, options);
         },
         sync: function (method, model, options) {
             options = options || {};
-            if (_.contains(['create', 'update'], method)) {
+            if (_.includes(['create', 'update'], method)) {
                 $.ajax(this.url(), {
                     method: 'POST',
                     data: JSON.stringify(this.toJSON()),
@@ -31,6 +32,9 @@ define(['application', 'backbone', 'lib/api', 'underscore', 'jquery'], function 
             } else {
                 Backbone.sync(method, model, options);
             }
+        },
+        setPerformancePath: function (path) {
+            this.performancePath = path;
         }
     });
 });
