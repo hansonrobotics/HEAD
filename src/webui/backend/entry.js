@@ -62,10 +62,12 @@ app.get('/robot_config/:name', function (req, res) {
 });
 
 app.post('/robot_config/:name', function (req, res) {
-    if (yamlIO.writeFile(path.join(argv.config, req.params['name'], 'config.yaml'), req.body))
-        res.json(req.body);
-    else
-        res.sendStatus(500);
+    // Do not overwrite config
+    res.json(req.body);
+//    if (yamlIO.writeFile(path.join(argv.config, req.params['name'], 'config.yaml'), req.body))
+//        res.json(req.body);
+//    else
+//        res.sendStatus(500);
 });
 
 app.get('/monitor/status', function (req, res) {
@@ -168,7 +170,7 @@ var updateKeywords = function (req, res) {
         path.join(argv.config, name, 'performances', dir, '.properties'), {keywords: keywords}));
 };
 
-app.get('/performances/keywords/:name/:path*?', function (req, res) {
+app.get('/performances/keywords/:name/:path(*)', function (req, res) {
     var dir = req.params['path'] || '',
         name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'];
     console.log(req.params);
@@ -179,7 +181,7 @@ app.get('/performances/keywords/:name/:path*?', function (req, res) {
 });
 
 app.post('/performances/keywords/update/:name', updateKeywords);
-app.post('/performances/keywords/update/:name/:path*?', updateKeywords);
+app.post('/performances/keywords/update/:name/:path(*)', updateKeywords);
 
 if (argv.ssl) {
     var privateKey = fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
