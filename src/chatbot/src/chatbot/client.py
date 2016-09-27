@@ -11,7 +11,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 VERSION = 'v1.1'
 
-logger = logging.getLogger('hr.chatbot.ai')
+logger = logging.getLogger('hr.chatbot.client')
 
 def get_default_username():
     import subprocess
@@ -22,9 +22,9 @@ def get_default_username():
 
 class Client(cmd.Cmd, object):
 
-    def __init__(self, username, key, test=False, *args, **kwargs):
+    def __init__(self, key, username=None, test=False, *args, **kwargs):
         super(Client, self).__init__(*args, **kwargs)
-        self.user = username
+        self.user = username or get_default_username()
         self.key = key
         self.test = test
         self.prompt = '[me]: '

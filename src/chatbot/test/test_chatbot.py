@@ -33,7 +33,7 @@ class ChatbotTest(unittest.TestCase):
 
     def test_prologue(self):
         from chatbot.client import Client
-        cli = Client('test_client', 'AAAAB3NzaC', test=True)
+        cli = Client('AAAAB3NzaC', 'test_client', test=True)
         cli.do_port(PORT)
         while not cli.ping():
             time.sleep(1)
