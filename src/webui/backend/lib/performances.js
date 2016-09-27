@@ -68,7 +68,7 @@ module.exports = {
     },
     remove: function (dir, id) {
         try {
-            fs.unlink(path.join(dir, id + this.ext));
+            fs.unlinkSync(path.join(dir, id + this.ext));
         } catch (e) {
             return false;
         }
