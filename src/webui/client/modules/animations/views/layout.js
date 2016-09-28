@@ -1,5 +1,5 @@
 define(['application', './templates/layout.tpl', 'lib/api', 'modules/motors/views/motors', './frames',
-        './animation_edit', './animations', 'bootstrap', 'entities/expression', 'scrollbar', 'entities/motor'],
+        './animation_edit', './animations', 'bootstrap', 'entities/expression', 'scrollbar', 'scrollbar-css', 'entities/motor'],
     function (App, template, api, MotorsView, FramesView, AnimationEditView, AnimationsView) {
         App.module('Animations.Views', function (Views, App, Backbone, Marionette, $, _) {
             Views.Animations = Marionette.LayoutView.extend({

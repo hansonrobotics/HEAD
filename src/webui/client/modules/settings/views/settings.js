@@ -1,4 +1,4 @@
-define(['application', 'marionette', './templates/settings.tpl', 'json_editor', 'lib/json_editor/slider', 'jquery'],
+define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 'lib/json_editor/slider', 'jquery'],
     function (App, Marionette, template, JSONEditor, $) {
         return Marionette.ItemView.extend({
             template: template,

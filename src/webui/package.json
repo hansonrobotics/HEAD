@@ -40,6 +40,7 @@
     "roslib": "^0.18.0",
     "select2": "^4.0.3",
     "supermodel": "github:pathable/supermodel",
+    "svg-url-loader": "^1.1.0",
     "underscore-tpl": "^0.3.3",
     "yargs": "^5.0.0"
   },

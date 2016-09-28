@@ -3,7 +3,7 @@ define(['marionette', './controller'], function (Marionette, controller) {
         'appRoutes': {
             'system': 'system',
             'logs': 'logs',
-            '': 'system',
+            '': 'system'
         }
     });
     new Router({controller: controller});

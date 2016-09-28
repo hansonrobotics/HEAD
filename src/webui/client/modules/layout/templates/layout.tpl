@@ -10,7 +10,7 @@
                 <span id="app-connection-error" class="label label-danger" style="display: none">Connection error. Click to refresh</span>
             </span>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#app-navigation">
+                    data-target="#app-nav">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>

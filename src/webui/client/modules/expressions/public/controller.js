@@ -1,5 +1,5 @@
 define(['application', './views/expressions', 'lib/api', 'lib/utilities', 'lib/crosshair-slider',
-        'vendor/jquery.knob'],
+        'vendor/jquery.knob', '../css/expressions'],
     function (App, ExpressionsView, api, utilities) {
         var expressions = {
             index: function () {

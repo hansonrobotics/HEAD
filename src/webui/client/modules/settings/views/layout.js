@@ -1,4 +1,5 @@
-define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery', 'lib/api', 'underscore', 'multilevelpushmenu'],
+define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery', 'lib/api', 'underscore',
+        'multilevelpushmenu', 'multilevelpushmenu-css'],
     function (Marionette, template, FadeInRegion, $, api, _) {
         return Marionette.LayoutView.extend({
             template: template,

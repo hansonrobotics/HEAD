@@ -1,5 +1,5 @@
 define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'underscore', './node_select',
-        './node_settings', 'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2'],
+        './node_settings', 'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2', 'select2-css'],
     function (App, Marionette, template, api, _, NodeSelectView, NodeSettingsView, FadeInRegion, Node, $) {
         return Marionette.LayoutView.extend({
             template: template,

@@ -1,4 +1,4 @@
-define(['application', 'lib/api', './views/layout', './views/attention_regions'],
+define(['application', 'lib/api', './views/layout', './views/attention_regions', './css/performances'],
     function (App, api, LayoutView, AttentionRegionsView) {
         return {
             performances: function () {

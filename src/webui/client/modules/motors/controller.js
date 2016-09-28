@@ -1,4 +1,5 @@
-define(["application", "lib/api", './views/motors', './views/layout', './views/configuration', 'entities/motor'],
+define(["application", "lib/api", './views/motors', './views/layout', './views/configuration', 'entities/motor',
+        './css/motors'],
     function (App, api, MotorsView, LayoutView, ConfigurationView) {
         return {
             public_index: function () {

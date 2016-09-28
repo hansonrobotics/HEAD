@@ -1,4 +1,4 @@
-define(['backgrid', 'jquery', 'backgrid_text_cell'], function (Backgrid, $) {
+define(['backgrid', 'backgrid-css', 'jquery', 'backgrid-text-cell', 'backgrid-text-cell-css'], function (Backgrid, $) {
     return [{
         // enable the select-all extension
         name: "",

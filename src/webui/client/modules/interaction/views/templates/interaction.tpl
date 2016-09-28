@@ -29,21 +29,20 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12">
-        <div class="app-interaction-footer">
-            <div class="app-faces-container"></div>
-            <div class="message-input-container input-group">
-                <input type="text" class="app-message-input form-control"
-                       placeholder="Type your message here..."/>
+    <div class="app-interaction-footer col-xs-12">
+        <div class="app-faces-container"></div>
+        <div class="message-input-container input-group">
+            <input type="text" class="app-message-input form-control"
+                   placeholder="Type your message here..."/>
 
-                <span class="input-group-btn">
+            <span class="input-group-btn">
                     <button class="app-send-button btn btn-primary">Send</button>
                     <button class="app-shut-up-button btn">ShutUp</button>
                     <button class="app-rate-good-button btn btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-                    <button class="app-rate-bad-button btn"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                    <button class="app-rate-bad-button btn"><span
+                            class="glyphicon glyphicon-thumbs-down"></span></button>
                     <button class="app-record-button btn btn-info"><i class="fa fa-microphone"></i></button>
                 </span>
-            </div>
         </div>
     </div>
 </div>
