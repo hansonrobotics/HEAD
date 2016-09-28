@@ -28,6 +28,7 @@ send "(markov-setup \"$MARKY_MARKOV_DIR/bin\" \"$HR_MODELS/markov_modeling\")\n"
 # Load the file for sentiment analysis
 if { [info exist ::env(OC_SA)] && $::env(OC_SA) == 1 } {
     send "(load \"$HR_WORKSPACE/opencog/opencog/opencog/nlp/chatbot/loadSentiList.scm\")\n"
+    send "(do-sentiment-analysis #t)\n"
 }
 
 # Load the AIML rules and pickup lines
