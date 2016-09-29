@@ -293,7 +293,7 @@ span.select2-selection.select2-selection--single {
     line-height: 39px !important;
 }
 
-.select2-dropdown, .popover {
+.select2-container, .popover {
     z-index: 999999999;
 }
 
