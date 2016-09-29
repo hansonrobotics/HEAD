@@ -110,9 +110,17 @@ sleep 3
 
 ROBOT_CONFIG_DIR=$HR_WORKSPACE/$MAJOR_PROJECT/src/robots_config
 WEBUI_SERVER=$HR_WORKSPACE/$MAJOR_PROJECT/src/webui/backend/entry.js
-tmux new-window -n 'webui' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/webui; webpack -w &
-    nodemon $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/backend/entry.js -p 4000 -s -c $ROBOT_CONFIG_DIR -r $NAME &
-    nodemon $HR_WORKSPACE/$MAJOR_PROJECT/src/webui/backend/entry.js -c $ROBOT_CONFIG_DIR -r $NAME -p 8000; $SHELL"
+WEBPACK_OPTIONS="--optimize-minimize"
+NODE_INTERPRETER="node"
+
+if [[ $DEV_MODE == 1 ]]; then
+  WEBPACK_OPTIONS="--optimize-minimize -w -dev"
+  NODE_INTERPRETER="nodemon"
+fi
+
+tmux new-window -n 'webui' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/webui; webpack $WEBPACK_OPTIONS &
+    $NODE_INTERPRETER $WEBUI_SERVER -p 4000 -c $ROBOT_CONFIG_DIR -r $NAME -s &
+    $NODE_INTERPRETER $WEBUI_SERVER -p 8000 -c $ROBOT_CONFIG_DIR -r $NAME; $SHELL"
 
 tmux new-window -n 'blender' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/blender_api && blender -y Sophia.blend -P autostart.py; $SHELL"
 if [[ $OC_CHATBOT != 1 ]]; then
