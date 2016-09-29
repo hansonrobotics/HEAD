@@ -1,5 +1,6 @@
-define(['application', './templates/configuration.tpl', 'backgrid', './config/motor_grid', 'lib/api',
-        'entities/motor', 'backbone_pageable', 'backgrid_select_all', 'backgrid_filter', 'backgrid_paginator', 'scrollbar'],
+define(['application', './templates/configuration.tpl', 'backgrid', 'backgrid-css', './config/motor_grid', 'lib/api',
+        'entities/motor', 'backbone-pageable', 'backgrid-select-all', 'backgrid-select-all-css', 'backgrid-filter',
+        'backgrid-filter-css', 'backgrid-paginator', 'backgrid-paginator-css', 'scrollbar', 'scrollbar-css'],
     function (App, template, Backgrid, columns, api) {
         App.module("Motors.Views", function (Views, App, Backbone, Marionette, $, _) {
             Views.Configuration = Marionette.LayoutView.extend({

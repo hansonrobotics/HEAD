@@ -1,8 +1,3 @@
-@font-face {
-    font-family: 'Biryani Regular';
-    src: url('/public/fonts/Biryani-Light.ttf');
-}
-
 body {
     margin-top: 52px;
 }
@@ -298,6 +293,10 @@ span.select2-selection.select2-selection--single {
     line-height: 39px !important;
 }
 
-.select2-dropdown, .popover {
+.select2-container, .popover {
     z-index: 999999999;
+}
+
+.ps-container.ps-in-scrolling, .ps-container:hover.ps-in-scrolling {
+    pointer-events: auto !important;
 }

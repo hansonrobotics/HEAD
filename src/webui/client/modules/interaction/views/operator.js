@@ -1,4 +1,4 @@
-define(['application', 'marionette', './templates/operator.tpl', 'lib/api', 'jquery', 'underscore', 'typeahead'],
+define(['application', 'marionette', './templates/operator.tpl', 'lib/api', 'jquery', 'underscore', 'typeahead', '../css/operator'],
     function (app, Marionette, template, api, $, _) {
         return Marionette.LayoutView.extend({
             template: template,

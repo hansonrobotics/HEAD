@@ -1,6 +1,6 @@
 define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
         '../entities/performance_collection', '../entities/performance', './queue', './timelines', 'jquery',
-        'underscore', 'select2'],
+        'underscore', 'select2', 'select2-css'],
     function (Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
               QueueView, TimelinesView, $, _) {
         return Marionette.LayoutView.extend({

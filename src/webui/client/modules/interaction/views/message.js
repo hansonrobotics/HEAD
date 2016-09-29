@@ -1,4 +1,4 @@
-define(["application", "./templates/message.tpl", 'lib/api', 'emoticons'], function (app, template, api) {
+define(["application", "./templates/message.tpl", 'lib/api', 'emoticons', 'emoticons-css'], function (app, template, api) {
     app.module("Interaction.Views", function (Views, app, Backbone, Marionette, $, _) {
         Views.Message = Marionette.ItemView.extend({
             template: template,

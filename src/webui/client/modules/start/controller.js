@@ -1,5 +1,5 @@
-define(['application', './views/layout', './views/logs',
-        './views/system', './entities/log', './entities/checks'],
+define(['application', './views/layout', './views/logs', './views/system', './entities/log', './entities/checks',
+        './css/status'],
     function (App, LayoutView, LogsView, SystemView) {
         return {
             init: function (name) {
@@ -27,7 +27,6 @@ define(['application', './views/layout', './views/logs',
                 this.layoutView.getRegion('content').show(this.logsView);
             },
             system: function () {
-                var self = this;
                 this.init('system');
                 var checksCollection = new App.Start.Entities.CheckCollection();
                 checksCollection.fetch();

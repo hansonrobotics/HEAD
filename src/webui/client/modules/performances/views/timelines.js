@@ -1,6 +1,6 @@
 define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox', './node',
         '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
-        'lib/api', 'annyang', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar', 'scrollTo'],
+        'lib/api', 'annyang', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar', 'scrollbar-css', 'scrollTo'],
     function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition, api, annyang) {
         return Marionette.LayoutView.extend({
             template: template,

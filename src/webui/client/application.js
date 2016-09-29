@@ -1,5 +1,10 @@
-define(['backbone', 'marionette', 'modules/layout/layout', 'lib/ros', 'lib/api', 'jquery'],
-    function (Backbone, Marionette, LayoutView, ros, api, $) {
+define(['backbone', 'marionette', 'modules/layout/layout', 'lib/ros', 'lib/api', 'jquery-ui', 'jquery-ui-touch-punch', 'bootstrap'],
+    function (Backbone, Marionette, LayoutView, ros, api) {
+        $.ajaxSetup({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        });
+
         var Application = new Marionette.Application({
                 fps: 48
             }),

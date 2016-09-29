@@ -1,4 +1,4 @@
-define(["application", "lib/api", "./views/layout"],
+define(['application', 'lib/api', './views/layout', '../css/expressions'],
     function (App, api, LayoutView) {
         return {
             index: function () {

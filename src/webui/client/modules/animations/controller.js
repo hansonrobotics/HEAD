@@ -1,4 +1,4 @@
-define(['application', './views/layout', 'lib/api', 'entities/animation'],
+define(['application', './views/layout', 'lib/api', 'entities/animation', './css/animations'],
     function (App, LayoutView, api) {
         return {
             admin_index: function () {

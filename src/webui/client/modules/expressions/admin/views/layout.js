@@ -1,5 +1,5 @@
 define(['application', './templates/layout.tpl', "modules/motors/views/motors", './expressions',
-    'entities/motor', 'entities/expression', 'scrollbar'], function (App, template, MotorsView, ExpressionsView) {
+    'entities/motor', 'entities/expression', 'scrollbar', 'scrollbar-css'], function (App, template, MotorsView, ExpressionsView) {
     App.module("Expressions.Admin.Views", function (Common, App, Backbone, Marionette, $, _) {
         Common.Layout = Marionette.LayoutView.extend({
             template: template,

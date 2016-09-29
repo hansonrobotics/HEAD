@@ -1,5 +1,5 @@
 define(['application', './views/layout', './views/settings', './entities/robot_config', './entities/robot_config_schema',
-        './entities/node_config', './entities/node_config_schema'],
+        './entities/node_config', './entities/node_config_schema', './css/settings'],
     function (App, LayoutView, SettingsView, RobotConfig, RobotConfigSchema, NodeConfig, NodeConfigSchema) {
         var self = {
             showLayout: function () {

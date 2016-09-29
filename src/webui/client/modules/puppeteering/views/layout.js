@@ -1,6 +1,7 @@
 define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'modules/performances/views/layout',
         'modules/interaction/views/interaction', 'modules/interaction/views/faces', 'jquery', '../../interaction/views/operator',
-        'modules/gestures/views/animation_mode', 'modules/gestures/views/poses', 'modules/gestures/views/animations', './crosshairs', 'scrollbar'],
+        'modules/gestures/views/animation_mode', 'modules/gestures/views/poses', 'modules/gestures/views/animations', './crosshairs',
+        'scrollbar', 'scrollbar-css'],
     function (App, Marionette, template, FadeInRegion, TimelineEditorView, InteractionView, FacesView, $, OperatorView,
               AnimationModeView, PosesView, AnimationsView, CrosshairsView) {
         return Marionette.LayoutView.extend({
@@ -50,9 +51,6 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
             onAttach: function () {
                 var self = this;
 
-                this.ui.leftColumn.perfectScrollbar({suppressScrollX: true, wheelPropagation: true});
-                this.ui.rightColumn.perfectScrollbar({suppressScrollX: true, wheelPropagation: true});
-
                 // left col
                 this.posesView = new PosesView({config: {duration: {min: 1, max: 8}}});
                 this.animationModeView = new AnimationModeView();
@@ -87,6 +85,7 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                         self.updateDimensions();
                 };
 
+                this.updateDimensions();
                 $(window).resize(updateDimensions).resize();
                 this.animationsView.collection.on('add', updateDimensions);
             },
@@ -94,11 +93,22 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                 var contentHeight = App.LayoutInstance.getContentHeight(),
                     height = contentHeight;
 
-                if (this.ui.leftColumn.offset().left == this.ui.rightColumn.offset().left)
-                    height = 'auto';
+                if (this.ui.leftColumn.offset().left == this.ui.rightColumn.offset().left) {
+                    this.ui.leftColumn.height('auto').perfectScrollbar('destroy');
+                    this.ui.rightColumn.height('auto').perfectScrollbar('destroy');
+                } else {
+                    this.ui.leftColumn.height(contentHeight).perfectScrollbar({
+                        suppressScrollX: true,
+                        wheelPropagation: true,
+                        swipePropagation: true
+                    });
+                    this.ui.rightColumn.height(contentHeight).perfectScrollbar({
+                        suppressScrollX: true,
+                        wheelPropagation: true,
+                        swipePropagation: true
+                    });
+                }
 
-                this.ui.leftColumn.height(height).perfectScrollbar('update');
-                this.ui.rightColumn.height(height).perfectScrollbar('update');
                 this.chatView.setHeight(height - this.ui.controls.outerHeight());
             }
         });
