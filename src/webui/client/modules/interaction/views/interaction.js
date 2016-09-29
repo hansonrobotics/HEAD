@@ -1,5 +1,5 @@
 define(['application', "marionette", './message', "./templates/interaction.tpl", 'lib/api', '../entities/message_collection',
-        'jquery', './faces', 'underscore', 'lib/speech_recognition', 'annyang', 'scrollbar', 'scrollbar-css'],
+        'jquery', './faces', 'underscore', 'lib/speech_recognition', 'annyang', 'scrollbar', 'scrollbar-css', '../css/interaction'],
     function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView, _, speechRecognition, annyang) {
         return Marionette.CompositeView.extend({
             template: template,
@@ -25,7 +25,7 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                 scrollbar: '.app-scrollbar',
                 facesContainer: '.app-faces-container',
                 rateGoodButton: '.app-rate-good-button',
-                rateBadButton: '.app-rate-bad-button',
+                rateBadButton: '.app-rate-bad-button'
             },
             events: {
                 'touchstart @ui.recordButton': 'toggleSpeech',

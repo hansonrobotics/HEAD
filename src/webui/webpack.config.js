@@ -49,7 +49,7 @@ module.exports = {
             loader: 'exports?JSONEditor'
         }, {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+            loader: 'style-loader!css-loader!postcss-loader'
         }, {
             test: /\.svg/,
             loader: 'svg-url-loader'
@@ -97,8 +97,7 @@ module.exports = {
             '_': 'lodash',
             d3: 'd3',
             eventemitter2: 'EventEmitter2'
-        }),
-        new ExtractTextPlugin('[name].css')
+        })
     ],
     postcss: [
         autoprefixer({
