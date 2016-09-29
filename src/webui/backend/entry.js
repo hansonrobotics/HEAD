@@ -163,13 +163,13 @@ app.post('/monitor/logs/:level', function (req, res) {
 });
 
 app.get('/keywords/:path(*)?', function (req, res) {
-    var dir = req.params['path'] || '',
+    var dir = req.params['path'] || '.',
         name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot;
     res.json(yamlIO.readFile(path.join(argv.config, name, 'performances', dir, '.properties')) || {keywords: []});
 });
 
 app.post('/keywords/:path(*)?', function (req, res) {
-    var dir = path.join(req.params['path'] || '', req.params['0'] || ''),
+    var dir = req.params['path'] || '.',
         keywords = _.map(req.body['keywords'] || [], function (k) { return k.trim(); }),
         name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot,
         filename = path.join(argv.config, name, 'performances', dir, '.properties'),
@@ -179,17 +179,18 @@ app.post('/keywords/:path(*)?', function (req, res) {
 });
 
 app.get('/performance/attention/:path(*)?', function (req, res) {
-    var dir = path.join(req.params['path'] || '', req.params['0'] || ''),
+    var dir = req.params['path'] || '.',
         name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot,
-        regions = yamlIO.readFile(path.join(argv.config, name, 'performances', dir || '', '.properties'));
+        regions = yamlIO.readFile(path.join(argv.config, name, 'performances', dir, '.properties'));
     res.json(regions ? regions['regions'] : []);
 });
 
 app.post('/performance/attention/:path(*)?', function (req, res) {
-    var dir = req.params['path'] || '',
+    var dir = req.params['path'] || '.',
         name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot,
         filename = path.join(argv.config, name, 'performances', dir, '.properties'),
         data = yamlIO.readFile(filename);
+
 
     res.json(yamlIO.writeFile(filename, _.extend(data, {regions: req.body})));
 });
