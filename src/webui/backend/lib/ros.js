@@ -25,7 +25,7 @@ module.exports = {
     services: {
         updateMotors: new ROSLIB.Service({
             ros : ros,
-            name : '/motors_controller/update_motors',
+            name : '/webui/motors_controller/update_motors',
             serviceType : 'webui/UpdateMotors'
         })
     },

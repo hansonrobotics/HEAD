@@ -50,18 +50,16 @@ class MotorsController:
         robot_name = req.robot_name
         configs.parseMotors(json.loads(req.motors))
         if len(configs.dynamixel) > 0:
-            file_name = os.path.join(config_root, "dynamixel.yaml")
+            file_name = os.path.join(config_root, robot_name, "dynamixel.yaml")
             write_yaml(file_name, configs.dynamixel)
             load_params(file_name, "/{}/safe".format(robot_name))
         if len(configs.motors) > 0:
-            file_name = os.path.join(config_root, "motors.yaml")
+            file_name = os.path.join(config_root, robot_name, "motors.yaml")
             write_yaml(file_name, {'motors': configs.motors})
             load_params(file_name, "/{}".format(robot_name))
         if len(configs.pololu) > 0:
             for board, config in configs.pololu.iteritems():
-                print config
-                print board
-                file_name = os.path.join(config_root, board + ".yaml")
+                file_name = os.path.join(config_root, robot_name, board + ".yaml")
                 write_yaml(file_name, config)
                 kill_node("/{}/pololu_{}".format(robot_name, board))
         kill_node("/{}/pau2motors".format(robot_name))
