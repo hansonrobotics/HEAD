@@ -180,7 +180,8 @@ app.post('/keywords/:path(*)?', function (req, res) {
 
 app.get('/performance/attention/:path(*)?', function (req, res) {
     var dir = path.join(req.params['path'] || '', req.params['0'] || ''),
-        regions = yamlIO.readFile(path.join(argv.config, argv.robot, 'performances', dir || '', '.properties'));
+        name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot,
+        regions = yamlIO.readFile(path.join(argv.config, name, 'performances', dir || '', '.properties'));
     res.json(regions ? regions['regions'] : []);
 });
 
