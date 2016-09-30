@@ -129,8 +129,8 @@ class Client(cmd.Cmd, object):
 
         if question == '[loopback]':
             self.cancel_timer()
-            self.timer = threading.Timer(
-                self.timeout, self.ask, (question, )).start()
+            self.timer = threading.Timer(self.timeout, self.ask, (question, ))
+            self.timer.start()
             logger.info("Start {} timer with timeout {}".format(
                 question, self.timeout))
 
@@ -170,6 +170,9 @@ class Client(cmd.Cmd, object):
         if self.timer is not None:
             self.timer.cancel()
             self.timer = None
+            logger.info("Timer canceled")
+        else:
+            logger.info("Timer is None")
 
     def default(self, line):
         try:
@@ -492,7 +495,7 @@ Syntax: upload package
             cmd = '[{}]'.format(cmd)
         if self.timeout is not None and cmd is not None:
             self.cancel_timer()
-            self.timer = threading.Timer(
-                self.timeout, self.ask, (cmd, )).start()
+            self.timer = threading.Timer(self.timeout, self.ask, (cmd, ))
+            self.timer.start()
             logger.info("Start {} timer with timeout {}".format(
                 cmd, self.timeout))
