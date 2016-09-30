@@ -35,6 +35,9 @@ class Character(object):
     def set_context(self, sid, context):
         raise NotImplementedError
 
+    def is_command(self, question):
+        return False
+
     def __repr__(self):
         return "<Character id: {}, name: {}, level: {}>".format(
             self.id, self.name, self.level)

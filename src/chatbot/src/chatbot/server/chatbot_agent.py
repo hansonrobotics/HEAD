@@ -251,6 +251,11 @@ def ask(question, lang, sid, query=False):
         logger.error("Wrong characer name")
         return response, WRONG_CHARACTER_NAME
 
+    for c in responding_characters:
+        if c.is_command(question):
+            response.update(c.respond(question, lang, sess, query))
+            return response, SUCCESS
+
     sess.characters = responding_characters
     if question and question.lower().strip() in ['hi', 'hello']:
         session_manager.reset_session(sid)
