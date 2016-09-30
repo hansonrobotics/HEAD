@@ -33,7 +33,7 @@ class ChatbotTest(unittest.TestCase):
         self.assertTrue(ret == 0)
 
     def test_prologue(self):
-        cli = Client('AAAAB3NzaC', 'test_client', port=PORT, test=True)
+        cli = Client('AAAAB3NzaC', username='test_client', port=PORT, test=True)
         while not cli.ping():
             time.sleep(1)
         cli.do_conn('localhost:' + PORT)
