@@ -107,8 +107,6 @@ def set_weights(weights, lang, sid):
 from session import ChatSessionManager
 session_manager = ChatSessionManager()
 MAX_CHAT_TRIES = 5
-NON_REPEAT = True
-
 
 def _ask_characters(characters, question, lang, sid, query):
     chat_tries = 0
@@ -138,7 +136,7 @@ def _ask_characters(characters, question, lang, sid, query):
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random() < weight:
-                if not NON_REPEAT or sess.check(_question, answer, lang):
+                if sess.check(_question, answer, c):
                     trace = _response.get('trace')
                     if trace:
                         for path in CHARACTER_PATH.split(','):
@@ -159,7 +157,7 @@ def _ask_characters(characters, question, lang, sid, query):
 
     dummy_character = get_character('dummy', lang)
     if dummy_character:
-        if not sess.check(_question, answer, lang):
+        if not sess.check(_question, answer, dummy_character):
             _response = dummy_character.respond(
                 "REPEAT_ANSWER", lang, sid, query)
         else:

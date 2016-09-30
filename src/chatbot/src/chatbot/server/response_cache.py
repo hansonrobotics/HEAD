@@ -38,9 +38,8 @@ class ResponseCache(object):
         s = ' '.join(s.split())  # remove consecutive spaces
         return s
 
-    def check(self, question, answer, lang):
-        if lang == 'zh':
-            logger.info("Don't check Chinese answer")
+    def check(self, question, answer, character):
+        if not character.non_repeat:
             return True
 
         # each additional character over the 15 characters, adds 30 seconds
