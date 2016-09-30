@@ -5,7 +5,7 @@ name:
 property_file:
     sophia.properties
 weight:
-    0.9
+    1
 level:
     90
 aiml:
