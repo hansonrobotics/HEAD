@@ -2,6 +2,7 @@ import datetime as dt
 from collections import defaultdict
 import logging
 import os
+import re
 
 logger = logging.getLogger('hr.chatbot.server.response_cache')
 
@@ -30,7 +31,8 @@ class ResponseCache(object):
     def _norm(self, s):
         if s is None:
             return s
-        s = s.lower().strip()
+        s = re.sub(r'\[.*\]', '', s) # remote [xxx] mark
+        s = s.strip()
         s = s.replace(',', ' ')
         s = s.replace('.', ' ')
         s = ' '.join(s.split())  # remove consecutive spaces
