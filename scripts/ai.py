@@ -160,9 +160,13 @@ class Chatbot():
                 self.ask(questions)
                 del self.input_stack[:]
 
-    def on_response(self, response):
+    def on_response(self, sid, response):
         if response is None:
             logger.error("No response")
+            return
+
+        if sid != self.client.session:
+            logger.error("Session id doesn't match")
             return
 
         logger.info("Get response {}".format(response))
