@@ -125,6 +125,8 @@ def _ask_characters(characters, question, lang, sid, query):
     while chat_tries < MAX_CHAT_TRIES:
         chat_tries += 1
         for c, weight in zip(characters, weights):
+            if weight == 0:
+                continue
             _response = c.respond(_question, lang, sid, query)
             assert isinstance(_response, dict), "Response must be a dict"
             answer = _response.get('text', '')
