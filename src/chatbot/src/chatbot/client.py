@@ -5,6 +5,7 @@ import os
 import time
 from functools import wraps
 import logging
+from chatbot.utils import norm
 
 import sys
 reload(sys)

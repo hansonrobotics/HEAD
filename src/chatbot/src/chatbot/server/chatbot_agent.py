@@ -17,8 +17,6 @@ INVALID_SESSION = 3
 INVALID_QUESTION = 4
 
 useSOLR = True
-CWD = os.path.dirname(os.path.realpath(__file__))
-
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters

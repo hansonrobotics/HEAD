@@ -2,10 +2,9 @@ import datetime as dt
 from collections import defaultdict
 import logging
 import os
-import re
+from chatbot.utils import norm
 
 logger = logging.getLogger('hr.chatbot.server.response_cache')
-
 
 class ResponseCache(object):
 
@@ -28,32 +27,22 @@ class ResponseCache(object):
         self.last_answer = None
         self.last_time = None
 
-    def _norm(self, s):
-        if s is None:
-            return s
-        s = re.sub(r'\[.*\]', '', s) # remote [xxx] mark
-        s = s.strip()
-        s = s.replace(',', ' ')
-        s = s.replace('.', ' ')
-        s = ' '.join(s.split())  # remove consecutive spaces
-        return s
-
     def check(self, question, answer, character):
         if not character.non_repeat:
             return True
 
         # each additional character over the 15 characters, adds 30 seconds
         # delay before that AIML string is allowed to repeat.
-        same_answers = [r for r in self.record if self._norm(r['Answer']) == self._norm(answer)]
+        same_answers = [r for r in self.record if norm(r['Answer']) == norm(answer)]
         time_elapsed = (dt.datetime.now() - same_answers[-1]['Datetime']
                         ).seconds if same_answers else 0
-        if max(0, len(self._norm(answer)) - 15) * 30 <= time_elapsed:
+        if max(0, len(norm(answer)) - 15) * 30 <= time_elapsed:
             logger.info("Allow short repeat answer")
             logger.debug("Answer length {}, time elapsed {}".format(
-                len(self._norm(answer)), time_elapsed))
+                len(norm(answer)), time_elapsed))
             return True
 
-        if self._norm(answer) == self._norm(self.last_answer):
+        if norm(answer) == norm(self.last_answer):
             logger.info("Last answer repeat")
             return False
         if not self.is_unique(answer):
@@ -74,7 +63,7 @@ class ResponseCache(object):
         if kwargs:
             record.update(kwargs)
         self.record.append(record)
-        self.index[self._norm(question)].append(len(self.record) - 1)
+        self.index[norm(question)].append(len(self.record) - 1)
         self.last_question = question
         self.last_answer = answer
         self.last_time = time
@@ -89,18 +78,18 @@ class ResponseCache(object):
         return False
 
     def contain(self, question, answer):
-        question = self._norm(question)
-        answer = self._norm(answer)
+        question = norm(question)
+        answer = norm(answer)
         records = self._get_records(question)
-        answers = [self._norm(r['Answer']) for r in records]
+        answers = [norm(r['Answer']) for r in records]
         return answer in answers
 
     def is_unique(self, answer):
-        answers = [self._norm(r['Answer']) for r in self.record]
-        return not self._norm(answer) in answers
+        answers = [norm(r['Answer']) for r in self.record]
+        return not norm(answer) in answers
 
     def _get_records(self, question):
-        records = [self.record[i] for i in self.index[self._norm(question)]]
+        records = [self.record[i] for i in self.index[norm(question)]]
         return records
 
     def dump(self, fname):
