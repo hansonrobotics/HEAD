@@ -107,6 +107,7 @@ class Client(cmd.Cmd, object):
 
     @retry(3)
     def ask(self, question, query=False):
+        self.cancel_timer()
         params = {
             "question": "{}".format(question),
             "session": self.session,
@@ -128,7 +129,6 @@ class Client(cmd.Cmd, object):
         response.update(r.json().get('response'))
 
         if question == '[loopback]':
-            self.cancel_timer()
             self.timer = threading.Timer(self.timeout, self.ask, (question, ))
             self.timer.start()
             logger.info("Start {} timer with timeout {}".format(
@@ -177,7 +177,6 @@ class Client(cmd.Cmd, object):
     def default(self, line):
         try:
             if line:
-                self.cancel_timer()
                 self.ask(line)
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))

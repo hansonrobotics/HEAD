@@ -91,7 +91,6 @@ class Chatbot():
         lang = rospy.get_param('lang', None)
         if lang:
             self.client.lang = lang
-        self.client.cancel_timer()
         self.client.ask(question, query)
 
     def _speech_event_callback(self, msg):
