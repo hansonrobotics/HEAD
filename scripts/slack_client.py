@@ -137,7 +137,6 @@ class HRSlackBot(object):
         answer = ''
         title = ''
         session = self.session_manager.get_session(sid)
-        print "Call on_reponse", sid, response, session
         if session is None:
             return
         channel = session.sdata.channel
@@ -162,6 +161,7 @@ class HRSlackBot(object):
 if __name__ == '__main__':
     logging.basicConfig()
     logging.getLogger().setLevel(logging.INFO)
+    logging.getLogger('urllib3').setLevel(logging.WARN)
     host = 'localhost'
     port = 8001
     if len(sys.argv) < 2:
