@@ -162,7 +162,7 @@ class Client(cmd.Cmd, object):
                     response.get('text')))
             else:
                 try:
-                    self.response_listener.on_response(response)
+                    self.response_listener.on_response(self.session, response)
                 except Exception as ex:
                     logger.error(ex)
 
