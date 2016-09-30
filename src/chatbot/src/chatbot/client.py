@@ -135,6 +135,7 @@ class Client(cmd.Cmd, object):
                 question, self.timeout))
 
         self.process_response(response)
+        return response
 
     def list_chatbot(self):
         params = {'Auth': self.key, 'lang': self.lang, 'session': self.session}
