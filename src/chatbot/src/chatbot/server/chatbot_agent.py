@@ -17,8 +17,6 @@ INVALID_SESSION = 3
 INVALID_QUESTION = 4
 
 useSOLR = True
-CWD = os.path.dirname(os.path.realpath(__file__))
-
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
@@ -107,8 +105,6 @@ def set_weights(weights, lang, sid):
 from session import ChatSessionManager
 session_manager = ChatSessionManager()
 MAX_CHAT_TRIES = 5
-NON_REPEAT = True
-
 
 def _ask_characters(characters, question, lang, sid, query):
     chat_tries = 0
@@ -129,6 +125,8 @@ def _ask_characters(characters, question, lang, sid, query):
     while chat_tries < MAX_CHAT_TRIES:
         chat_tries += 1
         for c, weight in zip(characters, weights):
+            if weight == 0:
+                continue
             _response = c.respond(_question, lang, sid, query)
             assert isinstance(_response, dict), "Response must be a dict"
             answer = _response.get('text', '')
@@ -138,7 +136,7 @@ def _ask_characters(characters, question, lang, sid, query):
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random() < weight:
-                if not NON_REPEAT or sess.check(_question, answer, lang):
+                if sess.check(_question, answer, c):
                     trace = _response.get('trace')
                     if trace:
                         for path in CHARACTER_PATH.split(','):
@@ -159,7 +157,7 @@ def _ask_characters(characters, question, lang, sid, query):
 
     dummy_character = get_character('dummy', lang)
     if dummy_character:
-        if not sess.check(_question, answer, lang):
+        if not sess.check(_question, answer, dummy_character):
             _response = dummy_character.respond(
                 "REPEAT_ANSWER", lang, sid, query)
         else:
@@ -252,6 +250,11 @@ def ask(question, lang, sid, query=False):
     if not responding_characters:
         logger.error("Wrong characer name")
         return response, WRONG_CHARACTER_NAME
+
+    for c in responding_characters:
+        if c.is_command(question):
+            response.update(c.respond(question, lang, sess, query))
+            return response, SUCCESS
 
     sess.characters = responding_characters
     if question and question.lower().strip() in ['hi', 'hello']:

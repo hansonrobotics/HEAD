@@ -62,8 +62,8 @@ class Session(object):
             except NotImplementedError:
                 pass
 
-    def check(self, question, answer, lang):
-        return self.cache.check(question, answer, lang)
+    def check(self, question, answer, character):
+        return self.cache.check(question, answer, character)
 
     def dump(self):
         if self.test:

@@ -15,6 +15,7 @@ class Character(object):
         self.weight = 1  # How likely its response is used. [0-1]
         self.languages = ['en']  # List of lanugages it supports
         self.local = True
+        self.non_repeat = True
 
     def get_properties(self):
         return self.properties
@@ -33,6 +34,9 @@ class Character(object):
 
     def set_context(self, sid, context):
         raise NotImplementedError
+
+    def is_command(self, question):
+        return False
 
     def __repr__(self):
         return "<Character id: {}, name: {}, level: {}>".format(

@@ -30,7 +30,8 @@ class Chatbot():
     def __init__(self):
         self.botname = rospy.get_param('botname', 'sophia')
         self.client = Client(
-            HR_CHATBOT_AUTHKEY, botname=self.botname, stdout=Console())
+            HR_CHATBOT_AUTHKEY, response_listener=self,
+            botname=self.botname, stdout=Console())
         self.client.chatbot_url = rospy.get_param(
             'chatbot_url', 'http://localhost:8001')
         # chatbot now saves a bit of simple state to handle sentiment analysis
@@ -80,17 +81,17 @@ class Chatbot():
         rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
         rospy.set_param('node_status/chatbot', 'running')
 
+
+
     def sentiment_active(self, active):
         self._sentiment_active = active
 
-    def get_response(self, question, lang, query=False):
+    def ask(self, questions, query=False):
+        question = ' '.join(questions)
+        lang = rospy.get_param('lang', None)
         if lang:
             self.client.lang = lang
-        response = self.client.ask(question, query)
-        if response is None:
-            logger.error("No response")
-            response = {}
-        return response
+        self.client.ask(question, query)
 
     def _speech_event_callback(self, msg):
         if msg.data == 'start':
@@ -139,7 +140,7 @@ class Chatbot():
                 self.input_stack.append((time.clock(), chat_message))
                 self.condition.notify_all()
         else:
-            self.respond([chat_message.utterance])
+            self.ask([chat_message.utterance])
 
     def process_input(self):
         while True:
@@ -155,37 +156,27 @@ class Chatbot():
                     self.condition.wait(self.delay_time)
                     if len(self.input_stack) > num_input:
                         continue
-                self.respond(questions)
+                self.ask(questions)
                 del self.input_stack[:]
 
-    def respond(self, questions):
-        lang = rospy.get_param('lang', None)
-        for question in questions:
-            tmp_answer = self.get_response(question, lang, True)
-            traces = tmp_answer.get('trace')
-            if traces:
-                patterns = []
-                for trace in traces:
-                    match_obj = trace_pattern.match(trace)
-                    if match_obj:
-                        patterns.append(match_obj.group('pname'))
-                logger.info("Question {}, Pattern {}".format(
-                    question, ' '.join(patterns)))
-
-        question = ' '.join(questions)
-        answer = self.get_response(question, lang)
-
-        response = answer.get('text')
-        emotion = answer.get('emotion')
-        botid = answer.get('botid')
-
+    def on_response(self, sid, response):
         if response is None:
+            logger.error("No response")
             return
 
+        if sid != self.client.session:
+            logger.error("Session id doesn't match")
+            return
+
+        logger.info("Get response {}".format(response))
+        text = response.get('text')
+        emotion = response.get('emotion')
+        botid = response.get('botid')
+
         # Add space after punctuation for multi-sentence responses
-        response = response.replace('?', '? ')
-        response = response.replace('.', '. ')
-        response = response.replace('_', ' ')
+        text = text.replace('?', '? ')
+        text = text.replace('.', '. ')
+        text = text.replace('_', ' ')
 
         # if sentiment active save state and wait for affect_express to publish response
         # otherwise publish and let tts handle it
@@ -198,9 +189,9 @@ class Chatbot():
                     '[#][PERCEIVE ACTION][EMOTION] {}'.format(emo.data))
                 logger.info('Chatbot perceived emo: {}'.format(emo.data))
             else:
-                p = self.polarity.get_polarity(response)
+                p = self.polarity.get_polarity(text)
                 logger.info('Polarity for "{}" is {}'.format(
-                    response.encode('utf-8'), p))
+                    text.encode('utf-8'), p))
                 # change emotion if polarity magnitude exceeds threshold defined in constructor
                 # otherwise let top level behaviors control
                 if p > self._polarity_threshold:
@@ -223,9 +214,7 @@ class Chatbot():
                     # Leave it for Opencog to handle responses later on.
 
         self._blink_publisher.publish('chat_saying')
-        self._response_publisher.publish(String(response))
-        logger.info("Ask: {}, answer: {}, answered by: {}".format(
-            question, response.encode('utf-8'), botid))
+        self._response_publisher.publish(String(text))
 
     # Just repeat the chat message, as a plain string.
     def _echo_callback(self, chat_message):
