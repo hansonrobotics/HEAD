@@ -42,27 +42,27 @@ class WholeShow(HierarchicalMachine):
         self.on_enter_sleeping_shutting("system_shutdown")
         # ROS Handling
         rospy.init_node('WholeShow')
-        self.sub_sleep = rospy.Subscriber('sleeper', String, self.sleep_cb)
-        self.performance_events = rospy.Subscriber('/performances/events', Event, self.performances_cb)
         self.btree_pub = rospy.Publisher("/behavior_switch", String, queue_size=2)
         self.soma_pub = rospy.Publisher('/blender_api/set_soma_state', SomaState, queue_size=10)
         self.look_pub = rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
         self.performance_runner = rospy.ServiceProxy('/performances/run_full_performance', srv.RunByName)
-        # Chat messages
-        rospy.Service('speech_on', srv.SpeechOn, self.speech_cb)
         # Start sleeping. Wait for Blender to load
         rospy.wait_for_service('/blender_api/get_animation_length')
+        rospy.wait_for_service('/performances/current')
         time.sleep(0.1)
         self.sleeping = rospy.get_param('start_sleeping', False)
         if self.sleeping:
             self.to_sleeping()
-        self.after_performance = None
         # Performance id as key and keyword array as value
         self.performances_keywords = {}
         # Parse on load.
         # TODO make sure we reload those once performances are saved.
         self.find_performances_properties()
 
+        # Start listeners
+        rospy.Service('speech_on', srv.SpeechOn, self.speech_cb)
+        self.sub_sleep = rospy.Subscriber('sleeper', String, self.sleep_cb)
+        self.performance_events = rospy.Subscriber('/performances/events', Event, self.performances_cb)
     """States callbacks """
     def start_sleeping(self):
         self.soma_pub.publish(self._get_soma('sleep', 1))
