@@ -49,7 +49,7 @@ class WholeShow(HierarchicalMachine):
         # Start sleeping. Wait for Blender to load
         rospy.wait_for_service('/blender_api/get_animation_length')
         rospy.wait_for_service('/performances/current')
-        time.sleep(0.1)
+        time.sleep(2)
         self.sleeping = rospy.get_param('start_sleeping', False)
         if self.sleeping:
             self.to_sleeping()
