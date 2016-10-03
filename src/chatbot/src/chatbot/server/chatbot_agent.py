@@ -141,7 +141,7 @@ def _ask_characters(characters, question, lang, sid, query):
             if random.random() < weight:
                 if sess.check(_question, answer, c):
                     trace = _response.get('trace')
-                    if trace:
+                    if trace and isinstance(trace, list):
                         for path in CHARACTER_PATH.split(','):
                             path = path.strip()
                             if not path:
