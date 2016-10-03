@@ -105,6 +105,7 @@ def set_weights(weights, lang, sid):
 from session import ChatSessionManager
 session_manager = ChatSessionManager()
 MAX_CHAT_TRIES = 5
+DISABLE_QUIBBLE = False
 
 def _ask_characters(characters, question, lang, sid, query):
     chat_tries = 0
@@ -132,8 +133,7 @@ def _ask_characters(characters, question, lang, sid, query):
             answer = _response.get('text', '')
             if not answer:
                 continue
-            quibble = _response.get('quibble')
-            if quibble:
+            if DISABLE_QUIBBLE and _response.get('quibble'):
                 continue
 
             # Each tier has weight*100% chance to be selected.
