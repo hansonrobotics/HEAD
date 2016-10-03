@@ -382,7 +382,9 @@ Syntax: upload package
         if self.last_response:
             trace = self.last_response.get('trace', None)
             if trace:
-                self.stdout.write('\n'.join(trace))
+                if isinstance(trace, list):
+                    trace = '\n'.join(trace)
+                self.stdout.write(trace)
         self.stdout.write('\n')
 
     do_t = do_trace

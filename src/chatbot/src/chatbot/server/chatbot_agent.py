@@ -132,13 +132,16 @@ def _ask_characters(characters, question, lang, sid, query):
             answer = _response.get('text', '')
             if not answer:
                 continue
+            quibble = _response.get('quibble')
+            if quibble:
+                continue
 
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random() < weight:
                 if sess.check(_question, answer, c):
                     trace = _response.get('trace')
-                    if trace:
+                    if trace and isinstance(trace, list):
                         for path in CHARACTER_PATH.split(','):
                             path = path.strip()
                             if not path:
