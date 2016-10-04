@@ -20,8 +20,9 @@ rospack = rospkg.RosPack()
 
 
 class WholeShow(HierarchicalMachine):
-
     def __init__(self):
+        rospy.wait_for_service('/performances/reload_properties')
+
         # States for wholeshow
         states = [{'name': 'sleeping', 'children': ['shutting']},
                   {'name': 'interacting', 'children': ['nonverbal']},
@@ -61,10 +62,9 @@ class WholeShow(HierarchicalMachine):
         self.performances_keywords = {}
         # Parse on load.
         # TODO make sure we reload those once performances are saved.
-        self.find_performances_properties()
 
-    """States callbacks """
     def start_sleeping(self):
+        """States callbacks """
         self.soma_pub.publish(self._get_soma('sleep', 1))
         self.soma_pub.publish(self._get_soma('normal', 0))
         # Look down
@@ -82,8 +82,8 @@ class WholeShow(HierarchicalMachine):
     def stop_interacting(self):
         self.btree_pub.publish(String("btree_off"))
 
-    """ ROS Callbacks """
     def speech_cb(self, req):
+        """ ROS Callbacks """
         speech = req.speech
         on = (self.current_state.name == 'interacting')
         # Special states keywords
@@ -96,8 +96,7 @@ class WholeShow(HierarchicalMachine):
                 return srv.SpeechOnResponse(False)
             except:
                 pass
-        if 'wake' in speech or \
-                'makeup' in speech:
+        if 'wake' in speech or 'makeup' in speech:
             try:
                 self.do_wake_up()
                 return srv.SpeechOnResponse(False)
@@ -116,11 +115,11 @@ class WholeShow(HierarchicalMachine):
             except:
                 pass
         if 'hi sophia' in speech or \
-                'hey sophia' in speech or \
-                'hello sofia' in speech or \
-                'hello sophia' in speech or \
-                'hi sofia' in speech or \
-                'hey sofia' in speech:
+                        'hey sophia' in speech or \
+                        'hello sofia' in speech or \
+                        'hello sophia' in speech or \
+                        'hi sofia' in speech or \
+                        'hey sofia' in speech:
             try:
                 self.start_talking()
                 return srv.SpeechOnResponse(True)
@@ -146,7 +145,7 @@ class WholeShow(HierarchicalMachine):
     def performances_cb(self, msg):
         if msg.event == 'running':
             self.to_performing()
-        if msg.event == 'finished'\
+        if msg.event == 'finished' \
                 or msg.event == 'idle':
             if self.after_performance:
                 self.after_performance()
@@ -169,9 +168,9 @@ class WholeShow(HierarchicalMachine):
         # Start performance before triggerring state change so soma state will be sinced with performance
         self.performance_runner('shared/wakeup')
 
-    """ Speech"""
     @staticmethod
     def _get_soma(name, magnitude):
+        """ Speech"""
         s = SomaState()
         s.name = name
         s.ease_in.secs = 0
@@ -184,32 +183,29 @@ class WholeShow(HierarchicalMachine):
     def system_shutdown():
         subprocess.call(['sudo', 'shutdown', '-P', 'now'])
 
-    """ Finds properties files for performances and adds keywords for execution """
-    def find_performances_properties(self):
-        robot_name = rospy.get_param('/robot_name')
-        robot_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
-        common_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
-        for path in [common_path, robot_path]:
-            for root, dirnames, filenames in os.walk(path):
-                if '.properties' in filenames:
-                    self.add_performance(path, os.path.relpath(root, path))
-
-    def add_performance(self, path, performance):
-        properties_file = os.path.join(path, performance, '.properties')
-        with open(properties_file, 'r') as f:
-            properties = yaml.load(f.read())
-        if 'keywords' in properties.keys() and properties['keywords']:
-            self.performances_keywords[performance] = properties['keywords']
-
-    """ Finds performances which one of keyword matches"""
     def find_performance_by_speech(self, speech):
+        """ Finds performances which one of keyword matches"""
         performances = []
-        for performance, keywords in self.performances_keywords.items():
+        for performance, keywords in self.get_keywords().items():
             for keyword in keywords:
                 # Currently only simple matching
                 if keyword in speech:
                     performances.append(performance)
         return performances
+
+    def get_keywords(self, performances=None, keywords=None, path='.'):
+        if performances is None:
+            performances = rospy.get_param(os.path.join('/', rospy.get_param('/robot_name'), 'webui/performances'))
+            keywords = {}
+
+        if 'properties' in performances and 'keywords' in performances['properties']:
+            keywords[path] = performances['properties']['keywords']
+
+        for key, value in performances.items():
+            if key != 'properties':
+                self.get_keywords(performances[key], keywords, os.path.join(path, key).strip('./'))
+
+        return keywords
 
 
 if __name__ == '__main__':

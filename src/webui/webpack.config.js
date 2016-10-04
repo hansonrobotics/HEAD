@@ -1,7 +1,6 @@
 var webpack = require('webpack'),
     path = require('path'),
     autoprefixer = require('autoprefixer'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin'),
     argv = require('yargs').options({
         d: {
             alias: 'dev',
@@ -107,5 +106,5 @@ module.exports = {
     debug: argv.dev,
     displayErrorDetails: argv.dev,
     outputPathinfo: argv.dev,
-    devtool: argv.dev ? 'eval-source-map' : 'cheap-source-map'
+    devtool: argv.dev ? 'cheap-eval-source-map' : null
 };
