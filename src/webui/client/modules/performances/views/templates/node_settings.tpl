@@ -120,7 +120,10 @@
             <label>No speech response</label>
             <input type="text" class="app-no-speech-input form-control">
         </div>
-
+        <div class="form-group" data-node-property="on_event">
+            <label>Performance to run if event happens</label>
+            <input type="text" class="app-on-event form-control">
+        </div>
         <div class="form-group">
             <button class="app-create-button pull-right btn btn-primary">Create</button>
         </div>

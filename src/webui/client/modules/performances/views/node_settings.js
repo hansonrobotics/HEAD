@@ -26,6 +26,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 btreeModeSelect: 'select.app-btree-mode-select',
                 createButton: '.app-create-button',
                 timeout: '.app-node-timeout',
+                onEventInput: '.app-on-event',
                 dialogTurnsInput: '.app-dialog-turns-input',
                 noMatchInput: '.app-no-match-input',
                 noSpeechInput: '.app-no-speech-input',
@@ -45,7 +46,9 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 'change @ui.noMatchInput': 'updateNoMatch',
                 'change @ui.noSpeechInput': 'updateNoSpeech',
                 'change @ui.chatbotSelect': 'updateChatbot',
-                'change @ui.chatTimeoutModeSelect': 'updateChatTimeoutMode'
+                'change @ui.chatTimeoutModeSelect': 'updateChatTimeoutMode',
+                'change @ui.onEventInput': 'updateOnEvent',
+
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -54,6 +57,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 this.ui.startTime.val(this.model.get('start_time'));
                 this.ui.duration.val(this.model.get('duration'));
                 this.ui.timeout.val(this.model.get('timeout'));
+                this.ui.onEventInput.val(this.model.get('on_event'));
                 this.ui.dialogTurnsInput.val(this.model.get('dialog_turns'));
                 this.ui.noMatchInput.val(this.model.get('no_match'));
                 this.ui.noSpeechInput.val(this.model.get('no_speech'));
@@ -291,6 +295,9 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
             },
             updateChatbot: function () {
                 this.model.set('bot_name', this.ui.chatbotSelect.val());
+            },
+            updateOnEvent: function () {
+                this.model.set('on_event', this.ui.onEventInput.val());
             },
             updateChatTimeoutMode: function () {
                 this.model.set('timeout_mode', this.ui.chatTimeoutModeSelect.val());
