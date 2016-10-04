@@ -59,7 +59,10 @@ module.exports = {
         if ('ignore_nodes' in performance && performance['ignore_nodes'] && 'nodes' in current) {
             performance['nodes'] = current['nodes'];
             delete performance['ignore_nodes'];
-        }
+        } else
+            for (let node of performance['nodes'])
+                delete node['id'];
+
 
         delete performance['id'];
         delete performance['path'];
