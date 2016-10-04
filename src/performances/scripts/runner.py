@@ -12,6 +12,7 @@ import fnmatch
 import random
 
 from std_msgs.msg import String, Int32, Float32
+from std_srvs.srv import Trigger
 from chatbot.msg import ChatMessage
 from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
@@ -71,6 +72,8 @@ class Runner:
                 'default': rospy.Publisher('/' + self.robot_name + '/tts', String, queue_size=1),
             }
         }
+        self.load_properties()
+        rospy.Service('~reload_properties', Trigger, self.reload_properties_callback)
         rospy.Service('~load', srv.Load, self.load_callback)
         rospy.Service('~load_nodes', srv.LoadNodes, self.load_nodes_callback)
         rospy.Service('~load_sequence', srv.LoadSequence, self.load_sequence_callback)
@@ -87,6 +90,25 @@ class Runner:
 
         self.worker.start()
         rospy.spin()
+
+    def load_properties(self):
+        robot_name = rospy.get_param('/robot_name')
+        robot_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
+        common_path = os.path.join(rospack.get_path('robots_config'), 'common', 'performances')
+        for path in [common_path, robot_path]:
+            for root, dirnames, filenames in os.walk(path):
+                if '.properties' in filenames:
+                    filename = os.path.join(root, '.properties')
+                    if os.path.isfile(filename):
+                        with open(filename) as f:
+                            properties = yaml.load(f.read())
+                            dir = os.path.relpath(root, path)
+                            rospy.set_param('/' + os.path.join(self.robot_name, 'webui/performances', dir).strip("/.") + '/properties', properties)
+
+
+    def reload_properties_callback(self, request):
+        self.load_properties()
+        return Trigger(success=True)
 
     def load_callback(self, request):
         return srv.LoadResponse(success=True, nodes=json.dumps(self.load_sequence([request.id])))

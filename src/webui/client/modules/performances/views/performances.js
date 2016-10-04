@@ -138,7 +138,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                 });
 
                 bootbox.dialog({
-                    title: 'Settings',
+                    title: 'Performance Settings',
                     message: settingsView.$el,
                     onEscape: true,
                     backdrop: true,
