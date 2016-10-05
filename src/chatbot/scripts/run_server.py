@@ -7,12 +7,20 @@ import datetime as dt
 import json
 import shutil
 
-log_dir = os.environ.get('ROS_LOG_DIR', os.path.expanduser('~/.hr/log'))
-if not os.path.isdir(log_dir):
-    os.makedirs(log_dir)
-LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(log_dir,
+import sys
+CWD = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, os.path.join(CWD, '../src'))
+
+if 'HR_CHARACTER_PATH' not in os.environ:
+    os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
+
+from chatbot.server.config import CHATBOT_LOG_DIR, HISTORY_DIR
+
+if not os.path.isdir(CHATBOT_LOG_DIR):
+    os.makedirs(CHATBOT_LOG_DIR)
+LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(CHATBOT_LOG_DIR,
                                                     dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
-link_log_fname = os.path.join(log_dir, 'chatbot_server_latest.log')
+link_log_fname = os.path.join(CHATBOT_LOG_DIR, 'chatbot_server_latest.log')
 if os.path.islink(link_log_fname):
     os.unlink(link_log_fname)
 os.symlink(LOG_CONFIG_FILE, link_log_fname)
@@ -27,13 +35,6 @@ root_logger.setLevel(logging.INFO)
 root_logger.addHandler(fh)
 root_logger.addHandler(sh)
 
-import sys
-CWD = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, os.path.join(CWD, '../src'))
-
-if 'HR_CHARACTER_PATH' not in os.environ:
-    os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
-
 from chatbot.server.auth import requires_auth
 from chatbot.server.auth import check_auth, authenticate
 
@@ -43,7 +44,6 @@ from chatbot.server.chatbot_agent import (
     ask, list_character, session_manager, set_weights,
     dump_history, dump_session, add_character, list_character_names,
     rate_answer)
-from chatbot.server.session import HISTORY_DIR
 from chatbot.stats import history_stats
 
 json_encode = json.JSONEncoder().encode
