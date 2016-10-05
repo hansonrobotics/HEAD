@@ -315,7 +315,8 @@ class pause(Node):
 
     def stop(self, run_time):
         if self.subscriber:
-            self.subscriber.unregister()
+            self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+            self.subscriber = None
         if self.timer:
             self.timer.cancel()
 
