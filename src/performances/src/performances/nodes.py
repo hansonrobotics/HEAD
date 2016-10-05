@@ -16,6 +16,7 @@ from performances.msg import Event
 import requests
 import urllib
 import dynamic_reconfigure.client
+from performances.srv import RunByNameRequest
 
 logger = logging.getLogger('hr.performances.nodes')
 
@@ -271,27 +272,41 @@ class pause(Node):
         Node.__init__(self, data, runner)
         self.subscriber = False
         self.timer = False
+        if 'on_event' not in self.data.keys():
+            self.data['on_event'] = False
+
+    def start_performance(self, msg=None):
+        if self.subscriber:
+            self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+            self.subscriber = None
+        req = RunByNameRequest()
+        req.id = self.data['on_event'].strip()
+        self.timer.cancel()
+        response = self.runner.run_full_perfromance_callback(req)
+        if not response.success:
+            self.runner.resume()
 
     def start(self, run_time):
         self.runner.pause()
 
         def resume(msg=None):
-            print 'resuming'
+            if self.subscriber:
+                self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+                self.subscriber = None
             if not self.finished:
                 self.runner.resume()
-            if self.subscriber:
-                self.subscriber.unregister()
             if self.timer:
                 self.timer.cancel()
 
         if 'topic' in self.data:
             topic = self.data['topic'].strip()
-            if topic and topic[0] != '/':
-                topic = '/' + self.runner.robot_name + '/' + topic
-                self.subscriber = rospy.Subscriber(topic, String, resume)
+            if self.data['on_event']:
+                self.subscriber = self.runner.register(topic, self.start_performance)
+            else:
+                self.subscriber = self.runner.register(topic, resume)
 
         try:
-            timeout = int(self.data['timeout'])
+            timeout = float(self.data['timeout'])
             if timeout > 0.1:
                 self.timer = Timer(timeout, resume)
                 self.timer.start()
