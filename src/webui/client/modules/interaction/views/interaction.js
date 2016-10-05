@@ -1,6 +1,6 @@
 define(['application', "marionette", './message', "./templates/interaction.tpl", 'lib/api', '../entities/message_collection',
-        'jquery', './faces', 'underscore', 'lib/speech_recognition', 'annyang', 'scrollbar', 'scrollbar-css', '../css/interaction'],
-    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView, _, speechRecognition, annyang) {
+        'jquery', './faces', 'underscore', 'lib/speech_recognition', 'annyang', 'roslib', 'scrollbar', 'scrollbar-css', '../css/interaction'],
+    function (app, Marionette, MessageView, template, api, MessageCollection, $, FacesView, _, speechRecognition, annyang, ROSLIB) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: MessageView,
