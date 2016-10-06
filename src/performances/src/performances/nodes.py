@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 # Nodes factory
+import os
 import pprint
 import rospy
 from std_msgs.msg import String, Int32, Float32
@@ -16,6 +17,7 @@ from performances.msg import Event
 import requests
 import urllib
 import dynamic_reconfigure.client
+import re
 
 logger = logging.getLogger('hr.performances.nodes')
 
@@ -28,10 +30,11 @@ class Node(object):
                                        for g in cls.subClasses(s)]
 
     @classmethod
-    def createNode(cls, data, runner, start_time=0):
+    def createNode(cls, data, runner, start_time=0, path=''):
         for s_cls in cls.subClasses(cls):
             if data['name'] == s_cls.__name__:
                 node = s_cls(data, runner)
+                node.path = path
                 if start_time > node.start_time:
                     # Start time should be before or on node starting
                     node.finished = True
@@ -45,6 +48,7 @@ class Node(object):
         self.started = False
         self.started_at = 0
         self.finished = False
+        self.path = ''
         # Node runner for accessing ROS topics and method
         # TODO make ROS topics and services singletons class for shared use.
         self.runner = runner
@@ -131,6 +135,14 @@ class speech(Node):
         # SSML tags for english TTS only.
         if lang == 'en':
             text = self._add_ssml(text)
+        variables = re.findall("{(.*?)}", text)
+        for var in variables:
+            param_name = os.path.join('/', self.runner.robot_name, 'webui/performances', self.path,
+                                      'properties/variables', var)
+            val = ''
+            if rospy.has_param(param_name):
+                val = rospy.get_param(param_name)
+            text = text.replace('{' + var + '}', val)
         self.runner.topics['tts'][lang].publish(String(text))
 
     # adds SSML tags for whole text returns updated text.
@@ -143,14 +155,14 @@ class speech(Node):
 class gesture(Node):
     def start(self, run_time):
         self.runner.topics['gesture'].publish(
-                SetGesture(self.data['gesture'], 1, float(self.data['speed']), self._magnitude(self.data['magnitude'])))
+            SetGesture(self.data['gesture'], 1, float(self.data['speed']), self._magnitude(self.data['magnitude'])))
 
 
 class emotion(Node):
     def start(self, run_time):
         self.runner.topics['emotion'].publish(
-                EmotionState(self.data['emotion'], self._magnitude(self.data['magnitude']),
-                             rospy.Duration.from_sec(self.data['duration'])))
+            EmotionState(self.data['emotion'], self._magnitude(self.data['magnitude']),
+                         rospy.Duration.from_sec(self.data['duration'])))
 
 
 # Behavior tree
@@ -218,7 +230,7 @@ class expression(Node):
         if (not self.shown) and (run_time > self.start_time + 0.05):
             self.shown = True
             self.runner.topics['expression'].publish(
-                    MakeFaceExpr(self.data['expression'], self._magnitude(self.data['magnitude'])))
+                MakeFaceExpr(self.data['expression'], self._magnitude(self.data['magnitude'])))
             logger.info("Publish expression {}".format(self.data))
 
     def stop(self, run_time):
@@ -254,7 +266,7 @@ class kfanimation(Node):
         if (not self.shown) and (run_time > self.start_time + 0.05):
             self.shown = True
             self.runner.topics['kfanimation'].publish(
-                    PlayAnimation(self.data['animation'], int(self.data['fps'])))
+                PlayAnimation(self.data['animation'], int(self.data['fps'])))
 
     def stop(self, run_time):
         try:
@@ -373,7 +385,7 @@ class chat(Node):
 
         def input_callback(event):
             self.respond(
-                    self.get_chatbot_response(event.data) if self.enable_chatbot else self.match_response(event.data))
+                self.get_chatbot_response(event.data) if self.enable_chatbot else self.match_response(event.data))
 
         self.subscriber = rospy.Subscriber('/' + self.runner.robot_name + '/nodes/listen/input', String, input_callback)
         self.runner.topics['events'].publish(Event('chat', 0))
@@ -385,7 +397,7 @@ class chat(Node):
     def paused(self, run_time):
         if self.timeout and not self.talking:
             if (self.timeout_mode == 'each' and time.time() - self.last_turn_at >= self.timeout) or (
-                    self.timeout_mode == 'whole' and time.time() - self.started_at >= self.timeout):
+                            self.timeout_mode == 'whole' and time.time() - self.started_at >= self.timeout):
                 if 'no_speech' in self.data:
                     self.respond(self.data['no_speech'])
                 else:
@@ -560,8 +572,9 @@ class gaze_at(attention):
         attention.__init__(self, data, runner)
         self.topic = 'gaze_at'
 
+
 class settings(Node):
-    def setParameters(self,rosnode, params):
+    def setParameters(self, rosnode, params):
         cl = dynamic_reconfigure.client.Client(rosnode)
         res = cl.update_configuration(params)
         cl.close()

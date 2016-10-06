@@ -55,7 +55,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                     success: function () {
                         current.fetchCurrent({
                             success: function (response) {
-                                showViews(response.ids);
+                                showViews(_.pluck(response.performances, 'id'));
 
                             },
                             error: function () {

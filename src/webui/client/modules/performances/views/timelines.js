@@ -58,7 +58,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     loadOptions = {
                         success: function () {
                             var handler = function () {
-                                self.model.loadNodes();
+                                self.model.loadPerformance();
                             };
 
                             self.listenTo(self.model.nodes, 'change add remove', handler);
@@ -74,7 +74,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     if (this.model.id && this.model.nodes.isEmpty()) {
                         this.model.load(loadOptions);
                     } else
-                        this.model.loadNodes(loadOptions);
+                        this.model.loadPerformance(loadOptions);
                 } else {
                     this.model = new Performance();
                     this.model.fetchCurrent(loadOptions);

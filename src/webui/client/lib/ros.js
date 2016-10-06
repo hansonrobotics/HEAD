@@ -314,10 +314,10 @@ define(['jquery', 'roslib', 'js-yaml', './api'], function ($, ROSLIB, jsyaml, ap
                         name: '/performances/load_sequence',
                         messageType: 'performances/LoadSequence'
                     }),
-                    load_nodes: new ROSLIB.Service({
+                    load_performance: new ROSLIB.Service({
                         ros: api.ros,
-                        name: '/performances/load_nodes',
-                        messageType: 'performances/LoadNodes'
+                        name: '/performances/load_performance',
+                        messageType: 'performances/LoadPerformance'
                     }),
                     current: new ROSLIB.Service({
                         ros: api.ros,

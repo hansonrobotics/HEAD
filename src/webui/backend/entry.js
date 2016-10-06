@@ -170,10 +170,12 @@ var readPerformanceProperties = function (dir) {
         dir = dir || '.';
         var name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot,
             filename = path.join(argv.config, name, 'performances', dir, '.properties'),
-            properties = yamlIO.readFile(filename);
-        return yamlIO.writeFile(filename, _.extend(properties, data));
-    };
+            properties = yamlIO.readFile(filename),
+            success = yamlIO.writeFile(filename, _.extend(properties, data));
 
+        ros.performances.reloadProperties();
+        return success;
+    };
 
 app.get('/keywords/:path(*)?', function (req, res) {
     res.json({keywords: readPerformanceProperties(req.params['path'])['keywords'] || []});
