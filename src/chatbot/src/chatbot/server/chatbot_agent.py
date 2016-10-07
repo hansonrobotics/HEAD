@@ -126,12 +126,22 @@ def _ask_characters(characters, question, lang, sid, query):
     response = None
     chat_tries = 0
     hit_character = None
+    circulate = True
 
+    # If the last input is a question, then try to use the same tier to
+    # answer it.
     if sess.open_character and sess.open_character in characters:
-        response = sess.open_character.respond(_question, lang, sid, query)
-        hit_character = sess.open_character
-        logger.info("Using open character {}".format(sess.open_character.id))
-    else:
+        logger.info("Using open dialog character {}".format(sess.open_character.id))
+        response = sess.open_character.respond(_question, lang, sess, query)
+        answer = response.get('text', '').strip()
+        if answer:
+            hit_character = sess.open_character
+            circulate = False
+        else:
+            sess.open_character = None
+            circulate = True
+
+    if circulate:
         # set the last used character to be the first of the list
         if sess.last_used_character:
             for c, weight in weighted_characters:
@@ -155,6 +165,7 @@ def _ask_characters(characters, question, lang, sid, query):
             if answer.lower().strip().endswith('?'):
                 hit_character = c
                 sess.open_character = c
+                logger.info("Set open dialog character {}".format(c.id))
                 break
 
             if DISABLE_QUIBBLE and response.get('quibble'):
