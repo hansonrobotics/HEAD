@@ -2,8 +2,6 @@ import os
 from chatbot.aiml import Kernel
 import logging
 
-logger = logging.getLogger('hr.chatbot.character')
-
 
 class Character(object):
 
@@ -17,6 +15,7 @@ class Character(object):
         self.languages = ['en']  # List of lanugages it supports
         self.local = True
         self.non_repeat = True
+        self.logger = logging.getLogger('hr.chatbot.character.{}'.format(id))
 
     def get_properties(self):
         return self.properties
@@ -61,9 +60,9 @@ class AIMLCharacter(Character):
         errors = []
         for f in aiml_files:
             if '*' not in f and not os.path.isfile(f):
-                logger.warn("[{}] {} is not found".format(self.id, f))
+                self.logger.warn("{} is not found".format(f))
             errors.extend(kernel.learn(f))
-            logger.info("[{}] Load {}".format(self.id, f))
+            self.logger.info("Load {}".format(f))
             if f not in self.aiml_files:
                 self.aiml_files.append(f)
         return errors
@@ -77,10 +76,9 @@ class AIMLCharacter(Character):
                     value = parts[1].strip()
                     self.kernel.setBotPredicate(key, value)
                     self.properties[key] = value
-                logger.info("[{}] Set properties file {}".format(
-                    self.id, propname))
+                self.logger.info("Set properties file {}".format(propname))
         except Exception:
-            logger.error("Couldn't open {}".format(propname))
+            self.logger.error("Couldn't open {}".format(propname))
 
     def set_properties(self, props):
         super(AIMLCharacter, self).set_properties(props)
@@ -95,12 +93,12 @@ class AIMLCharacter(Character):
             return
         if topic == self.current_topic:
             self.counter += 1
-            logger.info('[{}] Topic is continued {} {}'.format(
-                self.id, topic, self.counter))
+            self.logger.info('Topic is continued {} {}'.format(
+                topic, self.counter))
         else:
             self.counter = 0
-            logger.info('[{}] Topic is changed from "{}" to "{}", '
-                        'reset counter'.format(self.id, self.current_topic, topic))
+            self.logger.info('Topic is changed from "{}" to "{}", '
+                        'reset counter'.format(self.current_topic, topic))
             self.current_topic = topic
         if self.counter >= self.N:
             self.counter = 0
@@ -109,7 +107,7 @@ class AIMLCharacter(Character):
     def reset_topic(self, session):
         self.current_topic = ''
         self.kernel.setPredicate('topic', '', session)
-        logger.info("[{}] Topic is reset".format(self.id))
+        self.logger.info("Topic is reset")
 
     def respond(self, question, lang, session, query):
         ret = {}
@@ -135,13 +133,13 @@ class AIMLCharacter(Character):
         ret['botname'] = self.name
         trace = self.kernel.getTraceDocs()
         if trace:
-            logger.info("Trace: {}".format(trace))
+            self.logger.info("Trace: {}".format(trace))
             ret['trace'] = trace
         return ret
 
     def refresh(self, sid):
         self.kernel._deleteSession(sid)
-        logger.info("Character {} is refreshed".format(self.id))
+        self.logger.info("Character is refreshed")
 
     def get_context(self, sid):
         return self.kernel.getSessionData(sid)
@@ -152,4 +150,4 @@ class AIMLCharacter(Character):
             if k.startswith('_'):
                 continue
             self.kernel.setPredicate(k, v, sid)
-            logger.info("[{}] Set predicate {}={}".format(self.id, k, v))
+            self.logger.info("Set predicate {}={}".format(k, v))
