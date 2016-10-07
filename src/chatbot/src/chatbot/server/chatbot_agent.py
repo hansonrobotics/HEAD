@@ -108,7 +108,6 @@ MAX_CHAT_TRIES = 5
 DISABLE_QUIBBLE = False
 
 def _ask_characters(characters, question, lang, sid, query):
-    chat_tries = 0
     sess = session_manager.get_session(sid)
     if sess is None:
         return
@@ -122,62 +121,79 @@ def _ask_characters(characters, question, lang, sid, query):
         weights = [c.weight for c in characters]
     weighted_characters = zip(characters, weights)
 
-    # set the last used character to be the first of the list
-    if sess.last_used_character:
-        for c, weight in weighted_characters:
-            if sess.last_used_character.id == c.id:
-                weighted_characters.remove((c, weight))
-                weighted_characters.insert(0, (c, weight))
-
     _question = question.lower().strip()
     _question = ' '.join(_question.split())  # remove consecutive spaces
-    while chat_tries < MAX_CHAT_TRIES:
-        chat_tries += 1
-        for c, weight in weighted_characters:
-            if weight == 0:
-                continue
-            _response = c.respond(_question, lang, sid, query)
-            assert isinstance(_response, dict), "Response must be a dict"
-            answer = _response.get('text', '')
-            if not answer:
-                continue
-            if DISABLE_QUIBBLE and _response.get('quibble'):
-                continue
+    response = None
+    chat_tries = 0
+    hit_character = None
 
-            # Each tier has weight*100% chance to be selected.
-            # If the chance goes to the last tier, it will be selected anyway.
-            if random.random() < weight:
-                if sess.check(_question, answer, c):
-                    trace = _response.get('trace')
-                    if trace and isinstance(trace, list):
-                        for path in CHARACTER_PATH.split(','):
-                            path = path.strip()
-                            if not path:
-                                continue
-                            path = path + '/'
-                            trace = [f.replace(path, '') for f in trace]
-                        _response['trace'] = trace
-                    if not query:
-                        sess.add(question, answer, AnsweredBy=c.name,
-                                 User=user, BotName=botname, Trace=trace,
-                                 Revision=REVISION, Lang=lang)
-                        sess.last_used_character = c if c.dynamic_level else None
-                    return _response
+    if sess.open_character and sess.open_character in characters:
+        response = sess.open_character.respond(_question, lang, sid, query)
+        hit_character = sess.open_character
+        logger.info("Using open character {}".format(sess.open_character.id))
+    else:
+        # set the last used character to be the first of the list
+        if sess.last_used_character:
+            for c, weight in weighted_characters:
+                if sess.last_used_character.id == c.id:
+                    weighted_characters.remove((c, weight))
+                    weighted_characters.insert(0, (c, weight))
+            logger.info("Reorder responding characters to {}".format(weighted_characters))
+
+        while chat_tries < MAX_CHAT_TRIES:
+            chat_tries += 1
+            for c, weight in weighted_characters:
+                if weight == 0:
+                    logger.info("Ignore zero weighted character {}".format(c.id))
+                    continue
+
+                response = c.respond(_question, lang, sid, query)
+                assert isinstance(response, dict), "Response must be a dict"
+
+                answer = response.get('text', '').strip()
+                if not answer:
+                    continue
+
+                if answer.lower().strip().endswith('?'):
+                    hit_character = c
+                    sess.open_character = c
+                    break
+
+                if DISABLE_QUIBBLE and response.get('quibble'):
+                    logger.info("Ignore quibbled answer by {}".format(c.id))
+                    continue
+
+                # Each tier has weight*100% chance to be selected.
+                # If the chance goes to the last tier, it will be selected anyway.
+                if random.random() < weight:
+                    if sess.check(_question, answer, c):
+                        hit_character = c
+                        break
 
     dummy_character = get_character('dummy', lang)
-    if dummy_character:
-        if not sess.check(_question, answer, dummy_character):
-            _response = dummy_character.respond(
-                "REPEAT_ANSWER", lang, sid, query)
-        else:
-            _response = dummy_character.respond("NO_ANSWER", lang, sid, query)
-        answer = _response.get('text', '')
+    if response is None and dummy_character:
+        response = dummy_character.respond("NO_ANSWER", lang, sid, query)
 
-        if not query:
-            sess.add(question, answer, AnsweredBy=dummy_character.name,
-                     User=user, BotName=botname, Trace=None,
-                     Revision=REVISION, Lang=lang)
-        return _response
+    # Replace absolute path in the trace with relative path
+    trace = response.get('trace')
+    if trace and isinstance(trace, list):
+        for path in CHARACTER_PATH.split(','):
+            path = path.strip()
+            if not path:
+                continue
+            path = path + '/'
+            trace = [f.replace(path, '') for f in trace]
+        response['trace'] = trace
+
+    answer = response.get('text', '').strip()
+
+    if not query:
+        sess.add(question, answer, AnsweredBy=c.name,
+                    User=user, BotName=botname, Trace=trace,
+                    Revision=REVISION, Lang=lang)
+        sess.last_used_character = hit_character if hit_character.dynamic_level else None
+
+    return response
 
 
 def get_responding_characters(lang, sid):
@@ -269,6 +285,10 @@ def ask(question, lang, sid, query=False):
     if question and question.lower().strip() in ['hi', 'hello']:
         session_manager.reset_session(sid)
         logger.info("Session is cleaned by hi")
+    if question and question.lower().strip() in ["what's new"]:
+        sess.last_used_character = None
+        sess.open_character = None
+        logger.info("Triggered new topic")
 
     logger.info("Responding characters {}".format(responding_characters))
     _response = _ask_characters(
