@@ -186,8 +186,8 @@ class Client(cmd.Cmd, object):
         chatbots = []
         try:
             chatbots = self.list_chatbot()
-            chatbots = ['{}: weight: {} level: {}'.format(
-                c, w, l) for c, w, l in chatbots]
+            chatbots = ['{}: weight: {} level: {} dynamic level: {}'.format(
+                c, w, l, d) for c, w, l, d in chatbots]
             self.stdout.write('\n'.join(chatbots))
             self.stdout.write('\n')
         except Exception as ex:
