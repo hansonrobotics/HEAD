@@ -1,0 +1,22 @@
+===How To Configure Microphones===
+Considering we have two microphones[8sounds and usb microphone] and a speaker
+
+If manyears is not detected then remove ~/.config/pulse directory
+If 8sounds has no output use alsamixer to select 8sounds usb and set all microphone channels to capture mode 
+
+Echo cancellation:
+To do echo cancellation with pulseaudio you will need to pair up a microphone with speaker.
+Edit /etc/pulse/default.pa file
+
+Add the usb mic to list by:
+load-module module-alsa-source device_id=Device source_name="usbmic"
+
+Then pair it with default built in audio jack by:
+load-module module-echo-cancel aec_method=speex source_name="usbmic"
+==end of edit
+Note: -- if you restart pc and sound stops working it means usb mic is not attached
+-- do not pair 8sounds mic with speaker
+-- source is microphone , sink is speaker
+Attach usb mic and then
+pulseaudio -k
+pulseaudio --start
