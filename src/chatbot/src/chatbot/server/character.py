@@ -7,10 +7,11 @@ logger = logging.getLogger('hr.chatbot.character')
 
 class Character(object):
 
-    def __init__(self, id, name, level=99):
+    def __init__(self, id, name, level=99, dynamic_level=False):
         self.id = id
         self.name = name
         self.level = level
+        self.dynamic_level = dynamic_level
         self.properties = {}
         self.weight = 1  # How likely its response is used. [0-1]
         self.languages = ['en']  # List of lanugages it supports

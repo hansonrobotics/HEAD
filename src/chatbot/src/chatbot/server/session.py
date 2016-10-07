@@ -34,6 +34,7 @@ class Session(object):
         self.active = False
         self.last_active_time = None
         self.test = False
+        self.last_used_character = None
 
     def set_test(self, test):
         if test:
@@ -56,6 +57,7 @@ class Session(object):
         self.dump()
         self.cache.clean()
         self.init = dt.datetime.now()
+        self.last_used_character = None
         for c in self.characters:
             try:
                 c.refresh(self.sid)

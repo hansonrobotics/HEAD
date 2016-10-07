@@ -120,12 +120,20 @@ def _ask_characters(characters, question, lang, sid, query):
         weights = data.weights
     else:
         weights = [c.weight for c in characters]
+    weighted_characters = zip(characters, weights)
+
+    # set the last used character to be the first of the list
+    if sess.last_used_character:
+        for c, weight in weighted_characters:
+            if sess.last_used_character.id == c.id:
+                weighted_characters.remove((c, weight))
+                weighted_characters.insert(0, (c, weight))
 
     _question = question.lower().strip()
     _question = ' '.join(_question.split())  # remove consecutive spaces
     while chat_tries < MAX_CHAT_TRIES:
         chat_tries += 1
-        for c, weight in zip(characters, weights):
+        for c, weight in weighted_characters:
             if weight == 0:
                 continue
             _response = c.respond(_question, lang, sid, query)
@@ -153,6 +161,7 @@ def _ask_characters(characters, question, lang, sid, query):
                         sess.add(question, answer, AnsweredBy=c.name,
                                  User=user, BotName=botname, Trace=trace,
                                  Revision=REVISION, Lang=lang)
+                        sess.last_used_character = c if c.dynamic_level else None
                     return _response
 
     # Ask the same question to every tier to sync internal state
