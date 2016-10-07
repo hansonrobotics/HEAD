@@ -77,10 +77,10 @@ def list_character(lang, sid):
         return []
     responding_characters = get_responding_characters(lang, sid)
     if hasattr(sess.sdata, 'weights'):
-        return [(c.id, w, c.level) for c, w in zip(
+        return [(c.id, w, c.level, c.dynamic_level) for c, w in zip(
                 responding_characters, sess.sdata.weights)]
     else:
-        return [(c.id, c.weight, c.level) for c in responding_characters]
+        return [(c.id, c.weight, c.level, c.dynamic_level) for c in responding_characters]
 
 
 def list_character_names():
@@ -105,7 +105,7 @@ def set_weights(weights, lang, sid):
 from session import ChatSessionManager
 session_manager = ChatSessionManager()
 MAX_CHAT_TRIES = 5
-DISABLE_QUIBBLE = False
+DISABLE_QUIBBLE = True
 
 def _ask_characters(characters, question, lang, sid, query):
     sess = session_manager.get_session(sid)
