@@ -164,9 +164,6 @@ def _ask_characters(characters, question, lang, sid, query):
                         sess.last_used_character = c if c.dynamic_level else None
                     return _response
 
-    # Ask the same question to every tier to sync internal state
-    [c.respond(_question, lang, sid, query) for c in characters]
-
     dummy_character = get_character('dummy', lang)
     if dummy_character:
         if not sess.check(_question, answer, dummy_character):
