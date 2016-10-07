@@ -13,7 +13,6 @@ killme() {
     kill $(<"$pidfile") || true
     rm $pidfile
   fi
-  ps -ef|grep "python app/__init__.py -p 8000"|grep -v grep|awk '{print $2}'|xargs kill 2>/dev/null
 }
 
 trap 'killme' SIGINT EXIT
@@ -33,7 +32,10 @@ rosrun speech2command run.py &
 echo $! >>$pidfile
 rosrun webui fake_tts.py &
 echo $! >>$pidfile
-python app/__init__.py -p 8000 &
+webpack -w &
+echo $! >>$pidfile
+cd backend/
+nodemon entry.js -c /home/ubuntu/hansonrobotics/private_ws/src/robots_config -r sophia -p 8003 &
 echo $! >>$pidfile
 
 echo "Open http://localhost:8000/#interactions"
