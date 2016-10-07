@@ -75,6 +75,8 @@ class AIMLCharacterLoader(object):
                         character.kernel, aiml_files)
                 if 'weight' in spec:
                     character.weight = float(spec['weight'])
+                if 'dynamic_level' in spec:
+                    character.dynamic_level = bool(spec['dynamic_level'])
             except KeyError as ex:
                 logger.error(ex)
                 logger.error(traceback.format_exc())
