@@ -27,10 +27,7 @@ class ResponseCache(object):
         self.last_answer = None
         self.last_time = None
 
-    def check(self, question, answer, character):
-        if not character.non_repeat:
-            return True
-
+    def check(self, question, answer):
         # each additional character over the 15 characters, adds 30 seconds
         # delay before that AIML string is allowed to repeat.
         same_answers = [r for r in self.record if norm(r['Answer']) == norm(answer)]

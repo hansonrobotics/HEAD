@@ -55,6 +55,7 @@ class AIMLCharacter(Character):
         self.counter = 0
         self.N = 10  # How many times of reponse on the same topic
         self.languages = ['en']
+        self.max_chat_tries = 5
 
     def load_aiml_files(self, kernel, aiml_files):
         errors = []
@@ -112,11 +113,24 @@ class AIMLCharacter(Character):
 
     def respond(self, question, lang, session, query):
         ret = {}
+        sid = session.sid
+        answer = ''
         if lang not in self.languages:
-            ret['text'] = ''
+            answer = ''
         else:
-            ret['text'] = self.kernel.respond(question, session, query)
-        ret['emotion'] = self.kernel.getPredicate('emotion', session)
+            chat_tries = 0
+            answer = self.kernel.respond(question, sid, query)
+            if self.non_repeat:
+                while chat_tries < self.max_chat_tries:
+                    if session.check(question, answer):
+                        break
+                    answer = self.kernel.respond(question, sid, query)
+                    chat_tries += 1
+                answer = ''
+                ret['repeat'] = True
+                logger.warn("Repeat answer")
+        ret['text'] = answer
+        ret['emotion'] = self.kernel.getPredicate('emotion', sid)
         ret['botid'] = self.id
         ret['botname'] = self.name
         trace = self.kernel.getTraceDocs()

@@ -140,35 +140,32 @@ def _ask_characters(characters, question, lang, sid, query):
                     weighted_characters.insert(0, (c, weight))
             logger.info("Reorder responding characters to {}".format(weighted_characters))
 
-        while chat_tries < MAX_CHAT_TRIES:
-            chat_tries += 1
-            for c, weight in weighted_characters:
-                if weight == 0:
-                    logger.info("Ignore zero weighted character {}".format(c.id))
-                    continue
+        for c, weight in weighted_characters:
+            if weight == 0:
+                logger.info("Ignore zero weighted character {}".format(c.id))
+                continue
 
-                response = c.respond(_question, lang, sid, query)
-                assert isinstance(response, dict), "Response must be a dict"
+            response = c.respond(_question, lang, sess, query)
+            assert isinstance(response, dict), "Response must be a dict"
 
-                answer = response.get('text', '').strip()
-                if not answer:
-                    continue
+            answer = response.get('text', '').strip()
+            if not answer:
+                continue
 
-                if answer.lower().strip().endswith('?'):
-                    hit_character = c
-                    sess.open_character = c
-                    break
+            if answer.lower().strip().endswith('?'):
+                hit_character = c
+                sess.open_character = c
+                break
 
-                if DISABLE_QUIBBLE and response.get('quibble'):
-                    logger.info("Ignore quibbled answer by {}".format(c.id))
-                    continue
+            if DISABLE_QUIBBLE and response.get('quibble'):
+                logger.info("Ignore quibbled answer by {}".format(c.id))
+                continue
 
-                # Each tier has weight*100% chance to be selected.
-                # If the chance goes to the last tier, it will be selected anyway.
-                if random.random() < weight:
-                    if sess.check(_question, answer, c):
-                        hit_character = c
-                        break
+            # Each tier has weight*100% chance to be selected.
+            # If the chance goes to the last tier, it will be selected anyway.
+            if random.random() < weight:
+                hit_character = c
+                break
 
     dummy_character = get_character('dummy', lang)
     if response is None and dummy_character:
