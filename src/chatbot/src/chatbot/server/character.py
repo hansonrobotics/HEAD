@@ -124,9 +124,10 @@ class AIMLCharacter(Character):
                         break
                     answer = self.kernel.respond(question, sid, query)
                     chat_tries += 1
-                answer = ''
-                ret['repeat'] = True
-                logger.warn("Repeat answer")
+                if not session.check(question, answer):
+                    answer = ''
+                    ret['repeat'] = True
+                    self.logger.warn("Repeat answer")
         ret['text'] = answer
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)
         ret['botid'] = self.id
