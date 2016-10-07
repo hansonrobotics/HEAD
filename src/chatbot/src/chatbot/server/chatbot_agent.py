@@ -199,7 +199,10 @@ def _ask_characters(characters, question, lang, sid, query):
         sess.add(question, answer, AnsweredBy=c.name,
                     User=user, BotName=botname, Trace=trace,
                     Revision=REVISION, Lang=lang)
-        sess.last_used_character = hit_character if hit_character.dynamic_level else None
+        if hit_character and hit_character.dynamic_level:
+            sess.last_used_character = hit_character
+        else:
+            sess.last_used_character = None
 
     return response
 
