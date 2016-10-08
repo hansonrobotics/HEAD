@@ -54,7 +54,7 @@ class Chatbot():
         self.respond_worker.daemon = True
         self.respond_worker.start()
         self.delay_response = rospy.get_param('delay_response', False)
-        self.delay_time = rospy.get_param('delay_time', 2)
+        self.delay_time = rospy.get_param('delay_time', 5)
 
         rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
         rospy.Subscriber('speech_events', String, self._speech_event_callback)
