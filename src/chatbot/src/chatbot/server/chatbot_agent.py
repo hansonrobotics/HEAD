@@ -126,6 +126,7 @@ def _ask_characters(characters, question, lang, sid, query):
     response = None
     hit_character = None
     answer = None
+    cross_trace = []
 
     # If the last input is a question, then try to use the same tier to
     # answer it.
@@ -135,7 +136,9 @@ def _ask_characters(characters, question, lang, sid, query):
         answer = response.get('text', '').strip()
         if answer:
             hit_character = sess.open_character
+            cross_trace.append((sess.open_character.id, 'question', response.get('trace')))
         else:
+            cross_trace.append((sess.open_character.id, 'question', 'No answer'))
 
     if not answer:
         # Try the first tier to see if there is good match
@@ -148,9 +151,12 @@ def _ask_characters(characters, question, lang, sid, query):
                 response = c.respond(_question, lang, sess, query)
                 answer = response.get('text', '').strip()
                 hit_character = c
+                cross_trace.append((c.id, 'priority', response.get('trace')))
             else:
+                cross_trace.append((c.id, 'priority', 'Pass through'))
         else:
             logger.info("{} has no good match".format(c.id))
+            cross_trace.append((c.id, 'priority', 'No good match'))
 
     if not answer:
         # set the last used character to be the first of the list
@@ -171,17 +177,22 @@ def _ask_characters(characters, question, lang, sid, query):
 
             answer = response.get('text', '').strip()
             if not answer:
+                cross_trace.append((c.id, 'loop', 'No answer'))
                 continue
 
             if DISABLE_QUIBBLE and response.get('quibble'):
                 logger.info("Ignore quibbled answer by {}".format(c.id))
+                cross_trace.append((c.id, 'loop', 'Quibble answer'))
                 continue
 
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random() < weight:
                 hit_character = c
+                cross_trace.append((c.id, 'loop', response.get('trace')))
                 break
+            else:
+                cross_trace.append((c.id, 'loop', 'Pass through'))
 
     dummy_character = get_character('dummy', lang)
     if response is None and dummy_character:
@@ -207,8 +218,8 @@ def _ask_characters(characters, question, lang, sid, query):
         else:
             sess.open_character = None
 
+    response['trace'] = cross_trace
     return response
-
 
 def get_responding_characters(lang, sid):
     sess = session_manager.get_session(sid)

@@ -2,6 +2,7 @@ import os
 from chatbot.aiml import Kernel
 import logging
 import re
+from config import CHARACTER_PATH
 
 
 class Character(object):
@@ -42,6 +43,17 @@ class Character(object):
     def __repr__(self):
         return "<Character id: {}, name: {}, level: {}>".format(
             self.id, self.name, self.level)
+
+
+def replace_aiml_abs_path(trace):
+    if isinstance(trace, list):
+        for path in CHARACTER_PATH.split(','):
+            path = path.strip()
+            if not path:
+                continue
+            path = path + '/'
+            trace = [f.replace(path, '') for f in trace]
+    return trace
 
 
 class AIMLCharacter(Character):
@@ -139,7 +151,6 @@ class AIMLCharacter(Character):
         traces = self.kernel.getTraceDocs()
         if traces:
             self.logger.info("Trace: {}".format(traces))
-            ret['trace'] = traces
             patterns = []
             for trace in traces:
                 match_obj = self.trace_pattern.match(trace)
@@ -148,6 +159,8 @@ class AIMLCharacter(Character):
             ret['pattern'] = patterns
             if patterns:
                 ret['score'] = len(question)-len(patterns[0])
+            traces = replace_aiml_abs_path(traces)
+            ret['trace'] = '\n'.join(traces)
         return ret
 
     def refresh(self, sid):

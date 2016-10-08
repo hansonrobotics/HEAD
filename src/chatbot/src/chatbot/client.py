@@ -383,6 +383,7 @@ Syntax: upload package
             trace = self.last_response.get('trace', None)
             if trace:
                 if isinstance(trace, list):
+                    trace = ['{}: {}: {}'.format(x, y, z) for x, y, z  in trace]
                     trace = '\n'.join(trace)
                 self.stdout.write(trace)
         self.stdout.write('\n')
