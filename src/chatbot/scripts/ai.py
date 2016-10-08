@@ -152,7 +152,7 @@ class Chatbot():
                 questions = [i[1].utterance for i in self.input_stack]
                 question = ' '.join(questions)
                 logger.info("Current input: {}".format(question))
-                self.condition.wait(self.delay_time)
+                self.condition.wait(max(1, self.delay_time-len(self.input_stack)))
                 if len(self.input_stack) > num_input:
                     continue
                 self.ask(questions)
