@@ -54,7 +54,7 @@ class Chatbot():
         self.respond_worker.daemon = True
         self.respond_worker.start()
         self.delay_response = rospy.get_param('delay_response', False)
-        self.delay_time = rospy.get_param('delay_time', 2)
+        self.delay_time = rospy.get_param('delay_time', 5)
 
         rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
         rospy.Subscriber('speech_events', String, self._speech_event_callback)
@@ -152,10 +152,9 @@ class Chatbot():
                 questions = [i[1].utterance for i in self.input_stack]
                 question = ' '.join(questions)
                 logger.info("Current input: {}".format(question))
-                if len(question) < 10:
-                    self.condition.wait(self.delay_time)
-                    if len(self.input_stack) > num_input:
-                        continue
+                self.condition.wait(max(1, self.delay_time-len(self.input_stack)))
+                if len(self.input_stack) > num_input:
+                    continue
                 self.ask(questions)
                 del self.input_stack[:]
 

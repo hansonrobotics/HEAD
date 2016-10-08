@@ -1,6 +1,8 @@
 import os
 from chatbot.aiml import Kernel
 import logging
+import re
+from config import CHARACTER_PATH
 
 
 class Character(object):
@@ -43,6 +45,17 @@ class Character(object):
             self.id, self.name, self.level)
 
 
+def replace_aiml_abs_path(trace):
+    if isinstance(trace, list):
+        for path in CHARACTER_PATH.split(','):
+            path = path.strip()
+            if not path:
+                continue
+            path = path + '/'
+            trace = [f.replace(path, '') for f in trace]
+    return trace
+
+
 class AIMLCharacter(Character):
 
     def __init__(self, id, name, level=99):
@@ -55,6 +68,9 @@ class AIMLCharacter(Character):
         self.N = 10  # How many times of reponse on the same topic
         self.languages = ['en']
         self.max_chat_tries = 5
+        self.trace_pattern = re.compile(
+            r'.*/(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
+
 
     def load_aiml_files(self, kernel, aiml_files):
         errors = []
@@ -132,10 +148,24 @@ class AIMLCharacter(Character):
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)
         ret['botid'] = self.id
         ret['botname'] = self.name
-        trace = self.kernel.getTraceDocs()
-        if trace:
-            self.logger.info("Trace: {}".format(trace))
-            ret['trace'] = trace
+        traces = self.kernel.getTraceDocs()
+        if traces:
+            self.logger.info("Trace: {}".format(traces))
+            patterns = []
+            for trace in traces:
+                match_obj = self.trace_pattern.match(trace)
+                if match_obj:
+                    patterns.append(match_obj.group('pname'))
+            ret['pattern'] = patterns
+            if patterns:
+                first = patterns[0]
+                if '*' in first or '_' in first:
+                    if len(first.strip().split())>0.9*len(question.strip().split()):
+                        ret['ok_match'] = True
+                else:
+                    ret['exact_match'] = True
+            traces = replace_aiml_abs_path(traces)
+            ret['trace'] = '\n'.join(traces)
         return ret
 
     def refresh(self, sid):

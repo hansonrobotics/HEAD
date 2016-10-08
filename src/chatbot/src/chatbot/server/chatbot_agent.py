@@ -124,9 +124,9 @@ def _ask_characters(characters, question, lang, sid, query):
     _question = question.lower().strip()
     _question = ' '.join(_question.split())  # remove consecutive spaces
     response = None
-    chat_tries = 0
     hit_character = None
-    circulate = True
+    answer = None
+    cross_trace = []
 
     # If the last input is a question, then try to use the same tier to
     # answer it.
@@ -136,12 +136,28 @@ def _ask_characters(characters, question, lang, sid, query):
         answer = response.get('text', '').strip()
         if answer:
             hit_character = sess.open_character
-            circulate = False
+            cross_trace.append((sess.open_character.id, 'question', response.get('trace')))
         else:
-            sess.open_character = None
-            circulate = True
+            cross_trace.append((sess.open_character.id, 'question', 'No answer'))
 
-    if circulate:
+    if not answer:
+        # Try the first tier to see if there is good match
+        c, weight = weighted_characters[0]
+        _response = c.respond(_question, lang, sess, query=True)
+        if _response.get('exact_match') or _response.get('ok_match'):
+            logger.info("{} has good match".format(c.id))
+            if random.random() < weight:
+                response = c.respond(_question, lang, sess, query)
+                answer = response.get('text', '').strip()
+                hit_character = c
+                cross_trace.append((c.id, 'priority', response.get('trace')))
+            else:
+                cross_trace.append((c.id, 'priority', 'Pass through'))
+        else:
+            logger.info("{} has no good match".format(c.id))
+            cross_trace.append((c.id, 'priority', 'No good match'))
+
+    if not answer:
         # set the last used character to be the first of the list
         if sess.last_used_character:
             for c, weight in weighted_characters:
@@ -160,52 +176,49 @@ def _ask_characters(characters, question, lang, sid, query):
 
             answer = response.get('text', '').strip()
             if not answer:
+                cross_trace.append((c.id, 'loop', 'No answer'))
                 continue
-
-            if answer.lower().strip().endswith('?'):
-                hit_character = c
-                sess.open_character = c
-                logger.info("Set open dialog character {}".format(c.id))
-                break
 
             if DISABLE_QUIBBLE and response.get('quibble'):
                 logger.info("Ignore quibbled answer by {}".format(c.id))
+                cross_trace.append((c.id, 'loop', 'Quibble answer'))
                 continue
 
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random() < weight:
                 hit_character = c
+                cross_trace.append((c.id, 'loop', response.get('trace')))
                 break
+            else:
+                cross_trace.append((c.id, 'loop', 'Pass through'))
 
     dummy_character = get_character('dummy', lang)
-    if response is None and dummy_character:
+    if not answer and dummy_character:
         response = dummy_character.respond("NO_ANSWER", lang, sid, query)
-
-    # Replace absolute path in the trace with relative path
-    trace = response.get('trace')
-    if trace and isinstance(trace, list):
-        for path in CHARACTER_PATH.split(','):
-            path = path.strip()
-            if not path:
-                continue
-            path = path + '/'
-            trace = [f.replace(path, '') for f in trace]
-        response['trace'] = trace
-
-    answer = response.get('text', '').strip()
+        hit_character = dummy_character
+        answer = response.get('text', '').strip()
 
     if not query:
-        sess.add(question, answer, AnsweredBy=c.name,
-                    User=user, BotName=botname, Trace=trace,
+        sess.add(question, answer, AnsweredBy=hit_character.name,
+                    User=user, BotName=botname, Trace=cross_trace,
                     Revision=REVISION, Lang=lang)
-        if hit_character and hit_character.dynamic_level:
+
+        if hit_character is not None and hit_character.dynamic_level:
             sess.last_used_character = hit_character
         else:
             sess.last_used_character = None
 
-    return response
+        if answer.lower().strip().endswith('?'):
+            if hit_character.dynamic_level:
+                sess.open_character = hit_character
+                logger.info("Set open dialog character {}".format(
+                            hit_character.id))
+        else:
+            sess.open_character = None
 
+    response['trace'] = cross_trace
+    return response
 
 def get_responding_characters(lang, sid):
     sess = session_manager.get_session(sid)
