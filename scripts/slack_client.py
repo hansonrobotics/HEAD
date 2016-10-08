@@ -24,22 +24,28 @@ def format_trace(traces):
     line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
     urlprefix = "https://github.com/hansonrobotics/character_dev/blob/update"
     formated_traces = []
-    for trace in traces:
-        matchobj = pattern.match(trace)
-        if matchobj:
-            fname = matchobj.groupdict()['fname']
-            tloc = matchobj.groupdict()['tloc']
-            pname = matchobj.groupdict()['pname']
-            ploc = matchobj.groupdict()['ploc']
-            tline = line_pattern.match(tloc).group('line')
-            pline = line_pattern.match(ploc).group('line')
+    for name, stage, trace in traces:
+        subtraces = trace.split('\n')
+        formated_subtraces = []
+        for subtrace in subtraces:
+            matchobj = pattern.match(subtrace)
+            if matchobj:
+                fname = matchobj.groupdict()['fname']
+                tloc = matchobj.groupdict()['tloc']
+                pname = matchobj.groupdict()['pname']
+                ploc = matchobj.groupdict()['ploc']
+                tline = line_pattern.match(tloc).group('line')
+                pline = line_pattern.match(ploc).group('line')
 
-            p = '<{urlprefix}/{fname}#L{pline}|{pname} {ploc}>'.format(
-                pname=pname, urlprefix=urlprefix, fname=fname, pline=pline, ploc=ploc)
-            t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
-                urlprefix=urlprefix, fname=fname, tline=tline, tloc=tloc)
-            formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
-            formated_traces.append(formated_trace)
+                p = '<{urlprefix}/{fname}#L{pline}|{pname} {ploc}>'.format(
+                    pname=pname, urlprefix=urlprefix, fname=fname, pline=pline, ploc=ploc)
+                t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
+                    urlprefix=urlprefix, fname=fname, tline=tline, tloc=tloc)
+                formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
+                formated_subtraces.append(formated_trace)
+            else:
+                formated_subtraces.append(subtrace)
+        formated_traces.append('{name}: {stage}: \n{subtraces}\n'.format(name=name, stage=stage, subtraces='\n'.join(formated_subtraces)))
     return formated_traces
 
 
@@ -149,11 +155,7 @@ class HRSlackBot(object):
             if trace:
                 formated_trace = format_trace(trace)
                 if formated_trace:
-                    title = 'answered by {}\ntrace:\n{}'.format(
-                        botid, '\n'.join(formated_trace))
-                else:
-                    title = 'answered by {}\ntrace:\n{}'.format(
-                        botid, trace)
+                    title = 'answered by {}\n\ntrace:\n{}'.format(botid, '\n'.join(formated_trace))
         attachments = [{
             'pretext': answer,
             'title': title,
