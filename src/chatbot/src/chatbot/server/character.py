@@ -158,7 +158,12 @@ class AIMLCharacter(Character):
                     patterns.append(match_obj.group('pname'))
             ret['pattern'] = patterns
             if patterns:
-                ret['score'] = len(question)-len(patterns[0])
+                first = patterns[0]
+                if '*' in first or '_' in first:
+                    if len(first.strip().split())>0.9*len(question.strip().split()):
+                        ret['ok_match'] = True
+                else:
+                    ret['exact_match'] = True
             traces = replace_aiml_abs_path(traces)
             ret['trace'] = '\n'.join(traces)
         return ret

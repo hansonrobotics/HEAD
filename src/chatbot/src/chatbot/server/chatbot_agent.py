@@ -144,8 +144,7 @@ def _ask_characters(characters, question, lang, sid, query):
         # Try the first tier to see if there is good match
         c, weight = weighted_characters[0]
         _response = c.respond(_question, lang, sess, query=True)
-        score = _response.get('score')
-        if score is not None and score < 2:
+        if _response.get('exact_match') or _response.get('ok_match'):
             logger.info("{} has good match".format(c.id))
             if random.random() < weight:
                 response = c.respond(_question, lang, sess, query)
