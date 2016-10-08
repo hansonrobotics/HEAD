@@ -127,10 +127,16 @@ class AIMLCharacter(Character):
 
     def respond(self, question, lang, session, query):
         ret = {}
+        ret['text'] = ''
+        ret['botid'] = self.id
+        ret['botname'] = self.name
+
         sid = session.sid
         answer = ''
         if lang not in self.languages:
-            answer = ''
+            return ret
+        elif re.search(r'\[.*\]', question):
+            return ret
         else:
             chat_tries = 0
             answer = self.kernel.respond(question, sid, query)
@@ -146,8 +152,6 @@ class AIMLCharacter(Character):
                     self.logger.warn("Repeat answer")
         ret['text'] = answer
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)
-        ret['botid'] = self.id
-        ret['botname'] = self.name
         traces = self.kernel.getTraceDocs()
         if traces:
             self.logger.info("Trace: {}".format(traces))
