@@ -194,7 +194,7 @@ def _ask_characters(characters, question, lang, sid, query):
                 cross_trace.append((c.id, 'loop', 'Pass through'))
 
     dummy_character = get_character('dummy', lang)
-    if response is None and dummy_character:
+    if not answer and dummy_character:
         response = dummy_character.respond("NO_ANSWER", lang, sid, query)
         hit_character = dummy_character
         answer = response.get('text', '').strip()
