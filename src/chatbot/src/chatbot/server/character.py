@@ -1,6 +1,7 @@
 import os
 from chatbot.aiml import Kernel
 import logging
+import re
 
 
 class Character(object):
@@ -55,6 +56,9 @@ class AIMLCharacter(Character):
         self.N = 10  # How many times of reponse on the same topic
         self.languages = ['en']
         self.max_chat_tries = 5
+        self.trace_pattern = re.compile(
+            r'.*/(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
+
 
     def load_aiml_files(self, kernel, aiml_files):
         errors = []
@@ -132,10 +136,18 @@ class AIMLCharacter(Character):
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)
         ret['botid'] = self.id
         ret['botname'] = self.name
-        trace = self.kernel.getTraceDocs()
-        if trace:
-            self.logger.info("Trace: {}".format(trace))
-            ret['trace'] = trace
+        traces = self.kernel.getTraceDocs()
+        if traces:
+            self.logger.info("Trace: {}".format(traces))
+            ret['trace'] = traces
+            patterns = []
+            for trace in traces:
+                match_obj = self.trace_pattern.match(trace)
+                if match_obj:
+                    patterns.append(match_obj.group('pname'))
+            ret['pattern'] = patterns
+            if patterns:
+                ret['score'] = len(question)-len(patterns[0])
         return ret
 
     def refresh(self, sid):
