@@ -200,7 +200,7 @@ def _ask_characters(characters, question, lang, sid, query):
         answer = response.get('text', '').strip()
 
     if not query:
-        sess.add(question, answer, AnsweredBy=hit_character.name,
+        sess.add(question, answer, AnsweredBy=hit_character.id,
                     User=user, BotName=botname, Trace=cross_trace,
                     Revision=REVISION, Lang=lang)
 
