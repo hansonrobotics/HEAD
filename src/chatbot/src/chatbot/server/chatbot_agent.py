@@ -140,8 +140,8 @@ def _ask_characters(characters, question, lang, sid, query):
         else:
             cross_trace.append((sess.open_character.id, 'question', 'No answer'))
 
+    # Try the first tier to see if there is good match
     if not answer:
-        # Try the first tier to see if there is good match
         c, weight = weighted_characters[0]
         _response = c.respond(_question, lang, sess, query=True)
         if _response.get('exact_match') or _response.get('ok_match'):
@@ -149,23 +149,39 @@ def _ask_characters(characters, question, lang, sid, query):
             if random.random() < weight:
                 response = c.respond(_question, lang, sess, query)
                 answer = response.get('text', '').strip()
-                hit_character = c
-                cross_trace.append((c.id, 'priority', response.get('trace')))
+                if answer:
+                    hit_character = c
+                    cross_trace.append((c.id, 'priority', response.get('trace')))
+                else:
+                    cross_trace.append((c.id, 'priority', 'No match'))
             else:
                 cross_trace.append((c.id, 'priority', 'Pass through'))
         else:
             logger.info("{} has no good match".format(c.id))
             cross_trace.append((c.id, 'priority', 'No good match'))
 
+    # Check the last used character
     if not answer:
-        # set the last used character to be the first of the list
         if sess.last_used_character:
             for c, weight in weighted_characters:
                 if sess.last_used_character.id == c.id:
-                    weighted_characters.remove((c, weight))
-                    weighted_characters.insert(0, (c, weight))
-            logger.info("Reorder responding characters to {}".format(weighted_characters))
+                    _response = c.respond(_question, lang, sess, query=True)
+                    if _response.get('exact_match') or _response.get('ok_match'):
+                        logger.info("Last used tier {} has good match".format(c.id))
+                        if random.random() < weight:
+                            response = c.respond(_question, lang, sess, query)
+                            answer = response.get('text', '').strip()
+                            if answer:
+                                hit_character = c
+                                cross_trace.append((c.id, 'last used', response.get('trace')))
+                            else:
+                                cross_trace.append((c.id, 'last used', 'No match'))
+                    else:
+                        logger.info("{} has no good match".format(c.id))
+                        cross_trace.append((c.id, 'last used', 'No good match'))
 
+    # Check the loop
+    if not answer:
         for c, weight in weighted_characters:
             if weight == 0:
                 logger.info("Ignore zero weighted character {}".format(c.id))
