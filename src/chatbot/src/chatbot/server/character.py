@@ -3,6 +3,7 @@ from chatbot.aiml import Kernel
 import logging
 import re
 from config import CHARACTER_PATH
+from chatbot.utils import shorten
 
 
 class Character(object):
@@ -70,6 +71,7 @@ class AIMLCharacter(Character):
         self.max_chat_tries = 5
         self.trace_pattern = re.compile(
             r'.*/(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
+        self.response_limit = 140
 
 
     def load_aiml_files(self, kernel, aiml_files):
@@ -150,6 +152,9 @@ class AIMLCharacter(Character):
                     answer = ''
                     ret['repeat'] = True
                     self.logger.warn("Repeat answer")
+        answer, res = shorten(answer, self.response_limit)
+        if res:
+            self.kernel.setPredicate('tellmore', res)
         ret['text'] = answer
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)
         traces = self.kernel.getTraceDocs()
