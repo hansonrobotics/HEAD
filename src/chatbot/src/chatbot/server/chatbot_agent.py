@@ -180,6 +180,9 @@ def _ask_characters(characters, question, lang, sid, query):
                         logger.info("{} has no good match".format(c.id))
                         cross_trace.append((c.id, 'last used', 'No good match'))
 
+    quibble_response = None
+    quibble_answer = None
+    quibble_character = None
     # Check the loop
     if not answer:
         for c, weight in weighted_characters:
@@ -198,6 +201,9 @@ def _ask_characters(characters, question, lang, sid, query):
             if DISABLE_QUIBBLE and response.get('quibble'):
                 logger.info("Ignore quibbled answer by {}".format(c.id))
                 cross_trace.append((c.id, 'loop', 'Quibble answer'))
+                quibble_response = response
+                quibble_answer = answer
+                quibble_character = c
                 continue
 
             # Each tier has weight*100% chance to be selected.
@@ -208,6 +214,12 @@ def _ask_characters(characters, question, lang, sid, query):
                 break
             else:
                 cross_trace.append((c.id, 'loop', 'Pass through'))
+
+    if not answer:
+        if quibble_answer:
+            anawer = quibble_answer
+            hit_character = quibble_character
+            cross_trace.append((quibble_character.id, 'quibble', quibble_response.get('trace')))
 
     dummy_character = get_character('dummy', lang)
     if not answer and dummy_character:
