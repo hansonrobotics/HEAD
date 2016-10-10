@@ -71,8 +71,7 @@ class AIMLCharacter(Character):
         self.max_chat_tries = 5
         self.trace_pattern = re.compile(
             r'.*/(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
-        self.response_limit = 140
-
+        self.response_limit = 300
 
     def load_aiml_files(self, kernel, aiml_files):
         errors = []
@@ -155,6 +154,7 @@ class AIMLCharacter(Character):
         answer, res = shorten(answer, self.response_limit)
         if res:
             self.kernel.setPredicate('tellmore', res)
+            self.logger.info("Set predicate tellmore={}".format(res))
         ret['text'] = answer
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)
         traces = self.kernel.getTraceDocs()
