@@ -191,7 +191,7 @@ double getdegree(double x, double y)
                 flag=1;
                 Lturnaround = timel - degreeHandler[i][4];
                 delay = timel - degreeHandler[i][2] ;
-                defaultMax = 10 * Lturnaround; //considering the performance of core i7 machinew/ 2.34 ghz and w/ pyface tracker : cmt take much resource so better to deduct the value
+                defaultMax = 10 * Lturnaround; //considering the performance of core i7 machine w/ 2.34 ghz and w/ pyface tracker : cmt take much resource so better to deduct the value
                 /* How long the point identified as salient?  */
                 if  (Lturnaround < turn_around_time)
                 {
@@ -228,7 +228,7 @@ double getdegree(double x, double y)
 
 
     /* put the number in between 1 and 10 */
-
+    if (((DegreeVal*10)/defaultMax) + 0.5 >defaultMax) {defaultMax = ((DegreeVal*10)/defaultMax) + 0.5; }
     int roundD =  ((DegreeVal*10)/defaultMax) + 0.5;
     //cout<<"Degree Raw: "<<DegreeVal<<" Degree Tenth  "<<roundD<<" Possible Raw "<<Lturnaround * 7.5<<endl;
     DegreeVal = roundD;
