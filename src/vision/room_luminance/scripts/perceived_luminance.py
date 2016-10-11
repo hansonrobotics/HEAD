@@ -43,8 +43,8 @@ class ROIluminance:
     self.RefArea = 0
     self.camFLAG = 0
     self.totalArea = 0
-    self.covUp = 80
-    self.covDown = 95
+    self.covUp = 90
+    self.covDown = 98
     self.Flag = 0
     self.face = 0
     self.Rimg = []
@@ -79,6 +79,7 @@ class ROIluminance:
                  is temporary
                  the net difference b/n any camera flash and normal ROI>=50
   '''
+  #Won't work well if there is other temporary obj w/ luminance equvalent to cams luminance
   def isCamFlash(self,origin_im):
       grayim = cv2.cvtColor(origin_im, cv2.COLOR_BGR2GRAY)
       if time.time() - self.Rtime >= 3 or not self.camFLAG:
@@ -87,7 +88,7 @@ class ROIluminance:
           self.camFLAG = 1
 
       blurred = cv2.GaussianBlur(grayim, (25, 25), 0)
-      ret, tr = cv2.threshold(blurred, 240, 255, 0)
+      ret, tr = cv2.threshold(blurred, 230, 255, 0)
       (cnts, _) = cv2.findContours(tr.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
       for c in cnts:
           if cv2.contourArea(c) > 250:
@@ -102,7 +103,7 @@ class ROIluminance:
               chsv = cv2.cvtColor(cur, cv2.COLOR_BGR2HSV)
               ch, cs, cv = cv2.split(chsv)
               diff = ((float(np.sum(cv)) / size)) - (float(np.sum(rv)) / size)
-              if float(np.sum(cv)) >= 70 and diff > 30:
+              if float(np.sum(cv)) >= 60 and diff > 30:
                   return 1
       return 0
 
