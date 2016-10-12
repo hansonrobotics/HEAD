@@ -1,4 +1,4 @@
-define(['application', './templates/configuration.tpl', 'backgrid', 'backgrid-css', './config/motor_grid', 'lib/api',
+define(['application', './templates/configuration.tpl', 'backgrid', './config/motor_grid', 'backgrid-css', 'lib/api',
         'entities/motor', 'backbone-pageable', 'backgrid-select-all', 'backgrid-select-all-css', 'backgrid-filter',
         'backgrid-filter-css', 'backgrid-paginator', 'backgrid-paginator-css', 'scrollbar', 'scrollbar-css'],
     function (App, template, Backgrid, columns, api) {
