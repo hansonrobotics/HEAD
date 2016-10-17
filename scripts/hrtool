@@ -577,6 +577,8 @@ _do_install_deps() {
     install_manyears_deps
     install_webui_deps
     install_other_deps
+
+    $SUDO patch /opt/ros/indigo/lib/python2.7/dist-packages/rosbridge_library/internal/publishers.py $BASEDIR/patch/rosbridge.patch
 }
 
 do_get_hr_src() {
