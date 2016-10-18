@@ -87,7 +87,7 @@ h2, .h2 {
 
 #navbar {
     border-bottom: 2px solid #6cadd3;
-    z-index: 9999999;
+    z-index: 9999999999;
     margin: 0;
 }
 
