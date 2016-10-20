@@ -82,7 +82,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         pt.y=lqrpt[1];
         pt.z=0;
         /* call a function to get the degree of saliency of the current point*/
-        degree = getdegree(pt.x, pt.y);
+        degree = 0;
 
 
         /* for the purpose of visualizing points above degree 7:the most certain
