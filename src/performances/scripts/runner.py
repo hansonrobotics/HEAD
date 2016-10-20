@@ -262,7 +262,7 @@ class Runner:
             current_time = self.get_run_time()
             running = self.running and not self.paused
             return srv.CurrentResponse(ids=self.ids, nodes=json.dumps(self.running_nodes), current_time=current_time,
-                                       running=running)
+                                       running=running, paused=self.paused)
 
     def worker(self):
         self.run_condition.acquire()

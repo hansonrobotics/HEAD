@@ -11,10 +11,6 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                     el: '.app-performances-region',
                     regionClass: FadeInRegion
                 },
-                timeline: {
-                    el: '.app-timeline-region',
-                    regionClass: FadeInRegion
-                },
                 queue: {
                     el: '.app-performance-queue-container',
                     regionClass: FadeInRegion
@@ -32,50 +28,23 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 this.performanceCollection = new PerformanceCollection();
 
                 var self = this,
-                    current = new Performance(),
-                    showViews = function (ids) {
-                        var queueView = new QueueView({
-                                layoutView: self,
-                                performances: self.performanceCollection,
-                                sequence: ids
-                            }),
-                            performancesView = new PerformancesView({
-                                collection: self.performanceCollection,
-                                queueView: queueView
-                            });
+                    queueView = new QueueView({
+                        performances: self.performanceCollection
+                    }),
+                    performancesView = new PerformancesView({
+                        collection: self.performanceCollection,
+                        queueView: queueView
+                    });
 
-                        self.showTimeline(current, {readonly: true});
-                        self.getRegion('queue').show(queueView);
-                        self.getRegion('performances').show(performancesView);
+                self.getRegion('queue').show(queueView);
+                self.getRegion('performances').show(performancesView);
 
-                        performancesView.on('new', self.showTimeline, self);
-                    };
-
+                performancesView.on('new', queueView.editPerformance, queueView);
                 this.performanceCollection.fetch({
                     success: function () {
-                        current.fetchCurrent({
-                            success: function (response) {
-                                showViews(response.ids);
-
-                            },
-                            error: function () {
-                                showViews([]);
-                            }
-                        });
-                    },
-                    error: function () {
-                        showViews([]);
+                        queueView.showCurrent();
                     }
                 });
-            },
-            showTimeline: function (performance, options) {
-                var timelinesView = new TimelinesView(_.extend({
-                    collection: new Backbone.Collection(),
-                    model: performance,
-                    performances: this.performanceCollection,
-                    readonly: false
-                }, options));
-                this.getRegion('timeline').show(timelinesView);
             },
             changeLanguage: function (e) {
                 var language = $(e.target).data('lang');

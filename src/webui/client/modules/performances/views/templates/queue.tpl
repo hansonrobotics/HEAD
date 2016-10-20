@@ -1,3 +1,5 @@
+<div class="app-timeline-region"></div>
+
 <div class="row">
     <div class="col-md-12">
         <h2>Event sequence</h2>
