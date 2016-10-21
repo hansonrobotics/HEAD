@@ -5,13 +5,15 @@ import rospy
 from blender_api_msgs.msg import Target
 from ros_nmpt_saliency.msg import targets
 from pi_face_tracker.msg import FaceEvent, Faces
-
+from netcat import netcat
 '''
     This is a sample subscriber written to control Sophia's Head movement based on the degree of Salient points.
 '''
 class NMPT_SERVO:
   def __init__(self):
-    self.GLOBAL_FLAG = 0
+    self.hostname = "localhost"
+    self.port = 17020
+    self.GLOBAL_FLAG = 1
     self.FACES = 0
     self.TOPIC_FACE_TARGET = "/blender_api/set_face_target"
     self.TOPIC_GAZE_TARGET = "/blender_api/set_gaze_target"
@@ -36,6 +38,11 @@ class NMPT_SERVO:
     degree = data.degree 
     t = Target()
     t.x = 1.0
+    deg = "(StateLink (AnchorNode \"Degree value\")" + \
+                "(ListLink (NumberNode {})))\n".format(degree)
+
+    netcat(self.hostname, self.port, deg + "\n")
+    print deg
     if loc.x <= 0.5:
     	loc.x =(0.5 - loc.x)
     else:
@@ -46,11 +53,15 @@ class NMPT_SERVO:
     else:
         loc.y =(0.5 -loc.y)
     t.z = loc.y
-
-    if self.GLOBAL_FLAG and degree >=7: # Look to Certainly Determined Salient Point
+    
+    if self.GLOBAL_FLAG and degree >=13: # Look to Certainly Determined Salient Point
         self.look_pub.publish(t)
         self.look_gaze.publish(t)
+        locate = "(StateLink (AnchorNode \"locations\")" + \
+                "(ListLink (NumberNode {})))\n".format(loc)
 
+        netcat(self.hostname, self.port, locate + "\n")
+        print locate
   def face_event_cb(self, data):
     if data.face_event == self.EVENT_NEW_FACE:
 	print ("Controlling pkg: Face Tracker")
