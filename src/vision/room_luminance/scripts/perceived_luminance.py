@@ -24,7 +24,7 @@ light in the captured frame and detects object blocks above N% of coverage.
 d = deque()
 
 class ROIluminance:
-
+  
   # initialize publishers, subscribers and static members inside class
   # constructor.
   def __init__(self):
@@ -116,6 +116,10 @@ class ROIluminance:
         return "Nominal"
     else:
         return "Bright"
+    luminance = "(StateLink (AnchorNode \"bright\")" + \
+                "(ListLink (NumberNode {})))\n".format(lumene)
+    print luminance
+    netcat(self.hostname, self.port, luminance + "\n")
   def validate_cover(self):
       if self.count >= 5 and self.Flag == 1 and self.face >= 1:
           self.Flag = 0
@@ -139,13 +143,14 @@ class ROIluminance:
           d.append(dict[room_light])
 
           if max(d) + min(d) == 0 and room_light =="Dark":
+              
               return  -1
           if max(d) + min(d) == 0 and room_light =="Bright":
+              
               return 1
           else:
               return 0
-
-
+  
   # callback function for a topic "/camera/face_locations"
   def count_faces(self, face_state):
     self.face = len(face_state.faces)
