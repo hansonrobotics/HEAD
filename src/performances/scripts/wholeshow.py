@@ -58,6 +58,7 @@ class WholeShow(HierarchicalMachine):
         # Parse on load.
         # TODO make sure we reload those once performances are saved.
         self.find_performances_properties()
+        self.after_performance = False
 
         # Start listeners
         rospy.Service('speech_on', srv.SpeechOn, self.speech_cb)
