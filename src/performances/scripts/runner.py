@@ -39,6 +39,8 @@ class Runner:
         self.lock = Lock()
         self.run_condition = Condition()
         self.running_performances = []
+        # in memory set of properties with priority over params
+        self.properties = {}
         # References to event subscribing node callbacks
         self.observers = {}
         # Performances that already played as alternatives. Used to maximize different performance in single demo
@@ -72,6 +74,7 @@ class Runner:
         }
         self.load_properties()
         rospy.Service('~reload_properties', Trigger, self.reload_properties_callback)
+        rospy.Service('~set_property', srv.SetProperty, self.set_property_callback)
         rospy.Service('~load', srv.Load, self.load_callback)
         rospy.Service('~load_sequence', srv.LoadSequence, self.load_sequence_callback)
         rospy.Service('~load_performance', srv.LoadPerformance, self.load_performance_callback)
@@ -91,24 +94,13 @@ class Runner:
         self.worker.start()
         rospy.spin()
 
-    def load_properties(self):
-        robot_name = rospy.get_param('/robot_name')
-        robot_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
-        common_path = os.path.join(rospack.get_path('robots_config'), 'common', 'performances')
-        for path in [common_path, robot_path]:
-            for root, dirnames, filenames in os.walk(path):
-                if '.properties' in filenames:
-                    filename = os.path.join(root, '.properties')
-                    if os.path.isfile(filename):
-                        with open(filename) as f:
-                            properties = yaml.load(f.read())
-                            dir = os.path.relpath(root, path)
-                            rospy.set_param('/' + os.path.join(self.robot_name, 'webui/performances', dir).strip(
-                                "/.") + '/properties', properties)
-
     def reload_properties_callback(self, request):
         self.load_properties()
         return Trigger(success=True)
+
+    def set_property_callback(self, request):
+        self.set_property(request.id, request.name, request.val)
+        return srv.SetPropertyResponse(success=True)
 
     def load_callback(self, request):
         return srv.LoadResponse(success=True, performance=json.dumps(self.load_sequence([request.id])[0]))
@@ -301,7 +293,7 @@ class Runner:
                 continue
 
             for performance in self.running_performances:
-                nodes = [Node.createNode(node, self, self.start_time, performance['path']) for node in
+                nodes = [Node.createNode(node, self, self.start_time, performance['id']) for node in
                          performance['nodes']]
 
                 with self.lock:
@@ -366,6 +358,38 @@ class Runner:
     def hand_callback(self, msg):
         self.notify('HAND', msg)
         self.notify(msg.data, msg)
+
+    def load_properties(self):
+        robot_name = rospy.get_param('/robot_name')
+        robot_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
+        common_path = os.path.join(rospack.get_path('robots_config'), 'common', 'performances')
+        for path in [common_path, robot_path]:
+            for root, dirnames, filenames in os.walk(path):
+                if '.properties' in filenames:
+                    filename = os.path.join(root, '.properties')
+                    if os.path.isfile(filename):
+                        with open(filename) as f:
+                            properties = yaml.load(f.read())
+                            dir = os.path.relpath(root, path)
+                            rospy.set_param('/' + os.path.join(self.robot_name, 'webui/performances', dir).strip(
+                                "/.") + '/properties', properties)
+
+    def set_property(self, id, name, val):
+        if id in self.properties:
+            self.properties[id][name] = val
+        else:
+            self.properties[id] = {name: val}
+
+    def get_property(self, id, name):
+        if id in self.properties and name in self.properties[id] and self.properties[id][name]:
+            return self.properties[id][name]
+        else:
+            val = None
+            param_name = os.path.join('/', self.robot_name, 'webui/performances', os.path.dirname(id),
+                                      'properties/variables', name)
+            if rospy.has_param(param_name):
+                val = rospy.get_param(param_name)
+            return val
 
 
 if __name__ == '__main__':

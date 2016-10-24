@@ -62,6 +62,7 @@ add_service_files(
   LoadSequence.srv
   LoadPerformance.srv
   SpeechOn.srv
+  SetProperty.srv
 )
 
 ## Generate actions in the 'action' folder

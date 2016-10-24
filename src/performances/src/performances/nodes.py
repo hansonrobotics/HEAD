@@ -31,11 +31,11 @@ class Node(object):
                                        for g in cls.subClasses(s)]
 
     @classmethod
-    def createNode(cls, data, runner, start_time=0, path=''):
+    def createNode(cls, data, runner, start_time=0, id=''):
         for s_cls in cls.subClasses(cls):
             if data['name'] == s_cls.__name__:
                 node = s_cls(data, runner)
-                node.path = path
+                node.id = id
                 if start_time > node.start_time:
                     # Start time should be before or on node starting
                     node.finished = True
@@ -49,7 +49,7 @@ class Node(object):
         self.started = False
         self.started_at = 0
         self.finished = False
-        self.path = ''
+        self.id = ''
         # Node runner for accessing ROS topics and method
         # TODO make ROS topics and services singletons class for shared use.
         self.runner = runner
@@ -138,16 +138,11 @@ class speech(Node):
             text = self._add_ssml(text)
         variables = re.findall("{(.*?)}", text)
         for var in variables:
-            param_name = os.path.join('/', self.runner.robot_name, 'webui/performances', self.path,
-                                      'properties/variables', var)
-            val = ''
-            if rospy.has_param(param_name):
-                val = rospy.get_param(param_name)
+            val = self.runner.get_property(self.id, var) or ''
             text = text.replace('{' + var + '}', val)
         self.runner.topics['tts'][lang].publish(String(text))
 
     # adds SSML tags for whole text returns updated text.
-
     def _add_ssml(self, txt):
         return '<prosody rate="%.2f" pitch="%+d%%" volume="%+d%%">%s</prosody>' % \
                (self.data['speed'], 100 * (self.data['pitch'] - 1), 100 * (self.data['volume'] - 1), txt)
