@@ -81,6 +81,10 @@ class Chatbot():
         rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
         rospy.set_param('node_status/chatbot', 'running')
 
+        # the first message gets lost with using topic_tools
+        rospy.wait_for_service('tts_select', 5)
+        rospy.sleep(0.1)
+        self._response_publisher.publish(String(' '))
 
 
     def sentiment_active(self, active):
