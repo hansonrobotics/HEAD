@@ -218,12 +218,8 @@ class Runner:
         # Wait for worker to stop performance and enter waiting before proceeding
         self.run_condition.acquire()
         with self.lock:
-<<<<<<< HEAD
             rospy.logerr(start_time)
             success = len(self.running_performances) > 0
-=======
-            success = len(self.running_nodes) > 0
->>>>>>> 58bb3410ea6de160d8bb865bcb8a36bb646890a8
             if success:
                 self.running = True
                 self.start_time = start_time
