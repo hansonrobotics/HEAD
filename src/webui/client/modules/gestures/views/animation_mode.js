@@ -1,5 +1,5 @@
-define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery'],
-    function (Marionette, template, api, $) {
+define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'roslib'],
+    function (Marionette, template, api, $, ROSLIB) {
         return Marionette.ItemView.extend({
             ui: {
                 modeButtons: '.app-gesture-pp',

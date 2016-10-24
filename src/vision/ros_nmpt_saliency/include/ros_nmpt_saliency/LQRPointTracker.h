@@ -24,7 +24,7 @@ class PointTracker {
 
 class LQRPointTracker : PointTracker {
 public: 
-	LQRPointTracker(int numDims=1, double dt = 0.1, double drag = 0, double move_cost = .035);
+	LQRPointTracker(int numDims=1, double dt = 0.15, double drag = 0, double move_cost = .035);
 	virtual void setTrackerTarget(const std::vector<double> &newPosition); 
 	virtual void updateTrackerPosition();
 	virtual std::vector<double> getCurrentPosition(); 

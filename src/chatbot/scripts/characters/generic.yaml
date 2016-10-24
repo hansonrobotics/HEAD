@@ -6,5 +6,7 @@ weight:
     1
 level:
     93
+dynamic_level:
+    true
 aiml:
     - ../aiml/generic/*.aiml

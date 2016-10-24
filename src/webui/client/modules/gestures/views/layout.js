@@ -1,7 +1,7 @@
 define(["marionette", "./templates/layout.tpl", "lib/api", './animations', './cycles', './performances',
-        './poses', './animation_mode'],
+        './poses', './animation_mode', 'roslib'],
     function (Marionette, template, api, GesturesView, CyclesView, PerformancesView, EmotionsView,
-              AnimationModeView) {
+              AnimationModeView, ROSLIB) {
         return Marionette.LayoutView.extend({
             template: template,
             regions: {

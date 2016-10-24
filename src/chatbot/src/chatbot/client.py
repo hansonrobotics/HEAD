@@ -2,9 +2,12 @@ import cmd
 import requests
 import json
 import os
+import re
 import time
 from functools import wraps
 import logging
+import threading
+from chatbot.utils import norm
 
 import sys
 reload(sys)
@@ -22,11 +25,25 @@ def get_default_username():
 
 class Client(cmd.Cmd, object):
 
-    def __init__(self, key, username=None, botname='sophia',
-            host='localhost', port='8001', test=False, *args, **kwargs):
+    def __init__(self, key, response_listener=None, username=None, botname='sophia',
+            host='localhost', port='8001', test=False,
+            *args, **kwargs):
+        """
+        key: The authentication key for chatbot server.
+        response_listener: The object that has implemented on_response.
+        username: The user name.
+        botname: The bot name.
+        host: The host name of chatbot server.
+        port: The port of the host.
+        test: If the session is a test session.
+        """
         super(Client, self).__init__(*args, **kwargs)
         self.user = username or get_default_username()
         self.key = key
+        if response_listener:
+            assert hasattr(response_listener, 'on_response') and \
+                callable(response_listener.on_response)
+        self.response_listener = response_listener
         self.test = test
         self.prompt = '[me]: '
         self.botname = botname
@@ -38,6 +55,8 @@ class Client(cmd.Cmd, object):
         self.lang = 'en'
         self.session = None
         self.last_response = None
+        self.timer = None
+        self.timeout = None
         if self.ping():
             self.do_conn()
         else:
@@ -88,6 +107,7 @@ class Client(cmd.Cmd, object):
 
     @retry(3)
     def ask(self, question, query=False):
+        self.cancel_timer()
         params = {
             "question": "{}".format(question),
             "session": self.session,
@@ -108,6 +128,13 @@ class Client(cmd.Cmd, object):
         response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
         response.update(r.json().get('response'))
 
+        if question == '[loopback]':
+            self.timer = threading.Timer(self.timeout, self.ask, (question, ))
+            self.timer.start()
+            logger.info("Start {} timer with timeout {}".format(
+                question, self.timeout))
+
+        self.process_response(response)
         return response
 
     def list_chatbot(self):
@@ -124,15 +151,34 @@ class Client(cmd.Cmd, object):
         names = r.json().get('response')
         return names
 
+    def process_response(self, response):
+        if response is not None:
+            answer = response.get('text')
+            self.process_indicator(answer)
+            response['text'] = norm(answer)
+            self.last_response = response
+            if self.response_listener is None:
+                self.stdout.write('{}[by {}]: {}\n'.format(
+                    self.botname, response.get('botid'),
+                    response.get('text')))
+            else:
+                try:
+                    self.response_listener.on_response(self.session, response)
+                except Exception as ex:
+                    logger.error(ex)
+
+    def cancel_timer(self):
+        if self.timer is not None:
+            self.timer.cancel()
+            self.timer = None
+            logger.info("Timer canceled")
+        else:
+            logger.info("Timer is None")
+
     def default(self, line):
         try:
             if line:
-                response = self.ask(line)
-                if response is not None:
-                    self.last_response = response
-                    self.stdout.write('{}[by {}]: {}\n'.format(
-                        self.botname, response.get('botid'),
-                        response.get('text')))
+                self.ask(line)
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
 
@@ -140,8 +186,8 @@ class Client(cmd.Cmd, object):
         chatbots = []
         try:
             chatbots = self.list_chatbot()
-            chatbots = ['{}: weight: {} level: {}'.format(
-                c, w, l) for c, w, l in chatbots]
+            chatbots = ['{}: weight: {} level: {} dynamic level: {}'.format(
+                c, w, l, d) for c, w, l, d in chatbots]
             self.stdout.write('\n'.join(chatbots))
             self.stdout.write('\n')
         except Exception as ex:
@@ -336,7 +382,10 @@ Syntax: upload package
         if self.last_response:
             trace = self.last_response.get('trace', None)
             if trace:
-                self.stdout.write('\n'.join(trace))
+                if isinstance(trace, list):
+                    trace = ['{}: {}: {}'.format(x, y, z) for x, y, z  in trace]
+                    trace = '\n'.join(trace)
+                self.stdout.write(trace)
         self.stdout.write('\n')
 
     do_t = do_trace
@@ -431,3 +480,25 @@ Syntax: upload package
         self.stdout.write('Usage: summary [lookback days]\n')
         self.stdout.write('lookback days: -1 means all\n')
 
+    def process_indicator(self, reply):
+        cmd, timeout = None, None
+        for match in re.findall(r'\[.*\]', reply):
+            match = match.strip()
+            match = match.replace(' ', '')
+            if match == '[loopback=0]':
+                self.cancel_timer()
+                return
+            match = match.replace(']', '')
+            match = match.replace('[', '')
+            if '=' in match:
+                cmd, timeout = match.split('=')
+                self.timeout = float(timeout)/1000
+            else:
+                cmd = match
+            cmd = '[{}]'.format(cmd)
+        if self.timeout is not None and cmd is not None:
+            self.cancel_timer()
+            self.timer = threading.Timer(self.timeout, self.ask, (cmd, ))
+            self.timer.start()
+            logger.info("Start {} timer with timeout {}".format(
+                cmd, self.timeout))

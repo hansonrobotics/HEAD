@@ -10,6 +10,7 @@ from slackclient import SlackClient
 CWD = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(CWD, '../src'))
 from chatbot.client import Client
+from chatbot.server.session import SessionManager
 
 HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 SLACKBOT_API_TOKEN = os.environ.get('SLACKBOT_API_TOKEN')
@@ -23,22 +24,28 @@ def format_trace(traces):
     line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
     urlprefix = "https://github.com/hansonrobotics/character_dev/blob/update"
     formated_traces = []
-    for trace in traces:
-        matchobj = pattern.match(trace)
-        if matchobj:
-            fname = matchobj.groupdict()['fname']
-            tloc = matchobj.groupdict()['tloc']
-            pname = matchobj.groupdict()['pname']
-            ploc = matchobj.groupdict()['ploc']
-            tline = line_pattern.match(tloc).group('line')
-            pline = line_pattern.match(ploc).group('line')
+    for name, stage, trace in traces:
+        subtraces = trace.split('\n')
+        formated_subtraces = []
+        for subtrace in subtraces:
+            matchobj = pattern.match(subtrace)
+            if matchobj:
+                fname = matchobj.groupdict()['fname']
+                tloc = matchobj.groupdict()['tloc']
+                pname = matchobj.groupdict()['pname']
+                ploc = matchobj.groupdict()['ploc']
+                tline = line_pattern.match(tloc).group('line')
+                pline = line_pattern.match(ploc).group('line')
 
-            p = '<{urlprefix}/{fname}#L{pline}|{pname} {ploc}>'.format(
-                pname=pname, urlprefix=urlprefix, fname=fname, pline=pline, ploc=ploc)
-            t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
-                urlprefix=urlprefix, fname=fname, tline=tline, tloc=tloc)
-            formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
-            formated_traces.append(formated_trace)
+                p = '<{urlprefix}/{fname}#L{pline}|{pname} {ploc}>'.format(
+                    pname=pname, urlprefix=urlprefix, fname=fname, pline=pline, ploc=ploc)
+                t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
+                    urlprefix=urlprefix, fname=fname, tline=tline, tloc=tloc)
+                formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
+                formated_subtraces.append(formated_trace)
+            else:
+                formated_subtraces.append(subtrace)
+        formated_traces.append('{name}: {stage}: \n{subtraces}\n'.format(name=name, stage=stage, subtraces='\n'.join(formated_subtraces)))
     return formated_traces
 
 
@@ -52,6 +59,7 @@ class HRSlackBot(object):
         self.port = str(port)
         self.lang = 'en'
         self.icon_url = 'https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg'
+        self.session_manager = SessionManager()
 
     def send_message(self, channel, attachments):
         self.sc.api_call(
@@ -79,8 +87,19 @@ class HRSlackBot(object):
                 question = message.get('text')
                 channel = message.get('channel')
 
-                client = Client(HR_CHATBOT_AUTHKEY, username=name,
-                    botname=self.botname, host=self.host, port=self.port)
+                sid = self.session_manager.get_sid(name, self.botname)
+                if sid is not None:
+                    session = self.session_manager.get_session(sid)
+                    assert session is not None and hasattr(session.sdata, 'client')
+                    client = session.sdata.client
+                else:
+                    client = Client(HR_CHATBOT_AUTHKEY, username=name,
+                        botname=self.botname, host=self.host, port=self.port,
+                        response_listener=self)
+                    self.session_manager.add_session(name, self.botname, client.session)
+                    session = self.session_manager.get_session(client.session)
+                    session.sdata.client = client
+                    session.sdata.channel = channel
 
                 logger.info("Question {}".format(question))
                 if question in [':+1:', ':slightly_smiling_face:', ':)', 'gd']:
@@ -118,32 +137,42 @@ class HRSlackBot(object):
                     self.send_message(channel, attachments)
                     continue
 
-                response = client.ask(question)
-                answer = ''
-                title = ''
-                if response is None or not response.get('text'):
-                    answer = u"Sorry, I can't answer it right now"
-                else:
-                    answer = response.get('text')
-                    trace = response.get('trace', '')
-                    botid = response.get('botid', '')
-                    formated_trace = format_trace(trace)
-                    if formated_trace:
-                        title = 'answered by {}\ntrace:\n{}'.format(
-                            botid, '\n'.join(formated_trace))
-                attachments = [{
-                    'pretext': answer,
-                    'title': title,
-                    'color': '#3AA3E3',
-                    'fallback': answer,
-                }]
-                self.send_message(channel, attachments)
+                client.ask(question)
+
+    def on_response(self, sid, response):
+        answer = ''
+        title = ''
+        session = self.session_manager.get_session(sid)
+        if session is None:
+            return
+        channel = session.sdata.channel
+        if response is None or not response.get('text'):
+            answer = u"Sorry, I can't answer it right now"
+        else:
+            answer = response.get('text')
+            trace = response.get('trace', '')
+            botid = response.get('botid', '')
+            if trace:
+                formated_trace = format_trace(trace)
+                if formated_trace:
+                    title = 'answered by {}\n\ntrace:\n{}'.format(botid, '\n'.join(formated_trace))
+        attachments = [{
+            'pretext': answer,
+            'title': title,
+            'color': '#3AA3E3',
+            'fallback': answer,
+        }]
+        self.send_message(channel, attachments)
 
 if __name__ == '__main__':
     logging.basicConfig()
     logging.getLogger().setLevel(logging.INFO)
+    logging.getLogger('urllib3').setLevel(logging.WARN)
     host = 'localhost'
     port = 8001
+    if len(sys.argv) < 2:
+        print "Usage:", sys.argv[0], "botname"
+        sys.exit(1)
     botname = sys.argv[1]
     while True:
         try:

@@ -85,6 +85,8 @@ class Runner:
         # Shared subscribers for nodes
         rospy.Subscriber('/' + self.robot_name + '/speech_events', String,
                          lambda msg: self.notify('speech_events', msg))
+        # Shared subscribers for nodes
+        rospy.Subscriber('/hand_events', String, self.hand_callback)
 
         self.worker.start()
         rospy.spin()
@@ -216,8 +218,12 @@ class Runner:
         # Wait for worker to stop performance and enter waiting before proceeding
         self.run_condition.acquire()
         with self.lock:
+<<<<<<< HEAD
             rospy.logerr(start_time)
             success = len(self.running_performances) > 0
+=======
+            success = len(self.running_nodes) > 0
+>>>>>>> 58bb3410ea6de160d8bb865bcb8a36bb646890a8
             if success:
                 self.running = True
                 self.start_time = start_time
@@ -360,6 +366,10 @@ class Runner:
         if event in self.observers:
             if ref in self.observers[event]:
                 self.observers[event].remove(ref)
+
+    def hand_callback(self, msg):
+        self.notify('HAND', msg)
+        self.notify(msg.data, msg)
 
 
 if __name__ == '__main__':

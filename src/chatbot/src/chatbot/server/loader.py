@@ -2,6 +2,7 @@ import os
 import sys
 import yaml
 import logging
+import traceback
 from chatbot.server.character import AIMLCharacter, Character
 from zipfile import ZipFile
 
@@ -42,6 +43,7 @@ class PyModuleCharacterLoader(object):
                         characters.append(character)
         except Exception as ex:
             logger.error(ex)
+            logger.error(traceback.format_exc())
         return characters
 
 
@@ -73,8 +75,11 @@ class AIMLCharacterLoader(object):
                         character.kernel, aiml_files)
                 if 'weight' in spec:
                     character.weight = float(spec['weight'])
+                if 'dynamic_level' in spec:
+                    character.dynamic_level = bool(spec['dynamic_level'])
             except KeyError as ex:
                 logger.error(ex)
+                logger.error(traceback.format_exc())
             if errors:
                 raise Exception("Loading {} error {}".format(
                     character_yaml, '\n'.join(errors)))

@@ -1,0 +1,10 @@
+311,313c311,315
+<         if not self._publishers[topic].has_clients():
+<             self._publishers[topic].unregister()
+<             del self._publishers[topic]
+---
+>         # Commenting out see
+>         # https://github.com/RobotWebTools/rosbridge_suite/issues/138
+>         # if not self._publishers[topic].has_clients():
+>         #     self._publishers[topic].unregister()
+>         #     del self._publishers[topic]
