@@ -129,10 +129,6 @@ class Chatbot():
         # callback
         self._blink_publisher.publish('chat_heard')
 
-        if chat_message.confidence < 50:
-            self._response_publisher.publish('Could you say that again?')
-            return
-
         if self.delay_response:
             with self.condition:
                 logger.info("Add input: {}".format(chat_message.utterance))
