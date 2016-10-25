@@ -26,7 +26,7 @@ define(['backbone', 'lib/api', './node_config'], function (Backbone, api, NodeCo
 
                 Promise.all([desc_schema, node_schema]).then(function (data) {
                     var properties = {};
-                    for (let prop of data) {
+                    for (var prop in data) {
                         properties = _.extend(properties, prop);
                     }
                     options.success && options.success({
