@@ -57,15 +57,16 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 var self = this,
                     loadOptions = {
                         success: function () {
-                            var handler = function () {
+                            if (self.autoplay) self.run();
+
+                            var reload = function () {
                                 self.model.loadPerformance();
                             };
-
-                            self.listenTo(self.model.nodes, 'change add remove', handler);
+                            self.listenTo(self.model.nodes, 'change add remove', reload);
                         }
                     };
 
-                this.mergeOptions(options, ['performances']);
+                this.mergeOptions(options, ['performances', 'autoplay']);
 
                 if (options.sequence instanceof Array) {
                     this.model = new Performance();

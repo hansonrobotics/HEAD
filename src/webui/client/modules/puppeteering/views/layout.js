@@ -54,7 +54,7 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                 // left col
                 this.posesView = new PosesView({config: {duration: {min: 1, max: 8}}});
                 this.animationModeView = new AnimationModeView();
-                this.timelineEditorView = new TimelineEditorView({fluid: true, editing: false});
+                this.timelineEditorView = new TimelineEditorView({fluid: true, editing: false, autoplay: true});
 
                 // right col
                 this.chatView = new InteractionView({

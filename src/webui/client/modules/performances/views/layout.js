@@ -28,7 +28,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 'click @ui.languageButton': 'changeLanguage'
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['editing']);
+                this.mergeOptions(options, ['editing', 'autoplay']);
                 if (typeof this.editing == 'undefined') this.editing = true;
             },
             onShow: function () {
@@ -47,7 +47,8 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                             performancesView = new PerformancesView({
                                 collection: self.performanceCollection,
                                 queueView: queueView,
-                                editing: self.editing
+                                editing: self.editing,
+                                autoplay: self.autoplay
                             });
 
                         self.showTimeline(current, {readonly: true});

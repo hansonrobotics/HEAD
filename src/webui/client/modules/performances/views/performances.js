@@ -19,7 +19,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                 'change:path add remove reset': 'updateTabs'
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['editing']);
+                this.mergeOptions(options, ['editing', 'autoplay', 'queueView']);
                 if (typeof this.editing == 'undefined') this.editing = true;
             },
             onRender: function () {
@@ -28,6 +28,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                         $('.app-current-path', self.ui.tabs).removeClass('highlight');
                     };
 
+                if (this.autoplay) this.ui.addAllButton.html('Play All');
                 if (!this.editing) this.ui.newButton.hide();
 
                 this.ui.container.droppable({
@@ -61,20 +62,20 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                 var added = false;
                 this.collection.each(function (performance) {
                     if ((performance.get('path') || '') == self.currentPath) {
-                        self.options.queueView.addPerformance(performance, true);
+                        self.queueView.addPerformance(performance, true);
                         added = true;
                     }
                 });
-                self.options.queueView.updateTimeline()
 
-
+                self.queueView.updateTimeline({autoplay: this.autoplay});
             },
             attachHtml: function (collectionView, childView) {
                 var self = this;
 
                 // add performance to the queue on click
                 childView.on('click', function (data) {
-                    self.options.queueView.addPerformance(data.model);
+                    self.queueView.addPerformance(data.model, self.autoplay);
+                    if (self.autoplay) self.queueView.updateTimeline({autoplay: self.autoplay});
                 });
 
                 this.ui.newButton.before(childView.el);

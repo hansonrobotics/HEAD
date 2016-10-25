@@ -75,8 +75,11 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 if (!skipTimelineUpdate)
                     this.updateTimeline();
             },
-            updateTimeline: function () {
-                this.timelinesView = this._showTimeline({sequence: this._getPerformanceIds(), readonly: true});
+            updateTimeline: function (options) {
+                this.timelinesView = this._showTimeline(_.extend({
+                    sequence: this._getPerformanceIds(),
+                    readonly: true
+                }, options || {}));
             },
             removePerformance: function (performance) {
                 var self = this;
@@ -119,19 +122,18 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 return ids;
             },
             _showTimeline: function (options) {
-                var self = this,
-                    timelinesView = new TimelinesView(_.extend({
-                        performances: this.options.performances
-                    }, options));
+                var self = this;
+                this.timelinesView = new TimelinesView(_.extend({
+                    performances: this.options.performances
+                }, options));
 
-                timelinesView.on('close', function () {
+                this.timelinesView.on('close', function () {
                     if (!self.isDestroyed) self.updateTimeline();
                 });
 
                 // show configuration UI
-                this.options.layoutView.getRegion('timeline').show(timelinesView);
-
-                return timelinesView;
+                this.options.layoutView.getRegion('timeline').show(this.timelinesView);
+                return this.timelinesView;
             },
             _removeItem: function (item) {
                 this.stop();
