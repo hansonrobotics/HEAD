@@ -67,8 +67,8 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                     defaultValues: {speed: 1, interval: 1}
                 },
                 pause: {
-                    label: 'Pause',
-                    properties: ['topic', 'timeout', 'on_event'],
+                    label: 'Break',
+                    properties: ['topic', 'timeout', 'on_event', 'event_param'],
                     defaultValues: {duration: 0.2}
                 },
                 settings: {

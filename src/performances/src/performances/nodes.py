@@ -274,8 +274,10 @@ class pause(Node):
         self.timer = False
         if 'on_event' not in self.data.keys():
             self.data['on_event'] = False
+        if 'event_param' not in self.data.keys():
+            self.data['event_param'] = False
 
-    def start_performance(self, msg=None):
+    def start_performance(self):
         if self.subscriber:
             self.runner.unregister(self.data['topic'].strip(), self.subscriber)
             self.subscriber = None
@@ -286,29 +288,51 @@ class pause(Node):
         if not response.success:
             self.runner.resume()
 
+    def event_callback(self, msg=None):
+        if self.data['event_param']:
+            # Check if any comma separated
+            params = str(self.data['event_param']).lower().split(',')
+            matched = False
+            for p in params:
+                try:
+                    rospy.logerr(str(msg or '').lower()+" "+p)
+                    str(msg or '').lower().index(p.strip())
+                    matched = True
+                    continue
+                except ValueError:
+                    matched = matched or False
+            if not matched:
+                return False
+        if self.data['on_event']:
+            self.start_performance()
+        else:
+            self.resume()
+
+    def resume(self):
+        if self.subscriber:
+            self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+            self.subscriber = None
+        if not self.finished:
+            self.runner.resume()
+        if self.timer:
+            self.timer.cancel()
+
     def start(self, run_time):
         self.runner.pause()
 
-        def resume(msg=None):
-            if self.subscriber:
-                self.runner.unregister(self.data['topic'].strip(), self.subscriber)
-                self.subscriber = None
-            if not self.finished:
-                self.runner.resume()
-            if self.timer:
-                self.timer.cancel()
+
 
         if 'topic' in self.data:
             topic = self.data['topic'].strip()
-            if self.data['on_event']:
-                self.subscriber = self.runner.register(topic, self.start_performance)
-            else:
-                self.subscriber = self.runner.register(topic, resume)
-
+            # if self.data['on_event']:
+            #     self.subscriber = self.runner.register(topic, self.start_performance)
+            # else:
+            #     self.subscriber = self.runner.register(topic, resume)
+            self.subscriber = self.runner.register(topic, self.event_callback)
         try:
             timeout = float(self.data['timeout'])
             if timeout > 0.1:
-                self.timer = Timer(timeout, resume)
+                self.timer = Timer(timeout, self.resume)
                 self.timer.start()
         except (ValueError, KeyError) as e:
             logger.error(e)
