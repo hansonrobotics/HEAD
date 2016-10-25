@@ -31,11 +31,10 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
             },
             onRender: function () {
                 var self = this;
+                self.fetchKeywords();
+                self.fetchVariables();
                 this.ui.tabs.on('shown.bs.tab', function (e) {
-                    if ($(e.target).is(self.ui.settingsTab)) {
-                        self.fetchKeywords();
-                        self.fetchVariables();
-                    } else if ($(e.target).is(self.ui.attentionTab))
+                    if ($(e.target).is(self.ui.attentionTab))
                         self.getRegion('selectAreas').show(new AttentionRegionsView({performancePath: self.performancePath}));
                 });
                 this.ui.settingsTab.tab('show');
