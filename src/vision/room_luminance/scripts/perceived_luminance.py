@@ -13,7 +13,7 @@ from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
 from pi_face_tracker.msg import FaceEvent,Faces
 from room_luminance.msg import Luminance
-
+from netcat import netcat
 roslib.load_manifest('room_luminance')
 
 '''
@@ -28,6 +28,8 @@ class ROIluminance:
   # initialize publishers, subscribers and static members inside class
   # constructor.
   def __init__(self):
+    self.hostname = "localhost"
+    self.port = 17020
     self.pub = rospy.Publisher(
         '/opencog/room_luminance', Luminance, queue_size=10)
 
@@ -110,16 +112,17 @@ class ROIluminance:
   # Regardless of the state of coverage this function returns
   # category of room light in general manner
   def classifyLuminance(self, lumene):
+    luminance = "(StateLink (AnchorNode \"bright\")" + \
+                "(ListLink (NumberNode {})))\n".format(lumene)
+    print luminance
+    netcat(self.hostname, self.port, luminance + "\n")
     if lumene <= 25:
         return "Dark"
     elif lumene <= 40:
         return "Nominal"
     else:
         return "Bright"
-    luminance = "(StateLink (AnchorNode \"bright\")" + \
-                "(ListLink (NumberNode {})))\n".format(lumene)
-    print luminance
-    netcat(self.hostname, self.port, luminance + "\n")
+    
   def validate_cover(self):
       if self.count >= 5 and self.Flag == 1 and self.face >= 1:
           self.Flag = 0
