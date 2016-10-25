@@ -141,7 +141,13 @@ def _ask_characters(characters, question, lang, sid, query):
                 hit_character = sess.last_used_character
                 cross_trace.append((sess.last_used_character.id, 'continuation', 'Non-empty'))
             else:
-                _question = sess.cache.last_question
+                if context.get('_inputHistory'):
+                    for h in reversed(context.get('_inputHistory')):
+                        if h.lower().strip() != _question:
+                            _question = h.lower().strip()
+                            break
+                else:
+                    _question = sess.cache.last_question.lower().strip()
                 cross_trace.append((sess.last_used_character.id, 'continuation', 'Empty'))
     else:
         for c in characters:
@@ -254,7 +260,7 @@ def _ask_characters(characters, question, lang, sid, query):
     if not query:
         sess.add(question, answer, AnsweredBy=hit_character.id,
                     User=user, BotName=botname, Trace=cross_trace,
-                    Revision=REVISION, Lang=lang)
+                    Revision=REVISION, Lang=lang, ModQuestion=_question)
 
         if hit_character is not None and hit_character.dynamic_level:
             sess.last_used_character = hit_character
