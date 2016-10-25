@@ -18,11 +18,18 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
             collectionEvents: {
                 'change:path add remove reset': 'updateTabs'
             },
+            initialize: function (options) {
+                this.mergeOptions(options, ['editing']);
+                if (typeof this.editing == 'undefined') this.editing = true;
+            },
             onRender: function () {
-                var self = this;
-                var deactivate = function () {
-                    $('.app-current-path', self.ui.tabs).removeClass('highlight');
-                };
+                var self = this,
+                    deactivate = function () {
+                        $('.app-current-path', self.ui.tabs).removeClass('highlight');
+                    };
+
+                if (!this.editing) this.ui.newButton.hide();
+
                 this.ui.container.droppable({
                     accept: '.app-performance-button',
                     tolerance: 'pointer',
@@ -143,7 +150,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     onEscape: true,
                     backdrop: true,
                     size: 'large'
-                }).on("shown.bs.modal", function() {
+                }).on("shown.bs.modal", function () {
                     settingsView.render();
                 });
             },

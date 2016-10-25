@@ -14,7 +14,8 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             },
             queue: [],
             initialize: function (options) {
-                this.mergeOptions(options, ['sequence', 'performances', 'layoutView']);
+                this.mergeOptions(options, ['sequence', 'performances', 'layoutView', 'editing']);
+                if (typeof this.editing == 'undefined') this.editing = true;
             },
             onAttach: function () {
                 var self = this;
@@ -53,10 +54,13 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                     self.updateTimeline();
                 });
 
-                $('.app-edit', el).click(function () {
-                    self.stop();
-                    self._showTimeline({model: performance});
-                });
+                if (this.editing)
+                    $('.app-edit', el).click(function () {
+                        self.stop();
+                        self._showTimeline({model: performance});
+                    });
+                else
+                    $('.app-edit', el).hide();
 
                 performance.on('change', function () {
                     self._updateItem(item);
@@ -117,8 +121,8 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             _showTimeline: function (options) {
                 var self = this,
                     timelinesView = new TimelinesView(_.extend({
-                    performances: this.options.performances
-                }, options));
+                        performances: this.options.performances
+                    }, options));
 
                 timelinesView.on('close', function () {
                     if (!self.isDestroyed) self.updateTimeline();
