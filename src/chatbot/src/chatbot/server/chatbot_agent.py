@@ -396,4 +396,15 @@ def reload_characters(**kwargs):
         except Exception as ex:
             logger.error("Reloading characters error {}".format(ex))
 
+def rebuild_cs_character(**kwargs):
+    with sync:
+        try:
+            for c in CHARACTERS:
+                if c.id == 'cs' and hasattr(c, 'rebuild'):
+                    log = c.rebuild()
+                    if 'ERROR SUMMARY' in log:
+                        logger.error(log[log.index('ERROR SUMMARY'):])
+        except Exception as ex:
+            logger.error("Rebuilding chatscript characters error {}".format(ex))
+
 atexit.register(dump_history)
