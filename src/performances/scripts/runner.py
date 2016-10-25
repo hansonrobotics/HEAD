@@ -84,6 +84,7 @@ class Runner:
         # Shared subscribers for nodes
         rospy.Subscriber('/' + self.robot_name + '/speech_events', String,
                          lambda msg: self.notify('speech_events', msg))
+        rospy.Subscriber('/' + self.robot_name + '/speech', ChatMessage, self.speech_callback)
         # Shared subscribers for nodes
         rospy.Subscriber('/hand_events', String, self.hand_callback)
 
@@ -339,6 +340,10 @@ class Runner:
     def hand_callback(self, msg):
         self.notify('HAND', msg)
         self.notify(msg.data, msg)
+
+
+    def speech_callback(self, msg):
+        self.notify('SPEECH', msg.utterance)
 
 
 if __name__ == '__main__':

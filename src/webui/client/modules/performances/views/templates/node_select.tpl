@@ -21,8 +21,13 @@
     <div class="app-attention-region-list"></div>
 
     <div class="form-group" data-node-property="topic">
-        <label>Wait for topic</label>
+        <label>Wait for Event</label>
         <input type="text" class="app-node-topic form-control" title="Topic name"/>
+    </div>
+
+    <div class="form-group" data-node-property="event_param">
+        <label>Event Match Parameter</label>
+        <input type="text" class="app-node-event-param form-control" title="Event Parameter"/>
     </div>
 
     <div class="form-group" data-node-property="btree_mode">

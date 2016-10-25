@@ -16,6 +16,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 langSelect: 'select.app-lang-select',
                 attentionRegionList: '.app-attention-region-list',
                 topicInput: '.app-node-topic',
+                eventParamInput: '.app-node-event-param',
                 btreeModeSelect: 'select.app-btree-mode-select',
                 speechEventSelect: 'select.app-speech-event-select',
                 hrAngleSlider: '.app-hr-angle-slider',
@@ -33,6 +34,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 'change @ui.textInput': 'setTextDuration',
                 'change @ui.langSelect': 'setLanguage',
                 'change @ui.topicInput': 'setTopic',
+                'change @ui.eventParamInput': 'setEventParam',
                 'change @ui.listenResponseInputs': 'updateChatResponses',
                 'click @ui.listenAddResponseButton': 'addListenResponse',
                 'click @ui.removeListenResponseButton': 'removeListenResponse',
@@ -46,6 +48,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             },
             modelChanged: function () {
                 this.ui.topicInput.val(this.model.get('topic'));
+                this.ui.eventParamInput.val(this.model.get('event_param'));
             },
             onAttach: function () {
                 this.initFields();
@@ -303,6 +306,9 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             },
             setTopic: function () {
                 this.model.set('topic', this.ui.topicInput.val());
+            },
+            setEventParam: function () {
+                this.model.set('event_param', this.ui.eventParamInput.val());
             },
             enableAttentionRegionSelect: function () {
                 var self = this;
