@@ -318,15 +318,8 @@ class pause(Node):
 
     def start(self, run_time):
         self.runner.pause()
-
-
-
         if 'topic' in self.data:
             topic = self.data['topic'].strip()
-            # if self.data['on_event']:
-            #     self.subscriber = self.runner.register(topic, self.start_performance)
-            # else:
-            #     self.subscriber = self.runner.register(topic, resume)
             self.subscriber = self.runner.register(topic, self.event_callback)
         try:
             timeout = float(self.data['timeout'])
