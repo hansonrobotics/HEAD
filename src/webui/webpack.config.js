@@ -53,6 +53,9 @@ module.exports = {
         }, {
             test: /\.svg/,
             loader: 'svg-url-loader'
+        }, {
+            test: /\.yaml$/,
+            loader: 'json!yaml'
         }]
     },
     output: {
@@ -85,7 +88,7 @@ module.exports = {
             'bootstrap-css': 'css/vendor/bootstrap.min.css',
             'jquery-ui-css': 'jquery-ui-bundle/jquery-ui.css'
         },
-        extensions: ['', '.js', '.css'],
+        extensions: ['', '.js', '.css', '.yaml'],
         root: [path.join(__dirname, './client')],
         modulesDirectories: ['node_modules', 'client']
     },
