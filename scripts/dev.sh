@@ -129,10 +129,11 @@ if [[ $OC_CHATBOT == 1 ]]; then
   tmux new-window -n 'oc-ctrl' "roslaunch opencog_control psi.launch; $SHELL"
 else
   tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"
+  tmux new-window -n 'sound' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/sound; ./audioclass.py; $SHELL"
 fi
 
 tmux new-window -n 'fce' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./main.py; $SHELL"
-tmux new-window -n 'sound' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/sound; ./audioclass.py; $SHELL"
+
 sleep 4
 tmux new-window -n 'cmt' "roslaunch robots_config face_tracker.launch ${pi_arg}; $SHELL"
 tmux new-window -n 'bash' "cd $BASEDIR; $SHELL"
