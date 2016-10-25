@@ -38,6 +38,9 @@ class Character(object):
     def set_context(self, sid, context):
         raise NotImplementedError
 
+    def remove_context(self, sid, key):
+        raise NotImplementedError
+
     def is_command(self, question):
         return False
 
@@ -153,8 +156,8 @@ class AIMLCharacter(Character):
                     self.logger.warn("Repeat answer")
         answer, res = shorten(answer, self.response_limit)
         if res:
-            self.kernel.setPredicate('tellmore', res)
-            self.logger.info("Set predicate tellmore={}".format(res))
+            self.kernel.setPredicate('continue', res)
+            self.logger.info("Set predicate continue={}".format(res))
         ret['text'] = answer
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)
         traces = self.kernel.getTraceDocs()
@@ -191,3 +194,13 @@ class AIMLCharacter(Character):
                 continue
             self.kernel.setPredicate(k, v, sid)
             self.logger.info("Set predicate {}={}".format(k, v))
+
+    def remove_context(self, sid, key):
+        if key in self.get_context(sid).keys():
+            del self.kernel._sessions[sid][key]
+            self.logger.info("Removed context {}".format(key))
+            return True
+        else:
+            self.logger.info("No such context {}".format(key))
+            return False
+
