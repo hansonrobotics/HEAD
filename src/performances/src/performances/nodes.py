@@ -295,7 +295,6 @@ class pause(Node):
             matched = False
             for p in params:
                 try:
-                    rospy.logerr(str(msg or '').lower()+" "+p)
                     str(msg or '').lower().index(p.strip())
                     matched = True
                     continue
