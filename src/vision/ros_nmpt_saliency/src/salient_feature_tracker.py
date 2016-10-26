@@ -42,7 +42,7 @@ class NMPT_SERVO:
                 "(ListLink (NumberNode {})))\n".format(degree)
 
     netcat(self.hostname, self.port, deg + "\n")
-    print deg
+    
     if loc.x <= 0.5:
     	loc.x =(0.5 - loc.x)
     else:
@@ -61,7 +61,7 @@ class NMPT_SERVO:
                 "(ListLink (NumberNode {})))\n".format(loc)
 
         netcat(self.hostname, self.port, locate + "\n")
-        print locate
+        
   def face_event_cb(self, data):
     if data.face_event == self.EVENT_NEW_FACE:
 	print ("Controlling pkg: Face Tracker")
