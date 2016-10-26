@@ -10,10 +10,12 @@ import yaml
 import random
 from std_msgs.msg import String
 from blender_api_msgs.msg import Target, SomaState
+from blender_api_msgs.srv import SetParam
 import time
 import performances.srv as srv
 from performances.msg import Event
 import subprocess
+import threading
 
 logger = logging.getLogger('hr.performance.wholeshow')
 rospack = rospkg.RosPack()
@@ -47,35 +49,42 @@ class WholeShow(HierarchicalMachine):
         self.look_pub = rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
         self.performance_runner = rospy.ServiceProxy('/performances/run_full_performance', srv.RunByName)
         # Start sleeping. Wait for Blender to load
-        rospy.wait_for_service('/blender_api/get_animation_length')
+        rospy.wait_for_service('/blender_api/set_param')
         rospy.wait_for_service('/performances/current')
+        self.blender_param = rospy.ServiceProxy('/blender_api/set_param', SetParam)
         time.sleep(2)
         self.sleeping = rospy.get_param('start_sleeping', False)
         if self.sleeping:
-            self.to_sleeping()
+            t = threading.Timer(1, self.to_sleeping)
+            t.start()
         # Performance id as key and keyword array as value
         self.performances_keywords = {}
         # Parse on load.
         # TODO make sure we reload those once performances are saved.
         self.find_performances_properties()
         self.after_performance = False
-
         # Start listeners
         rospy.Service('speech_on', srv.SpeechOn, self.speech_cb)
         self.sub_sleep = rospy.Subscriber('sleeper', String, self.sleep_cb)
         self.performance_events = rospy.Subscriber('/performances/events', Event, self.performances_cb)
+
     """States callbacks """
     def start_sleeping(self):
         self.soma_pub.publish(self._get_soma('sleep', 1))
         self.soma_pub.publish(self._get_soma('normal', 0))
         # Look down
-
-        self.look_pub.publish(Target(1, 0, -0.15, 0))
+        self.look_pub.publish(Target(1, 0, -0.15, 0.3))
+        self.enable_blinking(False)
+        # Update param in case wholeshow restarts
+        rospy.set_param('start_sleeping', True)
 
     def stop_sleeping(self):
         self.soma_pub.publish(self._get_soma('sleep', 0))
         self.soma_pub.publish(self._get_soma('normal', 1))
         self.look_pub.publish(Target(1, 0, 0, 0))
+        self.enable_blinking()
+        # Update param in case wholeshow restarts
+        rospy.set_param('start_sleeping', False)
 
     def start_interacting(self):
         self.btree_pub.publish(String("btree_on"))
@@ -211,6 +220,13 @@ class WholeShow(HierarchicalMachine):
                 if keyword in speech:
                     performances.append(performance)
         return performances
+
+    def enable_blinking(self, enabled=True):
+        try:
+            self.blender_param("bpy.data.scenes[\"Scene\"].actuators.ACT_blink_randomly.HEAD_PARAM_enabled",
+                               str(enabled))
+        except rospy.ServiceException:
+            pass
 
 
 if __name__ == '__main__':
