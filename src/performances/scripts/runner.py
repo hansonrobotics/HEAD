@@ -107,7 +107,7 @@ class Runner:
 
     def load_performance_callback(self, request):
         self.load_performances(json.loads(request.performance))
-        return srv.LoadNodesResponse(True)
+        return srv.LoadPerformanceResponse(True)
 
     def load_sequence_callback(self, request):
         return srv.LoadSequenceResponse(success=True, performances=json.dumps(self.load_sequence(request.ids)))
@@ -210,7 +210,6 @@ class Runner:
         # Wait for worker to stop performance and enter waiting before proceeding
         self.run_condition.acquire()
         with self.lock:
-            rospy.logerr(start_time)
             success = len(self.running_performances) > 0
             if success:
                 self.running = True

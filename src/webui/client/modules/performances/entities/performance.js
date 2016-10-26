@@ -55,7 +55,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
             loadPerformance: function (options) {
                 options = options || {};
                 api.services.performances.load_performance.callService({
-                    ids: [this.id],
+                    //ids: [this.id],
                     performance: JSON.stringify(this.toJSON())
                 }, function (response) {
                     if (response.success) {
@@ -88,7 +88,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             parse: function (response) {
-                for (let attr of ['previous_id', 'ignore_nodes']) {
+                for (var attr in ['previous_id', 'ignore_nodes']) {
                     delete response[attr];
                     this.unset(attr);
                 }
