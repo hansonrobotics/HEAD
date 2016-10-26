@@ -12,7 +12,7 @@ import fnmatch
 import random
 
 from std_msgs.msg import String, Int32, Float32
-from std_srvs.srv import Trigger
+from std_srvs.srv import Trigger, TriggerResponse
 from chatbot.msg import ChatMessage
 from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
@@ -74,7 +74,7 @@ class Runner:
         }
         self.load_properties()
         rospy.Service('~reload_properties', Trigger, self.reload_properties_callback)
-        rospy.Service('~set_property', srv.SetProperty, self.set_property_callback)
+        rospy.Service('~set_properties', srv.SetProperties, self.set_properties_callback)
         rospy.Service('~load', srv.Load, self.load_callback)
         rospy.Service('~load_sequence', srv.LoadSequence, self.load_sequence_callback)
         rospy.Service('~load_performance', srv.LoadPerformance, self.load_performance_callback)
@@ -96,11 +96,11 @@ class Runner:
 
     def reload_properties_callback(self, request):
         self.load_properties()
-        return Trigger(success=True)
+        return TriggerResponse(success=True)
 
-    def set_property_callback(self, request):
-        self.set_property(request.id, request.name, request.val)
-        return srv.SetPropertyResponse(success=True)
+    def set_properties_callback(self, request):
+        self.set_properties(request.id, json.loads(request.properties))
+        return srv.SetPropertiesResponse(success=True)
 
     def load_callback(self, request):
         return srv.LoadResponse(success=True, performance=json.dumps(self.load_sequence([request.id])[0]))
@@ -373,11 +373,12 @@ class Runner:
                             rospy.set_param('/' + os.path.join(self.robot_name, 'webui/performances', dir).strip(
                                 "/.") + '/properties', properties)
 
-    def set_property(self, id, name, val):
-        if id in self.properties:
-            self.properties[id][name] = val
-        else:
-            self.properties[id] = {name: val}
+    def set_properties(self, id, properties):
+        for key, val in properties.iteritems():
+            if id in self.properties:
+                self.properties[id][key] = val
+            else:
+                self.properties[id] = {key: val}
 
     def get_property(self, id, name):
         if id in self.properties and name in self.properties[id] and self.properties[id][name]:

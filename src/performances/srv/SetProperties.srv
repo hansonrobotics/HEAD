@@ -1,5 +1,4 @@
 string id
-string name
-string val
+string properties
 ---
 bool success
