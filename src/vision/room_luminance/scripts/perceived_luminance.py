@@ -112,9 +112,9 @@ class ROIluminance:
   # Regardless of the state of coverage this function returns
   # category of room light in general manner
   def classifyLuminance(self, lumene):
-    luminance = "(StateLink (AnchorNode \"bright\")" + \
+    lumin = "(StateLink (AnchorNode \"luminance\")" + \
                 "(ListLink (NumberNode {})))\n".format(lumene)
-    print luminance
+   
     netcat(self.hostname, self.port, luminance + "\n")
     if lumene <= 25:
         return "Dark"
