@@ -57,11 +57,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 var self = this,
                     loadOptions = {
                         success: function () {
-                            var handler = function () {
+                            self.listenTo(self.model.nodes, 'change add remove', function () {
                                 self.model.loadNodes();
-                            };
-
-                            self.listenTo(self.model.nodes, 'change add remove', handler);
+                            });
                         }
                     };
 
@@ -71,9 +69,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.model = new Performance();
                     this.model.loadSequence(options.sequence, loadOptions);
                 } else if (this.model) {
-                    if (this.model.id && this.model.nodes.isEmpty()) {
-                        this.model.load(loadOptions);
-                    } else
+                    if (!options.running && !options.paused)
                         this.model.loadNodes(loadOptions);
                 } else {
                     this.model = new Performance();
@@ -154,6 +150,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         self.updateTimelineWidth();
                 };
                 $(window).on('resize', updateWidth);
+
+                if (this.options.running)
+                    this.startIndicator(this.options.current_time, this.model.getDuration());
+
+                if (this.options.paused)
+                    this.pauseIndicator(this.options.current_time);
             },
             onDestroy: function () {
                 this.stopIndicator();
@@ -430,8 +432,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.pausePosition = parseInt(this.ui.runIndicator.css('left'));
                 this.updateIndicatorTime();
                 this.enableIndicatorDragging();
+                this.ui.runButton.hide();
                 this.ui.pauseButton.hide();
                 this.ui.resumeButton.fadeIn();
+                this.ui.stopButton.fadeIn();
             },
             enableIndicatorDragging: function () {
                 var self = this;
