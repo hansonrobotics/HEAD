@@ -1,146 +1,182 @@
-define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'underscore'],
-    function (Marionette, Backbone, template, TimelinesView, _) {
-        return Marionette.ItemView.extend({
-            template: template,
-            ui: {
-                queue: '.app-performance-queue',
-                performances: '.app-performance-queue .app-performance',
-                performanceTemplate: '.app-performance-template',
-                clearButton: '.app-clear',
-                emptyNotice: '.app-empty-notice'
-            },
-            events: {
-                'click @ui.clearButton': 'clear'
-            },
-            queue: [],
-            initialize: function (options) {
-                this.mergeOptions(options, ['sequence', 'performances', 'layoutView']);
-            },
-            onAttach: function () {
-                var self = this;
+define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'underscore', 'lib/regions/fade_in',
+    '../entities/performance'], function (Marionette, Backbone, template, TimelinesView, _, FadeInRegion, Performance) {
+    return Marionette.LayoutView.extend({
+        template: template,
+        ui: {
+            queue: '.app-performance-queue',
+            performances: '.app-performance-queue .app-performance',
+            performanceTemplate: '.app-performance-template',
+            clearButton: '.app-clear',
+            emptyNotice: '.app-empty-notice'
+        },
+        events: {
+            'click @ui.clearButton': 'clearClick'
+        },
+        regions: {
+            timeline: {
+                el: '.app-timeline-region',
+                regionClass: FadeInRegion
+            }
+        },
+        queue: [],
+        initialize: function (options) {
+            this.mergeOptions(options, ['performances']);
+        },
+        onAttach: function () {
+            var self = this;
 
-                $(this.ui.queue).sortable({
-                    axis: "y",
-                    handle: ".app-drag-handle",
-                    placeholder: "ui-state-highlight",
-                    stop: function () {
-                        self.updateTimeline();
-                    }
+            $(this.ui.queue).sortable({
+                axis: "y",
+                handle: ".app-drag-handle",
+                placeholder: "ui-state-highlight",
+                stop: function () {
+                    self.updateTimeline();
+                }
+            });
+
+            if (this.options.sequence) {
+                this.showSequence(this.options.sequence);
+            }
+        },
+        showSequence: function (sequence, skipTimelineUpdate) {
+            var self = this;
+
+            this.clearQueue();
+            if (sequence instanceof Array && this.performances) {
+                _.each(sequence, function (id) {
+                    var model = self.performances.get(id);
+                    if (model) self.addPerformance(model, true);
                 });
+            }
+            if (!skipTimelineUpdate) this.updateTimeline();
+        },
+        showCurrent: function () {
+            var self = this,
+                current = new Performance();
 
-                if (this.sequence instanceof Array && this.performances) {
-                    _.each(this.sequence, function (id) {
-                        var model = self.performances.get(id);
-                        if (model) self.addPerformance(model);
+            current.fetchCurrent({
+                success: function (response) {
+                    self._showTimeline({
+                        model: current,
+                        running: response['running'],
+                        paused: response['paused'],
+                        current_time: response['current_time']
                     });
+
+                    self.showSequence(response['ids'], true);
                 }
-            },
-            addPerformance: function (performance, skipTimelineUpdate) {
-                var self = this,
-                    el = $(this.ui.performanceTemplate).clone().removeClass('app-performance-template').get(0),
-                    item = {
-                        model: performance,
-                        el: el
-                    };
+            });
+        },
+        editPerformance: function (performance, options) {
+            this._showTimeline({
+                model: performance,
+                readonly: false
+            });
+        },
+        addPerformance: function (performance, skipTimelineUpdate) {
+            var self = this,
+                el = $(this.ui.performanceTemplate).clone().removeClass('app-performance-template').get(0),
+                item = {
+                    model: performance,
+                    el: el
+                };
 
-                this.ui.emptyNotice.slideUp();
-                this._updateItem(item);
-                this.queue.push(item);
-                this.ui.queue.append(el);
+            this.ui.emptyNotice.slideUp();
+            this._updateItem(item);
+            this.queue.push(item);
+            this.ui.queue.append(el);
 
-                $('.app-remove', el).click(function () {
-                    self._removeItem(item);
-                    self.updateTimeline();
-                });
+            $('.app-remove', el).click(function () {
+                self._removeItem(item);
+                self.updateTimeline();
+            });
 
-                $('.app-edit', el).click(function () {
-                    self.stop();
-                    self._showTimeline({model: performance});
-                });
+            $('.app-edit', el).click(function () {
+                self.stop();
+                self._showTimeline({model: performance});
+            });
 
-                performance.on('change', function () {
-                    self._updateItem(item);
-                });
+            performance.on('change', function () {
+                self._updateItem(item);
+            });
 
-                performance.on('destroy', function () {
-                    self._removeItem(item);
-                    self.updateTimeline();
-                });
-                // Adding multiple performances at time makes it faster if timeline updated only once
-                skipTimelineUpdate = skipTimelineUpdate || false;
-                if (!skipTimelineUpdate)
-                    this.updateTimeline();
-            },
-            updateTimeline: function () {
-                this.timelinesView = this._showTimeline({sequence: this._getPerformanceIds(), readonly: true});
-            },
-            removePerformance: function (performance) {
-                var self = this;
+            performance.on('destroy', function () {
+                self._removeItem(item);
+                self.updateTimeline();
+            });
 
-                _.each(this.queue, function (item) {
-                    if (item.model == performance)
-                        self._removeItem(item)
-                });
-            },
-            stop: function () {
-                if (this.timelinesView) {
-                    this.timelinesView.destroy();
-                    this.timelinesView = null;
-                }
-            },
-            clear: function () {
-                this.stop();
+            if (!skipTimelineUpdate) this.updateTimeline();
+        },
+        updateTimeline: function () {
+            this.timelinesView = this._showTimeline({sequence: this._getPerformanceIds(), readonly: true});
+        },
+        removePerformance: function (performance) {
+            var self = this;
 
-                var self = this;
-                _.each(this.queue, function (item) {
-                    self.removePerformance(item.model);
-                });
+            _.each(this.queue, function (item) {
+                if (item.model == performance)
+                    self._removeItem(item)
+            });
+        },
+        stop: function () {
+            if (this.timelinesView) {
+                this.timelinesView.destroy();
+                this.timelinesView = null;
+            }
+        },
+        clearClick: function () {
+            this.stop();
+            this.clearQueue();
+            this.updateTimeline();
+            this.ui.clearButton.blur();
+        },
+        clearQueue: function () {
+            var self = this;
+            _.each(this.queue, function (item) {
+                self._removeItem(item);
+            });
+        },
+        _getPerformanceIds: function () {
+            var self = this,
+                ids = [];
 
-                this.updateTimeline();
-                this.ui.clearButton.blur();
-            },
-            _getPerformanceIds: function () {
-                var self = this,
-                    ids = [];
+            $('ul .app-performance:visible', this.el).each(function () {
+                var el = this,
+                    index = _.findIndex(self.queue, function (item) {
+                        return item && el == item.el;
+                    });
 
-                $('ul .app-performance:visible', this.el).each(function () {
-                    var el = this,
-                        index = _.findIndex(self.queue, function (item) {
-                            return item && el == item.el;
-                        });
+                if (index != -1) ids.push(self.queue[index].model.id);
+            });
 
-                    if (index != -1) ids.push(self.queue[index].model.id);
-                });
-
-                return ids;
-            },
-            _showTimeline: function (options) {
-                var self = this,
-                    timelinesView = new TimelinesView(_.extend({
+            return ids;
+        },
+        _showTimeline: function (options) {
+            var self = this,
+                timelinesView = new TimelinesView(_.extend({
                     performances: this.options.performances
                 }, options));
 
-                timelinesView.on('close', function () {
-                    if (!self.isDestroyed) self.updateTimeline();
-                });
+            timelinesView.on('close', function () {
+                if (!self.isDestroyed) self.updateTimeline();
+            });
 
-                // show configuration UI
-                this.options.layoutView.getRegion('timeline').show(timelinesView);
+            // show configuration UI
+            this.getRegion('timeline').show(timelinesView);
+            return timelinesView;
+        },
+        _removeItem: function (item) {
+            this.stop();
 
-                return timelinesView;
-            },
-            _removeItem: function (item) {
-                this.stop();
+            $(item.el).slideUp();
+            this.queue = _.without(this.queue, item);
 
-                $(item.el).slideUp();
-                this.queue = _.without(this.queue, item);
-
-                if (this.queue.length == 0)
-                    this.ui.emptyNotice.slideDown();
-            },
-            _updateItem: function (item) {
-                $('.app-name', item.el).html(item.model.get('name'));
-                $('.app-duration', item.el).html(item.model.getDuration().toFixed(2));
-            }
-        });
+            if (this.queue.length == 0)
+                this.ui.emptyNotice.slideDown();
+        },
+        _updateItem: function (item) {
+            $('.app-name', item.el).html(item.model.get('name'));
+            $('.app-duration', item.el).html(item.model.getDuration().toFixed(2));
+        }
     });
+});

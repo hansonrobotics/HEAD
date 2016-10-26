@@ -114,7 +114,7 @@ WEBPACK_OPTIONS="--optimize-minimize"
 NODE_INTERPRETER="node"
 
 if [[ $DEV_MODE == 1 ]]; then
-  WEBPACK_OPTIONS="--optimize-minimize -w -dev"
+  WEBPACK_OPTIONS="-w -dev"
   NODE_INTERPRETER="nodemon"
 fi
 
