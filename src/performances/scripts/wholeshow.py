@@ -225,6 +225,8 @@ class WholeShow(HierarchicalMachine):
         try:
             self.blender_param("bpy.data.scenes[\"Scene\"].actuators.ACT_blink_randomly.HEAD_PARAM_enabled",
                                str(enabled))
+            self.blender_param("bpy.data.scenes[\"Scene\"].actuators.ACT_saccade.HEAD_PARAM_enabled",
+                               str(enabled))
         except rospy.ServiceException:
             pass
 
