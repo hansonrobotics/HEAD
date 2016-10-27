@@ -13,6 +13,7 @@ class ResponseCache(object):
         self.index = defaultdict(list)
         self.last_question = None
         self.last_answer = None
+        self.that_question = None
         self.last_time = None
         self.staged_record = []
         self.cursor = 0
