@@ -134,11 +134,15 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     input.focus();
                 });
 
-                self.ui.tabs.append(addNewTab)
-                    .append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'))
-                    .append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function () {
-                        self.showSettings();
-                    }));
+                if (this.editing)
+                    this.ui.tabs.append(addNewTab);
+
+                this.ui.tabs.append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'));
+
+                if (this.editing)
+                    self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function () {
+                            self.showSettings();
+                        }));
             },
             showSettings: function () {
                 var settingsView = new SettingsView({
