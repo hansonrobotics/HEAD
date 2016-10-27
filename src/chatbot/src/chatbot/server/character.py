@@ -74,7 +74,7 @@ class AIMLCharacter(Character):
         self.max_chat_tries = 5
         self.trace_pattern = re.compile(
             r'.*/(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
-        self.response_limit = 300
+        self.response_limit = 140
 
     def load_aiml_files(self, kernel, aiml_files):
         errors = []
