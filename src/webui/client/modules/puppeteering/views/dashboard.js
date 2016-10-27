@@ -45,7 +45,7 @@ define(['application', 'marionette', './templates/dashboard.tpl', 'lib/regions/f
 
                 // left col
                 this.posesView = new PosesView({config: {duration: {min: 1, max: 8}}});
-                this.animationModeView = new AnimationModeView({settings: ['behavior']});
+                this.animationModeView = new AnimationModeView({settings: ['behavior', 'webspeech']});
                 this.timelineEditorView = new TimelineEditorView({fluid: true, editing: false, autoplay: true});
 
                 this.crosshairsView = new CrosshairsView();

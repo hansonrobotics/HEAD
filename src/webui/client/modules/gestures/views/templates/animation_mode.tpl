@@ -17,4 +17,9 @@
         <button type="button" class="app-gesture-ls-on btn btn-default">On</button>
         <button type="button" class="app-gesture-ls-off btn btn-default">Off</button>
     </div>
+    <div class="app-webspeech-container">
+        <h2>Webspeech: </h2>
+        <button type="button" class="app-webspeech-on btn btn-default">On</button>
+        <button type="button" class="app-webspeech-off btn btn-default active">Off</button>
+    </div>
 </div>
