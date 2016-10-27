@@ -160,6 +160,7 @@ class AIMLCharacter(Character):
             self.logger.info("Set predicate continue={}".format(res))
         ret['text'] = answer
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)
+        ret['performance'] = self.kernel.getPredicate('performance', sid)
         traces = self.kernel.getTraceDocs()
         if traces:
             self.logger.info("Trace: {}".format(traces))
