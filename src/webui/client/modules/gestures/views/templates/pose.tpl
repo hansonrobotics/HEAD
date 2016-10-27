@@ -1,1 +1,1 @@
-<button type="button" class="btn btn-default app-emotion-button"><%= name %></button>
+<button type="button" class="btn btn-default app-pose-button"><%= name %></button>

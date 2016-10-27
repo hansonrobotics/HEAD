@@ -1,4 +1,4 @@
-define(['application', './views/layout'],
+define(['application', './views/layout', './css/gestures'],
     function (App, LayoutView) {
         var gestures = {
             index: function () {

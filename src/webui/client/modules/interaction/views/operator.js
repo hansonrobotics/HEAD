@@ -5,6 +5,7 @@ define(['application', 'marionette', './templates/operator.tpl', 'lib/api', 'jqu
             ui: {
                 sayButton: '.app-say-button',
                 speechInput: '.app-speech-input',
+                modeButtonContainer: '.app-speech-mode-buttons',
                 modeButtons: '.app-speech-mode-buttons .btn',
                 shortcutInfo: '.app-shortcut-info'
             },
@@ -17,10 +18,12 @@ define(['application', 'marionette', './templates/operator.tpl', 'lib/api', 'jqu
                 predefined: []
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['interactionView']);
+                this.mergeOptions(options, ['interactionView', 'hideModeButtons']);
             },
             onShow: function () {
                 var self = this;
+                if (this.hideModeButtons) this.ui.modeButtonContainer.hide();
+
                 this.ui.shortcutInfo.hide();
                 this.mode = 'auto';
                 this.ui.speechInput.typeahead({

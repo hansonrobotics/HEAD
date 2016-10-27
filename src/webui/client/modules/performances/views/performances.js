@@ -28,7 +28,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                         $('.app-current-path', self.ui.tabs).removeClass('highlight');
                     };
 
-                if (this.autoplay) this.ui.addAllButton.html('Play All');
+                if (this.autoplay) this.ui.addAllButton.get(0).lastChild.nodeValue = ' Play All';
                 if (!this.editing) this.ui.newButton.hide();
 
                 this.ui.container.droppable({

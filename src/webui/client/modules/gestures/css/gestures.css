@@ -4,6 +4,7 @@
     list-style: none;
 }
 
-.app-gesture-button {
+.app-gesture-button,
+.app-pose-button {
     margin-bottom: 5px;
 }

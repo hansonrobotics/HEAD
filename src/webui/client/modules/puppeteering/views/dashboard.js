@@ -1,4 +1,4 @@
-define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'modules/performances/views/layout',
+define(['application', 'marionette', './templates/dashboard.tpl', 'lib/regions/fade_in', 'modules/performances/views/layout',
         'modules/interaction/views/interaction', 'modules/interaction/views/faces', 'jquery', '../../interaction/views/operator',
         'modules/gestures/views/animation_mode', 'modules/gestures/views/poses', 'modules/gestures/views/animations', './crosshairs',
         'scrollbar', 'scrollbar-css'],
@@ -23,20 +23,12 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                     el: ".app-animation-mode-region",
                     regionClass: FadeInRegion
                 },
-                chat: {
-                    el: ".app-chat-region",
-                    regionClass: FadeInRegion
-                },
                 poses: {
                     el: '.app-pose-region',
                     regionClass: FadeInRegion
                 },
                 animations: {
                     el: '.app-animations-region',
-                    regionClass: FadeInRegion
-                },
-                faces: {
-                    el: '.app-faces-region',
                     regionClass: FadeInRegion
                 },
                 crosshairs: {
@@ -53,28 +45,17 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
 
                 // left col
                 this.posesView = new PosesView({config: {duration: {min: 1, max: 8}}});
-                this.animationModeView = new AnimationModeView();
+                this.animationModeView = new AnimationModeView({settings: ['behavior']});
                 this.timelineEditorView = new TimelineEditorView({fluid: true, editing: false, autoplay: true});
 
-                // right col
-                this.chatView = new InteractionView({
-                    hide_faces: true,
-                    recognition_method: 'webspeech',
-                    hide_method_select: true,
-                    hide_noise: true
-                });
-
                 this.crosshairsView = new CrosshairsView();
-                this.facesView = new FacesView({always_visible: true, enableBTMode: true});
                 this.animationsView = new AnimationsView({config: {speed: {min: 0.5, max: 2}}});
-                this.speechView = new OperatorView({interactionView: this.chatView});
+                this.speechView = new OperatorView({interactionView: this.chatView, hideModeButtons: true});
 
                 this.getRegion('poses').show(this.posesView);
                 this.getRegion('timeline').show(this.timelineEditorView);
                 this.getRegion('animationMode').show(this.animationModeView);
-                this.getRegion('chat').show(this.chatView);
                 this.getRegion('crosshairs').show(this.crosshairsView);
-                this.getRegion('faces').show(this.facesView);
                 this.getRegion('animations').show(this.animationsView);
                 this.getRegion('speech').show(this.speechView);
 
@@ -107,8 +88,6 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                         swipePropagation: true
                     });
                 }
-
-                this.chatView.setHeight(contentHeight - this.ui.controls.outerHeight());
             }
         });
     });
