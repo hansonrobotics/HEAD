@@ -131,7 +131,7 @@ def _ask_characters(characters, question, lang, sid, query):
     control = get_character('control')
     if control is not None:
         _response = control.respond(_question, lang, sess, True)
-        cross_trace.append((control.id, 'control', _response.get('trace')))
+        cross_trace.append((control.id, 'control', _response.get('trace') or 'No match'))
         if _response.get('text') == '[tell me more]':
             if sess.last_used_character:
                 if sess.cache.that_question is None:
