@@ -156,7 +156,7 @@ class AIMLCharacter(Character):
                     self.logger.warn("Repeat answer")
         answer, res = shorten(answer, self.response_limit)
         if res:
-            self.kernel.setPredicate('continue', res)
+            self.kernel.setPredicate('continue', res, sid)
             self.logger.info("Set predicate continue={}".format(res))
         ret['text'] = answer
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)

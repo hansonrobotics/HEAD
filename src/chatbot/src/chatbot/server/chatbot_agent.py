@@ -131,6 +131,8 @@ def _ask_characters(characters, question, lang, sid, query):
 
     if _question in ['tell me more']:
         if sess.last_used_character:
+            if sess.cache.that_question is None:
+                sess.cache.that_question = sess.cache.last_question
             context = sess.last_used_character.get_context(sess.sid)
             if 'continue' in context and context.get('continue'):
                 _answer, res = shorten(context.get('continue'), 140)
@@ -141,13 +143,7 @@ def _ask_characters(characters, question, lang, sid, query):
                 hit_character = sess.last_used_character
                 cross_trace.append((sess.last_used_character.id, 'continuation', 'Non-empty'))
             else:
-                if context.get('_inputHistory'):
-                    for h in reversed(context.get('_inputHistory')):
-                        if h.lower().strip() != _question:
-                            _question = h.lower().strip()
-                            break
-                else:
-                    _question = sess.cache.last_question.lower().strip()
+                _question = sess.cache.that_question.lower().strip()
                 cross_trace.append((sess.last_used_character.id, 'continuation', 'Empty'))
     else:
         for c in characters:
@@ -155,6 +151,7 @@ def _ask_characters(characters, question, lang, sid, query):
                 c.remove_context(sess.sid, 'continue')
             except NotImplementedError:
                 pass
+        sess.cache.that_question = None
 
     # If the last input is a question, then try to use the same tier to
     # answer it.
