@@ -24,6 +24,10 @@ from config import CHARACTER_PATH
 CHARACTERS = load_characters(CHARACTER_PATH)
 REVISION = os.environ.get('HR_CHATBOT_REVISION')
 
+from session import ChatSessionManager
+session_manager = ChatSessionManager()
+DISABLE_QUIBBLE = True
+
 from chatbot.utils import shorten
 
 def get_character(id, lang=None):
@@ -103,11 +107,6 @@ def set_weights(weights, lang, sid):
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
-from session import ChatSessionManager
-session_manager = ChatSessionManager()
-MAX_CHAT_TRIES = 5
-DISABLE_QUIBBLE = True
-
 def _ask_characters(characters, question, lang, sid, query):
     sess = session_manager.get_session(sid)
     if sess is None:
@@ -129,29 +128,33 @@ def _ask_characters(characters, question, lang, sid, query):
     answer = None
     cross_trace = []
 
-    if _question in ['tell me more']:
-        if sess.last_used_character:
-            if sess.cache.that_question is None:
-                sess.cache.that_question = sess.cache.last_question
-            context = sess.last_used_character.get_context(sess.sid)
-            if 'continue' in context and context.get('continue'):
-                _answer, res = shorten(context.get('continue'), 140)
-                response['text'] = answer = _answer
-                response['botid'] = sess.last_used_character.id
-                response['botname'] = sess.last_used_character.name
-                sess.last_used_character.set_context(sess.sid, {'continue': res})
-                hit_character = sess.last_used_character
-                cross_trace.append((sess.last_used_character.id, 'continuation', 'Non-empty'))
-            else:
-                _question = sess.cache.that_question.lower().strip()
-                cross_trace.append((sess.last_used_character.id, 'continuation', 'Empty'))
-    else:
-        for c in characters:
-            try:
-                c.remove_context(sess.sid, 'continue')
-            except NotImplementedError:
-                pass
-        sess.cache.that_question = None
+    control = get_character('control')
+    if control is not None:
+        _response = control.respond(_question, lang, sess, True)
+        cross_trace.append((control.id, 'control', _response.get('trace')))
+        if _response.get('text') == '[tell me more]':
+            if sess.last_used_character:
+                if sess.cache.that_question is None:
+                    sess.cache.that_question = sess.cache.last_question
+                context = sess.last_used_character.get_context(sess.sid)
+                if 'continue' in context and context.get('continue'):
+                    _answer, res = shorten(context.get('continue'), 140)
+                    response['text'] = answer = _answer
+                    response['botid'] = sess.last_used_character.id
+                    response['botname'] = sess.last_used_character.name
+                    sess.last_used_character.set_context(sess.sid, {'continue': res})
+                    hit_character = sess.last_used_character
+                    cross_trace.append((sess.last_used_character.id, 'continuation', 'Non-empty'))
+                else:
+                    _question = sess.cache.that_question.lower().strip()
+                    cross_trace.append((sess.last_used_character.id, 'continuation', 'Empty'))
+        else:
+            for c in characters:
+                try:
+                    c.remove_context(sess.sid, 'continue')
+                except NotImplementedError:
+                    pass
+            sess.cache.that_question = None
 
     # If the last input is a question, then try to use the same tier to
     # answer it.
