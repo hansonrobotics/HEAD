@@ -196,6 +196,9 @@ class SessionManager(object):
                 self.remove_session(sid)
             time.sleep(0.1)
 
+    def list_sessions(self):
+        return self._sessions.keys()
+
 
 class ChatSessionManager(SessionManager):
 

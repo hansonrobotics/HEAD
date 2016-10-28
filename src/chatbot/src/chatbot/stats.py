@@ -4,7 +4,6 @@ import pandas as pd
 import glob
 import re
 import datetime as dt
-from client import Client
 from collections import Counter
 
 logger = logging.getLogger('hr.chatbot.stats')
@@ -66,6 +65,7 @@ def history_stats(history_dir, days):
 
 
 def playback_history(df):
+    from client import Client
     client = Client(os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC'), test=True)
     pattern_column = []
     for question in df.Question:

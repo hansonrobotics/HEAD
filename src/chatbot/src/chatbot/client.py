@@ -502,3 +502,22 @@ Syntax: upload package
             self.timer.start()
             logger.info("Start {} timer with timeout {}".format(
                 cmd, self.timeout))
+
+    def do_list_sessions(self, line):
+        params = {
+            "Auth": self.key
+        }
+        r = requests.get(
+            '{}/sessions'.format(self.root_url), params=params)
+        sessions = r.json().get('response')
+        if sessions:
+            self.stdout.write('sessions: {}\n'.format('\n'.join(sessions)))
+        else:
+            self.stdout.write('no session\n')
+
+    do_ls = do_list_sessions
+
+    def help_list_sessions(self):
+        self.stdout.write('List the current sessions\n')
+
+    help_ls = help_list_sessions

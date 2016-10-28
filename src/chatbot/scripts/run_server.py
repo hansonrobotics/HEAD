@@ -146,6 +146,13 @@ def _start_session():
                     mimetype="application/json")
 
 
+@app.route(ROOT + '/sessions', methods=['GET'])
+@requires_auth
+def _sessions():
+    sessions = session_manager.list_sessions()
+    return Response(json_encode({'ret': 0, 'response': sessions}),
+                    mimetype="application/json")
+
 @app.route(ROOT + '/set_weights', methods=['GET'])
 @requires_auth
 def _set_weights():
