@@ -99,7 +99,8 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                         model: current,
                         running: response['running'],
                         paused: response['paused'],
-                        current_time: response['current_time']
+                        current_time: response['current_time'],
+                        readonly: true
                     });
 
                     self.showSequence(response['ids'], true);

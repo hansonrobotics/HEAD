@@ -29,9 +29,9 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 'click @ui.lsOffButton': "lsOff"
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['settings']);
+                this.mergeOptions(options, ['settings', 'language']);
                 if (!this.settings || !this.settings.constructor === Array)
-                    this.settings = ['behavior', 'mode', 'lipsync', 'language'];
+                    this.settings = ['behavior', 'mode', 'lipsync'];
             },
             onAttach: function () {
                 var self = this,
