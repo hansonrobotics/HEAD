@@ -20,7 +20,8 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
         },
         queue: [],
         initialize: function (options) {
-            this.mergeOptions(options, ['performances']);
+            this.mergeOptions(options, ['sequence', 'performances', 'layoutView', 'editing']);
+            if (typeof this.editing == 'undefined') this.editing = true;
         },
         onAttach: function () {
             var self = this;
@@ -34,9 +35,47 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 }
             });
 
-            if (this.options.sequence) {
+            if (this.options.sequence)
                 this.showSequence(this.options.sequence);
-            }
+        },
+        addPerformance: function (performance, skipTimelineUpdate) {
+            var self = this,
+                el = $(this.ui.performanceTemplate).clone().removeClass('app-performance-template').get(0),
+                item = {
+                    model: performance,
+                    el: el
+                };
+
+            this.ui.emptyNotice.slideUp();
+            this._updateItem(item);
+            this.queue.push(item);
+            this.ui.queue.append(el);
+
+            $('.app-remove', el).click(function () {
+                self._removeItem(item);
+                self.updateTimeline();
+            });
+
+            if (this.editing)
+                $('.app-edit', el).click(function () {
+                    self.stop();
+                    self._showTimeline({model: performance});
+                });
+            else
+                $('.app-edit', el).hide();
+
+            performance.on('change', function () {
+                self._updateItem(item);
+            });
+
+            performance.on('destroy', function () {
+                self._removeItem(item);
+                self.updateTimeline();
+            });
+            // Adding multiple performances at time makes it faster if timeline updated only once
+            skipTimelineUpdate = skipTimelineUpdate || false;
+            if (!skipTimelineUpdate)
+                this.updateTimeline();
         },
         showSequence: function (sequence, skipTimelineUpdate) {
             var self = this;
@@ -107,8 +146,11 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
 
             if (!skipTimelineUpdate) this.updateTimeline();
         },
-        updateTimeline: function () {
-            this.timelinesView = this._showTimeline({sequence: this._getPerformanceIds(), readonly: true});
+        updateTimeline: function (options) {
+            this.timelinesView = this._showTimeline(_.extend({
+                sequence: this._getPerformanceIds(),
+                readonly: true
+            }, options || {}));
         },
         removePerformance: function (performance) {
             var self = this;
@@ -152,18 +194,18 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             return ids;
         },
         _showTimeline: function (options) {
-            var self = this,
-                timelinesView = new TimelinesView(_.extend({
-                    performances: this.options.performances
-                }, options));
+            var self = this;
+            this.timelinesView = new TimelinesView(_.extend({
+                performances: this.options.performances
+            }, options));
 
-            timelinesView.on('close', function () {
+            this.timelinesView.on('close', function () {
                 if (!self.isDestroyed) self.updateTimeline();
             });
 
             // show configuration UI
-            this.getRegion('timeline').show(timelinesView);
-            return timelinesView;
+            this.getRegion('timeline').show(this.timelinesView);
+            return this.timelinesView;
         },
         _removeItem: function (item) {
             this.stop();

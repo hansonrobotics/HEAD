@@ -597,3 +597,7 @@ textarea.form-control.app-node-text {
 .app-options-content select {
     width: 100%;
 }
+
+.app-settings-tab-content {
+    padding-top: 10px;
+}

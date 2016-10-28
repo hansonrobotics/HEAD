@@ -1,6 +1,5 @@
 ---
-string[] ids
-string nodes
+string performances
 float32 current_time
 bool running
 bool paused

@@ -71,7 +71,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 }
 
                 if (this.model.hasProperty('responses')) {
-                    this.initChatReponses();
+                    this.initChatResponses();
                     this.ui.listenAddResponseButton.click();
                 }
 
@@ -322,7 +322,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     self.initList(regions, 'attention_region', self.ui.attentionRegionList);
                 });
             },
-            initChatReponses: function () {
+            initChatResponses: function () {
                 var self = this;
                 self.ui.listenResponseList.html('');
 

@@ -23,6 +23,10 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
             events: {
                 'click @ui.languageButton': 'changeLanguage'
             },
+            initialize: function (options) {
+                this.mergeOptions(options, ['editing', 'autoplay']);
+                if (typeof this.editing == 'undefined') this.editing = true;
+            },
             onShow: function () {
                 this.setFluidContainer(!!this.options.fluid);
                 this.performanceCollection = new PerformanceCollection();

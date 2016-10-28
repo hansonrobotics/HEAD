@@ -57,20 +57,25 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 var self = this,
                     loadOptions = {
                         success: function () {
-                            self.listenTo(self.model.nodes, 'change add remove', function () {
-                                self.model.loadNodes();
-                            });
+                            if (self.autoplay) self.run();
+
+                            var reload = function () {
+                                self.model.loadPerformance();
+                            };
+                            self.listenTo(self.model.nodes, 'change add remove', reload);
                         }
                     };
 
-                this.mergeOptions(options, ['performances']);
+                this.mergeOptions(options, ['performances', 'autoplay']);
 
                 if (options.sequence instanceof Array) {
                     this.model = new Performance();
                     this.model.loadSequence(options.sequence, loadOptions);
                 } else if (this.model) {
-                    if (!options.running && !options.paused)
-                        this.model.loadNodes(loadOptions);
+                    if (this.model.id && this.model.nodes.isEmpty()) {
+                        this.model.load(loadOptions);
+                    } else
+                        this.model.loadPerformance(loadOptions);
                 } else {
                     this.model = new Performance();
                     this.model.fetchCurrent(loadOptions);

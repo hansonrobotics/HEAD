@@ -39,7 +39,8 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 var self = this;
                 options = options || {};
                 api.services.performances.current.callService({}, function (response) {
-                    self.nodes.reset(JSON.parse(response.nodes));
+                    response.performances = JSON.parse(response.performances);
+                    self.nodes.reset(self.mergeNodes(response.performances));
 
                     if (typeof options.success == 'function')
                         options.success(response);
@@ -51,10 +52,11 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
             load: function (options) {
                 this.loadSequence([this.id], options);
             },
-            loadNodes: function (options) {
+            loadPerformance: function (options) {
                 options = options || {};
-                api.services.performances.load_nodes.callService({
-                    nodes: JSON.stringify(this.nodes.toJSON())
+                api.services.performances.load_performance.callService({
+                    //ids: [this.id],
+                    performance: JSON.stringify(this.toJSON())
                 }, function (response) {
                     if (response.success) {
                         if (typeof options.success == 'function')
@@ -73,7 +75,8 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                     ids: ids
                 }, function (response) {
                     if (response.success) {
-                        self.nodes.reset(JSON.parse(response.nodes));
+                        response.performances = JSON.parse(response.performances);
+                        self.nodes.reset(self.mergeNodes(response.performances));
 
                         if (typeof options.success == 'function')
                             options.success(response);
@@ -85,9 +88,10 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             parse: function (response) {
-                delete response['previous_id'];
-                this.unset('previous_id');
-                this.unset('ignore_nodes');
+                for (var attr in ['previous_id', 'ignore_nodes']) {
+                    delete response[attr];
+                    this.unset(attr);
+                }
                 return response;
             },
             updateId: function () {
@@ -200,6 +204,13 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 if (msg.event = 'paused') {
                     this.trigger('pause', msg.time);
                 }
+            },
+            mergeNodes: function (performances) {
+                var nodes = [];
+                performances.forEach(function (p) {
+                    nodes = _.union(nodes, p['nodes']);
+                });
+                return nodes;
             }
         });
     });

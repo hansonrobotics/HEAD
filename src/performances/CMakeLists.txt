@@ -59,9 +59,10 @@ add_service_files(
   Resume.srv
   Current.srv
   Load.srv
-  LoadNodes.srv
   LoadSequence.srv
+  LoadPerformance.srv
   SpeechOn.srv
+  SetProperties.srv
 )
 
 ## Generate actions in the 'action' folder
