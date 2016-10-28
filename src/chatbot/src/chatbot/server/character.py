@@ -134,6 +134,7 @@ class AIMLCharacter(Character):
         ret['text'] = ''
         ret['botid'] = self.id
         ret['botname'] = self.name
+        ret['repeat'] = False
 
         sid = session.sid
         answer, res = '', ''
@@ -141,21 +142,24 @@ class AIMLCharacter(Character):
             return ret
         elif re.search(r'\[.*\]', question):
             return ret
-        else:
-            chat_tries = 0
-            answer = self.kernel.respond(question, sid, query)
-            answer, res = shorten(answer, self.response_limit)
-            if self.non_repeat:
-                while chat_tries < self.max_chat_tries:
-                    if answer and session.check(question, answer):
-                        break
-                    answer = self.kernel.respond(question, sid, query)
-                    answer, res = shorten(answer, self.response_limit)
-                    chat_tries += 1
-                if answer and not session.check(question, answer):
-                    answer = ''
-                    ret['repeat'] = True
-                    self.logger.warn("Repeat answer")
+
+        chat_tries = 0
+        answer = self.kernel.respond(question, sid, query)
+        answer, res = shorten(answer, self.response_limit)
+
+        if self.non_repeat:
+            while chat_tries < self.max_chat_tries:
+                if answer and session.check(question, answer):
+                    break
+                answer = self.kernel.respond(question, sid, query)
+                answer, res = shorten(answer, self.response_limit)
+                chat_tries += 1
+        if answer:
+            repeat = not session.check(question, answer)
+            if repeat:
+                answer = ''
+                self.logger.warn("Repeat answer")
+            ret['repeat'] = repeat
         if res:
             self.kernel.setPredicate('continue', res, sid)
             self.logger.info("Set predicate continue={}".format(res))

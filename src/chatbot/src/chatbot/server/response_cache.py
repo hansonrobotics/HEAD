@@ -26,6 +26,7 @@ class ResponseCache(object):
         self.index = defaultdict(list)
         self.last_question = None
         self.last_answer = None
+        self.that_question = None
         self.last_time = None
 
     def check(self, question, answer):
@@ -45,6 +46,9 @@ class ResponseCache(object):
             return False
         if not self.is_unique(answer):
             logger.info("Non unique answer")
+            return False
+        if not self.is_global_unique(answer):
+            logger.info("Non global unique answer")
             return False
         if self.contain(question, answer):
             logger.info("Repeat answer")
@@ -84,6 +88,10 @@ class ResponseCache(object):
 
     def is_unique(self, answer):
         answers = [norm(r['Answer']) for r in self.record]
+        return not norm(answer) in answers
+
+    def is_global_unique(self, answer):
+        answers = [norm(r['Answer']) for r in self.staged_record + self.record]
         return not norm(answer) in answers
 
     def _get_records(self, question):

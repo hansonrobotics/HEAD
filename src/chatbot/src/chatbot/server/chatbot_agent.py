@@ -107,6 +107,12 @@ def set_weights(weights, lang, sid):
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
+def preprocessing(question):
+    question = question.lower().strip()
+    question = ' '.join(question.split())  # remove consecutive spaces
+    question = question.replace('sofia', 'sophia')
+    return question
+
 def _ask_characters(characters, question, lang, sid, query):
     sess = session_manager.get_session(sid)
     if sess is None:
@@ -121,8 +127,7 @@ def _ask_characters(characters, question, lang, sid, query):
         weights = [c.weight for c in characters]
     weighted_characters = zip(characters, weights)
 
-    _question = question.lower().strip()
-    _question = ' '.join(_question.split())  # remove consecutive spaces
+    _question = preprocessing(question)
     response = {}
     hit_character = None
     answer = None
@@ -253,7 +258,10 @@ def _ask_characters(characters, question, lang, sid, query):
 
     dummy_character = get_character('dummy', lang)
     if not answer and dummy_character:
-        response = dummy_character.respond("NO_ANSWER", lang, sid, query)
+        if response.get('repeat'):
+            response = dummy_character.respond("REPEAT_ANSWER", lang, sid, query)
+        else:
+            response = dummy_character.respond("NO_ANSWER", lang, sid, query)
         hit_character = dummy_character
         answer = response.get('text', '').strip()
 
@@ -391,6 +399,12 @@ def ask(question, lang, sid, query=False):
                     c.check_reset_topic(sid)
                 except Exception:
                     continue
+
+        if 'goodbye' in question.lower().split() or \
+            'see you' in question.lower().split() or \
+            'bye' in question.lower().split():
+            session_manager.remove_session(sid)
+            logger.info("Session {} is removed by goodbye".format(sid))
 
     if _response is not None:
         response.update(_response)
