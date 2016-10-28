@@ -136,7 +136,7 @@ class AIMLCharacter(Character):
         ret['botname'] = self.name
 
         sid = session.sid
-        answer = ''
+        answer, res = '', ''
         if lang not in self.languages:
             return ret
         elif re.search(r'\[.*\]', question):
@@ -144,17 +144,18 @@ class AIMLCharacter(Character):
         else:
             chat_tries = 0
             answer = self.kernel.respond(question, sid, query)
+            answer, res = shorten(answer, self.response_limit)
             if self.non_repeat:
                 while chat_tries < self.max_chat_tries:
-                    if session.check(question, answer):
+                    if answer and session.check(question, answer):
                         break
                     answer = self.kernel.respond(question, sid, query)
+                    answer, res = shorten(answer, self.response_limit)
                     chat_tries += 1
-                if not session.check(question, answer):
+                if answer and not session.check(question, answer):
                     answer = ''
                     ret['repeat'] = True
                     self.logger.warn("Repeat answer")
-        answer, res = shorten(answer, self.response_limit)
         if res:
             self.kernel.setPredicate('continue', res, sid)
             self.logger.info("Set predicate continue={}".format(res))
@@ -163,7 +164,7 @@ class AIMLCharacter(Character):
         ret['performance'] = self.kernel.getPredicate('performance', sid)
         traces = self.kernel.getTraceDocs()
         if traces:
-            self.logger.info("Trace: {}".format(traces))
+            self.logger.debug("Trace: {}".format(traces))
             patterns = []
             for trace in traces:
                 match_obj = self.trace_pattern.match(trace)
