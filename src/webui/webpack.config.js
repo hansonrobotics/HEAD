@@ -21,7 +21,10 @@ module.exports = {
         loaders: [{
             test: /\.js$/,
             exclude: /node_modules/,
-            loaders: ['babel-loader']
+            loader: 'babel',
+            query: {
+                presets: ['es2015']
+            }
         }, {
             test: /\.woff|\.woff2|\.svg|.eot|\.ttf|\.otf/,
             loader: 'url?prefix=font/&limit=10000'
