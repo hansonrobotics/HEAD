@@ -107,6 +107,12 @@ def set_weights(weights, lang, sid):
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
+def preprocessing(question):
+    question = question.lower().strip()
+    question = ' '.join(question.split())  # remove consecutive spaces
+    question = question.replace('sofia', 'sophia')
+    return question
+
 def _ask_characters(characters, question, lang, sid, query):
     sess = session_manager.get_session(sid)
     if sess is None:
@@ -121,8 +127,7 @@ def _ask_characters(characters, question, lang, sid, query):
         weights = [c.weight for c in characters]
     weighted_characters = zip(characters, weights)
 
-    _question = question.lower().strip()
-    _question = ' '.join(_question.split())  # remove consecutive spaces
+    _question = preprocessing(question)
     response = {}
     hit_character = None
     answer = None
