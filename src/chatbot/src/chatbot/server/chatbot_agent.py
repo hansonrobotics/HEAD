@@ -400,6 +400,12 @@ def ask(question, lang, sid, query=False):
                 except Exception:
                     continue
 
+        if 'goodbye' in question.lower().split() or \
+            'see you' in question.lower().split() or \
+            'bye' in question.lower().split():
+            session_manager.remove_session(sid)
+            logger.info("Session {} is removed by goodbye".format(sid))
+
     if _response is not None:
         response.update(_response)
         logger.info("Ask {}, response {}".format(question, response))
