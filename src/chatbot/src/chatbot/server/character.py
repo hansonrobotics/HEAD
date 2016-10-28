@@ -38,6 +38,9 @@ class Character(object):
     def set_context(self, sid, context):
         raise NotImplementedError
 
+    def remove_context(self, sid, key):
+        raise NotImplementedError
+
     def is_command(self, question):
         return False
 
@@ -71,7 +74,7 @@ class AIMLCharacter(Character):
         self.max_chat_tries = 5
         self.trace_pattern = re.compile(
             r'.*/(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
-        self.response_limit = 300
+        self.response_limit = 140
 
     def load_aiml_files(self, kernel, aiml_files):
         errors = []
@@ -131,35 +134,41 @@ class AIMLCharacter(Character):
         ret['text'] = ''
         ret['botid'] = self.id
         ret['botname'] = self.name
+        ret['repeat'] = False
 
         sid = session.sid
-        answer = ''
+        answer, res = '', ''
         if lang not in self.languages:
             return ret
         elif re.search(r'\[.*\]', question):
             return ret
-        else:
-            chat_tries = 0
-            answer = self.kernel.respond(question, sid, query)
-            if self.non_repeat:
-                while chat_tries < self.max_chat_tries:
-                    if session.check(question, answer):
-                        break
-                    answer = self.kernel.respond(question, sid, query)
-                    chat_tries += 1
-                if not session.check(question, answer):
-                    answer = ''
-                    ret['repeat'] = True
-                    self.logger.warn("Repeat answer")
+
+        chat_tries = 0
+        answer = self.kernel.respond(question, sid, query)
         answer, res = shorten(answer, self.response_limit)
+
+        if self.non_repeat:
+            while chat_tries < self.max_chat_tries:
+                if answer and session.check(question, answer):
+                    break
+                answer = self.kernel.respond(question, sid, query)
+                answer, res = shorten(answer, self.response_limit)
+                chat_tries += 1
+        if answer:
+            repeat = not session.check(question, answer)
+            if repeat:
+                answer = ''
+                self.logger.warn("Repeat answer")
+            ret['repeat'] = repeat
         if res:
-            self.kernel.setPredicate('tellmore', res)
-            self.logger.info("Set predicate tellmore={}".format(res))
+            self.kernel.setPredicate('continue', res, sid)
+            self.logger.info("Set predicate continue={}".format(res))
         ret['text'] = answer
         ret['emotion'] = self.kernel.getPredicate('emotion', sid)
+        ret['performance'] = self.kernel.getPredicate('performance', sid)
         traces = self.kernel.getTraceDocs()
         if traces:
-            self.logger.info("Trace: {}".format(traces))
+            self.logger.debug("Trace: {}".format(traces))
             patterns = []
             for trace in traces:
                 match_obj = self.trace_pattern.match(trace)
@@ -191,3 +200,13 @@ class AIMLCharacter(Character):
                 continue
             self.kernel.setPredicate(k, v, sid)
             self.logger.info("Set predicate {}={}".format(k, v))
+
+    def remove_context(self, sid, key):
+        if key in self.get_context(sid).keys():
+            del self.kernel._sessions[sid][key]
+            self.logger.info("Removed context {}".format(key))
+            return True
+        else:
+            self.logger.info("No such context {}".format(key))
+            return False
+

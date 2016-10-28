@@ -1,27 +1,53 @@
-define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
+define(['backbone', 'lib/api', './node_config'], function (Backbone, api, NodeConfig) {
     return Backbone.Model.extend({
         initialize: function (node_name) {
             this.node_name = node_name;
         },
-        sync: function (method, collection, options) {
+        sync: function (method, self, options) {
             if (method == 'read') {
-                api.services.get_node_description.callService({node: this.node_name}, function (response) {
-                    var schema = collection.getSchemaFromDescription(JSON.parse(response.description));
-                    options.success && options.success(schema);
-                }, function (error) {
-                    options.error && options.error(error);
+                var node_schema = new Promise(function (resolve, reject) {
+                    var node = new NodeConfig(self.node_name);
+                    node.fetch({
+                        success: function () {
+                            resolve(JSON.parse(node.get('node_schema') || '{}'))
+                        },
+                        error: function (err) {
+                            reject(err);
+                        }
+                    })
+                }), desc_schema = new Promise(function (resolve, reject) {
+                    api.services.get_node_description.callService({node: self.node_name}, function (response) {
+                        var schema = self.getSchemaFromDescription(JSON.parse(response.description));
+                        resolve(schema);
+                    }, function (error) {
+                        reject(error);
+                    });
+                });
+
+                Promise.all([desc_schema, node_schema]).then(function (data) {
+                    var properties = {};
+                    for (var prop in data) {
+                        properties = _.extend(properties, prop);
+                    }
+                    options.success && options.success({
+                        title: self.node_name + ' settings',
+                        type: 'object',
+                        properties: properties
+                    });
+                    // returned data is in arguments[0], arguments[1], ... arguments[n]
+                    // you can process it here
+                }, function (err) {
+                    options.error && options.error(err);
                 });
             }
         },
         getSchemaFromDescription: function (description) {
-            return this.constructor.getSchemaFromDesc(description, this.node_name)
-        }
-    },
-    {
-        getSchemaFromDesc: function (description, node_name) {
             var properties = {};
 
             $.each(description, function (i, param) {
+                // hide node schema field
+                if (param.name == 'node_schema') return;
+
                 var property = {title: param['description']};
 
                 try {
@@ -62,11 +88,7 @@ define(['backbone', 'lib/api', 'jquery'], function (Backbone, api, $) {
                 properties[param.name] = property;
             });
 
-            return {
-                title: node_name + ' settings',
-                type: 'object',
-                properties: properties
-            };
+            return properties;
         }
     });
 });

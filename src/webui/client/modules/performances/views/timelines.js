@@ -155,6 +155,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         self.updateTimelineWidth();
                 };
                 $(window).on('resize', updateWidth);
+
+                if (this.options.running)
+                    this.startIndicator(this.options.current_time, this.model.getDuration());
+
+                if (this.options.paused)
+                    this.pauseIndicator(this.options.current_time);
             },
             onDestroy: function () {
                 this.stopIndicator();
@@ -431,8 +437,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.pausePosition = parseInt(this.ui.runIndicator.css('left'));
                 this.updateIndicatorTime();
                 this.enableIndicatorDragging();
+                this.ui.runButton.hide();
                 this.ui.pauseButton.hide();
                 this.ui.resumeButton.fadeIn();
+                this.ui.stopButton.fadeIn();
             },
             enableIndicatorDragging: function () {
                 var self = this;
