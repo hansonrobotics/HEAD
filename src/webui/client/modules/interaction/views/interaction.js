@@ -342,8 +342,6 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                 });
             },
             scrollToChatBottom: function () {
-                var self = this;
-
                 this.ui.scrollbar.stop().animate({scrollTop: this.ui.messages.height()}, 'slow', 'swing');
                 this.ui.scrollbar.perfectScrollbar('update');
             },

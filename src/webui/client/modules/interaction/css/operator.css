@@ -9,3 +9,7 @@
     font-size: 1em;
     cursor: pointer;
 }
+
+.speech-input-container {
+    margin-bottom: 10px;
+}

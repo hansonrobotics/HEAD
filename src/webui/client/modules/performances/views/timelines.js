@@ -66,7 +66,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         }
                     };
 
-                this.mergeOptions(options, ['performances', 'autoplay']);
+                this.mergeOptions(options, ['performances', 'autoplay', 'readonly']);
 
                 if (options.sequence instanceof Array) {
                     this.model = new Performance();
@@ -108,7 +108,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     }
                 });
 
-                if (this.options.readonly) {
+                if (this.readonly) {
                     this.ui.nodesContainer.hide();
                     this.ui.closeButton.hide();
                 } else {
@@ -128,7 +128,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 var nodeListener = function () {
                     if (self.model.nodes.isEmpty())
                         self.ui.clearButton.fadeOut();
-                    else if (!self.options.readonly)
+                    else if (!self.readonly)
                         self.ui.clearButton.fadeIn();
                 };
 
@@ -213,7 +213,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.listenTo(node, 'change', this.updateNodeEl);
                 this.updateNodeEl(node);
 
-                if (!this.options.readonly) {
+                if (!this.readonly) {
                     el.draggable({
                         helper: 'clone',
                         appendTo: 'body',
@@ -255,7 +255,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 }
             },
             showNodeSettings: function (node) {
-                if (this.options.readonly) return;
+                if (this.readonly) return;
                 this.ui.timelineContainer.find('.app-node').removeClass('active');
                 if (node.get('el')) $(node.get('el')).addClass('active');
                 this.nodeView.showSettings(node);
@@ -374,7 +374,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.model.save({path: this.model.get('path') || path}, {
                     success: function (model) {
                         if (self.performances) self.performances.add(model);
-                        self.options.readonly = false;
+                        self.readonly = false;
                         self.ui.deleteButton.fadeIn();
                         self.ui.clearButton.fadeIn();
                         self.ui.nodesContainer.fadeIn();
