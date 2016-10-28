@@ -13,6 +13,7 @@ class ResponseCache(object):
         self.index = defaultdict(list)
         self.last_question = None
         self.last_answer = None
+        self.that_question = None
         self.last_time = None
         self.staged_record = []
         self.cursor = 0
@@ -25,6 +26,7 @@ class ResponseCache(object):
         self.index = defaultdict(list)
         self.last_question = None
         self.last_answer = None
+        self.that_question = None
         self.last_time = None
 
     def check(self, question, answer):
@@ -34,8 +36,8 @@ class ResponseCache(object):
         time_elapsed = (dt.datetime.now() - same_answers[-1]['Datetime']
                         ).seconds if same_answers else 0
         if max(0, len(norm(answer)) - 10) * 30 <= time_elapsed:
-            logger.info("Allow short repeat answer")
-            logger.debug("Answer length {}, time elapsed {}".format(
+            logger.info("Allow repeat answer")
+            logger.info("Answer length {}, time elapsed {}".format(
                 len(norm(answer)), time_elapsed))
             return True
 
@@ -44,6 +46,9 @@ class ResponseCache(object):
             return False
         if not self.is_unique(answer):
             logger.info("Non unique answer")
+            return False
+        if not self.is_global_unique(answer):
+            logger.info("Non global unique answer")
             return False
         if self.contain(question, answer):
             logger.info("Repeat answer")
@@ -83,6 +88,10 @@ class ResponseCache(object):
 
     def is_unique(self, answer):
         answers = [norm(r['Answer']) for r in self.record]
+        return not norm(answer) in answers
+
+    def is_global_unique(self, answer):
+        answers = [norm(r['Answer']) for r in self.staged_record + self.record]
         return not norm(answer) in answers
 
     def _get_records(self, question):
