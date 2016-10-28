@@ -176,3 +176,16 @@ Parameters:
 Return:
 - *ret* - Return code
 - *response*
+
+### List current sessions
+
+```
+GET /v1.1/sessions
+```
+
+Parameters:
+- *Auth* - Authorization token
+
+Return:
+- *ret* - Return code
+- *response*
