@@ -274,11 +274,11 @@ def _ask_characters(characters, question, lang, sid, query):
 
     if not answer:
         if quibble_answer:
-            anawer = quibble_answer
+            answer = quibble_answer
             hit_character = quibble_character
             cross_trace.append((quibble_character.id, 'quibble', quibble_response.get('trace') or 'No trace'))
         elif repeat_answer:
-            anawer = repeat_answer
+            answer = repeat_answer
             hit_character = repeat_character
             cross_trace.append((repeat_character.id, 'repeat', repeat_response.get('trace') or 'No trace'))
 
