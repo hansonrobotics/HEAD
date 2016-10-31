@@ -118,6 +118,7 @@ def _ask_characters(characters, question, lang, sid, query):
     if sess is None:
         return
 
+    used_charaters = []
     data = sess.get_session_data()
     user = getattr(data, 'user')
     botname = getattr(data, 'botname')
@@ -174,6 +175,7 @@ def _ask_characters(characters, question, lang, sid, query):
         if sess.open_character and sess.open_character in characters:
             logger.info("Using open dialog character {}".format(sess.open_character.id))
             response = sess.open_character.respond(_question, lang, sess, query)
+            used_charaters.append(sess.open_character.id)
             answer = response.get('text', '').strip()
             if answer:
                 hit_character = sess.open_character
@@ -195,6 +197,7 @@ def _ask_characters(characters, question, lang, sid, query):
             logger.info("{} has good match".format(c.id))
             if random.random() < weight:
                 response = c.respond(_question, lang, sess, query)
+                used_charaters.append(c.id)
                 answer = response.get('text', '').strip()
                 if answer:
                     hit_character = c
@@ -217,6 +220,7 @@ def _ask_characters(characters, question, lang, sid, query):
                         logger.info("Last used tier {} has good match".format(c.id))
                         if random.random() < weight:
                             response = c.respond(_question, lang, sess, query)
+                            used_charaters.append(c.id)
                             answer = response.get('text', '').strip()
                             if answer:
                                 hit_character = c
@@ -241,6 +245,7 @@ def _ask_characters(characters, question, lang, sid, query):
                 continue
 
             response = c.respond(_question, lang, sess, query)
+            used_charaters.append(c.id)
             assert isinstance(response, dict), "Response must be a dict"
 
             _answer = response.get('text', '').strip()
@@ -312,6 +317,12 @@ def _ask_characters(characters, question, lang, sid, query):
                             hit_character.id))
         else:
             sess.open_character = None
+
+        # Workaround: sync name predicate
+        if 'my name is' in _question:
+            for c, weight in weighted_characters:
+                if c.id not in used_charaters:
+                    c.respond(_question, lang, sess, query)
 
     response['trace'] = cross_trace
     return response
