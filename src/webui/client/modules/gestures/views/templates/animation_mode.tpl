@@ -1,10 +1,9 @@
 <div class="row">
     <div class="app-behavior-container">
         <h2>Behavior Switches: </h2>
-        <button type="button" class="app-gesture-bt-on btn btn-default">On</button>
+        <button type="button" class="app-gesture-bt-toggle btn btn-default">Enable</button>
         <button type="button" class="app-gesture-bt-ft-off btn btn-default">FT Off</button>
         <button type="button" class="app-gesture-bt-ft btn btn-default">FT only</button>
-        <button type="button" class="app-gesture-bt-off btn btn-default">Off</button>
     </div>
     <div class="app-mode-container">
         <h2>Animation mode: </h2>
@@ -19,7 +18,6 @@
     </div>
     <div class="app-webspeech-container">
         <h2>Webspeech: </h2>
-        <button type="button" class="app-webspeech-on btn btn-default">On</button>
-        <button type="button" class="app-webspeech-off btn btn-default active">Off</button>
+        <button type="button" class="app-webspeech-toggle btn btn-default">Enable</button>
     </div>
 </div>
