@@ -3,9 +3,8 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
         return Marionette.ItemView.extend({
             ui: {
                 modeButtons: '.app-gesture-pp',
-                btOnButton: ".app-gesture-bt-on",
-                btOffButton: ".app-gesture-bt-off",
-                webspeechOnButton: ".app-webspeech-on",
+                btToggleButton: '.app-gesture-bt-toggle',
+                webspeechToggleButton: ".app-webspeech-toggle",
                 webspeechOffButton: ".app-webspeech-off",
                 btFTButton: ".app-gesture-bt-ft",
                 lsOnButton: ".app-gesture-ls-on",
@@ -18,10 +17,8 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             },
             template: template,
             events: {
-                'click @ui.btOnButton': "btOn",
-                'click @ui.btOffButton': "btOff",
-                'click @ui.webspeechOnButton': "webspeechOn",
-                'click @ui.webspeechOffButton': "webspeechOff",
+                'click @ui.btToggleButton': "btToggle",
+                'click @ui.webspeechToggleButton': "webspeechToggle",
                 'click @ui.btFTButton': "btFT",
                 'click @ui.btFTOffButton': "btFTOff",
                 'click @ui.modeButtons': "changePpMode",
@@ -62,11 +59,24 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                     api.topics.speech_active.subscribe(speechActiveCallback);
                 }
             },
+            onDestroy: function () {
+                this.webspeechOff();
+            },
+            btToggle: function () {
+                if (this.btEnabled)
+                    this.btOff();
+                else
+                    this.btOn()
+            },
             btOn: function () {
+                this.btEnabled = true;
+                this.ui.btToggleButton.html('Disable').addClass('active');
                 api.enableInteractionMode();
                 api.setBTMode(api.btModes.C_ALL);
             },
             btOff: function () {
+                this.btEnabled = false;
+                this.ui.btToggleButton.html('Enable').removeClass('active').blur();
                 api.disableInteractionMode();
             },
             lsOn: function () {
@@ -87,12 +97,16 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 var mode = $(e.target).data("mode") || 0;
                 api.topics.set_animation_mode.publish(new ROSLIB.Message({data: mode}));
             },
+            webspeechToggle: function () {
+                if (this.speechEnabled)
+                    this.webspeechOff();
+                else
+                    this.webspeechOn();
+            },
             webspeechOn: function () {
                 this.speechEnabled = true;
-                this.ui.webspeechOnButton.addClass('active');
-                this.ui.webspeechOffButton.removeClass('active');
+                this.ui.webspeechToggleButton.html('Disable').addClass('active');
 
-                var self = this;
                 annyang.abort();
                 annyang.removeCommands();
                 annyang.removeCallback();
@@ -127,21 +141,22 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             },
             webspeechOff: function (silent) {
                 if (!silent) {
-                    this.ui.webspeechOnButton.removeClass('active');
-                    this.ui.webspeechOffButton.addClass('active');
+                    this.ui.webspeechToggleButton.html('Enable').removeClass('active').blur();
                     this.speechEnabled = false;
                 }
 
                 annyang.abort();
             },
             speechActiveCallback: function (msg) {
+                console.log(msg);
                 if (this.speechEnabled) {
                     if (msg.data == 'start') {
                         this.speechPaused = true;
                         this.webspeechOff(true);
+                    } else if ((msg.data == 'stop') && this.speechPaused) {
+                        this.speechPaused = false;
+                        this.webspeechOn();
                     }
-                } else if ((msg.data == 'stop') && this.speechPaused) {
-                    this.webspeechOn();
                 }
             }
         });

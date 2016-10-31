@@ -131,10 +131,13 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 self.updateTimeline();
             });
 
-            $('.app-edit', el).click(function () {
-                self.stop();
-                self._showTimeline({model: performance});
-            });
+            if (this.editing)
+                $('.app-edit', el).click(function () {
+                    self.stop();
+                    self._showTimeline({model: performance});
+                });
+            else
+                $('.app-edit', el).hide();
 
             performance.on('change', function () {
                 self._updateItem(item);

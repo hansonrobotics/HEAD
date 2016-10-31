@@ -134,7 +134,7 @@ class AIMLCharacter(Character):
         ret['text'] = ''
         ret['botid'] = self.id
         ret['botname'] = self.name
-        ret['repeat'] = False
+        ret['repeat'] = ''
 
         sid = session.sid
         answer, res = '', ''
@@ -155,11 +155,10 @@ class AIMLCharacter(Character):
                 answer, res = shorten(answer, self.response_limit)
                 chat_tries += 1
         if answer:
-            repeat = not session.check(question, answer)
-            if repeat:
+            if not session.check(question, answer):
+                ret['repeat'] = answer
                 answer = ''
                 self.logger.warn("Repeat answer")
-            ret['repeat'] = repeat
         if res:
             self.kernel.setPredicate('continue', res, sid)
             self.logger.info("Set predicate continue={}".format(res))
