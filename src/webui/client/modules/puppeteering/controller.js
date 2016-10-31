@@ -8,7 +8,7 @@ define(['application', './views/dashboard', 'lib/api', '../performances/views/la
                 api.disableInteractionMode();
 
                 App.LayoutInstance.getRegion('content').show(layoutView);
-                App.LayoutInstance.setTitle('Puppeteering');
+                App.LayoutInstance.setTitle('Home');
                 App.LayoutInstance.setFluid(true);
             }
         };

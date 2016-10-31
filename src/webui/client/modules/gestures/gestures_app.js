@@ -2,7 +2,6 @@ define(['application', './controller'], function (App, controller) {
     App.module('Gestures', function (Gestures, App, Backbone, Marionette, $, _) {
         Gestures.Router = Marionette.AppRouter.extend({
             'appRoutes': {
-                '': 'index',
                 'gestures': 'index'
             }
         });
