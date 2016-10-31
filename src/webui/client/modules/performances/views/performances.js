@@ -60,6 +60,9 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
             addAll: function () {
                 var self = this;
                 var added = false;
+
+                if (this.autoplay) self.queueView.clearQueue();
+
                 this.collection.each(function (performance) {
                     if ((performance.get('path') || '') == self.currentPath) {
                         self.queueView.addPerformance(performance, true);
@@ -74,8 +77,12 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
 
                 // add performance to the queue on click
                 childView.on('click', function (data) {
-                    self.queueView.addPerformance(data.model, self.autoplay);
-                    if (self.autoplay) self.queueView.updateTimeline({autoplay: self.autoplay});
+                    if (self.autoplay) {
+                        self.queueView.clearQueue();
+                        self.queueView.addPerformance(data.model, true);
+                        self.queueView.updateTimeline({autoplay: true});
+                    } else
+                        self.queueView.addPerformance(data.model);
                 });
 
                 this.ui.newButton.before(childView.el);
