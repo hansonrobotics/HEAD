@@ -118,6 +118,7 @@ def _ask_characters(characters, question, lang, sid, query):
     if sess is None:
         return
 
+    used_charaters = []
     data = sess.get_session_data()
     user = getattr(data, 'user')
     botname = getattr(data, 'botname')
@@ -132,6 +133,13 @@ def _ask_characters(characters, question, lang, sid, query):
     hit_character = None
     answer = None
     cross_trace = []
+
+    repeat_response = None
+    repeat_answer = None
+    repeat_character = None
+    quibble_response = None
+    quibble_answer = None
+    quibble_character = None
 
     control = get_character('control')
     if control is not None:
@@ -167,12 +175,19 @@ def _ask_characters(characters, question, lang, sid, query):
         if sess.open_character and sess.open_character in characters:
             logger.info("Using open dialog character {}".format(sess.open_character.id))
             response = sess.open_character.respond(_question, lang, sess, query)
+            used_charaters.append(sess.open_character.id)
             answer = response.get('text', '').strip()
             if answer:
                 hit_character = sess.open_character
                 cross_trace.append((sess.open_character.id, 'question', response.get('trace') or 'No trace'))
             else:
-                cross_trace.append((sess.open_character.id, 'question', 'No answer'))
+                if response.get('repeat'):
+                    cross_trace.append((sess.open_character.id, 'question', 'Repetitive answer'))
+                    repeat_response = response
+                    repeat_answer = response.get('repeat')
+                    repeat_character = sess.open_character
+                else:
+                    cross_trace.append((sess.open_character.id, 'question', 'No answer'))
 
     # Try the first tier to see if there is good match
     if not answer:
@@ -182,6 +197,7 @@ def _ask_characters(characters, question, lang, sid, query):
             logger.info("{} has good match".format(c.id))
             if random.random() < weight:
                 response = c.respond(_question, lang, sess, query)
+                used_charaters.append(c.id)
                 answer = response.get('text', '').strip()
                 if answer:
                     hit_character = c
@@ -204,19 +220,23 @@ def _ask_characters(characters, question, lang, sid, query):
                         logger.info("Last used tier {} has good match".format(c.id))
                         if random.random() < weight:
                             response = c.respond(_question, lang, sess, query)
+                            used_charaters.append(c.id)
                             answer = response.get('text', '').strip()
                             if answer:
                                 hit_character = c
                                 cross_trace.append((c.id, 'last used', response.get('trace') or 'No trace'))
                             else:
-                                cross_trace.append((c.id, 'last used', 'No match'))
+                                if response.get('repeat'):
+                                    cross_trace.append((c.id, 'last used', 'Repetitive answer'))
+                                    repeat_response = response
+                                    repeat_answer = response.get('repeat')
+                                    repeat_character = c
+                                else:
+                                    cross_trace.append((c.id, 'last used', 'No answer'))
                     else:
                         logger.info("{} has no good match".format(c.id))
                         cross_trace.append((c.id, 'last used', 'No good match'))
 
-    quibble_response = None
-    quibble_answer = None
-    quibble_character = None
     # Check the loop
     if not answer:
         for c, weight in weighted_characters:
@@ -225,11 +245,18 @@ def _ask_characters(characters, question, lang, sid, query):
                 continue
 
             response = c.respond(_question, lang, sess, query)
+            used_charaters.append(c.id)
             assert isinstance(response, dict), "Response must be a dict"
 
             _answer = response.get('text', '').strip()
             if not _answer:
-                cross_trace.append((c.id, 'loop', 'No answer'))
+                if response.get('repeat'):
+                    cross_trace.append((c.id, 'loop', 'Repetitive answer'))
+                    repeat_response = response
+                    repeat_answer = response.get('repeat')
+                    repeat_character = c
+                else:
+                    cross_trace.append((c.id, 'loop', 'No answer'))
                 continue
 
             if DISABLE_QUIBBLE and response.get('quibble'):
@@ -252,9 +279,17 @@ def _ask_characters(characters, question, lang, sid, query):
 
     if not answer:
         if quibble_answer:
-            anawer = quibble_answer
+            answer = quibble_answer
             hit_character = quibble_character
+            response = quibble_response
+            response['text'] = answer
             cross_trace.append((quibble_character.id, 'quibble', quibble_response.get('trace') or 'No trace'))
+        elif repeat_answer:
+            answer = repeat_answer
+            hit_character = repeat_character
+            response = repeat_response
+            response['text'] = answer
+            cross_trace.append((repeat_character.id, 'repeat', repeat_response.get('trace') or 'No trace'))
 
     dummy_character = get_character('dummy', lang)
     if not answer and dummy_character:
@@ -282,6 +317,12 @@ def _ask_characters(characters, question, lang, sid, query):
                             hit_character.id))
         else:
             sess.open_character = None
+
+        # Workaround: sync name predicate
+        if 'my name is' in _question:
+            for c, weight in weighted_characters:
+                if c.id not in used_charaters:
+                    c.respond(_question, lang, sess, query)
 
     response['trace'] = cross_trace
     return response

@@ -464,9 +464,9 @@ class Kernel:
         elem = self._brain.match(subbedInput, subbedThat, subbedTopic)
         if elem is None:
             if self._verboseMode:
-                err = "WARNING: No match found for input: %s\n" % input.encode(
+                err = "No match found for input: %s" % input.encode(
                     self._textEncoding)
-                logger.warn(err)
+                logger.debug(err)
         else:
             # Process the element into a response string.
             _response = self._processElement(elem, sessionID).strip()
