@@ -191,3 +191,19 @@ Parameters:
 Return:
 - *ret* - Return code
 - *response*
+
+### Set custom context
+
+```
+GET /v1.1/set_context
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *session* - Session ID
+- *key* - Context key
+- *value* - Context value
+
+Return:
+- *ret* - Return code
+- *response*
