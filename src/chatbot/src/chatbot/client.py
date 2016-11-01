@@ -78,12 +78,13 @@ class Client(cmd.Cmd, object):
             return wrap_f
         return wrap
 
-    def start_session(self):
+    def start_session(self, new=False):
         params = {
             "Auth": self.key,
             "botname": self.botname,
             "user": self.user,
-            "test": self.test
+            "test": self.test,
+            "refresh": new
         }
         response = None
         try:
@@ -521,3 +522,9 @@ Syntax: upload package
         self.stdout.write('List the current sessions\n')
 
     help_ls = help_list_sessions
+
+    def do_ns(self, line):
+        self.start_session(True)
+
+    def help_ns(self):
+        self.stdout.write('Start new session\n')
