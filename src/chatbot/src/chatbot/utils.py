@@ -25,8 +25,9 @@ def shorten(text, cutoff):
 
 def get_location():
     # docker run -d -p 8004:8004 --name freegeoip fiorix/freegeoip -http :8004
-    host = os.environ.get('LOCATION_SERVER_HOST')
-    port = os.environ.get('LOCATION_SERVER_PORT')
+    host = os.environ.get('LOCATION_SERVER_HOST', 'localhost')
+    port = os.environ.get('LOCATION_SERVER_PORT', '8004')
+    location = None
     try:
         ip = subprocess.check_output(['dig', '+short', 'myip.opendns.com', '@resolver1.opendns.com']).strip()
         location = requests.get('http://{host}:{port}/json/{ip}'.format(host=host, port=port, ip=ip)).json()
