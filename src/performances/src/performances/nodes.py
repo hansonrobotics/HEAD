@@ -291,7 +291,7 @@ class pause(Node):
         req = RunByNameRequest()
         req.id = self.data['on_event'].strip()
         self.timer.cancel()
-        response = self.runner.run_full_perfromance_callback(req)
+        response = self.runner.run_full_performance_callback(req)
         if not response.success:
             self.runner.resume()
 
