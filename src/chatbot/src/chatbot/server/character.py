@@ -66,7 +66,7 @@ class AIMLCharacter(Character):
         super(AIMLCharacter, self).__init__(id, name, level)
         self.kernel = Kernel()
         self.aiml_files = []
-        self.kernel.verbose(False)
+        self.kernel.verbose(True)
         self.current_topic = ''
         self.counter = 0
         self.N = 10  # How many times of reponse on the same topic
