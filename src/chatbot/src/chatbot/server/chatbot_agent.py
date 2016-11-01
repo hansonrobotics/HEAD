@@ -16,7 +16,7 @@ NO_PATTERN_MATCH = 2
 INVALID_SESSION = 3
 INVALID_QUESTION = 4
 
-useSOLR = True
+useSOLR = False
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
@@ -203,7 +203,7 @@ def _ask_characters(characters, question, lang, sid, query):
                     hit_character = c
                     cross_trace.append((c.id, 'priority', response.get('trace') or 'No trace'))
                 else:
-                    cross_trace.append((c.id, 'priority', 'No match'))
+                    cross_trace.append((c.id, 'priority', 'No answer'))
             else:
                 cross_trace.append((c.id, 'priority', 'Pass through'))
         else:
@@ -412,7 +412,7 @@ def ask(question, lang, sid, query=False):
             response.update(c.respond(question, lang, sess, query))
             return response, SUCCESS
 
-    sess.characters = responding_characters
+    sess.set_characters(responding_characters)
     if question and question.lower().strip() in ['hi', 'hello']:
         session_manager.reset_session(sid)
         logger.info("Session is cleaned by hi")

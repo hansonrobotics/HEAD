@@ -4,10 +4,36 @@ import yaml
 import logging
 import traceback
 from chatbot.server.character import AIMLCharacter, Character
+from chatbot.utils import get_location, get_weather
 from zipfile import ZipFile
 
 logger = logging.getLogger('hr.chatbot.loader')
 
+dyn_properties = {}
+
+def load_dyn_properties():
+    global dyn_properties
+    location = get_location()
+    if location:
+        if 'city' in location:
+            dyn_properties['location'] = location.get('city')
+        elif 'country_name' in location:
+            dyn_properties['location'] = location.get('country_name')
+
+    weather = get_weather('{city},{country}'.format(city=location['city'], country=location['country_code']))
+    kelvin = 273.15
+    if weather and weather['cod'] == 200:
+        if 'main' in weather:
+            if 'temp_max' in weather['main']:
+                dyn_properties['high_temperature'] = '{:.1f}'.format(weather['main'].get('temp_max')-kelvin)
+            if 'temp_min' in weather['main']:
+                dyn_properties['low_temperature'] = '{:.1f}'.format(weather['main'].get('temp_min')-kelvin)
+            if 'temp' in weather['main']:
+                dyn_properties['temperature'] = '{:.1f}'.format(weather['main'].get('temp')-kelvin)
+        if 'weather' in weather and weather['weather']:
+            dyn_properties['weather'] = weather['weather'][0]['description']
+
+load_dyn_properties()
 
 def load_characters(character_path):
     characters = []
@@ -77,6 +103,20 @@ class AIMLCharacterLoader(object):
                     character.weight = float(spec['weight'])
                 if 'dynamic_level' in spec:
                     character.dynamic_level = bool(spec['dynamic_level'])
+                pre_prop = character.get_properties()
+                if not pre_prop.get('location'):
+                    location = dyn_properties.get('location')
+                    if location:
+                        character.set_properties({'location': location})
+                if not pre_prop.get('weather'):
+                    weather = dyn_properties.get('weather')
+                    if weather:
+                        character.set_properties({
+                            'weather': dyn_properties.get('weather'),
+                            'temperature': dyn_properties.get('temperature'),
+                            'low_temperature': dyn_properties.get('low_temperature'),
+                            'high_temperature': dyn_properties.get('high_temperature'),
+                        })
             except KeyError as ex:
                 logger.error(ex)
                 logger.error(traceback.format_exc())
@@ -108,3 +148,6 @@ class AIMLCharacterZipLoader(object):
                 characters.extend(AIMLCharacterLoader.load(
                     os.path.join(dirpath, yaml_file)))
         return characters
+
+if __name__ == '__main__':
+    print dyn_properties

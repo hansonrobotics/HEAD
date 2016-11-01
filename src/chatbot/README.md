@@ -65,6 +65,8 @@ Parameters:
 - *Auth* - Authorization token
 - *botname* - Chatbot name
 - *user* - User name
+- *test* - If true, start a test session, else start a normal session
+- *refresh* - If true, start a new session, else try to reuse the session binding with the same user name
 
 Return:
 - *ret* - Return code
