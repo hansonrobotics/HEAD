@@ -31,6 +31,12 @@ def get_location():
     try:
         ip = subprocess.check_output(['dig', '+short', 'myip.opendns.com', '@resolver1.opendns.com']).strip()
         location = requests.get('http://{host}:{port}/json/{ip}'.format(host=host, port=port, ip=ip)).json()
+        if location['country_code'] == 'HK':
+            location['city'] = 'Hong Kong'
+        if location['country_code'] == 'TW':
+            location['city'] = 'Taiwan'
+        if location['country_code'] == 'MO':
+            location['city'] = 'Macau'
     except Exception as ex:
         pass
     return location
