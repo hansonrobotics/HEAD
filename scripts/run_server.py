@@ -137,8 +137,11 @@ def _start_session():
     botname = request.args.get('botname')
     user = request.args.get('user')
     test = request.args.get('test', 'false')
+    refresh = request.args.get('refresh', 'false')
     test = test.lower() == 'true'
-    sid = session_manager.start_session(user=user, key=botname, test=test)
+    refresh = refresh.lower() == 'true'
+    sid = session_manager.start_session(
+        user=user, key=botname, test=test, refresh=refresh)
     sess = session_manager.get_session(sid)
     sess.sdata.botname = botname
     sess.sdata.user = user
