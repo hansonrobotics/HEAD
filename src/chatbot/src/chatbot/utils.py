@@ -24,9 +24,14 @@ def shorten(text, cutoff):
     return ret, '.'.join(sens[idx:])
 
 def get_location():
-    # docker run --net=host --restart=always -d fiorix/freegeoip
-    ip = subprocess.check_output(['dig', '+short', 'myip.opendns.com', '@resolver1.opendns.com']).strip()
-    location = requests.get('http://localhost:8080/json/{ip}'.format(ip=ip)).json()
+    # docker run -d -p 8004:8004 --name freegeoip fiorix/freegeoip -http :8004
+    host = os.environ.get('LOCATION_SERVER_HOST')
+    port = os.environ.get('LOCATION_SERVER_PORT')
+    try:
+        ip = subprocess.check_output(['dig', '+short', 'myip.opendns.com', '@resolver1.opendns.com']).strip()
+        location = requests.get('http://{host}:{port}/json/{ip}'.format(host=host, port=port, ip=ip)).json()
+    except Exception as ex:
+        pass
     return location
 
 def get_weather(city):

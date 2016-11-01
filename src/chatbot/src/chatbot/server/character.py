@@ -198,7 +198,7 @@ class AIMLCharacter(Character):
             if k.startswith('_'):
                 continue
             self.kernel.setPredicate(k, v, sid)
-            self.logger.info("Set predicate {}={}".format(k, v))
+            self.logger.debug("Set predicate {}={}".format(k, v))
 
     def remove_context(self, sid, key):
         if key in self.get_context(sid).keys():

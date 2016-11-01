@@ -4,6 +4,7 @@ import yaml
 import logging
 import traceback
 from chatbot.server.character import AIMLCharacter, Character
+from chatbot.utils import get_location
 from zipfile import ZipFile
 
 logger = logging.getLogger('hr.chatbot.loader')
@@ -77,6 +78,16 @@ class AIMLCharacterLoader(object):
                     character.weight = float(spec['weight'])
                 if 'dynamic_level' in spec:
                     character.dynamic_level = bool(spec['dynamic_level'])
+                pre_prop = character.get_properties()
+                if not pre_prop.get('location'):
+                    location = get_location()
+                    if location:
+                        prop = {}
+                        if 'city' in location:
+                            prop['location'] = location.get('city')
+                        elif 'country_name' in location:
+                            prop['location'] = location.get('country_name')
+                        character.set_properties(prop)
             except KeyError as ex:
                 logger.error(ex)
                 logger.error(traceback.format_exc())

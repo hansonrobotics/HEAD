@@ -53,6 +53,14 @@ class Session(object):
     def rate(self, rate, idx):
         return self.cache.rate(rate, idx)
 
+    def set_characters(self, characters):
+        self.characters = characters
+        for c in self.characters:
+            try:
+                c.set_context(self.sid, c.get_properties())
+            except Exception as ex:
+                pass
+
     def reset(self):
         self.active = False
         self.dump()
