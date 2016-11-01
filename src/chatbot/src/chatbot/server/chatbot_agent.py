@@ -107,6 +107,14 @@ def set_weights(weights, lang, sid):
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
+def set_context(prop, sid):
+    for c in CHARACTERS:
+        try:
+            c.set_context(sid, prop)
+        except Exception:
+            pass
+    return True, "Context is updated"
+
 def preprocessing(question):
     question = question.lower().strip()
     question = ' '.join(question.split())  # remove consecutive spaces
