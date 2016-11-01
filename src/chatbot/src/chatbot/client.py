@@ -528,3 +528,26 @@ Syntax: upload package
 
     def help_ns(self):
         self.stdout.write('Start new session\n')
+
+    def do_sc(self, line):
+        if not self.session:
+            self.start_session()
+        key, value = line.split('=')
+        params = {
+            "Auth": self.key,
+            "key": key,
+            "value": value,
+            "session": self.session
+        }
+        r = requests.get(
+            '{}/set_context'.format(self.root_url), params=params)
+        response = r.json().get('response')
+        self.stdout.write(response)
+        self.stdout.write('\n')
+
+    def help_sc(self):
+        s = """
+Set chatbot context
+Syntax: sc key=value
+"""
+        self.stdout.write(s)
