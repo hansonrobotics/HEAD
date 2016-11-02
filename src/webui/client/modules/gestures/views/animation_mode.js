@@ -148,7 +148,6 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 annyang.abort();
             },
             speechActiveCallback: function (msg) {
-                console.log(msg);
                 if (this.speechEnabled) {
                     if (msg.data == 'start') {
                         this.speechPaused = true;

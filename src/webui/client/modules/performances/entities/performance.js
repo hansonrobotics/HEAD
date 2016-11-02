@@ -49,6 +49,19 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                         options.error(error);
                 });
             },
+            enableSync: function () {
+                var self = this;
+                this.disableSync();
+                this.syncCallback = function (msg) {
+                    self.nodes.reset(self.mergeNodes(JSON.parse(msg.data)));
+                };
+
+                api.topics.running_performances.subscribe(this.syncCallback);
+            },
+            disableSync: function() {
+                api.topics.running_performances.unsubscribe();
+                api.topics.running_performances.removeAllListeners();
+            },
             load: function (options) {
                 this.loadSequence([this.id], options);
             },
