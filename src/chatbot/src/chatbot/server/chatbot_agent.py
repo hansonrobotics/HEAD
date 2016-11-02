@@ -185,7 +185,7 @@ def _ask_characters(characters, question, lang, sid, query):
             response = sess.open_character.respond(_question, lang, sess, query)
             used_charaters.append(sess.open_character.id)
             answer = response.get('text', '').strip()
-            if answer:
+            if answer and not response.get('bad'):
                 hit_character = sess.open_character
                 cross_trace.append((sess.open_character.id, 'question', response.get('trace') or 'No trace'))
             else:
@@ -194,6 +194,8 @@ def _ask_characters(characters, question, lang, sid, query):
                     repeat_response = response
                     repeat_answer = response.get('repeat')
                     repeat_character = sess.open_character
+                elif response.get('bad'):
+                    cross_trace.append((sess.open_character.id, 'question', 'Bad answer'))
                 else:
                     cross_trace.append((sess.open_character.id, 'question', 'No answer'))
 
@@ -265,6 +267,10 @@ def _ask_characters(characters, question, lang, sid, query):
                     repeat_character = c
                 else:
                     cross_trace.append((c.id, 'loop', 'No answer'))
+                continue
+
+            if response.get('bad'):
+                cross_trace.append((c.id, 'loop', 'Bad answer'))
                 continue
 
             if DISABLE_QUIBBLE and response.get('quibble'):
