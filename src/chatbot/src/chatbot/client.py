@@ -166,7 +166,7 @@ class Client(cmd.Cmd, object):
                     response.get('text')))
             else:
                 try:
-                    self.response_listener.on_response(self.session, response)
+                    threading.Timer(0, self.response_listener.on_response, (self.session, response)).start()
                 except Exception as ex:
                     logger.error(ex)
 
