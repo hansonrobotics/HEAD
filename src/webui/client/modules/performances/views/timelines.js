@@ -199,7 +199,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     handle = $('<span>').addClass('ui-resizable-handle ui-resizable-e ui-icon ui-icon-gripsmall-diagonal-se');
 
                 $(el).append(handle).resizable({
-                    handles: 'w, e',
+                    handles: 'e',
                     resize: function () {
                         var node = self.model.nodes.get({cid: $(this).data('node-id')});
                         node.set('duration', Math.round($(this).outerWidth() / self.config.pxPerSec * 100) / 100);

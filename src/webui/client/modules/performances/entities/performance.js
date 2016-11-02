@@ -49,18 +49,19 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                         options.error(error);
                 });
             },
-            enableSync: function () {
+            enableSync: function (callback) {
                 var self = this;
                 this.disableSync();
                 this.syncCallback = function (msg) {
-                    self.nodes.reset(self.mergeNodes(JSON.parse(msg.data)));
+                    var performances = JSON.parse(msg.data);
+                    self.nodes.reset(self.mergeNodes(performances));
+                    if (typeof callback == 'function') callback(performances);
                 };
 
                 api.topics.running_performances.subscribe(this.syncCallback);
             },
             disableSync: function() {
-                api.topics.running_performances.unsubscribe();
-                api.topics.running_performances.removeAllListeners();
+                if (this.syncCallback) api.topics.running_performances.unsubscribe(this.syncCallback);
             },
             load: function (options) {
                 this.loadSequence([this.id], options);
