@@ -3,7 +3,6 @@ define(['application', './views/interaction', 'lib/api', './entities/face_collec
         return {
             index: function () {
                 api.blenderMode.enable();
-                api.enableInteractionMode();
                 App.LayoutInstance.setTitle('Interaction');
                 App.LayoutInstance.showNav();
                 App.LayoutInstance.setFluid(false);

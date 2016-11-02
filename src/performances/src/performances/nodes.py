@@ -291,7 +291,7 @@ class pause(Node):
         req = RunByNameRequest()
         req.id = self.data['on_event'].strip()
         self.timer.cancel()
-        response = self.runner.run_full_perfromance_callback(req)
+        response = self.runner.run_full_performance_callback(req)
         if not response.success:
             self.runner.resume()
 
@@ -602,9 +602,12 @@ class gaze_at(attention):
 
 class settings(Node):
     def setParameters(self, rosnode, params):
-        cl = dynamic_reconfigure.client.Client(rosnode)
-        res = cl.update_configuration(params)
-        cl.close()
+        try:
+            cl = dynamic_reconfigure.client.Client(rosnode, timeout=0.1)
+            cl.update_configuration(params)
+            cl.close()
+        except:
+            pass
 
     def start(self, run_time):
         if (self.data['rosnode']):

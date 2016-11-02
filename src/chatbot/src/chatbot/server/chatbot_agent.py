@@ -16,7 +16,7 @@ NO_PATTERN_MATCH = 2
 INVALID_SESSION = 3
 INVALID_QUESTION = 4
 
-useSOLR = True
+useSOLR = False
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
@@ -107,6 +107,14 @@ def set_weights(weights, lang, sid):
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
+def set_context(prop, sid):
+    for c in CHARACTERS:
+        try:
+            c.set_context(sid, prop)
+        except Exception:
+            pass
+    return True, "Context is updated"
+
 def preprocessing(question):
     question = question.lower().strip()
     question = ' '.join(question.split())  # remove consecutive spaces
@@ -177,7 +185,7 @@ def _ask_characters(characters, question, lang, sid, query):
             response = sess.open_character.respond(_question, lang, sess, query)
             used_charaters.append(sess.open_character.id)
             answer = response.get('text', '').strip()
-            if answer:
+            if answer and not response.get('bad'):
                 hit_character = sess.open_character
                 cross_trace.append((sess.open_character.id, 'question', response.get('trace') or 'No trace'))
             else:
@@ -186,6 +194,8 @@ def _ask_characters(characters, question, lang, sid, query):
                     repeat_response = response
                     repeat_answer = response.get('repeat')
                     repeat_character = sess.open_character
+                elif response.get('bad'):
+                    cross_trace.append((sess.open_character.id, 'question', 'Bad answer'))
                 else:
                     cross_trace.append((sess.open_character.id, 'question', 'No answer'))
 
@@ -203,7 +213,7 @@ def _ask_characters(characters, question, lang, sid, query):
                     hit_character = c
                     cross_trace.append((c.id, 'priority', response.get('trace') or 'No trace'))
                 else:
-                    cross_trace.append((c.id, 'priority', 'No match'))
+                    cross_trace.append((c.id, 'priority', 'No answer'))
             else:
                 cross_trace.append((c.id, 'priority', 'Pass through'))
         else:
@@ -257,6 +267,10 @@ def _ask_characters(characters, question, lang, sid, query):
                     repeat_character = c
                 else:
                     cross_trace.append((c.id, 'loop', 'No answer'))
+                continue
+
+            if response.get('bad'):
+                cross_trace.append((c.id, 'loop', 'Bad answer'))
                 continue
 
             if DISABLE_QUIBBLE and response.get('quibble'):
@@ -412,7 +426,7 @@ def ask(question, lang, sid, query=False):
             response.update(c.respond(question, lang, sess, query))
             return response, SUCCESS
 
-    sess.characters = responding_characters
+    sess.set_characters(responding_characters)
     if question and question.lower().strip() in ['hi', 'hello']:
         session_manager.reset_session(sid)
         logger.info("Session is cleaned by hi")

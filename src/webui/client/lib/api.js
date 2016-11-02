@@ -409,10 +409,18 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             });
         },
         enableInteractionMode: function () {
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'opencog_off'}));
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on'}));
         },
         disableInteractionMode: function () {
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+        },
+        enableOpencogMode: function () {
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'opencog_on'}));
+        },
+        disableOpencogMode: function () {
+            api.topics.cmdTree.publish(new ROSLIB.Message({data: 'opencog_off'}));
         },
         set_look_at_face: function (f_id) {
             api.topics.set_look_at_face.publish(new ROSLIB.Message({face_event: 'track_face', face_id: f_id}));

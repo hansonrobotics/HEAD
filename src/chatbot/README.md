@@ -65,6 +65,8 @@ Parameters:
 - *Auth* - Authorization token
 - *botname* - Chatbot name
 - *user* - User name
+- *test* - If true, start a test session, else start a normal session
+- *refresh* - If true, start a new session, else try to reuse the session binding with the same user name
 
 Return:
 - *ret* - Return code
@@ -185,6 +187,22 @@ GET /v1.1/sessions
 
 Parameters:
 - *Auth* - Authorization token
+
+Return:
+- *ret* - Return code
+- *response*
+
+### Set custom context
+
+```
+GET /v1.1/set_context
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *session* - Session ID
+- *key* - Context key
+- *value* - Context value
 
 Return:
 - *ret* - Return code

@@ -22,18 +22,22 @@ rospack = rospkg.RosPack()
 
 
 class WholeShow(HierarchicalMachine):
+    OPENCOG_ENTER = ['enable advanced', 'start advanced', 'activate advanced']
+    OPENCOG_EXIT = ['disable advanced', 'deactivate advanced', 'exit advanced']
+
     def __init__(self):
         rospy.wait_for_service('/performances/reload_properties')
 
         # States for wholeshow
         states = [{'name': 'sleeping', 'children': ['shutting']},
                   {'name': 'interacting', 'children': ['nonverbal']},
-                  'performing']
+                  'performing', 'opencog']
         HierarchicalMachine.__init__(self, states=states, initial='interacting')
         # Transitions
         self.add_transition('wake_up', 'sleeping', 'interacting')
         # Transitions
         self.add_transition('perform', 'interacting', 'performing')
+        self.add_transition('start_opencog', 'interacting', 'opencog')
         self.add_transition('shut', 'sleeping', 'sleeping_shutting')
         self.add_transition('be_quiet', 'interacting', 'interacting_nonverbal')
         self.add_transition('start_talking', 'interacting_nonverbal', 'interacting')
@@ -45,7 +49,7 @@ class WholeShow(HierarchicalMachine):
         self.on_enter_sleeping_shutting("system_shutdown")
         # ROS Handling
         rospy.init_node('WholeShow')
-        self.btree_pub = rospy.Publisher("/behavior_switch", String, queue_size=2)
+        self.btree_pub = rospy.Publisher("/behavior_switch", String, queue_size=5)
         self.soma_pub = rospy.Publisher('/blender_api/set_soma_state', SomaState, queue_size=10)
         self.look_pub = rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
         self.performance_runner = rospy.ServiceProxy('/performances/run_full_performance', srv.RunByName)
@@ -97,6 +101,16 @@ class WholeShow(HierarchicalMachine):
         speech = req.speech
         on = (self.current_state.name == 'interacting')
         # Special states keywords
+        if self.current_state.name == 'opencog':
+            if self.check_keywords(self.OPENCOG_EXIT, speech):
+                self.to_interacting()
+            return srv.SpeechOnResponse(False)
+        if self.check_keywords(self.OPENCOG_ENTER, speech):
+            try:
+                self.start_opencog()
+            except:
+                pass
+            return srv.SpeechOnResponse(False)
         if 'go to sleep' in speech:
             try:
                 # use to_performng() instead of perform() so it can be called from other than interaction states
@@ -225,6 +239,20 @@ class WholeShow(HierarchicalMachine):
                                str(enabled))
         except rospy.ServiceException:
             pass
+
+    def on_enter_opencog(self):
+        self.btree_pub.publish(String("opencog_on"))
+
+    def on_exit_opencog(self):
+        self.btree_pub.publish(String("opencog_off"))
+
+    @staticmethod
+    def check_keywords(keywords, input):
+        for k in keywords:
+            if k.lower() in input.lower():
+                return  True
+        return False
+
 
 
 if __name__ == '__main__':

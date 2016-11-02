@@ -41,7 +41,7 @@ from chatbot.server.auth import check_auth, authenticate
 from flask import Flask, request, Response, send_from_directory
 
 from chatbot.server.chatbot_agent import (
-    ask, list_character, session_manager, set_weights,
+    ask, list_character, session_manager, set_weights, set_context,
     dump_history, dump_session, add_character, list_character_names,
     rate_answer)
 from chatbot.stats import history_stats
@@ -137,8 +137,11 @@ def _start_session():
     botname = request.args.get('botname')
     user = request.args.get('user')
     test = request.args.get('test', 'false')
+    refresh = request.args.get('refresh', 'false')
     test = test.lower() == 'true'
-    sid = session_manager.start_session(user=user, key=botname, test=test)
+    refresh = refresh.lower() == 'true'
+    sid = session_manager.start_session(
+        user=user, key=botname, test=test, refresh=refresh)
     sess = session_manager.get_session(sid)
     sess.sdata.botname = botname
     sess.sdata.user = user
@@ -164,6 +167,16 @@ def _set_weights():
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 
+@app.route(ROOT + '/set_context', methods=['GET'])
+@requires_auth
+def _set_context():
+    data = request.args
+    key = data.get('key')
+    value = data.get('value')
+    sid = data.get('session')
+    ret, response = set_context({key: value}, sid)
+    return Response(json_encode({'ret': ret, 'response': response}),
+                    mimetype="application/json")
 
 @app.route(ROOT + '/upload_character', methods=['POST'])
 def _upload_character():
