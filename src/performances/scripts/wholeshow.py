@@ -77,6 +77,7 @@ class WholeShow(HierarchicalMachine):
         self.enable_blinking(False)
         # Update param in case wholeshow restarts
         rospy.set_param('start_sleeping', True)
+        rospy.set_param('sleeping', True)
 
     def stop_sleeping(self):
         self.soma_pub.publish(self._get_soma('sleep', 0))
@@ -85,6 +86,7 @@ class WholeShow(HierarchicalMachine):
         self.enable_blinking()
         # Update param in case wholeshow restarts
         rospy.set_param('start_sleeping', False)
+        rospy.set_param('sleeping', False)
 
     def start_interacting(self):
         self.btree_pub.publish(String("btree_on"))
