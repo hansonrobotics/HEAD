@@ -19,8 +19,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                 'change:path add remove reset': 'updateTabs'
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['editing', 'autoplay', 'queueView']);
-                if (typeof this.editing == 'undefined') this.editing = true;
+                this.mergeOptions(options, ['readonly', 'autoplay', 'queueView']);
             },
             onRender: function () {
                 var self = this,
@@ -29,7 +28,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     };
 
                 if (this.autoplay) this.ui.addAllButton.get(0).lastChild.nodeValue = ' Play All';
-                if (!this.editing) this.ui.newButton.hide();
+                if (this.readonly) this.ui.newButton.hide();
 
                 this.ui.container.droppable({
                     accept: '.app-performance-button',
@@ -141,12 +140,12 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     input.focus();
                 });
 
-                if (this.editing)
+                if (!this.readonly)
                     this.ui.tabs.append(addNewTab);
 
                 this.ui.tabs.append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'));
 
-                if (this.editing)
+                if (!this.readonly)
                     self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function () {
                             self.showSettings();
                         }));

@@ -20,8 +20,7 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
         },
         queue: [],
         initialize: function (options) {
-            this.mergeOptions(options, ['sequence', 'performances', 'layoutView', 'editing']);
-            if (typeof this.editing == 'undefined') this.editing = true;
+            this.mergeOptions(options, ['sequence', 'performances', 'layoutView', 'readonly']);
         },
         onAttach: function () {
             var self = this;
@@ -37,18 +36,31 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
 
             if (this.options.sequence)
                 this.showSequence(this.options.sequence);
+
+            if (this.readonly) {
+                this.runningPerformances = new Performance();
+                this.runningPerformances.enableSync(function (performances) {
+                    self.showSequence(_.map(performances, 'id'), true);
+                });
+            }
+        },
+        onDestroy: function () {
+            if (this.readonly) this.runningPerformances.disableSync();
         },
         showSequence: function (sequence, skipTimelineUpdate) {
             var self = this;
 
-            this.clearQueue();
-            if (sequence instanceof Array && this.performances) {
-                _.each(sequence, function (id) {
-                    var model = self.performances.get(id);
-                    if (model) self.addPerformance(model, true);
-                });
+            if (!_.isEqual(this._getPerformanceIds(), sequence)) {
+                this.clearQueue();
+                if (sequence instanceof Array && this.performances) {
+                    _.each(sequence, function (id) {
+                        var model = self.performances.get(id);
+                        if (model) self.addPerformance(model, true);
+                    });
+                }
+
+                if (!skipTimelineUpdate) this.updateTimeline();
             }
-            if (!skipTimelineUpdate) this.updateTimeline();
         },
         showCurrent: function () {
             var self = this,
@@ -92,13 +104,13 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 self.updateTimeline();
             });
 
-            if (this.editing)
+            if (this.readonly)
+                $('.app-edit', el).hide();
+            else
                 $('.app-edit', el).click(function () {
                     self.stop();
                     self._showTimeline({model: performance});
                 });
-            else
-                $('.app-edit', el).hide();
 
             performance.on('change', function () {
                 self._updateItem(item);
@@ -173,8 +185,6 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             return this.timelinesView;
         },
         _removeItem: function (item) {
-            this.stop();
-
             $(item.el).slideUp();
             this.queue = _.without(this.queue, item);
 
