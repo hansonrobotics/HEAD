@@ -62,6 +62,7 @@ class Client(cmd.Cmd, object):
         else:
             self.stdout.write(
                 "Chatbot server is not responding. Server url {}\n".format(self.chatbot_url))
+        self.ignore_indicator = False
 
     def retry(times):
         def wrap(f):
@@ -155,7 +156,8 @@ class Client(cmd.Cmd, object):
     def process_response(self, response):
         if response is not None:
             answer = response.get('text')
-            self.process_indicator(answer)
+            if not self.ignore_indicator:
+                self.process_indicator(answer)
             response['text'] = norm(answer)
             self.last_response = response
             if self.response_listener is None:
