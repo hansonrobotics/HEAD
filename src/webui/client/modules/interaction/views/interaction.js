@@ -55,7 +55,6 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
             },
             onRender: function () {
                 var self = this;
-                api.enableInteractionMode();
                 this.addListeners();
 
                 if (this.options.recognition_method)

@@ -602,9 +602,12 @@ class gaze_at(attention):
 
 class settings(Node):
     def setParameters(self, rosnode, params):
-        cl = dynamic_reconfigure.client.Client(rosnode)
-        res = cl.update_configuration(params)
-        cl.close()
+        try:
+            cl = dynamic_reconfigure.client.Client(rosnode, timeout=0.1)
+            cl.update_configuration(params)
+            cl.close()
+        except:
+            pass
 
     def start(self, run_time):
         if (self.data['rosnode']):
