@@ -88,9 +88,9 @@ class HRSlackBot(object):
                 channel = message.get('channel')
 
                 sid = self.session_manager.get_sid(name, self.botname)
-                if sid is not None:
-                    session = self.session_manager.get_session(sid)
-                    assert session is not None and hasattr(session.sdata, 'client')
+                session = self.session_manager.get_session(sid)
+                if session is not None:
+                    assert hasattr(session.sdata, 'client')
                     client = session.sdata.client
                 else:
                     client = Client(HR_CHATBOT_AUTHKEY, username=name,
@@ -139,12 +139,26 @@ class HRSlackBot(object):
 
                 client.ask(question)
 
+                # session could change after ask
+                if client.session != session.sid:
+                    self.session_manager.remove_session(session.sid)
+                    self.session_manager.add_session(
+                        name, self.botname, client.session)
+                    session = self.session_manager.get_session(client.session)
+                    session.sdata.client = client
+                    session.sdata.channel = channel
+                    logger.info("Session is updated")
+
     def on_response(self, sid, response):
         answer = ''
         title = ''
         session = self.session_manager.get_session(sid)
         if session is None:
-            return
+            time.sleep(0.5)
+            session = self.session_manager.get_session(sid)
+            if session is None:
+                logger.error("No such session {}".format(session))
+                return
         channel = session.sdata.channel
         if response is None or not response.get('text'):
             answer = u"Sorry, I can't answer it right now"
