@@ -5,6 +5,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 modeButtons: '.app-gesture-pp',
                 btOnButton: ".app-gesture-bt-on",
                 btOffButton: ".app-gesture-bt-off",
+                ocOnButton: ".app-gesture-oc-on",
                 webspeechOnButton: ".app-webspeech-on",
                 webspeechOffButton: ".app-webspeech-off",
                 btFTButton: ".app-gesture-bt-ft",
@@ -20,6 +21,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             events: {
                 'click @ui.btOnButton': "btOn",
                 'click @ui.btOffButton': "btOff",
+                'click @ui.ocOffButton': "ocOff",
                 'click @ui.webspeechOnButton': "webspeechOn",
                 'click @ui.webspeechOffButton': "webspeechOff",
                 'click @ui.btFTButton': "btFT",
@@ -68,6 +70,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             },
             btOff: function () {
                 api.disableInteractionMode();
+                api.disableOpencogMode();
             },
             lsOn: function () {
                 api.setDynParam('/' + api.config.robot + '/anno_lipsync', 'lipsync', true)
@@ -82,6 +85,9 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             btFTOff: function () {
                 api.setBTMode(api.btModes.C_ALL - (api.btModes.C_FACE | api.btModes.C_EYES));
                 api.enableInteractionMode();
+            },
+            ocOn: function () {
+                api.enableOpencogMode();
             },
             changePpMode: function (e) {
                 var mode = $(e.target).data("mode") || 0;
