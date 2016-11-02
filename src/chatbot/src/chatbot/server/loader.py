@@ -20,16 +20,23 @@ def load_dyn_properties():
         elif 'country_name' in location:
             dyn_properties['location'] = location.get('country_name')
 
-    weather = get_weather('{city},{country}'.format(city=location['city'], country=location['country_code']))
     kelvin = 273.15
+    weather = None
+    if location:
+        weather = get_weather(
+            '{city},{country}'.format(
+                city=location['city'], country=location['country_code']))
     if weather and weather['cod'] == 200:
         if 'main' in weather:
             if 'temp_max' in weather['main']:
-                dyn_properties['high_temperature'] = '{:.1f}'.format(weather['main'].get('temp_max')-kelvin)
+                dyn_properties['high_temperature'] = \
+                    '{:.1f}'.format(weather['main'].get('temp_max')-kelvin)
             if 'temp_min' in weather['main']:
-                dyn_properties['low_temperature'] = '{:.1f}'.format(weather['main'].get('temp_min')-kelvin)
+                dyn_properties['low_temperature'] = \
+                    '{:.1f}'.format(weather['main'].get('temp_min')-kelvin)
             if 'temp' in weather['main']:
-                dyn_properties['temperature'] = '{:.1f}'.format(weather['main'].get('temp')-kelvin)
+                dyn_properties['temperature'] = \
+                    '{:.1f}'.format(weather['main'].get('temp')-kelvin)
         if 'weather' in weather and weather['weather']:
             dyn_properties['weather'] = weather['weather'][0]['description']
 
