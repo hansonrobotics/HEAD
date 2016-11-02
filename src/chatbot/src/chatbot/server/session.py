@@ -53,6 +53,14 @@ class Session(object):
     def rate(self, rate, idx):
         return self.cache.rate(rate, idx)
 
+    def set_characters(self, characters):
+        self.characters = characters
+        for c in self.characters:
+            try:
+                c.set_context(self.sid, c.get_properties())
+            except Exception as ex:
+                pass
+
     def reset(self):
         self.active = False
         self.dump()
@@ -163,13 +171,17 @@ class SessionManager(object):
         self._users[user][key] = sid
         return True
 
-    def start_session(self, user, key, test=False):
+    def start_session(self, user, key, test=False, refresh=False):
         """
         user: username
         key: a string to identify session in user scope
         test: if it's a session for test
+        refresh: if true, it will generate new session id
         """
         _sid = self.get_sid(user, key)
+        if _sid and refresh:
+            self.remove_session(_sid)
+            _sid = None
         if not _sid:
             _sid = self.gen_sid()
             self.add_session(user, key, _sid)

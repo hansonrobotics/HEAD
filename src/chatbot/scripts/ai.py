@@ -227,6 +227,7 @@ class Chatbot():
         self.enable = config.enable
         self.delay_response = config.delay_response
         self.delay_time = config.delay_time
+        self.client.ignore_indicator = config.ignore_indicator
         return config
 
 if __name__ == '__main__':

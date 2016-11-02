@@ -78,6 +78,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 this.btEnabled = false;
                 this.ui.btToggleButton.html('Enable').removeClass('active').blur();
                 api.disableInteractionMode();
+                api.disableOpencogMode();
             },
             lsOn: function () {
                 api.setDynParam('/' + api.config.robot + '/anno_lipsync', 'lipsync', true)
@@ -92,6 +93,9 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             btFTOff: function () {
                 api.setBTMode(api.btModes.C_ALL - (api.btModes.C_FACE | api.btModes.C_EYES));
                 api.enableInteractionMode();
+            },
+            ocOn: function () {
+                api.enableOpencogMode();
             },
             changePpMode: function (e) {
                 var mode = $(e.target).data("mode") || 0;
