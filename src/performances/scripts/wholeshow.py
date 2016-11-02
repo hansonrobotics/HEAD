@@ -22,8 +22,8 @@ rospack = rospkg.RosPack()
 
 
 class WholeShow(HierarchicalMachine):
-    OPENCOG_ENTER = ['enable opencog mode', 'activate opencog mode']
-    OPENCOG_EXIT = ['disable opencog mode', 'deactivate opencog mode', 'exit opencog mode']
+    OPENCOG_ENTER = ['enable advanced', 'start advanced']
+    OPENCOG_EXIT = ['disable advanced', 'deactivate advanced', 'exit advanced']
 
     def __init__(self):
         rospy.wait_for_service('/performances/reload_properties')
