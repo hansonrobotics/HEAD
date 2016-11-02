@@ -38,45 +38,6 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             if (this.options.sequence)
                 this.showSequence(this.options.sequence);
         },
-        addPerformance: function (performance, skipTimelineUpdate) {
-            var self = this,
-                el = $(this.ui.performanceTemplate).clone().removeClass('app-performance-template').get(0),
-                item = {
-                    model: performance,
-                    el: el
-                };
-
-            this.ui.emptyNotice.slideUp();
-            this._updateItem(item);
-            this.queue.push(item);
-            this.ui.queue.append(el);
-
-            $('.app-remove', el).click(function () {
-                self._removeItem(item);
-                self.updateTimeline();
-            });
-
-            if (this.editing)
-                $('.app-edit', el).click(function () {
-                    self.stop();
-                    self._showTimeline({model: performance});
-                });
-            else
-                $('.app-edit', el).hide();
-
-            performance.on('change', function () {
-                self._updateItem(item);
-            });
-
-            performance.on('destroy', function () {
-                self._removeItem(item);
-                self.updateTimeline();
-            });
-            // Adding multiple performances at time makes it faster if timeline updated only once
-            skipTimelineUpdate = skipTimelineUpdate || false;
-            if (!skipTimelineUpdate)
-                this.updateTimeline();
-        },
         showSequence: function (sequence, skipTimelineUpdate) {
             var self = this;
 
@@ -103,7 +64,7 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                         readonly: true
                     });
 
-                    self.showSequence(response['ids'], true);
+                    self.showSequence(_.map(response['performances'], 'id'), true);
                 }
             });
         },

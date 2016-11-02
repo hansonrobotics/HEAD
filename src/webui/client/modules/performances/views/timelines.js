@@ -59,10 +59,14 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         success: function () {
                             if (self.autoplay) self.run();
 
-                            var reload = function () {
-                                self.model.loadPerformance();
-                            };
-                            self.listenTo(self.model.nodes, 'change add remove', reload);
+                            if (self.readonly)
+                                self.model.enableSync();
+                            else {
+                                var reload = function () {
+                                    self.model.loadPerformance();
+                                };
+                                self.listenTo(self.model.nodes, 'change add remove', reload);
+                            }
                         }
                     };
 
@@ -74,7 +78,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 } else if (this.model) {
                     if (this.model.id && this.model.nodes.isEmpty()) {
                         this.model.load(loadOptions);
-                    } else
+                    } else if (this.readonly)
+                        this.model.enableSync();
+                    else
                         this.model.loadPerformance(loadOptions);
                 } else {
                     this.model = new Performance();
@@ -168,6 +174,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.model.stop();
                 if (typeof this.options.performances != 'undefined')
                     this.options.performances.eventHandler = false;
+
+                if (this.readonly) this.model.disableSync();
             },
             removeNodeElements: function () {
                 this.model.nodes.each(function (node) {
@@ -399,7 +407,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (this.ui.runIndicator.draggable('instance'))
                     this.ui.runIndicator.draggable('destroy');
 
-                this.ui.runIndicator.stop().css('left', startTime * this.config.pxPerSec).show()
+                this.ui.runIndicator.stop().css('left', startTime * this.config.pxPerSec)
                     .animate({left: endTime * this.config.pxPerSec}, {
                         duration: (endTime - startTime) * 1000,
                         easing: 'linear',
