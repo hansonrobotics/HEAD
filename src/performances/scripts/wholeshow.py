@@ -22,7 +22,7 @@ rospack = rospkg.RosPack()
 
 
 class WholeShow(HierarchicalMachine):
-    OPENCOG_ENTER = ['enable advanced', 'start advanced']
+    OPENCOG_ENTER = ['enable advanced', 'start advanced', 'activate advanced']
     OPENCOG_EXIT = ['disable advanced', 'deactivate advanced', 'exit advanced']
 
     def __init__(self):
