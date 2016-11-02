@@ -104,6 +104,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                     this.webspeechOn();
             },
             webspeechOn: function () {
+                var self = this;
                 this.speechEnabled = true;
                 this.ui.webspeechToggleButton.html('Disable').addClass('active');
 
@@ -125,6 +126,10 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 annyang.addCallback('error', function (error) {
                     console.log('speech recognition error');
                     console.log(error);
+                    if (self.speechEnabled) {
+                        console.log('restarting');
+                        self.webspeechOn();
+                    }
                 });
                 annyang.addCallback('result', function (results) {
                     if (results.length) {
