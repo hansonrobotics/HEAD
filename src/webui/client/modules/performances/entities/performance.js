@@ -102,7 +102,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             parse: function (response) {
-                for (var attr in ['previous_id', 'ignore_nodes']) {
+                for (let attr of ['previous_id', 'ignore_nodes']) {
                     delete response[attr];
                     this.unset(attr);
                 }
