@@ -41,7 +41,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     out: deactivate,
                     drop: function (event, ui) {
                         var view = self.children.findByCid(ui.draggable.data('cid'));
-                        if (view) {
+                        if (view && self.currentPath != view.model.get('path')) {
                             view.model.set({'path': self.currentPath, ignore_nodes: true});
                             view.model.save();
                         }
