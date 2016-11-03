@@ -41,7 +41,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     out: deactivate,
                     drop: function (event, ui) {
                         var view = self.children.findByCid(ui.draggable.data('cid'));
-                        if (view) {
+                        if (view && self.currentPath != view.model.get('path')) {
                             view.model.set({'path': self.currentPath, ignore_nodes: true});
                             view.model.save();
                         }
@@ -50,6 +50,9 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                 });
 
                 this.updateTabs();
+            },
+            childViewOptions: function () {
+                return this.options;
             },
             addNew: function () {
                 var performance = new Performance({name: 'New performance', path: this.currentPath});
@@ -147,8 +150,8 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
 
                 if (!this.readonly)
                     self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function () {
-                            self.showSettings();
-                        }));
+                        self.showSettings();
+                    }));
             },
             showSettings: function () {
                 var settingsView = new SettingsView({

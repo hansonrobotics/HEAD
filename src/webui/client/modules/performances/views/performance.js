@@ -12,14 +12,18 @@ define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function (Marionette
         modelEvents: {
             'change:name change:path': 'update'
         },
+        initialize: function (options) {
+            this.mergeOptions(options, ['readonly']);
+        },
         onRender: function () {
-            this.$el.attr('data-cid', this.cid).draggable({
-                appendTo: 'body',
-                cancel: false,
-                revert: true,
-                helper: 'clone',
-                refreshPositions: true
-            });
+            if (!this.readonly)
+                this.$el.attr('data-cid', this.cid).draggable({
+                    appendTo: 'body',
+                    cancel: false,
+                    revert: true,
+                    helper: 'clone',
+                    refreshPositions: true
+                });
             this.update();
         },
         update: function () {
