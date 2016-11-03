@@ -51,6 +51,9 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
 
                 this.updateTabs();
             },
+            childViewOptions: function () {
+                return this.options;
+            },
             addNew: function () {
                 var performance = new Performance({name: 'New performance', path: this.currentPath});
                 this.collection.add(performance);
@@ -147,8 +150,8 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
 
                 if (!this.readonly)
                     self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function () {
-                            self.showSettings();
-                        }));
+                        self.showSettings();
+                    }));
             },
             showSettings: function () {
                 var settingsView = new SettingsView({
