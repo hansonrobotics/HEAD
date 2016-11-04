@@ -29,6 +29,7 @@ session_manager = ChatSessionManager()
 DISABLE_QUIBBLE = True
 
 from chatbot.utils import shorten
+from chatbot.server.character import TYPE_AIML, TYPE_CS
 
 def get_character(id, lang=None):
     for character in CHARACTERS:
@@ -202,23 +203,24 @@ def _ask_characters(characters, question, lang, sid, query):
     # Try the first tier to see if there is good match
     if not answer:
         c, weight = weighted_characters[0]
-        _response = c.respond(_question, lang, sess, query=True)
-        if _response.get('exact_match') or _response.get('ok_match'):
-            logger.info("{} has good match".format(c.id))
-            if random.random() < weight:
-                response = c.respond(_question, lang, sess, query)
-                used_charaters.append(c.id)
-                answer = response.get('text', '').strip()
-                if answer:
-                    hit_character = c
-                    cross_trace.append((c.id, 'priority', response.get('trace') or 'No trace'))
+        if c.type == TYPE_AIML:
+            _response = c.respond(_question, lang, sess, query=True)
+            if _response.get('exact_match') or _response.get('ok_match'):
+                logger.info("{} has good match".format(c.id))
+                if random.random() < weight:
+                    response = c.respond(_question, lang, sess, query)
+                    used_charaters.append(c.id)
+                    answer = response.get('text', '').strip()
+                    if answer:
+                        hit_character = c
+                        cross_trace.append((c.id, 'priority', response.get('trace') or 'No trace'))
+                    else:
+                        cross_trace.append((c.id, 'priority', 'No answer'))
                 else:
-                    cross_trace.append((c.id, 'priority', 'No answer'))
+                    cross_trace.append((c.id, 'priority', 'Pass through'))
             else:
-                cross_trace.append((c.id, 'priority', 'Pass through'))
-        else:
-            logger.info("{} has no good match".format(c.id))
-            cross_trace.append((c.id, 'priority', 'No good match'))
+                logger.info("{} has no good match".format(c.id))
+                cross_trace.append((c.id, 'priority', 'No good match'))
 
     # Check the last used character
     if not answer:
@@ -444,12 +446,16 @@ def ask(question, lang, sid, query=False):
         if sess.last_used_character is not None:
             context = sess.last_used_character.get_context(sid)
             for c in responding_characters:
+                if c.id == sess.last_used_character.id:
+                    continue
                 try:
                     c.set_context(sid, context)
                 except NotImplementedError:
                     pass
 
             for c in responding_characters:
+                if c.type != TYPE_AIML:
+                    continue
                 try:
                     c.check_reset_topic(sid)
                 except Exception:
