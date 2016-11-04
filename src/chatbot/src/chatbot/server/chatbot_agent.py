@@ -359,12 +359,6 @@ def _ask_characters(characters, question, lang, sid, query):
         else:
             sess.open_character = None
 
-        # Workaround: sync name predicate
-        if 'my name is' in _question:
-            for c, weight in weighted_characters:
-                if c.id not in used_charaters:
-                    c.respond(_question, lang, sess, query)
-
     response['trace'] = cross_trace
     return response
 
