@@ -330,7 +330,7 @@ def _ask_characters(characters, question, lang, sid, query):
             hit_character = pickup_character
             response = pickup_response
             response['text'] = answer
-            cross_trace.append((repeat_character.id, 'pickup', pickup_response.get('trace') or 'No trace'))
+            cross_trace.append((pickup_character.id, 'pickup', pickup_response.get('trace') or 'No trace'))
 
     dummy_character = get_character('dummy', lang)
     if not answer and dummy_character:
