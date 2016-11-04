@@ -283,6 +283,12 @@ def _ask_characters(characters, question, lang, sid, query):
                 quibble_character = c
                 continue
 
+            if response.get('gambit'):
+                if random.random() > 0.3:
+                    cross_trace.append((c.id, 'loop', 'Ignore gambit answer'))
+                    logger.info("Ignore gambit response")
+                    continue
+
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random() < weight:
