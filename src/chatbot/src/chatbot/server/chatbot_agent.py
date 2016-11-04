@@ -149,6 +149,9 @@ def _ask_characters(characters, question, lang, sid, query):
     quibble_response = None
     quibble_answer = None
     quibble_character = None
+    pickup_response = None
+    pickup_answer = None
+    pickup_character = None
 
     control = get_character('control')
     if control is not None:
@@ -294,6 +297,11 @@ def _ask_characters(characters, question, lang, sid, query):
                     logger.info("Ignore gambit response")
                     continue
 
+            if 'pickup' in c.id:
+                pickup_response = response
+                pickup_answer = _answer
+                pickup_character = c
+
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random() < weight:
@@ -317,6 +325,12 @@ def _ask_characters(characters, question, lang, sid, query):
             response = repeat_response
             response['text'] = answer
             cross_trace.append((repeat_character.id, 'repeat', repeat_response.get('trace') or 'No trace'))
+        elif pickup_answer:
+            answer = pickup_answer
+            hit_character = pickup_character
+            response = pickup_response
+            response['text'] = answer
+            cross_trace.append((repeat_character.id, 'pickup', pickup_response.get('trace') or 'No trace'))
 
     dummy_character = get_character('dummy', lang)
     if not answer and dummy_character:
