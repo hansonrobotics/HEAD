@@ -16,6 +16,7 @@ import performances.srv as srv
 from performances.msg import Event
 import subprocess
 import threading
+import dynamic_reconfigure.client
 
 logger = logging.getLogger('hr.performance.wholeshow')
 rospack = rospkg.RosPack()
@@ -242,9 +243,20 @@ class WholeShow(HierarchicalMachine):
 
     def on_enter_opencog(self):
         self.btree_pub.publish(String("opencog_on"))
-
+        try:
+            cl = dynamic_reconfigure.client.Client('chatbot', timeout=0.1)
+            cl.update_configuration({"enable":False})
+            cl.close()
+        except:
+            pass
     def on_exit_opencog(self):
         self.btree_pub.publish(String("opencog_off"))
+        try:
+            cl = dynamic_reconfigure.client.Client('chatbot', timeout=0.1)
+            cl.update_configuration({"enable":True})
+            cl.close()
+        except:
+            pass
 
     @staticmethod
     def check_keywords(keywords, input):
