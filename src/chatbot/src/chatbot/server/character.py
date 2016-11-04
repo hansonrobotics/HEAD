@@ -204,6 +204,8 @@ class AIMLCharacter(Character):
                 continue
             self.kernel.setPredicate(k, v, sid)
             self.logger.debug("Set predicate {}={}".format(k, v))
+            if k in ['firstname', 'fullname']:
+                self.kernel.setPredicate('name', v, sid)
 
     def remove_context(self, sid, key):
         if key in self.get_context(sid).keys():
