@@ -7,8 +7,8 @@ import dynamic_reconfigure.client
 
 logger = logging.getLogger('hr.tools.common.control')
 
-def update_parameter(node, param):
-    client = dynamic_reconfigure.client.Client(node)
+def update_parameter(node, param, *args, **kwargs):
+    client = dynamic_reconfigure.client.Client(node, *args, **kwargs)
     try:
         client.update_configuration(param)
     except dynamic_reconfigure.DynamicReconfigureParameterException as ex:
@@ -19,7 +19,7 @@ def update_parameter(node, param):
 def chatbot(enable):
     node = 'chatbot'
     param = {'enable': enable}
-    return update_parameter(node, param)
+    return update_parameter(node, param, timeout=2)
 
 chatbot_on = functools.partial(chatbot, True)
 chatbot_off = functools.partial(chatbot, False)
