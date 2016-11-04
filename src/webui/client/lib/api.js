@@ -411,6 +411,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         enableInteractionMode: function () {
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'opencog_off'}));
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_on'}));
+            api.setDynParam('/' + api.config.robot + '/chatbot', 'enable', true);
         },
         disableInteractionMode: function () {
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
@@ -418,9 +419,11 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
         enableOpencogMode: function () {
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'btree_off'}));
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'opencog_on'}));
+            api.setDynParam('/' + api.config.robot + '/chatbot', 'enable', false);
         },
         disableOpencogMode: function () {
             api.topics.cmdTree.publish(new ROSLIB.Message({data: 'opencog_off'}));
+            api.setDynParam('/' + api.config.robot + '/chatbot', 'enable', true);
         },
         set_look_at_face: function (f_id) {
             api.topics.set_look_at_face.publish(new ROSLIB.Message({face_event: 'track_face', face_id: f_id}));
