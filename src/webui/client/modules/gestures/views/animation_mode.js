@@ -2,6 +2,9 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
     function (Marionette, template, api, $, ROSLIB, annyang) {
         return Marionette.ItemView.extend({
             ui: {
+                btOnButton: ".app-gesture-bt-on",
+                btOffButton: ".app-gesture-bt-off",
+                ocOnButton: ".app-gesture-oc-on",
                 modeButtons: '.app-gesture-pp',
                 btToggleButton: '.app-gesture-bt-toggle',
                 webspeechToggleButton: ".app-webspeech-toggle",
@@ -19,6 +22,11 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             events: {
                 'click @ui.btToggleButton': "btToggle",
                 'click @ui.webspeechToggleButton': "webspeechToggle",
+                'click @ui.btOnButton': "btOn",
+                'click @ui.btOffButton': "btOff",
+                'click @ui.ocOnButton': "ocOn",
+                'click @ui.webspeechOnButton': "webspeechOn",
+                'click @ui.webspeechOffButton': "webspeechOff",
                 'click @ui.btFTButton': "btFT",
                 'click @ui.btFTOffButton': "btFTOff",
                 'click @ui.modeButtons': "changePpMode",
