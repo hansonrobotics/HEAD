@@ -100,9 +100,9 @@ class WholeShow(HierarchicalMachine):
     def speech_cb(self, req):
         """ ROS Callbacks """
         speech = req.speech
-        on = (self.current_state.name == 'interacting')
+        on = (self.state == 'interacting')
         # Special states keywords
-        if self.current_state.name == 'opencog':
+        if self.state == 'opencog':
             if self.check_keywords(self.OPENCOG_EXIT, speech):
                 self.to_interacting()
             return srv.SpeechOnResponse(True)
@@ -188,7 +188,7 @@ class WholeShow(HierarchicalMachine):
                 pass
 
     def do_wake_up(self):
-        assert (self.current_state.name == 'sleeping')
+        assert (self.state == 'sleeping')
         self.after_performance = self.to_interacting
         # Start performance before triggerring state change so soma state will be sinced with performance
         self.performance_runner('shared/wakeup')
