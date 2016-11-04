@@ -19,6 +19,7 @@ class Speech2Command(object):
     def handle_speech(self, msg):
         for command in self.command_chain:
             try:
+                logger.info("{}".format(command))
                 if command.parse(msg):
                     command.execute()
                     break

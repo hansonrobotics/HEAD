@@ -8,6 +8,7 @@ from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState, SetGesture, Target, SomaState
 from performances.srv import SpeechOn, SpeechOnRequest, SpeechOnResponse
+import performances.utils
 from calc import calculate
 
 logger = logging.getLogger('hr.speech2command.commands')
@@ -33,21 +34,37 @@ class BaseCommand(object):
         """
         return True
 
+    def __repr__(self):
+        return self.__class__.__name__
+
 class WholeShowCommand(BaseCommand):
     def __init__(self):
         self.srv = rospy.ServiceProxy("speech_on", SpeechOn)
+        self.text = None
 
     def parse(self, msg):
-        text = msg.utterance.decode('utf-8').lower()
+        self.text = msg.utterance.decode('utf-8').lower()
+        if rospy.get_param('sleeping', None):
+            logger.info("Sleeping. Block the message")
+            return True
+        keywords = []
         try:
-            resp = self.srv.call(SpeechOnRequest(text))
-            return (not resp.success)
-        except:
-            return False
+            keywords = sum(performances.utils.get_keywords().values(), [])
+        except Exception as ex:
+            logger.error(ex)
+        for keyword in performances.utils.WHOLE_SHOW_BUILTIN_COMMANDS+keywords:
+            if keyword in self.text:
+                return True
 
     def execute(self):
-        pass
-
+        if not self.text:
+            return False
+        try:
+            resp = self.srv.call(SpeechOnRequest(self.text))
+            return (not resp.success)
+        except Exception as ex:
+            logger.error(ex)
+            return False
 
 class ForwardCommand(BaseCommand):
     def __init__(self, forward_topic_name):
