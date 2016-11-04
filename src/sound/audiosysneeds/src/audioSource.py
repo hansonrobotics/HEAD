@@ -60,7 +60,7 @@ if __name__ == '__main__':
         Vsource = rospy.Publisher('/opencog/AudioFeature', audiodata, queue_size=1)
         Vchange = rospy.Publisher('/opencog/suddenchange', Float32, queue_size=1)
         rospy.init_node('AudioFeature', anonymous=True)
-        rate = rospy.Rate(5)
+        rate1 = rospy.Rate(1)
 
         loop = 0
         global loop
@@ -99,6 +99,6 @@ if __name__ == '__main__':
             Vsource.publish(msg)
             Vchange.publish(suddenChanges(d))
 
-            rate.sleep()
+            rate1.sleep()
     except rospy.ROSInterruptException as e:
         print(e)
