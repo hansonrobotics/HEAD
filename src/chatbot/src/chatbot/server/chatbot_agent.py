@@ -231,7 +231,10 @@ def _ask_characters(characters, question, lang, sid, query):
                     if _response.get('exact_match') or _response.get('ok_match'):
                         logger.info("Last used tier {} has good match".format(c.id))
                         if random.random() < weight:
-                            response = c.respond(_question, lang, sess, query)
+                            if sess.last_used_character.type == TYPE_CS:
+                                response = _response
+                            else:
+                                response = c.respond(_question, lang, sess, query)
                             used_charaters.append(c.id)
                             answer = response.get('text', '').strip()
                             if answer:
@@ -245,6 +248,8 @@ def _ask_characters(characters, question, lang, sid, query):
                                     repeat_character = c
                                 else:
                                     cross_trace.append((c.id, 'last used', 'No answer'))
+                        else:
+                            cross_trace.append((c.id, 'last used', 'Pass through'))
                     else:
                         logger.info("{} has no good match".format(c.id))
                         cross_trace.append((c.id, 'last used', 'No good match'))
