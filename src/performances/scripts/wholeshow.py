@@ -105,13 +105,13 @@ class WholeShow(HierarchicalMachine):
         if self.current_state.name == 'opencog':
             if self.check_keywords(self.OPENCOG_EXIT, speech):
                 self.to_interacting()
-            return srv.SpeechOnResponse(False)
+            return srv.SpeechOnResponse(True)
         if self.check_keywords(self.OPENCOG_ENTER, speech):
             try:
                 self.start_opencog()
             except:
                 pass
-            return srv.SpeechOnResponse(False)
+            return srv.SpeechOnResponse(True)
         if 'go to sleep' in speech:
             try:
                 # use to_performng() instead of perform() so it can be called from other than interaction states
