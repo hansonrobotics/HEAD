@@ -16,6 +16,7 @@ import performances.srv as srv
 from performances.msg import Event
 import subprocess
 import threading
+import dynamic_reconfigure.client
 
 logger = logging.getLogger('hr.performance.wholeshow')
 rospack = rospkg.RosPack()
@@ -104,13 +105,13 @@ class WholeShow(HierarchicalMachine):
         if self.current_state.name == 'opencog':
             if self.check_keywords(self.OPENCOG_EXIT, speech):
                 self.to_interacting()
-            return srv.SpeechOnResponse(False)
+            return srv.SpeechOnResponse(True)
         if self.check_keywords(self.OPENCOG_ENTER, speech):
             try:
                 self.start_opencog()
             except:
                 pass
-            return srv.SpeechOnResponse(False)
+            return srv.SpeechOnResponse(True)
         if 'go to sleep' in speech:
             try:
                 # use to_performng() instead of perform() so it can be called from other than interaction states
@@ -242,9 +243,20 @@ class WholeShow(HierarchicalMachine):
 
     def on_enter_opencog(self):
         self.btree_pub.publish(String("opencog_on"))
-
+        try:
+            cl = dynamic_reconfigure.client.Client('chatbot', timeout=0.1)
+            cl.update_configuration({"enable":False})
+            cl.close()
+        except:
+            pass
     def on_exit_opencog(self):
         self.btree_pub.publish(String("opencog_off"))
+        try:
+            cl = dynamic_reconfigure.client.Client('chatbot', timeout=0.1)
+            cl.update_configuration({"enable":True})
+            cl.close()
+        except:
+            pass
 
     @staticmethod
     def check_keywords(keywords, input):
