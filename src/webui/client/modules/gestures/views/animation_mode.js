@@ -21,7 +21,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             events: {
                 'click @ui.btOnButton': "btOn",
                 'click @ui.btOffButton': "btOff",
-                'click @ui.ocOffButton': "ocOff",
+                'click @ui.ocOnButton': "ocOn",
                 'click @ui.webspeechOnButton': "webspeechOn",
                 'click @ui.webspeechOffButton': "webspeechOff",
                 'click @ui.btFTButton': "btFT",
