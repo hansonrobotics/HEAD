@@ -29,6 +29,7 @@ session_manager = ChatSessionManager()
 DISABLE_QUIBBLE = True
 
 from chatbot.utils import shorten
+from chatbot.server.character import TYPE_AIML, TYPE_CS
 
 def get_character(id, lang=None):
     for character in CHARACTERS:
@@ -148,6 +149,9 @@ def _ask_characters(characters, question, lang, sid, query):
     quibble_response = None
     quibble_answer = None
     quibble_character = None
+    pickup_response = None
+    pickup_answer = None
+    pickup_character = None
 
     control = get_character('control')
     if control is not None:
@@ -202,23 +206,24 @@ def _ask_characters(characters, question, lang, sid, query):
     # Try the first tier to see if there is good match
     if not answer:
         c, weight = weighted_characters[0]
-        _response = c.respond(_question, lang, sess, query=True)
-        if _response.get('exact_match') or _response.get('ok_match'):
-            logger.info("{} has good match".format(c.id))
-            if random.random() < weight:
-                response = c.respond(_question, lang, sess, query)
-                used_charaters.append(c.id)
-                answer = response.get('text', '').strip()
-                if answer:
-                    hit_character = c
-                    cross_trace.append((c.id, 'priority', response.get('trace') or 'No trace'))
+        if c.type == TYPE_AIML:
+            _response = c.respond(_question, lang, sess, query=True)
+            if _response.get('exact_match') or _response.get('ok_match'):
+                logger.info("{} has good match".format(c.id))
+                if random.random() < weight:
+                    response = c.respond(_question, lang, sess, query)
+                    used_charaters.append(c.id)
+                    answer = response.get('text', '').strip()
+                    if answer:
+                        hit_character = c
+                        cross_trace.append((c.id, 'priority', response.get('trace') or 'No trace'))
+                    else:
+                        cross_trace.append((c.id, 'priority', 'No answer'))
                 else:
-                    cross_trace.append((c.id, 'priority', 'No answer'))
+                    cross_trace.append((c.id, 'priority', 'Pass through'))
             else:
-                cross_trace.append((c.id, 'priority', 'Pass through'))
-        else:
-            logger.info("{} has no good match".format(c.id))
-            cross_trace.append((c.id, 'priority', 'No good match'))
+                logger.info("{} has no good match".format(c.id))
+                cross_trace.append((c.id, 'priority', 'No good match'))
 
     # Check the last used character
     if not answer:
@@ -229,7 +234,10 @@ def _ask_characters(characters, question, lang, sid, query):
                     if _response.get('exact_match') or _response.get('ok_match'):
                         logger.info("Last used tier {} has good match".format(c.id))
                         if random.random() < weight:
-                            response = c.respond(_question, lang, sess, query)
+                            if sess.last_used_character.type == TYPE_CS:
+                                response = _response
+                            else:
+                                response = c.respond(_question, lang, sess, query)
                             used_charaters.append(c.id)
                             answer = response.get('text', '').strip()
                             if answer:
@@ -243,6 +251,8 @@ def _ask_characters(characters, question, lang, sid, query):
                                     repeat_character = c
                                 else:
                                     cross_trace.append((c.id, 'last used', 'No answer'))
+                        else:
+                            cross_trace.append((c.id, 'last used', 'Pass through'))
                     else:
                         logger.info("{} has no good match".format(c.id))
                         cross_trace.append((c.id, 'last used', 'No good match'))
@@ -281,6 +291,17 @@ def _ask_characters(characters, question, lang, sid, query):
                 quibble_character = c
                 continue
 
+            if response.get('gambit'):
+                if random.random() > 0.3:
+                    cross_trace.append((c.id, 'loop', 'Ignore gambit answer'))
+                    logger.info("Ignore gambit response")
+                    continue
+
+            if 'pickup' in c.id:
+                pickup_response = response
+                pickup_answer = _answer
+                pickup_character = c
+
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
             if random.random() < weight:
@@ -304,6 +325,12 @@ def _ask_characters(characters, question, lang, sid, query):
             response = repeat_response
             response['text'] = answer
             cross_trace.append((repeat_character.id, 'repeat', repeat_response.get('trace') or 'No trace'))
+        elif pickup_answer:
+            answer = pickup_answer
+            hit_character = pickup_character
+            response = pickup_response
+            response['text'] = answer
+            cross_trace.append((pickup_character.id, 'pickup', pickup_response.get('trace') or 'No trace'))
 
     dummy_character = get_character('dummy', lang)
     if not answer and dummy_character:
@@ -314,7 +341,7 @@ def _ask_characters(characters, question, lang, sid, query):
         hit_character = dummy_character
         answer = response.get('text', '').strip()
 
-    if not query:
+    if not query and hit_character is not None:
         sess.add(question, answer, AnsweredBy=hit_character.id,
                     User=user, BotName=botname, Trace=cross_trace,
                     Revision=REVISION, Lang=lang, ModQuestion=_question)
@@ -331,12 +358,6 @@ def _ask_characters(characters, question, lang, sid, query):
                             hit_character.id))
         else:
             sess.open_character = None
-
-        # Workaround: sync name predicate
-        if 'my name is' in _question:
-            for c, weight in weighted_characters:
-                if c.id not in used_charaters:
-                    c.respond(_question, lang, sess, query)
 
     response['trace'] = cross_trace
     return response
@@ -444,12 +465,16 @@ def ask(question, lang, sid, query=False):
         if sess.last_used_character is not None:
             context = sess.last_used_character.get_context(sid)
             for c in responding_characters:
+                if c.id == sess.last_used_character.id:
+                    continue
                 try:
                     c.set_context(sid, context)
                 except NotImplementedError:
                     pass
 
             for c in responding_characters:
+                if c.type != TYPE_AIML:
+                    continue
                 try:
                     c.check_reset_topic(sid)
                 except Exception:
@@ -461,7 +486,7 @@ def ask(question, lang, sid, query=False):
             session_manager.remove_session(sid)
             logger.info("Session {} is removed by goodbye".format(sid))
 
-    if _response is not None:
+    if _response is not None and _response.get('text'):
         response.update(_response)
         logger.info("Ask {}, response {}".format(question, response))
         return response, SUCCESS
