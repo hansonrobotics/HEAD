@@ -6,6 +6,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 import atexit
+from collections import defaultdict
 
 from threading import RLock
 sync = RLock()
@@ -143,15 +144,7 @@ def _ask_characters(characters, question, lang, sid, query):
     answer = None
     cross_trace = []
 
-    repeat_response = None
-    repeat_answer = None
-    repeat_character = None
-    quibble_response = None
-    quibble_answer = None
-    quibble_character = None
-    pickup_response = None
-    pickup_answer = None
-    pickup_character = None
+    cached_responses = defaultdict(list)
 
     control = get_character('control')
     if control is not None:
@@ -195,9 +188,7 @@ def _ask_characters(characters, question, lang, sid, query):
             else:
                 if response.get('repeat'):
                     cross_trace.append((sess.open_character.id, 'question', 'Repetitive answer'))
-                    repeat_response = response
-                    repeat_answer = response.get('repeat')
-                    repeat_character = sess.open_character
+                    cached_responses['repeat'].append((response, response.get('repeat'), sess.open_character))
                 elif response.get('bad'):
                     cross_trace.append((sess.open_character.id, 'question', 'Bad answer'))
                 else:
@@ -246,9 +237,7 @@ def _ask_characters(characters, question, lang, sid, query):
                             else:
                                 if response.get('repeat'):
                                     cross_trace.append((c.id, 'last used', 'Repetitive answer'))
-                                    repeat_response = response
-                                    repeat_answer = response.get('repeat')
-                                    repeat_character = c
+                                    cached_responses['repeat'].append((response, response.get('repeat'), c))
                                 else:
                                     cross_trace.append((c.id, 'last used', 'No answer'))
                         else:
@@ -272,9 +261,7 @@ def _ask_characters(characters, question, lang, sid, query):
             if not _answer:
                 if response.get('repeat'):
                     cross_trace.append((c.id, 'loop', 'Repetitive answer'))
-                    repeat_response = response
-                    repeat_answer = response.get('repeat')
-                    repeat_character = c
+                    cached_responses['repeat'].append((response, response.get('repeat'), c))
                 else:
                     cross_trace.append((c.id, 'loop', 'No answer'))
                 continue
@@ -286,21 +273,18 @@ def _ask_characters(characters, question, lang, sid, query):
             if DISABLE_QUIBBLE and response.get('quibble'):
                 logger.info("Ignore quibbled answer by {}".format(c.id))
                 cross_trace.append((c.id, 'loop', 'Quibble answer'))
-                quibble_response = response
-                quibble_answer = _answer
-                quibble_character = c
+                cached_responses['quibble'].append((response, _answer, c))
                 continue
 
             if response.get('gambit'):
                 if random.random() > 0.3:
+                    cached_responses['gambit'].append((response, _answer, c))
                     cross_trace.append((c.id, 'loop', 'Ignore gambit answer'))
                     logger.info("Ignore gambit response")
                     continue
 
             if 'pickup' in c.id:
-                pickup_response = response
-                pickup_answer = _answer
-                pickup_character = c
+                cached_responses['pickup'].append((response, _answer, c))
 
             # Each tier has weight*100% chance to be selected.
             # If the chance goes to the last tier, it will be selected anyway.
@@ -313,24 +297,14 @@ def _ask_characters(characters, question, lang, sid, query):
                 cross_trace.append((c.id, 'loop', 'Pass through'))
 
     if not answer:
-        if quibble_answer:
-            answer = quibble_answer
-            hit_character = quibble_character
-            response = quibble_response
-            response['text'] = answer
-            cross_trace.append((quibble_character.id, 'quibble', quibble_response.get('trace') or 'No trace'))
-        elif repeat_answer:
-            answer = repeat_answer
-            hit_character = repeat_character
-            response = repeat_response
-            response['text'] = answer
-            cross_trace.append((repeat_character.id, 'repeat', repeat_response.get('trace') or 'No trace'))
-        elif pickup_answer:
-            answer = pickup_answer
-            hit_character = pickup_character
-            response = pickup_response
-            response['text'] = answer
-            cross_trace.append((pickup_character.id, 'pickup', pickup_response.get('trace') or 'No trace'))
+        for response_type in ['quibble', 'repeat', 'gambit', 'pickup']:
+            if cached_responses.get(response_type):
+                response, answer, hit_character = cached_responses.get(response_type)[0]
+                response['text'] = answer
+                cross_trace.append(
+                    (hit_character.id, response_type,
+                    response.get('trace') or 'No trace'))
+                break
 
     dummy_character = get_character('dummy', lang)
     if not answer and dummy_character:
