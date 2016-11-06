@@ -64,6 +64,9 @@ class Session(object):
             for key in ['weather', 'location', 'temperature']:
                 if key in prop:
                     context[key] = prop.get(key)
+            now = dt.datetime.now()
+            context['time'] = dt.datetime.strftime(now, '%I:%M %p')
+            context['date'] = dt.datetime.strftime(now, '%B %d %Y')
             try:
                 c.set_context(self.sid, context)
             except Exception as ex:
