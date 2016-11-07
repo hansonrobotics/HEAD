@@ -8,6 +8,7 @@ require(['eventemitter2', 'application',
         'modules/monitor/router',
         'modules/start/router',
         'modules/settings/router',
+        'modules/dashboard/router',
         'modules/puppeteering/router'],
     function (EventEmitter2, app) {
         app.start();
