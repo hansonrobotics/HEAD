@@ -1,0 +1,14 @@
+id:
+    qin
+name:
+    qin
+property_file:
+    qin.properties
+weight:
+    0.9
+level:
+    90
+dynamic_level:
+    true
+aiml:
+    - ../aiml/futurist/*.aiml
