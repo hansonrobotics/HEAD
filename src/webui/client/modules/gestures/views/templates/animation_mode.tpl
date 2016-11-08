@@ -15,7 +15,7 @@
         <button type="button" class="app-gesture-ls-off btn btn-default">Off</button>
     </div>
     <div class="app-webspeech-container">
-        <h2>Webspeech: </h2>
+        <h2>Microphone: </h2>
         <button type="button" class="app-webspeech-toggle btn btn-default">Enable</button>
     </div>
 </div>
