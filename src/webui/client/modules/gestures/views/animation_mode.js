@@ -38,6 +38,8 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 this.ui.modeContainer.addClass(cssClass);
                 this.ui.lipsyncContainer.addClass(cssClass);
 
+                this.btOn();
+
                 if (!_.includes(this.settings, 'behavior'))
                     this.ui.behaviorContainer.hide();
 
