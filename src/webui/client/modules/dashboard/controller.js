@@ -1,17 +1,17 @@
-define(['application', './views/dashboard', 'underscore', 'modules/performances/entities/performance_collection', 'entities/expression'],
-    function (App, DashboardView, _, PerformanceCollection) {
+define(['application', './views/dashboard', 'underscore', 'modules/performances/entities/performance_collection', 'entities/emotion_collection'],
+    function (App, DashboardView, _, PerformanceCollection, EmotionCollection) {
         return {
             demo: function () {
                 App.LayoutInstance.setTitle('Dashboard');
 
-                var performanceCollection = new PerformanceCollection(),
-                    expressionsCollection = new App.Entities.ExpressionCollection(),
+                var performances = new PerformanceCollection(),
+                    emotions = new EmotionCollection(),
                     dashboardView = new DashboardView({
-                        performances: performanceCollection,
-                        expressions: expressionsCollection
+                        performances: performances,
+                        emotions: emotions
                     });
 
-                performanceCollection.fetch({
+                performances.fetch({
                     success: function () {
                         //expressionsCollection.each(function (model) {
                         //    var emotions = ['happy', 'sad', 'afraid', 'angry', 'surprised', 'Curious'];
@@ -20,14 +20,14 @@ define(['application', './views/dashboard', 'underscore', 'modules/performances/
                         //});
                     }
                 });
-                expressionsCollection.fetch({
+                emotions.fetch({
                     success: function () {
-                        var filtered = expressionsCollection.filter(function (expression) {
-                            var expressions = ['Neutral', 'Smile', './sto   ', 'Afraid', 'Kiss', 'Disgusted'];
-                            return _.indexOf(expressions, expression.get('name')) != -1;
-                        });
-
-                        expressionsCollection.reset(filtered);
+                        // var filtered = emotions.filter(function (expression) {
+                        //     var expressions = [];
+                        //     return _.indexOf(expressions, expression.get('name')) != -1;
+                        // });
+                        //
+                        // emotions.reset(filtered);
                     }
                 });
 
