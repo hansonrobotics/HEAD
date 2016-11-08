@@ -49,6 +49,20 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                         options.error(error);
                 });
             },
+            enableSync: function (callback) {
+                var self = this;
+                this.disableSync();
+                this.syncCallback = function (msg) {
+                    var performances = JSON.parse(msg.data);
+                    self.nodes.reset(self.mergeNodes(performances));
+                    if (typeof callback == 'function') callback(performances);
+                };
+
+                api.topics.running_performances.subscribe(this.syncCallback);
+            },
+            disableSync: function() {
+                if (this.syncCallback) api.topics.running_performances.unsubscribe(this.syncCallback);
+            },
             load: function (options) {
                 this.loadSequence([this.id], options);
             },
@@ -88,7 +102,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             parse: function (response) {
-                for (var attr in ['previous_id', 'ignore_nodes']) {
+                for (let attr of ['previous_id', 'ignore_nodes']) {
                     delete response[attr];
                     this.unset(attr);
                 }

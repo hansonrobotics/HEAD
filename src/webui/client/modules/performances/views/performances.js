@@ -19,8 +19,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                 'change:path add remove reset': 'updateTabs'
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['editing', 'autoplay', 'queueView']);
-                if (typeof this.editing == 'undefined') this.editing = true;
+                this.mergeOptions(options, ['readonly', 'autoplay', 'queueView']);
             },
             onRender: function () {
                 var self = this,
@@ -29,7 +28,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     };
 
                 if (this.autoplay) this.ui.addAllButton.get(0).lastChild.nodeValue = ' Play All';
-                if (!this.editing) this.ui.newButton.hide();
+                if (this.readonly) this.ui.newButton.hide();
 
                 this.ui.container.droppable({
                     accept: '.app-performance-button',
@@ -42,7 +41,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     out: deactivate,
                     drop: function (event, ui) {
                         var view = self.children.findByCid(ui.draggable.data('cid'));
-                        if (view) {
+                        if (view && self.currentPath != view.model.get('path')) {
                             view.model.set({'path': self.currentPath, ignore_nodes: true});
                             view.model.save();
                         }
@@ -52,6 +51,9 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
 
                 this.updateTabs();
             },
+            childViewOptions: function () {
+                return this.options;
+            },
             addNew: function () {
                 var performance = new Performance({name: 'New performance', path: this.currentPath});
                 this.collection.add(performance);
@@ -60,6 +62,9 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
             addAll: function () {
                 var self = this;
                 var added = false;
+
+                if (this.autoplay) self.queueView.clearQueue();
+
                 this.collection.each(function (performance) {
                     if ((performance.get('path') || '') == self.currentPath) {
                         self.queueView.addPerformance(performance, true);
@@ -74,8 +79,12 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
 
                 // add performance to the queue on click
                 childView.on('click', function (data) {
-                    self.queueView.addPerformance(data.model, self.autoplay);
-                    if (self.autoplay) self.queueView.updateTimeline({autoplay: self.autoplay});
+                    if (self.autoplay) {
+                        self.queueView.clearQueue();
+                        self.queueView.addPerformance(data.model, true);
+                        self.queueView.updateTimeline({autoplay: true});
+                    } else
+                        self.queueView.addPerformance(data.model);
                 });
 
                 this.ui.newButton.before(childView.el);
@@ -134,15 +143,15 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     input.focus();
                 });
 
-                if (this.editing)
+                if (!this.readonly)
                     this.ui.tabs.append(addNewTab);
 
                 this.ui.tabs.append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'));
 
-                if (this.editing)
+                if (!this.readonly)
                     self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function () {
-                            self.showSettings();
-                        }));
+                        self.showSettings();
+                    }));
             },
             showSettings: function () {
                 var settingsView = new SettingsView({

@@ -1,4 +1,4 @@
-define(['application', './views/layout', 'lib/api', '../performances/views/layout', './css/puppeteering'],
+define(['application', './views/dashboard', 'lib/api', '../performances/views/layout', './css/puppeteering'],
     function (App, LayoutView, api) {
         return {
             index: function () {
@@ -8,7 +8,7 @@ define(['application', './views/layout', 'lib/api', '../performances/views/layou
                 api.disableInteractionMode();
 
                 App.LayoutInstance.getRegion('content').show(layoutView);
-                App.LayoutInstance.setTitle('Puppeteering');
+                App.LayoutInstance.setTitle('Home');
                 App.LayoutInstance.setFluid(true);
             }
         };

@@ -1,0 +1,31 @@
+#app-dashboard {
+    margin-top: 10px;
+}
+
+#app-dashboard button.app-expression,
+#app-dashboard button.app-performance {
+    margin: 0 0 10px 0;
+    width: 100%;
+    text-align: center;
+}
+
+#app-dashboard .container-fluid {
+    padding: 0;
+}
+
+#app-dashboard .app-text-input {
+    height: 112px;
+    max-width: 100%;
+}
+
+.performance-buttons button {
+    margin: 0 7px 9px 0;
+}
+
+.say-button-group {
+    margin-top: 10px;
+}
+
+.dashboard-record-button-group {
+    width: 63px
+}

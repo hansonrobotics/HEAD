@@ -8,7 +8,7 @@ define(['application', 'lib/api', './views/layout', './views/attention_regions',
                 api.disableInteractionMode();
 
                 // show page
-                App.LayoutInstance.setTitle('Interactions and Performances');
+                App.LayoutInstance.setTitle('Editor');
                 App.LayoutInstance.setFluid(true);
                 App.LayoutInstance.getRegion('content').show(layoutView);
             },

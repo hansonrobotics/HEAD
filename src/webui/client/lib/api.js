@@ -173,11 +173,13 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableGestures: function (success) {
-            api.topics.available_gestures.unsubscribe();
-            api.topics.available_gestures.removeAllListeners();
-            api.topics.available_gestures.subscribe(function (message) {
-                success(message.data);
-            });
+            success(["blink", "blink-micro", "blink-relaxed", "blink-sleepy", "look-L", "look-L.001", "look-L.UP", "look-R", "look-R.001", "look-R.UP", "lookLR", "lookRL", "nod-1", "nod-2", "nod-3", "nod-4", "shake-2", "shake-3", "think-browsDown", "think-browsUp", "think-DWN", "think-L",  "think-L.DWN", "think-L.UP", "think-R",  "think-R.DWN", "think-R.UP", "think-UP"]);
+            // api.topics.available_gestures.unsubscribe();
+            // api.topics.available_gestures.removeAllListeners();
+            // api.topics.available_gestures.subscribe(function (message) {
+            //     console.log(message.data);
+            //     success(message.data);
+            // });
         },
         /**
          * Set a gesture
@@ -213,11 +215,13 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableEmotionStates: function (success) {
-            api.topics.available_emotion_states.unsubscribe();
-            api.topics.available_emotion_states.removeAllListeners();
-            api.topics.available_emotion_states.subscribe(function (message) {
-                success(message.data);
-            });
+            success(["happy.001", "happy", "surprised", "sad", "irritated", "happy.002", "fear", "confused", "comprehending", "angry", "amused"])
+            // api.topics.available_emotion_states.unsubscribe();
+            // api.topics.available_emotion_states.removeAllListeners();
+            // api.topics.available_emotion_states.subscribe(function (message) {
+            //     console.log(message.data);
+            //     success(message.data);
+            // });
         },
         /**
          * Set an emotion, call multiple times to blend emotions together
