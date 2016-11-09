@@ -436,7 +436,7 @@ install_marky_markov() {
     $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
     $SUDO apt-get ${APT_GET_OPTS} update
     $SUDO apt-get ${APT_GET_OPTS} install ruby2.3 ruby2.3-dev
-    $SUDO gem install msgpack
+    $SUDO gem install marky_markov
     info "Installing Marky Markov is done"
 }
 
