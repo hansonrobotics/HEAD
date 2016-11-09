@@ -36,13 +36,13 @@ class Character(object):
     def refresh(self, sid):
         raise NotImplementedError
 
-    def get_context(self, sid):
+    def get_context(self, session):
         return {}
 
-    def set_context(self, sid, context):
+    def set_context(self, session, context):
         raise NotImplementedError
 
-    def remove_context(self, sid, key):
+    def remove_context(self, session, key):
         raise NotImplementedError
 
     def is_command(self, question):
@@ -194,11 +194,13 @@ class AIMLCharacter(Character):
         self.kernel._deleteSession(sid)
         self.logger.info("Character is refreshed")
 
-    def get_context(self, sid):
+    def get_context(self, session):
+        sid = session.sid
         return self.kernel.getSessionData(sid)
 
-    def set_context(self, sid, context):
+    def set_context(self, session, context):
         assert isinstance(context, dict)
+        sid = session.sid
         for k, v in context.iteritems():
             if k.startswith('_'):
                 continue
@@ -207,8 +209,9 @@ class AIMLCharacter(Character):
             if k in ['firstname', 'fullname']:
                 self.kernel.setPredicate('name', v, sid)
 
-    def remove_context(self, sid, key):
-        if key in self.get_context(sid).keys():
+    def remove_context(self, session, key):
+        sid = session.sid
+        if key in self.get_context(session).keys():
             del self.kernel._sessions[sid][key]
             self.logger.info("Removed context {}".format(key))
             return True
