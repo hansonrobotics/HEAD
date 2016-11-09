@@ -53,6 +53,17 @@ class Character(object):
             self.id, self.name, self.level)
 
 
+class DefaultCharacter(Character):
+
+    def set_context(self, session, context):
+        session.sdata.set_context(self.id, context)
+
+    def get_context(self, session):
+        return session.sdata.get_context(self.id)
+
+    def refresh(self, session):
+        session.sdata.reset_context(self.id)
+
 def replace_aiml_abs_path(trace):
     if isinstance(trace, list):
         for path in CHARACTER_PATH.split(','):
