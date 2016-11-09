@@ -13,8 +13,18 @@ logger = logging.getLogger('hr.chatbot.server.session')
 
 
 class SessionData(object):
-    pass
 
+    def __init__(self):
+        self.context = defaultdict(dict)
+
+    def set_context(self, cid, context):
+        self.context[cid].update(context)
+
+    def get_context(self, cid):
+        return self.context[cid]
+
+    def reset_context(self, cid):
+        self.context[cid] = {}
 
 class Session(object):
 
@@ -81,7 +91,7 @@ class Session(object):
         self.open_character = None
         for c in self.characters:
             try:
-                c.refresh(self.sid)
+                c.refresh(self)
             except NotImplementedError:
                 pass
 

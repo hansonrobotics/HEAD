@@ -323,10 +323,7 @@ def _ask_characters(characters, question, lang, sid, query):
                     User=user, BotName=botname, Trace=cross_trace,
                     Revision=REVISION, Lang=lang, ModQuestion=_question)
 
-        if hit_character is not None and hit_character.dynamic_level:
-            sess.last_used_character = hit_character
-        else:
-            sess.last_used_character = None
+        sess.last_used_character = hit_character
 
         if answer.lower().strip().endswith('?'):
             if hit_character.dynamic_level:

@@ -33,7 +33,7 @@ class Character(object):
     def respond(self, question, lang, session=None, query=False):
         raise NotImplementedError
 
-    def refresh(self, sid):
+    def refresh(self, session):
         raise NotImplementedError
 
     def get_context(self, session):
@@ -52,6 +52,17 @@ class Character(object):
         return "<Character id: {}, name: {}, level: {}>".format(
             self.id, self.name, self.level)
 
+
+class DefaultCharacter(Character):
+
+    def set_context(self, session, context):
+        session.sdata.set_context(self.id, context)
+
+    def get_context(self, session):
+        return session.sdata.get_context(self.id)
+
+    def refresh(self, session):
+        session.sdata.reset_context(self.id)
 
 def replace_aiml_abs_path(trace):
     if isinstance(trace, list):
@@ -190,7 +201,8 @@ class AIMLCharacter(Character):
             ret['trace'] = '\n'.join(traces)
         return ret
 
-    def refresh(self, sid):
+    def refresh(self, session):
+        sid = session.sid
         self.kernel._deleteSession(sid)
         self.logger.info("Character is refreshed")
 
