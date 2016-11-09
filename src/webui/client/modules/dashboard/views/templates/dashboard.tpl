@@ -3,23 +3,23 @@
         <div class="col-sm-3">
             <div class="control-stack">
                 <div class="dashboard-intensity knobBlock">
-                    <input value="17" type="text" class="app-intensity">
+                    <input value="17" type="text" class="app-intensity" disabled="disabled">
                 </div>
             </div>
         </div>
 
         <div class="col-sm-9">
-            <h3>Expressions</h3>
+            <h3>Poses</h3>
 
             <div class="container-fluid">
-                <% for (var i = 0; i < expressions.length / 3; i++) { %>
+                <% for (var i = 0; i < emotions.length / 3; i++) { %>
                 <div class="row">
                     <% for (var j = 0; j < 3; j++) { %>
                     <div class="col-xs-4">
-                        <% var expression = expressions.at(3 * i + j) %>
-                        <% if (!!expression) { %>
-                        <button class="app-expression btn btn-default btn-lg"
-                                data-expression="<%= expression.get('name') %>"><%= expression.get('name') %></button>
+                        <% var emotion = emotions.at(3 * i + j) %>
+                        <% if (!!emotion) { %>
+                        <button class="app-emotion btn btn-default btn-lg"
+                                data-emotion="<%= emotion.get('name') %>"><%= emotion.get('name') %></button>
                         <% } %>
                     </div>
                     <% } %>

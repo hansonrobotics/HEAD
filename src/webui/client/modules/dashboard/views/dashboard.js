@@ -3,19 +3,19 @@ define(["marionette", "./templates/dashboard.tpl", 'jquery', 'lib/api', 'vendor/
         var self;
         return Marionette.LayoutView.extend({
             template: template,
-            activeExpression: 'neutral',
+            activeEmotion: 'happy',
             intensity: 0.5,
             ui: {
                 intensity: '.app-intensity',
                 performanceButtons: '.app-performance',
-                expressionButtons: '.app-expression',
+                emotionButtons: '.app-emotion',
                 sayButton: '.app-say-button',
                 clearButton: '.app-clear-button',
                 speechInput: '.app-say-textarea'
             },
             events: {
                 'click @ui.performanceButtons': 'runPerformance',
-                'click @ui.expressionButtons': 'playExpression',
+                'click @ui.emotionButtons': 'playEmotion',
                 'click @ui.sayButton': 'say',
                 'click @ui.clearButton': 'clearVal',
                 'click @ui.recordButton': 'toggleSpeech'
@@ -25,11 +25,15 @@ define(["marionette", "./templates/dashboard.tpl", 'jquery', 'lib/api', 'vendor/
             },
             initialize: function (options) {
                 self = this;
-                if (options.expressions)
-                    options.expressions.bind('change add remove reset', this.render, this);
+
+                if (options.emotions)
+                    this.listenTo(options.emotions, 'change add remove reset', this.render);
+
+                if (options.performances)
+                    this.listenTo(options.performances, 'change add remove reset', this.render);
             },
             onDestroy: function () {
-                this.options.expressions.unbind('change add remove reset', this.render, this);
+                this.options.emotions.unbind('change add remove reset', this.render, this);
             },
             config: {
                 knob: {
@@ -68,19 +72,22 @@ define(["marionette", "./templates/dashboard.tpl", 'jquery', 'lib/api', 'vendor/
                 });
                 self.blenderEnable();
                 api.enableInteractionMode();
-
             },
             runPerformance: function (e) {
                 self.blenderEnable();
                 var performance = self.options.performances.findWhere({name: $(e.target).data('performance')});
-                if (performance) performance.run();
+                if (performance) {
+                    performance.load({success: function () {
+                        performance.run();
+                    }});
+                }
             },
-            playExpression: function (e) {
-                this.ui.expressionButtons.removeClass('active');
+            playEmotion: function (e) {
+                this.ui.emotionButtons.removeClass('active');
                 $(e.target).addClass('active');
                 self.blenderDisable();
-                self.activeExpression = $(e.target).data('expression');
-                api.setExpression(self.activeExpression, self.intensity);
+                self.activeEmotion = $(e.target).data('emotion');
+                api.setEmotion(self.activeEmotion, self.intensity, 5);
             },
             say: function () {
                 self.blenderEnable();
@@ -160,7 +167,7 @@ define(["marionette", "./templates/dashboard.tpl", 'jquery', 'lib/api', 'vendor/
                     self.config.knob.maxShow) < self.config.knob.maxShow)
                     ? value / (self.config.knob.max * 1.2) : 1.0;
                 self.blenderDisable();
-                api.setExpression(self.activeExpression, self.intensity);
+                api.setExpression(self.activeEmotion, self.intensity);
             },
             blenderEnable: function(){
                 api.blenderMode.enable();
