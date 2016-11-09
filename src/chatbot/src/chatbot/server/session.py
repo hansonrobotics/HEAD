@@ -81,7 +81,7 @@ class Session(object):
         self.open_character = None
         for c in self.characters:
             try:
-                c.refresh(self.sid)
+                c.refresh(self)
             except NotImplementedError:
                 pass
 

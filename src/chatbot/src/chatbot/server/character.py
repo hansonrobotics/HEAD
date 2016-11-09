@@ -33,7 +33,7 @@ class Character(object):
     def respond(self, question, lang, session=None, query=False):
         raise NotImplementedError
 
-    def refresh(self, sid):
+    def refresh(self, session):
         raise NotImplementedError
 
     def get_context(self, session):
@@ -190,7 +190,8 @@ class AIMLCharacter(Character):
             ret['trace'] = '\n'.join(traces)
         return ret
 
-    def refresh(self, sid):
+    def refresh(self, session):
+        sid = session.sid
         self.kernel._deleteSession(sid)
         self.logger.info("Character is refreshed")
 
