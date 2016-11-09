@@ -110,9 +110,12 @@ def set_weights(weights, lang, sid):
     return True, "Weights are updated"
 
 def set_context(prop, sid):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return False, "No session"
     for c in CHARACTERS:
         try:
-            c.set_context(sid, prop)
+            c.set_context(sess, prop)
         except Exception:
             pass
     return True, "Context is updated"
@@ -154,13 +157,13 @@ def _ask_characters(characters, question, lang, sid, query):
             if sess.last_used_character:
                 if sess.cache.that_question is None:
                     sess.cache.that_question = sess.cache.last_question
-                context = sess.last_used_character.get_context(sess.sid)
+                context = sess.last_used_character.get_context(sess)
                 if 'continue' in context and context.get('continue'):
                     _answer, res = shorten(context.get('continue'), 140)
                     response['text'] = answer = _answer
                     response['botid'] = sess.last_used_character.id
                     response['botname'] = sess.last_used_character.name
-                    sess.last_used_character.set_context(sess.sid, {'continue': res})
+                    sess.last_used_character.set_context(sess, {'continue': res})
                     hit_character = sess.last_used_character
                     cross_trace.append((sess.last_used_character.id, 'continuation', 'Non-empty'))
                 else:
@@ -169,7 +172,7 @@ def _ask_characters(characters, question, lang, sid, query):
         else:
             for c in characters:
                 try:
-                    c.remove_context(sess.sid, 'continue')
+                    c.remove_context(sess, 'continue')
                 except NotImplementedError:
                     pass
             sess.cache.that_question = None
@@ -437,12 +440,12 @@ def ask(question, lang, sid, query=False):
     if not query:
         # Sync session data
         if sess.last_used_character is not None:
-            context = sess.last_used_character.get_context(sid)
+            context = sess.last_used_character.get_context(sess)
             for c in responding_characters:
                 if c.id == sess.last_used_character.id:
                     continue
                 try:
-                    c.set_context(sid, context)
+                    c.set_context(sess, context)
                 except NotImplementedError:
                     pass
 

@@ -68,7 +68,7 @@ class Session(object):
             context['time'] = dt.datetime.strftime(now, '%I:%M %p')
             context['date'] = dt.datetime.strftime(now, '%B %d %Y')
             try:
-                c.set_context(self.sid, context)
+                c.set_context(self, context)
             except Exception as ex:
                 pass
 
