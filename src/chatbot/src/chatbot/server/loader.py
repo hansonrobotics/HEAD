@@ -30,13 +30,13 @@ def load_dyn_properties():
         if 'main' in weather:
             if 'temp_max' in weather['main']:
                 dyn_properties['high_temperature'] = \
-                    '{:.1f}'.format(weather['main'].get('temp_max')-kelvin)
+                    '{:.0f}'.format(weather['main'].get('temp_max')-kelvin)
             if 'temp_min' in weather['main']:
                 dyn_properties['low_temperature'] = \
-                    '{:.1f}'.format(weather['main'].get('temp_min')-kelvin)
+                    '{:.0f}'.format(weather['main'].get('temp_min')-kelvin)
             if 'temp' in weather['main']:
                 dyn_properties['temperature'] = \
-                    '{:.1f}'.format(weather['main'].get('temp')-kelvin)
+                    '{:.0f}'.format(weather['main'].get('temp')-kelvin)
         if 'weather' in weather and weather['weather']:
             dyn_properties['weather'] = weather['weather'][0]['description']
 
