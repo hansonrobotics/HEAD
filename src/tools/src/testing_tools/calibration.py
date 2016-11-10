@@ -9,9 +9,10 @@ import random
 #<node pkg="topic_tools" type="mux" name="head_pau" args="head_pau no_pau /blender_api/get_pau mux:=head_pau_mux"/>
 #<node pkg="topic_tools" type="mux" name="lips_pau" args="lips_pau head_pau lipsync_pau mux:=lips_pau_mux"/>
 #<node pkg="topic_tools" type="mux" name="eyes_pau" args="eyes_pau head_pau eyes_tracking_pau mux:=eyes_pau_mux"/>
-eye_pau_select = rospy.ServiceProxy("/sophia_body/eyes_pau_mux/select", MuxSelect)
-head_pau_select = rospy.ServiceProxy("/sophia_body/head_pau_mux/select", MuxSelect)
-neck_pau_select = rospy.ServiceProxy("/sophia_body/neck_pau_mux/select", MuxSelect)
+robot = 'sophia5'
+eye_pau_select = rospy.ServiceProxy("/{}/eyes_pau_mux/select".format(robot), MuxSelect)
+head_pau_select = rospy.ServiceProxy("/{}/head_pau_mux/select".format(robot), MuxSelect)
+neck_pau_select = rospy.ServiceProxy("/{}/neck_pau_mux/select".format(robot), MuxSelect)
 head_pau_select.call("/blender_api/get_pau")
 neck_pau_select.call("/blender_api/get_pau")
 eye_pau_select.call("eyes_tracking_pau")
@@ -41,7 +42,7 @@ def eyes_calib():
     rospy.init_node('calibration')
     r = rospy.Rate(1)
 
-    os.system('rosrun dynamic_reconfigure dynparam set /sophia_body/eye_tracking tracking True')
+    os.system('rosrun dynamic_reconfigure dynparam set /{}/eye_tracking tracking True'.format(robot))
 
     delta = 0
     while not rospy.is_shutdown():
@@ -64,9 +65,16 @@ def brows_calib(msg):
     #yaw = [msg.m_eyeGazeLeftYaw, msg.m_eyeGazeRightYaw]
     #print yaw+pitch
 
+def ee_calib(msg):
+    keys = get_shape_keys()
+    values =msg.m_coeffs
+    data = {k:v for k, v in zip(keys, values)}
+
+    print [data['lips-wide.L'], data['lips-narrow.L'], data['lips-wide.R'], data['lips-narrow.R']]
 
 if __name__ == '__main__':
     rospy.init_node("calibration")
-    rospy.Subscriber('/blender_api/get_pau', pau, brows_calib)
+    #rospy.Subscriber('/blender_api/get_pau', pau, brows_calib)
+    rospy.Subscriber('/blender_api/get_pau', pau, ee_calib)
     rospy.spin()
 
