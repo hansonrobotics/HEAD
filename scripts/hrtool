@@ -282,6 +282,10 @@ install_other_deps() {
     # For audio recording
     $SUDO apt-get ${APT_GET_OPTS} install pulseaudio
     $SUDO apt-get ${APT_GET_OPTS} install python-pyaudio
+
+    # For window layout
+    $SUDO apt-get ${APT_GET_OPTS} install xdotool
+
     info "Installing other dependencies is done"
 }
 
@@ -298,7 +302,6 @@ install_manyears_deps() {
 install_test_deps() {
     info "Installing test dependencies"
     $SUDO apt-get ${APT_GET_OPTS} install socat
-    $SUDO apt-get ${APT_GET_OPTS} install xdotool
 
     $SUDO apt-get ${APT_GET_OPTS} install npm
     $SUDO npm install -g n
