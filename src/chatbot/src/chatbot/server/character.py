@@ -5,6 +5,9 @@ import re
 from config import CHARACTER_PATH
 from chatbot.utils import shorten
 
+TYPE_AIML='aiml'
+TYPE_CS='cs'
+TYPE_DEFAULT='default'
 
 class Character(object):
 
@@ -19,6 +22,7 @@ class Character(object):
         self.local = True
         self.non_repeat = True
         self.logger = logging.getLogger('hr.chatbot.character.{}'.format(id))
+        self.type = TYPE_DEFAULT
 
     def get_properties(self):
         return self.properties
@@ -75,6 +79,7 @@ class AIMLCharacter(Character):
         self.trace_pattern = re.compile(
             r'.*/(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
         self.response_limit = 140
+        self.type = TYPE_AIML
 
     def load_aiml_files(self, kernel, aiml_files):
         errors = []
@@ -199,6 +204,8 @@ class AIMLCharacter(Character):
                 continue
             self.kernel.setPredicate(k, v, sid)
             self.logger.debug("Set predicate {}={}".format(k, v))
+            if k in ['firstname', 'fullname']:
+                self.kernel.setPredicate('name', v, sid)
 
     def remove_context(self, sid, key):
         if key in self.get_context(sid).keys():

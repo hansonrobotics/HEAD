@@ -7,6 +7,7 @@ import uuid
 from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
 from response_cache import ResponseCache
 from collections import defaultdict
+from chatbot.server.character import TYPE_AIML
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
@@ -56,8 +57,18 @@ class Session(object):
     def set_characters(self, characters):
         self.characters = characters
         for c in self.characters:
+            if c.type != TYPE_AIML:
+                continue
+            prop = c.get_properties()
+            context = {}
+            for key in ['weather', 'location', 'temperature']:
+                if key in prop:
+                    context[key] = prop.get(key)
+            now = dt.datetime.now()
+            context['time'] = dt.datetime.strftime(now, '%I:%M %p')
+            context['date'] = dt.datetime.strftime(now, '%B %d %Y')
             try:
-                c.set_context(self.sid, c.get_properties())
+                c.set_context(self.sid, context)
             except Exception as ex:
                 pass
 
