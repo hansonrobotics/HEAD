@@ -17,37 +17,16 @@
                 <a href="javascript:void(0)" role="tab" data-node-name="speech">Speech</a>
             </li>
             <li>
-                <a href="javascript:void(0)" role="tab" data-node-name="look_at">LookAt</a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" role="tab" data-node-name="gaze_at">GazeAt</a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" role="tab" data-node-name="interaction">Interaction</a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" role="tab" data-node-name="chat">Chat</a>
-            </li>
-            <li>
                 <a href="javascript:void(0)" role="tab" data-node-name="pause">Pause</a>
             </li>
             <!--<li>-->
                 <!--<a href="javascript:void(0)" role="tab" data-node-name="random">Random</a>-->
             <!--</li>-->
             <li>
-                <a href="javascript:void(0)" role="tab" data-node-name="kfanimation">KF Animation</a>
-            </li>
-            <li>
                 <a href="javascript:void(0)" role="tab" data-node-name="head_rotation">Head Tilt</a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" role="tab" data-node-name="settings">Settings</a>
             </li>
             <li class="app-scroll-right app-node-scroll" role="presentation">
                 <a href="javascript:void(0)"><i class="glyphicon glyphicon-chevron-right"></i></a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" role="tab" data-node-name="expression">Expression</a>
             </li>
         </ul>
 
