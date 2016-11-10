@@ -33,6 +33,11 @@ var self = module.exports = {
                 ros: ros,
                 name: '/performances/reload_properties',
                 serviceType: 'std_srvs/Trigger'
+            }),
+            set_properties: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/set_properties',
+                serviceType: 'performances/SetProperties'
             })
         }
     },
@@ -63,6 +68,14 @@ var self = module.exports = {
     performances: {
         reloadProperties: function () {
             self.services.performances.reload_properties.callService();
+        },
+        setProperties: function (id, properties, options) {
+            self.services.performances.set_properties.callService({
+                id: id,
+                properties: JSON.stringify(properties)
+            }, function (response) {
+                if (options.success) options.success(response);
+            });
         }
     }
 };

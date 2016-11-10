@@ -136,6 +136,16 @@ app.post('/run_performance', function (req, res) {
     res.json(performances.run('idf/' + req.body['key']));
 });
 
+app.get('/run_performance/:id(*)?/:prop/:val', function (req, res) {
+    var properties = {};
+    properties[req.params['prop']] = req.params['val'];
+    ros.performances.setProperties(req.params['id'], properties, {
+        success: function () {
+            res.json({result: performances.run(req.params['id'])});
+        }
+    });
+});
+
 app.get('/slide_performance/:performance', function (req, res) {
     res.json({result: performances.run('idf/' + req.params['performance'])});
 });
