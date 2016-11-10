@@ -174,7 +174,6 @@ class Chatbot():
 
         # Add space after punctuation for multi-sentence responses
         text = text.replace('?', '? ')
-        text = text.replace('.', '. ')
         text = text.replace('_', ' ')
 
         # if sentiment active save state and wait for affect_express to publish response
