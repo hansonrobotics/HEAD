@@ -5,13 +5,13 @@
     <div class="app-soma-list"></div>
     <div class="app-kfanimation-list"></div>
     <div class="app-settings-editor"></div>
-    <div class="form-group" data-node-property="language">
-        <label title="Language">Language</label>
-        <select class="app-lang-select">
-            <option value="en">English</option>
-            <option value="zh">Mandarin</option>
-        </select>
-    </div>
+    <!--<div class="form-group" data-node-property="language">-->
+        <!--<label title="Language">Language</label>-->
+        <!--<select class="app-lang-select">-->
+            <!--<option value="en">English</option>-->
+            <!--<option value="zh">Mandarin</option>-->
+        <!--</select>-->
+    <!--</div>-->
 
     <div class="form-group" data-node-property="text">
         <label title="Text">Text</label>
