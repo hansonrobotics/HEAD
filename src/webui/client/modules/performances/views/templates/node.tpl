@@ -17,11 +17,14 @@
                 <a href="javascript:void(0)" role="tab" data-node-name="speech">Speech</a>
             </li>
             <li>
+                <a href="javascript:void(0)" role="tab" data-node-name="look_at">LookAt</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" role="tab" data-node-name="gaze_at">GazeAt</a>
+            </li>
+            <li>
                 <a href="javascript:void(0)" role="tab" data-node-name="pause">Pause</a>
             </li>
-            <!--<li>-->
-                <!--<a href="javascript:void(0)" role="tab" data-node-name="random">Random</a>-->
-            <!--</li>-->
             <li>
                 <a href="javascript:void(0)" role="tab" data-node-name="head_rotation">Head Tilt</a>
             </li>
