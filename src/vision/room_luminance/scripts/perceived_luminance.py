@@ -115,7 +115,7 @@ class ROIluminance:
     lumin = "(StateLink (AnchorNode \"luminance\")" + \
                 "(ListLink (NumberNode {})))\n".format(lumene)
    
-    netcat(self.hostname, self.port, luminance + "\n")
+    netcat(self.hostname, self.port, lumin + "\n")
     if lumene <= 25:
         return "Dark"
     elif lumene <= 40:
