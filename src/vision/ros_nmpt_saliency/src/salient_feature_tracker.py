@@ -26,8 +26,8 @@ class NMPT_SERVO:
     self.EVENT_TRACK_FACE = "track_face"
 
     self.salience = rospy.Subscriber(self.TOPIC_SALIENT_POINT, targets, self.lookat_salientP_cb)
-    self.look_pub = rospy.Publisher(self.TOPIC_FACE_TARGET, Target, queue_size=10)
-    self.look_gaze = rospy.Publisher(self.TOPIC_GAZE_TARGET, Target, queue_size=10)
+    self.look_pub = rospy.Publisher(self.TOPIC_FACE_TARGET, Target, queue_size=1)
+    self.look_gaze = rospy.Publisher(self.TOPIC_GAZE_TARGET, Target, queue_size=1)
     rospy.Subscriber(self.TOPIC_FACE_EVENT, FaceEvent, self.face_event_cb)
     rospy.Subscriber(self.TOPIC_FACE_LOC, Faces, self.face_loc_cb)
 
@@ -36,32 +36,36 @@ class NMPT_SERVO:
     loc = []
     loc = data.positions[0]
     degree = data.degree 
+    salientid = data.id
     t = Target()
     t.x = 1.0
-    deg = "(StateLink (AnchorNode \"Degree value\")" + \
-                "(ListLink (NumberNode {})))\n".format(degree)
+    #deg = "(StateLink (AnchorNode \"Degree value\")" + \
+    #           "(ListLink (NumberNode {})))\n".format(degree)
 
-    netcat(self.hostname, self.port, deg + "\n")
-    
+    #netcat(self.hostname, self.port, deg + "\n")
+    #print deg
+    print loc
     if loc.x <= 0.5:
-    	loc.x =(0.5 - loc.x)
+        loc.x =(0.5 - loc.x)
     else:
         loc.x =(0.5 -loc.x)
     t.y = loc.x
     if loc.y <= 0.5:
-    	loc.y =(0.5 - loc.y)
+        loc.y =(0.5 - loc.y)
     else:
         loc.y =(0.5 -loc.y)
     t.z = loc.y
-    
+    loc.z = 0
     if self.GLOBAL_FLAG and degree >=13: # Look to Certainly Determined Salient Point
         self.look_pub.publish(t)
         self.look_gaze.publish(t)
-        locate = "(StateLink (AnchorNode \"locations\")" + \
-                "(ListLink (NumberNode {})))\n".format(loc)
-
+        locate = "(map-ato \"salients\" (NumberNode \""+str(salientid)+"\" (av 5 0 0)) "+str(loc.x)+" "+str(loc.y)+" "+str(loc.z)+")\n"
         netcat(self.hostname, self.port, locate + "\n")
-        
+        #locate = "(StateLink (AnchorNode \"locations\")" + \
+        #        "(ListLink (NumberNode {})))\n".format(loc)
+
+        #netcat(self.hostname, self.port, locate + "\n")
+        print locate
   def face_event_cb(self, data):
     if data.face_event == self.EVENT_NEW_FACE:
 	print ("Controlling pkg: Face Tracker")
