@@ -172,7 +172,7 @@ install_opencog_deps() {
     $SUDO apt-get ${APT_GET_OPTS} install guile-2.0-dev cython
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -rdpv >/dev/null
+    ./octool -rdpv
     rm octool
 
     install_relex_deps
@@ -196,7 +196,7 @@ install_relex_deps() {
 
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -l >/dev/null
+    ./octool -l
     rm octool
 
     # Java WordNet Library
@@ -338,7 +338,7 @@ install_vision_deps() {
       checkmd5 ${HR_CACHE}/dlib-${DLIB_VERSION}.tar.bz2 da930a35c2aa88612dd2ebf893f48f60 # md5sum for dlib-19.0
       mkdir -p $DLIB_PATH
       tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
-      cd $DLIB_PATH && python setup.py build >/dev/null
+      cd $DLIB_PATH && python setup.py build
       info "Installing dlib is done"
     else
       warn "Skipping dlib installation"
