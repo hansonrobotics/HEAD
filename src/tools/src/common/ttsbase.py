@@ -55,6 +55,21 @@ class TTSBase(object):
             logger.error(ex)
         logger.info("TTS finished")
 
+class NumbTTS(TTSBase):
+
+    def _tts(self, text):
+        fname = '{}.wav'.format(os.path.join(self.output_dir, text))
+        if os.path.isfile(fname):
+            shutil.copy(fname, self.wavout)
+            tts_data = TTSData()
+            tts_data.wavout = self.wavout
+            return tts_data
+
+    def get_duration(self):
+        source = pyglet.media.load(self.wavout)
+        logger.info("Duration of {} is {}".format(self.wavout, source.duration))
+        return source.duration
+
 class OnlineTTS(TTSBase):
 
     def __init__(self, output_dir):
