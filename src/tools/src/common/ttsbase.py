@@ -8,6 +8,7 @@ import pinyin
 import pyglet
 import shutil
 import xml.etree.ElementTree
+from audio2phoneme import audio2phoneme
 
 CWD = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger('hr.tools.common.ttsbase')
@@ -63,6 +64,13 @@ class NumbTTS(TTSBase):
             shutil.copy(fname, self.wavout)
             tts_data = TTSData()
             tts_data.wavout = self.wavout
+            try:
+                tts_data.phonemes = [
+                    {'name': phoneme[0], 'start': phoneme[1], 'end': phoneme[2]}
+                        for phoneme in audio2phoneme(fname)]
+            except Exception as ex:
+                logger.error(ex)
+                tts_data.phonemes = []
             return tts_data
 
     def get_duration(self):
