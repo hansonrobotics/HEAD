@@ -415,8 +415,19 @@ install_vision_deps() {
     fi
     info "Installing openface is done"
 
-    # 150 Megabyes of data.
-    $OPENFACE_DIR/models/get-models.sh
+    # $OPENFACE_DIR/models/get-models.sh
+    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
+    checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
+    mkdir -p $OPENFACE_DIR/models/dlib
+    mkdir -p $OPENFACE_DIR/models/openface
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${OPENFACE_DIR}/models/dlib
+    bunzip2 ${OPENFACE_DIR}/models/dlib/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${OPENFACE_DIR}/models/openface
+    cp ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl ${OPENFACE_DIR}/models/openface
 
     # CMT and Emotime Libraries.
     if [ ! -d $CPPMT_DIR ]; then
