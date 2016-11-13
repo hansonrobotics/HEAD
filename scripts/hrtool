@@ -29,6 +29,7 @@ CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
 
+export PKG_CONFIG_PATH=${HR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
 
 # Needed for compiling
@@ -207,6 +208,23 @@ install_relex_deps() {
     rm -r /tmp/jwnl14-rc2
     $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
     info "Installing RelEX dependencies is done"
+}
+
+install_pocketsphinx() {
+    wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
+    checkmd5 ${HR_CACHE}/sphinxbase-1.0.0.tar.gz df69f72b19abd943cfc4b51ec30a3b29
+    wget_cache https://github.com/hansonrobotics/pocketsphinx/archive/v1.0.0.tar.gz pocketsphinx-1.0.0.tar.gz
+    checkmd5 ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz b94bf391c22b6dd4c86a8c112aa62f48
+
+    tar zxf ${HR_CACHE}/sphinxbase-1.0.0.tar.gz -C /tmp
+    cd /tmp/sphinxbase-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    rm -r /tmp/sphinxbase-1.0.0
+
+    tar zxf ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz -C /tmp
+    cd /tmp/pocketsphinx-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    rm -r /tmp/pocketsphinx-1.0.0
 }
 
 install_other_deps() {
