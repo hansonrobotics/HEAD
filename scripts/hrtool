@@ -211,6 +211,7 @@ install_relex_deps() {
 }
 
 install_pocketsphinx() {
+    $SUDO apt-get ${APT_GET_OPTS} install bison automake
     wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
     checkmd5 ${HR_CACHE}/sphinxbase-1.0.0.tar.gz df69f72b19abd943cfc4b51ec30a3b29
     wget_cache https://github.com/hansonrobotics/pocketsphinx/archive/v1.0.0.tar.gz pocketsphinx-1.0.0.tar.gz
