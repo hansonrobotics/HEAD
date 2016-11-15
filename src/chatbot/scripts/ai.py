@@ -99,22 +99,44 @@ class Chatbot():
 
     def _speech_event_callback(self, msg):
         if msg.data == 'start':
+            logger.info("speech start")
             self.speech = True
         if msg.data == 'stop':
+            logger.info("speech end")
             rospy.sleep(2)
             self.speech = False
 
     def _request_callback(self, chat_message):
+        logger.info("chat message = {}".format(chat_message.utterance))
         if not self.enable:
             logger.info("Chatbot is disabled")
             return
-        if 'shut up' in chat_message.utterance.lower():
-            logger.info("Robot's talking wants to be interruptted")
-            self.tts_ctrl_pub.publish("shutup")
-            rospy.sleep(0.5)
-            self._response_publisher.publish(String('Okay'))
-            self._affect_publisher.publish(String('sad'))
-            return
+
+        # Old shut-up code
+        #if 'shut up' in chat_message.utterance.lower():
+        #    logger.info("Robot's talking wants to be interruptted")
+        #    self.tts_ctrl_pub.publish("shutup")
+        #    rospy.sleep(0.5)
+        #    self._response_publisher.publish(String('Okay'))
+        #    self._affect_publisher.publish(String('sad'))
+        #    return
+
+        # new interruptions: notify tts_talker about every time a user says something
+        # make distinction between short and long interruptions
+        # short interruptions should just temporarily mute tts_talker ('temp_shutup' is sent)
+        # long interruptions should be interpreted as new input ('shutup' is sent)
+        # but, only do this if the robot is talking
+
+        if self.speech == True:
+            # count words in interruption
+            self.wordcount = len(chat_message.utterance.split())
+
+            # either send temporary shutup or full shutup
+            if self.wordcount <= 1:
+                self.tts_ctrl_pub.publish("temp_shutup")
+                return  # and don't process the chat message any further
+            else:
+                self.tts_ctrl_pub.publish("shutup")
 
         # Handle chatbot command
         cmd, arg, line = self.client.parseline(chat_message.utterance)
