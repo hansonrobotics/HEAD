@@ -52,6 +52,8 @@ class BaseVisemes:
             return None
         return v
 
+    def filter_visemes(self, visemes, threshold):
+        return [viseme for viseme in visemes if visemes['duration']>threshold]
 
 class English_Visemes(BaseVisemes):
     # Mapping is approx. May need tunning
@@ -70,6 +72,23 @@ class English_Visemes(BaseVisemes):
         'Sil': ['sil']
     }
 
+
+class Numb_Visemes(BaseVisemes):
+    # Mapping is approx. May need tunning
+    # All phonemes are from cereproc documentation
+    # https://www.cereproc.com/files/CereVoiceCloudGuide.pdf
+    default_visemes_map = {
+        'A-I': ['A','AA','AI','AU','AE','AH','AW','AX','AY','EY',],
+        'E': ['E','E@','EI','II','IY','EI', 'EH',],
+        'F-V': ['F','V'],
+        'Q-W': ['W'],
+        'L': ['@', '@@', 'I', 'I@','IH','L', 'R', 'Y', 'R'],
+        'C-D-G-K-N-S-TH': ['CH','D','DH','G','H','HH','JH','K','N','NG','S','SH','T','TH','Z','ZH','DX','ER',],
+        'M': ['B','M','P'],
+        'O': ['O','OI','OO','OU','AO','OW','OY',],
+        'U': ['U','U@','UH','UU','UW'],
+        'Sil': ['SIL']
+    }
 
 class AnnoViseme(BaseVisemes):
     # See www.annosoft.com/docs/Visemes12.html

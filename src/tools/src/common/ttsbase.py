@@ -9,6 +9,7 @@ import pyglet
 import shutil
 import xml.etree.ElementTree
 from audio2phoneme import audio2phoneme
+from visemes import Numb_Visemes
 
 CWD = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger('hr.tools.common.ttsbase')
@@ -58,6 +59,15 @@ class TTSBase(object):
 
 class NumbTTS(TTSBase):
 
+    def get_visemes(self, phonemes):
+        visemes = []
+        for ph in phonemes:
+            v = self.get_viseme(ph)
+            if v is not None:
+                visemes.append(v)
+        logger.debug("Get visemes {}".format(visemes))
+        return visemes
+
     def _tts(self, text):
         fname = '{}.wav'.format(os.path.join(self.output_dir, text))
         if os.path.isfile(fname):
@@ -68,6 +78,10 @@ class NumbTTS(TTSBase):
                 tts_data.phonemes = [
                     {'name': phoneme[0], 'start': phoneme[1], 'end': phoneme[2]}
                         for phoneme in audio2phoneme(fname)]
+                viseme_config = Numb_Visemes()
+                tts_data.visemes = viseme_config.get_visemes(tts_data.phonemes)
+                #tts_data.visemes = viseme_config.filter_visemes(visemes, 0)
+                logger.info(tts_data.visemes)
             except Exception as ex:
                 logger.error(ex)
                 tts_data.phonemes = []
