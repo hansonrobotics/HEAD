@@ -29,6 +29,7 @@ CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
 
+export PKG_CONFIG_PATH=${HR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
 
 # Needed for compiling
@@ -207,6 +208,23 @@ install_relex_deps() {
     rm -r /tmp/jwnl14-rc2
     $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
     info "Installing RelEX dependencies is done"
+}
+
+install_pocketsphinx() {
+    wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
+    checkmd5 ${HR_CACHE}/sphinxbase-1.0.0.tar.gz df69f72b19abd943cfc4b51ec30a3b29
+    wget_cache https://github.com/hansonrobotics/pocketsphinx/archive/v1.0.0.tar.gz pocketsphinx-1.0.0.tar.gz
+    checkmd5 ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz b94bf391c22b6dd4c86a8c112aa62f48
+
+    tar zxf ${HR_CACHE}/sphinxbase-1.0.0.tar.gz -C /tmp
+    cd /tmp/sphinxbase-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    rm -r /tmp/sphinxbase-1.0.0
+
+    tar zxf ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz -C /tmp
+    cd /tmp/pocketsphinx-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    rm -r /tmp/pocketsphinx-1.0.0
 }
 
 install_other_deps() {
@@ -397,8 +415,19 @@ install_vision_deps() {
     fi
     info "Installing openface is done"
 
-    # 150 Megabyes of data.
-    $OPENFACE_DIR/models/get-models.sh
+    # $OPENFACE_DIR/models/get-models.sh
+    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
+    checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
+    mkdir -p $OPENFACE_DIR/models/dlib
+    mkdir -p $OPENFACE_DIR/models/openface
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${OPENFACE_DIR}/models/dlib
+    bunzip2 ${OPENFACE_DIR}/models/dlib/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${OPENFACE_DIR}/models/openface
+    cp ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl ${OPENFACE_DIR}/models/openface
 
     # CMT and Emotime Libraries.
     if [ ! -d $CPPMT_DIR ]; then
