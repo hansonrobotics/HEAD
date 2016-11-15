@@ -85,7 +85,6 @@ class NMPT_SERVO:
     for face in data.faces:
     	self.FACES = self.FACES +1
        	
-
 if __name__ == '__main__':
     global d
     try:
