@@ -32,15 +32,21 @@ def audio2phoneme(audio_file):
 
     nframes = decoder.n_frames()
 
-    phonemes = [(
-        seg.word,
-        seg.start_frame/nframes*length,
-        seg.end_frame/nframes*length)
-            for seg in decoder.seg()]
+
+    phonemes = []
+    offset = None
+    for seg in decoder.seg():
+        if offset is None:
+            offset = seg.start_frame
+        start_frame = seg.start_frame - offset
+        end_frame = seg.end_frame - offset
+        phonemes.append((
+            seg.word, start_frame/nframes*length, end_frame/nframes*length))
 
     return phonemes
 
 if __name__ == '__main__':
-    audio_file = os.path.join(os.path.expanduser('~/.hr/tts/numb'), 'nihao.wav')
+    audio_file = os.path.join(os.path.expanduser('~/.hr/tts/numb'), 'acapelabox_813168.wav')
+    #audio_file = os.path.join(os.path.expanduser('~/.hr/tts/numb'), 'hello.wav')
     phonemes = audio2phoneme(audio_file)
     print ('Phonemes: ', phonemes)
