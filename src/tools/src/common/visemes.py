@@ -53,7 +53,7 @@ class BaseVisemes:
         return v
 
     def filter_visemes(self, visemes, threshold):
-        return [viseme for viseme in visemes if visemes['duration']>threshold]
+        return [viseme for viseme in visemes if viseme['duration']>threshold]
 
 class English_Visemes(BaseVisemes):
     # Mapping is approx. May need tunning
