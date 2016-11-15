@@ -7,13 +7,19 @@ from ros_nmpt_saliency.msg import targets
 from pi_face_tracker.msg import FaceEvent, Faces
 from netcat import netcat
 '''
-    This is a sample subscriber written to control Sophia's Head movement based on the degree of Salient points.
+    This is a sample subscriber written to control Sophia's Head movement based on 
+    the degree of Salient points.NMPT salience considers a change in the state of 
+    a given point. This could happen either 1) By the movement of object  or
+     2) Simple Edge detection(which occurs by the maximum intensity variation).
+     Let's say Max is the maximum frequency of a point P in T time interval. 
+     Then, the degree of a given salient point is the re-scaled value of the 
+     ratio of the frequency of a salient point over 1 sec time interval and Max.
 '''
 class NMPT_SERVO:
   def __init__(self):
     self.hostname = "localhost"
     self.port = 17020
-    self.GLOBAL_FLAG = 1
+    self.GLOBAL_FLAG = 0
     self.FACES = 0
     self.TOPIC_FACE_TARGET = "/blender_api/set_face_target"
     self.TOPIC_GAZE_TARGET = "/blender_api/set_gaze_target"
@@ -39,12 +45,11 @@ class NMPT_SERVO:
     salientid = data.id
     t = Target()
     t.x = 1.0
-    #deg = "(StateLink (AnchorNode \"Degree value\")" + \
-    #           "(ListLink (NumberNode {})))\n".format(degree)
+    deg = "(StateLink (AnchorNode \"Degree value\")" + \
+               "(ListLink (NumberNode {})))\n".format(degree)
 
-    #netcat(self.hostname, self.port, deg + "\n")
-    #print deg
-    print loc
+    netcat(self.hostname, self.port, deg + "\n")
+    
     if loc.x <= 0.5:
         loc.x =(0.5 - loc.x)
     else:
@@ -59,13 +64,12 @@ class NMPT_SERVO:
     if self.GLOBAL_FLAG and degree >=13: # Look to Certainly Determined Salient Point
         self.look_pub.publish(t)
         self.look_gaze.publish(t)
-        locate = "(map-ato \"salients\" (NumberNode \""+str(salientid)+"\" (av 5 0 0)) "+str(loc.x)+" "+str(loc.y)+" "+str(loc.z)+")\n"
+        
+        locate = "(StateLink (AnchorNode \"locations\")" + \
+                "(ListLink (NumberNode \""+str(loc.x)+"\")" + \
+                "(NumberNode \""+str(loc.y)+"\") (NumberNode \""+str(loc.z)+"\")))\n"
         netcat(self.hostname, self.port, locate + "\n")
-        #locate = "(StateLink (AnchorNode \"locations\")" + \
-        #        "(ListLink (NumberNode {})))\n".format(loc)
-
-        #netcat(self.hostname, self.port, locate + "\n")
-        print locate
+        
   def face_event_cb(self, data):
     if data.face_event == self.EVENT_NEW_FACE:
 	print ("Controlling pkg: Face Tracker")
@@ -80,8 +84,7 @@ class NMPT_SERVO:
     self.FACES = 0
     for face in data.faces:
     	self.FACES = self.FACES +1
-    #print self.FACES
-    	
+       	
 
 if __name__ == '__main__':
     global d
