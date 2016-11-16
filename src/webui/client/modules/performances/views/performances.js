@@ -1,6 +1,6 @@
 define(['marionette', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
-        'jquery', 'bootbox', 'lib/api', './settings', 'typeahead', 'jquery-ui'],
-    function (Marionette, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView) {
+        'jquery', 'bootbox', 'lib/api', './settings', 'path', 'typeahead', 'jquery-ui'],
+    function (Marionette, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView, path) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: PerformanceView,
@@ -19,7 +19,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                 'change:path add remove reset': 'updateTabs'
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['editing', 'autoplay', 'queueView']);
+                this.mergeOptions(options, ['editing', 'autoplay', 'queueView', 'dir']);
                 if (typeof this.editing == 'undefined') this.editing = true;
             },
             onRender: function () {
@@ -50,7 +50,8 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     }
                 });
 
-                this.updateTabs();
+                if (this.dir) this.switchDir(this.dir);
+                else this.updateTabs();
             },
             addNew: function () {
                 var performance = new Performance({name: 'New performance', path: this.currentPath});
@@ -171,7 +172,7 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                     el = $('<a>').attr('href', 'javascript:void(0)').html(content);
 
                 if (!disableEvents)
-                    el.click(function () {
+                    el.attr('href', path.join('/#/performances', dir)).click(function () {
                         self.switchDir(dir);
                     }).droppable({
                         accept: '.app-performance-button',
