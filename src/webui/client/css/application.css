@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Yantramanav';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/Yantramanav-Regular.ttf') format('eot'), url('./fonts/Yantramanav-Regular.ttf') format('truetype');
+}
+
 body {
     margin-top: 52px;
 }
