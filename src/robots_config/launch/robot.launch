@@ -37,7 +37,6 @@
     </include -->
 
     <!-- Perception -->
-    <include file="$(arg basedir)/audio.launch" />
     <include file="$(arg basedir)/perception.launch">
         <arg name="saliency_tracking" value="$(arg saliency_tracking)" />
     </include>

@@ -1,4 +1,0 @@
-<!-- -*- mode: XML -*- -->
-<launch>
-    <node name="AudioFeature" pkg="audiosysneeds" type="audioSource.py" output="screen"></node>
-</launch>

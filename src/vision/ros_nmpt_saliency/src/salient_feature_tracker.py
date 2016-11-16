@@ -19,7 +19,7 @@ class NMPT_SERVO:
   def __init__(self):
     self.hostname = "localhost"
     self.port = 17020
-    self.GLOBAL_FLAG = 0
+    self.GLOBAL_FLAG = 1
     self.FACES = 0
     self.TOPIC_FACE_TARGET = "/blender_api/set_face_target"
     self.TOPIC_GAZE_TARGET = "/blender_api/set_gaze_target"
