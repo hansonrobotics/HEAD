@@ -1,6 +1,6 @@
-define(['marionette', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
+define(['marionette', 'backbone', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
         'jquery', 'bootbox', 'lib/api', './settings', 'path', 'typeahead', 'jquery-ui'],
-    function (Marionette, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView, path) {
+    function (Marionette, Backbone, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView, path) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: PerformanceView,
@@ -54,9 +54,40 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
                 else this.updateTabs();
             },
             addNew: function () {
-                var performance = new Performance({name: 'New performance', path: this.currentPath});
+                var performances = new Backbone.Collection(this.collection.where({path: this.currentPath})),
+                    names = performances.pluck('name'),
+                    performance = new Performance({
+                        name: this.getNextName('Performance', names),
+                        path: this.currentPath
+                    });
+
                 this.collection.add(performance);
                 this.trigger('new', performance);
+            },
+            getNextName: function (prefix, names) {
+                var numbers = _.sortBy(_.map(names, function (name) {
+                    var num = name.replace(prefix, '');
+
+                    if (num === name)
+                        return null;
+                    else {
+                        if (!num.trim()) return -1;
+                        else return parseInt(num);
+                    }
+                }));
+
+                numbers = _.filter(numbers, function (num) {
+                    return num !== null;
+                });
+
+                if (numbers.length)
+                    return prefix + ' ' + this.zeroPad(numbers[numbers.length - 1] + 1, 2);
+                else
+                    return prefix;
+            },
+            zeroPad: function (num, places) {
+                var zero = places - num.toString().length + 1;
+                return Array(+(zero > 0 && zero)).join("0") + num;
             },
             addAll: function () {
                 var self = this;
@@ -91,21 +122,8 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
             createdDirs: [],
             updateTabs: function () {
                 var self = this,
-                    paths = _.compact(_.uniq(this.collection.pluck('path'))),
-                    dirs = [];
-
-                // create a list of all directories
-                _.each(paths, function (path, i) {
-                    path = path.split('/');
-                    for (var i = 0; i < path.length; i++)
-                        dirs.push(path.slice(0, i + 1).join('/'));
-                });
-                dirs = _.uniq(_.union(dirs, this.createdDirs));
-
-                var depth = (this.currentPath == '') ? 0 : this.currentPath.split('/').length,
-                    currentDirs = _.filter(dirs, function (dir) {
-                        return self.getParentPath(dir) == self.currentPath;
-                    });
+                    depth = (this.currentPath == '') ? 0 : this.currentPath.split('/').length,
+                    currentDirs = this.getCurrentDirs();
 
                 // clear tabs
                 this.ui.tabs.html('');
@@ -142,8 +160,27 @@ define(['marionette', './templates/performances.tpl', './performance', '../entit
 
                 if (this.editing)
                     self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function () {
-                            self.showSettings();
-                        }));
+                        self.showSettings();
+                    }));
+            },
+            getCurrentDirs: function () {
+                var self = this,
+                    paths = _.compact(_.uniq(this.collection.pluck('path'))),
+                    dirs = [];
+
+                // create a list of all directories
+                _.each(paths, function (path, i) {
+                    path = path.split('/');
+                    for (var i = 0; i < path.length; i++)
+                        dirs.push(path.slice(0, i + 1).join('/'));
+                });
+
+                dirs = _.uniq(_.union(dirs, this.createdDirs));
+
+                return _.filter(dirs, function (dir) {
+                    return self.getParentPath(dir) == self.currentPath;
+                });
+
             },
             showSettings: function () {
                 var settingsView = new SettingsView({
