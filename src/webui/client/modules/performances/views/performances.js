@@ -29,7 +29,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     };
 
                 if (this.autoplay) this.ui.addAllButton.get(0).lastChild.nodeValue = ' Play All';
-                if (!this.editing) this.ui.newButton.hide();
+                if (this.readonly) this.ui.newButton.hide();
 
                 this.ui.container.droppable({
                     accept: '.app-performance-button',
@@ -42,7 +42,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     out: deactivate,
                     drop: function (event, ui) {
                         var view = self.children.findByCid(ui.draggable.data('cid'));
-                        if (view) {
+                        if (view && self.currentPath != view.model.get('path')) {
                             view.model.set({'path': self.currentPath, ignore_nodes: true});
                             view.model.save();
                         }
@@ -52,6 +52,9 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
 
                 if (this.dir) this.switchDir(this.dir);
                 else this.updateTabs();
+            },
+            childViewOptions: function () {
+                return this.options;
             },
             addNew: function () {
                 var performances = new Backbone.Collection(this.collection.where({path: this.currentPath})),
@@ -92,6 +95,9 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
             addAll: function () {
                 var self = this;
                 var added = false;
+
+                if (this.autoplay) self.queueView.clearQueue();
+
                 this.collection.each(function (performance) {
                     if ((performance.get('path') || '') == self.currentPath) {
                         self.queueView.addPerformance(performance, true);
@@ -106,8 +112,12 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
 
                 // add performance to the queue on click
                 childView.on('click', function (data) {
-                    self.queueView.addPerformance(data.model, self.autoplay);
-                    if (self.autoplay) self.queueView.updateTimeline({autoplay: self.autoplay});
+                    if (self.autoplay) {
+                        self.queueView.clearQueue();
+                        self.queueView.addPerformance(data.model, true);
+                        self.queueView.updateTimeline({autoplay: true});
+                    } else
+                        self.queueView.addPerformance(data.model);
                 });
 
                 this.ui.newButton.before(childView.el);
@@ -153,12 +163,12 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     input.focus();
                 });
 
-                if (this.editing)
+                if (!this.readonly)
                     this.ui.tabs.append(addNewTab);
 
                 this.ui.tabs.append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'));
 
-                if (this.editing)
+                if (!this.readonly)
                     self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function () {
                         self.showSettings();
                     }));
@@ -180,7 +190,6 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 return _.filter(dirs, function (dir) {
                     return self.getParentPath(dir) == self.currentPath;
                 });
-
             },
             showSettings: function () {
                 var settingsView = new SettingsView({

@@ -34,7 +34,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 var self = this,
                     queueView = new QueueView({
                         performances: self.performanceCollection,
-                        editing: this.editing,
+                        readonly: this.readonly,
                         autoplay: this.autoplay
                     }),
                     performancesView = new PerformancesView({

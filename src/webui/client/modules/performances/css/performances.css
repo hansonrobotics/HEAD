@@ -78,6 +78,10 @@
     position: absolute;
 }
 
+.app-timeline-nodes .app-node .ui-resizable-handle.ui-icon-gripsmall-diagonal-se {
+    z-index: 99999;
+}
+
 .app-timeline-editor {
     margin-bottom: 5px;
 }
