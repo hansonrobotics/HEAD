@@ -293,8 +293,7 @@ class Runner:
                 continue
 
             for performance in self.running_performances:
-                nodes = [Node.createNode(node, self, self.start_time, performance['id']) for node in
-                         performance['nodes']]
+                nodes = [Node.createNode(node, self, self.start_time, performance.get('id', '')) for node in performance['nodes']]
 
                 with self.lock:
                     if not self.running:
