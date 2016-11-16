@@ -80,7 +80,6 @@ class ChatbotTest(unittest.TestCase):
 
     def test_session_manager_auto(self):
         import chatbot.server.config
-        chatbot.server.config.SESSION_RESET_TIMEOUT = 1
         chatbot.server.config.SESSION_REMOVE_TIMEOUT = 2
         from chatbot.server.session import SessionManager
         reload(chatbot.server.session)
@@ -97,26 +96,12 @@ class ChatbotTest(unittest.TestCase):
         self.assertTrue(session.add("hi", "hi there"))
         self.assertIsNotNone(session.cache.last_time)
 
-        # session should not be resetted
-        time.sleep(0.7)
+        # session should not be removed
+        time.sleep(1)
         self.assertIsNotNone(session.cache.last_time)
-
-        # session should be resetted
-        time.sleep(0.8)
-        session = session_manager.get_session(sid)
-        self.assertIsNotNone(session)
-        self.assertIsNone(session.cache.last_time)
-
-        # session should be reactivated
-        self.assertTrue(session.add("hi", "hi there"))
-        self.assertIsNotNone(session.cache.last_time)
-        time.sleep(1.5)
-        session = session_manager.get_session(sid)
-        self.assertIsNotNone(session)
-        self.assertIsNone(session.cache.last_time)
 
         # session should be removed
-        time.sleep(1)
+        time.sleep(1.5)
         self.assertFalse(session.add("hi", "hi there"))
         session = session_manager.get_session(sid)
         self.assertIsNone(session)
