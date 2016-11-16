@@ -82,7 +82,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         pt.y=lqrpt[1];
         pt.z=0;
         /* call a function to get the degree of saliency of the current point*/
-        degree = getdegree(pt.x, pt.y);
+        degree = 0;
 
 
         /* for the purpose of visualizing points above degree 7:the most certain
@@ -195,7 +195,7 @@ double getdegree(double x, double y)
                 flag=1;
                 Lturnaround = timel - degreeHandler[i][4];
                 delay = timel - degreeHandler[i][2] ;
-                defaultMax = 10 * Lturnaround; //considering the performance of core i7 machinew/ 2.34 ghz and w/ pyface tracker : cmt take much resource so better to deduct the value
+                defaultMax = 10 * Lturnaround; //considering the performance of core i7 machine w/ 2.34 ghz and w/ pyface tracker : cmt take much resource so better to deduct the value
                 /* How long the point identified as salient?  */
                 if  (Lturnaround < turn_around_time)
                 {
@@ -236,7 +236,7 @@ double getdegree(double x, double y)
 
 
     /* put the number in between 1 and 10 */
-
+    if (((DegreeVal*10)/defaultMax) + 0.5 >defaultMax) {defaultMax = ((DegreeVal*10)/defaultMax) + 0.5; }
     int roundD =  ((DegreeVal*10)/defaultMax) + 0.5;
     //cout<<"Degree Raw: "<<DegreeVal<<" Degree Tenth  "<<roundD<<" Possible Raw "<<Lturnaround * 7.5<<endl;
     DegreeVal = roundD;
@@ -247,9 +247,9 @@ double getdegree(double x, double y)
 
 int main(int argc, char **argv)
    {
-        ros::init(argc, argv, "image_listener");
-        ros::NodeHandle nh;
-        nh.getParam("debug",debug_mode);
+        ros::init(argc, argv, "nmpt_saliency");
+        ros::NodeHandle nh("~");
+        nh.getParam("gui",debug_mode);
         if (debug_mode) cvNamedWindow("view");
         cvStartWindowThread();
         image_transport::ImageTransport it(nh);

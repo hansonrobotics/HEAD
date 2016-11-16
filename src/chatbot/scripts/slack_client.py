@@ -1,24 +1,22 @@
 #!/usr/bin/env python
 
 import os
-from slackclient import SlackClient
 import time
 import logging
-import requests
 import re
 import sys
+
+from slackclient import SlackClient
 CWD = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(CWD, '../src'))
+from chatbot.client import Client
 from chatbot.server.session import SessionManager
 
-VERSION = 'v1.1'
-KEY = 'AAAAB3NzaC'
-
+HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 SLACKBOT_API_TOKEN = os.environ.get('SLACKBOT_API_TOKEN')
 SLACKTEST_TOKEN = os.environ.get('SLACKTEST_TOKEN')
 
 logger = logging.getLogger('hr.chatbot.slackclient')
-
 
 def format_trace(traces):
     pattern = re.compile(
@@ -26,96 +24,42 @@ def format_trace(traces):
     line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
     urlprefix = "https://github.com/hansonrobotics/character_dev/blob/update"
     formated_traces = []
-    for trace in traces:
-        matchobj = pattern.match(trace)
-        if matchobj:
-            fname = matchobj.groupdict()['fname']
-            tloc = matchobj.groupdict()['tloc']
-            pname = matchobj.groupdict()['pname']
-            ploc = matchobj.groupdict()['ploc']
-            tline = line_pattern.match(tloc).group('line')
-            pline = line_pattern.match(ploc).group('line')
+    for name, stage, trace in traces:
+        subtraces = trace.split('\n')
+        formated_subtraces = []
+        for subtrace in subtraces:
+            matchobj = pattern.match(subtrace)
+            if matchobj:
+                fname = matchobj.groupdict()['fname']
+                tloc = matchobj.groupdict()['tloc']
+                pname = matchobj.groupdict()['pname']
+                ploc = matchobj.groupdict()['ploc']
+                tline = line_pattern.match(tloc).group('line')
+                pline = line_pattern.match(ploc).group('line')
 
-            p = '<{urlprefix}/{fname}#L{pline}|{pname} {ploc}>'.format(
-                pname=pname, urlprefix=urlprefix, fname=fname, pline=pline, ploc=ploc)
-            t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
-                urlprefix=urlprefix, fname=fname, tline=tline, tloc=tloc)
-            formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
-            formated_traces.append(formated_trace)
+                p = '<{urlprefix}/{fname}#L{pline}|{pname} {ploc}>'.format(
+                    pname=pname, urlprefix=urlprefix, fname=fname, pline=pline, ploc=ploc)
+                t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
+                    urlprefix=urlprefix, fname=fname, tline=tline, tloc=tloc)
+                formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
+                formated_subtraces.append(formated_trace)
+            else:
+                formated_subtraces.append(subtrace)
+        formated_traces.append('{name}: {stage}: \n{subtraces}\n'.format(name=name, stage=stage, subtraces='\n'.join(formated_subtraces)))
     return formated_traces
 
 
-class HRSlackBot(SlackClient):
+class HRSlackBot(object):
 
-    def __init__(self, host, port):
+    def __init__(self, host, port, botname):
         self.sc = SlackClient(SLACKBOT_API_TOKEN)
         self.sc.rtm_connect()
-        self.botname = 'sophia'
-        self.chatbot_ip = host
-        self.chatbot_port = str(port)
-        self.chatbot_url = 'http://{}:{}/{}'.format(
-            self.chatbot_ip, self.chatbot_port, VERSION)
+        self.botname = botname
+        self.host = host
+        self.port = str(port)
         self.lang = 'en'
-        self.session_manager = SessionManager()
         self.icon_url = 'https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg'
-
-    def set_sid(self, user):
-        params = {
-            "Auth": KEY,
-            "botname": self.botname,
-            "user": user
-        }
-        r = None
-        retry = 3
-        while r is None and retry > 0:
-            try:
-                r = requests.get(
-                    '{}/start_session'.format(self.chatbot_url), params=params)
-            except Exception:
-                retry -= 1
-                time.sleep(1)
-        if r is None:
-            logger.error("Can't get session\n")
-            return
-        ret = r.json().get('ret')
-        if r.status_code != 200:
-            logger.error("Request error: {}\n".format(r.status_code))
-        sid = r.json().get('sid')
-        logger.info("Get session {}\n".format(sid))
-        self.session_manager.add_session(user, sid)
-
-    def ask(self, user, question):
-        params = {
-            "question": "{}".format(question),
-            "session": self.session_manager.get_sid(user),
-            "lang": self.lang,
-            "Auth": KEY
-        }
-        r = requests.get('{}/chat'.format(self.chatbot_url), params=params)
-        ret = r.json().get('ret')
-        if r.status_code != 200:
-            logger.error("Request error: {}\n".format(r.status_code))
-
-        if ret != 0:
-            logger.error("QA error: error code {}, botname {}, question {}, lang {}\n".format(
-                ret, self.botname, question, self.lang))
-
-        response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
-        response.update(r.json().get('response'))
-
-        return ret, response
-
-    def _rate(self, user, rate):
-        params = {
-            "session": self.session_manager.get_sid(user),
-            "rate": rate,
-            "index": -1,
-            "Auth": KEY
-        }
-        r = requests.get('{}/rate'.format(self.chatbot_url), params=params)
-        ret = r.json().get('ret')
-        response = r.json().get('response')
-        return ret, response
+        self.session_manager = SessionManager()
 
     def send_message(self, channel, attachments):
         self.sc.api_call(
@@ -143,9 +87,23 @@ class HRSlackBot(SlackClient):
                 question = message.get('text')
                 channel = message.get('channel')
 
+                sid = self.session_manager.get_sid(name, self.botname)
+                session = self.session_manager.get_session(sid)
+                if session is not None:
+                    assert hasattr(session.sdata, 'client')
+                    client = session.sdata.client
+                else:
+                    client = Client(HR_CHATBOT_AUTHKEY, username=name,
+                        botname=self.botname, host=self.host, port=self.port,
+                        response_listener=self)
+                    self.session_manager.add_session(name, self.botname, client.session)
+                    session = self.session_manager.get_session(client.session)
+                    session.sdata.client = client
+                    session.sdata.channel = channel
+
                 logger.info("Question {}".format(question))
                 if question in [':+1:', ':slightly_smiling_face:', ':)', 'gd']:
-                    ret, _ = self._rate(name, 'good')
+                    ret, _ = client._rate('good')
                     if ret:
                         logger.info("Rate good")
                         answer = 'Thanks for rating'
@@ -162,7 +120,7 @@ class HRSlackBot(SlackClient):
                     self.send_message(channel, attachments)
                     continue
                 if question in [':-1:', ':disappointed:', ':(', 'bd']:
-                    ret, _ = self._rate(name, 'bad')
+                    ret, _ = client._rate('bad')
                     if ret:
                         logger.info("Rate bad")
                         answer = 'Thanks for rating'
@@ -179,36 +137,59 @@ class HRSlackBot(SlackClient):
                     self.send_message(channel, attachments)
                     continue
 
-                ret, response = self.ask(name, question)
-                if ret == 3:
-                    self.set_sid(name)
-                    ret, response = self.ask(name, question)
-                answer = response.get('text')
-                trace = response.get('trace', '')
+                client.ask(question)
 
-                botid = response.get('botid', '')
-                if ret != 0:
-                    answer = u"Sorry, I can't answer it right now"
-                    title = ''
-                else:
-                    formated_trace = format_trace(trace)
-                    title = 'answered by {}\ntrace:\n{}'.format(
-                        botid, '\n'.join(formated_trace))
-                attachments = [{
-                    'pretext': answer,
-                    'title': title,
-                    'color': '#3AA3E3',
-                    'fallback': answer,
-                }]
-                self.send_message(channel, attachments)
+                # session could change after ask
+                if client.session != session.sid:
+                    self.session_manager.remove_session(session.sid)
+                    self.session_manager.add_session(
+                        name, self.botname, client.session)
+                    session = self.session_manager.get_session(client.session)
+                    session.sdata.client = client
+                    session.sdata.channel = channel
+                    logger.info("Session is updated")
+
+    def on_response(self, sid, response):
+        answer = ''
+        title = ''
+        session = self.session_manager.get_session(sid)
+        if session is None:
+            time.sleep(0.5)
+            session = self.session_manager.get_session(sid)
+            if session is None:
+                logger.error("No such session {}".format(session))
+                return
+        channel = session.sdata.channel
+        if response is None or not response.get('text'):
+            answer = u"Sorry, I can't answer it right now"
+        else:
+            answer = response.get('text')
+            trace = response.get('trace', '')
+            botid = response.get('botid', '')
+            if trace:
+                formated_trace = format_trace(trace)
+                if formated_trace:
+                    title = 'answered by {}\n\ntrace:\n{}'.format(botid, '\n'.join(formated_trace))
+        attachments = [{
+            'pretext': answer,
+            'title': title,
+            'color': '#3AA3E3',
+            'fallback': answer,
+        }]
+        self.send_message(channel, attachments)
 
 if __name__ == '__main__':
     logging.basicConfig()
     logging.getLogger().setLevel(logging.INFO)
+    logging.getLogger('urllib3').setLevel(logging.WARN)
     host = 'localhost'
     port = 8001
+    if len(sys.argv) < 2:
+        print "Usage:", sys.argv[0], "botname"
+        sys.exit(1)
+    botname = sys.argv[1]
     while True:
         try:
-            HRSlackBot(host, port).run()
+            HRSlackBot(host, port, botname).run()
         except Exception as ex:
             logger.error(ex)

@@ -8,5 +8,7 @@ weight:
     0.9
 level:
     90
+dynamic_level:
+    true
 aiml:
     - ../aiml/futurist/*.aiml

@@ -43,12 +43,16 @@ class ROIluminance:
     self.count = 25
     self.ref = ""
     self.RefArea = 0
+    self.camFLAG = 0
     self.totalArea = 0
-    self.covUp = 65
-    self.covDown = 95
+    self.covUp = 90
+    self.covDown = 98
     self.Flag = 0
     self.face = 0
+    self.Rimg = []
     self.waittime = 0
+    self.Rtime = time.time()
+
 
   '''
   # BGR/True Color based: could be used for other feature extraction.
@@ -71,6 +75,40 @@ class ROIluminance:
       Y2 = 0.299*R + 0.587*G + 0.114*B
       return [Y1, Y2]
   '''
+
+
+  '''Assumption: Camera flash has luminance that ranges from 70 to 100
+                 is temporary
+                 the net difference b/n any camera flash and normal ROI>=50
+  '''
+  #Won't work well if there is other temporary obj w/ luminance equvalent to cams luminance
+  def isCamFlash(self,origin_im):
+      grayim = cv2.cvtColor(origin_im, cv2.COLOR_BGR2GRAY)
+      if time.time() - self.Rtime >= 3 or not self.camFLAG:
+          self.Rimg = origin_im
+          self.Rtime = time.time()
+          self.camFLAG = 1
+
+      blurred = cv2.GaussianBlur(grayim, (25, 25), 0)
+      ret, tr = cv2.threshold(blurred, 230, 255, 0)
+      (cnts, _) = cv2.findContours(tr.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+      for c in cnts:
+          if cv2.contourArea(c) > 250:
+              x, y, w, h = cv2.boundingRect(c)
+
+              ref = self.Rimg[y:y + h, x:x + w]
+              rhsv = cv2.cvtColor(ref, cv2.COLOR_BGR2HSV)
+              rh, rs, rv = cv2.split(rhsv)
+              size = np.size(rhsv)
+
+              cur = origin_im[y:y + h, x:x + w]
+              chsv = cv2.cvtColor(cur, cv2.COLOR_BGR2HSV)
+              ch, cs, cv = cv2.split(chsv)
+              diff = ((float(np.sum(cv)) / size)) - (float(np.sum(rv)) / size)
+              if float(np.sum(cv)) >= 60 and diff > 30:
+                  return 1
+      return 0
+
 
   # HSV based Room Luminance Detection
   def luminance_HSV(self, image_raw_hsv):
@@ -195,6 +233,7 @@ class ROIluminance:
 
         msg = Luminance()
         msg.covered = self.Flag
+        msg.camFlash = self.isCamFlash(cv_image)
         msg.room_light = room_light
         msg.sudden_change = self.sudden_change(room_light)
 

@@ -12,6 +12,7 @@ import fnmatch
 import random
 
 from std_msgs.msg import String, Int32, Float32
+from std_srvs.srv import Trigger, TriggerResponse
 from chatbot.msg import ChatMessage
 from blender_api_msgs.msg import SetGesture, EmotionState, Target, SomaState
 from basic_head_api.msg import MakeFaceExpr, PlayAnimation
@@ -37,9 +38,9 @@ class Runner:
         self.start_timestamp = 0
         self.lock = Lock()
         self.run_condition = Condition()
-        self.queue = Queue.Queue()
-        self.ids = []
-        self.running_nodes = []
+        self.running_performances = []
+        # in memory set of properties with priority over params
+        self.properties = {}
         # References to event subscribing node callbacks
         self.observers = {}
         # Performances that already played as alternatives. Used to maximize different performance in single demo
@@ -71,12 +72,15 @@ class Runner:
                 'default': rospy.Publisher('/' + self.robot_name + '/tts', String, queue_size=1),
             }
         }
+        self.load_properties()
+        rospy.Service('~reload_properties', Trigger, self.reload_properties_callback)
+        rospy.Service('~set_properties', srv.SetProperties, self.set_properties_callback)
         rospy.Service('~load', srv.Load, self.load_callback)
-        rospy.Service('~load_nodes', srv.LoadNodes, self.load_nodes_callback)
         rospy.Service('~load_sequence', srv.LoadSequence, self.load_sequence_callback)
+        rospy.Service('~load_performance', srv.LoadPerformance, self.load_performance_callback)
         rospy.Service('~run', srv.Run, self.run_callback)
         rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
-        rospy.Service('~run_full_performance', srv.RunByName, self.run_full_perfromance_callback)
+        rospy.Service('~run_full_performance', srv.RunByName, self.run_full_performance_callback)
         rospy.Service('~resume', srv.Resume, self.resume_callback)
         rospy.Service('~pause', srv.Pause, self.pause_callback)
         rospy.Service('~stop', srv.Stop, self.stop)
@@ -84,36 +88,50 @@ class Runner:
         # Shared subscribers for nodes
         rospy.Subscriber('/' + self.robot_name + '/speech_events', String,
                          lambda msg: self.notify('speech_events', msg))
+        rospy.Subscriber('/' + self.robot_name + '/speech', ChatMessage, self.speech_callback)
+        # Shared subscribers for nodes
+        rospy.Subscriber('/hand_events', String, self.hand_callback)
 
         self.worker.start()
         rospy.spin()
 
-    def load_callback(self, request):
-        return srv.LoadResponse(success=True, nodes=json.dumps(self.load_sequence([request.id])))
+    def reload_properties_callback(self, request):
+        self.load_properties()
+        return TriggerResponse(success=True)
 
-    def load_nodes_callback(self, request):
-        self.load_nodes(json.loads(request.nodes))
-        return srv.LoadNodesResponse(True)
+    def set_properties_callback(self, request):
+        self.set_properties(request.id, json.loads(request.properties))
+        return srv.SetPropertiesResponse(success=True)
+
+    def load_callback(self, request):
+        return srv.LoadResponse(success=True, performance=json.dumps(self.load_sequence([request.id])[0]))
+
+    def load_performance_callback(self, request):
+        self.load_performances(json.loads(request.performance))
+        return srv.LoadPerformanceResponse(True)
 
     def load_sequence_callback(self, request):
-        return srv.LoadSequenceResponse(success=True, nodes=json.dumps(self.load_sequence(request.ids)))
+        return srv.LoadSequenceResponse(success=True, performances=json.dumps(self.load_sequence(request.ids)))
 
     def run_by_name_callback(self, request):
         self.stop()
-        nodes = self.load_sequence([request.id])
-        if not nodes:
+        performances = self.load_sequence([request.id])
+        if not performances:
             return srv.RunByNameResponse(False)
         return srv.RunByNameResponse(self.run(0.0))
 
-    def run_full_perfromance_callback(self, request):
+    def run_full_performance_callback(self, request):
         self.stop()
-        nodes = self.load_folder(request.id)
-        if not nodes:
+        performances = self.load_folder(request.id)
+        if not performances:
             return srv.RunByNameResponse(False)
         return srv.RunByNameResponse(self.run(0.0))
 
     def load_folder(self, performance):
-        robot_name = rospy.get_param('/robot_name')
+        if performance.startswith('shared'):
+            robot_name = 'common'
+        else:
+            robot_name = rospy.get_param('/robot_name')
         dir_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', performance)
         if os.path.isdir(dir_path):
             root, dirs, files = next(os.walk(dir_path))
@@ -143,44 +161,47 @@ class Runner:
         return []
 
     def load_sequence(self, ids):
-        nodes = []
-
-        offset = 0
+        performances = []
         for id in ids:
-            robot_name = rospy.get_param('/robot_name')
-            path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + ".yaml")
+            if id.startswith('shared'):
+                robot_name = 'common'
+            else:
+                robot_name = rospy.get_param('/robot_name')
+            filename = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id + ".yaml")
+
+            if os.path.isfile(filename):
+                with open(filename, 'r') as f:
+                    performance = yaml.load(f.read())
+                    performance['id'] = id
+                    performance['path'] = os.path.dirname(id)
+                    performances.append(performance)
+
+        return self.load_performances(performances)
+
+    def load_performances(self, performances):
+        offset = 0
+
+        if not isinstance(performances, list):
+            performances = [performances]
+
+        for performance in performances:
             duration = 0
 
-            if os.path.isfile(path):
-                with open(path, 'r') as f:
-                    data = yaml.load(f.read())
-
-                if 'nodes' in data and isinstance(data['nodes'], list):
-                    for node in data['nodes']:
-                        if not 'start_time' in node:
-                            node['start_time'] = 0
-                        if node['name'] == 'pause':
-                            node['duration'] = 0.1
-                        duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
-                        node['start_time'] += offset
-                    offset += duration
-                    nodes += data['nodes']
-
-        self.load_nodes(nodes, ids)
-        return nodes
-
-    def load_nodes(self, nodes, ids=None):
-        self.stop()
-
-        if ids is None:
-            ids = []
-
-        for node in nodes:
-            node.pop('id', None)
-
+            if 'nodes' in performance and isinstance(performance['nodes'], list):
+                for node in performance['nodes']:
+                    if not 'start_time' in node:
+                        node['start_time'] = 0
+                    if node['name'] == 'pause':
+                        node['duration'] = 0.1
+                    duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
+                    node['start_time'] += offset
+                offset += duration
+            else:
+                performances.remove(performance)
         with self.lock:
-            self.ids = ids
-            self.running_nodes = nodes
+            self.running_performances = performances
+
+        return performances
 
     def run_callback(self, request):
         return srv.RunResponse(self.run(request.startTime))
@@ -190,8 +211,7 @@ class Runner:
         # Wait for worker to stop performance and enter waiting before proceeding
         self.run_condition.acquire()
         with self.lock:
-            rospy.logerr(start_time)
-            success = len(self.running_nodes) > 0
+            success = len(self.running_performances) > 0
             if success:
                 self.running = True
                 self.start_time = start_time
@@ -255,7 +275,8 @@ class Runner:
         with self.lock:
             current_time = self.get_run_time()
             running = self.running and not self.paused
-            return srv.CurrentResponse(ids=self.ids, nodes=json.dumps(self.running_nodes), current_time=current_time,
+            return srv.CurrentResponse(performances=json.dumps(self.running_performances),
+                                       current_time=current_time,
                                        running=running)
 
     def worker(self):
@@ -266,26 +287,31 @@ class Runner:
 
             self.topics['events'].publish(Event('idle', 0))
             self.run_condition.wait()
-            with self.lock:
-                nodes = [Node.createNode(node, self, self.start_time) for node in self.running_nodes]
             self.topics['events'].publish(Event('running', self.start_time))
 
-            if len(nodes) == 0:
+            if len(self.running_performances) == 0:
                 continue
 
-            running = True
-            while running:
-                with self.lock:
-                    run_time = self.get_run_time()
+            for performance in self.running_performances:
+                nodes = [Node.createNode(node, self, self.start_time, performance['id']) for node in
+                         performance['nodes']]
 
+                with self.lock:
                     if not self.running:
-                        self.topics['events'].publish(Event('finished', run_time))
                         break
 
-                running = False
-                # checks if any nodes still running
-                for node in nodes:
-                    running = node.run(run_time) or running
+                running = True
+                while running:
+                    with self.lock:
+                        run_time = self.get_run_time()
+
+                        if not self.running:
+                            self.topics['events'].publish(Event('finished', run_time))
+                            break
+                    running = False
+                    # checks if any nodes still running
+                    for node in nodes:
+                        running = node.run(run_time) or running
         self.run_condition.release()
 
     def get_run_time(self):
@@ -328,6 +354,47 @@ class Runner:
         if event in self.observers:
             if ref in self.observers[event]:
                 self.observers[event].remove(ref)
+
+    def hand_callback(self, msg):
+        self.notify('HAND', msg)
+        self.notify(msg.data, msg)
+
+    def load_properties(self):
+        robot_name = rospy.get_param('/robot_name')
+        robot_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
+        common_path = os.path.join(rospack.get_path('robots_config'), 'common', 'performances')
+        for path in [common_path, robot_path]:
+            for root, dirnames, filenames in os.walk(path):
+                if '.properties' in filenames:
+                    filename = os.path.join(root, '.properties')
+                    if os.path.isfile(filename):
+                        with open(filename) as f:
+                            properties = yaml.load(f.read())
+                            dir = os.path.relpath(root, path)
+                            rospy.set_param('/' + os.path.join(self.robot_name, 'webui/performances', dir).strip(
+                                "/.") + '/properties', properties)
+
+    def set_properties(self, id, properties):
+        for key, val in properties.iteritems():
+            if id in self.properties:
+                self.properties[id][key] = val
+            else:
+                self.properties[id] = {key: val}
+
+    def get_property(self, id, name):
+        if id in self.properties and name in self.properties[id] and self.properties[id][name]:
+            return self.properties[id][name]
+        else:
+            val = None
+            param_name = os.path.join('/', self.robot_name, 'webui/performances', os.path.dirname(id),
+                                      'properties/variables', name)
+            if rospy.has_param(param_name):
+                val = rospy.get_param(param_name)
+            return val
+
+
+    def speech_callback(self, msg):
+        self.notify('SPEECH', msg.utterance)
 
 
 if __name__ == '__main__':

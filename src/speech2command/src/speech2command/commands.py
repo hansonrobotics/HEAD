@@ -13,6 +13,11 @@ from calc import calculate
 logger = logging.getLogger('hr.speech2command.commands')
 
 class BaseCommand(object):
+
+    def __init__(self):
+        self.active = True
+        self.type = 'default'
+
     def parse(self, msg):
         """
         Parse the chat message. Set the command parameters according to
@@ -35,7 +40,9 @@ class BaseCommand(object):
 
 class WholeShowCommand(BaseCommand):
     def __init__(self):
+        super(WholeShowCommand, self).__init__()
         self.srv = rospy.ServiceProxy("speech_on", SpeechOn)
+        self.type = 'wholeshow'
 
     def parse(self, msg):
         text = msg.utterance.decode('utf-8').lower()
@@ -51,6 +58,7 @@ class WholeShowCommand(BaseCommand):
 
 class ForwardCommand(BaseCommand):
     def __init__(self, forward_topic_name):
+        super(ForwardCommand, self).__init__()
         self.forward_topic_name = forward_topic_name
         self.chatbot_speech_pub = rospy.Publisher(
             self.forward_topic_name, ChatMessage, queue_size=1)
@@ -73,6 +81,7 @@ class MotionCommand(BaseCommand):
         'look': Target,
     }
     def __init__(self, yaml_config):
+        super(MotionCommand, self).__init__()
         self.chatbot_response_pub = rospy.Publisher(
             'chatbot_responses', String, queue_size=1)
         self.motion_defs = []
@@ -150,6 +159,7 @@ class MotionCommand(BaseCommand):
 class MathCommand(BaseCommand):
 
     def __init__(self):
+        super(MathCommand, self).__init__()
         self.chatbot_response_pub = rospy.Publisher(
             'chatbot_responses', String, queue_size=1)
         self.ans = None

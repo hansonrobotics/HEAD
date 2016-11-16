@@ -6,13 +6,25 @@ import logging
 import uuid
 from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
 from response_cache import ResponseCache
+from collections import defaultdict
+from chatbot.server.character import TYPE_AIML
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
 
 class SessionData(object):
-    pass
 
+    def __init__(self):
+        self.context = defaultdict(dict)
+
+    def set_context(self, cid, context):
+        self.context[cid].update(context)
+
+    def get_context(self, cid):
+        return self.context[cid]
+
+    def reset_context(self, cid):
+        self.context[cid] = {}
 
 class Session(object):
 
@@ -33,6 +45,8 @@ class Session(object):
         self.active = False
         self.last_active_time = None
         self.test = False
+        self.last_used_character = None
+        self.open_character = None
 
     def set_test(self, test):
         if test:
@@ -50,19 +64,39 @@ class Session(object):
     def rate(self, rate, idx):
         return self.cache.rate(rate, idx)
 
+    def set_characters(self, characters):
+        self.characters = characters
+        for c in self.characters:
+            if c.type != TYPE_AIML:
+                continue
+            prop = c.get_properties()
+            context = {}
+            for key in ['weather', 'location', 'temperature']:
+                if key in prop:
+                    context[key] = prop.get(key)
+            now = dt.datetime.now()
+            context['time'] = dt.datetime.strftime(now, '%I:%M %p')
+            context['date'] = dt.datetime.strftime(now, '%B %d %Y')
+            try:
+                c.set_context(self, context)
+            except Exception as ex:
+                pass
+
     def reset(self):
         self.active = False
         self.dump()
         self.cache.clean()
         self.init = dt.datetime.now()
+        self.last_used_character = None
+        self.open_character = None
         for c in self.characters:
             try:
-                c.refresh(self.sid)
+                c.refresh(self)
             except NotImplementedError:
                 pass
 
-    def check(self, question, answer, lang):
-        return self.cache.check(question, answer, lang)
+    def check(self, question, answer):
+        return self.cache.check(question, answer)
 
     def dump(self):
         if self.test:
@@ -101,7 +135,7 @@ class SessionManager(object):
 
     def __init__(self, auto_clean=True):
         self._sessions = dict()
-        self._users = dict()
+        self._users = defaultdict(dict)
         self._locker = Locker()
         self._session_cleaner = threading.Thread(
             target=self._clean_sessions, name="SessionCleaner")
@@ -138,29 +172,40 @@ class SessionManager(object):
         if sid is not None:
             return self._sessions.get(sid, None)
 
-    def get_sid(self, user):
+    def get_sid(self, user, key):
         if user in self._users:
-            sid = self._users.get(user)
-            session = self._sessions.get(sid)
-            if session:
-                return sid
+            sessions = self._users.get(user)
+            if sessions:
+                sid = sessions.get(key)
+                session = self._sessions.get(sid)
+                if session:
+                    return sid
 
     def gen_sid(self):
         return str(uuid.uuid1())
 
     @_threadsafe
-    def add_session(self, user, sid):
+    def add_session(self, user, key, sid):
         if sid in self._sessions:
             return False
         self._sessions[sid] = Session(sid)
-        self._users[user] = sid
+        self._users[user][key] = sid
         return True
 
-    def start_session(self, user, test=False):
-        _sid = self.get_sid(user)
+    def start_session(self, user, key, test=False, refresh=False):
+        """
+        user: username
+        key: a string to identify session in user scope
+        test: if it's a session for test
+        refresh: if true, it will generate new session id
+        """
+        _sid = self.get_sid(user, key)
+        if _sid and refresh:
+            self.remove_session(_sid)
+            _sid = None
         if not _sid:
             _sid = self.gen_sid()
-            self.add_session(user, _sid)
+            self.add_session(user, key, _sid)
         session = self.get_session(_sid)
         assert(session is not None)
         session.set_test(test)
@@ -183,6 +228,9 @@ class SessionManager(object):
             for sid in remove_sessions:
                 self.remove_session(sid)
             time.sleep(0.1)
+
+    def list_sessions(self):
+        return self._sessions.keys()
 
 
 class ChatSessionManager(SessionManager):

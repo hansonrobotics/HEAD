@@ -1,0 +1,15 @@
+.app-speech-mode-buttons {
+    margin-bottom: 10px;
+}
+
+.app-suggestions {
+    margin-top: 5px;
+}
+.app-suggestions .label {
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.speech-input-container {
+    margin-bottom: 10px;
+}

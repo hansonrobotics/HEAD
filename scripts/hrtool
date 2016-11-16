@@ -29,6 +29,7 @@ CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
 
+export PKG_CONFIG_PATH=${HR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
 
 # Needed for compiling
@@ -172,7 +173,7 @@ install_opencog_deps() {
     $SUDO apt-get ${APT_GET_OPTS} install guile-2.0-dev cython
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -rdpv >/dev/null
+    ./octool -rdpv
     rm octool
 
     install_relex_deps
@@ -196,7 +197,7 @@ install_relex_deps() {
 
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -l >/dev/null
+    ./octool -l
     rm octool
 
     # Java WordNet Library
@@ -207,6 +208,24 @@ install_relex_deps() {
     rm -r /tmp/jwnl14-rc2
     $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
     info "Installing RelEX dependencies is done"
+}
+
+install_pocketsphinx() {
+    $SUDO apt-get ${APT_GET_OPTS} install bison automake
+    wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
+    checkmd5 ${HR_CACHE}/sphinxbase-1.0.0.tar.gz df69f72b19abd943cfc4b51ec30a3b29
+    wget_cache https://github.com/hansonrobotics/pocketsphinx/archive/v1.0.0.tar.gz pocketsphinx-1.0.0.tar.gz
+    checkmd5 ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz b94bf391c22b6dd4c86a8c112aa62f48
+
+    tar zxf ${HR_CACHE}/sphinxbase-1.0.0.tar.gz -C /tmp
+    cd /tmp/sphinxbase-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    rm -r /tmp/sphinxbase-1.0.0
+
+    tar zxf ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz -C /tmp
+    cd /tmp/pocketsphinx-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    rm -r /tmp/pocketsphinx-1.0.0
 }
 
 install_other_deps() {
@@ -280,31 +299,44 @@ install_other_deps() {
 
     install_manyears_deps
     # For audio recording
-    sudo apt-get ${APT_GET_OPTS} install pulseaudio
-    sudo apt-get ${APT_GET_OPTS} install python-pyaudio
+    $SUDO apt-get ${APT_GET_OPTS} install pulseaudio
+    $SUDO apt-get ${APT_GET_OPTS} install python-pyaudio
+
+    # For window layout
+    $SUDO apt-get ${APT_GET_OPTS} install xdotool
+
     info "Installing other dependencies is done"
 }
 
 install_manyears_deps() {
     info "Installing Manyears dependencies"
+    # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
     wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
     checkmd5 ${HR_CACHE}/manyears.tar.gz cf8688959e6d6a7ea9cdd1167814862a
     tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
-    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
+    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
     info "Installing Manyears dependencies is done"
 }
 
 install_test_deps() {
     info "Installing test dependencies"
     $SUDO apt-get ${APT_GET_OPTS} install socat
-    $SUDO apt-get ${APT_GET_OPTS} install xdotool
 
     $SUDO apt-get ${APT_GET_OPTS} install npm
     $SUDO npm install -g n
-    $SUDO n stable
+    # WebUI compatable webserver
+    $SUDO n 6.6.0
     $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
     info "Installing test dependencies is done"
 }
+
+install_webui_deps() {
+    sudo apt-get ${APT_GET_OPTS} install npm
+    sudo npm install -g n webpack nodemon
+    sudo n 6.6.0
+    sudo ln -sf /usr/local/n/versions/node/6.6.0/bin/node /usr/bin/node
+}
+
 
 install_vision_deps() {
     info "Installing vision dependencies"
@@ -325,7 +357,7 @@ install_vision_deps() {
       checkmd5 ${HR_CACHE}/dlib-${DLIB_VERSION}.tar.bz2 da930a35c2aa88612dd2ebf893f48f60 # md5sum for dlib-19.0
       mkdir -p $DLIB_PATH
       tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
-      cd $DLIB_PATH && python setup.py build >/dev/null
+      cd $DLIB_PATH && python setup.py build
       info "Installing dlib is done"
     else
       warn "Skipping dlib installation"
@@ -384,8 +416,19 @@ install_vision_deps() {
     fi
     info "Installing openface is done"
 
-    # 150 Megabyes of data.
-    $OPENFACE_DIR/models/get-models.sh
+    # $OPENFACE_DIR/models/get-models.sh
+    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
+    checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
+    mkdir -p $OPENFACE_DIR/models/dlib
+    mkdir -p $OPENFACE_DIR/models/openface
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${OPENFACE_DIR}/models/dlib
+    bunzip2 ${OPENFACE_DIR}/models/dlib/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${OPENFACE_DIR}/models/openface
+    cp ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl ${OPENFACE_DIR}/models/openface
 
     # CMT and Emotime Libraries.
     if [ ! -d $CPPMT_DIR ]; then
@@ -396,9 +439,7 @@ install_vision_deps() {
     fi
     cd $CPPMT_DIR
     git checkout wrapper
-    mkdir build
-    cd build
-    cmake ..
+    cmake .
     make -j$(nproc)
 
     if [ ! -d $EMOTIME_DIR ]; then
@@ -428,21 +469,18 @@ install_marky_markov() {
     $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
     $SUDO apt-get ${APT_GET_OPTS} update
     $SUDO apt-get ${APT_GET_OPTS} install ruby2.3 ruby2.3-dev
-    $SUDO gem install msgpack
+    $SUDO gem install marky_markov
     info "Installing Marky Markov is done"
 }
 
 check_or_create_ws() {
     [[ ! -z $1 ]]
-    if [[ -d $1 ]]; then
-        export HR_WORKSPACE=$1
-    else
+    if [[ ! -d $1 ]]; then
         local confirm
         _get_confirm "The workspace ${1} does not exist, create? [y/N]"
         if [[ ${confirm} -eq 1 ]]; then
             mkdir -p ${1}
             echo "Workspace directory ${1} is created"
-            export HR_WORKSPACE=${1}
         fi
     fi
 }
@@ -570,7 +608,11 @@ _do_install_deps() {
     install_opencog_deps
     install_vision_deps
     install_manyears_deps
+    install_webui_deps
     install_other_deps
+
+    wget_cache https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/patch/rosbridge.patch
+    $SUDO patch -N /opt/ros/indigo/lib/python2.7/dist-packages/rosbridge_library/internal/publishers.py ${HR_CACHE}/rosbridge.patch || true
 }
 
 do_get_hr_src() {
@@ -640,6 +682,8 @@ _do_build_hr() {
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
     pip2 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
     pip3 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
+    cd $HR_WORKSPACE/$PROJECT/src/webui
+    npm install
 }
 
 do_single_package() {
@@ -741,8 +785,13 @@ check_ws() {
     if [[ $rel_ws != $ws ]]; then
         local confirm
         warn "The workspace configured ${ws} doesn't match the your working path ${rel_ws}"
-        _get_confirm "Continue using ${ws}? [y/N]"
-        [[ ${confirm} -eq 1 ]] || exit 1
+        _get_confirm "Set workspace to your working path ${rel_ws}? [y/N]"
+        if [[ ${confirm} -eq 1 ]]; then
+            HR_WORKSPACE=${rel_ws}
+            set_env
+        else
+            exit 1
+        fi
     fi
 }
 
@@ -826,7 +875,7 @@ set_ws() {
                 [[ ${confirm} -eq 1 ]] || exit 0
                 HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
             else
-                eval $str
+                HR_WORKSPACE=${str#export HR_WORKSPACE=}
             fi
         else
             HR_WORKSPACE=$DEFAULT_HR_WORKSPACE
@@ -841,8 +890,11 @@ set_ws() {
         exit 1;
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
-    HR_WORKSPACE=${HR_WORKSPACE%/}
+    if [[ $HR_WORKSPACE != '/' ]]; then
+        HR_WORKSPACE=${HR_WORKSPACE%/}
+    fi
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
+    export HR_WORKSPACE=$HR_WORKSPACE
 }
 
 set_env() {
@@ -957,7 +1009,9 @@ execute() {
         $RUN_CUSTOM_FUNCTIONS == 1 ||
         $BUILD_PACKAGE == 1
         ]]; then
-        check_ws
+        if [[ $ASSUME_YES == 0 ]] ; then
+            check_ws
+        fi
     fi
     if [[ $INSTALL_DEPENDENCIES ]]; then do_install_deps; fi
     if [[ $GET_HR_SOURCE_CODE ]]; then do_get_hr_src; fi

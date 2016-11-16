@@ -42,7 +42,8 @@ class LoggingController:
             os.makedirs(os.path.dirname(file_name))
 
         with open(file_name, mode) as f:
-            f.write(yaml.safe_dump([{'data': data, 'time': time.strftime("%Y/%m/%d %H:%M:%S")}], encoding='utf-8', allow_unicode=True))
+            f.write(yaml.safe_dump([{'data': data, 'time': time.strftime("%Y/%m/%d %H:%M:%S")}], encoding='utf-8',
+                                   allow_unicode=True))
 
     @staticmethod
     def read(file_name):

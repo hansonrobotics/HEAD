@@ -35,17 +35,78 @@ class BaseVisemes:
     def get_visemes(self, phonemes):
         visemes = []
         for ph in phonemes:
-            try:
-                v = {}
-                v['name'] = self.phonemes[ph['name']]
-                v['start'] =ph['start']
-                v['duration'] = ph['end']-ph['start']
-            except KeyError:
-                logger.error("Unknown phoneme "+ph['name'])
-                continue
-            visemes.append(v)
+            v = self.get_viseme(ph)
+            if v is not None:
+                visemes.append(v)
         logger.debug("Get visemes {}".format(visemes))
         return visemes
+
+    def get_viseme(self, ph):
+        try:
+            v = {}
+            v['name'] = self.phonemes[ph['name']]
+            v['start'] =ph['start']
+            v['duration'] = ph['end']-ph['start']
+        except KeyError:
+            logger.error("Unknown phoneme "+ph['name'])
+            return None
+        return v
+
+    def filter_visemes(self, visemes, threshold):
+        return [viseme for viseme in visemes if viseme['duration']>threshold]
+
+class English_Visemes(BaseVisemes):
+    # Mapping is approx. May need tunning
+    # All phonemes are from cereproc documentation
+    # https://www.cereproc.com/files/CereVoiceCloudGuide.pdf
+    default_visemes_map = {
+        'A-I': ['a','aa','ai','au','ae','ah','aw','ax','ay','ey',],
+        'E': ['e','e@','ei','ii','iy','ei', 'eh',],
+        'F-V': ['f','v'],
+        'Q-W': ['w'],
+        'L': ['@', '@@', 'i', 'i@','ih','l', 'r', 'y', 'R'],
+        'C-D-G-K-N-S-TH': ['ch','d','dh','g','h','hh','jh','k','n','ng','s','sh','t','th','z','zh','dx','er',],
+        'M': ['b','m','p'],
+        'O': ['o','oi','oo','ou','ao','ow','oy',],
+        'U': ['u','u@','uh','uu','uw'],
+        'Sil': ['sil']
+    }
+
+
+class Numb_Visemes(BaseVisemes):
+    # Mapping is approx. May need tunning
+    # All phonemes are from cereproc documentation
+    # https://www.cereproc.com/files/CereVoiceCloudGuide.pdf
+    default_visemes_map = {
+        'A-I': ['A','AA','AI','AU','AE','AH','AW','AX','AY','EY',],
+        'E': ['E','E@','EI','II','IY','EI', 'EH',],
+        'F-V': ['F','V'],
+        'Q-W': ['W'],
+        'L': ['@', '@@', 'I', 'I@','IH','L', 'R', 'Y', 'R'],
+        'C-D-G-K-N-S-TH': ['CH','D','DH','G','H','HH','JH','K','N','NG','S','SH','T','TH','Z','ZH','DX','ER',],
+        'M': ['B','M','P'],
+        'O': ['O','OI','OO','OU','AO','OW','OY',],
+        'U': ['U','U@','UH','UU','UW'],
+        'Sil': ['SIL']
+    }
+
+class AnnoViseme(BaseVisemes):
+    # See www.annosoft.com/docs/Visemes12.html
+    default_visemes_map = {
+        'anno-AA-AH-h': ['AA', 'AH', 'h'],
+        'anno-AO-AW-OW-OY-UH-UW': ['AO', 'AW', 'OW', 'OY', 'UH', 'UW'],
+        'anno-EH-AE-IH-AY': ['EH', 'AE', 'IH', 'AY'],
+        'anno-y-IY-EY': ['y', 'IY', 'EY'],
+        'anno-r-ER': ['r', 'ER'],
+        'anno-L': ['l'],
+        'anno-CH-J-SH-ZH': ['CH', 'j', 'SH', 'ZH'],
+        'anno-n-NG-DH-d-g-t-z-s-k-TH': ['n', 'NG', 'DH', 'd', 'g', 't', 'z', 's', 'k', 'TH'],
+        'anno-f-v': ['f', 'v'],
+        'anno-M-B-P': ['m', 'b', 'p'],
+        'anno-W': ['w'],
+        'anno-X': ['x']
+    }
+
 
 class Pinyin_Viseme(BaseVisemes):
 

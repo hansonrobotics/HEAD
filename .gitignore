@@ -21,3 +21,4 @@ build
 .catkin_tools
 *.swp
 logs
+install

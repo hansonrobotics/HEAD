@@ -2,13 +2,19 @@ import cmd
 import requests
 import json
 import os
+import re
 import time
+from functools import wraps
+import logging
+import threading
+from chatbot.utils import norm
 
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 VERSION = 'v1.1'
 
+logger = logging.getLogger('hr.chatbot.client')
 
 def get_default_username():
     import subprocess
@@ -19,62 +25,99 @@ def get_default_username():
 
 class Client(cmd.Cmd, object):
 
-    def __init__(self, username, key, test=False, *args, **kwargs):
+    def __init__(self, key, response_listener=None, username=None, botname='sophia',
+            host='localhost', port='8001', test=False,
+            *args, **kwargs):
+        """
+        key: The authentication key for chatbot server.
+        response_listener: The object that has implemented on_response.
+        username: The user name.
+        botname: The bot name.
+        host: The host name of chatbot server.
+        port: The port of the host.
+        test: If the session is a test session.
+        """
         super(Client, self).__init__(*args, **kwargs)
-        self.user = username
+        self.user = username or get_default_username()
         self.key = key
+        if response_listener:
+            assert hasattr(response_listener, 'on_response') and \
+                callable(response_listener.on_response)
+        self.response_listener = response_listener
         self.test = test
         self.prompt = '[me]: '
-        self.botname = 'sophia'
-        self.chatbot_ip = 'localhost'
-        self.chatbot_port = '8001'
-        self.chatbot_url = 'http://{}:{}/{}'.format(
-            self.chatbot_ip, self.chatbot_port, VERSION)
+        self.botname = botname
+        self.chatbot_ip = host
+        self.chatbot_port = port
+        self.chatbot_url = 'http://{}:{}'.format(
+            self.chatbot_ip, self.chatbot_port)
+        self.root_url = '{}/{}'.format(self.chatbot_url, VERSION)
         self.lang = 'en'
         self.session = None
         self.last_response = None
+        self.timer = None
+        self.timeout = None
         if self.ping():
             self.do_conn()
         else:
             self.stdout.write(
                 "Chatbot server is not responding. Server url {}\n".format(self.chatbot_url))
+        self.ignore_indicator = False
 
-    def set_sid(self):
+    def retry(times):
+        def wrap(f):
+            @wraps(f)
+            def wrap_f(*args):
+                for i in range(times):
+                    try:
+                        return f(*args)
+                    except Exception as ex:
+                        logger.error(ex)
+                        self = args[0]
+                        self.start_session()
+                        continue
+            return wrap_f
+        return wrap
+
+    def start_session(self, new=False):
         params = {
             "Auth": self.key,
             "botname": self.botname,
             "user": self.user,
-            "test": self.test
+            "test": self.test,
+            "refresh": new
         }
-        r = None
-        retry = 3
-        while r is None and retry > 0:
-            try:
-                r = requests.get(
-                    '{}/start_session'.format(self.chatbot_url), params=params)
-            except Exception:
-                retry -= 1
-                self.stdout.write('.')
-                self.stdout.flush()
-                time.sleep(1)
-        if r is None:
+        response = None
+        try:
+            response = requests.get(
+                '{}/start_session'.format(self.root_url), params=params)
+        except Exception as ex:
+            self.stdout.write('{}\n'.format(ex))
+        if response is None:
             self.stdout.write(
                 "Can't get session\nPlease check the url {}\n".format(self.chatbot_url))
             return
-        ret = r.json().get('ret')
-        if r.status_code != 200:
-            self.stdout.write("Request error: {}\n".format(r.status_code))
-        self.session = r.json().get('sid')
-        self.stdout.write("Init session {}\n".format(self.session))
+        if response.status_code != 200:
+            self.stdout.write("Request error: {}\n".format(response.status_code))
+            return
+        session = response.json().get('sid')
+        if self.session == session:
+            self.stdout.write("Resume session {}\n".format(self.session))
+        else:
+            self.session = session
+            self.stdout.write("Init session {}\n".format(self.session))
 
-    def ask(self, question):
+    @retry(3)
+    def ask(self, question, query=False):
+        self.cancel_timer()
         params = {
             "question": "{}".format(question),
             "session": self.session,
             "lang": self.lang,
-            "Auth": self.key
+            "Auth": self.key,
+            "query": query
         }
-        r = requests.get('{}/chat'.format(self.chatbot_url), params=params)
+        r = requests.get('{}/chat'.format(self.root_url), params=params)
         ret = r.json().get('ret')
         if r.status_code != 200:
             self.stdout.write("Request error: {}\n".format(r.status_code))
@@ -82,38 +125,63 @@ class Client(cmd.Cmd, object):
         if ret != 0:
             self.stdout.write("QA error: error code {}, botname {}, question {}, lang {}\n".format(
                 ret, self.botname, question, self.lang))
+            raise Exception("QA error code {}".format(ret))
 
         response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
         response.update(r.json().get('response'))
 
-        return ret, response
+        if question == '[loopback]':
+            self.timer = threading.Timer(self.timeout, self.ask, (question, ))
+            self.timer.start()
+            logger.info("Start {} timer with timeout {}".format(
+                question, self.timeout))
+
+        self.process_response(response)
+        return response
 
     def list_chatbot(self):
         params = {'Auth': self.key, 'lang': self.lang, 'session': self.session}
         r = requests.get(
-            '{}/chatbots'.format(self.chatbot_url), params=params)
+            '{}/chatbots'.format(self.root_url), params=params)
         chatbots = r.json().get('response')
         return chatbots
 
     def list_chatbot_names(self):
         params = {'Auth': self.key, 'lang': self.lang, 'session': self.session}
         r = requests.get(
-            '{}/bot_names'.format(self.chatbot_url), params=params)
+            '{}/bot_names'.format(self.root_url), params=params)
         names = r.json().get('response')
         return names
+
+    def process_response(self, response):
+        if response is not None:
+            answer = response.get('text')
+            if not self.ignore_indicator:
+                self.process_indicator(answer)
+            response['text'] = norm(answer)
+            self.last_response = response
+            if self.response_listener is None:
+                self.stdout.write('{}[by {}]: {}\n'.format(
+                    self.botname, response.get('botid'),
+                    response.get('text')))
+            else:
+                try:
+                    threading.Timer(0, self.response_listener.on_response, (self.session, response)).start()
+                except Exception as ex:
+                    logger.error(ex)
+
+    def cancel_timer(self):
+        if self.timer is not None:
+            self.timer.cancel()
+            self.timer = None
+            logger.info("Timer canceled")
+        else:
+            logger.info("Timer is None")
 
     def default(self, line):
         try:
             if line:
-                ret, response = self.ask(line)
-                if ret != 0:
-                    self.do_conn()
-                    ret, response = self.ask(line)
-                else:
-                    self.last_response = response
-                    self.stdout.write('{}[by {}]: {}\n'.format(
-                        self.botname, response.get('botid'),
-                        response.get('text')))
+                self.ask(line)
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
 
@@ -121,8 +189,8 @@ class Client(cmd.Cmd, object):
         chatbots = []
         try:
             chatbots = self.list_chatbot()
-            chatbots = ['{}: weight: {} level: {}'.format(
-                c, w, l) for c, w, l in chatbots]
+            chatbots = ['{}: weight: {} level: {} dynamic level: {}'.format(
+                c, w, l, d) for c, w, l, d in chatbots]
             self.stdout.write('\n'.join(chatbots))
             self.stdout.write('\n')
         except Exception as ex:
@@ -139,7 +207,7 @@ class Client(cmd.Cmd, object):
             names = self.list_chatbot_names()
             if line in names:
                 self.botname = line
-                self.set_sid()
+                self.start_session()
                 self.stdout.write("Select chatbot {}\n".format(self.botname))
             else:
                 self.stdout.write("No such chatbot {}\n".format(line))
@@ -154,14 +222,15 @@ class Client(cmd.Cmd, object):
         if line:
             try:
                 self.chatbot_ip, self.chatbot_port = line.split(':')
-                self.chatbot_url = 'http://{}:{}/{}'.format(
-                    self.chatbot_ip, self.chatbot_port, VERSION)
+                self.chatbot_url = 'http://{}:{}'.format(
+                    self.chatbot_ip, self.chatbot_port)
+                self.root_url = '{}/{}'.format(self.chatbot_url, VERSION)
             except Exception:
                 self.stdout.write("Wrong conn argument\n")
                 self.help_conn()
                 return
         self.stdout.write("Connecting {}\n".format(self.chatbot_url))
-        self.set_sid()
+        self.start_session()
 
     def help_conn(self):
         s = """
@@ -175,8 +244,9 @@ For example, conn
 
     def do_ip(self, line):
         self.chatbot_ip = line
-        self.chatbot_url = 'http://{}:{}/{}'.format(
-            self.chatbot_ip, self.chatbot_port, VERSION)
+        self.chatbot_url = 'http://{}:{}'.format(
+            self.chatbot_ip, self.chatbot_port)
+        self.root_url = '{}/{}'.format(self.chatbot_url, VERSION)
 
     def help_ip(self):
         s = """
@@ -189,8 +259,9 @@ For example, ip 127.0.0.1
 
     def do_port(self, line):
         self.chatbot_port = line
-        self.chatbot_url = 'http://{}:{}/{}'.format(
-            self.chatbot_ip, self.chatbot_port, VERSION)
+        self.chatbot_url = 'http://{}:{}'.format(
+            self.chatbot_ip, self.chatbot_port)
+        self.root_url = '{}/{}'.format(self.chatbot_url, VERSION)
 
     def help_port(self):
         s = """
@@ -227,7 +298,7 @@ For example, port 8001
                 'Auth': self.key
             }
             r = requests.get(
-                '{}/reset_session'.format(self.chatbot_url), params=params)
+                '{}/reset_session'.format(self.root_url), params=params)
             ret = r.json().get('ret')
             response = r.json().get('response')
             self.stdout.write(response)
@@ -247,7 +318,7 @@ For example, port 8001
                 "session": self.session
             }
             r = requests.get(
-                '{}/set_weights'.format(self.chatbot_url), params=params)
+                '{}/set_weights'.format(self.root_url), params=params)
             ret = r.json().get('ret')
             response = r.json().get('response')
             self.stdout.write(response)
@@ -276,7 +347,7 @@ For example, rw .2, .4, .5
         }
         try:
             r = requests.post(
-                '{}/upload_character'.format(self.chatbot_url),
+                '{}/upload_character'.format(self.root_url),
                 files=files, data=params)
             ret = r.json().get('ret')
             response = r.json().get('response')
@@ -295,7 +366,7 @@ Syntax: upload package
 
     def ping(self):
         try:
-            r = requests.get('{}/ping'.format(self.chatbot_url))
+            r = requests.get('{}/ping'.format(self.root_url))
             response = r.json().get('response')
             if response == 'pong':
                 return True
@@ -313,7 +384,11 @@ Syntax: upload package
     def do_trace(self, line):
         if self.last_response:
             trace = self.last_response.get('trace', None)
-            self.stdout.write('\n'.join(trace))
+            if trace:
+                if isinstance(trace, list):
+                    trace = ['{}: {}: {}'.format(x, y, z) for x, y, z  in trace]
+                    trace = '\n'.join(trace)
+                self.stdout.write(trace)
         self.stdout.write('\n')
 
     do_t = do_trace
@@ -330,7 +405,7 @@ Syntax: upload package
             "index": -1,
             "Auth": self.key
         }
-        r = requests.get('{}/rate'.format(self.chatbot_url), params=params)
+        r = requests.get('{}/rate'.format(self.root_url), params=params)
         ret = r.json().get('ret')
         response = r.json().get('response')
         return ret, response
@@ -361,7 +436,7 @@ Syntax: upload package
             "Auth": self.key
         }
         r = requests.get(
-            '{}/dump_session'.format(self.chatbot_url), params=params)
+            '{}/dump_session'.format(self.root_url), params=params)
         if r.status_code == 200:
             fname = '{}.csv'.format(self.session)
             with open(fname, 'w') as f:
@@ -390,7 +465,7 @@ Syntax: upload package
             "Auth": self.key,
             "lookback": lookback
         }
-        r = requests.get('{}/stats'.format(self.chatbot_url), params=params)
+        r = requests.get('{}/stats'.format(self.root_url), params=params)
         ret = r.json().get('ret')
         response = r.json().get('response')
         if ret:
@@ -407,3 +482,74 @@ Syntax: upload package
         self.stdout.write('Report the summary of the chat history\n')
         self.stdout.write('Usage: summary [lookback days]\n')
         self.stdout.write('lookback days: -1 means all\n')
+
+    def process_indicator(self, reply):
+        cmd, timeout = None, None
+        for match in re.findall(r'\[.*\]', reply):
+            match = match.strip()
+            match = match.replace(' ', '')
+            if match == '[loopback=0]':
+                self.cancel_timer()
+                return
+            match = match.replace(']', '')
+            match = match.replace('[', '')
+            if '=' in match:
+                cmd, timeout = match.split('=')
+                self.timeout = float(timeout)/1000
+            else:
+                cmd = match
+            cmd = '[{}]'.format(cmd)
+        if self.timeout is not None and cmd is not None:
+            self.cancel_timer()
+            self.timer = threading.Timer(self.timeout, self.ask, (cmd, ))
+            self.timer.start()
+            logger.info("Start {} timer with timeout {}".format(
+                cmd, self.timeout))
+
+    def do_list_sessions(self, line):
+        params = {
+            "Auth": self.key
+        }
+        r = requests.get(
+            '{}/sessions'.format(self.root_url), params=params)
+        sessions = r.json().get('response')
+        if sessions:
+            self.stdout.write('sessions: {}\n'.format('\n'.join(sessions)))
+        else:
+            self.stdout.write('no session\n')
+
+    do_ls = do_list_sessions
+
+    def help_list_sessions(self):
+        self.stdout.write('List the current sessions\n')
+
+    help_ls = help_list_sessions
+
+    def do_ns(self, line):
+        self.start_session(True)
+
+    def help_ns(self):
+        self.stdout.write('Start new session\n')
+
+    def do_sc(self, line):
+        if not self.session:
+            self.start_session()
+        key, value = line.split('=')
+        params = {
+            "Auth": self.key,
+            "key": key,
+            "value": value,
+            "session": self.session
+        }
+        r = requests.get(
+            '{}/set_context'.format(self.root_url), params=params)
+        response = r.json().get('response')
+        self.stdout.write(response)
+        self.stdout.write('\n')
+
+    def help_sc(self):
+        s = """
+Set chatbot context
+Syntax: sc key=value
+"""
+        self.stdout.write(s)
