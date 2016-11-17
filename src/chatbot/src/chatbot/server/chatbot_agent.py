@@ -423,6 +423,7 @@ def ask(question, lang, sid, query=False):
 
     sess.set_characters(responding_characters)
     if question and question.lower().strip() in ['hi', 'hello']:
+        session_manager.dump(sid)
         session_manager.reset_session(sid)
         logger.info("Session is cleaned by hi")
     if question and question.lower().strip() in ["what's new"]:
