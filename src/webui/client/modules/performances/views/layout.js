@@ -24,7 +24,8 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 'click @ui.languageButton': 'changeLanguage'
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['readonly', 'autoplay']);
+                this.mergeOptions(options, ['editing', 'autoplay', 'dir']);
+                if (typeof this.editing == 'undefined') this.editing = true;
             },
             onShow: function () {
                 this.setFluidContainer(!!this.options.fluid);
@@ -39,8 +40,9 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                     performancesView = new PerformancesView({
                         collection: self.performanceCollection,
                         queueView: queueView,
-                        readonly: this.readonly,
-                        autoplay: this.autoplay
+                        editing: this.editing,
+                        autoplay: this.autoplay,
+                        dir: this.dir
                     });
 
                 self.getRegion('queue').show(queueView);

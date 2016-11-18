@@ -1,16 +1,18 @@
 define(['application', 'lib/api', './views/layout', './views/attention_regions', './css/performances'],
     function (App, api, LayoutView, AttentionRegionsView) {
         return {
-            performances: function () {
-                var layoutView = new LayoutView();
+            performances: function (dir) {
+                if (!this.layoutView || this.layoutView.isDestroyed) {
+                    this.layoutView = new LayoutView({dir: dir});
 
-                api.blenderMode.enable();
-                api.disableInteractionMode();
+                    api.blenderMode.enable();
+                    api.disableInteractionMode();
 
-                // show page
-                App.LayoutInstance.setTitle('Interactions and Performances');
-                App.LayoutInstance.setFluid(true);
-                App.LayoutInstance.getRegion('content').show(layoutView);
+                    // show page
+                    App.LayoutInstance.setTitle('Interactions and Performances');
+                    App.LayoutInstance.setFluid(true);
+                    App.LayoutInstance.getRegion('content').show(this.layoutView);
+                }
             },
             attention_regions: function () {
                 var attentionRegionsView = new AttentionRegionsView();

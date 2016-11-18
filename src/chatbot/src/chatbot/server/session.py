@@ -7,13 +7,24 @@ import uuid
 from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
 from response_cache import ResponseCache
 from collections import defaultdict
+from chatbot.server.character import TYPE_AIML
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
 
 class SessionData(object):
-    pass
 
+    def __init__(self):
+        self.context = defaultdict(dict)
+
+    def set_context(self, cid, context):
+        self.context[cid].update(context)
+
+    def get_context(self, cid):
+        return self.context[cid]
+
+    def reset_context(self, cid):
+        self.context[cid] = {}
 
 class Session(object):
 
@@ -56,8 +67,18 @@ class Session(object):
     def set_characters(self, characters):
         self.characters = characters
         for c in self.characters:
+            if c.type != TYPE_AIML:
+                continue
+            prop = c.get_properties()
+            context = {}
+            for key in ['weather', 'location', 'temperature']:
+                if key in prop:
+                    context[key] = prop.get(key)
+            now = dt.datetime.now()
+            context['time'] = dt.datetime.strftime(now, '%I:%M %p')
+            context['date'] = dt.datetime.strftime(now, '%B %d %Y')
             try:
-                c.set_context(self.sid, c.get_properties())
+                c.set_context(self, context)
             except Exception as ex:
                 pass
 
@@ -70,7 +91,7 @@ class Session(object):
         self.open_character = None
         for c in self.characters:
             try:
-                c.refresh(self.sid)
+                c.refresh(self)
             except NotImplementedError:
                 pass
 
