@@ -1,7 +1,7 @@
 define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'underscore', './node_select',
         './node_settings', 'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2', 'select2-css'],
     function (App, Marionette, template, api, _, NodeSelectView, NodeSettingsView, FadeInRegion, Node, $) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 container: '.app-node-settings',
@@ -74,15 +74,17 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 else
                     this.hideSettings();
 
+                this.initResponsive();
+            },
+            onDomRefresh: function () {
+                console.log('refresh');
                 this.initTabScrolling(this.ui.nodeTabBar, this.ui.nodeTabs, this.ui.nodeScrollLeft, this.ui.nodeScrollRight);
                 this.initTabScrolling(this.ui.optionsTabBar, this.ui.optionsTabs, this.ui.optionsScrollLeft, this.ui.optionsScrollRight);
-
-                this.initResponsive();
             },
             initResponsive: function () {
                 var self = this,
                     resize = function () {
-                        if (self.isDestroyed)
+                        if (self.isDestroyed())
                             $(window).unbind('resize', resize);
                         else if (self.ui.nodeTabBar.offset().left < self.ui.optionsTabBar.offset().left)
                             self.ui.container.removeClass('app-mobile');
@@ -95,12 +97,14 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
             initTabScrolling: function (tabBar, tabs, scrollLeft, scrollRight) {
                 var self = this,
                     resize = function () {
-                        if (self.isDestroyed) {
+                        if (self.isDestroyed()) {
                             $(window).off('resize', resize);
                             return;
                         }
 
                         var width = self.getWidthSum(tabs);
+                        console.log(width);
+                        console.log($(tabBar).width());
 
                         if (width > $(tabBar).width()) {
                             $(tabBar).addClass('app-overflow');

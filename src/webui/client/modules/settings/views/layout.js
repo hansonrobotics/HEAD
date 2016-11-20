@@ -1,7 +1,7 @@
 define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery', 'lib/api', 'underscore',
         'multilevelpushmenu', 'multilevelpushmenu-css'],
     function (Marionette, template, FadeInRegion, $, api, _) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             regions: {
                 content: {
@@ -17,10 +17,10 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
             events: {
                 'click @ui.navLinks': 'collapseNav'
             },
-            onShow: function () {
+            onRender: function () {
                 var self = this,
                     updateNavHeight = function () {
-                        if (self.isDestroyed)
+                        if (self.isDestroyed())
                             $(window).off("resize", updateNavHeight);
                         else {
                             self.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(document).height());

@@ -1,5 +1,5 @@
 define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function (Marionette, _, $) {
-    return Marionette.ItemView.extend({
+    return Marionette.View.extend({
         tagName: 'button',
         template: false,
         attributes: {

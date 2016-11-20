@@ -1,14 +1,10 @@
-define(['application', './controller'], function (App, controller) {
-    App.module('Performances', function (Performances, app, Backbone, Marionette, $, _) {
-        Performances.Router = Marionette.AppRouter.extend({
-            'appRoutes': {
-                'performances(/*dir)': 'performances',
-                'attention': 'attention_regions'
-            }
-        });
-
-        Performances.on('start', function () {
-            new Performances.Router({controller: controller});
-        });
+define(['marionette', 'application', './controller'], function (Marionette, App, controller) {
+    var Router = Marionette.AppRouter.extend({
+        'appRoutes': {
+            'performances': 'performances',
+            'attention': 'attention_regions'
+        }
     });
+
+    new Router({controller: controller});
 });

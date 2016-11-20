@@ -1,6 +1,6 @@
 define(['application', './views/layout', 'modules/motors/views/motors', './views/messages', './views/logs',
-        './views/speed', './views/system', './views/processes', 'entities/motor', './entities/log', './entities/ros_node'],
-    function (App, LayoutView, MotorsView, MessagesView, LogsView, SpeedView, SystemView, processesVIew) {
+        './views/speed', './views/system', './entities/log_collection', './entities/ros_node_collection', 'entities/motor_collection', './views/processes'],
+    function (App, LayoutView, MotorsView, MessagesView, LogsView, SpeedView, SystemView, LogCollection, RosNodeCollection, MotorCollection) {
         return {
             init: function (name) {
                 if (!this.layoutView) {
@@ -20,11 +20,11 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
             },
             motors: function () {
                 this.init('motors');
-                var motorsCollection = new App.Entities.MotorCollection(),
+                var motorsCollection = new MotorCollection(),
                     motorsView = new MotorsView({
-                    collection: motorsCollection,
-                    monitoring: true
-                });
+                        collection: motorsCollection,
+                        monitoring: true
+                    });
 
                 motorsCollection.fetchFromParam();
 
@@ -37,7 +37,7 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
             },
             logs: function () {
                 this.init('logs');
-                this.logCollection = new App.Entities.LogCollection();
+                this.logCollection = new LogCollection();
                 this.logCollection.fetch();
 
                 this.logsView = new LogsView({collection: this.logCollection});
@@ -56,7 +56,7 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
             system: function () {
                 var self = this;
                 this.init('system');
-                var rosNodeCollection = new App.Monitor.Entities.RosNodeCollection();
+                var rosNodeCollection = new RosNodeCollection();
                 rosNodeCollection.fetch();
                 this.systemView = new SystemView({
                     collection: rosNodeCollection

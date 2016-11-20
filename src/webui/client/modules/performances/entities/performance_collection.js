@@ -16,6 +16,7 @@ define(['backbone', './performance', 'lib/api'], function (Backbone, Performance
                     self.eventHandler(msg);
                 }
             });
-        }
+        },
+
     });
 });

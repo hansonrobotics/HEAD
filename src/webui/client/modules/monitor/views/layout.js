@@ -1,6 +1,6 @@
 define(['jquery', 'marionette', './templates/layout.tpl', 'lib/regions/fade_in'],
     function ($, Marionette, template, FadeInRegion) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 nav: '.app-nav',

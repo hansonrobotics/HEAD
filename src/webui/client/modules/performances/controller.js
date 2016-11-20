@@ -2,7 +2,7 @@ define(['application', 'lib/api', './views/layout', './views/attention_regions',
     function (App, api, LayoutView, AttentionRegionsView) {
         return {
             performances: function (dir) {
-                if (!this.layoutView || this.layoutView.isDestroyed) {
+                if (!this.layoutView || this.layoutView.isDestroyed()) {
                     this.layoutView = new LayoutView({dir: dir});
 
                     api.blenderMode.enable();

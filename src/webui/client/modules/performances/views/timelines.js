@@ -2,7 +2,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
         '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
         'lib/api', 'annyang', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar', 'scrollbar-css', 'scrollTo'],
     function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition, api, annyang) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
             config: {
@@ -155,7 +155,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
 
                 // add resize event
                 var updateWidth = function () {
-                    if (self.isDestroyed)
+                    if (self.isDestroyed())
                         $(window).off('resize', updateWidth);
                     else
                         self.updateTimelineWidth();
@@ -169,8 +169,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.pauseIndicator(this.options.current_time);
             },
             onDestroy: function () {
-                this.stopIndicator();
-
                 this.model.stop();
                 if (typeof this.options.performances != 'undefined')
                     this.options.performances.eventHandler = false;
@@ -415,7 +413,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                             self.updateIndicatorTime();
                         },
                         complete: function () {
-                            if (self.isDestroyed) return;
+                            if (self.isDestroyed()) return;
                             if (typeof callback == 'function')
                                 callback();
                         }

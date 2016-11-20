@@ -70,7 +70,7 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                     this.showFaces();
 
                 var updateHeight = function () {
-                    if (self.isDestroyed)
+                    if (self.isDestroyed())
                         $(window).off('resize', updateHeight);
                     else
                         self.setHeight();
@@ -116,7 +116,7 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
             setUpKeyShortcuts: function () {
                 var self = this,
                     keyDown = function (e) {
-                        if (self.isDestroyed) {
+                        if (self.isDestroyed()) {
                             // remove event when view is destroyed
                             $(window).off('keydown', keyDown);
                             return;
@@ -179,7 +179,7 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
             addListeners: function () {
                 var self = this,
                     responseCallback = function (msg) {
-                        if (self.isDestroyed) {
+                        if (self.isDestroyed()) {
                             api.topics.tts['default'].unsubscribe(responseCallback);
                             api.topics.tts['en'].unsubscribe(responseCallback);
                             api.topics.tts['zh'].unsubscribe(responseCallback);
@@ -187,20 +187,20 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                             self.responseCallback(msg);
                     },
                     speechActiveCallback = function (msg) {
-                        if (self.isDestroyed)
+                        if (self.isDestroyed())
                             api.topics.speech_active.unsubscribe(speechActiveCallback);
                         else
                             self.speechActiveCallback(msg);
                     },
                     voiceRecognised = function (msg) {
-                        if (self.isDestroyed) {
+                        if (self.isDestroyed()) {
                             api.topics.speech_topic.unsubscribe(voiceRecognised);
                             api.topics.speech_topic.removeAllListeners();
                         } else
                             self.voiceRecognised(msg);
                     },
                     suggestionCallback = function (msg) {
-                        if (self.isDestroyed) {
+                        if (self.isDestroyed()) {
                             api.topics.chatbot_responses['default'].unsubscribe(suggestionCallback)
                             api.topics.chatbot_responses['en'].unsubscribe(suggestionCallback)
                             api.topics.chatbot_responses['zh'].unsubscribe(suggestionCallback)
@@ -208,7 +208,7 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                             self.suggestionCallback(msg);
                     },
                     operatorModeCallback = function (response) {
-                        if (self.isDestroyed)
+                        if (self.isDestroyed())
                             api.topics.selected_tts_mux.unsubscribe(operatorModeCallback);
                         else {
                             self.operator_mode_enabled = response.data == 'web_responses';
@@ -484,7 +484,7 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                     lastTime = null;
 
                 this.dragonInterval = setInterval(function () {
-                    if (self.isDestroyed) clearInterval(self.dragonInterval);
+                    if (self.isDestroyed()) clearInterval(self.dragonInterval);
                     var current = self.ui.messageInput.val();
 
                     if (current) {
