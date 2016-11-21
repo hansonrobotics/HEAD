@@ -1,6 +1,6 @@
 define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'roslib', 'annyang'],
     function (Marionette, template, api, $, ROSLIB, annyang) {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             ui: {
                 btOnButton: ".app-gesture-bt-on",
                 btOffButton: ".app-gesture-bt-off",
@@ -59,7 +59,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                     this.ui.webspeechContainer.hide();
                 } else {
                     var speechActiveCallback = function (msg) {
-                        if (self.isDestroyed)
+                        if (self.isDestroyed())
                             api.topics.speech_active.unsubscribe(speechActiveCallback);
                         else
                             self.speechActiveCallback(msg);
@@ -157,7 +157,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 });
             },
             webspeechOff: function (silent) {
-                if (!silent) {
+                if (!silent && !this.isDestroyed()) {
                     this.ui.webspeechToggleButton.html('Enable').removeClass('active').blur();
                     this.speechEnabled = false;
                 }

@@ -1,6 +1,6 @@
 define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'underscore', 'lib/regions/fade_in',
     '../entities/performance'], function (Marionette, Backbone, template, TimelinesView, _, FadeInRegion, Performance) {
-    return Marionette.LayoutView.extend({
+    return Marionette.View.extend({
         template: template,
         ui: {
             queue: '.app-performance-queue',
@@ -177,7 +177,7 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             }, options));
 
             this.timelinesView.on('close', function () {
-                if (!self.isDestroyed) self.updateTimeline();
+                if (!self.isDestroyed()) self.updateTimeline();
             });
 
             // show configuration UI

@@ -51,36 +51,10 @@
     margin-right: 105px;
 }
 
-.hidden {
-    display: none;
-}
-
-/* SLIDER */
-.ui-slider-handle {
-    display: none;
-}
-
-.ui-slider {
-    -webkit-border-radius: 0 !important;
-    -moz-border-radius: 0 !important;;
-    border-radius: 0 !important;;
-    border: none;
-}
-
-.ui-slider-range {
-    -webkit-border-radius: 0 !important;
-    -moz-border-radius: 0 !important;;
-    border-radius: 0 !important;;
-}
-
-
 #app-edit-motors {
     margin-bottom: 20px;
 }
 
-.app-slider-value-container {
-    text-indent: 5px;
-}
 
 .app-motor-label {
     padding: 2px 8px;

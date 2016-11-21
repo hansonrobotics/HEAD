@@ -1,6 +1,6 @@
 define(['marionette', './templates/faces.tpl', '../entities/face_collection', 'jquery'],
     function (Marionette, template, FaceCollection, $) {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: template,
             enableBTMode: false,
             ui: {

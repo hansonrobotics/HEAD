@@ -2,7 +2,6 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
     function (App, Backbone, api, NodeCollection, _) {
         return Backbone.Model.extend({
             urlRoot: function () {
-                console.log(api.config.robot);
                 return '/performances/' + api.config.robot;
             },
             initialize: function (options) {

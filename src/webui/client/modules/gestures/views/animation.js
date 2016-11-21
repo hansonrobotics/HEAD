@@ -1,6 +1,6 @@
 define(["marionette", "./templates/animation.tpl", 'lib/api'],
     function (Marionette, template, api) {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             tagName: 'span',
             template: template,
             ui: {

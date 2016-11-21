@@ -1,7 +1,7 @@
 define(['jquery', 'marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'bootbox', 'lib/api',
         'bootstrap-css', 'jquery-ui-css', 'font-awesome', 'css/application.css'],
     function ($, Marionette, template, FadeInRegion, bootbox, api) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 title: '#app-title',

@@ -1,6 +1,6 @@
 define(["marionette", "./templates/motor.tpl", 'jquery', 'jquery-ui'],
     function (Marionette, template, $) {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: template,
             className: 'app-motor-container',
             modelEvents: {

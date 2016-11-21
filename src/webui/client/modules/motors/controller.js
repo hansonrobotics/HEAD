@@ -1,6 +1,6 @@
-define(["application", "lib/api", './views/motors', './views/layout', './views/configuration', 'entities/motor',
+define(["application", "lib/api", './views/motors', './views/layout', './views/configuration', 'entities/motor_collection',
         './css/motors'],
-    function (App, api, MotorsView, LayoutView, ConfigurationView) {
+    function (App, api, MotorsView, LayoutView, ConfigurationView, MotorCollection) {
         return {
             public_index: function () {
                 App.LayoutInstance.setTitle('Motors');
@@ -8,7 +8,7 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
                 api.blenderMode.disable();
 
                 // init collection and views
-                var motorsCollection = new App.Entities.MotorCollection(),
+                var motorsCollection = new MotorCollection(),
                     motorsView = new MotorsView({collection: motorsCollection}),
                     layoutView = new LayoutView();
 

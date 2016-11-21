@@ -1,7 +1,7 @@
 define(['application', 'marionette', './templates/attention_regions.tpl', '../entities/attention_regions',
         'underscore', 'jquery', 'lib/api', 'selectareas', 'selectareas-css', 'select2', 'select2-css'],
     function (App, Marionette, template, AttentionRegions, _, $, api) {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 container: '.app-selectareas-container',

@@ -1,90 +1,86 @@
-define(['application', './templates/configuration.tpl', 'backgrid', './config/motor_grid', 'backgrid-css', 'lib/api',
-        'entities/motor', 'backbone-pageable', 'backgrid-select-all', 'backgrid-select-all-css', 'backgrid-filter',
-        'backgrid-filter-css', 'backgrid-paginator', 'backgrid-paginator-css', 'scrollbar', 'scrollbar-css'],
-    function (App, template, Backgrid, columns, api) {
-        App.module("Motors.Views", function (Views, App, Backbone, Marionette, $, _) {
-            Views.Configuration = Marionette.LayoutView.extend({
-                template: template,
-                ui: {
-                    grid: ".app-motor-grid",
-                    addButton: '.app-add-button',
-                    saveButton: '.app-save-button',
-                    deleteButton: '.app-delete-button'
-                },
-                events: {
-                    'click @ui.addButton': 'add',
-                    'click @ui.saveButton': 'save',
-                    'click @ui.deleteButton': 'delete'
-                },
-                regions: {
-                    filter: '.app-filter'
-                },
-                onRender: function () {
-                    var self = this,
-                        PageableCollection = Backbone.PageableCollection.extend({
-                            mode: 'client',
-                            state: {
-                                pageSize: 100
-                            }
-                        });
-
-                    this.motorsCollection = new App.Entities.MotorCollection();
-                    this.pageableMotors = new PageableCollection();
-                    this.motorsCollection.fetchFromFile(function () {
-                        self.pageableMotors.add(self.motorsCollection.models);
+define(['application', './templates/configuration.tpl', 'backgrid', './config/motor_grid', 'entities/motor_collection',
+        'backgrid-css', 'entities/motor', 'backbone-pageable', 'backgrid-select-all', 'backgrid-select-all-css',
+        'backgrid-filter', 'backgrid-filter-css', 'backgrid-paginator', 'backgrid-paginator-css', 'scrollbar', 'scrollbar-css'],
+    function (App, template, Backgrid, columns, MotorCollection) {
+        return Marionette.View.extend({
+            template: template,
+            ui: {
+                grid: ".app-motor-grid",
+                addButton: '.app-add-button',
+                saveButton: '.app-save-button',
+                deleteButton: '.app-delete-button'
+            },
+            events: {
+                'click @ui.addButton': 'add',
+                'click @ui.saveButton': 'save',
+                'click @ui.deleteButton': 'delete'
+            },
+            regions: {
+                filter: '.app-filter'
+            },
+            onRender: function () {
+                var self = this,
+                    PageableCollection = Backbone.PageableCollection.extend({
+                        mode: 'client',
+                        state: {
+                            pageSize: 100
+                        }
                     });
 
-                    // Set up a grid to use the pageable collection
-                    this.pageableGrid = new Backgrid.Grid({
-                        columns: columns,
-                        collection: this.pageableMotors
-                    });
+                this.motorsCollection = new MotorCollection();
+                this.pageableMotors = new PageableCollection();
+                this.motorsCollection.fetchFromFile(function () {
+                    self.pageableMotors.add(self.motorsCollection.models);
+                });
 
-                    // Render the grid
-                    this.ui.grid.append(this.pageableGrid.render().el);
+                // Set up a grid to use the pageable collection
+                this.pageableGrid = new Backgrid.Grid({
+                    columns: columns,
+                    collection: this.pageableMotors
+                });
 
-                    // Initialize the paginator
-                    var paginator = new Backgrid.Extension.Paginator({
-                        collection: this.pageableMotors
-                    });
+                // Render the grid
+                this.ui.grid.append(this.pageableGrid.render().el);
 
-                    // Render the paginator
-                    this.ui.grid.after(paginator.render().el);
+                // Initialize the paginator
+                var paginator = new Backgrid.Extension.Paginator({
+                    collection: this.pageableMotors
+                });
 
-                    // Initialize a client-side filter to filter on the client
-                    // mode pageable collection's cache.
-                    var filter = new Backgrid.Extension.ClientSideFilter({
-                        collection: this.pageableMotors,
-                        fields: ['name']
-                    });
+                // Render the paginator
+                this.ui.grid.after(paginator.render().el);
 
-                    // Render the filter
-                    this.getRegion('filter').show(filter);
-                },
-                add: function () {
-                    this.pageableGrid.insertRow({name: "New"})
-                },
-                save: function () {
-                    var el = this.ui.saveButton;
-                    this.motorsCollection.reset(this.pageableMotors.toJSON());
-                    this.motorsCollection.sync(function () {
-                        App.Utilities.showPopover(el, 'Motors saved');
-                    }, function (error) {
-                        App.Utilities.showPopover(el, 'Error saving motors: ' + error);
-                    });
-                },
-                delete: function () {
-                    var self = this;
-                    $.each(this.pageableGrid.getSelectedModels(), function (i, e) {
-                        // remove from collection
-                        self.motorsCollection.remove(e);
+                // Initialize a client-side filter to filter on the client
+                // mode pageable collection's cache.
+                var filter = new Backgrid.Extension.ClientSideFilter({
+                    collection: this.pageableMotors,
+                    fields: ['name']
+                });
 
-                        // remove from the grid
-                        self.pageableGrid.removeRow(e);
-                    });
-                }
-            });
+                // Render the filter
+                this.getRegion('filter').show(filter);
+            },
+            add: function () {
+                this.pageableGrid.insertRow({name: "New"})
+            },
+            save: function () {
+                var el = this.ui.saveButton;
+                this.motorsCollection.reset(this.pageableMotors.toJSON());
+                this.motorsCollection.sync(function () {
+                    App.Utilities.showPopover(el, 'Motors saved');
+                }, function (error) {
+                    App.Utilities.showPopover(el, 'Error saving motors: ' + error);
+                });
+            },
+            delete: function () {
+                var self = this;
+                $.each(this.pageableGrid.getSelectedModels(), function (i, e) {
+                    // remove from collection
+                    self.motorsCollection.remove(e);
+
+                    // remove from the grid
+                    self.pageableGrid.removeRow(e);
+                });
+            }
         });
-
-        return App.module('Motors.Views.Configuration');
     });

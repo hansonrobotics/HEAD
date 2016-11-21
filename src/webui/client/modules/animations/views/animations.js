@@ -1,9 +1,11 @@
 define(['application', './animation'], function (App, animationView) {
-    App.module('Animations.Views', function (Views, App, Backbone, Marionette, $, _) {
-        Views.Animations = Marionette.CollectionView.extend({
-            childView: animationView
-        });
+    return Marionette.CollectionView.extend({
+        childView: animationView,
+        initialize: function (options) {
+            this.mergeOptions(options, ['layout'])
+        },
+        childViewOptions: function () {
+            return {layout: this.layout}
+        }
     });
-
-    return App.module('Animations.Views').Animations;
 });

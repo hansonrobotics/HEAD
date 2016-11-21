@@ -1,6 +1,6 @@
 define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 'underscore', 'lib/json_editor/slider'],
     function (App, Marionette, template, JSONEditor, _) {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 settings: '.app-settings'
@@ -37,7 +37,6 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     }, 1000);
             },
             onDestroy: function () {
-                this.editor.destroy();
                 clearInterval(this.refreshInterval);
             },
             setConfig: function () {
