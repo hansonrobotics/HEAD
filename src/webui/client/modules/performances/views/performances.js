@@ -16,7 +16,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 'click @ui.addAllButton': 'addAll'
             },
             collectionEvents: {
-                'change:path add remove reset': 'updateTabs'
+                'change:path reset': 'updateTabs'
             },
             initialize: function (options) {
                 this.mergeOptions(options, ['editing', 'autoplay', 'queueView', 'dir']);
@@ -179,7 +179,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     dirs = [];
 
                 // create a list of all directories
-                _.each(paths, function (path, i) {
+                _.each(paths, function (path) {
                     path = path.split('/');
                     for (var i = 0; i < path.length; i++)
                         dirs.push(path.slice(0, i + 1).join('/'));

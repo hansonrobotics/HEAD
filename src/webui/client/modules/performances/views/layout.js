@@ -51,7 +51,8 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
 
                 performancesView.on('new', queueView.editPerformance, queueView);
                 this.performanceCollection.fetch({
-                    success: function () {
+                    reset: true,
+                    success: function (response, collection) {
                         queueView.showCurrent();
                     }
                 });
