@@ -47,7 +47,7 @@ def get_location():
 def get_weather(city):
     OPENWEATHERAPPID = os.environ.get('OPENWEATHERAPPID')
     try:
-        response = requests.get('http://api.openweathermap.org/data/2.5/weather', params={'q': city, 'appid': OPENWEATHERAPPID}).json()
+        response = requests.get('http://api.openweathermap.org/data/2.5/weather', timeout=5, params={'q': city, 'appid': OPENWEATHERAPPID}).json()
     except Exception as ex:
         logger.error(ex)
         return
