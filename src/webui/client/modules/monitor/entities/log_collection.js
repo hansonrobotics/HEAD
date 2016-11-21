@@ -37,7 +37,7 @@ define(['application', 'lib/api', './log'], function (App, api, Log) {
                 return log['asctime'];
             }).reverse();
 
-            var model = new Entities.Log({
+            var model = new Log({
                 node: 'global_log',
                 log: logs
             });

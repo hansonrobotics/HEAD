@@ -17,7 +17,7 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
             events: {
                 'click @ui.navLinks': 'collapseNav'
             },
-            onRender: function () {
+            onDomRefresh: function () {
                 var self = this,
                     updateNavHeight = function () {
                         if (self.isDestroyed())
@@ -39,9 +39,6 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
                 $(window).on("resize", updateNavHeight);
                 this.nodeListInterval = setInterval(_.bind(this.updateNodeList, this), 10000);
                 this.updateNodeList();
-            },
-            destroy: function () {
-                $(window).off("resize", this.updateNavHeight);
             },
             collapseNav: function () {
                 $(this.ui.navigation).multilevelpushmenu('collapse');

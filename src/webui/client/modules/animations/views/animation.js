@@ -12,12 +12,15 @@ define(['application', './templates/animation.tpl', 'lib/api'],
             modelEvents: {
                 change: 'update'
             },
+            initialize: function (options) {
+                this.mergeOptions(options, ['layout'])
+            },
             buttonClicked: function () {
                 $('button.app-animation').removeClass('active');
                 this.ui.button.addClass('active');
 
                 var name = this.ui.button.data('name');
-                Views.trigger('animation_selected', this.model);
+                this.layout.animationSelected(this.model);
                 api.playAnimation(name, 25);
             },
             update: function () {

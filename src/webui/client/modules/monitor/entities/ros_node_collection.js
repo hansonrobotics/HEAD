@@ -12,7 +12,7 @@ define(['application', 'lib/api'], function (App, api) {
                     // Reset collection after setting config to redraw view
                     self.reset();
                     _.each(data.nodes, function (attrs) {
-                        self.add(new Entities.RosNode(attrs));
+                        self.add(new Backbone.Model(attrs));
                     });
                 },
                 error: function () {

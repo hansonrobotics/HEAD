@@ -1,4 +1,4 @@
-define(['application', 'lib/api'], function (App, api) {
+define(['application', 'lib/api', './motor'], function (App, api, Motor) {
     return Backbone.Collection.extend({
         model: Backbone.Model,
         comparator: 'order',
@@ -13,7 +13,7 @@ define(['application', 'lib/api'], function (App, api) {
 
                     _.each(expressions, function (expression, i) {
                         _.each(expression, function (motorPositions, name) {
-                            var model = new Entities.Motor({
+                            var model = new Motor({
                                 name: name,
                                 motor_positions: motorPositions,
                                 order: i

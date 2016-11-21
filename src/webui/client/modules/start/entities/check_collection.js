@@ -19,7 +19,7 @@ define(['application', 'lib/api'], function (App, api) {
                     // Reset collection after setting config to redraw view
                     self.reset();
                     _.each(data.checks, function (attrs) {
-                        self.add(new Entities.Check(attrs));
+                        self.add(new Backbone.Model(attrs));
                     });
                 },
                 error: function () {

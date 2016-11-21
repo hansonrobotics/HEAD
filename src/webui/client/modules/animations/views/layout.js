@@ -1,6 +1,8 @@
 define(['application', './templates/layout.tpl', 'lib/api', 'modules/motors/views/motors', './frames',
-        './animation_edit', './animations', 'entities/expression_collection', 'bootstrap', 'scrollbar', 'scrollbar-css'],
-    function (App, template, api, MotorsView, FramesView, AnimationEditView, AnimationsView, ExpressionCollection) {
+        './animation_edit', './animations', 'entities/expression_collection', 'entities/frame_collection',
+        'entities/animation_collection', 'entities/motor_collection', 'bootstrap', 'scrollbar', 'scrollbar-css'],
+    function (App, template, api, MotorsView, FramesView, AnimationEditView, AnimationsView, ExpressionCollection,
+              FrameCollection, AnimationCollection, MotorCollection) {
         return Marionette.View.extend({
             template: template,
             ui: {
@@ -40,7 +42,7 @@ define(['application', './templates/layout.tpl', 'lib/api', 'modules/motors/view
                 expressions.on('add', function (model) {
                     self.ui.expressions.append($('<button>').addClass('expression-button btn btn-default').html(
                         model.get('name')).click(function () {
-                        Views.trigger('add_expression_frame', model);
+                        self.addFrame(model.get('name'), model.get('motor_positions'));
                     }));
                 });
                 expressions.fetch();
@@ -61,22 +63,10 @@ define(['application', './templates/layout.tpl', 'lib/api', 'modules/motors/view
                 this.ui.motorsColumn.perfectScrollbar();
                 this.showMotors();
                 $(window).resize(resizeColumns).resize();
-
-                App.module('Animations.Views').on('frame_selected', function (frame) {
-                    self.frameSelected(frame);
-                }).on('animation_selected', function (name) {
-                    self.animationSelected(name);
-                }).on('add_frame', function () {
-                    self.addFrame('', {});
-                }).on('copy_frame', function (frame) {
-                    self.copyFrame(frame);
-                }).on('add_expression_frame', function (expression) {
-                    self.addFrame(expression.get('name'), expression.get('motor_positions'));
-                });
             },
             showAnimations: function () {
-                this.animationsCollection = new App.Entities.AnimationsCollection();
-                this.animationsView = new AnimationsView({collection: this.animationsCollection});
+                this.animationsCollection = new AnimationCollection();
+                this.animationsView = new AnimationsView({collection: this.animationsCollection, layout: this});
                 this.getRegion('animationButtons').show(this.animationsView);
 
                 // load data
@@ -85,7 +75,7 @@ define(['application', './templates/layout.tpl', 'lib/api', 'modules/motors/view
             showMotors: function () {
                 var self = this;
 
-                this.motorsCollection = new App.Entities.MotorCollection();
+                this.motorsCollection = new MotorCollection();
                 this.motorsCollection.fetchFromParam(function () {
                     self.motorsCollection.setDefaultValues();
                 });
@@ -123,7 +113,7 @@ define(['application', './templates/layout.tpl', 'lib/api', 'modules/motors/view
                     this.last_animation = animation;
                     this.selected_frame = null;
 
-                    var framesView = new FramesView({collection: animation.get('frames_collection')});
+                    var framesView = new FramesView({collection: animation.get('frames_collection'), layout: this});
                     this.getRegion('frames').show(framesView);
 
                     var animationEditView = new AnimationEditView({model: animation});
@@ -177,15 +167,15 @@ define(['application', './templates/layout.tpl', 'lib/api', 'modules/motors/view
             },
             copyAnimation: function () {
                 if (typeof this.last_animation != 'undefined')
-                    this.animationsCollection.add(new App.Entities.Animation({
+                    this.animationsCollection.add(new Backbone.Model({
                         name: this.last_animation.get('name') + '_copy',
                         frames_collection: this.last_animation.get('frames_collection').clone()
                     }));
             },
             addAnimation: function () {
-                this.animationsCollection.add(new App.Entities.Animation({
+                this.animationsCollection.add(new Backbone.Model({
                     name: 'New_Animation',
-                    frames_collection: new App.Entities.FramesCollection()
+                    frames_collection: new FrameCollection()
                 }));
             },
             copyFrame: function (frame) {

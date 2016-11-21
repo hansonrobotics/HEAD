@@ -1,7 +1,7 @@
-define(['application', './templates/configuration.tpl', 'backgrid', './config/motor_grid', 'backgrid-css', 'lib/api',
-        'entities/motor', 'backbone-pageable', 'backgrid-select-all', 'backgrid-select-all-css', 'backgrid-filter',
-        'backgrid-filter-css', 'backgrid-paginator', 'backgrid-paginator-css', 'scrollbar', 'scrollbar-css'],
-    function (App, template, Backgrid, columns, api) {
+define(['application', './templates/configuration.tpl', 'backgrid', './config/motor_grid', 'entities/motor_collection',
+        'backgrid-css', 'entities/motor', 'backbone-pageable', 'backgrid-select-all', 'backgrid-select-all-css',
+        'backgrid-filter', 'backgrid-filter-css', 'backgrid-paginator', 'backgrid-paginator-css', 'scrollbar', 'scrollbar-css'],
+    function (App, template, Backgrid, columns, MotorCollection) {
         return Marionette.View.extend({
             template: template,
             ui: {
@@ -27,7 +27,7 @@ define(['application', './templates/configuration.tpl', 'backgrid', './config/mo
                         }
                     });
 
-                this.motorsCollection = new App.Entities.MotorCollection();
+                this.motorsCollection = new MotorCollection();
                 this.pageableMotors = new PageableCollection();
                 this.motorsCollection.fetchFromFile(function () {
                     self.pageableMotors.add(self.motorsCollection.models);

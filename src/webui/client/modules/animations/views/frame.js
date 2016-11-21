@@ -23,6 +23,9 @@ define(["application", "./templates/frame.tpl"], function (App, template) {
         modelEvents: {
             change: 'modelChanged'
         },
+        initialize: function (options) {
+            this.mergeOptions(options, ['layout'])
+        },
         onRender: function () {
             this.modelChanged();
         },
@@ -36,7 +39,7 @@ define(["application", "./templates/frame.tpl"], function (App, template) {
             $('.app-select-frame, .app-frames li').removeClass('active');
             this.ui.selectButton.addClass('active');
             this.$el.addClass('active');
-            View.trigger('frame_selected', this.model);
+            this.layout.frameSelected(this.model);
         },
         updateFrame: function () {
             this.model.set('name', this.ui.name.val());
@@ -49,7 +52,7 @@ define(["application", "./templates/frame.tpl"], function (App, template) {
                 this.model.destroy();
         },
         copyFrame: function () {
-            View.trigger('copy_frame', this.model);
+            this.layout.copyFrame(this.model);
         }
     });
 

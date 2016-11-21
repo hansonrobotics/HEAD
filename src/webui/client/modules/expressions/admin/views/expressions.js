@@ -22,7 +22,7 @@ define(["application", "./expression", './templates/expressions.tpl'],
                 };
             },
             addExpressions: function () {
-                var expression = new App.Entities.Expression({
+                var expression = new Backbone.Model({
                     name: 'NewExpression',
                     motor_positions: this.motors.getRelativePositions()
                 });
