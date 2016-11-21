@@ -2,11 +2,12 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
     function (Marionette, template, api, $, ROSLIB, annyang) {
         return Marionette.ItemView.extend({
             ui: {
-                modeButtons: '.app-gesture-pp',
                 btOnButton: ".app-gesture-bt-on",
                 btOffButton: ".app-gesture-bt-off",
                 ocOnButton: ".app-gesture-oc-on",
-                webspeechOnButton: ".app-webspeech-on",
+                modeButtons: '.app-gesture-pp',
+                btToggleButton: '.app-gesture-bt-toggle',
+                webspeechToggleButton: ".app-webspeech-toggle",
                 webspeechOffButton: ".app-webspeech-off",
                 btFTButton: ".app-gesture-bt-ft",
                 lsOnButton: ".app-gesture-ls-on",
@@ -19,6 +20,8 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             },
             template: template,
             events: {
+                'click @ui.btToggleButton': "btToggle",
+                'click @ui.webspeechToggleButton': "webspeechToggle",
                 'click @ui.btOnButton': "btOn",
                 'click @ui.btOffButton': "btOff",
                 'click @ui.ocOnButton': "ocOn",
@@ -64,11 +67,24 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                     api.topics.speech_active.subscribe(speechActiveCallback);
                 }
             },
+            onDestroy: function () {
+                this.webspeechOff();
+            },
+            btToggle: function () {
+                if (this.btEnabled)
+                    this.btOff();
+                else
+                    this.btOn()
+            },
             btOn: function () {
+                this.btEnabled = true;
+                this.ui.btToggleButton.html('Disable').addClass('active');
                 api.enableInteractionMode();
                 api.setBTMode(api.btModes.C_ALL);
             },
             btOff: function () {
+                this.btEnabled = false;
+                this.ui.btToggleButton.html('Enable').removeClass('active').blur();
                 api.disableInteractionMode();
                 api.disableOpencogMode();
             },
@@ -93,12 +109,17 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 var mode = $(e.target).data("mode") || 0;
                 api.topics.set_animation_mode.publish(new ROSLIB.Message({data: mode}));
             },
+            webspeechToggle: function () {
+                if (this.speechEnabled)
+                    this.webspeechOff();
+                else
+                    this.webspeechOn();
+            },
             webspeechOn: function () {
-                this.speechEnabled = true;
-                this.ui.webspeechOnButton.addClass('active');
-                this.ui.webspeechOffButton.removeClass('active');
-
                 var self = this;
+                this.speechEnabled = true;
+                this.ui.webspeechToggleButton.html('Disable').addClass('active');
+
                 annyang.abort();
                 annyang.removeCommands();
                 annyang.removeCallback();
@@ -117,6 +138,10 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                 annyang.addCallback('error', function (error) {
                     console.log('speech recognition error');
                     console.log(error);
+                    if (self.speechEnabled) {
+                        console.log('restarting');
+                        self.webspeechOn();
+                    }
                 });
                 annyang.addCallback('result', function (results) {
                     if (results.length) {
@@ -133,8 +158,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
             },
             webspeechOff: function (silent) {
                 if (!silent) {
-                    this.ui.webspeechOnButton.removeClass('active');
-                    this.ui.webspeechOffButton.addClass('active');
+                    this.ui.webspeechToggleButton.html('Enable').removeClass('active').blur();
                     this.speechEnabled = false;
                 }
 
@@ -145,9 +169,10 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                     if (msg.data == 'start') {
                         this.speechPaused = true;
                         this.webspeechOff(true);
+                    } else if ((msg.data == 'stop') && this.speechPaused) {
+                        this.speechPaused = false;
+                        this.webspeechOn();
                     }
-                } else if ((msg.data == 'stop') && this.speechPaused) {
-                    this.webspeechOn();
                 }
             }
         });

@@ -53,6 +53,7 @@ class Runner:
             'neck_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/neck_pau_mux/select', MuxSelect)
         }
         self.topics = {
+            'running_performances': rospy.Publisher('~running_performances', String, queue_size=1),
             'look_at': rospy.Publisher('/blender_api/set_face_target', Target, queue_size=1),
             'gaze_at': rospy.Publisher('/blender_api/set_gaze_target', Target, queue_size=1),
             'head_rotation': rospy.Publisher('/blender_api/set_head_rotation', Float32, queue_size=1),
@@ -200,6 +201,7 @@ class Runner:
                 performances.remove(performance)
         with self.lock:
             self.running_performances = performances
+            self.topics['running_performances'].publish(String(json.dumps(performances)))
 
         return performances
 
@@ -284,6 +286,7 @@ class Runner:
         while True:
             with self.lock:
                 self.paused = False
+                self.running = False
 
             self.topics['events'].publish(Event('idle', 0))
             self.run_condition.wait()
@@ -293,7 +296,7 @@ class Runner:
                 continue
 
             for performance in self.running_performances:
-                nodes = [Node.createNode(node, self, self.start_time, performance['id']) for node in
+                nodes = [Node.createNode(node, self, self.start_time, performance.get('id', '')) for node in
                          performance['nodes']]
 
                 with self.lock:
@@ -391,7 +394,6 @@ class Runner:
             if rospy.has_param(param_name):
                 val = rospy.get_param(param_name)
             return val
-
 
     def speech_callback(self, msg):
         self.notify('SPEECH', msg.utterance)

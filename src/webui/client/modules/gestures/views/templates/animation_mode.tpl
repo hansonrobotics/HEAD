@@ -2,8 +2,6 @@
     <div class="app-behavior-container">
         <h2>Behavior Switches: </h2>
         <button type="button" class="app-gesture-bt-on btn btn-default">On</button>
-        <button type="button" class="app-gesture-bt-ft-off btn btn-default hidden">FT Off</button>
-        <button type="button" class="app-gesture-bt-ft btn btn-default hidden">FT only</button>
         <button type="button" class="app-gesture-bt-off btn btn-default">Off</button>
         <button type="button" class="app-gesture-oc-on btn btn-default">OC On</button>
     </div>
@@ -20,7 +18,6 @@
     </div>
     <div class="app-webspeech-container">
         <h2>Webspeech: </h2>
-        <button type="button" class="app-webspeech-on btn btn-default">On</button>
-        <button type="button" class="app-webspeech-off btn btn-default active">Off</button>
+        <button type="button" class="app-webspeech-toggle btn btn-default">Enable</button>
     </div>
 </div>

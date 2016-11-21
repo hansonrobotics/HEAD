@@ -214,6 +214,13 @@ define(['jquery', 'roslib', 'js-yaml', './api'], function ($, ROSLIB, jsyaml, ap
                     name: '/performances/events',
                     messageType: 'performances/Event'
                 }),
+                running_performances: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/performances/running_performances',
+                    messageType: 'std_msgs/String',
+                    queue_size: 1,
+                    queue_length: 1
+                }),
                 set_animation_mode: new ROSLIB.Topic({
                     ros: api.ros,
                     name: '/blender_api/set_animation_mode',
