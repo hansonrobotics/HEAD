@@ -69,7 +69,7 @@ class NumbTTS(TTSBase):
         return visemes
 
     def _tts(self, text):
-        fname = '{}.wav'.format(os.path.join(self.output_dir, text))
+        fname = '{}.wav'.format(os.path.join(self.output_dir, text.strip()))
         if os.path.isfile(fname):
             shutil.copy(fname, self.wavout)
             tts_data = TTSData()

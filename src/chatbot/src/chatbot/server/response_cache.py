@@ -2,6 +2,7 @@ import datetime as dt
 from collections import defaultdict
 import logging
 import os
+import csv
 from chatbot.utils import norm
 
 logger = logging.getLogger('hr.chatbot.server.response_cache')
@@ -15,11 +16,8 @@ class ResponseCache(object):
         self.last_answer = None
         self.that_question = None
         self.last_time = None
-        self.staged_record = []
-        self.cursor = 0
 
     def clean(self):
-        self.staged_record.extend(self.record)
         del self.record[:]
         del self.index
         self.record = []
@@ -47,9 +45,6 @@ class ResponseCache(object):
         if not self.is_unique(answer):
             logger.info("Non unique answer")
             return False
-        if not self.is_global_unique(answer):
-            logger.info("Non global unique answer")
-            return False
         if self.contain(question, answer):
             logger.info("Repeat answer")
             return False
@@ -71,11 +66,10 @@ class ResponseCache(object):
         self.last_time = time
 
     def rate(self, rate, idx):
-        all_records = self.staged_record + self.record
         if idx < 0:
-            idx = len(all_records) + idx
-        if idx >= self.cursor:
-            all_records[idx]['Rate'] = rate
+            idx = len(self.record) + idx
+        if idx < len(self.record):
+            self.record[idx]['Rate'] = rate
             return True
         return False
 
@@ -90,23 +84,16 @@ class ResponseCache(object):
         answers = [norm(r['Answer']) for r in self.record]
         return not norm(answer) in answers
 
-    def is_global_unique(self, answer):
-        answers = [norm(r['Answer']) for r in self.staged_record + self.record]
-        return not norm(answer) in answers
-
     def _get_records(self, question):
         records = [self.record[i] for i in self.index[norm(question)]]
         return records
 
     def dump(self, fname):
-        import csv
-        all_records = self.staged_record + self.record
-        records_to_dump = all_records[self.cursor:]
-        if not records_to_dump:
+        if not self.record:
             logger.debug("Nothing to dump")
             return False
         header = ['Datetime', 'Question', 'Answer', 'Rate']
-        for k in records_to_dump[0].keys():
+        for k in self.record[0].keys():
             if k not in header:
                 header.append(k)
 
@@ -116,9 +103,8 @@ class ResponseCache(object):
         with open(fname, 'a') as f:
             writer = csv.DictWriter(f, header, extrasaction='ignore')
             writer.writeheader()
-            writer.writerows(records_to_dump)
+            writer.writerows(self.record)
             logger.info("Dumpped chat history to {}".format(fname))
-            self.cursor = len(all_records)
             return True
         return False
 

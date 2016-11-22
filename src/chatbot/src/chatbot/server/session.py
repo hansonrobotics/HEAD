@@ -4,7 +4,7 @@ import os
 import datetime as dt
 import logging
 import uuid
-from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT, SESSION_RESET_TIMEOUT
+from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT
 from response_cache import ResponseCache
 from collections import defaultdict
 from chatbot.server.character import TYPE_AIML
@@ -33,7 +33,6 @@ class Session(object):
         self.sdata = SessionData()
         self.cache = ResponseCache()
         self.created = dt.datetime.now()
-        self.init = self.created
         self.characters = []
         dirname = os.path.join(HISTORY_DIR, self.created.strftime('%Y%m%d'))
         test_dirname = os.path.join(
@@ -41,7 +40,7 @@ class Session(object):
         self.fname = os.path.join(dirname, '{}.csv'.format(self.sid))
         self.test_fname = os.path.join(test_dirname, '{}.csv'.format(self.sid))
         self.dump_file = None
-        self.removed = False
+        self.closed = False
         self.active = False
         self.last_active_time = None
         self.test = False
@@ -54,7 +53,7 @@ class Session(object):
         self.test = test
 
     def add(self, question, answer, **kwargs):
-        if not self.removed:
+        if not self.closed:
             self.cache.add(question, answer, **kwargs)
             self.last_active_time = self.cache.last_time
             self.active = True
@@ -82,11 +81,12 @@ class Session(object):
             except Exception as ex:
                 pass
 
+    def close(self):
+        self.reset()
+        self.closed = True
+
     def reset(self):
-        self.active = False
-        self.dump()
         self.cache.clean()
-        self.init = dt.datetime.now()
         self.last_used_character = None
         self.open_character = None
         for c in self.characters:
@@ -115,8 +115,8 @@ class Session(object):
             return (since - self.created).total_seconds()
 
     def __repr__(self):
-        return "<Session {} init {} active {}>".format(
-            self.sid, self.init, self.cache.last_time)
+        return "<Session {} created {} active {}>".format(
+            self.sid, self.created, self.cache.last_time)
 
 
 class Locker(object):
@@ -157,7 +157,7 @@ class SessionManager(object):
         if sid in self._sessions:
             session = self._sessions.pop(sid)
             session.dump()
-            session.removed = True
+            session.close()
             del session
             logger.info("Removed session {}".format(sid))
 
@@ -167,7 +167,7 @@ class SessionManager(object):
             if session.active:
                 session.reset()
                 logger.info("Reset session {}".format(sid))
-
+ 
     def get_session(self, sid):
         if sid is not None:
             return self._sessions.get(sid, None)
@@ -216,15 +216,11 @@ class SessionManager(object):
 
     def _clean_sessions(self):
         while True:
-            reset_sessions, remove_sessions = [], []
+            remove_sessions = []
             since = dt.datetime.now()
             for sid, s in self._sessions.iteritems():
-                if SESSION_RESET_TIMEOUT < s.since_idle(since) < SESSION_REMOVE_TIMEOUT:
-                    reset_sessions.append(sid)
                 if s.since_idle(since) > SESSION_REMOVE_TIMEOUT:
                     remove_sessions.append(sid)
-            for sid in reset_sessions:
-                self.reset_session(sid)
             for sid in remove_sessions:
                 self.remove_session(sid)
             time.sleep(0.1)

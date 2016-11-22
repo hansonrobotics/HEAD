@@ -2,6 +2,9 @@ import re
 import os
 import requests
 import subprocess
+import logging
+
+logger = logging.getLogger('hr.chatbot.utils')
 
 
 def norm(s):
@@ -43,7 +46,11 @@ def get_location():
 
 def get_weather(city):
     OPENWEATHERAPPID = os.environ.get('OPENWEATHERAPPID')
-    response = requests.get('http://api.openweathermap.org/data/2.5/weather', params={'q': city, 'appid': OPENWEATHERAPPID}).json()
+    try:
+        response = requests.get('http://api.openweathermap.org/data/2.5/weather', timeout=5, params={'q': city, 'appid': OPENWEATHERAPPID}).json()
+    except Exception as ex:
+        logger.error(ex)
+        return
     return response
 
 if __name__ == '__main__':
