@@ -6,6 +6,7 @@ import traceback
 from chatbot.server.character import AIMLCharacter, Character
 from chatbot.utils import get_location, get_weather
 from zipfile import ZipFile
+import pprint
 
 logger = logging.getLogger('hr.chatbot.loader')
 
@@ -59,7 +60,7 @@ def load_characters(character_path):
             characters.extend(
                 AIMLCharacterLoader.load(os.path.join(path, yaml_file)))
 
-    logger.info("Add characters {}".format(characters))
+    logger.info("Add characters \n{}".format(pprint.pformat(characters)))
     return characters
 
 
