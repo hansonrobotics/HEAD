@@ -410,6 +410,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         duration: (endTime - startTime) * 1000,
                         easing: 'linear',
                         step: function () {
+                            if (self.isDestroyed()) return;
                             self.updateIndicatorTime();
                         },
                         complete: function () {

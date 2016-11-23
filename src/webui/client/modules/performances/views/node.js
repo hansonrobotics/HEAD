@@ -77,7 +77,6 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 this.initResponsive();
             },
             onDomRefresh: function () {
-                console.log('refresh');
                 this.initTabScrolling(this.ui.nodeTabBar, this.ui.nodeTabs, this.ui.nodeScrollLeft, this.ui.nodeScrollRight);
                 this.initTabScrolling(this.ui.optionsTabBar, this.ui.optionsTabs, this.ui.optionsScrollLeft, this.ui.optionsScrollRight);
             },
@@ -103,8 +102,6 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                         }
 
                         var width = self.getWidthSum(tabs);
-                        console.log(width);
-                        console.log($(tabBar).width());
 
                         if (width > $(tabBar).width()) {
                             $(tabBar).addClass('app-overflow');

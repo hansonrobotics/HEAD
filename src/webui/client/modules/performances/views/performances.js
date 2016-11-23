@@ -19,8 +19,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 'change:path reset': 'updateTabs'
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['editing', 'autoplay', 'queueView', 'dir']);
-                if (typeof this.editing == 'undefined') this.editing = true;
+                this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'queueView', 'dir']);
             },
             onRender: function () {
                 var self = this,
@@ -217,8 +216,11 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 var timeout = null,
                     el = $('<a>').attr('href', 'javascript:void(0)').html(content);
 
+                if (this.nav)
+                    el.attr('href', path.join('/#/performances', dir))
+
                 if (!disableEvents)
-                    el.attr('href', path.join('/#/performances', dir)).click(function () {
+                    el.click(function () {
                         self.switchDir(dir);
                     }).droppable({
                         accept: '.app-performance-button',
@@ -234,6 +236,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                             clearTimeout(timeout);
                         }
                     });
+
 
                 return $('<li>').attr('data-path', dir).append(el);
             },

@@ -1,7 +1,7 @@
 define(['marionette', 'application', './controller'], function (Marionette, App, controller) {
     var Router = Marionette.AppRouter.extend({
         'appRoutes': {
-            'performances': 'performances',
+            'performances(/*dir)': 'performances',
             'attention': 'attention_regions'
         }
     });

@@ -1,12 +1,12 @@
 define(['application', 'marionette', './templates/node_select.tpl', '../entities/node',
-        '../../settings/views/settings', '../../settings/entities/node_config_schema', 'lib/api', 'underscore',
-        'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2', 'select2-css'],
-    function (App, Marionette, template, Node, SettingsView, SettingsSchemaModel, api, _, $) {
+        '../../settings/views/settings', '../../settings/entities/node_config_schema',
+        '../../settings/entities/node_config', 'lib/api', 'underscore', 'jquery', 'jquery-ui', 'lib/crosshair-slider',
+        'select2', 'select2-css'],
+    function (App, Marionette, template, Node, SettingsView, NodeConfigSchema, NodeConfig, api, _, $) {
         return Marionette.View.extend({
             template: template,
             ui: {
                 nodeProperties: '[data-node-property]',
-
                 emotionList: '.app-emotion-list',
                 gestureList: '.app-gesture-list',
                 somaList: '.app-soma-list',
@@ -167,7 +167,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     $(self.ui.btreeModeSelect).select2();
                 }
                 if (this.model.hasProperty('rosnode')) {
-                    this.setSettingsEditor(this.model.get('schema'));
+                    self.updateSettingsSchema();
                     this.listenTo(this.model, 'change:rosnode', function () {
                         self.updateSettingsSchema();
                     });
@@ -263,27 +263,37 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 this.initList(somas, 'soma', this.ui.somaList);
             },
             updateSettingsSchema: function () {
-                var self = this;
-                var rosnode = this.model.get('rosnode');
-                api.services.get_node_description.callService({node: rosnode}, function (response) {
-                    var schema = SettingsSchemaModel.getSchemaFromDesc(JSON.parse(response.description), rosnode);
-                    self.model.set({schema: schema, values: {}});
-                    self.setSettingsEditor(schema);
-                    api.services.get_node_configuration.callService({node: rosnode}, function (response) {
-                        self.model.set({values: JSON.parse(response.configuration)});
-                    }, function (error) {
-                        console.log("Cant retrieve node settings")
-                    });
-                }, function (error) {
-                    console.log('Error fetching configuration schema');
+                var self = this,
+                    rosnode = this.model.get('rosnode'),
+                    schema = new NodeConfigSchema(rosnode);
+
+                schema.fetch({
+                    success: function (model) {
+                        self.setSettingsEditor(model.toJSON());
+                    }
                 });
             },
             setSettingsEditor: function (schema) {
+                var self = this,
+                    values = new NodeConfig(this.model.get('rosnode'));
+                var updateValues = function () {
+                    var currentView = self.getRegion('settingsEditor').currentView;
+                    if (currentView && currentView.model == values)
+                        self.model.set('values', values.toJSON());
+                    else
+                        values.off('change', updateValues);
+                };
+                values.on('change', updateValues);
                 this.getRegion('settingsEditor').show(new SettingsView({
-                    model: this.model,
+                    model: values,
                     schema: schema,
                     refresh: false
                 }));
+                values.fetch({
+                    success: function () {
+                        values.set(self.model.get('values'));
+                    }
+                });
             },
             setText: function () {
                 this.model.set('text', this.ui.textInput.val());

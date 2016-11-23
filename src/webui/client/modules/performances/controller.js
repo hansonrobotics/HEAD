@@ -3,7 +3,7 @@ define(['application', 'lib/api', './views/layout', './views/attention_regions',
         return {
             performances: function (dir) {
                 if (!this.layoutView || this.layoutView.isDestroyed()) {
-                    this.layoutView = new LayoutView({dir: dir});
+                    this.layoutView = new LayoutView({dir: dir, nav: true});
 
                     api.blenderMode.enable();
                     api.disableInteractionMode();
