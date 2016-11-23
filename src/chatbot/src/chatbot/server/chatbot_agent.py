@@ -185,7 +185,7 @@ def _ask_characters(characters, question, lang, sid, query):
             response = sess.open_character.respond(_question, lang, sess, query)
             used_charaters.append(sess.open_character.id)
             answer = response.get('text', '').strip()
-            if answer and not response.get('bad'):
+            if answer and not response.get('bad') and not response.get('gambit'):
                 hit_character = sess.open_character
                 cross_trace.append((sess.open_character.id, 'question', response.get('trace') or 'No trace'))
             else:
@@ -223,7 +223,7 @@ def _ask_characters(characters, question, lang, sid, query):
 
     # Check the last used character
     if not answer:
-        if sess.last_used_character:
+        if sess.last_used_character and sess.last_used_character.dynamic_level:
             for c, weight in weighted_characters:
                 if sess.last_used_character.id == c.id:
                     _response = c.respond(_question, lang, sess, query=True)
