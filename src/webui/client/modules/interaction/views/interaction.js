@@ -341,8 +341,10 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                 });
             },
             scrollToChatBottom: function () {
-                this.ui.scrollbar.stop().animate({scrollTop: this.ui.messages.height()}, 'slow', 'swing');
-                this.ui.scrollbar.perfectScrollbar('update');
+                if (!this.isDestroyed()) {
+                    this.ui.scrollbar.stop().animate({scrollTop: this.ui.messages.height()}, 'slow', 'swing');
+                    this.ui.scrollbar.perfectScrollbar('update');
+                }
             },
             voiceRecognised: function (msg) {
                 var attrs = {author: 'Me', message: msg.utterance};
