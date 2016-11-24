@@ -112,9 +112,14 @@ def set_weights(param, lang, sid):
     try:
         for w in param.split(','):
             k, v = w.split('=')
-            k = int(k)
             v = float(v)
-            weights[characters[k].id] = v
+            if v>1 or v<0:
+                return False, "Weight must be in the range [0, 1]"
+            try:
+                k = int(k)
+                weights[characters[k].id] = v
+            except ValueError:
+                weights[k] = v
     except Exception:
         return False, "Wrong weight format"
 

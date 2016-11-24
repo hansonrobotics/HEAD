@@ -346,6 +346,12 @@ Set the weight of tier with index1 to w1, and set the weight of tier with
 index2 to w2. And set 0 weight to other tiers. The index starts from 0.
 For example, rw 0=0.1, 2=0.3
 
+rw id1=w1,[id2=w2],...
+--------------------------
+Set the weight of tier with id=id1 to w1, and set the weight of tier with
+id=id2 to w2. And set 0 weight to other tiers.
+For example, rw generic=0.1
+
 rw reset
 --------
 Reset the weight of tiers to their defaults.
