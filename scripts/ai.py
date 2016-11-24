@@ -231,7 +231,7 @@ class Chatbot():
         self.delay_time = config.delay_time
         self.client.ignore_indicator = config.ignore_indicator
 
-        tiers = ['sophia', 'cs_sophia', 'generic']
+        tiers = ['sophia', 'cs', 'generic']
         if not config.reset:
             try:
                 param = ','.join(
