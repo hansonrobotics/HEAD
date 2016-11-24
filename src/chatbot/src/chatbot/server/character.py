@@ -192,10 +192,10 @@ class AIMLCharacter(Character):
             ret['pattern'] = patterns
             if patterns:
                 first = patterns[0]
-                if '*' not in first:
-                    ret['ok_match'] = True
-                elif '*' in first or '_' in first:
+                if '*' in first or '_' in first:
                     pattern_len = len(first.strip().split())
+                    if '*' not in first:
+                        ret['ok_match'] = True
                     if pattern_len>3 and pattern_len>0.9*len(question.strip().split()):
                         ret['ok_match'] = True
                 else:
