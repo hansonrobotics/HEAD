@@ -245,7 +245,7 @@ install_other_deps() {
     rm -rf /tmp/festival
 
     # For tts playing audio
-    $SUDO apt-get ${APT_GET_OPTS} install python-pyglet
+    $SUDO pip2 ${PIP_OPTS} install pygame
 
     # For chatbot
     $SUDO apt-get ${APT_GET_OPTS} install python-yaml
