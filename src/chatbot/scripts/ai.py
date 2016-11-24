@@ -231,7 +231,8 @@ class Chatbot():
         self.delay_time = config.delay_time
         self.client.ignore_indicator = config.ignore_indicator
 
-        tiers = ['sophia', 'cs', 'generic']
+        tiers = config.groups.groups.Weights.parameters.keys()
+        tiers.remove('reset')
         if not config.reset:
             try:
                 param = ','.join(
@@ -242,11 +243,14 @@ class Chatbot():
                 logger.error(ex)
 
         if config.reset:
-            self.client.do_rw('reset')
-            weights = self.client.get_weights()
-            for id in tiers:
-                if id in weights:
-                    setattr(config, id, weights[id])
+            try:
+                self.client.do_rw('reset')
+                weights = self.client.get_weights()
+                for id in tiers:
+                    if id in weights:
+                        setattr(config, id, weights[id])
+            except Exception as ex:
+                logger.error(ex)
             config.reset = False
         return config
 
