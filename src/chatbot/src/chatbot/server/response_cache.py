@@ -34,7 +34,7 @@ class ResponseCache(object):
         time_elapsed = (dt.datetime.now() - same_answers[-1]['Datetime']
                         ).seconds if same_answers else 0
         if max(0, len(norm(answer)) - 10) * 30 <= time_elapsed:
-            logger.info("Allow repeat answer")
+            logger.info("Allow repeat answer {}".format(answer))
             logger.info("Answer length {}, time elapsed {}".format(
                 len(norm(answer)), time_elapsed))
             return True
