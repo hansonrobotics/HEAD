@@ -141,7 +141,7 @@ GET /v1.1/set_weights
 
 Parameters:
 - *Auth* - Authorization token
-- *weights* - Tier weights
+- *param* - Tier weight parameter. Could be, for example, "0=1, 1=0.5", or "reset"
 - *session* - Session ID
 
 Return:
