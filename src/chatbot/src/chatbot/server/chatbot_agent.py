@@ -82,12 +82,15 @@ def list_character(lang, sid):
     sess = session_manager.get_session(sid)
     if sess is None:
         return []
-    responding_characters = get_responding_characters(lang, sid)
-    if hasattr(sess.sdata, 'weights'):
+    characters = get_responding_characters(lang, sid)
+    if hasattr(sess.sdata, 'weights') and sess.sdata.weights:
+        weights = []
+        for c in characters:
+            weights.append(sess.sdata.weights.get(c.id) or 0)
         return [(c.id, w, c.level, c.dynamic_level) for c, w in zip(
-                responding_characters, sess.sdata.weights)]
+                    characters, weights)]
     else:
-        return [(c.id, c.weight, c.level, c.dynamic_level) for c in responding_characters]
+        return [(c.id, c.weight, c.level, c.dynamic_level) for c in characters]
 
 
 def list_character_names():
@@ -95,17 +98,26 @@ def list_character_names():
     return names
 
 
-def set_weights(weights, lang, sid):
+def set_weights(param, lang, sid):
     sess = session_manager.get_session(sid)
     if sess is None:
         return False, "No session"
+
+    if param == 'reset':
+        sess.sdata.weights = {}
+        return True, "Weights are reset"
+
+    weights = {}
+    characters = get_responding_characters(lang, sid)
     try:
-        weights = [float(w.strip()) for w in weights.split(',')]
+        for w in param.split(','):
+            k, v = w.split('=')
+            k = int(k)
+            v = float(v)
+            weights[characters[k].id] = v
     except Exception:
         return False, "Wrong weight format"
-    responding_characters = get_responding_characters(lang, sid)
-    if len(weights) != len(responding_characters):
-        return False, "Number of weights doesn't match number of tiers {}".format(weights)
+
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
@@ -135,8 +147,10 @@ def _ask_characters(characters, question, lang, sid, query):
     data = sess.get_session_data()
     user = getattr(data, 'user')
     botname = getattr(data, 'botname')
-    if hasattr(data, 'weights'):
-        weights = data.weights
+    weights = []
+    if hasattr(data, 'weights') and data.weights:
+        for c in characters:
+            weights.append(data.weights.get(c.id) or 0)
     else:
         weights = [c.weight for c in characters]
     weighted_characters = zip(characters, weights)
