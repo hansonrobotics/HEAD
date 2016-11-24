@@ -230,6 +230,24 @@ class Chatbot():
         self.delay_response = config.delay_response
         self.delay_time = config.delay_time
         self.client.ignore_indicator = config.ignore_indicator
+
+        tiers = ['sophia', 'cs_sophia', 'generic']
+        if not config.reset:
+            try:
+                param = ','.join(
+                    ['{}={}'.format(id, config.get(id)) for id in tiers]
+                )
+                self.client.do_rw(param)
+            except Exception as ex:
+                logger.error(ex)
+
+        if config.reset:
+            self.client.do_rw('reset')
+            weights = self.client.get_weights()
+            for id in tiers:
+                if id in weights:
+                    setattr(config, id, weights[id])
+            config.reset = False
         return config
 
 if __name__ == '__main__':
