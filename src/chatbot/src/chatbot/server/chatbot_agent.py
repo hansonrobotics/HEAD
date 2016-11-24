@@ -82,12 +82,15 @@ def list_character(lang, sid):
     sess = session_manager.get_session(sid)
     if sess is None:
         return []
-    responding_characters = get_responding_characters(lang, sid)
-    if hasattr(sess.sdata, 'weights'):
+    characters = get_responding_characters(lang, sid)
+    if hasattr(sess.sdata, 'weights') and sess.sdata.weights:
+        weights = []
+        for c in characters:
+            weights.append(sess.sdata.weights.get(c.id) or 0)
         return [(c.id, w, c.level, c.dynamic_level) for c, w in zip(
-                responding_characters, sess.sdata.weights)]
+                    characters, weights)]
     else:
-        return [(c.id, c.weight, c.level, c.dynamic_level) for c in responding_characters]
+        return [(c.id, c.weight, c.level, c.dynamic_level) for c in characters]
 
 
 def list_character_names():
@@ -95,17 +98,31 @@ def list_character_names():
     return names
 
 
-def set_weights(weights, lang, sid):
+def set_weights(param, lang, sid):
     sess = session_manager.get_session(sid)
     if sess is None:
         return False, "No session"
+
+    if param == 'reset':
+        sess.sdata.weights = {}
+        return True, "Weights are reset"
+
+    weights = {}
+    characters = get_responding_characters(lang, sid)
     try:
-        weights = [float(w.strip()) for w in weights.split(',')]
+        for w in param.split(','):
+            k, v = w.split('=')
+            v = float(v)
+            if v>1 or v<0:
+                return False, "Weight must be in the range [0, 1]"
+            try:
+                k = int(k)
+                weights[characters[k].id] = v
+            except ValueError:
+                weights[k] = v
     except Exception:
         return False, "Wrong weight format"
-    responding_characters = get_responding_characters(lang, sid)
-    if len(weights) != len(responding_characters):
-        return False, "Number of weights doesn't match number of tiers {}".format(weights)
+
     sess.sdata.weights = weights
     return True, "Weights are updated"
 
@@ -135,8 +152,10 @@ def _ask_characters(characters, question, lang, sid, query):
     data = sess.get_session_data()
     user = getattr(data, 'user')
     botname = getattr(data, 'botname')
-    if hasattr(data, 'weights'):
-        weights = data.weights
+    weights = []
+    if hasattr(data, 'weights') and data.weights:
+        for c in characters:
+            weights.append(data.weights.get(c.id) or 0)
     else:
         weights = [c.weight for c in characters]
     weighted_characters = zip(characters, weights)
@@ -180,7 +199,8 @@ def _ask_characters(characters, question, lang, sid, query):
     # If the last input is a question, then try to use the same tier to
     # answer it.
     if not answer:
-        if sess.open_character and sess.open_character in characters:
+        if sess.open_character and sess.open_character in characters \
+                and sess.open_character.weight != 0:
             logger.info("Using open dialog character {}".format(sess.open_character.id))
             response = sess.open_character.respond(_question, lang, sess, query)
             used_charaters.append(sess.open_character.id)
@@ -193,14 +213,14 @@ def _ask_characters(characters, question, lang, sid, query):
                     cross_trace.append((sess.open_character.id, 'question', 'Repetitive answer'))
                     cached_responses['repeat'].append((response, response.get('repeat'), sess.open_character))
                 elif response.get('bad'):
-                    cross_trace.append((sess.open_character.id, 'question', 'Bad answer'))
+                    cross_trace.append((sess.open_character.id, 'question', 'Bad answer: {}'.format(response.get('trace'))))
                 else:
                     cross_trace.append((sess.open_character.id, 'question', 'No answer'))
 
     # Try the first tier to see if there is good match
     if not answer:
         c, weight = weighted_characters[0]
-        if c.type == TYPE_AIML:
+        if c.type == TYPE_AIML and weight != 0:
             _response = c.respond(_question, lang, sess, query=True)
             if _response.get('exact_match') or _response.get('ok_match'):
                 logger.info("{} has good match".format(c.id))
@@ -218,43 +238,51 @@ def _ask_characters(characters, question, lang, sid, query):
                 else:
                     cross_trace.append((c.id, 'priority', 'No answer'))
             else:
-                logger.info("{} has no good match".format(c.id))
-                cross_trace.append((c.id, 'priority', 'No good match: {}'.format(_response.get('trace') or 'No trace')))
+                if _response.get('text'):
+                    logger.info("{} has no good match".format(c.id))
+                    cross_trace.append((c.id, 'priority', 'No good match: {}'.format(_response.get('trace') or 'No trace')))
+                else:
+                    logger.info("{} has no pattern".format(c.id))
+                    cross_trace.append((c.id, 'priority', 'No pattern'))
 
     # Check the last used character
     if not answer:
-        if sess.last_used_character and sess.last_used_character.dynamic_level:
-            for c, weight in weighted_characters:
-                if sess.last_used_character.id == c.id:
-                    _response = c.respond(_question, lang, sess, query=True)
-                    if _response.get('exact_match') or _response.get('ok_match'):
-                        logger.info("Last used tier {} has good match".format(c.id))
+        if sess.last_used_character and sess.last_used_character.dynamic_level \
+                and sess.last_used_character.weight != 0:
+            if sess.last_used_character.id in used_charaters:
+                cross_trace.append((sess.last_used_character.id, 'last used', 'Skip used tier'))
+            else:
+                for c, weight in weighted_characters:
+                    if sess.last_used_character.id == c.id:
+                        _response = c.respond(_question, lang, sess, query=True)
+                        if _response.get('exact_match') or _response.get('ok_match'):
+                            logger.info("Last used tier {} has good match".format(c.id))
 
-                        if sess.last_used_character.type == TYPE_CS:
-                            response = _response
-                        else:
-                            response = c.respond(_question, lang, sess, query)
-                        used_charaters.append(c.id)
-                        _answer = response.get('text', '').strip()
-                        if _answer:
-                            if random.random() < weight:
-                                hit_character = c
-                                answer = _answer
-                                cross_trace.append((c.id, 'last used', response.get('trace') or 'No trace'))
+                            if sess.last_used_character.type == TYPE_CS:
+                                response = _response
                             else:
-                                cross_trace.append((c.id, 'last used', 'Pass through'))
-                                cached_responses['pass'].append((response, _answer, c))
-                        else:
-                            if response.get('repeat'):
-                                cross_trace.append((c.id, 'last used', 'Repetitive answer'))
-                                cached_responses['repeat'].append((response, response.get('repeat'), c))
+                                response = c.respond(_question, lang, sess, query)
+                            used_charaters.append(c.id)
+                            _answer = response.get('text', '').strip()
+                            if _answer:
+                                if random.random() < weight:
+                                    hit_character = c
+                                    answer = _answer
+                                    cross_trace.append((c.id, 'last used', response.get('trace') or 'No trace'))
+                                else:
+                                    cross_trace.append((c.id, 'last used', 'Pass through'))
+                                    cached_responses['pass'].append((response, _answer, c))
                             else:
-                                cross_trace.append((c.id, 'last used', 'No answer'))
-                    else:
-                        logger.info("{} has no good match".format(c.id))
-                        cross_trace.append((c.id, 'last used', 'No good match: {}'.format(_response.get('trace') or 'No trace')))
-                        #cached_responses['bad'].append((response, response.get('text'), c))
-                    break
+                                if response.get('repeat'):
+                                    cross_trace.append((c.id, 'last used', 'Repetitive answer'))
+                                    cached_responses['repeat'].append((response, response.get('repeat'), c))
+                                else:
+                                    cross_trace.append((c.id, 'last used', 'No answer'))
+                        else:
+                            logger.info("{} has no good match".format(c.id))
+                            cross_trace.append((c.id, 'last used', 'No good match: {}'.format(_response.get('trace') or 'No trace')))
+                            #cached_responses['bad'].append((response, response.get('text'), c))
+                        break
 
     # Check the loop
     if not answer:
@@ -265,6 +293,7 @@ def _ask_characters(characters, question, lang, sid, query):
 
             if c.id in used_charaters:
                 logger.info("Ignore used tiers {}".format(c.id))
+                cross_trace.append((c.id, 'loop', 'Skip used tier'))
                 continue
 
             response = c.respond(_question, lang, sess, query)
@@ -281,7 +310,8 @@ def _ask_characters(characters, question, lang, sid, query):
                 continue
 
             if response.get('bad'):
-                cross_trace.append((c.id, 'loop', 'Bad answer'))
+                cross_trace.append((c.id, 'loop', 'Bad answer: {}'.format(response.get('trace'))))
+                cached_responses['bad'].append((response, _answer, c))
                 continue
 
             if DISABLE_QUIBBLE and response.get('quibble'):
@@ -311,9 +341,11 @@ def _ask_characters(characters, question, lang, sid, query):
                 cross_trace.append((c.id, 'loop', 'Pass through'))
                 if 'pickup' not in c.id and 'markov' not in c.id:
                     cached_responses['pass'].append((response, _answer, c))
+                else:
+                    cached_responses['?'].append((response, _answer, c))
 
     if not answer:
-        for response_type in ['pass', 'quibble', 'repeat', 'gambit', 'pickup']:
+        for response_type in ['pass', 'quibble', 'repeat', 'gambit', 'pickup', 'bad', '?']:
             if cached_responses.get(response_type):
                 response, answer, hit_character = cached_responses.get(response_type)[0]
                 response['text'] = answer

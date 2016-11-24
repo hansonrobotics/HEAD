@@ -82,9 +82,12 @@ class Chatbot():
         rospy.set_param('node_status/chatbot', 'running')
 
         # the first message gets lost with using topic_tools
-        rospy.wait_for_service('tts_select', 5)
-        rospy.sleep(0.1)
-        self._response_publisher.publish(String(' '))
+        try:
+            rospy.wait_for_service('tts_select', 5)
+            rospy.sleep(0.1)
+            self._response_publisher.publish(String(' '))
+        except Exception as ex:
+            logger.error(ex)
 
 
     def sentiment_active(self, active):
@@ -227,6 +230,24 @@ class Chatbot():
         self.delay_response = config.delay_response
         self.delay_time = config.delay_time
         self.client.ignore_indicator = config.ignore_indicator
+
+        tiers = ['sophia', 'cs', 'generic']
+        if not config.reset:
+            try:
+                param = ','.join(
+                    ['{}={}'.format(id, config.get(id)) for id in tiers]
+                )
+                self.client.do_rw(param)
+            except Exception as ex:
+                logger.error(ex)
+
+        if config.reset:
+            self.client.do_rw('reset')
+            weights = self.client.get_weights()
+            for id in tiers:
+                if id in weights:
+                    setattr(config, id, weights[id])
+            config.reset = False
         return config
 
 if __name__ == '__main__':

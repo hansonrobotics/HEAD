@@ -161,9 +161,9 @@ def _sessions():
 def _set_weights():
     data = request.args
     lang = data.get('lang', None)
-    weights = data.get('weights')
+    param = data.get('param')
     session = data.get('session')
-    ret, response = set_weights(weights, lang, session)
+    ret, response = set_weights(param, lang, session)
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 

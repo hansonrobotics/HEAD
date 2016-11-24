@@ -311,8 +311,11 @@ For example, port 8001
 
     def do_rw(self, line):
         try:
+            line = "".join(line.split())
+            if '=' not in line and line != 'reset':
+                line = ','.join(['{}={}'.format(i, w) for i, w in enumerate(line.split(','))])
             params = {
-                "weights": line,
+                "param": line,
                 "Auth": self.key,
                 "lang": self.lang,
                 "session": self.session
@@ -323,15 +326,40 @@ For example, port 8001
             response = r.json().get('response')
             self.stdout.write(response)
             self.stdout.write('\n')
+            if not ret:
+                self.help_rw()
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
+
+    def get_weights(self):
+        chatbots = self.list_chatbot()
+        weights = {c: w for c, w, l, d in chatbots}
+        return weights
 
     def help_rw(self):
         s = """
 Update the weights of the current chain.
-Syntax: rw w1,w2,w3,...
+
+rw w1,w2,w3,...
+---------------
+Set the weights to tiers accordingly.
 For example, rw .2, .4, .5
 
+rw index1=w1,[index2=w2],...
+--------------------------
+Set the weight of tier with index1 to w1, and set the weight of tier with
+index2 to w2. And set 0 weight to other tiers. The index starts from 0.
+For example, rw 0=0.1, 2=0.3
+
+rw id1=w1,[id2=w2],...
+--------------------------
+Set the weight of tier with id=id1 to w1, and set the weight of tier with
+id=id2 to w2. And set 0 weight to other tiers.
+For example, rw generic=0.1
+
+rw reset
+--------
+Reset the weight of tiers to their defaults.
 """
         self.stdout.write(s)
 
