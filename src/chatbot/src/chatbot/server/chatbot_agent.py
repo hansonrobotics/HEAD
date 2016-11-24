@@ -194,7 +194,8 @@ def _ask_characters(characters, question, lang, sid, query):
     # If the last input is a question, then try to use the same tier to
     # answer it.
     if not answer:
-        if sess.open_character and sess.open_character in characters:
+        if sess.open_character and sess.open_character in characters \
+                and sess.open_character.weight != 0:
             logger.info("Using open dialog character {}".format(sess.open_character.id))
             response = sess.open_character.respond(_question, lang, sess, query)
             used_charaters.append(sess.open_character.id)
@@ -214,7 +215,7 @@ def _ask_characters(characters, question, lang, sid, query):
     # Try the first tier to see if there is good match
     if not answer:
         c, weight = weighted_characters[0]
-        if c.type == TYPE_AIML:
+        if c.type == TYPE_AIML and weight != 0:
             _response = c.respond(_question, lang, sess, query=True)
             if _response.get('exact_match') or _response.get('ok_match'):
                 logger.info("{} has good match".format(c.id))
@@ -237,7 +238,8 @@ def _ask_characters(characters, question, lang, sid, query):
 
     # Check the last used character
     if not answer:
-        if sess.last_used_character and sess.last_used_character.dynamic_level:
+        if sess.last_used_character and sess.last_used_character.dynamic_level \
+                and sess.last_used_character.weight != 0:
             for c, weight in weighted_characters:
                 if sess.last_used_character.id == c.id:
                     _response = c.respond(_question, lang, sess, query=True)
