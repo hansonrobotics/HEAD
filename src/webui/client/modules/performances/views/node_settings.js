@@ -47,8 +47,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 'change @ui.noSpeechInput': 'updateNoSpeech',
                 'change @ui.chatbotSelect': 'updateChatbot',
                 'change @ui.chatTimeoutModeSelect': 'updateChatTimeoutMode',
-                'change @ui.onEventInput': 'updateOnEvent',
-
+                'change @ui.onEventInput': 'updateOnEvent'
             },
             modelEvents: {
                 change: 'modelChanged'

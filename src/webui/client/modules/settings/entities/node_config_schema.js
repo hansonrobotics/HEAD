@@ -5,38 +5,46 @@ define(['backbone', 'lib/api', './node_config'], function (Backbone, api, NodeCo
         },
         sync: function (method, self, options) {
             if (method == 'read') {
-                var node_schema = new Promise(function (resolve, reject) {
-                    var node = new NodeConfig(self.node_name);
-                    node.fetch({
-                        success: function () {
-                            resolve(JSON.parse(node.get('node_schema') || '{}'))
-                        },
-                        error: function (err) {
-                            reject(err);
-                        }
-                    })
-                }), desc_schema = new Promise(function (resolve, reject) {
-                    api.services.get_node_description.callService({node: self.node_name}, function (response) {
-                        var schema = self.getSchemaFromDescription(JSON.parse(response.description));
-                        resolve(schema);
-                    }, function (error) {
-                        reject(error);
+                if (self.node_name) {
+                    var node_schema = new Promise(function (resolve, reject) {
+                        var node = new NodeConfig(self.node_name);
+                        node.fetch({
+                            success: function () {
+                                resolve(JSON.parse(node.get('node_schema') || '{}'))
+                            },
+                            error: function (err) {
+                                reject(err);
+                            }
+                        })
+                    }), desc_schema = new Promise(function (resolve, reject) {
+                        api.services.get_node_description.callService({node: self.node_name}, function (response) {
+                            var schema = self.getSchemaFromDescription(JSON.parse(response.description));
+                            resolve(schema);
+                        }, function (error) {
+                            reject(error);
+                        });
                     });
-                });
 
-                Promise.all([desc_schema, node_schema]).then(function (data) {
-                    var properties = {};
-                    for (var prop of data) properties = _.extend(properties, prop);
-                    options.success && options.success({
-                        title: self.node_name + ' settings',
-                        type: 'object',
-                        properties: properties
+                    Promise.all([desc_schema, node_schema]).then(function (data) {
+                        var properties = {};
+                        for (var prop of data) properties = _.extend(properties, prop);
+                        options.success && options.success({
+                            title: self.node_name + ' settings',
+                            type: 'object',
+                            properties: properties
+                        });
+                        // returned data is in arguments[0], arguments[1], ... arguments[n]
+                        // you can process it here
+                    }, function (err) {
+                        options.error && options.error(err);
                     });
-                    // returned data is in arguments[0], arguments[1], ... arguments[n]
-                    // you can process it here
-                }, function (err) {
-                    options.error && options.error(err);
-                });
+                } else {
+                    options.success && options.success({
+                        title: 'No node selected',
+                        type: 'object',
+                        properties: {}
+                    });
+                }
             }
         },
         getSchemaFromDescription: function (description) {

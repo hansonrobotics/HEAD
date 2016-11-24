@@ -167,7 +167,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     $(self.ui.btreeModeSelect).select2();
                 }
                 if (this.model.hasProperty('rosnode')) {
-                    self.updateSettingsSchema();
+                    this.setSettingsEditor(this.model.get('schema'));
                     this.listenTo(this.model, 'change:rosnode', function () {
                         self.updateSettingsSchema();
                     });
@@ -269,13 +269,19 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
 
                 schema.fetch({
                     success: function (model) {
-                        self.setSettingsEditor(model.toJSON());
+                        var schema = model.toJSON();
+                        self.model.set('schema', schema);
+                        self.setSettingsEditor(schema);
+                    },
+                    error: function () {
+                        self.model.set('schema', {});
                     }
                 });
             },
             setSettingsEditor: function (schema) {
                 var self = this,
                     values = new NodeConfig(this.model.get('rosnode'));
+
                 var updateValues = function () {
                     var currentView = self.getRegion('settingsEditor').currentView;
                     if (currentView && currentView.model == values)
