@@ -331,6 +331,11 @@ For example, port 8001
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
 
+    def get_weights(self):
+        chatbots = self.list_chatbot()
+        weights = {c: w for c, w, l, d in chatbots}
+        return weights
+
     def help_rw(self):
         s = """
 Update the weights of the current chain.
