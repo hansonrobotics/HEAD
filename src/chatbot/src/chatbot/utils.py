@@ -24,7 +24,15 @@ def shorten(text, cutoff):
         if len(ret) > 0 and len(ret+sen) > cutoff:
             break
         ret += (sen+'.')
-    return ret, '.'.join(sens[idx:])
+
+    res = '.'.join(sens[idx:])
+
+    # If first part or second part is too short, then don't cut
+    if len(ret.split()) < 3 or len(res.split()) < 3:
+        ret = text
+        res = ''
+
+    return ret, res
 
 def get_location():
     # docker run -d -p 8004:8004 --name freegeoip fiorix/freegeoip -http :8004
