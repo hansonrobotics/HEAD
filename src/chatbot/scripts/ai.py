@@ -46,7 +46,7 @@ class Chatbot():
         # sentiment dictionary
         self.polarity = Polarity()
         self._polarity_threshold = 0.2
-        self.speech = False
+        self.speech = False # User's speech input
 
         self.input_stack = []
         self.condition = threading.Condition()
@@ -113,20 +113,19 @@ class Chatbot():
             return
 
         # Old shut-up code
-        #if 'shut up' in chat_message.utterance.lower():
-        #    logger.info("Robot's talking wants to be interruptted")
-        #    self.tts_ctrl_pub.publish("shutup")
-        #    rospy.sleep(0.5)
-        #    self._response_publisher.publish(String('Okay'))
-        #    self._affect_publisher.publish(String('sad'))
-        #    return
+        if 'shut up' in chat_message.utterance.lower():
+            logger.info("Robot's talking wants to be interruptted")
+            self.tts_ctrl_pub.publish("shutup")
+            rospy.sleep(0.5)
+            self._response_publisher.publish(String('Okay'))
+            self._affect_publisher.publish(String('sad'))
+            return
 
         # new interruptions: notify tts_talker about every time a user says something
         # make distinction between short and long interruptions
         # short interruptions should just temporarily mute tts_talker ('temp_shutup' is sent)
         # long interruptions should be interpreted as new input ('shutup' is sent)
         # but, only do this if the robot is talking
-
         if self.speech == True:
             # count words in interruption
             self.wordcount = len(chat_message.utterance.split())
