@@ -13,7 +13,7 @@ class Speech2Command(object):
     def __init__(self, config):
         rospy.Subscriber('speech', ChatMessage, self.handle_speech)
         self.command_chain = [
-            #WholeShowCommand(),
+            WholeShowCommand(),
             ForwardCommand('chatbot_speech')]
 
     def handle_speech(self, msg):
