@@ -7,5 +7,6 @@
         <param name="sentiment" value="True" />
         <param name="botid" value="sophia" />
     </node>
-    <node name="speech2command" pkg="speech2command" type="run.py" respawn="true"/>
+    <!-- Wholeshow -->
+    <node name="wholeshow" pkg="performances" type="wholeshow.py" respawn="true"/>
 </launch>

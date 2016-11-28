@@ -17,6 +17,7 @@ from performances.msg import Event
 import subprocess
 import threading
 import dynamic_reconfigure.client
+from chatbot.msg import ChatMessage
 
 logger = logging.getLogger('hr.performance.wholeshow')
 rospack = rospkg.RosPack()
@@ -68,9 +69,11 @@ class WholeShow(HierarchicalMachine):
         # Parse on load.
         # TODO make sure we reload those once performances are saved.
         self.after_performance = False
-        # Start listeners
-        rospy.Service('speech_on', srv.SpeechOn, self.speech_cb)
-        self.sub_sleep = rospy.Subscriber('sleeper', String, self.sleep_cb)
+        # Speech handler. Receives all speech input, and forwards to chatbot if its not a command input,
+        #  or chat is enabled
+        self.speech_sub = rospy.Subscriber('speech', ChatMessage, self.speech_cb)
+        self.speech_pub = rospy.Publisher('chatbot_speech', ChatMessage, queue_size=10)
+        # Sleep
         self.performance_events = rospy.Subscriber('/performances/events', Event, self.performances_cb)
 
     def start_sleeping(self):
@@ -97,46 +100,46 @@ class WholeShow(HierarchicalMachine):
     def stop_interacting(self):
         self.btree_pub.publish(String("btree_off"))
 
-    def speech_cb(self, req):
+    def speech_cb(self, msg):
         """ ROS Callbacks """
-        speech = req.speech
+        speech = msg.utterance
         on = (self.state == 'interacting')
         # Special states keywords
         if self.state == 'opencog':
             if self.check_keywords(self.OPENCOG_EXIT, speech):
                 self.to_interacting()
-            return srv.SpeechOnResponse(True)
+            self.speech_pub.publish(msg)
         if self.check_keywords(self.OPENCOG_ENTER, speech):
             try:
                 self.start_opencog()
-            except:
+            except Exception:
                 pass
-            return srv.SpeechOnResponse(True)
+            self.speech_pub.publish(msg)
         if 'go to sleep' in speech:
             try:
                 # use to_performng() instead of perform() so it can be called from other than interaction states
                 self.to_performing()
                 self.after_performance = self.to_sleeping
                 self.performance_runner('shared/sleep')
-                return srv.SpeechOnResponse(False)
+                return False
             except:
                 pass
         if 'wake' in speech or 'makeup' in speech:
             try:
                 self.do_wake_up()
-                return srv.SpeechOnResponse(False)
+                return False
             except:
                 pass
         if 'shutdown' in speech:
             try:
                 self.shut()
-                return srv.SpeechOnResponse(False)
+                return False
             except:
                 pass
         if 'be quiet' in speech:
             try:
                 self.be_quiet()
-                return srv.SpeechOnResponse(False)
+                return False
             except:
                 pass
         if 'hi sophia' in speech or \
@@ -147,13 +150,13 @@ class WholeShow(HierarchicalMachine):
                         'hey sofia' in speech:
             try:
                 self.start_talking()
-                return srv.SpeechOnResponse(True)
+                self.speech_pub.publish(msg)
             except:
                 pass
             # Try wake up
             try:
                 self.do_wake_up()
-                return srv.SpeechOnResponse(False)
+                return False
             except:
                 pass
 
@@ -162,10 +165,11 @@ class WholeShow(HierarchicalMachine):
             try:
                 self.perform()
                 on = False
-                running = self.performance_runner(random.choice(performances))
+                self.performance_runner(random.choice(performances))
             except:
                 pass
-        return srv.SpeechOnResponse(on)
+        if on:
+            self.speech_pub.publish(msg)
 
     def performances_cb(self, msg):
         if msg.event == 'running':
@@ -178,14 +182,6 @@ class WholeShow(HierarchicalMachine):
             else:
                 self.to_interacting()
 
-    def sleep_cb(self, msg):
-        if msg.data == 'sleep':
-            self.to_sleeping()
-        if msg.data == 'wake':
-            try:
-                self.wake_up()
-            except:
-                pass
 
     def do_wake_up(self):
         assert (self.state == 'sleeping')
