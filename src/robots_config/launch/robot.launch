@@ -29,6 +29,7 @@
 
         <!-- Topic Mux for webui -->
         <include file="$(arg basedir)/topic_tools.launch" />
+
     </group>
 
     <!-- Face Tracking -->
@@ -46,10 +47,3 @@
     <include file="$(arg basedir)/rosbridge.launch" />
     <include file="$(arg basedir)/rosbridge_ssl.launch" />
 </launch>
-<!--
-372.297065764 K-Const
-70 Self.bounding_size
-1.1700764924 x
-0.600285714286 y
--0.317428571429 z
--->

@@ -61,7 +61,6 @@ add_service_files(
   Load.srv
   LoadSequence.srv
   LoadPerformance.srv
-  SpeechOn.srv
   SetProperties.srv
 )
 
