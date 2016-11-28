@@ -305,6 +305,7 @@ install_other_deps() {
     # For window layout
     $SUDO apt-get ${APT_GET_OPTS} install xdotool
 
+    install_pocketsphinx
     info "Installing other dependencies is done"
 }
 
