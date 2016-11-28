@@ -926,7 +926,9 @@ export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
 export MANYEARSLIB_PREFIX=$MANYEARSLIB_PREFIX
 
 export CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
-[ -f $TORCH_DIR/install/bin/torch-activate ] && source $TORCH_DIR/install/bin/torch-activate
+if [[ -f $TORCH_DIR/install/bin/torch-activate ]]; then
+  source $TORCH_DIR/install/bin/torch-activate
+fi
 EOF
 
     cp $HR_ENVFILE_PATH $BASEDIR >/dev/null 2>&1 # For compatibility
