@@ -596,9 +596,11 @@ do_build_hr() {
 
 _do_build_hr() {
     # build CppMT
-    cd $CPPMT_DIR
-    cmake .
-    make -j$(nproc)
+    if [[ -d CPPMT_DIR ]]; then
+        cd $CPPMT_DIR
+        cmake .
+        make -j$(nproc)
+    fi
 
     cd $HR_WORKSPACE/$PROJECT
     source /opt/ros/indigo/setup.bash
