@@ -175,14 +175,6 @@ install_opencog_deps() {
     ./octool -rdpv >/dev/null
     rm octool
 
-    install_relex_deps
-
-    # For sentiment analysis
-    $SUDO pip2 ${PIP_OPTS} install nltk
-    $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
-
-    # For random sentence generator
-    install_marky_markov
     info "Installing OpenCog dependencies is done"
 }
 
@@ -232,34 +224,11 @@ install_other_deps() {
     # For running scripts
     $SUDO apt-get ${APT_GET_OPTS} install tmux
 
-    # For Festival
-    $SUDO apt-get ${APT_GET_OPTS} install festival festival-dev
-    # Install female voice
-    mkdir -p ~/.hr/tts/festival/voices
-    # Install female voice
-    if [[ ! -f ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz ]]; then
-        wget -q http://festvox.org/packed/festival/2.1/festvox_cmu_us_slt_arctic_hts.tar.gz -P ~/.hr/tts/festival/voices
-    fi
-    tar zxf ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz -C /tmp
-    $SUDO cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
-    rm -rf /tmp/festival
-
     # For tts playing audio
     $SUDO apt-get ${APT_GET_OPTS} install python-pyglet
 
     # For chatbot
     $SUDO apt-get ${APT_GET_OPTS} install python-yaml
-
-    # For blender_api_test
-    $SUDO add-apt-repository -y ppa:mc3man/trusty-media
-    $SUDO apt-get ${APT_GET_OPTS} update
-    $SUDO apt-get ${APT_GET_OPTS} install ffmpeg
-
-    # MaryTTS
-    mkdir -p ~/.hr/tts/marytts
-    wget_cache https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
-    checkmd5 ${HR_CACHE}/marytts-5.1.2.zip 99e774dd4c6e791ad916ae76351522f0
-    unzip -qod ~/.hr/tts/marytts ${HR_CACHE}/marytts-5.1.2.zip
 
     # Swig for iflytek SDK
     $SUDO apt-get -y install swig
@@ -278,10 +247,6 @@ install_other_deps() {
     # For performances
     $SUDO pip2 install transitions
 
-    install_manyears_deps
-    # For audio recording
-    $SUDO apt-get ${APT_GET_OPTS} install pulseaudio
-    $SUDO apt-get ${APT_GET_OPTS} install python-pyaudio
     info "Installing other dependencies is done"
 }
 
@@ -573,8 +538,6 @@ _do_install_deps() {
     install_basic
     install_ros
     install_opencog_deps
-    install_vision_deps
-    install_manyears_deps
     install_webui_deps
     install_other_deps
 
