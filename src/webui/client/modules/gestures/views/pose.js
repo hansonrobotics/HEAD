@@ -1,6 +1,6 @@
 define(["marionette", "./templates/pose.tpl", 'lib/api'],
     function (Marionette, template, api) {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: template,
             tagName: 'span',
             className: 'app-emotion-slider-container',

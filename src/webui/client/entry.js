@@ -8,7 +8,8 @@ require(['eventemitter2', 'application',
         'modules/interaction/interaction_app',
         'modules/monitor/router',
         'modules/start/router',
-        'modules/settings/router'],
+        'modules/settings/router'
+    ],
     function (EventEmitter2, app) {
         app.start();
     });

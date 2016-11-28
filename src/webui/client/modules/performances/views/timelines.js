@@ -2,7 +2,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
         '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
         'lib/api', 'annyang', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar', 'scrollbar-css', 'scrollTo'],
     function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition, api, annyang) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
             config: {
@@ -59,10 +59,14 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         success: function () {
                             if (self.autoplay) self.run();
 
-                            var reload = function () {
-                                self.model.loadPerformance();
-                            };
-                            self.listenTo(self.model.nodes, 'change add remove', reload);
+                            if (self.readonly)
+                                self.model.enableSync();
+                            else {
+                                var reload = function () {
+                                    self.model.loadPerformance();
+                                };
+                                self.listenTo(self.model.nodes, 'change add remove', reload);
+                            }
                         }
                     };
 
@@ -74,7 +78,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 } else if (this.model) {
                     if (this.model.id && this.model.nodes.isEmpty()) {
                         this.model.load(loadOptions);
-                    } else
+                    } else if (this.readonly)
+                        this.model.enableSync();
+                    else
                         this.model.loadPerformance(loadOptions);
                 } else {
                     this.model = new Performance();
@@ -149,7 +155,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
 
                 // add resize event
                 var updateWidth = function () {
-                    if (self.isDestroyed)
+                    if (self.isDestroyed())
                         $(window).off('resize', updateWidth);
                     else
                         self.updateTimelineWidth();
@@ -163,11 +169,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.pauseIndicator(this.options.current_time);
             },
             onDestroy: function () {
-                this.stopIndicator();
-
                 this.model.stop();
                 if (typeof this.options.performances != 'undefined')
                     this.options.performances.eventHandler = false;
+
+                if (this.readonly) this.model.disableSync();
             },
             removeNodeElements: function () {
                 this.model.nodes.each(function (node) {
@@ -191,7 +197,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     handle = $('<span>').addClass('ui-resizable-handle ui-resizable-e ui-icon ui-icon-gripsmall-diagonal-se');
 
                 $(el).append(handle).resizable({
-                    handles: 'w, e',
+                    handles: 'e',
                     resize: function () {
                         var node = self.model.nodes.get({cid: $(this).data('node-id')});
                         node.set('duration', Math.round($(this).outerWidth() / self.config.pxPerSec * 100) / 100);
@@ -399,15 +405,16 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (this.ui.runIndicator.draggable('instance'))
                     this.ui.runIndicator.draggable('destroy');
 
-                this.ui.runIndicator.stop().css('left', startTime * this.config.pxPerSec).show()
+                this.ui.runIndicator.stop().css('left', startTime * this.config.pxPerSec)
                     .animate({left: endTime * this.config.pxPerSec}, {
                         duration: (endTime - startTime) * 1000,
                         easing: 'linear',
                         step: function () {
+                            if (self.isDestroyed()) return;
                             self.updateIndicatorTime();
                         },
                         complete: function () {
-                            if (self.isDestroyed) return;
+                            if (self.isDestroyed()) return;
                             if (typeof callback == 'function')
                                 callback();
                         }

@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Yantramanav';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/Yantramanav-Regular.ttf') format('eot'), url('./fonts/Yantramanav-Regular.ttf') format('truetype');
+}
+
 body {
     margin-top: 52px;
 }
@@ -299,4 +306,27 @@ span.select2-selection.select2-selection--single {
 
 .ps-container.ps-in-scrolling, .ps-container:hover.ps-in-scrolling {
     pointer-events: auto !important;
+}
+
+
+.hidden {
+    display: none;
+}
+
+/* SLIDER */
+.ui-slider-handle {
+    display: none;
+}
+
+.ui-slider {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;;
+    border-radius: 0 !important;;
+    border: none;
+}
+
+.ui-slider-range {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;;
+    border-radius: 0 !important;;
 }

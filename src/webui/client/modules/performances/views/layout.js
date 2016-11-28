@@ -3,7 +3,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
         'underscore', 'select2', 'select2-css'],
     function (Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
               QueueView, TimelinesView, $, _) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             cssClass: 'app-performances-page',
             regions: {
@@ -18,30 +18,32 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
             },
             ui: {
                 languageButton: '.app-language-select button',
-                container: '.app-performances-page'
+                container: '.app-performances-region'
             },
             events: {
                 'click @ui.languageButton': 'changeLanguage'
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['editing', 'autoplay']);
-                if (typeof this.editing == 'undefined') this.editing = true;
+                this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly']);
             },
-            onShow: function () {
-                this.setFluidContainer(!!this.options.fluid);
+            onRender: function () {
+                // fluid by default
+                this.setFluidContainer(this.fluid || typeof this.fluid == 'undefined');
                 this.performanceCollection = new PerformanceCollection();
 
                 var self = this,
                     queueView = new QueueView({
                         performances: self.performanceCollection,
-                        editing: this.editing,
+                        readonly: this.readonly,
                         autoplay: this.autoplay
                     }),
                     performancesView = new PerformancesView({
                         collection: self.performanceCollection,
                         queueView: queueView,
-                        editing: this.editing,
-                        autoplay: this.autoplay
+                        readonly: this.readonly,
+                        autoplay: this.autoplay,
+                        dir: this.dir,
+                        nav: this.nav
                     });
 
                 self.getRegion('queue').show(queueView);
@@ -49,7 +51,8 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
 
                 performancesView.on('new', queueView.editPerformance, queueView);
                 this.performanceCollection.fetch({
-                    success: function () {
+                    reset: true,
+                    success: function (response, collection) {
                         queueView.showCurrent();
                     }
                 });

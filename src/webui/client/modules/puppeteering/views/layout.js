@@ -4,7 +4,7 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
         'scrollbar', 'scrollbar-css'],
     function (App, Marionette, template, FadeInRegion, TimelineEditorView, InteractionView, FacesView, $, OperatorView,
               AnimationModeView, PosesView, AnimationsView, CrosshairsView) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 container: '.app-puppeteering-container',
@@ -54,7 +54,7 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                 // left col
                 this.posesView = new PosesView({config: {duration: {min: 1, max: 8}}});
                 this.animationModeView = new AnimationModeView();
-                this.timelineEditorView = new TimelineEditorView({fluid: true, editing: false, autoplay: true});
+                this.timelineEditorView = new TimelineEditorView({fluid: true, readonly: true, autoplay: true, nav: false});
 
                 // right col
                 this.chatView = new InteractionView({
@@ -79,7 +79,7 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                 this.getRegion('speech').show(this.speechView);
 
                 var updateDimensions = function () {
-                    if (self.isDestroyed)
+                    if (self.isDestroyed())
                         $(window).off('resize', updateDimensions);
                     else
                         self.updateDimensions();

@@ -1,7 +1,7 @@
 define(['application', 'marionette', './templates/node_settings.tpl', '../entities/node', 'lib/api', 'underscore',
         'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2', 'select2-css'],
     function (App, Marionette, template, Node, api, _, $) {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 nodeProperties: '[data-node-property]',
@@ -47,8 +47,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 'change @ui.noSpeechInput': 'updateNoSpeech',
                 'change @ui.chatbotSelect': 'updateChatbot',
                 'change @ui.chatTimeoutModeSelect': 'updateChatTimeoutMode',
-                'change @ui.onEventInput': 'updateOnEvent',
-
+                'change @ui.onEventInput': 'updateOnEvent'
             },
             modelEvents: {
                 change: 'modelChanged'
