@@ -107,8 +107,8 @@ if [[ $(id -u) != 0 ]]; then
     SUDO="sudo"
 fi
 
-APT_GET_OPTS="-y -qq"
-PIP_OPTS="-q"
+APT_GET_OPTS="-y"
+PIP_OPTS=""
 
 if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
     error "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
