@@ -13,7 +13,8 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
             },
             onRender: function () {
                 var self = this;
-
+                // disable select2
+                JSONEditor.defaults.editors.select.prototype.setupSelect2 = function() { this.select2 = null; };
                 this.editor = new JSONEditor(this.ui.settings.get(0), {
                     form_name_root: 'config',
                     theme: 'bootstrap3',
@@ -62,7 +63,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                         if (val && self.model.get('node_schema') && _.includes([Array, Object], val.constructor))
                             return JSON.stringify(val);
                         else
-                            return val;
+                            return val || '';
                     });
 
                     this.model.save(values, {

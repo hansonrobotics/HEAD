@@ -280,24 +280,27 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             },
             setSettingsEditor: function (schema) {
                 var self = this,
-                    values = new NodeConfig(this.model.get('rosnode'));
+                    nodeConfig = new NodeConfig(this.model.get('rosnode')),
+                    values = self.model.get('values');
 
                 var updateValues = function () {
                     var currentView = self.getRegion('settingsEditor').currentView;
-                    if (currentView && currentView.model == values)
-                        self.model.set('values', values.toJSON());
+                    if (currentView && currentView.model == nodeConfig)
+                        self.model.set('values', nodeConfig.toJSON());
                     else
-                        values.off('change', updateValues);
+                        nodeConfig.off('change', updateValues);
                 };
-                values.on('change', updateValues);
+
                 this.getRegion('settingsEditor').show(new SettingsView({
-                    model: values,
+                    model: nodeConfig,
                     schema: schema,
                     refresh: false
                 }));
-                values.fetch({
+
+                nodeConfig.on('change', updateValues);
+                nodeConfig.fetch({
                     success: function () {
-                        values.set(self.model.get('values'));
+                        nodeConfig.set(values);
                     }
                 });
             },
