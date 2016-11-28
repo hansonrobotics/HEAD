@@ -6,7 +6,7 @@ from transitions.extensions import HierarchicalMachine
 import rospy
 import rospkg
 import os
-import yaml
+import re
 import random
 from std_msgs.msg import String
 from blender_api_msgs.msg import Target, SomaState
@@ -208,10 +208,8 @@ class WholeShow(HierarchicalMachine):
         """ Finds performances which one of keyword matches"""
         performances = []
         for performance, keywords in self.get_keywords().items():
-            for keyword in keywords:
-                # Currently only simple matching
-                if keyword in speech:
-                    performances.append(performance)
+            if self.performance_keyword_match(keywords, speech):
+                performances.append(performance)
         return performances
 
     def get_keywords(self, performances=None, keywords=None, path='.'):
@@ -258,7 +256,16 @@ class WholeShow(HierarchicalMachine):
     def check_keywords(keywords, input):
         for k in keywords:
             if k.lower() in input.lower():
-                return  True
+                return True
+        return False
+
+    @staticmethod
+    def performance_keyword_match(keywords, input):
+        for keyword in keywords:
+            # Currently only simple matching
+            p = re.compile(r"\b{}\b".format(keyword))
+            if re.search(p, input):
+                return True
         return False
 
 
