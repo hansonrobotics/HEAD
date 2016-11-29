@@ -334,7 +334,7 @@ install_webui_deps() {
     # sudo apt-get remove nodejs
 
     # See https://github.com/nodesource/distributions#debinstall
-    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
     $SUDO apt-get install -y nodejs=6.9.1-1nodesource1~trusty1
 
     $SUDO npm install -g n webpack nodemon
