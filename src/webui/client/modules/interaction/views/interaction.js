@@ -426,7 +426,7 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                     annyang.abort();
                     annyang.removeCommands();
                     annyang.removeCallback();
-                    annyang.setLanguage(this.language == 'zh' ? 'zh-CN' : 'en-US');
+                    annyang.setLanguage(this.language == 'zh' ? 'cmn-Hans-CN' : 'en-US');
                     annyang.addCallback('start', function () {
                         console.log('starting speech recognition');
                         api.topics.chat_events.publish(new ROSLIB.Message({data: 'start'}));
