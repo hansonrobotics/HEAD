@@ -425,7 +425,7 @@ class chat(Node):
         if self.timeout and not self.talking:
             if (self.timeout_mode == 'each' and time.time() - self.last_turn_at >= self.timeout) or (
                             self.timeout_mode == 'whole' and time.time() - self.started_at >= self.timeout):
-                if 'no_speech' in self.data:
+                if 'no_speech' in self.data and self.data['no_speech']:
                     self.respond(self.data['no_speech'])
                 else:
                     self.add_turn()
@@ -478,6 +478,12 @@ class chat(Node):
         self.turns += 1
         self.last_turn_at = time.time()
 
+        if self.turns < self.dialog_turns and not (
+                        self.timeout_mode == 'whole' and time.time() - self.started_at >= self.timeout):
+            self.runner.topics['events'].publish(Event('chat', 0))
+        else:
+            self.resume()
+
     def resume(self):
         self.duration = 0
         self.runner.resume()
@@ -494,15 +500,9 @@ class chat(Node):
 
     def speech_event_callback(self, msg):
         event = msg.data
-
         if event == 'stop':
             self.add_turn()
             self.talking = False
-
-            if self.turns < self.dialog_turns:
-                self.runner.topics['events'].publish(Event('chat', 0))
-            else:
-                self.resume()
 
 
 class attention(Node):
