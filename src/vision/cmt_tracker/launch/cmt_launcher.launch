@@ -50,7 +50,7 @@
 
 <group if="$(arg choose_web_cam)">
     <param name= "usb_cam/pixel_format" value="yuyv"/>
-    <param name= "usb_cam/video_device" value="/dev/video0"/>
+    <param name= "usb_cam/video_device" value="/dev/video1"/>
     <param name= "camera_topic" value="/usb_cam/image_raw"/>
     <param name="emotime" value="False"/>
     <node pkg="usb_cam" name="usb_cam" type="usb_cam_node"/>

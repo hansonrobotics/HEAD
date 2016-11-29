@@ -24,19 +24,19 @@
   parser_param: jaw, sort_no: 23, speed: 15, topic: null}
 - {acceleration: 10, function: null, group: Neck, hardware: dynamixel, imax1: null,
   imax2: null, init: 2100, lin_max: null, lin_min: null, max: 2600, max1: null, max2: null,
-  min: 1200, motor_id: 4, name: Upper_Gimbal_L, other_func: '[{"name":"quaternion2dual","axis":"upright"},{"name":"linear","scale":1,"translate":0}]',
+  min: 1200, motor_id: 4, name: Upper_Gimbal_L, other_func: '[{"name":"quaternion2dual","axis":"upright"},{"name":"linear","scale":-1,"translate":0}]',
   parser: getproperty, parser_param: m_headRotation, sort_no: 31, speed: 0.4, topic: null}
 - {acceleration: 10, function: null, group: Neck, hardware: dynamixel, imax1: null,
   imax2: null, init: 2250, lin_max: null, lin_min: null, max: 3100, max1: null, max2: null,
-  min: 1700, motor_id: 3, name: Upper_Gimbal_R, other_func: '[{"name":"quaternion2dual","axis":"upleft"},{"name":"linear","scale":1,"translate":0}]',
+  min: 1700, motor_id: 3, name: Upper_Gimbal_R, other_func: '[{"name":"quaternion2dual","axis":"upleft"},{"name":"linear","scale":-1,"translate":0}]',
   parser: getproperty, parser_param: m_headRotation, sort_no: 32, speed: 0.4, topic: null}
 - {acceleration: 10, function: null, group: Neck, hardware: dynamixel, imax1: null,
   imax2: null, init: 2300, lin_max: null, lin_min: null, max: 2700, max1: null, max2: null,
-  min: 1700, motor_id: 2, name: Lower_Gimbal_L, other_func: '[{"name":"quaternion2dual","axis":"loleft"},{"name":"linear","scale":-1,"translate":0}]',
+  min: 1700, motor_id: 2, name: Lower_Gimbal_L, other_func: '[{"name":"quaternion2dual","axis":"loleft"},{"name":"linear","scale":1,"translate":0}]',
   parser: getproperty, parser_param: m_neckRotation, sort_no: 33, speed: 0.35, topic: null}
 - {acceleration: 10, function: null, group: Neck, hardware: dynamixel, imax1: null,
   imax2: null, init: 1900, lin_max: null, lin_min: null, max: 2300, max1: null, max2: null,
-  min: 1200, motor_id: 1, name: Lower_Gimbal_R, other_func: '[{"name":"quaternion2dual","axis":"loright"},{"name":"linear","scale":-1,"translate":0}]',
+  min: 1200, motor_id: 1, name: Lower_Gimbal_R, other_func: '[{"name":"quaternion2dual","axis":"loright"},{"name":"linear","scale":1,"translate":0}]',
   parser: getproperty, parser_param: m_neckRotation, sort_no: 34, speed: 0.35, topic: null}
 - {acceleration: 1, function: null, group: Neck, hardware: dynamixel, imax1: null,
   imax2: null, init: 2000, lin_max: null, lin_min: null, max: 3000, max1: null, max2: null,

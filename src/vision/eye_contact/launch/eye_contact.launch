@@ -1,0 +1,5 @@
+<launch>
+    <node name="eye_contact" pkg="eye_contact" type="eye_contact.py" output="screen">
+
+    </node>
+</launch>

@@ -4,7 +4,7 @@
     <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py" respawn="True" />
     <node name="pololu" pkg="ros_pololu" type="ros_pololu_node.py" output="screen">
         <param name="pololu_motors_yaml" value="$(find robots_config)/robot/default.yaml" />
-        <param name="port_name" value="/dev/ttyACM0" />
+        <param name="port_name" value="/dev/serial/by-id/usb-Pololu_Corporation_Pololu_Mini_Maestro_24-Channel_USB_Servo_Controller_00103480-if00" />
         <param name="topic_prefix" value="default/" />
         <param name="controller" value="Maestro" />
         <param name="sync" value="on" />
@@ -26,7 +26,7 @@
                 namespace: dxl_manager
                 serial_ports:
                     default:
-                        port_name: "/dev/ttyUSB0"
+                        port_name: "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AI027ZMI-if00-port0"
                         baud_rate: 1000000
                         min_motor_id: 0
                         max_motor_id: 7
