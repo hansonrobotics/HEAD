@@ -556,7 +556,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.pauseIndicator(e.time);
                     this.model.b_pause(e);
                 } else if (e.event == 'idle') {
-                    this.disableChat();
                     this.stopIndicator();
                 } else if (e.event == 'running')
                     this.startIndicator(e.time, duration);
