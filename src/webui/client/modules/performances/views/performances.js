@@ -59,7 +59,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 var performances = new Backbone.Collection(this.collection.where({path: this.currentPath})),
                     names = performances.pluck('name'),
                     performance = new Performance({
-                        name: this.getNextName('Performance', names),
+                        name: this.getNextName(path.basename(this.currentPath) || 'Performance', names),
                         path: this.currentPath
                     });
 
