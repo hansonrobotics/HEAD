@@ -265,19 +265,23 @@ install_test_deps() {
     $SUDO apt-get ${APT_GET_OPTS} install socat
     $SUDO apt-get ${APT_GET_OPTS} install xdotool
 
-    $SUDO apt-get ${APT_GET_OPTS} install npm
-    $SUDO npm install -g n
     # WebUI compatable webserver
-    $SUDO n 6.6.0
     $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
     info "Installing test dependencies is done"
 }
 
 install_webui_deps() {
-    sudo apt-get ${APT_GET_OPTS} install npm
-    sudo npm install -g n webpack nodemon
-    sudo n 6.6.0
-    sudo ln -sf /usr/local/n/versions/node/6.6.0/bin/node /usr/bin/node
+    # Remove npm and nodejs if needed
+    # sudo npm uninstall -g npm
+    # sudo apt-get remove nodejs
+
+    # See https://github.com/nodesource/distributions#debinstall
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    $SUDO apt-get install -y nodejs=6.9.1-1nodesource1~trusty1
+
+    $SUDO npm install -g n webpack nodemon
+    $SUDO n 6.9.1
+    $SUDO ln -sf /usr/local/n/versions/node/6.9.1/bin/node /usr/bin/node
 }
 
 
