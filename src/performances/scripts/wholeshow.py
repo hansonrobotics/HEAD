@@ -271,11 +271,5 @@ class WholeShow(HierarchicalMachine):
 
 
 if __name__ == '__main__':
-    w = WholeShow()
-    while not rospy.is_shutdown():
-        time.sleep(1)
-        # Update keywords every 10 seconds
-        if int(time.time()) % 10 == 0:
-            w.find_performances_properties()
-
-
+    WholeShow()
+    rospy.spin()
