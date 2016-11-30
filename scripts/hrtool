@@ -15,7 +15,9 @@ HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
 HR_CACHE=~/.hr/cache
 APT_CACHE=0
+PIP_CACHE=0
 APT_CACHE_DIR=$HOME/.hr/archives
+PIP_CACHE_DIR=$HOME/.hr/pip
 HR_MODELS=~/.hr/models
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
@@ -110,11 +112,14 @@ if [[ $(id -u) != 0 ]]; then
     SUDO="sudo"
 fi
 
-APT_CACHE_OPTS="-o dir::cache::archives=$APT_CACHE_DIR"
 APT_GET_OPTS="-y"
-PIP_OPTS=""
 if [[ $APT_CACHE == 1 ]]; then
-    APT_GET_OPTS="$APT_GET_OPTS $APT_CACHE_OPTS"
+    APT_GET_OPTS="$APT_GET_OPTS -o dir::cache::archives=$APT_CACHE_DIR"
+fi
+
+PIP_OPTS=""
+if [[ $PIP_CACHE == 1 ]]; then
+    PIP_OPTS="$PIP_OPTS --download-cache $PIP_CACHE_DIR"
 fi
 
 if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
@@ -131,6 +136,12 @@ if [[ ! -d $APT_CACHE_DIR ]]; then
     info "Creating $APT_CACHE_DIR"
     mkdir -p $APT_CACHE_DIR
 fi
+
+if [[ ! -d $PIP_CACHE_DIR ]]; then
+    info "Creating $PIP_CACHE_DIR"
+    mkdir -p $PIP_CACHE_DIR
+fi
+
 
 install_basic() {
     info "Installing basic dependencies"
