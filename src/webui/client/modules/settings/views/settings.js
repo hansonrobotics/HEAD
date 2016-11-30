@@ -63,7 +63,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                         if (val && self.model.get('node_schema') && _.includes([Array, Object], val.constructor))
                             return JSON.stringify(val);
                         else
-                            return val || '';
+                            return val;
                     });
 
                     this.model.save(values, {
