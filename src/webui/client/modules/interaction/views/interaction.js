@@ -420,7 +420,8 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                 if (this.messages[language]) this.collection.add(this.messages[language].models);
             },
             enableWebspeech: function () {
-                var self = this;
+                let self = this;
+                self.speechEnabled = true;
 
                 if (annyang) {
                     annyang.abort();
@@ -440,6 +441,16 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                         api.topics.chat_events.publish(new ROSLIB.Message({data: 'end'}));
 
                         self.onSpeechDisabled();
+
+                        let restart = setInterval(function () {
+                            if (self.speechEnabled) {
+                                if (!annyang.isListening()) {
+                                    self.enableWebspeech();
+                                    clearInterval(restart);
+                                }
+                            } else
+                                clearInterval(restart);
+                        }, 1000);
                     });
 
                     annyang.addCallback('error', function (error) {
@@ -461,6 +472,7 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                 }
             },
             disableWebspeech: function () {
+                self.speechEnabled = false;
                 if (annyang) annyang.abort();
             },
             recognitionButtonClick: function (e) {
