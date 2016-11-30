@@ -20,7 +20,7 @@
 
 using namespace std;
 using namespace cv;
-
+    double ID;
 	Size imSize(320,240);
 	BlockTimer bt;
 	FastSalience salTracker;
@@ -100,6 +100,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         ros_nmpt_saliency::targets trg;
         trg.positions.push_back(pt);
         trg.degree=degree;
+        trg.id= ID;
         pub.publish(trg);
         vizRect = viz(Rect(im.cols,0,im.cols, im.rows));
         cvtColor(sal, vizRect, CV_GRAY2BGR);
@@ -129,6 +130,8 @@ vector< vector<double> > degreeHandler(10000, vector<double>(5,0)); //Salient Po
 double DegreeVal, defaultMax; // holds random degree value during init
 double turn_around_time=1;
 
+
+
 /* This method computes the degree of salient points identified through time.
 - It computes the frequency of identified points over a fixed time interval t.
 - The maximum possible freq. per t is used to normzlie the frequency.
@@ -137,6 +140,7 @@ double turn_around_time=1;
 /* put this under degree.cpp and include degree.h here*/
 double getdegree(double x, double y)
 {
+    
     /*   */
     timel+=bt.getCurrTime(0);
     int flag=0; //for the purpose of switchin to "Add as unique salient point mode"
@@ -206,7 +210,7 @@ double getdegree(double x, double y)
                     degreeHandler[i][4] = timel;
                 }
                 degreeHandler[i][2] = timel;
-
+                ID= i;
                 break; // jump out from the loop given the point group is found
             }
             else { continue;  } // loop till it get the end or find the group
@@ -223,7 +227,11 @@ double getdegree(double x, double y)
             degreeHandler[counter][4] = timel;
             degreeHandler[counter][5]=timel;
             ++counter;
+            ID= counter;
         }
+        
+        
+        
     }
 
 
