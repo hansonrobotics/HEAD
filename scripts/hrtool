@@ -178,7 +178,7 @@ install_ros() {
     $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-image-proc
 
     # for blender to find ros packages
-    $SUDO pip3 ${PIP_OPTS} install rospkg catkin_pkg
+    $SUDO pip3 install ${PIP_OPTS} rospkg catkin_pkg
 
     set +e
     $SUDO rosdep init -q
@@ -201,7 +201,7 @@ install_opencog_deps() {
     install_relex_deps
 
     # For sentiment analysis
-    $SUDO pip2 ${PIP_OPTS} install nltk
+    $SUDO pip2 install ${PIP_OPTS} nltk
     $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
 
     # For random sentence generator
@@ -258,7 +258,7 @@ install_other_deps() {
     $SUDO apt-get ${APT_GET_OPTS} install blender
 
     # For webui
-    $SUDO pip2 ${PIP_OPTS} install flask EasyProcess psutil
+    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
 
     # For rosbridge_server
     $SUDO apt-get ${APT_GET_OPTS} install python-bson
@@ -305,10 +305,10 @@ install_other_deps() {
     # Swig for iflytek SDK
     $SUDO apt-get -y install swig
 
-    $SUDO pip2 ${PIP_OPTS} install pinyin==0.2.5
+    $SUDO pip2 install ${PIP_OPTS} pinyin==0.2.5
 
     # For speech2command
-    $SUDO pip2 ${PIP_OPTS} install pyparsing
+    $SUDO pip2 install ${PIP_OPTS} pyparsing
 
     # For rospy to run with python3
     $SUDO apt-get ${APT_GET_OPTS} install python3-yaml
@@ -369,8 +369,8 @@ install_vision_deps() {
     $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-opencv-apps
 
     # Tkinter error other wise.
-    $SUDO pip2 ${PIP_OPTS} install -I Pillow
-    $SUDO pip2 ${PIP_OPTS} install imgurpython
+    $SUDO pip2 install ${PIP_OPTS} -I Pillow
+    $SUDO pip2 install ${PIP_OPTS} imgurpython
 
     if [[ ! -d $DLIB_PATH ]]; then
       info "Installing dlib"
@@ -429,7 +429,7 @@ install_vision_deps() {
     # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
     info "Installing openface"
     $SUDO apt-get ${APT_GET_OPTS} install python-skimage
-    $SUDO pip2 ${PIP_OPTS} install numpy pandas scipy scikit-learn
+    $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy scikit-learn
 
     if [ ! -d $OPENFACE_DIR ]; then
       info "Cloning openface"
@@ -707,8 +707,8 @@ _do_build_hr() {
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status --make-args install
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
-    pip2 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
-    pip3 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
+    pip2 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
+    pip3 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
     cd $HR_WORKSPACE/$PROJECT/src/webui
     npm install
 }
