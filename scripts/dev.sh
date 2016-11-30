@@ -140,7 +140,6 @@ if [[ $OC_CHATBOT == 1 ]]; then
   tmux new-window -n 'sound' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/sound; ./audioclass.py; $SHELL"
 else
   tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"
-  
 fi
 
 tmux new-window -n 'fce' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./main.py; $SHELL"

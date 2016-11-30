@@ -53,7 +53,7 @@ generate_messages(
    DEPENDENCIES
    std_msgs  # Or other packages containing msgs
  )
- 
+
  catkin_package(CATKIN_DEPENDS message_runtime
 )
 
