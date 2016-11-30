@@ -14,6 +14,8 @@ DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
 HR_CACHE=~/.hr/cache
+APT_CACHE=0
+APT_CACHE_DIR=$HOME/.hr/archives
 HR_MODELS=~/.hr/models
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
@@ -108,8 +110,12 @@ if [[ $(id -u) != 0 ]]; then
     SUDO="sudo"
 fi
 
+APT_CACHE_OPTS="-o dir::cache::archives=$APT_CACHE_DIR"
 APT_GET_OPTS="-y"
 PIP_OPTS=""
+if [[ $APT_CACHE == 1 ]]; then
+    APT_GET_OPTS="$APT_GET_OPTS $APT_CACHE_OPTS"
+fi
 
 if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
     error "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
@@ -119,6 +125,11 @@ fi
 if [[ ! -d $HR_CACHE ]]; then
     info "Creating $HR_CACHE"
     mkdir -p $HR_CACHE
+fi
+
+if [[ ! -d $APT_CACHE_DIR ]]; then
+    info "Creating $APT_CACHE_DIR"
+    mkdir -p $APT_CACHE_DIR
 fi
 
 install_basic() {
