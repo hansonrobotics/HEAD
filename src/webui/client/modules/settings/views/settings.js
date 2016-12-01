@@ -46,7 +46,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     values = this.model.toJSON();
 
                 values = _.mapValues(values, function (val, key) {
-                    if (values['node_schema'] && self.schema['properties'][key] && _.contains(['array', 'object'], self.schema['properties'][key]['type']))
+                    if (values['node_schema'] && self.schema['properties'][key] && _.includes(['array', 'object'], self.schema['properties'][key]['type']))
                         return JSON.parse(val);
                     return val;
                 });
