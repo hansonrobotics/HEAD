@@ -1,4 +1,5 @@
-define(["marionette", "./animation", './templates/animations.tpl', 'entities/gesture_collection', 'lib/utilities', 'jquery-ui'],
+define(["marionette", "./animation", './templates/animations.tpl', 'entities/gesture_collection', 'lib/utilities',
+        'jquery-ui', './css/gestures'],
     function (Marionette, GestureView, template, GestureCollection, Utils) {
         return Marionette.CompositeView.extend({
             childView: GestureView,
@@ -34,7 +35,7 @@ define(["marionette", "./animation", './templates/animations.tpl', 'entities/ges
                     this.config = Utils.extendRecursive(this.config, options.config);
             },
             childViewOptions: function () {
-                var self = this;
+                let self = this;
                 return {
                     config: this.config,
                     getSliderValues: function () {
@@ -49,7 +50,7 @@ define(["marionette", "./animation", './templates/animations.tpl', 'entities/ges
                 return this.config;
             },
             onRender: function () {
-                var self = this;
+                let self = this;
 
                 // init speed slider
                 this.ui.speedSlider.slider({
@@ -59,7 +60,7 @@ define(["marionette", "./animation", './templates/animations.tpl', 'entities/ges
                     value: this.config.speed.current * 100,
                     animate: true,
                     change: function (e, ui) {
-                        var speed = ui.value / 100.0;
+                        let speed = ui.value / 100.0;
 
                         // update ui label
                         self.ui.speedValue.html(speed);

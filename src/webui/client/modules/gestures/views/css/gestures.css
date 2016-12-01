@@ -1,0 +1,14 @@
+.app-emotion-sliders {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.app-gesture-button,
+.app-pose-button {
+    margin-bottom: 5px;
+}
+
+.app-slider-value-container {
+    text-indent: 5px;
+}

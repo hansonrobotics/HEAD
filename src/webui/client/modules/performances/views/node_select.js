@@ -166,10 +166,11 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     this.ui.btreeModeSelect.val(this.model.get('mode'));
                     $(self.ui.btreeModeSelect).select2();
                 }
+
                 if (this.model.hasProperty('rosnode')) {
-                    this.setSettingsEditor(this.model.get('schema'));
+                    this.showNodeSettings(this.model.get('schema'));
                     this.listenTo(this.model, 'change:rosnode', function () {
-                        self.updateSettingsSchema();
+                        self.changeRosNode();
                     });
                 }
 
@@ -262,30 +263,31 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             updateSomaStates: function (somas) {
                 this.initList(somas, 'soma', this.ui.somaList);
             },
-            updateSettingsSchema: function () {
+            changeRosNode: function () {
                 var self = this,
                     rosnode = this.model.get('rosnode'),
                     schema = new NodeConfigSchema(rosnode);
 
+                this.model.set('values', {});
                 schema.fetch({
                     success: function (model) {
                         var schema = model.toJSON();
                         self.model.set('schema', schema);
-                        self.setSettingsEditor(schema);
+                        self.showNodeSettings(schema);
                     },
                     error: function () {
                         self.model.set('schema', {});
                     }
                 });
             },
-            setSettingsEditor: function (schema) {
+            showNodeSettings: function (schema) {
                 var self = this,
                     nodeConfig = new NodeConfig(this.model.get('rosnode')),
                     values = self.model.get('values');
 
                 var updateValues = function () {
                     var currentView = self.getRegion('settingsEditor').currentView;
-                    if (currentView && currentView.model == nodeConfig)
+                    if (currentView && currentView.model === nodeConfig)
                         self.model.set('values', nodeConfig.toJSON());
                     else
                         nodeConfig.off('change', updateValues);
