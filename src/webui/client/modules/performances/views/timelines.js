@@ -322,10 +322,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                                 compareEnd = compareBegin + model.get('duration');
 
                             // check if intersects
-                            if ((compareBegin <= begin && compareEnd > begin) ||
-                                (compareBegin < end && compareEnd >= end) ||
-                                (compareBegin <= begin && compareEnd >= end)
-                            ) {
+                            if (!(compareBegin >= end || compareEnd <= begin)) {
                                 available = false;
                             }
                         }
