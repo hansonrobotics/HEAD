@@ -18,6 +18,7 @@ APT_CACHE=0
 PIP_CACHE=0
 APT_CACHE_DIR=$HOME/.hr/archives
 PIP_CACHE_DIR=$HOME/.hr/pip
+LOG_DIR="$HOME/.hr/log"
 HR_MODELS=~/.hr/models
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
@@ -54,14 +55,19 @@ COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
 COLOR_ERROR='\033[31m'
 COLOR_RESET='\033[0m'
+if [[ ! -d $LOG_DIR/install ]]; then
+    mkdir -p $LOG_DIR/install
+fi
+LOG_FILE=$(mktemp -p $LOG_DIR/install)
+
 info() {
-    printf "${COLOR_INFO}[INFO] ${1}${COLOR_RESET}\n"
+    printf "${COLOR_INFO}[INFO] ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 warn() {
-    printf "${COLOR_WARN}[WARN] ${1}${COLOR_RESET}\n"
+    printf "${COLOR_WARN}[WARN] ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 error() {
-    printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
+    printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 
 md5str() {
