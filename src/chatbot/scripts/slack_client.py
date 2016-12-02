@@ -179,7 +179,7 @@ class HRSlackBot(object):
         self.send_message(channel, attachments)
 
 if __name__ == '__main__':
-    logging.basicConfig()
+    logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
     logging.getLogger().setLevel(logging.INFO)
     logging.getLogger('urllib3').setLevel(logging.WARN)
     host = 'localhost'
