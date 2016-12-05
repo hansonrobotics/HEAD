@@ -196,6 +196,19 @@ def _ask_characters(characters, question, lang, sid, query):
                     pass
             sess.cache.that_question = None
 
+    for c, weight in weighted_characters:
+        if c.is_favorite(_question):
+            _response = c.respond(_question, lang, sess, query)
+            _answer = _response.get('text')
+            if _answer:
+                hit_character = c
+                cross_trace.append((c.id, 'favorite', response.get('trace') or 'No trace'))
+                answer = _answer
+                response = _response
+                break
+            else:
+                cross_trace.append((c.id, 'favorite', 'No answer'))
+
     # If the last input is a question, then try to use the same tier to
     # answer it.
     if not answer:
