@@ -48,6 +48,9 @@ class Character(object):
     def is_command(self, question):
         return False
 
+    def is_favorite(self, question):
+        return False
+
     def __repr__(self):
         return "<Character id: {}, name: {}, level: {}>".format(
             self.id, self.name, self.level)
