@@ -255,7 +255,7 @@ def _ask_characters(characters, question, lang, sid, query):
     # Select tier that is designed to be proper to answer the question
     if not answer:
         for c, weight in weighted_characters:
-            if c.is_favorite(_question):
+            if weight != 0 and c.is_favorite(_question):
                 _response = c.respond(_question, lang, sess, query)
                 _answer = _response.get('text')
                 if _answer:
