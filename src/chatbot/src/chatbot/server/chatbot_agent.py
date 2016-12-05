@@ -196,6 +196,13 @@ def _ask_characters(characters, question, lang, sid, query):
                     pass
             sess.cache.that_question = None
 
+    reduction = get_character('reduction')
+    if reduction is not None:
+        _response = reduction.respond(_question, lang, sess, query=True)
+        reducted_text = _response.get('text')
+        if reducted_text:
+            _question = reducted_text
+
     for c, weight in weighted_characters:
         if c.is_favorite(_question):
             _response = c.respond(_question, lang, sess, query)
