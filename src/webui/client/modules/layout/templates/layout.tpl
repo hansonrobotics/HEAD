@@ -19,7 +19,7 @@
         </div>
         <div id="app-nav" class="collapse navbar-collapse">
             <ul id="app-user-nav" class="nav navbar-nav navbar-right">
-                <li><a href="#/puppeteering">Puppeteering</a></li>
+                <li><a href="#/">Puppeteering</a></li>
                 <li><a href="#/performances">Performances</a></li>
                 <li><a href="#/expressions">Expressions</a></li>
                 <li><a href="#/motors">Motors</a></li>
