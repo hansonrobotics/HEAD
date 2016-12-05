@@ -13,9 +13,13 @@ PROJECT=${PROJECT:-HEAD}
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
-APT_CACHE=0
-PIP_CACHE=0
 HR_CACHE=$HOME/.hr/cache
+if [[ -z $APT_CACHE ]]; then
+    APT_CACHE=0
+fi
+if [[ -z $PIP_CACHE ]]; then
+    PIP_CACHE=0
+fi
 APT_CACHE_DIR=$HR_CACHE/archives
 PIP_CACHE_DIR=$HR_CACHE/pip
 LOG_DIR="$HOME/.hr/log"
