@@ -40,6 +40,7 @@ def load_dyn_properties():
                     '{:.0f}'.format(weather['main'].get('temp')-kelvin)
         if 'weather' in weather and weather['weather']:
             dyn_properties['weather'] = weather['weather'][0]['description']
+    logger.info("Update dynamic properties {}".format(dyn_properties))
 
 load_dyn_properties()
 
