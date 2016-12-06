@@ -41,7 +41,7 @@ class AudioSensor(object):
         # respectively
         THRESHOLD = 25  # Test and modification of this constant is required
         if max(self.d) - min(self.d) > THRESHOLD:
-            return 10
+            return 1
         else:
             return 0
 
