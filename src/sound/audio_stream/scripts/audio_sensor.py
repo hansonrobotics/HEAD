@@ -3,6 +3,7 @@
 import rospy
 import math
 import struct
+import numpy as np
 from collections import deque
 from std_msgs.msg import Float32, UInt8MultiArray
 from audio_stream.msg import audiodata
@@ -27,12 +28,12 @@ class AudioSensor(object):
 
     def get_decibel(self, block):
         # The Energy of Sound per chunk is calculated
-        # get 1 val for each two char(byte)
-        count = len(block) / 2
-        SQUARE = 0.0
-        for i in block:
-            SQUARE = SQUARE + math.pow(abs(i), 2)
-        p = 20 * math.log10(math.sqrt((SQUARE / count)))
+        a = np.asarray(block)
+        rms = np.sqrt(np.mean(np.absolute(a)**2))
+        if rms > 1:
+            p = 20 * math.log10(rms)
+        else:
+            p = 0
         return p
 
     def suddenChanges(self):
