@@ -488,7 +488,7 @@ def ask(question, lang, sid, query=False):
             response.update(c.respond(question, lang, sess, query))
             return response, SUCCESS
 
-    sess.characters = responding_characters
+    sess.set_characters(responding_characters)
     if question:
         question = question.lower().strip()
         if 'hi' in question or 'hello' in question:
