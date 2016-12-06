@@ -138,7 +138,7 @@ class speech(Node):
             text = self._add_ssml(text)
         variables = re.findall("{(.*?)}", text)
         for var in variables:
-            val = self.runner.get_property(self.id, var) or ''
+            val = self.runner.get_variable(self.id, var) or ''
             text = text.replace('{' + var + '}', val)
         self.runner.topics['tts'][lang].publish(String(text))
 
