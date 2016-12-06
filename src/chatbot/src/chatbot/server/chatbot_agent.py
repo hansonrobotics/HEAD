@@ -265,7 +265,11 @@ def _ask_characters(characters, question, lang, sid, query):
                     response = _response
                     break
                 else:
-                    cross_trace.append((c.id, 'favorite', 'No answer'))
+                    if _response.get('repeat'):
+                        cross_trace.append((c.id, 'favorite', 'Repetitive answer'))
+                        cached_responses['repeat'].append((_response, _response.get('repeat'), c))
+                    else:
+                        cross_trace.append((c.id, 'favorite', 'No answer'))
 
     # Check the last used character
     if not answer:
