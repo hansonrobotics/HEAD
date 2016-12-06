@@ -1,4 +1,5 @@
-define(['backgrid', 'backgrid-css', 'jquery', 'backgrid-text-cell', 'backgrid-text-cell-css'], function (Backgrid, $) {
+define(['backgrid', 'backgrid-css', 'jquery', 'backgrid-text-cell', 'backgrid-text-cell-css',
+    '../backgrid/motor_values_cell'], function (Backgrid, $) {
     return [{
         // enable the select-all extension
         name: "",
@@ -39,15 +40,15 @@ define(['backgrid', 'backgrid-css', 'jquery', 'backgrid-text-cell', 'backgrid-te
     }, {
         name: "min",
         label: "Min",
-        cell: "integer"
+        cell: "motor-values"
     }, {
         name: "init",
         label: "Init",
-        cell: "integer"
+        cell: "motor-values"
     }, {
         name: "max",
         label: "Max",
-        cell: "integer"
+        cell: "motor-values"
     }, {
         name: "speed",
         label: "Speed",

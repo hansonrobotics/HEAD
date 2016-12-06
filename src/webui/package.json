@@ -36,6 +36,7 @@
     "lodash": "^4.15.0",
     "mkdirp": "^0.5.1",
     "multilevelpushmenu": "github:adgsm/multi-level-push-menu",
+    "nouislider": "^9.0.0",
     "perfect-scrollbar": "^0.6.12",
     "python-shell": "^0.4.0",
     "roslib": "^0.18.0",
