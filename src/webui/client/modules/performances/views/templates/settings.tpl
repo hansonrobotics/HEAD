@@ -9,14 +9,16 @@
 
     <div class="tab-content">
         <div role="tabpanel" class="app-settings-tab-content tab-pane fade active">
+            <h4>Keywords</h4>
             <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon">Keywords</div>
-                    <input type="text" class="app-keywords form-control" placeholder="Keywords">
-                    <span class="input-group-btn"><button type="button"
-                                                          class="app-save-keywords btn btn-primary">Save</button></span>
-                </div>
+                <input type="text" class="app-keywords form-control" placeholder="Keywords">
             </div>
+
+            <h4>Pause behavior while running</h4>
+            <div class="form-group">
+                <button type="button" class="app-pause-behavior-toggle btn btn-default active">Enable</button>
+            </div>
+
             <h4>Variables</h4>
             <div class="app-variable-template hidden">
                 <div class="form-group">
@@ -38,8 +40,8 @@
                 <button type="button" class="app-add-variable-btn btn btn-warning"><span
                         class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add variable
                 </button>
-                <button class="app-save-variables-btn btn btn-primary"><span class="glyphicon glyphicon-save"
-                                                                             aria-hidden="true"></span> Save
+                <button class="app-save-btn btn btn-primary"><span class="glyphicon glyphicon-save"
+                                                                   aria-hidden="true"></span> Save
                 </button>
             </div>
         </div>

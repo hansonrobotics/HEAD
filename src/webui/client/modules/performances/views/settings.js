@@ -1,17 +1,18 @@
-define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fade_in', './attention_regions', 'lib/api', 'path'],
-    function (App, Marionette, template, FadeInRegion, AttentionRegionsView, api, path) {
+define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fade_in', './attention_regions', 'lib/api'
+        , 'path', '../entities/settings'],
+    function (App, Marionette, template, FadeInRegion, AttentionRegionsView, api, path, Settings) {
         return Marionette.View.extend({
             template: template,
             ui: {
+                pauseBehaviorToggle: '.app-pause-behavior-toggle',
                 keywords: '.app-keywords',
-                saveKeywordsButton: '.app-save-keywords',
                 tabs: '.app-tabs a',
                 settingsTab: '.app-settings-tab',
                 attentionTab: '.app-attention-tab',
                 variableTemplate: '.app-variable-template',
                 variableContainer: '.app-variables-container',
                 addVariableButton: '.app-add-variable-btn',
-                saveVariablesButton: '.app-save-variables-btn',
+                saveButton: '.app-save-btn',
                 removeVariableButton: '.app-remove-variable-btn'
             },
             regions: {
@@ -21,92 +22,91 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                 }
             },
             events: {
-                'click @ui.saveKeywordsButton': 'saveKeywords',
                 'click @ui.addVariableButton': 'addVariable',
+                'click @ui.pauseBehaviorToggle': 'togglePauseBehavior',
                 'click @ui.removeVariableButton': 'removeVariable',
-                'click @ui.saveVariablesButton': 'updateVariables'
+                'click @ui.saveButton': 'save'
             },
             initialize: function (options) {
-                this.performancePath = options.performancePath || '.';
+                this.mergeOptions(options, ['path']);
+                if (!this.model) this.model = new Settings({path: this.path});
             },
             onRender: function () {
-                var self = this;
-                self.fetchKeywords();
-                self.fetchVariables();
+                let self = this;
+                this.model.fetch({
+                    success: function () {
+                        self.showKeywords();
+                        self.showVariables();
+                        self.showPauseBehaviorSwitch();
+                    }
+                });
+
                 this.ui.tabs.on('shown.bs.tab', function (e) {
                     if ($(e.target).is(self.ui.attentionTab))
-                        self.getRegion('selectAreas').show(new AttentionRegionsView({performancePath: self.performancePath}));
+                        self.getRegion('selectAreas').show(new AttentionRegionsView({path: self.path}));
                 });
+
                 this.ui.settingsTab.tab('show');
             },
-            fetchKeywords: function () {
-                var self = this;
-                $.ajax({
-                    method: 'GET',
-                    url: path.join('/keywords', this.performancePath),
-                    success: function (data) {
-                        self.ui.keywords.val(data['keywords'].join(', '));
-                    }
-                });
-            },
-            saveKeywords: function () {
-                var self = this;
-                $.ajax({
-                    method: 'POST',
-                    url: path.join('/keywords', this.performancePath),
-                    data: JSON.stringify({
-                        path: this.performancePath,
-                        keywords: this.ui.keywords.val().split(',')
-                    }),
+            save: function () {
+                let self = this;
+
+                this.setVariables();
+                this.setKeywords();
+
+                this.model.save({}, {
                     success: function () {
-                        App.Utilities.showPopover(self.ui.saveKeywordsButton, 'Saved', 'right');
+                        console.log('success');
+                        App.Utilities.showPopover(self.ui.saveButton, 'Saved', 'right');
                     },
                     error: function () {
-                        App.Utilities.showPopover(self.ui.saveKeywordsButton, 'Error', 'right');
+                        App.Utilities.showPopover(self.ui.saveButton, 'Unable to save', 'right');
                     }
+                })
+            },
+            showVariables: function () {
+                let self = this;
+                $.each(this.model.get('variables') || {}, function (key, value) {
+                    self.addVariable(key, value);
                 });
             },
-            fetchVariables: function () {
-                var self = this;
-                $.ajax({
-                    method: 'GET',
-                    url: path.join('/performance/variables', this.performancePath),
-                    success: function (data) {
-                        $.each(data, function (key, value) {
-                            self.addVariable(key, value);
-                        });
-                    },
-                    error: function () {
-                        console.log('Error fetching performance variables');
-                    }
-                });
+            showKeywords: function () {
+                this.ui.keywords.val((this.model.get('keywords') || []).join(', '));
             },
-            updateVariables: function () {
-                var self = this,
-                    variables = {},
+            showPauseBehaviorSwitch: function () {
+                let pauseBehavior = this.model.get('pause_behavior');
+                if ((typeof pauseBehavior == 'boolean' && pauseBehavior) || typeof pauseBehavior != 'boolean')
+                    this.ui.pauseBehaviorToggle.addClass('active');
+                else
+                    this.ui.pauseBehaviorToggle.removeClass('active').blur();
+            },
+            setKeywords: function () {
+                let keywords = _.map(this.ui.keywords.val().split(','), function (k) {
+                    return k.trim();
+                });
+
+                this.model.set('keywords', keywords);
+            },
+            setVariables: function () {
+                let variables = {},
                     inputs = $('input', this.ui.variableContainer);
 
-                for (var i = 0; i < inputs.length / 2; i++) {
-                    var key = $(inputs[i * 2]).val(),
+                for (let i = 0; i < inputs.length / 2; i++) {
+                    let key = $(inputs[i * 2]).val(),
                         val = $(inputs[i * 2 + 1]).val();
 
                     if (key && val) variables[key] = val;
                 }
 
-                $.ajax({
-                    method: 'POST',
-                    url: path.join('/performance/variables', this.performancePath),
-                    data: JSON.stringify(variables),
-                    success: function () {
-                        App.Utilities.showPopover(self.ui.saveVariablesButton, 'Saved', 'right');
-                    },
-                    error: function () {
-                        App.Utilities.showPopover(self.ui.saveVariablesButton, 'Error', 'right');
-                    }
-                });
+                this.model.set('variables', variables);
+            },
+            togglePauseBehavior: function () {
+                this.model.set('pause_behavior', !this.ui.pauseBehaviorToggle.hasClass('active'));
+                this.showPauseBehaviorSwitch();
+                
             },
             addVariable: function (key, value) {
-                var field = this.ui.variableTemplate.clone().find('.form-group');
+                let field = this.ui.variableTemplate.clone().find('.form-group');
                 if (key && value) {
                     field.find('.app-key-input').val(key);
                     field.find('.app-value-input').val(value);

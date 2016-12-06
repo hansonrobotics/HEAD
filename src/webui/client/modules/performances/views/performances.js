@@ -192,7 +192,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
             },
             showSettings: function () {
                 var settingsView = new SettingsView({
-                    performancePath: this.currentPath
+                    path: this.currentPath
                 });
 
                 bootbox.dialog({
