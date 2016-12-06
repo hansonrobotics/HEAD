@@ -16,6 +16,7 @@ class AudioSensor(object):
             'audio_sensors', audiodata, queue_size=1)
         rospy.Subscriber('speech_audio', UInt8MultiArray, self.audio_cb)
         self.d = deque(maxlen=5)
+        self.freqs = deque(maxlen=10)
         self.rate = rospy.get_param('audio_rate', 16000)
 
     def convData(self, V):
@@ -48,12 +49,22 @@ class AudioSensor(object):
     def audio_cb(self, msg):
         AudioData = self.convData(msg.data)
         Decibel = self.get_decibel(AudioData)
+        freq = freq_from_fft(AudioData, self.rate)
         self.d.append(Decibel)
+        self.freqs.append(freq)
 
         msg2 = audiodata()
         msg2.Decibel = Decibel
-        msg2.Frequency = freq_from_fft(AudioData, self.rate)
+        msg2.Frequency = freq
         msg2.SuddenChange = self.suddenChanges()
+
+        # https://en.wikipedia.org/wiki/Voice_frequency
+        # The voiced speech of a typical adult male will have a fundamental
+        # frequency from 85 to 180 Hz, and that of a typical adult female
+        # from 165 to 255 Hz
+        avg_freq = sum(self.freqs)/len(self.freqs) if len(self.freqs) > 0 else 0
+        if 85 < avg_freq < 255 and Decibel > 70:
+            msg2.speech = True
         self.pub.publish(msg2)
 
 if __name__ == '__main__':
