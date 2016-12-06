@@ -76,6 +76,8 @@
                 if (handle === 0) self.model.set('min', parseInt(values[0]));
                 else if (handle === 1) self.model.set('init', parseInt(values[1]));
                 else if (handle === 2) self.model.set('max', parseInt(values[2]));
+
+                // TODO: update motor position
             });
 
             this.listenTo(this.model, 'change:min change:init change:max', this.updateValues);
