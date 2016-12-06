@@ -3,18 +3,19 @@
 import rospy
 import math
 import struct
-import numpy as np
 from collections import deque
 from std_msgs.msg import Float32, UInt8MultiArray
 from audio_stream.msg import audiodata
+from audio_stream.frequency_estimator import freq_from_fft
 
 class AudioSensor(object):
 
     def __init__(self):
-        self.audio_feature = rospy.Publisher(
-            '/opencog/AudioFeature', audiodata, queue_size=1)
+        self.pub = rospy.Publisher(
+            'audio_sensors', audiodata, queue_size=1)
         rospy.Subscriber('speech_audio', UInt8MultiArray, self.audio_cb)
         self.d = deque(maxlen=5)
+        self.rate = rospy.get_param('audio_rate', 16000)
 
     def convData(self, V):
         # Converts Stream (which is in byte format) to List of +ve and -ve
@@ -34,25 +35,6 @@ class AudioSensor(object):
         p = 20 * math.log10(math.sqrt((SQUARE / count)))
         return p
 
-    def getFreq(self, Maindata):
-        rate = rospy.get_param('audio_rate', 16000)
-        chunk = int(rate / 10)  # 100ms
-
-        # Get the frequency of the current Chunk
-        # Purpose: Get the current Pitch of the file using fast fourier
-        # transform
-        fftData = abs(np.fft.rfft(Maindata)) ** 2  # find the maximum
-        which = fftData[1:].argmax() + 1
-        # use quadratic interpolation around the max
-        if which != len(fftData) - 1:
-            y0, y1, y2 = np.log(fftData[which - 1:which + 2:])
-            x1 = (y2 - y0) * .5 / (2 * y1 - y2 - y0)
-            # find the frequency and output it
-            FREQUENCY = (which + x1) * rate / chunk
-        else:
-            FREQUENCY = which * rate / chunk
-        return FREQUENCY
-
     def suddenChanges(self):
         # Return either 1 or 0 for Sudden Change and Similar decibels
         # respectively
@@ -69,9 +51,9 @@ class AudioSensor(object):
 
         msg2 = audiodata()
         msg2.Decibel = Decibel
-        msg2.Frequency = self.getFreq(AudioData)
+        msg2.Frequency = freq_from_fft(AudioData, self.rate)
         msg2.SuddenChange = self.suddenChanges()
-        self.audio_feature.publish(msg2)
+        self.pub.publish(msg2)
 
 if __name__ == '__main__':
     rospy.init_node('audio_sensor')
