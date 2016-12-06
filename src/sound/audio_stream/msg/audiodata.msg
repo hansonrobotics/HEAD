@@ -1,4 +1,4 @@
 float32 Decibel
 float32 Frequency
-float32 SuddenChange
-bool speech
+bool SuddenChange
+bool Speech

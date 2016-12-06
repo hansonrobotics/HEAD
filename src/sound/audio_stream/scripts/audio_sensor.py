@@ -38,13 +38,11 @@ class AudioSensor(object):
         return p
 
     def suddenChanges(self):
-        # Return either 1 or 0 for Sudden Change and Similar decibels
-        # respectively
         THRESHOLD = 25  # Test and modification of this constant is required
         if max(self.d) - min(self.d) > THRESHOLD:
-            return 1
+            return True
         else:
-            return 0
+            return False
 
     def audio_cb(self, msg):
         AudioData = self.convData(msg.data)
@@ -64,7 +62,7 @@ class AudioSensor(object):
         # from 165 to 255 Hz
         avg_freq = sum(self.freqs)/len(self.freqs) if len(self.freqs) > 0 else 0
         if 85 < avg_freq < 255 and Decibel > 70:
-            msg2.speech = True
+            msg2.Speech = True
         self.pub.publish(msg2)
 
 if __name__ == '__main__':
