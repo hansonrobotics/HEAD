@@ -9,6 +9,7 @@ from pololu.motors import Maestro, MicroSSC
 from ros_pololu.msg import MotorCommand
 from sensor_msgs.msg import JointState
 from ros_pololu import PololuMotor
+from std_msgs.msg import String
 import time
 import logging
 
@@ -24,12 +25,11 @@ class RosPololuNode:
         # Use safety proxy to filter motor comamnds
         safety = rospy.get_param("~safety", False)
         # Use specific rate to publish motors commands
-        self._sync = rospy.get_param("~sync", "off")
+        self._origin_sync = self._sync = rospy.get_param("~sync", "off")
         self._dynamic_speed = rospy.get_param("~dyn_speed", "off")
         self._servo_rate = rospy.get_param("~servo_rate", 50)
         self._controller_type = rospy.get_param("~controller", "Maestro")
         self._hw_fail = rospy.get_param("~hw_required", False)
-
         self._motors = {}
         self.idle = False
         if rospy.has_param("~pololu_motors_yaml"):
@@ -76,6 +76,8 @@ class RosPololuNode:
             topic_prefix = 'safe/'+topic_prefix
         rospy.Subscriber(topic_prefix + topic_name, MotorCommand, self.motor_command_callback)
         logger.info("ros_pololu Subscribed to %s" % (topic_prefix + topic_name))
+        # Topic to enable disable continou
+        rospy.Subscriber('pololu_sync', String, self.sync_callback)
 
     def publish_motor_states(self):
         if self.idle:
@@ -164,6 +166,17 @@ class RosPololuNode:
             self.controller.setAcceleration(id, acceleration)
         except AttributeError:
             pass
+
+    def sync_callback(self, msg):
+        """
+        Allows to pause continuous updates of motors while configs are updating
+        :param msg: String "off" or "on"
+        :return:
+        """
+        if msg.data == 'on':
+            self._sync = self._origin_sync
+        if msg.data == 'off':
+            self._sync = 'off'
 
 if __name__ == '__main__':
     rospy.init_node("pololu_node")
