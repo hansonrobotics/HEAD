@@ -7,7 +7,6 @@ import string
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from blender_api_msgs.msg import EmotionState, SetGesture, Target, SomaState
-from performances.srv import SpeechOn, SpeechOnRequest, SpeechOnResponse
 from calc import calculate
 
 logger = logging.getLogger('hr.speech2command.commands')
@@ -37,24 +36,6 @@ class BaseCommand(object):
                 False: otherwise
         """
         return True
-
-class WholeShowCommand(BaseCommand):
-    def __init__(self):
-        super(WholeShowCommand, self).__init__()
-        self.srv = rospy.ServiceProxy("speech_on", SpeechOn)
-        self.type = 'wholeshow'
-
-    def parse(self, msg):
-        text = msg.utterance.decode('utf-8').lower()
-        try:
-            resp = self.srv.call(SpeechOnRequest(text))
-            return (not resp.success)
-        except:
-            return False
-
-    def execute(self):
-        pass
-
 
 class ForwardCommand(BaseCommand):
     def __init__(self, forward_topic_name):
