@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import division
 import os
 import re
 import logging
 import hashlib
 import pinyin
-import pyglet
+from scipy.io import wavfile
 import shutil
+import yaml
 import xml.etree.ElementTree
 from audio2phoneme import audio2phoneme
 from visemes import Numb_Visemes
@@ -75,22 +77,35 @@ class NumbTTS(TTSBase):
             tts_data = TTSData()
             tts_data.wavout = self.wavout
             try:
-                tts_data.phonemes = [
-                    {'name': phoneme[0], 'start': phoneme[1], 'end': phoneme[2]}
-                        for phoneme in audio2phoneme(fname)]
+                tts_data.phonemes = self.get_phonemes(fname)
                 viseme_config = Numb_Visemes()
                 tts_data.visemes = viseme_config.get_visemes(tts_data.phonemes)
-                #tts_data.visemes = viseme_config.filter_visemes(visemes, 0)
                 logger.info(tts_data.visemes)
             except Exception as ex:
                 logger.error(ex)
                 tts_data.phonemes = []
             return tts_data
 
+    def get_phonemes(self, fname):
+        timing = '{}.yaml'.format(os.path.splitext(fname)[0])
+        if os.path.isfile(timing):
+            with open(timing) as f:
+                phonemes = yaml.load(f)
+            logger.info("Get timing info from file")
+        else:
+            phonemes = [
+                {'name': phoneme[0], 'start': phoneme[1], 'end': phoneme[2]}
+                    for phoneme in audio2phoneme(fname)]
+            with open(timing, 'w') as f:
+                yaml.dump(phonemes, f)
+            logger.info("Write timing info to file")
+        return phonemes
+
     def get_duration(self):
-        source = pyglet.media.load(self.wavout)
-        logger.info("Duration of {} is {}".format(self.wavout, source.duration))
-        return source.duration
+        rate, data = wavfile.read(self.wavout)
+        duration = data.shape[0]/rate
+        logger.info("Duration of {} is {}".format(self.wavout, duration))
+        return duration
 
 class OnlineTTS(TTSBase):
 
@@ -214,9 +229,10 @@ class ChineseTTSBase(OnlineTTS):
         return phonemes
 
     def get_duration(self):
-        source = pyglet.media.load(self.wavout)
-        logger.info("Duration of {} is {}".format(self.wavout, source.duration))
-        return source.duration
+        rate, data = wavfile.read(self.wavout)
+        duration = data.shape[0]/rate
+        logger.info("Duration of {} is {}".format(self.wavout, duration))
+        return duration
 
     def _tts(self, text):
         tts_data = super(ChineseTTSBase, self)._tts(text)

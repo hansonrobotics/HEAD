@@ -704,6 +704,18 @@ do_build_hr() {
     info "Building HR is done"
 }
 
+pack_hr() {
+    if [[ ! -d makeself ]]; then
+        wget_cache https://github.com/megastep/makeself/archive/release-2.2.0.tar.gz makeself-2.2.0.tar.gz
+        checkmd5 ${HR_CACHE}/makeself-2.2.0.tar.gz 8075530b2ad0a2fbd4bffa80a96eb2ea
+        mkdir -p makeself
+        tar zxf ${HR_CACHE}/makeself-2.2.0.tar.gz -C makeself --strip-components 1
+    fi
+    TIME=$(date +%Y%m%d%H%M%S)
+    makeself/makeself.sh ${HR_WORKSPACE}/HEAD/install HEAD-${TIME}.run "HEAD" .
+    rm -rf makeself
+}
+
 _do_build_hr() {
     # build CppMT
     if [[ -d $CPPMT_DIR ]]; then
