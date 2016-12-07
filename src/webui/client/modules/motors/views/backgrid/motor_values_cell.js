@@ -63,7 +63,7 @@
 
             let slider = $('.app-slider', this.$el).get(0);
 
-            this.originalValues = [this.model.get('min'), this.model.get('init'), this.model.get('max')];
+            this.originalValues = [this.model.get('min') || 1450, this.model.get('init') || 1500, this.model.get('max') || 1550];
             noUiSlider.create(slider, {
                 start: this.originalValues,
                 range: {
@@ -105,16 +105,17 @@
             return this;
         },
         updateValues: function () {
-            $('.app-min-val', this.$el).html(this.model.get('min'));
-            $('.app-init-val', this.$el).html(this.model.get('init'));
-            $('.app-max-val', this.$el).html(this.model.get('max'));
+            $('.app-min-val', this.$el).html(this.model.get('min') || 1450);
+            $('.app-init-val', this.$el).html(this.model.get('init') || 1500);
+            $('.app-max-val', this.$el).html(this.model.get('max') || 1550);
         },
         save: function (e) {
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
             }
-
+            // Update values
+            this.originalValues = [this.model.get('min'), this.model.get('init'), this.model.get('max')];
             this.$el.modal("hide");
         },
 
