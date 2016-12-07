@@ -29,7 +29,7 @@ from session import ChatSessionManager
 session_manager = ChatSessionManager()
 DISABLE_QUIBBLE = True
 
-from chatbot.utils import shorten
+from chatbot.utils import shorten, str_cleanup
 from chatbot.server.character import TYPE_AIML, TYPE_CS
 
 def get_character(id, lang=None):
@@ -211,7 +211,7 @@ def _ask_characters(characters, question, lang, sid, query):
             logger.info("Using open dialog character {}".format(sess.open_character.id))
             response = sess.open_character.respond(_question, lang, sess, query)
             used_charaters.append(sess.open_character.id)
-            answer = response.get('text', '').strip()
+            answer = str_cleanup(response.get('text', ''))
             if answer and not response.get('bad') and not response.get('gambit'):
                 hit_character = sess.open_character
                 cross_trace.append((sess.open_character.id, 'question', response.get('trace') or 'No trace'))
@@ -233,7 +233,7 @@ def _ask_characters(characters, question, lang, sid, query):
                 logger.info("{} has good match".format(c.id))
                 response = c.respond(_question, lang, sess, query)
                 used_charaters.append(c.id)
-                _answer = response.get('text', '').strip()
+                _answer = str_cleanup(response.get('text', ''))
                 if _answer:
                     if random.random() < weight:
                         hit_character = c
@@ -257,7 +257,7 @@ def _ask_characters(characters, question, lang, sid, query):
         for c, weight in weighted_characters:
             if weight != 0 and c.is_favorite(_question):
                 _response = c.respond(_question, lang, sess, query)
-                _answer = _response.get('text')
+                _answer = str_cleanup(_response.get('text'))
                 if _answer:
                     hit_character = c
                     cross_trace.append((c.id, 'favorite', response.get('trace') or 'No trace'))
@@ -289,7 +289,7 @@ def _ask_characters(characters, question, lang, sid, query):
                             else:
                                 response = c.respond(_question, lang, sess, query)
                             used_charaters.append(c.id)
-                            _answer = response.get('text', '').strip()
+                            _answer = str_cleanup(response.get('text', ''))
                             if _answer:
                                 if random.random() < weight:
                                     hit_character = c
@@ -326,7 +326,7 @@ def _ask_characters(characters, question, lang, sid, query):
             used_charaters.append(c.id)
             assert isinstance(response, dict), "Response must be a dict"
 
-            _answer = response.get('text', '').strip()
+            _answer = str_cleanup(response.get('text', ''))
             if not _answer:
                 if response.get('repeat'):
                     cross_trace.append((c.id, 'loop', 'Repetitive answer'))
@@ -387,7 +387,7 @@ def _ask_characters(characters, question, lang, sid, query):
         else:
             response = dummy_character.respond("NO_ANSWER", lang, sid, query)
         hit_character = dummy_character
-        answer = response.get('text', '').strip()
+        answer = str_cleanup(response.get('text', ''))
 
     if not query and hit_character is not None:
         sess.add(question, answer, AnsweredBy=hit_character.id,
