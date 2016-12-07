@@ -72,7 +72,7 @@
                 }
             });
 
-            slider.noUiSlider.on('update', function( values, handle ) {
+            slider.noUiSlider.on('slide', function( values, handle ) {
                 console.log(self.model)
                 var val = 0;
                 if (handle === 0){
