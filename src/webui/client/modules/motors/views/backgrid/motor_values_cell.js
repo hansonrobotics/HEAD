@@ -25,7 +25,7 @@
 
         /** @property {function(Object, ?Object=): string} template */
         template: function (data) {
-            return '<div class="modal-dialog"><div class="modal-content"><form><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3>Motor Values</h3></div><div class="modal-body"><div class="app-slider"></div><div class="row"><div class="col-md-4">Minimum:<span class="app-min-val"></span></div><div class="col-md-4">Initial:<span class="app-init-val"></span></div><div class="col-md-4">Maximum:<span class="app-max-val"></span></div></div></div><div class="modal-footer"><input class="btn btn-primary" type="submit" value="Save"/></div></form></div></div>';
+            return '<div class="modal-dialog"><div class="modal-content"><form><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h3>Motor Values</h3></div><div class="modal-body"><div class="app-slider"></div><div class="row"><div class="col-md-4">Minimum:<span class="app-min-val"></span></div><div class="col-md-4">Initial:<span class="app-init-val"></span></div><div class="col-md-4">Maximum:<span class="app-max-val"></span></div></div></div><div class="modal-footer"><input class="btn btn-primary" type="submit" value="Done"/></div></form></div></div>';
         },
 
         /** @property */
