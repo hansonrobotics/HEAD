@@ -330,3 +330,7 @@ span.select2-selection.select2-selection--single {
     -moz-border-radius: 0 !important;;
     border-radius: 0 !important;;
 }
+
+.modal-dialog {
+    margin-top: 60px;
+}
