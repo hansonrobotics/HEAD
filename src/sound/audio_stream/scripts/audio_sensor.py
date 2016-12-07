@@ -46,11 +46,14 @@ class AudioSensor(object):
         return p
 
     def suddenChanges(self):
-        THRESHOLD = 25  # Test and modification of this constant is required
-        if max(self.d) - min(self.d) > THRESHOLD:
-            return True
-        else:
-            return False
+        THRESHOLD = 20
+        if len(self.d) == self.d.maxlen:
+            s = [self.d[i] for i in range(0, self.d.maxlen-1)]
+            bg = sum(s)/(len(s)-1) # background noise level
+            if self.d[-1]> bg+THRESHOLD:
+                self.d.clear()
+                return True
+        return False
 
     def audio_cb(self, msg):
         AudioData = self.convData(msg.data)
