@@ -71,7 +71,8 @@ class Runner:
                 'en': rospy.Publisher('/' + self.robot_name + '/tts_en', String, queue_size=1),
                 'zh': rospy.Publisher('/' + self.robot_name + '/tts_zh', String, queue_size=1),
                 'default': rospy.Publisher('/' + self.robot_name + '/tts', String, queue_size=1),
-            }
+            },
+            'tts_control': rospy.Publisher('/' + self.robot_name + '/tts_control', String, queue_size=1)
         }
         self.load_properties()
         rospy.Service('~reload_properties', Trigger, self.reload_properties_callback)
@@ -251,6 +252,7 @@ class Runner:
                 stop_time = self.get_run_time()
                 self.running = False
                 self.paused = False
+                self.topics['tts_control'].publish('shutup')
 
         return srv.StopResponse(True, stop_time)
 
