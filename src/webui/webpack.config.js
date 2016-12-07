@@ -88,7 +88,8 @@ module.exports = {
             'multilevelpushmenu-css': 'css/vendor/jquery.multilevelpushmenu.css',
             'selectareas-css': 'css/vendor/jquery.selectareas.css',
             'bootstrap-css': 'css/vendor/bootstrap.min.css',
-            'jquery-ui-css': 'jquery-ui-bundle/jquery-ui.css'
+            'jquery-ui-css': 'jquery-ui-bundle/jquery-ui.css',
+            'nouislider-css': 'nouislider/distribute/nouislider.min.css'
         },
         extensions: ['', '.js', '.css', '.yaml'],
         root: [path.join(__dirname, './client')],
