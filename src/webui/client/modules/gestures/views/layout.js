@@ -2,7 +2,7 @@ define(["marionette", "./templates/layout.tpl", "lib/api", './animations', './cy
         './poses', './animation_mode', 'roslib'],
     function (Marionette, template, api, GesturesView, CyclesView, PerformancesView, EmotionsView,
               AnimationModeView, ROSLIB) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             regions: {
                 performances: '.app-performance-buttons',

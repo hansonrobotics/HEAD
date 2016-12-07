@@ -277,6 +277,9 @@ class FaceBox():
         # Approx horizontal FOV of camera used (taken from config)
         p = Point()
         #FOV-X and FOV-Y are different, now using FOV-X
+        if self.bounding_size == 0:
+            logger.warn("Bounding box is of 0 size")
+            return None
         dp = 0.17 / float(self.bounding_size) # It should be same in both axis
         # logger.warn("bbox size=" + str(self.bounding_size))
         #w = self.camera_width/2
@@ -291,6 +294,8 @@ class FaceBox():
     # simple exponential filter.
     def filter_3d_point(self) :
         p = self.get_3d_point()
+        if p is None:
+            return
 
         # First time ever, initialize to a reasonable value.
         if self.loc_3d.x == 0:

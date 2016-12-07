@@ -1,6 +1,6 @@
 define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fade_in', './attention_regions', 'lib/api', 'path'],
     function (App, Marionette, template, FadeInRegion, AttentionRegionsView, api, path) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 keywords: '.app-keywords',

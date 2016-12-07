@@ -137,8 +137,11 @@ if [[ $OC_CHATBOT == 1 ]]; then
   tmux new-window -n 'relex_server' "cd $HR_WORKSPACE/opencog/relex/ && bash opencog-server.sh; $SHELL"
   tmux new-window -n 'tel' "while true; do nc -zv localhost 17020 && break; sleep 1; done; expect $BASEDIR/load_scm.exp; $SHELL"
   tmux new-window -n 'oc-ctrl' "roslaunch opencog_control psi.launch; $SHELL"
+  tmux new-window -n 'sound' "export PYTHONPATH=${PYTHONPATH}:$OCBHAVE/face_track ; \
+  export $export ROS_NAMESPACE=$NAME; cd $OCBHAVE/sound; ./audioclass.py; $SHELL"
 else
   tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"
+
 fi
 
 tmux new-window -n 'fce' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./main.py; $SHELL"

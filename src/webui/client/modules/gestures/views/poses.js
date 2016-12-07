@@ -1,4 +1,4 @@
-define(["marionette", "./pose", './templates/poses.tpl', 'entities/emotion_collection', 'lib/utilities'],
+define(["marionette", "./pose", './templates/poses.tpl', 'entities/emotion_collection', 'lib/utilities', './css/gestures'],
     function (Marionette, PoseView, template, EmotionCollection, Utils) {
         return Marionette.CompositeView.extend({
             childView: PoseView,

@@ -4,7 +4,7 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
         'scrollbar', 'scrollbar-css'],
     function (App, Marionette, template, FadeInRegion, TimelineEditorView, InteractionView, FacesView, $, OperatorView,
               AnimationModeView, PosesView, AnimationsView, CrosshairsView) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 container: '.app-puppeteering-container',
@@ -49,12 +49,18 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                 }
             },
             onAttach: function () {
-                var self = this;
+                let self = this;
 
                 // left col
                 this.posesView = new PosesView({config: {duration: {min: 1, max: 8}}});
                 this.animationModeView = new AnimationModeView();
-                this.timelineEditorView = new TimelineEditorView({fluid: true, editing: false, autoplay: true});
+                this.timelineEditorView = new TimelineEditorView({
+                    fluid: true,
+                    readonly: true,
+                    autoplay: true,
+                    nav: false,
+                    hideQueue: true
+                });
 
                 // right col
                 this.chatView = new InteractionView({
@@ -78,8 +84,8 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                 this.getRegion('animations').show(this.animationsView);
                 this.getRegion('speech').show(this.speechView);
 
-                var updateDimensions = function () {
-                    if (self.isDestroyed)
+                let updateDimensions = function () {
+                    if (self.isDestroyed())
                         $(window).off('resize', updateDimensions);
                     else
                         self.updateDimensions();
@@ -90,7 +96,7 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                 this.animationsView.collection.on('add', updateDimensions);
             },
             updateDimensions: function () {
-                var contentHeight = App.LayoutInstance.getContentHeight();
+                let contentHeight = App.LayoutInstance.getContentHeight();
 
                 if (this.ui.leftColumn.offset().left == this.ui.rightColumn.offset().left) {
                     this.ui.leftColumn.height('auto').perfectScrollbar('destroy');

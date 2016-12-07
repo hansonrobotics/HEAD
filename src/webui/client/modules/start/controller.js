@@ -1,6 +1,6 @@
-define(['application', './views/layout', './views/logs', './views/system', './entities/log', './entities/checks',
-        './css/status'],
-    function (App, LayoutView, LogsView, SystemView) {
+define(['application', './views/layout', './views/logs', './views/system', './entities/log_collection',
+        './entities/check_collection', './css/status'],
+    function (App, LayoutView, LogsView, SystemView, LogCollection, CheckCollection) {
         return {
             init: function (name) {
                 if (!this.layoutView) {
@@ -20,7 +20,7 @@ define(['application', './views/layout', './views/logs', './views/system', './en
             },
             logs: function () {
                 this.init('logs');
-                this.logCollection = new App.Entities.LogCollection();
+                this.logCollection = new LogCollection();
                 this.logCollection.fetch();
 
                 this.logsView = new LogsView({collection: this.logCollection});
@@ -28,7 +28,7 @@ define(['application', './views/layout', './views/logs', './views/system', './en
             },
             system: function () {
                 this.init('system');
-                var checksCollection = new App.Start.Entities.CheckCollection();
+                var checksCollection = new CheckCollection();
                 checksCollection.fetch();
                 this.systemView = new SystemView({
                     collection: checksCollection

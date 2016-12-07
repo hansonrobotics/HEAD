@@ -2,11 +2,13 @@
 import os
 import rospy
 import logging
+
 from chatbot.msg import ChatMessage
-from speech2command.commands import MotionCommand, MathCommand, ForwardCommand, WholeShowCommand
+from speech2command.commands import ForwardCommand, WholeShowCommand
+from dynamic_reconfigure.server import Server
+from speech2command.cfg import Speech2CommandConfig
 
 logger = logging.getLogger('hr.speech2command.speech2command')
-CWD = os.path.dirname(os.path.abspath(__file__))
 
 class Speech2Command(object):
 
@@ -19,19 +21,27 @@ class Speech2Command(object):
     def handle_speech(self, msg):
         for command in self.command_chain:
             try:
-                if command.parse(msg):
+                if command.active and command.parse(msg):
                     command.execute()
                     break
             except Exception as ex:
                 logger.error("Handle speech message error: {}".format(ex))
                 continue
 
+    def reconfig(self, config, level):
+        for command in self.command_chain:
+            if command.type == 'wholeshow':
+                command.active = config.activate_wholeshow
+        return config
+
+
 if __name__ == '__main__':
     rospy.init_node('speech2command')
     from rospkg import RosPack                                                    
     rp = RosPack()                                                                
-    Speech2Command(
+    node = Speech2Command(
         os.path.join(
             rp.get_path('speech2command'), 'motion_command_config.yaml'))
+    Server(Speech2CommandConfig, node.reconfig)
     rospy.spin()
 

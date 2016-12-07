@@ -1,6 +1,6 @@
-define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 'underscore', 'lib/json_editor/slider'],
-    function (App, Marionette, template, JSONEditor, _) {
-        return Marionette.ItemView.extend({
+define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 'lib/json_editor/slider'],
+    function (App, Marionette, template, JSONEditor) {
+        return Marionette.View.extend({
             template: template,
             ui: {
                 settings: '.app-settings'
@@ -13,7 +13,8 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
             },
             onRender: function () {
                 var self = this;
-
+                // disable select2
+                JSONEditor.defaults.editors.select.prototype.setupSelect2 = function() { this.select2 = null; };
                 this.editor = new JSONEditor(this.ui.settings.get(0), {
                     form_name_root: 'config',
                     theme: 'bootstrap3',
@@ -37,15 +38,15 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     }, 1000);
             },
             onDestroy: function () {
-                this.editor.destroy();
                 clearInterval(this.refreshInterval);
+                this.editor.destroy();
             },
             setConfig: function () {
                 var self = this,
                     values = this.model.toJSON();
 
-                values = _.mapObject(values, function (val, key) {
-                    if (values['node_schema'] && self.schema['properties'][key] && _.contains(['array', 'object'], self.schema['properties'][key]['type']))
+                values = _.mapValues(values, function (val, key) {
+                    if (values['node_schema'] && self.schema['properties'][key] && _.includes(['array', 'object'], self.schema['properties'][key]['type']))
                         return JSON.parse(val);
                     return val;
                 });
@@ -59,7 +60,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 if (this.editor.validate().length === 0) {
                     var values = this.editor.getValue();
 
-                    values = _.mapObject(values, function (val) {
+                    values = _.mapValues(values, function (val) {
                         if (val && self.model.get('node_schema') && _.includes([Array, Object], val.constructor))
                             return JSON.stringify(val);
                         else

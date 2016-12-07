@@ -1,6 +1,6 @@
 define(['application', 'marionette', './templates/operator.tpl', 'lib/api', 'jquery', 'underscore', 'typeahead', '../css/operator'],
     function (app, Marionette, template, api, $, _) {
-        return Marionette.LayoutView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 sayButton: '.app-say-button',
@@ -20,7 +20,7 @@ define(['application', 'marionette', './templates/operator.tpl', 'lib/api', 'jqu
             initialize: function (options) {
                 this.mergeOptions(options, ['interactionView', 'hideModeButtons']);
             },
-            onShow: function () {
+            onRender: function () {
                 var self = this;
                 if (this.hideModeButtons) this.ui.modeButtonContainer.hide();
 

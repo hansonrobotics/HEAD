@@ -2,6 +2,9 @@ import re
 import os
 import requests
 import subprocess
+import logging
+
+logger = logging.getLogger('hr.chatbot.utils')
 
 
 def norm(s):
@@ -21,7 +24,15 @@ def shorten(text, cutoff):
         if len(ret) > 0 and len(ret+sen) > cutoff:
             break
         ret += (sen+'.')
-    return ret, '.'.join(sens[idx:])
+
+    res = '.'.join(sens[idx:])
+
+    # If first part or second part is too short, then don't cut
+    if len(ret.split()) < 3 or len(res.split()) < 3:
+        ret = text
+        res = ''
+
+    return ret, res
 
 def get_location():
     # docker run -d -p 8004:8004 --name freegeoip fiorix/freegeoip -http :8004
@@ -43,7 +54,11 @@ def get_location():
 
 def get_weather(city):
     OPENWEATHERAPPID = os.environ.get('OPENWEATHERAPPID')
-    response = requests.get('http://api.openweathermap.org/data/2.5/weather', params={'q': city, 'appid': OPENWEATHERAPPID}).json()
+    try:
+        response = requests.get('http://api.openweathermap.org/data/2.5/weather', timeout=5, params={'q': city, 'appid': OPENWEATHERAPPID}).json()
+    except Exception as ex:
+        logger.error(ex)
+        return
     return response
 
 if __name__ == '__main__':

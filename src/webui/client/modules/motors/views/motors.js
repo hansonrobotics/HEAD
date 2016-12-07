@@ -4,7 +4,7 @@ define(['application', "marionette", "./motor", 'jquery', 'jquery-ui'],
             childView: motorView,
             initialize: function () {
                 var self = this;
-                App.vent.on('motors:selection:set', function (status) {
+                App.on('motors:selection:set', function (status) {
                     self.showSelectButtons(status);
                 });
             },

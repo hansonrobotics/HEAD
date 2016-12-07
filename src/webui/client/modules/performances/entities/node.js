@@ -165,11 +165,8 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                 Supermodel.Model.prototype.destroy.call(this);
             },
             save: function (attrs, options) {
-                if (this.get('name') == 'settings') {
-                    console.log(attrs);
-                } else {
+                if (this.get('name') != 'settings')
                     Supermodel.Model.prototype.save.call(this, attrs, options);
-                }
             }
         });
     });

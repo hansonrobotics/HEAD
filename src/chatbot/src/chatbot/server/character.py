@@ -5,6 +5,9 @@ import re
 from config import CHARACTER_PATH
 from chatbot.utils import shorten
 
+TYPE_AIML='aiml'
+TYPE_CS='cs'
+TYPE_DEFAULT='default'
 
 class Character(object):
 
@@ -19,6 +22,7 @@ class Character(object):
         self.local = True
         self.non_repeat = True
         self.logger = logging.getLogger('hr.chatbot.character.{}'.format(id))
+        self.type = TYPE_DEFAULT
 
     def get_properties(self):
         return self.properties
@@ -29,25 +33,39 @@ class Character(object):
     def respond(self, question, lang, session=None, query=False):
         raise NotImplementedError
 
-    def refresh(self, sid):
+    def refresh(self, session):
         raise NotImplementedError
 
-    def get_context(self, sid):
+    def get_context(self, session):
         return {}
 
-    def set_context(self, sid, context):
+    def set_context(self, session, context):
         raise NotImplementedError
 
-    def remove_context(self, sid, key):
+    def remove_context(self, session, key):
         raise NotImplementedError
 
     def is_command(self, question):
+        return False
+
+    def is_favorite(self, question):
         return False
 
     def __repr__(self):
         return "<Character id: {}, name: {}, level: {}>".format(
             self.id, self.name, self.level)
 
+
+class DefaultCharacter(Character):
+
+    def set_context(self, session, context):
+        session.sdata.set_context(self.id, context)
+
+    def get_context(self, session):
+        return session.sdata.get_context(self.id)
+
+    def refresh(self, session):
+        session.sdata.reset_context(self.id)
 
 def replace_aiml_abs_path(trace):
     if isinstance(trace, list):
@@ -74,7 +92,8 @@ class AIMLCharacter(Character):
         self.max_chat_tries = 5
         self.trace_pattern = re.compile(
             r'.*/(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
-        self.response_limit = 140
+        self.response_limit = 512
+        self.type = TYPE_AIML
 
     def load_aiml_files(self, kernel, aiml_files):
         errors = []
@@ -177,7 +196,10 @@ class AIMLCharacter(Character):
             if patterns:
                 first = patterns[0]
                 if '*' in first or '_' in first:
-                    if len(first.strip().split())>0.9*len(question.strip().split()):
+                    pattern_len = len(first.strip().split())
+                    if '*' not in first:
+                        ret['ok_match'] = True
+                    if pattern_len>3 and pattern_len>0.9*len(question.strip().split()):
                         ret['ok_match'] = True
                 else:
                     ret['exact_match'] = True
@@ -185,23 +207,29 @@ class AIMLCharacter(Character):
             ret['trace'] = '\n'.join(traces)
         return ret
 
-    def refresh(self, sid):
+    def refresh(self, session):
+        sid = session.sid
         self.kernel._deleteSession(sid)
         self.logger.info("Character is refreshed")
 
-    def get_context(self, sid):
+    def get_context(self, session):
+        sid = session.sid
         return self.kernel.getSessionData(sid)
 
-    def set_context(self, sid, context):
+    def set_context(self, session, context):
         assert isinstance(context, dict)
+        sid = session.sid
         for k, v in context.iteritems():
             if k.startswith('_'):
                 continue
             self.kernel.setPredicate(k, v, sid)
             self.logger.debug("Set predicate {}={}".format(k, v))
+            if k in ['firstname', 'fullname']:
+                self.kernel.setPredicate('name', v, sid)
 
-    def remove_context(self, sid, key):
-        if key in self.get_context(sid).keys():
+    def remove_context(self, session, key):
+        sid = session.sid
+        if key in self.get_context(session).keys():
             del self.kernel._sessions[sid][key]
             self.logger.info("Removed context {}".format(key))
             return True

@@ -1,12 +1,12 @@
 define(['application', 'marionette', './templates/node_select.tpl', '../entities/node',
-        '../../settings/views/settings', '../../settings/entities/node_config_schema', 'lib/api', 'underscore',
-        'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2', 'select2-css'],
-    function (App, Marionette, template, Node, SettingsView, SettingsSchemaModel, api, _, $) {
-        return Marionette.LayoutView.extend({
+        '../../settings/views/settings', '../../settings/entities/node_config_schema',
+        '../../settings/entities/node_config', 'lib/api', 'underscore', 'jquery', 'jquery-ui', 'lib/crosshair-slider',
+        'select2', 'select2-css'],
+    function (App, Marionette, template, Node, SettingsView, NodeConfigSchema, NodeConfig, api, _, $) {
+        return Marionette.View.extend({
             template: template,
             ui: {
                 nodeProperties: '[data-node-property]',
-
                 emotionList: '.app-emotion-list',
                 gestureList: '.app-gesture-list',
                 somaList: '.app-soma-list',
@@ -166,10 +166,11 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     this.ui.btreeModeSelect.val(this.model.get('mode'));
                     $(self.ui.btreeModeSelect).select2();
                 }
+
                 if (this.model.hasProperty('rosnode')) {
-                    this.setSettingsEditor(this.model.get('schema'));
+                    this.showNodeSettings(this.model.get('schema'));
                     this.listenTo(this.model, 'change:rosnode', function () {
-                        self.updateSettingsSchema();
+                        self.changeRosNode();
                     });
                 }
 
@@ -187,7 +188,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 }
             },
             initList: function (list, attr, container, options) {
-                if (this.isDestroyed) return;
+                if (this.isDestroyed()) return;
                 var self = this;
                 options = options || {};
                 container.html('');
@@ -262,28 +263,48 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             updateSomaStates: function (somas) {
                 this.initList(somas, 'soma', this.ui.somaList);
             },
-            updateSettingsSchema: function () {
-                var self = this;
-                var rosnode = this.model.get('rosnode');
-                api.services.get_node_description.callService({node: rosnode}, function (response) {
-                    var schema = SettingsSchemaModel.getSchemaFromDesc(JSON.parse(response.description), rosnode);
-                    self.model.set({schema: schema, values: {}});
-                    self.setSettingsEditor(schema);
-                    api.services.get_node_configuration.callService({node: rosnode}, function (response) {
-                        self.model.set({values: JSON.parse(response.configuration)});
-                    }, function (error) {
-                        console.log("Cant retrieve node settings")
-                    });
-                }, function (error) {
-                    console.log('Error fetching configuration schema');
+            changeRosNode: function () {
+                var self = this,
+                    rosnode = this.model.get('rosnode'),
+                    schema = new NodeConfigSchema(rosnode);
+
+                this.model.set('values', {});
+                schema.fetch({
+                    success: function (model) {
+                        var schema = model.toJSON();
+                        self.model.set('schema', schema);
+                        self.showNodeSettings(schema);
+                    },
+                    error: function () {
+                        self.model.set('schema', {});
+                    }
                 });
             },
-            setSettingsEditor: function (schema) {
+            showNodeSettings: function (schema) {
+                var self = this,
+                    nodeConfig = new NodeConfig(this.model.get('rosnode')),
+                    values = self.model.get('values');
+
+                var updateValues = function () {
+                    var currentView = self.getRegion('settingsEditor').currentView;
+                    if (currentView && currentView.model === nodeConfig)
+                        self.model.set('values', nodeConfig.toJSON());
+                    else
+                        nodeConfig.off('change', updateValues);
+                };
+
                 this.getRegion('settingsEditor').show(new SettingsView({
-                    model: this.model,
+                    model: nodeConfig,
                     schema: schema,
                     refresh: false
                 }));
+
+                nodeConfig.on('change', updateValues);
+                nodeConfig.fetch({
+                    success: function () {
+                        nodeConfig.set(values);
+                    }
+                });
             },
             setText: function () {
                 this.model.set('text', this.ui.textInput.val());

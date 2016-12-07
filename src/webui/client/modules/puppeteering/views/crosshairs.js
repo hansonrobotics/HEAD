@@ -1,6 +1,6 @@
 define(['marionette', './templates/crosshairs.tpl', 'lib/api', 'lib/crosshair-slider'],
     function (Marionette, template, api) {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: template,
             ui: {
                 headControl: '.app-head-control',

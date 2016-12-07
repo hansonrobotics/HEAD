@@ -13,8 +13,17 @@ PROJECT=${PROJECT:-HEAD}
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
-HR_CACHE=~/.hr/cache
-HR_MODELS=~/.hr/models
+HR_CACHE=$HOME/.hr/cache
+if [[ -z $APT_CACHE ]]; then
+    APT_CACHE=0
+fi
+if [[ -z $PIP_CACHE ]]; then
+    PIP_CACHE=0
+fi
+APT_CACHE_DIR=$HR_CACHE/archives
+PIP_CACHE_DIR=$HR_CACHE/pip
+LOG_DIR="$HOME/.hr/log"
+HR_MODELS=$HR_CACHE/models
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 HR_REPOS=($PROJECT)
@@ -29,6 +38,7 @@ CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
 
+export PKG_CONFIG_PATH=${HR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
 
 # Needed for compiling
@@ -49,14 +59,19 @@ COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
 COLOR_ERROR='\033[31m'
 COLOR_RESET='\033[0m'
+if [[ ! -d $LOG_DIR/install ]]; then
+    mkdir -p $LOG_DIR/install
+fi
+LOG_FILE=$(mktemp -p $LOG_DIR/install)
+
 info() {
-    printf "${COLOR_INFO}[INFO] ${1}${COLOR_RESET}\n"
+    printf "${COLOR_INFO}[INFO] ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 warn() {
-    printf "${COLOR_WARN}[WARN] ${1}${COLOR_RESET}\n"
+    printf "${COLOR_WARN}[WARN] ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 error() {
-    printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
+    printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 
 md5str() {
@@ -107,8 +122,15 @@ if [[ $(id -u) != 0 ]]; then
     SUDO="sudo"
 fi
 
-APT_GET_OPTS="-y -qq"
-PIP_OPTS="-q"
+APT_GET_OPTS="-y"
+if [[ $APT_CACHE == 1 ]]; then
+    APT_GET_OPTS="$APT_GET_OPTS -o dir::cache::archives=$APT_CACHE_DIR"
+fi
+
+PIP_OPTS=""
+if [[ $PIP_CACHE == 1 ]]; then
+    PIP_OPTS="$PIP_OPTS --download-cache $PIP_CACHE_DIR"
+fi
 
 if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
     error "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
@@ -119,6 +141,17 @@ if [[ ! -d $HR_CACHE ]]; then
     info "Creating $HR_CACHE"
     mkdir -p $HR_CACHE
 fi
+
+if [[ ! -d $APT_CACHE_DIR ]]; then
+    info "Creating $APT_CACHE_DIR"
+    mkdir -p $APT_CACHE_DIR
+fi
+
+if [[ ! -d $PIP_CACHE_DIR ]]; then
+    info "Creating $PIP_CACHE_DIR"
+    mkdir -p $PIP_CACHE_DIR
+fi
+
 
 install_basic() {
     info "Installing basic dependencies"
@@ -155,7 +188,7 @@ install_ros() {
     $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-image-proc
 
     # for blender to find ros packages
-    $SUDO pip3 ${PIP_OPTS} install rospkg catkin_pkg
+    $SUDO pip3 install ${PIP_OPTS} rospkg catkin_pkg
 
     set +e
     $SUDO rosdep init -q
@@ -172,13 +205,13 @@ install_opencog_deps() {
     $SUDO apt-get ${APT_GET_OPTS} install guile-2.0-dev cython
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -rdpv >/dev/null
+    ./octool -rdpv
     rm octool
 
     install_relex_deps
 
     # For sentiment analysis
-    $SUDO pip2 ${PIP_OPTS} install nltk
+    $SUDO pip2 install ${PIP_OPTS} nltk
     $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
 
     # For random sentence generator
@@ -196,7 +229,7 @@ install_relex_deps() {
 
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -l >/dev/null
+    ./octool -l
     rm octool
 
     # Java WordNet Library
@@ -209,6 +242,30 @@ install_relex_deps() {
     info "Installing RelEX dependencies is done"
 }
 
+install_pocketsphinx() {
+    if [[ -f /opt/hansonrobotics/lib/pkgconfig/pocketsphinx.pc && -f /opt/hansonrobotics/lib/pkgconfig/sphinxbase.pc ]]; then
+        info "Pocketsphinx is already installed."
+        return
+    fi
+    info "Installing Pocketsphinx"
+    $SUDO apt-get ${APT_GET_OPTS} install bison automake
+    wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
+    checkmd5 ${HR_CACHE}/sphinxbase-1.0.0.tar.gz df69f72b19abd943cfc4b51ec30a3b29
+    wget_cache https://github.com/hansonrobotics/pocketsphinx/archive/v1.0.0.tar.gz pocketsphinx-1.0.0.tar.gz
+    checkmd5 ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz b94bf391c22b6dd4c86a8c112aa62f48
+
+    tar zxf ${HR_CACHE}/sphinxbase-1.0.0.tar.gz -C /tmp
+    cd /tmp/sphinxbase-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    rm -r /tmp/sphinxbase-1.0.0
+
+    tar zxf ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz -C /tmp
+    cd /tmp/pocketsphinx-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    rm -r /tmp/pocketsphinx-1.0.0
+    info "Installing Pocketsphinx is done"
+}
+
 install_other_deps() {
     info "Installing other dependencies"
     $SUDO add-apt-repository -y ppa:irie/blender
@@ -217,7 +274,7 @@ install_other_deps() {
     $SUDO apt-get ${APT_GET_OPTS} install blender
 
     # For webui
-    $SUDO pip2 ${PIP_OPTS} install flask EasyProcess psutil
+    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
 
     # For rosbridge_server
     $SUDO apt-get ${APT_GET_OPTS} install python-bson
@@ -264,10 +321,10 @@ install_other_deps() {
     # Swig for iflytek SDK
     $SUDO apt-get -y install swig
 
-    $SUDO pip2 ${PIP_OPTS} install pinyin==0.2.5
+    $SUDO pip2 install ${PIP_OPTS} pinyin==0.2.5
 
     # For speech2command
-    $SUDO pip2 ${PIP_OPTS} install pyparsing
+    $SUDO pip2 install ${PIP_OPTS} pyparsing
 
     # For rospy to run with python3
     $SUDO apt-get ${APT_GET_OPTS} install python3-yaml
@@ -282,6 +339,11 @@ install_other_deps() {
     # For audio recording
     $SUDO apt-get ${APT_GET_OPTS} install pulseaudio
     $SUDO apt-get ${APT_GET_OPTS} install python-pyaudio
+
+    # For window layout
+    $SUDO apt-get ${APT_GET_OPTS} install xdotool
+
+    install_pocketsphinx
     info "Installing other dependencies is done"
 }
 
@@ -298,21 +360,21 @@ install_manyears_deps() {
 install_test_deps() {
     info "Installing test dependencies"
     $SUDO apt-get ${APT_GET_OPTS} install socat
-    $SUDO apt-get ${APT_GET_OPTS} install xdotool
 
-    $SUDO apt-get ${APT_GET_OPTS} install npm
-    $SUDO npm install -g n
     # WebUI compatable webserver
-    $SUDO n 6.6.0
     $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
     info "Installing test dependencies is done"
 }
 
 install_webui_deps() {
-    sudo apt-get ${APT_GET_OPTS} install npm
-    sudo npm install -g n webpack nodemon
-    sudo n 6.6.0
-    sudo ln -sf /usr/local/n/versions/node/6.6.0/bin/node /usr/bin/node
+    # Remove npm and nodejs if needed
+    # sudo npm uninstall -g npm
+    # sudo apt-get remove nodejs
+
+    # See https://github.com/nodesource/distributions#debinstall
+    curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
+    $SUDO apt-get install -y nodejs=6.9.1-1nodesource1~trusty1
+    $SUDO npm install -g webpack nodemon
 }
 
 
@@ -323,8 +385,8 @@ install_vision_deps() {
     $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-opencv-apps
 
     # Tkinter error other wise.
-    $SUDO pip2 ${PIP_OPTS} install -I Pillow
-    $SUDO pip2 ${PIP_OPTS} install imgurpython
+    $SUDO pip2 install ${PIP_OPTS} -I Pillow
+    $SUDO pip2 install ${PIP_OPTS} imgurpython
 
     if [[ ! -d $DLIB_PATH ]]; then
       info "Installing dlib"
@@ -335,7 +397,7 @@ install_vision_deps() {
       checkmd5 ${HR_CACHE}/dlib-${DLIB_VERSION}.tar.bz2 da930a35c2aa88612dd2ebf893f48f60 # md5sum for dlib-19.0
       mkdir -p $DLIB_PATH
       tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
-      cd $DLIB_PATH && python setup.py build >/dev/null
+      cd $DLIB_PATH && python setup.py build
       info "Installing dlib is done"
     else
       warn "Skipping dlib installation"
@@ -383,7 +445,7 @@ install_vision_deps() {
     # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
     info "Installing openface"
     $SUDO apt-get ${APT_GET_OPTS} install python-skimage
-    $SUDO pip2 ${PIP_OPTS} install numpy pandas scipy scikit-learn
+    $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy scikit-learn
 
     if [ ! -d $OPENFACE_DIR ]; then
       info "Cloning openface"
@@ -394,8 +456,19 @@ install_vision_deps() {
     fi
     info "Installing openface is done"
 
-    # 150 Megabyes of data.
-    $OPENFACE_DIR/models/get-models.sh
+    # $OPENFACE_DIR/models/get-models.sh
+    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
+    checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
+    mkdir -p $OPENFACE_DIR/models/dlib
+    mkdir -p $OPENFACE_DIR/models/openface
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${OPENFACE_DIR}/models/dlib
+    bunzip2 -f ${OPENFACE_DIR}/models/dlib/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${OPENFACE_DIR}/models/openface
+    cp ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl ${OPENFACE_DIR}/models/openface
 
     # CMT and Emotime Libraries.
     if [ ! -d $CPPMT_DIR ]; then
@@ -436,7 +509,7 @@ install_marky_markov() {
     $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
     $SUDO apt-get ${APT_GET_OPTS} update
     $SUDO apt-get ${APT_GET_OPTS} install ruby2.3 ruby2.3-dev
-    $SUDO gem install msgpack
+    $SUDO gem install marky_markov
     info "Installing Marky Markov is done"
 }
 
@@ -633,9 +706,12 @@ do_build_hr() {
 
 _do_build_hr() {
     # build CppMT
-    cd $CPPMT_DIR
-    cmake .
-    make -j$(nproc)
+    if [[ -d $CPPMT_DIR ]]; then
+        cd $CPPMT_DIR
+        info "Building CPPMT"
+        cmake .
+        make -j$(nproc)
+    fi
 
     cd $HR_WORKSPACE/$PROJECT
     source /opt/ros/indigo/setup.bash
@@ -647,8 +723,8 @@ _do_build_hr() {
     catkin clean -y || catkin clean -a
     catkin build --force-cmake -j$(nproc) --no-status --make-args install
     TARGET=$HR_WORKSPACE/$PROJECT/devel/lib/python2.7/dist-packages/
-    pip2 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
-    pip3 ${PIP_OPTS} install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
+    pip2 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/hardware/pololu-motors --upgrade --no-deps
+    pip3 install -t $TARGET $HR_WORKSPACE/$PROJECT/src/blender_api_msgs --upgrade --no-deps
     cd $HR_WORKSPACE/$PROJECT/src/webui
     npm install
 }
@@ -893,7 +969,9 @@ export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
 export MANYEARSLIB_PREFIX=$MANYEARSLIB_PREFIX
 
 export CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
-[ -f $TORCH_DIR/install/bin/torch-activate ] && source $TORCH_DIR/install/bin/torch-activate
+if [[ -f $TORCH_DIR/install/bin/torch-activate ]]; then
+  source $TORCH_DIR/install/bin/torch-activate
+fi
 EOF
 
     cp $HR_ENVFILE_PATH $BASEDIR >/dev/null 2>&1 # For compatibility

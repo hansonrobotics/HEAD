@@ -101,7 +101,9 @@ module.exports = {
             "window.jQuery": "jquery",
             '_': 'lodash',
             d3: 'd3',
-            eventemitter2: 'EventEmitter2'
+            eventemitter2: 'EventEmitter2',
+            Marionette: 'marionette',
+            Backbone: 'backbone'
         })
     ],
     postcss: [

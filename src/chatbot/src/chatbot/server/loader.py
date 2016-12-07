@@ -6,6 +6,7 @@ import traceback
 from chatbot.server.character import AIMLCharacter, Character
 from chatbot.utils import get_location, get_weather
 from zipfile import ZipFile
+import pprint
 
 logger = logging.getLogger('hr.chatbot.loader')
 
@@ -30,15 +31,16 @@ def load_dyn_properties():
         if 'main' in weather:
             if 'temp_max' in weather['main']:
                 dyn_properties['high_temperature'] = \
-                    '{:.1f}'.format(weather['main'].get('temp_max')-kelvin)
+                    '{:.0f}'.format(weather['main'].get('temp_max')-kelvin)
             if 'temp_min' in weather['main']:
                 dyn_properties['low_temperature'] = \
-                    '{:.1f}'.format(weather['main'].get('temp_min')-kelvin)
+                    '{:.0f}'.format(weather['main'].get('temp_min')-kelvin)
             if 'temp' in weather['main']:
                 dyn_properties['temperature'] = \
-                    '{:.1f}'.format(weather['main'].get('temp')-kelvin)
+                    '{:.0f}'.format(weather['main'].get('temp')-kelvin)
         if 'weather' in weather and weather['weather']:
             dyn_properties['weather'] = weather['weather'][0]['description']
+    logger.info("Update dynamic properties {}".format(dyn_properties))
 
 load_dyn_properties()
 
@@ -59,7 +61,7 @@ def load_characters(character_path):
             characters.extend(
                 AIMLCharacterLoader.load(os.path.join(path, yaml_file)))
 
-    logger.info("Add characters {}".format(characters))
+    logger.info("Add characters \n{}".format(pprint.pformat(characters)))
     return characters
 
 
