@@ -66,7 +66,9 @@ define(['application', "marionette", './message', "./templates/interaction.tpl",
                 if (this.options.hide_noise)
                     this.ui.noiseContainer.hide();
 
-                if (!this.options.hide_faces)
+                if (this.options.hide_faces)
+                    this.ui.facesContainer.hide();
+                else
                     this.showFaces();
 
                 var updateHeight = function () {

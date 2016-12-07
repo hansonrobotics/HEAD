@@ -124,13 +124,17 @@
     cursor: pointer;
 }
 
+.app-faces-container {
+    padding-top: 10px;
+}
+
 .app-interaction-footer {
     -moz-box-shadow: -1px -1px 5px 0 #182934;
     -webkit-box-shadow: -1px -1px 5px 0 #182934;
     box-shadow: -1px -1px 5px 0 #182934;
 
     background-color: #323F48;
-    padding: 10px;
+    padding: 0 10px 10px;
 }
 
 .app-suggestions .label {
@@ -149,8 +153,4 @@
 
 .app-suggestion-actions .app-discard {
     color: #D9544F;
-}
-
-.app-shut-up-button{
-    background-color: #C70039;
 }
