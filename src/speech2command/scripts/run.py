@@ -4,7 +4,7 @@ import rospy
 import logging
 
 from chatbot.msg import ChatMessage
-from speech2command.commands import ForwardCommand, WholeShowCommand
+from speech2command.commands import ForwardCommand
 from dynamic_reconfigure.server import Server
 from speech2command.cfg import Speech2CommandConfig
 
@@ -15,7 +15,6 @@ class Speech2Command(object):
     def __init__(self, config):
         rospy.Subscriber('speech', ChatMessage, self.handle_speech)
         self.command_chain = [
-            WholeShowCommand(),
             ForwardCommand('chatbot_speech')]
 
     def handle_speech(self, msg):
