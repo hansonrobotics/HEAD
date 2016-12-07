@@ -2,7 +2,7 @@
 
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['underscore', 'backgrid', 'nouislider', 'nouislider-css'], factory);
+        define(['underscore', 'backgrid', 'nouislider', 'lib/api', 'nouislider-css'], factory);
     } else if (typeof exports === 'object') {
         // CommonJS
         module.exports = factory(require("underscore"),
@@ -12,7 +12,7 @@
         factory(root._, root.Backgrid);
     }
 
-}(this, function (_, Backgrid, noUiSlider) {
+}(this, function (_, Backgrid, noUiSlider, api) {
 
     var exports = {},
         MotorValuesEditor = exports.MotorValuesEditor = Backgrid.Extension.MotorValuesEditor = Backgrid.CellEditor.extend({
@@ -53,8 +53,8 @@
             this.updateValues();
 
             let self = this,
-                min = 500,
-                max = 2500;
+                min = 700,
+                max = 2300;
 
             if (this.model.get('hardware') == 'dynamixel') {
                 min = 0;
@@ -73,11 +73,30 @@
             });
 
             slider.noUiSlider.on('update', function( values, handle ) {
-                if (handle === 0) self.model.set('min', parseInt(values[0]));
-                else if (handle === 1) self.model.set('init', parseInt(values[1]));
-                else if (handle === 2) self.model.set('max', parseInt(values[2]));
+                console.log(self.model)
+                var val = 0;
+                if (handle === 0){
+                    val = parseInt(values[0])
+                    self.model.set('min', val);
+                } else if (handle === 1){
+                    val = parseInt(values[1])
+                    self.model.set('init', val);
+                } else if (handle === 2){
+                    val = parseInt(values[2]);
+                    self.model.set('max', val);
+                }
+                if (self.model.get('hardware') != 'dynamixel'){
+                    api._sendMotorCommand(
+                        {
+                            'name': self.model.get('motor_id'),
+                            'topic': self.model.get('topic'),
+                            'min': -3.1416/2, // -pi/2
+                            'max': 3.1416/2,  // pi/2
+                        },
+                        -3.1416/2 + ((val - min) / (max-min)) * 3.1416
+                    );
+                }
 
-                // TODO: update motor position
             });
 
             this.listenTo(this.model, 'change:min change:init change:max', this.updateValues);
