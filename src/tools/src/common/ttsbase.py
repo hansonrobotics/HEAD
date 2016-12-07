@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import division
 import os
 import re
 import logging
 import hashlib
 import pinyin
-import pyglet
+from scipy.io import wavfile
 import shutil
 import xml.etree.ElementTree
 from audio2phoneme import audio2phoneme
@@ -88,9 +89,10 @@ class NumbTTS(TTSBase):
             return tts_data
 
     def get_duration(self):
-        source = pyglet.media.load(self.wavout)
-        logger.info("Duration of {} is {}".format(self.wavout, source.duration))
-        return source.duration
+        rate, data = wavfile.read(self.wavout)
+        duration = data.shape[0]/rate
+        logger.info("Duration of {} is {}".format(self.wavout, duration))
+        return duration
 
 class OnlineTTS(TTSBase):
 
@@ -214,9 +216,10 @@ class ChineseTTSBase(OnlineTTS):
         return phonemes
 
     def get_duration(self):
-        source = pyglet.media.load(self.wavout)
-        logger.info("Duration of {} is {}".format(self.wavout, source.duration))
-        return source.duration
+        rate, data = wavfile.read(self.wavout)
+        duration = data.shape[0]/rate
+        logger.info("Duration of {} is {}".format(self.wavout, duration))
+        return duration
 
     def _tts(self, text):
         tts_data = super(ChineseTTSBase, self)._tts(text)
