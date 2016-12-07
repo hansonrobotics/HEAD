@@ -46,7 +46,7 @@ class Chatbot():
         # sentiment dictionary
         self.polarity = Polarity()
         self._polarity_threshold = 0.2
-        self.speech = False # User's speech input
+        self.speech = False # True when robot is talking
 
         self.input_stack = []
         self.condition = threading.Condition()
@@ -106,7 +106,6 @@ class Chatbot():
             self.speech = True
         if msg.data == 'stop':
             logger.info("speech end")
-            rospy.sleep(2)
             self.speech = False
 
     def _request_callback(self, chat_message):
