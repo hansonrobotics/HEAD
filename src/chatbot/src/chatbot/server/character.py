@@ -4,6 +4,8 @@ import logging
 import re
 from config import CHARACTER_PATH
 from chatbot.utils import shorten
+from collections import defaultdict
+from pprint import pformat
 
 TYPE_AIML='aiml'
 TYPE_CS='cs'
@@ -237,3 +239,20 @@ class AIMLCharacter(Character):
             self.logger.info("No such context {}".format(key))
             return False
 
+    def get_templates(self):
+        templates = []
+        root = self.kernel._brain._root
+        self.kernel._brain.get_templates(root, templates)
+        return templates
+
+    def print_duplicated_patterns(self):
+        patterns = defaultdict(list)
+        for t in self.get_templates():
+            key = (t[1]['pattern'].lower(),
+                t[1]['that'].lower(),
+                t[1]['topic'].lower())
+            patterns[key].append(t[1])
+        for pattern in patterns:
+            if len(patterns[pattern]) > 1:
+                self.logger.error("Duplicated patterns {}\n{}\n".format(
+                    len(patterns[pattern]), pformat(patterns[pattern])))

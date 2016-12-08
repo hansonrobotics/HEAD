@@ -126,6 +126,7 @@ class AIMLCharacterLoader(object):
                             'low_temperature': dyn_properties.get('low_temperature'),
                             'high_temperature': dyn_properties.get('high_temperature'),
                         })
+                character.print_duplicated_patterns()
             except KeyError as ex:
                 logger.error(ex)
                 logger.error(traceback.format_exc())
