@@ -548,10 +548,10 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
             this.topics.tts_control.publish({data: 'shutup'});
         },
         pausePololuSync:function(){
-            this.topics.pololu_sync.publish({data: 'on'});
+            this.topics.pololu_sync.publish({data: 'off'});
         },
         resumePololuSync:function(){
-            this.topics.pololu_sync.publish({data: 'off'});
+            this.topics.pololu_sync.publish({data: 'on'});
         }
     };
 
