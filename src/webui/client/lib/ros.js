@@ -250,6 +250,11 @@ define(['jquery', 'roslib', 'js-yaml', './api'], function ($, ROSLIB, jsyaml, ap
                     ros: api.ros,
                     name: '/' + api.config.robot + '/nodes/listen/input',
                     messageType: 'std_msgs/String'
+                }),
+                pololu_sync: new ROSLIB.Topic({
+                    ros: api.ros,
+                    name: '/' + api.config.robot + '/pololu_sync',
+                    messageType: 'std_msgs/String'
                 })
             };
         },
