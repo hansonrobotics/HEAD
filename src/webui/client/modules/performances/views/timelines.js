@@ -71,7 +71,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         }
                     };
 
-                this.mergeOptions(options, ['performances', 'autoplay', 'readonly']);
+                this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving']);
 
                 if (options.sequence instanceof Array) {
                     this.model = new Performance();
@@ -97,7 +97,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             onAttach: function () {
                 var self = this;
 
-                if (this.readonly) this.ui.editContainer.hide();
+                if (this.disableSaving) this.ui.editContainer.hide();
 
                 this.ui.scrollContainer.droppable({
                     accept: '[data-node-name], [data-node-id]',
