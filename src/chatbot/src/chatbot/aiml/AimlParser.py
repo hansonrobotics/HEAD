@@ -433,6 +433,8 @@ class AimlHandler(ContentHandler):
             assert self._elemStack[0][0] == 'template'
             self._elemStack[0][1]['pattern'] = self._currentPattern
             self._elemStack[0][1]['pattern-loc'] = self._currentPatternLocation
+            self._elemStack[0][1]['that'] = self._currentThat.strip()
+            self._elemStack[0][1]['topic'] = self._currentTopic.strip()
             self._whitespaceBehaviorStack.pop()
         elif name == "pattern":
             # </pattern> tags are only legal in the InsidePattern state
