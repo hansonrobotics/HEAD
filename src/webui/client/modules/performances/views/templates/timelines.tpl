@@ -1,6 +1,6 @@
 <h2>Timeline</h2>
 
-<div class="clearfix">
+<div class="app-edit-container clearfix">
     <div class="performance-name-container pull-left">
         <div class="input-group">
             <div class="input-group-addon">Name</div>

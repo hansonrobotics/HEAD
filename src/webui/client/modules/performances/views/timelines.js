@@ -10,6 +10,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             ui: {
                 timelineContainer: '.app-timelines',
+                editContainer: '.app-edit-container',
                 timelineNodes: '.app-timeline-nodes .app-node',
                 nodes: '.app-nodes .app-node',
                 nodesContainer: '.app-nodes',
@@ -95,6 +96,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             onAttach: function () {
                 var self = this;
+
+                if (this.readonly) this.ui.editContainer.hide();
 
                 this.ui.scrollContainer.droppable({
                     accept: '[data-node-name], [data-node-id]',
