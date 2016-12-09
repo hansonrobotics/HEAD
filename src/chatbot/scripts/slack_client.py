@@ -67,6 +67,24 @@ class HRSlackBot(object):
             attachments=attachments, username=self.botname.title(),
             icon_url=self.icon_url)
 
+    def error(self, channel, msg):
+        attachments = [{
+            'title': msg,
+            'color': 'danger',
+            'fallback': msg
+        }]
+        logger.error(msg)
+        self.send_message(channel, attachments)
+
+    def info(self, channel, msg):
+        attachments = [{
+            'title': msg,
+            'color': '#36a64f',
+            'fallback': msg
+        }]
+        logger.info(msg)
+        self.send_message(channel, attachments)
+
     def run(self):
         while True:
             time.sleep(0.2)
@@ -98,8 +116,13 @@ class HRSlackBot(object):
                         response_listener=self)
                     self.session_manager.add_session(name, self.botname, client.session)
                     session = self.session_manager.get_session(client.session)
-                    session.sdata.client = client
-                    session.sdata.channel = channel
+                    if session is not None:
+                        session.sdata.client = client
+                        session.sdata.channel = channel
+                        self.info(channel, "Session {}".format(session.sid))
+                    else:
+                        self.error(channel, "Can't get session")
+                        continue
 
                 logger.info("Question {}".format(question))
                 if question in [':+1:', ':slightly_smiling_face:', ':)', 'gd']:
@@ -137,7 +160,10 @@ class HRSlackBot(object):
                     self.send_message(channel, attachments)
                     continue
 
-                client.ask(question)
+                try:
+                    client.ask(question)
+                except Exception as ex:
+                    self.error(channel, ex.message)
 
                 # session could change after ask
                 if client.session != session.sid:
