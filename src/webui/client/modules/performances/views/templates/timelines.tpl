@@ -1,6 +1,6 @@
 <h2>Timeline</h2>
 
-<div class="clearfix">
+<div class="app-edit-container clearfix">
     <div class="performance-name-container pull-left">
         <div class="input-group">
             <div class="input-group-addon">Name</div>
@@ -19,9 +19,12 @@
             <i class="fa fa-eraser"></i>
             Clear
         </button>
-        <button class="app-close-button btn btn-primary"><i
-                    class="glyphicon glyphicon-ok"></i> Done
-        </button>
+        <button class="app-done-button btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Done</button>
+
+        <button class="app-yes-button btn btn-default" disabled="disabled">Save changes?</button>
+        <button class="app-yes-button btn btn-success"><i class="glyphicon glyphicon-ok"></i> Yes</button>
+        <button class="app-no-button btn btn-danger"><i class="glyphicon glyphicon-remove"></i> No</button>
+        <button class="app-cancel-button btn btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> Cancel</button>
     </div>
 </div>
 

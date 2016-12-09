@@ -21,7 +21,7 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
         },
         queue: [],
         initialize: function (options) {
-            this.mergeOptions(options, ['sequence', 'performances', 'layoutView', 'readonly', 'hidden']);
+            this.mergeOptions(options, ['sequence', 'performances', 'layoutView', 'readonly', 'hidden', 'disableSaving']);
         },
         onRender: function () {
             let self = this;
@@ -185,7 +185,8 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
         _showTimeline: function (options) {
             let self = this;
             this.timelinesView = new TimelinesView(_.extend({
-                performances: this.options.performances
+                performances: this.options.performances,
+                disableSaving: this.disableSaving
             }, options));
 
             this.timelinesView.on('close', function () {

@@ -115,8 +115,15 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                         self.queueView.clearQueue();
                         self.queueView.addPerformance(data.model, true);
                         self.queueView.updateTimeline({autoplay: true});
-                    } else
-                        self.queueView.addPerformance(data.model);
+                    } else {
+                        self.queueView.addPerformance(data.model, !self.readonly);
+
+                        if (!self.readonly) {
+                            let timelinesView = self.queueView.timelinesView;
+                            if (!timelinesView || !timelinesView.changed)
+                                self.queueView.editPerformance(data.model);
+                        }
+                    }
                 });
 
                 this.ui.newButton.before(childView.el);
