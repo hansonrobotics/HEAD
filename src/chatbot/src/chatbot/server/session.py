@@ -188,6 +188,8 @@ class SessionManager(object):
     def add_session(self, user, key, sid):
         if sid in self._sessions:
             return False
+        if sid is None:
+            return False
         self._sessions[sid] = Session(sid)
         self._users[user][key] = sid
         return True
