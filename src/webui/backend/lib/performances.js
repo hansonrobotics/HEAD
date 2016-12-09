@@ -78,7 +78,7 @@ module.exports = {
         return true;
     },
     run: function (id) {
-        var res = cp.spawnSync('rosservice', ['call', '/performances/run_by_name', id], {encoding: 'utf8'});
+        var res = cp.spawnSync('rosservice', ['call', '/performances/run_full_performance', id], {encoding: 'utf8'});
         return res.status === 0 && yaml.load(res.stdout)['success'];
     }
 };
