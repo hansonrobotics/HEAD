@@ -211,18 +211,20 @@ def _ask_characters(characters, question, lang, sid, query):
             logger.info("Using open dialog character {}".format(sess.open_character.id))
             response = sess.open_character.respond(_question, lang, sess, query)
             used_charaters.append(sess.open_character.id)
-            answer = str_cleanup(response.get('text', ''))
-            if answer and not response.get('bad') and not response.get('gambit'):
-                hit_character = sess.open_character
-                cross_trace.append((sess.open_character.id, 'question', response.get('trace') or 'No trace'))
-            else:
+            _answer = str_cleanup(response.get('text', ''))
+            if _answer:
                 if response.get('repeat'):
                     cross_trace.append((sess.open_character.id, 'question', 'Repetitive answer'))
                     cached_responses['repeat'].append((response, response.get('repeat'), sess.open_character))
                 elif response.get('bad'):
                     cross_trace.append((sess.open_character.id, 'question', 'Bad answer: {}'.format(response.get('trace'))))
+                    cached_responses['bad'].append((response, _answer, sess.open_character))
                 else:
-                    cross_trace.append((sess.open_character.id, 'question', 'No answer'))
+                    answer = _answer
+                    hit_character = sess.open_character
+                    cross_trace.append((sess.open_character.id, 'question', response.get('trace') or 'No trace'))
+            else:
+                cross_trace.append((sess.open_character.id, 'question', 'No answer'))
 
     # Try the first tier to see if there is good match
     if not answer:
