@@ -25,6 +25,8 @@ until rostopic list ; do sleep 1; done
 rosparam set /robot_name sophia
 rosparam set lang en
 
+ROS_NAMESPACE=webui rosrun webui node_configuration.py &
+echo $! >>$pidfile
 export ROS_NAMESPACE=sophia
 rosrun chatbot ai.py &
 echo $! >>$pidfile
