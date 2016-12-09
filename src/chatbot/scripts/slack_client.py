@@ -160,7 +160,10 @@ class HRSlackBot(object):
                     self.send_message(channel, attachments)
                     continue
 
-                client.ask(question)
+                try:
+                    client.ask(question)
+                except Exception as ex:
+                    self.error(channel, ex.message)
 
                 # session could change after ask
                 if client.session != session.sid:

@@ -22,6 +22,12 @@ def get_default_username():
     host = subprocess.check_output('hostname', shell=True).strip()
     return '{}@{}'.format(user, host)
 
+ERRORS = {
+1: 'Wrong Character Name',
+2: 'No Answer',
+3: 'Invalid Session',
+4: 'Invalid Question'
+}
 
 class Client(cmd.Cmd, object):
 
@@ -68,6 +74,7 @@ class Client(cmd.Cmd, object):
         def wrap(f):
             @wraps(f)
             def wrap_f(*args):
+                error = None
                 for i in range(times):
                     try:
                         return f(*args)
@@ -75,7 +82,9 @@ class Client(cmd.Cmd, object):
                         logger.error(ex)
                         self = args[0]
                         self.start_session()
+                        error = ex.message
                         continue
+                raise Exception(error)
             return wrap_f
         return wrap
 
@@ -125,7 +134,7 @@ class Client(cmd.Cmd, object):
         if ret != 0:
             self.stdout.write("QA error: error code {}, botname {}, question {}, lang {}\n".format(
                 ret, self.botname, question, self.lang))
-            raise Exception("QA error code {}".format(ret))
+            raise Exception("QA error: {}({})".format(ERRORS.get(ret, 'Unknown'), ret))
 
         response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
         response.update(r.json().get('response'))
