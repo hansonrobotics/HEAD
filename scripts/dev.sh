@@ -144,7 +144,7 @@ else
 
 fi
 
-tmux new-window -n 'fce' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/face_track; ./main.py; $SHELL"
+tmux new-window -n 'orb' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/ros_bridge; ./main.py; $SHELL"
 
 sleep 4
 tmux new-window -n 'cmt' "roslaunch robots_config face_tracker.launch ${pi_arg}; $SHELL"
