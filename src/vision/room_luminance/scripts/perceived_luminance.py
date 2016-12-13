@@ -180,8 +180,7 @@ class ROIluminance:
               return  -1
           if max(d) + min(d) == 0 and room_light =="Bright":
               return 1
-          else:
-              return 0
+      return 0
 
 
   # callback function for a topic "/camera/face_locations"
