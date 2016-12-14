@@ -21,6 +21,8 @@ from performances.nodes import Node
 from performances.weak_method import WeakMethod
 from performances.msg import Event
 import performances.srv as srv
+from dynamic_reconfigure.server import Server
+from performances.cfg import PerformancesConfig
 
 logger = logging.getLogger('hr.performances')
 rospack = rospkg.RosPack()
@@ -33,6 +35,7 @@ class Runner:
         self.robot_name = rospy.get_param('/robot_name')
         self.running = False
         self.paused = False
+        self.autopause = False
         self.pause_time = 0
         self.start_time = 0
         self.start_timestamp = 0
@@ -94,8 +97,16 @@ class Runner:
         # Shared subscribers for nodes
         rospy.Subscriber('/hand_events', String, self.hand_callback)
 
+
+        Server(PerformancesConfig, self.reconfig)
         self.worker.start()
         rospy.spin()
+
+    def reconfig(self, config, level):
+        with self.lock:
+            self.autopause = config.autopause
+
+        return config
 
     def reload_properties_callback(self, request):
         self.load_properties()
@@ -297,7 +308,7 @@ class Runner:
             if len(self.running_performances) == 0:
                 continue
 
-            for performance in self.running_performances:
+            for i, performance in enumerate(self.running_performances):
                 nodes = [Node.createNode(node, self, self.start_time, performance.get('id', '')) for node in
                          performance['nodes']]
 
@@ -305,9 +316,15 @@ class Runner:
                     if not self.running:
                         break
 
+                    autopause = self.autopause and 0 < i < len(self.running_performances)
+
+                if autopause:
+                    self.pause()
+
                 running = True
                 while running:
                     with self.lock:
+
                         run_time = self.get_run_time()
 
                         if not self.running:
@@ -317,7 +334,6 @@ class Runner:
                     # checks if any nodes still running
                     for node in nodes:
                         running = node.run(run_time) or running
-        self.run_condition.release()
 
     def get_run_time(self):
         """
