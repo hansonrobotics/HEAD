@@ -131,7 +131,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             onAttach: function () {
                 let self = this;
 
-                if (this.disableSaving) this.ui.editContainer.hide();
+                if (this.disableSaving && this.readonly)
+                    this.ui.editContainer.hide();
+
                 this.hideConfirmButtons();
                 this.ui.scrollContainer.droppable({
                     accept: '[data-node-name], [data-node-id]',
