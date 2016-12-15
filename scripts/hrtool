@@ -377,7 +377,6 @@ install_webui_deps() {
     $SUDO npm install -g webpack nodemon
 }
 
-
 install_vision_deps() {
     info "Installing vision dependencies"
     mkdir -p $VISION_TOOL_PREFIX
@@ -511,6 +510,28 @@ install_marky_markov() {
     $SUDO apt-get ${APT_GET_OPTS} install ruby2.3 ruby2.3-dev
     $SUDO gem install marky_markov
     info "Installing Marky Markov is done"
+}
+
+get_models() {
+    _get_models
+}
+
+_get_models() {
+    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+
+    # openface
+    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${HR_MODELS}
+    bunzip2 -f ${HR_MODELS}/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${HR_MODELS}
+
+    # markov
+    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 77d0a3e130f0339c501f929de54ba36a
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 }
 
 check_or_create_ws() {
