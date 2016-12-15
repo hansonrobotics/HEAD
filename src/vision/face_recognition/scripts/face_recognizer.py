@@ -27,6 +27,7 @@ import pandas as pd
 import logging
 import multiprocessing
 import shutil
+import tempfile
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
@@ -41,6 +42,7 @@ from face_recognition.cfg import FaceRecognitionConfig
 
 CWD = os.path.dirname(os.path.abspath(__file__))
 HR_MODELS = os.environ.get('HR_MODELS', os.path.expanduser('~/.hr/cache/models'))
+ARCHIVE_DIR = os.path.expanduser('~/.hr/faces')
 DLIB_FACEPREDICTOR = os.path.join(HR_MODELS,
                     'shape_predictor_68_face_landmarks.dat')
 NETWORK_MODEL = os.path.join(HR_MODELS, 'nn4.small2.v1.t7')
@@ -161,6 +163,7 @@ class FaceRecognizer(object):
             fname = os.path.join(img_dir, "{}.jpg".format(uuid.uuid1().hex))
             cv2.imwrite(fname, image)
             logger.info("Write face image to {}".format(fname))
+            print "Write face image to {}".format(fname)
 
     def prepare(self):
         """Align faces, generate representations and labels"""
@@ -241,6 +244,9 @@ class FaceRecognizer(object):
                 print "P: {} C: {}".format(persons, confidences)
 
     def reset(self):
+        archive_fname = os.path.join(ARCHIVE_DIR, 'faces-{}'.format(
+                dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S')))
+        shutil.make_archive(archive_fname, 'gztar', root_dir=CWD, base_dir='faces')
         shutil.rmtree(self.train_dir, ignore_errors=True)
         shutil.rmtree(self.aligned_dir, ignore_errors=True)
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
