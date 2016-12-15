@@ -60,6 +60,7 @@ class FaceRecognizer(object):
         self.face_detector = dlib.get_frontal_face_detector()
         self.count = 0
         self.train = False
+        self.enable = True
         self.data_root = 'faces'
         self.train_dir = os.path.join(self.data_root, 'training-images')
         self.aligned_dir = os.path.join(self.data_root, 'aligned-images')
@@ -232,6 +233,8 @@ class FaceRecognizer(object):
         return persons, confidences
 
     def image_cb(self, ros_image):
+        if not self.enable:
+            return
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         self.count += 1
         if self.count % 30 != 0:
@@ -252,6 +255,11 @@ class FaceRecognizer(object):
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
 
     def reconfig(self, config, level):
+        self.enable = config.enable
+        if not self.enable:
+            config.reset = False
+            config.train = False
+            return config
         if self.train and not config.train:
             try:
                 self.train_model()
