@@ -248,6 +248,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 return $('<li>').attr('data-path', dir).append(el);
             },
             switchDir: function (dir) {
+                if (this.nav) Backbone.history.navigate(path.join('#/performances', dir));
                 this.updateVisiblePerformances(dir);
                 this.currentPath = dir;
                 this.collection.currentPath = dir;
