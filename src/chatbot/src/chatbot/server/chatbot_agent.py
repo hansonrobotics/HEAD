@@ -137,6 +137,21 @@ def set_context(prop, sid):
             pass
     return True, "Context is updated"
 
+def get_context(sid):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return False, "No session"
+    context = {}
+    for c in CHARACTERS:
+        try:
+            context.update(c.get_context(sess))
+        except Exception:
+            pass
+    for k in context.keys():
+        if k.startswith('_'):
+            del context[k]
+    return True, context
+
 def preprocessing(question):
     question = question.lower().strip()
     question = ' '.join(question.split())  # remove consecutive spaces

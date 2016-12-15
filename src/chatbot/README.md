@@ -207,3 +207,17 @@ Parameters:
 Return:
 - *ret* - Return code
 - *response*
+
+### Get session context
+
+```
+GET /v1.1/get_context
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *session* - Session ID
+
+Return:
+- *ret* - Return code
+- *response*

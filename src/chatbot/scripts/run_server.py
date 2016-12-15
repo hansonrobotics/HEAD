@@ -43,7 +43,7 @@ from flask import Flask, request, Response, send_from_directory
 from chatbot.server.chatbot_agent import (
     ask, list_character, session_manager, set_weights, set_context,
     dump_history, dump_session, add_character, list_character_names,
-    rate_answer)
+    rate_answer, get_context)
 from chatbot.stats import history_stats
 
 json_encode = json.JSONEncoder().encode
@@ -175,6 +175,15 @@ def _set_context():
     value = data.get('value')
     sid = data.get('session')
     ret, response = set_context({key: value}, sid)
+    return Response(json_encode({'ret': ret, 'response': response}),
+                    mimetype="application/json")
+
+@app.route(ROOT + '/get_context', methods=['GET'])
+@requires_auth
+def _get_context():
+    data = request.args
+    sid = data.get('session')
+    ret, response = get_context(sid)
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 
