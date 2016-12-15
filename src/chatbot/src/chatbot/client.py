@@ -4,7 +4,7 @@ import json
 import os
 import re
 import time
-from functools import wraps
+from functools import wraps, partial
 import logging
 import threading
 import pprint
@@ -592,7 +592,7 @@ Syntax: sc key=value
 """
         self.stdout.write(s)
 
-    def do_gc(self, line):
+    def do_gc(self, line=None):
         if not self.session:
             self.start_session()
         params = {
@@ -607,7 +607,11 @@ Syntax: sc key=value
             self.stdout.write(pprint.pformat(response))
         else:
             self.stdout.write(response)
+            response = {}
         self.stdout.write('\n')
+        return response
 
     def help_gc(self):
         self.stdout.write('Get chatbot context\n')
+
+    get_context = do_gc
