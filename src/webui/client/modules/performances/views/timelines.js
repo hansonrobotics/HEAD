@@ -44,6 +44,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 'click @ui.nodes': 'nodeClicked',
                 'click @ui.saveButton': 'savePerformances',
                 'keyup @ui.performanceName': 'setPerformanceName',
+                'focusout @ui.performanceName': 'sortPerformances',
                 'click @ui.runButton': 'runAtIndicator',
                 'click @ui.stopButton': 'stop',
                 'click @ui.pauseButton': 'pause',
@@ -229,7 +230,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.model.nodes.add(node);
             },
             modelChanged: function () {
-                this.ui.performanceName.val(this.model.get('name'));
+                let name = this.model.get('name');
+                if (name != this.ui.performanceName.val())
+                    this.ui.performanceName.val(name);
             },
             initResizable: function (el) {
                 let self = this,
@@ -405,6 +408,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             setPerformanceName: function () {
                 this.model.set('name', this.ui.performanceName.val());
+            },
+            sortPerformances: function () {
+                this.performances.sort();
             },
             savePerformances: function (options) {
                 let self = this,

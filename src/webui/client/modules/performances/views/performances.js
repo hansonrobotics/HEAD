@@ -186,10 +186,12 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                         dirs.push(path.slice(0, i + 1).join('/'));
                 });
 
-                dirs = _.uniq(_.union(dirs, this.createdDirs));
-
-                return _.filter(dirs, function (dir) {
+                dirs = _.filter(_.uniq(_.union(dirs, this.createdDirs)), function (dir) {
                     return self.getParentPath(dir) == self.currentPath;
+                });
+
+                return _.sortBy(dirs, function (d) {
+                    return d;
                 });
             },
             showSettings: function () {
