@@ -219,6 +219,8 @@ class Chatbot():
         self._blink_publisher.publish('chat_saying')
         self._response_publisher.publish(String(text))
 
+        if rospy.has_param('{}/context'.format(self.node_name)):
+            rospy.delete_param('{}/context'.format(self.node_name))
         context = self.client.get_context()
         for k, v in context.iteritems():
             rospy.set_param('{}/context/{}'.format(self.node_name, k), v)
