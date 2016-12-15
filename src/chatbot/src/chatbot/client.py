@@ -4,9 +4,10 @@ import json
 import os
 import re
 import time
-from functools import wraps
+from functools import wraps, partial
 import logging
 import threading
+import pprint
 from chatbot.utils import norm
 
 import sys
@@ -590,3 +591,27 @@ Set chatbot context
 Syntax: sc key=value
 """
         self.stdout.write(s)
+
+    def do_gc(self, line=None):
+        if not self.session:
+            self.start_session()
+        params = {
+            "Auth": self.key,
+            "session": self.session
+        }
+        r = requests.get(
+            '{}/get_context'.format(self.root_url), params=params)
+        ret = r.json().get('ret')
+        response = r.json().get('response')
+        if ret:
+            self.stdout.write(pprint.pformat(response))
+        else:
+            self.stdout.write(response)
+            response = {}
+        self.stdout.write('\n')
+        return response
+
+    def help_gc(self):
+        self.stdout.write('Get chatbot context\n')
+
+    get_context = do_gc

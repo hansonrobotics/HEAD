@@ -47,6 +47,8 @@ class Chatbot():
         self.polarity = Polarity()
         self._polarity_threshold = 0.2
         self.speech = False
+        self.enable = True
+        self.node_name = rospy.get_name()
 
         self.input_stack = []
         self.condition = threading.Condition()
@@ -216,6 +218,12 @@ class Chatbot():
 
         self._blink_publisher.publish('chat_saying')
         self._response_publisher.publish(String(text))
+
+        context = self.client.get_context()
+        for k, v in context.iteritems():
+            rospy.set_param('{}/context/{}'.format(self.node_name, k), v)
+            logger.info("Set param {}={}".format(k, v))
+
 
     # Just repeat the chat message, as a plain string.
     def _echo_callback(self, chat_message):
