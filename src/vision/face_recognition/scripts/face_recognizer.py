@@ -264,19 +264,25 @@ class FaceRecognizer(object):
                 rospy.set_param('{}/recent_persons'.format(self.ros_name),
                             ','.join(self.detected_faces))
 
-    def reset(self):
+    def archive(self):
         archive_fname = os.path.join(ARCHIVE_DIR, 'faces-{}'.format(
                 dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S')))
         shutil.make_archive(archive_fname, 'gztar', root_dir=CWD, base_dir='faces')
+
+    def reset(self):
+        self.archive()
         shutil.rmtree(self.train_dir, ignore_errors=True)
         shutil.rmtree(self.aligned_dir, ignore_errors=True)
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
 
     def save_model(self):
-        for f in ['labels.csv', 'reps.csv', 'classifier.pkl']:
-            shutil.copy(os.path.join(self.aligned_dir, f),
-                        os.path.join(self.classifier_dir))
-        logger.info("Model is saved")
+        files = ['labels.csv', 'reps.csv', 'classifier.pkl']
+        files = [os.path.join(self.aligned_dir, f) for f in files]
+        if all([os.path.isfile(f) for f in files]):
+            for f in files:
+                shutil.copy(f, os.path.join(self.classifier_dir))
+            logger.info("Model is saved")
+        self.archive()
 
     def reconfig(self, config, level):
         self.enable = config.enable
