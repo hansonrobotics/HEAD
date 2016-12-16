@@ -28,6 +28,7 @@ import logging
 import multiprocessing
 import shutil
 import tempfile
+from collections import deque
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
@@ -67,6 +68,10 @@ class FaceRecognizer(object):
         self.classifier_dir = CLASSIFIER_DIR
         self.clf, self.le = None, None
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
+        self.ros_name = rospy.get_name()
+        self.multi_faces = False
+        self.threshold = 0
+        self.detected_faces = deque(maxlen=10)
 
     def load_classifier(self, model):
         if os.path.isfile(model):
@@ -78,7 +83,7 @@ class FaceRecognizer(object):
 
     def getRep(self, bgrImg, all=True):
         if bgrImg is None:
-            return
+            return []
 
         rgbImg = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
         if all:
@@ -87,7 +92,7 @@ class FaceRecognizer(object):
             bb = self.align.getLargestFaceBoundingBox(rgbImg)
 
         if bb is None:
-            return
+            return []
 
         if not hasattr(bb, '__iter__'):
             bb = [bb]
@@ -217,7 +222,7 @@ class FaceRecognizer(object):
     def infer(self, img):
         if self.clf is None or self.le is None:
             return None, None
-        reps = self.getRep(img)
+        reps = self.getRep(img, self.multi_faces)
         persons = []
         confidences = []
         for rep in reps:
@@ -235,16 +240,24 @@ class FaceRecognizer(object):
     def image_cb(self, ros_image):
         if not self.enable:
             return
-        image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
+
         self.count += 1
         if self.count % 30 != 0:
             return
+        image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
             self.collect_face(image)
         else:
             persons, confidences = self.infer(image)
             if persons:
-                print "P: {} C: {}".format(persons, confidences)
+                for p, c in zip(persons, confidences):
+                    if c <= self.threshold:
+                        continue
+                    self.detected_faces.append(p)
+                    logger.info("P: {} C: {}".format(p, c))
+                    print "P: {} C: {}".format(p, c)
+                rospy.set_param('{}/recent_persons'.format(self.ros_name),
+                            ','.join(self.detected_faces))
 
     def reset(self):
         archive_fname = os.path.join(ARCHIVE_DIR, 'faces-{}'.format(
@@ -268,6 +281,8 @@ class FaceRecognizer(object):
                 logger.error(ex)
         self.train = config.train
         self.face_name = config.face_name
+        self.threshold = config.confidence_threshold
+        self.multi_faces = config.multi_faces
         if config.reset:
             config.train = False
             self.train = False
