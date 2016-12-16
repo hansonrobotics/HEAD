@@ -185,9 +185,10 @@ def _ask_characters(characters, question, lang, sid, query):
 
     control = get_character('control')
     if control is not None:
-        _response = control.respond(_question, lang, sess, query=True)
-        cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
-        if _response.get('text') == '[tell me more]':
+        _response = control.respond(_question, lang, sess, query)
+        _answer = _response.get('text')
+        if _answer == '[tell me more]':
+            cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
             if sess.last_used_character:
                 if sess.cache.that_question is None:
                     sess.cache.that_question = sess.cache.last_question
@@ -204,6 +205,13 @@ def _ask_characters(characters, question, lang, sid, query):
                     _question = sess.cache.that_question.lower().strip()
                     cross_trace.append((sess.last_used_character.id, 'continuation', 'Empty'))
         else:
+            if _answer:
+                cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
+                hit_character = control
+                answer = _answer
+                response = _response
+            else:
+                cross_trace.append((control.id, 'control', 'No answer'))
             for c in characters:
                 try:
                     c.remove_context(sess, 'continue')
@@ -567,6 +575,15 @@ def ask(question, lang, sid, query=False):
         logger.error("No pattern match")
         return response, NO_PATTERN_MATCH
 
+def said(sid, text):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return False, "No session"
+    control = get_character('control')
+    if control is not None:
+        control.said(sess, text)
+        return True, "Done"
+    return False, 'No control tier'
 
 def dump_history():
     return session_manager.dump_all()

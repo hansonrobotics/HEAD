@@ -43,7 +43,7 @@ from flask import Flask, request, Response, send_from_directory
 from chatbot.server.chatbot_agent import (
     ask, list_character, session_manager, set_weights, set_context,
     dump_history, dump_session, add_character, list_character_names,
-    rate_answer, get_context)
+    rate_answer, get_context, said)
 from chatbot.stats import history_stats
 
 json_encode = json.JSONEncoder().encode
@@ -97,6 +97,15 @@ def _batch_chat():
     return Response(json_encode({'ret': 0, 'response': responses}),
                     mimetype="application/json")
 
+@app.route(ROOT + '/said', methods=['GET'])
+@requires_auth
+def _said():
+    data = request.args
+    session = data.get('session')
+    message = data.get('message')
+    ret, response = said(session, message)
+    return Response(json_encode({'ret': ret, 'response': response}),
+                    mimetype="application/json")
 
 @app.route(ROOT + '/rate', methods=['GET'])
 @requires_auth

@@ -615,3 +615,21 @@ Syntax: sc key=value
         self.stdout.write('Get chatbot context\n')
 
     get_context = do_gc
+
+    def do_said(self, line):
+        if not self.session:
+            self.start_session()
+        params = {
+            "Auth": self.key,
+            "session": self.session,
+            "message": line
+        }
+        r = requests.get(
+            '{}/said'.format(self.root_url), params=params)
+        ret = r.json().get('ret')
+        response = r.json().get('response')
+        self.stdout.write(response)
+        self.stdout.write('\n')
+
+    def help_said(self):
+        self.stdout.write('Set the chatbot state as the message was said\n')

@@ -256,3 +256,10 @@ class AIMLCharacter(Character):
             if len(patterns[pattern]) > 1:
                 self.logger.error("Duplicated patterns {}\n{}\n".format(
                     len(patterns[pattern]), pformat(patterns[pattern])))
+
+    def said(self, session, text):
+        sid = session.sid
+        outputHistory = self.kernel.getPredicate(self.kernel._outputHistory, sid)
+        if isinstance(outputHistory, list):
+            outputHistory.append(text)
+            self.logger.info("Add '{}' to output history".format(text))
