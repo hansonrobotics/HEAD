@@ -93,7 +93,7 @@ class Runner:
         rospy.Subscriber('/' + self.robot_name + '/speech', ChatMessage, self.speech_callback)
         # Shared subscribers for nodes
         rospy.Subscriber('/hand_events', String, self.hand_callback)
-
+        rospy.Subscriber('/face_training_event', String, self.training_callback)
         self.worker.start()
         rospy.spin()
 
@@ -413,6 +413,9 @@ class Runner:
             return True
         except rospy.names.ParameterInvalid:
             return False
+
+    def training_callback(self, msg):
+        self.notify('FACE_TRAINING', msg.data)
 
 if __name__ == '__main__':
     Runner()
