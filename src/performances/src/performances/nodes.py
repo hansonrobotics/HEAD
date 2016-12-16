@@ -621,15 +621,17 @@ class settings(Node):
     def setParameters(self, rosnode, params):
         try:
             cl = dynamic_reconfigure.client.Client(rosnode, timeout=0.1)
-
+            params = self.set_variables(params)
             cl.update_configuration(params)
             cl.close()
         except:
             pass
     def set_variables(self, params):
-        for k,v in enumerate(params):
+        for k,v in params.items():
             if isinstance(v, basestring):
                 params[k] = self.replace_variables_text(v)
+            else:
+                params[k] = v
         return params
 
     def start(self, run_time):
