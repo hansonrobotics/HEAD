@@ -6,7 +6,7 @@
             <div class="input-group-addon">Name</div>
             <input class="app-performance-name form-control" type="text"/>
             <button class="app-save-button btn btn-primary"><i
-                        class="glyphicon glyphicon-floppy-save"></i> Save
+                    class="glyphicon glyphicon-floppy-save"></i> Save
             </button>
         </div>
     </div>
@@ -30,19 +30,23 @@
 
 <div class="btn-group" role="group" aria-label="...">
     <button class="app-run-button btn btn-default" title="Run"><i
-                class="glyphicon glyphicon-play-circle"></i> Run
+            class="glyphicon glyphicon-play-circle"></i> Run
     </button>
-    <button class="app-pause-button btn btn-default" title="Stop"><i
-                class="glyphicon glyphicon-pause"></i> Pause
+    <button class="app-pause-button btn btn-default" title="Pause"><i
+            class="glyphicon glyphicon-pause"></i> Pause
     </button>
-    <button class="app-resume-button btn btn-default" title="Stop"><i
-                class="glyphicon glyphicon-play-circle"></i> Resume
+    <button class="app-resume-button btn btn-default" title="Resume"><i
+            class="glyphicon glyphicon-play-circle"></i> Resume
+    </button>
+    <button class="app-auto-pause-button btn btn-default" title="Auto-pause"><i class="fa fa-pause-circle"
+                                                                                aria-hidden="true"></i>
+        Auto-pause
     </button>
     <button class="app-loop-button btn btn-default" title="Loop"><i
-                class="glyphicon glyphicon-repeat"></i> Loop
+            class="glyphicon glyphicon-repeat"></i> Loop
     </button>
     <button class="app-stop-button btn btn-default" title="Stop"><i
-                class="glyphicon glyphicon-stop"></i> Stop
+            class="glyphicon glyphicon-stop"></i> Stop
     </button>
     <button class="app-frame-count btn btn-primary" title="Frame count" disabled="disabled">0</button>
 </div>
