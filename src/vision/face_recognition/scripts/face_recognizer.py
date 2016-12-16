@@ -39,6 +39,7 @@ import rospy
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from dynamic_reconfigure.server import Server
+import dynamic_reconfigure.client
 from face_recognition.cfg import FaceRecognitionConfig
 from std_msgs.msg import String
 
@@ -51,6 +52,7 @@ NETWORK_MODEL = os.path.join(HR_MODELS, 'nn4.small2.v1.t7')
 CLASSIFIER_DIR = os.path.join(HR_MODELS, 'classifier')
 logger = logging.getLogger('hr.vision.face_recognition.face_recognizer')
 
+
 class FaceRecognizer(object):
 
     def __init__(self):
@@ -61,6 +63,8 @@ class FaceRecognizer(object):
         self.landmarkIndices = openface.AlignDlib.OUTER_EYES_AND_NOSE
         self.face_detector = dlib.get_frontal_face_detector()
         self.count = 0
+        self.face_count = 0 # Cumulative total faces in training.
+        self.max_face_count = 10
         self.train = False
         self.enable = True
         self.data_root = 'faces'
@@ -73,6 +77,7 @@ class FaceRecognizer(object):
         self.multi_faces = False
         self.threshold = 0
         self.detected_faces = deque(maxlen=10)
+        self.node_name = rospy.get_name()
         self.pub = rospy.Publisher(
             'face_training_event', String, latch=True, queue_size=1)
 
@@ -172,6 +177,8 @@ class FaceRecognizer(object):
             fname = os.path.join(img_dir, "{}.jpg".format(uuid.uuid1().hex))
             cv2.imwrite(fname, image)
             logger.info("Write face image to {}".format(fname))
+            self.face_count += 1
+            self.pub.publish('{}/{}'.format(self.face_count, self.max_face_count))
             print "Write face image to {}".format(fname)
 
     def prepare(self):
@@ -250,8 +257,18 @@ class FaceRecognizer(object):
             return
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
-            self.pub.publish('start')
             self.collect_face(image)
+            if self.face_count == self.max_face_count:
+                self.train = False
+                try:
+                    self.train_model()
+                except Exception as ex:
+                    logger.error("Train model failed")
+                    logger.error(ex)
+                finally:
+                    self.update_parameter({'train': False})
+                    self.face_count = 0
+                logger.info("Training model is finished")
         else:
             persons, confidences = self.infer(image)
             if persons:
@@ -284,6 +301,15 @@ class FaceRecognizer(object):
             logger.info("Model is saved")
         self.archive()
 
+    def update_parameter(self, param):
+        client = dynamic_reconfigure.client.Client(self.node_name, timeout=2)
+        try:
+            client.update_configuration(param)
+        except Exception as ex:
+            logger.error("Updating parameter error: {}".format(ex))
+            return False
+        return True
+
     def reconfig(self, config, level):
         self.enable = config.enable
         if not self.enable:
@@ -294,13 +320,18 @@ class FaceRecognizer(object):
             self.save_model()
             config.save = False
         if self.train and not config.train:
-            try:
-                self.train_model()
-            except Exception as ex:
-                logger.error("Train model failed")
-                logger.error(ex)
-        self.train = config.train
+            # TODO: stop training if it's started
+            pass
         self.face_name = config.face_name
+        self.train = config.train
+        if self.train:
+            if self.face_name:
+                self.pub.publish('start')
+                self.face_count = 0
+            else:
+                self.train = False
+                config.train = False
+                logger.error("Name is not set")
         self.threshold = config.confidence_threshold
         self.multi_faces = config.multi_faces
         if config.reset:
