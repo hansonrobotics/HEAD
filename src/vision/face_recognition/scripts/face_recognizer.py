@@ -262,6 +262,7 @@ class FaceRecognizer(object):
                 self.train = False
                 try:
                     self.train_model()
+                    self.update_parameter({'face_name': ''})
                 except Exception as ex:
                     logger.error("Train model failed")
                     logger.error(ex)
