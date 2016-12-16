@@ -66,14 +66,12 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                         else
                             return val;
                     });
-                    // Only update values if the view is synced
-                    if (this.options.refresh){
-                        this.model.save(values, {
-                            error: function () {
-                                console.log('error updating node configuration');
-                            }
-                        });
-                    }
+
+                    this.model.save(values, {
+                        error: function () {
+                            console.log('error updating node configuration');
+                        }
+                    });
                 }
             }
         });
