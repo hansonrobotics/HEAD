@@ -40,6 +40,7 @@ from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from dynamic_reconfigure.server import Server
 from face_recognition.cfg import FaceRecognitionConfig
+from std_msgs.msg import String
 
 CWD = os.path.dirname(os.path.abspath(__file__))
 HR_MODELS = os.environ.get('HR_MODELS', os.path.expanduser('~/.hr/cache/models'))
@@ -72,6 +73,8 @@ class FaceRecognizer(object):
         self.multi_faces = False
         self.threshold = 0
         self.detected_faces = deque(maxlen=10)
+        self.pub = rospy.Publisher(
+            'face_training_event', String, latch=True, queue_size=1)
 
     def load_classifier(self, model):
         if os.path.isfile(model):
@@ -218,6 +221,7 @@ class FaceRecognizer(object):
         embeddings.to_csv(reps_fname, header=False, index=False)
         logger.info("Update label file {}".format(label_fname))
         logger.info("Update representation file {}".format(reps_fname))
+        self.pub.publish('end')
 
     def infer(self, img):
         if self.clf is None or self.le is None:
@@ -246,6 +250,7 @@ class FaceRecognizer(object):
             return
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
+            self.pub.publish('start')
             self.collect_face(image)
         else:
             persons, confidences = self.infer(image)
