@@ -221,3 +221,18 @@ Parameters:
 Return:
 - *ret* - Return code
 - *response*
+
+### Add the message to the output history of the control tier, as the tier has said that before
+
+```
+GET /v1.1/said
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *session* - Session ID
+- *message* - Message text
+
+Return:
+- *ret* - Return code
+- *response*
