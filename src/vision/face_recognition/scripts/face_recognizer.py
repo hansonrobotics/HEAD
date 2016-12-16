@@ -67,25 +67,29 @@ class FaceRecognizer(object):
         self.max_face_count = 10
         self.train = False
         self.enable = True
-        self.data_root = 'faces'
+        self.data_root = os.path.join(CWD, 'faces')
         self.train_dir = os.path.join(self.data_root, 'training-images')
         self.aligned_dir = os.path.join(self.data_root, 'aligned-images')
         self.classifier_dir = CLASSIFIER_DIR
         self.clf, self.le = None, None
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
-        self.ros_name = rospy.get_name()
+        self.node_name = rospy.get_name()
         self.multi_faces = False
         self.threshold = 0
         self.detected_faces = deque(maxlen=10)
-        self.node_name = rospy.get_name()
         self.pub = rospy.Publisher(
             'face_training_event', String, latch=True, queue_size=1)
 
     def load_classifier(self, model):
         if os.path.isfile(model):
             with open(model) as f:
-                self.le, self.clf = pickle.load(f)
-                logger.info("Loaded model {}".format(model))
+                try:
+                    self.le, self.clf = pickle.load(f)
+                    logger.info("Loaded model {}".format(model))
+                except Exception as ex:
+                    logger.error("Loading model {} failed".format(model))
+                    logger.error(ex)
+                    self.clf, self.le = None, None
         else:
             logger.error("Model file {} is not found".format(model))
 
@@ -156,7 +160,7 @@ class FaceRecognizer(object):
         for imgObject in iterImgs(self.aligned_dir):
             reps = self.net.forward(imgObject.getRGB())
             face_reps.append(reps)
-            labels.append((imgObject.cls, imgObject.path))
+            labels.append((imgObject.cls, imgObject.name))
         if face_reps and labels:
             pd.DataFrame(face_reps).to_csv(reps_fname, header=False, index=False)
             pd.DataFrame(labels).to_csv(label_fname, header=False, index=False)
@@ -279,7 +283,7 @@ class FaceRecognizer(object):
                     self.detected_faces.append(p)
                     logger.info("P: {} C: {}".format(p, c))
                     print "P: {} C: {}".format(p, c)
-                rospy.set_param('{}/recent_persons'.format(self.ros_name),
+                rospy.set_param('{}/recent_persons'.format(self.node_name),
                             ','.join(self.detected_faces))
 
     def archive(self):
