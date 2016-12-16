@@ -267,12 +267,21 @@ class FaceRecognizer(object):
         shutil.rmtree(self.aligned_dir, ignore_errors=True)
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
 
+    def save_model(self):
+        for f in ['labels.csv', 'reps.csv', 'classifier.pkl']:
+            shutil.copy(os.path.join(self.aligned_dir, f),
+                        os.path.join(self.classifier_dir))
+        logger.info("Model is saved")
+
     def reconfig(self, config, level):
         self.enable = config.enable
         if not self.enable:
             config.reset = False
             config.train = False
             return config
+        if config.save:
+            self.save_model()
+            config.save = False
         if self.train and not config.train:
             try:
                 self.train_model()
