@@ -222,6 +222,7 @@ class Chatbot():
         if rospy.has_param('{}/context'.format(self.node_name)):
             rospy.delete_param('{}/context'.format(self.node_name))
         context = self.client.get_context()
+        context['sid'] = self.client.session
         for k, v in context.iteritems():
             rospy.set_param('{}/context/{}'.format(self.node_name, k), v)
             logger.info("Set param {}={}".format(k, v))
