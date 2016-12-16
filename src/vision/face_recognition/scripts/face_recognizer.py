@@ -339,6 +339,7 @@ class FaceRecognizer(object):
                 logger.error("Name is not set")
         self.threshold = config.confidence_threshold
         self.multi_faces = config.multi_faces
+        self.max_face_count = config.max_face_count
         if config.reset:
             config.train = False
             self.train = False
