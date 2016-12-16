@@ -395,11 +395,24 @@ class Runner:
                                       'properties/variables', name)
             if rospy.has_param(param_name):
                 val = rospy.get_param(param_name)
+                if self.is_param(val):
+                    return rospy.get_param(val, None)
             return val
 
     def speech_callback(self, msg):
         self.notify('SPEECH', msg.utterance)
 
+    @staticmethod
+    def is_param(param):
+        """ Checks if value is valid param.
+        Has to start with slash
+        """
+        validator = rospy.names.global_name("param_name")
+        try:
+            validator(param, False)
+            return True
+        except rospy.names.ParameterInvalid:
+            return False
 
 if __name__ == '__main__':
     Runner()
