@@ -28,6 +28,7 @@ import logging
 import multiprocessing
 import shutil
 import tempfile
+from collections import deque
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
@@ -38,7 +39,9 @@ import rospy
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from dynamic_reconfigure.server import Server
+import dynamic_reconfigure.client
 from face_recognition.cfg import FaceRecognitionConfig
+from std_msgs.msg import String
 
 CWD = os.path.dirname(os.path.abspath(__file__))
 HR_MODELS = os.environ.get('HR_MODELS', os.path.expanduser('~/.hr/cache/models'))
@@ -48,6 +51,7 @@ DLIB_FACEPREDICTOR = os.path.join(HR_MODELS,
 NETWORK_MODEL = os.path.join(HR_MODELS, 'nn4.small2.v1.t7')
 CLASSIFIER_DIR = os.path.join(HR_MODELS, 'classifier')
 logger = logging.getLogger('hr.vision.face_recognition.face_recognizer')
+
 
 class FaceRecognizer(object):
 
@@ -59,6 +63,8 @@ class FaceRecognizer(object):
         self.landmarkIndices = openface.AlignDlib.OUTER_EYES_AND_NOSE
         self.face_detector = dlib.get_frontal_face_detector()
         self.count = 0
+        self.face_count = 0 # Cumulative total faces in training.
+        self.max_face_count = 10
         self.train = False
         self.enable = True
         self.data_root = 'faces'
@@ -67,6 +73,13 @@ class FaceRecognizer(object):
         self.classifier_dir = CLASSIFIER_DIR
         self.clf, self.le = None, None
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
+        self.ros_name = rospy.get_name()
+        self.multi_faces = False
+        self.threshold = 0
+        self.detected_faces = deque(maxlen=10)
+        self.node_name = rospy.get_name()
+        self.pub = rospy.Publisher(
+            'face_training_event', String, latch=True, queue_size=1)
 
     def load_classifier(self, model):
         if os.path.isfile(model):
@@ -78,7 +91,7 @@ class FaceRecognizer(object):
 
     def getRep(self, bgrImg, all=True):
         if bgrImg is None:
-            return
+            return []
 
         rgbImg = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
         if all:
@@ -87,7 +100,7 @@ class FaceRecognizer(object):
             bb = self.align.getLargestFaceBoundingBox(rgbImg)
 
         if bb is None:
-            return
+            return []
 
         if not hasattr(bb, '__iter__'):
             bb = [bb]
@@ -164,6 +177,8 @@ class FaceRecognizer(object):
             fname = os.path.join(img_dir, "{}.jpg".format(uuid.uuid1().hex))
             cv2.imwrite(fname, image)
             logger.info("Write face image to {}".format(fname))
+            self.face_count += 1
+            self.pub.publish('{}/{}'.format(self.face_count, self.max_face_count))
             print "Write face image to {}".format(fname)
 
     def prepare(self):
@@ -213,11 +228,12 @@ class FaceRecognizer(object):
         embeddings.to_csv(reps_fname, header=False, index=False)
         logger.info("Update label file {}".format(label_fname))
         logger.info("Update representation file {}".format(reps_fname))
+        self.pub.publish('end')
 
     def infer(self, img):
         if self.clf is None or self.le is None:
             return None, None
-        reps = self.getRep(img)
+        reps = self.getRep(img, self.multi_faces)
         persons = []
         confidences = []
         for rep in reps:
@@ -235,24 +251,65 @@ class FaceRecognizer(object):
     def image_cb(self, ros_image):
         if not self.enable:
             return
-        image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
+
         self.count += 1
         if self.count % 30 != 0:
             return
+        image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
             self.collect_face(image)
+            if self.face_count == self.max_face_count:
+                self.train = False
+                try:
+                    self.train_model()
+                    self.update_parameter({'face_name': ''})
+                except Exception as ex:
+                    logger.error("Train model failed")
+                    logger.error(ex)
+                finally:
+                    self.update_parameter({'train': False})
+                    self.face_count = 0
+                logger.info("Training model is finished")
         else:
             persons, confidences = self.infer(image)
             if persons:
-                print "P: {} C: {}".format(persons, confidences)
+                for p, c in zip(persons, confidences):
+                    if c <= self.threshold:
+                        continue
+                    self.detected_faces.append(p)
+                    logger.info("P: {} C: {}".format(p, c))
+                    print "P: {} C: {}".format(p, c)
+                rospy.set_param('{}/recent_persons'.format(self.ros_name),
+                            ','.join(self.detected_faces))
 
-    def reset(self):
+    def archive(self):
         archive_fname = os.path.join(ARCHIVE_DIR, 'faces-{}'.format(
                 dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S')))
         shutil.make_archive(archive_fname, 'gztar', root_dir=CWD, base_dir='faces')
+
+    def reset(self):
+        self.archive()
         shutil.rmtree(self.train_dir, ignore_errors=True)
         shutil.rmtree(self.aligned_dir, ignore_errors=True)
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
+
+    def save_model(self):
+        files = ['labels.csv', 'reps.csv', 'classifier.pkl']
+        files = [os.path.join(self.aligned_dir, f) for f in files]
+        if all([os.path.isfile(f) for f in files]):
+            for f in files:
+                shutil.copy(f, os.path.join(self.classifier_dir))
+            logger.info("Model is saved")
+        self.archive()
+
+    def update_parameter(self, param):
+        client = dynamic_reconfigure.client.Client(self.node_name, timeout=2)
+        try:
+            client.update_configuration(param)
+        except Exception as ex:
+            logger.error("Updating parameter error: {}".format(ex))
+            return False
+        return True
 
     def reconfig(self, config, level):
         self.enable = config.enable
@@ -260,14 +317,24 @@ class FaceRecognizer(object):
             config.reset = False
             config.train = False
             return config
+        if config.save:
+            self.save_model()
+            config.save = False
         if self.train and not config.train:
-            try:
-                self.train_model()
-            except Exception as ex:
-                logger.error("Train model failed")
-                logger.error(ex)
-        self.train = config.train
+            # TODO: stop training if it's started
+            pass
         self.face_name = config.face_name
+        self.train = config.train
+        if self.train:
+            if self.face_name:
+                self.pub.publish('start')
+                self.face_count = 0
+            else:
+                self.train = False
+                config.train = False
+                logger.error("Name is not set")
+        self.threshold = config.confidence_threshold
+        self.multi_faces = config.multi_faces
         if config.reset:
             config.train = False
             self.train = False
