@@ -162,7 +162,7 @@ define(['marionette', './templates/animation_mode.tpl', 'lib/api', 'jquery', 'ro
                     this.speechEnabled = false;
                 }
 
-                annyang.abort();
+                if (annyang) annyang.abort();
             },
             speechActiveCallback: function (msg) {
                 if (this.speechEnabled) {
