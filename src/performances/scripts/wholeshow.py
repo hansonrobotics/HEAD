@@ -18,7 +18,8 @@ import subprocess
 import threading
 import dynamic_reconfigure.client
 from chatbot.msg import ChatMessage
-
+from dynamic_reconfigure.server import Server
+from performances.cfg import WholeshowConfig
 logger = logging.getLogger('hr.performance.wholeshow')
 rospack = rospkg.RosPack()
 
@@ -75,6 +76,9 @@ class WholeShow(HierarchicalMachine):
         self.speech_pub = rospy.Publisher('chatbot_speech', ChatMessage, queue_size=10)
         # Sleep
         self.performance_events = rospy.Subscriber('/performances/events', Event, self.performances_cb)
+        # Dynamic reconfigure
+        self.config = {}
+        self.cfg_srv = Server(WholeshowConfig, self.config_cb)
 
     def start_sleeping(self):
         """States callbacks """
@@ -103,7 +107,7 @@ class WholeShow(HierarchicalMachine):
     def speech_cb(self, msg):
         """ ROS Callbacks """
         speech = msg.utterance
-        on = (self.state == 'interacting')
+        on = (self.state == 'interacting') or (self.state == 'performing' and self.config['chat_during_performance'])
         # Special states keywords
         if self.state == 'opencog':
             if self.check_keywords(self.OPENCOG_EXIT, speech):
@@ -268,6 +272,9 @@ class WholeShow(HierarchicalMachine):
                 return True
         return False
 
+    def config_cb(self, config, level=0):
+        self.config = config
+        return config
 
 
 if __name__ == '__main__':
