@@ -55,6 +55,12 @@ logger = logging.getLogger('hr.vision.face_recognition.face_recognizer')
 
 class FaceRecognizer(object):
 
+    class Face(object):
+        def __init__(self, name, confidence, bbox):
+            self.name = name
+            self.confidence = confidence
+            self.bbox = bbox
+
     def __init__(self):
         self.bridge = CvBridge()
         self.imgDim = 96
@@ -79,14 +85,14 @@ class FaceRecognizer(object):
         self.detected_faces = deque(maxlen=10)
         self.training_job = None
         self.stop_training = threading.Event()
-        self.persons = []
-        self.confidences = []
-        self.bboxes = []
+        self.faces = []
         self.pub = rospy.Publisher(
             'face_training_event', String, latch=True, queue_size=1)
         self.imgpub = rospy.Publisher(
             'image', Image, latch=True, queue_size=1)
         self._lock = threading.RLock()
+        self.colors = [ (255, 0, 0), (0, 255, 0), (0, 0, 255),
+            (255, 255, 0), (255, 0, 255), (0, 255, 255) ]
 
     def load_classifier(self, model):
         if os.path.isfile(model):
@@ -266,10 +272,15 @@ class FaceRecognizer(object):
 
     def republish(self, ros_image):
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
-        if self.persons:
-            for p, c, b in zip(self.persons, self.confidences, self.bboxes):
-                cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), (255, 0, 0), 3)
-                cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 0), 3)
+        if self.faces:
+            i = 0
+            for face in sorted(self.faces, key=lambda x: x.bbox.left()):
+                b = face.bbox
+                p = face.name
+                cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 3)
+                cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 2, self.colors[i], 3)
+                i += 1
+                i = i%6
         self.imgpub.publish(self.bridge.cv2_to_imgmsg(image, 'bgr8'))
 
     def image_cb(self, ros_image):
@@ -282,9 +293,7 @@ class FaceRecognizer(object):
             return
         if self.count % 90 == 0:
             # clear current person every ~3s
-            self.persons = []
-            self.confidences = []
-            self.bboxes = []
+            self.faces = []
             rospy.set_param('{}/current_persons'.format(self.node_name),'')
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
@@ -316,14 +325,12 @@ class FaceRecognizer(object):
                 for p, c, b in zip(persons, confidences, bboxes):
                     if c <= self.threshold:
                         continue
-                    faces.append((p,c,b))
+                    faces.append(FaceRecognizer.Face(p,c,b))
                     logger.info("P: {} C: {}".format(p, c))
                     print "P: {} C: {}".format(p, c)
-                faces = sorted(faces, key=lambda x: x[1])
-                self.persons = [f[0] for f in faces]
-                self.confidences = [f[1] for f in faces]
-                self.bboxes = [f[2] for f in faces]
-                current = '|'.join(self.persons)
+                faces = sorted(faces, key=lambda x: x.confidence)
+                self.faces = faces
+                current = '|'.join([f.name for f in self.faces])
                 self.detected_faces.append(current)
                 rospy.set_param('{}/recent_persons'.format(self.node_name),
                             ','.join(self.detected_faces))
