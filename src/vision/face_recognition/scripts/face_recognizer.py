@@ -79,8 +79,13 @@ class FaceRecognizer(object):
         self.detected_faces = deque(maxlen=10)
         self.training_job = None
         self.stop_training = threading.Event()
+        self.persons = []
+        self.confidences = []
+        self.bboxes = []
         self.pub = rospy.Publisher(
             'face_training_event', String, latch=True, queue_size=1)
+        self.imgpub = rospy.Publisher(
+            'image', Image, latch=True, queue_size=1)
         self._lock = threading.RLock()
 
     def load_classifier(self, model):
@@ -98,7 +103,7 @@ class FaceRecognizer(object):
 
     def getRep(self, bgrImg, all=True):
         if bgrImg is None:
-            return []
+            return [], []
 
         rgbImg = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
         if all:
@@ -107,25 +112,18 @@ class FaceRecognizer(object):
             bb = self.align.getLargestFaceBoundingBox(rgbImg)
 
         if bb is None:
-            return []
+            return [], []
 
         if not hasattr(bb, '__iter__'):
             bb = [bb]
 
-        alignedFaces = []
-        for box in bb:
-            alignedFaces.append(
-                self.align.align(
-                    self.imgDim,
-                    rgbImg,
-                    box,
-                    landmarkIndices=self.landmarkIndices))
-
         reps = []
-        for alignedFace in alignedFaces:
-            reps.append(self.net.forward(alignedFace))
+        for box in bb:
+            aligned_face = self.align.align(self.imgDim, rgbImg, box,
+                    landmarkIndices=self.landmarkIndices)
+            reps.append(self.net.forward(aligned_face))
 
-        return reps
+        return reps, bb
 
     def align_images(self, input_dir):
         imgs = list(iterImgs(input_dir))
@@ -249,10 +247,11 @@ class FaceRecognizer(object):
     def infer(self, img):
         if self.clf is None or self.le is None:
             return None, None
-        reps = self.getRep(img, self.multi_faces)
+        reps, bb = self.getRep(img, self.multi_faces)
         persons = []
         confidences = []
-        for rep in reps:
+        bboxes = []
+        for rep, box in zip(reps, bb):
             try:
                 rep = rep.reshape(1, -1)
             except:
@@ -262,7 +261,16 @@ class FaceRecognizer(object):
             maxI = np.argmax(predictions)
             persons.append(self.le.inverse_transform(maxI))
             confidences.append(predictions[maxI])
-        return persons, confidences
+            bboxes.append(box)
+        return persons, confidences, bboxes
+
+    def republish(self, ros_image):
+        image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
+        if self.persons:
+            for p, c, b in zip(self.persons, self.confidences, self.bboxes):
+                cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), (255, 0, 0), 3)
+                cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 0), 3)
+        self.imgpub.publish(self.bridge.cv2_to_imgmsg(image, 'bgr8'))
 
     def image_cb(self, ros_image):
         if not self.enable:
@@ -270,9 +278,13 @@ class FaceRecognizer(object):
 
         self.count += 1
         if self.count % 30 != 0:
+            self.republish(ros_image)
             return
         if self.count % 90 == 0:
             # clear current person every ~3s
+            self.persons = []
+            self.confidences = []
+            self.bboxes = []
             rospy.set_param('{}/current_persons'.format(self.node_name),'')
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
@@ -298,22 +310,26 @@ class FaceRecognizer(object):
                     self.update_parameter({'face_name': ''})
                     self.face_count = 0
         else:
-            persons, confidences = self.infer(image)
+            persons, confidences, bboxes = self.infer(image)
             if persons:
                 faces = []
-                for p, c in zip(persons, confidences):
+                for p, c, b in zip(persons, confidences, bboxes):
                     if c <= self.threshold:
                         continue
-                    faces.append((p,c))
+                    faces.append((p,c,b))
                     logger.info("P: {} C: {}".format(p, c))
                     print "P: {} C: {}".format(p, c)
                 faces = sorted(faces, key=lambda x: x[1])
-                current = '|'.join([p for p,c in faces])
+                self.persons = [f[0] for f in faces]
+                self.confidences = [f[1] for f in faces]
+                self.bboxes = [f[2] for f in faces]
+                current = '|'.join(self.persons)
                 self.detected_faces.append(current)
                 rospy.set_param('{}/recent_persons'.format(self.node_name),
                             ','.join(self.detected_faces))
                 rospy.set_param('{}/current_persons'.format(self.node_name),
                             current)
+        self.republish(ros_image)
 
     def archive(self, remove=False):
         archive_fname = os.path.join(ARCHIVE_DIR, 'faces-{}'.format(
