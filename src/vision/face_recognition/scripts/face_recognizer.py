@@ -25,7 +25,7 @@ import time
 import numpy as np
 import pandas as pd
 import logging
-import multiprocessing
+import threading
 import shutil
 import tempfile
 from collections import deque
@@ -55,6 +55,12 @@ logger = logging.getLogger('hr.vision.face_recognition.face_recognizer')
 
 class FaceRecognizer(object):
 
+    class Face(object):
+        def __init__(self, name, confidence, bbox):
+            self.name = name
+            self.confidence = confidence
+            self.bbox = bbox
+
     def __init__(self):
         self.bridge = CvBridge()
         self.imgDim = 96
@@ -67,31 +73,43 @@ class FaceRecognizer(object):
         self.max_face_count = 10
         self.train = False
         self.enable = True
-        self.data_root = 'faces'
+        self.data_root = os.path.join(CWD, 'faces')
         self.train_dir = os.path.join(self.data_root, 'training-images')
         self.aligned_dir = os.path.join(self.data_root, 'aligned-images')
         self.classifier_dir = CLASSIFIER_DIR
         self.clf, self.le = None, None
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
-        self.ros_name = rospy.get_name()
+        self.node_name = rospy.get_name()
         self.multi_faces = False
         self.threshold = 0
         self.detected_faces = deque(maxlen=10)
-        self.node_name = rospy.get_name()
+        self.training_job = None
+        self.stop_training = threading.Event()
+        self.faces = []
         self.pub = rospy.Publisher(
             'face_training_event', String, latch=True, queue_size=1)
+        self.imgpub = rospy.Publisher(
+            'image', Image, latch=True, queue_size=1)
+        self._lock = threading.RLock()
+        self.colors = [ (255, 0, 0), (0, 255, 0), (0, 0, 255),
+            (255, 255, 0), (255, 0, 255), (0, 255, 255) ]
 
     def load_classifier(self, model):
         if os.path.isfile(model):
             with open(model) as f:
-                self.le, self.clf = pickle.load(f)
-                logger.info("Loaded model {}".format(model))
+                try:
+                    self.le, self.clf = pickle.load(f)
+                    logger.info("Loaded model {}".format(model))
+                except Exception as ex:
+                    logger.error("Loading model {} failed".format(model))
+                    logger.error(ex)
+                    self.clf, self.le = None, None
         else:
             logger.error("Model file {} is not found".format(model))
 
     def getRep(self, bgrImg, all=True):
         if bgrImg is None:
-            return []
+            return [], []
 
         rgbImg = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
         if all:
@@ -100,25 +118,18 @@ class FaceRecognizer(object):
             bb = self.align.getLargestFaceBoundingBox(rgbImg)
 
         if bb is None:
-            return []
+            return [], []
 
         if not hasattr(bb, '__iter__'):
             bb = [bb]
 
-        alignedFaces = []
-        for box in bb:
-            alignedFaces.append(
-                self.align.align(
-                    self.imgDim,
-                    rgbImg,
-                    box,
-                    landmarkIndices=self.landmarkIndices))
-
         reps = []
-        for alignedFace in alignedFaces:
-            reps.append(self.net.forward(alignedFace))
+        for box in bb:
+            aligned_face = self.align.align(self.imgDim, rgbImg, box,
+                    landmarkIndices=self.landmarkIndices)
+            reps.append(self.net.forward(aligned_face))
 
-        return reps
+        return reps, bb
 
     def align_images(self, input_dir):
         imgs = list(iterImgs(input_dir))
@@ -156,8 +167,8 @@ class FaceRecognizer(object):
         for imgObject in iterImgs(self.aligned_dir):
             reps = self.net.forward(imgObject.getRGB())
             face_reps.append(reps)
-            labels.append((imgObject.cls, imgObject.path))
-        if face_reps and labels:
+            labels.append((imgObject.cls, imgObject.name))
+        if face_reps and labels and not self.stop_training.is_set():
             pd.DataFrame(face_reps).to_csv(reps_fname, header=False, index=False)
             pd.DataFrame(labels).to_csv(label_fname, header=False, index=False)
             logger.info("Generated label file {}".format(label_fname))
@@ -183,60 +194,70 @@ class FaceRecognizer(object):
 
     def prepare(self):
         """Align faces, generate representations and labels"""
+        logger.info("Preparing")
         self.align_images(self.train_dir)
         self.gen_data()
 
     def train_model(self):
-        self.prepare()
-        label_fname = "{}/labels.csv".format(self.aligned_dir)
-        reps_fname = "{}/reps.csv".format(self.aligned_dir)
-        labels, embeddings = None, None
-        if os.path.isfile(label_fname) and \
-                    os.path.isfile(reps_fname):
-            labels = pd.read_csv(label_fname, header=None)
-            embeddings = pd.read_csv(reps_fname, header=None)
+        with self._lock:
+            self.pub.publish('training')
+            self.prepare()
+            label_fname = "{}/labels.csv".format(self.aligned_dir)
+            reps_fname = "{}/reps.csv".format(self.aligned_dir)
+            labels, embeddings = None, None
+            if os.path.isfile(label_fname) and \
+                        os.path.isfile(reps_fname):
+                labels = pd.read_csv(label_fname, header=None)
+                embeddings = pd.read_csv(reps_fname, header=None)
 
-        if labels is None or embeddings is None:
-            logger.error("No labels or representations are found")
-            return
+            if labels is None or embeddings is None:
+                logger.error("No labels or representations are found")
+                self.pub.publish('abort')
+                return
 
-        # append the existing data
-        original_label_fname = "{}/labels.csv".format(self.classifier_dir)
-        original_reps_fname = "{}/reps.csv".format(self.classifier_dir)
-        if os.path.isfile(original_label_fname) and \
-                    os.path.isfile(original_reps_fname):
-            labels2 = pd.read_csv(original_label_fname, header=None)
-            embeddings2 = pd.read_csv(original_reps_fname, header=None)
-            labels = labels.append(labels2)
-            embeddings = embeddings.append(embeddings2)
+            # append the existing data
+            original_label_fname = "{}/labels.csv".format(self.classifier_dir)
+            original_reps_fname = "{}/reps.csv".format(self.classifier_dir)
+            if os.path.isfile(original_label_fname) and \
+                        os.path.isfile(original_reps_fname):
+                labels2 = pd.read_csv(original_label_fname, header=None)
+                embeddings2 = pd.read_csv(original_reps_fname, header=None)
+                labels = labels.append(labels2)
+                embeddings = embeddings.append(embeddings2)
 
-        labels_data = labels.as_matrix()[:,0].tolist()
-        embeddings_data = embeddings.as_matrix()
+            labels_data = labels.as_matrix()[:,0].tolist()
+            embeddings_data = embeddings.as_matrix()
 
-        le = LabelEncoder().fit(labels_data)
-        labelsNum = le.transform(labels_data)
-        clf = SVC(C=1, kernel='linear', probability=True)
-        clf.fit(embeddings_data, labelsNum)
+            le = LabelEncoder().fit(labels_data)
+            labelsNum = le.transform(labels_data)
+            clf = SVC(C=1, kernel='linear', probability=True)
+            clf.fit(embeddings_data, labelsNum)
 
-        classifier_fname = "{}/classifier.pkl".format(self.aligned_dir)
-        with open(classifier_fname, 'w') as f:
-            pickle.dump((le, clf), f)
-        logger.info("Model saved to {}".format(classifier_fname))
-        self.load_classifier(classifier_fname)
+            if not self.stop_training.is_set():
+                labels.to_csv(label_fname, header=False, index=False)
+                embeddings.to_csv(reps_fname, header=False, index=False)
+                logger.info("Update label file {}".format(label_fname))
+                logger.info("Update representation file {}".format(reps_fname))
 
-        labels.to_csv(label_fname, header=False, index=False)
-        embeddings.to_csv(reps_fname, header=False, index=False)
-        logger.info("Update label file {}".format(label_fname))
-        logger.info("Update representation file {}".format(reps_fname))
-        self.pub.publish('end')
+                classifier_fname = "{}/classifier.pkl".format(self.aligned_dir)
+                with open(classifier_fname, 'w') as f:
+                    pickle.dump((le, clf), f)
+                logger.info("Model saved to {}".format(classifier_fname))
+
+                self.load_classifier(classifier_fname)
+                self.archive(True)
+                self.pub.publish('end')
+            else:
+                self.pub.publish('abort')
 
     def infer(self, img):
         if self.clf is None or self.le is None:
             return None, None
-        reps = self.getRep(img, self.multi_faces)
+        reps, bb = self.getRep(img, self.multi_faces)
         persons = []
         confidences = []
-        for rep in reps:
+        bboxes = []
+        for rep, box in zip(reps, bb):
             try:
                 rep = rep.reshape(1, -1)
             except:
@@ -246,7 +267,21 @@ class FaceRecognizer(object):
             maxI = np.argmax(predictions)
             persons.append(self.le.inverse_transform(maxI))
             confidences.append(predictions[maxI])
-        return persons, confidences
+            bboxes.append(box)
+        return persons, confidences, bboxes
+
+    def republish(self, ros_image):
+        image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
+        if self.faces:
+            i = 0
+            for face in sorted(self.faces, key=lambda x: x.bbox.left()):
+                b = face.bbox
+                p = face.name
+                cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 3)
+                cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 2, self.colors[i], 3)
+                i += 1
+                i = i%6
+        self.imgpub.publish(self.bridge.cv2_to_imgmsg(image, 'bgr8'))
 
     def image_cb(self, ros_image):
         if not self.enable:
@@ -254,43 +289,65 @@ class FaceRecognizer(object):
 
         self.count += 1
         if self.count % 30 != 0:
+            self.republish(ros_image)
             return
+        if self.count % 90 == 0:
+            # clear current person every ~3s
+            self.faces = []
+            rospy.set_param('{}/current_persons'.format(self.node_name),'')
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
             self.collect_face(image)
             if self.face_count == self.max_face_count:
-                self.train = False
                 try:
-                    self.train_model()
-                    self.update_parameter({'face_name': ''})
+                    self.training_job = threading.Thread(target=self.train_model)
+                    self.training_job.deamon = True
+                    self.training_job.start()
+                    while not self.stop_training.is_set() and self.training_job.is_alive():
+                        self.training_job.join(0.2)
+                    if self.training_job.is_alive():
+                        logger.info("Training is interrupted")
+                    else:
+                        logger.info("Training model is finished")
                 except Exception as ex:
                     logger.error("Train model failed")
                     logger.error(ex)
                 finally:
+                    self.training_job = None
+                    self.train = False
                     self.update_parameter({'train': False})
+                    self.update_parameter({'face_name': ''})
                     self.face_count = 0
-                logger.info("Training model is finished")
         else:
-            persons, confidences = self.infer(image)
+            persons, confidences, bboxes = self.infer(image)
             if persons:
-                for p, c in zip(persons, confidences):
+                faces = []
+                for p, c, b in zip(persons, confidences, bboxes):
                     if c <= self.threshold:
                         continue
-                    self.detected_faces.append(p)
+                    faces.append(FaceRecognizer.Face(p,c,b))
                     logger.info("P: {} C: {}".format(p, c))
                     print "P: {} C: {}".format(p, c)
-                rospy.set_param('{}/recent_persons'.format(self.ros_name),
+                faces = sorted(faces, key=lambda x: x.confidence)
+                self.faces = faces
+                current = '|'.join([f.name for f in self.faces])
+                self.detected_faces.append(current)
+                rospy.set_param('{}/recent_persons'.format(self.node_name),
                             ','.join(self.detected_faces))
+                rospy.set_param('{}/current_persons'.format(self.node_name),
+                            current)
+        self.republish(ros_image)
 
-    def archive(self):
+    def archive(self, remove=False):
         archive_fname = os.path.join(ARCHIVE_DIR, 'faces-{}'.format(
                 dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S')))
         shutil.make_archive(archive_fname, 'gztar', root_dir=CWD, base_dir='faces')
+        if remove:
+            shutil.rmtree(self.train_dir, ignore_errors=True)
+            shutil.rmtree(self.aligned_dir, ignore_errors=True)
 
     def reset(self):
-        self.archive()
-        shutil.rmtree(self.train_dir, ignore_errors=True)
-        shutil.rmtree(self.aligned_dir, ignore_errors=True)
+        self.archive(True)
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
 
     def save_model(self):
@@ -300,7 +357,10 @@ class FaceRecognizer(object):
             for f in files:
                 shutil.copy(f, os.path.join(self.classifier_dir))
             logger.info("Model is saved")
-        self.archive()
+            self.archive()
+            return True
+        logger.info("Model is not saved")
+        return False
 
     def update_parameter(self, param):
         client = dynamic_reconfigure.client.Client(self.node_name, timeout=2)
@@ -322,12 +382,16 @@ class FaceRecognizer(object):
             config.save = False
         if self.train and not config.train:
             # TODO: stop training if it's started
-            pass
+            logger.info("Stopping")
+            self.train = False
+            self.stop_training.set()
+            self.pub.publish('abort')
         self.face_name = config.face_name
         self.train = config.train
         if self.train:
             if self.face_name:
                 self.pub.publish('start')
+                self.stop_training.clear()
                 self.face_count = 0
             else:
                 self.train = False
@@ -335,6 +399,7 @@ class FaceRecognizer(object):
                 logger.error("Name is not set")
         self.threshold = config.confidence_threshold
         self.multi_faces = config.multi_faces
+        self.max_face_count = config.max_face_count
         if config.reset:
             config.train = False
             self.train = False
