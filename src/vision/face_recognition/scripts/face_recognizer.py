@@ -271,6 +271,9 @@ class FaceRecognizer(object):
         self.count += 1
         if self.count % 30 != 0:
             return
+        if self.count % 90 == 0:
+            # clear current person every ~3s
+            rospy.set_param('{}/current_persons'.format(self.node_name),'')
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
             self.collect_face(image)
@@ -297,15 +300,20 @@ class FaceRecognizer(object):
         else:
             persons, confidences = self.infer(image)
             if persons:
+                faces = []
                 for p, c in zip(persons, confidences):
                     if c <= self.threshold:
                         continue
-                    if p not in self.detected_faces:
-                        self.detected_faces.append(p)
+                    faces.append((p,c))
                     logger.info("P: {} C: {}".format(p, c))
                     print "P: {} C: {}".format(p, c)
+                faces = sorted(faces, key=lambda x: x[1])
+                current = '|'.join([p for p,c in faces])
+                self.detected_faces.append(current)
                 rospy.set_param('{}/recent_persons'.format(self.node_name),
                             ','.join(self.detected_faces))
+                rospy.set_param('{}/current_persons'.format(self.node_name),
+                            current)
 
     def archive(self, remove=False):
         archive_fname = os.path.join(ARCHIVE_DIR, 'faces-{}'.format(
