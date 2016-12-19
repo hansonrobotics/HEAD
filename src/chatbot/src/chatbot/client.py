@@ -621,29 +621,30 @@ Syntax: rc key,key2,key3,...
 
     remove_context = do_rc
 
-    def do_gc(self, line=None):
+    def get_context(self):
         if not self.session:
             self.start_session()
         params = {
             "Auth": self.key,
             "session": self.session
         }
-        r = requests.get(
+        response = requests.get(
             '{}/get_context'.format(self.root_url), params=params)
-        ret = r.json().get('ret')
+        return response
+
+    def do_gc(self, line=None):
+        r = self.get_context()
         response = r.json().get('response')
+        ret = r.json().get('ret')
         if ret:
             self.stdout.write(pprint.pformat(response))
         else:
             self.stdout.write(response)
             response = {}
         self.stdout.write('\n')
-        return response
 
     def help_gc(self):
         self.stdout.write('Get chatbot context\n')
-
-    get_context = do_gc
 
     def do_said(self, line):
         if not self.session:
