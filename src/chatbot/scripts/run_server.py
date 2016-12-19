@@ -180,10 +180,13 @@ def _set_weights():
 @requires_auth
 def _set_context():
     data = request.args
-    key = data.get('key')
-    value = data.get('value')
+    context_str = data.get('context')
+    context = {}
+    for tok in context_str.split(','):
+        k, v = tok.split('=')
+        context[k.strip()] = v.strip()
     sid = data.get('session')
-    ret, response = set_context({key: value}, sid)
+    ret, response = set_context(context, sid)
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 

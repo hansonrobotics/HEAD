@@ -21,7 +21,7 @@ useSOLR = False
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
-from config import CHARACTER_PATH
+from config import CHARACTER_PATH, RESET_SESSION_BY_HELLO
 CHARACTERS = load_characters(CHARACTER_PATH)
 REVISION = os.environ.get('HR_CHATBOT_REVISION')
 
@@ -527,7 +527,7 @@ def ask(question, lang, sid, query=False):
             return response, SUCCESS
 
     sess.set_characters(responding_characters)
-    if question:
+    if RESET_SESSION_BY_HELLO and question:
         question = question.lower().strip()
         if 'hi' in question or 'hello' in question:
             session_manager.reset_session(sid)

@@ -572,11 +572,17 @@ Syntax: upload package
     def do_sc(self, line):
         if not self.session:
             self.start_session()
-        key, value = line.split('=')
+        try:
+            for tok in line.split(','):
+                k, v = tok.split('=')
+                self.stdout.write('{}={}\n'.format(k, v))
+        except Exception as ex:
+            self.stdout.write('Wrong format\n')
+            self.help_sc()
+            return
         params = {
             "Auth": self.key,
-            "key": key,
-            "value": value,
+            "context": line,
             "session": self.session
         }
         r = requests.get(
@@ -585,10 +591,12 @@ Syntax: upload package
         self.stdout.write(response)
         self.stdout.write('\n')
 
+    set_context = do_sc
+
     def help_sc(self):
         s = """
 Set chatbot context
-Syntax: sc key=value
+Syntax: sc key=value,key2=value2,...
 """
         self.stdout.write(s)
 
