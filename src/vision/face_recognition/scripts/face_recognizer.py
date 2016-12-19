@@ -295,10 +295,8 @@ class FaceRecognizer(object):
         if self.count % 30 != 0:
             self.republish(ros_image)
             return
-        if self.count % 89 == 0:
-            # clear current person every ~3s
-            self.faces = []
-            rospy.set_param('{}/current_persons'.format(self.node_name),'')
+        self.faces = []
+        rospy.set_param('{}/current_persons'.format(self.node_name),'')
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
             self.collect_face(image)
