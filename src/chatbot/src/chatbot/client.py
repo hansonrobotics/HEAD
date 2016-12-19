@@ -4,9 +4,10 @@ import json
 import os
 import re
 import time
-from functools import wraps
+from functools import wraps, partial
 import logging
 import threading
+import pprint
 from chatbot.utils import norm
 
 import sys
@@ -568,14 +569,19 @@ Syntax: upload package
     def help_ns(self):
         self.stdout.write('Start new session\n')
 
+    @retry(1)
     def do_sc(self, line):
-        if not self.session:
-            self.start_session()
-        key, value = line.split('=')
+        try:
+            for tok in line.split(','):
+                k, v = tok.split('=')
+                self.stdout.write('{}={}\n'.format(k, v))
+        except Exception as ex:
+            self.stdout.write('Wrong format\n')
+            self.help_sc()
+            return
         params = {
             "Auth": self.key,
-            "key": key,
-            "value": value,
+            "context": line,
             "session": self.session
         }
         r = requests.get(
@@ -584,9 +590,71 @@ Syntax: upload package
         self.stdout.write(response)
         self.stdout.write('\n')
 
+    set_context = do_sc
+
     def help_sc(self):
         s = """
 Set chatbot context
-Syntax: sc key=value
+Syntax: sc key=value,key2=value2,...
 """
         self.stdout.write(s)
+
+    @retry(1)
+    def do_rc(self, line):
+        params = {
+            "Auth": self.key,
+            "keys": line,
+            "session": self.session
+        }
+        r = requests.get(
+            '{}/remove_context'.format(self.root_url), params=params)
+        response = r.json().get('response')
+        self.stdout.write(response)
+        self.stdout.write('\n')
+
+    def help_rc(self):
+        s = """
+Remove chatbot context
+Syntax: rc key,key2,key3,...
+"""
+        self.stdout.write(s)
+
+    remove_context = do_rc
+
+    def get_context(self):
+        if not self.session:
+            self.start_session()
+        params = {
+            "Auth": self.key,
+            "session": self.session
+        }
+        response = requests.get(
+            '{}/get_context'.format(self.root_url), params=params)
+        return response.json().get('response')
+
+    @retry(1)
+    def do_gc(self, line=None):
+        response = self.get_context()
+        self.stdout.write(pprint.pformat(response))
+        self.stdout.write('\n')
+
+    def help_gc(self):
+        self.stdout.write('Get chatbot context\n')
+
+    def do_said(self, line):
+        if not self.session:
+            self.start_session()
+        params = {
+            "Auth": self.key,
+            "session": self.session,
+            "message": line
+        }
+        r = requests.get(
+            '{}/said'.format(self.root_url), params=params)
+        ret = r.json().get('ret')
+        response = r.json().get('response')
+        self.stdout.write(response)
+        self.stdout.write('\n')
+
+    def help_said(self):
+        self.stdout.write('Set the chatbot state as the message was said\n')

@@ -1,7 +1,8 @@
 define(['backbone', 'roslib', 'lib/api', 'underscore'], function (Backbone, ROSLIB, api, _) {
     return Backbone.Model.extend({
-        initialize: function (node_name) {
+        initialize: function (node_name, readonly) {
             this.node_name = node_name;
+            this.readonly = readonly || false;
         },
         sync: function (method, model, options) {
             var self = this;
@@ -13,10 +14,11 @@ define(['backbone', 'roslib', 'lib/api', 'underscore'], function (Backbone, ROSL
                     options.error && options.error(error);
                 });
             } else {
-                _.each(model.changed, function (value, name) {
-                    api.setDynParam(self.node_name, name, value);
-                });
-
+                if (!this.readonly){
+                    _.each(model.changed, function (value, name) {
+                        api.setDynParam(self.node_name, name, value);
+                    });
+                }
                 options.success && options.success(model.toJSON());
             }
         }

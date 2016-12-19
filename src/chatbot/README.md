@@ -201,8 +201,51 @@ GET /v1.1/set_context
 Parameters:
 - *Auth* - Authorization token
 - *session* - Session ID
-- *key* - Context key
-- *value* - Context value
+- *context* - Context string (format key=value,key2=value2)
+
+Return:
+- *ret* - Return code
+- *response*
+
+### Remove context
+
+```
+GET /v1.1/remove_context
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *session* - Session ID
+- *context* - Context keys (format key,key2,key3,...)
+
+Return:
+- *ret* - Return code
+- *response*
+
+### Get session context
+
+```
+GET /v1.1/get_context
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *session* - Session ID
+
+Return:
+- *ret* - Return code
+- *response*
+
+### Add the message to the output history of the control tier, as the tier has said that before
+
+```
+GET /v1.1/said
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *session* - Session ID
+- *message* - Message text
 
 Return:
 - *ret* - Return code
