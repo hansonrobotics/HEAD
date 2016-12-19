@@ -291,7 +291,7 @@ class FaceRecognizer(object):
         if self.count % 30 != 0:
             self.republish(ros_image)
             return
-        if self.count % 90 == 0:
+        if self.count % 89 == 0:
             # clear current person every ~3s
             self.faces = []
             rospy.set_param('{}/current_persons'.format(self.node_name),'')
@@ -336,6 +336,9 @@ class FaceRecognizer(object):
                             ','.join(self.detected_faces))
                 rospy.set_param('{}/current_persons'.format(self.node_name),
                             current)
+                rospy.set_param('{}/face_visible'.format(self.node_name), True)
+            else:
+                rospy.set_param('{}/face_visible'.format(self.node_name), False)
         self.republish(ros_image)
 
     def archive(self, remove=False):
