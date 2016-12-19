@@ -81,7 +81,7 @@ class FaceRecognizer(object):
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
         self.node_name = rospy.get_name()
         self.multi_faces = False
-        self.threshold = 0
+        self.threshold = 0.5
         self.detected_faces = deque(maxlen=10)
         self.training_job = None
         self.stop_training = threading.Event()
