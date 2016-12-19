@@ -295,8 +295,6 @@ class FaceRecognizer(object):
         if self.count % 30 != 0:
             self.republish(ros_image)
             return
-        self.faces = []
-        rospy.set_param('{}/current_persons'.format(self.node_name),'')
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
             self.collect_face(image)
@@ -340,7 +338,10 @@ class FaceRecognizer(object):
                             current)
                 rospy.set_param('{}/face_visible'.format(self.node_name), True)
             else:
-                rospy.set_param('{}/face_visible'.format(self.node_name), False)
+                if self.count % 150 == 0: # wait ~5 seconds to let it pick up the face again
+                    self.faces = []
+                    rospy.set_param('{}/face_visible'.format(self.node_name), False)
+                    rospy.set_param('{}/current_persons'.format(self.node_name),'')
         self.republish(ros_image)
 
     def archive(self, remove=False):
