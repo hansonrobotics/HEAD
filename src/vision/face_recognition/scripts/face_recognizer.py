@@ -278,7 +278,8 @@ class FaceRecognizer(object):
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.faces:
             i = 0
-            for face in sorted(self.faces, key=lambda x: x.bbox.left()):
+            for face in sorted(self.faces,
+                    key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True):
                 b = face.bbox
                 p = face.name
                 cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 3)
@@ -328,7 +329,8 @@ class FaceRecognizer(object):
                     faces.append(FaceRecognizer.Face(p,c,b))
                     logger.info("P: {} C: {}".format(p, c))
                     print "P: {} C: {}".format(p, c)
-                faces = sorted(faces, key=lambda x: x.confidence)
+                faces = sorted(faces,
+                        key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True)
                 self.faces = faces
                 current = '|'.join([f.name for f in self.faces])
                 self.detected_faces.append(current)
