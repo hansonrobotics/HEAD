@@ -41,6 +41,7 @@ from sensor_msgs.msg import Image
 from dynamic_reconfigure.server import Server
 import dynamic_reconfigure.client
 from face_recognition.cfg import FaceRecognitionConfig
+from face_recognition.utils import get_3d_point
 from std_msgs.msg import String
 
 CWD = os.path.dirname(os.path.abspath(__file__))
@@ -332,6 +333,9 @@ class FaceRecognizer(object):
                 faces = sorted(faces,
                         key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True)
                 self.faces = faces
+                point = get_3d_point(self.faces[0].bbox)
+                if point:
+                    logger.info("3D point {}".format(point))
                 current = '|'.join([f.name for f in self.faces])
                 self.detected_faces.append(current)
                 rospy.set_param('{}/recent_persons'.format(self.node_name),
