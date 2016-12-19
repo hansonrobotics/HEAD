@@ -45,7 +45,7 @@ class Node(object):
     def replace_variables_text(self, text):
         variables = re.findall("{(.*?)}", text)
         for var in variables:
-            val = self.runner.get_property(self.id, var) or ''
+            val = self.runner.get_variable(self.id, var) or ''
             text = text.replace('{' + var + '}', val)
         return text
 
@@ -316,9 +316,7 @@ class pause(Node):
                     matched = matched or False
             if not matched:
                 return False
-
         if self.data['on_event']:
-            rospy.logerr("EVENT MATCH")
             self.start_performance()
         else:
             self.resume()
