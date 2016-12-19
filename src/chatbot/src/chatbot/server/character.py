@@ -225,7 +225,7 @@ class AIMLCharacter(Character):
             if k.startswith('_'):
                 continue
             self.kernel.setPredicate(k, v, sid)
-            self.logger.debug("Set predicate {}={}".format(k, v))
+            self.logger.info("Set predicate {}={}".format(k, v))
             if k in ['firstname', 'fullname']:
                 self.kernel.setPredicate('name', v, sid)
 
