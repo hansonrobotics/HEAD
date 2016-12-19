@@ -207,6 +207,21 @@ Return:
 - *ret* - Return code
 - *response*
 
+### Remove context
+
+```
+GET /v1.1/remove_context
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *session* - Session ID
+- *context* - Context keys (format key,key2,key3,...)
+
+Return:
+- *ret* - Return code
+- *response*
+
 ### Get session context
 
 ```

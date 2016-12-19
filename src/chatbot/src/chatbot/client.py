@@ -600,6 +600,27 @@ Syntax: sc key=value,key2=value2,...
 """
         self.stdout.write(s)
 
+    def do_rc(self, line):
+        params = {
+            "Auth": self.key,
+            "keys": line,
+            "session": self.session
+        }
+        r = requests.get(
+            '{}/remove_context'.format(self.root_url), params=params)
+        response = r.json().get('response')
+        self.stdout.write(response)
+        self.stdout.write('\n')
+
+    def help_rc(self):
+        s = """
+Remove chatbot context
+Syntax: rc key,key2,key3,...
+"""
+        self.stdout.write(s)
+
+    remove_context = do_rc
+
     def do_gc(self, line=None):
         if not self.session:
             self.start_session()
