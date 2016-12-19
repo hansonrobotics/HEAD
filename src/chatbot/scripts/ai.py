@@ -102,6 +102,12 @@ class Chatbot():
         if lang:
             self.client.lang = lang
 
+        # XXX: replace his/her name -> my name
+        question = question.replace('his name', 'my name')
+        question = question.replace('her name', 'my name')
+        question = question.replace('His name', 'My name')
+        question = question.replace('Her name', 'My name')
+
         persons = rospy.get_param('face_recognizer/current_persons', '')
         if persons:
             person = persons.split('|')[0]
