@@ -250,7 +250,6 @@ class FaceRecognizer(object):
                 logger.info("Model saved to {}".format(classifier_fname))
 
                 self.load_classifier(classifier_fname)
-                self.archive(True)
                 self.pub.publish('end')
             else:
                 self.pub.publish('abort')
