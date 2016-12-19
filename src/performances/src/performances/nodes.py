@@ -292,10 +292,10 @@ class pause(Node):
 
     def start_performance(self):
         if self.subscriber:
-            self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
             self.subscriber = None
         req = RunByNameRequest()
-        req.id = self.data['on_event'].strip()
+        req.id = str(self.data['on_event'] or '').strip()
         if self.timer:
             self.timer.cancel()
         response = self.runner.run_full_performance_callback(req)
@@ -323,7 +323,7 @@ class pause(Node):
 
     def resume(self):
         if self.subscriber:
-            self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
             self.subscriber = None
         if not self.finished:
             self.runner.resume()
@@ -333,7 +333,7 @@ class pause(Node):
     def start(self, run_time):
         self.runner.pause()
         if 'topic' in self.data:
-            topic = self.data['topic'].strip()
+            topic = str(self.data['topic'] or '').strip()
             if topic != 'ROSPARAM':
                 self.subscriber = self.runner.register(topic, self.event_callback)
             else:
@@ -353,7 +353,7 @@ class pause(Node):
 
     def stop(self, run_time):
         if self.subscriber:
-            self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
             self.subscriber = None
         if self.timer:
             self.timer.cancel()
