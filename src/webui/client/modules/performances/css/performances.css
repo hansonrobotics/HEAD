@@ -216,9 +216,11 @@
 }
 
 li.app-performance.active,
-li.app-performance:hover {
+li.app-performance:hover,
+li.app-performance:focus {
     cursor: pointer;
     border: solid 1px #5cb85c !important;
+    background-color: #323F48 !important;
 }
 
 li.app-performance .app-play,
@@ -227,18 +229,6 @@ li.app-performance .app-edit {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-}
-
-li.app-performance .app-status-indicator {
-    height: 14px;
-    width: 14px;
-    background-color: #182934;
-    display: inline-block;
-    margin-right: 5px;
-}
-
-li.app-performance .app-status-indicator.active {
-    background-color: #5cb85c;
 }
 
 .app-performance-queue .ui-state-highlight {

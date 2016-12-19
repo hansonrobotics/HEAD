@@ -489,6 +489,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (!$.isNumeric(time))
                     time = parseInt(left) / this.config.pxPerSec;
 
+                this.trigger('running', time);
+
                 let step = 1. / App.getOption('fps'),
                     frameCount = parseInt(time / step);
 
@@ -539,6 +541,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.enableIndicatorDragging();
                 this.updateIndicatorTime(0);
                 this.resetButtons();
+
+                this.trigger('idle');
 
                 if (this.enableLoop)
                     this.run();

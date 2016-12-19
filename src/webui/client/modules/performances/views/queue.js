@@ -209,8 +209,27 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 disableSaving: this.disableSaving
             }, options));
 
-            this.timelinesView.on('close', function () {
-                if (!self.isDestroyed()) self.updateTimeline();
+            this.listenTo(this.timelinesView, 'close', function () {
+                self.updateTimeline();
+            });
+
+            this.listenTo(this.timelinesView, 'running', function (time) {
+                let offset = 0;
+                _.find(self.queue, function (item) {
+                    offset += item.model.getDuration();
+                    let found = time <= offset;
+
+                    if (found && !$(item.el).hasClass('active')) {
+                            self.ui.queue.find('.app-performance').removeClass('active');
+                            $(item.el).addClass('active');
+                    }
+
+                    return found;
+                })
+            });
+
+            this.listenTo(this.timelinesView, 'idle', function () {
+                self.ui.queue.find('.app-performance').removeClass('active');
             });
 
             // show configuration UI
