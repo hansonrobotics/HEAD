@@ -200,17 +200,18 @@ class Runner:
         for performance in performances:
             duration = 0
 
-            if 'nodes' in performance and isinstance(performance['nodes'], list):
-                for node in performance['nodes']:
-                    if not 'start_time' in node:
-                        node['start_time'] = 0
-                    if node['name'] == 'pause':
-                        node['duration'] = 0.1
-                    duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
-                    node['start_time'] += offset
-                offset += duration
-            else:
-                performances.remove(performance)
+            if 'nodes' not in performance or not isinstance(performance['nodes'], list):
+                performance['nodes'] = []
+
+            for node in performance['nodes']:
+                if not 'start_time' in node:
+                    node['start_time'] = 0
+                if node['name'] == 'pause':
+                    node['duration'] = 0.1
+                duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
+                node['start_time'] += offset
+            offset += duration
+
         with self.lock:
             self.running_performances = performances
             self.topics['running_performances'].publish(String(json.dumps(performances)))
@@ -320,6 +321,9 @@ class Runner:
 
                 if autopause:
                     self.pause()
+                    # make sure performance is paused even without any nodes
+                    while self.paused:
+                        continue
 
                 running = True
                 while running:
