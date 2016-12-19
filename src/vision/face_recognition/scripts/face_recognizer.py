@@ -361,6 +361,8 @@ class FaceRecognizer(object):
         files = ['labels.csv', 'reps.csv', 'classifier.pkl']
         files = [os.path.join(self.aligned_dir, f) for f in files]
         if all([os.path.isfile(f) for f in files]):
+            if not os.path.isdir(self.classifier_dir):
+                os.makedirs(self.classifier_dir)
             for f in files:
                 shutil.copy(f, os.path.join(self.classifier_dir))
             logger.info("Model is saved")
