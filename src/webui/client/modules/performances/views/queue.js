@@ -39,7 +39,6 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 });
             }
 
-
             if (this.options.sequence)
                 this.showSequence(this.options.sequence);
 
@@ -111,7 +110,21 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             this.queue.push(item);
             this.ui.queue.append(el);
 
-            $('.app-remove', el).click(function () {
+            $(el).click(function () {
+                let startTime = 0;
+                _.find(self.queue, function (i) {
+                    if (i !== item) startTime += i.model.getDuration();
+                    return i === item;
+                });
+
+                if (!self.timelinesView || !self.timelinesView.readonly)
+                    self.updateTimeline();
+
+                self.timelinesView.run(startTime);
+            });
+
+            $('.app-remove', el).click(function (e) {
+                e.stopPropagation();
                 self._removeItem(item);
                 self.updateTimeline();
             });
@@ -119,7 +132,8 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             if (this.readonly)
                 $('.app-edit', el).hide();
             else
-                $('.app-edit', el).click(function () {
+                $('.app-edit', el).click(function (e) {
+                    e.stopPropagation();
                     self.stop();
                     self._showTimeline({model: performance});
                 });

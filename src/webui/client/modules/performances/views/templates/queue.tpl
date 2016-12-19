@@ -16,7 +16,11 @@
 
         <li class="app-performance-template app-performance list-group-item">
             <span class="app-drag-handle pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>
+            <button type="button" class="app-play pull-left btn btn-primary">
+                <span class="glyphicon glyphicon-play"></span>
+            </button>
             <span class="app-name"></span>
+
             <div class="pull-right">
                 <span class="label label-primary"><span class="app-duration"></span> sec</span>
 

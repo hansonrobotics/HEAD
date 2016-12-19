@@ -53,8 +53,12 @@
 
 .app-performance-queue button span {
     position: absolute;
-    left: 1px;
+    left: 2px;
     top: 3px;
+}
+
+.app-performance-queue .app-play {
+    margin: 0 5px 0 0;
 }
 
 .app-clear-performance-queue {
@@ -207,16 +211,17 @@
     -webkit-border-radius: 4px 4px 4px 4px;
 }
 
-/*.app-node-start-time,*/
-/*.app-node-duration,*/
-/*.app-node-timeout {*/
-    /*width: 70px !important;*/
-/*}*/
-
 .app-performance-template {
     display: none;
 }
 
+li.app-performance.active,
+li.app-performance:hover {
+    cursor: pointer;
+    border: solid 1px #5cb85c !important;
+}
+
+li.app-performance .app-play,
 li.app-performance .app-remove,
 li.app-performance .app-edit {
     -webkit-border-radius: 3px;
