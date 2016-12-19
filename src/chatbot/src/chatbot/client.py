@@ -634,14 +634,8 @@ Syntax: rc key,key2,key3,...
 
     @retry(1)
     def do_gc(self, line=None):
-        r = self.get_context()
-        response = r.json().get('response')
-        ret = r.json().get('ret')
-        if ret:
-            self.stdout.write(pprint.pformat(response))
-        else:
-            self.stdout.write(response)
-            response = {}
+        response = self.get_context()
+        self.stdout.write(pprint.pformat(response))
         self.stdout.write('\n')
 
     def help_gc(self):
