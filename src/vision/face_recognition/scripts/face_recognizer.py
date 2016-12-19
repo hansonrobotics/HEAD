@@ -231,7 +231,12 @@ class FaceRecognizer(object):
             le = LabelEncoder().fit(labels_data)
             labelsNum = le.transform(labels_data)
             clf = SVC(C=1, kernel='linear', probability=True)
-            clf.fit(embeddings_data, labelsNum)
+            try:
+                clf.fit(embeddings_data, labelsNum)
+            except ValueError as ex:
+                logger.error(ex)
+                self.pub.publish('abort')
+                return
 
             if not self.stop_training.is_set():
                 labels.to_csv(label_fname, header=False, index=False)
