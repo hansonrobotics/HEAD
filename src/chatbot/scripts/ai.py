@@ -48,6 +48,7 @@ class Chatbot():
         self._polarity_threshold = 0.2
         self.speech = False
         self.enable = True
+        self.mute = False
         self.node_name = rospy.get_name()
 
         self.input_stack = []
@@ -117,8 +118,9 @@ class Chatbot():
             logger.info("Robot's talking wants to be interruptted")
             self.tts_ctrl_pub.publish("shutup")
             rospy.sleep(0.5)
-            self._response_publisher.publish(String('Okay'))
             self._affect_publisher.publish(String('sad'))
+            if not self.mute:
+                self._response_publisher.publish(String('Okay'))
             return
 
         # Handle chatbot command
@@ -216,8 +218,9 @@ class Chatbot():
                     # Currently response is independant of message received so no need to wait
                     # Leave it for Opencog to handle responses later on.
 
-        self._blink_publisher.publish('chat_saying')
-        self._response_publisher.publish(String(text))
+        if not self.mute:
+            self._blink_publisher.publish('chat_saying')
+            self._response_publisher.publish(String(text))
 
         if rospy.has_param('{}/context'.format(self.node_name)):
             rospy.delete_param('{}/context'.format(self.node_name))
@@ -247,7 +250,7 @@ class Chatbot():
 
         if config.set_context:
             self.client.set_context(config.set_context)
-
+        self.mute = config.mute
         tiers = config.groups.groups.Weights.parameters.keys()
         tiers.remove('reset')
         if not config.reset:
