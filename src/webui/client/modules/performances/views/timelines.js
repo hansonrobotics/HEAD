@@ -238,8 +238,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (this.readonly) this.model.disableSync();
             },
             removeNodeElements: function () {
+                let self = this;
                 this.model.nodes.each(function (node) {
-                    node.unset('el');
+                    self.removeNode(node);
                 });
             },
             nodeClicked: function (e) {
@@ -275,7 +276,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                             self.showNodeSettings(node);
                         });
 
-                node.set('el', el.get(0));
+                node.set('el', el.get(0), {silent: true});
                 this.listenTo(node, 'change', this.placeNode);
                 this.listenTo(node, 'change', this.focusNode);
                 this.listenTo(node, 'change', this.updateNodeEl);
@@ -344,7 +345,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 let el = $(node.get('el'));
                 if (el.length)
                     el.remove();
-                node.unset('el');
+                node.unset('el', {silent: true});
                 this.removeEmptyTimelines();
             },
             arrangeNodes: function () {

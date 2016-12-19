@@ -5,7 +5,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 return '/performances/' + api.config.robot;
             },
             initialize: function (options) {
-                var self = this;
+                let self = this;
 
                 this.nodes = new NodeCollection();
                 this.set('nodes', this.nodes);
@@ -17,15 +17,15 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                     });
 
                 // trigger performance change on node change
-                this.nodes.on('change', function () {
-                    self.trigger('change:nodes');
+                this.nodes.on('reset change update', function () {
+                    self.trigger('change:duration', self);
                 });
 
                 // making sure nodes attribute holds NodeCollection instance
                 this.on('change:nodes', function () {
                     if (this.get('nodes') != this.nodes) {
                         // updating collection
-                        this.nodes.set(this.get('nodes'));
+                        this.nodes.reset(this.get('nodes'));
                         this.set({nodes: this.nodes}, {silent: true});
                     }
                 });
@@ -35,7 +35,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 this.updateId();
             },
             fetchCurrent: function (options) {
-                var self = this;
+                let self = this;
                 options = options || {};
                 api.services.performances.current.callService({}, function (response) {
                     response.performances = JSON.parse(response.performances);
@@ -49,10 +49,10 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             enableSync: function (callback) {
-                var self = this;
+                let self = this;
                 this.disableSync();
                 this.syncCallback = function (msg) {
-                    var performances = JSON.parse(msg.data);
+                    let performances = JSON.parse(msg.data);
                     self.nodes.reset(self.mergeNodes(performances));
                     if (typeof callback == 'function') callback(performances);
                 };
@@ -82,7 +82,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             loadSequence: function (ids, options) {
-                var self = this;
+                let self = this;
                 options = options || {};
                 api.services.performances.load_sequence.callService({
                     ids: ids
@@ -109,7 +109,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
             },
             updateId: function () {
                 if (this.get('name')) {
-                    var name = this.get('name').toLowerCase().replace(/ /g, '_').replace(/[^\w-]+/g, ''),
+                    let name = this.get('name').toLowerCase().replace(/ /g, '_').replace(/[^\w-]+/g, ''),
                         path = this.get('path') ? this.get('path').split('/') : [];
 
                     path.push(name);
@@ -121,7 +121,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 }
             },
             run: function (startTime, options) {
-                var self = this;
+                let self = this;
                 if (!options) options = {};
 
                 api.services.performances.run.callService({
@@ -142,7 +142,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             resume: function (options) {
-                var self = this;
+                let self = this;
                 if (!options) options = {};
 
                 api.services.performances.resume.callService({}, function (response) {
@@ -161,7 +161,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             pause: function (options) {
-                var self = this;
+                let self = this;
                 if (!options) options = {};
 
                 api.services.performances.pause.callService({}, function (response) {
@@ -183,7 +183,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 this.resumeTime = options.time;
             },
             stop: function (options) {
-                var self = this;
+                let self = this;
                 if (!options) options = {};
 
                 api.services.performances.stop.callService({}, function (response) {
@@ -199,11 +199,11 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 });
             },
             getDuration: function () {
-                var duration = 0;
+                let duration = 0;
 
                 if (this.nodes.length > 0) {
                     this.nodes.forEach(function (node) {
-                        var startTime = node.get('start_time'),
+                        let startTime = node.get('start_time'),
                             nodeDuration = node.get('duration');
 
                         if (startTime != null && nodeDuration != null && startTime + nodeDuration > duration)
@@ -219,7 +219,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 }
             },
             mergeNodes: function (performances) {
-                var nodes = [];
+                let nodes = [];
                 performances.forEach(function (p) {
                     nodes = _.union(nodes, p['nodes']);
                 });
