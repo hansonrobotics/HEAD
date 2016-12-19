@@ -245,6 +245,9 @@ class Chatbot():
             self.client.do_said(config.set_that)
             config.set_that = ''
 
+        if config.set_context:
+            self.client.set_context(config.set_context)
+
         tiers = config.groups.groups.Weights.parameters.keys()
         tiers.remove('reset')
         if not config.reset:
