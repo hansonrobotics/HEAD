@@ -183,6 +183,14 @@ let readPerformanceProperties = function (dir) {
         return success;
     };
 
+app.get('/performance/settings/:path(*)?', function (req, res) {
+    res.json(readPerformanceProperties(req.params['path']) || {});
+});
+
+app.post('/performance/settings/:path(*)?', function (req, res) {
+    res.json(writePerformanceProperties(req.params['path'], req.body || {}));
+});
+
 app.get('/keywords/:path(*)?', function (req, res) {
     res.json({keywords: readPerformanceProperties(req.params['path'])['keywords'] || []});
 });

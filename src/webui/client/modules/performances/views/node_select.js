@@ -282,7 +282,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             },
             showNodeSettings: function (schema) {
                 var self = this,
-                    nodeConfig = new NodeConfig(this.model.get('rosnode')),
+                    nodeConfig = new NodeConfig(this.model.get('rosnode'), true),
                     values = self.model.get('values');
 
                 var updateValues = function () {

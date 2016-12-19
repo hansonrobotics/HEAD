@@ -43,7 +43,7 @@ from flask import Flask, request, Response, send_from_directory
 from chatbot.server.chatbot_agent import (
     ask, list_character, session_manager, set_weights, set_context,
     dump_history, dump_session, add_character, list_character_names,
-    rate_answer)
+    rate_answer, get_context, said, remove_context)
 from chatbot.stats import history_stats
 
 json_encode = json.JSONEncoder().encode
@@ -97,6 +97,15 @@ def _batch_chat():
     return Response(json_encode({'ret': 0, 'response': responses}),
                     mimetype="application/json")
 
+@app.route(ROOT + '/said', methods=['GET'])
+@requires_auth
+def _said():
+    data = request.args
+    session = data.get('session')
+    message = data.get('message')
+    ret, response = said(session, message)
+    return Response(json_encode({'ret': ret, 'response': response}),
+                    mimetype="application/json")
 
 @app.route(ROOT + '/rate', methods=['GET'])
 @requires_auth
@@ -171,10 +180,34 @@ def _set_weights():
 @requires_auth
 def _set_context():
     data = request.args
-    key = data.get('key')
-    value = data.get('value')
+    context_str = data.get('context')
+    context = {}
+    for tok in context_str.split(','):
+        k, v = tok.split('=')
+        context[k.strip()] = v.strip()
     sid = data.get('session')
-    ret, response = set_context({key: value}, sid)
+    ret, response = set_context(context, sid)
+    return Response(json_encode({'ret': ret, 'response': response}),
+                    mimetype="application/json")
+
+
+@app.route(ROOT + '/remove_context', methods=['GET'])
+@requires_auth
+def _remove_context():
+    data = request.args
+    keys = data.get('keys')
+    keys = keys.split(',')
+    sid = data.get('session')
+    ret, response = remove_context(keys, sid)
+    return Response(json_encode({'ret': ret, 'response': response}),
+                    mimetype="application/json")
+
+@app.route(ROOT + '/get_context', methods=['GET'])
+@requires_auth
+def _get_context():
+    data = request.args
+    sid = data.get('session')
+    ret, response = get_context(sid)
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 

@@ -21,7 +21,7 @@ useSOLR = False
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
-from config import CHARACTER_PATH
+from config import CHARACTER_PATH, RESET_SESSION_BY_HELLO
 CHARACTERS = load_characters(CHARACTER_PATH)
 REVISION = os.environ.get('HR_CHATBOT_REVISION')
 
@@ -137,6 +137,37 @@ def set_context(prop, sid):
             pass
     return True, "Context is updated"
 
+def remove_context(keys, sid):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return False, "No session"
+    for c in CHARACTERS:
+        if c.type != TYPE_AIML and c.type != TYPE_CS:
+            continue
+        try:
+            for key in keys:
+                c.remove_context(sess, key)
+        except Exception:
+            pass
+    return True, "Context is updated"
+
+def get_context(sid):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return False, "No session"
+    context = {}
+    for c in CHARACTERS:
+        if c.type != TYPE_AIML and c.type != TYPE_CS:
+            continue
+        try:
+            context.update(c.get_context(sess))
+        except Exception:
+            pass
+    for k in context.keys():
+        if k.startswith('_'):
+            del context[k]
+    return True, context
+
 def preprocessing(question):
     question = question.lower().strip()
     question = ' '.join(question.split())  # remove consecutive spaces
@@ -170,9 +201,10 @@ def _ask_characters(characters, question, lang, sid, query):
 
     control = get_character('control')
     if control is not None:
-        _response = control.respond(_question, lang, sess, query=True)
-        cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
-        if _response.get('text') == '[tell me more]':
+        _response = control.respond(_question, lang, sess, query)
+        _answer = _response.get('text')
+        if _answer == '[tell me more]':
+            cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
             if sess.last_used_character:
                 if sess.cache.that_question is None:
                     sess.cache.that_question = sess.cache.last_question
@@ -189,6 +221,13 @@ def _ask_characters(characters, question, lang, sid, query):
                     _question = sess.cache.that_question.lower().strip()
                     cross_trace.append((sess.last_used_character.id, 'continuation', 'Empty'))
         else:
+            if _answer:
+                cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
+                hit_character = control
+                answer = _answer
+                response = _response
+            else:
+                cross_trace.append((control.id, 'control', 'No answer'))
             for c in characters:
                 try:
                     c.remove_context(sess, 'continue')
@@ -504,7 +543,7 @@ def ask(question, lang, sid, query=False):
             return response, SUCCESS
 
     sess.set_characters(responding_characters)
-    if question:
+    if RESET_SESSION_BY_HELLO and question:
         question = question.lower().strip()
         if 'hi' in question or 'hello' in question:
             session_manager.reset_session(sid)
@@ -552,6 +591,15 @@ def ask(question, lang, sid, query=False):
         logger.error("No pattern match")
         return response, NO_PATTERN_MATCH
 
+def said(sid, text):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return False, "No session"
+    control = get_character('control')
+    if control is not None:
+        control.said(sess, text)
+        return True, "Done"
+    return False, 'No control tier'
 
 def dump_history():
     return session_manager.dump_all()

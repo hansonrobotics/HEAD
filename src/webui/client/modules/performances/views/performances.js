@@ -22,7 +22,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'queueView', 'dir']);
             },
             onRender: function () {
-                var self = this,
+                let self = this,
                     deactivate = function () {
                         $('.app-current-path', self.ui.tabs).removeClass('highlight');
                     };
@@ -40,7 +40,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     deactivate: deactivate,
                     out: deactivate,
                     drop: function (event, ui) {
-                        var view = self.children.findByCid(ui.draggable.data('cid'));
+                        let view = self.children.findByCid(ui.draggable.data('cid'));
                         if (view && self.currentPath != view.model.get('path')) {
                             view.model.set({'path': self.currentPath, ignore_nodes: true});
                             view.model.save();
@@ -56,7 +56,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 return this.options;
             },
             addNew: function () {
-                var performances = new Backbone.Collection(this.collection.where({path: this.currentPath})),
+                let performances = new Backbone.Collection(this.collection.where({path: this.currentPath})),
                     names = performances.pluck('name'),
                     performance = new Performance({
                         name: this.getNextName(path.basename(this.currentPath) || 'Performance', names),
@@ -67,8 +67,8 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 this.trigger('new', performance);
             },
             getNextName: function (prefix, names) {
-                var numbers = _.sortBy(_.map(names, function (name) {
-                    var num = name.replace(prefix, '');
+                let numbers = _.sortBy(_.map(names, function (name) {
+                    let num = name.replace(prefix, '');
 
                     if (num === name)
                         return null;
@@ -88,12 +88,12 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     return prefix;
             },
             zeroPad: function (num, places) {
-                var zero = places - num.toString().length + 1;
+                let zero = places - num.toString().length + 1;
                 return Array(+(zero > 0 && zero)).join("0") + num;
             },
             addAll: function () {
-                var self = this;
-                var added = false;
+                let self = this;
+                let added = false;
 
                 if (this.autoplay) self.queueView.clearQueue();
 
@@ -107,7 +107,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 self.queueView.updateTimeline({autoplay: this.autoplay});
             },
             attachHtml: function (collectionView, childView) {
-                var self = this;
+                let self = this;
 
                 // add performance to the queue on click
                 childView.on('click', function (data) {
@@ -116,13 +116,8 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                         self.queueView.addPerformance(data.model, true);
                         self.queueView.updateTimeline({autoplay: true});
                     } else {
-                        self.queueView.addPerformance(data.model, !self.readonly);
-
-                        if (!self.readonly) {
-                            let timelinesView = self.queueView.timelinesView;
-                            if (!timelinesView || !timelinesView.changed)
-                                self.queueView.editPerformance(data.model);
-                        }
+                        let timelinesView = self.queueView.timelinesView;
+                        self.queueView.addPerformance(data.model, !timelinesView || timelinesView.changed);
                     }
                 });
 
@@ -137,7 +132,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
             currentPath: '',
             createdDirs: [],
             updateTabs: function () {
-                var self = this,
+                let self = this,
                     depth = (this.currentPath == '') ? 0 : this.currentPath.split('/').length,
                     currentDirs = this.getCurrentDirs();
 
@@ -151,14 +146,14 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     self.ui.tabs.append(self.createTab(dir));
                 });
 
-                var addNewTab = self.createTab(this.currentPath, $('<span>').addClass('glyphicon glyphicon-plus')
+                let addNewTab = self.createTab(this.currentPath, $('<span>').addClass('glyphicon glyphicon-plus')
                     .attr('aria-hidden', 'true'), true);
 
                 addNewTab.click(function (e, ui) {
-                    var input = $('<input>').addClass('form-control input-sm'),
+                    let input = $('<input>').addClass('form-control input-sm'),
                         newTab = $('<li>').addClass('app-new-dir').html(input);
                     input.focusout(function () {
-                        var dir = $(this).val();
+                        let dir = $(this).val();
                         if (dir) {
                             self.createdDirs.push(self.joinPaths(self.currentPath, dir));
                             self.updateTabs();
@@ -180,26 +175,28 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     }));
             },
             getCurrentDirs: function () {
-                var self = this,
+                let self = this,
                     paths = _.compact(_.uniq(this.collection.pluck('path'))),
                     dirs = [];
 
                 // create a list of all directories
                 _.each(paths, function (path) {
                     path = path.split('/');
-                    for (var i = 0; i < path.length; i++)
+                    for (let i = 0; i < path.length; i++)
                         dirs.push(path.slice(0, i + 1).join('/'));
                 });
 
-                dirs = _.uniq(_.union(dirs, this.createdDirs));
-
-                return _.filter(dirs, function (dir) {
+                dirs = _.filter(_.uniq(_.union(dirs, this.createdDirs)), function (dir) {
                     return self.getParentPath(dir) == self.currentPath;
+                });
+
+                return _.sortBy(dirs, function (d) {
+                    return d;
                 });
             },
             showSettings: function () {
-                var settingsView = new SettingsView({
-                    performancePath: this.currentPath
+                let settingsView = new SettingsView({
+                    path: this.currentPath
                 });
 
                 bootbox.dialog({
@@ -213,14 +210,14 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 });
             },
             createTab: function (dir, content, disableEvents) {
-                var self = this;
+                let self = this;
 
                 if (!content) {
                     content = dir.split('/');
                     content = content[content.length - 1];
                 }
 
-                var timeout = null,
+                let timeout = null,
                     el = $('<a>').attr('href', 'javascript:void(0)').html(content);
 
                 if (this.nav)
@@ -244,10 +241,10 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                         }
                     });
 
-
                 return $('<li>').attr('data-path', dir).append(el);
             },
             switchDir: function (dir) {
+                if (this.nav) Backbone.history.navigate(path.join('#/performances', dir));
                 this.updateVisiblePerformances(dir);
                 this.currentPath = dir;
                 this.collection.currentPath = dir;

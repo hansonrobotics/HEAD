@@ -43,7 +43,7 @@ class Runner:
         self.run_condition = Condition()
         self.running_performances = []
         # in memory set of properties with priority over params
-        self.properties = {}
+        self.variables = {}
         # References to event subscribing node callbacks
         self.observers = {}
         # Performances that already played as alternatives. Used to maximize different performance in single demo
@@ -96,9 +96,8 @@ class Runner:
         rospy.Subscriber('/' + self.robot_name + '/speech', ChatMessage, self.speech_callback)
         # Shared subscribers for nodes
         rospy.Subscriber('/hand_events', String, self.hand_callback)
-
-
         Server(PerformancesConfig, self.reconfig)
+        rospy.Subscriber('/face_training_event', String, self.training_callback)
         self.worker.start()
         rospy.spin()
 
@@ -113,7 +112,7 @@ class Runner:
         return TriggerResponse(success=True)
 
     def set_properties_callback(self, request):
-        self.set_properties(request.id, json.loads(request.properties))
+        self.set_variable(request.id, json.loads(request.properties))
         return srv.SetPropertiesResponse(success=True)
 
     def load_callback(self, request):
@@ -310,7 +309,19 @@ class Runner:
 
             for i, performance in enumerate(self.running_performances):
                 nodes = [Node.createNode(node, self, self.start_time, performance.get('id', '')) for node in
+            behavior = True
+                         
+            for performance in self.running_performances:
+                id = performance.get('id', '')
+                nodes = [Node.createNode(node, self, self.start_time, id) for node in
                          performance['nodes']]
+
+                pause = self.get_property(os.path.dirname(id), 'pause_behavior')
+                if pause or pause is None and behavior:
+                    # Only pause behavior if its enabled. Otherwise Pause behavior have no effect
+                    if rospy.get_param("/behavior_enabled"):
+                        self.topics['interaction'].publish('btree_off')
+                        behavior = False
 
                 with self.lock:
                     if not self.running:
@@ -334,6 +345,9 @@ class Runner:
                     # checks if any nodes still running
                     for node in nodes:
                         running = node.run(run_time) or running
+
+            if not behavior:
+                self.topics['interaction'].publish('btree_on')
 
     def get_run_time(self):
         """
@@ -395,27 +409,51 @@ class Runner:
                             rospy.set_param('/' + os.path.join(self.robot_name, 'webui/performances', dir).strip(
                                 "/.") + '/properties', properties)
 
-    def set_properties(self, id, properties):
-        for key, val in properties.iteritems():
-            if id in self.properties:
-                self.properties[id][key] = val
-            else:
-                self.properties[id] = {key: val}
+    def get_property(self, path, name):
+        param_name = os.path.join('/', self.robot_name, 'webui/performances', path, 'properties', name)
+        if rospy.has_param(param_name):
+            return rospy.get_param(param_name)
+        else:
+            return None
 
-    def get_property(self, id, name):
-        if id in self.properties and name in self.properties[id] and self.properties[id][name]:
-            return self.properties[id][name]
+    def set_variable(self, id, properties):
+        for key, val in properties.iteritems():
+            if id in self.variables:
+                self.variables[id][key] = val
+            else:
+                self.variables[id] = {key: val}
+
+    def get_variable(self, id, name):
+        if id in self.variables and name in self.variables[id] and self.variables[id][name]:
+            return self.variables[id][name]
         else:
             val = None
             param_name = os.path.join('/', self.robot_name, 'webui/performances', os.path.dirname(id),
                                       'properties/variables', name)
+
             if rospy.has_param(param_name):
                 val = rospy.get_param(param_name)
+                if self.is_param(val):
+                    return rospy.get_param(val, None)
             return val
 
     def speech_callback(self, msg):
         self.notify('SPEECH', msg.utterance)
 
+    @staticmethod
+    def is_param(param):
+        """ Checks if value is valid param.
+        Has to start with slash
+        """
+        validator = rospy.names.global_name("param_name")
+        try:
+            validator(param, False)
+            return True
+        except rospy.names.ParameterInvalid:
+            return False
+
+    def training_callback(self, msg):
+        self.notify('FACE_TRAINING', msg.data)
 
 if __name__ == '__main__':
     Runner()
