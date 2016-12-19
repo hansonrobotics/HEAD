@@ -16,8 +16,10 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                         self.nodes.add(new self.nodes.model(attributes));
                     });
 
-                // trigger performance change on node change
+                this.updateDuration();
+                // update duration and trigger change event on nodes' change
                 this.nodes.on('reset change update', function () {
+                    self.updateDuration();
                     self.trigger('change:duration', self);
                 });
 
@@ -198,20 +200,22 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                         options.error(error);
                 });
             },
-            getDuration: function () {
-                let duration = 0;
+            updateDuration: function () {
+                let self = this;
+                this.duration = 0;
 
                 if (this.nodes.length > 0) {
                     this.nodes.forEach(function (node) {
                         let startTime = node.get('start_time'),
                             nodeDuration = node.get('duration');
 
-                        if (startTime != null && nodeDuration != null && startTime + nodeDuration > duration)
-                            duration = startTime + nodeDuration;
+                        if (startTime != null && nodeDuration != null && startTime + nodeDuration > self.duration)
+                            self.duration = startTime + nodeDuration;
                     });
                 }
-
-                return duration;
+            },
+            getDuration: function () {
+                return this.duration;
             },
             handleEvents: function (msg) {
                 if (msg.event = 'paused') {
