@@ -201,8 +201,7 @@ GET /v1.1/set_context
 Parameters:
 - *Auth* - Authorization token
 - *session* - Session ID
-- *key* - Context key
-- *value* - Context value
+- *context* - Context string (format key=value,key2=value2)
 
 Return:
 - *ret* - Return code
