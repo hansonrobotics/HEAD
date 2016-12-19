@@ -569,9 +569,8 @@ Syntax: upload package
     def help_ns(self):
         self.stdout.write('Start new session\n')
 
+    @retry(1)
     def do_sc(self, line):
-        if not self.session:
-            self.start_session()
         try:
             for tok in line.split(','):
                 k, v = tok.split('=')
@@ -600,6 +599,7 @@ Syntax: sc key=value,key2=value2,...
 """
         self.stdout.write(s)
 
+    @retry(1)
     def do_rc(self, line):
         params = {
             "Auth": self.key,
@@ -630,8 +630,9 @@ Syntax: rc key,key2,key3,...
         }
         response = requests.get(
             '{}/get_context'.format(self.root_url), params=params)
-        return response
+        return response.json().get('response')
 
+    @retry(1)
     def do_gc(self, line=None):
         r = self.get_context()
         response = r.json().get('response')
