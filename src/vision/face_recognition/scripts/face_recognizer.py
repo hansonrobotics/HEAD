@@ -252,7 +252,7 @@ class FaceRecognizer(object):
 
     def infer(self, img):
         if self.clf is None or self.le is None:
-            return None, None
+            return None, None, None
         reps, bb = self.getRep(img, self.multi_faces)
         persons = []
         confidences = []
@@ -262,7 +262,7 @@ class FaceRecognizer(object):
                 rep = rep.reshape(1, -1)
             except:
                 logger.info("No Face detected")
-                return (None, None)
+                return None, None, None
             predictions = self.clf.predict_proba(rep).ravel()
             maxI = np.argmax(predictions)
             persons.append(self.le.inverse_transform(maxI))
