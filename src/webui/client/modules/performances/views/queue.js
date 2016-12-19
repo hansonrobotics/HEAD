@@ -82,8 +82,14 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                         readonly: true
                     });
 
-                    self.showSequence(_.map(response['performances'], 'id'), true);
-                    self.performances.add(response['performances'], {merge: true});
+                    let ids = _.map(response['performances'], 'id');
+                    self.showSequence(ids, true);
+
+                    // fetch full info for performances in the sequence
+                    _.each(ids, function (id) {
+                        let p = self.performances.get(id);
+                        if (p.nodes.isEmpty()) p.fetch();
+                    });
                 }
             });
         },

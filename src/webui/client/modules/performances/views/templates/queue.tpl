@@ -18,7 +18,7 @@
             <span class="app-drag-handle pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>
             <span class="app-name"></span>
             <div class="pull-right">
-                <span class="label label-primary">duration: <span class="app-duration"></span> sec</span>
+                <span class="label label-primary"><span class="app-duration"></span> sec</span>
 
                 <button type="button" class="app-remove pull-right btn btn-danger">
                     <span class="glyphicon glyphicon-trash"></span>
