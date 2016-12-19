@@ -53,9 +53,12 @@ class WholeShow(HierarchicalMachine):
         # ROS Handling
         rospy.init_node('WholeShow')
         self.btree_pub = rospy.Publisher("/behavior_switch", String, queue_size=5)
+        self.btree_sub = rospy.Subscriber("/behavior_switch", String, self.btree_cb)
         self.soma_pub = rospy.Publisher('/blender_api/set_soma_state', SomaState, queue_size=10)
         self.look_pub = rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
         self.performance_runner = rospy.ServiceProxy('/performances/run_full_performance', srv.RunByName)
+        # Wholeshow starts with behavior enabled, unless set otherwise
+        rospy.set_param("/behavior_enabled", rospy.get_param("/behavior_enabled", True))
         # Start sleeping. Wait for Blender to load
         rospy.wait_for_service('/blender_api/set_param')
         rospy.wait_for_service('/performances/current')
@@ -82,6 +85,7 @@ class WholeShow(HierarchicalMachine):
 
     def start_sleeping(self):
         """States callbacks """
+        self.btree_pub.publish(String("btree_off"))
         self.soma_pub.publish(self._get_soma('sleep', 1))
         self.soma_pub.publish(self._get_soma('normal', 0))
         # Look down
@@ -99,10 +103,10 @@ class WholeShow(HierarchicalMachine):
         rospy.set_param('start_sleeping', False)
 
     def start_interacting(self):
-        self.btree_pub.publish(String("btree_on"))
+        pass
 
     def stop_interacting(self):
-        self.btree_pub.publish(String("btree_off"))
+        pass
 
     def speech_cb(self, msg):
         """ ROS Callbacks """
@@ -121,6 +125,7 @@ class WholeShow(HierarchicalMachine):
             self.speech_pub.publish(msg)
         if 'go to sleep' in speech:
             try:
+                self.btree_pub.publish(String("btree_off"))
                 # use to_performng() instead of perform() so it can be called from other than interaction states
                 self.to_performing()
                 self.after_performance = self.to_sleeping
@@ -189,6 +194,7 @@ class WholeShow(HierarchicalMachine):
 
     def do_wake_up(self):
         assert (self.state == 'sleeping')
+        self.btree_pub.publish(String("btree_on"))
         self.after_performance = self.to_interacting
         # Start performance before triggerring state change so soma state will be sinced with performance
         self.performance_runner('shared/wakeup')
@@ -266,9 +272,12 @@ class WholeShow(HierarchicalMachine):
     @staticmethod
     def performance_keyword_match(keywords, input):
         for keyword in keywords:
+            if not keyword:
+                continue
             # Currently only simple matching
             p = re.compile(r"\b{}\b".format(keyword))
             if re.search(p, input):
+                rospy.logerr("Input {} is in keywords {}".format(input, keyword ))
                 return True
         return False
 
@@ -276,6 +285,17 @@ class WholeShow(HierarchicalMachine):
         self.config = config
         return config
 
+    def btree_cb(self, msg):
+        """
+        Keeps track if behavior tree active.
+        Sets ROS param accordingly
+        :param msg: String
+        :return:
+        """
+        if msg.data == "btree_on":
+            rospy.set_param("/behavior_enabled", True)
+        if msg.data == "btree_off":
+            rospy.set_param("/behavior_enabled", False)
 
 if __name__ == '__main__':
     WholeShow()

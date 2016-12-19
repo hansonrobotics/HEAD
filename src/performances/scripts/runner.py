@@ -305,8 +305,10 @@ class Runner:
 
                 pause = self.get_property(os.path.dirname(id), 'pause_behavior')
                 if pause or pause is None and behavior:
-                    self.topics['interaction'].publish('btree_off')
-                    behavior = False
+                    # Only pause behavior if its enabled. Otherwise Pause behavior have no effect
+                    if rospy.get_param("/behavior_enabled"):
+                        self.topics['interaction'].publish('btree_off')
+                        behavior = False
 
                 with self.lock:
                     if not self.running:
