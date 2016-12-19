@@ -231,7 +231,12 @@ class FaceRecognizer(object):
             le = LabelEncoder().fit(labels_data)
             labelsNum = le.transform(labels_data)
             clf = SVC(C=1, kernel='linear', probability=True)
-            clf.fit(embeddings_data, labelsNum)
+            try:
+                clf.fit(embeddings_data, labelsNum)
+            except ValueError as ex:
+                logger.error(ex)
+                self.pub.publish('abort')
+                return
 
             if not self.stop_training.is_set():
                 labels.to_csv(label_fname, header=False, index=False)
@@ -245,14 +250,13 @@ class FaceRecognizer(object):
                 logger.info("Model saved to {}".format(classifier_fname))
 
                 self.load_classifier(classifier_fname)
-                self.archive(True)
                 self.pub.publish('end')
             else:
                 self.pub.publish('abort')
 
     def infer(self, img):
         if self.clf is None or self.le is None:
-            return None, None
+            return None, None, None
         reps, bb = self.getRep(img, self.multi_faces)
         persons = []
         confidences = []
@@ -262,7 +266,7 @@ class FaceRecognizer(object):
                 rep = rep.reshape(1, -1)
             except:
                 logger.info("No Face detected")
-                return (None, None)
+                return None, None, None
             predictions = self.clf.predict_proba(rep).ravel()
             maxI = np.argmax(predictions)
             persons.append(self.le.inverse_transform(maxI))
@@ -291,10 +295,8 @@ class FaceRecognizer(object):
         if self.count % 30 != 0:
             self.republish(ros_image)
             return
-        if self.count % 90 == 0:
-            # clear current person every ~3s
-            self.faces = []
-            rospy.set_param('{}/current_persons'.format(self.node_name),'')
+        self.faces = []
+        rospy.set_param('{}/current_persons'.format(self.node_name),'')
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
             self.collect_face(image)
@@ -336,6 +338,9 @@ class FaceRecognizer(object):
                             ','.join(self.detected_faces))
                 rospy.set_param('{}/current_persons'.format(self.node_name),
                             current)
+                rospy.set_param('{}/face_visible'.format(self.node_name), True)
+            else:
+                rospy.set_param('{}/face_visible'.format(self.node_name), False)
         self.republish(ros_image)
 
     def archive(self, remove=False):
@@ -354,6 +359,8 @@ class FaceRecognizer(object):
         files = ['labels.csv', 'reps.csv', 'classifier.pkl']
         files = [os.path.join(self.aligned_dir, f) for f in files]
         if all([os.path.isfile(f) for f in files]):
+            if not os.path.isdir(self.classifier_dir):
+                os.makedirs(self.classifier_dir)
             for f in files:
                 shutil.copy(f, os.path.join(self.classifier_dir))
             logger.info("Model is saved")

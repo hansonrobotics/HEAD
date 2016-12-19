@@ -101,6 +101,16 @@ class Chatbot():
         lang = rospy.get_param('lang', None)
         if lang:
             self.client.lang = lang
+
+        persons = rospy.get_param('face_recognizer/current_persons', '')
+        if persons:
+            person = persons.split('|')[0]
+            person = person.title()
+            self.client.set_context('queryname={}'.format(person))
+            logger.info("Set queryname to {}".format(person))
+        else:
+            self.client.remove_context('queryname')
+            logger.info("Remove queryname")
         self.client.ask(question, query)
 
     def _speech_event_callback(self, msg):
@@ -229,7 +239,6 @@ class Chatbot():
         for k, v in context.iteritems():
             rospy.set_param('{}/context/{}'.format(self.node_name, k), v)
             logger.info("Set param {}={}".format(k, v))
-
 
     # Just repeat the chat message, as a plain string.
     def _echo_callback(self, chat_message):

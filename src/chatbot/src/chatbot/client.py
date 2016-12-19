@@ -569,9 +569,8 @@ Syntax: upload package
     def help_ns(self):
         self.stdout.write('Start new session\n')
 
+    @retry(1)
     def do_sc(self, line):
-        if not self.session:
-            self.start_session()
         try:
             for tok in line.split(','):
                 k, v = tok.split('=')
@@ -600,29 +599,53 @@ Syntax: sc key=value,key2=value2,...
 """
         self.stdout.write(s)
 
-    def do_gc(self, line=None):
+    @retry(1)
+    def do_rc(self, line):
+        params = {
+            "Auth": self.key,
+            "keys": line,
+            "session": self.session
+        }
+        r = requests.get(
+            '{}/remove_context'.format(self.root_url), params=params)
+        response = r.json().get('response')
+        self.stdout.write(response)
+        self.stdout.write('\n')
+
+    def help_rc(self):
+        s = """
+Remove chatbot context
+Syntax: rc key,key2,key3,...
+"""
+        self.stdout.write(s)
+
+    remove_context = do_rc
+
+    def get_context(self):
         if not self.session:
             self.start_session()
         params = {
             "Auth": self.key,
             "session": self.session
         }
-        r = requests.get(
+        response = requests.get(
             '{}/get_context'.format(self.root_url), params=params)
-        ret = r.json().get('ret')
+        return response.json().get('response')
+
+    @retry(1)
+    def do_gc(self, line=None):
+        r = self.get_context()
         response = r.json().get('response')
+        ret = r.json().get('ret')
         if ret:
             self.stdout.write(pprint.pformat(response))
         else:
             self.stdout.write(response)
             response = {}
         self.stdout.write('\n')
-        return response
 
     def help_gc(self):
         self.stdout.write('Get chatbot context\n')
-
-    get_context = do_gc
 
     def do_said(self, line):
         if not self.session:

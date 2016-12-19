@@ -137,12 +137,28 @@ def set_context(prop, sid):
             pass
     return True, "Context is updated"
 
+def remove_context(keys, sid):
+    sess = session_manager.get_session(sid)
+    if sess is None:
+        return False, "No session"
+    for c in CHARACTERS:
+        if c.type != TYPE_AIML and c.type != TYPE_CS:
+            continue
+        try:
+            for key in keys:
+                c.remove_context(sess, key)
+        except Exception:
+            pass
+    return True, "Context is updated"
+
 def get_context(sid):
     sess = session_manager.get_session(sid)
     if sess is None:
         return False, "No session"
     context = {}
     for c in CHARACTERS:
+        if c.type != TYPE_AIML and c.type != TYPE_CS:
+            continue
         try:
             context.update(c.get_context(sess))
         except Exception:
