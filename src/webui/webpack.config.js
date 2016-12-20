@@ -93,7 +93,8 @@ module.exports = {
             'bootstrap-css': 'css/vendor/bootstrap.min.css',
             'jquery-ui-css': 'jquery-ui-bundle/jquery-ui.css',
             'nouislider-css': 'nouislider/distribute/nouislider.min.css',
-            'backbone.naturalsort': 'vendor/backbone.naturalsort'
+            'backbone.naturalsort': 'vendor/backbone.naturalsort',
+            'natural-sort': 'javascript-natural-sort'
         },
         extensions: ['', '.js', '.css', '.yaml'],
         root: [path.join(__dirname, './client')],
