@@ -58,15 +58,17 @@ logger = logging.getLogger('hr.vision.face_recognition.face_recognizer')
 class FaceRecognizer(object):
 
     class Face(object):
-        def __init__(self, name, confidence, bbox):
+        def __init__(self, name, confidence, bbox, landmarks):
             self.name = name
             self.confidence = confidence
             self.bbox = bbox
+            self.landmarks = landmarks
 
     def __init__(self):
         self.bridge = CvBridge()
         self.imgDim = 96
         self.align = openface.AlignDlib(DLIB_FACEPREDICTOR)
+        self.face_pose_predictor = dlib.shape_predictor(DLIB_FACEPREDICTOR)
         self.net = openface.TorchNeuralNet(NETWORK_MODEL, self.imgDim)
         self.landmarkIndices = openface.AlignDlib.OUTER_EYES_AND_NOSE
         self.face_detector = dlib.get_frontal_face_detector()
@@ -285,8 +287,14 @@ class FaceRecognizer(object):
                     key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True):
                 b = face.bbox
                 p = face.name
-                cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 3)
-                cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 2, self.colors[i], 3)
+                landmarks = face.landmarks
+                cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 2)
+                cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 1, self.colors[i], 2)
+                for j in range(landmarks.num_parts):
+                    point = landmarks.part(j)
+                    x = int(point.x)
+                    y = int(point.y)
+                    cv2.circle(image, (x,y), 1, self.colors[i], 1)
                 i += 1
                 i = i%6
         self.imgpub.publish(self.bridge.cv2_to_imgmsg(image, 'bgr8'))
@@ -327,7 +335,8 @@ class FaceRecognizer(object):
             if persons:
                 faces = []
                 for p, c, b in zip(persons, confidences, bboxes):
-                    faces.append(FaceRecognizer.Face(p,c,b))
+                    l = self.face_pose_predictor(image, b)
+                    faces.append(FaceRecognizer.Face(p,c,b,l))
                     logger.info("P: {} C: {}".format(p, c))
                 faces = sorted(faces,
                         key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True)
