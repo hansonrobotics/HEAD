@@ -34,7 +34,12 @@ var self = module.exports = {
                 name: '/performances/reload_properties',
                 serviceType: 'std_srvs/Trigger'
             })
-        }
+        },
+        updateExpressions: new ROSLIB.Service({
+            ros: ros,
+            name: '/webui/motors_controller/update_expressions',
+            serviceType: 'webui/UpdateExpressions'
+        })
     },
     topics: {
         lookAt: new ROSLIB.Topic({
@@ -64,5 +69,12 @@ var self = module.exports = {
         reloadProperties: function () {
             self.services.performances.reload_properties.callService();
         }
-    }
+    },
+    updateExpressions: function (robot_name) {
+        this.services.updateExpressions.callService({
+            robot_name: robot_name,
+        }, function (res) {
+            console.log(res);
+        });
+    },
 };

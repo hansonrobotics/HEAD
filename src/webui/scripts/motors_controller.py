@@ -43,6 +43,7 @@ class MotorsController:
     def __init__(self):
         rospy.init_node('motors_controller')
         rospy.Service('~update_motors', srv.UpdateMotors, self.update_motors)
+        rospy.Service('~update_expressions', srv.UpdateExpressions, self.update_expressions)
         rospy.spin()
 
     def update_motors(self, req):
@@ -63,8 +64,17 @@ class MotorsController:
                 write_yaml(file_name, config)
                 kill_node("/{}/pololu_{}".format(robot_name, board))
         kill_node("/{}/pau2motors".format(robot_name))
-
+        kill_node("/{}/basic_head_api".format(robot_name))
         return srv.UpdateMotorsResponse(True)
+
+    def update_expressions(self, req):
+        robot_name = req.robot_name
+        expressions = os.path.join(config_root, robot_name, "expressions.yaml")
+        load_params(expressions, "/{}".format(robot_name))
+        animations = os.path.join(config_root, robot_name, "animations.yaml")
+        load_params(animations, "/{}".format(robot_name))
+        kill_node("/{}/basic_head_api".format(robot_name))
+        return srv.UpdateExpressionsResponse(True)
 
 
 if __name__ == '__main__':
