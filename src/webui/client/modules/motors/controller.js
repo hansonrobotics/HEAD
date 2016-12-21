@@ -23,9 +23,10 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
             admin_index: function () {
                 api.disableInteractionMode();
                 api.blenderMode.disable();
-                api.setExpression("Neutral", 0);
-                api.pointHead();
-
+                var motorsCollection = new MotorCollection();
+                motorsCollection.fetchFromParam(function () {
+                    motorsCollection.setDefaultValues();
+                });
                 App.LayoutInstance.showAdminNav();
                 App.LayoutInstance.setTitle('Motor configuration');
                 var configurationView = new ConfigurationView();
