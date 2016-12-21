@@ -42,6 +42,7 @@ from dynamic_reconfigure.server import Server
 import dynamic_reconfigure.client
 from face_recognition.cfg import FaceRecognitionConfig
 from face_recognition.utils import get_3d_point
+from face_recognition.msg import Face, Faces
 from std_msgs.msg import String
 
 CWD = os.path.dirname(os.path.abspath(__file__))
@@ -87,10 +88,12 @@ class FaceRecognizer(object):
         self.training_job = None
         self.stop_training = threading.Event()
         self.faces = []
-        self.pub = rospy.Publisher(
+        self.event_pub = rospy.Publisher(
             'face_training_event', String, latch=True, queue_size=1)
+        self.faces_pub = rospy.Publisher(
+            '~faces', Faces, latch=True, queue_size=1)
         self.imgpub = rospy.Publisher(
-            'image', Image, latch=True, queue_size=1)
+            '~image', Image, latch=True, queue_size=1)
         self._lock = threading.RLock()
         self.colors = [ (255, 0, 0), (0, 255, 0), (0, 0, 255),
             (255, 255, 0), (255, 0, 255), (0, 255, 255) ]
@@ -190,7 +193,7 @@ class FaceRecognizer(object):
             cv2.imwrite(fname, image)
             logger.info("Write face image to {}".format(fname))
             self.face_count += 1
-            self.pub.publish('{}/{}'.format(self.face_count, self.max_face_count))
+            self.event_pub.publish('{}/{}'.format(self.face_count, self.max_face_count))
             print "Write face image to {}".format(fname)
 
     def prepare(self):
@@ -201,7 +204,7 @@ class FaceRecognizer(object):
 
     def train_model(self):
         with self._lock:
-            self.pub.publish('training')
+            self.event_pub.publish('training')
             self.prepare()
             label_fname = "{}/labels.csv".format(self.aligned_dir)
             reps_fname = "{}/reps.csv".format(self.aligned_dir)
@@ -213,7 +216,7 @@ class FaceRecognizer(object):
 
             if labels is None or embeddings is None:
                 logger.error("No labels or representations are found")
-                self.pub.publish('abort')
+                self.event_pub.publish('abort')
                 return
 
             # append the existing data
@@ -236,7 +239,7 @@ class FaceRecognizer(object):
                 clf.fit(embeddings_data, labelsNum)
             except ValueError as ex:
                 logger.error(ex)
-                self.pub.publish('abort')
+                self.event_pub.publish('abort')
                 return
 
             if not self.stop_training.is_set():
@@ -251,9 +254,9 @@ class FaceRecognizer(object):
                 logger.info("Model saved to {}".format(classifier_fname))
 
                 self.load_classifier(classifier_fname)
-                self.pub.publish('end')
+                self.event_pub.publish('end')
             else:
-                self.pub.publish('abort')
+                self.event_pub.publish('abort')
 
     def infer(self, img):
         if self.clf is None or self.le is None:
@@ -399,12 +402,12 @@ class FaceRecognizer(object):
             logger.info("Stopping")
             self.train = False
             self.stop_training.set()
-            self.pub.publish('abort')
+            self.event_pub.publish('abort')
         self.face_name = config.face_name
         self.train = config.train
         if self.train:
             if self.face_name:
-                self.pub.publish('start')
+                self.event_pub.publish('start')
                 self.stop_training.clear()
                 self.face_count = 0
             else:
