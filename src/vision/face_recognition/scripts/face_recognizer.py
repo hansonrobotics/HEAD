@@ -194,7 +194,6 @@ class FaceRecognizer(object):
             logger.info("Write face image to {}".format(fname))
             self.face_count += 1
             self.event_pub.publish('{}/{}'.format(self.face_count, self.max_face_count))
-            print "Write face image to {}".format(fname)
 
     def prepare(self):
         """Align faces, generate representations and labels"""
@@ -328,18 +327,12 @@ class FaceRecognizer(object):
             if persons:
                 faces = []
                 for p, c, b in zip(persons, confidences, bboxes):
-                    if c <= self.threshold:
-                        continue
                     faces.append(FaceRecognizer.Face(p,c,b))
                     logger.info("P: {} C: {}".format(p, c))
-                    print "P: {} C: {}".format(p, c)
                 faces = sorted(faces,
                         key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True)
                 self.faces = faces
-                point = get_3d_point(self.faces[0].bbox)
-                if point:
-                    logger.info("3D point {}".format(point))
-                current = '|'.join([f.name for f in self.faces])
+                current = '|'.join([f.name for f in self.faces if f.confidence > self.threshold])
                 self.detected_faces.append(current)
                 rospy.set_param('{}/recent_persons'.format(self.node_name),
                             ','.join(self.detected_faces))
@@ -351,6 +344,17 @@ class FaceRecognizer(object):
                     self.faces = []
                     rospy.set_param('{}/face_visible'.format(self.node_name), False)
                     rospy.set_param('{}/current_persons'.format(self.node_name),'')
+            msgs = Faces()
+            for face in self.faces:
+                msg = Face()
+                msg.faceid = face.name
+                msg.left = face.bbox.left()
+                msg.top = face.bbox.top()
+                msg.right = face.bbox.right()
+                msg.bottom = face.bbox.bottom()
+                msg.confidence = face.confidence
+                msgs.faces.append(msg)
+            self.faces_pub.publish(msgs)
         self.republish(ros_image)
 
     def archive(self, remove=False):
