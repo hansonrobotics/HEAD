@@ -82,15 +82,15 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
 
                 // find a prefix with the highest number or the highest number for the last prefix
                 _.each(names, function (name) {
-                    let p, n;
+                    let p, n, numeric = $.isNumeric(name);
 
-                    if (!prefix && $.isNumeric(name)) {
+                    if (!prefix && numeric) {
                         p = ' ';
                         n = name;
                     } else {
                         p = prefix || name.replace(/ \d+$/, '');
                         if (prefix === ' ') {
-                            if ($.isNumeric(name))
+                            if (numeric)
                                 n = name;
                             else
                                 return;
