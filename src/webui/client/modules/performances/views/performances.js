@@ -1,6 +1,7 @@
 define(['marionette', 'backbone', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
-        'jquery', 'bootbox', 'lib/api', './settings', 'path', 'typeahead', 'jquery-ui'],
-    function (Marionette, Backbone, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView, path) {
+        'jquery', 'bootbox', 'lib/api', './settings', 'path', 'natural-sort', 'typeahead', 'jquery-ui'],
+    function (Marionette, Backbone, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView, path,
+              naturalSort) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: PerformanceView,
@@ -190,9 +191,8 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     return self.getParentPath(dir) == self.currentPath;
                 });
 
-                return _.sortBy(dirs, function (d) {
-                    return d;
-                });
+                naturalSort.insensitive = true;
+                return dirs.sort(naturalSort);
             },
             showSettings: function () {
                 let settingsView = new SettingsView({

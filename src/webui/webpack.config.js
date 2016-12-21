@@ -52,6 +52,9 @@ module.exports = {
             test: require.resolve('json-editor'),
             loader: 'exports?JSONEditor'
         }, {
+            test: /vendor\/backbone\.naturalsort/,
+            loader: 'imports?_=underscore&naturalSort=javascript-natural-sort'
+        }, {
             test: /\.css$/,
             loader: 'style-loader!css-loader!postcss-loader'
         }, {
@@ -91,7 +94,9 @@ module.exports = {
             'selectareas-css': 'css/vendor/jquery.selectareas.css',
             'bootstrap-css': 'css/vendor/bootstrap.min.css',
             'jquery-ui-css': 'jquery-ui-bundle/jquery-ui.css',
-            'nouislider-css': 'nouislider/distribute/nouislider.min.css'
+            'nouislider-css': 'nouislider/distribute/nouislider.min.css',
+            'backbone.naturalsort': 'vendor/backbone.naturalsort',
+            'natural-sort': 'javascript-natural-sort'
         },
         extensions: ['', '.js', '.css', '.yaml'],
         root: [path.join(__dirname, './client')],
