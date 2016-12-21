@@ -41,6 +41,7 @@ from sensor_msgs.msg import Image
 from dynamic_reconfigure.server import Server
 import dynamic_reconfigure.client
 from face_recognition.cfg import FaceRecognitionConfig
+from face_recognition.utils import get_3d_point
 from std_msgs.msg import String
 
 CWD = os.path.dirname(os.path.abspath(__file__))
@@ -81,7 +82,7 @@ class FaceRecognizer(object):
         self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
         self.node_name = rospy.get_name()
         self.multi_faces = False
-        self.threshold = 0
+        self.threshold = 0.5
         self.detected_faces = deque(maxlen=10)
         self.training_job = None
         self.stop_training = threading.Event()
@@ -278,7 +279,8 @@ class FaceRecognizer(object):
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.faces:
             i = 0
-            for face in sorted(self.faces, key=lambda x: x.bbox.left()):
+            for face in sorted(self.faces,
+                    key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True):
                 b = face.bbox
                 p = face.name
                 cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 3)
@@ -328,8 +330,12 @@ class FaceRecognizer(object):
                     faces.append(FaceRecognizer.Face(p,c,b))
                     logger.info("P: {} C: {}".format(p, c))
                     print "P: {} C: {}".format(p, c)
-                faces = sorted(faces, key=lambda x: x.confidence)
+                faces = sorted(faces,
+                        key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True)
                 self.faces = faces
+                point = get_3d_point(self.faces[0].bbox)
+                if point:
+                    logger.info("3D point {}".format(point))
                 current = '|'.join([f.name for f in self.faces])
                 self.detected_faces.append(current)
                 rospy.set_param('{}/recent_persons'.format(self.node_name),
