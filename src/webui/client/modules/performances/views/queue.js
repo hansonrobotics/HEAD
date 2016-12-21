@@ -39,7 +39,6 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 });
             }
 
-
             if (this.options.sequence)
                 this.showSequence(this.options.sequence);
 
@@ -82,7 +81,14 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                         readonly: true
                     });
 
-                    self.showSequence(_.map(response['performances'], 'id'), true);
+                    let ids = _.map(response['performances'], 'id');
+                    self.showSequence(ids, true);
+
+                    // fetch full info for performances in the sequence
+                    _.each(ids, function (id) {
+                        let p = self.performances.get(id);
+                        if (p.nodes.isEmpty()) p.fetch();
+                    });
                 }
             });
         },
@@ -101,11 +107,24 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 };
 
             this.ui.emptyNotice.slideUp();
-            this._updateItem(item);
             this.queue.push(item);
             this.ui.queue.append(el);
 
-            $('.app-remove', el).click(function () {
+            $(el).click(function () {
+                let startTime = 0;
+                _.find(self.queue, function (i) {
+                    if (i !== item) startTime += i.model.getDuration();
+                    return i === item;
+                });
+
+                if (!self.timelinesView || !self.timelinesView.readonly)
+                    self.updateTimeline();
+
+                self.timelinesView.run(startTime);
+            });
+
+            $('.app-remove', el).click(function (e) {
+                e.stopPropagation();
                 self._removeItem(item);
                 self.updateTimeline();
             });
@@ -113,12 +132,13 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             if (this.readonly)
                 $('.app-edit', el).hide();
             else
-                $('.app-edit', el).click(function () {
+                $('.app-edit', el).click(function (e) {
+                    e.stopPropagation();
                     self.stop();
                     self._showTimeline({model: performance});
                 });
-
-            performance.on('change', function () {
+            this._updateItem(item);
+            this.listenTo(performance, 'change:name change:duration', function () {
                 self._updateItem(item);
             });
 
@@ -189,8 +209,27 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 disableSaving: this.disableSaving
             }, options));
 
-            this.timelinesView.on('close', function () {
-                if (!self.isDestroyed()) self.updateTimeline();
+            this.listenTo(this.timelinesView, 'close', function () {
+                self.updateTimeline();
+            });
+
+            this.listenTo(this.timelinesView, 'running', function (time) {
+                let offset = 0;
+                _.find(self.queue, function (item) {
+                    offset += item.model.getDuration();
+                    let found = time <= offset;
+
+                    if (found && !$(item.el).hasClass('active')) {
+                            self.ui.queue.find('.app-performance').removeClass('active');
+                            $(item.el).addClass('active');
+                    }
+
+                    return found;
+                })
+            });
+
+            this.listenTo(this.timelinesView, 'idle', function () {
+                self.ui.queue.find('.app-performance').removeClass('active');
             });
 
             // show configuration UI
@@ -199,6 +238,7 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
         },
         _removeItem: function (item) {
             $(item.el).slideUp();
+            this.stopListening(item.model);
             this.queue = _.without(this.queue, item);
 
             if (this.queue.length == 0)

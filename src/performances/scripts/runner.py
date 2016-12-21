@@ -21,6 +21,8 @@ from performances.nodes import Node
 from performances.weak_method import WeakMethod
 from performances.msg import Event
 import performances.srv as srv
+from dynamic_reconfigure.server import Server
+from performances.cfg import PerformancesConfig
 
 logger = logging.getLogger('hr.performances')
 rospack = rospkg.RosPack()
@@ -33,6 +35,7 @@ class Runner:
         self.robot_name = rospy.get_param('/robot_name')
         self.running = False
         self.paused = False
+        self.autopause = False
         self.pause_time = 0
         self.start_time = 0
         self.start_timestamp = 0
@@ -93,9 +96,16 @@ class Runner:
         rospy.Subscriber('/' + self.robot_name + '/speech', ChatMessage, self.speech_callback)
         # Shared subscribers for nodes
         rospy.Subscriber('/hand_events', String, self.hand_callback)
+        Server(PerformancesConfig, self.reconfig)
         rospy.Subscriber('/face_training_event', String, self.training_callback)
         self.worker.start()
         rospy.spin()
+
+    def reconfig(self, config, level):
+        with self.lock:
+            self.autopause = config.autopause
+
+        return config
 
     def reload_properties_callback(self, request):
         self.load_properties()
@@ -189,17 +199,18 @@ class Runner:
         for performance in performances:
             duration = 0
 
-            if 'nodes' in performance and isinstance(performance['nodes'], list):
-                for node in performance['nodes']:
-                    if not 'start_time' in node:
-                        node['start_time'] = 0
-                    if node['name'] == 'pause':
-                        node['duration'] = 0.1
-                    duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
-                    node['start_time'] += offset
-                offset += duration
-            else:
-                performances.remove(performance)
+            if 'nodes' not in performance or not isinstance(performance['nodes'], list):
+                performance['nodes'] = []
+
+            for node in performance['nodes']:
+                if not 'start_time' in node:
+                    node['start_time'] = 0
+                if node['name'] == 'pause':
+                    node['duration'] = 0.1
+                duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
+                node['start_time'] += offset
+            offset += duration
+
         with self.lock:
             self.running_performances = performances
             self.topics['running_performances'].publish(String(json.dumps(performances)))
@@ -296,16 +307,16 @@ class Runner:
 
             if len(self.running_performances) == 0:
                 continue
-
             behavior = True
-            for performance in self.running_performances:
-                id = performance.get('id', '')
-                nodes = [Node.createNode(node, self, self.start_time, id) for node in
+            for i, performance in enumerate(self.running_performances):
+                nodes = [Node.createNode(node, self, self.start_time, performance.get('id', '')) for node in
                          performance['nodes']]
-
-                pause = self.get_property(os.path.dirname(id), 'pause_behavior')
-                if pause or pause is None and behavior:
-                    # Only pause behavior if its enabled. Otherwise Pause behavior have no effect
+                pid = performance.get('id', '')
+                pause = self.get_property(os.path.dirname(pid), 'pause_behavior')
+                # Pause must be either enabled or not set (by default all performances are
+                # pausing behavior if its not set)
+                if (pause or pause is None) and behavior:
+                    # Only pause behavior if its already running. Otherwise Pause behavior have no effect
                     if rospy.get_param("/behavior_enabled"):
                         self.topics['interaction'].publish('btree_off')
                         behavior = False
@@ -314,9 +325,18 @@ class Runner:
                     if not self.running:
                         break
 
+                    autopause = self.autopause and 0 < i < len(self.running_performances)
+
+                if autopause:
+                    self.pause()
+                    # make sure performance is paused even without any nodes
+                    while self.paused:
+                        continue
+
                 running = True
                 while running:
                     with self.lock:
+
                         run_time = self.get_run_time()
 
                         if not self.running:

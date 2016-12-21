@@ -1,4 +1,5 @@
-define(['backbone', 'marionette', 'modules/layout/layout', 'lib/ros', 'lib/api', 'jquery-ui', 'jquery-ui-touch-punch', 'bootstrap'],
+define(['backbone', 'marionette', 'modules/layout/layout', 'lib/ros', 'lib/api', 'jquery-ui', 'jquery-ui-touch-punch',
+        'bootstrap'],
     function (Backbone, Marionette, LayoutView, ros, api) {
         $.ajaxSetup({
             contentType: 'application/json; charset=utf-8',

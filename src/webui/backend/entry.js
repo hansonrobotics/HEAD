@@ -1,4 +1,4 @@
-var express = require('express'),
+let express = require('express'),
     https = require("https"),
     app = express(),
     monitoring = require('./lib/monitoring'),
@@ -45,7 +45,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/robot_config.js', function (req, res) {
-    var filename = path.resolve(argv.config, argv.robot, 'webstart.js');
+    let filename = path.resolve(argv.config, argv.robot, 'webstart.js');
     if (monitoring.robot_started(argv.robot) === 1) {
         res.send("define(function (){return {mode:'normal'}});");
     } else {
@@ -79,7 +79,7 @@ app.get('/motors/get/:name', function (req, res) {
 });
 
 app.post('/motors/update/:name', function (req, res) {
-    var robot_name = req.params['name'];
+    let robot_name = req.params['name'];
     yamlIO.writeFile(path.join(argv.config, robot_name, 'motors_settings.yaml'), req.body);
     ros.updateMotors(robot_name, req.body);
     res.json({error: false});
@@ -94,7 +94,7 @@ app.post('/expressions/update/:name', function (req, res) {
 });
 
 app.get('/attention_regions/:name', function (req, res) {
-    var regions = yamlIO.readFile(path.join(argv.config, req.params['name'], 'attention_regions.yaml') || []);
+    let regions = yamlIO.readFile(path.join(argv.config, req.params['name'], 'attention_regions.yaml') || []);
     // TODO: remove when configs are updated
     if ('attention_regions' in regions) regions = regions['attention_regions'];
     res.json(regions);
@@ -113,8 +113,8 @@ app.get('/performances/:name', function (req, res) {
         path.join(argv.config, 'common', 'performances')], {skip_nodes: true}));
 });
 
-var updatePerformance = function (req, res) {
-    var name = req.params['id'].indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'],
+let updatePerformance = function (req, res) {
+    let name = req.params['id'].indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'],
         root = path.join(argv.config, name, 'performances');
 
     if (performances.update(root, req.params['id'], _.cloneDeep(req.body)))
@@ -123,10 +123,16 @@ var updatePerformance = function (req, res) {
         res.sendStatus(500);
 };
 
-app.route('/performances/:name/:id*').post(updatePerformance).put(updatePerformance);
+app.route('/performances/:name/:id*').post(updatePerformance).put(updatePerformance)
+    .get(function (req, res) {
+        let name = req.params['id'].indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'],
+            dir = path.join(argv.config, name, 'performances');
+
+        res.json(performances.get(dir, req.params['id']));
+    });
 
 app.delete('/performances/:name/:id*', function (req, res) {
-    var id = path.join(req.param('id') || '', req.params['0'] || ''),
+    let id = path.join(req.param('id') || '', req.params['0'] || ''),
         name = req.params['id'].indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'];
 
     res.json(performances.remove(path.join(argv.config, name, 'performances'), req.params['id']));
@@ -137,7 +143,7 @@ app.post('/run_performance', function (req, res) {
 });
 
 app.get('/slide_performance/:show/:performance', function (req, res) {
-    res.json({result: performances.run(req.params['show']+"/"+req.params['performance'])});
+    res.json({result: performances.run(req.params['show'] + "/" + req.params['performance'])});
 });
 
 app.post('/lookat', function (req, res) {
@@ -161,14 +167,14 @@ app.post('/monitor/logs/:level', function (req, res) {
     });
 });
 
-var readPerformanceProperties = function (dir) {
+let readPerformanceProperties = function (dir) {
         dir = dir || '.';
-        var name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot;
+        let name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot;
         return yamlIO.readFile(path.join(argv.config, name, 'performances', dir, '.properties')) || {};
     },
     writePerformanceProperties = function (dir, data) {
         dir = dir || '.';
-        var name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot,
+        let name = dir.indexOf(shared_performances_folder) === 0 ? 'common' : argv.robot,
             filename = path.join(argv.config, name, 'performances', dir, '.properties'),
             properties = yamlIO.readFile(filename),
             success = yamlIO.writeFile(filename, _.extend(properties, data));
@@ -190,7 +196,7 @@ app.get('/keywords/:path(*)?', function (req, res) {
 });
 
 app.post('/keywords/:path(*)?', function (req, res) {
-    var keywords = _.map(req.body['keywords'] || [], function (k) {
+    let keywords = _.map(req.body['keywords'] || [], function (k) {
         return k.trim();
     });
 
@@ -214,7 +220,7 @@ app.post('/performance/variables/:path(*)?', function (req, res) {
 });
 
 if (argv.ssl) {
-    var privateKey = fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
+    let privateKey = fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
         certificate = fs.readFileSync(path.join(__dirname, 'ssl', 'cert.crt'));
 
     https.createServer({

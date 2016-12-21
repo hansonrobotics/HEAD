@@ -53,8 +53,12 @@
 
 .app-performance-queue button span {
     position: absolute;
-    left: 1px;
+    left: 2px;
     top: 3px;
+}
+
+.app-performance-queue .app-play {
+    margin: 0 5px 0 0;
 }
 
 .app-clear-performance-queue {
@@ -207,33 +211,24 @@
     -webkit-border-radius: 4px 4px 4px 4px;
 }
 
-/*.app-node-start-time,*/
-/*.app-node-duration,*/
-/*.app-node-timeout {*/
-    /*width: 70px !important;*/
-/*}*/
-
 .app-performance-template {
     display: none;
 }
 
+li.app-performance.active,
+li.app-performance:hover,
+li.app-performance:focus {
+    cursor: pointer;
+    border: solid 1px #5cb85c !important;
+    background-color: #323F48 !important;
+}
+
+li.app-performance .app-play,
 li.app-performance .app-remove,
 li.app-performance .app-edit {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-}
-
-li.app-performance .app-status-indicator {
-    height: 14px;
-    width: 14px;
-    background-color: #182934;
-    display: inline-block;
-    margin-right: 5px;
-}
-
-li.app-performance .app-status-indicator.active {
-    background-color: #5cb85c;
 }
 
 .app-performance-queue .ui-state-highlight {

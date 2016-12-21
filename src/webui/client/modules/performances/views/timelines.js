@@ -1,7 +1,9 @@
 define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox', './node',
         '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
-        'lib/api', 'annyang', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar', 'scrollbar-css', 'scrollTo'],
-    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition, api, annyang) {
+        'lib/api', 'annyang', 'modules/settings/entities/node_config', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar',
+        'scrollbar-css', 'scrollTo', 'font-awesome'],
+    function (App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition,
+              api, annyang, NodeConfig) {
         return Marionette.View.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
@@ -21,6 +23,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 runButton: '.app-run-button',
                 stopButton: '.app-stop-button',
                 pauseButton: '.app-pause-button',
+                autoPauseButton: '.app-auto-pause-button',
                 resumeButton: '.app-resume-button',
                 loopButton: '.app-loop-button',
                 clearButton: '.app-clear-button',
@@ -56,8 +59,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 'click @ui.loopButton': 'loop',
                 'click @ui.yesButton': 'confirm',
                 'click @ui.noButton': 'close',
-                'click @ui.cancelButton': 'hideConfirmButtons'
-
+                'click @ui.cancelButton': 'hideConfirmButtons',
+                'click @ui.autoPauseButton': 'toggleAutoPause'
             },
             modelEvents: {
                 'change': 'modelChanged'
@@ -96,6 +99,15 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.model = new Performance();
                     this.model.fetchCurrent(loadOptions);
                 }
+                this.nodeConfig = new NodeConfig('/performances');
+                this.listenTo(this.nodeConfig, 'change', this.reconfigure);
+                this.nodeConfig.fetch();
+                this.configRefreshInterval = setInterval(function () {
+                    if (self.isDestroyed())
+                        clearInterval(self.configRefreshInterval);
+                    else
+                        self.nodeConfig.fetch()
+                }, 1000);
             },
             changed: false,
             markChanged: function () {
@@ -128,6 +140,19 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             close: function () {
                 this.trigger('close');
+            },
+            reconfigure: function () {
+                if (this.nodeConfig.get('autopause')) {
+                    this.ui.autoPauseButton.addClass('active');
+                } else {
+                    this.ui.autoPauseButton.removeClass('active').blur();
+                }
+            },
+            toggleAutoPause: function () {
+                this.setAutoPause(!this.nodeConfig.get('autopause'))
+            },
+            setAutoPause: function (val) {
+                this.nodeConfig.save({autopause: val});
             },
             onAttach: function () {
                 let self = this;
@@ -216,8 +241,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (this.readonly) this.model.disableSync();
             },
             removeNodeElements: function () {
+                let self = this;
                 this.model.nodes.each(function (node) {
-                    node.unset('el');
+                    self.removeNode(node);
                 });
             },
             nodeClicked: function (e) {
@@ -255,7 +281,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                             self.showNodeSettings(node);
                         });
 
-                node.set('el', el.get(0));
+                node.set('el', el.get(0), {silent: true});
                 this.listenTo(node, 'change', this.placeNode);
                 this.listenTo(node, 'change', this.focusNode);
                 this.listenTo(node, 'change', this.updateNodeEl);
@@ -324,7 +350,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 let el = $(node.get('el'));
                 if (el.length)
                     el.remove();
-                node.unset('el');
+                node.unset('el', {silent: true});
                 this.removeEmptyTimelines();
             },
             arrangeNodes: function () {
@@ -471,6 +497,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (!$.isNumeric(time))
                     time = parseInt(left) / this.config.pxPerSec;
 
+                this.trigger('running', time);
+
                 let step = 1. / App.getOption('fps'),
                     frameCount = parseInt(time / step);
 
@@ -521,6 +549,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.enableIndicatorDragging();
                 this.updateIndicatorTime(0);
                 this.resetButtons();
+
+                this.trigger('idle');
 
                 if (this.enableLoop)
                     this.run();
