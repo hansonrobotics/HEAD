@@ -69,55 +69,51 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 this.trigger('new', this.newestPerformance);
             },
             getNextName: function (names, defaultPrefix) {
-                let prefix,
-                    number = null,
-                    tmpPrefix;
+                let self = this,
+                    prefix,
+                    number = null;
 
                 // use the prefix of the last created performance in this dir
                 if (this.newestPerformance && this.newestPerformance.get('name')) {
-                    prefix = this.newestPerformance.get('name').replace(/ \d+$/, '');
+                    prefix = this.newestPerformance.get('name');
                     // set an empty prefix if it's numeric
                     if ($.isNumeric(prefix)) prefix = ' ';
+                    else prefix = prefix.replace(/\d+$/, '');
                 }
 
-                // find a prefix with the highest number or the highest number for the last prefix
-                _.each(names, function (name) {
-                    let p, n, numeric = $.isNumeric(name);
-
-                    if (!prefix && numeric) {
-                        p = ' ';
-                        n = name;
-                    } else {
-                        p = prefix || name.replace(/ \d+$/, '');
+                if (prefix) {
+                    names = _.filter(names, function (name) {
                         if (prefix === ' ') {
-                            if (numeric)
-                                n = name;
-                            else
-                                return;
+                            return $.isNumeric(name);
                         } else {
-                            if (name.indexOf(p) < 0) return;
-                            n = name.replace(p + ' ', '');
-                            if (n === name) n = 0;
+                            let regex = new RegExp('^' + self.escape(prefix) + '\d*', 'i');
+                            return regex.test(name);
                         }
-                    }
+                    });
+                }
 
-                    n = parseInt(n);
-                    if (number === null || n > number) {
-                        number = n;
-                        if (!prefix) tmpPrefix = p;
-                    }
-                });
+                naturalSort.insensitive = true;
+                names = names.sort(naturalSort);
 
-                prefix = prefix || tmpPrefix || defaultPrefix;
+                if (names.length) {
+                    let name = names[names.length - 1];
+                    prefix = name.replace(/\d*$/, '') || ' ';
+                    number = name.replace(prefix, '') || 0;
+                }
+
+                prefix = prefix || defaultPrefix;
 
                 if (number !== null)
-                    return (prefix + ' ' + this.zeroPad(number + 1, 2)).trim();
+                    return (prefix + this.zeroPad(parseInt(number) + 1, 2)).trim();
                 else
                     return prefix;
             },
             zeroPad: function (num, places) {
                 let zero = places - num.toString().length + 1;
                 return Array(+(zero > 0 && zero)).join("0") + num;
+            },
+            escape: function(str) {
+                return str.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" );
             },
             addAll: function () {
                 let self = this;
