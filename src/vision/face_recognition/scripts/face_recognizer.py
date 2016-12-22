@@ -42,6 +42,7 @@ from dynamic_reconfigure.server import Server
 import dynamic_reconfigure.client
 from face_recognition.cfg import FaceRecognitionConfig
 from face_recognition.utils import get_3d_point
+from face_recognition.msg import Face, Faces
 from std_msgs.msg import String
 
 CWD = os.path.dirname(os.path.abspath(__file__))
@@ -57,15 +58,17 @@ logger = logging.getLogger('hr.vision.face_recognition.face_recognizer')
 class FaceRecognizer(object):
 
     class Face(object):
-        def __init__(self, name, confidence, bbox):
+        def __init__(self, name, confidence, bbox, landmarks):
             self.name = name
             self.confidence = confidence
             self.bbox = bbox
+            self.landmarks = landmarks
 
     def __init__(self):
         self.bridge = CvBridge()
         self.imgDim = 96
         self.align = openface.AlignDlib(DLIB_FACEPREDICTOR)
+        self.face_pose_predictor = dlib.shape_predictor(DLIB_FACEPREDICTOR)
         self.net = openface.TorchNeuralNet(NETWORK_MODEL, self.imgDim)
         self.landmarkIndices = openface.AlignDlib.OUTER_EYES_AND_NOSE
         self.face_detector = dlib.get_frontal_face_detector()
@@ -87,10 +90,12 @@ class FaceRecognizer(object):
         self.training_job = None
         self.stop_training = threading.Event()
         self.faces = []
-        self.pub = rospy.Publisher(
+        self.event_pub = rospy.Publisher(
             'face_training_event', String, latch=True, queue_size=1)
+        self.faces_pub = rospy.Publisher(
+            '~faces', Faces, latch=True, queue_size=1)
         self.imgpub = rospy.Publisher(
-            'image', Image, latch=True, queue_size=1)
+            '~image', Image, latch=True, queue_size=1)
         self._lock = threading.RLock()
         self.colors = [ (255, 0, 0), (0, 255, 0), (0, 0, 255),
             (255, 255, 0), (255, 0, 255), (0, 255, 255) ]
@@ -190,8 +195,7 @@ class FaceRecognizer(object):
             cv2.imwrite(fname, image)
             logger.info("Write face image to {}".format(fname))
             self.face_count += 1
-            self.pub.publish('{}/{}'.format(self.face_count, self.max_face_count))
-            print "Write face image to {}".format(fname)
+            self.event_pub.publish('{}/{}'.format(self.face_count, self.max_face_count))
 
     def prepare(self):
         """Align faces, generate representations and labels"""
@@ -201,7 +205,7 @@ class FaceRecognizer(object):
 
     def train_model(self):
         with self._lock:
-            self.pub.publish('training')
+            self.event_pub.publish('training')
             self.prepare()
             label_fname = "{}/labels.csv".format(self.aligned_dir)
             reps_fname = "{}/reps.csv".format(self.aligned_dir)
@@ -213,7 +217,7 @@ class FaceRecognizer(object):
 
             if labels is None or embeddings is None:
                 logger.error("No labels or representations are found")
-                self.pub.publish('abort')
+                self.event_pub.publish('abort')
                 return
 
             # append the existing data
@@ -236,7 +240,7 @@ class FaceRecognizer(object):
                 clf.fit(embeddings_data, labelsNum)
             except ValueError as ex:
                 logger.error(ex)
-                self.pub.publish('abort')
+                self.event_pub.publish('abort')
                 return
 
             if not self.stop_training.is_set():
@@ -251,9 +255,9 @@ class FaceRecognizer(object):
                 logger.info("Model saved to {}".format(classifier_fname))
 
                 self.load_classifier(classifier_fname)
-                self.pub.publish('end')
+                self.event_pub.publish('end')
             else:
-                self.pub.publish('abort')
+                self.event_pub.publish('abort')
 
     def infer(self, img):
         if self.clf is None or self.le is None:
@@ -283,8 +287,14 @@ class FaceRecognizer(object):
                     key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True):
                 b = face.bbox
                 p = face.name
-                cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 3)
-                cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 2, self.colors[i], 3)
+                landmarks = face.landmarks
+                cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 2)
+                cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 1, self.colors[i], 2)
+                for j in range(landmarks.num_parts):
+                    point = landmarks.part(j)
+                    x = int(point.x)
+                    y = int(point.y)
+                    cv2.circle(image, (x,y), 1, self.colors[i], 1)
                 i += 1
                 i = i%6
         self.imgpub.publish(self.bridge.cv2_to_imgmsg(image, 'bgr8'))
@@ -325,18 +335,13 @@ class FaceRecognizer(object):
             if persons:
                 faces = []
                 for p, c, b in zip(persons, confidences, bboxes):
-                    if c <= self.threshold:
-                        continue
-                    faces.append(FaceRecognizer.Face(p,c,b))
+                    l = self.face_pose_predictor(image, b)
+                    faces.append(FaceRecognizer.Face(p,c,b,l))
                     logger.info("P: {} C: {}".format(p, c))
-                    print "P: {} C: {}".format(p, c)
                 faces = sorted(faces,
                         key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True)
                 self.faces = faces
-                point = get_3d_point(self.faces[0].bbox)
-                if point:
-                    logger.info("3D point {}".format(point))
-                current = '|'.join([f.name for f in self.faces])
+                current = '|'.join([f.name for f in self.faces if f.confidence > self.threshold])
                 self.detected_faces.append(current)
                 rospy.set_param('{}/recent_persons'.format(self.node_name),
                             ','.join(self.detected_faces))
@@ -348,6 +353,17 @@ class FaceRecognizer(object):
                     self.faces = []
                     rospy.set_param('{}/face_visible'.format(self.node_name), False)
                     rospy.set_param('{}/current_persons'.format(self.node_name),'')
+            msgs = Faces()
+            for face in self.faces:
+                msg = Face()
+                msg.faceid = face.name
+                msg.left = face.bbox.left()
+                msg.top = face.bbox.top()
+                msg.right = face.bbox.right()
+                msg.bottom = face.bbox.bottom()
+                msg.confidence = face.confidence
+                msgs.faces.append(msg)
+            self.faces_pub.publish(msgs)
         self.republish(ros_image)
 
     def archive(self, remove=False):
@@ -399,12 +415,12 @@ class FaceRecognizer(object):
             logger.info("Stopping")
             self.train = False
             self.stop_training.set()
-            self.pub.publish('abort')
+            self.event_pub.publish('abort')
         self.face_name = config.face_name
         self.train = config.train
         if self.train:
             if self.face_name:
-                self.pub.publish('start')
+                self.event_pub.publish('start')
                 self.stop_training.clear()
                 self.face_count = 0
             else:
