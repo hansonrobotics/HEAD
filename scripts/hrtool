@@ -518,6 +518,14 @@ get_models() {
 
 _get_models() {
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    local old_dir=${HOME}/.hr/cache/models
+    if [[ -d ${old_dir} ]]; then
+        for f in ${old_dir}/*; do
+            if [[ ! -e ${HR_MODELS}/${f##*/} ]]; then
+                mv ${f} ${HR_MODELS}/
+            fi
+        done
+    fi
 
     # openface
     wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
