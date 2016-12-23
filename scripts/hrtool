@@ -381,7 +381,7 @@ install_webui_deps() {
 
     # See https://github.com/nodesource/distributions#debinstall
     curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
-    $SUDO apt-get install -y nodejs=6.9.1-1nodesource1~trusty1
+    $SUDO apt-get install -y nodejs=6.9.2-1nodesource1~trusty1
     $SUDO npm install -g webpack nodemon
 }
 
