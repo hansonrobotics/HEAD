@@ -113,6 +113,14 @@ wget_cache() {
     [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
     info "Downloading $1 is done"
 }
+
+curl_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    info "Downloading $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || curl -L ${url} -o ${HR_CACHE}/${ofile}
+    info "Downloading $1 is done"
+}
 ### COMMON FUNCTIONS END ###
 
 export PATH=/usr/lib/ccache:$PATH
@@ -500,8 +508,8 @@ install_marky_markov() {
     else
       warn "Skipping marky_markov clone"
     fi
-    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
-    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 77d0a3e130f0339c501f929de54ba36a
+    wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/markov_modeling.tar.gz
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
