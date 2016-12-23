@@ -10,7 +10,7 @@ def str_cleanup(text):
     if text:
         text = text.strip()
         text = ' '.join(text.split())
-        if text[0] == '.':
+        if text and text[0] == '.':
             text = text[1:]
     return text
 
