@@ -113,6 +113,14 @@ wget_cache() {
     [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
     info "Downloading $1 is done"
 }
+
+curl_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    info "Downloading $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || curl -L ${url} -o ${HR_CACHE}/${ofile}
+    info "Downloading $1 is done"
+}
 ### COMMON FUNCTIONS END ###
 
 export PATH=/usr/lib/ccache:$PATH
