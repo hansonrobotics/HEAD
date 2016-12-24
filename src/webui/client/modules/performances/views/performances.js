@@ -83,7 +83,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 });
 
                 if (numbers.length)
-                    return prefix + ' ' + this.zeroPad(numbers[numbers.length - 1] + 1, 2);
+                    return prefix + ' ' + (numbers[numbers.length - 1] + 1);
                 else
                     return prefix;
             },
