@@ -90,7 +90,10 @@ app.get('/expressions/:name', function (req, res) {
 });
 
 app.post('/expressions/update/:name', function (req, res) {
-    res.json({error: !yamlIO.writeFile(path.join(argv.config, req.params['name'], 'expressions.yaml'), req.body)});
+    let robot_name = req.params['name'];
+    let save = {error: !yamlIO.writeFile(path.join(argv.config, req.params['name'], 'expressions.yaml'), req.body)}
+    ros.updateExpressions(robot_name);
+    res.json(save);
 });
 
 app.get('/attention_regions/:name', function (req, res) {
@@ -105,7 +108,10 @@ app.post('/attention_regions/:name', function (req, res) {
 });
 
 app.post('/animations/update/:name', function (req, res) {
-    res.json(yamlIO.writeFile(path.join(argv.config, req.params['name'], 'animations.yaml'), req.body));
+    let robot_name = req.params['name'];
+    let save = {error: !yamlIO.writeFile(path.join(argv.config, req.params['name'], 'animations.yaml'), req.body)}
+    ros.updateExpressions(robot_name)
+    res.json(save);
 });
 
 app.get('/performances/:name', function (req, res) {

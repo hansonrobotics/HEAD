@@ -94,46 +94,48 @@ class AIMLCharacterLoader(object):
             return os.path.join(root_dir, p)
 
         characters = []
-        errors = []
         with open(character_yaml) as f:
             spec = yaml.load(f)
             try:
+                errors = []
                 root_dir = os.path.dirname(os.path.realpath(character_yaml))
-                character = AIMLCharacter(spec['id'], spec['name'])
-                if 'property_file' in spec:
-                    character.set_property_file(abs_path(spec['property_file']))
-                if 'level' in spec:
-                    character.level = int(spec['level'])
-                if 'aiml' in spec:
-                    aiml_files = [abs_path(f) for f in spec['aiml']]
-                    errors = character.load_aiml_files(
-                        character.kernel, aiml_files)
-                if 'weight' in spec:
-                    character.weight = float(spec['weight'])
-                if 'dynamic_level' in spec:
-                    character.dynamic_level = bool(spec['dynamic_level'])
-                pre_prop = character.get_properties()
-                if not pre_prop.get('location'):
-                    location = dyn_properties.get('location')
-                    if location:
-                        character.set_properties({'location': location})
-                if not pre_prop.get('weather'):
-                    weather = dyn_properties.get('weather')
-                    if weather:
-                        character.set_properties({
-                            'weather': dyn_properties.get('weather'),
-                            'temperature': dyn_properties.get('temperature'),
-                            'low_temperature': dyn_properties.get('low_temperature'),
-                            'high_temperature': dyn_properties.get('high_temperature'),
-                        })
-                character.print_duplicated_patterns()
+                for name in spec['name'].split(','):
+                    name = name.strip()
+                    character = AIMLCharacter(spec['id'], name)
+                    if 'property_file' in spec:
+                        character.set_property_file(abs_path(spec['property_file']))
+                    if 'level' in spec:
+                        character.level = int(spec['level'])
+                    if 'aiml' in spec:
+                        aiml_files = [abs_path(f) for f in spec['aiml']]
+                        errors = character.load_aiml_files(
+                            character.kernel, aiml_files)
+                    if 'weight' in spec:
+                        character.weight = float(spec['weight'])
+                    if 'dynamic_level' in spec:
+                        character.dynamic_level = bool(spec['dynamic_level'])
+                    pre_prop = character.get_properties()
+                    if not pre_prop.get('location'):
+                        location = dyn_properties.get('location')
+                        if location:
+                            character.set_properties({'location': location})
+                    if not pre_prop.get('weather'):
+                        weather = dyn_properties.get('weather')
+                        if weather:
+                            character.set_properties({
+                                'weather': dyn_properties.get('weather'),
+                                'temperature': dyn_properties.get('temperature'),
+                                'low_temperature': dyn_properties.get('low_temperature'),
+                                'high_temperature': dyn_properties.get('high_temperature'),
+                            })
+                    character.print_duplicated_patterns()
+                    characters.append(character)
+                if errors:
+                    raise Exception("Loading {} error {}".format(
+                        character_yaml, '\n'.join(errors)))
             except KeyError as ex:
                 logger.error(ex)
                 logger.error(traceback.format_exc())
-            if errors:
-                raise Exception("Loading {} error {}".format(
-                    character_yaml, '\n'.join(errors)))
-            characters.append(character)
         return characters
 
 from gsheet_chatter import batch_csv2aiml

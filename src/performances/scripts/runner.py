@@ -307,19 +307,16 @@ class Runner:
 
             if len(self.running_performances) == 0:
                 continue
-
+            behavior = True
             for i, performance in enumerate(self.running_performances):
                 nodes = [Node.createNode(node, self, self.start_time, performance.get('id', '')) for node in
-            behavior = True
-                         
-            for performance in self.running_performances:
-                id = performance.get('id', '')
-                nodes = [Node.createNode(node, self, self.start_time, id) for node in
                          performance['nodes']]
-
-                pause = self.get_property(os.path.dirname(id), 'pause_behavior')
-                if pause or pause is None and behavior:
-                    # Only pause behavior if its enabled. Otherwise Pause behavior have no effect
+                pid = performance.get('id', '')
+                pause = self.get_property(os.path.dirname(pid), 'pause_behavior')
+                # Pause must be either enabled or not set (by default all performances are
+                # pausing behavior if its not set)
+                if (pause or pause is None) and behavior:
+                    # Only pause behavior if its already running. Otherwise Pause behavior have no effect
                     if rospy.get_param("/behavior_enabled"):
                         self.topics['interaction'].publish('btree_off')
                         behavior = False

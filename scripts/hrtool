@@ -14,6 +14,7 @@ DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
 HR_CACHE=$HOME/.hr/cache
+HR_MODELS=$HOME/.hr/models
 if [[ -z $APT_CACHE ]]; then
     APT_CACHE=0
 fi
@@ -23,7 +24,6 @@ fi
 APT_CACHE_DIR=$HR_CACHE/archives
 PIP_CACHE_DIR=$HR_CACHE/pip
 LOG_DIR="$HOME/.hr/log"
-HR_MODELS=$HR_CACHE/models
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 HR_REPOS=($PROJECT)
@@ -111,6 +111,14 @@ wget_cache() {
     ofile=${2-${url##*/}}
     info "Downloading $1"
     [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+    info "Downloading $1 is done"
+}
+
+curl_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    info "Downloading $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || curl -L ${url} -o ${HR_CACHE}/${ofile}
     info "Downloading $1 is done"
 }
 ### COMMON FUNCTIONS END ###
@@ -373,7 +381,7 @@ install_webui_deps() {
 
     # See https://github.com/nodesource/distributions#debinstall
     curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
-    $SUDO apt-get install -y nodejs=6.9.1-1nodesource1~trusty1
+    $SUDO apt-get install -y nodejs=6.9.2-1nodesource1~trusty1
     $SUDO npm install -g webpack nodemon
 }
 
@@ -500,8 +508,8 @@ install_marky_markov() {
     else
       warn "Skipping marky_markov clone"
     fi
-    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
-    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 77d0a3e130f0339c501f929de54ba36a
+    wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/markov_modeling.tar.gz
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
@@ -518,6 +526,14 @@ get_models() {
 
 _get_models() {
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    local old_dir=${HOME}/.hr/cache/models
+    if [[ -d ${old_dir} ]]; then
+        for f in ${old_dir}/*; do
+            if [[ ! -e ${HR_MODELS}/${f##*/} ]]; then
+                mv ${f} ${HR_MODELS}/
+            fi
+        done
+    fi
 
     # openface
     wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
