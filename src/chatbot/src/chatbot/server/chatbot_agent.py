@@ -29,7 +29,7 @@ from session import ChatSessionManager
 session_manager = ChatSessionManager()
 DISABLE_QUIBBLE = True
 
-from chatbot.utils import shorten, str_cleanup
+from chatbot.utils import shorten, str_cleanup, get_weather, parse_weather
 from chatbot.server.character import TYPE_AIML, TYPE_CS
 
 def get_character(id, lang=None):
@@ -227,6 +227,22 @@ def _ask_characters(characters, question, lang, sid, query):
                 else:
                     _question = sess.cache.that_question.lower().strip()
                     cross_trace.append((sess.last_used_character.id, 'continuation', 'Empty'))
+        elif _answer == '[weather]':
+            cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
+            context = control.get_context(sess)
+            if context:
+                location = context.get('querylocation')
+                prop = parse_weather(get_weather(location))
+                if prop:
+                    answer = "The weather in {city} is {weather}, "\
+                        "temperature is {temperature}.".format(
+                        city=location, weather=prop.get('weather'),
+                        temperature=prop.get('temperature'))
+                    response['text'] = answer
+                    response['botid'] = control.id
+                    response['botname'] = control.name
+                else:
+                    cross_trace.append((control.id, 'control', 'No answer'))
         else:
             if _answer:
                 cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))

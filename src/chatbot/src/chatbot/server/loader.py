@@ -4,7 +4,7 @@ import yaml
 import logging
 import traceback
 from chatbot.server.character import AIMLCharacter, Character
-from chatbot.utils import get_location, get_weather
+from chatbot.utils import get_location, get_weather, parse_weather
 from zipfile import ZipFile
 import pprint
 
@@ -21,25 +21,14 @@ def load_dyn_properties():
         elif 'country_name' in location:
             dyn_properties['location'] = location.get('country_name')
 
-    kelvin = 273.15
     weather = None
     if location:
         weather = get_weather(
             '{city},{country}'.format(
                 city=location['city'], country=location['country_code']))
-    if weather and weather['cod'] == 200:
-        if 'main' in weather:
-            if 'temp_max' in weather['main']:
-                dyn_properties['high_temperature'] = \
-                    '{:.0f}'.format(weather['main'].get('temp_max')-kelvin)
-            if 'temp_min' in weather['main']:
-                dyn_properties['low_temperature'] = \
-                    '{:.0f}'.format(weather['main'].get('temp_min')-kelvin)
-            if 'temp' in weather['main']:
-                dyn_properties['temperature'] = \
-                    '{:.0f}'.format(weather['main'].get('temp')-kelvin)
-        if 'weather' in weather and weather['weather']:
-            dyn_properties['weather'] = weather['weather'][0]['description']
+        weather_prop = parse_weather(weather)
+    if weather_prop:
+        dyn_properties.update(weather_prop)
     logger.info("Update dynamic properties {}".format(dyn_properties))
 
 load_dyn_properties()

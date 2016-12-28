@@ -62,13 +62,32 @@ def get_location():
     return location
 
 def get_weather(city):
-    OPENWEATHERAPPID = os.environ.get('OPENWEATHERAPPID')
-    try:
-        response = requests.get('http://api.openweathermap.org/data/2.5/weather', timeout=5, params={'q': city, 'appid': OPENWEATHERAPPID}).json()
-    except Exception as ex:
-        logger.error(ex)
-        return
-    return response
+    if city:
+        OPENWEATHERAPPID = os.environ.get('OPENWEATHERAPPID')
+        try:
+            response = requests.get('http://api.openweathermap.org/data/2.5/weather', timeout=5, params={'q': city, 'appid': OPENWEATHERAPPID}).json()
+        except Exception as ex:
+            logger.error(ex)
+            return
+        return response
+
+def parse_weather(weather):
+    kelvin = 273.15
+    prop = {}
+    if weather and weather['cod'] == 200:
+        if 'main' in weather:
+            if 'temp_max' in weather['main']:
+                prop['high_temperature'] = \
+                    '{:.0f}'.format(weather['main'].get('temp_max')-kelvin)
+            if 'temp_min' in weather['main']:
+                prop['low_temperature'] = \
+                    '{:.0f}'.format(weather['main'].get('temp_min')-kelvin)
+            if 'temp' in weather['main']:
+                prop['temperature'] = \
+                    '{:.0f}'.format(weather['main'].get('temp')-kelvin)
+        if 'weather' in weather and weather['weather']:
+            prop['weather'] = weather['weather'][0]['description']
+    return prop
 
 if __name__ == '__main__':
     text = '''My mind is built using Hanson Robotics' character engine, a simulated humanlike brain that runs inside a personal computer. Within this framework, Hanson has modelled Phil's personality and emotions, allowing you to talk with Phil through me, using speech recognition, natural language understanding, and computer vision such as face recognition, and animation of the robotic muscles in my face.'''
