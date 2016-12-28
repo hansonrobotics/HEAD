@@ -199,6 +199,13 @@ def _ask_characters(characters, question, lang, sid, query):
 
     cached_responses = defaultdict(list)
 
+    reduction = get_character('reduction')
+    if reduction is not None:
+        _response = reduction.respond(_question, lang, sess, query=True)
+        reducted_text = _response.get('text')
+        if reducted_text:
+            _question = reducted_text
+
     control = get_character('control')
     if control is not None:
         _response = control.respond(_question, lang, sess, query)
@@ -234,13 +241,6 @@ def _ask_characters(characters, question, lang, sid, query):
                 except NotImplementedError:
                     pass
             sess.cache.that_question = None
-
-    reduction = get_character('reduction')
-    if reduction is not None:
-        _response = reduction.respond(_question, lang, sess, query=True)
-        reducted_text = _response.get('text')
-        if reducted_text:
-            _question = reducted_text
 
     # If the last input is a question, then try to use the same tier to
     # answer it.
