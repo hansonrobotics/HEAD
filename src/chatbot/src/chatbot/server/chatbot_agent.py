@@ -30,7 +30,17 @@ session_manager = ChatSessionManager()
 DISABLE_QUIBBLE = True
 
 from chatbot.utils import shorten, str_cleanup, get_weather, parse_weather
+from chatbot.words2num import words2num
 from chatbot.server.character import TYPE_AIML, TYPE_CS
+from operator import add, sub, mul, div, pow
+
+OPERATOR_MAP = {
+    '[+]': add,
+    '[-]': sub,
+    '[*]': mul,
+    '[/]': div,
+    '[pow]': pow,
+}
 
 def get_character(id, lang=None):
     for character in CHARACTERS:
@@ -238,6 +248,26 @@ def _ask_characters(characters, question, lang, sid, query):
                         "temperature is {temperature}.".format(
                         city=location, weather=prop.get('weather'),
                         temperature=prop.get('temperature'))
+                    response['text'] = answer
+                    response['botid'] = control.id
+                    response['botname'] = control.name
+                else:
+                    cross_trace.append((control.id, 'control', 'No answer'))
+        elif _answer in ['[+]', '[-]', '[*]', '[/]', '[pow]']:
+            opt = _answer
+            cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
+            context = control.get_context(sess)
+            if context:
+                item1 = context.get('item1')
+                item2 = context.get('item2')
+                item1 = words2num(item1)
+                item2 = words2num(item2)
+                if item1 and item2:
+                    result = OPERATOR_MAP[opt](item1, item2)
+                    if result > 1e10:
+                        answer = "The number is too big. You should use a calculator."
+                    else:
+                        answer = "The answer is {result}".format(result=result)
                     response['text'] = answer
                     response['botid'] = control.id
                     response['botname'] = control.name
