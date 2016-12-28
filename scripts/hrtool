@@ -7,9 +7,14 @@
 set -e
 
 BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
-HR_VERSION=0.1.0
+
+### BEGIN: CONFIGURATIONS ###
+HR_VERSION=0.1.2
 
 PROJECT=${PROJECT:-HEAD}
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+HR_REPOS=($PROJECT)
+
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
@@ -24,10 +29,6 @@ fi
 APT_CACHE_DIR=$HR_CACHE/archives
 PIP_CACHE_DIR=$HR_CACHE/pip
 LOG_DIR="$HOME/.hr/log"
-
-OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
-HR_REPOS=($PROJECT)
-
 VISION_TOOL_PREFIX=$HR_PREFIX/vision
 DLIB_DIR=$VISION_TOOL_PREFIX/dlib
 TORCH_DIR=$VISION_TOOL_PREFIX/torch
@@ -45,14 +46,46 @@ export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
 export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/lib
 
-include_dirs=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
-include_path=$(printf "%s:" "${include_dirs[@]}")
+INCLUDE_DIRS=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
+INCLUDE_PATH=$(printf "%s:" "${INCLUDE_DIRS[@]}")
 
-export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$include_path
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$INCLUDE_PATH
 export LIBRARY_PATH=$LIBRARY_PATH:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src:k
-
+export PATH=/usr/lib/ccache:$PATH
 
 ASSUME_YES=0
+
+SUDO=""
+if [[ $(id -u) != 0 ]]; then
+    SUDO="sudo"
+fi
+
+APT_GET_OPTS="-y"
+if [[ $APT_CACHE == 1 ]]; then
+    APT_GET_OPTS="$APT_GET_OPTS -o dir::cache::archives=$APT_CACHE_DIR"
+fi
+
+PIP_OPTS=""
+if [[ $PIP_CACHE == 1 ]]; then
+    PIP_OPTS="$PIP_OPTS --download-cache $PIP_CACHE_DIR"
+fi
+
+if [[ ! -d $HR_CACHE ]]; then
+    info "Creating $HR_CACHE"
+    mkdir -p $HR_CACHE
+fi
+
+if [[ ! -d $APT_CACHE_DIR ]]; then
+    info "Creating $APT_CACHE_DIR"
+    mkdir -p $APT_CACHE_DIR
+fi
+
+if [[ ! -d $PIP_CACHE_DIR ]]; then
+    info "Creating $PIP_CACHE_DIR"
+    mkdir -p $PIP_CACHE_DIR
+fi
+
+### END: CONFIGURATIONS ###
 
 ### COMMON FUNCTIONS BEGIN ###
 COLOR_INFO='\033[32m'
@@ -127,44 +160,6 @@ curl_cache() {
     info "Downloading $1 is done"
 }
 ### COMMON FUNCTIONS END ###
-
-export PATH=/usr/lib/ccache:$PATH
-
-SUDO=""
-if [[ $(id -u) != 0 ]]; then
-    SUDO="sudo"
-fi
-
-APT_GET_OPTS="-y"
-if [[ $APT_CACHE == 1 ]]; then
-    APT_GET_OPTS="$APT_GET_OPTS -o dir::cache::archives=$APT_CACHE_DIR"
-fi
-
-PIP_OPTS=""
-if [[ $PIP_CACHE == 1 ]]; then
-    PIP_OPTS="$PIP_OPTS --download-cache $PIP_CACHE_DIR"
-fi
-
-if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
-    error "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
-    exit 1
-fi
-
-if [[ ! -d $HR_CACHE ]]; then
-    info "Creating $HR_CACHE"
-    mkdir -p $HR_CACHE
-fi
-
-if [[ ! -d $APT_CACHE_DIR ]]; then
-    info "Creating $APT_CACHE_DIR"
-    mkdir -p $APT_CACHE_DIR
-fi
-
-if [[ ! -d $PIP_CACHE_DIR ]]; then
-    info "Creating $PIP_CACHE_DIR"
-    mkdir -p $PIP_CACHE_DIR
-fi
-
 
 install_basic() {
     info "Installing basic dependencies"
@@ -1132,12 +1127,17 @@ execute() {
     if [[ $BUILD_PACKAGE ]]; then do_build_package ; fi
 }
 
+### Main ###
+
+if [[ ! $(lsb_release --codename --short) == "trusty" ]]; then
+    error "Error: Only Ubuntu 14.04 (trusty) is supported" >&2
+    exit 1
+fi
+
 for i in $(env|grep ROS|cut -d= -f1); do
     unset $i
 done
 unset HR_WORKSPACE
-
-############
 
 if [[ ! $BASH_SOURCE == $0 ]]; then return; fi
 
