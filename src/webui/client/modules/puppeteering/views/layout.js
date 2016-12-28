@@ -59,7 +59,8 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                     readonly: true,
                     autoplay: true,
                     nav: false,
-                    hideQueue: true
+                    hideQueue: true,
+                    disableSaving: true
                 });
 
                 // right col

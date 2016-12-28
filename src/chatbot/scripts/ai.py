@@ -47,6 +47,9 @@ class Chatbot():
         self.polarity = Polarity()
         self._polarity_threshold = 0.2
         self.speech = False
+        self.enable = True
+        self.mute = False
+        self.node_name = rospy.get_name()
 
         self.input_stack = []
         self.condition = threading.Condition()
@@ -98,6 +101,22 @@ class Chatbot():
         lang = rospy.get_param('lang', None)
         if lang:
             self.client.lang = lang
+
+        # XXX: replace his/her name -> my name
+        question = question.replace('his name', 'my name')
+        question = question.replace('her name', 'my name')
+        question = question.replace('His name', 'My name')
+        question = question.replace('Her name', 'My name')
+
+        persons = rospy.get_param('/face_recognizer/current_persons', '')
+        if persons:
+            person = persons.split('|')[0]
+            person = person.title()
+            self.client.set_context('queryname={}'.format(person))
+            logger.info("Set queryname to {}".format(person))
+        else:
+            self.client.remove_context('queryname')
+            logger.info("Remove queryname")
         self.client.ask(question, query)
 
     def _speech_event_callback(self, msg):
@@ -115,8 +134,9 @@ class Chatbot():
             logger.info("Robot's talking wants to be interruptted")
             self.tts_ctrl_pub.publish("shutup")
             rospy.sleep(0.5)
-            self._response_publisher.publish(String('Okay'))
             self._affect_publisher.publish(String('sad'))
+            if not self.mute:
+                self._response_publisher.publish(String('Okay'))
             return
 
         # Handle chatbot command
@@ -214,8 +234,17 @@ class Chatbot():
                     # Currently response is independant of message received so no need to wait
                     # Leave it for Opencog to handle responses later on.
 
-        self._blink_publisher.publish('chat_saying')
-        self._response_publisher.publish(String(text))
+        if not self.mute:
+            self._blink_publisher.publish('chat_saying')
+            self._response_publisher.publish(String(text))
+
+        if rospy.has_param('{}/context'.format(self.node_name)):
+            rospy.delete_param('{}/context'.format(self.node_name))
+        context = self.client.get_context()
+        context['sid'] = self.client.session
+        for k, v in context.iteritems():
+            rospy.set_param('{}/context/{}'.format(self.node_name, k), v)
+            logger.info("Set param {}={}".format(k, v))
 
     # Just repeat the chat message, as a plain string.
     def _echo_callback(self, chat_message):
@@ -230,7 +259,13 @@ class Chatbot():
         self.delay_response = config.delay_response
         self.delay_time = config.delay_time
         self.client.ignore_indicator = config.ignore_indicator
+        if config.set_that:
+            self.client.do_said(config.set_that)
+            config.set_that = ''
 
+        if config.set_context:
+            self.client.set_context(config.set_context)
+        self.mute = config.mute
         tiers = config.groups.groups.Weights.parameters.keys()
         tiers.remove('reset')
         if not config.reset:

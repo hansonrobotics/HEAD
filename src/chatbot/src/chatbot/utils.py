@@ -6,6 +6,13 @@ import logging
 
 logger = logging.getLogger('hr.chatbot.utils')
 
+def str_cleanup(text):
+    if text:
+        text = text.strip()
+        text = ' '.join(text.split())
+        if text and text[0] == '.':
+            text = text[1:]
+    return text
 
 def norm(s):
     if s is None:
@@ -32,6 +39,8 @@ def shorten(text, cutoff):
         ret = text
         res = ''
 
+    ret = str_cleanup(ret)
+    res = str_cleanup(res)
     return ret, res
 
 def get_location():
@@ -72,3 +81,8 @@ if __name__ == '__main__':
     print text
     print shorten(text, 123)
 
+    print str_cleanup('.')
+    print str_cleanup(' .ss ')
+    print str_cleanup(' s.ss ')
+    print str_cleanup('')
+    print str_cleanup(None)

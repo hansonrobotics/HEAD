@@ -26,11 +26,13 @@ module.exports = {
                 presets: ['es2015']
             }
         }, {
-            test: /\.woff|\.woff2|\.svg|.eot|\.ttf|\.otf/,
-            loader: 'url?prefix=font/&limit=10000'
-        }, {
             test: /\.jpe?g|\.png|\.gif/,
             loader: "file-loader"
+        }, {
+            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: "url-loader?limit=10000&minetype=application/font-woff"
+        }, {
+            test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader"
         }, {
             test: /\.tpl/,
             loader: "underscore-template-loader",
@@ -49,6 +51,9 @@ module.exports = {
         }, {
             test: require.resolve('json-editor'),
             loader: 'exports?JSONEditor'
+        }, {
+            test: /vendor\/backbone\.naturalsort/,
+            loader: 'imports?_=underscore&naturalSort=javascript-natural-sort'
         }, {
             test: /\.css$/,
             loader: 'style-loader!css-loader!postcss-loader'
@@ -84,11 +89,14 @@ module.exports = {
             'backgrid-text-cell-css': 'backgrid-text-cell/backgrid-text-cell.css',
             'select2-css': 'select2/dist/css/select2.css',
             'scrollbar-css': 'perfect-scrollbar/dist/css/perfect-scrollbar.css',
-            'font-awesome': 'css/vendor/font-awesome.min.css',
+            'font-awesome': 'css/vendor/font-awesome.css',
             'multilevelpushmenu-css': 'css/vendor/jquery.multilevelpushmenu.css',
             'selectareas-css': 'css/vendor/jquery.selectareas.css',
             'bootstrap-css': 'css/vendor/bootstrap.min.css',
-            'jquery-ui-css': 'jquery-ui-bundle/jquery-ui.css'
+            'jquery-ui-css': 'jquery-ui-bundle/jquery-ui.css',
+            'nouislider-css': 'nouislider/distribute/nouislider.min.css',
+            'backbone.naturalsort': 'vendor/backbone.naturalsort',
+            'natural-sort': 'javascript-natural-sort'
         },
         extensions: ['', '.js', '.css', '.yaml'],
         root: [path.join(__dirname, './client')],

@@ -67,6 +67,13 @@ class PatternMgr:
         # Collapse a multi-word name into a single word
         self._botName = unicode(string.join(name.split()))
 
+    def get_templates(self, d, l):
+        for k in d.iterkeys():
+            if isinstance(d[k], dict):
+                self.get_templates(d[k], l)
+            else:
+                l.append(d[k])
+
     def dump(self):
         """Print all learned patterns, for debugging purposes."""
         pprint.pprint(self._root)

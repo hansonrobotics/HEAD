@@ -54,7 +54,10 @@ define(['backbone', 'lib/api', './node_config'], function (Backbone, api, NodeCo
                 // hide node schema field
                 if (param.name == 'node_schema') return;
 
-                var property = {title: param['description']};
+                var property = {
+                    title: param['description'],
+                    propertyOrder: i
+                };
 
                 try {
                     param['edit_method'] = JSON.parse(param['edit_method'].split("'").join('"'));

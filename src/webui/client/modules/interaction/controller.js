@@ -7,7 +7,7 @@ define(['application', './views/interaction', 'lib/api', './entities/face_collec
                 App.LayoutInstance.showNav();
                 App.LayoutInstance.setFluid(false);
 
-                var interactionView = new InteractionView();
+                let interactionView = new InteractionView({hide_faces: true});
                 App.LayoutInstance.getRegion('content').show(interactionView);
             }
         };

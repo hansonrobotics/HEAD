@@ -13,12 +13,17 @@ PROJECT=${PROJECT:-HEAD}
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
-HR_CACHE=~/.hr/cache
-APT_CACHE=0
-PIP_CACHE=0
-APT_CACHE_DIR=$HOME/.hr/archives
-PIP_CACHE_DIR=$HOME/.hr/pip
-HR_MODELS=~/.hr/models
+HR_CACHE=$HOME/.hr/cache
+HR_MODELS=$HOME/.hr/models
+if [[ -z $APT_CACHE ]]; then
+    APT_CACHE=0
+fi
+if [[ -z $PIP_CACHE ]]; then
+    PIP_CACHE=0
+fi
+APT_CACHE_DIR=$HR_CACHE/archives
+PIP_CACHE_DIR=$HR_CACHE/pip
+LOG_DIR="$HOME/.hr/log"
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
 HR_REPOS=($PROJECT)
@@ -54,14 +59,24 @@ COLOR_INFO='\033[32m'
 COLOR_WARN='\033[33m'
 COLOR_ERROR='\033[31m'
 COLOR_RESET='\033[0m'
+if [[ ! -d $LOG_DIR/install ]]; then
+    mkdir -p $LOG_DIR/install
+fi
+timestamp=$(date "+%Y%m%d%H%M%S")
+LOG_FILE=$LOG_DIR/install/${timestamp}.log
+ln -sf -T $LOG_FILE $LOG_DIR/install/latest.log
+
 info() {
-    printf "${COLOR_INFO}[INFO] ${1}${COLOR_RESET}\n"
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    printf "${COLOR_INFO}[INFO] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 warn() {
-    printf "${COLOR_WARN}[WARN] ${1}${COLOR_RESET}\n"
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    printf "${COLOR_WARN}[WARN] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 error() {
-    printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    printf "${COLOR_ERROR}[ERROR] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 
 md5str() {
@@ -101,6 +116,14 @@ wget_cache() {
     ofile=${2-${url##*/}}
     info "Downloading $1"
     [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+    info "Downloading $1 is done"
+}
+
+curl_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    info "Downloading $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || curl -L ${url} -o ${HR_CACHE}/${ofile}
     info "Downloading $1 is done"
 }
 ### COMMON FUNCTIONS END ###
@@ -233,6 +256,11 @@ install_relex_deps() {
 }
 
 install_pocketsphinx() {
+    if [[ -f /opt/hansonrobotics/lib/pkgconfig/pocketsphinx.pc && -f /opt/hansonrobotics/lib/pkgconfig/sphinxbase.pc ]]; then
+        info "Pocketsphinx is already installed."
+        return
+    fi
+    info "Installing Pocketsphinx"
     $SUDO apt-get ${APT_GET_OPTS} install bison automake
     wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
     checkmd5 ${HR_CACHE}/sphinxbase-1.0.0.tar.gz df69f72b19abd943cfc4b51ec30a3b29
@@ -248,6 +276,7 @@ install_pocketsphinx() {
     cd /tmp/pocketsphinx-1.0.0
     ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
     rm -r /tmp/pocketsphinx-1.0.0
+    info "Installing Pocketsphinx is done"
 }
 
 install_other_deps() {
@@ -357,10 +386,9 @@ install_webui_deps() {
 
     # See https://github.com/nodesource/distributions#debinstall
     curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
-    $SUDO apt-get install -y nodejs=6.9.1-1nodesource1~trusty1
+    $SUDO apt-get install -y nodejs=6.9.2-1nodesource1~trusty1
     $SUDO npm install -g webpack nodemon
 }
-
 
 install_vision_deps() {
     info "Installing vision dependencies"
@@ -485,8 +513,8 @@ install_marky_markov() {
     else
       warn "Skipping marky_markov clone"
     fi
-    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
-    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 77d0a3e130f0339c501f929de54ba36a
+    wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/markov_modeling.tar.gz
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
@@ -495,6 +523,37 @@ install_marky_markov() {
     $SUDO apt-get ${APT_GET_OPTS} install ruby2.3 ruby2.3-dev
     $SUDO gem install marky_markov
     info "Installing Marky Markov is done"
+}
+
+get_models() {
+    _get_models
+}
+
+_get_models() {
+    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    local old_dir=${HOME}/.hr/cache/models
+    if [[ -d ${old_dir} ]]; then
+        for f in ${old_dir}/*; do
+            [[ -f "$f" ]] || continue
+            if [[ ! -e ${HR_MODELS}/${f##*/} ]]; then
+                mv ${f} ${HR_MODELS}/
+            fi
+        done
+    fi
+
+    # openface
+    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${HR_MODELS}
+    bunzip2 -f ${HR_MODELS}/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${HR_MODELS}
+
+    # markov
+    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 }
 
 check_or_create_ws() {
@@ -634,6 +693,7 @@ _do_install_deps() {
     install_manyears_deps
     install_webui_deps
     install_other_deps
+    get_models
 
     wget_cache https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/patch/rosbridge.patch
     $SUDO patch -N /opt/ros/indigo/lib/python2.7/dist-packages/rosbridge_library/internal/publishers.py ${HR_CACHE}/rosbridge.patch || true
@@ -686,6 +746,18 @@ do_build_hr() {
     info "Building HR"
     _do_build_hr
     info "Building HR is done"
+}
+
+pack_hr() {
+    if [[ ! -d makeself ]]; then
+        wget_cache https://github.com/megastep/makeself/archive/release-2.2.0.tar.gz makeself-2.2.0.tar.gz
+        checkmd5 ${HR_CACHE}/makeself-2.2.0.tar.gz 8075530b2ad0a2fbd4bffa80a96eb2ea
+        mkdir -p makeself
+        tar zxf ${HR_CACHE}/makeself-2.2.0.tar.gz -C makeself --strip-components 1
+    fi
+    TIME=$(date +%Y%m%d%H%M%S)
+    makeself/makeself.sh ${HR_WORKSPACE}/HEAD/install HEAD-${TIME}.run "HEAD" .
+    rm -rf makeself
 }
 
 _do_build_hr() {

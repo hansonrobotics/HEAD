@@ -1,7 +1,8 @@
-define(['application', './templates/configuration.tpl', 'backgrid', './config/motor_grid', 'entities/motor_collection',
+define(['application', 'lib/api','./templates/configuration.tpl', 'backgrid', './config/motor_grid', 'entities/motor_collection',
         'backgrid-css', 'entities/motor', 'backbone-pageable', 'backgrid-select-all', 'backgrid-select-all-css',
-        'backgrid-filter', 'backgrid-filter-css', 'backgrid-paginator', 'backgrid-paginator-css', 'scrollbar', 'scrollbar-css'],
-    function (App, template, Backgrid, columns, MotorCollection) {
+        'backgrid-filter', 'backgrid-filter-css', 'backgrid-paginator', 'backgrid-paginator-css', 'scrollbar',
+        'scrollbar-css'],
+    function (App, api, template, Backgrid, columns, MotorCollection) {
         return Marionette.View.extend({
             template: template,
             ui: {
@@ -59,6 +60,7 @@ define(['application', './templates/configuration.tpl', 'backgrid', './config/mo
 
                 // Render the filter
                 this.getRegion('filter').show(filter);
+                api.pausePololuSync();
             },
             add: function () {
                 this.pageableGrid.insertRow({name: "New"})
@@ -81,6 +83,9 @@ define(['application', './templates/configuration.tpl', 'backgrid', './config/mo
                     // remove from the grid
                     self.pageableGrid.removeRow(e);
                 });
+            },
+            onDestroy: function(){
+                api.resumePololuSync();
             }
         });
     });

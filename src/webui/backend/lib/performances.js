@@ -1,4 +1,4 @@
-var glob = require('glob'),
+let glob = require('glob'),
     path = require('path'),
     fs = require('fs'),
     yaml = require('js-yaml'),
@@ -14,13 +14,13 @@ module.exports = {
         if (dirs.constructor !== Array)
             dirs = [dirs];
 
-        var performances = [];
+        let performances = [];
 
         for (let dir of dirs) {
-            var files = glob.sync(path.join(dir, '**', '*.yaml'));
+            let files = glob.sync(path.join(dir, '**', '*.yaml'));
 
-            for (var file of files) {
-                var id = file.replace(path.join(dir), '').replace(this.ext, '').substr(1),
+            for (let file of files) {
+                let id = file.replace(dir, '').replace(this.ext, '').substr(1),
                     performance = this.get(dir, id, options);
 
                 if (performance) performances.push(performance);
@@ -31,12 +31,12 @@ module.exports = {
     },
     get: function (dir, id, options) {
         options = typeof options == 'object' ? options : {};
-        var performance = yamlIO.readFile(path.join(dir, id + this.ext));
+        let performance = yamlIO.readFile(path.join(dir, id + this.ext));
 
         if (performance) {
             performance['id'] = id;
             performance['path'] = path.dirname(id);
-            performance['path'] = performance['path'] === '.' ? '' : performance['path']
+            performance['path'] = performance['path'] === '.' ? '' : performance['path'];
             performance['name'] = path.basename(id);
 
             if ('skip_nodes' in options && options['skip_nodes'])
@@ -46,7 +46,7 @@ module.exports = {
         return performance;
     },
     update: function (dir, id, performance) {
-        var current;
+        let current;
 
         if ('previous_id' in performance) {
             current = this.get(dir, performance['previous_id']);
@@ -78,7 +78,10 @@ module.exports = {
         return true;
     },
     run: function (id) {
-        var res = cp.spawnSync('rosservice', ['call', '/performances/run_by_name', id], {encoding: 'utf8'});
-        return res.status === 0 && yaml.load(res.stdout)['success'];
+//        var res = cp.spawnSync('rosservice', ['call', '/performances/run_full_performance', id], {encoding: 'utf8'});
+//        return res.status === 0 && yaml.load(res.stdout)['success'];
+        // Async call to make the suncing with multiple PCs easier.
+        var res = cp.spawn('rosservice', ['call', '/performances/run_full_performance', id], {encoding: 'utf8'});
+        return true;
     }
 };

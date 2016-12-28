@@ -96,10 +96,10 @@ class PololuMotor:
     def get_default_pulse(angle):
         """
         :param angle: Angle in radians
-        :return: pulse between 3200 - 8800 matching the -90 - 90 degrees angles
+        :return: pulse between 2800 - 9200 matching the -90 - 90 degrees angles
         """
         angle = max(min(math.pi / 2.0, angle), -math.pi / 2.0)
-        return int(3200 + (8800 - 3200) * (angle + math.pi / 2.0) / math.pi)
+        return int(2800 + (9200 - 2800) * (angle + math.pi / 2.0) / math.pi)
 
     def get_calibrated_config(self):
         """

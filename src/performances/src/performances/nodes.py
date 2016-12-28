@@ -42,6 +42,13 @@ class Node(object):
                 return node
         print "Wrong node description"
 
+    def replace_variables_text(self, text):
+        variables = re.findall("{(.*?)}", text)
+        for var in variables:
+            val = self.runner.get_variable(self.id, var) or ''
+            text = text.replace('{' + var + '}', val)
+        return text
+
     def __init__(self, data, runner):
         self.data = data
         self.duration = data['duration']
@@ -136,10 +143,7 @@ class speech(Node):
         # SSML tags for english TTS only.
         if lang == 'en':
             text = self._add_ssml(text)
-        variables = re.findall("{(.*?)}", text)
-        for var in variables:
-            val = self.runner.get_variable(self.id, var) or ''
-            text = text.replace('{' + var + '}', val)
+        text = self.replace_variables_text(text)
         self.runner.topics['tts'][lang].publish(String(text))
 
     # adds SSML tags for whole text returns updated text.
@@ -279,6 +283,8 @@ class pause(Node):
         Node.__init__(self, data, runner)
         self.subscriber = False
         self.timer = False
+        if 'topic' not in self.data.keys():
+            self.data['topic'] = False
         if 'on_event' not in self.data.keys():
             self.data['on_event'] = False
         if 'event_param' not in self.data.keys():
@@ -286,11 +292,12 @@ class pause(Node):
 
     def start_performance(self):
         if self.subscriber:
-            self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
             self.subscriber = None
         req = RunByNameRequest()
-        req.id = self.data['on_event'].strip()
-        self.timer.cancel()
+        req.id = str(self.data['on_event'] or '').strip()
+        if self.timer:
+            self.timer.cancel()
         response = self.runner.run_full_performance_callback(req)
         if not response.success:
             self.runner.resume()
@@ -316,7 +323,7 @@ class pause(Node):
 
     def resume(self):
         if self.subscriber:
-            self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
             self.subscriber = None
         if not self.finished:
             self.runner.resume()
@@ -326,8 +333,16 @@ class pause(Node):
     def start(self, run_time):
         self.runner.pause()
         if 'topic' in self.data:
-            topic = self.data['topic'].strip()
-            self.subscriber = self.runner.register(topic, self.event_callback)
+            topic = str(self.data['topic'] or '').strip()
+            if topic != 'ROSPARAM':
+                self.subscriber = self.runner.register(topic, self.event_callback)
+            else:
+                if self.data['event_param']:
+                    if rospy.get_param(self.data['event_param'], False):
+                        # Resume current performance or play performance specified
+                        self.timer = Timer(0.0, lambda: self.event_callback(self.data['event_param']))
+                        self.timer.start()
+                        return
         try:
             timeout = float(self.data['timeout'])
             if timeout > 0.1:
@@ -338,7 +353,7 @@ class pause(Node):
 
     def stop(self, run_time):
         if self.subscriber:
-            self.runner.unregister(self.data['topic'].strip(), self.subscriber)
+            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
             self.subscriber = None
         if self.timer:
             self.timer.cancel()
@@ -604,10 +619,18 @@ class settings(Node):
     def setParameters(self, rosnode, params):
         try:
             cl = dynamic_reconfigure.client.Client(rosnode, timeout=0.1)
+            params = self.set_variables(params)
             cl.update_configuration(params)
             cl.close()
         except:
             pass
+    def set_variables(self, params):
+        for k,v in params.items():
+            if isinstance(v, basestring):
+                params[k] = self.replace_variables_text(v)
+            else:
+                params[k] = v
+        return params
 
     def start(self, run_time):
         if (self.data['rosnode']):
