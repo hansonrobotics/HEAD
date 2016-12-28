@@ -103,6 +103,8 @@ class AIMLCharacterLoader(object):
                         character.weight = float(spec['weight'])
                     if 'dynamic_level' in spec:
                         character.dynamic_level = bool(spec['dynamic_level'])
+                    if 'non_repeat' in spec:
+                        character.non_repeat = bool(spec['non_repeat'])
                     pre_prop = character.get_properties()
                     if not pre_prop.get('location'):
                         location = dyn_properties.get('location')
