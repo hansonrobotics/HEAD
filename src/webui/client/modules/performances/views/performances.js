@@ -143,6 +143,9 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                         let timelinesView = self.queueView.timelinesView;
                         self.queueView.addPerformance(data.model, !timelinesView || timelinesView.changed);
                     }
+
+                    if (!data.model.nodes.length)
+                        data.model.fetch();
                 });
 
                 this.ui.newButton.before(childView.el);

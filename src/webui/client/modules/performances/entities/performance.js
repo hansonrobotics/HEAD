@@ -215,6 +215,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 }
             },
             getDuration: function () {
+                if (! this.duration) this.updateDuration();
                 return this.duration;
             },
             handleEvents: function (msg) {

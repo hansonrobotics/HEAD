@@ -324,28 +324,31 @@ class Runner:
                 with self.lock:
                     if not self.running:
                         break
-
-                    autopause = self.autopause and 0 < i < len(self.running_performances)
-
-                if autopause:
-                    self.pause()
-                    # make sure performance is paused even without any nodes
-                    while self.paused:
-                        continue
+                    autopause = self.autopause and i < len(self.running_performances) - 1
 
                 running = True
+                finished = None
                 while running:
                     with self.lock:
-
                         run_time = self.get_run_time()
 
                         if not self.running:
                             self.topics['events'].publish(Event('finished', run_time))
                             break
+
                     running = False
                     # checks if any nodes still running
                     for node in nodes:
                         running = node.run(run_time) or running
+
+                    if finished is None:
+                        # true if all performance nodes are already finished
+                        finished = not running
+
+                if not finished and autopause:
+                    self.pause()
+                    while self.paused:
+                        continue
 
             if not behavior:
                 self.topics['interaction'].publish('btree_on')
