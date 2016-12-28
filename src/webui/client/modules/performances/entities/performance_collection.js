@@ -11,7 +11,7 @@ define(['backbone', './performance', 'lib/api', 'backbone.naturalsort'], functio
         },
         initialize: function () {
             // Subscribing to performance events
-            var self = this;
+            let self = this;
             api.subPerformanceEvents(function (msg) {
                 if (self.eventHandler) {
                     self.eventHandler(msg);
