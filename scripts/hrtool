@@ -62,16 +62,21 @@ COLOR_RESET='\033[0m'
 if [[ ! -d $LOG_DIR/install ]]; then
     mkdir -p $LOG_DIR/install
 fi
-LOG_FILE=$(mktemp -p $LOG_DIR/install)
+timestamp=$(date "+%Y%m%d%H%M%S")
+LOG_FILE=$LOG_DIR/install/${timestamp}.log
+ln -sf -T $LOG_FILE $LOG_DIR/install/latest.log
 
 info() {
-    printf "${COLOR_INFO}[INFO] ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    printf "${COLOR_INFO}[INFO] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 warn() {
-    printf "${COLOR_WARN}[WARN] ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    printf "${COLOR_WARN}[WARN] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 error() {
-    printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
+    local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    printf "${COLOR_ERROR}[ERROR] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 
 md5str() {
