@@ -529,6 +529,7 @@ _get_models() {
     local old_dir=${HOME}/.hr/cache/models
     if [[ -d ${old_dir} ]]; then
         for f in ${old_dir}/*; do
+            [[ -f "$f" ]] || continue
             if [[ ! -e ${HR_MODELS}/${f##*/} ]]; then
                 mv ${f} ${HR_MODELS}/
             fi
@@ -546,7 +547,7 @@ _get_models() {
 
     # markov
     wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
-    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 77d0a3e130f0339c501f929de54ba36a
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 }
 
