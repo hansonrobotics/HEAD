@@ -262,12 +262,18 @@ def _ask_characters(characters, question, lang, sid, query):
                 item2 = context.get('item2')
                 item1 = words2num(item1)
                 item2 = words2num(item2)
-                if item1 and item2:
-                    result = opt(item1, item2)
-                    if result > 1e10:
-                        answer = "The number is too big. You should use a calculator."
-                    else:
-                        answer = "The answer is {result}".format(result=result)
+                if item1 is not None and item2 is not None:
+                    try:
+                        result = opt(item1, item2)
+                        if result > 1e10:
+                            answer = "The number is too big. You should use a calculator."
+                        else:
+                            answer = "The answer is {result}".format(result=result)
+                    except ZeroDivisionError:
+                        answer = "Oh, the answer is not a number"
+                    except Exception as ex:
+                        logger.error(ex)
+                        answer = "Sorry, something goes wrong. I can't calculate it."
                     response['text'] = answer
                     response['botid'] = control.id
                     response['botname'] = control.name
