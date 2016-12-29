@@ -319,6 +319,7 @@ install_other_deps() {
 
     # For chatbot
     $SUDO apt-get ${APT_GET_OPTS} install python-yaml
+    $SUDO pip2 install num2words
 
     # For blender_api_test
     $SUDO add-apt-repository -y ppa:mc3man/trusty-media
@@ -357,6 +358,7 @@ install_other_deps() {
     $SUDO apt-get ${APT_GET_OPTS} install xdotool
 
     install_pocketsphinx
+
     info "Installing other dependencies is done"
 }
 

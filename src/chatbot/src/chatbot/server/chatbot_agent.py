@@ -2,6 +2,7 @@
 import logging
 import random
 import os
+import re
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -29,8 +30,19 @@ from session import ChatSessionManager
 session_manager = ChatSessionManager()
 DISABLE_QUIBBLE = True
 
-from chatbot.utils import shorten, str_cleanup
+from chatbot.utils import shorten, str_cleanup, get_weather, parse_weather
+from chatbot.words2num import words2num
 from chatbot.server.character import TYPE_AIML, TYPE_CS
+from operator import add, sub, mul, truediv, pow
+import math
+
+OPERATOR_MAP = {
+    '[add]': add,
+    '[sub]': sub,
+    '[mul]': mul,
+    '[div]': truediv,
+    '[pow]': pow,
+}
 
 def get_character(id, lang=None):
     for character in CHARACTERS:
@@ -199,6 +211,13 @@ def _ask_characters(characters, question, lang, sid, query):
 
     cached_responses = defaultdict(list)
 
+    reduction = get_character('reduction')
+    if reduction is not None:
+        _response = reduction.respond(_question, lang, sess, query=True)
+        reducted_text = _response.get('text')
+        if reducted_text:
+            _question = reducted_text
+
     control = get_character('control')
     if control is not None:
         _response = control.respond(_question, lang, sess, query)
@@ -220,8 +239,59 @@ def _ask_characters(characters, question, lang, sid, query):
                 else:
                     _question = sess.cache.that_question.lower().strip()
                     cross_trace.append((sess.last_used_character.id, 'continuation', 'Empty'))
+        elif _answer.startswith('[weather]'):
+            template = _answer.replace('[weather]', '')
+            cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
+            context = control.get_context(sess)
+            if context:
+                location = context.get('querylocation')
+                prop = parse_weather(get_weather(location))
+                if prop:
+                    try:
+                        _answer = template.format(location=location, **prop)
+                        if _answer:
+                            answer = _answer
+                            response['text'] = _answer
+                            response['botid'] = control.id
+                            response['botname'] = control.name
+                    except Exception as ex:
+                        cross_trace.append((control.id, 'control', 'No answer'))
+                        logger.error(ex)
+                else:
+                    cross_trace.append((control.id, 'control', 'No answer'))
+        elif _answer in OPERATOR_MAP.keys():
+            opt = OPERATOR_MAP[_answer]
+            cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
+            context = control.get_context(sess)
+            if context:
+                item1 = context.get('item1')
+                item2 = context.get('item2')
+                item1 = words2num(item1)
+                item2 = words2num(item2)
+                if item1 is not None and item2 is not None:
+                    try:
+                        result = opt(item1, item2)
+                        img = math.modf(result)[0]
+                        if img < 1e-6:
+                            result_str = '{:d}'.format(int(result))
+                        else:
+                            result_str = 'about {:.4f}'.format(result)
+                        if result > 1e20:
+                            answer = "The number is too big. You should use a calculator."
+                        else:
+                            answer = "The answer is {result}".format(result=result_str)
+                    except ZeroDivisionError:
+                        answer = "Oh, the answer is not a number"
+                    except Exception as ex:
+                        logger.error(ex)
+                        answer = "Sorry, something goes wrong. I can't calculate it."
+                    response['text'] = answer
+                    response['botid'] = control.id
+                    response['botname'] = control.name
+                else:
+                    cross_trace.append((control.id, 'control', 'No answer'))
         else:
-            if _answer:
+            if _answer and not re.findall(r'\[.*\].*', _answer):
                 cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
                 hit_character = control
                 answer = _answer
@@ -234,13 +304,6 @@ def _ask_characters(characters, question, lang, sid, query):
                 except NotImplementedError:
                     pass
             sess.cache.that_question = None
-
-    reduction = get_character('reduction')
-    if reduction is not None:
-        _response = reduction.respond(_question, lang, sess, query=True)
-        reducted_text = _response.get('text')
-        if reducted_text:
-            _question = reducted_text
 
     # If the last input is a question, then try to use the same tier to
     # answer it.
