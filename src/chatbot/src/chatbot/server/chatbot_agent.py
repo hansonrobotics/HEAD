@@ -32,13 +32,13 @@ DISABLE_QUIBBLE = True
 from chatbot.utils import shorten, str_cleanup, get_weather, parse_weather
 from chatbot.words2num import words2num
 from chatbot.server.character import TYPE_AIML, TYPE_CS
-from operator import add, sub, mul, div, pow
+from operator import add, sub, mul, truediv, pow
 
 OPERATOR_MAP = {
     '[add]': add,
     '[sub]': sub,
     '[mul]': mul,
-    '[div]': div,
+    '[div]': truediv,
     '[pow]': pow,
 }
 
