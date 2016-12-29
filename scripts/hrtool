@@ -227,16 +227,20 @@ install_ros() {
 
 install_opencog_deps() {
     info "Installing OpenCog dependencies"
-    $SUDO apt-get ${APT_GET_OPTS} install cmake ccache
-    $SUDO apt-get ${APT_GET_OPTS} install binutils-dev
-    $SUDO apt-get ${APT_GET_OPTS} install libboost-dev libboost-date-time-dev libboost-filesystem-dev libboost-program-options-dev libboost-regex-dev libboost-serialization-dev libboost-system-dev libboost-thread-dev
-    $SUDO apt-get ${APT_GET_OPTS} install guile-2.0-dev cython
+    local pkgs=(
+        cmake ccache
+        binutils-dev
+        libboost-dev libboost-date-time-dev libboost-filesystem-dev
+        libboost-program-options-dev libboost-regex-dev
+        libboost-serialization-dev libboost-system-dev libboost-thread-dev
+        guile-2.0-dev cython
+    )
+    apt_get_install "${pkgs[@]}"
+
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
     ./octool -rdpv
     rm octool
-
-    install_relex_deps
 
     # For sentiment analysis
     $SUDO pip2 install ${PIP_OPTS} nltk
@@ -244,6 +248,9 @@ install_opencog_deps() {
 
     # For random sentence generator
     install_marky_markov
+
+    install_relex_deps
+
     info "Installing OpenCog dependencies is done"
 }
 
