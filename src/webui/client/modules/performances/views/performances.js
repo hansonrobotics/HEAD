@@ -104,7 +104,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 prefix = prefix || defaultPrefix;
 
                 if (number !== null)
-                    return (prefix + this.zeroPad(parseInt(number) + 1, 2)).trim();
+                    return prefix.trim() + (parseInt(number) + 1);
                 else
                     return prefix;
             },
@@ -143,6 +143,9 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                         let timelinesView = self.queueView.timelinesView;
                         self.queueView.addPerformance(data.model, !timelinesView || timelinesView.changed);
                     }
+
+                    if (!data.model.nodes.length)
+                        data.model.fetch();
                 });
 
                 this.ui.newButton.before(childView.el);

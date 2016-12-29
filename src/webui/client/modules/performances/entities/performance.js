@@ -206,15 +206,18 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
 
                 if (this.nodes.length > 0) {
                     this.nodes.forEach(function (node) {
+                        if (node.get('name') === 'pause')
+                            node.set('duration', 0.1);
+
                         let startTime = node.get('start_time'),
                             nodeDuration = node.get('duration');
-
                         if (startTime != null && nodeDuration != null && startTime + nodeDuration > self.duration)
                             self.duration = startTime + nodeDuration;
                     });
                 }
             },
             getDuration: function () {
+                if (! this.duration) this.updateDuration();
                 return this.duration;
             },
             handleEvents: function (msg) {

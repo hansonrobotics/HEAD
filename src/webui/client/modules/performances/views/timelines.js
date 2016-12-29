@@ -561,12 +561,21 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.updateIndicatorTime();
                 }
             },
-            run: function (startTime) {
+            run: function (startTime, options) {
+                if (!options) options = {};
+
                 if (!$.isNumeric(startTime))
                     startTime = 0;
 
                 this.model.run(startTime, {
+                    success: function (model, response) {
+                        if (typeof options.success == 'function')
+                            options.success(model, response);
+                    },
                     error: function (error) {
+                        if (typeof options.error == 'function')
+                            options.error(error);
+
                         console.log(error);
                     }
                 });
