@@ -10,7 +10,8 @@ class WordsToNumbers():
     # they are an odd case where numbers that might otherwise be called
     # 'ten one', 'ten two', etc. actually have their own names as single
     # digits do)
-    __ones__ = { 'one':   1, 'eleven':     11,
+    __ones__ = { 'zero': 0,
+                 'one':   1, 'eleven':     11,
                  'two':   2, 'twelve':     12,
                  'three': 3, 'thirteen':   13,
                  'four':  4, 'fourteen':   14,
@@ -166,4 +167,5 @@ if __name__ == '__main__':
     assert words2num("thirteen hundred") == 1300
     assert words2num("nine thousand two hundred and ninety seven") == 9297
     assert words2num(None) is None
+    assert words2num("zero") == 0
     print 'done'
