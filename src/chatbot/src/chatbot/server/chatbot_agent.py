@@ -35,10 +35,10 @@ from chatbot.server.character import TYPE_AIML, TYPE_CS
 from operator import add, sub, mul, div, pow
 
 OPERATOR_MAP = {
-    '[+]': add,
-    '[-]': sub,
-    '[*]': mul,
-    '[/]': div,
+    '[add]': add,
+    '[sub]': sub,
+    '[mul]': mul,
+    '[div]': div,
     '[pow]': pow,
 }
 
@@ -253,8 +253,8 @@ def _ask_characters(characters, question, lang, sid, query):
                     response['botname'] = control.name
                 else:
                     cross_trace.append((control.id, 'control', 'No answer'))
-        elif _answer in ['[+]', '[-]', '[*]', '[/]', '[pow]']:
-            opt = _answer
+        elif _answer in OPERATOR_MAP.keys():
+            opt = OPERATOR_MAP[_answer]
             cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
             context = control.get_context(sess)
             if context:
@@ -263,7 +263,7 @@ def _ask_characters(characters, question, lang, sid, query):
                 item1 = words2num(item1)
                 item2 = words2num(item2)
                 if item1 and item2:
-                    result = OPERATOR_MAP[opt](item1, item2)
+                    result = opt(item1, item2)
                     if result > 1e10:
                         answer = "The number is too big. You should use a calculator."
                     else:
