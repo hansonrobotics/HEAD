@@ -1,5 +1,4 @@
 import re
-from pyparsing import nums, Literal, Word, OneOrMore
 from num2words import num2words
 
 class WordsToNumbers():
@@ -138,8 +137,6 @@ class WordsToNumbers():
         return num
 
 wtn = WordsToNumbers()
-word = Literal('one') | Literal('two') | Literal('three') | Literal('four') | Literal('five') | Literal('six') | Literal('seven') | Literal('eight') | Literal('nine') | Literal('eleven') | Literal('twelve') | Literal('thirteen') | Literal('fourteen') | Literal('fifteen') | Literal('sixteen') | Literal('seventeen') | Literal('eighteen') | Literal('nineteen') | Literal('ten') | Literal('twenty') | Literal('thirty') | Literal('forty') | Literal('fifty') | Literal('sixty') | Literal('seventy') | Literal('eighty') | Literal('ninety') | Literal('hundred') | Literal('thousand') | Literal('million') | Literal('billion') | Literal('trillion')
-numword = OneOrMore(word).setParseAction(lambda tokens: wtn.parse(" ".join(tokens)))
 
 def words2num(s):
     if not s:
@@ -155,14 +152,18 @@ def words2num(s):
     s = ' '.join(ss)
     s = re.sub(r"\band\b","", s)
     s = re.sub(r"-"," ", s)
+    s = ' '.join(s.split())
     try:
-        num = numword.parseString(s)
-        if num:
-            return num[0]
+        num = wtn.parse(s)
+        return num
     except Exception:
         pass
 
 if __name__ == '__main__':
     assert words2num('one hundred trillion and twelve') == 100000000000012
     assert words2num('one hundred trillion twelve hundred and 21') == 100000000001221
-    print words2num(None)
+    assert words2num("one hundred and seventy nine") == 179
+    assert words2num("thirteen hundred") == 1300
+    assert words2num("nine thousand two hundred and ninety seven") == 9297
+    assert words2num(None) is None
+    print 'done'
