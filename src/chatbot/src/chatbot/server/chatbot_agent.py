@@ -33,6 +33,7 @@ from chatbot.utils import shorten, str_cleanup, get_weather, parse_weather
 from chatbot.words2num import words2num
 from chatbot.server.character import TYPE_AIML, TYPE_CS
 from operator import add, sub, mul, truediv, pow
+import math
 
 OPERATOR_MAP = {
     '[add]': add,
@@ -265,10 +266,15 @@ def _ask_characters(characters, question, lang, sid, query):
                 if item1 is not None and item2 is not None:
                     try:
                         result = opt(item1, item2)
-                        if result > 1e10:
+                        img = math.modf(result)[0]
+                        if img < 1e-6:
+                            result_str = '{:d}'.format(int(result))
+                        else:
+                            result_str = 'about {:.4f}'.format(result)
+                        if result > 1e20:
                             answer = "The number is too big. You should use a calculator."
                         else:
-                            answer = "The answer is {result}".format(result=result)
+                            answer = "The answer is {result}".format(result=result_str)
                     except ZeroDivisionError:
                         answer = "Oh, the answer is not a number"
                     except Exception as ex:
