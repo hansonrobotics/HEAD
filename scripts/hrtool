@@ -161,16 +161,32 @@ curl_cache() {
 }
 ### COMMON FUNCTIONS END ###
 
+check_apt_installed() {
+    # Check if the given debian packages are installed
+    statuses=$(dpkg-query -W -f='${db:Status-Abbrev}' "$@")
+    if [[ $? != 0 ]]; then
+        return 1
+    fi
+    for s in $statuses; do
+        if [[ ${s#} == 2 && ${s:1} != 'i' ]]; then
+            return 1
+        fi
+    done
+}
+
+apt_get_install() {
+    if ! check_apt_installed "$@"; then
+        $SUDO apt-get ${APT_GET_OPTS} install "$@" || (
+            $SUDO apt-get ${APT_GET_OPTS} update &&
+            $SUDO apt-get ${APT_GET_OPTS} install "$@")
+    fi
+}
+
 install_basic() {
     info "Installing basic dependencies"
-    $SUDO apt-get ${APT_GET_OPTS} update
-    $SUDO apt-get ${APT_GET_OPTS} install git
-    $SUDO apt-get ${APT_GET_OPTS} install wget
-    $SUDO apt-get ${APT_GET_OPTS} install telnet
-    $SUDO apt-get ${APT_GET_OPTS} install python3-pip
-    $SUDO apt-get ${APT_GET_OPTS} install python-pip
-    $SUDO apt-get ${APT_GET_OPTS} install build-essential
-    $SUDO apt-get ${APT_GET_OPTS} install software-properties-common
+    local pkgs=(git wget telnet python3-pip python-pip build-essential
+            software-properties-common)
+    apt_get_install "${pkgs[@]}"
     info "Installing basic dependencies is done"
 }
 
@@ -178,22 +194,26 @@ install_ros() {
     info "Installing ROS"
     $SUDO sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
     $SUDO apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
-    $SUDO apt-get ${APT_GET_OPTS} update
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-desktop
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-tf
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-driver-common
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-cv-bridge
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-image-transport
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-openni-camera
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-mjpeg-server
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-usb-cam
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-dynamixel-motor
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-robot-state-publisher
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-joint-state-publisher
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-rosbridge-server
-    $SUDO apt-get ${APT_GET_OPTS} install python-catkin-tools
+    local pkgs=(
+        ros-indigo-desktop
+        ros-indigo-tf
+        ros-indigo-driver-common
+        ros-indigo-cv-bridge
+        ros-indigo-image-transport
+        ros-indigo-openni-camera
+        ros-indigo-mjpeg-server
+        ros-indigo-usb-cam
+        ros-indigo-dynamixel-motor
+        ros-indigo-robot-state-publisher
+        ros-indigo-joint-state-publisher
+        ros-indigo-rosbridge-server
+        python-catkin-tools
+    )
+
     # for camera calibration
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-image-proc
+    pkgs+=(ros-indigo-image-proc)
+
+    apt_get_install "${pkgs[@]}"
 
     # for blender to find ros packages
     $SUDO pip3 install ${PIP_OPTS} rospkg catkin_pkg
