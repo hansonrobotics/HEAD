@@ -4,7 +4,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
         return Marionette.View.extend({
             template: template,
             ui: {
-                pauseBehaviorToggle: '.app-pause-behavior-toggle',
+                pauseBehaviorCheckbox: '.app-pause-behavior-checkbox',
                 keywords: '.app-keywords',
                 tabs: '.app-tabs a',
                 settingsTab: '.app-settings-tab',
@@ -23,7 +23,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
             },
             events: {
                 'click @ui.addVariableButton': 'addVariable',
-                'click @ui.pauseBehaviorToggle': 'togglePauseBehavior',
+                'change @ui.pauseBehaviorCheckbox': 'updatePauseBehavior',
                 'click @ui.removeVariableButton': 'removeVariable',
                 'click @ui.saveButton': 'save'
             },
@@ -37,7 +37,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                     success: function () {
                         self.showKeywords();
                         self.showVariables();
-                        self.showPauseBehaviorSwitch();
+                        self.ui.pauseBehaviorCheckbox.prop('checked', self.model.get('pause_behavior'));
                     }
                 });
 
@@ -56,7 +56,6 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
 
                 this.model.save({}, {
                     success: function () {
-                        console.log('success');
                         App.Utilities.showPopover(self.ui.saveButton, 'Saved', 'right');
                     },
                     error: function () {
@@ -72,13 +71,6 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
             },
             showKeywords: function () {
                 this.ui.keywords.val((this.model.get('keywords') || []).join(', '));
-            },
-            showPauseBehaviorSwitch: function () {
-                let pauseBehavior = this.model.get('pause_behavior');
-                if ((typeof pauseBehavior == 'boolean' && pauseBehavior) || typeof pauseBehavior != 'boolean')
-                    this.ui.pauseBehaviorToggle.addClass('active');
-                else
-                    this.ui.pauseBehaviorToggle.removeClass('active').blur();
             },
             setKeywords: function () {
                 let keywords = _.map(this.ui.keywords.val().split(','), function (k) {
@@ -100,10 +92,8 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
 
                 this.model.set('variables', variables);
             },
-            togglePauseBehavior: function () {
-                this.model.set('pause_behavior', !this.ui.pauseBehaviorToggle.hasClass('active'));
-                this.showPauseBehaviorSwitch();
-                
+            updatePauseBehavior: function () {
+                this.model.set('pause_behavior', this.ui.pauseBehaviorCheckbox.prop('checked'));
             },
             addVariable: function (key, value) {
                 let field = this.ui.variableTemplate.clone().find('.form-group');

@@ -14,9 +14,10 @@
                 <input type="text" class="app-keywords form-control" placeholder="Keywords">
             </div>
 
-            <h4>Pause behavior while running</h4>
-            <div class="form-group">
-                <button type="button" class="app-pause-behavior-toggle btn btn-default active">Enable</button>
+            <div class="checkbox">
+                <label>
+                    <input class="app-pause-behavior-checkbox" type="checkbox"> Pause behavior while running
+                </label>
             </div>
 
             <h4>Variables</h4>
