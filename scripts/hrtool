@@ -410,7 +410,7 @@ install_manyears_deps() {
 
 install_test_deps() {
     info "Installing test dependencies"
-    $SUDO apt-get ${APT_GET_OPTS} install socat
+    apt_get_install socat
 
     # WebUI compatable webserver
     $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
@@ -431,8 +431,7 @@ install_webui_deps() {
 install_vision_deps() {
     info "Installing vision dependencies"
     mkdir -p $VISION_TOOL_PREFIX
-    $SUDO apt-get ${APT_GET_OPTS} install libopencv-dev
-    $SUDO apt-get ${APT_GET_OPTS} install ros-indigo-opencv-apps
+    apt_get_install libopencv-dev ros-indigo-opencv-apps
 
     # Tkinter error other wise.
     $SUDO pip2 install ${PIP_OPTS} -I Pillow
@@ -453,9 +452,6 @@ install_vision_deps() {
       warn "Skipping dlib installation"
     fi
 
-    #TODO change this commands to clone() when they are forked in hansonrobotics repository once recusive option is added
-
-
     # Install clandmarks
     if [ ! -d $CLANDMARK_DIR ]; then
       info "Installing clandmarks"
@@ -466,6 +462,7 @@ install_vision_deps() {
     else
       warn "Skipping clandmark downloading"
     fi
+
     # Install Torch
     if [ ! -d $TORCH_DIR ]; then
       info "Installing torch"
@@ -494,7 +491,7 @@ install_vision_deps() {
     # Dependencies for openface
     # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
     info "Installing openface"
-    $SUDO apt-get ${APT_GET_OPTS} install python-skimage
+    apt_get_install python-skimage
     $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy scikit-learn
 
     if [ ! -d $OPENFACE_DIR ]; then
@@ -557,8 +554,7 @@ install_marky_markov() {
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
     $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
-    $SUDO apt-get ${APT_GET_OPTS} update
-    $SUDO apt-get ${APT_GET_OPTS} install ruby2.3 ruby2.3-dev
+    apt_get_install ruby2.3 ruby2.3-dev
     $SUDO gem install marky_markov
     info "Installing Marky Markov is done"
 }
