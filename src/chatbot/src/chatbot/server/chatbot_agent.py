@@ -2,6 +2,7 @@
 import logging
 import random
 import os
+import re
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -238,20 +239,24 @@ def _ask_characters(characters, question, lang, sid, query):
                 else:
                     _question = sess.cache.that_question.lower().strip()
                     cross_trace.append((sess.last_used_character.id, 'continuation', 'Empty'))
-        elif _answer == '[weather]':
+        elif _answer.startswith('[weather]'):
+            template = _answer.replace('[weather]', '')
             cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
             context = control.get_context(sess)
             if context:
                 location = context.get('querylocation')
                 prop = parse_weather(get_weather(location))
                 if prop:
-                    answer = "The weather in {city} is {weather}, "\
-                        "temperature is {temperature}.".format(
-                        city=location, weather=prop.get('weather'),
-                        temperature=prop.get('temperature'))
-                    response['text'] = answer
-                    response['botid'] = control.id
-                    response['botname'] = control.name
+                    try:
+                        _answer = template.format(location=location, **prop)
+                        if _answer:
+                            answer = _answer
+                            response['text'] = _answer
+                            response['botid'] = control.id
+                            response['botname'] = control.name
+                    except Exception as ex:
+                        cross_trace.append((control.id, 'control', 'No answer'))
+                        logger.error(ex)
                 else:
                     cross_trace.append((control.id, 'control', 'No answer'))
         elif _answer in OPERATOR_MAP.keys():
@@ -286,7 +291,7 @@ def _ask_characters(characters, question, lang, sid, query):
                 else:
                     cross_trace.append((control.id, 'control', 'No answer'))
         else:
-            if _answer:
+            if _answer and not re.findall(r'\[.*\].*', _answer):
                 cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
                 hit_character = control
                 answer = _answer
