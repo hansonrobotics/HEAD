@@ -21,7 +21,7 @@ def load_dyn_properties():
         elif 'country_name' in location:
             dyn_properties['location'] = location.get('country_name')
 
-    weather = None
+    weather_prop = None
     if location:
         weather = get_weather(
             '{city},{country}'.format(
