@@ -256,11 +256,13 @@ install_opencog_deps() {
 
 install_relex_deps() {
     info "Installing RelEX dependencies"
-    $SUDO apt-get ${APT_GET_OPTS} update
-    $SUDO apt-get ${APT_GET_OPTS} install build-essential python-dev swig zlib1g-dev unzip wget
-    $SUDO apt-get ${APT_GET_OPTS} install wordnet-dev wordnet-sense-index
-    $SUDO apt-get ${APT_GET_OPTS} install openjdk-7-jdk
-    $SUDO apt-get ${APT_GET_OPTS} install ant libcommons-logging-java libgetopt-java
+    local pkgs=(
+        build-essential python-dev swig zlib1g-dev unzip wget
+        wordnet-dev wordnet-sense-index
+        openjdk-7-jdk
+        ant libcommons-logging-java libgetopt-java
+    )
+    apt_get_install "${pkgs[@]}"
 
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
