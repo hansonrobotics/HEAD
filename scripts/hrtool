@@ -172,6 +172,8 @@ check_apt_installed() {
             return 1
         fi
     done
+    local pkgs=$@
+    info "Packages $pkgs are already installed"
 }
 
 apt_get_install() {
@@ -303,84 +305,96 @@ install_pocketsphinx() {
     info "Installing Pocketsphinx is done"
 }
 
-install_other_deps() {
-    info "Installing other dependencies"
+install_blender() {
+    info "Installing blender"
     $SUDO add-apt-repository -y ppa:irie/blender
-    $SUDO apt-get ${APT_GET_OPTS} update
+    apt_get_install blender
+    info "Installing blender done"
+}
 
-    $SUDO apt-get ${APT_GET_OPTS} install blender
+install_ffmpeg() {
+    info "Installing ffmpeg"
+    # For blender_api_test
+    $SUDO add-apt-repository -y ppa:mc3man/trusty-media
+    apt_get_install ffmpeg
+    info "Installing ffmpeg done"
+}
 
-    # For webui
-    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
-
-    # For rosbridge_server
-    $SUDO apt-get ${APT_GET_OPTS} install python-bson
-
-    # For pololu-motors
-    # DO NOT UPGRADE WITH PIP
-    $SUDO apt-get ${APT_GET_OPTS} install python-serial
-
-    # For Blender
-    $SUDO apt-get ${APT_GET_OPTS} install python3-numpy
-
-    # For running scripts
-    $SUDO apt-get ${APT_GET_OPTS} install tmux
-
+install_tts() {
     # For Festival
-    $SUDO apt-get ${APT_GET_OPTS} install festival festival-dev
+    apt_get_install festival festival-dev
+
     # Install female voice
     mkdir -p ~/.hr/tts/festival/voices
     # Install female voice
     if [[ ! -f ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz ]]; then
-        wget -q http://festvox.org/packed/festival/2.1/festvox_cmu_us_slt_arctic_hts.tar.gz -P ~/.hr/tts/festival/voices
+        wget_cache http://festvox.org/packed/festival/2.1/festvox_cmu_us_slt_arctic_hts.tar.gz
+        checkmd5 ${HR_CACHE}/festvox_cmu_us_slt_arctic_hts.tar.gz a9b53441968f6bc612b85c04bbc4cf0f
+        cp ${HR_CACHE}/festvox_cmu_us_slt_arctic_hts.tar.gz $HOME/.hr/tts/festival/voices
     fi
     tar zxf ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz -C /tmp
     $SUDO cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
     rm -rf /tmp/festival
-
-    # For tts playing audio
-    $SUDO apt-get ${APT_GET_OPTS} install python-pyglet
-
-    # For chatbot
-    $SUDO apt-get ${APT_GET_OPTS} install python-yaml
-
-    # For blender_api_test
-    $SUDO add-apt-repository -y ppa:mc3man/trusty-media
-    $SUDO apt-get ${APT_GET_OPTS} update
-    $SUDO apt-get ${APT_GET_OPTS} install ffmpeg
 
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
     wget_cache https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
     checkmd5 ${HR_CACHE}/marytts-5.1.2.zip 99e774dd4c6e791ad916ae76351522f0
     unzip -qod ~/.hr/tts/marytts ${HR_CACHE}/marytts-5.1.2.zip
+}
+
+install_other_deps() {
+    info "Installing other dependencies"
+    local pkgs=()
+
+    # For rosbridge_server
+    pkgs+=(python-bson)
+
+    # For pololu-motors
+    # DO NOT UPGRADE WITH PIP
+    pkgs+=(python-serial)
+
+    # For Blender
+    pkgs+=(python3-numpy)
+
+    # For running scripts
+    pkgs+=(tmux)
+
+    # For tts playing audio
+    pkgs+=(python-pyglet)
+
+    # For chatbot
+    pkgs+=(python-yaml)
 
     # Swig for iflytek SDK
-    $SUDO apt-get -y install swig
+    pkgs+=(swig)
 
+    # For rospy to run with python3
+    pkgs+=(python3-yaml)
+
+    # For telnet automation
+    pkgs+=(expect)
+
+    # For audio recording
+    pkgs+=(pulseaudio python-pyaudio)
+
+    # For window layout
+    pkgs+=(xdotool)
+
+    apt_get_install "${pkgs[@]}"
+
+    # For Chinese tts
     $SUDO pip2 install ${PIP_OPTS} pinyin==0.2.5
 
     # For speech2command
     $SUDO pip2 install ${PIP_OPTS} pyparsing
 
-    # For rospy to run with python3
-    $SUDO apt-get ${APT_GET_OPTS} install python3-yaml
-
-    # For telnet automation
-    $SUDO apt-get ${APT_GET_OPTS} install expect
-
     # For performances
     $SUDO pip2 install transitions
 
-    install_manyears_deps
-    # For audio recording
-    $SUDO apt-get ${APT_GET_OPTS} install pulseaudio
-    $SUDO apt-get ${APT_GET_OPTS} install python-pyaudio
+    # For webui
+    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
 
-    # For window layout
-    $SUDO apt-get ${APT_GET_OPTS} install xdotool
-
-    install_pocketsphinx
     info "Installing other dependencies is done"
 }
 
@@ -716,6 +730,10 @@ _do_install_deps() {
     install_vision_deps
     install_manyears_deps
     install_webui_deps
+    install_blender
+    install_ffmpeg
+    install_tts
+    install_pocketsphinx
     install_other_deps
     get_models
 
