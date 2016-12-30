@@ -37,7 +37,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                     success: function () {
                         self.showKeywords();
                         self.showVariables();
-                        self.ui.pauseBehaviorCheckbox.prop('checked', self.model.get('pause_behavior'));
+                        self.showPauseBehavior();
                     }
                 });
 
@@ -68,6 +68,10 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                 $.each(this.model.get('variables') || {}, function (key, value) {
                     self.addVariable(key, value);
                 });
+            },
+            showPauseBehavior: function () {
+                let pauseBehavior = this.model.get('pause_behavior');
+                this.ui.pauseBehaviorCheckbox.prop('checked', typeof pauseBehavior == 'undefined' ? true : pauseBehavior);
             },
             showKeywords: function () {
                 this.ui.keywords.val((this.model.get('keywords') || []).join(', '));
