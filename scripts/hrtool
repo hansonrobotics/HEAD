@@ -86,15 +86,15 @@ ln -sf -T $LOG_FILE $LOG_DIR/install/latest.log
 
 info() {
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    printf "${COLOR_INFO}[INFO] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
+    printf "${COLOR_INFO}[INFO] ${timestamp} $*${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 warn() {
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    printf "${COLOR_WARN}[WARN] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
+    printf "${COLOR_WARN}[WARN] ${timestamp} $*${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 error() {
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    printf "${COLOR_ERROR}[ERROR] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
+    printf "${COLOR_ERROR}[ERROR] ${timestamp} $*${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 
 md5str() {
