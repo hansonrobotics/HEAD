@@ -886,14 +886,6 @@ _do_clean_up() {
     $SUDO rm /usr/local/lib/libcogutil.so
 }
 
-do_run() {
-    while [[ $# > 0 ]]; do
-        info "Running $1"
-        $1
-        shift
-    done
-}
-
 _get_rel_ws() {
     readlink -f ${BASEDIR}/../../
 }
@@ -976,7 +968,7 @@ parse_opts() {
         t) RUN_TESTS=1 ;;
         p) PRINT_HR_WORKSPACE=1 ;;
         s) BUILD_SINGLE_PKG=1  && CUSTOM_FUNCTIONS=$OPTARG ;;
-        r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
+        r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG && break ;;
         d) DEVELOPER_MODE=1 ;;
         c) CLEANUP=1 ;;
         m) MIGRATE=1 ;;
@@ -995,6 +987,7 @@ parse_opts() {
         esac
     done
     shift $((OPTIND-1))
+    CUSTOM_FUNCTIONS_ARGS=$@
 }
 
 set_ws() {
@@ -1161,7 +1154,7 @@ execute() {
     if [[ $RUN_TESTS ]]; then do_test; fi
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
     if [[ $BUILD_SINGLE_PKG ]]; then do_single_package $CUSTOM_FUNCTIONS ; fi
-    if [[ $RUN_CUSTOM_FUNCTIONS ]]; then do_run $CUSTOM_FUNCTIONS ; fi
+    if [[ $RUN_CUSTOM_FUNCTIONS ]]; then $CUSTOM_FUNCTIONS $CUSTOM_FUNCTIONS_ARGS; fi
     if [[ $MIGRATE ]]; then do_migrate ; fi
     if [[ $BUILD_PACKAGE ]]; then do_build_package ; fi
 }
