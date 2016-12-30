@@ -55,7 +55,7 @@ class ROS2OpenCV:
         self.output_image = "output_image"
         self.show_text = rospy.get_param("~show_text", True)
         self.show_features = rospy.get_param("~show_features", True)
-        self.headless = rospy.get_param("~headless", False)
+        self.headless = not rospy.get_param("~gui", True)
 
         """ Initialize the Region of Interest and its publisher """
         #self.ROI = RegionOfInterest()
