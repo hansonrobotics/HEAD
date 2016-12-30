@@ -205,10 +205,10 @@ install_ros() {
     # for blender to find ros packages
     $SUDO pip3 install ${PIP_OPTS} rospkg catkin_pkg
 
-    set +e
-    $SUDO rosdep init -q
-    rosdep update -q
-    set -e
+    if [[ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]]; then
+        $SUDO rosdep init -q
+        rosdep update -q
+    fi
     info "Installing ROS is done"
 }
 
