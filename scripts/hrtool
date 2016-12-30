@@ -86,15 +86,15 @@ ln -sf -T $LOG_FILE $LOG_DIR/install/latest.log
 
 info() {
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    printf "${COLOR_INFO}[INFO] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
+    printf "${COLOR_INFO}[INFO] ${timestamp} $*${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 warn() {
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    printf "${COLOR_WARN}[WARN] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
+    printf "${COLOR_WARN}[WARN] ${timestamp} $*${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 error() {
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    printf "${COLOR_ERROR}[ERROR] ${timestamp} ${1}${COLOR_RESET}\n" | tee -a $LOG_FILE
+    printf "${COLOR_ERROR}[ERROR] ${timestamp} $*${COLOR_RESET}\n" | tee -a $LOG_FILE
 }
 
 md5str() {
@@ -148,17 +148,32 @@ curl_cache() {
 
 check_apt_installed() {
     # Check if the given debian packages are installed
-    statuses=$(dpkg-query -W -f='${db:Status-Abbrev}' "$@")
-    if [[ $? != 0 ]]; then
-        return 1
-    fi
-    for s in $statuses; do
-        if [[ ${s#} == 2 && ${s:1} != 'i' ]]; then
-            return 1
+    local pkgs=$@
+    local s
+    local v
+    local ver
+    local pkg
+    for pkg in $pkgs; do
+        if [[ ${pkg} =~ .*"=".* ]]; then
+            ver=${pkg##*=}
+            pkg=${pkg%=*}
+            s=$(dpkg-query -W -f='${db:Status-Abbrev}=${Version}' "$pkg")
+            v=${s##*=}
+            s=${s%=*}
+            if [[ $ver != $v ]]; then
+                return 1
+            else
+                info "$pkg=$ver is already installed"
+            fi
+        else
+            s=$(dpkg-query -W -f='${db:Status-Abbrev}' "$pkg")
+            if [[ ${#s} != 3 || ${s:1:1} != 'i' ]]; then
+                return 1
+            else
+                info "$pkg is already installed"
+            fi
         fi
     done
-    local pkgs=$@
-    info "Packages $pkgs are already installed"
 }
 
 apt_get_install() {
@@ -205,10 +220,10 @@ install_ros() {
     # for blender to find ros packages
     $SUDO pip3 install ${PIP_OPTS} rospkg catkin_pkg
 
-    set +e
-    $SUDO rosdep init -q
-    rosdep update -q
-    set -e
+    if [[ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]]; then
+        $SUDO rosdep init -q
+        rosdep update -q
+    fi
     info "Installing ROS is done"
 }
 
@@ -414,7 +429,7 @@ install_webui_deps() {
     # See https://github.com/nodesource/distributions#debinstall
     if [[ $(nodejs -v) != "v6.9.2" ]]; then
         curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
-        $SUDO apt-get install -y nodejs=6.9.2-1nodesource1~trusty1
+        apt_get_install nodejs=6.9.2-1nodesource1~trusty1
     fi
     if ! npm ls -g webpack >/dev/null; then
         $SUDO npm install -g webpack
@@ -886,14 +901,6 @@ _do_clean_up() {
     $SUDO rm /usr/local/lib/libcogutil.so
 }
 
-do_run() {
-    while [[ $# > 0 ]]; do
-        info "Running $1"
-        $1
-        shift
-    done
-}
-
 _get_rel_ws() {
     readlink -f ${BASEDIR}/../../
 }
@@ -976,7 +983,7 @@ parse_opts() {
         t) RUN_TESTS=1 ;;
         p) PRINT_HR_WORKSPACE=1 ;;
         s) BUILD_SINGLE_PKG=1  && CUSTOM_FUNCTIONS=$OPTARG ;;
-        r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG ;;
+        r) RUN_CUSTOM_FUNCTIONS=1 && CUSTOM_FUNCTIONS=$OPTARG && break ;;
         d) DEVELOPER_MODE=1 ;;
         c) CLEANUP=1 ;;
         m) MIGRATE=1 ;;
@@ -995,6 +1002,7 @@ parse_opts() {
         esac
     done
     shift $((OPTIND-1))
+    CUSTOM_FUNCTIONS_ARGS=$@
 }
 
 set_ws() {
@@ -1161,7 +1169,7 @@ execute() {
     if [[ $RUN_TESTS ]]; then do_test; fi
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
     if [[ $BUILD_SINGLE_PKG ]]; then do_single_package $CUSTOM_FUNCTIONS ; fi
-    if [[ $RUN_CUSTOM_FUNCTIONS ]]; then do_run $CUSTOM_FUNCTIONS ; fi
+    if [[ $RUN_CUSTOM_FUNCTIONS ]]; then $CUSTOM_FUNCTIONS $CUSTOM_FUNCTIONS_ARGS; fi
     if [[ $MIGRATE ]]; then do_migrate ; fi
     if [[ $BUILD_PACKAGE ]]; then do_build_package ; fi
 }
