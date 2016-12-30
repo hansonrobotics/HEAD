@@ -8,6 +8,7 @@ The description tries to highlight the included components and their respective 
 ### Description of Each UI Parts:
  
 **Import parent animations:**
+
 ![Image of Dynamic Reconfigure](docs/Evolver_UI_Parts/Import_UI.png)
 
 * In the provided text box initial list of actions which will participate in the animation evolution process are provided; also users can change list of actions provided in the list as long as they provide animation names that are found in the blender instance (there is no limit to the number of actions/animations they can include).
