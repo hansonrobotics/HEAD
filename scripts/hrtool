@@ -160,7 +160,7 @@ check_apt_installed() {
             s=$(dpkg-query -W -f='${db:Status-Abbrev}=${Version}' "$pkg")
             v=${s##*=}
             s=${s%=*}
-            if [[ $ver != $v ]]; then
+            if [[ $ver != $v || ${#s} != 3 || ${s:1:1} != 'i' ]]; then
                 return 1
             else
                 info "$pkg=$ver is already installed"
