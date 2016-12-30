@@ -148,17 +148,32 @@ curl_cache() {
 
 check_apt_installed() {
     # Check if the given debian packages are installed
-    statuses=$(dpkg-query -W -f='${db:Status-Abbrev}' "$@")
-    if [[ $? != 0 ]]; then
-        return 1
-    fi
-    for s in $statuses; do
-        if [[ ${s#} == 2 && ${s:1} != 'i' ]]; then
-            return 1
+    local pkgs=$@
+    local s
+    local v
+    local ver
+    local pkg
+    for pkg in $pkgs; do
+        if [[ ${pkg} =~ .*"=".* ]]; then
+            ver=${pkg##*=}
+            pkg=${pkg%=*}
+            s=$(dpkg-query -W -f='${db:Status-Abbrev}=${Version}' "$pkg")
+            v=${s##*=}
+            s=${s%=*}
+            if [[ $ver != $v ]]; then
+                return 1
+            else
+                info "$pkg=$ver is already installed"
+            fi
+        else
+            s=$(dpkg-query -W -f='${db:Status-Abbrev}' "$pkg")
+            if [[ ${#s} != 3 || ${s:1:1} != 'i' ]]; then
+                return 1
+            else
+                info "$pkg is already installed"
+            fi
         fi
     done
-    local pkgs=$@
-    info "Packages $pkgs are already installed"
 }
 
 apt_get_install() {
@@ -414,7 +429,7 @@ install_webui_deps() {
     # See https://github.com/nodesource/distributions#debinstall
     if [[ $(nodejs -v) != "v6.9.2" ]]; then
         curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
-        $SUDO apt-get install -y nodejs=6.9.2-1nodesource1~trusty1
+        apt_get_install nodejs=6.9.2-1nodesource1~trusty1
     fi
     if ! npm ls -g webpack >/dev/null; then
         $SUDO npm install -g webpack
