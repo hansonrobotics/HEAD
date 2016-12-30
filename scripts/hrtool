@@ -12,7 +12,7 @@ BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 HR_VERSION=0.1.2
 
 PROJECT=${PROJECT:-HEAD}
-OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex)
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=($PROJECT)
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
