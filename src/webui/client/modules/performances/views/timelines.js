@@ -52,7 +52,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 'click @ui.stopButton': 'stop',
                 'click @ui.pauseButton': 'pause',
                 'click @ui.resumeButton': 'resume',
-                'click @ui.timeAxis': 'moveIndicator',
+                'click @ui.timeAxis': 'moveIndicatorCallback',
                 'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance',
                 'click @ui.doneButton': 'done',
@@ -555,9 +555,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (this.enableLoop)
                     this.run();
             },
-            moveIndicator: function (e) {
+            moveIndicatorCallback: function (e) {
+                this.moveIndicator(Math.min(e.offsetX / this.config.pxPerSec, this.model.getDuration()))
+            },
+            moveIndicator: function (time) {
                 if (!this.running || this.paused) {
-                    this.ui.runIndicator.css('left', Math.min(e.offsetX, this.model.getDuration() * this.config.pxPerSec));
+                    this.ui.runIndicator.css('left', time * this.config.pxPerSec);
                     this.updateIndicatorTime();
                 }
             },

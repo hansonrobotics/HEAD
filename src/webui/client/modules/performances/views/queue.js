@@ -26,7 +26,7 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
         onRender: function () {
             let self = this;
 
-            if (this.hidden)  {
+            if (this.hidden) {
                 this.ui.container.hide();
             } else {
                 $(this.ui.queue).sortable({
@@ -98,6 +98,16 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 readonly: false
             });
         },
+        getItemStartTime: function (item) {
+            let startTime = 0;
+
+            _.find(this.queue, function (i) {
+                if (i !== item) startTime += i.model.getDuration();
+                return i === item;
+            });
+
+            return startTime;
+        },
         addPerformance: function (performance, skipTimelineUpdate) {
             let self = this,
                 el = $(this.ui.performanceTemplate).clone().removeClass('app-performance-template').get(0),
@@ -111,16 +121,18 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             this.ui.queue.append(el);
 
             $(el).click(function () {
-                let startTime = 0;
-                _.find(self.queue, function (i) {
-                    if (i !== item) startTime += i.model.getDuration();
-                    return i === item;
-                });
-
                 if (!self.timelinesView || !self.timelinesView.readonly)
                     self.updateTimeline();
 
-                self.timelinesView.run(startTime);
+                self.timelinesView.moveIndicator(self.getItemStartTime(item) + 0.02);
+            });
+
+            $('.app-play', el).click(function (e) {
+                e.stopPropagation();
+                if (!self.timelinesView || !self.timelinesView.readonly)
+                    self.updateTimeline();
+
+                self.timelinesView.run(self.getItemStartTime(item));
             });
 
             $('.app-remove', el).click(function (e) {
@@ -217,11 +229,11 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 let offset = 0;
                 _.find(self.queue, function (item) {
                     offset += item.model.getDuration();
-                    let found = time <= offset;
+                    let found = time < offset;
 
                     if (found && !$(item.el).hasClass('active')) {
-                            self.ui.queue.find('.app-performance').removeClass('active');
-                            $(item.el).addClass('active');
+                        self.ui.queue.find('.app-performance').removeClass('active');
+                        $(item.el).addClass('active');
                     }
 
                     return found;
