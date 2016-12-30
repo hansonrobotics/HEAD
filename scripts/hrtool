@@ -70,21 +70,6 @@ if [[ $PIP_CACHE == 1 ]]; then
     PIP_OPTS="$PIP_OPTS --download-cache $PIP_CACHE_DIR"
 fi
 
-if [[ ! -d $HR_CACHE ]]; then
-    info "Creating $HR_CACHE"
-    mkdir -p $HR_CACHE
-fi
-
-if [[ ! -d $APT_CACHE_DIR ]]; then
-    info "Creating $APT_CACHE_DIR"
-    mkdir -p $APT_CACHE_DIR
-fi
-
-if [[ ! -d $PIP_CACHE_DIR ]]; then
-    info "Creating $PIP_CACHE_DIR"
-    mkdir -p $PIP_CACHE_DIR
-fi
-
 ### END: CONFIGURATIONS ###
 
 ### COMMON FUNCTIONS BEGIN ###
@@ -1191,6 +1176,13 @@ for i in $(env|grep ROS|cut -d= -f1); do
     unset $i
 done
 unset HR_WORKSPACE
+
+for d in $HR_CACHE $APT_CACHE_DIR $PIP_CACHE_DIR; do
+    if [[ ! -d ${d} ]]; then
+        info "Creating ${d}"
+        mkdir -p ${d}
+    fi
+done
 
 if [[ ! $BASH_SOURCE == $0 ]]; then return; fi
 
