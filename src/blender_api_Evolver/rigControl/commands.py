@@ -29,6 +29,7 @@ class EvaAPI(RigAPI):
     initial_population = [] # initialize population for the IGA
 
 
+
     def __init__(self):
         pass
 
@@ -131,16 +132,16 @@ class EvaAPI(RigAPI):
     def listPopulation_IGA(self):
         action_exists = 0
         action_names = bpy.data.scenes['Scene']['action_add_IGA'] # An example input can be... GST-amused : GST-thoughtful : GST-nod-1 : GST-shake-2
-        action_list = action_names.split(' : ') #converts text input into lists
-        print (action_list)
+        parent_list = action_names.split(' : ') #converts text input into lists
+        print (parent_list)
         
         #checked_list = []
-        for i in range(0, len(action_list)):
+        for i in range(0, len(parent_list)):
             flag = 0
             action_exists = 0
 
             for j, gesture in enumerate(bpy.data.actions):  
-                if gesture.name == action_list[i] and flag == 0:
+                if gesture.name == parent_list[i] and flag == 0:
                     previous_name = gesture.name[4:] # [4:] removing the 'GST-' prefix copies it to the previous_name variable.
                     gesture = gesture.copy()
                     gesture.name= 'IGA-' + previous_name # So, for example the new copy of 'GST-thought' will be 'IGA-thoughtful'
@@ -151,7 +152,7 @@ class EvaAPI(RigAPI):
                         print("An action named "+ gesture.name + " is imported to the parent population set panel for IGA")
                                
             if action_exists == 0:
-                print("An action named " + action_list[i] + " doesn't exist. Make sure it is imported!")
+                print("An action named " + parent_list[i] + " doesn't exist. Make sure it is imported!")
         print(self.initial_population)
         return self.initial_population   
     
@@ -165,7 +166,7 @@ class EvaAPI(RigAPI):
 
     def select_Facialparts(self):#, selected):
 
-        action_list = ['bool_action1', 'bool_action2', 'bool_action3', 'bool_action4', 'bool_action5', 'bool_action6', 'bool_action7', 'bool_action8', 'bool_action9', 'bool_action10', 'bool_action11', 'bool_action12', 'bool_action13', 'bool_action14', 'bool_action15',  'bool_action16', 'bool_action17', 'bool_action18', 'bool_action19', 'bool_action20', 'bool_action21', 'bool_action22', 'bool_action23',  'bool_action24', 'bool_action25', 'bool_action26', 'bool_action27', 'bool_action28', 'bool_action29', 'bool_action30', 'bool_action31', 'bool_action32', 'bool_action33', 'bool_action34', 'bool_action35', 'bool_action36', 'bool_action38', 'bool_action39', 'bool_action40', 'bool_action41', 'bool_action42', 'bool_action43', 'bool_action44', 'bool_action45']
+        parent_list = ['bool_action1', 'bool_action2', 'bool_action3', 'bool_action4', 'bool_action5', 'bool_action6', 'bool_action7', 'bool_action8', 'bool_action9', 'bool_action10', 'bool_action11', 'bool_action12', 'bool_action13', 'bool_action14', 'bool_action15',  'bool_action16', 'bool_action17', 'bool_action18', 'bool_action19', 'bool_action20', 'bool_action21', 'bool_action22', 'bool_action23',  'bool_action24', 'bool_action25', 'bool_action26', 'bool_action27', 'bool_action28', 'bool_action29', 'bool_action30', 'bool_action31', 'bool_action32', 'bool_action33', 'bool_action34', 'bool_action35', 'bool_action36', 'bool_action38', 'bool_action39', 'bool_action40', 'bool_action41', 'bool_action42', 'bool_action43', 'bool_action44', 'bool_action45']
 
         '''selected = selected.split(',')
         sel_list = []
@@ -187,7 +188,7 @@ class EvaAPI(RigAPI):
         for i in range(0, len(ticked_actions)):
             if ticked_actions[i][1] == 1:
                 for j in range(0, len(self.initial_population)):   
-                    if ticked_actions[i][0] == action_list[j]:
+                    if ticked_actions[i][0] == parent_list[j]:
                          if eyes == True:
                              if self.initial_population[j] + '_eyes' not in self.selected_actions:
                                  self.selected_actions.append(self.initial_population[j] +'_'+'eyes') 
@@ -214,7 +215,7 @@ class EvaAPI(RigAPI):
 # A hack function: Renaming an action imported into the IGA panel would cause it to be removed from the list (though not from the blender instance).
     #def removeActions_fromIGA(self, ticked_actions):
     def removeActions_fromIGA(self):
-        action_list = ['bool_action1', 'bool_action2', 'bool_action3', 'bool_action4', 'bool_action5', 'bool_action6', 'bool_action7', 'bool_action8', 'bool_action9', 'bool_action10', 'bool_action11', 'bool_action12', 'bool_action13', 'bool_action14', 'bool_action15',  'bool_action16', 'bool_action17', 'bool_action18', 'bool_action19', 'bool_action20', 'bool_action21', 'bool_action22', 'bool_action23',  'bool_action24', 'bool_action25', 'bool_action26', 'bool_action27', 'bool_action28', 'bool_action29', 'bool_action30', 'bool_action31', 'bool_action32', 'bool_action33', 'bool_action34', 'bool_action35', 'bool_action36', 'bool_action38', 'bool_action39', 'bool_action40', 'bool_action41', 'bool_action42', 'bool_action43', 'bool_action44', 'bool_action45']
+        parent_list = ['bool_action1', 'bool_action2', 'bool_action3', 'bool_action4', 'bool_action5', 'bool_action6', 'bool_action7', 'bool_action8', 'bool_action9', 'bool_action10', 'bool_action11', 'bool_action12', 'bool_action13', 'bool_action14', 'bool_action15',  'bool_action16', 'bool_action17', 'bool_action18', 'bool_action19', 'bool_action20', 'bool_action21', 'bool_action22', 'bool_action23',  'bool_action24', 'bool_action25', 'bool_action26', 'bool_action27', 'bool_action28', 'bool_action29', 'bool_action30', 'bool_action31', 'bool_action32', 'bool_action33', 'bool_action34', 'bool_action35', 'bool_action36', 'bool_action38', 'bool_action39', 'bool_action40', 'bool_action41', 'bool_action42', 'bool_action43', 'bool_action44', 'bool_action45']
         ticked_actions_list = []
         ticked_boxes = bpy.data.scenes["Scene"].bool_actions.items()
         ticked_actions = sorted(ticked_boxes)
@@ -223,7 +224,7 @@ class EvaAPI(RigAPI):
         for i in range(0, len(ticked_actions)):
             if ticked_actions[i][1] == 1:
                 for j in range(0, len(self.initial_population)):
-                    if ticked_actions[i][0] == action_list[j]:
+                    if ticked_actions[i][0] == parent_list[j]:
                         ticked_actions_list.append(self.initial_population[j]) 
                         break
 
@@ -274,11 +275,44 @@ class EvaAPI(RigAPI):
                     break
         return 0 
 
-# A function to add/save a list of chosen actions into the current blend file. But the .blend file needs to be saved before closing in order to make the save permanent.
+# A function to add/save a list of chosen evolved actions into the current blend file. But the .blend file needs to be saved before closing in order to make the save permanent.
   
     def saveAction_IGA(self):
+
+
+        child_list = ['bool_child1', 'bool_child2', 'bool_child3', 'bool_child4', 'bool_child5', 'bool_child6', 'bool_child7', 'bool_child8', 'bool_child9', 'bool_child10', 'bool_child11', 'bool_child12', 'bool_child13', 'bool_child14', 'bool_action15',  'bool_child16', 'bool_child17', 'bool_child18', 'bool_child19', 'bool_child20', 'bool_child21', 'bool_child22', 'bool_child23',  'bool_child24', 'bool_child25', 'bool_child26', 'bool_child27', 'bool_child28', 'bool_child29', 'bool_child30', 'bool_child31', 'bool_child32', 'bool_child33', 'bool_child34', 'bool_child35', 'bool_child36', 'bool_child37', 'bool_child38', 'bool_child39', 'bool_action40',  'bool_child41', 'bool_child42', 'bool_child43', 'bool_child44', 'bool_child45', 'bool_child46', 'bool_child47', 'bool_child48',  'bool_child49', 'bool_child50', 'bool_action51', 'bool_action52', 'bool_action53', 'bool_action54', 'bool_action55', 'bool_action56', 'bool_action57', 'bool_action58', 'bool_action59', 'bool_action60', 'bool_action61', 'bool_action62', 'bool_action63', 'bool_action64', 'bool_action65',  'bool_action66', 'bool_action67', 'bool_action68', 'bool_action69', 'bool_action70', 'bool_action71', 'bool_action72', 'bool_action73',  'bool_action74', 'bool_action75', 'bool_child76', 'bool_child78', 'bool_child97', 'bool_child80', 'bool_child81', 'bool_child82', 'bool_child83', 'bool_child84', 'bool_action85',  'bool_child86', 'bool_child87', 'bool_child88', 'bool_child89', 'bool_child90', 'bool_child91', 'bool_child92', 'bool_child93',  'bool_child94', 'bool_child95', 'bool_child96', 'bool_child97', 'bool_child98', 'bool_child99', 'bool_child100', 'bool_child101', 'bool_child102', 'bool_child103', 'bool_child104', 'bool_action105',  'bool_child106', 'bool_child107', 'bool_child108', 'bool_child109', 'bool_child110', 'bool_child111', 'bool_child112', 'bool_child113',  'bool_child114', 'bool_child115', 'bool_child116', 'bool_child117', 'bool_child118', 'bool_child119', 'bool_child120', 'bool_action121',  'bool_child122', 'bool_child123', 'bool_child124', 'bool_child125', 'bool_child126', 'bool_child127', 'bool_child128', 'bool_child129',  'bool_child130', 'bool_child131', 'bool_child132', 'bool_child133', 'bool_child134', 'bool_child135', 'bool_child136', 'bool_action137',  'bool_child138', 'bool_child139', 'bool_child140', 'bool_child141', 'bool_child142', 'bool_child143', 'bool_child144', 'bool_child145',  'bool_child146', 'bool_child147', 'bool_child148',  'bool_child149', 'bool_child150']  
+
+        total_children_animations = []
+        selected_children_animations = []
+        for j, action in enumerate(bpy.data.actions):
+            if "IGA-child" in action.name:
+                total_children_animations.append(action.name)
+ 
+        total_children_animations = sorted(total_children_animations)
+        children_ticked_boxes = bpy.data.scenes["Scene"].bool_child_actions.items()
+
+        for i in range(0, len(total_children_animations)):
+            for j in range(0, len(children_ticked_boxes)):
+                if children_ticked_boxes[j][1] == 1:
+                    for bools in range(0, len(child_list)):
+                        if children_ticked_boxes[j][0] == child_list[bools]:
+                            selected_children_animations.append(total_children_animations[bools])
+                            break
+        print('selected children list')
+        print(selected_children_animations)
+        print(len(children_ticked_boxes))
+        print(len(total_children_animations))
+        for i in range(0, len(selected_children_animations)):
+            for j, action in enumerate(bpy.data.actions):
+                if action.name == selected_children_animations[i]:
+                    #bpy.data.actions[selected_children_animations[i]].use_fake_user = True
+                    bpy.data.actions[selected_children_animations[i]].name = 'GST-Evolved' + str(selected_children_animations[i][9:])
+                    bpy.data.actions['GST-Evolved' + str(selected_children_animations[i][9:])].use_fake_user = True
+                    break
+                    selected_children_animations[i] =  'Evolved' + str(selected_children_animations[i][9:])
+            
         
-        action_exists = 0
+        '''action_exists = 0
         action_names = bpy.data.scenes['Scene'].action_save_IGA # An example input may look like... IGA-amused : IGA-thoughtful : IGA-nod-1 etc.(put in the list names of evolved actions you want to be saved.)
         action_list = action_names.split(' : ') #converts text input into lists
         print (action_list)
@@ -294,7 +328,7 @@ class EvaAPI(RigAPI):
                     action_exists = 1
                     flag = 1
             if action_exists == 0:
-                print("An action named " + action_list[i] + " is not known!")
+                print("An action named " + action_list[i] + " is not known!")'''
 
 # A function to rename an action's current name to a new one   
     

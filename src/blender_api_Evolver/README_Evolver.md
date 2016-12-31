@@ -62,9 +62,14 @@ The latest generation always replaces automatically the list where the parents w
 
 **Save evolved animations:**
 
-![Image of Dynamic Reconfigure](docs/Evolver_UI_Parts/Save_actions_UI.png)
+![Image of Dynamic Reconfigure](docs/Evolver_UI_Parts/Evolved_animations_UI.png)
 
-* Users can put names of list of evolved actions they want to save permanently. In order to list of animations just follow the format provided by default in the text box and then hit the save actions button. The concept of save means that each actions will be found afterwards once the users saves ('save as' would be better) the blend file at the end of the experiment. When re-opening the blend (new one) file only the evolved actions saved through the save actions button would be found. The reason is because blender doesn't automatically save actions even if the blend file is saved.
+* Users can select list of evolved actions they want to save permanently. Once the users selects the list of animations and clicks the save buttons, in order to finalize the saving process (make it permanent within the .blend file) the .blend file needs to be saved (or 'save as' would be better, so as not to change the original .blend file) before closing the blender instance. 
+When re-opening the new blend file, the selected evolved animations would be found at the GST-actions panel with a prefix 'Evolved' appended to their names. 
+
+![Image of Dynamic Reconfigure](docs/Evolver_UI_Parts/Evolved_animations_selected_UI.png)
+
+* Sample of evolved animations merged to the GST-actions panel.
 
 **Rename animations:**
 
