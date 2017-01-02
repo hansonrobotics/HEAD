@@ -63,12 +63,12 @@ class English_Visemes(BaseVisemes):
         'A-I': ['a','aa','ai','au','ae','ah','aw','ax','ay','ey',],
         'E': ['e','e@','ei','ii','iy','ei', 'eh',],
         'F-V': ['f','v'],
-        'Q-W': ['w'],
-        'L': ['@', '@@', 'i', 'i@','ih','l', 'r', 'y', 'R'],
+        'Q-W': ['w', 'q'],
+        'L': ['@', '@@', 'i', 'i@','ih','l', 'r', 'y', 'R','rl'],
         'C-D-G-K-N-S-TH': ['ch','d','dh','g','h','hh','jh','k','n','ng','s','sh','t','th','z','zh','dx','er',],
         'M': ['b','m','p'],
-        'O': ['o','oi','oo','ou','ao','ow','oy',],
-        'U': ['u','u@','uh','uu','uw'],
+        'O': ['o','oi','oo','ou','ao','ow','oy','oh'],
+        'U': ['u','u@','uh','uu','uw','j'],
         'Sil': ['sil']
     }
 
