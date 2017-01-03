@@ -448,16 +448,8 @@ install_webui_deps() {
     fi
 }
 
-install_vision_deps() {
-    info "Installing vision dependencies"
-    mkdir -p $VISION_TOOL_PREFIX
-    apt_get_install libopencv-dev ros-indigo-opencv-apps
-
-    # Tkinter error other wise.
-    $SUDO pip2 install ${PIP_OPTS} -I Pillow
-    $SUDO pip2 install ${PIP_OPTS} imgurpython
-
-    if [[ ! -d $DLIB_PATH ]]; then
+install_dlib() {
+    if [[ ! -e $DLIB_PATH/dist/dlib/dlib.so ]]; then
       info "Installing dlib"
       # The dlib DNS server sometimes times out. Pinging it first
       # makes it much more likely that the wget will succeed.
@@ -472,6 +464,9 @@ install_vision_deps() {
       warn "Skipping dlib installation"
     fi
 
+}
+
+install_clandmarks() {
     # Install clandmarks
     if [ ! -d $CLANDMARK_DIR ]; then
       info "Installing clandmarks"
@@ -482,41 +477,42 @@ install_vision_deps() {
     else
       warn "Skipping clandmark downloading"
     fi
+}
 
-    # Install Torch
+install_torch() {
     if [ ! -d $TORCH_DIR ]; then
-      info "Installing torch"
-      git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
+        info "Installing torch"
+        git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
 
-      cd $TORCH_DIR
-      bash install-deps
-      echo no | ./install.sh
+        cd $TORCH_DIR
+        bash install-deps
+        echo no | ./install.sh
 
-      # Install lua packages in the torch file in scripts directory.
-      info "Installing lua packages"
-      cd $TORCH_DIR/install/bin
-      ./luarocks install nn
-      ./luarocks install dpnn
-      ./luarocks install image
-      ./luarocks install optim
-      ./luarocks install csvigo
-      ./luarocks install sys
-      info "Installing lua packages is done"
-      info "Installing torch is done"
+        # Install lua packages in the torch file in scripts directory.
+        info "Installing lua packages"
+        cd $TORCH_DIR/install/bin
+        ./luarocks install nn
+        ./luarocks install dpnn
+        ./luarocks install image
+        ./luarocks install optim
+        ./luarocks install csvigo
+        ./luarocks install sys
+        info "Installing lua packages is done"
+        info "Installing torch is done"
+        cd $BASEDIR
     else
-      warn "Skipping Torch installation"
+        warn "Skipping Torch installation"
     fi
+}
 
-    # Install openface
-    # Dependencies for openface
-    # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
+install_openface() {
     info "Installing openface"
+    # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
     apt_get_install python-skimage
     $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy scikit-learn
 
     if [ ! -d $OPENFACE_DIR ]; then
       info "Cloning openface"
-      #TODO a checkout verison that works with the latest.
       git clone https://github.com/hansonrobotics/openface.git $OPENFACE_DIR --recursive
     else
       warn "Skipping openface clone"
@@ -524,31 +520,41 @@ install_vision_deps() {
     info "Installing openface is done"
 
     # $OPENFACE_DIR/models/get-models.sh
-    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
     wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
     wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
-    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    if [[ ! -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ]]; then
+        wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+        bunzip2 -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2
+    fi
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat 73fde5e05226548677a050913eed4e04
     checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
     checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
     mkdir -p $OPENFACE_DIR/models/dlib
     mkdir -p $OPENFACE_DIR/models/openface
-    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${OPENFACE_DIR}/models/dlib
-    bunzip2 -f ${OPENFACE_DIR}/models/dlib/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ${OPENFACE_DIR}/models/dlib
     cp ${HR_CACHE}/nn4.small2.v1.t7 ${OPENFACE_DIR}/models/openface
     cp ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl ${OPENFACE_DIR}/models/openface
+}
 
-    # CMT and Emotime Libraries.
+install_cmt() {
     if [ ! -d $CPPMT_DIR ]; then
-      info "Cloning CppMT"
-      git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
+        info "Cloning CppMT"
+        git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
+        cd $CPPMT_DIR
+        git checkout wrapper
     else
-      warn "Skipping CppMT clone"
+        warn "Skipping CppMT clone"
     fi
-    cd $CPPMT_DIR
-    git checkout wrapper
-    cmake .
-    make -j$(nproc)
 
+    if [ ! -f $CPPMT_DIR/cmt ]; then
+        cd $CPPMT_DIR
+        cmake .
+        make -j$(nproc)
+    fi
+    cd $BASEDIR
+}
+
+install_emotime() {
     if [ ! -d $EMOTIME_DIR ]; then
       info "Cloning emotime"
       git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
@@ -558,6 +564,24 @@ install_vision_deps() {
     cd $EMOTIME_DIR/build
     cmake ..
     make -j$(nproc)
+}
+
+install_vision_deps() {
+    info "Installing vision dependencies"
+    mkdir -p $VISION_TOOL_PREFIX
+    apt_get_install libopencv-dev ros-indigo-opencv-apps
+
+    # Tkinter error other wise.
+    $SUDO pip2 install ${PIP_OPTS} -I Pillow
+    $SUDO pip2 install ${PIP_OPTS} imgurpython
+
+    install_dlib
+    install_clandmarks
+    install_torch
+    install_openface
+    install_cmt
+    install_emotime
+
     info "Installing vision dependencies is done"
 }
 
