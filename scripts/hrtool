@@ -176,6 +176,24 @@ check_apt_installed() {
     done
 }
 
+add_ppa() {
+    user=$(echo $1|cut -d: -f2|cut -d/ -f1)
+    ppa=$(echo $1|cut -d: -f2|cut -d/ -f2)
+    for file in `find /etc/apt/ -name \*.list`; do
+        set +e
+        item=$(grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $file)
+        set -e
+        USER=`echo $item | cut -d/ -f4`
+        PPA=`echo $item | cut -d/ -f5`
+        if [[ $USER == $user && $PPA == $ppa ]]; then
+            info "PPA $1 is already added"
+            return 0
+        fi
+    done
+    info $SUDO add-apt-repository -y $1
+    $SUDO add-apt-repository -y $1
+}
+
 apt_get_install() {
     if ! check_apt_installed "$@"; then
         $SUDO apt-get ${APT_GET_OPTS} install "$@" || (
@@ -241,7 +259,7 @@ install_opencog_deps() {
 
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -rdpv
+    ./octool -dpv
     rm octool
 
     # For sentiment analysis
@@ -266,18 +284,22 @@ install_relex_deps() {
     )
     apt_get_install "${pkgs[@]}"
 
-    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
-    chmod +rx octool
-    ./octool -l
-    rm octool
+    if [[ ! -e /usr/local/lib/liblink-grammar.so ]]; then
+        wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
+        chmod +rx octool
+        ./octool -l
+        rm octool
+    fi
 
     # Java WordNet Library
-    wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
-    checkmd5 ${HR_CACHE}/jwnl14-rc2.zip c1c35ce1d1590938abe48d7785f87ae0
-    unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
-    $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
-    rm -r /tmp/jwnl14-rc2
-    $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
+    if [[ ! -e /usr/local/share/java/jwnl.jar ]]; then
+        wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
+        checkmd5 ${HR_CACHE}/jwnl14-rc2.zip c1c35ce1d1590938abe48d7785f87ae0
+        unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
+        $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
+        rm -r /tmp/jwnl14-rc2
+        $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
+    fi
     info "Installing RelEX dependencies is done"
 }
 
@@ -308,7 +330,7 @@ install_pocketsphinx() {
 
 install_blender() {
     info "Installing blender"
-    $SUDO add-apt-repository -y ppa:irie/blender
+    add_ppa ppa:irie/blender
     apt_get_install blender
     info "Installing blender done"
 }
@@ -316,7 +338,7 @@ install_blender() {
 install_ffmpeg() {
     info "Installing ffmpeg"
     # For blender_api_test
-    $SUDO add-apt-repository -y ppa:mc3man/trusty-media
+    add_ppa ppa:mc3man/trusty-media
     apt_get_install ffmpeg
     info "Installing ffmpeg done"
 }
@@ -404,11 +426,16 @@ install_other_deps() {
 
 install_manyears_deps() {
     info "Installing Manyears dependencies"
-    # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
-    wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
-    checkmd5 ${HR_CACHE}/manyears.tar.gz cf8688959e6d6a7ea9cdd1167814862a
-    tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
-    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
+    if [[ ! -e $MANYEARSLIB_PREFIX/bin/libmanyears.a ]]; then
+        # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
+        wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
+        checkmd5 ${HR_CACHE}/manyears.tar.gz cf8688959e6d6a7ea9cdd1167814862a
+        mkdir -p $MANYEARSLIB_PREFIX
+        tar zxf $HR_CACHE/manyears.tar.gz --strip-components 1 -C $MANYEARSLIB_PREFIX
+        mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
+    else
+        info "Manyears is already installed"
+    fi
     info "Installing Manyears dependencies is done"
 }
 
@@ -439,16 +466,8 @@ install_webui_deps() {
     fi
 }
 
-install_vision_deps() {
-    info "Installing vision dependencies"
-    mkdir -p $VISION_TOOL_PREFIX
-    apt_get_install libopencv-dev ros-indigo-opencv-apps
-
-    # Tkinter error other wise.
-    $SUDO pip2 install ${PIP_OPTS} -I Pillow
-    $SUDO pip2 install ${PIP_OPTS} imgurpython
-
-    if [[ ! -d $DLIB_PATH ]]; then
+install_dlib() {
+    if [[ ! -e $DLIB_PATH/dist/dlib/dlib.so ]]; then
       info "Installing dlib"
       # The dlib DNS server sometimes times out. Pinging it first
       # makes it much more likely that the wget will succeed.
@@ -463,6 +482,9 @@ install_vision_deps() {
       warn "Skipping dlib installation"
     fi
 
+}
+
+install_clandmarks() {
     # Install clandmarks
     if [ ! -d $CLANDMARK_DIR ]; then
       info "Installing clandmarks"
@@ -473,41 +495,42 @@ install_vision_deps() {
     else
       warn "Skipping clandmark downloading"
     fi
+}
 
-    # Install Torch
+install_torch() {
     if [ ! -d $TORCH_DIR ]; then
-      info "Installing torch"
-      git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
+        info "Installing torch"
+        git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
 
-      cd $TORCH_DIR
-      bash install-deps
-      echo no | ./install.sh
+        cd $TORCH_DIR
+        bash install-deps
+        echo no | ./install.sh
 
-      # Install lua packages in the torch file in scripts directory.
-      info "Installing lua packages"
-      cd $TORCH_DIR/install/bin
-      ./luarocks install nn
-      ./luarocks install dpnn
-      ./luarocks install image
-      ./luarocks install optim
-      ./luarocks install csvigo
-      ./luarocks install sys
-      info "Installing lua packages is done"
-      info "Installing torch is done"
+        # Install lua packages in the torch file in scripts directory.
+        info "Installing lua packages"
+        cd $TORCH_DIR/install/bin
+        ./luarocks install nn
+        ./luarocks install dpnn
+        ./luarocks install image
+        ./luarocks install optim
+        ./luarocks install csvigo
+        ./luarocks install sys
+        info "Installing lua packages is done"
+        info "Installing torch is done"
+        cd $BASEDIR
     else
-      warn "Skipping Torch installation"
+        warn "Skipping Torch installation"
     fi
+}
 
-    # Install openface
-    # Dependencies for openface
-    # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
+install_openface() {
     info "Installing openface"
+    # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
     apt_get_install python-skimage
     $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy scikit-learn
 
     if [ ! -d $OPENFACE_DIR ]; then
       info "Cloning openface"
-      #TODO a checkout verison that works with the latest.
       git clone https://github.com/hansonrobotics/openface.git $OPENFACE_DIR --recursive
     else
       warn "Skipping openface clone"
@@ -515,31 +538,41 @@ install_vision_deps() {
     info "Installing openface is done"
 
     # $OPENFACE_DIR/models/get-models.sh
-    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
     wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
     wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
-    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    if [[ ! -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ]]; then
+        wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+        bunzip2 -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2
+    fi
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat 73fde5e05226548677a050913eed4e04
     checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
     checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
     mkdir -p $OPENFACE_DIR/models/dlib
     mkdir -p $OPENFACE_DIR/models/openface
-    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${OPENFACE_DIR}/models/dlib
-    bunzip2 -f ${OPENFACE_DIR}/models/dlib/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ${OPENFACE_DIR}/models/dlib
     cp ${HR_CACHE}/nn4.small2.v1.t7 ${OPENFACE_DIR}/models/openface
     cp ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl ${OPENFACE_DIR}/models/openface
+}
 
-    # CMT and Emotime Libraries.
+install_cmt() {
     if [ ! -d $CPPMT_DIR ]; then
-      info "Cloning CppMT"
-      git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
+        info "Cloning CppMT"
+        git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
+        cd $CPPMT_DIR
+        git checkout wrapper
     else
-      warn "Skipping CppMT clone"
+        warn "Skipping CppMT clone"
     fi
-    cd $CPPMT_DIR
-    git checkout wrapper
-    cmake .
-    make -j$(nproc)
 
+    if [ ! -f $CPPMT_DIR/cmt ]; then
+        cd $CPPMT_DIR
+        cmake .
+        make -j$(nproc)
+    fi
+    cd $BASEDIR
+}
+
+install_emotime() {
     if [ ! -d $EMOTIME_DIR ]; then
       info "Cloning emotime"
       git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
@@ -549,6 +582,24 @@ install_vision_deps() {
     cd $EMOTIME_DIR/build
     cmake ..
     make -j$(nproc)
+}
+
+install_vision_deps() {
+    info "Installing vision dependencies"
+    mkdir -p $VISION_TOOL_PREFIX
+    apt_get_install libopencv-dev ros-indigo-opencv-apps
+
+    # Tkinter error other wise.
+    $SUDO pip2 install ${PIP_OPTS} -I Pillow
+    $SUDO pip2 install ${PIP_OPTS} imgurpython
+
+    install_dlib
+    install_clandmarks
+    install_torch
+    install_openface
+    install_cmt
+    install_emotime
+
     info "Installing vision dependencies is done"
 }
 
@@ -564,7 +615,7 @@ install_marky_markov() {
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
-    $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
+    add_ppa ppa:brightbox/ruby-ng
     apt_get_install ruby2.3 ruby2.3-dev
     $SUDO gem install marky_markov
     info "Installing Marky Markov is done"
