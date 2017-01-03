@@ -176,6 +176,24 @@ check_apt_installed() {
     done
 }
 
+add_ppa() {
+    user=$(echo $1|cut -d: -f2|cut -d/ -f1)
+    ppa=$(echo $1|cut -d: -f2|cut -d/ -f2)
+    for file in `find /etc/apt/ -name \*.list`; do
+        set +e
+        item=$(grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $file)
+        set -e
+        USER=`echo $item | cut -d/ -f4`
+        PPA=`echo $item | cut -d/ -f5`
+        if [[ $USER == $user && $PPA == $ppa ]]; then
+            info "PPA $1 is already added"
+            return 0
+        fi
+    done
+    info $SUDO add-apt-repository -y $1
+    $SUDO add-apt-repository -y $1
+}
+
 apt_get_install() {
     if ! check_apt_installed "$@"; then
         $SUDO apt-get ${APT_GET_OPTS} install "$@" || (
@@ -312,7 +330,7 @@ install_pocketsphinx() {
 
 install_blender() {
     info "Installing blender"
-    $SUDO add-apt-repository -y ppa:irie/blender
+    add_ppa ppa:irie/blender
     apt_get_install blender
     info "Installing blender done"
 }
@@ -320,7 +338,7 @@ install_blender() {
 install_ffmpeg() {
     info "Installing ffmpeg"
     # For blender_api_test
-    $SUDO add-apt-repository -y ppa:mc3man/trusty-media
+    add_ppa ppa:mc3man/trusty-media
     apt_get_install ffmpeg
     info "Installing ffmpeg done"
 }
@@ -597,7 +615,7 @@ install_marky_markov() {
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
-    $SUDO apt-add-repository -y ppa:brightbox/ruby-ng
+    add_ppa ppa:brightbox/ruby-ng
     apt_get_install ruby2.3 ruby2.3-dev
     $SUDO gem install marky_markov
     info "Installing Marky Markov is done"
