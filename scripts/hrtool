@@ -241,7 +241,7 @@ install_opencog_deps() {
 
     wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
     chmod +rx octool
-    ./octool -rdpv
+    ./octool -dpv
     rm octool
 
     # For sentiment analysis
@@ -266,18 +266,22 @@ install_relex_deps() {
     )
     apt_get_install "${pkgs[@]}"
 
-    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
-    chmod +rx octool
-    ./octool -l
-    rm octool
+    if [[ ! -e /usr/local/lib/liblink-grammar.so ]]; then
+        wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
+        chmod +rx octool
+        ./octool -l
+        rm octool
+    fi
 
     # Java WordNet Library
-    wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
-    checkmd5 ${HR_CACHE}/jwnl14-rc2.zip c1c35ce1d1590938abe48d7785f87ae0
-    unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
-    $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
-    rm -r /tmp/jwnl14-rc2
-    $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
+    if [[ ! -e /usr/local/share/java/jwnl.jar ]]; then
+        wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
+        checkmd5 ${HR_CACHE}/jwnl14-rc2.zip c1c35ce1d1590938abe48d7785f87ae0
+        unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
+        $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
+        rm -r /tmp/jwnl14-rc2
+        $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
+    fi
     info "Installing RelEX dependencies is done"
 }
 
@@ -404,11 +408,16 @@ install_other_deps() {
 
 install_manyears_deps() {
     info "Installing Manyears dependencies"
-    # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
-    wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
-    checkmd5 ${HR_CACHE}/manyears.tar.gz cf8688959e6d6a7ea9cdd1167814862a
-    tar zxf $HR_CACHE/manyears.tar.gz -C $HR_PREFIX
-    mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
+    if [[ ! -e $MANYEARSLIB_PREFIX/bin/libmanyears.a ]]; then
+        # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
+        wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
+        checkmd5 ${HR_CACHE}/manyears.tar.gz cf8688959e6d6a7ea9cdd1167814862a
+        mkdir -p $MANYEARSLIB_PREFIX
+        tar zxf $HR_CACHE/manyears.tar.gz --strip-components 1 -C $MANYEARSLIB_PREFIX
+        mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
+    else
+        info "Manyears is already installed"
+    fi
     info "Installing Manyears dependencies is done"
 }
 
