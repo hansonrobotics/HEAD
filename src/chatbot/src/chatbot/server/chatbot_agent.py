@@ -347,6 +347,9 @@ def _ask_characters(characters, question, lang, sid, query):
                     else:
                         cross_trace.append((c.id, 'priority', 'Pass through'))
                         cached_responses['pass'].append((response, _answer, c))
+                elif response.get('repeat'):
+                    cross_trace.append((c.id, 'priority', 'Repetitive answer'))
+                    cached_responses['repeat'].append((response, response.get('repeat'), c))
                 else:
                     cross_trace.append((c.id, 'priority', 'No answer'))
             elif _answer:
