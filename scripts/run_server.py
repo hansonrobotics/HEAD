@@ -171,8 +171,14 @@ def _set_weights():
     data = request.args
     lang = data.get('lang', None)
     param = data.get('param')
-    session = data.get('session')
-    ret, response = set_weights(param, lang, session)
+    sid = data.get('session')
+    ret, response = set_weights(param, lang, sid)
+    if ret:
+        sess = session_manager.get_session(sid)
+        if sess and hasattr(sess.sdata, 'weights'):
+            logger.info("Set weights {} successfully".format(sess.sdata.weights))
+    else:
+        logger.info("Set weights failed.")
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 
