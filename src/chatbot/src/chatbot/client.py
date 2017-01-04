@@ -64,6 +64,7 @@ class Client(cmd.Cmd, object):
         self.last_response = None
         self.timer = None
         self.timeout = None
+        self.weights = None
         if self.ping():
             self.do_conn()
         else:
@@ -116,6 +117,7 @@ class Client(cmd.Cmd, object):
         else:
             self.session = session
             self.stdout.write("Init session {}\n".format(self.session))
+        self.set_weights(self.weights)
 
     @retry(3)
     def ask(self, question, query=False):
@@ -338,6 +340,9 @@ For example, port 8001
             self.stdout.write('\n')
             if not ret:
                 self.help_rw()
+                logger.warn("Set weights failed")
+            else:
+                logger.warn("Set weights successfully")
         except Exception as ex:
             self.stdout.write('{}\n'.format(ex))
 
@@ -345,6 +350,13 @@ For example, port 8001
         chatbots = self.list_chatbot()
         weights = {c: w for c, w, l, d in chatbots}
         return weights
+
+    def set_weights(self, weights):
+        self.weights = weights
+        if weights is not None:
+            self.do_rw(weights)
+        else:
+            self.do_rw('reset')
 
     def help_rw(self):
         s = """

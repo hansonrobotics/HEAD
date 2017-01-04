@@ -267,19 +267,25 @@ class Chatbot():
         self.mute = config.mute
         tiers = config.groups.groups.Weights.parameters.keys()
         tiers.remove('reset')
+        logger.info(config)
         if not config.reset:
             try:
-                param = ','.join(
+                weights = ','.join(
                     ['{}={}'.format(id, config.get(id)) for id in tiers]
                 )
-                self.client.do_rw(param)
+                self.client.set_weights(weights)
+                logger.info("Set weights {}".format(self.client.weights))
             except Exception as ex:
                 logger.error(ex)
 
         if config.reset:
             try:
-                self.client.do_rw('reset')
+                self.client.set_weights(None)
                 weights = self.client.get_weights()
+                if not weights:
+                    logger.error("Can't get weights from server")
+                else:
+                    logger.info("Get weights {}".format(weights))
                 for id in tiers:
                     if id in weights:
                         setattr(config, id, weights[id])

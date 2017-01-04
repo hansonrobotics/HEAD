@@ -95,14 +95,8 @@ def list_character(lang, sid):
     if sess is None:
         return []
     characters = get_responding_characters(lang, sid)
-    if hasattr(sess.sdata, 'weights') and sess.sdata.weights:
-        weights = []
-        for c in characters:
-            weights.append(sess.sdata.weights.get(c.id) or 0)
-        return [(c.id, w, c.level, c.dynamic_level) for c, w in zip(
-                    characters, weights)]
-    else:
-        return [(c.id, c.weight, c.level, c.dynamic_level) for c in characters]
+    weights = get_weights(characters, sess)
+    return [(c.id, w, c.level, c.dynamic_level) for c, w in zip(characters, weights)]
 
 
 def list_character_names():
@@ -137,6 +131,18 @@ def set_weights(param, lang, sid):
 
     sess.sdata.weights = weights
     return True, "Weights are updated"
+
+def get_weights(characters, sess):
+    weights = []
+    if hasattr(sess.sdata, 'weights') and sess.sdata.weights:
+        for c in characters:
+            if c.id in sess.sdata.weights:
+                weights.append(sess.sdata.weights.get(c.id))
+            else:
+                weights.append(c.weight)
+    else:
+        weights = [c.weight for c in characters]
+    return weights
 
 def set_context(prop, sid):
     sess = session_manager.get_session(sid)
@@ -195,13 +201,9 @@ def _ask_characters(characters, question, lang, sid, query):
     data = sess.get_session_data()
     user = getattr(data, 'user')
     botname = getattr(data, 'botname')
-    weights = []
-    if hasattr(data, 'weights') and data.weights:
-        for c in characters:
-            weights.append(data.weights.get(c.id) or 0)
-    else:
-        weights = [c.weight for c in characters]
+    weights = get_weights(characters, sess)
     weighted_characters = zip(characters, weights)
+    logger.info("Weights {}".format(weighted_characters))
 
     _question = preprocessing(question)
     response = {}
