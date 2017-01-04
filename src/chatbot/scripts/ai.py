@@ -193,7 +193,6 @@ class Chatbot():
         logger.info("Get response {}".format(response))
         text = response.get('text')
         emotion = response.get('emotion')
-        botid = response.get('botid')
 
         # Add space after punctuation for multi-sentence responses
         text = text.replace('?', '? ')
