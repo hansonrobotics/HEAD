@@ -13,5 +13,8 @@ HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 if __name__ == '__main__':
     logging.basicConfig()
     logging.getLogger().setLevel(logging.WARN)
-    client = Client(HR_CHATBOT_AUTHKEY)
+    if len(sys.argv)>1:
+        client = Client(HR_CHATBOT_AUTHKEY, botname=sys.argv[1])
+    else:
+        client = Client(HR_CHATBOT_AUTHKEY)
     client.cmdloop()
