@@ -696,11 +696,16 @@ def reload_characters(**kwargs):
 def rebuild_cs_character(**kwargs):
     with sync:
         try:
-            for c in CHARACTERS:
+            botname=kwargs.get('botname')
+            characters=get_characters_by_name(botname)
+            if not characters:
+                logger.error("Can't find CS tier for {}".format(botname))
+            for c in characters:
                 if c.id == 'cs' and hasattr(c, 'rebuild'):
                     log = c.rebuild()
                     if 'ERROR SUMMARY' in log:
                         logger.error(log[log.index('ERROR SUMMARY'):])
+                    logger.info("Rebuilding chatscript for {} successfully".format(botname))
         except Exception as ex:
             logger.error("Rebuilding chatscript characters error {}".format(ex))
 
