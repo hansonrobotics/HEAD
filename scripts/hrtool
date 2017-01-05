@@ -311,7 +311,7 @@ install_relex_deps() {
 
     # Java WordNet Library
     if [[ ! -e /usr/local/share/java/jwnl.jar ]]; then
-        wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
+        wget_cache $GITHUB_STORAGE_URL/jwnl14-rc2.zip
         checkmd5 ${HR_CACHE}/jwnl14-rc2.zip c1c35ce1d1590938abe48d7785f87ae0
         unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
         $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
@@ -508,7 +508,7 @@ install_clandmarks() {
     # Install clandmarks
     if [ ! -d $CLANDMARK_DIR ]; then
       info "Installing clandmarks"
-      wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/clandmark.tar.bz2
+      wget_cache $GITHUB_STORAGE_URL/clandmark.tar.bz2
       mkdir -p $CLANDMARK_DIR
       tar -xf $HR_CACHE/clandmark.tar.bz2 -C $CLANDMARK_DIR --strip-components=1
       info "Installing clandmarks is done"
@@ -630,7 +630,7 @@ install_marky_markov() {
     else
       warn "Skipping marky_markov clone"
     fi
-    wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/markov_modeling.tar.gz
+    wget_cache $GITHUB_STORAGE_URL/markov_modeling.tar.gz
     checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
