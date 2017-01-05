@@ -180,6 +180,14 @@ curl_cache() {
 
     info "Downloading $1 is done"
 }
+
+timeit() {
+    local start=$(date +%s.%N)
+    $@
+    local elapsed=$(echo "$(date +%s.%N)-$start" | bc)
+    info "Time used $elapsed"
+}
+
 ### COMMON FUNCTIONS END ###
 
 check_apt_installed() {
@@ -839,18 +847,18 @@ _do_install_deps() {
         $SUDO mkdir -p $HR_PREFIX
     fi
     $SUDO chmod 777 $HR_PREFIX
-    install_basic
-    install_ros
-    install_opencog_deps
-    install_vision_deps
-    install_manyears_deps
-    install_webui_deps
-    install_blender
-    install_ffmpeg
-    install_tts
-    install_pocketsphinx
-    install_other_deps
-    get_models
+    timeit install_basic
+    timeit install_ros
+    timeit install_opencog_deps
+    timeit install_vision_deps
+    timeit install_manyears_deps
+    timeit install_webui_deps
+    timeit install_blender
+    timeit install_ffmpeg
+    timeit install_tts
+    timeit install_pocketsphinx
+    timeit install_other_deps
+    timeit get_models
 
     wget_cache https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/patch/rosbridge.patch
     $SUDO patch -N /opt/ros/indigo/lib/python2.7/dist-packages/rosbridge_library/internal/publishers.py ${HR_CACHE}/rosbridge.patch || true
@@ -1305,4 +1313,4 @@ if [[ ! $BASH_SOURCE == $0 ]]; then return; fi
 
 if [ $# -eq 0 ] ; then show_help; exit 0; fi
 
-execute $@
+timeit execute $@
