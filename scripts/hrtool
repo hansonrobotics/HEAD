@@ -15,6 +15,7 @@ PROJECT=${PROJECT:-HEAD}
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=($PROJECT)
 GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
+declare -A MD5SUMS
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
@@ -125,7 +126,7 @@ checkmd5() {
         error "$FNAME md5sum did not match."
         error "Expected: $EXPECTED"
         error "Actual: $ACTUAL"
-        rm $FNAME && warn "$FNAME is removed"
+        mv ${FNAME} ${FNAME}.old && warn "$FNAME is removed"
         return 1
     fi
 }
@@ -135,6 +136,23 @@ wget_cache() {
     ofile=${2-${url##*/}}
     info "Downloading $1"
     [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+
+    # check md5sum
+    local sum=${MD5SUMS[$ofile]}
+    local retry=1
+    if [[ ! -z $sum ]]; then
+        while (( $retry >= 0 )); do
+            if checkmd5 ${HR_CACHE}/${ofile} $sum; then
+                break
+            fi
+            retry=$((retry-1))
+            echo $retry
+            if (( $retry >= 0 )); then
+                wget ${url} -O ${HR_CACHE}/${ofile}
+            fi
+        done
+    fi
+
     info "Downloading $1 is done"
 }
 
@@ -143,6 +161,23 @@ curl_cache() {
     ofile=${2-${url##*/}}
     info "Downloading $1"
     [[ -f ${HR_CACHE}/${ofile} ]] || curl -L ${url} -o ${HR_CACHE}/${ofile}
+
+    # check md5sum
+    local sum=${MD5SUMS[$ofile]}
+    local retry=1
+    if [[ ! -z $sum ]]; then
+        while (( $retry >= 0 )); do
+            if checkmd5 ${HR_CACHE}/${ofile} $sum; then
+                break
+            fi
+            retry=$((retry-1))
+            echo $retry
+            if (( $retry >= 0 )); then
+                curl -L ${url} -o ${HR_CACHE}/${ofile}
+            fi
+        done
+    fi
+
     info "Downloading $1 is done"
 }
 ### COMMON FUNCTIONS END ###
@@ -278,8 +313,8 @@ install_opencog_deps() {
 install_link_grammar() {
     info "Installing Link-Grammar"
 
+    MD5SUMS["link-grammar-5.3.13.tar.gz"]=d519ff9f404bbda5bfe229839272d91c
     wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.13.tar.gz
-    checkmd5 ${HR_CACHE}/link-grammar-5.3.13.tar.gz d519ff9f404bbda5bfe229839272d91c
 
     rm -rf /tmp/link-grammar-5.3.13
     tar -zxf ${HR_CACHE}/link-grammar-5.3.13.tar.gz -C /tmp
@@ -311,8 +346,8 @@ install_relex_deps() {
 
     # Java WordNet Library
     if [[ ! -e /usr/local/share/java/jwnl.jar ]]; then
+        MD5SUMS["jwnl14-rc2.zip"]=c1c35ce1d1590938abe48d7785f87ae0
         wget_cache $GITHUB_STORAGE_URL/jwnl14-rc2.zip
-        checkmd5 ${HR_CACHE}/jwnl14-rc2.zip c1c35ce1d1590938abe48d7785f87ae0
         unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
         $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
         rm -r /tmp/jwnl14-rc2
@@ -328,10 +363,10 @@ install_pocketsphinx() {
     fi
     info "Installing Pocketsphinx"
     apt_get_install bison automake
+    MD5SUMS["sphinxbase-1.0.0.tar.gz"]=df69f72b19abd943cfc4b51ec30a3b29
+    MD5SUMS["pocketsphinx-1.0.0.tar.gz"]=b94bf391c22b6dd4c86a8c112aa62f48
     wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
-    checkmd5 ${HR_CACHE}/sphinxbase-1.0.0.tar.gz df69f72b19abd943cfc4b51ec30a3b29
     wget_cache https://github.com/hansonrobotics/pocketsphinx/archive/v1.0.0.tar.gz pocketsphinx-1.0.0.tar.gz
-    checkmd5 ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz b94bf391c22b6dd4c86a8c112aa62f48
 
     tar zxf ${HR_CACHE}/sphinxbase-1.0.0.tar.gz -C /tmp
     cd /tmp/sphinxbase-1.0.0
@@ -369,8 +404,8 @@ install_tts() {
     mkdir -p ~/.hr/tts/festival/voices
     # Install female voice
     if [[ ! -f ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz ]]; then
+        MD5SUMS["festvox_cmu_us_slt_arctic_hts.tar.gz"]=a9b53441968f6bc612b85c04bbc4cf0f
         wget_cache http://festvox.org/packed/festival/2.1/festvox_cmu_us_slt_arctic_hts.tar.gz
-        checkmd5 ${HR_CACHE}/festvox_cmu_us_slt_arctic_hts.tar.gz a9b53441968f6bc612b85c04bbc4cf0f
         cp ${HR_CACHE}/festvox_cmu_us_slt_arctic_hts.tar.gz $HOME/.hr/tts/festival/voices
     fi
     tar zxf ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz -C /tmp
@@ -379,8 +414,8 @@ install_tts() {
 
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
+    MD5SUMS["marytts-5.1.2.zip"]=99e774dd4c6e791ad916ae76351522f0
     wget_cache https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
-    checkmd5 ${HR_CACHE}/marytts-5.1.2.zip 99e774dd4c6e791ad916ae76351522f0
     unzip -qod ~/.hr/tts/marytts ${HR_CACHE}/marytts-5.1.2.zip
 }
 
@@ -446,8 +481,8 @@ install_manyears_deps() {
     info "Installing Manyears dependencies"
     if [[ ! -e $MANYEARSLIB_PREFIX/bin/libmanyears.a ]]; then
         # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
+        MD5SUMS["manyears.tar.gz"]=cf8688959e6d6a7ea9cdd1167814862a
         wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
-        checkmd5 ${HR_CACHE}/manyears.tar.gz cf8688959e6d6a7ea9cdd1167814862a
         mkdir -p $MANYEARSLIB_PREFIX
         tar zxf $HR_CACHE/manyears.tar.gz --strip-components 1 -C $MANYEARSLIB_PREFIX
         mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
@@ -492,8 +527,8 @@ install_dlib() {
       # The dlib DNS server sometimes times out. Pinging it first
       # makes it much more likely that the wget will succeed.
       ping -c 5 dlib.net
+      MD5SUMS["dlib-${DLIB_VERSION}.tar.bz2"]=da930a35c2aa88612dd2ebf893f48f60
       wget_cache http://dlib.net/files/dlib-${DLIB_VERSION}.tar.bz2
-      checkmd5 ${HR_CACHE}/dlib-${DLIB_VERSION}.tar.bz2 da930a35c2aa88612dd2ebf893f48f60 # md5sum for dlib-19.0
       mkdir -p $DLIB_PATH
       tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
       cd $DLIB_PATH && python setup.py build
@@ -508,6 +543,7 @@ install_clandmarks() {
     # Install clandmarks
     if [ ! -d $CLANDMARK_DIR ]; then
       info "Installing clandmarks"
+      MD5SUMS["clandmark.tar.bz2"]=0d1eb90bad2c02fb38aed4e464555f02
       wget_cache $GITHUB_STORAGE_URL/clandmark.tar.bz2
       mkdir -p $CLANDMARK_DIR
       tar -xf $HR_CACHE/clandmark.tar.bz2 -C $CLANDMARK_DIR --strip-components=1
@@ -558,14 +594,15 @@ install_openface() {
     info "Installing openface is done"
 
     # $OPENFACE_DIR/models/get-models.sh
+    MD5SUMS["nn4.small2.v1.t7"]=c95bfd8cc1adf05210e979ff623013b6
+    MD5SUMS["celeb-classifier.nn4.small2.v1.pkl"]=199a2c0d32fd0f22f14ad2d248280475
+    MD5SUMS["shape_predictor_68_face_landmarks.dat.bz2"]=677a91476056de0507f1915adc7ef86a
     wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
     wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
     if [[ ! -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ]]; then
         wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
         bunzip2 -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2
     fi
-    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat 73fde5e05226548677a050913eed4e04
-    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
     checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
     mkdir -p $OPENFACE_DIR/models/dlib
     mkdir -p $OPENFACE_DIR/models/openface
@@ -630,8 +667,8 @@ install_marky_markov() {
     else
       warn "Skipping marky_markov clone"
     fi
+    MD5SUMS["markov_modeling.tar.gz"]=7d51bbcd4df89b2633bd9520fb99b2b7
     wget_cache $GITHUB_STORAGE_URL/markov_modeling.tar.gz
-    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
@@ -870,8 +907,8 @@ do_build_hr() {
 
 pack_hr() {
     if [[ ! -d makeself ]]; then
+        MD5SUMS["makeself-2.2.0.tar.gz"]=8075530b2ad0a2fbd4bffa80a96eb2ea
         wget_cache https://github.com/megastep/makeself/archive/release-2.2.0.tar.gz makeself-2.2.0.tar.gz
-        checkmd5 ${HR_CACHE}/makeself-2.2.0.tar.gz 8075530b2ad0a2fbd4bffa80a96eb2ea
         mkdir -p makeself
         tar zxf ${HR_CACHE}/makeself-2.2.0.tar.gz -C makeself --strip-components 1
     fi
