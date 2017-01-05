@@ -14,6 +14,7 @@ HR_VERSION=0.1.2
 PROJECT=${PROJECT:-HEAD}
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=($PROJECT)
+GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
@@ -274,6 +275,26 @@ install_opencog_deps() {
     info "Installing OpenCog dependencies is done"
 }
 
+install_link_grammar() {
+    info "Installing Link-Grammar"
+
+    wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.13.tar.gz
+    checkmd5 ${HR_CACHE}/link-grammar-5.3.13.tar.gz d519ff9f404bbda5bfe229839272d91c
+
+    rm -rf /tmp/link-grammar-5.3.13
+    tar -zxf ${HR_CACHE}/link-grammar-5.3.13.tar.gz -C /tmp
+    mkdir -p /tmp/link-grammar-5.3.13/build
+    cd /tmp/link-grammar-5.3.13/build
+    JAVA_HOME=/usr/lib/jvm/default-java
+    ../configure
+    make -j$(nproc)
+    $SUDO make install
+    $SUDO ldconfig
+    rm -rf /tmp/link-grammar-5.3.13
+    cd $BASEDIR
+    info "Installing Link-Grammar done"
+}
+
 install_relex_deps() {
     info "Installing RelEX dependencies"
     local pkgs=(
@@ -285,10 +306,7 @@ install_relex_deps() {
     apt_get_install "${pkgs[@]}"
 
     if [[ ! -e /usr/local/lib/liblink-grammar.so ]]; then
-        wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
-        chmod +rx octool
-        ./octool -l
-        rm octool
+        install_link_grammar
     fi
 
     # Java WordNet Library
