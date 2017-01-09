@@ -128,7 +128,7 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 if (!self.timelinesView || !self.timelinesView.readonly)
                     self.updateTimeline();
 
-                self.timelinesView.moveIndicator(self.getItemStartTime(item) + 0.02);
+                self.timelinesView.moveIndicator(self.getItemStartTime(item));
             });
 
             $('.app-play', el).click(function (e) {
@@ -235,14 +235,14 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             this.listenTo(this.timelinesView, 'running', function (time) {
                 let offset = 0;
                 _.find(self.queue, function (item) {
-                    offset += item.model.getDuration();
-                    let found = time < offset;
+                    let found = time <= offset;
 
                     if (found && !$(item.el).hasClass('active')) {
                         self.ui.queue.find('.app-performance').removeClass('active');
                         $(item.el).addClass('active');
                     }
 
+                    offset += item.model.getDuration();
                     return found;
                 })
             });
