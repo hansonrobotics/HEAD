@@ -235,14 +235,14 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
             this.listenTo(this.timelinesView, 'running', function (time) {
                 let offset = 0;
                 _.find(self.queue, function (item) {
-                    let found = time <= offset;
+                    offset += item.model.getDuration();
+                    let found = time < offset;
 
                     if (found && !$(item.el).hasClass('active')) {
                         self.ui.queue.find('.app-performance').removeClass('active');
                         $(item.el).addClass('active');
                     }
 
-                    offset += item.model.getDuration();
                     return found;
                 })
             });

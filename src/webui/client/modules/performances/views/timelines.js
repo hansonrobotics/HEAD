@@ -561,7 +561,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             moveIndicator: function (time) {
                 if (!this.running || this.paused) {
                     this.ui.runIndicator.css('left', time * this.config.pxPerSec);
-                    this.updateIndicatorTime();
+                    this.updateIndicatorTime(time);
                 }
             },
             run: function (startTime, options) {
