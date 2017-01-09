@@ -41,7 +41,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 options = options || {};
                 api.services.performances.current.callService({}, function (response) {
                     response.performances = JSON.parse(response.performances);
-                    self.nodes.reset(self.mergeNodes(response.performances));
+                    self.nodes.set(self.mergeNodes(response.performances));
 
                     if (typeof options.success == 'function')
                         options.success(response);
@@ -55,7 +55,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 this.disableSync();
                 this.syncCallback = function (msg) {
                     let performances = JSON.parse(msg.data);
-                    self.nodes.reset(self.mergeNodes(performances));
+                    self.nodes.set(self.mergeNodes(performances));
                     if (typeof callback == 'function') callback(performances);
                 };
 
@@ -91,7 +91,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 }, function (response) {
                     if (response.success) {
                         response.performances = JSON.parse(response.performances);
-                        self.nodes.reset(self.mergeNodes(response.performances));
+                        self.nodes.set(self.mergeNodes(response.performances));
 
                         if (typeof options.success == 'function')
                             options.success(response);

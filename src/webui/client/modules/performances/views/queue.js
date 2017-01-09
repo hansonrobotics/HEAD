@@ -83,13 +83,17 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
 
                     let ids = _.map(response['performances'], 'id');
                     self.showSequence(ids, true);
-
-                    // fetch full info for performances in the sequence
-                    _.each(ids, function (id) {
-                        let p = self.performances.get(id);
-                        if (p.nodes.isEmpty()) p.fetch();
-                    });
+                    self.fetchPerformances(ids);
                 }
+            });
+        },
+        fetchPerformances: function (ids) {
+            let self = this;
+
+            // fetch full info for performances in the sequence
+            _.each(ids, function (id) {
+                let p = self.performances.get(id);
+                if (p && p.nodes.isEmpty()) p.fetch();
             });
         },
         editPerformance: function (performance, options) {
@@ -159,11 +163,14 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
                 self.updateTimeline();
             });
 
+            this.fetchPerformances([performance.get('id')]);
+
             if (!skipTimelineUpdate) this.updateTimeline();
         },
         updateTimeline: function (options) {
+            let ids = this._getPerformanceIds();
             this.timelinesView = this._showTimeline(_.extend({
-                sequence: this._getPerformanceIds(),
+                sequence: ids,
                 readonly: true
             }, options || {}));
         },

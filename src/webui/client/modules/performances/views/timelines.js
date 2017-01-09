@@ -438,7 +438,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             sortPerformances: function () {
                 this.performances.sort();
             },
-            savePerformances: function (options) {
+            savePerformances: function () {
                 let self = this,
                     path = '';
 
