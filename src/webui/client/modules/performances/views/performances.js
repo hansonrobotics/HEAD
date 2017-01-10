@@ -116,8 +116,8 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 return str.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" );
             },
             addAll: function () {
-                let self = this;
-                let added = false;
+                let self = this,
+                    added = false;
 
                 if (this.autoplay) self.queueView.clearQueue();
 
