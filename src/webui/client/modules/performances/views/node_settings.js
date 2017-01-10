@@ -64,14 +64,20 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 if (this.model.hasProperty('blender_mode')) this.ui.kfModeSelect.val(this.model.get('blender_mode'));
                 if (this.model.hasProperty('message')) this.ui.messageInput.val(this.model.get('message'));
                 if (this.model.hasProperty('attention_region')) this.selectAttentionRegion();
-
+                this.updateButtons();
+            },
+            updateButtons: function () {
                 if (this.collection.contains(this.model))
                     this.ui.createButton.hide();
                 else
                     this.ui.createButton.fadeIn();
             },
             onAttach: function () {
-                var self = this;
+                let self = this;
+
+                this.listenTo(this.collection, 'add remove', function (model) {
+                    if (self.model === model) self.updateButtons();
+                });
 
                 this.properties = this.model.getConfig().properties;
 
