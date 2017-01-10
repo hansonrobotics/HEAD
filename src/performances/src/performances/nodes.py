@@ -71,7 +71,8 @@ class Node(object):
     def run(self, run_time):
         # ignore the finished nodes
         if self.finished:
-            return False
+            # don't start but mark as running if node should be running
+            return self.start_time < run_time < self.end_time()
         if self.started:
             # Time to finish:
             if run_time >= self.end_time():
