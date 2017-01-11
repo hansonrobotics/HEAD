@@ -55,6 +55,7 @@ class Session(object):
     def add(self, question, answer, **kwargs):
         if not self.closed:
             self.cache.add(question, answer, **kwargs)
+            self.dump()
             self.last_active_time = self.cache.last_time
             self.active = True
             return True
@@ -246,6 +247,7 @@ class ChatSessionManager(SessionManager):
     def dump(self, sid):
         fname = None
         sess = self._sessions.get(sid)
-        if sess and sess.dump():
+        if sess:
+            sess.dump()
             fname = sess.dump_file
         return fname

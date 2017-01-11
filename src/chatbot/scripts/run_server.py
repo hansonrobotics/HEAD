@@ -318,7 +318,7 @@ def _dump_session():
         sid = data.get('session')
         fname = dump_session(sid)
         session_manager.remove_session(sid)
-        if fname:
+        if fname is not None and os.path.isfile(fname):
             return send_from_directory(os.path.dirname(fname), os.path.basename(fname))
         else:
             return '', 404

@@ -11,6 +11,7 @@ class ResponseCache(object):
 
     def __init__(self):
         self.record = []
+        self.cursor = 0
         self.index = defaultdict(list)
         self.last_question = None
         self.last_answer = None
@@ -21,6 +22,7 @@ class ResponseCache(object):
         del self.record[:]
         del self.index
         self.record = []
+        self.cursor = 0
         self.index = defaultdict(list)
         self.last_question = None
         self.last_answer = None
@@ -89,9 +91,10 @@ class ResponseCache(object):
         return records
 
     def dump(self, fname):
-        if not self.record:
-            logger.debug("Nothing to dump")
+        if self.cursor >= len(self.record):
+            logger.warn("Nothing to dump")
             return False
+
         header = ['Datetime', 'Question', 'Answer', 'Rate']
         for k in self.record[0].keys():
             if k not in header:
@@ -102,8 +105,10 @@ class ResponseCache(object):
             os.makedirs(dirname)
         with open(fname, 'a') as f:
             writer = csv.DictWriter(f, header, extrasaction='ignore')
-            writer.writeheader()
-            writer.writerows(self.record)
+            if self.cursor == 0:
+                writer.writeheader()
+            writer.writerows(self.record[self.cursor:])
+            self.cursor = len(self.record)
             logger.info("Dumpped chat history to {}".format(fname))
             return True
         return False
