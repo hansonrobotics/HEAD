@@ -185,7 +185,7 @@ timeit() {
     local start=$(date +%s.%N)
     $@
     local elapsed=$(echo "$(date +%s.%N)-$start" | bc)
-    info "Time used $elapsed"
+    info "Command \"$1\", time used $elapsed"
 }
 
 ### COMMON FUNCTIONS END ###
@@ -1272,22 +1272,22 @@ execute() {
             check_ws
         fi
     fi
-    if [[ $INSTALL_DEPENDENCIES ]]; then do_install_deps; fi
-    if [[ $GET_HR_SOURCE_CODE ]]; then do_get_hr_src; fi
-    if [[ $GET_SOURCE_CODE ]]; then do_get_src; fi
-    if [[ $DEVELOPER_MODE ]]; then do_dev_mode ; fi
-    if [[ $UPDATE_HR_SOURCE_CODE ]]; then do_update_hr ; fi
-    if [[ $UPDATE_SOURCE_CODE ]]; then do_update ; fi
-    if [[ $CLEANUP ]]; then do_clean_up ; fi
-    if [[ $BUILD_HR_SOURCE_CODE ]]; then do_build_hr; fi
-    if [[ $UPDATE_VISION_CODE ]]; then do_update_vision_tools; fi
-    if [[ $BUILD_SOURCE_CODE ]]; then do_build; fi
-    if [[ $RUN_TESTS ]]; then do_test; fi
+    if [[ $INSTALL_DEPENDENCIES ]]; then timeit do_install_deps; fi
+    if [[ $GET_HR_SOURCE_CODE ]]; then timeit do_get_hr_src; fi
+    if [[ $GET_SOURCE_CODE ]]; then timeit do_get_src; fi
+    if [[ $DEVELOPER_MODE ]]; then timeit do_dev_mode ; fi
+    if [[ $UPDATE_HR_SOURCE_CODE ]]; then timeit do_update_hr ; fi
+    if [[ $UPDATE_SOURCE_CODE ]]; then timeit do_update ; fi
+    if [[ $CLEANUP ]]; then timeit do_clean_up ; fi
+    if [[ $BUILD_HR_SOURCE_CODE ]]; then timeit do_build_hr; fi
+    if [[ $UPDATE_VISION_CODE ]]; then timeit do_update_vision_tools; fi
+    if [[ $BUILD_SOURCE_CODE ]]; then timeit do_build; fi
+    if [[ $RUN_TESTS ]]; then timeit do_test; fi
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
-    if [[ $BUILD_SINGLE_PKG ]]; then do_single_package $CUSTOM_FUNCTIONS ; fi
-    if [[ $RUN_CUSTOM_FUNCTIONS ]]; then $CUSTOM_FUNCTIONS $CUSTOM_FUNCTIONS_ARGS; fi
-    if [[ $MIGRATE ]]; then do_migrate ; fi
-    if [[ $BUILD_PACKAGE ]]; then do_build_package ; fi
+    if [[ $BUILD_SINGLE_PKG ]]; then timeit do_single_package $CUSTOM_FUNCTIONS ; fi
+    if [[ $RUN_CUSTOM_FUNCTIONS ]]; then timeit $CUSTOM_FUNCTIONS $CUSTOM_FUNCTIONS_ARGS; fi
+    if [[ $MIGRATE ]]; then timeit do_migrate ; fi
+    if [[ $BUILD_PACKAGE ]]; then timeit do_build_package ; fi
 }
 
 ### Main ###
@@ -1313,4 +1313,4 @@ if [[ ! $BASH_SOURCE == $0 ]]; then return; fi
 
 if [ $# -eq 0 ] ; then show_help; exit 0; fi
 
-timeit execute $@
+execute $@
