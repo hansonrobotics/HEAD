@@ -71,7 +71,8 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                     this.ui.createButton.fadeIn();
             },
             onAttach: function () {
-                var self = this;
+                let self = this,
+                    settings = this.model.getSettings();
 
                 this.properties = this.model.getConfig().properties;
 
@@ -104,11 +105,11 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                     this.ui.speedSlider.slider({
                         range: 'min',
                         animate: true,
-                        min: 50,
-                        max: 200,
+                        min: settings.hasOwnProperty('speed') ? settings.speed[0] * 100 : 50,
+                        max: settings.hasOwnProperty('speed') ? settings.speed[1] * 100 : 200,
                         value: this.model.get('speed') * 100,
                         slide: function (e, ui) {
-                            var speed = ui.value / 100;
+                            let speed = ui.value / 100;
                             self.model.set('speed', speed);
                             self.ui.speedLabel.html(speed.toFixed(2));
                         }
@@ -135,11 +136,11 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                     this.ui.pitchSlider.slider({
                         range: 'min',
                         animate: true,
-                        min: 0,
-                        max: 150,
+                        min: settings.hasOwnProperty('pitch') ? settings.pitch[0] * 100 : 0,
+                        max: settings.hasOwnProperty('pitch') ? settings.pitch[1] * 100 : 150,
                         value: this.model.get('pitch') * 100,
                         slide: function (e, ui) {
-                            var pitch = ui.value / 100;
+                            let pitch = ui.value / 100;
                             self.model.set('pitch', pitch);
                             self.ui.pitchLabel.html(pitch.toFixed(2));
                         }
@@ -174,6 +175,8 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
 
                     // init slider
                     this.ui.magnitudeSlider.slider({
+                        min: settings.hasOwnProperty('magnitude') ? settings.magnitude[0] * 100 : 0,
+                        max: settings.hasOwnProperty('magnitude') ? settings.magnitude[1] * 100 : 100,
                         animate: true,
                         range: true,
                         values: magnitude,
