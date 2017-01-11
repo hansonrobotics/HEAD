@@ -15,6 +15,7 @@ from chatbot.server.session import SessionManager
 HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 SLACKBOT_API_TOKEN = os.environ.get('SLACKBOT_API_TOKEN')
 SLACKTEST_TOKEN = os.environ.get('SLACKTEST_TOKEN')
+CHATBOT_SERVER_URL = os.environ.get('CHATBOT_SERVER_URL', 'http://localhost:8001')
 
 logger = logging.getLogger('hr.chatbot.slackclient')
 
@@ -119,7 +120,8 @@ class HRSlackBot(object):
                     if session is not None:
                         session.sdata.client = client
                         session.sdata.channel = channel
-                        self.info(channel, "Session {}".format(session.sid))
+                        self.info(channel, "Session <{url}/v1.1/session_history?session={sid}&Auth={auth}|{sid}>".format(
+                            url=CHATBOT_SERVER_URL, sid=session.sid, auth=HR_CHATBOT_AUTHKEY))
                     else:
                         self.error(channel, "Can't get session")
                         continue
