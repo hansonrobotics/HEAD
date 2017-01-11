@@ -14,7 +14,6 @@ class AudioSensor(object):
     def __init__(self):
         self.pub = rospy.Publisher(
             'audio_sensors', audiodata, queue_size=1)
-        rospy.Subscriber('speech_audio', UInt8MultiArray, self.audio_cb)
         self.d = deque(maxlen=5)
         self.freqs = deque(maxlen=5)
         self.rate = rospy.get_param('audio_rate', 16000)
@@ -26,6 +25,7 @@ class AudioSensor(object):
         self.vad_lo_freq = 85
         self.vad_hi_freq = 255
         self.vad_decibel = 75
+        rospy.Subscriber('speech_audio', UInt8MultiArray, self.audio_cb)
 
     def convData(self, V):
         # Converts Stream (which is in byte format) to List of +ve and -ve
