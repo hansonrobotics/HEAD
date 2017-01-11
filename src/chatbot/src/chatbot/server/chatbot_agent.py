@@ -614,6 +614,7 @@ def ask(question, lang, sid, query=False):
     if RESET_SESSION_BY_HELLO and question:
         question = question.lower().strip()
         if 'hi' in question or 'hello' in question:
+            session_manager.dump(sid)
             session_manager.reset_session(sid)
             logger.info("Session is cleaned by hi")
     if question and question.lower().strip() in ["what's new"]:
