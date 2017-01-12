@@ -39,7 +39,23 @@ class BaseVisemes:
             if v is not None:
                 visemes.append(v)
         logger.debug("Get visemes {}".format(visemes))
+        self.expand_m_visems(visemes)
         return visemes
+
+    def expand_m_visems(self, visemes):
+        """
+            Let M last longer to close the mouth
+        """
+        ids = [i for i, v in enumerate(visemes) if v['name']=='M']
+        logger.info('Before visemes {}'.format(visemes))
+        logger.info('ids of M {}'.format(ids))
+        for id in ids:
+            if id < (len(visemes)-1):
+                t = visemes[id+1]['duration']/2
+                visemes[id]['duration'] += t
+                visemes[id+1]['start'] += t
+                visemes[id+1]['duration'] -= t
+        logger.info('After visemes {}'.format(visemes))
 
     def get_viseme(self, ph):
         try:
