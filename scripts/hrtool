@@ -686,6 +686,23 @@ install_marky_markov() {
     info "Installing Marky Markov is done"
 }
 
+install_calib_tools() {
+    MD5SUMS["maestro-linux-150116.tar.gz"]=84feed740c0695bb0eea13ccf7988b97
+    wget_cache $GITHUB_STORAGE_URL/maestro-linux-150116.tar.gz
+    mkdir -p ${HR_PREFIX}/maestro
+    tar zxf ${HR_CACHE}/maestro-linux-150116.tar.gz -C ${HR_PREFIX}/maestro --strip-components 1
+    apt_get_install libusb-1.0-0-dev mono-runtime libmono-winforms2.0-cil
+    $SUDO cp ${HR_PREFIX}/maestro/99-pololu.rules /etc/udev/rules.d/
+    $SUDO udevadm control --reload-rules
+
+    MD5SUMS["mx_calib"]=5e34a64564df92c116f027a9ff48a11b
+    wget_cache $GITHUB_STORAGE_URL/mx_calib
+    if [[ ! -f ${HR_PREFIX}/mx_calib ]]; then
+        cp ${HR_CACHE}/mx_calib ${HR_PREFIX}
+    fi
+    chmod +x ${HR_PREFIX}/mx_calib
+}
+
 get_models() {
     _get_models
 }
@@ -857,6 +874,7 @@ _do_install_deps() {
     timeit install_ffmpeg
     timeit install_tts
     timeit install_pocketsphinx
+    timeit install_calib_tools
     timeit install_other_deps
     timeit get_models
 
