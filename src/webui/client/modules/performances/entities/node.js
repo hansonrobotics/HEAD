@@ -39,7 +39,11 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                 gesture: {
                     label: 'Animation',
                     properties: ['speed', 'animation', 'magnitude'],
-                    defaultValues: {speed: 1, magnitude: [0.9, 1]}
+                    defaultValues: {speed: 1, magnitude: [0.9, 1]},
+                    settings: {
+                        speed: [0.2, 2],
+                        magnitude: [0.2, 3]
+                    }
                 },
                 head_rotation: {
                     label: 'Head Tilt',
@@ -54,17 +58,27 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                 speech: {
                     label: 'Speech',
                     properties: ['language', 'speed', 'pitch', 'volume', 'text'],
-                    defaultValues: {speed: 1, pitch: 1, volume: 1, text: ''}
+                    defaultValues: {speed: 0.7                                                                                                                                                                                                                                                                                                                                                              , pitch: 1, volume: 1, text: ''},
+                    settings: {
+                        speed: [0.3, 0.7],
+                        pitch: [0.8, 1.2]
+                    }
                 },
                 look_at: {
                     label: 'Look at',
                     properties: ['attention_region', 'duration', 'crosshair', 'speed', 'interval'],
-                    defaultValues: {speed: 1, interval: 1}
+                    defaultValues: {speed: 1, interval: 1},
+                    settings: {
+                        speed: [0.1, 2]
+                    }
                 },
                 gaze_at: {
                     label: 'Gaze at',
                     properties: ['attention_region', 'duration', 'crosshair', 'speed', 'interval'],
-                    defaultValues: {speed: 1, interval: 1}
+                    defaultValues: {speed: 1, interval: 1},
+                    settings: {
+                        speed: [0.1, 2]
+                    }
                 },
                 pause: {
                     label: 'Break',
@@ -115,8 +129,11 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                 this.removeEl();
             },
             getConfig: function () {
-                var name = this.get('name');
-                return this.config[name] || this.config['default'];
+                return this.config[this.get('name')] || this.config['default'];
+            },
+            getSettings: function () {
+                let config = this.getConfig();
+                return config.hasOwnProperty('settings') ? config.settings : {};
             },
             hasProperty: function (property) {
                 return _.includes(this.getConfig().properties, property);
