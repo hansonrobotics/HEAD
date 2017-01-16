@@ -570,7 +570,8 @@ class attention(Node):
 
     # returns random coordinate from the region
     def get_point(self, region):
-        regions = rospy.get_param('/' + self.runner.robot_name + "/attention_regions")
+        regions = rospy.get_param(
+            '/' + os.path.join(self.runner.robot_name, "webui/performances", os.path.dirname(self.id), "properties/regions"), [])
         regions = [{'x': r['x'], 'y': r['y'] - r['height'], 'width': r['width'], 'height': r['height']} for r in regions
                    if r['type'] == region]
 
@@ -625,8 +626,9 @@ class settings(Node):
             cl.close()
         except:
             pass
+
     def set_variables(self, params):
-        for k,v in params.items():
+        for k, v in params.items():
             if isinstance(v, basestring):
                 params[k] = self.replace_variables_text(v)
             else:
