@@ -220,6 +220,14 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 if (! this.duration) this.updateDuration();
                 return this.duration;
             },
+            getDescription: function () {
+                let desc = '';
+                this.nodes.forEach(function (node) {
+                    if (node.get('name') === 'speech')
+                        desc += node.get('text') + ' ';
+                });
+                return desc.trim();
+            },
             handleEvents: function (msg) {
                 if (msg.event = 'paused') {
                     this.trigger('pause', msg.time);
