@@ -1,0 +1,7 @@
+<launch>
+
+<param name="gallery_dir" value="$(find face_id)/gallery_dir"/>
+<param name="gallery_info_file" value="$(find face_id)/gallery_dir/gallery_info.txt"/>
+<param name="haarcascade_frontalface_alt" value="$(find face_id)/haarcascade/haarcascade_frontalface_alt.xml"/>
+<node pkg="face_id" name="face_id_node" type="face_id_node" output="screen"/>
+</launch>
