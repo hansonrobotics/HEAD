@@ -529,6 +529,26 @@ install_webui_deps() {
     fi
 }
 
+install_openbiometrics() {
+    apt_get_install --force-yes qt5-default libqt5svg5-dev
+    if [[ ! -d ${HR_PREFIX}/vision/openbr ]]; then
+        mkdir -p ${HR_PREFIX}/vision
+        cd ${HR_PREFIX}/vision
+        git clone https://github.com/biometrics/openbr.git
+        cd ${HR_PREFIX}/vision/openbr
+        git checkout v1.1.0
+        git submodule init
+        git submodule update
+
+        mkdir -p ${HR_PREFIX}/vision/openbr/build
+        cd ${HR_PREFIX}/vision/openbr/build
+        cmake -DCMAKE_BUILD_TYPE=Release ..
+        make -j4
+        $SUDO make install
+        cd ${HR_WORKSPACE}
+    fi
+}
+
 install_dlib() {
     if [[ ! -e $DLIB_PATH/dist/dlib/dlib.so ]]; then
       info "Installing dlib"
