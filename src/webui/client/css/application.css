@@ -24,6 +24,12 @@ body {
     padding: 7px 16px;
 }
 
+.btn-sm {
+    height: 31px;
+    font-size: 13px;
+    line-height: 13px;
+}
+
 .input-group-addon,
 .btn-default {
     border: #5b6777 1px solid;

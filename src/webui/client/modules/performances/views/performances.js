@@ -112,8 +112,8 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 let zero = places - num.toString().length + 1;
                 return Array(+(zero > 0 && zero)).join("0") + num;
             },
-            escape: function(str) {
-                return str.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" );
+            escape: function (str) {
+                return str.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
             },
             addAll: function () {
                 let self = this,
@@ -177,16 +177,34 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     .attr('aria-hidden', 'true'), true);
 
                 addNewTab.click(function (e, ui) {
+                    addNewTab.hide();
                     let input = $('<input>').addClass('form-control input-sm'),
-                        newTab = $('<li>').addClass('app-new-dir').html(input);
+                        okButton = $('<button/>', {class: 'btn-sm btn btn-primary'}).html('OK'),
+                        container = $('<div/>', {class: 'form-inline'}).append($('<div/>', {class: 'form-group'})
+                            .append(input)).append(okButton),
+                        newTab = $('<li>').addClass('app-new-dir').html(container);
                     input.focusout(function () {
-                        let dir = $(this).val();
-                        if (dir) {
-                            self.createdDirs.push(self.joinPaths(self.currentPath, dir));
-                            self.updateTabs();
-                        }
-                        newTab.remove();
+                        setTimeout(function () {
+                            if (!input.is(':focus')) {
+                                newTab.fadeOut(300, function () {
+                                    addNewTab.fadeIn(300);
+                                    $(newTab).remove();
+                                });
+                            }
+                        }, 500);
                     });
+
+                    okButton.click(function () {
+                        let dir = $(input).val().trim();
+                        if (dir) {
+                            dir = self.joinPaths(self.currentPath, dir);
+                            self.createdDirs.push(dir);
+                            self.switchDir(dir);
+                        } else {
+                            input.focus();
+                        }
+                    });
+
                     $(this).before(newTab);
                     input.focus();
                 });
