@@ -58,9 +58,9 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                 speech: {
                     label: 'Speech',
                     properties: ['language', 'speed', 'pitch', 'volume', 'text'],
-                    defaultValues: {speed: 0.7                                                                                                                                                                                                                                                                                                                                                              , pitch: 1, volume: 1, text: ''},
+                    defaultValues: {speed: 1, pitch: 1, volume: 1, text: ''},
                     settings: {
-                        speed: [0.3, 0.7],
+                        speed: [0.7, 1.2],
                         pitch: [0.8, 1.2]
                     }
                 },
