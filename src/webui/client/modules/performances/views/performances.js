@@ -67,6 +67,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
 
                 this.collection.add(this.newestPerformance);
                 this.trigger('new', this.newestPerformance);
+                this.ui.addAllButton.fadeIn();
             },
             getNextName: function (names, defaultPrefix) {
                 let self = this,
@@ -297,7 +298,13 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 this.updateTabs();
             },
             updateVisiblePerformances: function (dir) {
-                $('.app-performance-button:not(.ui-draggable-dragging)', this.$el).hide().filter('[data-path="' + dir + '"]').fadeIn();
+                let performances = $('.app-performance-button:not(.ui-draggable-dragging)', this.$el).hide().filter('[data-path="' + dir + '"]');
+                if (performances.length) {
+                    performances.fadeIn();
+                    this.ui.addAllButton.fadeIn();
+                } else {
+                    this.ui.addAllButton.hide();
+                }
             },
             joinPaths: function (path1, path2) {
                 return _.compact(_.union((path1 || '').split('/'), (path2 || '').split('/'))).join('/');
