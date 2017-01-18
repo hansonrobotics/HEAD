@@ -37,6 +37,7 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+OPENBR_DIR=$VISION_TOOL_PREFIX/openbr
 CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
@@ -531,17 +532,17 @@ install_webui_deps() {
 
 install_openbiometrics() {
     apt_get_install --force-yes qt5-default libqt5svg5-dev
-    if [[ ! -d ${HR_PREFIX}/vision/openbr ]]; then
-        mkdir -p ${HR_PREFIX}/vision
-        cd ${HR_PREFIX}/vision
+    if [[ ! -d ${OPENBR_DIR} ]]; then
+        mkdir -p ${OPENBR_DIR}
+        cd ${OPENBR_DIR}/..
         git clone https://github.com/biometrics/openbr.git
-        cd ${HR_PREFIX}/vision/openbr
+        cd ${OPENBR_DIR}
         git checkout v1.1.0
         git submodule init
         git submodule update
 
-        mkdir -p ${HR_PREFIX}/vision/openbr/build
-        cd ${HR_PREFIX}/vision/openbr/build
+        mkdir -p ${OPENBR_DIR}/build
+        cd ${OPENBR_DIR}/build
         cmake -DCMAKE_BUILD_TYPE=Release ..
         make -j4
         $SUDO make install
@@ -684,6 +685,7 @@ install_vision_deps() {
     install_openface
     install_cmt
     install_emotime
+    install_openbiometrics
 
     info "Installing vision dependencies is done"
 }
