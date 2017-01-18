@@ -9,6 +9,10 @@ body {
     margin-top: 52px;
 }
 
+.label.label-alt {
+    background-color: #182934;
+}
+
 .input-group-addon,
 .btn {
     color: #fff;

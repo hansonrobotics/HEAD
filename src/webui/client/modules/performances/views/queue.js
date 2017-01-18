@@ -122,41 +122,44 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
 
             this.ui.emptyNotice.slideUp();
             this.queue.push(item);
-            this.ui.queue.append(el);
 
-            $(el).click(function () {
-                if (!self.timelinesView || !self.timelinesView.readonly)
-                    self.updateTimeline();
+            if (!this.hidden) {
+                this.ui.queue.append(el);
 
-                self.timelinesView.moveIndicator(self.getItemStartTime(item));
-            });
+                $(el).click(function () {
+                    if (!self.timelinesView || !self.timelinesView.readonly)
+                        self.updateTimeline();
 
-            $('.app-play', el).click(function (e) {
-                e.stopPropagation();
-                if (!self.timelinesView || !self.timelinesView.readonly)
-                    self.updateTimeline();
-
-                self.timelinesView.run(self.getItemStartTime(item));
-            });
-
-            $('.app-remove', el).click(function (e) {
-                e.stopPropagation();
-                self._removeItem(item);
-                self.updateTimeline();
-            });
-
-            if (this.readonly)
-                $('.app-edit', el).hide();
-            else
-                $('.app-edit', el).click(function (e) {
-                    e.stopPropagation();
-                    self.stop();
-                    self._showTimeline({model: performance});
+                    self.timelinesView.moveIndicator(self.getItemStartTime(item));
                 });
-            this._updateItem(item);
-            this.listenTo(performance, 'change:name change:duration', function () {
-                self._updateItem(item);
-            });
+
+                $('.app-play', el).click(function (e) {
+                    e.stopPropagation();
+                    if (!self.timelinesView || !self.timelinesView.readonly)
+                        self.updateTimeline();
+
+                    self.timelinesView.run(self.getItemStartTime(item));
+                });
+
+                $('.app-remove', el).click(function (e) {
+                    e.stopPropagation();
+                    self._removeItem(item);
+                    self.updateTimeline();
+                });
+
+                if (this.readonly)
+                    $('.app-edit', el).hide();
+                else
+                    $('.app-edit', el).click(function (e) {
+                        e.stopPropagation();
+                        self.stop();
+                        self._showTimeline({model: performance});
+                    });
+                this._updateItem(item);
+                this.listenTo(performance, 'change:name change:duration', function () {
+                    self._updateItem(item);
+                });
+            }
 
             performance.on('destroy', function () {
                 self._removeItem(item);
@@ -265,6 +268,7 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
         },
         _updateItem: function (item) {
             $('.app-name', item.el).html(item.model.get('name'));
+            $('.app-desc', item.el).html(item.model.getDescription());
             $('.app-duration', item.el).html(item.model.getDuration().toFixed(2));
         }
     });
