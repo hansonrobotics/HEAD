@@ -552,9 +552,10 @@ install_openbiometrics() {
     apt_get_install --force-yes qt5-default libqt5svg5-dev
     install_opencv
     if [[ ! -f ${HR_PREFIX}/lib/libopenbr.so ]]; then
-        mkdir -p ${OPENBR_SRC_DIR}
-        cd ${OPENBR_SRC_DIR}/..
-        git clone https://github.com/biometrics/openbr.git
+        if [ ! -d ${OPENBR_SRC_DIR} ]; then
+            info "Cloning openbr"
+            git clone https://github.com/biometrics/openbr.git ${OPENBR_SRC_DIR}
+        fi
         cd ${OPENBR_SRC_DIR}
         git checkout v1.1.0
         git submodule init
