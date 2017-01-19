@@ -533,7 +533,7 @@ install_webui_deps() {
 }
 
 install_opencv() {
-    if [[ -f ${HR_PREFIX}/lib/libopencv_core.so ]]; then
+    if [[ ! -f ${HR_PREFIX}/lib/libopencv_core.so ]]; then
         MD5SUMS["opencv-2.4.11.zip"]=32f498451bff1817a60e1aabc2939575
         wget_cache https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip
         rm -rf /tmp/opencv-2.4.11
