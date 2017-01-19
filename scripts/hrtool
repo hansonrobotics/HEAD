@@ -533,23 +533,25 @@ install_webui_deps() {
 }
 
 install_opencv() {
-    MD5SUMS["opencv-2.4.11.zip"]=32f498451bff1817a60e1aabc2939575
-    wget_cache https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip
-    rm -rf /tmp/opencv-2.4.11
-    unzip ${HR_CACHE}/opencv-2.4.11.zip -d /tmp
-    cd /tmp/opencv-2.4.11
-    mkdir build
-    cd build
-    cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
-    $SUDO make install
-    rm -rf /tmp/opencv-2.4.11
-    cd ${HR_WORKSPACE}
+    if [[ -f ${HR_PREFIX}/lib/libopencv_core.so ]]; then
+        MD5SUMS["opencv-2.4.11.zip"]=32f498451bff1817a60e1aabc2939575
+        wget_cache https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip
+        rm -rf /tmp/opencv-2.4.11
+        unzip ${HR_CACHE}/opencv-2.4.11.zip -d /tmp
+        cd /tmp/opencv-2.4.11
+        mkdir build
+        cd build
+        cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
+        $SUDO make install
+        rm -rf /tmp/opencv-2.4.11
+        cd ${HR_WORKSPACE}
+    fi
 }
 
 install_openbiometrics() {
     apt_get_install --force-yes qt5-default libqt5svg5-dev
     install_opencv
-    if [[ ! -d ${OPENBR_SRC_DIR} ]]; then
+    if [[ ! -f ${HR_PREFIX}/lib/libopenbr.so ]]; then
         mkdir -p ${OPENBR_SRC_DIR}
         cd ${OPENBR_SRC_DIR}/..
         git clone https://github.com/biometrics/openbr.git
