@@ -37,7 +37,7 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
-OPENBR_DIR=$VISION_TOOL_PREFIX/openbr
+OPENBR_SRC_DIR=$VISION_TOOL_PREFIX/openbr
 CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
@@ -46,15 +46,16 @@ export PKG_CONFIG_PATH=${HR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
 
 # Needed for compiling
+export OpenBR_DIR=$HR_PREFIX/share/openbr/cmake
+export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:$HR_PREFIX
 export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_PREFIX/lib:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/lib
-export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:$HR_PREFIX/share/openbr/cmake
 
 INCLUDE_DIRS=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 INCLUDE_PATH=$(printf "%s:" "${INCLUDE_DIRS[@]}")
 
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_PREFIX/include:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$INCLUDE_PATH
-export LIBRARY_PATH=$LIBRARY_PATH:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src
+export LIBRARY_PATH=$LIBRARY_PATH:$HR_PREFIX/lib:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src
 export PATH=/usr/lib/ccache:$PATH
 
 ASSUME_YES=0
@@ -539,7 +540,7 @@ install_opencv() {
     cd /tmp/opencv-2.4.11
     mkdir build
     cd build
-    cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
+    cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
     $SUDO make install
     rm -rf /tmp/opencv-2.4.11
     cd ${HR_WORKSPACE}
@@ -548,17 +549,17 @@ install_opencv() {
 install_openbiometrics() {
     apt_get_install --force-yes qt5-default libqt5svg5-dev
     install_opencv
-    if [[ ! -d ${OPENBR_DIR} ]]; then
-        mkdir -p ${OPENBR_DIR}
-        cd ${OPENBR_DIR}/..
+    if [[ ! -d ${OPENBR_SRC_DIR} ]]; then
+        mkdir -p ${OPENBR_SRC_DIR}
+        cd ${OPENBR_SRC_DIR}/..
         git clone https://github.com/biometrics/openbr.git
-        cd ${OPENBR_DIR}
+        cd ${OPENBR_SRC_DIR}
         git checkout v1.1.0
         git submodule init
         git submodule update
 
-        mkdir -p ${OPENBR_DIR}/build
-        cd ${OPENBR_DIR}/build
+        mkdir -p ${OPENBR_SRC_DIR}/build
+        cd ${OPENBR_SRC_DIR}/build
         cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
         $SUDO make install
         cd ${HR_WORKSPACE}
