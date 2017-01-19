@@ -1242,6 +1242,8 @@ export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
 export MANYEARSLIB_PREFIX=$MANYEARSLIB_PREFIX
 
 export CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
+export OpenBR_DIR=$OpenBR_DIR
+
 if [[ -f $TORCH_DIR/install/bin/torch-activate ]]; then
   source $TORCH_DIR/install/bin/torch-activate
 fi
