@@ -538,7 +538,7 @@ install_opencv() {
     cd /tmp/opencv-2.4.11
     mkdir build
     cd build
-    cmake -DWITH_FFMPEG=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
+    cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
     $SUDO make install
     rm -rf /tmp/opencv-2.4.11
     cd ${HR_WORKSPACE}
