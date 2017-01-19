@@ -236,6 +236,10 @@ class expression(Node):
 
     def stop(self, run_time):
         try:
+            self.runner.topics['expression'].publish(
+                MakeFaceExpr('Neutral', self._magnitude(self.data['magnitude'])))
+            time.sleep(self.duration)
+            logger.info("Neutral expression")
             self.runner.services['head_pau_mux']("/blender_api/get_pau")
             logger.info("Call head_pau_mux topic {}".format("/blender_api/get_pau"))
         except Exception as ex:
