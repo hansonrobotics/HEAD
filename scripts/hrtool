@@ -735,10 +735,10 @@ install_calib_tools() {
 
     MD5SUMS["mx_calib"]=5e34a64564df92c116f027a9ff48a11b
     wget_cache $GITHUB_STORAGE_URL/mx_calib
-    if [[ ! -f ${HR_PREFIX}/mx_calib ]]; then
-        cp ${HR_CACHE}/mx_calib ${HR_PREFIX}
+    if [[ ! -f ${HR_PREFIX}/bin/mx_calib ]]; then
+        cp ${HR_CACHE}/mx_calib ${HR_PREFIX}/bin
+        chmod +x ${HR_PREFIX}/bin/mx_calib
     fi
-    chmod +x ${HR_PREFIX}/mx_calib
 }
 
 get_models() {
