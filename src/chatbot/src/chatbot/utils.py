@@ -89,7 +89,16 @@ def parse_weather(weather):
             prop['weather'] = weather['weather'][0]['description']
     return prop
 
+def check_online(url, port='80'):
+    try:
+        subprocess.check_call(['nc', '-z', '-w', '1', str(url), str(port)])
+    except Exception as ex:
+        logger.error(ex)
+        return False
+    return True
+
 if __name__ == '__main__':
+    logging.basicConfig()
     text = '''My mind is built using Hanson Robotics' character engine, a simulated humanlike brain that runs inside a personal computer. Within this framework, Hanson has modelled Phil's personality and emotions, allowing you to talk with Phil through me, using speech recognition, natural language understanding, and computer vision such as face recognition, and animation of the robotic muscles in my face.'''
     print len(text)
     print text
@@ -105,3 +114,5 @@ if __name__ == '__main__':
     print str_cleanup(' s.ss ')
     print str_cleanup('')
     print str_cleanup(None)
+    print check_online('google.com')
+    print check_online('duckduckgo.com', 80)
