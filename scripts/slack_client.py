@@ -5,6 +5,7 @@ import time
 import logging
 import re
 import sys
+import yaml
 
 from slackclient import SlackClient
 CWD = os.path.dirname(os.path.realpath(__file__))
@@ -52,7 +53,7 @@ def format_trace(traces):
 
 class HRSlackBot(object):
 
-    def __init__(self, host, port, botname):
+    def __init__(self, host, port, botname, config_file=None):
         self.sc = SlackClient(SLACKBOT_API_TOKEN)
         self.sc.rtm_connect()
         self.botname = botname
@@ -61,6 +62,16 @@ class HRSlackBot(object):
         self.lang = 'en'
         self.icon_url = 'https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg'
         self.session_manager = SessionManager()
+        self.config = None
+        self.weights = None
+        if config_file is not None:
+            if os.path.isfile(config_file):
+                with open(config_file) as f:
+                    self.config = yaml.load(f)
+                    if 'weights' in self.config:
+                        self.weights = ','.join(['{}={}'.format(k,v) for k, v in self.config.get('weights').iteritems()])
+            else:
+                logger.warn("Config file {} is not found".format(config_file))
 
     def send_message(self, channel, attachments):
         self.sc.api_call(
@@ -115,6 +126,8 @@ class HRSlackBot(object):
                     client = Client(HR_CHATBOT_AUTHKEY, username=name,
                         botname=self.botname, host=self.host, port=self.port,
                         response_listener=self)
+                    if self.weights is not None:
+                        client.set_weights(self.weights)
                     self.session_manager.add_session(name, self.botname, client.session)
                     session = self.session_manager.get_session(client.session)
                     if session is not None:
@@ -215,11 +228,15 @@ if __name__ == '__main__':
     host = 'localhost'
     port = 8001
     if len(sys.argv) < 2:
-        print "Usage:", sys.argv[0], "botname"
+        print "Usage:", sys.argv[0], "<botname>", "[config file]"
         sys.exit(1)
     botname = sys.argv[1]
+    if len(sys.argv) > 2:
+        config_file = sys.argv[2]
+    else:
+        config_file = None
     while True:
         try:
-            HRSlackBot(host, port, botname).run()
+            HRSlackBot(host, port, botname, config_file).run()
         except Exception as ex:
             logger.error(ex)
