@@ -178,11 +178,11 @@ class EvaAPI(RigAPI):
         head = bpy.data.scenes['Scene'].bool_facialpart.bool_head
 
 
-        ticked_boxes = bpy.data.scenes["Scene"].bool_actions.items()
+        ticked_boxes = bpy.data.scenes["Scene"].bool_parent_actions.items()
         ticked_actions = sorted(ticked_boxes)
 
         ticked_actions_list = []
-        ticked_boxes = bpy.data.scenes["Scene"].bool_actions.items()
+        ticked_boxes = bpy.data.scenes["Scene"].bool_parent_actions.items()
         ticked_actions = sorted(ticked_boxes)
         print(ticked_actions)
         for i in range(0, len(ticked_actions)):
@@ -217,7 +217,7 @@ class EvaAPI(RigAPI):
     def removeActions_fromIGA(self):
         parent_list = ['bool_action1', 'bool_action2', 'bool_action3', 'bool_action4', 'bool_action5', 'bool_action6', 'bool_action7', 'bool_action8', 'bool_action9', 'bool_action10', 'bool_action11', 'bool_action12', 'bool_action13', 'bool_action14', 'bool_action15',  'bool_action16', 'bool_action17', 'bool_action18', 'bool_action19', 'bool_action20', 'bool_action21', 'bool_action22', 'bool_action23',  'bool_action24', 'bool_action25', 'bool_action26', 'bool_action27', 'bool_action28', 'bool_action29', 'bool_action30', 'bool_action31', 'bool_action32', 'bool_action33', 'bool_action34', 'bool_action35', 'bool_action36', 'bool_action38', 'bool_action39', 'bool_action40', 'bool_action41', 'bool_action42', 'bool_action43', 'bool_action44', 'bool_action45']
         ticked_actions_list = []
-        ticked_boxes = bpy.data.scenes["Scene"].bool_actions.items()
+        ticked_boxes = bpy.data.scenes["Scene"].bool_parent_actions.items()
         ticked_actions = sorted(ticked_boxes)
         print (ticked_boxes)
         inc = 0
