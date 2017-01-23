@@ -17,6 +17,7 @@ HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 SLACKBOT_API_TOKEN = os.environ.get('SLACKBOT_API_TOKEN')
 SLACKTEST_TOKEN = os.environ.get('SLACKTEST_TOKEN')
 CHATBOT_SERVER_URL = os.environ.get('CHATBOT_SERVER_URL', 'http://localhost:8001')
+URL_PREFIX = os.environ.get('URL_PREFIX', "http://localhost:8001")
 
 logger = logging.getLogger('hr.chatbot.slackclient')
 
@@ -24,7 +25,6 @@ def format_trace(traces):
     pattern = re.compile(
         r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
     line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
-    urlprefix = "https://github.com/hansonrobotics/character_dev/blob/update"
     formated_traces = []
     for name, stage, trace in traces:
         subtraces = trace.split('\n')
@@ -40,9 +40,9 @@ def format_trace(traces):
                 pline = line_pattern.match(ploc).group('line')
 
                 p = '<{urlprefix}/{fname}#L{pline}|{pname} {ploc}>'.format(
-                    pname=pname, urlprefix=urlprefix, fname=fname, pline=pline, ploc=ploc)
+                    pname=pname, urlprefix=URL_PREFIX, fname=fname, pline=pline, ploc=ploc)
                 t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
-                    urlprefix=urlprefix, fname=fname, tline=tline, tloc=tloc)
+                    urlprefix=URL_PREFIX, fname=fname, tline=tline, tloc=tloc)
                 formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
                 formated_subtraces.append(formated_trace)
             else:
