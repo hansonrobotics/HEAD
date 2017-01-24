@@ -83,13 +83,17 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
 
                     let ids = _.map(response['performances'], 'id');
                     self.showSequence(ids, true);
-
-                    // fetch full info for performances in the sequence
-                    _.each(ids, function (id) {
-                        let p = self.performances.get(id);
-                        if (p.nodes.isEmpty()) p.fetch();
-                    });
+                    self.fetchPerformances(ids);
                 }
+            });
+        },
+        fetchPerformances: function (ids) {
+            let self = this;
+
+            // fetch full info for performances in the sequence
+            _.each(ids, function (id) {
+                let p = self.performances.get(id);
+                if (p && p.nodes.isEmpty()) p.fetch();
             });
         },
         editPerformance: function (performance, options) {
@@ -118,52 +122,58 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
 
             this.ui.emptyNotice.slideUp();
             this.queue.push(item);
-            this.ui.queue.append(el);
 
-            $(el).click(function () {
-                if (!self.timelinesView || !self.timelinesView.readonly)
-                    self.updateTimeline();
+            if (!this.hidden) {
+                this.ui.queue.append(el);
 
-                self.timelinesView.moveIndicator(self.getItemStartTime(item) + 0.02);
-            });
+                $(el).click(function () {
+                    if (!self.timelinesView || !self.timelinesView.readonly)
+                        self.updateTimeline();
 
-            $('.app-play', el).click(function (e) {
-                e.stopPropagation();
-                if (!self.timelinesView || !self.timelinesView.readonly)
-                    self.updateTimeline();
-
-                self.timelinesView.run(self.getItemStartTime(item));
-            });
-
-            $('.app-remove', el).click(function (e) {
-                e.stopPropagation();
-                self._removeItem(item);
-                self.updateTimeline();
-            });
-
-            if (this.readonly)
-                $('.app-edit', el).hide();
-            else
-                $('.app-edit', el).click(function (e) {
-                    e.stopPropagation();
-                    self.stop();
-                    self._showTimeline({model: performance});
+                    self.timelinesView.moveIndicator(self.getItemStartTime(item));
                 });
-            this._updateItem(item);
-            this.listenTo(performance, 'change:name change:duration', function () {
-                self._updateItem(item);
-            });
+
+                $('.app-play', el).click(function (e) {
+                    e.stopPropagation();
+                    if (!self.timelinesView || !self.timelinesView.readonly)
+                        self.updateTimeline();
+
+                    self.timelinesView.run(self.getItemStartTime(item));
+                });
+
+                $('.app-remove', el).click(function (e) {
+                    e.stopPropagation();
+                    self._removeItem(item);
+                    self.updateTimeline();
+                });
+
+                if (this.readonly)
+                    $('.app-edit', el).hide();
+                else
+                    $('.app-edit', el).click(function (e) {
+                        e.stopPropagation();
+                        self.stop();
+                        self._showTimeline({model: performance});
+                    });
+                this._updateItem(item);
+                this.listenTo(performance, 'change:name change:duration', function () {
+                    self._updateItem(item);
+                });
+            }
 
             performance.on('destroy', function () {
                 self._removeItem(item);
                 self.updateTimeline();
             });
 
+            this.fetchPerformances([performance.get('id')]);
+
             if (!skipTimelineUpdate) this.updateTimeline();
         },
         updateTimeline: function (options) {
+            let ids = this._getPerformanceIds();
             this.timelinesView = this._showTimeline(_.extend({
-                sequence: this._getPerformanceIds(),
+                sequence: ids,
                 readonly: true
             }, options || {}));
         },
@@ -258,6 +268,7 @@ define(['marionette', 'backbone', './templates/queue.tpl', './timelines', 'under
         },
         _updateItem: function (item) {
             $('.app-name', item.el).html(item.model.get('name'));
+            $('.app-desc', item.el).html(item.model.getDescription());
             $('.app-duration', item.el).html(item.model.getDuration().toFixed(2));
         }
     });

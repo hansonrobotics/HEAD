@@ -333,7 +333,7 @@ def _ask_characters(characters, question, lang, sid, query):
     # Try the first tier to see if there is good match
     if not answer:
         c, weight = weighted_characters[0]
-        if c.type == TYPE_AIML and weight != 0:
+        if c.id == botname and weight != 0:
             _response = c.respond(_question, lang, sess, query=True)
             _answer = str_cleanup(_response.get('text', ''))
             if _response.get('exact_match') or _response.get('ok_match'):
@@ -614,6 +614,7 @@ def ask(question, lang, sid, query=False):
     if RESET_SESSION_BY_HELLO and question:
         question = question.lower().strip()
         if 'hi' in question or 'hello' in question:
+            session_manager.dump(sid)
             session_manager.reset_session(sid)
             logger.info("Session is cleaned by hi")
     if question and question.lower().strip() in ["what's new"]:

@@ -5,6 +5,7 @@ import time
 import logging
 import re
 import sys
+import yaml
 
 from slackclient import SlackClient
 CWD = os.path.dirname(os.path.realpath(__file__))
@@ -15,6 +16,8 @@ from chatbot.server.session import SessionManager
 HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 SLACKBOT_API_TOKEN = os.environ.get('SLACKBOT_API_TOKEN')
 SLACKTEST_TOKEN = os.environ.get('SLACKTEST_TOKEN')
+CHATBOT_SERVER_URL = os.environ.get('CHATBOT_SERVER_URL', 'http://localhost:8001')
+URL_PREFIX = os.environ.get('URL_PREFIX', "http://localhost:8001")
 
 logger = logging.getLogger('hr.chatbot.slackclient')
 
@@ -22,7 +25,6 @@ def format_trace(traces):
     pattern = re.compile(
         r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
     line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
-    urlprefix = "https://github.com/hansonrobotics/character_dev/blob/update"
     formated_traces = []
     for name, stage, trace in traces:
         subtraces = trace.split('\n')
@@ -38,9 +40,9 @@ def format_trace(traces):
                 pline = line_pattern.match(ploc).group('line')
 
                 p = '<{urlprefix}/{fname}#L{pline}|{pname} {ploc}>'.format(
-                    pname=pname, urlprefix=urlprefix, fname=fname, pline=pline, ploc=ploc)
+                    pname=pname, urlprefix=URL_PREFIX, fname=fname, pline=pline, ploc=ploc)
                 t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
-                    urlprefix=urlprefix, fname=fname, tline=tline, tloc=tloc)
+                    urlprefix=URL_PREFIX, fname=fname, tline=tline, tloc=tloc)
                 formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
                 formated_subtraces.append(formated_trace)
             else:
@@ -51,7 +53,7 @@ def format_trace(traces):
 
 class HRSlackBot(object):
 
-    def __init__(self, host, port, botname):
+    def __init__(self, host, port, botname, config_file=None):
         self.sc = SlackClient(SLACKBOT_API_TOKEN)
         self.sc.rtm_connect()
         self.botname = botname
@@ -60,6 +62,16 @@ class HRSlackBot(object):
         self.lang = 'en'
         self.icon_url = 'https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg'
         self.session_manager = SessionManager()
+        self.config = None
+        self.weights = None
+        if config_file is not None:
+            if os.path.isfile(config_file):
+                with open(config_file) as f:
+                    self.config = yaml.load(f)
+                    if 'weights' in self.config:
+                        self.weights = ','.join(['{}={}'.format(k,v) for k, v in self.config.get('weights').iteritems()])
+            else:
+                logger.warn("Config file {} is not found".format(config_file))
 
     def send_message(self, channel, attachments):
         self.sc.api_call(
@@ -114,12 +126,15 @@ class HRSlackBot(object):
                     client = Client(HR_CHATBOT_AUTHKEY, username=name,
                         botname=self.botname, host=self.host, port=self.port,
                         response_listener=self)
+                    if self.weights is not None:
+                        client.set_weights(self.weights)
                     self.session_manager.add_session(name, self.botname, client.session)
                     session = self.session_manager.get_session(client.session)
                     if session is not None:
                         session.sdata.client = client
                         session.sdata.channel = channel
-                        self.info(channel, "Session {}".format(session.sid))
+                        self.info(channel, "Session <{url}/v1.1/session_history?session={sid}&Auth={auth}|{sid}>".format(
+                            url=CHATBOT_SERVER_URL, sid=session.sid, auth=HR_CHATBOT_AUTHKEY))
                     else:
                         self.error(channel, "Can't get session")
                         continue
@@ -173,6 +188,8 @@ class HRSlackBot(object):
                     session = self.session_manager.get_session(client.session)
                     session.sdata.client = client
                     session.sdata.channel = channel
+                    self.info(channel, "Session <{url}/v1.1/session_history?session={sid}&Auth={auth}|{sid}>".format(
+                        url=CHATBOT_SERVER_URL, sid=session.sid, auth=HR_CHATBOT_AUTHKEY))
                     logger.info("Session is updated")
 
     def on_response(self, sid, response):
@@ -211,11 +228,15 @@ if __name__ == '__main__':
     host = 'localhost'
     port = 8001
     if len(sys.argv) < 2:
-        print "Usage:", sys.argv[0], "botname"
+        print "Usage:", sys.argv[0], "<botname>", "[config file]"
         sys.exit(1)
     botname = sys.argv[1]
+    if len(sys.argv) > 2:
+        config_file = sys.argv[2]
+    else:
+        config_file = None
     while True:
         try:
-            HRSlackBot(host, port, botname).run()
+            HRSlackBot(host, port, botname, config_file).run()
         except Exception as ex:
             logger.error(ex)

@@ -47,7 +47,7 @@
     height: 21px;
     width: 21px;
     padding: 2px;
-    margin: 0 0 0 5px;
+    margin: 0;
     position: relative;
 }
 
@@ -211,30 +211,6 @@
     -webkit-border-radius: 4px 4px 4px 4px;
 }
 
-.app-performance-template {
-    display: none;
-}
-
-li.app-performance.active,
-li.app-performance:hover,
-li.app-performance:focus {
-    cursor: pointer;
-    border: solid 1px #5cb85c !important;
-    background-color: #323F48 !important;
-}
-
-li.app-performance .app-play,
-li.app-performance .app-remove,
-li.app-performance .app-edit {
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-}
-
-.app-performance-queue .ui-state-highlight {
-    height: 38px;
-}
-
 .app-time-axis {
     height: 20px;
     cursor: pointer;
@@ -346,10 +322,10 @@ textarea.form-control.app-node-text {
     position: relative;
     white-space: nowrap;
     overflow: hidden;
-    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox;      /* TWEENER - IE 10 */
-    display: -webkit-flex;     /* NEW - Chrome */
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */
     display: flex;
 }
 
@@ -599,4 +575,53 @@ textarea.form-control.app-node-text {
 
 .app-settings-tab-content {
     padding-top: 10px;
+}
+
+
+.app-performance-template {
+    display: none;
+}
+
+li.app-performance:not(.app-performance-template) {
+    display: flex;
+    justify-content: space-between;
+}
+
+li.app-performance.active,
+li.app-performance:hover,
+li.app-performance:focus {
+    cursor: pointer;
+    border: solid 1px #5cb85c !important;
+    background-color: #323F48 !important;
+}
+
+li.app-performance .app-play,
+li.app-performance .app-remove,
+li.app-performance .app-edit {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.app-performance-queue .ui-state-highlight {
+    height: 38px;
+}
+
+.app-performance .button-container {
+    padding-left: 10px;
+}
+
+.app-performance .button-container,
+.app-performance .controls-container {
+    flex-shrink: 0;
+}
+
+.app-performance .app-description-container {
+    white-space: nowrap;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+.app-performance .app-description-container .app-name {
+    margin: 0 10px;
 }

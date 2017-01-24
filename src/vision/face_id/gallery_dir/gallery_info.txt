@@ -1,0 +1,8 @@
+Ben_Goertzel.jpg,ben
+ben2.jpg,ben
+ben3.jpg,ben
+ben4.jpg,ben
+ben5.jpg,ben
+David_Hanson.jpg,david
+dh2.jpg,david
+dh3.jpg,david
