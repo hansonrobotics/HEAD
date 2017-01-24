@@ -71,7 +71,8 @@ class Node(object):
     def run(self, run_time):
         # ignore the finished nodes
         if self.finished:
-            return False
+            # don't start but mark as running if node should be running
+            return self.start_time < run_time < self.end_time()
         if self.started:
             # Time to finish:
             if run_time >= self.end_time():
@@ -235,6 +236,10 @@ class expression(Node):
 
     def stop(self, run_time):
         try:
+            self.runner.topics['expression'].publish(
+                MakeFaceExpr('Neutral', self._magnitude(self.data['magnitude'])))
+            time.sleep(self.duration)
+            logger.info("Neutral expression")
             self.runner.services['head_pau_mux']("/blender_api/get_pau")
             logger.info("Call head_pau_mux topic {}".format("/blender_api/get_pau"))
         except Exception as ex:
@@ -569,7 +574,8 @@ class attention(Node):
 
     # returns random coordinate from the region
     def get_point(self, region):
-        regions = rospy.get_param('/' + self.runner.robot_name + "/attention_regions")
+        regions = rospy.get_param(
+            '/' + os.path.join(self.runner.robot_name, "webui/performances", os.path.dirname(self.id), "properties/regions"), [])
         regions = [{'x': r['x'], 'y': r['y'] - r['height'], 'width': r['width'], 'height': r['height']} for r in regions
                    if r['type'] == region]
 
@@ -624,8 +630,9 @@ class settings(Node):
             cl.close()
         except:
             pass
+
     def set_variables(self, params):
-        for k,v in params.items():
+        for k, v in params.items():
             if isinstance(v, basestring):
                 params[k] = self.replace_variables_text(v)
             else:

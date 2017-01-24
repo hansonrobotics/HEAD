@@ -318,7 +318,7 @@ def _dump_session():
         sid = data.get('session')
         fname = dump_session(sid)
         session_manager.remove_session(sid)
-        if fname:
+        if fname is not None and os.path.isfile(fname):
             return send_from_directory(os.path.dirname(fname), os.path.basename(fname))
         else:
             return '', 404
@@ -336,6 +336,25 @@ def _chat_history():
         return send_from_directory(HISTORY_DIR, os.path.basename(history_file))
     else:
         return '', 404
+
+@app.route(ROOT + '/session_history', methods=['GET'])
+@requires_auth
+def _session_history():
+    try:
+        data = request.args
+        sid = data.get('session')
+        sess = session_manager.get_session(sid)
+        fname = sess.dump_file
+        if fname is not None and os.path.isfile(fname):
+            return send_from_directory(
+                os.path.dirname(fname),
+                os.path.basename(fname),
+                mimetype='text/plain')
+        else:
+            return '', 404
+    except Exception as ex:
+        logger.error("Internal error {}".format(ex))
+        return '', 500
 
 
 @app.route(ROOT + '/ping', methods=['GET'])

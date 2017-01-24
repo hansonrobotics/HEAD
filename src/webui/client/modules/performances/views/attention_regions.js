@@ -22,7 +22,7 @@ define(['application', 'marionette', './templates/attention_regions.tpl', '../en
             },
             initialize: function (options) {
                 this.collection = new AttentionRegions();
-                this.collection.setPerformancePath(options.performancePath);
+                this.collection.setPerformancePath(options.path);
             },
             onAttach: function () {
                 var self = this;

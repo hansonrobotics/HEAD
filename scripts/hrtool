@@ -14,6 +14,8 @@ HR_VERSION=0.1.2
 PROJECT=${PROJECT:-HEAD}
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=($PROJECT)
+GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
+declare -A MD5SUMS
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
@@ -35,6 +37,7 @@ TORCH_DIR=$VISION_TOOL_PREFIX/torch
 OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
 CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
 EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+OPENBR_SRC_DIR=$VISION_TOOL_PREFIX/openbr
 CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
 MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
 DLIB_VERSION=19.0
@@ -43,14 +46,16 @@ export PKG_CONFIG_PATH=${HR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
 
 # Needed for compiling
+export OpenBR_DIR=$HR_PREFIX/share/openbr/cmake
+export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:$HR_PREFIX
 export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_PREFIX/lib:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/lib
 
 INCLUDE_DIRS=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 INCLUDE_PATH=$(printf "%s:" "${INCLUDE_DIRS[@]}")
 
-export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$INCLUDE_PATH
-export LIBRARY_PATH=$LIBRARY_PATH:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src:k
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_PREFIX/include:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$INCLUDE_PATH
+export LIBRARY_PATH=$LIBRARY_PATH:$HR_PREFIX/lib:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src
 export PATH=/usr/lib/ccache:$PATH
 
 ASSUME_YES=0
@@ -124,7 +129,7 @@ checkmd5() {
         error "$FNAME md5sum did not match."
         error "Expected: $EXPECTED"
         error "Actual: $ACTUAL"
-        rm $FNAME && warn "$FNAME is removed"
+        mv ${FNAME} ${FNAME}.old && warn "$FNAME is removed"
         return 1
     fi
 }
@@ -134,6 +139,23 @@ wget_cache() {
     ofile=${2-${url##*/}}
     info "Downloading $1"
     [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+
+    # check md5sum
+    local sum=${MD5SUMS[$ofile]}
+    local retry=1
+    if [[ ! -z $sum ]]; then
+        while (( $retry >= 0 )); do
+            if checkmd5 ${HR_CACHE}/${ofile} $sum; then
+                break
+            fi
+            retry=$((retry-1))
+            echo $retry
+            if (( $retry >= 0 )); then
+                wget ${url} -O ${HR_CACHE}/${ofile}
+            fi
+        done
+    fi
+
     info "Downloading $1 is done"
 }
 
@@ -142,8 +164,33 @@ curl_cache() {
     ofile=${2-${url##*/}}
     info "Downloading $1"
     [[ -f ${HR_CACHE}/${ofile} ]] || curl -L ${url} -o ${HR_CACHE}/${ofile}
+
+    # check md5sum
+    local sum=${MD5SUMS[$ofile]}
+    local retry=1
+    if [[ ! -z $sum ]]; then
+        while (( $retry >= 0 )); do
+            if checkmd5 ${HR_CACHE}/${ofile} $sum; then
+                break
+            fi
+            retry=$((retry-1))
+            echo $retry
+            if (( $retry >= 0 )); then
+                curl -L ${url} -o ${HR_CACHE}/${ofile}
+            fi
+        done
+    fi
+
     info "Downloading $1 is done"
 }
+
+timeit() {
+    local start=$(date +%s.%N)
+    $@
+    local elapsed=$(echo "$(date +%s.%N)-$start" | bc)
+    info "Command \"$1\", time used $elapsed"
+}
+
 ### COMMON FUNCTIONS END ###
 
 check_apt_installed() {
@@ -274,6 +321,26 @@ install_opencog_deps() {
     info "Installing OpenCog dependencies is done"
 }
 
+install_link_grammar() {
+    info "Installing Link-Grammar"
+
+    MD5SUMS["link-grammar-5.3.13.tar.gz"]=d519ff9f404bbda5bfe229839272d91c
+    wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.13.tar.gz
+
+    rm -rf /tmp/link-grammar-5.3.13
+    tar -zxf ${HR_CACHE}/link-grammar-5.3.13.tar.gz -C /tmp
+    mkdir -p /tmp/link-grammar-5.3.13/build
+    cd /tmp/link-grammar-5.3.13/build
+    JAVA_HOME=/usr/lib/jvm/default-java
+    ../configure
+    make -j$(nproc)
+    $SUDO make install
+    $SUDO ldconfig
+    rm -rf /tmp/link-grammar-5.3.13
+    cd $BASEDIR
+    info "Installing Link-Grammar done"
+}
+
 install_relex_deps() {
     info "Installing RelEX dependencies"
     local pkgs=(
@@ -285,16 +352,13 @@ install_relex_deps() {
     apt_get_install "${pkgs[@]}"
 
     if [[ ! -e /usr/local/lib/liblink-grammar.so ]]; then
-        wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
-        chmod +rx octool
-        ./octool -l
-        rm octool
+        install_link_grammar
     fi
 
     # Java WordNet Library
     if [[ ! -e /usr/local/share/java/jwnl.jar ]]; then
-        wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/jwnl14-rc2.zip
-        checkmd5 ${HR_CACHE}/jwnl14-rc2.zip c1c35ce1d1590938abe48d7785f87ae0
+        MD5SUMS["jwnl14-rc2.zip"]=c1c35ce1d1590938abe48d7785f87ae0
+        wget_cache $GITHUB_STORAGE_URL/jwnl14-rc2.zip
         unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
         $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
         rm -r /tmp/jwnl14-rc2
@@ -310,19 +374,19 @@ install_pocketsphinx() {
     fi
     info "Installing Pocketsphinx"
     apt_get_install bison automake
+    MD5SUMS["sphinxbase-1.0.0.tar.gz"]=df69f72b19abd943cfc4b51ec30a3b29
+    MD5SUMS["pocketsphinx-1.0.0.tar.gz"]=b94bf391c22b6dd4c86a8c112aa62f48
     wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
-    checkmd5 ${HR_CACHE}/sphinxbase-1.0.0.tar.gz df69f72b19abd943cfc4b51ec30a3b29
     wget_cache https://github.com/hansonrobotics/pocketsphinx/archive/v1.0.0.tar.gz pocketsphinx-1.0.0.tar.gz
-    checkmd5 ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz b94bf391c22b6dd4c86a8c112aa62f48
 
     tar zxf ${HR_CACHE}/sphinxbase-1.0.0.tar.gz -C /tmp
     cd /tmp/sphinxbase-1.0.0
-    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && $SUDO make install
     rm -r /tmp/sphinxbase-1.0.0
 
     tar zxf ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz -C /tmp
     cd /tmp/pocketsphinx-1.0.0
-    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && make install
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && $SUDO make install
     rm -r /tmp/pocketsphinx-1.0.0
     cd $BASEDIR
     info "Installing Pocketsphinx is done"
@@ -351,8 +415,8 @@ install_tts() {
     mkdir -p ~/.hr/tts/festival/voices
     # Install female voice
     if [[ ! -f ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz ]]; then
+        MD5SUMS["festvox_cmu_us_slt_arctic_hts.tar.gz"]=a9b53441968f6bc612b85c04bbc4cf0f
         wget_cache http://festvox.org/packed/festival/2.1/festvox_cmu_us_slt_arctic_hts.tar.gz
-        checkmd5 ${HR_CACHE}/festvox_cmu_us_slt_arctic_hts.tar.gz a9b53441968f6bc612b85c04bbc4cf0f
         cp ${HR_CACHE}/festvox_cmu_us_slt_arctic_hts.tar.gz $HOME/.hr/tts/festival/voices
     fi
     tar zxf ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz -C /tmp
@@ -361,8 +425,8 @@ install_tts() {
 
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
+    MD5SUMS["marytts-5.1.2.zip"]=99e774dd4c6e791ad916ae76351522f0
     wget_cache https://github.com/marytts/marytts/releases/download/v5.1.2/marytts-5.1.2.zip
-    checkmd5 ${HR_CACHE}/marytts-5.1.2.zip 99e774dd4c6e791ad916ae76351522f0
     unzip -qod ~/.hr/tts/marytts ${HR_CACHE}/marytts-5.1.2.zip
 }
 
@@ -428,8 +492,8 @@ install_manyears_deps() {
     info "Installing Manyears dependencies"
     if [[ ! -e $MANYEARSLIB_PREFIX/bin/libmanyears.a ]]; then
         # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
+        MD5SUMS["manyears.tar.gz"]=cf8688959e6d6a7ea9cdd1167814862a
         wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
-        checkmd5 ${HR_CACHE}/manyears.tar.gz cf8688959e6d6a7ea9cdd1167814862a
         mkdir -p $MANYEARSLIB_PREFIX
         tar zxf $HR_CACHE/manyears.tar.gz --strip-components 1 -C $MANYEARSLIB_PREFIX
         mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
@@ -468,14 +532,51 @@ install_webui_deps() {
     fi
 }
 
+install_opencv() {
+    if [[ ! -f ${HR_PREFIX}/lib/libopencv_core.so ]]; then
+        MD5SUMS["opencv-2.4.11.zip"]=32f498451bff1817a60e1aabc2939575
+        wget_cache https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip
+        rm -rf /tmp/opencv-2.4.11
+        unzip ${HR_CACHE}/opencv-2.4.11.zip -d /tmp
+        cd /tmp/opencv-2.4.11
+        mkdir build
+        cd build
+        cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
+        $SUDO make install
+        rm -rf /tmp/opencv-2.4.11
+        cd ${HR_WORKSPACE}
+    fi
+}
+
+install_openbiometrics() {
+    apt_get_install --force-yes qt5-default libqt5svg5-dev
+    install_opencv
+    if [[ ! -f ${HR_PREFIX}/lib/libopenbr.so ]]; then
+        if [ ! -d ${OPENBR_SRC_DIR} ]; then
+            info "Cloning openbr"
+            git clone https://github.com/biometrics/openbr.git ${OPENBR_SRC_DIR}
+        fi
+        cd ${OPENBR_SRC_DIR}
+        git checkout v1.1.0
+        git submodule init
+        git submodule update
+
+        mkdir -p ${OPENBR_SRC_DIR}/build
+        cd ${OPENBR_SRC_DIR}/build
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
+        $SUDO make install
+        cd ${HR_WORKSPACE}
+    fi
+}
+
 install_dlib() {
     if [[ ! -e $DLIB_PATH/dist/dlib/dlib.so ]]; then
       info "Installing dlib"
       # The dlib DNS server sometimes times out. Pinging it first
       # makes it much more likely that the wget will succeed.
       ping -c 5 dlib.net
+      MD5SUMS["dlib-${DLIB_VERSION}.tar.bz2"]=da930a35c2aa88612dd2ebf893f48f60
       wget_cache http://dlib.net/files/dlib-${DLIB_VERSION}.tar.bz2
-      checkmd5 ${HR_CACHE}/dlib-${DLIB_VERSION}.tar.bz2 da930a35c2aa88612dd2ebf893f48f60 # md5sum for dlib-19.0
       mkdir -p $DLIB_PATH
       tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
       cd $DLIB_PATH && python setup.py build
@@ -490,7 +591,8 @@ install_clandmarks() {
     # Install clandmarks
     if [ ! -d $CLANDMARK_DIR ]; then
       info "Installing clandmarks"
-      wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/clandmark.tar.bz2
+      MD5SUMS["clandmark.tar.bz2"]=0d1eb90bad2c02fb38aed4e464555f02
+      wget_cache $GITHUB_STORAGE_URL/clandmark.tar.bz2
       mkdir -p $CLANDMARK_DIR
       tar -xf $HR_CACHE/clandmark.tar.bz2 -C $CLANDMARK_DIR --strip-components=1
       info "Installing clandmarks is done"
@@ -540,14 +642,15 @@ install_openface() {
     info "Installing openface is done"
 
     # $OPENFACE_DIR/models/get-models.sh
+    MD5SUMS["nn4.small2.v1.t7"]=c95bfd8cc1adf05210e979ff623013b6
+    MD5SUMS["celeb-classifier.nn4.small2.v1.pkl"]=199a2c0d32fd0f22f14ad2d248280475
+    MD5SUMS["shape_predictor_68_face_landmarks.dat.bz2"]=677a91476056de0507f1915adc7ef86a
     wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
     wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
     if [[ ! -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ]]; then
         wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
         bunzip2 -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2
     fi
-    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat 73fde5e05226548677a050913eed4e04
-    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
     checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
     mkdir -p $OPENFACE_DIR/models/dlib
     mkdir -p $OPENFACE_DIR/models/openface
@@ -601,6 +704,7 @@ install_vision_deps() {
     install_openface
     install_cmt
     install_emotime
+    install_openbiometrics
 
     info "Installing vision dependencies is done"
 }
@@ -612,8 +716,8 @@ install_marky_markov() {
     else
       warn "Skipping marky_markov clone"
     fi
-    wget_cache https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master/markov_modeling.tar.gz
-    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
+    MD5SUMS["markov_modeling.tar.gz"]=7d51bbcd4df89b2633bd9520fb99b2b7
+    wget_cache $GITHUB_STORAGE_URL/markov_modeling.tar.gz
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
@@ -621,6 +725,23 @@ install_marky_markov() {
     apt_get_install ruby2.3 ruby2.3-dev
     $SUDO gem install marky_markov
     info "Installing Marky Markov is done"
+}
+
+install_calib_tools() {
+    MD5SUMS["maestro-linux-150116.tar.gz"]=84feed740c0695bb0eea13ccf7988b97
+    wget_cache $GITHUB_STORAGE_URL/maestro-linux-150116.tar.gz
+    mkdir -p ${HR_PREFIX}/maestro
+    tar zxf ${HR_CACHE}/maestro-linux-150116.tar.gz -C ${HR_PREFIX}/maestro --strip-components 1
+    apt_get_install libusb-1.0-0-dev mono-runtime libmono-winforms2.0-cil
+    $SUDO cp ${HR_PREFIX}/maestro/99-pololu.rules /etc/udev/rules.d/
+    #$SUDO udevadm control --reload-rules
+
+    MD5SUMS["mx_calib"]=5e34a64564df92c116f027a9ff48a11b
+    wget_cache $GITHUB_STORAGE_URL/mx_calib
+    if [[ ! -f ${HR_PREFIX}/bin/mx_calib ]]; then
+        $SUDO cp ${HR_CACHE}/mx_calib ${HR_PREFIX}/bin
+        $SUDO chmod +x ${HR_PREFIX}/bin/mx_calib
+    fi
 }
 
 get_models() {
@@ -784,18 +905,19 @@ _do_install_deps() {
         $SUDO mkdir -p $HR_PREFIX
     fi
     $SUDO chmod 777 $HR_PREFIX
-    install_basic
-    install_ros
-    install_opencog_deps
-    install_vision_deps
-    install_manyears_deps
-    install_webui_deps
-    install_blender
-    install_ffmpeg
-    install_tts
-    install_pocketsphinx
-    install_other_deps
-    get_models
+    timeit install_basic
+    timeit install_ros
+    timeit install_opencog_deps
+    timeit install_vision_deps
+    timeit install_manyears_deps
+    timeit install_webui_deps
+    timeit install_blender
+    timeit install_ffmpeg
+    timeit install_tts
+    timeit install_pocketsphinx
+    timeit install_calib_tools
+    timeit install_other_deps
+    timeit get_models
 
     wget_cache https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/patch/rosbridge.patch
     $SUDO patch -N /opt/ros/indigo/lib/python2.7/dist-packages/rosbridge_library/internal/publishers.py ${HR_CACHE}/rosbridge.patch || true
@@ -852,8 +974,8 @@ do_build_hr() {
 
 pack_hr() {
     if [[ ! -d makeself ]]; then
+        MD5SUMS["makeself-2.2.0.tar.gz"]=8075530b2ad0a2fbd4bffa80a96eb2ea
         wget_cache https://github.com/megastep/makeself/archive/release-2.2.0.tar.gz makeself-2.2.0.tar.gz
-        checkmd5 ${HR_CACHE}/makeself-2.2.0.tar.gz 8075530b2ad0a2fbd4bffa80a96eb2ea
         mkdir -p makeself
         tar zxf ${HR_CACHE}/makeself-2.2.0.tar.gz -C makeself --strip-components 1
     fi
@@ -1120,6 +1242,8 @@ export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
 export MANYEARSLIB_PREFIX=$MANYEARSLIB_PREFIX
 
 export CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
+export OpenBR_DIR=$OpenBR_DIR
+
 if [[ -f $TORCH_DIR/install/bin/torch-activate ]]; then
   source $TORCH_DIR/install/bin/torch-activate
 fi
@@ -1209,22 +1333,22 @@ execute() {
             check_ws
         fi
     fi
-    if [[ $INSTALL_DEPENDENCIES ]]; then do_install_deps; fi
-    if [[ $GET_HR_SOURCE_CODE ]]; then do_get_hr_src; fi
-    if [[ $GET_SOURCE_CODE ]]; then do_get_src; fi
-    if [[ $DEVELOPER_MODE ]]; then do_dev_mode ; fi
-    if [[ $UPDATE_HR_SOURCE_CODE ]]; then do_update_hr ; fi
-    if [[ $UPDATE_SOURCE_CODE ]]; then do_update ; fi
-    if [[ $CLEANUP ]]; then do_clean_up ; fi
-    if [[ $BUILD_HR_SOURCE_CODE ]]; then do_build_hr; fi
-    if [[ $UPDATE_VISION_CODE ]]; then do_update_vision_tools; fi
-    if [[ $BUILD_SOURCE_CODE ]]; then do_build; fi
-    if [[ $RUN_TESTS ]]; then do_test; fi
+    if [[ $INSTALL_DEPENDENCIES ]]; then timeit do_install_deps; fi
+    if [[ $GET_HR_SOURCE_CODE ]]; then timeit do_get_hr_src; fi
+    if [[ $GET_SOURCE_CODE ]]; then timeit do_get_src; fi
+    if [[ $DEVELOPER_MODE ]]; then timeit do_dev_mode ; fi
+    if [[ $UPDATE_HR_SOURCE_CODE ]]; then timeit do_update_hr ; fi
+    if [[ $UPDATE_SOURCE_CODE ]]; then timeit do_update ; fi
+    if [[ $CLEANUP ]]; then timeit do_clean_up ; fi
+    if [[ $BUILD_HR_SOURCE_CODE ]]; then timeit do_build_hr; fi
+    if [[ $UPDATE_VISION_CODE ]]; then timeit do_update_vision_tools; fi
+    if [[ $BUILD_SOURCE_CODE ]]; then timeit do_build; fi
+    if [[ $RUN_TESTS ]]; then timeit do_test; fi
     if [[ $PRINT_HR_WORKSPACE ]]; then echo HR_WORKSPACE=$HR_WORKSPACE ; fi
-    if [[ $BUILD_SINGLE_PKG ]]; then do_single_package $CUSTOM_FUNCTIONS ; fi
-    if [[ $RUN_CUSTOM_FUNCTIONS ]]; then $CUSTOM_FUNCTIONS $CUSTOM_FUNCTIONS_ARGS; fi
-    if [[ $MIGRATE ]]; then do_migrate ; fi
-    if [[ $BUILD_PACKAGE ]]; then do_build_package ; fi
+    if [[ $BUILD_SINGLE_PKG ]]; then timeit do_single_package $CUSTOM_FUNCTIONS ; fi
+    if [[ $RUN_CUSTOM_FUNCTIONS ]]; then timeit $CUSTOM_FUNCTIONS $CUSTOM_FUNCTIONS_ARGS; fi
+    if [[ $MIGRATE ]]; then timeit do_migrate ; fi
+    if [[ $BUILD_PACKAGE ]]; then timeit do_build_package ; fi
 }
 
 ### Main ###

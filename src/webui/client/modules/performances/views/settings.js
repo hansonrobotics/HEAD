@@ -29,7 +29,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
             },
             initialize: function (options) {
                 this.mergeOptions(options, ['path']);
-                if (!this.model) this.model = new Settings({path: this.path});
+                if (!this.model) this.model = new Settings({}, {path: this.path});
             },
             onRender: function () {
                 let self = this;

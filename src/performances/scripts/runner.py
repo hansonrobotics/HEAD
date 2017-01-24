@@ -324,7 +324,6 @@ class Runner:
                 with self.lock:
                     if not self.running:
                         break
-                    autopause = self.autopause and i < len(self.running_performances) - 1
 
                 running = True
                 finished = None
@@ -344,6 +343,9 @@ class Runner:
                     if finished is None:
                         # true if all performance nodes are already finished
                         finished = not running
+
+                with self.lock:
+                    autopause = self.autopause and i < len(self.running_performances) - 1
 
                 if not finished and autopause:
                     self.pause()

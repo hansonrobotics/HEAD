@@ -486,7 +486,7 @@ Syntax: upload package
             "Auth": self.key
         }
         r = requests.get(
-            '{}/dump_session'.format(self.root_url), params=params)
+            '{}/session_history'.format(self.root_url), params=params)
         if r.status_code == 200:
             fname = '{}.csv'.format(self.session)
             with open(fname, 'w') as f:

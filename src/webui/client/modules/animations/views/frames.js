@@ -7,8 +7,16 @@ define(["application", "./frame", './templates/frames.tpl', 'jquery-ui'],
             ui: {
                 container: '.app-frames'
             },
+            initialize: function (options) {
+                this.mergeOptions(options, ['layout'])
+            },
+            childViewOptions: function () {
+                return {
+                    layout: this.layout
+                }
+            },
             onRender: function () {
-                var self = this;
+                const self = this;
                 this.setOrderNumbers();
 
                 $(this.ui.container).sortable({
@@ -21,9 +29,8 @@ define(["application", "./frame", './templates/frames.tpl', 'jquery-ui'],
                 });
             },
             setOrderNumbers: function () {
-                var self = this;
-
-                $(this.ui.container).find('li').each(function (i, frame) {
+                const self = this;
+                this.ui.container.find('li').each(function (i, frame) {
                     self.children.each(function (motorView) {
                         if (frame == motorView.el) {
                             console.log('set');

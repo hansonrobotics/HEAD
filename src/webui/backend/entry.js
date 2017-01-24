@@ -194,7 +194,8 @@ app.get('/performance/settings/:path(*)?', function (req, res) {
 });
 
 app.post('/performance/settings/:path(*)?', function (req, res) {
-    res.json(writePerformanceProperties(req.params['path'], req.body || {}));
+    let success = writePerformanceProperties(req.params['path'], req.body || {});
+    res.json(success ? req.body : {});
 });
 
 app.get('/keywords/:path(*)?', function (req, res) {
