@@ -70,6 +70,10 @@ class HRSlackBot(object):
                     self.config = yaml.load(f)
                     if 'weights' in self.config:
                         self.weights = ','.join(['{}={}'.format(k,v) for k, v in self.config.get('weights').iteritems()])
+                    if 'host' in self.config:
+                        self.host = self.config.get('host')
+                    if 'port' in self.config:
+                        self.port = self.config.get('port')
             else:
                 logger.warn("Config file {} is not found".format(config_file))
 
