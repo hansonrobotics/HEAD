@@ -1327,6 +1327,8 @@ execute() {
         $BUILD_HR_SOURCE_CODE == 1 ||
         $BUILD_SOURCE_CODE == 1 ||
         $RUN_CUSTOM_FUNCTIONS == 1 ||
+        $GET_HR_SOURCE_CODE == 1 ||
+        $GET_SOURCE_CODE == 1 ||
         $BUILD_PACKAGE == 1
         ]]; then
         if [[ $ASSUME_YES == 0 ]] ; then
