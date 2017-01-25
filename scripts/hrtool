@@ -327,7 +327,7 @@ install_link_grammar() {
     MD5SUMS["link-grammar-5.3.13.tar.gz"]=d519ff9f404bbda5bfe229839272d91c
     wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.13.tar.gz
 
-    rm -rf /tmp/link-grammar-5.3.13
+    $SUDO rm -rf /tmp/link-grammar-5.3.13
     tar -zxf ${HR_CACHE}/link-grammar-5.3.13.tar.gz -C /tmp
     mkdir -p /tmp/link-grammar-5.3.13/build
     cd /tmp/link-grammar-5.3.13/build
@@ -336,7 +336,7 @@ install_link_grammar() {
     make -j$(nproc)
     $SUDO make install
     $SUDO ldconfig
-    rm -rf /tmp/link-grammar-5.3.13
+    $SUDO rm -rf /tmp/link-grammar-5.3.13
     cd $BASEDIR
     info "Installing Link-Grammar done"
 }
@@ -361,7 +361,7 @@ install_relex_deps() {
         wget_cache $GITHUB_STORAGE_URL/jwnl14-rc2.zip
         unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
         $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
-        rm -r /tmp/jwnl14-rc2
+        $SUDO rm -r /tmp/jwnl14-rc2
         $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
     fi
     info "Installing RelEX dependencies is done"
@@ -382,12 +382,12 @@ install_pocketsphinx() {
     tar zxf ${HR_CACHE}/sphinxbase-1.0.0.tar.gz -C /tmp
     cd /tmp/sphinxbase-1.0.0
     ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && $SUDO make install
-    rm -r /tmp/sphinxbase-1.0.0
+    $SUDO rm -r /tmp/sphinxbase-1.0.0
 
     tar zxf ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz -C /tmp
     cd /tmp/pocketsphinx-1.0.0
     ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && $SUDO make install
-    rm -r /tmp/pocketsphinx-1.0.0
+    $SUDO rm -r /tmp/pocketsphinx-1.0.0
     cd $BASEDIR
     info "Installing Pocketsphinx is done"
 }
@@ -421,7 +421,7 @@ install_tts() {
     fi
     tar zxf ~/.hr/tts/festival/voices/festvox_cmu_us_slt_arctic_hts.tar.gz -C /tmp
     $SUDO cp -rT /tmp/festival/lib/voices /usr/share/festival/voices
-    rm -rf /tmp/festival
+    $SUDO rm -rf /tmp/festival
 
     # MaryTTS
     mkdir -p ~/.hr/tts/marytts
@@ -536,14 +536,14 @@ install_opencv() {
     if [[ ! -f ${HR_PREFIX}/lib/libopencv_core.so ]]; then
         MD5SUMS["opencv-2.4.11.zip"]=32f498451bff1817a60e1aabc2939575
         wget_cache https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip
-        rm -rf /tmp/opencv-2.4.11
+        $SUDO rm -rf /tmp/opencv-2.4.11
         unzip ${HR_CACHE}/opencv-2.4.11.zip -d /tmp
         cd /tmp/opencv-2.4.11
         mkdir build
         cd build
         cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
         $SUDO make install
-        rm -rf /tmp/opencv-2.4.11
+        $SUDO rm -rf /tmp/opencv-2.4.11
         cd ${HR_WORKSPACE}
     fi
 }
