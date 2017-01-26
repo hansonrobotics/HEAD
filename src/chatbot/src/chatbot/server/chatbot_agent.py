@@ -314,6 +314,10 @@ def _ask_characters(characters, question, lang, sid, query):
             cross_trace.append((character.id, stage, 'Skip used tier'))
             return False, None, None
 
+        if character.id in used_charaters and character.type == TYPE_CS:
+            cross_trace.append((character.id, stage, 'Skip CS tier'))
+            return False, None, None
+
         used_charaters.append(character.id)
         answer = None
         answered = False
