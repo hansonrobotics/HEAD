@@ -358,6 +358,7 @@ def _ask_characters(characters, question, lang, sid, query):
                 else:
                     answered = False
                     cross_trace.append((character.id, stage, 'Pass through. Weight: {}'.format(weight)))
+                    logger.info("{} has no answer".format(character.id))
                     if 'markov' not in character.id:
                         cached_responses['pass'].append((response, answer, character))
                     else:
@@ -368,6 +369,7 @@ def _ask_characters(characters, question, lang, sid, query):
                 cross_trace.append((character.id, stage, 'Repetitive answer. Answer: {}'.format(answer)))
                 cached_responses['repeat'].append((response, answer, character))
             else:
+                logger.info("{} has no answer".format(character.id))
                 cross_trace.append((character.id, stage, 'No answer. Trace: {}'.format(trace)))
         return answered, answer, response
 
