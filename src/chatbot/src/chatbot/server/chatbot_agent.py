@@ -340,17 +340,17 @@ def _ask_characters(characters, question, lang, sid, query):
                     answered = True
                 else:
                     logger.info("{} has no good match".format(character.id))
-                    cross_trace.append((character.id, stage, 'No good match. Trace: {}'.format(trace)))
+                    cross_trace.append((character.id, stage, 'No good match. Answer: {}, Trace: {}'.format(answer, trace)))
                     cached_responses['nogoodmatch'].append((response, answer, character))
             elif response.get('bad'):
-                cross_trace.append((character.id, stage, 'Bad answer. Trace: {}'.format(trace)))
+                cross_trace.append((character.id, stage, 'Bad answer. Answer: {}, Trace: {}'.format(answer, trace)))
                 cached_responses['bad'].append((response, answer, character))
             elif DISABLE_QUIBBLE and response.get('quibble'):
-                cross_trace.append((character.id, stage, 'Quibble answer. Trace: {}'.format(trace)))
+                cross_trace.append((character.id, stage, 'Quibble answer. Answer: {}, Trace: {}'.format(answer, trace)))
                 cached_responses['quibble'].append((response, answer, character))
             elif response.get('gambit'):
                 if random.random() > 0.3:
-                    cross_trace.append((character.id, stage, 'Ignore gambit answer. Trace: {}'.format(trace)))
+                    cross_trace.append((character.id, stage, 'Ignore gambit answer. Answer: {}, Trace: {}'.format(answer, trace)))
                     cached_responses['gambit'].append((response, answer, character))
                 else:
                     answered = True
@@ -361,7 +361,7 @@ def _ask_characters(characters, question, lang, sid, query):
                     cross_trace.append((character.id, stage, 'Trace: {}'.format(trace)))
                 else:
                     answered = False
-                    cross_trace.append((character.id, stage, 'Pass through. Weight: {}'.format(weight)))
+                    cross_trace.append((character.id, stage, 'Pass through. Answer: {}, Weight: {}, Trace: {}'.format(answer, weight, trace)))
                     logger.info("{} has no answer".format(character.id))
                     if 'markov' not in character.id:
                         cached_responses['pass'].append((response, answer, character))
@@ -370,7 +370,7 @@ def _ask_characters(characters, question, lang, sid, query):
         else:
             if response.get('repeat'):
                 answer = response.get('repeat')
-                cross_trace.append((character.id, stage, 'Repetitive answer. Answer: {}'.format(answer)))
+                cross_trace.append((character.id, stage, 'Repetitive answer. Answer: {}, Trace: {}'.format(answer, trace)))
                 cached_responses['repeat'].append((response, answer, character))
             else:
                 logger.info("{} has no answer".format(character.id))
