@@ -24,7 +24,7 @@ logger = logging.getLogger('hr.chatbot.slackclient')
 
 def format_trace(traces):
     pattern = re.compile(
-        r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
+        r'(Trace:)?\s*(?P<fname>.*\.aiml), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
     line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
     formated_traces = []
     for name, stage, trace in traces:
