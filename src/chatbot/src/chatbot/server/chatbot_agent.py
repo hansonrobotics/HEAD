@@ -186,10 +186,18 @@ def get_context(sid):
             del context[k]
     return True, context
 
-def preprocessing(question):
+def preprocessing(question, lang, session):
     question = question.lower().strip()
     question = ' '.join(question.split())  # remove consecutive spaces
     question = question.replace('sofia', 'sophia')
+
+    reduction = get_character('reduction')
+    if reduction is not None:
+        response = reduction.respond(question, lang, session, query=True)
+        reducted_text = response.get('text')
+        if reducted_text:
+            question = reducted_text
+
     return question
 
 def _ask_characters(characters, question, lang, sid, query):
@@ -205,20 +213,12 @@ def _ask_characters(characters, question, lang, sid, query):
     weighted_characters = zip(characters, weights)
     logger.info("Weights {}".format(weighted_characters))
 
-    _question = preprocessing(question)
+    _question = preprocessing(question, lang, sess)
     response = {}
     hit_character = None
     answer = None
     cross_trace = []
-
     cached_responses = defaultdict(list)
-
-    reduction = get_character('reduction')
-    if reduction is not None:
-        _response = reduction.respond(_question, lang, sess, query=True)
-        reducted_text = _response.get('text')
-        if reducted_text:
-            _question = reducted_text
 
     control = get_character('control')
     if control is not None:
