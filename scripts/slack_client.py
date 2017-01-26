@@ -23,8 +23,7 @@ URL_PREFIX = os.environ.get('URL_PREFIX', "http://localhost:8001")
 logger = logging.getLogger('hr.chatbot.slackclient')
 
 def format_trace(traces):
-    pattern = re.compile(
-        r'(Trace:)?\s*(?P<fname>.*\.aiml), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
+    pattern = re.compile(r'(.*:)?\s*(.*\.aiml), (\(.*\)), (.*), (\(.*\))')
     line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
     formated_traces = []
     for name, stage, trace in traces:
@@ -33,10 +32,7 @@ def format_trace(traces):
         for subtrace in subtraces:
             matchobj = pattern.match(subtrace)
             if matchobj:
-                fname = matchobj.groupdict()['fname']
-                tloc = matchobj.groupdict()['tloc']
-                pname = matchobj.groupdict()['pname']
-                ploc = matchobj.groupdict()['ploc']
+                other, fname, tloc, pname, ploc = matchobj.groups()
                 tline = line_pattern.match(tloc).group('line')
                 pline = line_pattern.match(ploc).group('line')
 
@@ -44,7 +40,10 @@ def format_trace(traces):
                     pname=pname, urlprefix=URL_PREFIX, fname=fname, pline=pline, ploc=ploc)
                 t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
                     urlprefix=URL_PREFIX, fname=fname, tline=tline, tloc=tloc)
-                formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
+                if other:
+                    formated_trace = '{other}\n{p}, {t}, {fname}'.format(other=other, fname=fname, p=p, t=t)
+                else:
+                    formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
                 formated_subtraces.append(formated_trace)
             else:
                 formated_subtraces.append(subtrace)
