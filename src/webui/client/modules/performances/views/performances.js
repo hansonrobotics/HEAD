@@ -20,7 +20,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 'change:path reset': 'updateTabs'
             },
             initialize: function (options) {
-                this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'queueView', 'dir']);
+                this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'layoutView', 'dir']);
             },
             onRender: function () {
                 let self = this,
@@ -119,16 +119,16 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 let self = this,
                     added = false;
 
-                if (this.autoplay) self.queueView.clearQueue();
+                if (this.autoplay) self.layoutView.clearQueue();
 
                 this.collection.each(function (performance) {
                     if ((performance.get('path') || '') == self.currentPath) {
-                        self.queueView.addPerformance(performance, true);
+                        self.layoutView.addPerformance(performance, true);
                         added = true;
                     }
                 });
 
-                self.queueView.updateTimeline({autoplay: this.autoplay});
+                self.layoutView.updateTimeline({autoplay: this.autoplay});
             },
             attachHtml: function (collectionView, childView) {
                 let self = this;
@@ -136,12 +136,12 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 // add performance to the queue on click
                 childView.on('click', function (data) {
                     if (self.autoplay) {
-                        self.queueView.clearQueue();
-                        self.queueView.addPerformance(data.model, true);
-                        self.queueView.updateTimeline({autoplay: true});
+                        self.layoutView.clearQueue();
+                        self.layoutView.addPerformance(data.model, true);
+                        self.layoutView.updateTimeline({autoplay: true});
                     } else {
-                        let timelinesView = self.queueView.timelinesView;
-                        self.queueView.addPerformance(data.model, !timelinesView || timelinesView.changed);
+                        let timelinesView = self.layoutView.timelinesView;
+                        self.layoutView.addPerformance(data.model, !timelinesView || timelinesView.changed);
                     }
 
                     if (!data.model.nodes.length)

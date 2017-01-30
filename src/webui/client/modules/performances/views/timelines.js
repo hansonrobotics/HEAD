@@ -36,6 +36,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 yesButton: '.app-yes-button',
                 noButton: '.app-no-button',
                 cancelButton: '.app-cancel-button',
+                editButton: '.app-edit-button',
+                previousButton: '.app-previous-button',
+                nextButton: '.app-next-button'
             },
             regions: {
                 nodeSettings: {
@@ -60,7 +63,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 'click @ui.yesButton': 'confirm',
                 'click @ui.noButton': 'close',
                 'click @ui.cancelButton': 'hideConfirmButtons',
-                'click @ui.autoPauseButton': 'toggleAutoPause'
+                'click @ui.autoPauseButton': 'toggleAutoPause',
+                'click @ui.editButton': 'editCurrent',
+                'click @ui.previousButton': 'editPrevious',
+                'click @ui.nextButton': 'editNext',
             },
             modelEvents: {
                 'change': 'modelChanged'
@@ -83,7 +89,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         }
                     };
 
-                this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving']);
+                this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView']);
 
                 if (options.sequence instanceof Array) {
                     this.model = new Performance();
@@ -141,6 +147,15 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             close: function () {
                 this.trigger('close');
             },
+            editCurrent: function() {
+                this.layoutView.editCurrent();
+            },
+            editPrevious: function() {
+                this.layoutView.editPrevious();
+            },
+            editNext: function() {
+                this.layoutView.editNext();
+            },
             reconfigure: function () {
                 if (this.nodeConfig.get('autopause')) {
                     this.ui.autoPauseButton.addClass('active');
@@ -182,19 +197,24 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (this.readonly) {
                     this.ui.nodesContainer.hide();
                     this.ui.doneButton.hide();
+                    this.ui.previousButton.hide();
+                    this.ui.nextButton.hide();
                 } else {
                     this.nodeView = new NodeView({collection: this.model.nodes});
                     this.getRegion('nodeSettings').show(this.nodeView);
+                    this.ui.editButton.hide();
                 }
 
                 this.modelChanged();
                 this.ui.scrollContainer.perfectScrollbar();
 
-                // Performance event handler
-                if (typeof this.options.performances != 'undefined')
-                    this.options.performances.eventHandler = function (msg) {
+                let eventCallback = function(msg) {
+                    if (self.isDestroyed())
+                        api.topics.performance_events.unsubscribe(eventCallback);
+                    else
                         self.handleEvents(msg);
-                    };
+                };
+                api.topics.performance_events.subscribe(eventCallback);
 
                 let nodeListener = function () {
                     if (self.model.nodes.isEmpty())
@@ -235,8 +255,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             onDestroy: function () {
                 this.model.stop();
-                if (typeof this.options.performances != 'undefined')
-                    this.options.performances.eventHandler = false;
 
                 if (this.readonly) this.model.disableSync();
             },
@@ -365,7 +383,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.updateTimelineWidth();
             },
             removeEmptyTimelines: function () {
-                $('.app-timeline-nodes', this.el).filter(':empty').remove();
+                let timelines = $('.app-timeline-nodes', this.el);
+                timelines.filter(':empty').remove();
+                if (!timelines.length)
+                    this.addTimeline();
             },
             placeNode: function (node) {
                 let self = this,
@@ -497,7 +518,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (!$.isNumeric(time))
                     time = parseInt(left) / this.config.pxPerSec;
 
-                this.trigger('running', time);
+                this.trigger('change:time', time);
 
                 let step = 1. / App.getOption('fps'),
                     frameCount = parseInt(time / step);
@@ -637,19 +658,33 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         });
                 });
             },
+            showEditNav: function() {
+                this.ui.editButton.fadeIn();
+                this.ui.previousButton.fadeIn();
+                this.ui.nextButton.fadeIn();
+            },
+            hideEditNav: function() {
+                this.ui.editButton.hide();
+                this.ui.previousButton.hide();
+                this.ui.nextButton.hide();
+            },
             handleEvents: function (e) {
                 let duration = this.model.getDuration();
-
+                console.log(e)
                 if (e.event == 'paused') {
                     this.pauseIndicator(e.time);
                     this.model.b_pause(e);
+                    this.showEditNav();
                 } else if (e.event == 'idle') {
                     this.stopIndicator();
-                } else if (e.event == 'running')
+                    this.showEditNav();
+                } else if (e.event == 'running') {
                     this.startIndicator(e.time, duration);
-                else if (e.event == 'resume')
+                    this.hideEditNav();
+                } else if (e.event == 'resume') {
                     this.startIndicator(e.time, duration);
-                else if (e.event == 'chat')
+                    this.hideEditNav();
+                } else if (e.event == 'chat')
                     this.enableChat();
                 else if (e.event == 'chat_end')
                     this.disableChat();

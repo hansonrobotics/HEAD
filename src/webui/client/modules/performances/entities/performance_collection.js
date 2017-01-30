@@ -8,15 +8,6 @@ define(['backbone', './performance', 'lib/api', 'backbone.naturalsort'], functio
         },
         url: function () {
             return '/performances/' + api.config.robot;
-        },
-        initialize: function () {
-            // Subscribing to performance events
-            let self = this;
-            api.subPerformanceEvents(function (msg) {
-                if (self.eventHandler) {
-                    self.eventHandler(msg);
-                }
-            });
         }
     });
 });
