@@ -1,13 +1,13 @@
-define(['backbone', './performance', 'lib/api', 'backbone.naturalsort'], function (Backbone, Performance, api) {
+define(['backbone', './performance', 'lib/api', 'backbone.naturalsort'], function(Backbone, Performance, api) {
     return Backbone.Collection.extend({
         eventHandler: false,
         model: Performance,
         sortType: 'natural',
-        comparator: function (model) {
-            return (model.get('name') || '').toLowerCase();
+        comparator: function(model) {
+            return (model.get('name') || '').toLowerCase()
         },
-        url: function () {
-            return '/performances/' + api.config.robot;
+        url: function() {
+            return '/performances/' + api.config.robot
         }
-    });
-});
+    })
+})

@@ -1,8 +1,8 @@
 define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
         '../entities/performance_collection', '../entities/performance', './queue', './timelines', 'jquery',
-        'underscore', '../entities/queue_item', 'select2', 'select2-css'],
-    function (Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
-              QueueView, TimelinesView, $, _, QueueItem) {
+        'underscore', '../entities/queue', '../entities/queue_item', 'select2', 'select2-css'],
+    function(Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
+             QueueView, TimelinesView, $, _, QueueCollection, QueueItem) {
         return Marionette.View.extend({
             template: template,
             className: 'app-performances-page',
@@ -11,7 +11,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                     el: '.app-performances-region',
                     regionClass: FadeInRegion
                 },
-                queue: { 
+                queue: {
                     el: '.app-queue-region',
                 },
                 timeline: {
@@ -33,21 +33,18 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 'click @ui.languageButton': 'changeLanguage',
                 'click @ui.clearButton': 'clearClick'
             },
-            initialize: function (options) {
-                this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue', 'disableSaving']);
+            initialize: function(options) {
+                this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue', 'disableSaving', 'allowEdit',
+                    'sequence'])
+                this.performances = new PerformanceCollection()
+                this.queueCollection = new QueueCollection()
             },
-            onRender: function () {
+            onAttach: function() {
                 // fluid by default
-                this.setFluidContainer(this.fluid || typeof this.fluid == 'undefined');
-                this.performances = new PerformanceCollection();
-                this.queueCollection = new PerformanceCollection();
-                this.listenTo(this.queueCollection, 'add remove reset', function() {
-                    if (!this.editting)
-                        this.updateTimeline();
-                });
+                this.setFluidContainer(this.fluid || typeof this.fluid === 'undefined')
 
                 let self = this,
-                    queueView = new QueueView({ 
+                    queueView = new QueueView({
                         collection: this.queueCollection,
                         readonly: this.readonly,
                         layoutView: this
@@ -59,246 +56,236 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                         autoplay: this.autoplay,
                         dir: this.dir,
                         nav: this.nav
-                    });
+                    })
 
-                self.getRegion('queue').show(queueView); 
-                self.getRegion('performances').show(performancesView);
+                self.getRegion('queue').show(queueView)
+                self.getRegion('performances').show(performancesView)
 
-                this.listenTo(performancesView, 'new', this.editPerformance);
+                this.listenTo(performancesView, 'new', function(p) {
+                    this._showTimeline({
+                        model: p,
+                        readonly: false
+                    })
+                })
+
                 this.performances.fetch({
                     reset: true,
-                    success: function (response, collection) {
-                        self.showCurrent();
+                    success: function() {
+                        if (!self.sequence)
+                            self.showCurrent()
                     }
-                });
+                })
 
-                if (this.hiddenQueue) {
-                    this.ui.queueContainer.hide();
-                }
+                if (this.hideQueue)
+                    this.ui.queueContainer.hide()
 
-                if (this.options.sequence)
-                    this.showSequence(this.options.sequence);
+                if (this.sequence)
+                    this.addSequence(this.sequence)
 
                 if (this.readonly) {
-                    this.runningPerformances = new Performance();
-                    this.runningPerformances.enableSync(function (performances) {
-                        self.showSequence(_.map(performances, 'id'), true);
-                    });
+                    this.runningPerformances = new Performance()
+                    this.runningPerformances.enableSync(function(performances) {
+                        self.clearQueue()
+                        self.addSequence(_.map(performances, 'id'), true)
+                    })
                 }
             },
-            onDestroy: function () {
-                if (this.readonly) this.runningPerformances.disableSync();
+            onDestroy: function() {
+                if (this.readonly) this.runningPerformances.disableSync()
             },
-            changeLanguage: function (e) {
-                var language = $(e.target).data('lang');
+            changeLanguage: function(e) {
+                var language = $(e.target).data('lang')
 
-                this.ui.languageButton.removeClass('active');
-                $(e.target).addClass('active');
+                this.ui.languageButton.removeClass('active')
+                $(e.target).addClass('active')
 
-                api.setRobotLang(language);
+                api.setRobotLang(language)
             },
-            setFluidContainer: function (enable) {
+            setFluidContainer: function(enable) {
                 if (enable)
-                    this.ui.container.removeClass('container').addClass('container-fluid');
+                    this.ui.container.removeClass('container').addClass('container-fluid')
                 else
-                    this.ui.container.removeClass('container-fluid').addClass('container');
+                    this.ui.container.removeClass('container-fluid').addClass('container')
             },
-            showSequence: function (sequence, skipTimelineUpdate) {
-                let self = this;
+            addSequence: function(sequence, skipTimelineUpdate) {
+                let self = this
 
                 if (!_.isEqual(this._getPerformanceIds(), sequence)) {
-                    this.clearQueue();
                     if (sequence instanceof Array && this.performances) {
-                        _.each(sequence, function (id) {
-                            let model = self.performances.get(id);
-                            if (model) self.addPerformance(model, true);
-                        });
+                        _.each(sequence, function(id) {
+                            let model = self.performances.get(id)
+                            if (model) self.addPerformance(model, true)
+                        })
                     }
 
-                    if (!skipTimelineUpdate) this.updateTimeline();
+                    if (!skipTimelineUpdate) this.updateTimeline()
                 }
             },
-            showCurrent: function () {
+            showCurrent: function() {
                 let self = this,
-                    current = new Performance();
+                    current = new Performance()
 
                 current.fetchCurrent({
-                    success: function (response) {
+                    success: function(response) {
                         self._showTimeline({
                             model: current,
                             running: response['running'],
                             paused: response['paused'],
                             current_time: response['current_time'],
                             readonly: true
-                        });
+                        })
 
-                        let ids = _.map(response['performances'], 'id');
-                        self.showSequence(ids, true);
-                        self.fetchPerformances(ids);
+                        let ids = _.map(response['performances'], 'id')
+                        self.addSequence(ids, true)
+                        self.fetchPerformances(ids)
                     }
-                });
+                })
             },
-            fetchPerformances: function (ids) {
-                let self = this;
+            fetchPerformances: function(ids) {
+                let self = this
 
                 // fetch full info for performances in the sequence
-                _.each(ids, function (id) {
-                    let p = self.performances.get(id);
-                    if (p && p.nodes.isEmpty()) p.fetch();
-                });
-            },
-            findItemByTime: function(time) {
-                let offset = 0;
-                return this.queueCollection.find(function(item) {
-                    let match = time >= offset;
-                    offset += item.get('performance').getDuration();
-                    return match && time < offset;
-                });
+                _.each(ids, function(id) {
+                    let p = self.performances.get(id)
+                    if (p && p.nodes.isEmpty()) p.fetch()
+                })
             },
             editCurrent: function() {
-                let item = this.findItemByTime(this.time);
-                if (item) this.editPerformance(item.get('performance'));
+                let item = this.queueCollection.findItemByTime(this.time)
+                if (item) this.editItem(item)
             },
-            getItemIndex: function(performance) {
-                return this.queueCollection.findIndex(function(item) {
-                    return item.get('performance') === performance;
-                });
-            },
-            editPrevious: function() {
-                let self = this;
+            editPrevious: function(item) {
                 if (this.timelinesView) {
-                    let i = this.getItemIndex(this.timelinesView.model);
-                    if (i > 0) this.editPerformance(this.queueCollection.at(i - 1).get('performance'));
+                    let i = this.queueCollection.findIndex(item)
+                    if (i > 0) this.editItem(this.queueCollection.at(i - 1))
                 }
             },
-            editNext: function() {
-                let self = this;
+            editNext: function(item) {
                 if (this.timelinesView) {
-                    let i = this.getItemIndex(this.timelinesView.model);
-                    if (i >= 0 && i < this.queueCollection.length - 1) this.editPerformance(this.queueCollection.at(i + 1).get('performance'));
+                    let i = this.queueCollection.findIndex(item)
+                    if (i >= 0 && i < this.queueCollection.length - 1) this.editItem(this.queueCollection.at(i + 1))
                 }
             },
-            editPerformance: function (performance) {
+            editItem: function(item) {
+                this.highlight(item)
                 this._showTimeline({
-                    model: performance,
+                    model: item.get('performance'),
+                    queueItem: item,
                     readonly: false
-                });
+                })
             },
-            getPerformanceStartTime: function (performance) {
-                let startTime = 0;
-
-                this.queueCollection.find(function (item) {
-                    let p = item.get('performance'),
-                        found = p === performance;
-                    if (!found) startTime += p.getDuration();
-                    return found;
-                });
-
-                return startTime;
-            },
-            play: function(performance) {
-                console.log(performance)
+            play: function(item) {
                 if (!this.timelinesView || !this.timelinesView.readonly)
-                    this.updateTimeline();
-                this.timelinesView.run(this.getPerformanceStartTime(performance));
+                    this.updateTimeline()
+                this.timelinesView.run(item.getStartTime())
             },
-            setTime: function(performance) {
+            remove: function(item) {
+                this.queueCollection.remove(item)
+                if (!this.editting)
+                    this.updateTimeline()
+            },
+            setTime: function(item) {
                 if (this.editting) {
-                    this.editPerformance(performance);
+                    this.editItem(item)
                 } else {
-                    if (!this.timelinesView) this.updateTimeline();
-                    this.timelinesView.moveIndicator(this.getPerformanceStartTime(performance));
+                    if (!this.timelinesView) this.updateTimeline()
+                    this.timelinesView.moveIndicator(item.getStartTime())
                 }
             },
-            addPerformance: function (performance, skipTimelineUpdate) {
-                this.queueCollection.add(new QueueItem({performance: performance}));
-                this.fetchPerformances([performance.get('id')]);
-                if (!skipTimelineUpdate) this.updateTimeline();
+            addPerformance: function(performance, skipTimelineUpdate) {
+                let item = new QueueItem({performance: performance}, {silent: skipTimelineUpdate})
+                this.queueCollection.add(item)
+                this.fetchPerformances([performance.get('id')])
+                if (!skipTimelineUpdate) this.updateTimeline()
+                return item
             },
-            updateTimeline: function (options) {
-                let ids = this._getPerformanceIds();
+            updateTimeline: function(options) {
+                let ids = this._getPerformanceIds()
                 this.timelinesView = this._showTimeline(_.extend({
                     sequence: ids,
                     readonly: true
-                }, options || {}));
+                }, options || {}))
             },
-            stop: function () {
+            stop: function() {
                 if (this.timelinesView) {
-                    this.timelinesView.destroy();
-                    this.timelinesView = null;
+                    this.timelinesView.destroy()
+                    this.timelinesView = null
                 }
             },
-            clearClick: function () {
-                this.stop();
-                this.clearQueue();
-                this.updateTimeline();
-                this.ui.clearButton.blur();
+            clearClick: function() {
+                this.stop()
+                this.clearQueue()
+                this.updateTimeline()
+                this.ui.clearButton.blur()
             },
-            clearQueue: function () {
-                this.queueCollection.reset();
+            clearQueue: function() {
+                this.queueCollection.reset()
             },
-            _getPerformanceIds: function () {
-                let ids = [];
+            highlight: function(item) {
+                let el = this.ui.queueContainer.find('[data-model-cid=' + item.cid + ']')
+                if (!el.hasClass('active')) {
+                    this.ui.queueContainer.find('.app-performance').removeClass('active')
+                    el.addClass('active')
+                }
+            },
+            _getPerformanceIds: function() {
+                let ids = []
 
-                this.queueCollection.each(function (item) {
-                    let performance = item.get('performance');
+                this.queueCollection.each(function(item) {
+                    let performance = item.get('performance')
                     if (performance instanceof Performance && performance.id)
                         ids.push(performance.id)
-                });
+                })
 
-                return ids;
+                return ids
             },
-            _showTimeline: function (options) {
+            _showTimeline: function(options) {
                 let self = this,
                     playButtons = this.ui.queue.find('.app-play')
 
-                this.editting = !options.readonly;
+                this.editting = !options.readonly
 
                 if (this.editting)
-                    playButtons.fadeOut();
+                    playButtons.fadeOut()
                 else
-                    playButtons.fadeIn();
+                    playButtons.fadeIn()
 
                 this.timelinesView = new TimelinesView(_.extend({
                     performances: this.performances,
                     disableSaving: this.disableSaving,
-                    layoutView: this
-                }, options));
+                    layoutView: this,
+                    queue: this.queueCollection,
+                    allowEdit: this.allowEdit
+                }, options))
 
-                this.listenTo(this.timelinesView, 'close', function () {
-                    self.updateTimeline();
-                });
+                this.listenTo(this.timelinesView, 'close', function() {
+                    self.updateTimeline()
+                })
 
-                self.time = 0;
-                this.listenTo(this.timelinesView, 'change:time', function (time) {
+                self.time = 0
+                this.listenTo(this.timelinesView, 'change:time', function(time) {
                     if (!this.editting) {
-                        self.time = time;
-                        let offset = 0;
+                        self.time = time
+                        let offset = 0
 
-                        self.queueCollection.find(function (item) {
-                            offset += item.get('performance').getDuration();
-                            let found = time < offset;
+                        self.queueCollection.find(function(item) {
+                            offset += item.get('performance').getDuration()
+                            let found = time < offset
 
-                            if (found) {
-                                let el = self.ui.queueContainer.find('[data-model-cid=' + item.cid + ']')
-                                if (!el.hasClass('active')) {
-                                    self.ui.queueContainer.find('.app-performance').removeClass('active');
-                                    el.addClass('active');
-                                }
-                            }
+                            if (found) self.highlight(item)
 
-                            return found;
-                        });
+                            return found
+                        })
                     }
-                });
+                })
 
-                this.listenTo(this.timelinesView, 'idle', function () {
-                    self.ui.queue.find('.app-performance').removeClass('active');
-                });
+                this.listenTo(this.timelinesView, 'idle', function() {
+                    self.ui.queue.find('.app-performance').removeClass('active')
+                })
 
                 // show configuration UI
-                this.getRegion('timeline').show(this.timelinesView);
-                return this.timelinesView;
+                this.getRegion('timeline').show(this.timelinesView)
+                return this.timelinesView
             }
-        });
-    });
+        })
+    })
