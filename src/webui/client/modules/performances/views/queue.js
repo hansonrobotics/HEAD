@@ -13,10 +13,24 @@ define(['marionette', 'backbone', './timelines', 'underscore', 'lib/regions/fade
             placeholder: "ui-state-highlight",
         }],
         initialize: function(options) {
-            this.mergeOptions(options, ['layoutView', 'readonly'])
+            this.mergeOptions(options, ['layoutView', 'readonly', 'playEnabled'])
         },
         childViewOptions: function() {
-            return this.options
+            return _.extend(this.options, {playEnabled: this.playEnabled})
+        },
+        enablePlay: function() {
+            this.playEnabled = true
+            if (this.collection.length)
+                this.children.each(function(item, a2) {
+                    item.enablePlay()
+                })
+        },
+        disablePlay: function() {
+            this.playEnabled = false
+            if (this.collection.length)
+                this.children.each(function(item) {
+                    item.disablePlay()
+                })
         }
     })
 })

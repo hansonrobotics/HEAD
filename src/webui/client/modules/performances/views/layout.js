@@ -51,25 +51,25 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 // fluid by default
                 this.setFluidContainer(this.fluid || typeof this.fluid === 'undefined')
 
-                let self = this,
-                    queueView = new QueueView({
-                        collection: this.queueCollection,
-                        readonly: this.readonly,
-                        layoutView: this
-                    }),
-                    performancesView = new PerformancesView({
-                        collection: self.performances,
-                        layoutView: this,
-                        readonly: this.readonly,
-                        autoplay: this.autoplay,
-                        dir: this.dir,
-                        nav: this.nav
-                    })
+                let self = this
+                this.queueView = new QueueView({
+                    collection: this.queueCollection,
+                    readonly: this.readonly,
+                    layoutView: this
+                })
+                this.performancesView = new PerformancesView({
+                    collection: self.performances,
+                    layoutView: this,
+                    readonly: this.readonly,
+                    autoplay: this.autoplay,
+                    dir: this.dir,
+                    nav: this.nav
+                })
 
-                self.getRegion('queue').show(queueView)
-                self.getRegion('performances').show(performancesView)
+                self.getRegion('queue').show(this.queueView)
+                self.getRegion('performances').show(this.performancesView)
 
-                this.listenTo(performancesView, 'new', function(p) {
+                this.listenTo(this.performancesView, 'new', function(p) {
                     this._showTimeline({
                         model: p,
                         readonly: false
@@ -174,7 +174,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 this.changeCheck(function() {
                     let i = self.queueCollection.findIndex(item)
                     if (i >= 0 && i < self.queueCollection.length - 1) self.editItem(self.queueCollection.at(i + 1))
-                });
+                })
             },
             editItem: function(item) {
                 if (!this.timelinesView || this.timelinesView.readonly || item.get('performance') !== this.timelinesView.model) {
@@ -211,7 +211,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 let item = new QueueItem({performance: performance}, {silent: skipTimelineUpdate})
                 this.queueCollection.add(item)
                 this.fetchPerformances([performance.get('id')])
-                if (!skipTimelineUpdate) this.updateTimeline()
+                if (!skipTimelineUpdate && !this.editting) this.updateTimeline()
                 return item
             },
             updateTimeline: function(options) {
@@ -250,7 +250,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                     this.changeCheckCancelCallback = cancelCallback
                     this.ui.saveChangesModal.modal()
                 } else
-                    callback(true);
+                    callback(true)
             },
             saveChanges: function() {
                 this.timelinesView.model.save()
@@ -284,6 +284,10 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                     playButtons = this.ui.queue.find('.app-play')
 
                 this.editting = !options.readonly
+                if (this.editting)
+                    this.queueView.disablePlay()
+                else
+                    this.queueView.enablePlay()
 
                 if (this.editting)
                     playButtons.fadeOut()

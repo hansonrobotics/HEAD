@@ -28,6 +28,8 @@ module.exports = Marionette.View.extend({
         this.ui.name.html(performance.get('name'))
         this.ui.description.html(performance.getDescription())
         this.ui.duration.html(performance.getDuration().toFixed(2))
+        if (!this.options.playEnabled)
+            this.ui.playButton.hide()
     },
     play: function(e) {
         e.stopPropagation()
@@ -41,5 +43,11 @@ module.exports = Marionette.View.extend({
     },
     setTime: function() {
         this.layoutView.setTime(this.model)
+    },
+    enablePlay: function() {
+        this.ui.playButton.fadeIn()
+    },
+    disablePlay: function() {
+        this.ui.playButton.fadeOut()
     }
 })
